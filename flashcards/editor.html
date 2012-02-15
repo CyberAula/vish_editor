@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flashcard Example</title>
+	<style type="text/css">
+		html,body {
+			background-color: #fff;
+			color: #000;
+			font-family: helvetica, arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 12pt;
+		}
+		
+		#myCanvas {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			border: 1px solid #555;
+		}
+	</style>
+
+        <script type="text/javascript">
+	    var fc = {
+                "name": "myFirstFlashcard",
+                "description": "flashcard explanation",
+                "type": "flashcard",
+                "backgroundSrc": "images/background.jpg",   //500x375                
+                "pois": [
+                   {"id": 1,
+                    "x": 120,
+                    "y": 220,
+                    "width": 23,
+                    "height": 24,
+                    "fill": 'rgba(127, 255, 212, .5)',
+		    "template": 1,
+                    "targetSrc": "path/to/content",
+                    "title": "example name",
+                    "description": "bla bla"  
+                 },   
+                   {"id": 2,
+                    "x": 275,
+                    "y": 195,
+                    "width": 23,
+                    "height": 24,
+                    "fill": 'rgba(127, 255, 212, .5)',
+		    "template": 2,
+                    "targetSrc": "path/to/content",
+                    "title": "example name",
+                    "description": "bla bla"  
+                 }
+                ]
+              };
+        </script>
+	<script type="text/javascript" src="flashcard.js"></script>
+	<script type="text/javascript" src="canvasStateEditor.js"></script>
+	<script type="text/javascript" src="poi.js"></script>
+</head>
+<body onload="initEditor()">
+	<canvas id="myCanvas">
+            Your browser does not support canvas            
+        </canvas>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    	<title>ViSH Test</title>
+    	<meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="stylesheets/smoke.css">
+
+  	  <style>  
+       .slides > article:not(.fill)::before {
+         content: '';
+         display: block;
+         width: 100px;
+         height: 100px;
+         position: absolute;
+         left: 0;
+         bottom: 0;
+       }
+      </style>
+
+  	  <meta name="viewport" content="width=1100,height=750">
+  	  <meta name="apple-mobile-web-app-capable" content="yes">
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	  <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.1.min.js"><\/script>')</script>	
+  </head>
+  
+  <body onload="start()" style="display: none" class="loaded">
+
+    <section class="slides layout-regular template-default">
+	
+    </section>
+  
+<link rel="stylesheet" type="text/css" href="stylesheets/css"><link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1.css">
+<!--[if gte IE 8]>
+  <link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1explorer9.css">
+<![endif]-->
+<script type="text/javascript" src="js/prettify.js"></script>
+<script type="text/javascript" src="js/smoke.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+
+<script type="text/javascript" src="js/VISH.js"></script>
+<script type="text/javascript" src="js/VISH.Samples.js"></script>
+<script type="text/javascript" src="js/VISH.Renderer.js"></script>
+<script type="text/javascript" src="js/VISH.Excursion.js"></script>
+<script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
+<script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
+<script type="text/javascript" src="js/VISH.SlideManager.js"></script>
+<script type="text/javascript" src="js/VISH.Editor.js"></script>
+<script type="text/javascript" src="js/VISH.Dummies.js"></script>
+
+<script>
+function start(){
+  //VISH.SlideManager.init(VISH.Samples.samples);
+  VISH.Editor.init();
+}
+</script>
+</body>
+</html>
