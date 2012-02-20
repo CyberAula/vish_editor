@@ -26,10 +26,11 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			else if(slide.elements[el].type === "flashcard"){
 				content += _renderFlashcard(slide.elements[el],slide.template);
+				classes += "flashcard";
 			}
 		}
 
-		SLIDE_CONTAINER.append("<article class='"+classes+"'>"+content+"</article>");
+		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
 	};
 
 	var _renderText = function(element, template){
@@ -49,7 +50,7 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 	
 	var _renderFlashcard = function(element, template){
-		return "<div class='"+template+"_"+element['areaid']+"'>"+element['body']+"</div>";
+		return "<div class='"+template+"_"+element['areaid']+"'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
 	};
 
 	return {
