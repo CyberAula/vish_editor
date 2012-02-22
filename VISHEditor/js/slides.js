@@ -168,7 +168,9 @@ function updateSlideClass(slideNo, className) {
   }
 };
 
-function updateSlides() {
+
+//MODIFIED BY KIKE TO DETERMINE IF GOING RIGHT OR LEFT
+function updateSlides(goingRight) {
   for (var i = 0; i < slideEls.length; i++) {
     switch (i) {
       case curSlide - 2:
@@ -191,8 +193,13 @@ function updateSlides() {
         break;
     }
   }
-
-  triggerLeaveEvent(curSlide - 1);
+  
+  if(goingRight){
+    triggerLeaveEvent(curSlide - 1);
+  }
+  else{
+    triggerLeaveEvent(curSlide + 1);    
+  }
   triggerEnterEvent(curSlide);
 
   window.setTimeout(function() {
@@ -230,7 +237,7 @@ function prevSlide() {
   if (curSlide > 0) {
     curSlide--;
 
-    updateSlides();
+    updateSlides(false);
   }
 };
 
@@ -242,13 +249,14 @@ function nextSlide() {
   if (curSlide < slideEls.length - 1) {
     curSlide++;
 
-    updateSlides();
+    updateSlides(true);
   }
 };
 
 /* Slide events */
 
 function triggerEnterEvent(no) {
+  
   var el = getSlideEl(no);
   if (!el) {
     return;
@@ -268,7 +276,7 @@ function triggerEnterEvent(no) {
 
 function triggerLeaveEvent(no) {
   var el = getSlideEl(no);
-  if (!el) {
+  if (!el) {    
     return;
   }
 

@@ -98,9 +98,48 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     ];
     
     var ctx = null;
-    
-    var init = function(context){
+    var slideId = null;
+        
+    var init = function(context, mySlideId){
         ctx = context;
+        slideId = mySlideId;
+    };
+    
+    var update = function(poi, mx, my){
+      var isInsideClosingButton, template, myState, isInsideZone, tmpVideo, zone;
+      
+      template = TYPES[poi.templateNumber];
+      myState = V.SlideManager.getStatus(slideId);
+      
+      isInsideClosingButton = (template.closingButtonX <= mx) && (template.closingButtonX + template.closingButtonWidth >= mx) &&
+              (template.closingButtonY <= my) && (template.closingButtonY + template.closingButtonHeight >= my);
+      if(isInsideClosingButton) {
+        myState.drawingPoi = 0;  //close this poi
+        //TODO stop the video if any        
+      }
+      
+      for (var i = 0; i < poi.zonesContent.length; i++) {
+        zone = poi.zonesContent[i];
+        if(zone.type === "video"){
+            isInsideZone = (template.zones[i].x <= mx) && (template.zones[i].x + template.zones[i].width >= mx) &&
+              (template.zones[i].y <= my) && (template.zones[i].y + template.zones[i].height >= my);
+            if(isInsideZone){
+                tmpVideo = document.createElement('video');
+                for(var a=0; a<zone.content.length;a++){
+                    if (tmpVideo.canPlayType(zone.content[a].mimetype)) {
+                      tmpVideo = V.Utils.loader.getVideo(zone.content[a].src);
+                      break;
+                    }
+                }
+                if(tmpVideo.paused) {
+                  tmpVideo.play();                  
+                }
+                else {
+                  tmpVideo.pause();
+                }
+            }
+        }
+      }      
     };
     
     var draw = function(poi){
@@ -151,14 +190,8 @@ VISH.Mods.fc.template = (function(V, $, undefined){
                 
                 V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpVideo, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);
                 
-                if(tmpVideo.paused && !tmpVideo.ended){
+                if(tmpVideo.paused){
                   ctx.drawImage(V.Utils.loader.getImage('libimages/play.png'), (zoneTemplate.x + zoneTemplate.width/2) - 128/2, (zoneTemplate.y + zoneTemplate.height/2) - 128/2, 128, 128 );
-                }
-                else if(tmpVideo.ended) {
-                  ctx.drawImage(V.Utils.loader.getImage('libimages/play.png'), (zoneTemplate.x + zoneTemplate.width/2) - 128/2, (zoneTemplate.y + zoneTemplate.height/2) - 128/2, 128, 128 );
-                }
-                else{
-                  canvasState.valid = false; //playing video, so draw again in next interval
                 }
                 break;
             }  
@@ -167,6 +200,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     
     return {
         init    : init,
+        update  : update,
         draw    : draw
     };
 
