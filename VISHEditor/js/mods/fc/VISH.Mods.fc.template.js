@@ -99,6 +99,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     
     var ctx = null;
     var slideId = null;
+    
         
     var init = function(context, mySlideId){
         ctx = context;
@@ -115,7 +116,14 @@ VISH.Mods.fc.template = (function(V, $, undefined){
               (template.closingButtonY <= my) && (template.closingButtonY + template.closingButtonHeight >= my);
       if(isInsideClosingButton) {
         myState.drawingPoi = 0;  //close this poi
-        //TODO stop the video if any        
+        //TODO stop the video if any
+        for (var i = 0; i < poi.zonesContent.length; i++) {
+            zone = poi.zonesContent[i];
+            if(zone.type === "video"){
+                tmpVideo = V.Utils.loader.getVideo(zone.content);
+                tmpVideo.pause();
+            }
+        }
       }
       
       for (var i = 0; i < poi.zonesContent.length; i++) {
@@ -124,19 +132,13 @@ VISH.Mods.fc.template = (function(V, $, undefined){
             isInsideZone = (template.zones[i].x <= mx) && (template.zones[i].x + template.zones[i].width >= mx) &&
               (template.zones[i].y <= my) && (template.zones[i].y + template.zones[i].height >= my);
             if(isInsideZone){
-                tmpVideo = document.createElement('video');
-                for(var a=0; a<zone.content.length;a++){
-                    if (tmpVideo.canPlayType(zone.content[a].mimetype)) {
-                      tmpVideo = V.Utils.loader.getVideo(zone.content[a].src);
-                      break;
-                    }
-                }
-                if(tmpVideo.paused) {
-                  tmpVideo.play();                  
-                }
-                else {
-                  tmpVideo.pause();
-                }
+                 tmpVideo = V.Utils.loader.getVideo(zone.content);
+                 if(tmpVideo.paused) {
+                   tmpVideo.play();                  
+                 }
+                 else {
+                   tmpVideo.pause();
+                 }
             }
         }
       }      
@@ -179,14 +181,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
                 V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpImg, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);  
                 break;
               case "video":
-                //TODO take this decission before this, not in every frame drawing
-                tmpVideo = document.createElement('video');
-                for(var i=0; i<zone.content.length;i++){
-                    if (tmpVideo.canPlayType(zone.content[i].mimetype)) {
-                      tmpVideo = V.Utils.loader.getVideo(zone.content[i].src);
-                      break;
-                    }
-                }
+                tmpVideo = V.Utils.loader.getVideo(zone.content);
                 
                 V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpVideo, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);
                 
@@ -197,6 +192,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
             }  
         }
     };
+    
     
     return {
         init    : init,

@@ -30,7 +30,8 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     var init = function(fcElem, mySlideId) {
         var loadingImg;
         //parse the flashcard json
-        flashcard = JSON.parse(fcElem.jsoncontent);
+        var tmpFlashcard = JSON.parse(fcElem.jsoncontent);
+        flashcard = _removeNotPlayableVideos(tmpFlashcard);
         slideId = mySlideId;
         
         // Get the canvas element.
@@ -93,6 +94,28 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     //function to clear params and stop animations
     var clear = function(){
         clearInterval(intervalReturn);
+    };
+    
+    //function to remove from the flashcard object the video types that are not playable
+    //TODO, if not any playable video substitute the zone by an image with "video type incorrect"
+    var _removeNotPlayableVideos = function(fc){
+        var poi, zone;
+        var tmpVideo = document.createElement('video');
+        for (var i = 0; i < fc.pois.length; i++) {
+            poi = fc.pois[i];
+            for(var a = 0; a < poi.zonesContent.length;a++){
+                zone = poi.zonesContent[a];
+                if(zone.type==="video"){
+                    for(var t = 0; t < zone.content.length; t++){                        
+                        if(tmpVideo.canPlayType(zone.content[t].mimetype)){
+                            //substitute content for the playable content
+                            zone.content = zone.content[t].src;
+                        }
+                    }
+                }
+            }            
+        }
+        return fc;        
     };
     
     var _initGetMouseVariables = function(){
