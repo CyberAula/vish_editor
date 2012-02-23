@@ -23,7 +23,7 @@ body {
   display: block !important;
 
   height: 100%;
-  min-height: 740px;
+  min-height: 600px;
   
   overflow-x: hidden;
   overflow-y: auto;
@@ -54,14 +54,14 @@ body {
   position: absolute;
   overflow: hidden;
 
-  width: 900px;
-  height: 700px;
+  width: 600px;
+  height: 467px;
 
   left: 50%;
   top: 50%;
 
-  margin-left: -450px;
-  margin-top: -350px;
+  margin-left: -300px;
+  margin-top: -233px;
   
   padding: 40px 60px;
 
