@@ -614,4 +614,9 @@ article.smaller q::after {
 .prettyprint .dec, 
 .prettyprint .var { /* a declaration; a variable name */
   color: rgb(127, 0, 127);
-}  
+}
+
+/*added by KIKE to put the flashcard in the full slide*/
+.slides > article.flashcard{
+  padding: 0;
+}

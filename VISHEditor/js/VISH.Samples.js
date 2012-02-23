@@ -96,11 +96,6 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'Ejemplo de flashcard pa tí...'
-				},
-				{
 					'type'        : 'flashcard',
 					'areaid'      : 'center',
 					'canvasid'    : 'myCanvas',
@@ -112,12 +107,7 @@ VISH.Samples = (function(V,undefined){
 		{
 			'id'       :'vish9',
 			'template' :'t2',
-			'elements':[
-				{
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'FLASHCARD 2...'
-				},
+			'elements':[				
 				{
 					'type'        : 'flashcard',
 					'areaid'      : 'center',

@@ -25,7 +25,7 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "applet ";
 			}
 			else if(slide.elements[el].type === "flashcard"){
-				content += _renderFlashcard(slide.elements[el],slide.template);
+				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
 			}
 		}
@@ -50,7 +50,7 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 	
 	var _renderFlashcard = function(element, template){
-		return "<div class='"+template+"_"+element['areaid']+"'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
+		return "<div class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
 	};
 
 	return {
