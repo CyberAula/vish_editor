@@ -90,7 +90,47 @@ VISH.Samples = (function(V,undefined){
 					'body'   : 'swf/virtualexperiment_1.swf'		
 				}
 			]
-		},		
+		},
+		{
+			'id'       :'vish6',
+			'template' :'t2',
+			'elements':[
+				{
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Experimento virtual2'
+				},
+				{
+					'type'    : 'applet',
+					'areaid'  : 'left',
+					'archive' : 'Wave.class', //archive param of the applet
+					'code'    : 'Wave.class',
+					'width'   : 200,
+					'height'  : 150,
+					'params'  : '<param name=image value="Banna.jpg"><param name=horizMotion value=0.03>'
+				}
+			]
+		},
+		{
+			'id'       :'vish7',
+			'template' :'t2',
+			'elements':[
+				{
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Experimento virtual3'
+				},
+				{
+					'type'    : 'applet',
+					'areaid'  : 'left',
+					'archive' : 'applets/Clock.class', //archive param of the applet
+					'code'    : 'Clock.class',
+					'width'   : 310,
+					'height'  : 160,
+					'params'  : '<PARAM NAME=text VALUE="#00ff"><PARAM NAME=bgcolor VALUE="#00aaaa"><PARAM NAME=bordersize VALUE="35"><PARAM NAME=border_outside VALUE="#00ffaa"><PARAM NAME=border_inside VALUE="#0000FF"><PARAM NAME=fonttype VALUE="0"><PARAM NAME="GMT" VALUE="true"><PARAM NAME="correction" VALUE="3600000">'
+				}
+			]
+		},
 		{
 			'id'       :'vish8',
 			'template' :'t2',

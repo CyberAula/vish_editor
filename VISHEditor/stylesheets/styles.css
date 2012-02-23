@@ -54,14 +54,11 @@ body {
   position: absolute;
   overflow: hidden;
 
-  width: 600px;
-  height: 467px;
+  width: 800px;
+  height: 600px;
 
-  left: 50%;
-  top: 50%;
-
-  margin-left: -300px;
-  margin-top: -233px;
+  left: 50px;
+  top: 30px;
   
   padding: 40px 60px;
 
