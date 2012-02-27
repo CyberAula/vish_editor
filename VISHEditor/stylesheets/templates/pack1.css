@@ -47,7 +47,11 @@
 	color: black;
 }
 
-.t1_image, .t1_swf{
+.t1_image{
+	width: 300px;
+}
+
+.t1_swf{
 	height: 100%;
 	position: absolute;
 	bottom: 0;
@@ -82,9 +86,14 @@
 	border: 2px double transparent;
 	margin-right: 2%;
 	font-size: 18px;
+	overflow:hidden;
 }
 
-.t2_image, .t2_swf{
+.t2_image{
+	width: 600px;
+}
+
+.t2_swf{
 	width: 100%;
 	height: 100%;
 }

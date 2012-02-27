@@ -38,7 +38,7 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 
 	var _renderImage = function(element, template){
-		return "<div class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' /></div>";
+		return "<div class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' /></div>";
 	};
 
 	var _renderSwf = function(element, template){

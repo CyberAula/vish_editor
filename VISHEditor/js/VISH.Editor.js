@@ -51,6 +51,7 @@ VISH.Editor = (function(V,$,undefined){
 					element.body   = $(div).html();
 				} else if(element.type==="image"){
 					element.body   = $(div).find('img').attr('src');
+					element.style  = $(div).find('img').attr('style');
 				}
 				slide.elements.push(element);
 				element = {};
@@ -108,7 +109,28 @@ VISH.Editor = (function(V,$,undefined){
 		smoke.prompt('Paste image url',function(e){
 			if (e){
 				params['current_el'].attr('type','image');
-				params['current_el'].html("<img class='"+template+"_image' src='"+e+"' />");
+				params['current_el'].html("<img class='"+template+"_image' id='draggable' src='"+e+"' />");
+				params['current_el'].after("<div class='theslider'><input id='imageSlider' type='slider' name='size' value='1' style='display: none; '></div>");			
+				
+				//position the slider below the div with the image
+				var divPos = params['current_el'].position();
+				var divHeight = params['current_el'].height();
+				$('.theslider').css('top', divPos.top + divHeight - 20);
+				$('.theslider').css('left', divPos.left);
+				$('.theslider').css('margin-left', '12px');
+						   
+				$("#imageSlider").slider({
+					from: 1,			   
+					to: 8,
+					step: 1,
+					round: 0,
+					dimension: "x",
+					skin: "blue",
+					onstatechange: function( value ){
+					    $("#draggable").width(325*value);
+					}
+				});
+				$("#draggable").draggable();
 			}
 		});
 	};
