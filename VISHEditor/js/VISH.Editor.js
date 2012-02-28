@@ -15,6 +15,8 @@ VISH.Editor = (function(V,$,undefined){
 
 	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
 
+	var nextImageId = 0;  //number for next image id and its slider to resize it
+	
 	var init = function(){
 		_loadCSS('stylesheets/editor.css');
 		$('body').append(MENUBAR);
@@ -45,16 +47,19 @@ VISH.Editor = (function(V,$,undefined){
 			slide.elements = [];
 			var element = {};
 			$(s).find('div').each(function(i,div){
-				element.type   = $(div).attr('type');
-				element.areaid = $(div).attr('areaid');
-				if(element.type==="text"){
-					element.body   = $(div).html();
-				} else if(element.type==="image"){
-					element.body   = $(div).find('img').attr('src');
-					element.style  = $(div).find('img').attr('style');
+				//to remove all the divs of the sliders, only consider the final boxes
+				if($(div).attr("areaid") !== undefined){
+					element.type   = $(div).attr('type');
+					element.areaid = $(div).attr('areaid');
+					if(element.type==="text"){
+						element.body   = $(div).html();
+					} else if(element.type==="image"){
+						element.body   = $(div).find('img').attr('src');
+						element.style  = $(div).find('img').attr('style');
+					}
+					slide.elements.push(element);
+					element = {};
 				}
-				slide.elements.push(element);
-				element = {};
 			});
 			excursion.push(slide);
 			slide = {};
@@ -108,29 +113,35 @@ VISH.Editor = (function(V,$,undefined){
 
 		smoke.prompt('Paste image url',function(e){
 			if (e){
+				var idToDragAndResize = "draggable" + nextImageId;
 				params['current_el'].attr('type','image');
-				params['current_el'].html("<img class='"+template+"_image' id='draggable' src='"+e+"' />");
-				params['current_el'].after("<div class='theslider'><input id='imageSlider' type='slider' name='size' value='1' style='display: none; '></div>");			
+				params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+e+"' />");
+				if(params['current_el'].next().attr('class')==="theslider"){
+					//already added slider remove it to add a new one
+					params['current_el'].next().remove();
+				}
+				params['current_el'].after("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");			
 				
 				//position the slider below the div with the image
 				var divPos = params['current_el'].position();
 				var divHeight = params['current_el'].height();
-				$('.theslider').css('top', divPos.top + divHeight - 20);
-				$('.theslider').css('left', divPos.left);
-				$('.theslider').css('margin-left', '12px');
+				$("#sliderId"+nextImageId).css('top', divPos.top + divHeight - 20);
+				$("#sliderId"+nextImageId).css('left', divPos.left);
+				$("#sliderId"+nextImageId).css('margin-left', '12px');
 						   
-				$("#imageSlider").slider({
-					from: 1,			   
+				$("#imageSlider"+nextImageId).slider({
+					from: 1,
 					to: 8,
 					step: 1,
 					round: 0,
 					dimension: "x",
 					skin: "blue",
 					onstatechange: function( value ){
-					    $("#draggable").width(325*value);
+					    $("#" + idToDragAndResize).width(325*value);
 					}
 				});
-				$("#draggable").draggable();
+				$("#" + idToDragAndResize).draggable({cursor: "move"});
+				nextImageId += 1;
 			}
 		});
 	};
