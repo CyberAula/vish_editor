@@ -7,6 +7,8 @@ VISH.Editor = (function(V,$,undefined){
 	var MENUBAR = "<div id='menubar'>\
 	<div class='barbutton' id='add'>\
 	</div>\
+	<div class='barbutton' id='quiz'>\
+	</div>\
 	<div class='barbutton' id='save'>\
 	</div>\
 	</div>";
@@ -22,6 +24,7 @@ VISH.Editor = (function(V,$,undefined){
 		$('body').append(MENUBAR);
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#add', _onAddButtonClicked);
+		$(document).on('click','#quiz', _onQuizButtonClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
@@ -36,6 +39,10 @@ VISH.Editor = (function(V,$,undefined){
 
 	var _onAddButtonClicked = function(){
 		smoke.alert(TEMPLATES);		
+	};
+
+	var _onQuizButtonClicked = function(){
+			
 	};
 
 	var _onSaveButtonClicked = function(){
@@ -132,8 +139,8 @@ VISH.Editor = (function(V,$,undefined){
 				$("#imageSlider"+nextImageId).slider({
 					from: 1,
 					to: 8,
-					step: 1,
-					round: 0,
+					step: 0.5,
+					round: 1,
 					dimension: "x",
 					skin: "blue",
 					onstatechange: function( value ){

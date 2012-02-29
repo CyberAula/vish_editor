@@ -18,12 +18,17 @@
 	float: left;
 	cursor: pointer;
 	margin-bottom: 20px;
+	margin-right: 20px;
 }
 
 #add {
 	background-image: url('../images/new.png');
 	background-size:60px 60px;
-	margin-right: 20px;
+}
+
+#quiz {
+	background-image: url('../images/quiz.png');
+	background-size:60px 60px;
 }
 
 #save {

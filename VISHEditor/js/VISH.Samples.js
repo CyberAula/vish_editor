@@ -116,7 +116,37 @@ VISH.Samples = (function(V,undefined){
 					'js'          : 'js/mods/fc/VISH.Mods.fc.js'
 				}
 			]
-		}
+		},
+		{
+			'id'       :'vish10',
+			'template' :'t2',
+			'elements':[
+				{
+					'type'     : 'openquestion',
+					'areaid'   : 'header',
+					'body'     : 'Do you like this slide?',
+					'posturl'  : 'http://localhost/quiz/adfklkdf'
+				}
+			]
+		},
+		{
+			'id'       :'vish11',
+			'template' :'t2',
+			'elements':[
+				{
+					'type'     : 'mcquestion',
+					'areaid'   : 'header',
+					'body'     : 'Do you like this slide?',
+					'posturl'  : 'http://localhost/quiz/adfklkdf',
+					'options'  : [
+						'yes',
+						'no',
+						'maybe'
+					],
+					'rightanswer' : 0
+				}
+			]
+		},
 		
 		];
 
