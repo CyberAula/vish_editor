@@ -22,6 +22,11 @@ namespace :vish_editor do
     Rake::Task["release"].invoke
   end
 
+  task :build do
+    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["build"].invoke
+  end
+  
   task :prepare do
     system "mv app/assets/javascripts/vish_editor.js app/assets/vish_editor.js"
     system "rm -rf app/assets/images"
