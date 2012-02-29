@@ -253,6 +253,11 @@ function nextSlide() {
   }
 };
 
+//added by KIKE to go to the last slide when adding a new one
+function lastSlide(){
+  
+};
+
 /* Slide events */
 
 function triggerEnterEvent(no) {

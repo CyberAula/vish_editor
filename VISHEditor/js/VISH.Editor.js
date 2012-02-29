@@ -17,6 +17,8 @@ VISH.Editor = (function(V,$,undefined){
 
 	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
 
+	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
+	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
 	var init = function(){
@@ -42,7 +44,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onQuizButtonClicked = function(){
-			
+		smoke.alert(MESSAGE);		
 	};
 
 	var _onSaveButtonClicked = function(){
@@ -90,6 +92,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var _onTemplateThumbClicked = function(event){
 		$('.slides').append(V.Dummies.getDummy($(this).attr('template')));
+		
 		_clearSmoke();
 		
 		var evt = document.createEvent("Event");
