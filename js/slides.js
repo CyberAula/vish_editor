@@ -560,7 +560,7 @@ function addGeneralStyle() {
   var el = document.createElement('link');
   el.rel = 'stylesheet';
   el.type = 'text/css';
-  el.href = PERMANENT_URL_PREFIX + 'stylesheets/styles.css';
+  el.href = PERMANENT_URL_PREFIX + '/assets/styles.css';
   document.body.appendChild(el);
   
   var el = document.createElement('meta');

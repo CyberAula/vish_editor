@@ -28,7 +28,7 @@ VISH.Excursion = (function(V,undefined){
 		}
 		
 		//get the script to represent the flashcards
-		$.getScript('./js/slides.js',function(){
+		$.getScript('/assets/slides.js',function(){
 			var evt = document.createEvent("Event");
 			evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 			document.dispatchEvent(evt);	

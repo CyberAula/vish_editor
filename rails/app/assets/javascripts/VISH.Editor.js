@@ -31,7 +31,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
 		$(document).on('click','#picthumb', _launchPicEditor);
-		$.getScript('./js/slides.js',function(){
+		$.getScript('/assets/slides.js',function(){
 			var evt = document.createEvent("Event");
 			evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 			document.dispatchEvent(evt);	
