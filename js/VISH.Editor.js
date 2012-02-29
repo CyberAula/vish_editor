@@ -91,20 +91,21 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onTemplateThumbClicked = function(event){
-		$('.slides').append(V.Dummies.getDummy($(this).attr('template')));
+		addSlide(V.Dummies.getDummy($(this).attr('template')));		
 		
 		_clearSmoke();
 		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
+		setTimeout("lastSlide()", 300);
 	};
 
 	var _onEditableClicked = function(event){
 		params['current_el'] = $(this);
 		smoke.alert(EDITORS,function(e){
 		});
-	}
+	};
 
 	var _launchTextEditor = function(event){
 		_clearSmoke();

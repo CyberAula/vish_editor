@@ -255,8 +255,16 @@ function nextSlide() {
 
 //added by KIKE to go to the last slide when adding a new one
 function lastSlide(){
-  
+  while (curSlide < slideEls.length - 1) {
+    nextSlide();
+  }
 };
+
+//added by KIKE to add a new slide
+function addSlide(slide){
+  $('.slides').append(slide);
+};
+
 
 /* Slide events */
 
