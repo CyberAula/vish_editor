@@ -5,7 +5,7 @@ require "vish_editor/version"
 Gem::Specification.new do |s|
   s.name        = "vish_editor"
   s.version     = VishEditor::VERSION
-  s.authors     = ["Víctor Sanchez Belmar", "Enrique Barra Arias"]
+  s.authors     = ["Victor Sanchez Belmar", "Enrique Barra Arias"]
   s.email       = ["vsanchez@dit.upm.es", "ebarra@dit.upm.es"]
   s.homepage    = ""
   s.summary     = "Wrapper gem for VISH Editor"
