@@ -14,11 +14,10 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "vish_editor"
 
   s.files         = `git ls-files`.split("\n") |
-                     Dir["app/assets/javascripts/libs/*"] |
-                     Dir["app/assets/javascripts/mods/*"] |
-                     Dir["app/assets/javascripts/mods/fc/*"] |
-                     Dir["app/assets/stylesheets/templates/*"] |
-                     Dir["app/assets/images/templatesthumbs/*"]
+                     Dir["app/assets/javascripts/*/*"] |
+                     Dir["app/assets/javascripts/*/*/*"] |
+                     Dir["app/assets/stylesheets/*/*"] |
+                     Dir["app/assets/images/*/*"]
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]

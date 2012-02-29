@@ -16,8 +16,24 @@ COMPILER_DOWNLOAD_URI = 'http://closure-compiler.googlecode.com/files/compiler-l
 # @see http://code.google.com/closure/compiler/
 #
 namespace :vish_editor do
+  
+  task :relase do
+    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["release"].invoke
+  end
 
   task :prepare do
+    system "mv app/assets/javascripts/vish_editor.js app/assets/vish_editor.js"
+    system "rm -rf app/assets/images"
+    system "rm -rf app/assets/javascripts"
+    system "rm -rf app/assets/stylesheets"
+    system "cp -r ../images/ app/assets/images/"
+    system "cp -r ../js/ app/assets/javascripts/"
+    system "cp -r ../stylesheets/ app/assets/stylesheets/"
+    system "mv app/assets/vish_editor.js app/assets/javascripts/vish_editor.js"
+  end
+
+  task :compile do 
     js_files = []
     JS_FILES_DIRS.each do |dir|
       js_files.concat(Dir[ File.join(dir, "**/*.js") ].sort)
