@@ -26,7 +26,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	var _onslideenter = function(e){
-		var fcElem, slideId;-
+		var fcElem, slideId;
 		setTimeout(function(){
 			if($(e.target).hasClass('swf')){
 				V.SWFPlayer.loadSWF($(e.target));

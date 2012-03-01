@@ -36,6 +36,7 @@ namespace :vish_editor do
     system "cp -r ../js/ app/assets/javascripts/"
     system "cp -r ../stylesheets/ app/assets/stylesheets/"
     system "mv app/assets/vish_editor.js app/assets/javascripts/vish_editor.js"
+    system "git commit -am \"Preparing the gem.\""
   end
 
   task :compile do 
