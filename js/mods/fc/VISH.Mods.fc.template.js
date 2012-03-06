@@ -1,4 +1,10 @@
 VISH.Mods.fc.template = (function(V, $, undefined){
+    //template is the white box with rounded corners that we use to store content
+    //and present it when the user clicks on any point of interest (poi)
+    //there can be different templates depending on how the user wants to present the content
+    //these different templates are defined in an array called TYPES
+    //one template is defined as a json object that indicates its widht, height,
+    //closing button positions and the position of all the zones (for content) in it
 
     //definition of the template sizes and the zones positions and sizes
     var TYPES = [
@@ -100,12 +106,13 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     var ctx = null;
     var slideId = null;
     
-        
+    //initialization function, only saves context and slideId
     var init = function(context, mySlideId){
         ctx = context;
         slideId = mySlideId;
     };
     
+    //function to update the state of the template
     var update = function(poi, mx, my){
       var isInsideClosingButton, template, myState, isInsideZone, tmpVideo, zone;
       
@@ -144,6 +151,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
       }      
     };
     
+    //function to draw the template
     var draw = function(poi){
         var zone, template;
         var tmpImg, tmpWidth, tmpHeight, tmpVideo, lines, line;
