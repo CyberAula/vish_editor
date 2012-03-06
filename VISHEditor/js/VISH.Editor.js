@@ -15,6 +15,9 @@ VISH.Editor = (function(V,$,undefined){
 
 	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
 
+	/**
+	 * Initializes the VISH editor
+	 */
 	var init = function(){
 		_loadCSS('stylesheets/editor.css');
 		$('body').append(MENUBAR);
@@ -31,11 +34,16 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
-
+	/**
+	 * Shows the available templates to create new slides 
+	 */
 	var _onAddButtonClicked = function(){
 		smoke.alert(TEMPLATES);		
 	};
 
+	/**
+	 * Saves the current slides generated
+	 */
 	var _onSaveButtonClicked = function(){
 		var excursion = [];
 		var slide = {};
@@ -65,6 +73,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlideManager.init(excursion);
 	};
 
+	/**
+	 * 
+	 */
 	var _loadCSS = function(path){
 		$("head").append("<link>");
 		css = $("head").children(":last");
@@ -75,6 +86,9 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+	/**
+	 * Includes a new slide following the template selected
+	 */
 	var _onTemplateThumbClicked = function(event){
 		$('.slides').append(V.Dummies.getDummy($(this).attr('template')));
 		_clearSmoke();
@@ -84,15 +98,24 @@ VISH.Editor = (function(V,$,undefined){
 		document.dispatchEvent(evt);
 	};
 
+	/**
+	 * Event launched when an editable element belonging to the slide is clicked
+	 */
 	var _onEditableClicked = function(event){
 		params['current_el'] = $(this);
 		smoke.alert(EDITORS,function(e){
 		});
 	}
 
+	/**
+	 * Allows users to include text content in the slide using a WYSIWYG editor
+	 */
 	var _launchTextEditor = function(event){
+		
+		//params['current_el'].append("<textarea>Testing...</textarea>");
+		
 		_clearSmoke();
-
+		
 		smoke.prompt('Write your text',function(e){
 			if (e){
 				params['current_el'].attr('type','text');
@@ -101,6 +124,9 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+	/**
+	 * Allows users to include images in the slide by selecting the image URL
+	 */
 	var _launchPicEditor = function(event){
 		_clearSmoke();
 		var template = params['current_el'].parent().attr('template');
@@ -113,6 +139,9 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+	/**
+	 * Removes the smoke box
+	 */
 	var _clearSmoke = function(){
 		$('.smoke, .smoke-base, .smokebg').remove();
 	};
