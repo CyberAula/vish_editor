@@ -13,9 +13,9 @@ VISH.Editor = (function(V,$,undefined){
 	</div>\
 	</div>";
 	
-	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='/assets/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='/assets/templatesthumbs/t2.png' /></div></div>";                           
+	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='/images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='/images/templatesthumbs/t2.png' /></div></div>";                           
 
-	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='/assets/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='/assets/picture-editor.png' /></div></div>";
+	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='/images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='/images/picture-editor.png' /></div></div>";
 
 	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
 	
