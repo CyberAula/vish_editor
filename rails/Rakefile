@@ -1,0 +1,137 @@
+require "bundler/gem_tasks"
+require "rails"
+
+# configure these defaults based on Your needs :
+JS_FILES_DIRS = ['app/assets/javascripts']
+
+COMPILER_JAR_PATH = "lib/java/build/compiler.jar" # adjust the jar path !
+# only required if running under JRuby - will compile multiple files
+# faster as it does not need to run system `java -jar ...` commands.
+#COMPILER_MAIN_CLASS = "com.google.javascript.jscomp.CommandLineRunner"
+COMPILER_DOWNLOAD_URI = 'http://closure-compiler.googlecode.com/files/compiler-latest.zip'
+
+#
+# a javascript compile rake task (uses google's closure compiler).
+#
+# @see http://code.google.com/closure/compiler/
+#
+namespace :vish_editor do
+  
+  task :release do
+    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["release"].invoke
+  end
+
+  task :build do
+    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["build"].invoke
+  end
+  
+  task :prepare do
+    system "mv app/assets/javascripts/vish_editor.js app/assets/vish_editor.js"
+    system "rm -rf app/assets/images"
+    system "rm -rf app/assets/javascripts"
+    system "rm -rf app/assets/stylesheets"
+    system "cp -r ../images/ app/assets/images/"
+    system "cp -r ../js/ app/assets/javascripts/"
+    system "cp -r ../stylesheets/ app/assets/stylesheets/"
+    system "mv app/assets/vish_editor.js app/assets/javascripts/vish_editor.js"
+  end
+
+  task :compile do 
+    js_files = []
+    JS_FILES_DIRS.each do |dir|
+      js_files.concat(Dir[ File.join(dir, "**/*.js") ].sort)
+    end
+    puts "matched #{js_files.size} .js file(s)"
+    compile_js(js_files)
+  end
+
+  desc "downloads (and extracts) the latest closure compiler.jar into COMPILER_JAR_PATH path (#{COMPILER_JAR_PATH})"
+  task :download_jar do
+    require 'uri'; require 'net/http'; require 'tempfile'
+    uri = URI.parse(COMPILER_DOWNLOAD_URI)
+    puts "downloading compiler jar from: #{COMPILER_DOWNLOAD_URI}"
+    response = Net::HTTP.start(uri.host, uri.port) do |http|
+      http.get(uri.path)
+    end
+    case response
+    when Net::HTTPSuccess
+      file_data, content_type = response.body, response.content_type
+      raise "no data returned from #{uri}" if file_data.nil? || file_data.size == 0
+    else
+      raise "download from #{uri} failed with response: #{response}"
+    end
+    filename = uri.path.split('/')[-1]
+    Tempfile.open(filename) do |tmpfile|
+      tmpfile << file_data
+      filename = tmpfile.path
+    end
+    if content_type =~ /application\/(x-)?zip/
+      # compiler-latest.zip with 3 entries :
+      # - compiler.jar
+      # - COPYING
+      # - README
+      extract_path = File.dirname(compiler_jar_path)
+      unless File.exist?(extract_path)
+        FileUtils.mkdir_p(extract_path)
+      end
+      # -u  update files, create if necessary :
+      system "unzip -u #{filename} -d #{extract_path}"
+    else
+      raise "unexpected content-type: #{content_type}"
+    end
+  end
+
+  #========================================================================
+
+  def compile_js(files)
+    unless File.exist?(compiler_jar_path)
+      Rake::Task["vish_editor:download_jar"].invoke
+    end
+    unless File.exist?(compiler_jar_path)
+      puts "#{compiler_jar_path} not found !"
+      raise "try to run `rake vish_editor:download_jar` manually to download the compiler jar"
+    end
+
+    files = [ files ] unless files.is_a?(Array)
+
+    compiler_options = {}
+    compiler_options['--js'] = files.join(' ')
+    compiler_options['--compilation_level'] = 'SIMPLE_OPTIMIZATIONS'
+    compiler_options['--js_output_file'] = "../vishEditor.min.js"
+    compiler_options['--warning_level'] = 'QUIET'
+    compiler_options2 = {}
+    compiler_options2['--js'] = files.join(' ')
+    compiler_options2['--compilation_level'] = 'WHITESPACE_ONLY'
+    compiler_options2['--formatting'] = 'PRETTY_PRINT'
+    compiler_options2['--js_output_file'] = "../vishEditor.js"
+    compiler_options2['--warning_level'] = 'QUIET'
+    
+    files.each do |file|
+      puts " > #{file}"
+    end
+    
+    puts ""
+    puts "----------------------------------------------------"
+    puts "compiling ..."
+
+    # NOTE: JRuby "version" disabled as the closure java code does a System.exit !
+    #if defined?(JRUBY_VERSION) # JRuby style - will be much faster :
+    #  require 'java'; require compiler_jar_path
+    #  instance_eval "#{COMPILER_MAIN_CLASS}.main( #{compiler_options.to_a.flatten.inspect} )"
+    #else
+    system "java -jar #{compiler_jar_path} #{compiler_options.to_a.join(' ')}"
+    system "java -jar #{compiler_jar_path} #{compiler_options2.to_a.join(' ')}"
+    #end
+    puts "DONE"
+    puts "----------------------------------------------------"
+    puts "compiled #{files.size} javascript file(s) into vishEditor.js and vishEditor.min.js"
+    puts ""
+  end
+
+  def compiler_jar_path
+    ENV['COMPILER_JAR_PATH'].presence || COMPILER_JAR_PATH
+  end
+
+end

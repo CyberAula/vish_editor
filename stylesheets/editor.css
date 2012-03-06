@@ -1,0 +1,94 @@
+#menubar {
+	background-color: rgb(55,55,55);
+	width: 100%;
+	height: 70px;
+	position: fixed;
+	bottom:0px;
+	left: 0px;
+	border-top: 2px solid black;
+}
+
+.barbutton {
+	position: relative;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	width: 60px;
+	height: 60px;
+	float: left;
+	cursor: pointer;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+
+#add {
+	background-image: url('../images/new.png');
+	background-size:60px 60px;
+}
+
+#quiz {
+	background-image: url('../images/quiz.png');
+	background-size:60px 60px;
+}
+
+#save {
+	background-image: url('../images/save.png');
+	background-size:60px 60px;
+}
+
+#thumbcontent{
+	width: 100%;
+	height: 90px;
+}
+
+.templatethumb{
+	border: 1px solid transparent;
+	width: 100px;
+	height: 75px;
+	background-color: rgb(240,240,240);
+	margin-right: 20px;
+	float: left;
+	color: black;
+	cursor: pointer;
+}
+
+.templatethumb img{
+	width:100%;
+	height:100%;
+}
+
+.templatethumb:hover{
+	border: 1px solid black;
+}
+
+.editable{
+	background-color: rgba(100,100,100,0.4);
+}
+
+.editable:hover{
+	background-color: rgba(217,188,43,0.4);
+}
+
+.menuicon{
+	float: left;
+	width: 100px;
+	height: 100px;
+	margin-right: 20px;
+}
+
+.menuicon img{
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.menu{
+	width: 100%;
+	height: 120px;
+}
+
+.theslider{
+	width: 300px;
+	height: 40px;
+	position: absolute;
+}
