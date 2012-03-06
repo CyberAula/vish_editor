@@ -27,12 +27,12 @@ VISH.Excursion = (function(V,undefined){
 			}
 		}
 		
-		//get the script to represent the flashcards
-		$.getScript('/assets/slides.js',function(){
-			var evt = document.createEvent("Event");
-			evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-			document.dispatchEvent(evt);	
-		});		
+		
+		//$.getScript('js/slides.js',function(){
+		var evt = document.createEvent("Event");
+		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
+		document.dispatchEvent(evt);	
+		//});		
 	};
 
 	return {
