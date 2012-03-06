@@ -13,16 +13,16 @@ VISH.Editor = (function(V,$,undefined){
 	</div>\
 	</div>";
 	
-	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='images/templatesthumbs/t2.png' /></div></div>";                           
+	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='/assets/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='/assets/templatesthumbs/t2.png' /></div></div>";                           
 
-	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
+	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='/assets/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='/assets/picture-editor.png' /></div></div>";
 
 	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
 	var init = function(){
-		_loadCSS('stylesheets/editor.css');
+		_loadCSS('/assets/editor.css');
 		$('body').append(MENUBAR);
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#add', _onAddButtonClicked);

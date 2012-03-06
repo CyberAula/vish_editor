@@ -22,17 +22,17 @@
 }
 
 #add {
-	background-image: url('../images/new.png');
+	background-image: url('/assets/new.png');
 	background-size:60px 60px;
 }
 
 #quiz {
-	background-image: url('../images/quiz.png');
+	background-image: url('/assets/quiz.png');
 	background-size:60px 60px;
 }
 
 #save {
-	background-image: url('../images/save.png');
+	background-image: url('/assets/save.png');
 	background-size:60px 60px;
 }
 
