@@ -18,6 +18,7 @@ VISH.Mods.fc.loader = (function(V, undefined){
         loaders.push(V.Utils.loader.loadImage('images/anim.png'));
         
         //now load the images that the flashcard uses
+        //we use several for loops to cover all the flashcard json and find the contents to load
         loaders.push(V.Utils.loader.loadImage(fc.backgroundSrc));        
         //cover all pois
         for (var i = 0; i < fc.pois.length; i++) {
@@ -40,7 +41,7 @@ VISH.Mods.fc.loader = (function(V, undefined){
           }
         }
         
-          
+        //after everything have been loaded continue
         $.when.apply(null, loaders).done(function() {
               console.log("Flashcard preloaded!");
               // callback when everything was loaded

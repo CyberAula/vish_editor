@@ -22,7 +22,7 @@ VISH.Editor = (function(V,$,undefined){
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
 	var init = function(){
-		_loadCSS('/assets/editor.css');
+		//_loadCSS('/assets/editor.css');
 		$('body').append(MENUBAR);
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#add', _onAddButtonClicked);
@@ -31,11 +31,11 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
 		$(document).on('click','#picthumb', _launchPicEditor);
-		$.getScript('/assets/slides.js',function(){
-			var evt = document.createEvent("Event");
-			evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-			document.dispatchEvent(evt);	
-		});
+		//$.getScript('js/slides.js',function(){
+		var evt = document.createEvent("Event");
+		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
+		document.dispatchEvent(evt);	
+		//});
 	};
 
 

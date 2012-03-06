@@ -1,8 +1,9 @@
 VISH.Mods.fc.player = (function(V, $, undefined){
     //constants
     var INTERVAL = 10;  //frames per second
-    var WIDTH = 800;
-    var HEIGHT = 600;
+    var WIDTH = 800;    //width of the canvas
+    var HEIGHT = 600;   //height of the canvas
+    
     var NUMBER_OF_FRAMES = 10; //number of frames that the animation representing the poi have
     var FRAME_WIDTH = 40; //width of each poi frame
     var FRAME_HEIGHT = 40; //height of each poi frame
@@ -12,7 +13,8 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     var flashcard = null;
     var slideId = null;
     
-    var intervalReturn = null; //to clear interval
+    //object used to capture setInterval and after that clear interval when needed (after passing to the next slide in the presentation)
+    var intervalReturn = null;
     
     //***** finally some tricks to get mouse coordinates ****
     // This complicates things a little but fixes mouse co-ordinate problems
@@ -25,6 +27,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     // They will mess up mouse coordinates and this fixes that
     var htmlTop = null;
     var htmlLeft = null;
+    
     
     //Initialize the player for this flashcard
     var init = function(fcElem, mySlideId) {
@@ -58,6 +61,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         }, 1000/INTERVAL);
     };
     
+    //update the status of this flashcard
     var update = function(){
         var myState;
         myState = V.SlideManager.getStatus(slideId);
@@ -66,6 +70,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         V.SlideManager.updateStatus(myState.id, myState);
     };
     
+    //draw this flashcard depending on its status
     var draw = function(){
         var poi, animX;
         
@@ -92,6 +97,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     };
     
     //function to clear params and stop animations
+    //used when passing to the next slide to "stop" this flashcard
     var clear = function(){
         clearInterval(intervalReturn);
     };
@@ -118,6 +124,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         return fc;        
     };
     
+    //private function to initialize the mouse variables to get the position of the click
     var _initGetMouseVariables = function(){
         var html;
         if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -133,6 +140,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         htmlLeft = html.offsetLeft;  
     };
     
+    //function to add click listeners to canvas and check where the user have clicked
     var _initListeners = function(){
         var myState;
         myState = V.SlideManager.getStatus(slideId);
@@ -161,8 +169,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
             }            
           }
         });
-    };
+    };    
     
+    //private function to get mouse coordinates
     var _getMouse = function (e) {
         var element, offsetX, offsetY, mx, my;
         element = canvas;
