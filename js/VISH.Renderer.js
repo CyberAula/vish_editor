@@ -2,10 +2,18 @@ VISH.Renderer = (function(V,$,undefined){
 	
 	var SLIDE_CONTAINER = null;
 
+	/**
+	 * Function to initialize the renderer
+	 * Only gets the section element from the html page
+	 */
 	var init        = function(){
 		SLIDE_CONTAINER = $('.slides');
 	}
 
+	/**
+	 * slides.html only have a section element and in this function we add an article element
+	 * with the proper content for the slide
+	 */	
 	var renderSlide = function(slide){
 		var content = "";
 		var classes = "";
@@ -39,26 +47,50 @@ VISH.Renderer = (function(V,$,undefined){
 		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
 	};
 
+	/**
+	 * Function to render text inside an article (a slide)
+	 */
 	var _renderText = function(element, template){
 		return "<div class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
 	};
 
+	/**
+	 * Function to render an image inside an article (a slide)
+	 */
 	var _renderImage = function(element, template){
 		return "<div class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' /></div>";
 	};
 
+	/**
+	 * Function to render a flash object inside an article (a slide)
+	 * the flash object is not really inside the article but in the src attribute of the div
+	 * when entering a slide with a swf class we call V.SWFPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the src inside the div
+	 */
 	var _renderSwf = function(element, template){
 		return "<div class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
 	};
 
+	/**
+	 * Function to render an applet inside an article (a slide)
+	 * the applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div
+	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the params inside the div
+	 */
 	var _renderApplet = function(element, template){
 		return "<div class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";
 	};
 	
+	/**
+	 * Function to render a flashcard inside an article (a slide)
+	 * we only add canvas inside the div element
+	 * the flashcard will be drawn inside the canvas element
+	 */
 	var _renderFlashcard = function(element, template){
 		return "<div class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
 	};
 
+	/**
+	 * Function to render an open question form inside an article (a slide)
+	 */
 	var _renderOpenquestion = function(element, template){
 		var ret = "<div class='question_title'>"+element['body']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
@@ -70,6 +102,9 @@ VISH.Renderer = (function(V,$,undefined){
 		return ret;		
 	};
 	
+	/**
+	 * Function to render a multiple choice question form inside an article (a slide)
+	 */
 	var _renderMcquestion = function(element, template){
 		var ret = "<div class='question_title'>"+element['body']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";

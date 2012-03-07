@@ -4,6 +4,7 @@ VISH.Editor = (function(V,$,undefined){
 		current_el : null 	
 	};
 
+	//buttons bar that is shown at the bottom of the vish editor
 	var MENUBAR = "<div id='menubar'>\
 	<div class='barbutton' id='add'>\
 	</div>\
@@ -27,14 +28,21 @@ VISH.Editor = (function(V,$,undefined){
 	</div>\
 	</div>";
 	
+	//templates panel that is shown in the lightbox when adding a slide
 	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='/images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='/images/templatesthumbs/t2.png' /></div></div>";                           
 
+	//options menu shown in the lightbox to add text or image to the template
 	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='/images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='/images/picture-editor.png' /></div></div>";
 
+	//message shown in the lightbox to tell the user it haven´t been implemented yet
 	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
+	/**
+	 * Initializes the VISH editor
+	 * adds the listeners to the click events in the different images and buttons
+	 */
 	var init = function(){
 		//_loadCSS('/assets/editor.css');
 		$('body').append(MENUBAR);
@@ -52,15 +60,28 @@ VISH.Editor = (function(V,$,undefined){
 		//});
 	};
 
-
+	/**
+	 * function called when user clicks on add new slide button
+	 * Shows the available templates to create new slides 
+	 */
 	var _onAddButtonClicked = function(){
 		smoke.alert(TEMPLATES);		
 	};
 
+	/**
+	 * function called when user clicks on add new quiz button
+	 * Shows the message
+	 */
 	var _onQuizButtonClicked = function(){
 		smoke.alert(MESSAGE);		
 	};
 
+	/**
+	 * function called when user clicks on save
+	 * Generates the json for the current slides
+	 * covers the section element and every article inside
+	 * finally calls SlideManager with the generated json
+	 */
 	var _onSaveButtonClicked = function(){
 		var excursion = [];
 		var slide = {};
@@ -94,6 +115,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlideManager.init(excursion);
 	};
 
+	/**
+	 * function to dinamically add a css
+	 */
 	var _loadCSS = function(path){
 		$("head").append("<link>");
 		css = $("head").children(":last");
@@ -104,6 +128,10 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+	/**
+	 * function called when user clicks on template
+	 * Includes a new slide following the template selected
+	 */
 	var _onTemplateThumbClicked = function(event){
 		addSlide(V.Dummies.getDummy($(this).attr('template')));		
 		
@@ -115,12 +143,19 @@ VISH.Editor = (function(V,$,undefined){
 		setTimeout("lastSlide()", 300);
 	};
 
+	/**
+	 * function called when user clicks on an editable element
+	 * Event launched when an editable element belonging to the slide is clicked
+	 */
 	var _onEditableClicked = function(event){
 		params['current_el'] = $(this);
 		smoke.alert(EDITORS,function(e){
 		});
 	};
-
+	
+	/**
+	 * Allows users to include text content in the slide using a WYSIWYG editor
+	 */
 	var _launchTextEditor = function(event){
 		_clearSmoke();
 
@@ -132,6 +167,9 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+	/**
+	 * Allows users to include images in the slide by selecting the image URL
+	 */
 	var _launchPicEditor = function(event){
 		_clearSmoke();
 		var template = params['current_el'].parent().attr('template');
@@ -170,7 +208,10 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 	};
-
+	
+	/**
+	 * Removes the smoke box
+	 */
 	var _clearSmoke = function(){
 		$('.smoke, .smoke-base, .smokebg').remove();
 	};

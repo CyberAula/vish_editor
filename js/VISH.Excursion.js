@@ -1,6 +1,10 @@
 VISH.Excursion = (function(V,undefined){
 	var mySlides = null;
 	
+	/**
+	 * Function to initialize the excursion
+	 * Initialize renderer and call it to render each slide
+	 */
 	var init = function(slides){
 		mySlides = slides;		
 		V.Renderer.init();
@@ -13,6 +17,11 @@ VISH.Excursion = (function(V,undefined){
 		_finishRenderer();
 	};
 
+	/**
+	 * Private function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)
+	 * Cover all the slides array to preload the flashcards content
+	 * Finally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run
+	 */
 	var _finishRenderer = function(){		
 		for(var i=0;i<mySlides.length;i++){
 			for(var num=0;num<mySlides[i].elements.length;num++){
