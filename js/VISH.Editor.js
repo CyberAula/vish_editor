@@ -7,6 +7,20 @@ VISH.Editor = (function(V,$,undefined){
 	var MENUBAR = "<div id='menubar'>\
 	<div class='barbutton' id='add'>\
 	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
+	<div class='barbutton' id='add'>\
+	</div>\
 	<div class='barbutton' id='quiz'>\
 	</div>\
 	<div class='barbutton' id='save'>\
