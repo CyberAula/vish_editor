@@ -29,10 +29,10 @@ VISH.Editor = (function(V,$,undefined){
 	</div>";
 	
 	//templates panel that is shown in the lightbox when adding a slide
-	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='/images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='/images/templatesthumbs/t2.png' /></div></div>";                           
+	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='images/templatesthumbs/t2.png' /></div></div>";                           
 
 	//options menu shown in the lightbox to add text or image to the template
-	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='/images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='/images/picture-editor.png' /></div></div>";
+	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
 
 	//message shown in the lightbox to tell the user it haven´t been implemented yet
 	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
