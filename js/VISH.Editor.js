@@ -31,9 +31,9 @@ VISH.Editor = (function(V,$,undefined){
 	//templates panel that is shown in the lightbox when adding a slide
 	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='images/templatesthumbs/t2.png' /></div></div>";                           
 
-	//options menu shown in the lightbox to add text or image to the template
-	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
-
+	//options menu shown in the lightbox to add text or image to the template or video to the template
+	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div><div id='vidthumb' class='menuicon'><img src='images/youtube-video-editor.png' /></div></div>";
+	var YOUTUBE_SEARCH = "<div id='content_youtube_search' class='menu'><div id='searchForm'><form id='form_youtube'><input type='text' id='youtube_search' autofocus ></input><input type='button' id='button_youtube' value='search' ></input></form></div></div>";
 	//message shown in the lightbox to tell the user it haven´t been implemented yet
 	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
 	
@@ -53,6 +53,10 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
 		$(document).on('click','#picthumb', _launchPicEditor);
+		$(document).on('click','#vidthumb', _launchVidEditor);
+		$(document).on('click', '#button_youtube', _listVideo);
+		//$(document).on('submit', '#form_youtube', _listVideo);
+		
 		//$.getScript('js/slides.js',function(){
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
@@ -133,6 +137,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
+		//addSlide en slides.js
 		addSlide(V.Dummies.getDummy($(this).attr('template')));		
 		
 		_clearSmoke();
@@ -158,14 +163,14 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _launchTextEditor = function(event){
 		_clearSmoke();
-
+		//Prompt o signal??? 
 		smoke.prompt('Write your text',function(e){
 			if (e){
-				params['current_el'].attr('type','text');
+				params['current_el'].attr('type','text'); // 
 				params['current_el'].html(e);
 			}
 		});
-	};
+	};YOUTUBE_SEARCH
 
 	/**
 	 * Allows users to include images in the slide by selecting the image URL
@@ -208,6 +213,60 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 	};
+
+
+/**
+	 * Allows users to include videos from youtube in the slide 
+	 */
+	var _launchVidEditor = function(event){
+		_clearSmoke();		
+		smoke.alert(YOUTUBE_SEARCH);		
+		
+		
+	};
+
+/*
+Will list the videos finded that match with the term wrote
+*/
+
+	var _listVideo = function(event){
+		if ($("#searchResultsVideoListTable")) {
+			$("#searchResultsVideoListTable").remove();
+
+		}
+		var videos= 10; 
+		params['current_el'] = $(this); //averiguar cómo funciona y qué hace esto?? 
+		var term = $('#youtube_search').val();
+		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results=10&start-index=1";
+		
+		console.log(" url_youtube vale : " + url_youtube);
+	
+	
+	//me irá añadiendo el contenido ... pco a poco  
+
+		$("#searchForm").append('<table id="searchResultsVideoListTable"> </table>');
+		$("#searchResultsVideoListTable").append('<tr id="video_row"> </tr>');
+		jQuery.getJSON(url_youtube,function (data) {
+
+			$.each(data.feed.entry, function(i, item) {
+				var title = item['title']['$t'];
+//console.log("title es: "+title);
+				var video = item['id']['$t'];
+				console.log("video es: "+video);
+
+				video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
+				videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
+//url's video thumbnail 
+				var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
+			//not used yet
+				var video_embebed = ("http://www.youtube.com/embed/"+videoID);	
+				$("#video_row").append('<td><a href="'+video+'" id="link_'+i+'"><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
+
+			});
+		});
+	};
+
+
 	
 	/**
 	 * Removes the smoke box
