@@ -1,41 +1,9 @@
 VISH.Editor = (function(V,$,undefined){
 	
+	//hash to store current_el that will be the zone of the template that the user has clicked
 	var params = {
 		current_el : null 	
 	};
-
-	//buttons bar that is shown at the bottom of the vish editor
-	var MENUBAR = "<div id='menubar'>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='add'>\
-	</div>\
-	<div class='barbutton' id='quiz'>\
-	</div>\
-	<div class='barbutton' id='save'>\
-	</div>\
-	</div>";
-	
-	//templates panel that is shown in the lightbox when adding a slide
-	var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='images/templatesthumbs/t2.png' /></div></div>";                           
-
-	//options menu shown in the lightbox to add text or image to the template
-	var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
-
-	//message shown in the lightbox to tell the user it haven´t been implemented yet
-	var MESSAGE = "This functionality has not been implemented yet, we are working on it";
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
@@ -43,39 +11,28 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * adds the listeners to the click events in the different images and buttons
 	 */
-	var init = function(){
-		//_loadCSS('/assets/editor.css');
-		$('body').append(MENUBAR);
+	var init = function(){		
+		$("a#addslide").fancybox();		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
-		$(document).on('click','#add', _onAddButtonClicked);
-		$(document).on('click','#quiz', _onQuizButtonClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
-		$(document).on('click','#picthumb', _launchPicEditor);
-		//$.getScript('js/slides.js',function(){
+
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);	
-		//});
 	};
 
 	/**
-	 * function called when user clicks on add new slide button
-	 * Shows the available templates to create new slides 
+	 * Function to get a value from the id in the dom and draw it in the zone in params['current_el']
 	 */
-	var _onAddButtonClicked = function(){
-		smoke.alert(TEMPLATES);		
+	var getValueFromFancybox = function(id_to_get){
+		$.fancybox.close();
+		_drawImageInZone($("#"+id_to_get).val());
+		//delete the value
+		$("#"+id_to_get).val("");
 	};
-
-	/**
-	 * function called when user clicks on add new quiz button
-	 * Shows the message
-	 */
-	var _onQuizButtonClicked = function(){
-		smoke.alert(MESSAGE);		
-	};
-
+	
 	/**
 	 * function called when user clicks on save
 	 * Generates the json for the current slides
@@ -135,7 +92,7 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		addSlide(V.Dummies.getDummy($(this).attr('template')));		
 		
-		_clearSmoke();
+		_closeFancybox();
 		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
@@ -148,8 +105,25 @@ VISH.Editor = (function(V,$,undefined){
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
 	var _onEditableClicked = function(event){
+		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
+		$(this).removeClass("editable");
 		params['current_el'] = $(this);
-		smoke.alert(EDITORS,function(e){
+		$(this).html($("#menuselect").clone());	 //need to clone it, because we need to show it many times, not only the first one
+		
+		$("a#addpicture").fancybox({
+			"onStart"  : function(data) {
+			loadTab('tab_pic_from_url');
+		}
+		});
+		$("a#addflash").fancybox({
+			"onStart"  : function(data) {
+			loadTab('tab_flash_from_url');
+		}
+		});
+		$("a#addvideo").fancybox({
+			"onStart"  : function(data) {
+			loadTab('tab_video_from_url');
+		}
 		});
 	};
 	
@@ -157,67 +131,60 @@ VISH.Editor = (function(V,$,undefined){
 	 * Allows users to include text content in the slide using a WYSIWYG editor
 	 */
 	var _launchTextEditor = function(event){
-		_clearSmoke();
-
-		smoke.prompt('Write your text',function(e){
-			if (e){
-				params['current_el'].attr('type','text');
-				params['current_el'].html(e);
-			}
-		});
+		params['current_el'].attr('type','text');
+		params['current_el'].html("aqui iria el codigo del wysiwyg");		
 	};
 
+	
 	/**
-	 * Allows users to include images in the slide by selecting the image URL
+	 * Function to draw an image in a zone of the template
+	 * the zone to draw is the one in params['current_el']
+	 * this function also adds the slider and makes the image draggable
 	 */
-	var _launchPicEditor = function(event){
-		_clearSmoke();
+	var _drawImageInZone = function(image_url){
 		var template = params['current_el'].parent().attr('template');
 
-		smoke.prompt('Paste image url',function(e){
-			if (e){
-				var idToDragAndResize = "draggable" + nextImageId;
-				params['current_el'].attr('type','image');
-				params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+e+"' />");
-				if(params['current_el'].next().attr('class')==="theslider"){
-					//already added slider remove it to add a new one
-					params['current_el'].next().remove();
-				}
-				params['current_el'].after("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");			
-				
-				//position the slider below the div with the image
-				var divPos = params['current_el'].position();
-				var divHeight = params['current_el'].height();
-				$("#sliderId"+nextImageId).css('top', divPos.top + divHeight - 20);
-				$("#sliderId"+nextImageId).css('left', divPos.left);
-				$("#sliderId"+nextImageId).css('margin-left', '12px');
-						   
-				$("#imageSlider"+nextImageId).slider({
-					from: 1,
-					to: 8,
-					step: 0.5,
-					round: 1,
-					dimension: "x",
-					skin: "blue",
-					onstatechange: function( value ){
-					    $("#" + idToDragAndResize).width(325*value);
-					}
-				});
-				$("#" + idToDragAndResize).draggable({cursor: "move"});
-				nextImageId += 1;
+		var idToDragAndResize = "draggable" + nextImageId;
+		params['current_el'].attr('type','image');
+		params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
+		if(params['current_el'].next().attr('class')==="theslider"){
+			//already added slider remove it to add a new one
+			params['current_el'].next().remove();
+		}
+		params['current_el'].after("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");			
+		
+		//position the slider below the div with the image
+		var divPos = params['current_el'].position();
+		var divHeight = params['current_el'].height();
+		$("#sliderId"+nextImageId).css('top', divPos.top + divHeight - 20);
+		$("#sliderId"+nextImageId).css('left', divPos.left);
+		$("#sliderId"+nextImageId).css('margin-left', '12px');
+				   
+		$("#imageSlider"+nextImageId).slider({
+			from: 1,
+			to: 8,
+			step: 0.5,
+			round: 1,
+			dimension: "x",
+			skin: "blue",
+			onstatechange: function( value ){
+			    $("#" + idToDragAndResize).width(325*value);
 			}
 		});
+		$("#" + idToDragAndResize).draggable({cursor: "move"});
+		nextImageId += 1;
 	};
 	
 	/**
 	 * Removes the smoke box
 	 */
-	var _clearSmoke = function(){
-		$('.smoke, .smoke-base, .smokebg').remove();
+	var _closeFancybox = function(){
+		$.fancybox.close();
 	};
 
 	return {
-		init: init
+		init			: init,
+		getValueFromFancybox    : getValueFromFancybox
 	};
 
 }) (VISH, jQuery);

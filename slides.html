@@ -3,10 +3,6 @@
     <head>
 		
     <title>ViSH Test</title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/smoke.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/jslider.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/jslider.blue.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/editor.css">
 	
     <style>  
        .slides > article:not(.fill)::before {
@@ -45,7 +41,6 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1explorer9.css">
 <![endif]-->
 
-<script type="text/javascript" src="js/smoke.js"></script>
 <script type="text/javascript" src="js/json2.js"></script>
 
 <script type="text/javascript" src="js/VISH.js"></script>
@@ -55,8 +50,6 @@
 <script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
 <script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
 <script type="text/javascript" src="js/VISH.SlideManager.js"></script>
-<script type="text/javascript" src="js/VISH.Editor.js"></script>
-<script type="text/javascript" src="js/VISH.Dummies.js"></script>
 
 <script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 <script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
@@ -75,8 +68,8 @@
 //uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 //uncomment VISH.Editor.init to show the editor
 function start(){
-  //VISH.SlideManager.init(VISH.Samples.samples);
-  VISH.Editor.init();
+  VISH.SlideManager.init(VISH.Samples.samples);
+  //VISH.Editor.init();
 }
 </script>
 </body>

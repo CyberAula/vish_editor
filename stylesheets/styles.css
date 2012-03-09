@@ -390,7 +390,6 @@ li {
   margin-bottom: .5em;
 }
 li::before {
-  content: '·';
 
   width: .75em;
   margin-left: -.75em;
