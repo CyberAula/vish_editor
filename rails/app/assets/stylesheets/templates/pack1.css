@@ -9,14 +9,15 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	margin-left: -60px;
+	margin-left: auto;
 	padding-left: 60px;
-	margin-right: -60px;
+	margin-right: auto;
 	padding-right: 60px;
 	font-size: 24px;
 	min-height: 24px;
-	width: 99%;
-	overflow:hidden;	
+	width: 75%;
+	overflow:hidden;
+	border-radius: 15px;	
 }
 
 .t1_left{
@@ -28,7 +29,8 @@
 	border: 2px double transparent;
 	margin-right: 2%;
 	font-size: 18px;
-	overflow:hidden;	
+	overflow:hidden;
+	border-radius: 15px;	
 }
 
 .t1_right{
@@ -39,7 +41,8 @@
 	float: right;
 	border: 2px double grey;
 	font-size: 18px;
-	overflow:hidden;	
+	overflow:hidden;
+	border-radius: 15px;	
 }
 
 .t1_text{
