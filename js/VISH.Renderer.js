@@ -75,7 +75,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var loop=(element['loop'])?"loop='loop' ":""
 		var sources = JSON.parse(element['sources'])
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='auto' " + controls + autoplay + poster + loop + ">"
+		rendered = rendered + "<video class='" + template + "_video' preload='none' " + controls + autoplay + poster + loop + ">"
 		
 		$.each(sources, function(index, value) {
 			rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
