@@ -55,6 +55,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			fcElem = _getFlashcardFromSlideId(slideId);	
 			V.Mods.fc.player.init(fcElem, slideId);
 		}
+		V.VideoPlayer.autoPlayVideos(e.target)
 	};
 
 	/**
@@ -80,6 +81,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * and we stop flashcards
 	 */
 	var _onslideleave = function(e){
+		V.VideoPlayer.stopVideos(e.target);
 		V.SWFPlayer.unloadSWF();
 		V.AppletPlayer.unloadApplet();
 		if($(e.target).hasClass('flashcard')){				
