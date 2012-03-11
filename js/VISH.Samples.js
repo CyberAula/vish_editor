@@ -186,11 +186,10 @@ VISH.Samples = (function(V,undefined){
 					'areaid' : 'right',
 					'controls' : true,
 					'autoplay' : true,
-					'sources': '[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
+					'sources': '[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'
 				}
 			]
-		},
-		
+		}
 		];
 
 	return {

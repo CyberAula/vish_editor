@@ -69,7 +69,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderVideo = function(element, template){
 		var rendered = "<div class='"+template+"_"+element['areaid']+"'>"
-		var controls=(element['controls'])?"controls='true' ":""
+		var controls=(element['controls'])?"controls='controls' ":""
 		var autoplay=(element['autoplay'])?"autoplayonslideenter='true' ":""
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
 		var loop=(element['loop'])?"loop='loop' ":""

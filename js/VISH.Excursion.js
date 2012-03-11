@@ -36,6 +36,7 @@ VISH.Excursion = (function(V,undefined){
 			}
 		}
 		
+		V.VideoPlayer.setVideoTagEvents()
 		
 		//$.getScript('js/slides.js',function(){
 		var evt = document.createEvent("Event");
