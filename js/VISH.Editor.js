@@ -20,7 +20,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','#textthumb', _launchTextEditor);
-
+		$(document).on('click','#youtube_search_button', _listVideo);
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);	
@@ -35,7 +35,34 @@ VISH.Editor = (function(V,$,undefined){
 		//delete the value
 		$("#"+id_to_get).val("");
 	};
-	
+
+
+	/** Funcion to get an youtube video and embed into the zone
+	**/
+
+	var getYoutubeVideo = function (video_id) {
+		$.fancybox.close();
+		//generate embed for the video
+		var video_embedded = "http://www.youtube.com/embed/"+video_id;
+		var final_video = '<iframe type="text/html"style="width:400px; height:300px;" src="'+video_embedded+'" frameborder="0"></iframe>';
+		//insert embed in zone
+		params['current_el'].attr('type','flash');
+		params['current_el'].html(final_video);
+		
+	};
+	/** Funcion to show a preview youtube video and select to embed into the zone
+	**/
+
+	var showYoutubeVideo = function(video_id) {
+		//generate embed for the preview video
+		var video_embedded = "http://www.youtube.com/embed/"+video_id;
+		var final_video = '<iframe type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
+		$("#youtube_preview").html(final_video);
+		
+		 $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\''+video_id+'\')" >add this video</button>');
+	};
+
+
 	/**
 	 * function called when user clicks on save
 	 * Generates the json for the current slides
@@ -129,7 +156,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		});
 	};
-	
+	style="width:200px; height:160px;"
 	/**
 	 * function callen when user clicks on the text thumb
 	 * Allows users to include text content in the slide using a WYSIWYG editor
@@ -217,7 +244,59 @@ VISH.Editor = (function(V,$,undefined){
 		$("#" + idToDragAndResize).draggable({cursor: "move"});
 		nextImageId += 1;
 	};
+
+
+
+
+/*
+Will list the videos finded that match with the term wrote
+*/
+
+	var _listVideo = function(event){
+		var template = params['current_el'].parent().attr('template');	
+		
+		
+		if ($("#searchResultsVideoListTable")) {
+			$("#searchResultsVideoListTable").remove();
+
+		}
+		var videos= 10; 
+		
+		var term = $('#youtube_input_text').val();
+		
+		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results=10&start-index=1";
+		
+			
+	//adding content searchForm 
+
+		$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
+		$("#searchResultsVideoListTable").append('<tr id="video_row"> </tr>');
+		jQuery.getJSON(url_youtube,function (data) {
+
+			$.each(data.feed.entry, function(i, item) {
+				var title = item['title']['$t'];
+//console.log("title es: "+title);
+				var video = item['id']['$t'];
+				
+
+				video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
+				videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
+//url's video thumbnail 
+				var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
+			//not used yet
+					
+				$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
+							
+				
+			});
+		});
+		//draw an empty div to preview the youtube video
+		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:225px;"></div>');
+	};
+
+
 	
+
 	/**
 	 * Removes the smoke box
 	 */
@@ -227,7 +306,9 @@ VISH.Editor = (function(V,$,undefined){
 
 	return {
 		init			: init,
-		getValueFromFancybox    : getValueFromFancybox
+		getValueFromFancybox    : getValueFromFancybox, 
+		getYoutubeVideo		: getYoutubeVideo,
+		showYoutubeVideo	: showYoutubeVideo
 	};
 
 }) (VISH, jQuery);
