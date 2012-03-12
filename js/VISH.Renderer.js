@@ -24,6 +24,9 @@ VISH.Renderer = (function(V,$,undefined){
 			else if(slide.elements[el].type === "image"){
 				content += _renderImage(slide.elements[el],slide.template);
 			}
+			else if(slide.elements[el].type === "video"){
+				content += _renderVideo(slide.elements[el],slide.template);
+			}
 			else if(slide.elements[el].type === "swf"){
 				content += _renderSwf(slide.elements[el],slide.template);
 				classes += "swf ";
@@ -59,6 +62,32 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderImage = function(element, template){
 		return "<div class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' /></div>";
+	};
+	
+	/**
+	 * Function to render a video inside an article (a slide)
+	 */
+	var _renderVideo = function(element, template){
+		var rendered = "<div class='"+template+"_"+element['areaid']+"'>"
+		var controls=(element['controls'])?"controls='controls' ":""
+		var autoplay=(element['autoplay'])?"autoplayonslideenter='true' ":""
+		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
+		var loop=(element['loop'])?"loop='loop' ":""
+		var sources = JSON.parse(element['sources'])
+		
+		rendered = rendered + "<video class='" + template + "_video' preload='none' " + controls + autoplay + poster + loop + ">"
+		
+		$.each(sources, function(index, value) {
+			rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
+		});
+		
+		if(sources.length>0){
+			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
+		}
+		
+		rendered = rendered + "</video>"
+		
+		return rendered
 	};
 
 	/**

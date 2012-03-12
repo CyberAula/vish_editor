@@ -146,8 +146,50 @@ VISH.Samples = (function(V,undefined){
 					'rightanswer' : 0
 				}
 			]
+		},
+		{
+			'id'       :'vish12',
+			'template' :'t2',
+			'elements':[
+				{
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Sublime HTML5 video!'
+				},       
+				{
+					'type'   : 'video',
+					'areaid' : 'center',
+					'controls' : true,
+					'autoplay' : false,
+					'loop' : false,
+					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+					'sources': '[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
+				}
+			]
+		},
+		{
+			'id'       :'vish13',
+			'template' :'t1',
+			'elements':[
+				{
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Example of HTML5 video with autostart'
+				},
+				{
+					'type'   : 'text',
+					'areaid' : 'left',
+					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
+				},
+				{
+					'type'   : 'video',
+					'areaid' : 'right',
+					'controls' : true,
+					'autoplay' : true,
+					'sources': '[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'
+				}
+			]
 		}
-		
 		];
 
 	return {

@@ -51,6 +51,11 @@
 	width: 300px;
 }
 
+.t1_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
 .t1_swf{
 	height: 100%;
 	position: absolute;
@@ -91,6 +96,11 @@
 
 .t2_image{
 	width: 600px;
+}
+
+.t2_video{
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .t2_swf{
