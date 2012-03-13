@@ -19,7 +19,8 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
-		$(document).on('click','#textthumb', _launchTextEditor);
+		$(document).on('click','.edit_pencil', _onEditableClicked);
+		$(document).on('click','.textthumb', _launchTextEditor);
 		$(document).on('click','#youtube_search_button', _listVideo);
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
@@ -62,6 +63,20 @@ VISH.Editor = (function(V,$,undefined){
 		 $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\''+video_id+'\')" >add this video</button>');
 	};
 
+	/**
+	 * function to load a tab and its content in the fancybox
+	 */
+	var loadTab = function (tab_id){
+	    //deselect all of them
+	    $(".fancy_tab").removeClass("fancy_selected");
+	    //select the correct one
+	    $("#" + tab_id).addClass("fancy_selected");
+	    
+	    //hide previous tab
+	    $(".fancy_tab_content").hide();
+	    //show content
+	    $("#" + tab_id + "_content").show();
+	};
 
 	/**
 	 * function called when user clicks on save
@@ -120,7 +135,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
-		addSlide(V.Dummies.getDummy($(this).attr('template')));		
+		var slide = V.Dummies.getDummy($(this).attr('template'));
+		addSlide(slide);		
 		
 		_closeFancybox();
 		
@@ -135,30 +151,48 @@ VISH.Editor = (function(V,$,undefined){
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
 	var _onEditableClicked = function(event){
-		//first remove the "editable" class because we are going to add clickable icons there and we don�t want it to be editable any more
+		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
 		params['current_el'] = $(this);
-		$(this).html($("#menuselect").clone());	 //need to clone it, because we need to show it many times, not only the first one
 		
-		$("a#addpicture").fancybox({
-			"onStart"  : function(data) {
-			loadTab('tab_pic_from_url');
-		}
+		//need to clone it, because we need to show it many times, not only the first one
+		//so we need to remove its id		
+		var content = $("#menuselect").clone().attr('id','');
+		//add zone attr to the a elements to remember where to add the content
+		content.find("a").each(function(index, domElem) {
+			$(domElem).attr("zone", params['current_el'].attr("id"));
 		});
-		$("a#addflash").fancybox({
+		
+		$(this).html(content);
+		
+		$("a.addpicture").fancybox({
 			"onStart"  : function(data) {
-			loadTab('tab_flash_from_url');
-		}
+				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				var clickedZoneId = $(data).attr("zone");
+				params['current_el'] = $("#" + clickedZoneId);
+				loadTab('tab_pic_from_url');
+			}
 		});
-		$("a#addvideo").fancybox({
+		$("a.addflash").fancybox({
 			"onStart"  : function(data) {
-			loadTab('tab_video_from_url');
-		}
+				var clickedZoneId = $(data).attr("zone");
+				params['current_el'] = $("#" + clickedZoneId);
+				loadTab('tab_flash_from_url');
+			}
+		});
+		$("a.addvideo").fancybox({
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				params['current_el'] = $("#" + clickedZoneId);
+				loadTab('tab_video_from_url');
+			}
 		});
 	};
-	style="width:200px; height:160px;"
+
+	
+
 	/**
-	 * function callen when user clicks on the text thumb
+	 * function called when user clicks on the text thumb
 	 * Allows users to include text content in the slide using a WYSIWYG editor
 	 */
 	var _launchTextEditor = function(event){
@@ -216,7 +250,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		var idToDragAndResize = "draggable" + nextImageId;
 		params['current_el'].attr('type','image');
-		params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
+		params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='edit_pencil'><img class='edit_pencil_img' src='images/edit.png'/></div>");
 		if(params['current_el'].next().attr('class')==="theslider"){
 			//already added slider remove it to add a new one
 			params['current_el'].next().remove();
@@ -293,22 +327,21 @@ Will list the videos finded that match with the term wrote
 		//draw an empty div to preview the youtube video
 		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:225px;"></div>');
 	};
-
-
 	
 
 	/**
-	 * Removes the smoke box
+	 * Removes the lightbox
 	 */
 	var _closeFancybox = function(){
 		$.fancybox.close();
 	};
 
 	return {
-		init			: init,
+		init					: init,
+		loadTab 				: loadTab,
 		getValueFromFancybox    : getValueFromFancybox, 
-		getYoutubeVideo		: getYoutubeVideo,
-		showYoutubeVideo	: showYoutubeVideo
+		getYoutubeVideo			: getYoutubeVideo,
+		showYoutubeVideo		: showYoutubeVideo
 	};
 
 }) (VISH, jQuery);

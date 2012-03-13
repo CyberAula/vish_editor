@@ -67,24 +67,24 @@
   
   <div style='display:none'>
     <div id='menuselect'>
-	<div id='textthumb' class='menuicon'>
-	    <img src='images/text-editor.png' />
-	</div>
-	<div id='picthumb' class='menuicon'>
-	    <a id="addpicture" href="#picture_fancybox">
-		<img src='images/picture-editor.png' />
-	    </a>
-	</div>
-	<div id='flashthumb' class='menuicon'>
-	    <a id="addflash" href="#flash_fancybox">
-		<img src='images/flash-editor.png' />
-	    </a>
-	</div>
-	<div id='videothumb' class='menuicon'>
-	    <a id="addvideo" href="#video_fancybox">
-		<img src='images/video-editor.png' />
-	    </a>
-	</div>
+		<div class='menuicon textthumb'>
+		    <img src='images/text-editor.png' />
+		</div>
+		<div class='menuicon picthumb'>
+		    <a class="addpicture" href="#picture_fancybox">
+				<img src='images/picture-editor.png' />
+		    </a>
+		</div>
+		<div class='menuicon flashthumb'>
+		    <a class="addflash" href="#flash_fancybox">
+				<img src='images/flash-editor.png' />
+		    </a>
+		</div>
+		<div class='menuicon'>
+		    <a class="addvideo" href="#video_fancybox">
+				<img src='images/video-editor.png' />
+		    </a>
+		</div>
     </div>
   </div>
   
@@ -92,10 +92,10 @@
     <div id="picture_fancybox" class="outer_box">
 	<div class="fancy_tabs">	   
 	    <ul>
-	      <li><a href="#" onclick="loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab">URL</a></li>
-	      <li><a href="#" onclick="loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab">UPLOAD</a></li>
-	      <li><a href="#" onclick="loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">VISH</a></li>
-	      <li><a href="#" onclick="loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab">FLIKR</a></li>
+	      <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab">URL</a></li>
+	      <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab">UPLOAD</a></li>
+	      <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">VISH</a></li>
+	      <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab">FLIKR</a></li>
 	    </ul>
 	</div>
 	<div id='tab_pic_from_url_content' class="fancy_tab_content">
@@ -211,18 +211,7 @@
 
 
 <script>
-//function to load a tab and its content in the fancybox
-function loadTab(tab_id){
-    //deselect all of them
-    $(".fancy_tab").removeClass("fancy_selected");
-    //select the correct one
-    $("#" + tab_id).addClass("fancy_selected");
-    
-    //hide previous tab
-    $(".fancy_tab_content").hide();
-    //show content
-    $("#" + tab_id + "_content").show();
-};
+
 
 //first function called when page loads
 //uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)

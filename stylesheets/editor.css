@@ -134,3 +134,16 @@
 .fancy_tab_content{
 	padding: 30px 0px 20px 20px;
 }
+
+.edit_pencil{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	width: 30px;
+	height: 30px;
+}
+
+.edit_pencil_img{
+	width: 30px;
+	height: 30px;
+}
