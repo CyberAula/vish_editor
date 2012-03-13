@@ -5,9 +5,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
-	var init = function(slides){
-		mySlides = slides;
-		V.Excursion.init(slides);
+	var init = function(excursion){
+		mySlides = excursion.slides;
+		V.Excursion.init(mySlides);
 
 		$('article').on('slideenter',_onslideenter);
 		$('article').on('slideleave',_onslideleave);

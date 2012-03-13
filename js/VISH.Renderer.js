@@ -54,21 +54,21 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render text inside an article (a slide)
 	 */
 	var _renderText = function(element, template){
-		return "<div class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
 	};
 
 	/**
 	 * Function to render an image inside an article (a slide)
 	 */
 	var _renderImage = function(element, template){
-		return "<div class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' /></div>";
+		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' /></div>";
 	};
 	
 	/**
 	 * Function to render a video inside an article (a slide)
 	 */
 	var _renderVideo = function(element, template){
-		var rendered = "<div class='"+template+"_"+element['areaid']+"'>"
+		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>"
 		var controls=(element['controls'])?"controls='controls' ":""
 		var autoplay=(element['autoplay'])?"autoplayonslideenter='true' ":""
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
@@ -96,7 +96,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * when entering a slide with a swf class we call V.SWFPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the src inside the div
 	 */
 	var _renderSwf = function(element, template){
-		return "<div class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
+		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
 	};
 
 	/**
@@ -105,7 +105,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the params inside the div
 	 */
 	var _renderApplet = function(element, template){
-		return "<div class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";
+		return "<div id='"+element['id']+"' class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";
 	};
 	
 	/**
@@ -114,14 +114,14 @@ VISH.Renderer = (function(V,$,undefined){
 	 * the flashcard will be drawn inside the canvas element
 	 */
 	var _renderFlashcard = function(element, template){
-		return "<div class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
+		return "<div id='"+element['id']+"' class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
 	};
 
 	/**
 	 * Function to render an open question form inside an article (a slide)
 	 */
 	var _renderOpenquestion = function(element, template){
-		var ret = "<div class='question_title'>"+element['body']+"</div>";
+		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";
@@ -135,7 +135,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
 	var _renderMcquestion = function(element, template){
-		var ret = "<div class='question_title'>"+element['body']+"</div>";
+		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";
