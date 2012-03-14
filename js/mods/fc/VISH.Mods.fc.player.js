@@ -45,7 +45,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
         
-        loadingImg = V.Utils.loader.getImage("/assets/loading.png");
+        loadingImg = V.Utils.loader.getImage(VISH.ImagesPath + "loading.png");
         
         //first draw the loading image
         ctx = canvas.getContext('2d');
@@ -86,7 +86,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         // draw background
         ctx.drawImage(V.Utils.loader.getImage(flashcard.backgroundSrc), 0, 0, WIDTH, HEIGHT);
         //rounded corners
-        ctx.drawImage(V.Utils.loader.getImage("/assets/rounded_corners.png"), 0, 0);
+        ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + "rounded_corners.png"), 0, 0);
         
         // draw all pois
         for (var i = 0; i < flashcard.pois.length; i++) {
@@ -94,7 +94,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
             
             //the animation has frames in the same line and all 40x40px
             animX = myState.poiFrameNumber * FRAME_WIDTH;
-            ctx.drawImage(V.Utils.loader.getImage('/assets/anim.png'), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT);
+            ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + 'anim.png'), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT);
         }
         
         if(myState.drawingPoi > 0){
