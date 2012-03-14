@@ -21,19 +21,9 @@
 	margin-right: 20px;
 }
 
-#add {
-	background-image: url('/assets/new.png');
-	background-size:60px 60px;
-}
-
-#quiz {
-	background-image: url('/assets/quiz.png');
-	background-size:60px 60px;
-}
-
-#save {
-	background-image: url('/assets/save.png');
-	background-size:60px 60px;
+.image_barbutton{
+	width: 60px;
+	height: 60px;
 }
 
 #thumbcontent{
@@ -61,7 +51,7 @@
 	border: 1px solid black;
 }
 
-.editable{
+.grey_background{
 	background-color: rgba(100,100,100,0.4);
 }
 
@@ -91,4 +81,69 @@
 	width: 300px;
 	height: 40px;
 	position: absolute;
+}
+
+#thumbcontent{
+	width: 400px;
+	height: 300px;
+	padding: 20px 20px 20px 20px;
+}
+
+/*****fancybox tabs ****************/
+.outer_box{
+	width: 800px;
+	height: 600px;
+}
+
+.fancy_tabs{
+	background: white;
+}
+
+.fancy_tabs ul{
+	list-style-type: none;
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.5;
+	font-weight: bold;
+}
+
+.fancy_tabs li{
+	display: inline;
+}
+
+.fancy_tabs li a{
+	display: inline-block;
+	padding: 0.5em 1.5em;
+	border-right: 1px solid #D3E8F6;
+	text-decoration: none;
+	background: #244974;
+	color: white;
+}
+
+.fancy_tabs li a:hover{
+	background:white;
+	color:#244974;
+	border-right-color:#d3e8f6;
+}
+
+.fancy_tabs li a.fancy_selected{
+	background:#C4C4C4;
+	color:#244974;
+}
+
+.fancy_tab_content{
+	padding: 30px 0px 20px 20px;
+}
+
+.edit_pencil{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	width: 30px;
+	height: 30px;
+}
+
+.edit_pencil_img{
+	width: 30px;
+	height: 30px;
 }

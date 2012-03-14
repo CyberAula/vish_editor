@@ -376,12 +376,12 @@ VISH.Utils.canvas = function(V, undefined) {
     finalw = dw + 2;
     finalh = dh + 2;
     if(type === "text") {
-      cornerFile = V.Utils.loader.getImage("libimages/corner_small_text.png")
+      cornerFile = V.Utils.loader.getImage("images/corner_small_text.png")
     }else {
       if(finalw > 300 && finalh > 300) {
-        cornerFile = V.Utils.loader.getImage("libimages/corner.png")
+        cornerFile = V.Utils.loader.getImage("images/corner.png")
       }else {
-        cornerFile = V.Utils.loader.getImage("libimages/corner_small.png")
+        cornerFile = V.Utils.loader.getImage("images/corner_small.png")
       }
     }
     ctx.save();
@@ -5692,16 +5692,16 @@ VISH.Mods.fc.loader = function(V, undefined) {
   var init = function(fc) {
     var tmpVideo;
     var loaders = [];
-    loaders.push(V.Utils.loader.loadImage("libimages/loading.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/rounded_corners.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/template1.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/play.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/corner.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/corner_small.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/corner_small_text.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/filled.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/closeicon.png"));
-    loaders.push(V.Utils.loader.loadImage("libimages/anim.png"));
+    loaders.push(V.Utils.loader.loadImage("images/loading.png"));
+    loaders.push(V.Utils.loader.loadImage("images/rounded_corners.png"));
+    loaders.push(V.Utils.loader.loadImage("images/template1.png"));
+    loaders.push(V.Utils.loader.loadImage("images/play.png"));
+    loaders.push(V.Utils.loader.loadImage("images/corner.png"));
+    loaders.push(V.Utils.loader.loadImage("images/corner_small.png"));
+    loaders.push(V.Utils.loader.loadImage("images/corner_small_text.png"));
+    loaders.push(V.Utils.loader.loadImage("images/filled.png"));
+    loaders.push(V.Utils.loader.loadImage("images/closeicon.png"));
+    loaders.push(V.Utils.loader.loadImage("images/anim.png"));
     loaders.push(V.Utils.loader.loadImage(fc.backgroundSrc));
     for(var i = 0;i < fc.pois.length;i++) {
       for(var p = 0;p < fc.pois[i].zonesContent.length;p++) {
@@ -5752,7 +5752,7 @@ VISH.Mods.fc.player = function(V, $, undefined) {
     canvas = document.getElementById(fcElem.canvasid);
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-    loadingImg = V.Utils.loader.getImage("libimages/loading.png");
+    loadingImg = V.Utils.loader.getImage("images/loading.png");
     ctx = canvas.getContext("2d");
     ctx.drawImage(loadingImg, 0, 0);
     V.Mods.fc.template.init(ctx, slideId);
@@ -5774,11 +5774,11 @@ VISH.Mods.fc.player = function(V, $, undefined) {
     var myState;
     myState = V.SlideManager.getStatus(slideId);
     ctx.drawImage(V.Utils.loader.getImage(flashcard.backgroundSrc), 0, 0, WIDTH, HEIGHT);
-    ctx.drawImage(V.Utils.loader.getImage("libimages/rounded_corners.png"), 0, 0);
+    ctx.drawImage(V.Utils.loader.getImage("images/rounded_corners.png"), 0, 0);
     for(var i = 0;i < flashcard.pois.length;i++) {
       poi = flashcard.pois[i];
       animX = myState.poiFrameNumber * FRAME_WIDTH;
-      ctx.drawImage(V.Utils.loader.getImage("libimages/anim.png"), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT)
+      ctx.drawImage(V.Utils.loader.getImage("images/anim.png"), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT)
     }
     if(myState.drawingPoi > 0) {
       V.Mods.fc.template.draw(flashcard.pois[myState.drawingPoi - 1])
@@ -5906,7 +5906,7 @@ VISH.Mods.fc.template = function(V, $, undefined) {
     var tmpImg, tmpWidth, tmpHeight, tmpVideo, lines, line;
     template = TYPES[poi.templateNumber];
     ctx.drawImage(V.Utils.loader.getImage(template.image), template.x, template.y, template.width, template.height);
-    ctx.drawImage(V.Utils.loader.getImage("libimages/closeicon.png"), template.closingButtonX, template.closingButtonY, 50, 50);
+    ctx.drawImage(V.Utils.loader.getImage("images/closeicon.png"), template.closingButtonX, template.closingButtonY, 50, 50);
     for(var i = 0;i < poi.zonesContent.length;i++) {
       zone = poi.zonesContent[i];
       zoneTemplate = template.zones[i];
@@ -5931,7 +5931,7 @@ VISH.Mods.fc.template = function(V, $, undefined) {
           tmpVideo = V.Utils.loader.getVideo(zone.content);
           V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpVideo, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);
           if(tmpVideo.paused) {
-            ctx.drawImage(V.Utils.loader.getImage("libimages/play.png"), zoneTemplate.x + zoneTemplate.width / 2 - 128 / 2, zoneTemplate.y + zoneTemplate.height / 2 - 128 / 2, 128, 128)
+            ctx.drawImage(V.Utils.loader.getImage("images/play.png"), zoneTemplate.x + zoneTemplate.width / 2 - 128 / 2, zoneTemplate.y + zoneTemplate.height / 2 - 128 / 2, 128, 128)
           }
           break
       }

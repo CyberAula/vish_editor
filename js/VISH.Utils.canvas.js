@@ -1,6 +1,9 @@
 VISH.Utils.canvas = (function(V,undefined){
 	
-        //draw an image keeping the aspect ratio centered inside the given rectangle
+        
+    /**
+     * draw an image keeping the aspect ratio centered inside the given rectangle
+     */
     var drawImageWithAspectRatio = function (ctx, content, dx, dy, dw, dh) {
       var ratio, tmpHeight, tmpWidth, finalx, finaly, finalw, finalh;
       
@@ -30,7 +33,9 @@ VISH.Utils.canvas = (function(V,undefined){
       ctx.drawImage(content, finalx, finaly, finalw, finalh);  
     };
     
-    //draw an image keeping the aspect ratio centered inside the given rectangle
+    /**
+     * draw an image keeping the aspect ratio centered inside the given rectangle
+     */
     var drawImageWithAspectRatioAndRoundedCorners = function (ctx, content, dx, dy, dw, dh) {
       var ratio, tmpHeight, tmpWidth, finalx, finaly, finalw, finalh;
       
@@ -67,7 +72,9 @@ VISH.Utils.canvas = (function(V,undefined){
       
     };
     
-    //draw rounded corners to a rectangle
+    /**
+     * draw rounded corners to a rectangle
+     */
     var drawRoundedCorners = function (ctx, dx, dy, dw, dh, type) {
       var cornerFile, finalx, finaly, finalw, finalh;
       //fix for firefox and explorer, draw the corners in a 2px bigger rectangle
@@ -78,13 +85,13 @@ VISH.Utils.canvas = (function(V,undefined){
     
       //select corner file to use
       if(type==="text") {
-        cornerFile = V.Utils.loader.getImage('libimages/corner_small_text.png');
+        cornerFile = V.Utils.loader.getImage('images/corner_small_text.png');
       }
       else if(finalw > 300 && finalh > 300){
-        cornerFile = V.Utils.loader.getImage('libimages/corner.png');
+        cornerFile = V.Utils.loader.getImage('images/corner.png');
       }
       else {
-        cornerFile = V.Utils.loader.getImage('libimages/corner_small.png');
+        cornerFile = V.Utils.loader.getImage('images/corner_small.png');
       }
       
       //draw corners

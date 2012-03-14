@@ -1,5 +1,10 @@
 VISH.Mods.fc.loader = (function(V, undefined){
     
+    
+    /**
+     * Function to initialize the loader for the flashcard, loads all the common images and
+     * covers the flashcard element to preload its contents
+     */
     var init = function(fc){
         var tmpVideo;        
         
@@ -54,9 +59,6 @@ VISH.Mods.fc.loader = (function(V, undefined){
         });
         
     };
-    
-    
-    
     
     return {
         init      : init

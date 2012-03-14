@@ -17,24 +17,29 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
+	display: block !important;
+	height: 100%;
+	min-height: 600px;
+	overflow-x: hidden;
+	overflow-y: auto;
 
-  display: block !important;
-
+<<<<<<< Updated upstream:rails/app/assets/stylesheets/styles.css
   height: 100%;
   min-height: 600px;
+=======
+>>>>>>> Stashed changes:VISHEditor/stylesheets/styles.css
   
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  background: rgb(215, 215, 215);
+  //*background: rgb(215, 215, 215);
   background: -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
   background: -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
   background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));*/
 
   -webkit-font-smoothing: antialiased;
+	background-image: url(../libimages/back1.png);
+	background-repeat: repeat;
 }
 
 .slides {
@@ -54,11 +59,22 @@ body {
   position: absolute;
   overflow: hidden;
 
+<<<<<<< Updated upstream:rails/app/assets/stylesheets/styles.css
   width: 800px;
   height: 600px;
 
   left: 50px;
   top: 30px;
+=======
+  width: 600px;
+  height: 467px;
+
+  left: 50%;
+  top: 50%;
+
+  margin-left: -300px;
+  margin-top: -233px;
+>>>>>>> Stashed changes:VISHEditor/stylesheets/styles.css
   
   padding: 40px 60px;
 

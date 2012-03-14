@@ -106,13 +106,17 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     var ctx = null;
     var slideId = null;
     
-    //initialization function, only saves context and slideId
+    /**
+     * initialization function, only saves context and slideId
+     */
     var init = function(context, mySlideId){
         ctx = context;
         slideId = mySlideId;
     };
     
-    //function to update the state of the template
+    /**
+     * function to update the state of the template
+     */
     var update = function(poi, mx, my){
       var isInsideClosingButton, template, myState, isInsideZone, tmpVideo, zone;
       
@@ -151,7 +155,9 @@ VISH.Mods.fc.template = (function(V, $, undefined){
       }      
     };
     
-    //function to draw the template
+    /**
+     * function to draw the template
+     */
     var draw = function(poi){
         var zone, template;
         var tmpImg, tmpWidth, tmpHeight, tmpVideo, lines, line;
