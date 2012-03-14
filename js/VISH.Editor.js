@@ -85,16 +85,23 @@ VISH.Editor = (function(V,$,undefined){
 	 * finally calls SlideManager with the generated json
 	 */
 	var _onSaveButtonClicked = function(){
-		var excursion = [];
+		var excursion = {};
+		//TODO decide this params
+		excursion.id = '';
+		excursion.title = '';
+		excursion.description = '';
+		excursion.author = '';
+		excursion.slides = [];
 		var slide = {};
 		$('article').each(function(index,s){
-			slide.id = ''; //TO-DO what if saved before!
+			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
 			$(s).find('div').each(function(i,div){
 				//to remove all the divs of the sliders, only consider the final boxes
 				if($(div).attr("areaid") !== undefined){
+					element.id     = $(div).attr('id');
 					element.type   = $(div).attr('type');
 					element.areaid = $(div).attr('areaid');
 					if(element.type==="text"){
@@ -107,7 +114,7 @@ VISH.Editor = (function(V,$,undefined){
 					element = {};
 				}
 			});
-			excursion.push(slide);
+			excursion.slides.push(slide);
 			slide = {};
 		});
 		var jsonexcursion = JSON.stringify(excursion);
