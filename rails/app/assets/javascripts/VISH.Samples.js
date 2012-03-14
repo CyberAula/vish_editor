@@ -1,21 +1,30 @@
 VISH.Samples = (function(V,undefined){
 	
-	var samples = [
+	var samples = {
+				'id'            :  '1',
+                'title'         :  'Nanoyou',
+                'description'   :  'This excursion is about nanotechnology',
+                'author'        :  'Enrique Barra',
+                'slides'        : [
 		{
 			'id'       :'vish1',
+			'author'   : 'John Doe',
 			'template' :'t1',
 			'elements':[
 				{
+                    'id'     : '315',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Ejemplo de flora'
 				},
 				{
+                    'id'     : '316',
 					'type'   : 'text',
 					'areaid' : 'left',
 					'body'   : '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>'
 				},
 				{
+                    'id'     : '317',
 					'type'   : 'image',
 					'areaid' : 'right',
 					'body'   : 'http://www.asturtalla.com/arbol.jpg'		
@@ -27,11 +36,13 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'     : '318',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Ejemplo de fauna...'
 				},
 				{
+                    'id'     : '319',
 					'type'   : 'image',
 					'areaid' : 'center',
 					'body'   : 'http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg'		
@@ -43,16 +54,19 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t1',
 			'elements':[
 				{
+                    'id'     : '320',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Sensores'
 				},
 				{
+                    'id'     : '321',
 					'type'   : 'text',
 					'areaid' : 'left',
 					'body'   : '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>'
 				},
 				{
+                    'id'     : '322',
 					'type'   : 'image',
 					'areaid' : 'right',
 					'body'   : 'http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png'		
@@ -64,11 +78,13 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'     : '323',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Puesta de sol...'
 				},
 				{
+                    'id'     : '324',
 					'type'   : 'image',
 					'areaid' : 'left',
 					'body'   : 'http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg'		
@@ -80,11 +96,13 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'     : '325',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Experimento virtual1'
 				},
 				{
+                    'id'     : '326',
 					'type'   : 'swf',
 					'areaid' : 'left',
 					'body'   : 'swf/virtualexperiment_1.swf'		
@@ -96,6 +114,7 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'     	  : '327',
 					'type'        : 'flashcard',
 					'areaid'      : 'center',
 					'canvasid'    : 'myCanvas',
@@ -109,6 +128,7 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[				
 				{
+                    'id'          : '328',
 					'type'        : 'flashcard',
 					'areaid'      : 'center',
 					'canvasid'    : 'myCanvas2',
@@ -122,6 +142,7 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'       : '329',
 					'type'     : 'openquestion',
 					'areaid'   : 'header',
 					'body'     : 'Do you like this slide?',
@@ -134,6 +155,7 @@ VISH.Samples = (function(V,undefined){
 			'template' :'t2',
 			'elements':[
 				{
+                    'id'       : '330',
 					'type'     : 'mcquestion',
 					'areaid'   : 'header',
 					'body'     : 'Do you like this slide?',
@@ -146,9 +168,56 @@ VISH.Samples = (function(V,undefined){
 					'rightanswer' : 0
 				}
 			]
+		},
+		{
+			'id'       :'vish12',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '331',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Sublime HTML5 video!'
+				},       
+				{
+                    'id'     : '332',
+					'type'   : 'video',
+					'areaid' : 'center',
+					'controls' : true,
+					'autoplay' : false,
+					'loop' : false,
+					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+					'sources': '[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
+				}
+			]
+		},
+		{
+			'id'       :'vish13',
+			'template' :'t1',
+			'elements':[
+				{
+                    'id'     : '333',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Example of HTML5 video with autostart'
+				},
+				{
+                    'id'     : '334',
+					'type'   : 'text',
+					'areaid' : 'left',
+					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
+				},
+				{
+                    'id'     : '335',
+					'type'   : 'video',
+					'areaid' : 'right',
+					'controls' : true,
+					'autoplay' : true,
+					'sources': '[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'
+				}
+			]
 		}
-		
-		];
+		]};
 
 	return {
 		samples: samples

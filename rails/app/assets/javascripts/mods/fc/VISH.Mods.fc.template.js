@@ -17,7 +17,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
             "closingButtonY": 60,
             "closingButtonWidth": 50,
             "closingButtonHeight": 50,
-            "image": "images/template1.png",
+            "image": "/assets/template1.png",
             "zones" : [
                 {
                 "x": 130,
@@ -39,7 +39,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
             "closingButtonY": 60,
             "closingButtonWidth": 50,
             "closingButtonHeight": 50,
-            "image": "images/template1.png",
+            "image": "/assets/template1.png",
             "zones" : [
                 {
                 "x": 142,
@@ -70,7 +70,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
             "closingButtonY": 60,
             "closingButtonWidth": 50,
             "closingButtonHeight": 50,
-            "image": "images/template1.png",
+            "image": "/assets/template1.png",
             "zones" : [
                 {
                 "x": 142,
@@ -106,13 +106,17 @@ VISH.Mods.fc.template = (function(V, $, undefined){
     var ctx = null;
     var slideId = null;
     
-    //initialization function, only saves context and slideId
+    /**
+     * initialization function, only saves context and slideId
+     */
     var init = function(context, mySlideId){
         ctx = context;
         slideId = mySlideId;
     };
     
-    //function to update the state of the template
+    /**
+     * function to update the state of the template
+     */
     var update = function(poi, mx, my){
       var isInsideClosingButton, template, myState, isInsideZone, tmpVideo, zone;
       
@@ -151,7 +155,9 @@ VISH.Mods.fc.template = (function(V, $, undefined){
       }      
     };
     
-    //function to draw the template
+    /**
+     * function to draw the template
+     */
     var draw = function(poi){
         var zone, template;
         var tmpImg, tmpWidth, tmpHeight, tmpVideo, lines, line;
@@ -161,7 +167,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
         //first we draw the template image
         ctx.drawImage(V.Utils.loader.getImage(template.image), template.x, template.y, template.width, template.height);
         //now the closing icon
-        ctx.drawImage(V.Utils.loader.getImage('images/closeicon.png'), template.closingButtonX, template.closingButtonY, 50, 50);
+        ctx.drawImage(V.Utils.loader.getImage('/assets/closeicon.png'), template.closingButtonX, template.closingButtonY, 50, 50);
     
         //now the zones
         for(var i = 0; i < poi.zonesContent.length; i++) {            
@@ -194,7 +200,7 @@ VISH.Mods.fc.template = (function(V, $, undefined){
                 V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpVideo, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);
                 
                 if(tmpVideo.paused){
-                  ctx.drawImage(V.Utils.loader.getImage('images/play.png'), (zoneTemplate.x + zoneTemplate.width/2) - 128/2, (zoneTemplate.y + zoneTemplate.height/2) - 128/2, 128, 128 );
+                  ctx.drawImage(V.Utils.loader.getImage('/assets/play.png'), (zoneTemplate.x + zoneTemplate.width/2) - 128/2, (zoneTemplate.y + zoneTemplate.height/2) - 128/2, 128, 128 );
                 }
                 break;
             }  

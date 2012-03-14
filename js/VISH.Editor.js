@@ -257,7 +257,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		var idToDragAndResize = "draggable" + nextImageId;
 		params['current_el'].attr('type','image');
-		params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='edit_pencil'><img class='edit_pencil_img' src='images/edit.png'/></div>");
+		params['current_el'].html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='edit_pencil'><img class='edit_pencil_img' src='/assets/edit.png'/></div>");
 		if(params['current_el'].next().attr('class')==="theslider"){
 			//already added slider remove it to add a new one
 			params['current_el'].next().remove();

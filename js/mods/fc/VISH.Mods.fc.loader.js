@@ -11,16 +11,16 @@ VISH.Mods.fc.loader = (function(V, undefined){
         //now load everything
         var loaders = [];
         //load all the helper images        
-        loaders.push(V.Utils.loader.loadImage('images/loading.png'));
-        loaders.push(V.Utils.loader.loadImage('images/rounded_corners.png'));
-        loaders.push(V.Utils.loader.loadImage('images/template1.png'));
-        loaders.push(V.Utils.loader.loadImage('images/play.png'));
-        loaders.push(V.Utils.loader.loadImage('images/corner.png'));
-        loaders.push(V.Utils.loader.loadImage('images/corner_small.png'));
-        loaders.push(V.Utils.loader.loadImage('images/corner_small_text.png'));
-        loaders.push(V.Utils.loader.loadImage('images/filled.png'));
-        loaders.push(V.Utils.loader.loadImage('images/closeicon.png'));
-        loaders.push(V.Utils.loader.loadImage('images/anim.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/loading.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/rounded_corners.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/template1.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/play.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/corner.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/corner_small.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/corner_small_text.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/filled.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/closeicon.png'));
+        loaders.push(V.Utils.loader.loadImage('/assets/anim.png'));
         
         //now load the images that the flashcard uses
         //we use several for loops to cover all the flashcard json and find the contents to load

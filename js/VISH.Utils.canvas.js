@@ -85,13 +85,13 @@ VISH.Utils.canvas = (function(V,undefined){
     
       //select corner file to use
       if(type==="text") {
-        cornerFile = V.Utils.loader.getImage('images/corner_small_text.png');
+        cornerFile = V.Utils.loader.getImage('/assets/corner_small_text.png');
       }
       else if(finalw > 300 && finalh > 300){
-        cornerFile = V.Utils.loader.getImage('images/corner.png');
+        cornerFile = V.Utils.loader.getImage('/assets/corner.png');
       }
       else {
-        cornerFile = V.Utils.loader.getImage('images/corner_small.png');
+        cornerFile = V.Utils.loader.getImage('/assets/corner_small.png');
       }
       
       //draw corners

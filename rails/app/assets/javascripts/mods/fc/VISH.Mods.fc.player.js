@@ -29,7 +29,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
     var htmlLeft = null;
     
     
-    //Initialize the player for this flashcard
+    /**
+     * Initialize the player for this flashcard
+     */
     var init = function(fcElem, mySlideId) {
         var loadingImg;
         //parse the flashcard json
@@ -43,7 +45,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
         
-        loadingImg = V.Utils.loader.getImage("images/loading.png");
+        loadingImg = V.Utils.loader.getImage("/assets/loading.png");
         
         //first draw the loading image
         ctx = canvas.getContext('2d');
@@ -61,7 +63,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         }, 1000/INTERVAL);
     };
     
-    //update the status of this flashcard
+    /**
+     * update the status of this flashcard
+     */
     var update = function(){
         var myState;
         myState = V.SlideManager.getStatus(slideId);
@@ -70,7 +74,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         V.SlideManager.updateStatus(myState.id, myState);
     };
     
-    //draw this flashcard depending on its status
+    /**
+     * draw this flashcard depending on its status
+     */
     var draw = function(){
         var poi, animX;
         
@@ -80,7 +86,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         // draw background
         ctx.drawImage(V.Utils.loader.getImage(flashcard.backgroundSrc), 0, 0, WIDTH, HEIGHT);
         //rounded corners
-        ctx.drawImage(V.Utils.loader.getImage("images/rounded_corners.png"), 0, 0);
+        ctx.drawImage(V.Utils.loader.getImage("/assets/rounded_corners.png"), 0, 0);
         
         // draw all pois
         for (var i = 0; i < flashcard.pois.length; i++) {
@@ -88,7 +94,7 @@ VISH.Mods.fc.player = (function(V, $, undefined){
             
             //the animation has frames in the same line and all 40x40px
             animX = myState.poiFrameNumber * FRAME_WIDTH;
-            ctx.drawImage(V.Utils.loader.getImage('images/anim.png'), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT);
+            ctx.drawImage(V.Utils.loader.getImage('/assets/anim.png'), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT);
         }
         
         if(myState.drawingPoi > 0){
@@ -96,14 +102,18 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         }
     };
     
-    //function to clear params and stop animations
-    //used when passing to the next slide to "stop" this flashcard
+    /**
+     * function to clear params and stop animations
+     * used when passing to the next slide to "stop" this flashcard
+     */
     var clear = function(){
         clearInterval(intervalReturn);
     };
     
-    //function to remove from the flashcard object the video types that are not playable
-    //TODO, if not any playable video substitute the zone by an image with "video type incorrect"
+    /**
+     * function to remove from the flashcard object the video types that are not playable
+     * TODO, if not any playable video substitute the zone by an image with "video type incorrect"
+     */
     var _removeNotPlayableVideos = function(fc){
         var poi, zone;
         var tmpVideo = document.createElement('video');
@@ -124,7 +134,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         return fc;        
     };
     
-    //private function to initialize the mouse variables to get the position of the click
+    /**
+     * private function to initialize the mouse variables to get the position of the click
+     */
     var _initGetMouseVariables = function(){
         var html;
         if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -140,7 +152,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         htmlLeft = html.offsetLeft;  
     };
     
-    //function to add click listeners to canvas and check where the user have clicked
+    /**
+     * function to add click listeners to canvas and check where the user have clicked
+     */
     var _initListeners = function(){
         var myState;
         myState = V.SlideManager.getStatus(slideId);
@@ -171,7 +185,9 @@ VISH.Mods.fc.player = (function(V, $, undefined){
         });
     };    
     
-    //private function to get mouse coordinates
+    /**
+     * private function to get mouse coordinates
+     */
     var _getMouse = function (e) {
         var element, offsetX, offsetY, mx, my;
         element = canvas;

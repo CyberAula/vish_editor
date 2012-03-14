@@ -9,15 +9,14 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	margin-left: auto;
+	margin-left: -60px;
 	padding-left: 60px;
-	margin-right: auto;
+	margin-right: -60px;
 	padding-right: 60px;
 	font-size: 24px;
 	min-height: 24px;
-	width: 75%;
-	overflow:hidden;
-	border-radius: 15px;	
+	width: 99%;
+	overflow:hidden;	
 }
 
 .t1_left{
@@ -29,8 +28,7 @@
 	border: 2px double transparent;
 	margin-right: 2%;
 	font-size: 18px;
-	overflow:hidden;
-	border-radius: 15px;	
+	overflow:hidden;	
 }
 
 .t1_right{
@@ -41,8 +39,7 @@
 	float: right;
 	border: 2px double grey;
 	font-size: 18px;
-	overflow:hidden;
-	border-radius: 15px;	
+	overflow:hidden;	
 }
 
 .t1_text{
@@ -52,6 +49,11 @@
 
 .t1_image{
 	width: 300px;
+}
+
+.t1_video{
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .t1_swf{
@@ -94,6 +96,11 @@
 
 .t2_image{
 	width: 600px;
+}
+
+.t2_video{
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .t2_swf{
