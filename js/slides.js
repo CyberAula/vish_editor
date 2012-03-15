@@ -501,25 +501,36 @@ function updateHash() {
   location.replace('#' + (curSlide + 1));
 };
 
+/**
+ * 
+ */
+function isSlideFocused() {
+	if($(".wysiwygInstance").is(":focus")){
+		return false;
+	}
+	return true;
+};
+
 /* Event listeners */
 
 function handleBodyKeyDown(event) {
   switch (event.keyCode) {
+    //case 13: // Enter
+    //case 32: // space
     case 39: // right arrow
-    	nextSlide();
-    	event.preventDefault();
-    	break;
-    case 13: // Enter
-    case 32: // space
     case 34: // PgDn	
-      nextSlide();
-      event.preventDefault();
+      if(isSlideFocused()) {
+		nextSlide();
+		event.preventDefault();
+      }
       break;
     case 37: // left arrow
-    	prevSlide();
-    	event.preventDefault();
+    	if(isSlideFocused()) {
+			prevSlide();
+    		event.preventDefault();    		
+    	}
     	break;
-    case 8: // Backspace
+    //case 8: // Backspace
     case 33: // PgUp
       prevSlide();
       event.preventDefault();
