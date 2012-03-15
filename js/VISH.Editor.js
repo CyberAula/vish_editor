@@ -168,6 +168,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
+		
 		addSlide(slide);		
 		
 		_closeFancybox();
@@ -269,7 +270,7 @@ VISH.Editor = (function(V,$,undefined){
     videoTag.setAttribute('title', "Click to drag");
 		videoTag.setAttribute('controls', "controls");
 		videoTag.setAttribute('preload', "metadata");
-		videoTag.setAttribute('poster', "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg");
+		videoTag.setAttribute('poster', "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg");
 		var videoSource = document.createElement('source');
 		videoSource.setAttribute('src', url);
 		var fallbackText = document.createElement('p');
@@ -283,26 +284,27 @@ VISH.Editor = (function(V,$,undefined){
 		var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>"
 		$(params['current_el']).append(editTag)
 		
-		params['current_el'].after("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
-    
-    //position the slider below the div with the image
-    var divPos = params['current_el'].position();
-    var divHeight = params['current_el'].height();
-    $("#sliderId"+nextVideoId).css('top', divPos.top + divHeight - 20);
-    $("#sliderId"+nextVideoId).css('left', divPos.left);
-    $("#sliderId"+nextVideoId).css('margin-left', '12px');
-           
-    $("#imageSlider"+nextVideoId).slider({
-      from: 1,
-      to: 8,
-      step: 0.5,
-      round: 1,
-      dimension: "x",
-      skin: "blue",
-      onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(325*value);
-      }
-    });
+//		params['current_el'].after("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
+//    
+//    //position the slider below the div with the image
+//    var divPos = params['current_el'].position();
+//    var divHeight = params['current_el'].height();
+//    $("#sliderId"+nextVideoId).css('top', divPos.top + divHeight - 20);
+//    $("#sliderId"+nextVideoId).css('left', divPos.left);
+//    $("#sliderId"+nextVideoId).css('margin-left', '12px');
+//           
+//    $("#imageSlider"+nextVideoId).slider({
+//      from: 1,
+//      to: 8,
+//      step: 0.5,
+//      round: 1,
+//      dimension: "x",
+//      skin: "blue",
+//      onstatechange: function( value ){
+//          $("#" + idToDragAndResize).width(325*value);
+//					console.log("onStateChange")
+//      }
+//    });
     $("#" + idToDragAndResize).draggable({cursor: "move"});
   }
 
