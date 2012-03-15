@@ -15,7 +15,21 @@
 	<p>Your browser does not support HTML5 video.</p>
 </video>
 
-
+<script>
+	
+	$('.t2_video').focus(function(event) {
+		var video = this;
+		var playing = ! video.paused;
+		this.blur();
+  console.log('Handler for .focus() called. when the video playing is' + playing);
+  });
+	
+	 $('.t2_video').blur(function(event) {
+  console.log('Handler for .blur() called.');
+});
+	
+	
+</script>
 
 
 </body>
