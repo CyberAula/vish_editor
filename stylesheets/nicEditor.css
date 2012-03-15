@@ -1,0 +1,36 @@
+/*
+ * Styles for the NicEditor WYSIWYG
+ */
+
+.wysiwygInstance {
+	padding: 3px;
+}
+
+.nicEdit-selected {
+	border: 2px solid #D9BC2B !important;
+}
+
+.nicEdit-panelContain {
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	background-color: transparent;
+	overflow: hidden;
+	width: 100%;
+	border: 0px solid #cccccc;
+}
+
+.nicEdit-panel {
+	background-color: #fff !important;
+	border: 1px solid #ccc;
+	width: 740px;
+	margin:0px 2px 2px 50px; /* top margin, right margin, bottom margin, left margin */
+	padding-left: 60px;
+	zoom: 1;
+	overflow: hidden;
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+
+.nicEdit-button {
+	background-color: #fff !important;
+}
