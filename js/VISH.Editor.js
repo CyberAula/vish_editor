@@ -9,6 +9,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
+	var domId = 0;  //number for next doom element id and its slider to resize it
 	
 	var myNicEditor; // to manage the NicEditor WYSIWYG
 	
@@ -30,6 +31,15 @@ VISH.Editor = (function(V,$,undefined){
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);	
 	};
+	
+		
+  /**
+   * Return a unic id.
+   */
+	var getNewId = function(){
+		domId = domId +1;
+		return "unicID_" + domId;
+	}
 
 	/**
 	 * Function to get a value from the id in the dom and draw it in the zone in params['current_el']
@@ -234,6 +244,67 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});*/
 	}
+	
+	
+	/**
+   * Function called when user clicks on import HTML5 video from URL
+   * Allows users to paste a HTML5 video from URL
+   */
+  var pasteHTML5Video = function(input_id){
+		_closeFancybox();
+		var url = $("#" + input_id).val();
+		$("#" + input_id).val("");
+		
+		//Draw video!
+		var template = params['current_el'].parent().attr('template');
+    //slide object = params['current_el']
+
+    var nextVideoId = getNewId();
+    var idToDragAndResize = "draggable" + nextVideoId;
+    params['current_el'].attr('type','video');
+		
+    var videoTag = document.createElement('video');
+    videoTag.setAttribute('id', idToDragAndResize);
+    videoTag.setAttribute('class', template + "_video");
+    videoTag.setAttribute('title', "Click to drag");
+		videoTag.setAttribute('controls', "controls");
+		videoTag.setAttribute('preload', "metadata");
+		videoTag.setAttribute('poster', "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg");
+		var videoSource = document.createElement('source');
+		videoSource.setAttribute('src', url);
+		var fallbackText = document.createElement('p');
+		$(fallbackText).html("Your browser does not support HTML5 video.")
+    $(videoTag).append(videoSource)
+		$(videoTag).append(fallbackText)
+		
+		$(params['current_el']).html("");
+		$(params['current_el']).append(videoTag)
+		
+		var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>"
+		$(params['current_el']).append(editTag)
+		
+		params['current_el'].after("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
+    
+    //position the slider below the div with the image
+    var divPos = params['current_el'].position();
+    var divHeight = params['current_el'].height();
+    $("#sliderId"+nextVideoId).css('top', divPos.top + divHeight - 20);
+    $("#sliderId"+nextVideoId).css('left', divPos.left);
+    $("#sliderId"+nextVideoId).css('margin-left', '12px');
+           
+    $("#imageSlider"+nextVideoId).slider({
+      from: 1,
+      to: 8,
+      step: 0.5,
+      round: 1,
+      dimension: "x",
+      skin: "blue",
+      onstatechange: function( value ){
+          $("#" + idToDragAndResize).width(325*value);
+      }
+    });
+    $("#" + idToDragAndResize).draggable({cursor: "move"});
+  }
 
 	
 	/**
@@ -283,6 +354,10 @@ Will list the videos finded that match with the term wrote
 */
 
 	var _listVideo = function(event){
+		
+		
+		console.log("_listVideo!")
+		
 		var template = params['current_el'].parent().attr('template');	
 		
 		
@@ -337,6 +412,7 @@ Will list the videos finded that match with the term wrote
 		loadTab 				: loadTab,
 		getValueFromFancybox    : getValueFromFancybox, 
 		getYoutubeVideo			: getYoutubeVideo,
+		pasteHTML5Video     : pasteHTML5Video,
 		showYoutubeVideo		: showYoutubeVideo
 	};
 
