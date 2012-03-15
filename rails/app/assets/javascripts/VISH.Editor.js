@@ -125,7 +125,7 @@ VISH.Editor = (function(V,$,undefined){
 		//V.SlideManager.init(excursion);
 		
 		//POST to http://server/excursions/
-		$.post("excursions", jsonexcursion, function(data) {
+		$.post("", jsonexcursion, function(data) {
 	      	alert("Return data: " + data);
 	    });
 		
