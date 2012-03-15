@@ -1,4 +1,5 @@
 VISH.Editor = (function(V,$,undefined){
+	var initOptions;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -14,7 +15,9 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * adds the listeners to the click events in the different images and buttons
 	 */
-	var init = function(){		
+	var init = function(options){
+		initOptions = options;
+				
 		$("a#addslide").fancybox();		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
@@ -125,7 +128,13 @@ VISH.Editor = (function(V,$,undefined){
 		//V.SlideManager.init(excursion);
 		
 		//POST to http://server/excursions/
-		$.post("/excursions", jsonexcursion, function(data) {
+		
+		var params = {
+			"excursion[json]": jsonexcursion,
+			"authenticity_token" : initOptions["token"]
+		}
+		
+		$.post(initOptions["postPath"], params, function(data) {
 	      	alert("Return data: " + data);
 	    });
 		
