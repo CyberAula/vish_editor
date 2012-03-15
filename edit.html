@@ -37,7 +37,7 @@
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
-
+    <div id="wrappter">
     <section class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
 		    <div class='barbutton'>
@@ -155,8 +155,8 @@
 	</div>
 	<div id='tab_video_from_url_content' class="fancy_tab_content">
 	    Paste html5 video URL
-	    <input id="video_url" type="text" size="25" value="">
-	    <button type="button" onclick="VISH.Editor.getValueFromFancybox('video_url')">Done</button>
+	    <input id="video_url" type="text" size="25" value="http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"> 
+	    <button type="button" onclick="VISH.Editor.pasteHTML5Video('video_url')">Done</button>
 	</div>
 	<div id='tab_video_upload_content' class="fancy_tab_content">
 	    Select video to upload
@@ -221,5 +221,6 @@ function start(){
   VISH.Editor.init();
 }
 </script>
+</div>
 </body>
 </html>
