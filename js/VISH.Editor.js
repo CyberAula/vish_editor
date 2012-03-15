@@ -11,6 +11,7 @@ VISH.Editor = (function(V,$,undefined){
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	
 	var myNicEditor; // to manage the NicEditor WYSIWYG
+	var visible = false;
 	
 	/**
 	 * Initializes the VISH editor
@@ -29,8 +30,8 @@ VISH.Editor = (function(V,$,undefined){
 		document.dispatchEvent(evt);	
 		
 		// initialize the NicEditor WYSIWYG
-		myNicEditor = new nicEditor();
-        myNicEditor.setPanel('slides_panel');
+		//myNicEditor = new nicEditor();
+        //myNicEditor.setPanel('slides_panel');
 	};
 
 	/**
@@ -207,11 +208,23 @@ VISH.Editor = (function(V,$,undefined){
 	 * Allows users to include text content in the slide using a WYSIWYG editor
 	 */
 	var _launchTextEditor = function(event){
+		if(!visible) {
+			myNicEditor = new nicEditor();
+        	myNicEditor.setPanel('slides_panel');
+        	visible = true;
+		}
 		params['current_el'].attr('type','text');
-		var wysiwygId = params['current_el'][0].id;
-		params['current_el'].html("<div class='wysiwygInstance' id=wysiwygId style='width: params['current_el'].width(); height: params['current_el'].height();'>Insert text here</div>");
-        myNicEditor.addInstance(wysiwygId);
-	};
+		var wysiwygId = "wysiwyg_" + params['current_el'][0].id;
+		var wysiwygWidth = params['current_el'].width() - 10;
+		var wysiwygHeight = params['current_el'].height() - 10;
+		params['current_el'].html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'>Insert text here</div>");
+		myNicEditor.addInstance(wysiwygId);
+		/*$("#"+wysiwygId).keyup(function(e) {
+			if(e.keyCode == 13) { // enter
+				$("#"+wysiwygId); // TODO: añadir un intro a lo escrito -> mira el API del nicEditor a ver si encuentras algo útil
+			}
+		});*/
+	}
 
 	
 	/**
