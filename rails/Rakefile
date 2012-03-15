@@ -38,8 +38,8 @@ namespace :vish_editor do
     system "cp -r ../stylesheets/ app/assets/stylesheets/"
     #replace path /images and /stylesheets by /assets    
     system "sed -i 's/\\/images/\\/assets/g' app/assets/stylesheets/*css"
-    system "sed -i \'s/\/images/\/assets/g\' app/assets/javascripts/VISH.js"
-    system "sed -i \'s/\/stylesheets/\/assets/g\' app/assets/javascripts/VISH.js"
+    system "sed -i \'s/\\/images/\\/assets/g\' app/assets/javascripts/VISH.js"
+    system "sed -i \'s/\\/stylesheets/\\/assets/g\' app/assets/javascripts/VISH.js"
     
     system "mv app/assets/vish_editor.js app/assets/javascripts/vish_editor.js"
     system "mv app/assets/vish_editor.css app/assets/stylesheets/vish_editor.css"
