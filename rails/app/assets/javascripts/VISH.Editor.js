@@ -119,9 +119,16 @@ VISH.Editor = (function(V,$,undefined){
 		});
 		var jsonexcursion = JSON.stringify(excursion);
 		console.log(jsonexcursion);
-		$('article').remove();
-		$('#menubar').remove();
-		V.SlideManager.init(excursion);
+		
+		//$('article').remove();
+		//$('#menubar').remove();
+		//V.SlideManager.init(excursion);
+		
+		//POST to http://server/excursions/
+		$.post("excursions", jsonexcursion, function(data) {
+	      	alert("Return data: " + data);
+	    });
+		
 	};
 
 	/**
