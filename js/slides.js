@@ -502,7 +502,8 @@ function updateHash() {
 };
 
 /**
- * 
+ * function to know if the slides have the focus or not
+ * @return false if other element (right now only wysiwyg instances are checked) has the focus
  */
 function isSlideFocused() {
 	if($(".wysiwygInstance").is(":focus")){
@@ -538,20 +539,30 @@ function handleBodyKeyDown(event) {
 
     case 40: // down arrow
       if (isChromeVoxActive()) {
-        speakNextItem();
+        if(isSlideFocused()) {
+        	speakNextItem();
+        	event.preventDefault();
+        }
       } else {
-        nextSlide();
+      	if(isSlideFocused()) {
+      		nextSlide();
+      		event.preventDefault();	
+      	}
       }
-      event.preventDefault();
       break;
 
     case 38: // up arrow
       if (isChromeVoxActive()) {
-        speakPrevItem();
+      	if(isSlideFocused) {
+      		speakPrevItem();
+        	event.preventDefault();
+      	}
       } else {
-        prevSlide();
+      	if(isSlideFocused()) {
+			prevSlide();
+			event.preventDefault();     		
+      	}
       }
-      event.preventDefault();
       break;
   }
 };
