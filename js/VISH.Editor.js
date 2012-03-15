@@ -67,9 +67,11 @@ VISH.Editor = (function(V,$,undefined){
 	var showYoutubeVideo = function(video_id) {
 		//generate embed for the preview video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
 		$("#youtube_preview").html(final_video);
-		
+		if($("#preview_video_button")){
+		$("#preview_video_button").remove();		
+		}
 		 $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\''+video_id+'\')" >add this video</button>');
 	};
 
@@ -292,9 +294,9 @@ Will list the videos finded that match with the term wrote
 	var _listVideo = function(event){
 		var template = params['current_el'].parent().attr('template');	
 		
-		
-		if ($("#searchResultsVideoListTable")) {
-			$("#searchResultsVideoListTable").remove();
+		/* changed for sliding , before was searchResultsVideoListTable*/
+		if ($("#ytb_slider_content")) {
+			$("#ytb_slider_content").remove();
 
 		}
 		var videos= 10; 
@@ -302,12 +304,14 @@ Will list the videos finded that match with the term wrote
 		var term = $('#youtube_input_text').val();
 		
 		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results=10&start-index=1";
-		
-			
+		/*adding div for sliding */
+		$("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>');	
+		$("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
 	//adding content searchForm 
-
-		$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
+	//commented while trying slider
+		/*$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
 		$("#searchResultsVideoListTable").append('<tr id="video_row"> </tr>');
+		*/
 		jQuery.getJSON(url_youtube,function (data) {
 
 			$.each(data.feed.entry, function(i, item) {
@@ -320,17 +324,28 @@ Will list the videos finded that match with the term wrote
 				videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
 //url's video thumbnail 
 				var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-			//not used yet
-					
-				$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
-							
-				
+			
+			//commented while trying slider	
+				/*$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
+				*/			
+			
+			/*adding div for sliding */
+			$("#ul_ytb_vid").append('<li><div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div></li>');	
 			});
 		});
 		//draw an empty div to preview the youtube video
 		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:225px;"></div>');
 	};
 	
+
+	$(document).ready(function(){	
+		$("#slider").easyMultipleSlider(
+			{
+				number_slides_visible:5
+			}
+		);
+	});	
+
 
 	/**
 	 * Removes the lightbox
