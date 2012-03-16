@@ -340,7 +340,7 @@ VISH.Editor = (function(V,$,undefined){
 		//position the slider below the div with the image
 		var divPos = params['current_el'].position();
 		var divHeight = params['current_el'].height();
-		$("#sliderId"+nextImageId).css('top', divPos.top + divHeight - 20);
+		$("#sliderId"+nextImageId).css('top', divPos.top + divHeight +10);
 		$("#sliderId"+nextImageId).css('left', divPos.left);
 		$("#sliderId"+nextImageId).css('margin-left', '12px');
 				   
