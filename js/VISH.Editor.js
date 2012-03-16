@@ -6,13 +6,15 @@ VISH.Editor = (function(V,$,undefined){
 	// current_editor that will be the wysiwyg editor that the user is managing
 	var params = {
 		current_el : null,
+		
 	};
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
 	var domId = 0;  //number for next doom element id and its slider to resize it
 	
 	var myNicEditor; // to manage the NicEditor WYSIWYG
-	
+	var vid_array = new Array(); //to manage video slider
+	var queryMaxMaxNumberYoutubeVideo= 20; //maximum video query for youtube API's (999 max)
 	/**
 	 * Initializes the VISH editor
 	 * adds the listeners to the click events in the different images and buttons
@@ -79,6 +81,37 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		 $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\''+video_id+'\')" >add this video</button>');
 	};
+
+
+ // function to draw Youtube video slider (draw 5 video thumbnails)
+	var drawYoutubeSlides = function (page) {
+	
+		if (vid_array.length==0) {
+			console.log("empty array");
+		} 
+		else {
+			var count = 0;
+			count = (page*5+1)-5;
+			console.log("page is " + page + " and count vale : " + count);
+
+			$(".ytb_slide").remove();	
+			var i;
+			
+			for (i=1;i<=5 ;i++) {
+				
+				$("#vid_"+i).append(vid_array[count]);
+				count+=1;
+			}
+	//add page number (each page contents 5 slides)
+		var prev = parseInt(page)-1;		
+		$("#a_prev_but_ytb").attr("href", 'javascript:VISH.Editor.drawYoutubeSlides(\''+ prev+'\')');
+		var next = parseInt(page)+1;
+		$("#a_next_but_ytb").attr("href", 'javascript:VISH.Editor.drawYoutubeSlides(\''+next+'\')');
+
+	}
+}
+
+
 
 	/**
 	 * function to load a tab and its content in the fancybox
@@ -367,7 +400,7 @@ Will list the videos finded that match with the term wrote
 */
 
 	var _listVideo = function(event){
-		
+		//var vid_array = new Array();
 		
 		console.log("_listVideo!")
 		
@@ -378,14 +411,31 @@ Will list the videos finded that match with the term wrote
 			$("#ytb_slider_content").remove();
 
 		}
-		var videos= 10; 
+		if($("#preview_video_button")){
+		$("#preview_video_button").remove();		
+		}
+		if($("#youtube_preview")){
+		$("#youtube_preview").remove();		
+		}
+
+		
 		
 		var term = $('#youtube_input_text').val();
 		
-		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results=10&start-index=1";
+		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";
 		/*adding div for sliding */
 		$("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>');	
 		$("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
+/* trying do slider  */
+		$("#ul_ytb_vid").append('<li id="prev_but_ytb" style="width:40px;  "><a id="a_prev_but_ytb" ><img src="images/arrow_left_strech.png"  /></a></li>');		
+		$("#ul_ytb_vid").append('<li id="vid_1"></ul>');
+		$("#ul_ytb_vid").append('<li id="vid_2"></ul>');
+		$("#ul_ytb_vid").append('<li id="vid_3"></ul>');
+		$("#ul_ytb_vid").append('<li id="vid_4"></ul>');
+		$("#ul_ytb_vid").append('<li id="vid_5"></ul>');
+		$("#ul_ytb_vid").append('<li id="next_but_ytb" style="width:40px;  "><a id="a_next_but_ytb"><img src="images/arrow_right_strech.png"  /></a></li>');
+
+		
 	//adding content searchForm 
 	//commented while trying slider
 		/*$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
@@ -408,22 +458,28 @@ Will list the videos finded that match with the term wrote
 				/*$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
 				*/			
 			
-			/*adding div for sliding */
-			$("#ul_ytb_vid").append('<li><div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div></li>');	
+			/*adding div for sliding , commented for doing a for ...  */
+			/*$("#ul_ytb_vid").append('<li><div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div></li>');	 */
+			
+//metemos en un array todas las imágenes y sus respectivos links ...etc...
+vid_array[i+1]='<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div>';
+console.log("and array "+ i +" is: " + vid_array[i] );
 			});
+
+//llamamos a una función que pinte los 5 arrays primeros 
+
+	
+		drawYoutubeSlides(1); //primera página
 		});
 		//draw an empty div to preview the youtube video
-		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:455px;"></div>');
-	};
+		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:455px; padding-left:30%;"></div>');
 	
 
-	$(document).ready(function(){	
-		$("#slider").easyMultipleSlider(
-			{
-				number_slides_visible:5
-			}
-		);
-	});	
+
+};
+	
+
+	
 
 
 	/**
@@ -437,9 +493,10 @@ Will list the videos finded that match with the term wrote
 		init					: init,
 		loadTab 				: loadTab,
 		getValueFromFancybox    : getValueFromFancybox, 
-		getYoutubeVideo			: getYoutubeVideo,
-		pasteHTML5Video     : pasteHTML5Video,
-		showYoutubeVideo		: showYoutubeVideo
+		getYoutubeVideo		: getYoutubeVideo,
+		pasteHTML5Video    	: pasteHTML5Video,
+		showYoutubeVideo	: showYoutubeVideo, 
+		drawYoutubeSlides	: drawYoutubeSlides
 	};
 
 }) (VISH, jQuery);

@@ -16,6 +16,7 @@
 body {
   display: block !important;
   overflow-x: hidden;
+text-align: center;  
 }
 
 .slides {
