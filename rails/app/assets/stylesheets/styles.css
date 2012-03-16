@@ -27,6 +27,10 @@ body {
   position: absolute;
 
   -webkit-transform: translate3d(0, 0, 0);
+  background: url("/assets/background.jpg");
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
 }
 
 .slides > article {
