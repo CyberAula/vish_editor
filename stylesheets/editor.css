@@ -151,3 +151,22 @@
 	width: 30px;
 	height: 30px;
 }
+
+#picture_fancybox{
+	background: url(/images/background_img_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
+}
+
+#flash_fancybox{
+	background: url(/images/background_flash_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
+}
+
+#video_fancybox{
+	background: url(/images/background_video_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
+}
+
