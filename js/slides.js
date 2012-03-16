@@ -265,7 +265,12 @@ function goToSlide(no){
   if(no>slideEls.length - 1){
   	return;
   }
-  else{
+  else if (no>curSlide){
+  	while (curSlide > no) {
+    	prevSlide();
+  	}
+  }
+  else if (no<curSlide){
   	while (curSlide < no) {
     	nextSlide();
   	}
