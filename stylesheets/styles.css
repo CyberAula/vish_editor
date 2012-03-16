@@ -15,7 +15,7 @@
 
 body {
   display: block !important;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .slides {
