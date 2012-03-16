@@ -540,13 +540,13 @@ function handleBodyKeyDown(event) {
     case 39: // right arrow
     case 34: // PgDn	
       if(isSlideFocused()) {
-		nextSlide();
-		event.preventDefault();
+		    nextSlide();
+		    event.preventDefault();
       }
       break;
     case 37: // left arrow
     	if(isSlideFocused()) {
-			prevSlide();
+			  prevSlide();
     		event.preventDefault();    		
     	}
     	break;
@@ -578,8 +578,8 @@ function handleBodyKeyDown(event) {
       	}
       } else {
       	if(isSlideFocused()) {
-			prevSlide();
-			event.preventDefault();     		
+			    prevSlide();
+			    event.preventDefault();     		
       	}
       }
       break;
