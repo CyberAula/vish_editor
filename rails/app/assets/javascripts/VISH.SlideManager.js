@@ -49,13 +49,16 @@ VISH.SlideManager = (function(V,$,undefined){
 			else if($(e.target).hasClass('applet')){
 				V.AppletPlayer.loadApplet($(e.target));
 			}
+			else if($(e.target).hasClass('iframe')){
+				V.SWFPlayer.loadIframe($(e.target));
+			}
 		},500);
 		if($(e.target).hasClass('flashcard')){
 			slideId = $(e.target).attr("id");
 			fcElem = _getFlashcardFromSlideId(slideId);	
 			V.Mods.fc.player.init(fcElem, slideId);
 		}
-		V.VideoPlayer.autoPlayVideos(e.target)
+		V.VideoPlayer.playVideos(e.target)
 	};
 
 	/**
@@ -81,8 +84,10 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * and we stop flashcards
 	 */
 	var _onslideleave = function(e){
+		//TODO detect class of e.target and unload only when neccesary
 		V.VideoPlayer.stopVideos(e.target);
 		V.SWFPlayer.unloadSWF();
+		V.SWFPlayer.unloadIframe();
 		V.AppletPlayer.unloadApplet();
 		if($(e.target).hasClass('flashcard')){				
 			V.Mods.fc.player.clear();

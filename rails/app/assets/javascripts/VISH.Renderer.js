@@ -31,6 +31,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderSwf(slide.elements[el],slide.template);
 				classes += "swf ";
 			}
+			else if(slide.elements[el].type === "iframe"){  //used for youtube videos
+				content += _renderIframe(slide.elements[el],slide.template);
+				classes += "iframe ";
+			}
 			else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
@@ -75,7 +79,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var loop=(element['loop'])?"loop='loop' ":""
 		var sources = JSON.parse(element['sources'])
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='none' " + controls + autoplay + poster + loop + ">"
+		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + controls + autoplay + poster + loop + ">"
 		
 		$.each(sources, function(index, value) {
 			rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
@@ -97,6 +101,14 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderSwf = function(element, template){
 		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
+	};
+	
+	/**
+	 * Function to render an iframe inside an article (a slide)	 * 
+	 * when entering a slide with an iframe class we call V.SWFPlayer.loadIframe (see VISH.SlideManager._onslideenter) and it will add the src inside the div
+	 */
+	var _renderIframe = function(element, template){
+		return "<div id='"+element['id']+"' class='iframeelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_iframe"+"' src='"+element['body']+"'></div>";
 	};
 
 	/**

@@ -216,6 +216,30 @@ VISH.Samples = (function(V,undefined){
 					'sources': '[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'
 				}
 			]
+		},
+		{
+			'id'       :'vish14',
+			'template' :'t1',
+			'elements':[
+				{
+                    'id'     : '393',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Example of Youtube video'
+				},
+				{
+                    'id'     : '334',
+					'type'   : 'text',
+					'areaid' : 'left',
+					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
+				},
+				{
+                    'id'     : '335',
+					'type'   : 'iframe',
+					'areaid' : 'right',
+					'body'   : '<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'
+				}
+			]
 		}
 		]};
 

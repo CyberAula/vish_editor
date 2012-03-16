@@ -6,10 +6,12 @@ VISH.Editor = (function(V,$,undefined){
 	// current_editor that will be the wysiwyg editor that the user is managing
 	var params = {
 		current_el : null,
-		current_editor : null
 	};
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
+	var domId = 0;  //number for next doom element id and its slider to resize it
+	
+	var myNicEditor; // to manage the NicEditor WYSIWYG
 	
 	/**
 	 * Initializes the VISH editor
@@ -29,6 +31,15 @@ VISH.Editor = (function(V,$,undefined){
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);	
 	};
+	
+		
+  /**
+   * Return a unic id.
+   */
+	var getNewId = function(){
+		domId = domId +1;
+		return "unicID_" + domId;
+	}
 
 	/**
 	 * Function to get a value from the id in the dom and draw it in the zone in params['current_el']
@@ -41,28 +52,31 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-	/** Funcion to get an youtube video and embed into the zone
-	**/
-
+	/** 
+	 * Funcion to get an youtube video and embed into the zone
+	 */
 	var getYoutubeVideo = function (video_id) {
 		$.fancybox.close();
 		//generate embed for the video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe type="text/html"style="width:400px; height:300px;" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='"+video_embedded+"' frameborder='0'></iframe>";
 		//insert embed in zone
-		params['current_el'].attr('type','flash');
+		params['current_el'].attr('type','iframe');
 		params['current_el'].html(final_video);
 		
 	};
-	/** Funcion to show a preview youtube video and select to embed into the zone
-	**/
-
+	
+	/** 
+	 * Funcion to show a preview youtube video and select to embed into the zone
+	 */
 	var showYoutubeVideo = function(video_id) {
 		//generate embed for the preview video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
 		$("#youtube_preview").html(final_video);
-		
+		if($("#preview_video_button")){
+		$("#preview_video_button").remove();		
+		}
 		 $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\''+video_id+'\')" >add this video</button>');
 	};
 
@@ -108,10 +122,13 @@ VISH.Editor = (function(V,$,undefined){
 					element.type   = $(div).attr('type');
 					element.areaid = $(div).attr('areaid');
 					if(element.type==="text"){
-						element.body   = $(div).html();
+						//TODO make this text json safe
+						element.body   = $(div).find("div").html();
 					} else if(element.type==="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = $(div).find('img').attr('style');
+					} else if(element.type==="iframe"){
+						element.body   = $(div).html();
 					}
 					slide.elements.push(element);
 					element = {};
@@ -125,6 +142,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		//$('article').remove();
 		//$('#menubar').remove();
+		//$(".nicEdit-panelContain").remove();
 		//V.SlideManager.init(excursion);
 		
 		//POST to http://server/excursions/
@@ -135,7 +153,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		$.post(initOptions["postPath"], params, function(data) {
-	      	alert("Return data: " + data);
+	      	$(this).html(data);
 	    });
 		
 	};
@@ -159,6 +177,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
+		
 		addSlide(slide);		
 		
 		_closeFancybox();
@@ -219,48 +238,84 @@ VISH.Editor = (function(V,$,undefined){
 	 * Allows users to include text content in the slide using a WYSIWYG editor
 	 */
 	var _launchTextEditor = function(event){
+		if(myNicEditor == null) {
+			myNicEditor = new nicEditor();
+        	myNicEditor.setPanel('slides_panel');
+		}
 		params['current_el'].attr('type','text');
-		params['current_el'].html("<textarea id='input' name='input'></textarea><button id='save_wysiwyg'type='button'>Save text</button>");
-		params['current_editor'] = $("#input").cleditor({
-          width:        params['current_el'].width(), // width not including margins, borders or padding
-          height:       params['current_el'].height()-40, // height not including margins, borders or padding
-          controls:     // controls to add to the toolbar
-                        "bold italic underline strikethrough subscript superscript | font size " +
-                        "style | color highlight removeformat | bullets numbering | outdent " +
-                        "indent | alignleft center alignright justify | rule image link unlink ",
-          colors:       // colors in the color popup
-                        "FFF FCC FC9 FF9 FFC 9F9 9FF CFF CCF FCF " +
-                        "CCC F66 F96 FF6 FF3 6F9 3FF 6FF 99F F9F " +
-                        "BBB F00 F90 FC6 FF0 3F3 6CC 3CF 66C C6C " +
-                        "999 C00 F60 FC3 FC0 3C0 0CC 36F 63F C3C " +
-                        "666 900 C60 C93 990 090 399 33F 60C 939 " +
-                        "333 600 930 963 660 060 366 009 339 636 " +
-                        "000 300 630 633 330 030 033 006 309 303",    
-          fonts:        // font names in the font popup
-                        "Arial,Arial Black,Comic Sans MS,Courier New,Narrow,Garamond," +
-                        "Georgia,Impact,Sans Serif,Serif,Tahoma,Trebuchet MS,Verdana",
-          sizes:        // sizes in the font size popup
-                        "1,2,3,4,5,6,7",
-          styles:       // styles in the style popup
-                        [["Paragraph", "<p>"], ["Header 1", "<h1>"], ["Header 2", "<h2>"],
-                        ["Header 3", "<h3>"],  ["Header 4","<h4>"],  ["Header 5","<h5>"],
-                        ["Header 6","<h6>"]],
-          useCSS:       false, // use CSS to style HTML when possible (not supported in ie)
-          docType:      // Document type contained within the editor
-                        '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">',
-          docCSSFile:   // CSS file used to style the document contained within the editor
-                        "", 
-          bodyStyle:    // style to assign to document body contained within the editor
-                        "margin:4px; font:10pt Arial,Verdana; cursor:text"
-        });
-		// when the button is pressed the text and the html code from the wysiwyg editor are saved
-		// TODO: save the text in a JSON file
-		$("#save_wysiwyg").click(function(){
-        	params['current_editor'][0].select();
-        	var text = params['current_editor'][0].selectedText();
-        	var htmlText = params['current_editor'][0].selectedHTML();
-        });
-	};
+		var wysiwygId = "wysiwyg_" + params['current_el'][0].id;
+		var wysiwygWidth = params['current_el'].width() - 10;
+		var wysiwygHeight = params['current_el'].height() - 10;
+		params['current_el'].html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'>Insert text here</div>");
+		myNicEditor.addInstance(wysiwygId);
+		/*$("#"+wysiwygId).keydown(function(e) {
+			if(e.keyCode == 39) {
+					
+			}
+		});*/
+	}
+	
+	
+	/**
+   * Function called when user clicks on import HTML5 video from URL
+   * Allows users to paste a HTML5 video from URL
+   */
+  var pasteHTML5Video = function(input_id){
+		_closeFancybox();
+		var url = $("#" + input_id).val();
+		$("#" + input_id).val("");
+		
+		//Draw video!
+		var template = params['current_el'].parent().attr('template');
+    //slide object = params['current_el']
+
+    var nextVideoId = getNewId();
+    var idToDragAndResize = "draggable" + nextVideoId;
+    params['current_el'].attr('type','video');
+		
+    var videoTag = document.createElement('video');
+    videoTag.setAttribute('id', idToDragAndResize);
+    videoTag.setAttribute('class', template + "_video");
+    videoTag.setAttribute('title', "Click to drag");
+		videoTag.setAttribute('controls', "controls");
+		videoTag.setAttribute('preload', "metadata");
+		videoTag.setAttribute('poster', "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg");
+		var videoSource = document.createElement('source');
+		videoSource.setAttribute('src', url);
+		var fallbackText = document.createElement('p');
+		$(fallbackText).html("Your browser does not support HTML5 video.")
+    $(videoTag).append(videoSource)
+		$(videoTag).append(fallbackText)
+		
+		$(params['current_el']).html("");
+		$(params['current_el']).append(videoTag)
+		
+		var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>"
+		$(params['current_el']).append(editTag)
+		
+//		params['current_el'].after("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
+//    
+//    //position the slider below the div with the image
+//    var divPos = params['current_el'].position();
+//    var divHeight = params['current_el'].height();
+//    $("#sliderId"+nextVideoId).css('top', divPos.top + divHeight - 20);
+//    $("#sliderId"+nextVideoId).css('left', divPos.left);
+//    $("#sliderId"+nextVideoId).css('margin-left', '12px');
+//           
+//    $("#imageSlider"+nextVideoId).slider({
+//      from: 1,
+//      to: 8,
+//      step: 0.5,
+//      round: 1,
+//      dimension: "x",
+//      skin: "blue",
+//      onstatechange: function( value ){
+//          $("#" + idToDragAndResize).width(325*value);
+//					console.log("onStateChange")
+//      }
+//    });
+    $("#" + idToDragAndResize).draggable({cursor: "move"});
+  }
 
 	
 	/**
@@ -310,11 +365,15 @@ Will list the videos finded that match with the term wrote
 */
 
 	var _listVideo = function(event){
+		
+		
+		console.log("_listVideo!")
+		
 		var template = params['current_el'].parent().attr('template');	
 		
-		
-		if ($("#searchResultsVideoListTable")) {
-			$("#searchResultsVideoListTable").remove();
+		/* changed for sliding , before was searchResultsVideoListTable*/
+		if ($("#ytb_slider_content")) {
+			$("#ytb_slider_content").remove();
 
 		}
 		var videos= 10; 
@@ -322,12 +381,14 @@ Will list the videos finded that match with the term wrote
 		var term = $('#youtube_input_text').val();
 		
 		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results=10&start-index=1";
-		
-			
+		/*adding div for sliding */
+		$("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>');	
+		$("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
 	//adding content searchForm 
-
-		$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
+	//commented while trying slider
+		/*$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
 		$("#searchResultsVideoListTable").append('<tr id="video_row"> </tr>');
+		*/
 		jQuery.getJSON(url_youtube,function (data) {
 
 			$.each(data.feed.entry, function(i, item) {
@@ -340,17 +401,28 @@ Will list the videos finded that match with the term wrote
 				videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
 //url's video thumbnail 
 				var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-			//not used yet
-					
-				$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
-							
-				
+			
+			//commented while trying slider	
+				/*$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
+				*/			
+			
+			/*adding div for sliding */
+			$("#ul_ytb_vid").append('<li><div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div></li>');	
 			});
 		});
 		//draw an empty div to preview the youtube video
-		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:225px;"></div>');
+		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:455px;"></div>');
 	};
 	
+
+	$(document).ready(function(){	
+		$("#slider").easyMultipleSlider(
+			{
+				number_slides_visible:5
+			}
+		);
+	});	
+
 
 	/**
 	 * Removes the lightbox
@@ -364,6 +436,7 @@ Will list the videos finded that match with the term wrote
 		loadTab 				: loadTab,
 		getValueFromFancybox    : getValueFromFancybox, 
 		getYoutubeVideo			: getYoutubeVideo,
+		pasteHTML5Video     : pasteHTML5Video,
 		showYoutubeVideo		: showYoutubeVideo
 	};
 

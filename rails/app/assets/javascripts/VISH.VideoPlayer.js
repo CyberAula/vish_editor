@@ -15,19 +15,24 @@ VISH.VideoPlayer = (function(){
 			video.addEventListener('ended', function () {
 				//console.log("Ended " + video.currentTime)
 			}, false);
+			
+			//PREVENT KEYBOARD EVENTS ON FIREFOX!
+			$(video).focus(function(event) {
+        this.blur();
+      });
 		});
 	}
 	
 		
 	/**
-	 * Function to start videos with autoplayonslideenter param
+	 * Function to start all videos of a slide
 	 */
-	var autoPlayVideos = function(element){
+	var playVideos = function(element){
 		var currentVideos = $(element).find("video");
 		$.each(currentVideos, function(index, video) {
 			
 			if ($(video).attr("wasplayingonslideleave")=="true"){
-				video.play()
+			  video.play()
 			} else if ($(video).attr("wasplayingonslideleave")=="false"){
 				//Do nothing
 			} else if (typeof $(video).attr("wasplayingonslideleave") == "undefined"){
@@ -43,7 +48,7 @@ VISH.VideoPlayer = (function(){
 	
 	
 	/**
-	 * Function to stop all the videos of a slide
+	 * Function to stop all videos of a slide
 	 */
 	var stopVideos = function(element){
 		var currentVideos = $(element).find("video");
@@ -58,7 +63,7 @@ VISH.VideoPlayer = (function(){
 
 	return {
 		setVideoTagEvents: setVideoTagEvents,
-		autoPlayVideos: autoPlayVideos,
+		playVideos: playVideos,
 		stopVideos:stopVideos
 	};
 

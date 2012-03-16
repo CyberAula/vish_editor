@@ -11,15 +11,33 @@ VISH.SWFPlayer = (function(){
 	};
 
 	/**
+	 * Function to add the iframe object to the slide
+	 */
+	var loadIframe = function(element){
+		$.each(element.children('.iframeelement'),function(index,value){
+			$(value).append($(value).attr('src'));
+		});
+	};
+
+	/**
 	 * Function to remove the flash objects from the slides
 	 */
 	var unloadSWF = function(element){
 		$('.swfelement embed').remove();
 	}
+	
+	/**
+	 * Function to remove the iframe objects from the slides
+	 */
+	var unloadIframe = function(element){
+		$('.iframeelement iframe').remove();
+	}
 
 	return {
 		loadSWF:loadSWF,
-		unloadSWF:unloadSWF
+		loadIframe:loadIframe,
+		unloadSWF:unloadSWF,
+		unloadIframe:unloadIframe
 	};
 
 })(VISH,jQuery);
