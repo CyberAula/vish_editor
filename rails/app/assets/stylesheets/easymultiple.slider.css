@@ -1,0 +1,58 @@
+/* Easy Slider */
+
+#ytb_slider_content ul, #ytb_slider_content li
+{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#ytb_slider_content li
+{ 
+	/* 
+		define width and height of list item (slide)
+		entire slider area will adjust according to the parameters provided here
+	*/ 
+	width:140px;
+	height:103px;
+	overflow:hidden; 
+	float:left;
+}					
+
+/* // Easy Slider */
+
+/* CSS for single Slide */
+.ytb_slide {
+    background: #f4f4f4;
+	border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+	width:100%;
+	height:100%;
+}
+.ytb_slide p /* no tenemos p ni a*/
+{
+	color:#333333;
+	font-size:11px;
+	line-height:14px;
+	padding:0 10px 0 0;
+	text-align:left;
+	width:223px;
+}
+/*.ytb_slide p a {
+	background-color:#F5F5F5;
+	border-bottom:1px solid #E7E7E7;
+	border-top:1px solid #E7E7E7;
+	color:#3981C5;
+	display:block;
+	font-family:Times,Serif;
+	font-size:15px;
+	height:15px;
+	line-height:15px;
+	margin:3px 0 2px;
+	padding:2px 0;
+	text-decoration:none;
+} */
+/* CSS for single Slide */
+
+
