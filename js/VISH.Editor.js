@@ -52,22 +52,23 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-	/** Funcion to get an youtube video and embed into the zone
-	**/
-
+	/** 
+	 * Funcion to get an youtube video and embed into the zone
+	 */
 	var getYoutubeVideo = function (video_id) {
 		$.fancybox.close();
 		//generate embed for the video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe type="text/html"style="width:400px; height:300px;" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='"+video_embedded+"' frameborder='0'></iframe>";
 		//insert embed in zone
-		params['current_el'].attr('type','flash');
+		params['current_el'].attr('type','iframe');
 		params['current_el'].html(final_video);
 		
 	};
-	/** Funcion to show a preview youtube video and select to embed into the zone
-	**/
-
+	
+	/** 
+	 * Funcion to show a preview youtube video and select to embed into the zone
+	 */
 	var showYoutubeVideo = function(video_id) {
 		//generate embed for the preview video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
@@ -121,11 +122,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.type   = $(div).attr('type');
 					element.areaid = $(div).attr('areaid');
 					if(element.type==="text"){
-						element.body   = $(div).html();
+						//TODO make this text json safe
+						element.body   = $(div).find("div").html();
 					} else if(element.type==="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = $(div).find('img').attr('style');
+					} else if(element.type==="iframe"){
+						element.body   = $(div).html();
 					}
+					slide.elements.push(element);
+					element = {};
 				}
 			});
 			excursion.slides.push(slide);
@@ -134,20 +140,21 @@ VISH.Editor = (function(V,$,undefined){
 		var jsonexcursion = JSON.stringify(excursion);
 		console.log(jsonexcursion);
 		
-		//$('article').remove();
-		//$('#menubar').remove();
-		//V.SlideManager.init(excursion);
+		$('article').remove();
+		$('#menubar').remove();
+		$(".nicEdit-panelContain").remove();
+		V.SlideManager.init(excursion);
 		
 		//POST to http://server/excursions/
 		
-		var params = {
-			"excursion[json]": jsonexcursion,
-			"authenticity_token" : initOptions["token"]
-		}
+		//var params = {
+		//	"excursion[json]": jsonexcursion,
+		//	"authenticity_token" : initOptions["token"]
+		//}
 		
-		$.post(initOptions["postPath"], params, function(data) {
-	      	alert("Return data: " + data);
-	    });
+		//$.post(initOptions["postPath"], params, function(data) {
+	    //  	alert("Return data: " + data);
+	    //});
 		
 	};
 
@@ -404,7 +411,7 @@ Will list the videos finded that match with the term wrote
 			});
 		});
 		//draw an empty div to preview the youtube video
-		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:225px;"></div>');
+		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:455px;"></div>');
 	};
 	
 
