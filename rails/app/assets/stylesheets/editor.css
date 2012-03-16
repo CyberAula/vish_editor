@@ -11,7 +11,7 @@
     -webkit-border-radius: 0px 0px 20px 20px;
 }
 
-.barbutton {
+.barbuttonaddsave{
 	position: relative;
 	top: 5px;
 	left: 5px;
@@ -22,7 +22,84 @@
 	cursor: pointer;
 	margin-bottom: 20px;
 	margin-right: 5px;
-	margin-left: 5px;
+	margin-left: 14px;
+	background-color: #CCC;
+	border-radius: 5px; 
+}
+
+#addslide_div{
+	background: url(/assets/add.png);
+}
+#addslide_div:hover{
+	background: url(/assets/clicked/add_clicked.png);
+}
+#save_div{
+	background: url(/assets/save.png);
+}
+#save_div:hover{
+	background: url(/assets/clicked/save_clicked.png);
+}
+
+#textthumb {
+	background: url(/assets/txt.png);
+	width: 44px;
+	height: 55px;
+}
+
+#textthumb:hover {
+	background: url(/assets/clicked/txt_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#imgthumb {
+	background: url(/assets/img.png);
+	width: 44px;
+	height: 55px;
+}
+
+#imgthumb:hover {
+	background: url(/assets/clicked/img_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#flashthumb {
+	background: url(/assets/flash.png);
+	width: 44px;
+	height: 55px;
+}
+
+#flashthumb:hover {
+	background: url(/assets/clicked/flash_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#videothumb {
+	background: url(/assets/video.png);
+	width: 44px;
+	height: 55px;
+}
+
+#videothumb:hover {
+	background: url(/assets/clicked/video_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+.barbutton {
+	position: relative;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	width: 60px;
+	height: 60px;
+	float: left;
+	cursor: pointer;
+	margin-bottom: 20px;
+	margin-right: 7px;
+	margin-left: 7px;
 }
 
 .image_barbutton{
@@ -65,9 +142,11 @@
 
 .menuicon{
 	float: left;
-	width: 100px;
-	height: 100px;
-	margin-right: 20px;
+	width: 45px;
+	height: 55px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 .menuicon img{
@@ -150,4 +229,27 @@
 .edit_pencil_img{
 	width: 30px;
 	height: 30px;
+}
+
+.addpicture {
+	weight: 50px;
+	height: 50px;
+}
+
+#picture_fancybox{
+	background: url(/assets/background_img_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
+}
+
+#flash_fancybox{
+	background: url(/assets/background_flash_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
+}
+
+#video_fancybox{
+	background: url(/assets/background_video_fancybox.png);
+	background-repeat:no-repeat;
+	background-position: right bottom;
 }
