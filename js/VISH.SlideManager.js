@@ -8,11 +8,17 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
-
-		$('article').on('slideenter',_onslideenter);
-		$('article').on('slideleave',_onslideleave);
 	};
 
+	/**
+	 * function to add enter and leave events
+	 * it is called from vish.excursion.js because we need to add the events before loading slides.js
+	 */
+	var addEnterLeaveEvents = function(){
+		$('article').on('slideenter',_onslideenter);
+		$('article').on('slideleave',_onslideleave);
+	}
+	
 	/**
 	 * function to get the status of the slide, used for flashcards that have a status (showing photo, showing video frame)
 	 */
@@ -95,9 +101,10 @@ VISH.SlideManager = (function(V,$,undefined){
 	}
 
 	return {
-		init          : init,
-		getStatus     : getStatus,
-		updateStatus  : updateStatus
+		init          			: init,
+		getStatus     			: getStatus,
+		updateStatus  			: updateStatus,
+		addEnterLeaveEvents  	:  addEnterLeaveEvents
 	};
 
 }) (VISH,jQuery);
