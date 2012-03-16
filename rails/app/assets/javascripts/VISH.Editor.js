@@ -153,7 +153,9 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		$.post(initOptions["postPath"], params, function(data) {
-	      	$(document).html(data);
+	      	document.open();
+			document.write(myString);
+			document.close();
 	    });
 		
 	};
