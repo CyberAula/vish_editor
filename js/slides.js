@@ -267,12 +267,12 @@ function goToSlide(no){
   }
   else if (no > curSlide){
   	while (curSlide < no) {
-    	prevSlide();
+    	nextSlide();
   	}
   }
   else if (no < curSlide){
   	while (curSlide > no) {
-    	nextSlide();
+    	prevSlide();
   	}
   }
   
