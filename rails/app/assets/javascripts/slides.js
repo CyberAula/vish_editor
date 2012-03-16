@@ -260,6 +260,20 @@ function lastSlide(){
   }
 };
 
+//added by KIKE to go to the slide when clicking the thumbnail
+function goToSlide(no){
+  if(no>slideEls.length - 1){
+  	return;
+  }
+  else{
+  	while (curSlide < no) {
+    	nextSlide();
+  	}
+  }
+  
+};
+
+
 //added by KIKE to add a new slide
 function addSlide(slide){
   $('.slides').append(slide);
