@@ -11,6 +11,83 @@
     -webkit-border-radius: 0px 0px 20px 20px;
 }
 
+.barbuttonaddsave{
+	position: relative;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	width: 60px;
+	height: 60px;
+	float: left;
+	cursor: pointer;
+	margin-bottom: 20px;
+	margin-right: 5px;
+	margin-left: 14px;
+	background-color: #CCC;
+	border-radius: 5px; 
+}
+
+#addslide_div{
+	background: url(/images/add.png);
+}
+#addslide_div:hover{
+	background: url(/images/clicked/add_clicked.png);
+}
+#save_div{
+	background: url(/images/save.png);
+}
+#save_div:hover{
+	background: url(/images/clicked/save_clicked.png);
+}
+
+#textthumb {
+	background: url(/images/txt.png);
+	width: 44px;
+	height: 55px;
+}
+
+#textthumb:hover {
+	background: url(/images/clicked/txt_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#imgthumb {
+	background: url(/images/img.png);
+	width: 44px;
+	height: 55px;
+}
+
+#imgthumb:hover {
+	background: url(/images/clicked/img_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#flashthumb {
+	background: url(/images/flash.png);
+	width: 44px;
+	height: 55px;
+}
+
+#flashthumb:hover {
+	background: url(/images/clicked/flash_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
+#videothumb {
+	background: url(/images/video.png);
+	width: 44px;
+	height: 55px;
+}
+
+#videothumb:hover {
+	background: url(/images/clicked/video_clicked.png);
+	width: 44px;
+	height: 55px;
+}
+
 .barbutton {
 	position: relative;
 	top: 5px;
@@ -65,9 +142,11 @@
 
 .menuicon{
 	float: left;
-	width: 100px;
-	height: 100px;
-	margin-right: 20px;
+	width: 45px;
+	height: 55px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 .menuicon img{
@@ -150,4 +229,9 @@
 .edit_pencil_img{
 	width: 30px;
 	height: 30px;
+}
+
+.addpicture {
+	weight: 50px;
+	height: 50px;
 }

@@ -40,11 +40,11 @@
     <div id="wrappter">
     <section class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
-		    <div class='barbutton'>
-				<a id="addslide" href="#thumbcontent">
-				    <img class="image_barbutton" src="/images/add.png"/>
-				</a>
-		    </div>
+	        <a id="addslide" href="#thumbcontent">
+			    <div id="addslide_div" class='barbuttonaddsave'>
+			    </div>
+            </a>
+
 		    <div class='barbutton'>
 				<a id="slide_thumb_1">
 				    <img class="image_barbutton" src="/images/arrow_left.png"/>
@@ -94,12 +94,11 @@
 				<a id="slide_thumb_1">
 				    <img class="image_barbutton" src="/images/arrow_right.png"/>
 				</a>
-		    </div>
-		    <div class='barbutton'>
-				<a id="save">
-				    <img class="image_barbutton" src="/images/save.png"/>
-				</a>
-		    </div>
+		    </div>		    
+            <a id="save" href="#thumbcontent">
+			    <div id="save_div" class='barbuttonaddsave'>
+			    </div>
+            </a>
 		</div>
     </section>
   
@@ -116,24 +115,20 @@
   
   <div style='display:none'>
     <div id='menuselect'>
-		<div class='menuicon textthumb'>
-		    <img src='images/text-editor.png' />
+		<div class='menuicon textthumb' id='textthumb'>
 		</div>
-		<div class='menuicon picthumb'>
-		    <a class="addpicture" href="#picture_fancybox">
-				<img src='images/picture-editor.png' />
-		    </a>
-		</div>
-		<div class='menuicon flashthumb'>
-		    <a class="addflash" href="#flash_fancybox">
-				<img src='images/flash-editor.png' />
-		    </a>
-		</div>
-		<div class='menuicon'>
-		    <a class="addvideo" href="#video_fancybox">
-				<img src='images/video-editor.png' />
-		    </a>
-		</div>
+        <a class="addpicture" href="#picture_fancybox">
+            <div class='menuicon picthumb' id='imgthumb'>
+            </div>
+        </a>
+        <a class="addflash" href="#flash_fancybox">
+            <div class='menuicon flashthumb' id='flashthumb'>
+            </div>
+        </a>
+        <a class="addvideo" href="#video_fancybox">
+            <div class='menuicon' id='videothumb'>
+            </div>
+        </a>
     </div>
   </div>
   
