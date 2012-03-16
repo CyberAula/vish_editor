@@ -253,3 +253,10 @@
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
+
+.slide_number{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 30px;
+}

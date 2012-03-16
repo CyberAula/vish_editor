@@ -262,7 +262,7 @@ function lastSlide(){
 
 //added by KIKE to go to the slide when clicking the thumbnail
 function goToSlide(no){
-  if(no>slideEls.length - 1){
+  if(no >= slideEls.length - 1){
   	return;
   }
   else if (no > curSlide){
