@@ -154,7 +154,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		$.post(initOptions["postPath"], params, function(data) {
 	      	document.open();
-			document.write(myString);
+			document.write(data);
 			document.close();
 	    });
 		
