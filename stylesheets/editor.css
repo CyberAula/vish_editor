@@ -6,6 +6,9 @@
 	bottom:0px;
 	left: 0px;
 	border-top: 2px solid black;
+	border-radius: 0px 0px 20px 20px;
+    -moz-border-radius: 0px 0px 20px 20px;
+    -webkit-border-radius: 0px 0px 20px 20px;
 }
 
 .barbutton {
