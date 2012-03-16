@@ -58,7 +58,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			fcElem = _getFlashcardFromSlideId(slideId);	
 			V.Mods.fc.player.init(fcElem, slideId);
 		}
-		V.VideoPlayer.playVideos(e.target)
+		V.VideoPlayer.playVideos(e.target);
 	};
 
 	/**
