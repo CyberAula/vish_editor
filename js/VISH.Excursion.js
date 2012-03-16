@@ -38,6 +38,8 @@ VISH.Excursion = (function(V,undefined){
 		
 		V.VideoPlayer.setVideoTagEvents()
 		
+		V.SlideManager.addEnterLeaveEvents();
+		
 		//$.getScript('js/slides.js',function(){
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
