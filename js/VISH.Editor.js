@@ -74,7 +74,7 @@ VISH.Editor = (function(V,$,undefined){
 	var showYoutubeVideo = function(video_id) {
 		//generate embed for the preview video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px;"" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="'+video_embedded+'" frameborder="0"></iframe>';
 		$("#youtube_preview").html(final_video);
 		if($("#preview_video_button")){
 		$("#preview_video_button").remove();		
@@ -87,13 +87,12 @@ VISH.Editor = (function(V,$,undefined){
 	var drawYoutubeSlides = function (page) {
 	
 		if (vid_array.length==0) {
-			console.log("empty array");
+			console.log("empty array"); //
 		} 
 		else {
 			var count = 0;
 			count = (page*5+1)-5;
-			console.log("page is " + page + " and count vale : " + count);
-
+			
 			$(".ytb_slide").remove();	
 			var i;
 			
@@ -103,11 +102,23 @@ VISH.Editor = (function(V,$,undefined){
 				count+=1;
 			}
 	//add page number (each page contents 5 slides)
+		var tot_num_pag = queryMaxMaxNumberYoutubeVideo/5;
+			
+			
 		var prev = parseInt(page)-1;		
+		
 		$("#a_prev_but_ytb").attr("href", 'javascript:VISH.Editor.drawYoutubeSlides(\''+ prev+'\')');
 		var next = parseInt(page)+1;
 		$("#a_next_but_ytb").attr("href", 'javascript:VISH.Editor.drawYoutubeSlides(\''+next+'\')');
-
+		//no action preview button if fisrt page
+		if (page==1) { 
+			$("#a_prev_but_ytb").attr("href", 'javascript:void(0)');
+		}
+		
+				//no action next button	if last page
+		else if (page==tot_num_pag) { 
+			$("#a_next_but_ytb").attr("href", 'javascript:void(0)');
+		}
 	}
 }
 
@@ -400,10 +411,7 @@ Will list the videos finded that match with the term wrote
 */
 
 	var _listVideo = function(event){
-		//var vid_array = new Array();
-		
-		console.log("_listVideo!")
-		
+				
 		var template = params['current_el'].parent().attr('template');	
 		
 		/* changed for sliding , before was searchResultsVideoListTable*/
@@ -437,10 +445,7 @@ Will list the videos finded that match with the term wrote
 
 		
 	//adding content searchForm 
-	//commented while trying slider
-		/*$("#tab_video_youtube_content").append('<table id="searchResultsVideoListTable"> </table>');
-		$("#searchResultsVideoListTable").append('<tr id="video_row"> </tr>');
-		*/
+	
 		jQuery.getJSON(url_youtube,function (data) {
 
 			$.each(data.feed.entry, function(i, item) {
@@ -454,25 +459,19 @@ Will list the videos finded that match with the term wrote
 //url's video thumbnail 
 				var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
 			
-			//commented while trying slider	
-				/*$("#video_row").append('<td><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></td>');
-				*/			
-			
-			/*adding div for sliding , commented for doing a for ...  */
-			/*$("#ul_ytb_vid").append('<li><div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div></li>');	 */
-			
-//metemos en un array todas las imágenes y sus respectivos links ...etc...
-vid_array[i+1]='<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div>';
-console.log("and array "+ i +" is: " + vid_array[i] );
+//new way for slidding using array like a container 
+				vid_array[i+1]='<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div>';
+		
 			});
 
-//llamamos a una función que pinte los 5 arrays primeros 
+//call to the function that draws five video slides and paginates them
 
-	
-		drawYoutubeSlides(1); //primera página
+		drawYoutubeSlides(1); 
+		//use drawYouTubeSlides (number of page to draw) 
+		
 		});
 		//draw an empty div to preview the youtube video
-		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:455px; padding-left:30%;"></div>');
+		$("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:350px; padding-left:30%;"></div>');
 	
 
 
