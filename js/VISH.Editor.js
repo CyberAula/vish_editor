@@ -137,6 +137,14 @@ VISH.Editor = (function(V,$,undefined){
 	    $(".fancy_tab_content").hide();
 	    //show content
 	    $("#" + tab_id + "_content").show();
+
+			switch(tab_id)	{
+				case "tab_video_repo":
+				  VISH.Editor.Video.Repository.onLoadTab();
+				  break;
+				default:
+				  break;
+			}	
 	};
 
 	/**
@@ -423,13 +431,11 @@ Will list the videos finded that match with the term wrote
 
 		}
 		if($("#preview_video_button")){
-		$("#preview_video_button").remove();		
+		  $("#preview_video_button").remove();		
 		}
 		if($("#youtube_preview")){
-		$("#youtube_preview").remove();		
+		  $("#youtube_preview").remove();		
 		}
-
-		
 		
 		var term = $('#youtube_input_text').val();
 		
@@ -479,8 +485,6 @@ Will list the videos finded that match with the term wrote
 
 
 };
-	
-
 	
 
 
