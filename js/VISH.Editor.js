@@ -32,6 +32,8 @@ VISH.Editor = (function(V,$,undefined){
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);	
+
+		
 	};
 	
 		
@@ -61,7 +63,7 @@ VISH.Editor = (function(V,$,undefined){
 		$.fancybox.close();
 		//generate embed for the video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='"+video_embedded+"' frameborder='0'></iframe>";
+		var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
 		//insert embed in zone
 		params['current_el'].attr('type','iframe');
 		params['current_el'].html(final_video);
@@ -428,10 +430,11 @@ Will list the videos finded that match with the term wrote
 */
 
 	var _listVideo = function(event){
+		
 				
 		var template = params['current_el'].parent().attr('template');	
 		
-		/* changed for sliding , before was searchResultsVideoListTable*/
+		//remove preview elements
 		if ($("#ytb_slider_content")) {
 			$("#ytb_slider_content").remove();
 
