@@ -74,7 +74,7 @@ VISH.Editor = (function(V,$,undefined){
 	var showYoutubeVideo = function(video_id) {
 		//generate embed for the preview video
 		var video_embedded = "http://www.youtube.com/embed/"+video_id;
-		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="'+video_embedded+'" frameborder="0"></iframe>';
+		var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
 		$("#youtube_preview").html(final_video);
 		if($("#preview_video_button")){
 		$("#preview_video_button").remove();		
@@ -142,6 +142,12 @@ VISH.Editor = (function(V,$,undefined){
 				case "tab_video_repo":
 				  VISH.Editor.Video.Repository.onLoadTab();
 				  break;
+				case "tab_video_youtube":
+				$("#ytb_slider_content").remove();
+				  $("#youtube_preview").remove();
+				$("#preview_video_button").remove();
+
+				break;
 				default:
 				  break;
 			}	
