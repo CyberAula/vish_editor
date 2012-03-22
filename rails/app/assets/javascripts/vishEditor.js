@@ -9893,39 +9893,6 @@ VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
 VISH.ImagesPath = "/assets/";
 VISH.StylesheetsPath = "/assets/";
-VISH.AppletPlayer = function() {
-  var loadApplet = function(element) {
-    $.each(element.children(".appletelement"), function(index, value) {
-      var toAppend = "<applet code='" + $(value).attr("code") + "' width='" + $(value).attr("width") + "' height='" + $(value).attr("height") + "' archive='" + $(value).attr("archive") + "'>" + $(value).attr("params") + "</applet>";
-      $(value).append(toAppend)
-    })
-  };
-  var unloadApplet = function(element) {
-    $(".appletelement applet").remove()
-  };
-  return{loadApplet:loadApplet, unloadApplet:unloadApplet}
-}(VISH, jQuery);
-VISH.Dummies = function(VISH, undefined) {
-  var nextDivId = 1;
-  var nextArticleId = 1;
-  var dummies = ["<article id='article_id_to_change' template='t1'><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background'></div></article>", "<article id='article_id_to_change' template='t2'><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background'></div></article>"];
-  var getDummy = function(template) {
-    return _replaceIds(dummies[parseInt(template, 10) - 1])
-  };
-  var _replaceIds = function(string) {
-    var newString = string;
-    while(newString.indexOf("div_id_to_change") != -1) {
-      newString = newString.replace("div_id_to_change", "zone" + nextDivId);
-      nextDivId++
-    }
-    while(newString.indexOf("article_id_to_change") != -1) {
-      newString = newString.replace("article_id_to_change", "article" + nextArticleId);
-      nextArticleId++
-    }
-    return newString
-  };
-  return{getDummy:getDummy}
-}(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
   var params = {current_el:null};
@@ -9959,13 +9926,13 @@ VISH.Editor = function(V, $, undefined) {
   var getYoutubeVideo = function(video_id) {
     $.fancybox.close();
     var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='" + video_embedded + "' frameborder='0'></iframe>";
+    var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
     params["current_el"].attr("type", "iframe");
     params["current_el"].html(final_video)
   };
   var showYoutubeVideo = function(video_id) {
     var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '" frameborder="0"></iframe>';
+    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")) {
       $("#preview_video_button").remove()
@@ -10002,7 +9969,19 @@ VISH.Editor = function(V, $, undefined) {
     $(".fancy_tab").removeClass("fancy_selected");
     $("#" + tab_id).addClass("fancy_selected");
     $(".fancy_tab_content").hide();
-    $("#" + tab_id + "_content").show()
+    $("#" + tab_id + "_content").show();
+    switch(tab_id) {
+      case "tab_video_repo":
+        VISH.Editor.Video.Repository.onLoadTab();
+        break;
+      case "tab_video_youtube":
+        $("#ytb_slider_content").remove();
+        $("#youtube_preview").remove();
+        $("#preview_video_button").remove();
+        break;
+      default:
+        break
+    }
   };
   var _onSaveButtonClicked = function() {
     var excursion = {};
@@ -10043,12 +10022,10 @@ VISH.Editor = function(V, $, undefined) {
     });
     var jsonexcursion = JSON.stringify(excursion);
     console.log(jsonexcursion);
-    var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
-    $.post(initOptions["postPath"], params, function(data) {
-      document.open();
-      document.write(data);
-      document.close()
-    })
+    $("article").remove();
+    $("#menubar").remove();
+    $(".nicEdit-panelContain").remove();
+    V.SlideManager.init(excursion)
   };
   var _loadCSS = function(path) {
     $("head").append("<link>");
@@ -10186,6 +10163,137 @@ VISH.Editor = function(V, $, undefined) {
     $.fancybox.close()
   };
   return{init:init, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getYoutubeVideo:getYoutubeVideo, pasteHTML5Video:pasteHTML5Video, showYoutubeVideo:showYoutubeVideo, drawYoutubeSlides:drawYoutubeSlides}
+}(VISH, jQuery);
+VISH.Editor.Video = function(V, $, undefined) {
+  var dummy = new function() {
+    return""
+  };
+  return{dummy:dummy}
+}(VISH, jQuery);
+VISH.AppletPlayer = function() {
+  var loadApplet = function(element) {
+    $.each(element.children(".appletelement"), function(index, value) {
+      var toAppend = "<applet code='" + $(value).attr("code") + "' width='" + $(value).attr("width") + "' height='" + $(value).attr("height") + "' archive='" + $(value).attr("archive") + "'>" + $(value).attr("params") + "</applet>";
+      $(value).append(toAppend)
+    })
+  };
+  var unloadApplet = function(element) {
+    $(".appletelement applet").remove()
+  };
+  return{loadApplet:loadApplet, unloadApplet:unloadApplet}
+}(VISH, jQuery);
+VISH.Dummies = function(VISH, undefined) {
+  var nextDivId = 1;
+  var nextArticleId = 1;
+  var dummies = ["<article id='article_id_to_change' template='t1'><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background'></div></article>", "<article id='article_id_to_change' template='t2'><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background'></div></article>"];
+  var getDummy = function(template) {
+    return _replaceIds(dummies[parseInt(template, 10) - 1])
+  };
+  var _replaceIds = function(string) {
+    var newString = string;
+    while(newString.indexOf("div_id_to_change") != -1) {
+      newString = newString.replace("div_id_to_change", "zone" + nextDivId);
+      nextDivId++
+    }
+    while(newString.indexOf("article_id_to_change") != -1) {
+      newString = newString.replace("article_id_to_change", "article" + nextArticleId);
+      nextArticleId++
+    }
+    return newString
+  };
+  return{getDummy:getDummy}
+}(VISH);
+VISH.Editor.Carrousel = function(V, $, undefined) {
+  var createCarrousel = function(containerId, rows, callback) {
+    var multipleRow = rows > 1;
+    if(multipleRow) {
+      var rowClass = "multiple_row"
+    }else {
+      var rowClass = "single_row"
+    }
+    var wrapperDiv = $("#" + containerId);
+    wrapperDiv.attr("class", "image_carousel");
+    wrapperDiv.removeAttr("id");
+    var mainDiv = document.createElement("div");
+    $(mainDiv).html($(wrapperDiv).html());
+    $(wrapperDiv).html("");
+    mainDiv.setAttribute("id", containerId);
+    var clearFix = document.createElement("div");
+    clearFix.setAttribute("class", "clearfix");
+    var button_prev = document.createElement("a");
+    var button_next = document.createElement("a");
+    button_prev.setAttribute("class", "prev");
+    button_next.setAttribute("class", "next");
+    $(button_prev).addClass("prev_" + rowClass);
+    $(button_next).addClass("next_" + rowClass);
+    button_prev.setAttribute("href", "#");
+    button_next.setAttribute("href", "#");
+    button_prev.setAttribute("id", "carrousel_prev");
+    button_next.setAttribute("id", "carrousel_next");
+    $(button_prev).html("<span>prev</span>");
+    $(button_next).html("<span>next</span>");
+    var paginationDiv = document.createElement("div");
+    paginationDiv.setAttribute("class", "pagination");
+    paginationDiv.setAttribute("id", "carrousel_pag");
+    $(wrapperDiv).append(clearFix);
+    $(wrapperDiv).append(button_prev);
+    $(wrapperDiv).append(button_next);
+    $(wrapperDiv).append(paginationDiv);
+    $(mainDiv).children().addClass("carrousel_element_" + rowClass);
+    $(mainDiv).children().click(function(event) {
+      callback(event)
+    });
+    if(multipleRow) {
+      applyMultipleRows(wrapperDiv, mainDiv, rows)
+    }else {
+      $(wrapperDiv).prepend(mainDiv);
+      setMainCarrousel(containerId)
+    }
+    return"Done"
+  };
+  var applyMultipleRows = function(wrapperDiv, mainDiv, rows) {
+    var synchronizeIds = [];
+    var i;
+    for(i = 0;i < rows;i++) {
+      window[mainDiv.id + "_row" + i] = document.createElement("div");
+      window[mainDiv.id + "_row" + i].setAttribute("id", mainDiv.id + "_row" + i);
+      if(i != 0) {
+        synchronizeIds.push(mainDiv.id + "_row" + i)
+      }
+    }
+    $(mainDiv).children().each(function(index, value) {
+      $(window[mainDiv.id + "_row" + index % rows]).append(value)
+    });
+    for(i = rows - 1;i >= 0;i--) {
+      $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i]);
+      if(i == 0) {
+        setMainCarrousel(mainDiv.id + "_row" + i, synchronizeIds)
+      }else {
+        setRowCarrousel(mainDiv.id + "_row" + i)
+      }
+    }
+  };
+  var setRowCarrousel = function(id) {
+    $("#" + id).carouFredSel({auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}})
+  };
+  var setMainCarrousel = function(id, synchronizeIds) {
+    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}, prev:{button:"#carrousel_prev", key:"left"}, next:{button:"#carrousel_next", key:"right"}, pagination:"#carrousel_pag"});
+    if(synchronizeIds) {
+      $(synchronizeIds).each(function(index, value) {
+        $("#" + id).trigger("configuration", ["synchronise", "#" + value])
+      })
+    }
+  };
+  return{createCarrousel:createCarrousel}
+}(VISH, jQuery);
+VISH.Editor.Video.Repository = function(V, $, undefined) {
+  var onLoadTab = function() {
+    VISH.Editor.Carrousel.createCarrousel("tab_video_repo_content_carrousel", 2, VISH.Editor.Video.Repository.onClickCarrouselElement)
+  };
+  var onClickCarrouselElement = function() {
+    console.log("onClickCarrouselElement! in VISH.Editor.Video.Repository!")
+  };
+  return{onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;

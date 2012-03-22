@@ -1,0 +1,100 @@
+.image_carousel {
+    padding: 15px 0 15px 5px;
+    position: relative;
+}
+
+.image_carousel img {
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 9px;
+    margin: 7px;
+    display: block;
+    float: left;
+}
+
+a.prev, a.next {
+    background: url(../assets/carrousel_sprite.png) no-repeat transparent;
+    width: 45px;
+    height: 50px;
+    display: block;
+    position: absolute;
+		outline: none;
+}
+
+a.prev_single_row, a.next_single_row{
+	  top: 85px;
+}
+
+a.prev_multiple_row, a.next_multiple_row{
+    top: 85px;
+}
+
+a.prev {
+  left: -10px;
+  background-position: 0 0; 
+}
+a.prev:hover {      
+  background-position: 0 -50px; 
+}
+a.prev.disabled {   
+  background-position: 0 -100px !important;  
+}
+a.next {  
+  right: 10px;
+	background-position: -50px 0; 
+}
+a.next:hover {      
+  background-position: -50px -50px; 
+}
+a.next.disabled {   
+  background-position: -50px -100px !important;  
+}
+a.prev.disabled, a.next.disabled {
+    cursor: default;
+}
+   
+a.prev span, a.next span {
+    display: none;
+}
+
+.pagination {
+    text-align: center;
+		margin-right: 22px;
+}
+
+.pagination a {
+    background: url(../assets/carrousel_sprite.png) 0 -300px no-repeat transparent;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px 0 0;
+    display: inline-block;
+		outline: none;
+}
+
+.pagination a.selected {
+    background-position: -25px -300px;
+    cursor: default;
+}
+
+.pagination a span {
+    display: none;
+}
+
+.clearfix {
+    float: none;
+    clear: both;
+}
+
+.carrousel_element_single_row{
+	width: 150px;
+	height: 150px;
+	max-width: 150px;
+  max-height: 150px;
+}
+
+.carrousel_element_multiple_row{
+  width: 150px;
+  height: 150px;
+  max-width: 150px;
+  max-height: 150px;
+}
