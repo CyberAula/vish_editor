@@ -19,13 +19,18 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
    * Funcion to get an youtube video and embed into the zone
    */
   var drawYoutubeVideo = function (video_id) {
+ 	var template = VISH.Editor.getTemplate();
+	var current_area = VISH.Editor.getCurrentArea();
+
+	var nextVideoId = VISH.Editor.getId();
     $.fancybox.close();
     //generate embed for the video
     var video_embedded = "http://www.youtube.com/embed/"+video_id;
-    var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
+    var final_video = "<iframe type='text/html' class='"+template+"'_video'  style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
     //insert embed in zone
 		var current_area = VISH.Editor.getCurrentArea();
     current_area.attr('type','iframe');
+   
     current_area.html(final_video);
   };
 
@@ -37,15 +42,14 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 */
   var showYoutubeVideo = function(e) {
     //generate embed for the preview video
-	console.log("evento target id :" + e.target.id);
-	console.log("id del video en el hash es :" + hash_youtube_video_id[e.target.id]);
-    var video_embedded = "http://www.youtube.com/embed/"+ hash_youtube_video_id[e.target.id];//video_id;
+	
+    var video_embedded = "http://www.youtube.com/embed/"+ hash_youtube_video_id[e.target.id];
     var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")){
     $("#preview_video_button").remove();    
     }
-     $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); // +video_id+
+     $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); 
   };
 
 
@@ -96,10 +100,9 @@ var listVideo = function(id){
 		    
 	var term = $('#' + id).val();		
 	var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
-    	console.log("Term to search value is : "+ term);
-
+    	
 	var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";
-	console.log("query  : "+ url_youtube);
+	
 //adding content searchForm 
   
 	jQuery.getJSON(url_youtube,function (data) {
@@ -107,7 +110,7 @@ var listVideo = function(id){
 		$.each(data.feed.entry, function(i, item) {
 
 		        var title = item['title']['$t']; //not used yet
-		//console.log("title es: "+title);
+		
 		        var video = item['id']['$t'];
 
 
@@ -117,10 +120,10 @@ var listVideo = function(id){
         		hash_youtube_video_id["vid"+i] = videoID;
 			
         		var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-			console.log("image url is : "+ image_url);
+			
 			$("#" + carrouselDivId).append('<img id="vid'+i+'" src="'+image_url+'" />');
 		});
-//call createCarrousel ( div_id, 1 , callbackFunction)
+//call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
 
 	VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 1, VISH.Editor.Video.Youtube.showYoutubeVideo);
 
@@ -130,70 +133,7 @@ var listVideo = function(id){
  $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:240px; padding-left:30%;"></div>');
 
 };
-//Commented for developing new listVideo (in carrousel)  
-/*  var listVideo = function(id){
-		    
-		var term = $('#' + id).val();		
-    var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
-    console.log("Term to search value is : "+ term);
-    //remove preview elements
-    if ($("#ytb_slider_content")) {
-      $("#ytb_slider_content").remove();
 
-    }
-    if($("#preview_video_button")){
-      $("#preview_video_button").remove();    
-    }
-    if($("#youtube_preview")){
-      $("#youtube_preview").remove();   
-    }
-    
-    var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";
-   //adding div for sliding 
-    $("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>'); 
-    $("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
-// trying do slider  
-    $("#ul_ytb_vid").append('<li id="prev_but_ytb" style="width:40px;  "><a id="a_prev_but_ytb" ><img src="images/arrow_left_strech.png"  /></a></li>');    
-    $("#ul_ytb_vid").append('<li id="vid_1"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_2"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_3"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_4"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_5"></ul>');
-    $("#ul_ytb_vid").append('<li id="next_but_ytb" style="width:40px;  "><a id="a_next_but_ytb"><img src="images/arrow_right_strech.png"  /></a></li>');
-
-    
-  //adding content searchForm 
-  
-    jQuery.getJSON(url_youtube,function (data) {
-
-      $.each(data.feed.entry, function(i, item) {
-        var title = item['title']['$t'];
-//console.log("title es: "+title);
-        var video = item['id']['$t'];
-        
-
-        video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
-        videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
-//url's video thumbnail 
-        var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-      
-//new way for slidding using array like a container 
-        vid_array[i+1]='<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.Video.Youtube.showYoutubeVideo(\''+videoID+'\')" id="link_'+i+' "><img id="img_'+i+'" src="'+image_url+'" width=130px height="97px"></a></div>';
-    
-      });
-
-//call to the function that draws five video slides and paginates them
-
-    drawYoutubeSlides(1); 
-    //use drawYouTubeSlides (number of page to draw) 
-    
-    });
-    //draw an empty div to preview the youtube video
-    $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:350px; padding-left:30%;"></div>');
-
-};
-
-*/
 
 
 	return {
