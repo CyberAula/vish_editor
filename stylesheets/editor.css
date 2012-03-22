@@ -27,17 +27,34 @@
 	border-radius: 5px; 
 }
 
-#addslide_div{
+#addslide_div {
 	background: url(/images/add.png);
 }
-#addslide_div:hover{
-	background: url(/images/clicked/add_clicked.png);
+#addslide_div:hover {
+	background: url(/images/hover/add_hover.png);
 }
+
+#arrow_left_div {
+	background: url(/images/arrow_left.png);
+}
+
+#arrow_left_div:hover {
+	background: url(/images/hover/arrow_left_hover.png);
+}
+
+#arrow_right_div {
+	background: url(/images/arrow_right.png);
+}
+
+#arrow_right_div:hover {
+	background: url(/images/hover/arrow_right_hover.png);
+}
+
 #save_div{
 	background: url(/images/save.png);
 }
 #save_div:hover{
-	background: url(/images/clicked/save_clicked.png);
+	background: url(/images/hover/save_hover.png);
 }
 
 #textthumb {
@@ -47,7 +64,7 @@
 }
 
 #textthumb:hover {
-	background: url(/images/clicked/txt_clicked.png);
+	background: url(/images/hover/txt_hover.png);
 	width: 44px;
 	height: 55px;
 }
@@ -59,7 +76,7 @@
 }
 
 #imgthumb:hover {
-	background: url(/images/clicked/img_clicked.png);
+	background: url(/images/hover/img_hover.png);
 	width: 44px;
 	height: 55px;
 }
@@ -71,7 +88,7 @@
 }
 
 #flashthumb:hover {
-	background: url(/images/clicked/flash_clicked.png);
+	background: url(/images/hover/flash_hover.png);
 	width: 44px;
 	height: 55px;
 }
@@ -83,7 +100,7 @@
 }
 
 #videothumb:hover {
-	background: url(/images/clicked/video_clicked.png);
+	background: url(/images/hover/video_hover.png);
 	width: 44px;
 	height: 55px;
 }
@@ -102,10 +119,6 @@
 	margin-left: 7px;
 }
 
-.image_barbutton{
-	width: 60px;
-	height: 60px;
-}
 
 #thumbcontent{
 	width: 100%;

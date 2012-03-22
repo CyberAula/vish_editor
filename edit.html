@@ -45,11 +45,9 @@
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
 	      </a>
-		    <div class='barbutton'>
-				<a onclick="javascript:prevSlide()">
-				    <img class="image_barbutton" src="/images/arrow_left.png"/>
-				</a>
-		    </div>
+          <a onclick="javascript:prevSlide()">
+		    <div id='arrow_left_div' class='barbutton'></div>
+          </a>
 		    <div class='barbutton'>
 				<a id="slide_thumb_1" onclick="javascript:goToSlide(0)">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
@@ -98,9 +96,9 @@
 				    <span class="slide_number">8</span>
 				</a>
 		    </div>
-		    <div class='barbutton'>
+		    <div class='barbutton' id='arrow_right_div'>
 				<a onclick="javascript:nextSlide()">
-				    <img class="image_barbutton" src="/images/arrow_right.png"/>
+				    <img class="image_barbutton"/>
 				</a>
 		    </div>		    
             <a id="save" href="#thumbcontent">
