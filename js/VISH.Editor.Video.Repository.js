@@ -1,50 +1,86 @@
 VISH.Editor.Video.Repository = (function(V,$,undefined){
 	
 	var carrouselDivId = "tab_video_repo_content_carrousel";
+	var previewDivId = "tab_video_repo_content_preview";
+	var currentVideos = new Array();
 	
 	var onLoadTab = function(){
-		loadData();
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Video.Repository.onClickCarrouselElement);
-	}
-	
-	var onClickCarrouselElement = function(){
-		console.log("onClickCarrouselElement! in VISH.Editor.Video.Repository!")
+		 _requestData();
 	}
 	
 	/*
-	 * Fill tab_video_repo_content_carrousel div with server data.
+	 * Request data to the server.
 	 */
-	var loadData = function(){
-		//Clean previous content
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId)
-		
-		
-		var json = getJson();
-		
-		//Parse JSON
-		//[...]
-		
-    //Fill data
-		$("#" + carrouselDivId).html(
-		        "<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg' />" +
-            "<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg' />" +
-            "<img src='http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg' />" +
-            "<img src='http://www.forodefotos.com/attachments/naturaleza/12983d1281113830-fotos-de-paisaje-fotos-de-paisaje.jpg' />" +
-            "<img src='http://ro18.blogspot.es/img/paisaje.jpg' />" +
-            "<img src='http://walpaper.es/images/wallpapers/Paisaje-fotografia-HDR-656343.jpeg' />" +
-            "<img src='http://3.bp.blogspot.com/-a-WrZZf0WJo/TsEBPXjUQXI/AAAAAAAAFBg/kh0aS9Kemag/s1600/PAISAJE+JUANMA.jpg' />" +
-            "<img src='http://images.artelista.com/artelista/obras/fichas/8/3/3/8619208014133041.JPG' />" +
-            "<img src='http://4.bp.blogspot.com/-CfZKEdXcXtg/TijG57sIFWI/AAAAAAAAARQ/O8FP1OQ0a0w/s1600/delfines-saltando.jpg' />"
-						);
+	var _requestData = function(){
+		VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived);
 	}
 	
-	var getJson = function(){
-    return VISH.Editor.API.requestVideos("any");
+	 /*
+   * Fill tab_video_repo_content_carrousel div with server data.
+   */
+	var onDataReceived = function(data){
+    //Clean previous content
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId)
+    
+    //Clean previous videos
+    currentVideos = new Array();  
+		
+    var content = "";
+    
+    $.each(data, function(index, video) {
+      content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>"
+      currentVideos[video.id]=video
+    });
+
+    $("#" + carrouselDivId).html(content);
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Video.Repository.onClickCarrouselElement);
   }
 	
+	 
+  var onClickCarrouselElement = function(event){
+    var videoId = $(event.target).attr("videoid");
+    var renderedVideo = _renderVideoElement(currentVideos[videoId])
+		_renderVideoPreview(renderedVideo,currentVideos[videoId])
+  }
+  
+  var _renderVideoElement = function(video){
+    var controls= "controls='controls' "
+    var poster="poster='" + video.poster + "'"
+    var rendered = "<video class='" + "videoPreview" + "' preload='metadata' " + controls + poster + ">"
+    var sources = JSON.parse(video.sources)
+    
+    $.each(sources, function(index, source) {
+      rendered = rendered + "<source src='" + source.src + "' type='" + source.mimetype + "'>"
+    });
+    
+    if(sources.length>0){
+      rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
+    }
+    
+    rendered = rendered + "</video>"
+		
+		return rendered
+  }
+	
+	var _renderVideoPreview = function(renderedVideo,video){
+		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video")
+		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata")
+		$(videoArea).html("")
+		$(metadataArea).html("")
+		$(videoArea).append(renderedVideo)
+		
+		$()
+		//Filling metadata with video fields...
+	}
+	
+	var getCurrentVideos = function(){
+		return currentVideos ;
+	}
 	
 	return {
 		onLoadTab					      : onLoadTab,
+		getCurrentVideos: getCurrentVideos,
+		onDataReceived  : onDataReceived,
 		onClickCarrouselElement : onClickCarrouselElement
 	};
 
