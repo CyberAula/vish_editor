@@ -10022,10 +10022,12 @@ VISH.Editor = function(V, $, undefined) {
     });
     var jsonexcursion = JSON.stringify(excursion);
     console.log(jsonexcursion);
-    $("article").remove();
-    $("#menubar").remove();
-    $(".nicEdit-panelContain").remove();
-    V.SlideManager.init(excursion)
+    var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
+    $.post(initOptions["postPath"], params, function(data) {
+      document.open();
+      document.write(data);
+      document.close()
+    })
   };
   var _loadCSS = function(path) {
     $("head").append("<link>");
