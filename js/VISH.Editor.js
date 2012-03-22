@@ -145,7 +145,7 @@ VISH.Editor = (function(V,$,undefined){
   /**
    * Removes the lightbox
    */
-  var closeFancybox = function(){
+  var _closeFancybox = function(){
     $.fancybox.close();
   };
 

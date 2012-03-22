@@ -158,8 +158,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 
 
 	return {
-		createCarrousel					: createCarrousel,
-		cleanCarrousel          : cleanCarrousel
+		createCarrousel		: createCarrousel,
+		cleanCarrousel    : cleanCarrousel
 	};
 
 }) (VISH, jQuery);

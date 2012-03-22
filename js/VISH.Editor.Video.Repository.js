@@ -44,7 +44,7 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	
 	
 	return {
-		onLoadTab					: onLoadTab,
+		onLoadTab					      : onLoadTab,
 		onClickCarrouselElement : onClickCarrouselElement
 	};
 

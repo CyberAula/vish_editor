@@ -45,7 +45,7 @@ VISH.Editor.Image = (function(V,$,undefined){
   };
 	
 	return {
-		onLoadTab					: onLoadTab,
+		onLoadTab		: onLoadTab,
 		drawImage   : drawImage
 	};
 

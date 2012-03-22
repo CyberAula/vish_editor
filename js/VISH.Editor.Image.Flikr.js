@@ -1,4 +1,4 @@
-VISH.Editor.Image.Repository = (function(V,$,undefined){
+VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 	var onLoadTab = function(){
 		
