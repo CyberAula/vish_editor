@@ -1,17 +1,19 @@
 VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	
+	var carrouselDivId = "tab_video_youtube_content_carrousel";
 	var queryMaxMaxNumberYoutubeVideo= 20; //maximum video query for youtube API's (999 max)
-	var vid_array = new Array(); //to manage video slider
+	var hash_youtube_video_id = new Array(); //to videoID param
 	
 	var onLoadTab = function(){
-    $("#ytb_slider_content").remove();
+   // $("#ytb_slider_content").remove();
     $("#youtube_preview").remove();
     $("#preview_video_button").remove();
+    //clean carrousel
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+	
 	}
 	
-	var onClickCarrouselElement = function(){
-		console.log("onClickCarrouselElement! in VISH.Editor.Video.Youtube!")
-	}
+
 
   /** 
    * Funcion to get an youtube video and embed into the zone
@@ -31,16 +33,19 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
   
   /** 
    * Funcion to show a preview youtube video and select to embed into the zone
-   */
-  var showYoutubeVideo = function(video_id) {
+   * video_id    
+*/
+  var showYoutubeVideo = function(e) {
     //generate embed for the preview video
-    var video_embedded = "http://www.youtube.com/embed/"+video_id;
+	console.log("evento target id :" + e.target.id);
+	console.log("id del video en el hash es :" + hash_youtube_video_id[e.target.id]);
+    var video_embedded = "http://www.youtube.com/embed/"+ hash_youtube_video_id[e.target.id];//video_id;
     var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")){
     $("#preview_video_button").remove();    
     }
-     $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+video_id+'\')" >add this video</button>');
+     $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); // +video_id+
   };
 
 
@@ -85,14 +90,52 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 
 /*
-Will list the videos finded that match with the term wrote
+(New) Will list the videos finded that match with the term wrote
 */
+var listVideo = function(id){
+		    
+	var term = $('#' + id).val();		
+	var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
+    	console.log("Term to search value is : "+ term);
 
-  var listVideo = function(id){
+	var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";
+	console.log("query  : "+ url_youtube);
+//adding content searchForm 
+  
+	jQuery.getJSON(url_youtube,function (data) {
+
+		$.each(data.feed.entry, function(i, item) {
+
+		        var title = item['title']['$t']; //not used yet
+		//console.log("title es: "+title);
+		        var video = item['id']['$t'];
+
+
+		        video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
+		        videoID=video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
+	//url's video thumbnail 
+        		hash_youtube_video_id["vid"+i] = videoID;
+			
+        		var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
+			console.log("image url is : "+ image_url);
+			$("#" + carrouselDivId).append('<img id="vid'+i+'" src="'+image_url+'" />');
+		});
+//call createCarrousel ( div_id, 1 , callbackFunction)
+
+	VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 1, VISH.Editor.Video.Youtube.showYoutubeVideo);
+
+	});
+
+ //draw an empty div to preview the youtube video
+ $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:240px; padding-left:30%;"></div>');
+
+};
+//Commented for developing new listVideo (in carrousel)  
+/*  var listVideo = function(id){
 		    
 		var term = $('#' + id).val();		
     var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
-    
+    console.log("Term to search value is : "+ term);
     //remove preview elements
     if ($("#ytb_slider_content")) {
       $("#ytb_slider_content").remove();
@@ -106,10 +149,10 @@ Will list the videos finded that match with the term wrote
     }
     
     var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+term+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";
-    /*adding div for sliding */
+   //adding div for sliding 
     $("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>'); 
     $("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
-/* trying do slider  */
+// trying do slider  
     $("#ul_ytb_vid").append('<li id="prev_but_ytb" style="width:40px;  "><a id="a_prev_but_ytb" ><img src="images/arrow_left_strech.png"  /></a></li>');    
     $("#ul_ytb_vid").append('<li id="vid_1"></ul>');
     $("#ul_ytb_vid").append('<li id="vid_2"></ul>');
@@ -150,16 +193,16 @@ Will list the videos finded that match with the term wrote
 
 };
 
-
+*/
 
 
 	return {
-		onLoadTab					: onLoadTab,
-		drawYoutubeVideo   : drawYoutubeVideo,
+		onLoadTab	  : onLoadTab,
+		drawYoutubeVideo  : drawYoutubeVideo,
 		showYoutubeVideo  : showYoutubeVideo, 
 		drawYoutubeSlides : drawYoutubeSlides,
 		listVideo         : listVideo,
-		onClickCarrouselElement : onClickCarrouselElement
+		
 	};
 
 }) (VISH, jQuery);
