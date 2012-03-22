@@ -216,6 +216,7 @@
 
 .fancy_tab_content{
 	padding: 30px 0px 20px 20px;
+	text-align:center;
 }
 
 .edit_pencil{
@@ -253,6 +254,7 @@
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
+
 
 .slide_number{
 	position: absolute;

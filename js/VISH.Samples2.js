@@ -1,6 +1,6 @@
-VISH.Samples = (function(V,undefined){
+VISH.Samples2 = (function(V,undefined){
 	
-	var samples = [
+	var samples2 = [
 		{
 			'id'       :'vish1',
 			'template' :'t1',
@@ -171,7 +171,7 @@ VISH.Samples = (function(V,undefined){
 		];
 
 	return {
-		samples: samples
+		samples2: samples2
 	};
 
 })(VISH);

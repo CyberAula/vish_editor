@@ -11,73 +11,149 @@ VISH.AppletPlayer = function() {
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
-  var dummies = ["<article template='t1'><div areaid='header' class='t1_header editable'></div><div areaid='left' class='t1_left editable'></div><div areaid='right' class='t1_right editable'></div></article>", "<article template='t2'><div areaid='header' class='t2_header editable'></div><div areaid='left' class='t2_left editable'></div></article>"];
+  var nextDivId = 1;
+  var nextArticleId = 1;
+  var dummies = ["<article id='article_id_to_change' template='t1'><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background'></div></article>", "<article id='article_id_to_change' template='t2'><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background'></div></article>"];
   var getDummy = function(template) {
-    return dummies[parseInt(template, 10) - 1]
+    return _replaceIds(dummies[parseInt(template, 10) - 1])
+  };
+  var _replaceIds = function(string) {
+    var newString = string;
+    while(newString.indexOf("div_id_to_change") != -1) {
+      newString = newString.replace("div_id_to_change", "zone" + nextDivId);
+      nextDivId++
+    }
+    while(newString.indexOf("article_id_to_change") != -1) {
+      newString = newString.replace("article_id_to_change", "article" + nextArticleId);
+      nextArticleId++
+    }
+    return newString
   };
   return{getDummy:getDummy}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
+  var initOptions;
   var params = {current_el:null};
-  var MENUBAR = "<div id='menubar'>\t<div class='barbutton' id='add'>\t</div>\t<div class='barbutton' id='quiz'>\t</div>\t<div class='barbutton' id='save'>\t</div>\t</div>";
-  var TEMPLATES = "<div id='thumbcontent'><div class='templatethumb' template='1'><img src='images/templatesthumbs/t1.png' /></div><div class='templatethumb' template='2'><img src='images/templatesthumbs/t2.png' /></div></div>";
-  var EDITORS = "<div class='menu'><div id='textthumb' class='menuicon'><img src='images/text-editor.png' /></div><div id='picthumb' class='menuicon'><img src='images/picture-editor.png' /></div></div>";
-  var MESSAGE = "This functionality has not been implemented yet, we are working on it";
   var nextImageId = 0;
-  var init = function() {
-    _loadCSS("stylesheets/editor.css");
-    $("body").append(MENUBAR);
+  var domId = 0;
+  var myNicEditor;
+  var vid_array = new Array;
+  var queryMaxMaxNumberYoutubeVideo = 20;
+  var init = function(options) {
+    initOptions = options;
+    $("a#addslide").fancybox();
     $(document).on("click", ".templatethumb", _onTemplateThumbClicked);
-    $(document).on("click", "#add", _onAddButtonClicked);
-    $(document).on("click", "#quiz", _onQuizButtonClicked);
     $(document).on("click", "#save", _onSaveButtonClicked);
     $(document).on("click", ".editable", _onEditableClicked);
-    $(document).on("click", "#textthumb", _launchTextEditor);
-    $(document).on("click", "#picthumb", _launchPicEditor);
-    $.getScript("./js/slides.js", function() {
-      var evt = document.createEvent("Event");
-      evt.initEvent("OURDOMContentLoaded", false, true);
-      document.dispatchEvent(evt)
-    })
+    $(document).on("click", ".edit_pencil", _onEditableClicked);
+    $(document).on("click", ".textthumb", _launchTextEditor);
+    $(document).on("click", "#youtube_search_button", _listVideo);
+    var evt = document.createEvent("Event");
+    evt.initEvent("OURDOMContentLoaded", false, true);
+    document.dispatchEvent(evt)
   };
-  var _onAddButtonClicked = function() {
-    smoke.alert(TEMPLATES)
+  var getNewId = function() {
+    domId = domId + 1;
+    return"unicID_" + domId
   };
-  var _onQuizButtonClicked = function() {
-    smoke.alert(MESSAGE)
+  var getValueFromFancybox = function(id_to_get) {
+    $.fancybox.close();
+    _drawImageInZone($("#" + id_to_get).val());
+    $("#" + id_to_get).val("")
+  };
+  var getYoutubeVideo = function(video_id) {
+    $.fancybox.close();
+    var video_embedded = "http://www.youtube.com/embed/" + video_id;
+    var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='" + video_embedded + "' frameborder='0'></iframe>";
+    params["current_el"].attr("type", "iframe");
+    params["current_el"].html(final_video)
+  };
+  var showYoutubeVideo = function(video_id) {
+    var video_embedded = "http://www.youtube.com/embed/" + video_id;
+    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '" frameborder="0"></iframe>';
+    $("#youtube_preview").html(final_video);
+    if($("#preview_video_button")) {
+      $("#preview_video_button").remove()
+    }
+    $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\'' + video_id + "')\" >add this video</button>")
+  };
+  var drawYoutubeSlides = function(page) {
+    if(vid_array.length == 0) {
+      console.log("empty array")
+    }else {
+      var count = 0;
+      count = page * 5 + 1 - 5;
+      $(".ytb_slide").remove();
+      var i;
+      for(i = 1;i <= 5;i++) {
+        $("#vid_" + i).append(vid_array[count]);
+        count += 1
+      }
+      var tot_num_pag = queryMaxMaxNumberYoutubeVideo / 5;
+      var prev = parseInt(page) - 1;
+      $("#a_prev_but_ytb").attr("href", "javascript:VISH.Editor.drawYoutubeSlides('" + prev + "')");
+      var next = parseInt(page) + 1;
+      $("#a_next_but_ytb").attr("href", "javascript:VISH.Editor.drawYoutubeSlides('" + next + "')");
+      if(page == 1) {
+        $("#a_prev_but_ytb").attr("href", "javascript:void(0)")
+      }else {
+        if(page == tot_num_pag) {
+          $("#a_next_but_ytb").attr("href", "javascript:void(0)")
+        }
+      }
+    }
+  };
+  var loadTab = function(tab_id) {
+    $(".fancy_tab").removeClass("fancy_selected");
+    $("#" + tab_id).addClass("fancy_selected");
+    $(".fancy_tab_content").hide();
+    $("#" + tab_id + "_content").show()
   };
   var _onSaveButtonClicked = function() {
-    var excursion = [];
+    var excursion = {};
+    excursion.id = "";
+    excursion.title = "";
+    excursion.description = "";
+    excursion.author = "";
+    excursion.slides = [];
     var slide = {};
     $("article").each(function(index, s) {
-      slide.id = "";
+      slide.id = $(s).attr("id");
       slide.template = $(s).attr("template");
       slide.elements = [];
       var element = {};
       $(s).find("div").each(function(i, div) {
         if($(div).attr("areaid") !== undefined) {
+          element.id = $(div).attr("id");
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
           if(element.type === "text") {
-            element.body = $(div).html()
+            element.body = $(div).find("div").html()
           }else {
             if(element.type === "image") {
               element.body = $(div).find("img").attr("src");
               element.style = $(div).find("img").attr("style")
+            }else {
+              if(element.type === "iframe") {
+                element.body = $(div).html()
+              }
             }
           }
           slide.elements.push(element);
           element = {}
         }
       });
-      excursion.push(slide);
+      excursion.slides.push(slide);
       slide = {}
     });
     var jsonexcursion = JSON.stringify(excursion);
     console.log(jsonexcursion);
-    $("article").remove();
-    $("#menubar").remove();
-    V.SlideManager.init(excursion)
+    var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
+    $.post(initOptions["postPath"], params, function(data) {
+      document.open();
+      document.write(data);
+      document.close()
+    })
   };
   var _loadCSS = function(path) {
     $("head").append("<link>");
@@ -85,55 +161,136 @@ VISH.Editor = function(V, $, undefined) {
     css.attr({rel:"stylesheet", type:"text/css", href:path})
   };
   var _onTemplateThumbClicked = function(event) {
-    $(".slides").append(V.Dummies.getDummy($(this).attr("template")));
-    _clearSmoke();
+    var slide = V.Dummies.getDummy($(this).attr("template"));
+    addSlide(slide);
+    _closeFancybox();
     var evt = document.createEvent("Event");
     evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt)
+    document.dispatchEvent(evt);
+    setTimeout("lastSlide()", 300)
   };
   var _onEditableClicked = function(event) {
+    $(this).removeClass("editable");
     params["current_el"] = $(this);
-    smoke.alert(EDITORS, function(e) {
-    })
+    var content = $("#menuselect").clone().attr("id", "");
+    content.find("a").each(function(index, domElem) {
+      $(domElem).attr("zone", params["current_el"].attr("id"))
+    });
+    $(this).html(content);
+    $("a.addpicture").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_pic_from_url")
+    }});
+    $("a.addflash").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_flash_from_url")
+    }});
+    $("a.addvideo").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_video_from_url")
+    }})
   };
   var _launchTextEditor = function(event) {
-    _clearSmoke();
-    smoke.prompt("Write your text", function(e) {
-      if(e) {
-        params["current_el"].attr("type", "text");
-        params["current_el"].html(e)
-      }
-    })
+    if(myNicEditor == null) {
+      myNicEditor = new nicEditor;
+      myNicEditor.setPanel("slides_panel")
+    }
+    params["current_el"].attr("type", "text");
+    var wysiwygId = "wysiwyg_" + params["current_el"][0].id;
+    var wysiwygWidth = params["current_el"].width() - 10;
+    var wysiwygHeight = params["current_el"].height() - 10;
+    params["current_el"].html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
+    myNicEditor.addInstance(wysiwygId)
   };
-  var _launchPicEditor = function(event) {
-    _clearSmoke();
+  var pasteHTML5Video = function(input_id) {
+    _closeFancybox();
+    var url = $("#" + input_id).val();
+    $("#" + input_id).val("");
     var template = params["current_el"].parent().attr("template");
-    smoke.prompt("Paste image url", function(e) {
-      if(e) {
-        var idToDragAndResize = "draggable" + nextImageId;
-        params["current_el"].attr("type", "image");
-        params["current_el"].html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + e + "' />");
-        if(params["current_el"].next().attr("class") === "theslider") {
-          params["current_el"].next().remove()
-        }
-        params["current_el"].after("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-        var divPos = params["current_el"].position();
-        var divHeight = params["current_el"].height();
-        $("#sliderId" + nextImageId).css("top", divPos.top + divHeight - 20);
-        $("#sliderId" + nextImageId).css("left", divPos.left);
-        $("#sliderId" + nextImageId).css("margin-left", "12px");
-        $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-          $("#" + idToDragAndResize).width(325 * value)
-        }});
-        $("#" + idToDragAndResize).draggable({cursor:"move"});
-        nextImageId += 1
-      }
-    })
+    var nextVideoId = getNewId();
+    var idToDragAndResize = "draggable" + nextVideoId;
+    params["current_el"].attr("type", "video");
+    var videoTag = document.createElement("video");
+    videoTag.setAttribute("id", idToDragAndResize);
+    videoTag.setAttribute("class", template + "_video");
+    videoTag.setAttribute("title", "Click to drag");
+    videoTag.setAttribute("controls", "controls");
+    videoTag.setAttribute("preload", "metadata");
+    videoTag.setAttribute("poster", "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg");
+    var videoSource = document.createElement("source");
+    videoSource.setAttribute("src", url);
+    var fallbackText = document.createElement("p");
+    $(fallbackText).html("Your browser does not support HTML5 video.");
+    $(videoTag).append(videoSource);
+    $(videoTag).append(fallbackText);
+    $(params["current_el"]).html("");
+    $(params["current_el"]).append(videoTag);
+    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>";
+    $(params["current_el"]).append(editTag);
+    $("#" + idToDragAndResize).draggable({cursor:"move"})
   };
-  var _clearSmoke = function() {
-    $(".smoke, .smoke-base, .smokebg").remove()
+  var _drawImageInZone = function(image_url) {
+    var template = params["current_el"].parent().attr("template");
+    var idToDragAndResize = "draggable" + nextImageId;
+    params["current_el"].attr("type", "image");
+    params["current_el"].html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' /><div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>");
+    if(params["current_el"].next().attr("class") === "theslider") {
+      params["current_el"].next().remove()
+    }
+    params["current_el"].after("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    var divPos = params["current_el"].position();
+    var divHeight = params["current_el"].height();
+    $("#sliderId" + nextImageId).css("top", divPos.top + divHeight + 10);
+    $("#sliderId" + nextImageId).css("left", divPos.left);
+    $("#sliderId" + nextImageId).css("margin-left", "12px");
+    $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      $("#" + idToDragAndResize).width(325 * value)
+    }});
+    $("#" + idToDragAndResize).draggable({cursor:"move"});
+    nextImageId += 1
   };
-  return{init:init}
+  var _listVideo = function(event) {
+    var template = params["current_el"].parent().attr("template");
+    if($("#ytb_slider_content")) {
+      $("#ytb_slider_content").remove()
+    }
+    if($("#preview_video_button")) {
+      $("#preview_video_button").remove()
+    }
+    if($("#youtube_preview")) {
+      $("#youtube_preview").remove()
+    }
+    var term = $("#youtube_input_text").val();
+    var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + term + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
+    $("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>');
+    $("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
+    $("#ul_ytb_vid").append('<li id="prev_but_ytb" style="width:40px;  "><a id="a_prev_but_ytb" ><img src="images/arrow_left_strech.png"  /></a></li>');
+    $("#ul_ytb_vid").append('<li id="vid_1"></ul>');
+    $("#ul_ytb_vid").append('<li id="vid_2"></ul>');
+    $("#ul_ytb_vid").append('<li id="vid_3"></ul>');
+    $("#ul_ytb_vid").append('<li id="vid_4"></ul>');
+    $("#ul_ytb_vid").append('<li id="vid_5"></ul>');
+    $("#ul_ytb_vid").append('<li id="next_but_ytb" style="width:40px;  "><a id="a_next_but_ytb"><img src="images/arrow_right_strech.png"  /></a></li>');
+    jQuery.getJSON(url_youtube, function(data) {
+      $.each(data.feed.entry, function(i, item) {
+        var title = item["title"]["$t"];
+        var video = item["id"]["$t"];
+        video = video.replace("http://gdata.youtube.com/feeds/api/videos/", "http://www.youtube.com/watch?v=");
+        videoID = video.replace("http://www.youtube.com/watch?v=", "");
+        var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
+        vid_array[i + 1] = '<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\'' + videoID + '\')" id="link_' + i + ' "><img id="img_' + i + '" src="' + image_url + '" width=130px height="97px"></a></div>'
+      });
+      drawYoutubeSlides(1)
+    });
+    $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:350px; padding-left:30%;"></div>')
+  };
+  var _closeFancybox = function() {
+    $.fancybox.close()
+  };
+  return{init:init, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getYoutubeVideo:getYoutubeVideo, pasteHTML5Video:pasteHTML5Video, showYoutubeVideo:showYoutubeVideo, drawYoutubeSlides:drawYoutubeSlides}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;
@@ -154,11 +311,11 @@ VISH.Excursion = function(V, undefined) {
         }
       }
     }
-    $.getScript("./js/slides.js", function() {
-      var evt = document.createEvent("Event");
-      evt.initEvent("OURDOMContentLoaded", false, true);
-      document.dispatchEvent(evt)
-    })
+    V.VideoPlayer.setVideoTagEvents();
+    V.SlideManager.addEnterLeaveEvents();
+    var evt = document.createEvent("Event");
+    evt.initEvent("OURDOMContentLoaded", false, true);
+    document.dispatchEvent(evt)
   };
   return{init:init}
 }(VISH);
@@ -177,23 +334,32 @@ VISH.Renderer = function(V, $, undefined) {
         if(slide.elements[el].type === "image") {
           content += _renderImage(slide.elements[el], slide.template)
         }else {
-          if(slide.elements[el].type === "swf") {
-            content += _renderSwf(slide.elements[el], slide.template);
-            classes += "swf "
+          if(slide.elements[el].type === "video") {
+            content += _renderVideo(slide.elements[el], slide.template)
           }else {
-            if(slide.elements[el].type === "applet") {
-              content += _renderApplet(slide.elements[el], slide.template);
-              classes += "applet "
+            if(slide.elements[el].type === "swf") {
+              content += _renderSwf(slide.elements[el], slide.template);
+              classes += "swf "
             }else {
-              if(slide.elements[el].type === "flashcard") {
-                content = _renderFlashcard(slide.elements[el], slide.template);
-                classes += "flashcard"
+              if(slide.elements[el].type === "iframe") {
+                content += _renderIframe(slide.elements[el], slide.template);
+                classes += "iframe "
               }else {
-                if(slide.elements[el].type === "openquestion") {
-                  content = _renderOpenquestion(slide.elements[el], slide.template)
+                if(slide.elements[el].type === "applet") {
+                  content += _renderApplet(slide.elements[el], slide.template);
+                  classes += "applet "
                 }else {
-                  if(slide.elements[el].type === "mcquestion") {
-                    content = _renderMcquestion(slide.elements[el], slide.template)
+                  if(slide.elements[el].type === "flashcard") {
+                    content = _renderFlashcard(slide.elements[el], slide.template);
+                    classes += "flashcard"
+                  }else {
+                    if(slide.elements[el].type === "openquestion") {
+                      content = _renderOpenquestion(slide.elements[el], slide.template)
+                    }else {
+                      if(slide.elements[el].type === "mcquestion") {
+                        content = _renderMcquestion(slide.elements[el], slide.template)
+                      }
+                    }
                   }
                 }
               }
@@ -205,22 +371,42 @@ VISH.Renderer = function(V, $, undefined) {
     SLIDE_CONTAINER.append("<article class='" + classes + "' id='" + slide.id + "'>" + content + "</article>")
   };
   var _renderText = function(element, template) {
-    return"<div class='" + template + "_" + element["areaid"] + " " + template + "_text" + "'>" + element["body"] + "</div>"
+    return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + " " + template + "_text" + "'>" + element["body"] + "</div>"
   };
   var _renderImage = function(element, template) {
-    return"<div class='" + template + "_" + element["areaid"] + "'><img class='" + template + "_image' src='" + element["body"] + "' style='" + element["style"] + "' /></div>"
+    return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + "'><img class='" + template + "_image' src='" + element["body"] + "' style='" + element["style"] + "' /></div>"
+  };
+  var _renderVideo = function(element, template) {
+    var rendered = "<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + "'>";
+    var controls = element["controls"] ? "controls='controls' " : "";
+    var autoplay = element["autoplay"] ? "autoplayonslideenter='true' " : "";
+    var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
+    var loop = element["loop"] ? "loop='loop' " : "";
+    var sources = JSON.parse(element["sources"]);
+    rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + controls + autoplay + poster + loop + ">";
+    $.each(sources, function(index, value) {
+      rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
+    });
+    if(sources.length > 0) {
+      rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
+    }
+    rendered = rendered + "</video>";
+    return rendered
   };
   var _renderSwf = function(element, template) {
-    return"<div class='swfelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_swf" + "' src='" + element["body"] + "'></div>"
+    return"<div id='" + element["id"] + "' class='swfelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_swf" + "' src='" + element["body"] + "'></div>"
+  };
+  var _renderIframe = function(element, template) {
+    return"<div id='" + element["id"] + "' class='iframeelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_iframe" + "' src='" + element["body"] + "'></div>"
   };
   var _renderApplet = function(element, template) {
-    return"<div class='appletelement " + template + "_" + element["areaid"] + "' code='" + element["code"] + "' width='" + element["width"] + "' height='" + element["height"] + "' archive='" + element["archive"] + "' params='" + element["params"] + "' ></div>"
+    return"<div id='" + element["id"] + "' class='appletelement " + template + "_" + element["areaid"] + "' code='" + element["code"] + "' width='" + element["width"] + "' height='" + element["height"] + "' archive='" + element["archive"] + "' params='" + element["params"] + "' ></div>"
   };
   var _renderFlashcard = function(element, template) {
-    return"<div class='template_flashcard'><canvas id='" + element["canvasid"] + "'>Your browser does not support canvas</canvas></div>"
+    return"<div id='" + element["id"] + "' class='template_flashcard'><canvas id='" + element["canvasid"] + "'>Your browser does not support canvas</canvas></div>"
   };
   var _renderOpenquestion = function(element, template) {
-    var ret = "<div class='question_title'>" + element["body"] + "</div>";
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["body"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
@@ -230,7 +416,7 @@ VISH.Renderer = function(V, $, undefined) {
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    var ret = "<div class='question_title'>" + element["body"] + "</div>";
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["body"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
@@ -248,26 +434,41 @@ VISH.SWFPlayer = function() {
       $(value).append("<embed src='" + $(value).attr("src") + "' class='" + $(value).attr("templateclass") + "' />")
     })
   };
+  var loadIframe = function(element) {
+    $.each(element.children(".iframeelement"), function(index, value) {
+      $(value).append($(value).attr("src"))
+    })
+  };
   var unloadSWF = function(element) {
     $(".swfelement embed").remove()
   };
-  return{loadSWF:loadSWF, unloadSWF:unloadSWF}
+  var unloadIframe = function(element) {
+    $(".iframeelement iframe").remove()
+  };
+  return{loadSWF:loadSWF, loadIframe:loadIframe, unloadSWF:unloadSWF, unloadIframe:unloadIframe}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = [{"id":"vish1", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual1"}, 
-  {"type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish8", "template":"t2", "elements":[{"type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish10", "template":"t2", "elements":[{"type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish11", "template":"t2", "elements":[{"type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}];
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", 
+  "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
+  "body":"Experimento virtual1"}, {"id":"326", "type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish8", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"329", "type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish11", "template":"t2", "elements":[{"id":"330", "type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}, {"id":"vish12", "template":"t2", "elements":[{"id":"331", 
+  "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"center", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish13", 
+  "template":"t1", "elements":[{"id":"333", "type":"text", "areaid":"header", "body":"Example of HTML5 video with autostart"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}]};
   return{samples:samples}
 }(VISH);
 VISH.SlideManager = function(V, $, undefined) {
   var mySlides = null;
   var slideStatus = {};
-  var init = function(slides) {
-    mySlides = slides;
-    V.Excursion.init(slides);
+  var init = function(excursion) {
+    mySlides = excursion.slides;
+    V.Excursion.init(mySlides)
+  };
+  var addEnterLeaveEvents = function() {
     $("article").on("slideenter", _onslideenter);
     $("article").on("slideleave", _onslideleave)
   };
@@ -282,12 +483,16 @@ VISH.SlideManager = function(V, $, undefined) {
   };
   var _onslideenter = function(e) {
     var fcElem, slideId;
-    -setTimeout(function() {
+    setTimeout(function() {
       if($(e.target).hasClass("swf")) {
         V.SWFPlayer.loadSWF($(e.target))
       }else {
         if($(e.target).hasClass("applet")) {
           V.AppletPlayer.loadApplet($(e.target))
+        }else {
+          if($(e.target).hasClass("iframe")) {
+            V.SWFPlayer.loadIframe($(e.target))
+          }
         }
       }
     }, 500);
@@ -296,6 +501,7 @@ VISH.SlideManager = function(V, $, undefined) {
       fcElem = _getFlashcardFromSlideId(slideId);
       V.Mods.fc.player.init(fcElem, slideId)
     }
+    V.VideoPlayer.playVideos(e.target)
   };
   var _getFlashcardFromSlideId = function(id) {
     var fc = null;
@@ -311,13 +517,15 @@ VISH.SlideManager = function(V, $, undefined) {
     return null
   };
   var _onslideleave = function(e) {
+    V.VideoPlayer.stopVideos(e.target);
     V.SWFPlayer.unloadSWF();
+    V.SWFPlayer.unloadIframe();
     V.AppletPlayer.unloadApplet();
     if($(e.target).hasClass("flashcard")) {
       V.Mods.fc.player.clear()
     }
   };
-  return{init:init, getStatus:getStatus, updateStatus:updateStatus}
+  return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
@@ -376,12 +584,12 @@ VISH.Utils.canvas = function(V, undefined) {
     finalw = dw + 2;
     finalh = dh + 2;
     if(type === "text") {
-      cornerFile = V.Utils.loader.getImage("images/corner_small_text.png")
+      cornerFile = V.Utils.loader.getImage(VISH.ImagesPath + "corner_small_text.png")
     }else {
       if(finalw > 300 && finalh > 300) {
-        cornerFile = V.Utils.loader.getImage("images/corner.png")
+        cornerFile = V.Utils.loader.getImage(VISH.ImagesPath + "corner.png")
       }else {
-        cornerFile = V.Utils.loader.getImage("images/corner_small.png")
+        cornerFile = V.Utils.loader.getImage(VISH.ImagesPath + "corner_small.png")
       }
     }
     ctx.save();
@@ -403,7 +611,6 @@ VISH.Utils.canvas = function(V, undefined) {
   };
   return{drawImageWithAspectRatioAndRoundedCorners:drawImageWithAspectRatioAndRoundedCorners, drawImageWithAspectRatio:drawImageWithAspectRatio, drawRoundedCorners:drawRoundedCorners}
 }(VISH);
-VISH.Utils = {};
 VISH.Utils.loader = function(V, undefined) {
   var libVideos = {};
   var libImages = {};
@@ -473,20 +680,176 @@ VISH.Utils.text = function(V, undefined) {
   };
   return{getLines:getLines}
 }(VISH);
+VISH.VideoPlayer = function() {
+  var setVideoTagEvents = function() {
+    var videos = $("video");
+    $.each(videos, function(index, video) {
+      video.addEventListener("play", function() {
+      }, false);
+      video.addEventListener("pause", function() {
+      }, false);
+      video.addEventListener("ended", function() {
+      }, false);
+      $(video).focus(function(event) {
+        this.blur()
+      })
+    })
+  };
+  var playVideos = function(element) {
+    var currentVideos = $(element).find("video");
+    $.each(currentVideos, function(index, video) {
+      if($(video).attr("wasplayingonslideleave") == "true") {
+        video.play()
+      }else {
+        if($(video).attr("wasplayingonslideleave") == "false") {
+        }else {
+          if(typeof $(video).attr("wasplayingonslideleave") == "undefined") {
+            if($(video).attr("autoplayonslideenter") == "true") {
+              video.play()
+            }
+          }
+        }
+      }
+    })
+  };
+  var stopVideos = function(element) {
+    var currentVideos = $(element).find("video");
+    $.each(currentVideos, function(index, video) {
+      var playing = !video.paused;
+      $(video).attr("wasplayingonslideleave", playing);
+      if(playing) {
+        video.pause()
+      }
+    })
+  };
+  return{setVideoTagEvents:setVideoTagEvents, playVideos:playVideos, stopVideos:stopVideos}
+}(VISH, jQuery);
 var VISH = VISH || {};
+VISH.Utils || (VISH.Utils = {});
+VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
+VISH.ImagesPath = "/assets/";
+VISH.StylesheetsPath = "/assets/";
 VISH.Samples = function(V, undefined) {
   var samples = [{"id":"vish1", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual1"}, 
   {"type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish6", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual2"}, {"type":"applet", "areaid":"left", "archive":"Wave.class", "code":"Wave.class", "width":200, "height":150, "params":'<param name=image value="Banna.jpg"><param name=horizMotion value=0.03>'}]}, {"id":"vish7", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual3"}, {"type":"applet", 
-  "areaid":"left", "archive":"applets/Clock.class", "code":"Clock.class", "width":310, "height":160, "params":'<PARAM NAME=text VALUE="#00ff"><PARAM NAME=bgcolor VALUE="#00aaaa"><PARAM NAME=bordersize VALUE="35"><PARAM NAME=border_outside VALUE="#00ffaa"><PARAM NAME=border_inside VALUE="#0000FF"><PARAM NAME=fonttype VALUE="0"><PARAM NAME="GMT" VALUE="true"><PARAM NAME="correction" VALUE="3600000">'}]}, {"id":"vish8", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flashcard pa t\ufffd..."}, 
-  {"type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
+  "areaid":"left", "archive":"applets/Clock.class", "code":"Clock.class", "width":310, "height":160, "params":'<PARAM NAME=text VALUE="#00ff"><PARAM NAME=bgcolor VALUE="#00aaaa"><PARAM NAME=bordersize VALUE="35"><PARAM NAME=border_outside VALUE="#00ffaa"><PARAM NAME=border_inside VALUE="#0000FF"><PARAM NAME=fonttype VALUE="0"><PARAM NAME="GMT" VALUE="true"><PARAM NAME="correction" VALUE="3600000">'}]}, {"id":"vish8", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flashcard pa t\u00ed..."}, 
+  {"type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]}]}', 
   "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"FLASHCARD 2..."}, {"type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
   "js":"js/mods/fc/VISH.Mods.fc.js"}]}];
   return{samples:samples}
 }(VISH);
+(function($) {
+  $.fn.easyMultipleSlider = function(options) {
+    var defaults = {prevId:"prevBtn", prevText:"Previous", nextId:"nextBtn", nextText:"Next", controlsShow:true, controlsBefore:"", controlsAfter:"", controlsFade:true, firstId:"firstBtn", firstText:"First", firstShow:false, lastId:"lastBtn", lastText:"Last", lastShow:false, vertical:false, speed:800, auto:false, pause:2E3, continuous:false, number_slides_visible:1};
+    var options = $.extend(defaults, options);
+    this.each(function() {
+      var obj = $(this);
+      var s = $("li", obj).length;
+      var w = !options.vertical ? $("li", obj).width() * options.number_slides_visible : $("li", obj).width();
+      var h = options.vertical ? $("li", obj).height() * options.number_slides_visible : $("li", obj).height();
+      obj.width(w);
+      obj.height(h);
+      obj.css("overflow", "hidden");
+      var ts = s / options.number_slides_visible - 1;
+      var t = 0;
+      $("ul", obj).css("width", s * w);
+      if(!options.vertical) {
+        $("li", obj).css("float", "left")
+      }
+      if(options.controlsShow) {
+        var html = options.controlsBefore;
+        if(options.firstShow) {
+          html += '<span id="' + options.firstId + '"><a href="javascript:void(0);">' + options.firstText + "</a></span>"
+        }
+        html += ' <span id="' + options.prevId + '"><a href="javascript:void(0);">' + options.prevText + "</a></span>";
+        html += ' <span id="' + options.nextId + '"><a href="javascript:void(0);">' + options.nextText + "</a></span>";
+        if(options.lastShow) {
+          html += ' <span id="' + options.lastId + '"><a href="javascript:void(0);">' + options.lastText + "</a></span>"
+        }
+        html += options.controlsAfter;
+        $(obj).after(html)
+      }
+      $("a", "#" + options.nextId).click(function() {
+        animate("next", true)
+      });
+      $("a", "#" + options.prevId).click(function() {
+        animate("prev", true)
+      });
+      $("a", "#" + options.firstId).click(function() {
+        animate("first", true)
+      });
+      $("a", "#" + options.lastId).click(function() {
+        animate("last", true)
+      });
+      function animate(dir, clicked) {
+        var ot = t;
+        switch(dir) {
+          case "next":
+            t = ot >= ts ? options.continuous ? 0 : ts : t + 1;
+            break;
+          case "prev":
+            t = t <= 0 ? options.continuous ? ts : 0 : t - 1;
+            break;
+          case "first":
+            t = 0;
+            break;
+          case "last":
+            t = ts;
+            break;
+          default:
+            break
+        }
+        var diff = Math.abs(ot - t);
+        var speed = diff * options.speed;
+        if(!options.vertical) {
+          p = t * w * -1;
+          $("ul", obj).animate({marginLeft:p}, speed)
+        }else {
+          p = t * h * -1;
+          $("ul", obj).animate({marginTop:p}, speed)
+        }
+        if(!options.continuous && options.controlsFade) {
+          if(t == ts) {
+            $("a", "#" + options.nextId).hide();
+            $("a", "#" + options.lastId).hide()
+          }else {
+            $("a", "#" + options.nextId).show();
+            $("a", "#" + options.lastId).show()
+          }
+          if(t == 0) {
+            $("a", "#" + options.prevId).hide();
+            $("a", "#" + options.firstId).hide()
+          }else {
+            $("a", "#" + options.prevId).show();
+            $("a", "#" + options.firstId).show()
+          }
+        }
+        if(clicked) {
+          clearTimeout(timeout)
+        }
+        if(options.auto && dir == "next" && !clicked) {
+          timeout = setTimeout(function() {
+            animate("next", false)
+          }, diff * options.speed + options.pause)
+        }
+      }
+      var timeout;
+      if(options.auto) {
+        timeout = setTimeout(function() {
+          animate("next", false)
+        }, options.pause)
+      }
+      if(!options.continuous && options.controlsFade) {
+        $("a", "#" + options.prevId).hide();
+        $("a", "#" + options.firstId).hide()
+      }
+    })
+  }
+})(jQuery);
 var JSON;
 if(!JSON) {
   JSON = {}
@@ -4474,6 +4837,3146 @@ if(!JSON) {
     d._zIndex && a(c.helper).css("zIndex", d._zIndex)
   }})
 })(jQuery);
+(function($) {
+  if($.fn.carouFredSel) {
+    return
+  }
+  $.fn.carouFredSel = function(options, configs) {
+    if(this.length == 0) {
+      debug(true, 'No element found for "' + this.selector + '".');
+      return this
+    }
+    if(this.length > 1) {
+      return this.each(function() {
+        $(this).carouFredSel(options, configs)
+      })
+    }
+    var $cfs = this, $tt0 = this[0];
+    if($cfs.data("cfs_isCarousel")) {
+      var starting_position = $cfs.triggerHandler("_cfs_currentPosition");
+      $cfs.trigger("_cfs_destroy", true)
+    }else {
+      var starting_position = false
+    }
+    $cfs._cfs_init = function(o, setOrig, start) {
+      o = go_getObject($tt0, o);
+      if(o.debug) {
+        conf.debug = o.debug;
+        debug(conf, 'The "debug" option should be moved to the second configuration-object.')
+      }
+      var obs = ["items", "scroll", "auto", "prev", "next", "pagination"];
+      for(var a = 0, l = obs.length;a < l;a++) {
+        o[obs[a]] = go_getObject($tt0, o[obs[a]])
+      }
+      if(typeof o.scroll == "number") {
+        if(o.scroll <= 50) {
+          o.scroll = {"items":o.scroll}
+        }else {
+          o.scroll = {"duration":o.scroll}
+        }
+      }else {
+        if(typeof o.scroll == "string") {
+          o.scroll = {"easing":o.scroll}
+        }
+      }
+      if(typeof o.items == "number") {
+        o.items = {"visible":o.items}
+      }else {
+        if(o.items == "variable") {
+          o.items = {"visible":o.items, "width":o.items, "height":o.items}
+        }
+      }
+      if(typeof o.items != "object") {
+        o.items = {}
+      }
+      if(setOrig) {
+        opts_orig = $.extend(true, {}, $.fn.carouFredSel.defaults, o)
+      }
+      opts = $.extend(true, {}, $.fn.carouFredSel.defaults, o);
+      if(typeof opts.items.visibleConf != "object") {
+        opts.items.visibleConf = {}
+      }
+      if(opts.items.start == 0 && typeof start == "number") {
+        opts.items.start = start
+      }
+      crsl.upDateOnWindowResize = opts.responsive;
+      crsl.direction = opts.direction == "up" || opts.direction == "left" ? "next" : "prev";
+      var dims = [["width", "innerWidth", "outerWidth", "height", "innerHeight", "outerHeight", "left", "top", "marginRight", 0, 1, 2, 3], ["height", "innerHeight", "outerHeight", "width", "innerWidth", "outerWidth", "top", "left", "marginBottom", 3, 2, 1, 0]];
+      var dn = dims[0].length, dx = opts.direction == "right" || opts.direction == "left" ? 0 : 1;
+      opts.d = {};
+      for(var d = 0;d < dn;d++) {
+        opts.d[dims[0][d]] = dims[dx][d]
+      }
+      var all_itm = $cfs.children();
+      switch(typeof opts.items.visible) {
+        case "object":
+          opts.items.visibleConf.min = opts.items.visible.min;
+          opts.items.visibleConf.max = opts.items.visible.max;
+          opts.items.visible = false;
+          break;
+        case "string":
+          if(opts.items.visible == "variable") {
+            opts.items.visibleConf.variable = true
+          }else {
+            opts.items.visibleConf.adjust = opts.items.visible
+          }
+          opts.items.visible = false;
+          break;
+        case "function":
+          opts.items.visibleConf.adjust = opts.items.visible;
+          opts.items.visible = false;
+          break
+      }
+      if(typeof opts.items.filter == "undefined") {
+        opts.items.filter = all_itm.filter(":hidden").length > 0 ? ":visible" : "*"
+      }
+      if(opts[opts.d["width"]] == "auto") {
+        opts[opts.d["width"]] = ms_getTrueLargestSize(all_itm, opts, "outerWidth")
+      }
+      if(ms_isPercentage(opts[opts.d["width"]]) && !opts.responsive) {
+        opts[opts.d["width"]] = ms_getPercentage(ms_getTrueInnerSize($wrp.parent(), opts, "innerWidth"), opts[opts.d["width"]]);
+        crsl.upDateOnWindowResize = true
+      }
+      if(opts[opts.d["height"]] == "auto") {
+        opts[opts.d["height"]] = ms_getTrueLargestSize(all_itm, opts, "outerHeight")
+      }
+      if(!opts.items[opts.d["width"]]) {
+        if(opts.responsive) {
+          debug(true, "Set a " + opts.d["width"] + " for the items!");
+          opts.items[opts.d["width"]] = ms_getTrueLargestSize(all_itm, opts, "outerWidth")
+        }else {
+          opts.items[opts.d["width"]] = ms_hasVariableSizes(all_itm, opts, "outerWidth") ? "variable" : all_itm[opts.d["outerWidth"]](true)
+        }
+      }
+      if(!opts.items[opts.d["height"]]) {
+        opts.items[opts.d["height"]] = ms_hasVariableSizes(all_itm, opts, "outerHeight") ? "variable" : all_itm[opts.d["outerHeight"]](true)
+      }
+      if(!opts[opts.d["height"]]) {
+        opts[opts.d["height"]] = opts.items[opts.d["height"]]
+      }
+      if(!opts.items.visible && !opts.responsive) {
+        if(opts.items[opts.d["width"]] == "variable") {
+          opts.items.visibleConf.variable = true
+        }
+        if(!opts.items.visibleConf.variable) {
+          if(typeof opts[opts.d["width"]] == "number") {
+            opts.items.visible = Math.floor(opts[opts.d["width"]] / opts.items[opts.d["width"]])
+          }else {
+            var maxS = ms_getTrueInnerSize($wrp.parent(), opts, "innerWidth");
+            opts.items.visible = Math.floor(maxS / opts.items[opts.d["width"]]);
+            opts[opts.d["width"]] = opts.items.visible * opts.items[opts.d["width"]];
+            if(!opts.items.visibleConf.adjust) {
+              opts.align = false
+            }
+          }
+          if(opts.items.visible == "Infinity" || opts.items.visible < 1) {
+            debug(true, 'Not a valid number of visible items: Set to "variable".');
+            opts.items.visibleConf.variable = true
+          }
+        }
+      }
+      if(!opts[opts.d["width"]]) {
+        opts[opts.d["width"]] = "variable";
+        if(!opts.responsive && opts.items.filter == "*" && !opts.items.visibleConf.variable && opts.items[opts.d["width"]] != "variable") {
+          opts[opts.d["width"]] = opts.items.visible * opts.items[opts.d["width"]];
+          opts.align = false
+        }
+      }
+      if(opts.items.visibleConf.variable) {
+        opts.maxDimention = opts[opts.d["width"]] == "variable" ? ms_getTrueInnerSize($wrp.parent(), opts, "innerWidth") : opts[opts.d["width"]];
+        if(opts.align === false) {
+          opts[opts.d["width"]] = "variable"
+        }
+        opts.items.visible = gn_getVisibleItemsNext(all_itm, opts, 0)
+      }else {
+        if(opts.items.filter != "*") {
+          opts.items.visibleConf.org = opts.items.visible;
+          opts.items.visible = gn_getVisibleItemsNextFilter(all_itm, opts, 0)
+        }
+      }
+      if(typeof opts.align == "undefined") {
+        opts.align = opts[opts.d["width"]] == "variable" ? false : "center"
+      }
+      opts.items.visible = cf_getItemsAdjust(opts.items.visible, opts, opts.items.visibleConf.adjust, $tt0);
+      opts.items.visibleConf.old = opts.items.visible;
+      opts.usePadding = false;
+      if(opts.responsive) {
+        if(!opts.items.visibleConf.min) {
+          opts.items.visibleConf.min = opts.items.visible
+        }
+        if(!opts.items.visibleConf.max) {
+          opts.items.visibleConf.max = opts.items.visible
+        }
+        opts.align = false;
+        opts.padding = [0, 0, 0, 0];
+        var isVisible = $wrp.is(":visible");
+        if(isVisible) {
+          $wrp.hide()
+        }
+        var fullS = ms_getPercentage(ms_getTrueInnerSize($wrp.parent(), opts, "innerWidth"), opts[opts.d["width"]]);
+        if(typeof opts[opts.d["width"]] == "number" && fullS < opts[opts.d["width"]]) {
+          fullS = opts[opts.d["width"]]
+        }
+        if(isVisible) {
+          $wrp.show()
+        }
+        var visb = cf_getItemAdjustMinMax(Math.ceil(fullS / opts.items[opts.d["width"]]), opts.items.visibleConf);
+        if(visb > all_itm.length) {
+          visb = all_itm.length
+        }
+        var newS = Math.floor(fullS / visb), seco = opts[opts.d["height"]], secp = ms_isPercentage(seco);
+        all_itm.each(function() {
+          var $t = $(this), nw = newS - ms_getPaddingBorderMargin($t, opts, "Width");
+          $t[opts.d["width"]](nw);
+          if(secp) {
+            $t[opts.d["height"]](ms_getPercentage(nw, seco))
+          }
+        });
+        opts.items.visible = visb;
+        opts.items[opts.d["width"]] = newS;
+        opts[opts.d["width"]] = visb * newS
+      }else {
+        opts.padding = cf_getPadding(opts.padding);
+        if(opts.align == "top") {
+          opts.align = "left"
+        }
+        if(opts.align == "bottom") {
+          opts.align = "right"
+        }
+        switch(opts.align) {
+          case "center":
+          ;
+          case "left":
+          ;
+          case "right":
+            if(opts[opts.d["width"]] != "variable") {
+              var p = cf_getAlignPadding(gi_getCurrentItems(all_itm, opts), opts);
+              opts.usePadding = true;
+              opts.padding[opts.d[1]] = p[1];
+              opts.padding[opts.d[3]] = p[0]
+            }
+            break;
+          default:
+            opts.align = false;
+            opts.usePadding = opts.padding[0] == 0 && opts.padding[1] == 0 && opts.padding[2] == 0 && opts.padding[3] == 0 ? false : true;
+            break
+        }
+      }
+      if(typeof opts.cookie == "boolean" && opts.cookie) {
+        opts.cookie = "caroufredsel_cookie_" + $cfs.attr("id")
+      }
+      if(typeof opts.items.minimum != "number") {
+        opts.items.minimum = opts.items.visible
+      }
+      if(typeof opts.scroll.duration != "number") {
+        opts.scroll.duration = 500
+      }
+      if(typeof opts.scroll.items == "undefined") {
+        opts.scroll.items = opts.items.visibleConf.variable || opts.items.filter != "*" ? "visible" : opts.items.visible
+      }
+      opts.auto = go_getNaviObject($tt0, opts.auto, "auto");
+      opts.prev = go_getNaviObject($tt0, opts.prev);
+      opts.next = go_getNaviObject($tt0, opts.next);
+      opts.pagination = go_getNaviObject($tt0, opts.pagination, "pagination");
+      opts.auto = $.extend(true, {}, opts.scroll, opts.auto);
+      opts.prev = $.extend(true, {}, opts.scroll, opts.prev);
+      opts.next = $.extend(true, {}, opts.scroll, opts.next);
+      opts.pagination = $.extend(true, {}, opts.scroll, opts.pagination);
+      if(typeof opts.pagination.keys != "boolean") {
+        opts.pagination.keys = false
+      }
+      if(typeof opts.pagination.anchorBuilder != "function" && opts.pagination.anchorBuilder !== false) {
+        opts.pagination.anchorBuilder = $.fn.carouFredSel.pageAnchorBuilder
+      }
+      if(typeof opts.auto.play != "boolean") {
+        opts.auto.play = true
+      }
+      if(typeof opts.auto.delay != "number") {
+        opts.auto.delay = 0
+      }
+      if(typeof opts.auto.pauseOnEvent == "undefined") {
+        opts.auto.pauseOnEvent = true
+      }
+      if(typeof opts.auto.pauseOnResize != "boolean") {
+        opts.auto.pauseOnResize = true
+      }
+      if(typeof opts.auto.pauseDuration != "number") {
+        opts.auto.pauseDuration = opts.auto.duration < 10 ? 2500 : opts.auto.duration * 5
+      }
+      if(opts.synchronise) {
+        opts.synchronise = cf_getSynchArr(opts.synchronise)
+      }
+      if(conf.debug) {
+        debug(conf, "Carousel width: " + opts.width);
+        debug(conf, "Carousel height: " + opts.height);
+        if(opts.maxDimention) {
+          debug(conf, "Available " + opts.d["width"] + ": " + opts.maxDimention)
+        }
+        debug(conf, "Item widths: " + opts.items.width);
+        debug(conf, "Item heights: " + opts.items.height);
+        debug(conf, "Number of items visible: " + opts.items.visible);
+        if(opts.auto.play) {
+          debug(conf, "Number of items scrolled automatically: " + opts.auto.items)
+        }
+        if(opts.prev.button) {
+          debug(conf, "Number of items scrolled backward: " + opts.prev.items)
+        }
+        if(opts.next.button) {
+          debug(conf, "Number of items scrolled forward: " + opts.next.items)
+        }
+      }
+    };
+    $cfs._cfs_build = function() {
+      $cfs.data("cfs_isCarousel", true);
+      var orgCSS = {"textAlign":$cfs.css("textAlign"), "float":$cfs.css("float"), "position":$cfs.css("position"), "top":$cfs.css("top"), "right":$cfs.css("right"), "bottom":$cfs.css("bottom"), "left":$cfs.css("left"), "width":$cfs.css("width"), "height":$cfs.css("height"), "marginTop":$cfs.css("marginTop"), "marginRight":$cfs.css("marginRight"), "marginBottom":$cfs.css("marginBottom"), "marginLeft":$cfs.css("marginLeft")};
+      switch(orgCSS.position) {
+        case "absolute":
+          var newPosition = "absolute";
+          break;
+        case "fixed":
+          var newPosition = "fixed";
+          break;
+        default:
+          var newPosition = "relative"
+      }
+      $wrp.css(orgCSS).css({"overflow":"hidden", "position":newPosition});
+      $cfs.data("cfs_origCss", orgCSS).css({"textAlign":"left", "float":"none", "position":"absolute", "top":0, "left":0, "marginTop":0, "marginRight":0, "marginBottom":0, "marginLeft":0});
+      if(opts.usePadding) {
+        $cfs.children().each(function() {
+          var m = parseInt($(this).css(opts.d["marginRight"]));
+          if(isNaN(m)) {
+            m = 0
+          }
+          $(this).data("cfs_origCssMargin", m)
+        })
+      }
+    };
+    $cfs._cfs_bind_events = function() {
+      $cfs._cfs_unbind_events();
+      $cfs.bind(cf_e("stop", conf), function(e, imm) {
+        e.stopPropagation();
+        if(!crsl.isStopped) {
+          if(opts.auto.button) {
+            opts.auto.button.addClass(cf_c("stopped", conf))
+          }
+        }
+        crsl.isStopped = true;
+        if(opts.auto.play) {
+          opts.auto.play = false;
+          $cfs.trigger(cf_e("pause", conf), imm)
+        }
+        return true
+      });
+      $cfs.bind(cf_e("finish", conf), function(e) {
+        e.stopPropagation();
+        if(crsl.isScrolling) {
+          sc_stopScroll(scrl)
+        }
+        return true
+      });
+      $cfs.bind(cf_e("pause", conf), function(e, imm, res) {
+        e.stopPropagation();
+        tmrs = sc_clearTimers(tmrs);
+        if(imm && crsl.isScrolling) {
+          scrl.isStopped = true;
+          var nst = getTime() - scrl.startTime;
+          scrl.duration -= nst;
+          if(scrl.pre) {
+            scrl.pre.duration -= nst
+          }
+          if(scrl.post) {
+            scrl.post.duration -= nst
+          }
+          sc_stopScroll(scrl, false)
+        }
+        if(!crsl.isPaused && !crsl.isScrolling) {
+          if(res) {
+            tmrs.timePassed += getTime() - tmrs.startTime
+          }
+        }
+        if(!crsl.isPaused) {
+          if(opts.auto.button) {
+            opts.auto.button.addClass(cf_c("paused", conf))
+          }
+        }
+        crsl.isPaused = true;
+        if(opts.auto.onPausePause) {
+          var dur1 = opts.auto.pauseDuration - tmrs.timePassed, perc = 100 - Math.ceil(dur1 * 100 / opts.auto.pauseDuration);
+          opts.auto.onPausePause.call($tt0, perc, dur1)
+        }
+        return true
+      });
+      $cfs.bind(cf_e("play", conf), function(e, dir, del, res) {
+        e.stopPropagation();
+        tmrs = sc_clearTimers(tmrs);
+        var v = [dir, del, res], t = ["string", "number", "boolean"], a = cf_sortParams(v, t);
+        var dir = a[0], del = a[1], res = a[2];
+        if(dir != "prev" && dir != "next") {
+          dir = crsl.direction
+        }
+        if(typeof del != "number") {
+          del = 0
+        }
+        if(typeof res != "boolean") {
+          res = false
+        }
+        if(res) {
+          crsl.isStopped = false;
+          opts.auto.play = true
+        }
+        if(!opts.auto.play) {
+          e.stopImmediatePropagation();
+          return debug(conf, "Carousel stopped: Not scrolling.")
+        }
+        if(crsl.isPaused) {
+          if(opts.auto.button) {
+            opts.auto.button.removeClass(cf_c("stopped", conf));
+            opts.auto.button.removeClass(cf_c("paused", conf))
+          }
+        }
+        crsl.isPaused = false;
+        tmrs.startTime = getTime();
+        var dur1 = opts.auto.pauseDuration + del;
+        dur2 = dur1 - tmrs.timePassed;
+        perc = 100 - Math.ceil(dur2 * 100 / dur1);
+        tmrs.auto = setTimeout(function() {
+          if(opts.auto.onPauseEnd) {
+            opts.auto.onPauseEnd.call($tt0, perc, dur2)
+          }
+          if(crsl.isScrolling) {
+            $cfs.trigger(cf_e("play", conf), dir)
+          }else {
+            $cfs.trigger(cf_e(dir, conf), opts.auto)
+          }
+        }, dur2);
+        if(opts.auto.onPauseStart) {
+          opts.auto.onPauseStart.call($tt0, perc, dur2)
+        }
+        return true
+      });
+      $cfs.bind(cf_e("resume", conf), function(e) {
+        e.stopPropagation();
+        if(scrl.isStopped) {
+          scrl.isStopped = false;
+          crsl.isPaused = false;
+          crsl.isScrolling = true;
+          scrl.startTime = getTime();
+          sc_startScroll(scrl)
+        }else {
+          $cfs.trigger(cf_e("play", conf))
+        }
+        return true
+      });
+      $cfs.bind(cf_e("prev", conf) + " " + cf_e("next", conf), function(e, obj, num, clb) {
+        e.stopPropagation();
+        if(crsl.isStopped || $cfs.is(":hidden")) {
+          e.stopImmediatePropagation();
+          return debug(conf, "Carousel stopped or hidden: Not scrolling.")
+        }
+        if(opts.items.minimum >= itms.total) {
+          e.stopImmediatePropagation();
+          return debug(conf, "Not enough items (" + itms.total + ", " + opts.items.minimum + " needed): Not scrolling.")
+        }
+        var v = [obj, num, clb], t = ["object", "number/string", "function"], a = cf_sortParams(v, t);
+        var obj = a[0], num = a[1], clb = a[2];
+        var eType = e.type.substr(conf.events.prefix.length);
+        if(typeof obj != "object" || obj == null) {
+          obj = opts[eType]
+        }
+        if(typeof clb == "function") {
+          obj.onAfter = clb
+        }
+        if(typeof num != "number") {
+          if(opts.items.filter != "*") {
+            num = "visible"
+          }else {
+            var arr = [num, obj.items, opts[eType].items];
+            for(var a = 0, l = arr.length;a < l;a++) {
+              if(typeof arr[a] == "number" || arr[a] == "page" || arr[a] == "visible") {
+                num = arr[a];
+                break
+              }
+            }
+          }
+          switch(num) {
+            case "page":
+              e.stopImmediatePropagation();
+              return $cfs.triggerHandler(eType + "Page", [obj, clb]);
+              break;
+            case "visible":
+              if(!opts.items.visibleConf.variable && opts.items.filter == "*") {
+                num = opts.items.visible
+              }
+              break
+          }
+        }
+        if(scrl.isStopped) {
+          $cfs.trigger(cf_e("resume", conf));
+          $cfs.trigger(cf_e("queue", conf), [eType, [obj, num, clb]]);
+          e.stopImmediatePropagation();
+          return debug(conf, "Carousel resumed scrolling.")
+        }
+        if(obj.duration > 0) {
+          if(crsl.isScrolling) {
+            if(obj.queue) {
+              $cfs.trigger(cf_e("queue", conf), [eType, [obj, num, clb]])
+            }
+            e.stopImmediatePropagation();
+            return debug(conf, "Carousel currently scrolling.")
+          }
+        }
+        if(obj.conditions && !obj.conditions.call($tt0)) {
+          e.stopImmediatePropagation();
+          return debug(conf, 'Callback "conditions" returned false.')
+        }
+        tmrs.timePassed = 0;
+        $cfs.trigger("_cfs_slide_" + eType, [obj, num]);
+        if(opts.synchronise) {
+          var s = opts.synchronise, c = [obj, num];
+          for(var j = 0, l = s.length;j < l;j++) {
+            var d = eType;
+            if(!s[j][1]) {
+              c[0] = s[j][0].triggerHandler("_cfs_configuration", eType)
+            }
+            if(!s[j][2]) {
+              d = d == "prev" ? "next" : "prev"
+            }
+            c[1] = num + s[j][3];
+            s[j][0].trigger("_cfs_slide_" + d, c)
+          }
+        }
+        return true
+      });
+      $cfs.bind(cf_e("_cfs_slide_prev", conf, false), function(e, sO, nI) {
+        e.stopPropagation();
+        var a_itm = $cfs.children();
+        if(!opts.circular) {
+          if(itms.first == 0) {
+            if(opts.infinite) {
+              $cfs.trigger(cf_e("next", conf), itms.total - 1)
+            }
+            return e.stopImmediatePropagation()
+          }
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts)
+        }
+        if(typeof nI != "number") {
+          if(opts.items.visibleConf.variable) {
+            nI = gn_getVisibleItemsPrev(a_itm, opts, itms.total - 1)
+          }else {
+            if(opts.items.filter != "*") {
+              var xI = typeof sO.items == "number" ? sO.items : gn_getVisibleOrg($cfs, opts);
+              nI = gn_getScrollItemsPrevFilter(a_itm, opts, itms.total - 1, xI)
+            }else {
+              nI = opts.items.visible
+            }
+          }
+          nI = cf_getAdjust(nI, opts, sO.items, $tt0)
+        }
+        if(!opts.circular) {
+          if(itms.total - nI < itms.first) {
+            nI = itms.total - itms.first
+          }
+        }
+        opts.items.visibleConf.old = opts.items.visible;
+        if(opts.items.visibleConf.variable) {
+          var vI = gn_getVisibleItemsNext(a_itm, opts, itms.total - nI);
+          if(opts.items.visible + nI <= vI && nI < itms.total) {
+            nI++;
+            vI = gn_getVisibleItemsNext(a_itm, opts, itms.total - nI)
+          }
+          opts.items.visible = cf_getItemsAdjust(vI, opts, opts.items.visibleConf.adjust, $tt0)
+        }else {
+          if(opts.items.filter != "*") {
+            var vI = gn_getVisibleItemsNextFilter(a_itm, opts, itms.total - nI);
+            opts.items.visible = cf_getItemsAdjust(vI, opts, opts.items.visibleConf.adjust, $tt0)
+          }
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts, true)
+        }
+        if(nI == 0) {
+          e.stopImmediatePropagation();
+          return debug(conf, "0 items to scroll: Not scrolling.")
+        }
+        debug(conf, "Scrolling " + nI + " items backward.");
+        itms.first += nI;
+        while(itms.first >= itms.total) {
+          itms.first -= itms.total
+        }
+        if(!opts.circular) {
+          if(itms.first == 0 && sO.onEnd) {
+            sO.onEnd.call($tt0)
+          }
+          if(!opts.infinite) {
+            nv_enableNavi(opts, itms.first, conf)
+          }
+        }
+        $cfs.children().slice(itms.total - nI, itms.total).prependTo($cfs);
+        if(itms.total < opts.items.visible + nI) {
+          $cfs.children().slice(0, opts.items.visible + nI - itms.total).clone(true).appendTo($cfs)
+        }
+        var a_itm = $cfs.children(), c_old = gi_getOldItemsPrev(a_itm, opts, nI), c_new = gi_getNewItemsPrev(a_itm, opts), l_cur = a_itm.eq(nI - 1), l_old = c_old.last(), l_new = c_new.last();
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts)
+        }
+        if(opts.align) {
+          var p = cf_getAlignPadding(c_new, opts), pL = p[0], pR = p[1]
+        }else {
+          var pL = 0, pR = 0
+        }
+        var oL = pL < 0 ? opts.padding[opts.d[3]] : 0;
+        if(sO.fx == "directscroll" && opts.items.visible < nI) {
+          var hiddenitems = a_itm.slice(opts.items.visibleConf.old, nI), orgW = opts.items[opts.d["width"]];
+          hiddenitems.each(function() {
+            var hi = $(this);
+            hi.data("isHidden", hi.is(":hidden")).hide()
+          });
+          opts.items[opts.d["width"]] = "variable"
+        }else {
+          var hiddenitems = false
+        }
+        var i_siz = ms_getTotalSize(a_itm.slice(0, nI), opts, "width"), w_siz = cf_mapWrapperSizes(ms_getSizes(c_new, opts, true), opts, !opts.usePadding);
+        if(hiddenitems) {
+          opts.items[opts.d["width"]] = orgW
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts, true);
+          if(pR >= 0) {
+            sz_resetMargin(l_old, opts, opts.padding[opts.d[1]])
+          }
+          sz_resetMargin(l_cur, opts, opts.padding[opts.d[3]])
+        }
+        if(opts.align) {
+          opts.padding[opts.d[1]] = pR;
+          opts.padding[opts.d[3]] = pL
+        }
+        var a_cfs = {}, a_dur = sO.duration;
+        if(sO.fx == "none") {
+          a_dur = 0
+        }else {
+          if(a_dur == "auto") {
+            a_dur = opts.scroll.duration / opts.scroll.items * nI
+          }else {
+            if(a_dur <= 0) {
+              a_dur = 0
+            }else {
+              if(a_dur < 10) {
+                a_dur = i_siz / a_dur
+              }
+            }
+          }
+        }
+        scrl = sc_setScroll(a_dur, sO.easing);
+        if(opts[opts.d["width"]] == "variable" || opts[opts.d["height"]] == "variable") {
+          scrl.anims.push([$wrp, w_siz])
+        }
+        if(opts.usePadding) {
+          var new_m = opts.padding[opts.d[3]];
+          if(l_new.not(l_cur).length) {
+            var a_cur = {};
+            a_cur[opts.d["marginRight"]] = l_cur.data("cfs_origCssMargin");
+            if(pL < 0) {
+              l_cur.css(a_cur)
+            }else {
+              scrl.anims.push([l_cur, a_cur])
+            }
+          }
+          if(l_new.not(l_old).length) {
+            var a_old = {};
+            a_old[opts.d["marginRight"]] = l_old.data("cfs_origCssMargin");
+            scrl.anims.push([l_old, a_old])
+          }
+          if(pR >= 0) {
+            var a_new = {};
+            a_new[opts.d["marginRight"]] = l_new.data("cfs_origCssMargin") + opts.padding[opts.d[1]];
+            scrl.anims.push([l_new, a_new])
+          }
+        }else {
+          var new_m = 0
+        }
+        a_cfs[opts.d["left"]] = new_m;
+        var args = [c_old, c_new, w_siz, a_dur];
+        if(sO.onBefore) {
+          sO.onBefore.apply($tt0, args)
+        }
+        clbk.onBefore = sc_callCallbacks(clbk.onBefore, $tt0, args);
+        switch(sO.fx) {
+          case "fade":
+          ;
+          case "crossfade":
+          ;
+          case "cover":
+          ;
+          case "uncover":
+            scrl.pre = sc_setScroll(scrl.duration, scrl.easing);
+            scrl.post = sc_setScroll(scrl.duration, scrl.easing);
+            scrl.duration = 0;
+            break
+        }
+        switch(sO.fx) {
+          case "crossfade":
+          ;
+          case "cover":
+          ;
+          case "uncover":
+            var $cf2 = $cfs.clone().appendTo($wrp);
+            break
+        }
+        switch(sO.fx) {
+          case "uncover":
+            $cf2.children().slice(0, nI).remove();
+          case "crossfade":
+          ;
+          case "cover":
+            $cf2.children().slice(opts.items.visible).remove();
+            break
+        }
+        switch(sO.fx) {
+          case "fade":
+            scrl.pre.anims.push([$cfs, {"opacity":0}]);
+            break;
+          case "crossfade":
+            $cf2.css({"opacity":0});
+            scrl.pre.anims.push([$cfs, {"width":"+=0"}, function() {
+              $cf2.remove()
+            }]);
+            scrl.post.anims.push([$cf2, {"opacity":1}]);
+            break;
+          case "cover":
+            scrl = fx_cover(scrl, $cfs, $cf2, opts, true);
+            break;
+          case "uncover":
+            scrl = fx_uncover(scrl, $cfs, $cf2, opts, true, nI);
+            break
+        }
+        var a_complete = function() {
+          var overFill = opts.items.visible + nI - itms.total;
+          if(overFill > 0) {
+            $cfs.children().slice(itms.total).remove();
+            c_old = $cfs.children().slice(itms.total - (nI - overFill)).get().concat($cfs.children().slice(0, overFill).get())
+          }
+          if(hiddenitems) {
+            hiddenitems.each(function() {
+              var hi = $(this);
+              if(!hi.data("isHidden")) {
+                hi.show()
+              }
+            })
+          }
+          if(opts.usePadding) {
+            var l_itm = $cfs.children().eq(opts.items.visible + nI - 1);
+            l_itm.css(opts.d["marginRight"], l_itm.data("cfs_origCssMargin"))
+          }
+          scrl.anims = [];
+          if(scrl.pre) {
+            scrl.pre = sc_setScroll(scrl.orgDuration, scrl.easing)
+          }
+          var fn = function() {
+            switch(sO.fx) {
+              case "fade":
+              ;
+              case "crossfade":
+                $cfs.css("filter", "");
+                break
+            }
+            scrl.post = sc_setScroll(0, null);
+            crsl.isScrolling = false;
+            var args = [c_old, c_new, w_siz];
+            if(sO.onAfter) {
+              sO.onAfter.apply($tt0, args)
+            }
+            clbk.onAfter = sc_callCallbacks(clbk.onAfter, $tt0, args);
+            if(queu.length) {
+              $cfs.trigger(cf_e(queu[0][0], conf), queu[0][1]);
+              queu.shift()
+            }
+            if(!crsl.isPaused) {
+              $cfs.trigger(cf_e("play", conf))
+            }
+          };
+          switch(sO.fx) {
+            case "fade":
+              scrl.pre.anims.push([$cfs, {"opacity":1}, fn]);
+              sc_startScroll(scrl.pre);
+              break;
+            case "uncover":
+              scrl.pre.anims.push([$cfs, {"width":"+=0"}, fn]);
+              sc_startScroll(scrl.pre);
+              break;
+            default:
+              fn();
+              break
+          }
+        };
+        scrl.anims.push([$cfs, a_cfs, a_complete]);
+        crsl.isScrolling = true;
+        $cfs.css(opts.d["left"], -(i_siz - oL));
+        tmrs = sc_clearTimers(tmrs);
+        sc_startScroll(scrl);
+        cf_setCookie(opts.cookie, $cfs.triggerHandler(cf_e("currentPosition", conf)));
+        $cfs.trigger(cf_e("updatePageStatus", conf), [false, w_siz]);
+        return true
+      });
+      $cfs.bind(cf_e("_cfs_slide_next", conf, false), function(e, sO, nI) {
+        e.stopPropagation();
+        var a_itm = $cfs.children();
+        if(!opts.circular) {
+          if(itms.first == opts.items.visible) {
+            if(opts.infinite) {
+              $cfs.trigger(cf_e("prev", conf), itms.total - 1)
+            }
+            return e.stopImmediatePropagation()
+          }
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts)
+        }
+        if(typeof nI != "number") {
+          if(opts.items.filter != "*") {
+            var xI = typeof sO.items == "number" ? sO.items : gn_getVisibleOrg($cfs, opts);
+            nI = gn_getScrollItemsNextFilter(a_itm, opts, 0, xI)
+          }else {
+            nI = opts.items.visible
+          }
+          nI = cf_getAdjust(nI, opts, sO.items, $tt0)
+        }
+        var lastItemNr = itms.first == 0 ? itms.total : itms.first;
+        if(!opts.circular) {
+          if(opts.items.visibleConf.variable) {
+            var vI = gn_getVisibleItemsNext(a_itm, opts, nI), xI = gn_getVisibleItemsPrev(a_itm, opts, lastItemNr - 1)
+          }else {
+            var vI = opts.items.visible, xI = opts.items.visible
+          }
+          if(nI + vI > lastItemNr) {
+            nI = lastItemNr - xI
+          }
+        }
+        opts.items.visibleConf.old = opts.items.visible;
+        if(opts.items.visibleConf.variable) {
+          var vI = gn_getVisibleItemsNextTestCircular(a_itm, opts, nI, lastItemNr);
+          while(opts.items.visible - nI >= vI && nI < itms.total) {
+            nI++;
+            vI = gn_getVisibleItemsNextTestCircular(a_itm, opts, nI, lastItemNr)
+          }
+          opts.items.visible = cf_getItemsAdjust(vI, opts, opts.items.visibleConf.adjust, $tt0)
+        }else {
+          if(opts.items.filter != "*") {
+            var vI = gn_getVisibleItemsNextFilter(a_itm, opts, nI);
+            opts.items.visible = cf_getItemsAdjust(vI, opts, opts.items.visibleConf.adjust, $tt0)
+          }
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts, true)
+        }
+        if(nI == 0) {
+          e.stopImmediatePropagation();
+          return debug(conf, "0 items to scroll: Not scrolling.")
+        }
+        debug(conf, "Scrolling " + nI + " items forward.");
+        itms.first -= nI;
+        while(itms.first < 0) {
+          itms.first += itms.total
+        }
+        if(!opts.circular) {
+          if(itms.first == opts.items.visible && sO.onEnd) {
+            sO.onEnd.call($tt0)
+          }
+          if(!opts.infinite) {
+            nv_enableNavi(opts, itms.first, conf)
+          }
+        }
+        if(itms.total < opts.items.visible + nI) {
+          $cfs.children().slice(0, opts.items.visible + nI - itms.total).clone(true).appendTo($cfs)
+        }
+        var a_itm = $cfs.children(), c_old = gi_getOldItemsNext(a_itm, opts), c_new = gi_getNewItemsNext(a_itm, opts, nI), l_cur = a_itm.eq(nI - 1), l_old = c_old.last(), l_new = c_new.last();
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts)
+        }
+        if(opts.align) {
+          var p = cf_getAlignPadding(c_new, opts), pL = p[0], pR = p[1]
+        }else {
+          var pL = 0, pR = 0
+        }
+        if(sO.fx == "directscroll" && opts.items.visibleConf.old < nI) {
+          var hiddenitems = a_itm.slice(opts.items.visibleConf.old, nI), orgW = opts.items[opts.d["width"]];
+          hiddenitems.each(function() {
+            var hi = $(this);
+            hi.data("isHidden", hi.is(":hidden")).hide()
+          });
+          opts.items[opts.d["width"]] = "variable"
+        }else {
+          var hiddenitems = false
+        }
+        var i_siz = ms_getTotalSize(a_itm.slice(0, nI), opts, "width"), w_siz = cf_mapWrapperSizes(ms_getSizes(c_new, opts, true), opts, !opts.usePadding);
+        if(hiddenitems) {
+          opts.items[opts.d["width"]] = orgW
+        }
+        if(opts.align) {
+          if(opts.padding[opts.d[1]] < 0) {
+            opts.padding[opts.d[1]] = 0
+          }
+        }
+        if(opts.usePadding) {
+          sz_resetMargin(a_itm, opts, true);
+          sz_resetMargin(l_old, opts, opts.padding[opts.d[1]])
+        }
+        if(opts.align) {
+          opts.padding[opts.d[1]] = pR;
+          opts.padding[opts.d[3]] = pL
+        }
+        var a_cfs = {}, a_dur = sO.duration;
+        if(sO.fx == "none") {
+          a_dur = 0
+        }else {
+          if(a_dur == "auto") {
+            a_dur = opts.scroll.duration / opts.scroll.items * nI
+          }else {
+            if(a_dur <= 0) {
+              a_dur = 0
+            }else {
+              if(a_dur < 10) {
+                a_dur = i_siz / a_dur
+              }
+            }
+          }
+        }
+        scrl = sc_setScroll(a_dur, sO.easing);
+        if(opts[opts.d["width"]] == "variable" || opts[opts.d["height"]] == "variable") {
+          scrl.anims.push([$wrp, w_siz])
+        }
+        if(opts.usePadding) {
+          var l_new_m = l_new.data("cfs_origCssMargin");
+          if(pR >= 0) {
+            l_new_m += opts.padding[opts.d[1]]
+          }
+          l_new.css(opts.d["marginRight"], l_new_m);
+          if(l_cur.not(l_old).length) {
+            var a_old = {};
+            a_old[opts.d["marginRight"]] = l_old.data("cfs_origCssMargin");
+            scrl.anims.push([l_old, a_old])
+          }
+          var c_new_m = l_cur.data("cfs_origCssMargin");
+          if(pL >= 0) {
+            c_new_m += opts.padding[opts.d[3]]
+          }
+          var a_cur = {};
+          a_cur[opts.d["marginRight"]] = c_new_m;
+          scrl.anims.push([l_cur, a_cur])
+        }
+        a_cfs[opts.d["left"]] = -i_siz;
+        if(pL < 0) {
+          a_cfs[opts.d["left"]] += pL
+        }
+        var args = [c_old, c_new, w_siz, a_dur];
+        if(sO.onBefore) {
+          sO.onBefore.apply($tt0, args)
+        }
+        clbk.onBefore = sc_callCallbacks(clbk.onBefore, $tt0, args);
+        switch(sO.fx) {
+          case "fade":
+          ;
+          case "crossfade":
+          ;
+          case "cover":
+          ;
+          case "uncover":
+            scrl.pre = sc_setScroll(scrl.duration, scrl.easing);
+            scrl.post = sc_setScroll(scrl.duration, scrl.easing);
+            scrl.duration = 0;
+            break
+        }
+        switch(sO.fx) {
+          case "crossfade":
+          ;
+          case "cover":
+          ;
+          case "uncover":
+            var $cf2 = $cfs.clone().appendTo($wrp);
+            break
+        }
+        switch(sO.fx) {
+          case "uncover":
+            $cf2.children().slice(opts.items.visibleConf.old).remove();
+            break;
+          case "crossfade":
+          ;
+          case "cover":
+            $cf2.children().slice(0, nI).remove();
+            $cf2.children().slice(opts.items.visible).remove();
+            break
+        }
+        switch(sO.fx) {
+          case "fade":
+            scrl.pre.anims.push([$cfs, {"opacity":0}]);
+            break;
+          case "crossfade":
+            $cf2.css({"opacity":0});
+            scrl.pre.anims.push([$cfs, {"width":"+=0"}, function() {
+              $cf2.remove()
+            }]);
+            scrl.post.anims.push([$cf2, {"opacity":1}]);
+            break;
+          case "cover":
+            scrl = fx_cover(scrl, $cfs, $cf2, opts, false);
+            break;
+          case "uncover":
+            scrl = fx_uncover(scrl, $cfs, $cf2, opts, false, nI);
+            break
+        }
+        var a_complete = function() {
+          var overFill = opts.items.visible + nI - itms.total, new_m = opts.usePadding ? opts.padding[opts.d[3]] : 0;
+          $cfs.css(opts.d["left"], new_m);
+          if(overFill > 0) {
+            $cfs.children().slice(itms.total).remove()
+          }
+          var l_itm = $cfs.children().slice(0, nI).appendTo($cfs).last();
+          if(overFill > 0) {
+            c_new = gi_getCurrentItems(a_itm, opts)
+          }
+          if(hiddenitems) {
+            hiddenitems.each(function() {
+              var hi = $(this);
+              if(!hi.data("isHidden")) {
+                hi.show()
+              }
+            })
+          }
+          if(opts.usePadding) {
+            if(itms.total < opts.items.visible + nI) {
+              var l_cur = $cfs.children().eq(opts.items.visible - 1);
+              l_cur.css(opts.d["marginRight"], l_cur.data("cfs_origCssMargin") + opts.padding[opts.d[3]])
+            }
+            l_itm.css(opts.d["marginRight"], l_itm.data("cfs_origCssMargin"))
+          }
+          scrl.anims = [];
+          if(scrl.pre) {
+            scrl.pre = sc_setScroll(scrl.orgDuration, scrl.easing)
+          }
+          var fn = function() {
+            switch(sO.fx) {
+              case "fade":
+              ;
+              case "crossfade":
+                $cfs.css("filter", "");
+                break
+            }
+            scrl.post = sc_setScroll(0, null);
+            crsl.isScrolling = false;
+            var args = [c_old, c_new, w_siz];
+            if(sO.onAfter) {
+              sO.onAfter.apply($tt0, args)
+            }
+            clbk.onAfter = sc_callCallbacks(clbk.onAfter, $tt0, args);
+            if(queu.length) {
+              $cfs.trigger(cf_e(queu[0][0], conf), queu[0][1]);
+              queu.shift()
+            }
+            if(!crsl.isPaused) {
+              $cfs.trigger(cf_e("play", conf))
+            }
+          };
+          switch(sO.fx) {
+            case "fade":
+              scrl.pre.anims.push([$cfs, {"opacity":1}, fn]);
+              sc_startScroll(scrl.pre);
+              break;
+            case "uncover":
+              scrl.pre.anims.push([$cfs, {"width":"+=0"}, fn]);
+              sc_startScroll(scrl.pre);
+              break;
+            default:
+              fn();
+              break
+          }
+        };
+        scrl.anims.push([$cfs, a_cfs, a_complete]);
+        crsl.isScrolling = true;
+        tmrs = sc_clearTimers(tmrs);
+        sc_startScroll(scrl);
+        cf_setCookie(opts.cookie, $cfs.triggerHandler(cf_e("currentPosition", conf)));
+        $cfs.trigger(cf_e("updatePageStatus", conf), [false, w_siz]);
+        return true
+      });
+      $cfs.bind(cf_e("slideTo", conf), function(e, num, dev, org, obj, dir, clb) {
+        e.stopPropagation();
+        var v = [num, dev, org, obj, dir, clb], t = ["string/number/object", "number", "boolean", "object", "string", "function"], a = cf_sortParams(v, t);
+        var obj = a[3], dir = a[4], clb = a[5];
+        num = gn_getItemIndex(a[0], a[1], a[2], itms, $cfs);
+        if(num == 0) {
+          return
+        }
+        if(typeof obj != "object") {
+          obj = false
+        }
+        if(crsl.isScrolling) {
+          if(typeof obj != "object" || obj.duration > 0) {
+            return false
+          }
+        }
+        if(dir != "prev" && dir != "next") {
+          if(opts.circular) {
+            if(num <= itms.total / 2) {
+              dir = "next"
+            }else {
+              dir = "prev"
+            }
+          }else {
+            if(itms.first == 0 || itms.first > num) {
+              dir = "next"
+            }else {
+              dir = "prev"
+            }
+          }
+        }
+        if(dir == "prev") {
+          num = itms.total - num
+        }
+        $cfs.trigger(cf_e(dir, conf), [obj, num, clb]);
+        return true
+      });
+      $cfs.bind(cf_e("prevPage", conf), function(e, obj, clb) {
+        e.stopPropagation();
+        var cur = $cfs.triggerHandler(cf_e("currentPage", conf));
+        return $cfs.triggerHandler(cf_e("slideToPage", conf), [cur - 1, obj, "prev", clb])
+      });
+      $cfs.bind(cf_e("nextPage", conf), function(e, obj, clb) {
+        e.stopPropagation();
+        var cur = $cfs.triggerHandler(cf_e("currentPage", conf));
+        return $cfs.triggerHandler(cf_e("slideToPage", conf), [cur + 1, obj, "next", clb])
+      });
+      $cfs.bind(cf_e("slideToPage", conf), function(e, pag, obj, dir, clb) {
+        e.stopPropagation();
+        if(typeof pag != "number") {
+          pag = $cfs.triggerHandler(cf_e("currentPage", conf))
+        }
+        var ipp = opts.pagination.items || opts.items.visible, max = Math.floor(itms.total / ipp) - 1;
+        if(pag < 0) {
+          pag = max
+        }
+        if(pag > max) {
+          pag = 0
+        }
+        return $cfs.triggerHandler(cf_e("slideTo", conf), [pag * ipp, 0, true, obj, dir, clb])
+      });
+      $cfs.bind(cf_e("jumpToStart", conf), function(e, s) {
+        e.stopPropagation();
+        if(s) {
+          s = gn_getItemIndex(s, 0, true, itms, $cfs)
+        }else {
+          s = 0
+        }
+        s += itms.first;
+        if(s != 0) {
+          while(s > itms.total) {
+            s -= itms.total
+          }
+          $cfs.prepend($cfs.children().slice(s, itms.total))
+        }
+        return true
+      });
+      $cfs.bind(cf_e("synchronise", conf), function(e, s) {
+        e.stopPropagation();
+        if(s) {
+          s = cf_getSynchArr(s)
+        }else {
+          if(opts.synchronise) {
+            s = opts.synchronise
+          }else {
+            return debug(conf, "No carousel to synchronise.")
+          }
+        }
+        var n = $cfs.triggerHandler(cf_e("currentPosition", conf)), x = true;
+        for(var j = 0, l = s.length;j < l;j++) {
+          if(!s[j][0].triggerHandler(cf_e("slideTo", conf), [n, s[j][3], true])) {
+            x = false
+          }
+        }
+        return x
+      });
+      $cfs.bind(cf_e("queue", conf), function(e, dir, opt) {
+        e.stopPropagation();
+        if(typeof dir == "function") {
+          dir.call($tt0, queu)
+        }else {
+          if(is_array(dir)) {
+            queu = dir
+          }else {
+            if(typeof dir != "undefined") {
+              queu.push([dir, opt])
+            }
+          }
+        }
+        return queu
+      });
+      $cfs.bind(cf_e("insertItem", conf), function(e, itm, num, org, dev) {
+        e.stopPropagation();
+        var v = [itm, num, org, dev], t = ["string/object", "string/number/object", "boolean", "number"], a = cf_sortParams(v, t);
+        var itm = a[0], num = a[1], org = a[2], dev = a[3];
+        if(typeof itm == "object" && typeof itm.jquery == "undefined") {
+          itm = $(itm)
+        }
+        if(typeof itm == "string") {
+          itm = $(itm)
+        }
+        if(typeof itm != "object" || typeof itm.jquery == "undefined" || itm.length == 0) {
+          return debug(conf, "Not a valid object.")
+        }
+        if(typeof num == "undefined") {
+          num = "end"
+        }
+        if(opts.usePadding) {
+          itm.each(function() {
+            var m = parseInt($(this).css(opts.d["marginRight"]));
+            if(isNaN(m)) {
+              m = 0
+            }
+            $(this).data("cfs_origCssMargin", m)
+          })
+        }
+        var orgNum = num, before = "before";
+        if(num == "end") {
+          if(org) {
+            if(itms.first == 0) {
+              num = itms.total - 1;
+              before = "after"
+            }else {
+              num = itms.first;
+              itms.first += itm.length
+            }
+            if(num < 0) {
+              num = 0
+            }
+          }else {
+            num = itms.total - 1;
+            before = "after"
+          }
+        }else {
+          num = gn_getItemIndex(num, dev, org, itms, $cfs)
+        }
+        if(orgNum != "end" && !org) {
+          if(num < itms.first) {
+            itms.first += itm.length
+          }
+        }
+        if(itms.first >= itms.total) {
+          itms.first -= itms.total
+        }
+        var $cit = $cfs.children().eq(num);
+        if($cit.length) {
+          $cit[before](itm)
+        }else {
+          $cfs.append(itm)
+        }
+        itms.total = $cfs.children().length;
+        var sz = $cfs.triggerHandler("updateSizes");
+        nv_showNavi(opts, itms.total, conf);
+        nv_enableNavi(opts, itms.first, conf);
+        $cfs.trigger(cf_e("linkAnchors", conf));
+        $cfs.trigger(cf_e("updatePageStatus", conf), [true, sz]);
+        return true
+      });
+      $cfs.bind(cf_e("removeItem", conf), function(e, num, org, dev) {
+        e.stopPropagation();
+        var v = [num, org, dev], t = ["string/number/object", "boolean", "number"], a = cf_sortParams(v, t);
+        var num = a[0], org = a[1], dev = a[2];
+        if(typeof num == "undefined" || num == "end") {
+          $cfs.children().last().remove()
+        }else {
+          num = gn_getItemIndex(num, dev, org, itms, $cfs);
+          var $cit = $cfs.children().eq(num);
+          if($cit.length) {
+            if(num < itms.first) {
+              itms.first -= $cit.length
+            }
+            $cit.remove()
+          }
+        }
+        itms.total = $cfs.children().length;
+        var sz = $cfs.triggerHandler("updateSizes");
+        nv_showNavi(opts, itms.total, conf);
+        nv_enableNavi(opts, itms.first, conf);
+        $cfs.trigger(cf_e("updatePageStatus", conf), [true, sz]);
+        return true
+      });
+      $cfs.bind(cf_e("onBefore", conf) + " " + cf_e("onAfter", conf), function(e, fn) {
+        e.stopPropagation();
+        var eType = e.type.substr(conf.events.prefix.length);
+        if(is_array(fn)) {
+          clbk[eType] = fn
+        }
+        if(typeof fn == "function") {
+          clbk[eType].push(fn)
+        }
+        return clbk[eType]
+      });
+      $cfs.bind(cf_e("_cfs_currentPosition", conf, false), function(e, fn) {
+        e.stopPropagation();
+        return $cfs.triggerHandler(cf_e("currentPosition", conf), fn)
+      });
+      $cfs.bind(cf_e("currentPosition", conf), function(e, fn) {
+        e.stopPropagation();
+        if(itms.first == 0) {
+          var val = 0
+        }else {
+          var val = itms.total - itms.first
+        }
+        if(typeof fn == "function") {
+          fn.call($tt0, val)
+        }
+        return val
+      });
+      $cfs.bind(cf_e("currentPage", conf), function(e, fn) {
+        e.stopPropagation();
+        var ipp = opts.pagination.items || opts.items.visible;
+        var max = Math.ceil(itms.total / ipp - 1);
+        if(itms.first == 0) {
+          var nr = 0
+        }else {
+          if(itms.first < itms.total % ipp) {
+            var nr = 0
+          }else {
+            if(itms.first == ipp && !opts.circular) {
+              var nr = max
+            }else {
+              var nr = Math.round((itms.total - itms.first) / ipp)
+            }
+          }
+        }
+        if(nr < 0) {
+          nr = 0
+        }
+        if(nr > max) {
+          nr = max
+        }
+        if(typeof fn == "function") {
+          fn.call($tt0, nr)
+        }
+        return nr
+      });
+      $cfs.bind(cf_e("currentVisible", conf), function(e, fn) {
+        e.stopPropagation();
+        $i = gi_getCurrentItems($cfs.children(), opts);
+        if(typeof fn == "function") {
+          fn.call($tt0, $i)
+        }
+        return $i
+      });
+      $cfs.bind(cf_e("slice", conf), function(e, f, l, fn) {
+        e.stopPropagation();
+        var v = [f, l, fn], t = ["number", "number", "function"], a = cf_sortParams(v, t);
+        f = typeof a[0] == "number" ? a[0] : 0, l = typeof a[1] == "number" ? a[1] : itms.total, fn = a[2];
+        f += itms.first;
+        l += itms.first;
+        while(f > itms.total) {
+          f -= itms.total
+        }
+        while(l > itms.total) {
+          l -= itms.total
+        }
+        while(f < 0) {
+          f += itms.total
+        }
+        while(l < 0) {
+          l += itms.total
+        }
+        var $iA = $cfs.children();
+        if(l > f) {
+          var $i = $iA.slice(f, l)
+        }else {
+          var $i = $iA.slice(f, itms.total).get().concat($iA.slice(0, l).get())
+        }
+        if(typeof fn == "function") {
+          fn.call($tt0, $i)
+        }
+        return $i
+      });
+      $cfs.bind(cf_e("isPaused", conf) + " " + cf_e("isStopped", conf) + " " + cf_e("isScrolling", conf), function(e, fn) {
+        e.stopPropagation();
+        var eType = e.type.substr(conf.events.prefix.length);
+        if(typeof fn == "function") {
+          fn.call($tt0, crsl[eType])
+        }
+        return crsl[eType]
+      });
+      $cfs.bind(cf_e("_cfs_configuration", conf, false), function(e, a, b, c) {
+        e.stopPropagation();
+        return $cfs.triggerHandler(cf_e("configuration", conf), [a, b, c])
+      });
+      $cfs.bind(cf_e("configuration", conf), function(e, a, b, c) {
+        e.stopPropagation();
+        var reInit = false;
+        if(typeof a == "function") {
+          a.call($tt0, opts)
+        }else {
+          if(typeof a == "object") {
+            opts_orig = $.extend(true, {}, opts_orig, a);
+            if(b !== false) {
+              reInit = true
+            }else {
+              opts = $.extend(true, {}, opts, a)
+            }
+          }else {
+            if(typeof a != "undefined") {
+              if(typeof b == "function") {
+                var val = eval("opts." + a);
+                if(typeof val == "undefined") {
+                  val = ""
+                }
+                b.call($tt0, val)
+              }else {
+                if(typeof b != "undefined") {
+                  if(typeof c !== "boolean") {
+                    c = true
+                  }
+                  eval("opts_orig." + a + " = b");
+                  if(c !== false) {
+                    reInit = true
+                  }else {
+                    eval("opts." + a + " = b")
+                  }
+                }else {
+                  return eval("opts." + a)
+                }
+              }
+            }
+          }
+        }
+        if(reInit) {
+          sz_resetMargin($cfs.children(), opts);
+          $cfs._cfs_init(opts_orig);
+          $cfs._cfs_bind_buttons();
+          var siz = sz_setSizes($cfs, opts, false);
+          $cfs.trigger(cf_e("updatePageStatus", conf), [true, siz])
+        }
+        return opts
+      });
+      $cfs.bind(cf_e("linkAnchors", conf), function(e, $con, sel) {
+        e.stopPropagation();
+        if(typeof $con == "undefined" || $con.length == 0) {
+          $con = $("body")
+        }else {
+          if(typeof $con == "string") {
+            $con = $($con)
+          }
+        }
+        if(typeof $con != "object") {
+          return debug(conf, "Not a valid object.")
+        }
+        if(typeof sel != "string" || sel.length == 0) {
+          sel = "a.caroufredsel"
+        }
+        $con.find(sel).each(function() {
+          var h = this.hash || "";
+          if(h.length > 0 && $cfs.children().index($(h)) != -1) {
+            $(this).unbind("click").click(function(e) {
+              e.preventDefault();
+              $cfs.trigger(cf_e("slideTo", conf), h)
+            })
+          }
+        });
+        return true
+      });
+      $cfs.bind(cf_e("updatePageStatus", conf), function(e, build, sizes) {
+        e.stopPropagation();
+        if(!opts.pagination.container) {
+          return
+        }
+        if(build) {
+          var ipp = opts.pagination.items || opts.items.visible, l = Math.ceil(itms.total / ipp);
+          if(opts.pagination.anchorBuilder) {
+            opts.pagination.container.children().remove();
+            opts.pagination.container.each(function() {
+              for(var a = 0;a < l;a++) {
+                var i = $cfs.children().eq(gn_getItemIndex(a * ipp, 0, true, itms, $cfs));
+                $(this).append(opts.pagination.anchorBuilder(a + 1, i))
+              }
+            })
+          }
+          opts.pagination.container.each(function() {
+            $(this).children().unbind(opts.pagination.event).each(function(a) {
+              $(this).bind(opts.pagination.event, function(e) {
+                e.preventDefault();
+                $cfs.trigger(cf_e("slideTo", conf), [a * ipp, 0, true, opts.pagination])
+              })
+            })
+          })
+        }
+        opts.pagination.container.each(function() {
+          $(this).children().removeClass(cf_c("selected", conf)).eq($cfs.triggerHandler(cf_e("currentPage", conf))).addClass(cf_c("selected", conf))
+        });
+        return true
+      });
+      $cfs.bind(cf_e("updateSizes", conf), function(e) {
+        var a_itm = $cfs.children(), vI = opts.items.visible;
+        if(opts.items.visibleConf.variable) {
+          vI = gn_getVisibleItemsNext(a_itm, opts, 0)
+        }else {
+          if(opts.items.filter != "*") {
+            vI = gn_getVisibleItemsNextFilter(a_itm, opts, 0)
+          }
+        }
+        if(!opts.circular && itms.first != 0 && vI > itms.first) {
+          if(opts.items.visibleConf.variable) {
+            var nI = gn_getVisibleItemsPrev(a_itm, opts, itms.first) - itms.first
+          }else {
+            if(opts.items.filter != "*") {
+              var nI = gn_getVisibleItemsPrevFilter(a_itm, opts, itms.first) - itms.first
+            }else {
+              nI = opts.items.visible - itms.first
+            }
+          }
+          debug(conf, "Preventing non-circular: sliding " + nI + " items backward.");
+          $cfs.trigger("prev", nI)
+        }
+        opts.items.visible = cf_getItemsAdjust(vI, opts, opts.items.visibleConf.adjust, $tt0);
+        return sz_setSizes($cfs, opts)
+      });
+      $cfs.bind(cf_e("_cfs_destroy", conf, false), function(e, orgOrder) {
+        e.stopPropagation();
+        $cfs.trigger(cf_e("destroy", conf), orgOrder);
+        return true
+      });
+      $cfs.bind(cf_e("destroy", conf), function(e, orgOrder) {
+        e.stopPropagation();
+        tmrs = sc_clearTimers(tmrs);
+        $cfs.data("cfs_isCarousel", false);
+        $cfs.trigger(cf_e("finish", conf));
+        if(orgOrder) {
+          $cfs.trigger(cf_e("jumpToStart", conf))
+        }
+        if(opts.usePadding) {
+          sz_resetMargin($cfs.children(), opts)
+        }
+        $cfs.css($cfs.data("cfs_origCss"));
+        $cfs._cfs_unbind_events();
+        $cfs._cfs_unbind_buttons();
+        $wrp.replaceWith($cfs);
+        return true
+      })
+    };
+    $cfs._cfs_unbind_events = function() {
+      $cfs.unbind(cf_e("", conf));
+      $cfs.unbind(cf_e("", conf, false))
+    };
+    $cfs._cfs_bind_buttons = function() {
+      $cfs._cfs_unbind_buttons();
+      nv_showNavi(opts, itms.total, conf);
+      nv_enableNavi(opts, itms.first, conf);
+      if(opts.auto.pauseOnHover) {
+        var pC = bt_pauseOnHoverConfig(opts.auto.pauseOnHover);
+        $wrp.bind(cf_e("mouseenter", conf, false), function() {
+          $cfs.trigger(cf_e("pause", conf), pC)
+        }).bind(cf_e("mouseleave", conf, false), function() {
+          $cfs.trigger(cf_e("resume", conf))
+        })
+      }
+      if(opts.auto.button) {
+        opts.auto.button.bind(cf_e(opts.auto.event, conf, false), function(e) {
+          e.preventDefault();
+          var ev = false, pC = null;
+          if(crsl.isPaused) {
+            ev = "play"
+          }else {
+            if(opts.auto.pauseOnEvent) {
+              ev = "pause";
+              pC = bt_pauseOnHoverConfig(opts.auto.pauseOnEvent)
+            }
+          }
+          if(ev) {
+            $cfs.trigger(cf_e(ev, conf), pC)
+          }
+        })
+      }
+      if(opts.prev.button) {
+        opts.prev.button.bind(cf_e(opts.prev.event, conf, false), function(e) {
+          e.preventDefault();
+          $cfs.trigger(cf_e("prev", conf))
+        });
+        if(opts.prev.pauseOnHover) {
+          var pC = bt_pauseOnHoverConfig(opts.prev.pauseOnHover);
+          opts.prev.button.bind(cf_e("mouseenter", conf, false), function() {
+            $cfs.trigger(cf_e("pause", conf), pC)
+          }).bind(cf_e("mouseleave", conf, false), function() {
+            $cfs.trigger(cf_e("resume", conf))
+          })
+        }
+      }
+      if(opts.next.button) {
+        opts.next.button.bind(cf_e(opts.next.event, conf, false), function(e) {
+          e.preventDefault();
+          $cfs.trigger(cf_e("next", conf))
+        });
+        if(opts.next.pauseOnHover) {
+          var pC = bt_pauseOnHoverConfig(opts.next.pauseOnHover);
+          opts.next.button.bind(cf_e("mouseenter", conf, false), function() {
+            $cfs.trigger(cf_e("pause", conf), pC)
+          }).bind(cf_e("mouseleave", conf, false), function() {
+            $cfs.trigger(cf_e("resume", conf))
+          })
+        }
+      }
+      if($.fn.mousewheel) {
+        if(opts.prev.mousewheel) {
+          if(!crsl.mousewheelPrev) {
+            crsl.mousewheelPrev = true;
+            $wrp.mousewheel(function(e, delta) {
+              if(delta > 0) {
+                e.preventDefault();
+                var num = bt_mousesheelNumber(opts.prev.mousewheel);
+                $cfs.trigger(cf_e("prev", conf), num)
+              }
+            })
+          }
+        }
+        if(opts.next.mousewheel) {
+          if(!crsl.mousewheelNext) {
+            crsl.mousewheelNext = true;
+            $wrp.mousewheel(function(e, delta) {
+              if(delta < 0) {
+                e.preventDefault();
+                var num = bt_mousesheelNumber(opts.next.mousewheel);
+                $cfs.trigger(cf_e("next", conf), num)
+              }
+            })
+          }
+        }
+      }
+      if($.fn.touchwipe) {
+        var wP = opts.prev.wipe ? function() {
+          $cfs.trigger(cf_e("prev", conf))
+        } : null, wN = opts.next.wipe ? function() {
+          $cfs.trigger(cf_e("next", conf))
+        } : null;
+        if(wN || wN) {
+          if(!crsl.touchwipe) {
+            crsl.touchwipe = true;
+            var twOps = {"min_move_x":30, "min_move_y":30, "preventDefaultEvents":true};
+            switch(opts.direction) {
+              case "up":
+              ;
+              case "down":
+                twOps.wipeUp = wN;
+                twOps.wipeDown = wP;
+                break;
+              default:
+                twOps.wipeLeft = wN;
+                twOps.wipeRight = wP
+            }
+            $wrp.touchwipe(twOps)
+          }
+        }
+      }
+      if(opts.pagination.container) {
+        if(opts.pagination.pauseOnHover) {
+          var pC = bt_pauseOnHoverConfig(opts.pagination.pauseOnHover);
+          opts.pagination.container.bind(cf_e("mouseenter", conf, false), function() {
+            $cfs.trigger(cf_e("pause", conf), pC)
+          }).bind(cf_e("mouseleave", conf, false), function() {
+            $cfs.trigger(cf_e("resume", conf))
+          })
+        }
+      }
+      if(opts.prev.key || opts.next.key) {
+        $(document).bind(cf_e("keyup", conf, false, true, true), function(e) {
+          var k = e.keyCode;
+          if(k == opts.next.key) {
+            e.preventDefault();
+            $cfs.trigger(cf_e("next", conf))
+          }
+          if(k == opts.prev.key) {
+            e.preventDefault();
+            $cfs.trigger(cf_e("prev", conf))
+          }
+        })
+      }
+      if(opts.pagination.keys) {
+        $(document).bind(cf_e("keyup", conf, false, true, true), function(e) {
+          var k = e.keyCode;
+          if(k >= 49 && k < 58) {
+            k = (k - 49) * opts.items.visible;
+            if(k <= itms.total) {
+              e.preventDefault();
+              $cfs.trigger(cf_e("slideTo", conf), [k, 0, true, opts.pagination])
+            }
+          }
+        })
+      }
+      if(opts.auto.play) {
+        $cfs.trigger(cf_e("play", conf), opts.auto.delay)
+      }
+      if(crsl.upDateOnWindowResize) {
+        $(window).bind(cf_e("resize", conf, false, true, true), function(e) {
+          $cfs.trigger(cf_e("finish", conf));
+          if(opts.auto.pauseOnResize && !crsl.isPaused) {
+            $cfs.trigger(cf_e("play", conf))
+          }
+          sz_resetMargin($cfs.children(), opts);
+          $cfs._cfs_init(opts_orig);
+          var siz = sz_setSizes($cfs, opts, false);
+          $cfs.trigger(cf_e("updatePageStatus", conf), [true, siz])
+        })
+      }
+    };
+    $cfs._cfs_unbind_buttons = function() {
+      var ns1 = cf_e("", conf), ns2 = cf_e("", conf, false);
+      ns3 = cf_e("", conf, false, true, true);
+      $(document).unbind(ns3);
+      $(window).unbind(ns3);
+      $wrp.unbind(ns2);
+      if(opts.auto.button) {
+        opts.auto.button.unbind(ns2)
+      }
+      if(opts.prev.button) {
+        opts.prev.button.unbind(ns2)
+      }
+      if(opts.next.button) {
+        opts.next.button.unbind(ns2)
+      }
+      if(opts.pagination.container) {
+        opts.pagination.container.unbind(ns2);
+        if(opts.pagination.anchorBuilder) {
+          opts.pagination.container.children().remove()
+        }
+      }
+      nv_showNavi(opts, "hide", conf);
+      nv_enableNavi(opts, "removeClass", conf)
+    };
+    var crsl = {"direction":"next", "isPaused":true, "isScrolling":false, "isStopped":false, "mousewheelNext":false, "mousewheelPrev":false, "touchwipe":false}, itms = {"total":$cfs.children().length, "first":0}, tmrs = {"timer":null, "auto":null, "queue":null, "startTime":getTime(), "timePassed":0}, scrl = {"isStopped":false, "duration":0, "startTime":0, "easing":"", "anims":[]}, clbk = {"onBefore":[], "onAfter":[]}, queu = [], conf = $.extend(true, {}, $.fn.carouFredSel.configs, configs), opts = 
+    {}, opts_orig = options, $wrp = $cfs.wrap("<" + conf.wrapper.element + ' class="' + conf.wrapper.classname + '" />').parent();
+    conf.selector = $cfs.selector;
+    conf.serialNumber = $.fn.carouFredSel.serialNumber++;
+    $cfs._cfs_init(opts_orig, true, starting_position);
+    $cfs._cfs_build();
+    $cfs._cfs_bind_events();
+    $cfs._cfs_bind_buttons();
+    if(is_array(opts.items.start)) {
+      var start_arr = opts.items.start
+    }else {
+      var start_arr = [];
+      if(opts.items.start != 0) {
+        start_arr.push(opts.items.start)
+      }
+    }
+    if(opts.cookie) {
+      start_arr.unshift(cf_readCookie(opts.cookie))
+    }
+    if(start_arr.length > 0) {
+      for(var a = 0, l = start_arr.length;a < l;a++) {
+        var s = start_arr[a];
+        if(s == 0) {
+          continue
+        }
+        if(s === true) {
+          s = window.location.hash;
+          if(s.length < 1) {
+            continue
+          }
+        }else {
+          if(s === "random") {
+            s = Math.floor(Math.random() * itms.total)
+          }
+        }
+        if($cfs.triggerHandler(cf_e("slideTo", conf), [s, 0, true, {fx:"none"}])) {
+          break
+        }
+      }
+    }
+    var siz = sz_setSizes($cfs, opts, false), itm = gi_getCurrentItems($cfs.children(), opts);
+    if(opts.onCreate) {
+      opts.onCreate.call($tt0, itm, siz)
+    }
+    $cfs.trigger(cf_e("updatePageStatus", conf), [true, siz]);
+    $cfs.trigger(cf_e("linkAnchors", conf));
+    return $cfs
+  };
+  $.fn.carouFredSel.serialNumber = 1;
+  $.fn.carouFredSel.defaults = {"synchronise":false, "infinite":true, "circular":true, "responsive":false, "direction":"left", "items":{"start":0}, "scroll":{"easing":"swing", "duration":500, "pauseOnHover":false, "mousewheel":false, "wipe":false, "event":"click", "queue":false}};
+  $.fn.carouFredSel.configs = {"debug":false, "events":{"prefix":"", "namespace":"cfs"}, "wrapper":{"element":"div", "classname":"caroufredsel_wrapper"}, "classnames":{}};
+  $.fn.carouFredSel.pageAnchorBuilder = function(nr, itm) {
+    return'<a href="#"><span>' + nr + "</span></a>"
+  };
+  function sc_setScroll(d, e) {
+    return{anims:[], duration:d, orgDuration:d, easing:e, startTime:getTime()}
+  }
+  function sc_startScroll(s) {
+    if(typeof s.pre == "object") {
+      sc_startScroll(s.pre)
+    }
+    for(var a = 0, l = s.anims.length;a < l;a++) {
+      var b = s.anims[a];
+      if(!b) {
+        continue
+      }
+      if(b[3]) {
+        b[0].stop()
+      }
+      b[0].animate(b[1], {complete:b[2], duration:s.duration, easing:s.easing})
+    }
+    if(typeof s.post == "object") {
+      sc_startScroll(s.post)
+    }
+  }
+  function sc_stopScroll(s, finish) {
+    if(typeof finish != "boolean") {
+      finish = true
+    }
+    if(typeof s.pre == "object") {
+      sc_stopScroll(s.pre, finish)
+    }
+    for(var a = 0, l = s.anims.length;a < l;a++) {
+      var b = s.anims[a];
+      b[0].stop(true);
+      if(finish) {
+        b[0].css(b[1]);
+        if(typeof b[2] == "function") {
+          b[2]()
+        }
+      }
+    }
+    if(typeof s.post == "object") {
+      sc_stopScroll(s.post, finish)
+    }
+  }
+  function sc_clearTimers(t) {
+    if(t.auto) {
+      clearTimeout(t.auto)
+    }
+    return t
+  }
+  function sc_callCallbacks(cbs, t, args) {
+    if(cbs.length) {
+      for(var a = 0, l = cbs.length;a < l;a++) {
+        cbs[a].apply(t, args)
+      }
+    }
+    return[]
+  }
+  function fx_fade(sO, c, x, d, f) {
+    var o = {"duration":d, "easing":sO.easing};
+    if(typeof f == "function") {
+      o.complete = f
+    }
+    c.animate({opacity:x}, o)
+  }
+  function fx_cover(sc, c1, c2, o, prev) {
+    var old_w = ms_getSizes(gi_getOldItemsNext(c1.children(), o), o, true)[0], new_w = ms_getSizes(c2.children(), o, true)[0], cur_l = prev ? -new_w : old_w, css_o = {}, ani_o = {};
+    css_o[o.d["width"]] = new_w;
+    css_o[o.d["left"]] = cur_l;
+    ani_o[o.d["left"]] = 0;
+    sc.pre.anims.push([c1, {"opacity":1}]);
+    sc.post.anims.push([c2, ani_o, function() {
+      $(this).remove()
+    }]);
+    c2.css(css_o);
+    return sc
+  }
+  function fx_uncover(sc, c1, c2, o, prev, n) {
+    var new_w = ms_getSizes(gi_getNewItemsNext(c1.children(), o, n), o, true)[0], old_w = ms_getSizes(c2.children(), o, true)[0], cur_l = prev ? -old_w : new_w, css_o = {}, ani_o = {};
+    css_o[o.d["width"]] = old_w;
+    css_o[o.d["left"]] = 0;
+    ani_o[o.d["left"]] = cur_l;
+    sc.post.anims.push([c2, ani_o, function() {
+      $(this).remove()
+    }]);
+    c2.css(css_o);
+    return sc
+  }
+  function nv_showNavi(o, t, c) {
+    if(t == "show" || t == "hide") {
+      var f = t
+    }else {
+      if(o.items.minimum >= t) {
+        debug(c, "Not enough items: hiding navigation (" + t + " items, " + o.items.minimum + " needed).");
+        var f = "hide"
+      }else {
+        var f = "show"
+      }
+    }
+    var s = f == "show" ? "removeClass" : "addClass", h = cf_c("hidden", c);
+    if(o.auto.button) {
+      o.auto.button[f]()[s](h)
+    }
+    if(o.prev.button) {
+      o.prev.button[f]()[s](h)
+    }
+    if(o.next.button) {
+      o.next.button[f]()[s](h)
+    }
+    if(o.pagination.container) {
+      o.pagination.container[f]()[s](h)
+    }
+  }
+  function nv_enableNavi(o, f, c) {
+    if(o.circular || o.infinite) {
+      return
+    }
+    var fx = f == "removeClass" || f == "addClass" ? f : false, di = cf_c("disabled", c);
+    if(o.auto.button && fx) {
+      o.auto.button[fx](di)
+    }
+    if(o.prev.button) {
+      var fn = fx || f == 0 ? "addClass" : "removeClass";
+      o.prev.button[fn](di)
+    }
+    if(o.next.button) {
+      var fn = fx || f == o.items.visible ? "addClass" : "removeClass";
+      o.next.button[fn](di)
+    }
+  }
+  function go_getObject($tt, obj) {
+    if(typeof obj == "function") {
+      obj = obj.call($tt)
+    }
+    if(typeof obj == "undefined") {
+      obj = {}
+    }
+    return obj
+  }
+  function go_getNaviObject($tt, obj, type) {
+    if(typeof type != "string") {
+      type = ""
+    }
+    obj = go_getObject($tt, obj);
+    if(typeof obj == "string") {
+      var temp = cf_getKeyCode(obj);
+      if(temp == -1) {
+        obj = $(obj)
+      }else {
+        obj = temp
+      }
+    }
+    if(type == "pagination") {
+      if(typeof obj == "boolean") {
+        obj = {"keys":obj}
+      }
+      if(typeof obj.jquery != "undefined") {
+        obj = {"container":obj}
+      }
+      if(typeof obj.container == "function") {
+        obj.container = obj.container.call($tt)
+      }
+      if(typeof obj.container == "string") {
+        obj.container = $(obj.container)
+      }
+      if(typeof obj.items != "number") {
+        obj.items = false
+      }
+    }else {
+      if(type == "auto") {
+        if(typeof obj.jquery != "undefined") {
+          obj = {"button":obj}
+        }
+        if(typeof obj == "boolean") {
+          obj = {"play":obj}
+        }
+        if(typeof obj == "number") {
+          obj = {"pauseDuration":obj}
+        }
+        if(typeof obj.button == "function") {
+          obj.button = obj.button.call($tt)
+        }
+        if(typeof obj.button == "string") {
+          obj.button = $(obj.button)
+        }
+      }else {
+        if(typeof obj.jquery != "undefined") {
+          obj = {"button":obj}
+        }
+        if(typeof obj == "number") {
+          obj = {"key":obj}
+        }
+        if(typeof obj.button == "function") {
+          obj.button = obj.button.call($tt)
+        }
+        if(typeof obj.button == "string") {
+          obj.button = $(obj.button)
+        }
+        if(typeof obj.key == "string") {
+          obj.key = cf_getKeyCode(obj.key)
+        }
+      }
+    }
+    return obj
+  }
+  function gn_getItemIndex(num, dev, org, items, $cfs) {
+    if(typeof num == "string") {
+      if(isNaN(num)) {
+        num = $(num)
+      }else {
+        num = parseInt(num)
+      }
+    }
+    if(typeof num == "object") {
+      if(typeof num.jquery == "undefined") {
+        num = $(num)
+      }
+      num = $cfs.children().index(num);
+      if(num == -1) {
+        num = 0
+      }
+      if(typeof org != "boolean") {
+        org = false
+      }
+    }else {
+      if(typeof org != "boolean") {
+        org = true
+      }
+    }
+    if(isNaN(num)) {
+      num = 0
+    }else {
+      num = parseInt(num)
+    }
+    if(isNaN(dev)) {
+      dev = 0
+    }else {
+      dev = parseInt(dev)
+    }
+    if(org) {
+      num += items.first
+    }
+    num += dev;
+    if(items.total > 0) {
+      while(num >= items.total) {
+        num -= items.total
+      }
+      while(num < 0) {
+        num += items.total
+      }
+    }
+    return num
+  }
+  function gn_getVisibleItemsPrev(i, o, s) {
+    var t = 0, x = 0;
+    for(var a = s;a >= 0;a--) {
+      var j = i.eq(a);
+      t += j.is(":visible") ? j[o.d["outerWidth"]](true) : 0;
+      if(t > o.maxDimention) {
+        return x
+      }
+      if(a == 0) {
+        a = i.length
+      }
+      x++
+    }
+  }
+  function gn_getVisibleItemsPrevFilter(i, o, s) {
+    return gn_getItemsPrevFilter(i, o.items.filter, o.items.visibleConf.org, s)
+  }
+  function gn_getScrollItemsPrevFilter(i, o, s, m) {
+    return gn_getItemsPrevFilter(i, o.items.filter, m, s)
+  }
+  function gn_getItemsPrevFilter(i, f, m, s) {
+    var t = 0, x = 0;
+    for(var a = s, l = i.length - 1;a >= 0;a--) {
+      x++;
+      if(x == l) {
+        return x
+      }
+      var j = i.eq(a);
+      if(j.is(f)) {
+        t++;
+        if(t == m) {
+          return x
+        }
+      }
+      if(a == 0) {
+        a = i.length
+      }
+    }
+  }
+  function gn_getVisibleOrg($c, o) {
+    return o.items.visibleConf.org || $c.children().slice(0, o.items.visible).filter(o.items.filter).length
+  }
+  function gn_getVisibleItemsNext(i, o, s) {
+    var t = 0, x = 0;
+    for(var a = s, l = i.length - 1;a <= l;a++) {
+      var j = i.eq(a);
+      t += j.is(":visible") ? j[o.d["outerWidth"]](true) : 0;
+      if(t > o.maxDimention) {
+        return x
+      }
+      x++;
+      if(x == l) {
+        return x
+      }
+      if(a == l) {
+        a = -1
+      }
+    }
+  }
+  function gn_getVisibleItemsNextTestCircular(i, o, s, l) {
+    var v = gn_getVisibleItemsNext(i, o, s);
+    if(!o.circular) {
+      if(s + v > l) {
+        v = l - s
+      }
+    }
+    return v
+  }
+  function gn_getVisibleItemsNextFilter(i, o, s) {
+    return gn_getItemsNextFilter(i, o.items.filter, o.items.visibleConf.org, s, o.circular)
+  }
+  function gn_getScrollItemsNextFilter(i, o, s, m) {
+    return gn_getItemsNextFilter(i, o.items.filter, m + 1, s, o.circular) - 1
+  }
+  function gn_getItemsNextFilter(i, f, m, s, c) {
+    var t = 0, x = 0;
+    for(var a = s, l = i.length - 1;a <= l;a++) {
+      x++;
+      if(x == l) {
+        return x
+      }
+      var j = i.eq(a);
+      if(j.is(f)) {
+        t++;
+        if(t == m) {
+          return x
+        }
+      }
+      if(a == l) {
+        a = -1
+      }
+    }
+  }
+  function gi_getCurrentItems(i, o) {
+    return i.slice(0, o.items.visible)
+  }
+  function gi_getOldItemsPrev(i, o, n) {
+    return i.slice(n, o.items.visibleConf.old + n)
+  }
+  function gi_getNewItemsPrev(i, o) {
+    return i.slice(0, o.items.visible)
+  }
+  function gi_getOldItemsNext(i, o) {
+    return i.slice(0, o.items.visibleConf.old)
+  }
+  function gi_getNewItemsNext(i, o, n) {
+    return i.slice(n, o.items.visible + n)
+  }
+  function sz_resetMargin(i, o, m) {
+    var x = typeof m == "boolean" ? m : false;
+    if(typeof m != "number") {
+      m = 0
+    }
+    i.each(function() {
+      var j = $(this);
+      var t = parseInt(j.css(o.d["marginRight"]));
+      if(isNaN(t)) {
+        t = 0
+      }
+      j.data("cfs_tempCssMargin", t);
+      j.css(o.d["marginRight"], x ? j.data("cfs_tempCssMargin") : m + j.data("cfs_origCssMargin"))
+    })
+  }
+  function sz_setSizes($c, o, p) {
+    var $w = $c.parent(), $i = $c.children(), $v = gi_getCurrentItems($i, o), sz = cf_mapWrapperSizes(ms_getSizes($v, o, true), o, p);
+    $w.css(sz);
+    if(o.usePadding) {
+      var p = o.padding, r = p[o.d[1]];
+      if(o.align) {
+        if(r < 0) {
+          r = 0
+        }
+      }
+      var $l = $v.last();
+      $l.css(o.d["marginRight"], $l.data("cfs_origCssMargin") + r);
+      $c.css(o.d["top"], p[o.d[0]]);
+      $c.css(o.d["left"], p[o.d[3]])
+    }
+    $c.css(o.d["width"], sz[o.d["width"]] + ms_getTotalSize($i, o, "width") * 2);
+    $c.css(o.d["height"], ms_getLargestSize($i, o, "height"));
+    return sz
+  }
+  function ms_getSizes(i, o, wrapper) {
+    var s1 = ms_getTotalSize(i, o, "width", wrapper), s2 = ms_getLargestSize(i, o, "height", wrapper);
+    return[s1, s2]
+  }
+  function ms_getLargestSize(i, o, dim, wrapper) {
+    if(typeof wrapper != "boolean") {
+      wrapper = false
+    }
+    if(typeof o[o.d[dim]] == "number" && wrapper) {
+      return o[o.d[dim]]
+    }
+    if(typeof o.items[o.d[dim]] == "number") {
+      return o.items[o.d[dim]]
+    }
+    var di2 = dim.toLowerCase().indexOf("width") > -1 ? "outerWidth" : "outerHeight";
+    return ms_getTrueLargestSize(i, o, di2)
+  }
+  function ms_getTrueLargestSize(i, o, dim) {
+    var s = 0;
+    for(var a = 0, l = i.length;a < l;a++) {
+      var j = i.eq(a);
+      var m = j.is(":visible") ? j[o.d[dim]](true) : 0;
+      if(s < m) {
+        s = m
+      }
+    }
+    return s
+  }
+  function ms_getTrueInnerSize($el, o, dim) {
+    if(!$el.is(":visible")) {
+      return 0
+    }
+    var siz = $el[o.d[dim]](), arr = o.d[dim].toLowerCase().indexOf("width") > -1 ? ["paddingLeft", "paddingRight"] : ["paddingTop", "paddingBottom"];
+    for(var a = 0, l = arr.length;a < l;a++) {
+      var m = parseInt($el.css(arr[a]));
+      siz -= isNaN(m) ? 0 : m
+    }
+    return siz
+  }
+  function ms_getTotalSize(i, o, dim, wrapper) {
+    if(typeof wrapper != "boolean") {
+      wrapper = false
+    }
+    if(typeof o[o.d[dim]] == "number" && wrapper) {
+      return o[o.d[dim]]
+    }
+    if(typeof o.items[o.d[dim]] == "number") {
+      return o.items[o.d[dim]] * i.length
+    }
+    var d = dim.toLowerCase().indexOf("width") > -1 ? "outerWidth" : "outerHeight", s = 0;
+    for(var a = 0, l = i.length;a < l;a++) {
+      var j = i.eq(a);
+      s += j.is(":visible") ? j[o.d[d]](true) : 0
+    }
+    return s
+  }
+  function ms_hasVariableSizes(i, o, dim) {
+    var s = false, v = false;
+    for(var a = 0, l = i.length;a < l;a++) {
+      var j = i.eq(a);
+      var c = j.is(":visible") ? j[o.d[dim]](true) : 0;
+      if(s === false) {
+        s = c
+      }else {
+        if(s != c) {
+          v = true
+        }
+      }
+      if(s == 0) {
+        v = true
+      }
+    }
+    return v
+  }
+  function ms_getPaddingBorderMargin(i, o, d) {
+    return i[o.d["outer" + d]](true) - ms_getTrueInnerSize(i, o, "inner" + d)
+  }
+  function ms_isPercentage(x) {
+    return typeof x == "string" && x.substr(-1) == "%"
+  }
+  function ms_getPercentage(s, o) {
+    if(ms_isPercentage(o)) {
+      o = o.substring(0, o.length - 1);
+      if(isNaN(o)) {
+        return s
+      }
+      s *= o / 100
+    }
+    return s
+  }
+  function cf_e(n, c, pf, ns, rd) {
+    if(typeof pf != "boolean") {
+      pf = true
+    }
+    if(typeof ns != "boolean") {
+      ns = true
+    }
+    if(typeof rd != "boolean") {
+      rd = false
+    }
+    if(pf) {
+      n = c.events.prefix + n
+    }
+    if(ns) {
+      n = n + "." + c.events.namespace
+    }
+    if(ns && rd) {
+      n += c.serialNumber
+    }
+    return n
+  }
+  function cf_c(n, c) {
+    return typeof c.classnames[n] == "string" ? c.classnames[n] : n
+  }
+  function cf_mapWrapperSizes(ws, o, p) {
+    if(typeof p != "boolean") {
+      p = true
+    }
+    var pad = o.usePadding && p ? o.padding : [0, 0, 0, 0];
+    var wra = {};
+    wra[o.d["width"]] = ws[0] + pad[1] + pad[3];
+    wra[o.d["height"]] = ws[1] + pad[0] + pad[2];
+    return wra
+  }
+  function cf_sortParams(vals, typs) {
+    var arr = [];
+    for(var a = 0, l1 = vals.length;a < l1;a++) {
+      for(var b = 0, l2 = typs.length;b < l2;b++) {
+        if(typs[b].indexOf(typeof vals[a]) > -1 && typeof arr[b] == "undefined") {
+          arr[b] = vals[a];
+          break
+        }
+      }
+    }
+    return arr
+  }
+  function cf_getPadding(p) {
+    if(typeof p == "undefined") {
+      return[0, 0, 0, 0]
+    }
+    if(typeof p == "number") {
+      return[p, p, p, p]
+    }else {
+      if(typeof p == "string") {
+        p = p.split("px").join("").split("em").join("").split(" ")
+      }
+    }
+    if(!is_array(p)) {
+      return[0, 0, 0, 0]
+    }
+    for(var i = 0;i < 4;i++) {
+      p[i] = parseInt(p[i])
+    }
+    switch(p.length) {
+      case 0:
+        return[0, 0, 0, 0];
+      case 1:
+        return[p[0], p[0], p[0], p[0]];
+      case 2:
+        return[p[0], p[1], p[0], p[1]];
+      case 3:
+        return[p[0], p[1], p[2], p[1]];
+      default:
+        return[p[0], p[1], p[2], p[3]]
+    }
+  }
+  function cf_getAlignPadding(itm, o) {
+    var x = typeof o[o.d["width"]] == "number" ? Math.ceil(o[o.d["width"]] - ms_getTotalSize(itm, o, "width")) : 0;
+    switch(o.align) {
+      case "left":
+        return[0, x];
+      case "right":
+        return[x, 0];
+      case "center":
+      ;
+      default:
+        return[Math.ceil(x / 2), Math.floor(x / 2)]
+    }
+  }
+  function cf_getAdjust(x, o, a, $t) {
+    var v = x;
+    if(typeof a == "function") {
+      v = a.call($t, v)
+    }else {
+      if(typeof a == "string") {
+        var p = a.split("+"), m = a.split("-");
+        if(m.length > p.length) {
+          var neg = true, sta = m[0], adj = m[1]
+        }else {
+          var neg = false, sta = p[0], adj = p[1]
+        }
+        switch(sta) {
+          case "even":
+            v = x % 2 == 1 ? x - 1 : x;
+            break;
+          case "odd":
+            v = x % 2 == 0 ? x - 1 : x;
+            break;
+          default:
+            v = x;
+            break
+        }
+        adj = parseInt(adj);
+        if(!isNaN(adj)) {
+          if(neg) {
+            adj = -adj
+          }
+          v += adj
+        }
+      }
+    }
+    if(typeof v != "number") {
+      v = 1
+    }
+    if(v < 1) {
+      v = 1
+    }
+    return v
+  }
+  function cf_getItemsAdjust(x, o, a, $t) {
+    return cf_getItemAdjustMinMax(cf_getAdjust(x, o, a, $t), o.items.visibleConf)
+  }
+  function cf_getItemAdjustMinMax(v, i) {
+    if(typeof i.min == "number" && v < i.min) {
+      v = i.min
+    }
+    if(typeof i.max == "number" && v > i.max) {
+      v = i.max
+    }
+    if(v < 1) {
+      v = 1
+    }
+    return v
+  }
+  function cf_getSynchArr(s) {
+    if(!is_array(s)) {
+      s = [[s]]
+    }
+    if(!is_array(s[0])) {
+      s = [s]
+    }
+    for(var j = 0, l = s.length;j < l;j++) {
+      if(typeof s[j][0] == "string") {
+        s[j][0] = $(s[j][0])
+      }
+      if(typeof s[j][1] != "boolean") {
+        s[j][1] = true
+      }
+      if(typeof s[j][2] != "boolean") {
+        s[j][2] = true
+      }
+      if(typeof s[j][3] != "number") {
+        s[j][3] = 0
+      }
+    }
+    return s
+  }
+  function cf_getKeyCode(k) {
+    if(k == "right") {
+      return 39
+    }
+    if(k == "left") {
+      return 37
+    }
+    if(k == "up") {
+      return 38
+    }
+    if(k == "down") {
+      return 40
+    }
+    return-1
+  }
+  function cf_setCookie(n, v) {
+    if(n) {
+      document.cookie = n + "=" + v + "; path=/"
+    }
+  }
+  function cf_readCookie(n) {
+    n += "=";
+    var ca = document.cookie.split(";");
+    for(var a = 0, l = ca.length;a < l;a++) {
+      var c = ca[a];
+      while(c.charAt(0) == " ") {
+        c = c.substring(1, c.length)
+      }
+      if(c.indexOf(n) == 0) {
+        return c.substring(n.length, c.length)
+      }
+    }
+    return 0
+  }
+  function bt_pauseOnHoverConfig(p) {
+    if(p && typeof p == "string") {
+      var i = p.indexOf("immediate") > -1 ? true : false, r = p.indexOf("resume") > -1 ? true : false
+    }else {
+      var i = r = false
+    }
+    return[i, r]
+  }
+  function bt_mousesheelNumber(mw) {
+    return typeof mw == "number" ? mw : null
+  }
+  function is_array(a) {
+    return typeof a == "object" && a instanceof Array
+  }
+  function getTime() {
+    return(new Date).getTime()
+  }
+  function debug(d, m) {
+    if(typeof d == "object") {
+      var s = " (" + d.selector + ")";
+      d = d.debug
+    }else {
+      var s = ""
+    }
+    if(!d) {
+      return false
+    }
+    if(typeof m == "string") {
+      m = "carouFredSel" + s + ": " + m
+    }else {
+      m = ["carouFredSel" + s + ":", m]
+    }
+    if(window.console && window.console.log) {
+      window.console.log(m)
+    }
+    return false
+  }
+  $.fn.caroufredsel = function(o, c) {
+    return this.carouFredSel(o, c)
+  };
+  $.extend($.easing, {"quadratic":function(t) {
+    var t2 = t * t;
+    return t * (-t2 * t + 4 * t2 - 6 * t + 4)
+  }, "cubic":function(t) {
+    return t * (4 * t * t - 9 * t + 6)
+  }, "elastic":function(t) {
+    var t2 = t * t;
+    return t * (33 * t2 * t2 - 106 * t2 * t + 126 * t2 - 67 * t + 15)
+  }})
+})(jQuery);
+eval(function(p, a, c, k, e, r) {
+  e = function(c) {
+    return(c < a ? "" : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+  };
+  if(!"".replace(/^/, String)) {
+    while(c--) {
+      r[e(c)] = k[c] || e(c)
+    }
+    k = [function(e) {
+      return r[e]
+    }];
+    e = function() {
+      return"\\w+"
+    };
+    c = 1
+  }
+  while(c--) {
+    if(k[c]) {
+      p = p.replace(new RegExp("\\b" + e(c) + "\\b", "g"), k[c])
+    }
+  }
+  return p
+}("h.i['1a']=h.i['z'];h.O(h.i,{y:'D',z:9(x,t,b,c,d){6 h.i[h.i.y](x,t,b,c,d)},17:9(x,t,b,c,d){6 c*(t/=d)*t+b},D:9(x,t,b,c,d){6-c*(t/=d)*(t-2)+b},13:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t+b;6-c/2*((--t)*(t-2)-1)+b},X:9(x,t,b,c,d){6 c*(t/=d)*t*t+b},U:9(x,t,b,c,d){6 c*((t=t/d-1)*t*t+1)+b},R:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t+b;6 c/2*((t-=2)*t*t+2)+b},N:9(x,t,b,c,d){6 c*(t/=d)*t*t*t+b},M:9(x,t,b,c,d){6-c*((t=t/d-1)*t*t*t-1)+b},L:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t*t+b;6-c/2*((t-=2)*t*t*t-2)+b},K:9(x,t,b,c,d){6 c*(t/=d)*t*t*t*t+b},J:9(x,t,b,c,d){6 c*((t=t/d-1)*t*t*t*t+1)+b},I:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t*t*t+b;6 c/2*((t-=2)*t*t*t*t+2)+b},G:9(x,t,b,c,d){6-c*8.C(t/d*(8.g/2))+c+b},15:9(x,t,b,c,d){6 c*8.n(t/d*(8.g/2))+b},12:9(x,t,b,c,d){6-c/2*(8.C(8.g*t/d)-1)+b},Z:9(x,t,b,c,d){6(t==0)?b:c*8.j(2,10*(t/d-1))+b},Y:9(x,t,b,c,d){6(t==d)?b+c:c*(-8.j(2,-10*t/d)+1)+b},W:9(x,t,b,c,d){e(t==0)6 b;e(t==d)6 b+c;e((t/=d/2)<1)6 c/2*8.j(2,10*(t-1))+b;6 c/2*(-8.j(2,-10*--t)+2)+b},V:9(x,t,b,c,d){6-c*(8.o(1-(t/=d)*t)-1)+b},S:9(x,t,b,c,d){6 c*8.o(1-(t=t/d-1)*t)+b},Q:9(x,t,b,c,d){e((t/=d/2)<1)6-c/2*(8.o(1-t*t)-1)+b;6 c/2*(8.o(1-(t-=2)*t)+1)+b},P:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d)==1)6 b+c;e(!p)p=d*.3;e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);6-(a*8.j(2,10*(t-=1))*8.n((t*d-s)*(2*8.g)/p))+b},H:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d)==1)6 b+c;e(!p)p=d*.3;e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);6 a*8.j(2,-10*t)*8.n((t*d-s)*(2*8.g)/p)+c+b},T:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d/2)==2)6 b+c;e(!p)p=d*(.3*1.5);e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);e(t<1)6-.5*(a*8.j(2,10*(t-=1))*8.n((t*d-s)*(2*8.g)/p))+b;6 a*8.j(2,-10*(t-=1))*8.n((t*d-s)*(2*8.g)/p)*.5+c+b},F:9(x,t,b,c,d,s){e(s==u)s=1.l;6 c*(t/=d)*t*((s+1)*t-s)+b},E:9(x,t,b,c,d,s){e(s==u)s=1.l;6 c*((t=t/d-1)*t*((s+1)*t+s)+1)+b},16:9(x,t,b,c,d,s){e(s==u)s=1.l;e((t/=d/2)<1)6 c/2*(t*t*(((s*=(1.B))+1)*t-s))+b;6 c/2*((t-=2)*t*(((s*=(1.B))+1)*t+s)+2)+b},A:9(x,t,b,c,d){6 c-h.i.v(x,d-t,0,c,d)+b},v:9(x,t,b,c,d){e((t/=d)<(1/2.k)){6 c*(7.q*t*t)+b}m e(t<(2/2.k)){6 c*(7.q*(t-=(1.5/2.k))*t+.k)+b}m e(t<(2.5/2.k)){6 c*(7.q*(t-=(2.14/2.k))*t+.11)+b}m{6 c*(7.q*(t-=(2.18/2.k))*t+.19)+b}},1b:9(x,t,b,c,d){e(t<d/2)6 h.i.A(x,t*2,0,c,d)*.5+b;6 h.i.v(x,t*2-d,0,c,d)*.5+c*.5+b}});", 
+62, 74, "||||||return||Math|function|||||if|var|PI|jQuery|easing|pow|75|70158|else|sin|sqrt||5625|asin|||undefined|easeOutBounce|abs||def|swing|easeInBounce|525|cos|easeOutQuad|easeOutBack|easeInBack|easeInSine|easeOutElastic|easeInOutQuint|easeOutQuint|easeInQuint|easeInOutQuart|easeOutQuart|easeInQuart|extend|easeInElastic|easeInOutCirc|easeInOutCubic|easeOutCirc|easeInOutElastic|easeOutCubic|easeInCirc|easeInOutExpo|easeInCubic|easeOutExpo|easeInExpo||9375|easeInOutSine|easeInOutQuad|25|easeOutSine|easeInOutBack|easeInQuad|625|984375|jswing|easeInOutBounce".split("|"), 
+0, {}));
+(function(b) {
+  var m, t, u, f, D, j, E, n, z, A, q = 0, e = {}, o = [], p = 0, d = {}, l = [], G = null, v = new Image, J = /\.(jpg|gif|png|bmp|jpeg)(.*)?$/i, W = /[^\.]\.(swf)\s*$/i, K, L = 1, y = 0, s = "", r, i, h = false, B = b.extend(b("<div/>")[0], {prop:0}), M = b.browser.msie && b.browser.version < 7 && !window.XMLHttpRequest, N = function() {
+    t.hide();
+    v.onerror = v.onload = null;
+    G && G.abort();
+    m.empty()
+  }, O = function() {
+    if(false === e.onError(o, q, e)) {
+      t.hide();
+      h = false
+    }else {
+      e.titleShow = false;
+      e.width = "auto";
+      e.height = "auto";
+      m.html('<p id="fancybox-error">The requested content cannot be loaded.<br />Please try again later.</p>');
+      F()
+    }
+  }, I = function() {
+    var a = o[q], c, g, k, C, P, w;
+    N();
+    e = b.extend({}, b.fn.fancybox.defaults, typeof b(a).data("fancybox") == "undefined" ? e : b(a).data("fancybox"));
+    w = e.onStart(o, q, e);
+    if(w === false) {
+      h = false
+    }else {
+      if(typeof w == "object") {
+        e = b.extend(e, w)
+      }
+      k = e.title || (a.nodeName ? b(a).attr("title") : a.title) || "";
+      if(a.nodeName && !e.orig) {
+        e.orig = b(a).children("img:first").length ? b(a).children("img:first") : b(a)
+      }
+      if(k === "" && e.orig && e.titleFromAlt) {
+        k = e.orig.attr("alt")
+      }
+      c = e.href || (a.nodeName ? b(a).attr("href") : a.href) || null;
+      if(/^(?:javascript)/i.test(c) || c == "#") {
+        c = null
+      }
+      if(e.type) {
+        g = e.type;
+        if(!c) {
+          c = e.content
+        }
+      }else {
+        if(e.content) {
+          g = "html"
+        }else {
+          if(c) {
+            g = c.match(J) ? "image" : c.match(W) ? "swf" : b(a).hasClass("iframe") ? "iframe" : c.indexOf("#") === 0 ? "inline" : "ajax"
+          }
+        }
+      }
+      if(g) {
+        if(g == "inline") {
+          a = c.substr(c.indexOf("#"));
+          g = b(a).length > 0 ? "inline" : "ajax"
+        }
+        e.type = g;
+        e.href = c;
+        e.title = k;
+        if(e.autoDimensions) {
+          if(e.type == "html" || e.type == "inline" || e.type == "ajax") {
+            e.width = "auto";
+            e.height = "auto"
+          }else {
+            e.autoDimensions = false
+          }
+        }
+        if(e.modal) {
+          e.overlayShow = true;
+          e.hideOnOverlayClick = false;
+          e.hideOnContentClick = false;
+          e.enableEscapeButton = false;
+          e.showCloseButton = false
+        }
+        e.padding = parseInt(e.padding, 10);
+        e.margin = parseInt(e.margin, 10);
+        m.css("padding", e.padding + e.margin);
+        b(".fancybox-inline-tmp").unbind("fancybox-cancel").bind("fancybox-change", function() {
+          b(this).replaceWith(j.children())
+        });
+        switch(g) {
+          case "html":
+            m.html(e.content);
+            F();
+            break;
+          case "inline":
+            if(b(a).parent().is("#fancybox-content") === true) {
+              h = false;
+              break
+            }
+            b('<div class="fancybox-inline-tmp" />').hide().insertBefore(b(a)).bind("fancybox-cleanup", function() {
+              b(this).replaceWith(j.children())
+            }).bind("fancybox-cancel", function() {
+              b(this).replaceWith(m.children())
+            });
+            b(a).appendTo(m);
+            F();
+            break;
+          case "image":
+            h = false;
+            b.fancybox.showActivity();
+            v = new Image;
+            v.onerror = function() {
+              O()
+            };
+            v.onload = function() {
+              h = true;
+              v.onerror = v.onload = null;
+              e.width = v.width;
+              e.height = v.height;
+              b("<img />").attr({id:"fancybox-img", src:v.src, alt:e.title}).appendTo(m);
+              Q()
+            };
+            v.src = c;
+            break;
+          case "swf":
+            e.scrolling = "no";
+            C = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + e.width + '" height="' + e.height + '"><param name="movie" value="' + c + '"></param>';
+            P = "";
+            b.each(e.swf, function(x, H) {
+              C += '<param name="' + x + '" value="' + H + '"></param>';
+              P += " " + x + '="' + H + '"'
+            });
+            C += '<embed src="' + c + '" type="application/x-shockwave-flash" width="' + e.width + '" height="' + e.height + '"' + P + "></embed></object>";
+            m.html(C);
+            F();
+            break;
+          case "ajax":
+            h = false;
+            b.fancybox.showActivity();
+            e.ajax.win = e.ajax.success;
+            G = b.ajax(b.extend({}, e.ajax, {url:c, data:e.ajax.data || {}, error:function(x) {
+              x.status > 0 && O()
+            }, success:function(x, H, R) {
+              if((typeof R == "object" ? R : G).status == 200) {
+                if(typeof e.ajax.win == "function") {
+                  w = e.ajax.win(c, x, H, R);
+                  if(w === false) {
+                    t.hide();
+                    return
+                  }else {
+                    if(typeof w == "string" || typeof w == "object") {
+                      x = w
+                    }
+                  }
+                }
+                m.html(x);
+                F()
+              }
+            }}));
+            break;
+          case "iframe":
+            Q()
+        }
+      }else {
+        O()
+      }
+    }
+  }, F = function() {
+    var a = e.width, c = e.height;
+    a = a.toString().indexOf("%") > -1 ? parseInt((b(window).width() - e.margin * 2) * parseFloat(a) / 100, 10) + "px" : a == "auto" ? "auto" : a + "px";
+    c = c.toString().indexOf("%") > -1 ? parseInt((b(window).height() - e.margin * 2) * parseFloat(c) / 100, 10) + "px" : c == "auto" ? "auto" : c + "px";
+    m.wrapInner('<div style="width:' + a + ";height:" + c + ";overflow: " + (e.scrolling == "auto" ? "auto" : e.scrolling == "yes" ? "scroll" : "hidden") + ';position:relative;"></div>');
+    e.width = m.width();
+    e.height = m.height();
+    Q()
+  }, Q = function() {
+    var a, c;
+    t.hide();
+    if(f.is(":visible") && false === d.onCleanup(l, p, d)) {
+      b.event.trigger("fancybox-cancel");
+      h = false
+    }else {
+      h = true;
+      b(j.add(u)).unbind();
+      b(window).unbind("resize.fb scroll.fb");
+      b(document).unbind("keydown.fb");
+      f.is(":visible") && d.titlePosition !== "outside" && f.css("height", f.height());
+      l = o;
+      p = q;
+      d = e;
+      if(d.overlayShow) {
+        u.css({"background-color":d.overlayColor, opacity:d.overlayOpacity, cursor:d.hideOnOverlayClick ? "pointer" : "auto", height:b(document).height()});
+        if(!u.is(":visible")) {
+          M && b("select:not(#fancybox-tmp select)").filter(function() {
+            return this.style.visibility !== "hidden"
+          }).css({visibility:"hidden"}).one("fancybox-cleanup", function() {
+            this.style.visibility = "inherit"
+          });
+          u.show()
+        }
+      }else {
+        u.hide()
+      }
+      i = X();
+      s = d.title || "";
+      y = 0;
+      n.empty().removeAttr("style").removeClass();
+      if(d.titleShow !== false) {
+        if(b.isFunction(d.titleFormat)) {
+          a = d.titleFormat(s, l, p, d)
+        }else {
+          a = s && s.length ? d.titlePosition == "float" ? '<table id="fancybox-title-float-wrap" cellpadding="0" cellspacing="0"><tr><td id="fancybox-title-float-left"></td><td id="fancybox-title-float-main">' + s + '</td><td id="fancybox-title-float-right"></td></tr></table>' : '<div id="fancybox-title-' + d.titlePosition + '">' + s + "</div>" : false
+        }
+        s = a;
+        if(!(!s || s === "")) {
+          n.addClass("fancybox-title-" + d.titlePosition).html(s).appendTo("body").show();
+          switch(d.titlePosition) {
+            case "inside":
+              n.css({width:i.width - d.padding * 2, marginLeft:d.padding, marginRight:d.padding});
+              y = n.outerHeight(true);
+              n.appendTo(D);
+              i.height += y;
+              break;
+            case "over":
+              n.css({marginLeft:d.padding, width:i.width - d.padding * 2, bottom:d.padding}).appendTo(D);
+              break;
+            case "float":
+              n.css("left", parseInt((n.width() - i.width - 40) / 2, 10) * -1).appendTo(f);
+              break;
+            default:
+              n.css({width:i.width - d.padding * 2, paddingLeft:d.padding, paddingRight:d.padding}).appendTo(f)
+          }
+        }
+      }
+      n.hide();
+      if(f.is(":visible")) {
+        b(E.add(z).add(A)).hide();
+        a = f.position();
+        r = {top:a.top, left:a.left, width:f.width(), height:f.height()};
+        c = r.width == i.width && r.height == i.height;
+        j.fadeTo(d.changeFade, 0.3, function() {
+          var g = function() {
+            j.html(m.contents()).fadeTo(d.changeFade, 1, S)
+          };
+          b.event.trigger("fancybox-change");
+          j.empty().removeAttr("filter").css({"border-width":d.padding, width:i.width - d.padding * 2, height:e.autoDimensions ? "auto" : i.height - y - d.padding * 2});
+          if(c) {
+            g()
+          }else {
+            B.prop = 0;
+            b(B).animate({prop:1}, {duration:d.changeSpeed, easing:d.easingChange, step:T, complete:g})
+          }
+        })
+      }else {
+        f.removeAttr("style");
+        j.css("border-width", d.padding);
+        if(d.transitionIn == "elastic") {
+          r = V();
+          j.html(m.contents());
+          f.show();
+          if(d.opacity) {
+            i.opacity = 0
+          }
+          B.prop = 0;
+          b(B).animate({prop:1}, {duration:d.speedIn, easing:d.easingIn, step:T, complete:S})
+        }else {
+          d.titlePosition == "inside" && y > 0 && n.show();
+          j.css({width:i.width - d.padding * 2, height:e.autoDimensions ? "auto" : i.height - y - d.padding * 2}).html(m.contents());
+          f.css(i).fadeIn(d.transitionIn == "none" ? 0 : d.speedIn, S)
+        }
+      }
+    }
+  }, Y = function() {
+    if(d.enableEscapeButton || d.enableKeyboardNav) {
+      b(document).bind("keydown.fb", function(a) {
+        if(a.keyCode == 27 && d.enableEscapeButton) {
+          a.preventDefault();
+          b.fancybox.close()
+        }else {
+          if((a.keyCode == 37 || a.keyCode == 39) && d.enableKeyboardNav && a.target.tagName !== "INPUT" && a.target.tagName !== "TEXTAREA" && a.target.tagName !== "SELECT") {
+            a.preventDefault();
+            b.fancybox[a.keyCode == 37 ? "prev" : "next"]()
+          }
+        }
+      })
+    }
+    if(d.showNavArrows) {
+      if(d.cyclic && l.length > 1 || p !== 0) {
+        z.show()
+      }
+      if(d.cyclic && l.length > 1 || p != l.length - 1) {
+        A.show()
+      }
+    }else {
+      z.hide();
+      A.hide()
+    }
+  }, S = function() {
+    if(!b.support.opacity) {
+      j.get(0).style.removeAttribute("filter");
+      f.get(0).style.removeAttribute("filter")
+    }
+    e.autoDimensions && j.css("height", "auto");
+    f.css("height", "auto");
+    s && s.length && n.show();
+    d.showCloseButton && E.show();
+    Y();
+    d.hideOnContentClick && j.bind("click", b.fancybox.close);
+    d.hideOnOverlayClick && u.bind("click", b.fancybox.close);
+    b(window).bind("resize.fb", b.fancybox.resize);
+    d.centerOnScroll && b(window).bind("scroll.fb", b.fancybox.center);
+    if(d.type == "iframe") {
+      b('<iframe id="fancybox-frame" name="fancybox-frame' + (new Date).getTime() + '" frameborder="0" hspace="0" ' + (b.browser.msie ? 'allowtransparency="true""' : "") + ' scrolling="' + e.scrolling + '" src="' + d.href + '"></iframe>').appendTo(j)
+    }
+    f.show();
+    h = false;
+    b.fancybox.center();
+    d.onComplete(l, p, d);
+    var a, c;
+    if(l.length - 1 > p) {
+      a = l[p + 1].href;
+      if(typeof a !== "undefined" && a.match(J)) {
+        c = new Image;
+        c.src = a
+      }
+    }
+    if(p > 0) {
+      a = l[p - 1].href;
+      if(typeof a !== "undefined" && a.match(J)) {
+        c = new Image;
+        c.src = a
+      }
+    }
+  }, T = function(a) {
+    var c = {width:parseInt(r.width + (i.width - r.width) * a, 10), height:parseInt(r.height + (i.height - r.height) * a, 10), top:parseInt(r.top + (i.top - r.top) * a, 10), left:parseInt(r.left + (i.left - r.left) * a, 10)};
+    if(typeof i.opacity !== "undefined") {
+      c.opacity = a < 0.5 ? 0.5 : a
+    }
+    f.css(c);
+    j.css({width:c.width - d.padding * 2, height:c.height - y * a - d.padding * 2})
+  }, U = function() {
+    return[b(window).width() - d.margin * 2, b(window).height() - d.margin * 2, b(document).scrollLeft() + d.margin, b(document).scrollTop() + d.margin]
+  }, X = function() {
+    var a = U(), c = {}, g = d.autoScale, k = d.padding * 2;
+    c.width = d.width.toString().indexOf("%") > -1 ? parseInt(a[0] * parseFloat(d.width) / 100, 10) : d.width + k;
+    c.height = d.height.toString().indexOf("%") > -1 ? parseInt(a[1] * parseFloat(d.height) / 100, 10) : d.height + k;
+    if(g && (c.width > a[0] || c.height > a[1])) {
+      if(e.type == "image" || e.type == "swf") {
+        g = d.width / d.height;
+        if(c.width > a[0]) {
+          c.width = a[0];
+          c.height = parseInt((c.width - k) / g + k, 10)
+        }
+        if(c.height > a[1]) {
+          c.height = a[1];
+          c.width = parseInt((c.height - k) * g + k, 10)
+        }
+      }else {
+        c.width = Math.min(c.width, a[0]);
+        c.height = Math.min(c.height, a[1])
+      }
+    }
+    c.top = parseInt(Math.max(a[3] - 20, a[3] + (a[1] - c.height - 40) * 0.5), 10);
+    c.left = parseInt(Math.max(a[2] - 20, a[2] + (a[0] - c.width - 40) * 0.5), 10);
+    return c
+  }, V = function() {
+    var a = e.orig ? b(e.orig) : false, c = {};
+    if(a && a.length) {
+      c = a.offset();
+      c.top += parseInt(a.css("paddingTop"), 10) || 0;
+      c.left += parseInt(a.css("paddingLeft"), 10) || 0;
+      c.top += parseInt(a.css("border-top-width"), 10) || 0;
+      c.left += parseInt(a.css("border-left-width"), 10) || 0;
+      c.width = a.width();
+      c.height = a.height();
+      c = {width:c.width + d.padding * 2, height:c.height + d.padding * 2, top:c.top - d.padding - 20, left:c.left - d.padding - 20}
+    }else {
+      a = U();
+      c = {width:d.padding * 2, height:d.padding * 2, top:parseInt(a[3] + a[1] * 0.5, 10), left:parseInt(a[2] + a[0] * 0.5, 10)}
+    }
+    return c
+  }, Z = function() {
+    if(t.is(":visible")) {
+      b("div", t).css("top", L * -40 + "px");
+      L = (L + 1) % 12
+    }else {
+      clearInterval(K)
+    }
+  };
+  b.fn.fancybox = function(a) {
+    if(!b(this).length) {
+      return this
+    }
+    b(this).data("fancybox", b.extend({}, a, b.metadata ? b(this).metadata() : {})).unbind("click.fb").bind("click.fb", function(c) {
+      c.preventDefault();
+      if(!h) {
+        h = true;
+        b(this).blur();
+        o = [];
+        q = 0;
+        c = b(this).attr("rel") || "";
+        if(!c || c == "" || c === "nofollow") {
+          o.push(this)
+        }else {
+          o = b("a[rel=" + c + "], area[rel=" + c + "]");
+          q = o.index(this)
+        }
+        I()
+      }
+    });
+    return this
+  };
+  b.fancybox = function(a, c) {
+    var g;
+    if(!h) {
+      h = true;
+      g = typeof c !== "undefined" ? c : {};
+      o = [];
+      q = parseInt(g.index, 10) || 0;
+      if(b.isArray(a)) {
+        for(var k = 0, C = a.length;k < C;k++) {
+          if(typeof a[k] == "object") {
+            b(a[k]).data("fancybox", b.extend({}, g, a[k]))
+          }else {
+            a[k] = b({}).data("fancybox", b.extend({content:a[k]}, g))
+          }
+        }
+        o = jQuery.merge(o, a)
+      }else {
+        if(typeof a == "object") {
+          b(a).data("fancybox", b.extend({}, g, a))
+        }else {
+          a = b({}).data("fancybox", b.extend({content:a}, g))
+        }
+        o.push(a)
+      }
+      if(q > o.length || q < 0) {
+        q = 0
+      }
+      I()
+    }
+  };
+  b.fancybox.showActivity = function() {
+    clearInterval(K);
+    t.show();
+    K = setInterval(Z, 66)
+  };
+  b.fancybox.hideActivity = function() {
+    t.hide()
+  };
+  b.fancybox.next = function() {
+    return b.fancybox.pos(p + 1)
+  };
+  b.fancybox.prev = function() {
+    return b.fancybox.pos(p - 1)
+  };
+  b.fancybox.pos = function(a) {
+    if(!h) {
+      a = parseInt(a);
+      o = l;
+      if(a > -1 && a < l.length) {
+        q = a;
+        I()
+      }else {
+        if(d.cyclic && l.length > 1) {
+          q = a >= l.length ? 0 : l.length - 1;
+          I()
+        }
+      }
+    }
+  };
+  b.fancybox.cancel = function() {
+    if(!h) {
+      h = true;
+      b.event.trigger("fancybox-cancel");
+      N();
+      e.onCancel(o, q, e);
+      h = false
+    }
+  };
+  b.fancybox.close = function() {
+    function a() {
+      u.fadeOut("fast");
+      n.empty().hide();
+      f.hide();
+      b.event.trigger("fancybox-cleanup");
+      j.empty();
+      d.onClosed(l, p, d);
+      l = e = [];
+      p = q = 0;
+      d = e = {};
+      h = false
+    }
+    if(!(h || f.is(":hidden"))) {
+      h = true;
+      if(d && false === d.onCleanup(l, p, d)) {
+        h = false
+      }else {
+        N();
+        b(E.add(z).add(A)).hide();
+        b(j.add(u)).unbind();
+        b(window).unbind("resize.fb scroll.fb");
+        b(document).unbind("keydown.fb");
+        j.find("iframe").attr("src", M && /^https/i.test(window.location.href || "") ? "javascript:void(false)" : "about:blank");
+        d.titlePosition !== "inside" && n.empty();
+        f.stop();
+        if(d.transitionOut == "elastic") {
+          r = V();
+          var c = f.position();
+          i = {top:c.top, left:c.left, width:f.width(), height:f.height()};
+          if(d.opacity) {
+            i.opacity = 1
+          }
+          n.empty().hide();
+          B.prop = 1;
+          b(B).animate({prop:0}, {duration:d.speedOut, easing:d.easingOut, step:T, complete:a})
+        }else {
+          f.fadeOut(d.transitionOut == "none" ? 0 : d.speedOut, a)
+        }
+      }
+    }
+  };
+  b.fancybox.resize = function() {
+    u.is(":visible") && u.css("height", b(document).height());
+    b.fancybox.center(true)
+  };
+  b.fancybox.center = function(a) {
+    var c, g;
+    if(!h) {
+      g = a === true ? 1 : 0;
+      c = U();
+      !g && (f.width() > c[0] || f.height() > c[1]) || f.stop().animate({top:parseInt(Math.max(c[3] - 20, c[3] + (c[1] - j.height() - 40) * 0.5 - d.padding)), left:parseInt(Math.max(c[2] - 20, c[2] + (c[0] - j.width() - 40) * 0.5 - d.padding))}, typeof a == "number" ? a : 200)
+    }
+  };
+  b.fancybox.init = function() {
+    if(!b("#fancybox-wrap").length) {
+      b("body").append(m = b('<div id="fancybox-tmp"></div>'), t = b('<div id="fancybox-loading"><div></div></div>'), u = b('<div id="fancybox-overlay"></div>'), f = b('<div id="fancybox-wrap"></div>'));
+      D = b('<div id="fancybox-outer"></div>').append('<div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div>').appendTo(f);
+      D.append(j = b('<div id="fancybox-content"></div>'), E = b('<a id="fancybox-close"></a>'), n = b('<div id="fancybox-title"></div>'), z = b('<a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a>'), A = b('<a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>'));
+      E.click(b.fancybox.close);
+      t.click(b.fancybox.cancel);
+      z.click(function(a) {
+        a.preventDefault();
+        b.fancybox.prev()
+      });
+      A.click(function(a) {
+        a.preventDefault();
+        b.fancybox.next()
+      });
+      b.fn.mousewheel && f.bind("mousewheel.fb", function(a, c) {
+        if(h) {
+          a.preventDefault()
+        }else {
+          if(b(a.target).get(0).clientHeight == 0 || b(a.target).get(0).scrollHeight === b(a.target).get(0).clientHeight) {
+            a.preventDefault();
+            b.fancybox[c > 0 ? "prev" : "next"]()
+          }
+        }
+      });
+      b.support.opacity || f.addClass("fancybox-ie");
+      if(M) {
+        t.addClass("fancybox-ie6");
+        f.addClass("fancybox-ie6");
+        b('<iframe id="fancybox-hide-sel-frame" src="' + (/^https/i.test(window.location.href || "") ? "javascript:void(false)" : "about:blank") + '" scrolling="no" border="0" frameborder="0" tabindex="-1"></iframe>').prependTo(D)
+      }
+    }
+  };
+  b.fn.fancybox.defaults = {padding:10, margin:40, opacity:false, modal:false, cyclic:false, scrolling:"auto", width:560, height:340, autoScale:true, autoDimensions:true, centerOnScroll:false, ajax:{}, swf:{wmode:"transparent"}, hideOnOverlayClick:true, hideOnContentClick:false, overlayShow:true, overlayOpacity:0.7, overlayColor:"#777", titleShow:true, titlePosition:"float", titleFormat:null, titleFromAlt:false, transitionIn:"fade", transitionOut:"fade", speedIn:300, speedOut:300, changeSpeed:300, 
+  changeFade:"fast", easingIn:"swing", easingOut:"swing", showCloseButton:true, showNavArrows:true, enableEscapeButton:true, enableKeyboardNav:true, onStart:function() {
+  }, onCancel:function() {
+  }, onComplete:function() {
+  }, onCleanup:function() {
+  }, onClosed:function() {
+  }, onError:function() {
+  }};
+  b(document).ready(function() {
+    b.fancybox.init()
+  })
+})(jQuery);
+(function(d) {
+  function g(a) {
+    var b = a || window.event, i = [].slice.call(arguments, 1), c = 0, h = 0, e = 0;
+    a = d.event.fix(b);
+    a.type = "mousewheel";
+    if(a.wheelDelta) {
+      c = a.wheelDelta / 120
+    }
+    if(a.detail) {
+      c = -a.detail / 3
+    }
+    e = c;
+    if(b.axis !== undefined && b.axis === b.HORIZONTAL_AXIS) {
+      e = 0;
+      h = -1 * c
+    }
+    if(b.wheelDeltaY !== undefined) {
+      e = b.wheelDeltaY / 120
+    }
+    if(b.wheelDeltaX !== undefined) {
+      h = -1 * b.wheelDeltaX / 120
+    }
+    i.unshift(a, c, h, e);
+    return d.event.handle.apply(this, i)
+  }
+  var f = ["DOMMouseScroll", "mousewheel"];
+  d.event.special.mousewheel = {setup:function() {
+    if(this.addEventListener) {
+      for(var a = f.length;a;) {
+        this.addEventListener(f[--a], g, false)
+      }
+    }else {
+      this.onmousewheel = g
+    }
+  }, teardown:function() {
+    if(this.removeEventListener) {
+      for(var a = f.length;a;) {
+        this.removeEventListener(f[--a], g, false)
+      }
+    }else {
+      this.onmousewheel = null
+    }
+  }};
+  d.fn.extend({mousewheel:function(a) {
+    return a ? this.bind("mousewheel", a) : this.trigger("mousewheel")
+  }, unmousewheel:function(a) {
+    return this.unbind("mousewheel", a)
+  }})
+})(jQuery);
 var Hashtable = function() {
   function c(b) {
     var d;
@@ -5687,21 +9190,968 @@ var Hashtable = function() {
     return!(a.isFunction(g) && g.call(this.element[0], c, d) === !1 || c.isDefaultPrevented())
   }}
 })(jQuery);
+var bkExtend = function() {
+  var A = arguments;
+  if(A.length == 1) {
+    A = [this, A[0]]
+  }
+  for(var B in A[1]) {
+    A[0][B] = A[1][B]
+  }
+  return A[0]
+};
+function bkClass() {
+}
+bkClass.prototype.construct = function() {
+};
+bkClass.extend = function(C) {
+  var A = function() {
+    if(arguments[0] !== bkClass) {
+      return this.construct.apply(this, arguments)
+    }
+  };
+  var B = new this(bkClass);
+  bkExtend(B, C);
+  A.prototype = B;
+  A.extend = this.extend;
+  return A
+};
+var bkElement = bkClass.extend({construct:function(B, A) {
+  if(typeof B == "string") {
+    B = (A || document).createElement(B)
+  }
+  B = $BK(B);
+  return B
+}, appendTo:function(A) {
+  A.appendChild(this);
+  return this
+}, appendBefore:function(A) {
+  A.parentNode.insertBefore(this, A);
+  return this
+}, addEvent:function(B, A) {
+  bkLib.addEvent(this, B, A);
+  return this
+}, setContent:function(A) {
+  this.innerHTML = A;
+  return this
+}, pos:function() {
+  var C = curtop = 0;
+  var B = obj = this;
+  if(obj.offsetParent) {
+    do {
+      C += obj.offsetLeft;
+      curtop += obj.offsetTop
+    }while(obj = obj.offsetParent)
+  }
+  var A = !window.opera ? parseInt(this.getStyle("border-width") || this.style.border) || 0 : 0;
+  return[C + A, curtop + A + this.offsetHeight]
+}, noSelect:function() {
+  bkLib.noSelect(this);
+  return this
+}, parentTag:function(A) {
+  var B = this;
+  do {
+    if(B && B.nodeName && B.nodeName.toUpperCase() == A) {
+      return B
+    }
+    B = B.parentNode
+  }while(B);
+  return false
+}, hasClass:function(A) {
+  return this.className.match(new RegExp("(\\s|^)nicEdit-" + A + "(\\s|$)"))
+}, addClass:function(A) {
+  if(!this.hasClass(A)) {
+    this.className += " nicEdit-" + A
+  }
+  return this
+}, removeClass:function(A) {
+  if(this.hasClass(A)) {
+    this.className = this.className.replace(new RegExp("(\\s|^)nicEdit-" + A + "(\\s|$)"), " ")
+  }
+  return this
+}, setStyle:function(A) {
+  var B = this.style;
+  for(var C in A) {
+    switch(C) {
+      case "float":
+        B.cssFloat = B.styleFloat = A[C];
+        break;
+      case "opacity":
+        B.opacity = A[C];
+        B.filter = "alpha(opacity=" + Math.round(A[C] * 100) + ")";
+        break;
+      case "className":
+        this.className = A[C];
+        break;
+      default:
+        B[C] = A[C]
+    }
+  }
+  return this
+}, getStyle:function(A, C) {
+  var B = !C ? document.defaultView : C;
+  if(this.nodeType == 1) {
+    return B && B.getComputedStyle ? B.getComputedStyle(this, null).getPropertyValue(A) : this.currentStyle[bkLib.camelize(A)]
+  }
+}, remove:function() {
+  this.parentNode.removeChild(this);
+  return this
+}, setAttributes:function(A) {
+  for(var B in A) {
+    this[B] = A[B]
+  }
+  return this
+}});
+var bkLib = {isMSIE:navigator.appVersion.indexOf("MSIE") != -1, addEvent:function(C, B, A) {
+  C.addEventListener ? C.addEventListener(B, A, false) : C.attachEvent("on" + B, A)
+}, toArray:function(C) {
+  var B = C.length, A = new Array(B);
+  while(B--) {
+    A[B] = C[B]
+  }
+  return A
+}, noSelect:function(B) {
+  if(B.setAttribute && B.nodeName.toLowerCase() != "input" && B.nodeName.toLowerCase() != "textarea") {
+    B.setAttribute("unselectable", "on")
+  }
+  for(var A = 0;A < B.childNodes.length;A++) {
+    bkLib.noSelect(B.childNodes[A])
+  }
+}, camelize:function(A) {
+  return A.replace(/\-(.)/g, function(B, C) {
+    return C.toUpperCase()
+  })
+}, inArray:function(A, B) {
+  return bkLib.search(A, B) != null
+}, search:function(A, C) {
+  for(var B = 0;B < A.length;B++) {
+    if(A[B] == C) {
+      return B
+    }
+  }
+  return null
+}, cancelEvent:function(A) {
+  A = A || window.event;
+  if(A.preventDefault && A.stopPropagation) {
+    A.preventDefault();
+    A.stopPropagation()
+  }
+  return false
+}, domLoad:[], domLoaded:function() {
+  if(arguments.callee.done) {
+    return
+  }
+  arguments.callee.done = true;
+  for(i = 0;i < bkLib.domLoad.length;i++) {
+    bkLib.domLoad[i]()
+  }
+}, onDomLoaded:function(A) {
+  this.domLoad.push(A);
+  if(document.addEventListener) {
+    document.addEventListener("DOMContentLoaded", bkLib.domLoaded, null)
+  }else {
+    if(bkLib.isMSIE) {
+      document.write("<style>.nicEdit-main p { margin: 0; }</style><script id=__ie_onload defer " + (location.protocol == "https:" ? "src='javascript:void(0)'" : "src=//0") + "><\/script>");
+      $BK("__ie_onload").onreadystatechange = function() {
+        if(this.readyState == "complete") {
+          bkLib.domLoaded()
+        }
+      }
+    }
+  }
+  window.onload = bkLib.domLoaded
+}};
+function $BK(A) {
+  if(typeof A == "string") {
+    A = document.getElementById(A)
+  }
+  return A && !A.appendTo ? bkExtend(A, bkElement.prototype) : A
+}
+var bkEvent = {addEvent:function(A, B) {
+  if(B) {
+    this.eventList = this.eventList || {};
+    this.eventList[A] = this.eventList[A] || [];
+    this.eventList[A].push(B)
+  }
+  return this
+}, fireEvent:function() {
+  var A = bkLib.toArray(arguments), C = A.shift();
+  if(this.eventList && this.eventList[C]) {
+    for(var B = 0;B < this.eventList[C].length;B++) {
+      this.eventList[C][B].apply(this, A)
+    }
+  }
+}};
+function __(A) {
+  return A
+}
+Function.prototype.closure = function() {
+  var A = this, B = bkLib.toArray(arguments), C = B.shift();
+  return function() {
+    if(typeof bkLib != "undefined") {
+      return A.apply(C, B.concat(bkLib.toArray(arguments)))
+    }
+  }
+};
+Function.prototype.closureListener = function() {
+  var A = this, C = bkLib.toArray(arguments), B = C.shift();
+  return function(E) {
+    E = E || window.event;
+    if(E.target) {
+      var D = E.target
+    }else {
+      var D = E.srcElement
+    }
+    return A.apply(B, [E, D].concat(C))
+  }
+};
+var nicEditorConfig = bkClass.extend({buttons:{"bold":{name:__("Click to Bold"), command:"Bold", tags:["B", "STRONG"], css:{"font-weight":"bold"}, key:"b"}, "italic":{name:__("Click to Italic"), command:"Italic", tags:["EM", "I"], css:{"font-style":"italic"}, key:"i"}, "underline":{name:__("Click to Underline"), command:"Underline", tags:["U"], css:{"text-decoration":"underline"}, key:"u"}, "left":{name:__("Left Align"), command:"justifyleft", noActive:true}, "center":{name:__("Center Align"), command:"justifycenter", 
+noActive:true}, "right":{name:__("Right Align"), command:"justifyright", noActive:true}, "justify":{name:__("Justify Align"), command:"justifyfull", noActive:true}, "ol":{name:__("Insert Ordered List"), command:"insertorderedlist", tags:["OL"]}, "ul":{name:__("Insert Unordered List"), command:"insertunorderedlist", tags:["UL"]}, "subscript":{name:__("Click to Subscript"), command:"subscript", tags:["SUB"]}, "superscript":{name:__("Click to Superscript"), command:"superscript", tags:["SUP"]}, "strikethrough":{name:__("Click to Strike Through"), 
+command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:VISH.ImagesPath + "nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", 
+"justify", "ol", "ul", "fontSize", "fontFamily", "fontFormat", "indent", "outdent", "image", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
+var nicEditors = {nicPlugins:[], editors:[], registerPlugin:function(B, A) {
+  this.nicPlugins.push({p:B, o:A})
+}, allTextAreas:function(C) {
+  var A = document.getElementsByTagName("textarea");
+  for(var B = 0;B < A.length;B++) {
+    nicEditors.editors.push((new nicEditor(C)).panelInstance(A[B]))
+  }
+  return nicEditors.editors
+}, findEditor:function(C) {
+  var B = nicEditors.editors;
+  for(var A = 0;A < B.length;A++) {
+    if(B[A].instanceById(C)) {
+      return B[A].instanceById(C)
+    }
+  }
+}};
+var nicEditor = bkClass.extend({construct:function(C) {
+  this.options = new nicEditorConfig;
+  bkExtend(this.options, C);
+  this.nicInstances = new Array;
+  this.loadedPlugins = new Array;
+  var A = nicEditors.nicPlugins;
+  for(var B = 0;B < A.length;B++) {
+    this.loadedPlugins.push(new A[B].p(this, A[B].o))
+  }
+  nicEditors.editors.push(this);
+  bkLib.addEvent(document.body, "mousedown", this.selectCheck.closureListener(this))
+}, panelInstance:function(B, C) {
+  B = this.checkReplace($BK(B));
+  var A = (new bkElement("DIV")).setStyle({width:(parseInt(B.getStyle("width")) || B.clientWidth) + "px"}).appendBefore(B);
+  this.setPanel(A);
+  return this.addInstance(B, C)
+}, checkReplace:function(B) {
+  var A = nicEditors.findEditor(B);
+  if(A) {
+    A.removeInstance(B);
+    A.removePanel()
+  }
+  return B
+}, addInstance:function(B, C) {
+  B = this.checkReplace($BK(B));
+  if(B.contentEditable || !!window.opera) {
+    var A = new nicEditorInstance(B, C, this)
+  }else {
+    var A = new nicEditorIFrameInstance(B, C, this)
+  }
+  this.nicInstances.push(A);
+  return this
+}, removeInstance:function(C) {
+  C = $BK(C);
+  var B = this.nicInstances;
+  for(var A = 0;A < B.length;A++) {
+    if(B[A].e == C) {
+      B[A].remove();
+      this.nicInstances.splice(A, 1)
+    }
+  }
+}, removePanel:function(A) {
+  if(this.nicPanel) {
+    this.nicPanel.remove();
+    this.nicPanel = null
+  }
+}, instanceById:function(C) {
+  C = $BK(C);
+  var B = this.nicInstances;
+  for(var A = 0;A < B.length;A++) {
+    if(B[A].e == C) {
+      return B[A]
+    }
+  }
+}, setPanel:function(A) {
+  this.nicPanel = new nicEditorPanel($BK(A), this.options, this);
+  this.fireEvent("panel", this.nicPanel);
+  return this
+}, nicCommand:function(B, A) {
+  if(this.selectedInstance) {
+    this.selectedInstance.nicCommand(B, A)
+  }
+}, getIcon:function(D, A) {
+  var C = this.options.iconList[D];
+  var B = A.iconFiles ? A.iconFiles[D] : "";
+  return{backgroundImage:"url('" + (C ? this.options.iconsPath : B) + "')", backgroundPosition:(C ? (C - 1) * -18 : 0) + "px 0px"}
+}, selectCheck:function(C, A) {
+  var B = false;
+  do {
+    if(A.className && A.className.indexOf("nicEdit") != -1) {
+      return false
+    }
+  }while(A = A.parentNode);
+  this.fireEvent("blur", this.selectedInstance, A);
+  this.lastSelectedInstance = this.selectedInstance;
+  this.selectedInstance = null;
+  return false
+}});
+nicEditor = nicEditor.extend(bkEvent);
+var nicEditorInstance = bkClass.extend({isSelected:false, construct:function(G, D, C) {
+  this.ne = C;
+  this.elm = this.e = G;
+  this.options = D || {};
+  newX = parseInt(G.getStyle("width")) || G.clientWidth;
+  newY = parseInt(G.getStyle("height")) || G.clientHeight;
+  this.initialHeight = newY - 8;
+  var H = G.nodeName.toLowerCase() == "textarea";
+  if(H || this.options.hasPanel) {
+    var B = bkLib.isMSIE && !(typeof document.body.style.maxHeight != "undefined" && document.compatMode == "CSS1Compat");
+    var E = {width:newX + "px", border:"1px solid #ccc", borderTop:0, overflowY:"auto", overflowX:"hidden"};
+    E[B ? "height" : "maxHeight"] = this.ne.options.maxHeight ? this.ne.options.maxHeight + "px" : null;
+    this.editorContain = (new bkElement("DIV")).setStyle(E).appendBefore(G);
+    var A = (new bkElement("DIV")).setStyle({width:newX - 8 + "px", margin:"4px", minHeight:newY + "px"}).addClass("main").appendTo(this.editorContain);
+    G.setStyle({display:"none"});
+    A.innerHTML = G.innerHTML;
+    if(H) {
+      A.setContent(G.value);
+      this.copyElm = G;
+      var F = G.parentTag("FORM");
+      if(F) {
+        bkLib.addEvent(F, "submit", this.saveContent.closure(this))
+      }
+    }
+    A.setStyle(B ? {height:newY + "px"} : {overflow:"hidden"});
+    this.elm = A
+  }
+  this.ne.addEvent("blur", this.blur.closure(this));
+  this.init();
+  this.blur()
+}, init:function() {
+  this.elm.setAttribute("contentEditable", "true");
+  if(this.getContent() == "") {
+    this.setContent("<br />")
+  }
+  this.instanceDoc = document.defaultView;
+  this.elm.addEvent("mousedown", this.selected.closureListener(this)).addEvent("keypress", this.keyDown.closureListener(this)).addEvent("focus", this.selected.closure(this)).addEvent("blur", this.blur.closure(this)).addEvent("keyup", this.selected.closure(this));
+  this.ne.fireEvent("add", this)
+}, remove:function() {
+  this.saveContent();
+  if(this.copyElm || this.options.hasPanel) {
+    this.editorContain.remove();
+    this.e.setStyle({display:"block"});
+    this.ne.removePanel()
+  }
+  this.disable();
+  this.ne.fireEvent("remove", this)
+}, disable:function() {
+  this.elm.setAttribute("contentEditable", "false")
+}, getSel:function() {
+  return window.getSelection ? window.getSelection() : document.selection
+}, getRng:function() {
+  var A = this.getSel();
+  if(!A) {
+    return null
+  }
+  return A.rangeCount > 0 ? A.getRangeAt(0) : A.createRange()
+}, selRng:function(A, B) {
+  if(window.getSelection) {
+    B.removeAllRanges();
+    B.addRange(A)
+  }else {
+    A.select()
+  }
+}, selElm:function() {
+  var C = this.getRng();
+  if(C.startContainer) {
+    var D = C.startContainer;
+    if(C.cloneContents().childNodes.length == 1) {
+      for(var B = 0;B < D.childNodes.length;B++) {
+        var A = D.childNodes[B].ownerDocument.createRange();
+        A.selectNode(D.childNodes[B]);
+        if(C.compareBoundaryPoints(Range.START_TO_START, A) != 1 && C.compareBoundaryPoints(Range.END_TO_END, A) != -1) {
+          return $BK(D.childNodes[B])
+        }
+      }
+    }
+    return $BK(D)
+  }else {
+    return $BK(this.getSel().type == "Control" ? C.item(0) : C.parentElement())
+  }
+}, saveRng:function() {
+  this.savedRange = this.getRng();
+  this.savedSel = this.getSel()
+}, restoreRng:function() {
+  if(this.savedRange) {
+    this.selRng(this.savedRange, this.savedSel)
+  }
+}, keyDown:function(B, A) {
+  if(B.ctrlKey) {
+    this.ne.fireEvent("key", this, B)
+  }
+}, selected:function(C, A) {
+  if(!A) {
+    A = this.selElm()
+  }
+  if(!C.ctrlKey) {
+    var B = this.ne.selectedInstance;
+    if(B != this) {
+      if(B) {
+        this.ne.fireEvent("blur", B, A)
+      }
+      this.ne.selectedInstance = this;
+      this.ne.fireEvent("focus", B, A)
+    }
+    this.ne.fireEvent("selected", B, A);
+    this.isFocused = true;
+    this.elm.addClass("selected")
+  }
+  return false
+}, blur:function() {
+  this.isFocused = false;
+  this.elm.removeClass("selected")
+}, saveContent:function() {
+  if(this.copyElm || this.options.hasPanel) {
+    this.ne.fireEvent("save", this);
+    this.copyElm ? this.copyElm.value = this.getContent() : this.e.innerHTML = this.getContent()
+  }
+}, getElm:function() {
+  return this.elm
+}, getContent:function() {
+  this.content = this.getElm().innerHTML;
+  this.ne.fireEvent("get", this);
+  return this.content
+}, setContent:function(A) {
+  this.content = A;
+  this.ne.fireEvent("set", this);
+  this.elm.innerHTML = this.content
+}, nicCommand:function(B, A) {
+  document.execCommand(B, false, A)
+}});
+var nicEditorIFrameInstance = nicEditorInstance.extend({savedStyles:[], init:function() {
+  var B = this.elm.innerHTML.replace(/^\s+|\s+$/g, "");
+  this.elm.innerHTML = "";
+  !B ? B = "<br />" : B;
+  this.initialContent = B;
+  this.elmFrame = (new bkElement("iframe")).setAttributes({src:"javascript:;", frameBorder:0, allowTransparency:"true", scrolling:"no"}).setStyle({height:"100px", width:"100%"}).addClass("frame").appendTo(this.elm);
+  if(this.copyElm) {
+    this.elmFrame.setStyle({width:this.elm.offsetWidth - 4 + "px"})
+  }
+  var A = ["font-size", "font-family", "font-weight", "color"];
+  for(itm in A) {
+    this.savedStyles[bkLib.camelize(itm)] = this.elm.getStyle(itm)
+  }
+  setTimeout(this.initFrame.closure(this), 50)
+}, disable:function() {
+  this.elm.innerHTML = this.getContent()
+}, initFrame:function() {
+  var B = $BK(this.elmFrame.contentWindow.document);
+  B.designMode = "on";
+  B.open();
+  var A = this.ne.options.externalCSS;
+  B.write("<html><head>" + (A ? '<link href="' + A + '" rel="stylesheet" type="text/css" />' : "") + '</head><body id="nicEditContent" style="margin: 0 !important; background-color: transparent !important;">' + this.initialContent + "</body></html>");
+  B.close();
+  this.frameDoc = B;
+  this.frameWin = $BK(this.elmFrame.contentWindow);
+  this.frameContent = $BK(this.frameWin.document.body).setStyle(this.savedStyles);
+  this.instanceDoc = this.frameWin.document.defaultView;
+  this.heightUpdate();
+  this.frameDoc.addEvent("mousedown", this.selected.closureListener(this)).addEvent("keyup", this.heightUpdate.closureListener(this)).addEvent("keydown", this.keyDown.closureListener(this)).addEvent("keyup", this.selected.closure(this));
+  this.ne.fireEvent("add", this)
+}, getElm:function() {
+  return this.frameContent
+}, setContent:function(A) {
+  this.content = A;
+  this.ne.fireEvent("set", this);
+  this.frameContent.innerHTML = this.content;
+  this.heightUpdate()
+}, getSel:function() {
+  return this.frameWin ? this.frameWin.getSelection() : this.frameDoc.selection
+}, heightUpdate:function() {
+  this.elmFrame.style.height = Math.max(this.frameContent.offsetHeight, this.initialHeight) + "px"
+}, nicCommand:function(B, A) {
+  this.frameDoc.execCommand(B, false, A);
+  setTimeout(this.heightUpdate.closure(this), 100)
+}});
+var nicEditorPanel = bkClass.extend({construct:function(E, B, A) {
+  this.elm = E;
+  this.options = B;
+  this.ne = A;
+  this.panelButtons = new Array;
+  this.buttonList = bkExtend([], this.ne.options.buttonList);
+  this.panelContain = (new bkElement("DIV")).addClass("panelContain");
+  this.panelElm = (new bkElement("DIV")).addClass("panel").appendTo(this.panelContain);
+  this.panelContain.appendTo(E);
+  var C = this.ne.options;
+  var D = C.buttons;
+  for(button in D) {
+    this.addButton(button, C, true)
+  }
+  this.reorder();
+  E.noSelect()
+}, addButton:function(buttonName, options, noOrder) {
+  var button = options.buttons[buttonName];
+  var type = button.type ? eval("(typeof(" + button.type + ') == "undefined") ? null : ' + button.type + ";") : nicEditorButton;
+  var hasButton = bkLib.inArray(this.buttonList, buttonName);
+  if(type && (hasButton || this.ne.options.fullPanel)) {
+    this.panelButtons.push(new type(this.panelElm, buttonName, options, this.ne));
+    if(!hasButton) {
+      this.buttonList.push(buttonName)
+    }
+  }
+}, findButton:function(B) {
+  for(var A = 0;A < this.panelButtons.length;A++) {
+    if(this.panelButtons[A].name == B) {
+      return this.panelButtons[A]
+    }
+  }
+}, reorder:function() {
+  var C = this.buttonList;
+  for(var B = 0;B < C.length;B++) {
+    var A = this.findButton(C[B]);
+    if(A) {
+      this.panelElm.appendChild(A.margin)
+    }
+  }
+}, remove:function() {
+  this.elm.remove()
+}});
+var nicEditorButton = bkClass.extend({construct:function(D, A, C, B) {
+  this.options = C.buttons[A];
+  this.name = A;
+  this.ne = B;
+  this.elm = D;
+  this.margin = (new bkElement("DIV")).setStyle({"float":"left", marginTop:"2px"}).appendTo(D);
+  this.contain = (new bkElement("DIV")).setStyle({width:"20px", height:"20px"}).addClass("buttonContain").appendTo(this.margin);
+  this.border = (new bkElement("DIV")).setStyle({backgroundColor:"#efefef", border:"1px solid #efefef"}).appendTo(this.contain);
+  this.button = (new bkElement("DIV")).setStyle({width:"18px", height:"18px", overflow:"hidden", zoom:1, cursor:"pointer"}).addClass("button").setStyle(this.ne.getIcon(A, C)).appendTo(this.border);
+  this.button.addEvent("mouseover", this.hoverOn.closure(this)).addEvent("mouseout", this.hoverOff.closure(this)).addEvent("mousedown", this.mouseClick.closure(this)).noSelect();
+  if(!window.opera) {
+    this.button.onmousedown = this.button.onclick = bkLib.cancelEvent
+  }
+  B.addEvent("selected", this.enable.closure(this)).addEvent("blur", this.disable.closure(this)).addEvent("key", this.key.closure(this));
+  this.disable();
+  this.init()
+}, init:function() {
+}, hide:function() {
+  this.contain.setStyle({display:"none"})
+}, updateState:function() {
+  if(this.isDisabled) {
+    this.setBg()
+  }else {
+    if(this.isHover) {
+      this.setBg("hover")
+    }else {
+      if(this.isActive) {
+        this.setBg("active")
+      }else {
+        this.setBg()
+      }
+    }
+  }
+}, setBg:function(A) {
+  switch(A) {
+    case "hover":
+      var B = {border:"1px solid #666", backgroundColor:"#ddd"};
+      break;
+    case "active":
+      var B = {border:"1px solid #666", backgroundColor:"#ccc"};
+      break;
+    default:
+      var B = {border:"1px solid #efefef", backgroundColor:"#efefef"}
+  }
+  this.border.setStyle(B).addClass("button-" + A)
+}, checkNodes:function(A) {
+  var B = A;
+  do {
+    if(this.options.tags && bkLib.inArray(this.options.tags, B.nodeName)) {
+      this.activate();
+      return true
+    }
+  }while(B = B.parentNode && B.className != "nicEdit");
+  B = $BK(A);
+  while(B.nodeType == 3) {
+    B = $BK(B.parentNode)
+  }
+  if(this.options.css) {
+    for(itm in this.options.css) {
+      if(B.getStyle(itm, this.ne.selectedInstance.instanceDoc) == this.options.css[itm]) {
+        this.activate();
+        return true
+      }
+    }
+  }
+  this.deactivate();
+  return false
+}, activate:function() {
+  if(!this.isDisabled) {
+    this.isActive = true;
+    this.updateState();
+    this.ne.fireEvent("buttonActivate", this)
+  }
+}, deactivate:function() {
+  this.isActive = false;
+  this.updateState();
+  if(!this.isDisabled) {
+    this.ne.fireEvent("buttonDeactivate", this)
+  }
+}, enable:function(A, B) {
+  this.isDisabled = false;
+  this.contain.setStyle({opacity:1}).addClass("buttonEnabled");
+  this.updateState();
+  this.checkNodes(B)
+}, disable:function(A, B) {
+  this.isDisabled = true;
+  this.contain.setStyle({opacity:0.6}).removeClass("buttonEnabled");
+  this.updateState()
+}, toggleActive:function() {
+  this.isActive ? this.deactivate() : this.activate()
+}, hoverOn:function() {
+  if(!this.isDisabled) {
+    this.isHover = true;
+    this.updateState();
+    this.ne.fireEvent("buttonOver", this)
+  }
+}, hoverOff:function() {
+  this.isHover = false;
+  this.updateState();
+  this.ne.fireEvent("buttonOut", this)
+}, mouseClick:function() {
+  if(this.options.command) {
+    this.ne.nicCommand(this.options.command, this.options.commandArgs);
+    if(!this.options.noActive) {
+      this.toggleActive()
+    }
+  }
+  this.ne.fireEvent("buttonClick", this)
+}, key:function(A, B) {
+  if(this.options.key && B.ctrlKey && String.fromCharCode(B.keyCode || B.charCode).toLowerCase() == this.options.key) {
+    this.mouseClick();
+    if(B.preventDefault) {
+      B.preventDefault()
+    }
+  }
+}});
+var nicPlugin = bkClass.extend({construct:function(B, A) {
+  this.options = A;
+  this.ne = B;
+  this.ne.addEvent("panel", this.loadPanel.closure(this));
+  this.init()
+}, loadPanel:function(C) {
+  var B = this.options.buttons;
+  for(var A in B) {
+    C.addButton(A, this.options)
+  }
+  C.reorder()
+}, init:function() {
+}});
+var nicPaneOptions = {};
+var nicEditorPane = bkClass.extend({construct:function(D, C, B, A) {
+  this.ne = C;
+  this.elm = D;
+  this.pos = D.pos();
+  this.contain = (new bkElement("div")).setStyle({zIndex:"99999", overflow:"hidden", position:"absolute", left:this.pos[0] + "px", top:this.pos[1] + "px"});
+  this.pane = (new bkElement("div")).setStyle({fontSize:"12px", border:"1px solid #ccc", overflow:"hidden", padding:"4px", textAlign:"left", backgroundColor:"#ffffc9"}).addClass("pane").setStyle(B).appendTo(this.contain);
+  if(A && !A.options.noClose) {
+    this.close = (new bkElement("div")).setStyle({"float":"right", height:"16px", width:"16px", cursor:"pointer"}).setStyle(this.ne.getIcon("close", nicPaneOptions)).addEvent("mousedown", A.removePane.closure(this)).appendTo(this.pane)
+  }
+  this.contain.noSelect().appendTo(document.body);
+  this.position();
+  this.init()
+}, init:function() {
+}, position:function() {
+  if(this.ne.nicPanel) {
+    var B = this.ne.nicPanel.elm;
+    var A = B.pos();
+    var C = A[0] + parseInt(B.getStyle("width")) - (parseInt(this.pane.getStyle("width")) + 8);
+    if(C < this.pos[0]) {
+      this.contain.setStyle({left:C + "px"})
+    }
+  }
+}, toggle:function() {
+  this.isVisible = !this.isVisible;
+  this.contain.setStyle({display:this.isVisible ? "block" : "none"})
+}, remove:function() {
+  if(this.contain) {
+    this.contain.remove();
+    this.contain = null
+  }
+}, append:function(A) {
+  A.appendTo(this.pane)
+}, setContent:function(A) {
+  this.pane.setContent(A)
+}});
+var nicEditorAdvancedButton = nicEditorButton.extend({init:function() {
+  this.ne.addEvent("selected", this.removePane.closure(this)).addEvent("blur", this.removePane.closure(this))
+}, mouseClick:function() {
+  if(!this.isDisabled) {
+    if(this.pane && this.pane.pane) {
+      this.removePane()
+    }else {
+      this.pane = new nicEditorPane(this.contain, this.ne, {width:this.width || "270px", backgroundColor:"#fff"}, this);
+      this.addPane();
+      this.ne.selectedInstance.saveRng()
+    }
+  }
+}, addForm:function(C, G) {
+  this.form = (new bkElement("form")).addEvent("submit", this.submit.closureListener(this));
+  this.pane.append(this.form);
+  this.inputs = {};
+  for(itm in C) {
+    var D = C[itm];
+    var F = "";
+    if(G) {
+      F = G.getAttribute(itm)
+    }
+    if(!F) {
+      F = D.value || ""
+    }
+    var A = C[itm].type;
+    if(A == "title") {
+      (new bkElement("div")).setContent(D.txt).setStyle({fontSize:"14px", fontWeight:"bold", padding:"0px", margin:"2px 0"}).appendTo(this.form)
+    }else {
+      var B = (new bkElement("div")).setStyle({overflow:"hidden", clear:"both"}).appendTo(this.form);
+      if(D.txt) {
+        (new bkElement("label")).setAttributes({"for":itm}).setContent(D.txt).setStyle({margin:"2px 4px", fontSize:"13px", width:"50px", lineHeight:"20px", textAlign:"right", "float":"left"}).appendTo(B)
+      }
+      switch(A) {
+        case "text":
+          this.inputs[itm] = (new bkElement("input")).setAttributes({id:itm, value:F, type:"text"}).setStyle({margin:"2px 0", fontSize:"13px", "float":"left", height:"20px", border:"1px solid #ccc", overflow:"hidden"}).setStyle(D.style).appendTo(B);
+          break;
+        case "select":
+          this.inputs[itm] = (new bkElement("select")).setAttributes({id:itm}).setStyle({border:"1px solid #ccc", "float":"left", margin:"2px 0"}).appendTo(B);
+          for(opt in D.options) {
+            var E = (new bkElement("option")).setAttributes({value:opt, selected:opt == F ? "selected" : ""}).setContent(D.options[opt]).appendTo(this.inputs[itm])
+          }
+          break;
+        case "content":
+          this.inputs[itm] = (new bkElement("textarea")).setAttributes({id:itm}).setStyle({border:"1px solid #ccc", "float":"left"}).setStyle(D.style).appendTo(B);
+          this.inputs[itm].value = F
+      }
+    }
+  }
+  (new bkElement("input")).setAttributes({type:"submit"}).setStyle({backgroundColor:"#efefef", border:"1px solid #ccc", margin:"3px 0", "float":"left", clear:"both"}).appendTo(this.form);
+  this.form.onsubmit = bkLib.cancelEvent
+}, submit:function() {
+}, findElm:function(B, A, E) {
+  var D = this.ne.selectedInstance.getElm().getElementsByTagName(B);
+  for(var C = 0;C < D.length;C++) {
+    if(D[C].getAttribute(A) == E) {
+      return $BK(D[C])
+    }
+  }
+}, removePane:function() {
+  if(this.pane) {
+    this.pane.remove();
+    this.pane = null;
+    this.ne.selectedInstance.restoreRng()
+  }
+}});
+var nicButtonTips = bkClass.extend({construct:function(A) {
+  this.ne = A;
+  A.addEvent("buttonOver", this.show.closure(this)).addEvent("buttonOut", this.hide.closure(this))
+}, show:function(A) {
+  this.timer = setTimeout(this.create.closure(this, A), 400)
+}, create:function(A) {
+  this.timer = null;
+  if(!this.pane) {
+    this.pane = new nicEditorPane(A.button, this.ne, {fontSize:"12px", marginTop:"5px"});
+    this.pane.setContent(A.options.name)
+  }
+}, hide:function(A) {
+  if(this.timer) {
+    clearTimeout(this.timer)
+  }
+  if(this.pane) {
+    this.pane = this.pane.remove()
+  }
+}});
+nicEditors.registerPlugin(nicButtonTips);
+var nicSelectOptions = {buttons:{"fontSize":{name:__("Select Font Size"), type:"nicEditorFontSizeSelect", command:"fontsize"}, "fontFamily":{name:__("Select Font Family"), type:"nicEditorFontFamilySelect", command:"fontname"}, "fontFormat":{name:__("Select Font Format"), type:"nicEditorFontFormatSelect", command:"formatBlock"}}};
+var nicEditorSelect = bkClass.extend({construct:function(D, A, C, B) {
+  this.options = C.buttons[A];
+  this.elm = D;
+  this.ne = B;
+  this.name = A;
+  this.selOptions = new Array;
+  this.margin = (new bkElement("div")).setStyle({"float":"left", margin:"2px 1px 0 1px"}).appendTo(this.elm);
+  this.contain = (new bkElement("div")).setStyle({width:"90px", height:"20px", cursor:"pointer", overflow:"hidden"}).addClass("selectContain").addEvent("click", this.toggle.closure(this)).appendTo(this.margin);
+  this.items = (new bkElement("div")).setStyle({overflow:"hidden", zoom:1, border:"1px solid #ccc", paddingLeft:"3px", backgroundColor:"#fff"}).appendTo(this.contain);
+  this.control = (new bkElement("div")).setStyle({overflow:"hidden", "float":"right", height:"18px", width:"16px"}).addClass("selectControl").setStyle(this.ne.getIcon("arrow", C)).appendTo(this.items);
+  this.txt = (new bkElement("div")).setStyle({overflow:"hidden", "float":"left", width:"66px", height:"14px", marginTop:"1px", fontFamily:"sans-serif", textAlign:"center", fontSize:"12px"}).addClass("selectTxt").appendTo(this.items);
+  if(!window.opera) {
+    this.contain.onmousedown = this.control.onmousedown = this.txt.onmousedown = bkLib.cancelEvent
+  }
+  this.margin.noSelect();
+  this.ne.addEvent("selected", this.enable.closure(this)).addEvent("blur", this.disable.closure(this));
+  this.disable();
+  this.init()
+}, disable:function() {
+  this.isDisabled = true;
+  this.close();
+  this.contain.setStyle({opacity:0.6})
+}, enable:function(A) {
+  this.isDisabled = false;
+  this.close();
+  this.contain.setStyle({opacity:1})
+}, setDisplay:function(A) {
+  this.txt.setContent(A)
+}, toggle:function() {
+  if(!this.isDisabled) {
+    this.pane ? this.close() : this.open()
+  }
+}, open:function() {
+  this.pane = new nicEditorPane(this.items, this.ne, {width:"88px", padding:"0px", borderTop:0, borderLeft:"1px solid #ccc", borderRight:"1px solid #ccc", borderBottom:"0px", backgroundColor:"#fff"});
+  for(var C = 0;C < this.selOptions.length;C++) {
+    var B = this.selOptions[C];
+    var A = (new bkElement("div")).setStyle({overflow:"hidden", borderBottom:"1px solid #ccc", width:"88px", textAlign:"left", overflow:"hidden", cursor:"pointer"});
+    var D = (new bkElement("div")).setStyle({padding:"0px 4px"}).setContent(B[1]).appendTo(A).noSelect();
+    D.addEvent("click", this.update.closure(this, B[0])).addEvent("mouseover", this.over.closure(this, D)).addEvent("mouseout", this.out.closure(this, D)).setAttributes("id", B[0]);
+    this.pane.append(A);
+    if(!window.opera) {
+      D.onmousedown = bkLib.cancelEvent
+    }
+  }
+}, close:function() {
+  if(this.pane) {
+    this.pane = this.pane.remove()
+  }
+}, over:function(A) {
+  A.setStyle({backgroundColor:"#ccc"})
+}, out:function(A) {
+  A.setStyle({backgroundColor:"#fff"})
+}, add:function(B, A) {
+  this.selOptions.push(new Array(B, A))
+}, update:function(A) {
+  this.ne.nicCommand(this.options.command, A);
+  this.close()
+}});
+var nicEditorFontSizeSelect = nicEditorSelect.extend({sel:{1:"1&nbsp;(8pt)", 2:"2&nbsp;(10pt)", 3:"3&nbsp;(12pt)", 4:"4&nbsp;(14pt)", 5:"5&nbsp;(18pt)", 6:"6&nbsp;(24pt)"}, init:function() {
+  this.setDisplay("Font&nbsp;Size...");
+  for(itm in this.sel) {
+    this.add(itm, '<font size="' + itm + '">' + this.sel[itm] + "</font>")
+  }
+}});
+var nicEditorFontFamilySelect = nicEditorSelect.extend({sel:{arial:"Arial", "comic sans ms":"Comic Sans", "courier new":"Courier New", georgia:"Georgia", helvetica:"Helvetica", impact:"Impact", "times new roman":"Times", "trebuchet ms":"Trebuchet", verdana:"Verdana"}, init:function() {
+  this.setDisplay("Font&nbsp;Family...");
+  for(itm in this.sel) {
+    this.add(itm, '<font face="' + itm + '">' + this.sel[itm] + "</font>")
+  }
+}});
+var nicEditorFontFormatSelect = nicEditorSelect.extend({sel:{p:"Paragraph", pre:"Pre", h6:"Heading&nbsp;6", h5:"Heading&nbsp;5", h4:"Heading&nbsp;4", h3:"Heading&nbsp;3", h2:"Heading&nbsp;2", h1:"Heading&nbsp;1"}, init:function() {
+  this.setDisplay("Font&nbsp;Format...");
+  for(itm in this.sel) {
+    var A = itm.toUpperCase();
+    this.add("<" + A + ">", "<" + itm + ' style="padding: 0px; margin: 0px;">' + this.sel[itm] + "</" + A + ">")
+  }
+}});
+nicEditors.registerPlugin(nicPlugin, nicSelectOptions);
+var nicLinkOptions = {buttons:{"link":{name:"Add Link", type:"nicLinkButton", tags:["A"]}, "unlink":{name:"Remove Link", command:"unlink", noActive:true}}};
+var nicLinkButton = nicEditorAdvancedButton.extend({addPane:function() {
+  this.ln = this.ne.selectedInstance.selElm().parentTag("A");
+  this.addForm({"":{type:"title", txt:"Add/Edit Link"}, href:{type:"text", txt:"URL", value:"http://", style:{width:"150px"}}, title:{type:"text", txt:"Title"}, target:{type:"select", txt:"Open In", options:{"":"Current Window", _blank:"New Window"}, style:{width:"100px"}}}, this.ln)
+}, submit:function(C) {
+  var A = this.inputs.href.value;
+  if(A == "http://" || A == "") {
+    alert("You must enter a URL to Create a Link");
+    return false
+  }
+  this.removePane();
+  if(!this.ln) {
+    var B = "javascript:nicTemp();";
+    this.ne.nicCommand("createlink", B);
+    this.ln = this.findElm("A", "href", B)
+  }
+  if(this.ln) {
+    this.ln.setAttributes({href:this.inputs.href.value, title:this.inputs.title.value, target:this.inputs.target.options[this.inputs.target.selectedIndex].value})
+  }
+}});
+nicEditors.registerPlugin(nicPlugin, nicLinkOptions);
+var nicColorOptions = {buttons:{"forecolor":{name:__("Change Text Color"), type:"nicEditorColorButton", noClose:true}, "bgcolor":{name:__("Change Background Color"), type:"nicEditorBgColorButton", noClose:true}}};
+var nicEditorColorButton = nicEditorAdvancedButton.extend({addPane:function() {
+  var D = {"0":"00", 1:"33", 2:"66", 3:"99", 4:"CC", 5:"FF"};
+  var H = (new bkElement("DIV")).setStyle({width:"270px"});
+  for(var A in D) {
+    for(var F in D) {
+      for(var E in D) {
+        var I = "#" + D[A] + D[E] + D[F];
+        var C = (new bkElement("DIV")).setStyle({cursor:"pointer", height:"15px", "float":"left"}).appendTo(H);
+        var G = (new bkElement("DIV")).setStyle({border:"2px solid " + I}).appendTo(C);
+        var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).appendTo(G);
+        if(!window.opera) {
+          C.onmousedown = B.onmousedown = bkLib.cancelEvent
+        }
+      }
+    }
+  }
+  this.pane.append(H.noSelect())
+}, colorSelect:function(A) {
+  this.ne.nicCommand("foreColor", A);
+  this.removePane()
+}, on:function(A) {
+  A.setStyle({border:"2px solid #000"})
+}, off:function(A, B) {
+  A.setStyle({border:"2px solid " + B})
+}});
+var nicEditorBgColorButton = nicEditorColorButton.extend({colorSelect:function(A) {
+  this.ne.nicCommand("hiliteColor", A);
+  this.removePane()
+}});
+nicEditors.registerPlugin(nicPlugin, nicColorOptions);
+var nicImageOptions = {buttons:{"image":{name:"Add Image", type:"nicImageButton", tags:["IMG"]}}};
+var nicImageButton = nicEditorAdvancedButton.extend({addPane:function() {
+  this.im = this.ne.selectedInstance.selElm().parentTag("IMG");
+  this.addForm({"":{type:"title", txt:"Add/Edit Image"}, src:{type:"text", txt:"URL", value:"http://", style:{width:"150px"}}, alt:{type:"text", txt:"Alt Text", style:{width:"100px"}}, align:{type:"select", txt:"Align", options:{none:"Default", left:"Left", right:"Right"}}}, this.im)
+}, submit:function(B) {
+  var C = this.inputs.src.value;
+  if(C == "" || C == "http://") {
+    alert("You must enter a Image URL to insert");
+    return false
+  }
+  this.removePane();
+  if(!this.im) {
+    var A = "javascript:nicImTemp();";
+    this.ne.nicCommand("insertImage", A);
+    this.im = this.findElm("IMG", "src", A)
+  }
+  if(this.im) {
+    this.im.setAttributes({src:this.inputs.src.value, alt:this.inputs.alt.value, align:this.inputs.align.value})
+  }
+}});
+nicEditors.registerPlugin(nicPlugin, nicImageOptions);
+var nicSaveOptions = {buttons:{"save":{name:__("Save this content"), type:"nicEditorSaveButton"}}};
+var nicEditorSaveButton = nicEditorButton.extend({init:function() {
+  if(!this.ne.options.onSave) {
+    this.margin.setStyle({display:"none"})
+  }
+}, mouseClick:function() {
+  var B = this.ne.options.onSave;
+  var A = this.ne.selectedInstance;
+  B(A.getContent(), A.elm.id, A)
+}});
+nicEditors.registerPlugin(nicPlugin, nicSaveOptions);
 VISH.Mods.fc = {};
 VISH.Mods.fc.loader = function(V, undefined) {
   var init = function(fc) {
     var tmpVideo;
     var loaders = [];
-    loaders.push(V.Utils.loader.loadImage("images/loading.png"));
-    loaders.push(V.Utils.loader.loadImage("images/rounded_corners.png"));
-    loaders.push(V.Utils.loader.loadImage("images/template1.png"));
-    loaders.push(V.Utils.loader.loadImage("images/play.png"));
-    loaders.push(V.Utils.loader.loadImage("images/corner.png"));
-    loaders.push(V.Utils.loader.loadImage("images/corner_small.png"));
-    loaders.push(V.Utils.loader.loadImage("images/corner_small_text.png"));
-    loaders.push(V.Utils.loader.loadImage("images/filled.png"));
-    loaders.push(V.Utils.loader.loadImage("images/closeicon.png"));
-    loaders.push(V.Utils.loader.loadImage("images/anim.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "loading.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "rounded_corners.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "template1.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "play.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "corner.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "corner_small.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "corner_small_text.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "filled.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "closeicon.png"));
+    loaders.push(V.Utils.loader.loadImage(VISH.ImagesPath + "anim.png"));
     loaders.push(V.Utils.loader.loadImage(fc.backgroundSrc));
     for(var i = 0;i < fc.pois.length;i++) {
       for(var p = 0;p < fc.pois[i].zonesContent.length;p++) {
@@ -5752,7 +10202,7 @@ VISH.Mods.fc.player = function(V, $, undefined) {
     canvas = document.getElementById(fcElem.canvasid);
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-    loadingImg = V.Utils.loader.getImage("images/loading.png");
+    loadingImg = V.Utils.loader.getImage(VISH.ImagesPath + "loading.png");
     ctx = canvas.getContext("2d");
     ctx.drawImage(loadingImg, 0, 0);
     V.Mods.fc.template.init(ctx, slideId);
@@ -5774,11 +10224,11 @@ VISH.Mods.fc.player = function(V, $, undefined) {
     var myState;
     myState = V.SlideManager.getStatus(slideId);
     ctx.drawImage(V.Utils.loader.getImage(flashcard.backgroundSrc), 0, 0, WIDTH, HEIGHT);
-    ctx.drawImage(V.Utils.loader.getImage("images/rounded_corners.png"), 0, 0);
+    ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + "rounded_corners.png"), 0, 0);
     for(var i = 0;i < flashcard.pois.length;i++) {
       poi = flashcard.pois[i];
       animX = myState.poiFrameNumber * FRAME_WIDTH;
-      ctx.drawImage(V.Utils.loader.getImage("images/anim.png"), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT)
+      ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + "anim.png"), animX, 0, FRAME_WIDTH, FRAME_HEIGHT, poi.x, poi.y, FRAME_WIDTH, FRAME_HEIGHT)
     }
     if(myState.drawingPoi > 0) {
       V.Mods.fc.template.draw(flashcard.pois[myState.drawingPoi - 1])
@@ -5862,8 +10312,8 @@ VISH.Mods.fc.player = function(V, $, undefined) {
   return{init:init, clear:clear}
 }(VISH, jQuery);
 VISH.Mods.fc.template = function(V, $, undefined) {
-  var TYPES = [{"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":"libimages/template1.png", "zones":[{"x":130, "y":99, "width":536, "height":402, "textstyle":"italic 16px helvetica, arial, sans-serif", "textcolor":"blue", "textlinespacing":40}]}, {"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":"libimages/template1.png", 
-  "zones":[{"x":142, "y":99, "width":536, "height":33, "textstyle":"bold 26px Arial", "textcolor":"black", "textlinespacing":20}, {"x":132, "y":175, "width":536, "height":331, "textstyle":"16px Arial", "textcolor":"black", "textlinespacing":20}]}, {"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":"libimages/template1.png", "zones":[{"x":142, "y":99, "width":536, "height":33, "textstyle":"bold 26px arial", 
+  var TYPES = [{"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":VISH.ImagesPath + "template1.png", "zones":[{"x":130, "y":99, "width":536, "height":402, "textstyle":"italic 16px helvetica, arial, sans-serif", "textcolor":"blue", "textlinespacing":40}]}, {"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":VISH.ImagesPath + 
+  "template1.png", "zones":[{"x":142, "y":99, "width":536, "height":33, "textstyle":"bold 26px Arial", "textcolor":"black", "textlinespacing":20}, {"x":132, "y":175, "width":536, "height":331, "textstyle":"16px Arial", "textcolor":"black", "textlinespacing":20}]}, {"x":80, "y":60, "width":642, "height":482, "closingButtonX":672, "closingButtonY":60, "closingButtonWidth":50, "closingButtonHeight":50, "image":VISH.ImagesPath + "template1.png", "zones":[{"x":142, "y":99, "width":536, "height":33, "textstyle":"bold 26px arial", 
   "textcolor":"black", "textlinespacing":20}, {"x":122, "y":175, "width":260, "height":331, "textstyle":"italic 9px arial", "textcolor":"black", "textlinespacing":20}, {"x":418, "y":175, "width":260, "height":331, "textstyle":"12px aria", "textcolor":"black", "textlinespacing":20}]}];
   var ctx = null;
   var slideId = null;
@@ -5906,7 +10356,7 @@ VISH.Mods.fc.template = function(V, $, undefined) {
     var tmpImg, tmpWidth, tmpHeight, tmpVideo, lines, line;
     template = TYPES[poi.templateNumber];
     ctx.drawImage(V.Utils.loader.getImage(template.image), template.x, template.y, template.width, template.height);
-    ctx.drawImage(V.Utils.loader.getImage("images/closeicon.png"), template.closingButtonX, template.closingButtonY, 50, 50);
+    ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + "closeicon.png"), template.closingButtonX, template.closingButtonY, 50, 50);
     for(var i = 0;i < poi.zonesContent.length;i++) {
       zone = poi.zonesContent[i];
       zoneTemplate = template.zones[i];
@@ -5931,7 +10381,7 @@ VISH.Mods.fc.template = function(V, $, undefined) {
           tmpVideo = V.Utils.loader.getVideo(zone.content);
           V.Utils.canvas.drawImageWithAspectRatioAndRoundedCorners(ctx, tmpVideo, zoneTemplate.x, zoneTemplate.y, zoneTemplate.width, zoneTemplate.height);
           if(tmpVideo.paused) {
-            ctx.drawImage(V.Utils.loader.getImage("images/play.png"), zoneTemplate.x + zoneTemplate.width / 2 - 128 / 2, zoneTemplate.y + zoneTemplate.height / 2 - 128 / 2, 128, 128)
+            ctx.drawImage(V.Utils.loader.getImage(VISH.ImagesPath + "play.png"), zoneTemplate.x + zoneTemplate.width / 2 - 128 / 2, zoneTemplate.y + zoneTemplate.height / 2 - 128 / 2, 128, 128)
           }
           break
       }
@@ -5939,7 +10389,6 @@ VISH.Mods.fc.template = function(V, $, undefined) {
   };
   return{init:init, update:update, draw:draw}
 }(VISH, jQuery);
-VISH.Mods = {};
 var PERMANENT_URL_PREFIX = "";
 var SLIDE_CLASSES = ["far-past", "past", "current", "next", "far-next"];
 var PM_TOUCH_SENSITIVITY = 15;
@@ -6117,6 +10566,29 @@ function nextSlide() {
   }
 }
 function lastSlide() {
+  while(curSlide < slideEls.length - 1) {
+    nextSlide()
+  }
+}
+function goToSlide(no) {
+  if(no >= slideEls.length - 1) {
+    return
+  }else {
+    if(no > curSlide) {
+      while(curSlide < no) {
+        nextSlide()
+      }
+    }else {
+      if(no < curSlide) {
+        while(curSlide > no) {
+          prevSlide()
+        }
+      }
+    }
+  }
+}
+function addSlide(slide) {
+  $(".slides").append(slide)
 }
 function triggerEnterEvent(no) {
   var el = getSlideEl(no);
@@ -6285,41 +10757,57 @@ function getCurSlideFromHash() {
 function updateHash() {
   location.replace("#" + (curSlide + 1))
 }
+function isSlideFocused() {
+  if($(".wysiwygInstance").is(":focus")) {
+    return false
+  }
+  return true
+}
 function handleBodyKeyDown(event) {
   switch(event.keyCode) {
     case 39:
     ;
-    case 13:
-    ;
-    case 32:
-    ;
     case 34:
-      nextSlide();
-      event.preventDefault();
+      if(isSlideFocused()) {
+        nextSlide();
+        event.preventDefault()
+      }
       break;
     case 37:
-    ;
-    case 8:
-    ;
+      if(isSlideFocused()) {
+        prevSlide();
+        event.preventDefault()
+      }
+      break;
     case 33:
       prevSlide();
       event.preventDefault();
       break;
     case 40:
       if(isChromeVoxActive()) {
-        speakNextItem()
+        if(isSlideFocused()) {
+          speakNextItem();
+          event.preventDefault()
+        }
       }else {
-        nextSlide()
+        if(isSlideFocused()) {
+          nextSlide();
+          event.preventDefault()
+        }
       }
-      event.preventDefault();
       break;
     case 38:
       if(isChromeVoxActive()) {
-        speakPrevItem()
+        if(isSlideFocused) {
+          speakPrevItem();
+          event.preventDefault()
+        }
       }else {
-        prevSlide()
+        if(isSlideFocused()) {
+          prevSlide();
+          event.preventDefault()
+        }
       }
-      event.preventDefault();
       break
   }
 }
@@ -6337,7 +10825,7 @@ function addGeneralStyle() {
   var el = document.createElement("link");
   el.rel = "stylesheet";
   el.type = "text/css";
-  el.href = PERMANENT_URL_PREFIX + "stylesheets/styles.css";
+  el.href = PERMANENT_URL_PREFIX + VISH.StylesheetsPath + "styles.css";
   document.body.appendChild(el);
   var el = document.createElement("meta");
   el.name = "viewport";

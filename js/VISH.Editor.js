@@ -5,8 +5,7 @@ VISH.Editor = (function(V,$,undefined){
 	// current_el that will be the zone of the template that the user has clicked
 	// current_editor that will be the wysiwyg editor that the user is managing
 	var params = {
-		current_el : null,
-		
+		current_el : null		
 	};
 	
 	var nextImageId = 0;  //number for next image id and its slider to resize it
