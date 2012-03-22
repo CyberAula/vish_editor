@@ -199,13 +199,14 @@ VISH.Editor = (function(V,$,undefined){
 		var jsonexcursion = JSON.stringify(excursion);
 		console.log(jsonexcursion);
 		
+		/*
 		$('article').remove();
 		$('#menubar').remove();
 		$(".nicEdit-panelContain").remove();
 		V.SlideManager.init(excursion);
+		*/
 		
 		
-		/*
 		
 		//POST to http://server/excursions/
 		var params = {
@@ -218,7 +219,7 @@ VISH.Editor = (function(V,$,undefined){
 			document.write(data);
 			document.close();
 	    });
-	    */
+	    
 		
 	};
 
