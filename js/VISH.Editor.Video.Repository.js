@@ -4,16 +4,38 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	var previewDivId = "tab_video_repo_content_preview";
 	var currentVideos = new Array();
 	
+	var init = function(){
+		var myInput = $("#tab_video_repo_content").find("input[type='search']");
+		$(myInput).watermark('Search content');
+		$(myInput).keydown(function(event) {
+			if(event.keyCode == 13) {
+          VISH.Editor.Video.Repository.requestData($(myInput).val());
+					$(myInput).blur();
+      }
+    });
+	}
+	
 	var onLoadTab = function(){
-		 _requestData();
+		var previousSearch = ($("#tab_video_repo_content").find("input[type='search']").val()!="");
+		if(! previousSearch){
+		 _renderVideoPreview(null);
+     _requestInicialData();
+		}
 	}
 	
 	/*
-	 * Request data to the server.
+	 * Request inicial data to the server.
 	 */
-	var _requestData = function(){
-		VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived);
+	var _requestInicialData = function(){
+		VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived,VISH.Editor.Video.Repository.onAPIError);
 	}
+	
+	/*
+   * Request data to the server.
+   */
+  var requestData = function(text){
+    VISH.Editor.API.requestVideos(text,VISH.Editor.Video.Repository.onDataReceived,VISH.Editor.Video.Repository.onAPIError);
+  }
 	
 	 /*
    * Fill tab_video_repo_content_carrousel div with server data.
@@ -36,6 +58,10 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 		VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Video.Repository.onClickCarrouselElement);
   }
 	
+	 var onAPIError = function(){
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId)
+		console.log("API error")
+  }
 	 
   var onClickCarrouselElement = function(event){
     var videoId = $(event.target).attr("videoid");
@@ -67,9 +93,10 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata")
 		$(videoArea).html("")
 		$(metadataArea).html("")
-		$(videoArea).append(renderedVideo)
+		if((renderedVideo)&&(video)){
+			$(videoArea).append(renderedVideo)
+		}
 		
-		$()
 		//Filling metadata with video fields...
 	}
 	
@@ -78,8 +105,10 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	}
 	
 	return {
+		init                    : init,
 		onLoadTab					      : onLoadTab,
-		getCurrentVideos: getCurrentVideos,
+		getCurrentVideos        : getCurrentVideos,
+		requestData             : requestData,
 		onDataReceived  : onDataReceived,
 		onClickCarrouselElement : onClickCarrouselElement
 	};
