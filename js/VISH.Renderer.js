@@ -73,7 +73,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderVideo = function(element, template){
 		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>"
-		var controls=(element['controls'])?"controls='controls' ":""
+		var controls= "controls='controls' "
 		var autoplay=(element['autoplay'])?"autoplayonslideenter='true' ":""
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
 		var loop=(element['loop'])?"loop='loop' ":""
@@ -81,8 +81,9 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + controls + autoplay + poster + loop + ">"
 		
-		$.each(sources, function(index, value) {
-			rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
+		$.each(sources, function(index, source) {
+			var mimetype = (source.mimetype)?"type='" + source.mimetype + "' ":""
+			rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">"
 		});
 		
 		if(sources.length>0){

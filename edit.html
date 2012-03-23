@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/jslider.blue.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/editor.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/nicEditor.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/easymultiple.slider.css">
 		<link rel="stylesheet" type="text/css" href="stylesheets/carrousel.css">
 
     <style>  
@@ -205,7 +204,7 @@
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
 				  Paste html5 video URL
 				  <input id="video_url" type="text" size="25" value="http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"> 
-				  <button type="button" onclick="VISH.Editor.pasteHTML5Video('video_url')">Done</button>
+				  <button type="button" onclick="VISH.Editor.getValueFromFancybox('video_url')">Done</button>
 				</div>
 				<div id='tab_video_upload_content' class="fancy_tab_content">
 				  Select video to upload
@@ -216,26 +215,26 @@
 				  Vish repository	    
 					
 					<!-- Add carrousel -->
-					<div id="tab_video_repo_content_carrousel">
-	          <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg" />
-	          <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg" />
-					  <img src="http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg" />
-						<img src="http://www.forodefotos.com/attachments/naturaleza/12983d1281113830-fotos-de-paisaje-fotos-de-paisaje.jpg" />
-						<img src="http://ro18.blogspot.es/img/paisaje.jpg" />
-						<img src="http://walpaper.es/images/wallpapers/Paisaje-fotografia-HDR-656343.jpeg" />
-						<img src="http://3.bp.blogspot.com/-a-WrZZf0WJo/TsEBPXjUQXI/AAAAAAAAFBg/kh0aS9Kemag/s1600/PAISAJE+JUANMA.jpg" />
-						<img src="http://images.artelista.com/artelista/obras/fichas/8/3/3/8619208014133041.JPG" />
-						<img src="http://4.bp.blogspot.com/-CfZKEdXcXtg/TijG57sIFWI/AAAAAAAAARQ/O8FP1OQ0a0w/s1600/delfines-saltando.jpg" />
-				  </div>
-					
+					<div id="tab_video_repo_content_carrousel"></div>
+					<div id="tab_video_repo_content_preview">
+						<div id="tab_video_repo_content_preview_video">
+							
+						</div>
+						<div id="tab_video_repo_content_preview_metadata">
+							
+						</div>
+					</div>
 				</div>  
 				
 				
 				
 				<div id='tab_video_youtube_content' class="fancy_tab_content">
 				  Search in youtube
+					
 				  <input id="youtube_input_text" type="text" size="25" value="" autofocus placeholder="write text to search"/>
-				  <button id="youtube_search_button" type="button">Search</button>
+				  <button id="youtube_search_button" type="button" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
+					<!-- Add carrousel -->
+					<div id="tab_video_youtube_content_carrousel"></div>
 				</div>
 	    </div>
 	  </div>
@@ -249,12 +248,12 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
-		<script type="text/javascript" src="js/libs/jquery.easing-1.3.pack.js"></script>
 		<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
 		<script type="text/javascript" src="js/libs/json2.js"></script>
 		
 		<script type="text/javascript" src="js/VISH.js"></script>
 		<script type="text/javascript" src="js/VISH.Samples.js"></script>
+		<script type="text/javascript" src="js/VISH.Samples.API.js"></script>
 		<script type="text/javascript" src="js/VISH.Renderer.js"></script>
 		<script type="text/javascript" src="js/VISH.Excursion.js"></script>
 		<script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
@@ -267,6 +266,13 @@
 		<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
 		<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
 		<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Flikr.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
+		<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
 		
 		<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 		<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>

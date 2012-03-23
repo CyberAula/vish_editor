@@ -275,3 +275,26 @@
 	left: 20px;
 	font-size: 20px;
 }
+
+#tab_video_repo_content_preview{
+	width: 650px;
+	height: 225px;
+	text-align: center;
+	padding: 20px;
+	margin: auto;
+}
+
+#tab_video_repo_content_preview_video{
+	width: 350px;
+  height: 225px;
+	margin-left: auto; 
+	margin-right: auto;
+}
+
+#tab_video_repo_content_preview_metadata{
+}
+
+.videoPreview{
+	max-width: 300px;
+  max-height: 200px;
+}
