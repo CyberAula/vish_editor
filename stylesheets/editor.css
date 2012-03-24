@@ -436,12 +436,13 @@ table.metadata td.header_right{
 	background: url("/images/table_right.png") no-repeat scroll right -1px #9E1F63;
 }
 
-table.metadata td div.height_wrapper{
-	height: 20px;
-	overflow: hidden;
-}
-
 table.metadata td div.height_wrapper_description{
 	height: 100px;
 	overflow: hidden;
+}
+
+.caroufredsel_wrapper{
+	overflow-y: visible;
+	overflow-x: visible;
+	overflow: visible;
 }

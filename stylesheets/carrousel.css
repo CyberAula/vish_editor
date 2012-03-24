@@ -1,13 +1,15 @@
 .image_carousel {
     padding: 15px 0 10px 5px;
     position: relative;
+    width: 750px;
+    overflow: hidden;
 }
 
 .image_carousel img {
     border: 1px solid #ccc;
     background-color: white;
     padding: 9px;
-    margin: 7px;
+    margin: 6px;
     display: block;
     float: left;
 }
@@ -30,7 +32,7 @@ a.prev_multiple_row, a.next_multiple_row{
 }
 
 a.prev {
-  left: -10px;
+  left: 0px;
   background-position: 0 0; 
 }
 a.prev:hover {      
@@ -40,8 +42,8 @@ a.prev.disabled {
   background-position: 0 -100px !important;  
 }
 a.next {  
-  right: 10px;
-	background-position: -50px 0; 
+  right: 0px;
+  background-position: -50px 0; 
 }
 a.next:hover {      
   background-position: -50px -50px; 

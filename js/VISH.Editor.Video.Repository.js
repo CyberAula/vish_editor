@@ -66,7 +66,7 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
   var onClickCarrouselElement = function(event){
     var videoId = $(event.target).attr("videoid");
     var renderedVideo = _renderVideoElement(currentVideos[videoId])
-		_renderVideoPreview(renderedVideo,currentVideos[videoId])
+	_renderVideoPreview(renderedVideo,currentVideos[videoId])
   }
   
   var _renderVideoElement = function(video){
