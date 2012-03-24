@@ -5,14 +5,14 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	var currentVideos = new Array();
 	
 	var init = function(){
-		var myInput = $("#tab_video_repo_content").find("input[type='search']");
-		$(myInput).watermark('Search content');
-		$(myInput).keydown(function(event) {
-			if(event.keyCode == 13) {
+	  var myInput = $("#tab_video_repo_content").find("input[type='search']");
+	  $(myInput).watermark('Search content');
+	  $(myInput).keydown(function(event) {
+	    if(event.keyCode == 13) {
           VISH.Editor.Video.Repository.requestData($(myInput).val());
-					$(myInput).blur();
-      }
-    });
+          $(myInput).blur();
+		}
+      });
 	}
 	
 	var onLoadTab = function(){
@@ -55,7 +55,7 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
     });
 
     $("#" + carrouselDivId).html(content);
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Video.Repository.onClickCarrouselElement);
+	VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Video.Repository.onClickCarrouselElement);
   }
 	
 	 var onAPIError = function(){
@@ -95,10 +95,42 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 		$(metadataArea).html("")
 		if((renderedVideo)&&(video)){
 			$(videoArea).append(renderedVideo)
+			var table = _generateTable(video.author,video.title,video.description)
+			$(metadataArea).html(table)
+		}
+	}
+	
+	
+	var _generateTable = function(author,title,description){
+		
+		if(!author){
+		  author = "";
+		}
+		if(!title){
+		  title = "";
+		}
+		if(!description){
+		  description = "";
 		}
 		
-		//Filling metadata with video fields...
+		return "<table class=\"metadata\">"+
+		  "<tr class=\"even\">" +
+		    "<td class=\"title header_left\">Author</td>" + 
+		    "<td class=\"title header_right\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
+		  "</tr>" + 
+		  "<tr class=\"odd\">" + 
+		  	"<td class=\"title\">Title</td>" + 
+		    "<td class=\"info\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
+		  "</tr>" + 
+		  "<tr class=\"even\">" + 
+		    "<td colspan=\"2\" class=\"title_description\">Description</td>" + 
+		  "</tr>" + 
+		  "<tr class=\"odd\">" + 
+		  	"<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 
+		  "</tr>" + 
+		"</table>";
 	}
+	
 	
 	var getCurrentVideos = function(){
 		return currentVideos ;
@@ -106,10 +138,10 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	
 	return {
 		init                    : init,
-		onLoadTab					      : onLoadTab,
+		onLoadTab				: onLoadTab,
 		getCurrentVideos        : getCurrentVideos,
 		requestData             : requestData,
-		onDataReceived  : onDataReceived,
+		onDataReceived  		: onDataReceived,
 		onClickCarrouselElement : onClickCarrouselElement
 	};
 

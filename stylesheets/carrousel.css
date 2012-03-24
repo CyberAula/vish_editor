@@ -1,5 +1,5 @@
 .image_carousel {
-    padding: 15px 0 15px 5px;
+    padding: 15px 0 10px 5px;
     position: relative;
 }
 
@@ -18,11 +18,11 @@ a.prev, a.next {
     height: 50px;
     display: block;
     position: absolute;
-		outline: none;
+	outline: none;
 }
 
 a.prev_single_row, a.next_single_row{
-	  top: 85px;
+	top: 85px;
 }
 
 a.prev_multiple_row, a.next_multiple_row{
@@ -68,7 +68,7 @@ a.prev span, a.next span {
     height: 15px;
     margin: 0 5px 0 0;
     display: inline-block;
-		outline: none;
+	outline: none;
 }
 
 .pagination a.selected {
@@ -86,9 +86,9 @@ a.prev span, a.next span {
 }
 
 .carrousel_element_single_row{
-	width: 150px;
-	height: 150px;
-	max-width: 150px;
+  width: 150px;
+  height: 150px;
+  max-width: 150px;
   max-height: 150px;
 }
 
