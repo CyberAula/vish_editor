@@ -381,7 +381,7 @@ if (opts.responsive) {
 			} 
 
 			$wrp.css(orgCSS).css({
-				'overflow'		: 'hidden',
+//				'overflow'		: 'hidden',
 				'position'		: newPosition
 			});
 

@@ -29,7 +29,9 @@ VISH.Editor = (function(V,$,undefined){
 		document.dispatchEvent(evt);
 		
 		//Init submodules
+		VISH.Debugging.init(true);
 		VISH.Editor.Text.init();
+		VISH.Editor.Video.init();
 	};
 	
 	

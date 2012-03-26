@@ -1,6 +1,7 @@
 VISH.Editor.Video = (function(V,$,undefined){
 		
-	var init = new function(){
+	var init = function(){
+		VISH.Editor.Video.Repository.init();
 	}	
 			
 	return {
