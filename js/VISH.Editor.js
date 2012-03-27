@@ -33,9 +33,9 @@ VISH.Editor = (function(V,$,undefined){
 		document.dispatchEvent(evt);
 		
 		//Init submodules
-		VISH.Debugging.init(true);
-		VISH.Editor.Text.init();
-		VISH.Editor.Video.init();
+		V.Debugging.init(true);
+		V.Editor.Text.init();
+		V.Editor.Video.init();
 	};
 	
 	
@@ -65,55 +65,7 @@ VISH.Editor = (function(V,$,undefined){
     });
   };
 
-  /**
-   * function to add a new slide
-   */
-  function _addSlide(slide){
-  	$('.slides').append(slide);
-  };
-
-	/**
-	 * function to add a thumbnail of the added slide and activate the onlicks of the thumbnail
-	 */
-	function _addThumbnail(){
-		var number_of_slides = slideEls.length + 1;  //it is slideEls.length +1 because we have recently added a slide and it is not in this array
-		$("#"+ "slide_thumb_"+ number_of_slides).click( function() {
-  			VISH.Editor.goToSlide(number_of_slides);
-		});
-		$("#"+ "slide_thumb_"+ number_of_slides).css("cursor", "pointer");
-		$("#"+ "slide_thumb_"+ number_of_slides + " .slide_number").html(number_of_slides);
-		
-	}
-
-  /**
-   * go to the last slide when adding a new one
-   */
-  function lastSlide(){
-    goToSlide(slideEls.length);
-  };
-
-  /**
-   * go to the slide when clicking the thumbnail
-   * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
-   */
-  function goToSlide(no){
-    if((no > slideEls.length) || (no <= 0)){
-  	  return;
-    }
-    else if (no > curSlide+1){
-  	  while (curSlide+1 < no) {
-    	nextSlide();
-  	  }
-    }
-    else if (no < curSlide+1){
-  	  while (curSlide+1 > no) {
-    	prevSlide();
-  	  }
-    }
-    //finally add a background color to the selected slide
-    $(".barbutton").css("background-color", "transparent");
-    $("#"+ "slide_thumb_"+ no).css("background-color", "blue");
-  };
+  
 
   /////////////////////////
   /// Fancy Box Functions
@@ -137,16 +89,16 @@ VISH.Editor = (function(V,$,undefined){
 			switch(tab_id)	{		
 				//Image
         case "tab_pic_from_url":
-          VISH.Editor.Image.onLoadTab("url");
+          V.Editor.Image.onLoadTab("url");
           break;
         case "tab_pic_upload":
-          VISH.Editor.Image.onLoadTab("upload");
+          V.Editor.Image.onLoadTab("upload");
           break;
         case "tab_pic_repo":
-          VISH.Editor.Image.Repository.onLoadTab();
+          V.Editor.Image.Repository.onLoadTab();
           break;
         case "tab_pic_flikr":
-          VISH.Editor.Image.Flikr.onLoadTab();
+          V.Editor.Image.Flikr.onLoadTab();
         break;
 				
 				//Video
@@ -177,13 +129,13 @@ VISH.Editor = (function(V,$,undefined){
 		//Call the draw function of the submodule
     switch(id_to_get)  {
       case "picture_url":
-        VISH.Editor.Image.drawImage($("#"+id_to_get).val());
+        V.Editor.Image.drawImage($("#"+id_to_get).val());
         break;
       case "flash_embed_code":
         console.log("Feature not implemented: Flash embed code")
         break;
       case "video_url":
-        VISH.Editor.Video.HTML5.drawVideo($("#"+id_to_get).val())
+        V.Editor.Video.HTML5.drawVideo($("#"+id_to_get).val())
         break;
       //case "add_your_input_id_here":
         //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
@@ -204,8 +156,6 @@ VISH.Editor = (function(V,$,undefined){
   };
 
 
-
-
   //////////////////
   ///    Events
   //////////////////
@@ -217,15 +167,15 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		_addSlide(slide);		
-		_addThumbnail();
+		V.Editor.SlidesUtilities.addSlide(slide);		
+		V.Editor.SlidesUtilities.addThumbnail();
 		
 		$.fancybox.close();
 		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
-		setTimeout("VISH.Editor.lastSlide()", 300);
+		setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300);
 	};
 
 	/**
@@ -353,7 +303,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
-		goToSlide(curSlide);
+		V.Editor.SlidesUtilities.goToSlide(curSlide);
 	};
 	
 	/**
@@ -361,7 +311,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
-		goToSlide(curSlide+2);
+		V.Editor.SlidesUtilities.goToSlide(curSlide+2);
 	};
 	
 	
@@ -395,9 +345,7 @@ VISH.Editor = (function(V,$,undefined){
 		getId                   : getId,
 		getTemplate             : getTemplate,
 		getCurrentArea          : getCurrentArea,
-		getParams               : getParams,
-		goToSlide				: goToSlide,
-		lastSlide				: lastSlide
+		getParams               : getParams
 	};
 
 }) (VISH, jQuery);
