@@ -23,6 +23,10 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.edit_pencil', _onEditableClicked);
+		
+		//arrows in button panel
+		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 			
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
@@ -48,7 +52,7 @@ VISH.Editor = (function(V,$,undefined){
     return "unicID_" + domId;
   }
 	
-	/**
+  /**
    * function to dinamically add a css
    */
   var _loadCSS = function(path){
@@ -93,7 +97,7 @@ VISH.Editor = (function(V,$,undefined){
    * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
   function goToSlide(no){
-    if(no > slideEls.length){
+    if((no > slideEls.length) || (no <= 0)){
   	  return;
     }
     else if (no > curSlide+1){
@@ -323,6 +327,7 @@ VISH.Editor = (function(V,$,undefined){
     
     $('article').remove();
     $('#menubar').remove();
+    $('.theslider').remove();
     $(".nicEdit-panelContain").remove();
     V.SlideManager.init(excursion);
     
@@ -343,7 +348,21 @@ VISH.Editor = (function(V,$,undefined){
     
   };
 	
+	/**
+	 * Function to move the slides left one item
+	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
+	 */
+	var _onArrowLeftClicked = function(){
+		goToSlide(curSlide);
+	};
 	
+	/**
+	 * Function to move the slides right one item
+	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
+	 */
+	var _onArrowRightClicked = function(){
+		goToSlide(curSlide+2);
+	};
 	
 	
 	//////////////////
@@ -362,10 +381,10 @@ VISH.Editor = (function(V,$,undefined){
 	}
 	
 	var getCurrentArea = function() {
-    if(params['current_el']){
-      return params['current_el']
-    }
-    return null;
+	    if(params['current_el']){
+	      return params['current_el']
+	    }
+	    return null;
   }
 
 

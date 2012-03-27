@@ -154,7 +154,6 @@
 	float: left;
 	width: 24px;
 	height: 32px;
-	margin-top: 10px;
 	margin-right: 10px;
 	margin-left: 10px;
 	cursor: pointer;
@@ -167,9 +166,11 @@
 }
 
 .theslider{
-	width: 300px;
+	width: 750px;
 	height: 40px;
 	position: absolute;
+	top: 650px;
+	left: 75px;
 }
 
 #thumbcontent{

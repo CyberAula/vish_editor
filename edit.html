@@ -40,13 +40,12 @@
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
-			<div id='menubar'>
+		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
-	      </a>
-          <a onclick="javascript:prevSlide()">
-		    <div id='arrow_left_div' class='barbutton with_pointer'></div>
-          </a>
+	        </a>
+            <div id='arrow_left_div' class='barbutton with_pointer'>
+            </div>
 		    <div class='barbutton' id="slide_thumb_1">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
 				    <span class="slide_number"></span>
@@ -80,9 +79,6 @@
 				    <span class="slide_number"></span>
 		    </div>
 		    <div class='barbutton with_pointer' id='arrow_right_div'>
-				<a onclick="javascript:nextSlide()">
-				    <img class="image_barbutton"/>
-				</a>
 		    </div>		    
             <a id="save" href="#thumbcontent">
 			    <div id="save_div" class='barbuttonaddsave'>
@@ -105,6 +101,7 @@
 
   
 	  <div style='display:none'>
+	  	
 	    <div id='menuselect'>
 			  <div class='menuicon textthumb'></div>
 	      <a class="addpicture" href="#picture_fancybox">
@@ -117,18 +114,14 @@
 	        <div class='menuicon videothumb'></div>
 	      </a>
 	    </div>
+	    
 	    <div id='menuselect_for_header'>
 			  <div class='menuicon_small textthumb'></div>
 	      <a class="addpicture" href="#picture_fancybox">
 	        <div class='menuicon_small picthumb'></div>
-	      </a>
-	      <a class="addflash" href="#flash_fancybox">
-	        <div class='menuicon_small flashthumb'></div>
-	      </a>
-	      <a class="addvideo" href="#video_fancybox">
-	        <div class='menuicon_small videothumb'></div>
-	      </a>
+	      </a>	      
 	    </div>
+	    
 	  </div>
   
   
