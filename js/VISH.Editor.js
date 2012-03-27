@@ -186,7 +186,15 @@ VISH.Editor = (function(V,$,undefined){
 		
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
-		var content = $("#menuselect").clone().attr('id','');
+		var content = null;
+		
+		if($(this).attr("areaid")==="header"){
+			content = $("#menuselect_for_header").clone().attr('id','');
+		}
+		else{
+			content = $("#menuselect").clone().attr('id','');
+		}
+				
 		//add zone attr to the a elements to remember where to add the content
 		content.find("a").each(function(index, domElem) {
 			$(domElem).attr("zone", params['current_el'].attr("id"));
