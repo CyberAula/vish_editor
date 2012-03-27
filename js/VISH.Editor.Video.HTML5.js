@@ -1,9 +1,15 @@
 VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	
+	var init = function(){
+    var urlInput = $("#tab_video_from_url_content").find("input.url");
+    $(urlInput).watermark('Paste HTML5 video URL');
+		var uploadInput = $("#tab_video_upload_content").find("input.upload");
+    $(uploadInput).watermark('Select video to upload');
+  }
+	
 	var onLoadTab = function(tab){
 		
 	}
-
 
   var drawVideoWithUrl = function (url){
 		drawVideo([[url,_getMimetypeFromUrl(url)]])
@@ -93,6 +99,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 
 	
 	return {
+		init             : init,
 		onLoadTab				 : onLoadTab,
 		drawVideoWithUrl : drawVideoWithUrl,
 		drawVideo        : drawVideo

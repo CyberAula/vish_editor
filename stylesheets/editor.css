@@ -206,8 +206,11 @@
 	padding: 0.5em 1.5em;
 	border-right: 1px solid #D3E8F6;
 	text-decoration: none;
-	background: #244974;
-	color: white;
+	background: #24497D;
+	color: #C3879D;
+	font-size: 16px;
+	font-family: Verdana;
+	font-weight: bold;
 }
 
 .fancy_tabs li a:hover{
@@ -312,22 +315,37 @@ div.search_container {
 	width: 200px;
 }
 
-input[type=search] {
+
+input.vishtab {
 	color: #245292;
-	background: url('/images/search_icon.png') 5px 50% no-repeat #F2E6EA;
-	padding: 1px 3px 0 22px;
 	font-size: 12px;
-	height: 25px;
-	width: 200px;
 	cursor: text;
 	display: block;
-	/* text-shadow: 0px 0px 0.5px #9E1F63; */
 	letter-spacing: 0px;
-	word-spacing: 1px;
+  word-spacing: 1px;
 	margin-left: 20px;
-	margin-bottom: 5px;
+  margin-bottom: 5px;
+	height: 25px;
 }
 
+input[type=search] {
+	background: url('/images/search_icon.png') 5px 50% no-repeat #F2E6EA;
+	padding: 1px 3px 0 22px;
+	width: 250px;
+}
+
+input.url, input.upload{
+  width: 500px;
+  padding: 1px 3px 0 28px;
+}
+
+input.url {
+	background: url('/images/url_icon.png') 5px 50% no-repeat #F2E6EA;
+}
+
+input.upload {
+  background: url('/images/url_icon.png') 5px 50% no-repeat #F2E6EA;
+}
 
 input.rounded {
 	border: solid 1px #9E1F63;

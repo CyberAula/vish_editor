@@ -197,19 +197,17 @@
 				    </ul>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
-				  Paste html5 video URL
-				  <input id="video_url" type="text" size="25" value="http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"> 
-				  <button type="button" onclick="VISH.Editor.getValueFromFancybox('video_url')">Done</button>
+				  <input id="url_video_input" type="text" class="rounded vishtab url">
+					<button type="button" class="okButton" onclick="VISH.Editor.getValueFromFancybox('video_url')"> Add</button>
 				</div>
 				<div id='tab_video_upload_content' class="fancy_tab_content">
-				  Select video to upload
-				  <input id="upload_video_input" type="text" size="25" value="">
-				  <button type="button" onclick="alert('Uploaded!')">Upload</button>
+					<input id="upload_video_input" type="text" class="rounded vishtab upload">
+          <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">
 				  
 					<div class="search_container">
-					  <input type="search" class="rounded"> </input>
+					  <input type="search" class="rounded vishtab"> </input>
 					</div>
 					
 					<div id="tab_video_repo_content_carrousel"></div>
@@ -224,13 +222,9 @@
 					</div>
 				</div>  
 				
-				
-				
 				<div id='tab_video_youtube_content' class="fancy_tab_content">
-				  Search in youtube
-					
 				  <input id="youtube_input_text" type="text" size="25" value="" autofocus placeholder="write text to search"/>
-				  <button id="youtube_search_button" type="button" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
+				  <button id="youtube_search_button" type="button" class="okButton" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
 					<!-- Add carrousel -->
 					<div id="tab_video_youtube_content_carrousel"></div>
 				</div>
