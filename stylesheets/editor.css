@@ -97,12 +97,14 @@
 	width: 60px;
 	height: 60px;
 	float: left;
-	cursor: pointer;
 	margin-bottom: 20px;
 	margin-right: 7px;
 	margin-left: 7px;
 }
 
+.with_pointer{
+	cursor: pointer;
+}
 
 #thumbcontent{
 	width: 100%;
