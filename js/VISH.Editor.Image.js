@@ -11,7 +11,7 @@ VISH.Editor.Image = (function(V,$,undefined){
    */
   var drawImage = function(image_url){
     var template = VISH.Editor.getTemplate();
-	var current_area = VISH.Editor.getCurrentArea();
+	  var current_area = VISH.Editor.getCurrentArea();
 
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;

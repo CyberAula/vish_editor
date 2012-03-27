@@ -135,7 +135,7 @@ VISH.Editor = (function(V,$,undefined){
         console.log("Feature not implemented: Flash embed code")
         break;
       case "video_url":
-        V.Editor.Video.HTML5.drawVideo($("#"+id_to_get).val())
+        V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
         break;
       //case "add_your_input_id_here":
         //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
@@ -264,7 +264,23 @@ VISH.Editor = (function(V,$,undefined){
             element.style  = $(div).find('img').attr('style');
           } else if(element.type==="iframe"){
             element.body   = $(div).html();
-          }
+          } else if(element.type==="video"){
+						var video = $(div).find("video");
+						element.poster = $(video).attr("poster");
+						element.style  = $(video).attr('style');
+						
+						//Sources
+						var sources= '';				
+						$(video).find('source').each(function(index, source) {
+							if(index!=0){
+								sources = sources + ',';
+							}
+							var mymetipe = (typeof $(source).attr("type") != "undefined")?' "mimetype": "' + $(source).attr("type") + '", ':''
+              sources = sources + '{' + mymetipe + '"src": "' + $(source).attr("src") + '"}'
+            });
+						sources = '[' + sources + ']'
+						element.sources = sources;
+					}
           slide.elements.push(element);
           element = {};
         }

@@ -299,7 +299,7 @@
 	max-height: 195px;
 }
 
-.videoPreview{
+.preview_video{
 	max-width: 300px;
 	height: 195px;
 }
@@ -432,11 +432,11 @@ table.metadata td.header_right{
 
 table.metadata td div.height_wrapper_description{
 	height: 100px;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .caroufredsel_wrapper{
 	overflow-y: visible;
 	overflow-x: visible;
-	overflow: visible;
 }
