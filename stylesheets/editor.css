@@ -193,13 +193,14 @@
 	width: 800px;
 	height: 600px;
 }
+.fancy_tab_flickr
 
 .fancy_tabs{
 	background: white;
 }
 
 .fancy_tabs ul{
-	width: 820px;
+	width: 800px;
 	list-style-type: none;
 	background-color: #DADADA;
 	margin: 0;
@@ -213,18 +214,18 @@
 }
 
 .fancy_tabs li{
-	display: inline;
+	display: inline-block;
 }
 
 .fancy_tabs li a{
-	display: inline-block;
+	display:block;
 	padding: 0.5em 1.5em;
 	border-right: 1px solid #D3E8F6;
 	text-decoration: none;
-	background: #24497D;
+	background: #ededed;
 	color: #C3879D;
 	font-size: 16px;
-	font-family: Verdana;
+	font-family: Helvetica;
 	font-weight: bold;
 	border: solid 1px 1px 1px 1px #9E1F63;
 	border-radius: 10px 10px 0px 0px;
@@ -234,8 +235,8 @@
 }
 
 .fancy_tabs li a:hover{
-	background:white;
-	color:#244974;
+	background:#999
+	color:#FFF;
 	border-right-color:#d3e8f6;
 }
 
