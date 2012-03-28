@@ -123,7 +123,7 @@ $("#preview_video_button").remove();
 		drawYoutubeVideo  : drawYoutubeVideo,
 		showYoutubeVideo  : showYoutubeVideo, 
 		
-		listVideo         : listVideo,
+		listVideo         : listVideo
 		
 	};
 
