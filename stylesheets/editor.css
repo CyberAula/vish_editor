@@ -125,10 +125,20 @@
 .templatethumb img{
 	width:100%;
 	height:100%;
+	border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
 }
 
 .templatethumb:hover{
+	box-shadow: 5px 5px 5px #888;
+	-moz-box-shadow: 5px 5px 5px #888;
+	-webkit-box-shadow: 5px 5px 5px #888;
 	border: 1px solid black;
+	border-radius: 9px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	
 }
 
 .grey_background{
@@ -190,11 +200,13 @@
 }
 
 .fancy_tabs ul{
+	width: 780px;
 	list-style-type: none;
+	background-color: #DADADA;
 	margin: 0;
 	font-size: 1em;
 	line-height: 1.5;
-	font-weight: bold;
+	font-weight: bold;	
 }
 
 .fancy_tabs li{
