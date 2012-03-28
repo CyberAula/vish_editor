@@ -296,7 +296,7 @@ VISH.Editor = (function(V,$,undefined){
     $('article').remove();
     $('#menubar').remove();
     $('.theslider').remove();
-    $(".nicEdit-panelContain").remove();
+    $(".nicEdit-panelContain").remove();  
     V.SlideManager.init(excursion);
     */
     
