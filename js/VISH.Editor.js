@@ -18,7 +18,9 @@ VISH.Editor = (function(V,$,undefined){
 	var init = function(options){
 		initOptions = options;
 				
-		$("a#addslide").fancybox();		
+		$("a#addslide").fancybox({
+			'width': 800,
+    		'height': 600});		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
@@ -207,6 +209,8 @@ VISH.Editor = (function(V,$,undefined){
 		$(this).html(content);
 		
 		$("a.addpicture").fancybox({
+			'width': 800,
+    		'height': 600,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
@@ -215,6 +219,8 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("a.addflash").fancybox({
+			'width': 800,
+    		'height': 600,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
@@ -222,6 +228,8 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("a.addvideo").fancybox({
+			'width': 800,
+    		'height': 600,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);

@@ -186,7 +186,6 @@
 #thumbcontent{
 	width: 400px;
 	height: 300px;
-	padding: 20px 20px 20px 20px;
 }
 
 /*****fancybox tabs ****************/
@@ -200,13 +199,17 @@
 }
 
 .fancy_tabs ul{
-	width: 780px;
+	width: 820px;
 	list-style-type: none;
 	background-color: #DADADA;
 	margin: 0;
 	font-size: 1em;
 	line-height: 1.5;
-	font-weight: bold;	
+	font-weight: bold;
+	padding: 0px;
+	border-radius: 10px 10px 0px 0px;
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;	
 }
 
 .fancy_tabs li{
@@ -223,6 +226,11 @@
 	font-size: 16px;
 	font-family: Verdana;
 	font-weight: bold;
+	border: solid 1px 1px 1px 1px #9E1F63;
+	border-radius: 10px 10px 0px 0px;
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
+	
 }
 
 .fancy_tabs li a:hover{
@@ -232,7 +240,7 @@
 }
 
 .fancy_tabs li a.fancy_selected{
-	background:#C4C4C4;
+	background: #FFF;
 	color:#244974;
 }
 
@@ -334,9 +342,9 @@ input.vishtab {
 	cursor: text;
 	display: block;
 	letter-spacing: 0px;
-  word-spacing: 1px;
+    word-spacing: 1px;
 	margin-left: 20px;
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 	height: 25px;
 }
 

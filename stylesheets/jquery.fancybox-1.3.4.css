@@ -66,6 +66,7 @@
 }
 
 #fancybox-outer {
+	width: 820px;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -79,7 +80,7 @@
 }
 
 #fancybox-content {
-	width: 0;
+	width: 100% !important;
 	height: 0;
 	padding: 0;
 	outline: none;
