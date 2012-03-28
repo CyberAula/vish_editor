@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/jslider.blue.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/editor.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/nicEditor.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/easymultiple.slider.css">
 		<link rel="stylesheet" type="text/css" href="stylesheets/carrousel.css">
 
     <style>  
@@ -35,71 +34,51 @@
 	  <script type="text/javascript" src="js/libs/jquery.ui.draggable.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.slider.min.js"></script>
 		<script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
-		
+		<script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>	
 	  
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
-			<div id='menubar'>
+		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
-	      </a>
-          <a onclick="javascript:prevSlide()">
-		    <div id='arrow_left_div' class='barbutton'></div>
-          </a>
-		    <div class='barbutton'>
-				<a id="slide_thumb_1" onclick="javascript:goToSlide(0)">
+	        </a>
+            <div id='arrow_left_div' class='barbutton with_pointer'>
+            </div>
+		    <div class='barbutton' id="slide_thumb_1">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">1</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_2" onclick="javascript:goToSlide(1)">
+		    <div class='barbutton' id="slide_thumb_2" >
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">2</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_3" onclick="javascript:goToSlide(2)">
+		    <div class='barbutton' id="slide_thumb_3">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">3</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_4" onclick="javascript:goToSlide(3)">
+		    <div class='barbutton' id="slide_thumb_4">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">4</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_5" onclick="javascript:goToSlide(4)">
+		    <div class='barbutton' id="slide_thumb_5">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">5</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_6" onclick="javascript:goToSlide(5)">
+		    <div class='barbutton' id="slide_thumb_6">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">6</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_7" onclick="javascript:goToSlide(6)">
+		    <div class='barbutton' id="slide_thumb_7">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">7</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_8" onclick="javascript:goToSlide(7)">
+		    <div class='barbutton' id="slide_thumb_8">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">8</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton' id='arrow_right_div'>
-				<a onclick="javascript:nextSlide()">
-				    <img class="image_barbutton"/>
-				</a>
+		    <div class='barbutton with_pointer' id='arrow_right_div'>
 		    </div>		    
             <a id="save" href="#thumbcontent">
 			    <div id="save_div" class='barbuttonaddsave'>
@@ -122,20 +101,31 @@
 
   
 	  <div style='display:none'>
+	  	
 	    <div id='menuselect'>
-			  <div class='menuicon textthumb' id='textthumb'></div>
+			  <div class='menuicon textthumb'></div>
 	      <a class="addpicture" href="#picture_fancybox">
-	        <div class='menuicon picthumb' id='imgthumb'></div>
+	        <div class='menuicon picthumb'></div>
 	      </a>
 	      <a class="addflash" href="#flash_fancybox">
-	        <div class='menuicon flashthumb' id='flashthumb'></div>
+	        <div class='menuicon flashthumb'></div>
 	      </a>
 	      <a class="addvideo" href="#video_fancybox">
-	        <div class='menuicon' id='videothumb'></div>
+	        <div class='menuicon videothumb'></div>
 	      </a>
 	    </div>
+	    
+	    <div id='menuselect_for_header'>
+			  <div class='menuicon_small textthumb'></div>
+	      <a class="addpicture" href="#picture_fancybox">
+	        <div class='menuicon_small picthumb'></div>
+	      </a>	      
+	    </div>
+	    
 	  </div>
   
+  
+  	  <!-- IMAGE -->
 	  <div style='display:none'>
 	    <div id="picture_fancybox" class="outer_box">
 				<div class="fancy_tabs">	   
@@ -167,6 +157,8 @@
 	    </div>
 	  </div>
   
+  
+  	  <!-- FLASH -->
 	  <div style='display:none'>
 	    <div id="flash_fancybox" class="outer_box">
 				<div class="fancy_tabs">	   
@@ -192,6 +184,8 @@
 	    </div>
 	  </div>
   
+  
+  	  <!-- VIDEO -->
 	  <div style='display:none'>
 	    <div id="video_fancybox" class="outer_box">
 				<div class="fancy_tabs">	   
@@ -203,92 +197,98 @@
 				    </ul>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
-				  Paste html5 video URL
-				  <input id="video_url" type="text" size="25" value="http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"> 
-				  <button type="button" onclick="VISH.Editor.pasteHTML5Video('video_url')">Done</button>
+				  <input id="url_video_input" type="text" class="rounded vishtab url">
+					<button type="button" class="okButton" onclick="VISH.Editor.getValueFromFancybox('video_url')"> Add</button>
 				</div>
 				<div id='tab_video_upload_content' class="fancy_tab_content">
-				  Select video to upload
-				  <input id="upload_video_input" type="text" size="25" value="">
-				  <button type="button" onclick="alert('Uploaded!')">Upload</button>
+					<input id="upload_video_input" type="text" class="rounded vishtab upload">
+          <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">
-				  Vish repository	    
+				  
+					<div class="search_container">
+					  <input type="search" class="rounded vishtab"> </input>
+					</div>
 					
-					<!-- Add carrousel -->
-					<div id="tab_video_repo_content_carrousel">
-	          <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg" />
-	          <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg" />
-					  <img src="http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg" />
-						<img src="http://www.forodefotos.com/attachments/naturaleza/12983d1281113830-fotos-de-paisaje-fotos-de-paisaje.jpg" />
-						<img src="http://ro18.blogspot.es/img/paisaje.jpg" />
-						<img src="http://walpaper.es/images/wallpapers/Paisaje-fotografia-HDR-656343.jpeg" />
-						<img src="http://3.bp.blogspot.com/-a-WrZZf0WJo/TsEBPXjUQXI/AAAAAAAAFBg/kh0aS9Kemag/s1600/PAISAJE+JUANMA.jpg" />
-						<img src="http://images.artelista.com/artelista/obras/fichas/8/3/3/8619208014133041.JPG" />
-						<img src="http://4.bp.blogspot.com/-CfZKEdXcXtg/TijG57sIFWI/AAAAAAAAARQ/O8FP1OQ0a0w/s1600/delfines-saltando.jpg" />
-				  </div>
-					
+					<div id="tab_video_repo_content_carrousel"></div>
+					<div id="tab_video_repo_content_preview">
+						<div id="tab_video_repo_content_preview_video">
+							
+						</div>
+						<div id="tab_video_repo_content_preview_metadata"></div>
+						<div id="tab_video_repo_content_preview_foot">
+							<button type="button" class="okButton" onclick="VISH.Editor.Video.Repository.addSelectedVideo()">Add</button>
+						</div>
+					</div>
 				</div>  
 				
-				
-				
 				<div id='tab_video_youtube_content' class="fancy_tab_content">
-				  Search in youtube
 				  <input id="youtube_input_text" type="text" size="25" value="" autofocus placeholder="write text to search"/>
-				  <button id="youtube_search_button" type="button">Search</button>
+				  <button id="youtube_search_button" type="button" class="okButton" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
+					<!-- Add carrousel -->
+					<div id="tab_video_youtube_content_carrousel"></div>
 				</div>
 	    </div>
 	  </div>
     
 
-		<link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
-		<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
-		<link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1.css">
-		<!--[if gte IE 8]>
-		  <link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1explorer9.css">
-		<![endif]-->
-		
-		<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
-		<script type="text/javascript" src="js/libs/jquery.easing-1.3.pack.js"></script>
-		<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
-		<script type="text/javascript" src="js/libs/json2.js"></script>
-		
-		<script type="text/javascript" src="js/VISH.js"></script>
-		<script type="text/javascript" src="js/VISH.Samples.js"></script>
-		<script type="text/javascript" src="js/VISH.Renderer.js"></script>
-		<script type="text/javascript" src="js/VISH.Excursion.js"></script>
-		<script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
-		<script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
-		<script type="text/javascript" src="js/VISH.VideoPlayer.js"></script>
-		<script type="text/javascript" src="js/VISH.SlideManager.js"></script>
-		<script type="text/javascript" src="js/VISH.Dummies.js"></script>
-		
-		<script type="text/javascript" src="js/VISH.Editor.js"></script>
-		<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
-		<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
-		<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
-		
-		<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
-		<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
-		<script type="text/javascript" src="js/VISH.Utils.text.js"></script>
-		
-		<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.js"></script>
-		<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.loader.js"></script>
-		<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.player.js"></script>
-		<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
-		
-		<script type="text/javascript" src="js/libs/slides.js"></script>
-		
-		<script type="text/javascript" src="js/libs/nicEdit.js" ></script>
-		
-		<script>
-			//First function called when page loads
-			//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
-			//uncomment VISH.Editor.init to show the editor
-			function start(){
-			  VISH.Editor.init();
-			}
-    </script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1.css">
+	<!--[if gte IE 8]>
+	  <link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1explorer9.css">
+	<![endif]-->
+	
+	<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="js/libs/json2.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.js"></script>
+	<script type="text/javascript" src="js/VISH.Samples.js"></script>
+	<script type="text/javascript" src="js/VISH.Samples.API.js"></script>
+	<script type="text/javascript" src="js/VISH.Renderer.js"></script>
+	<script type="text/javascript" src="js/VISH.Excursion.js"></script>
+	<script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.VideoPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.SlideManager.js"></script>
+	<script type="text/javascript" src="js/VISH.Dummies.js"></script>
+	<script type="text/javascript" src="js/VISH.Debugging.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.Editor.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Flikr.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.SlidesUtilities.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
+	<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
+	<script type="text/javascript" src="js/VISH.Utils.text.js"></script>
+	
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.loader.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.player.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
+	
+	<script type="text/javascript" src="js/libs/slides.js"></script>
+	
+	<script type="text/javascript" src="js/libs/nicEdit.js" ></script>
+	
+	<script>
+		//First function called when page loads
+		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
+		//uncomment VISH.Editor.init to show the editor
+		function start(){
+		  VISH.Editor.init();
+		}
+	</script>
 		
   </body>
 </html>

@@ -51,23 +51,24 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		$(mainDiv).children().addClass("carrousel_element_" + rowClass)
 		
 		//Callbacks events
-		$(mainDiv).children().click(function(event) {
-       callback(event)
-    });
-		
+		if ((callback)&&(typeof callback == "function")) {
+			$(mainDiv).children().click(function(event){
+				callback(event)
+			});
+	  }
 		
 		if (multipleRow) {
-		  applyMultipleRows(wrapperDiv, mainDiv, rows);
+		  _applyMultipleRows(wrapperDiv, mainDiv, rows);
 	  }	else {
 		  $(wrapperDiv).prepend(mainDiv)
-			setMainCarrousel(containerId);
+			_setMainCarrousel(containerId);
 	  }
 			
 	  return "Done"
   }
 
 
-  var applyMultipleRows = function(wrapperDiv,mainDiv,rows){
+  var _applyMultipleRows = function(wrapperDiv,mainDiv,rows){
 		
 		var synchronizeIds = [];
 		
@@ -91,14 +92,14 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		for (i=rows-1;i>=0;i--) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
 			if(i==0){
-				setMainCarrousel(mainDiv.id + "_row" + i,synchronizeIds);
+				_setMainCarrousel(mainDiv.id + "_row" + i,synchronizeIds);
 			} else {
-				setRowCarrousel(mainDiv.id + "_row" + i);
+				_setRowCarrousel(mainDiv.id + "_row" + i);
 			}
     }
 	}
 
-	var setRowCarrousel = function (id){
+	var _setRowCarrousel = function (id){
 		$("#" + id).carouFredSel({
       auto    : false,
       width   : 750,
@@ -112,7 +113,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
     }); 
 	}
 
-	var setMainCarrousel = function (id,synchronizeIds){
+	var _setMainCarrousel = function (id,synchronizeIds){
 	  $("#" + id).carouFredSel({
 	    circular: false,
 	    infinite: false,
@@ -143,10 +144,22 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 		
 	}
+	
+	var cleanCarrousel = function(containerId){
+    var carrouselWrapper = $("#" + containerId).parent().parent();
+		if($(carrouselWrapper).hasClass('image_carousel')){
+			$(carrouselWrapper).removeClass('image_carousel')
+			$(carrouselWrapper).html("")
+			$(carrouselWrapper).attr("id",containerId)
+		} else {
+//			console.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
+		}
+  }
 
 
 	return {
-		createCarrousel					: createCarrousel
+		createCarrousel		: createCarrousel,
+		cleanCarrousel    : cleanCarrousel
 	};
 
 }) (VISH, jQuery);

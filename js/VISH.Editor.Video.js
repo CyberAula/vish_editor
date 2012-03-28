@@ -1,11 +1,12 @@
 VISH.Editor.Video = (function(V,$,undefined){
 		
-	var dummy = new function(){
-		return ""
+	var init = function(){
+		VISH.Editor.Video.HTML5.init();
+		VISH.Editor.Video.Repository.init();
 	}	
 			
 	return {
-		dummy: dummy
+		init: init
 	};
 
 }) (VISH, jQuery);

@@ -4150,7 +4150,7 @@
         default:
           var newPosition = "relative"
       }
-      $wrp.css(orgCSS).css({"overflow":"hidden", "position":newPosition});
+      $wrp.css(orgCSS).css({"position":newPosition});
       $cfs.data("cfs_origCss", orgCSS).css({"textAlign":"left", "float":"none", "position":"absolute", "top":0, "left":0, "marginTop":0, "marginRight":0, "marginBottom":0, "marginLeft":0});
       if(opts.usePadding) {
         $cfs.children().each(function() {
@@ -6342,31 +6342,6 @@
     return t * (33 * t2 * t2 - 106 * t2 * t + 126 * t2 - 67 * t + 15)
   }})
 })(jQuery);
-eval(function(p, a, c, k, e, r) {
-  e = function(c) {
-    return(c < a ? "" : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
-  };
-  if(!"".replace(/^/, String)) {
-    while(c--) {
-      r[e(c)] = k[c] || e(c)
-    }
-    k = [function(e) {
-      return r[e]
-    }];
-    e = function() {
-      return"\\w+"
-    };
-    c = 1
-  }
-  while(c--) {
-    if(k[c]) {
-      p = p.replace(new RegExp("\\b" + e(c) + "\\b", "g"), k[c])
-    }
-  }
-  return p
-}("h.i['1a']=h.i['z'];h.O(h.i,{y:'D',z:9(x,t,b,c,d){6 h.i[h.i.y](x,t,b,c,d)},17:9(x,t,b,c,d){6 c*(t/=d)*t+b},D:9(x,t,b,c,d){6-c*(t/=d)*(t-2)+b},13:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t+b;6-c/2*((--t)*(t-2)-1)+b},X:9(x,t,b,c,d){6 c*(t/=d)*t*t+b},U:9(x,t,b,c,d){6 c*((t=t/d-1)*t*t+1)+b},R:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t+b;6 c/2*((t-=2)*t*t+2)+b},N:9(x,t,b,c,d){6 c*(t/=d)*t*t*t+b},M:9(x,t,b,c,d){6-c*((t=t/d-1)*t*t*t-1)+b},L:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t*t+b;6-c/2*((t-=2)*t*t*t-2)+b},K:9(x,t,b,c,d){6 c*(t/=d)*t*t*t*t+b},J:9(x,t,b,c,d){6 c*((t=t/d-1)*t*t*t*t+1)+b},I:9(x,t,b,c,d){e((t/=d/2)<1)6 c/2*t*t*t*t*t+b;6 c/2*((t-=2)*t*t*t*t+2)+b},G:9(x,t,b,c,d){6-c*8.C(t/d*(8.g/2))+c+b},15:9(x,t,b,c,d){6 c*8.n(t/d*(8.g/2))+b},12:9(x,t,b,c,d){6-c/2*(8.C(8.g*t/d)-1)+b},Z:9(x,t,b,c,d){6(t==0)?b:c*8.j(2,10*(t/d-1))+b},Y:9(x,t,b,c,d){6(t==d)?b+c:c*(-8.j(2,-10*t/d)+1)+b},W:9(x,t,b,c,d){e(t==0)6 b;e(t==d)6 b+c;e((t/=d/2)<1)6 c/2*8.j(2,10*(t-1))+b;6 c/2*(-8.j(2,-10*--t)+2)+b},V:9(x,t,b,c,d){6-c*(8.o(1-(t/=d)*t)-1)+b},S:9(x,t,b,c,d){6 c*8.o(1-(t=t/d-1)*t)+b},Q:9(x,t,b,c,d){e((t/=d/2)<1)6-c/2*(8.o(1-t*t)-1)+b;6 c/2*(8.o(1-(t-=2)*t)+1)+b},P:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d)==1)6 b+c;e(!p)p=d*.3;e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);6-(a*8.j(2,10*(t-=1))*8.n((t*d-s)*(2*8.g)/p))+b},H:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d)==1)6 b+c;e(!p)p=d*.3;e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);6 a*8.j(2,-10*t)*8.n((t*d-s)*(2*8.g)/p)+c+b},T:9(x,t,b,c,d){f s=1.l;f p=0;f a=c;e(t==0)6 b;e((t/=d/2)==2)6 b+c;e(!p)p=d*(.3*1.5);e(a<8.w(c)){a=c;f s=p/4}m f s=p/(2*8.g)*8.r(c/a);e(t<1)6-.5*(a*8.j(2,10*(t-=1))*8.n((t*d-s)*(2*8.g)/p))+b;6 a*8.j(2,-10*(t-=1))*8.n((t*d-s)*(2*8.g)/p)*.5+c+b},F:9(x,t,b,c,d,s){e(s==u)s=1.l;6 c*(t/=d)*t*((s+1)*t-s)+b},E:9(x,t,b,c,d,s){e(s==u)s=1.l;6 c*((t=t/d-1)*t*((s+1)*t+s)+1)+b},16:9(x,t,b,c,d,s){e(s==u)s=1.l;e((t/=d/2)<1)6 c/2*(t*t*(((s*=(1.B))+1)*t-s))+b;6 c/2*((t-=2)*t*(((s*=(1.B))+1)*t+s)+2)+b},A:9(x,t,b,c,d){6 c-h.i.v(x,d-t,0,c,d)+b},v:9(x,t,b,c,d){e((t/=d)<(1/2.k)){6 c*(7.q*t*t)+b}m e(t<(2/2.k)){6 c*(7.q*(t-=(1.5/2.k))*t+.k)+b}m e(t<(2.5/2.k)){6 c*(7.q*(t-=(2.14/2.k))*t+.11)+b}m{6 c*(7.q*(t-=(2.18/2.k))*t+.19)+b}},1b:9(x,t,b,c,d){e(t<d/2)6 h.i.A(x,t*2,0,c,d)*.5+b;6 h.i.v(x,t*2-d,0,c,d)*.5+c*.5+b}});", 
-62, 74, "||||||return||Math|function|||||if|var|PI|jQuery|easing|pow|75|70158|else|sin|sqrt||5625|asin|||undefined|easeOutBounce|abs||def|swing|easeInBounce|525|cos|easeOutQuad|easeOutBack|easeInBack|easeInSine|easeOutElastic|easeInOutQuint|easeOutQuint|easeInQuint|easeInOutQuart|easeOutQuart|easeInQuart|extend|easeInElastic|easeInOutCirc|easeInOutCubic|easeOutCirc|easeInOutElastic|easeOutCubic|easeInCirc|easeInOutExpo|easeInCubic|easeOutExpo|easeInExpo||9375|easeInOutSine|easeInOutQuad|25|easeOutSine|easeInOutBack|easeInQuad|625|984375|jswing|easeInOutBounce".split("|"), 
-0, {}));
 (function(b) {
   var m, t, u, f, D, j, E, n, z, A, q = 0, e = {}, o = [], p = 0, d = {}, l = [], G = null, v = new Image, J = /\.(jpg|gif|png|bmp|jpeg)(.*)?$/i, W = /[^\.]\.(swf)\s*$/i, K, L = 1, y = 0, s = "", r, i, h = false, B = b.extend(b("<div/>")[0], {prop:0}), M = b.browser.msie && b.browser.version < 7 && !window.XMLHttpRequest, N = function() {
     t.hide();
@@ -8201,6 +8176,246 @@ var Hashtable = function() {
     return!(a.isFunction(g) && g.call(this.element[0], c, d) === !1 || c.isDefaultPrevented())
   }}
 })(jQuery);
+(function(a, h, y) {
+  var w = "function", v = "password", j = "maxLength", n = "type", b = "", c = true, u = "placeholder", i = false, t = "watermark", g = t, f = "watermarkClass", q = "watermarkFocus", l = "watermarkSubmit", o = "watermarkMaxLength", e = "watermarkPassword", d = "watermarkText", k = /\r/g, s = "input:data(" + g + "),textarea:data(" + g + ")", m = "input:text,input:password,input[type=search],input:not([type]),textarea", p = ["Page_ClientValidate"], r = i, x = u in document.createElement("input");
+  a.watermark = a.watermark || {version:"3.1.3", runOnce:c, options:{className:t, useNative:c, hideBeforeUnload:c}, hide:function(b) {
+    a(b).filter(s).each(function() {
+      a.watermark._hide(a(this))
+    })
+  }, _hide:function(a, r) {
+    var p = a[0], q = (p.value || b).replace(k, b), l = a.data(d) || b, m = a.data(o) || 0, i = a.data(f);
+    if(l.length && q == l) {
+      p.value = b;
+      if(a.data(e)) {
+        if((a.attr(n) || b) === "text") {
+          var g = a.data(e) || [], c = a.parent() || [];
+          if(g.length && c.length) {
+            c[0].removeChild(a[0]);
+            c[0].appendChild(g[0]);
+            a = g
+          }
+        }
+      }
+      if(m) {
+        a.attr(j, m);
+        a.removeData(o)
+      }
+      if(r) {
+        a.attr("autocomplete", "off");
+        h.setTimeout(function() {
+          a.select()
+        }, 1)
+      }
+    }
+    i && a.removeClass(i)
+  }, show:function(b) {
+    a(b).filter(s).each(function() {
+      a.watermark._show(a(this))
+    })
+  }, _show:function(g) {
+    var p = g[0], u = (p.value || b).replace(k, b), h = g.data(d) || b, s = g.attr(n) || b, t = g.data(f);
+    if((u.length == 0 || u == h) && !g.data(q)) {
+      r = c;
+      if(g.data(e)) {
+        if(s === v) {
+          var m = g.data(e) || [], l = g.parent() || [];
+          if(m.length && l.length) {
+            l[0].removeChild(g[0]);
+            l[0].appendChild(m[0]);
+            g = m;
+            g.attr(j, h.length);
+            p = g[0]
+          }
+        }
+      }
+      if(s === "text" || s === "search") {
+        var i = g.attr(j) || 0;
+        if(i > 0 && h.length > i) {
+          g.data(o, i);
+          g.attr(j, h.length)
+        }
+      }
+      t && g.addClass(t);
+      p.value = h
+    }else {
+      a.watermark._hide(g)
+    }
+  }, hideAll:function() {
+    if(r) {
+      a.watermark.hide(m);
+      r = i
+    }
+  }, showAll:function() {
+    a.watermark.show(m)
+  }};
+  a.fn.watermark = a.fn.watermark || function(p, o) {
+    var t = "string";
+    if(!this.length) {
+      return this
+    }
+    var s = i, r = typeof p === t;
+    if(r) {
+      p = p.replace(k, b)
+    }
+    if(typeof o === "object") {
+      s = typeof o.className === t;
+      o = a.extend({}, a.watermark.options, o)
+    }else {
+      if(typeof o === t) {
+        s = c;
+        o = a.extend({}, a.watermark.options, {className:o})
+      }else {
+        o = a.watermark.options
+      }
+    }
+    if(typeof o.useNative !== w) {
+      o.useNative = o.useNative ? function() {
+        return c
+      } : function() {
+        return i
+      }
+    }
+    return this.each(function() {
+      var B = "dragleave", A = "dragenter", z = this, i = a(z);
+      if(!i.is(m)) {
+        return
+      }
+      if(i.data(g)) {
+        if(r || s) {
+          a.watermark._hide(i);
+          r && i.data(d, p);
+          s && i.data(f, o.className)
+        }
+      }else {
+        if(x && o.useNative.call(z, i) && (i.attr("tagName") || b) !== "TEXTAREA") {
+          r && i.attr(u, p);
+          return
+        }
+        i.data(d, r ? p : b);
+        i.data(f, o.className);
+        i.data(g, 1);
+        if((i.attr(n) || b) === v) {
+          var C = i.wrap("<span>").parent(), t = a(C.html().replace(/type=["']?password["']?/i, 'type="text"'));
+          t.data(d, i.data(d));
+          t.data(f, i.data(f));
+          t.data(g, 1);
+          t.attr(j, p.length);
+          t.focus(function() {
+            a.watermark._hide(t, c)
+          }).bind(A, function() {
+            a.watermark._hide(t)
+          }).bind("dragend", function() {
+            h.setTimeout(function() {
+              t.blur()
+            }, 1)
+          });
+          i.blur(function() {
+            a.watermark._show(i)
+          }).bind(B, function() {
+            a.watermark._show(i)
+          });
+          t.data(e, i);
+          i.data(e, t)
+        }else {
+          i.focus(function() {
+            i.data(q, 1);
+            a.watermark._hide(i, c)
+          }).blur(function() {
+            i.data(q, 0);
+            a.watermark._show(i)
+          }).bind(A, function() {
+            a.watermark._hide(i)
+          }).bind(B, function() {
+            a.watermark._show(i)
+          }).bind("dragend", function() {
+            h.setTimeout(function() {
+              a.watermark._show(i)
+            }, 1)
+          }).bind("drop", function(e) {
+            var c = i[0], a = e.originalEvent.dataTransfer.getData("Text");
+            if((c.value || b).replace(k, b).replace(a, b) === i.data(d)) {
+              c.value = a
+            }
+            i.focus()
+          })
+        }
+        if(z.form) {
+          var w = z.form, y = a(w);
+          if(!y.data(l)) {
+            y.submit(a.watermark.hideAll);
+            if(w.submit) {
+              y.data(l, w.submit);
+              w.submit = function(c, b) {
+                return function() {
+                  var d = b.data(l);
+                  a.watermark.hideAll();
+                  if(d.apply) {
+                    d.apply(c, Array.prototype.slice.call(arguments))
+                  }else {
+                    d()
+                  }
+                }
+              }(w, y)
+            }else {
+              y.data(l, 1);
+              w.submit = function(b) {
+                return function() {
+                  a.watermark.hideAll();
+                  delete b.submit;
+                  b.submit()
+                }
+              }(w)
+            }
+          }
+        }
+      }
+      a.watermark._show(i)
+    })
+  };
+  if(a.watermark.runOnce) {
+    a.watermark.runOnce = i;
+    a.extend(a.expr[":"], {data:function(c, d, b) {
+      return!!a.data(c, b[3])
+    }});
+    (function(c) {
+      a.fn.val = function() {
+        var e = this;
+        if(!e.length) {
+          return arguments.length ? e : y
+        }
+        if(!arguments.length) {
+          if(e.data(g)) {
+            var f = (e[0].value || b).replace(k, b);
+            return f === (e.data(d) || b) ? b : f
+          }else {
+            return c.apply(e, arguments)
+          }
+        }else {
+          c.apply(e, arguments);
+          a.watermark.show(e);
+          return e
+        }
+      }
+    })(a.fn.val);
+    p.length && a(function() {
+      for(var b, c, d = p.length - 1;d >= 0;d--) {
+        b = p[d];
+        c = h[b];
+        if(typeof c === w) {
+          h[b] = function(b) {
+            return function() {
+              a.watermark.hideAll();
+              return b.apply(null, Array.prototype.slice.call(arguments))
+            }
+          }(c)
+        }
+      }
+    });
+    a(h).bind("beforeunload", function() {
+      a.watermark.options.hideBeforeUnload && a.watermark.hideAll()
+    })
+  }
+})(jQuery, window);
 var JSON;
 if(!JSON) {
   JSON = {}
@@ -9461,31 +9676,6 @@ function nextSlide() {
     updateSlides(true)
   }
 }
-function lastSlide() {
-  while(curSlide < slideEls.length - 1) {
-    nextSlide()
-  }
-}
-function goToSlide(no) {
-  if(no >= slideEls.length - 1) {
-    return
-  }else {
-    if(no > curSlide) {
-      while(curSlide < no) {
-        nextSlide()
-      }
-    }else {
-      if(no < curSlide) {
-        while(curSlide > no) {
-          prevSlide()
-        }
-      }
-    }
-  }
-}
-function addSlide(slide) {
-  $(".slides").append(slide)
-}
 function triggerEnterEvent(no) {
   var el = getSlideEl(no);
   if(!el) {
@@ -9778,115 +9968,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
 }else {
   initialize()
 }
-;(function($) {
-  $.fn.easyMultipleSlider = function(options) {
-    var defaults = {prevId:"prevBtn", prevText:"Previous", nextId:"nextBtn", nextText:"Next", controlsShow:true, controlsBefore:"", controlsAfter:"", controlsFade:true, firstId:"firstBtn", firstText:"First", firstShow:false, lastId:"lastBtn", lastText:"Last", lastShow:false, vertical:false, speed:800, auto:false, pause:2E3, continuous:false, number_slides_visible:1};
-    var options = $.extend(defaults, options);
-    this.each(function() {
-      var obj = $(this);
-      var s = $("li", obj).length;
-      var w = !options.vertical ? $("li", obj).width() * options.number_slides_visible : $("li", obj).width();
-      var h = options.vertical ? $("li", obj).height() * options.number_slides_visible : $("li", obj).height();
-      obj.width(w);
-      obj.height(h);
-      obj.css("overflow", "hidden");
-      var ts = s / options.number_slides_visible - 1;
-      var t = 0;
-      $("ul", obj).css("width", s * w);
-      if(!options.vertical) {
-        $("li", obj).css("float", "left")
-      }
-      if(options.controlsShow) {
-        var html = options.controlsBefore;
-        if(options.firstShow) {
-          html += '<span id="' + options.firstId + '"><a href="javascript:void(0);">' + options.firstText + "</a></span>"
-        }
-        html += ' <span id="' + options.prevId + '"><a href="javascript:void(0);">' + options.prevText + "</a></span>";
-        html += ' <span id="' + options.nextId + '"><a href="javascript:void(0);">' + options.nextText + "</a></span>";
-        if(options.lastShow) {
-          html += ' <span id="' + options.lastId + '"><a href="javascript:void(0);">' + options.lastText + "</a></span>"
-        }
-        html += options.controlsAfter;
-        $(obj).after(html)
-      }
-      $("a", "#" + options.nextId).click(function() {
-        animate("next", true)
-      });
-      $("a", "#" + options.prevId).click(function() {
-        animate("prev", true)
-      });
-      $("a", "#" + options.firstId).click(function() {
-        animate("first", true)
-      });
-      $("a", "#" + options.lastId).click(function() {
-        animate("last", true)
-      });
-      function animate(dir, clicked) {
-        var ot = t;
-        switch(dir) {
-          case "next":
-            t = ot >= ts ? options.continuous ? 0 : ts : t + 1;
-            break;
-          case "prev":
-            t = t <= 0 ? options.continuous ? ts : 0 : t - 1;
-            break;
-          case "first":
-            t = 0;
-            break;
-          case "last":
-            t = ts;
-            break;
-          default:
-            break
-        }
-        var diff = Math.abs(ot - t);
-        var speed = diff * options.speed;
-        if(!options.vertical) {
-          p = t * w * -1;
-          $("ul", obj).animate({marginLeft:p}, speed)
-        }else {
-          p = t * h * -1;
-          $("ul", obj).animate({marginTop:p}, speed)
-        }
-        if(!options.continuous && options.controlsFade) {
-          if(t == ts) {
-            $("a", "#" + options.nextId).hide();
-            $("a", "#" + options.lastId).hide()
-          }else {
-            $("a", "#" + options.nextId).show();
-            $("a", "#" + options.lastId).show()
-          }
-          if(t == 0) {
-            $("a", "#" + options.prevId).hide();
-            $("a", "#" + options.firstId).hide()
-          }else {
-            $("a", "#" + options.prevId).show();
-            $("a", "#" + options.firstId).show()
-          }
-        }
-        if(clicked) {
-          clearTimeout(timeout)
-        }
-        if(options.auto && dir == "next" && !clicked) {
-          timeout = setTimeout(function() {
-            animate("next", false)
-          }, diff * options.speed + options.pause)
-        }
-      }
-      var timeout;
-      if(options.auto) {
-        timeout = setTimeout(function() {
-          animate("next", false)
-        }, options.pause)
-      }
-      if(!options.continuous && options.controlsFade) {
-        $("a", "#" + options.prevId).hide();
-        $("a", "#" + options.firstId).hide()
-      }
-    })
-  }
-})(jQuery);
-var VISH = VISH || {};
+;var VISH = VISH || {};
 VISH.Utils || (VISH.Utils = {});
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
@@ -9895,12 +9977,8 @@ VISH.ImagesPath = "/assets/";
 VISH.StylesheetsPath = "/assets/";
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
-  var params = {current_el:null};
-  var nextImageId = 0;
   var domId = 0;
-  var myNicEditor;
-  var vid_array = new Array;
-  var queryMaxMaxNumberYoutubeVideo = 20;
+  var params = {current_el:null};
   var init = function(options) {
     initOptions = options;
     $("a#addslide").fancybox();
@@ -9908,62 +9986,23 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", "#save", _onSaveButtonClicked);
     $(document).on("click", ".editable", _onEditableClicked);
     $(document).on("click", ".edit_pencil", _onEditableClicked);
-    $(document).on("click", ".textthumb", _launchTextEditor);
-    $(document).on("click", "#youtube_search_button", _listVideo);
+    $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
+    $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
     var evt = document.createEvent("Event");
     evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt)
+    document.dispatchEvent(evt);
+    V.Debugging.init(true);
+    V.Editor.Text.init();
+    V.Editor.Video.init()
   };
-  var getNewId = function() {
+  var getId = function() {
     domId = domId + 1;
     return"unicID_" + domId
   };
-  var getValueFromFancybox = function(id_to_get) {
-    $.fancybox.close();
-    _drawImageInZone($("#" + id_to_get).val());
-    $("#" + id_to_get).val("")
-  };
-  var getYoutubeVideo = function(video_id) {
-    $.fancybox.close();
-    var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = "<iframe type='text/html' style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
-    params["current_el"].attr("type", "iframe");
-    params["current_el"].html(final_video)
-  };
-  var showYoutubeVideo = function(video_id) {
-    var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
-    $("#youtube_preview").html(final_video);
-    if($("#preview_video_button")) {
-      $("#preview_video_button").remove()
-    }
-    $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.getYoutubeVideo(\'' + video_id + "')\" >add this video</button>")
-  };
-  var drawYoutubeSlides = function(page) {
-    if(vid_array.length == 0) {
-      console.log("empty array")
-    }else {
-      var count = 0;
-      count = page * 5 + 1 - 5;
-      $(".ytb_slide").remove();
-      var i;
-      for(i = 1;i <= 5;i++) {
-        $("#vid_" + i).append(vid_array[count]);
-        count += 1
-      }
-      var tot_num_pag = queryMaxMaxNumberYoutubeVideo / 5;
-      var prev = parseInt(page) - 1;
-      $("#a_prev_but_ytb").attr("href", "javascript:VISH.Editor.drawYoutubeSlides('" + prev + "')");
-      var next = parseInt(page) + 1;
-      $("#a_next_but_ytb").attr("href", "javascript:VISH.Editor.drawYoutubeSlides('" + next + "')");
-      if(page == 1) {
-        $("#a_prev_but_ytb").attr("href", "javascript:void(0)")
-      }else {
-        if(page == tot_num_pag) {
-          $("#a_next_but_ytb").attr("href", "javascript:void(0)")
-        }
-      }
-    }
+  var _loadCSS = function(path) {
+    $("head").append("<link>");
+    css = $("head").children(":last");
+    css.attr({rel:"stylesheet", type:"text/css", href:path})
   };
   var loadTab = function(tab_id) {
     $(".fancy_tab").removeClass("fancy_selected");
@@ -9971,17 +10010,92 @@ VISH.Editor = function(V, $, undefined) {
     $(".fancy_tab_content").hide();
     $("#" + tab_id + "_content").show();
     switch(tab_id) {
+      case "tab_pic_from_url":
+        V.Editor.Image.onLoadTab("url");
+        break;
+      case "tab_pic_upload":
+        V.Editor.Image.onLoadTab("upload");
+        break;
+      case "tab_pic_repo":
+        V.Editor.Image.Repository.onLoadTab();
+        break;
+      case "tab_pic_flikr":
+        V.Editor.Image.Flikr.onLoadTab();
+        break;
+      case "tab_video_from_url":
+        VISH.Editor.Video.HTML5.onLoadTab("url");
+        break;
+      case "tab_video_upload":
+        VISH.Editor.Video.HTML5.onLoadTab("upload");
+        break;
       case "tab_video_repo":
         VISH.Editor.Video.Repository.onLoadTab();
         break;
       case "tab_video_youtube":
-        $("#ytb_slider_content").remove();
-        $("#youtube_preview").remove();
-        $("#preview_video_button").remove();
+        VISH.Editor.Video.Youtube.onLoadTab();
         break;
       default:
         break
     }
+  };
+  var getValueFromFancybox = function(id_to_get) {
+    $.fancybox.close();
+    switch(id_to_get) {
+      case "picture_url":
+        V.Editor.Image.drawImage($("#" + id_to_get).val());
+        break;
+      case "flash_embed_code":
+        console.log("Feature not implemented: Flash embed code");
+        break;
+      case "video_url":
+        V.Editor.Video.HTML5.drawVideoWithUrl($("#" + id_to_get).val());
+        break;
+      default:
+        break
+    }
+    $("#" + id_to_get).val("")
+  };
+  var _closeFancybox = function() {
+    $.fancybox.close()
+  };
+  var _onTemplateThumbClicked = function(event) {
+    var slide = V.Dummies.getDummy($(this).attr("template"));
+    V.Editor.SlidesUtilities.addSlide(slide);
+    V.Editor.SlidesUtilities.addThumbnail();
+    $.fancybox.close();
+    var evt = document.createEvent("Event");
+    evt.initEvent("OURDOMContentLoaded", false, true);
+    document.dispatchEvent(evt);
+    setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300)
+  };
+  var _onEditableClicked = function(event) {
+    $(this).removeClass("editable");
+    params["current_el"] = $(this);
+    var content = null;
+    if($(this).attr("areaid") === "header") {
+      content = $("#menuselect_for_header").clone().attr("id", "")
+    }else {
+      content = $("#menuselect").clone().attr("id", "")
+    }
+    content.find("a").each(function(index, domElem) {
+      $(domElem).attr("zone", params["current_el"].attr("id"))
+    });
+    $(this).html(content);
+    $("a.addpicture").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_pic_from_url")
+    }});
+    $("a.addflash").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_flash_from_url")
+    }});
+    $("a.addvideo").fancybox({"onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_video_from_url")
+    }})
   };
   var _onSaveButtonClicked = function() {
     var excursion = {};
@@ -10010,6 +10124,22 @@ VISH.Editor = function(V, $, undefined) {
             }else {
               if(element.type === "iframe") {
                 element.body = $(div).html()
+              }else {
+                if(element.type === "video") {
+                  var video = $(div).find("video");
+                  element.poster = $(video).attr("poster");
+                  element.style = $(video).attr("style");
+                  var sources = "";
+                  $(video).find("source").each(function(index, source) {
+                    if(index != 0) {
+                      sources = sources + ","
+                    }
+                    var mymetipe = typeof $(source).attr("type") != "undefined" ? ' "mimetype": "' + $(source).attr("type") + '", ' : "";
+                    sources = sources + "{" + mymetipe + '"src": "' + $(source).attr("src") + '"}'
+                  });
+                  sources = "[" + sources + "]";
+                  element.sources = sources
+                }
               }
             }
           }
@@ -10022,156 +10152,89 @@ VISH.Editor = function(V, $, undefined) {
     });
     var jsonexcursion = JSON.stringify(excursion);
     console.log(jsonexcursion);
-    var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
-    $.post(initOptions["postPath"], params, function(data) {
-      document.open();
-      document.write(data);
-      document.close()
-    })
+    $("article").remove();
+    $("#menubar").remove();
+    $(".theslider").remove();
+    $(".nicEdit-panelContain").remove();
+    V.SlideManager.init(excursion)
   };
-  var _loadCSS = function(path) {
-    $("head").append("<link>");
-    css = $("head").children(":last");
-    css.attr({rel:"stylesheet", type:"text/css", href:path})
+  var _onArrowLeftClicked = function() {
+    V.Editor.SlidesUtilities.goToSlide(curSlide)
   };
-  var _onTemplateThumbClicked = function(event) {
-    var slide = V.Dummies.getDummy($(this).attr("template"));
-    addSlide(slide);
-    _closeFancybox();
-    var evt = document.createEvent("Event");
-    evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt);
-    setTimeout("lastSlide()", 300)
+  var _onArrowRightClicked = function() {
+    V.Editor.SlidesUtilities.goToSlide(curSlide + 2)
   };
-  var _onEditableClicked = function(event) {
-    $(this).removeClass("editable");
-    params["current_el"] = $(this);
-    var content = $("#menuselect").clone().attr("id", "");
-    content.find("a").each(function(index, domElem) {
-      $(domElem).attr("zone", params["current_el"].attr("id"))
-    });
-    $(this).html(content);
-    $("a.addpicture").fancybox({"onStart":function(data) {
-      var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
-      loadTab("tab_pic_from_url")
-    }});
-    $("a.addflash").fancybox({"onStart":function(data) {
-      var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
-      loadTab("tab_flash_from_url")
-    }});
-    $("a.addvideo").fancybox({"onStart":function(data) {
-      var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
-      loadTab("tab_video_from_url")
-    }})
+  var getParams = function() {
+    return params
   };
-  var _launchTextEditor = function(event) {
-    if(myNicEditor == null) {
-      myNicEditor = new nicEditor;
-      myNicEditor.setPanel("slides_panel")
+  var getTemplate = function() {
+    if(params["current_el"]) {
+      return params["current_el"].parent().attr("template")
     }
-    params["current_el"].attr("type", "text");
-    var wysiwygId = "wysiwyg_" + params["current_el"][0].id;
-    var wysiwygWidth = params["current_el"].width() - 10;
-    var wysiwygHeight = params["current_el"].height() - 10;
-    params["current_el"].html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
-    myNicEditor.addInstance(wysiwygId)
+    return null
   };
-  var pasteHTML5Video = function(input_id) {
-    _closeFancybox();
-    var url = $("#" + input_id).val();
-    $("#" + input_id).val("");
-    var template = params["current_el"].parent().attr("template");
-    var nextVideoId = getNewId();
-    var idToDragAndResize = "draggable" + nextVideoId;
-    params["current_el"].attr("type", "video");
-    var videoTag = document.createElement("video");
-    videoTag.setAttribute("id", idToDragAndResize);
-    videoTag.setAttribute("class", template + "_video");
-    videoTag.setAttribute("title", "Click to drag");
-    videoTag.setAttribute("controls", "controls");
-    videoTag.setAttribute("preload", "metadata");
-    videoTag.setAttribute("poster", "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg");
-    var videoSource = document.createElement("source");
-    videoSource.setAttribute("src", url);
-    var fallbackText = document.createElement("p");
-    $(fallbackText).html("Your browser does not support HTML5 video.");
-    $(videoTag).append(videoSource);
-    $(videoTag).append(fallbackText);
-    $(params["current_el"]).html("");
-    $(params["current_el"]).append(videoTag);
-    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>";
-    $(params["current_el"]).append(editTag);
-    $("#" + idToDragAndResize).draggable({cursor:"move"})
+  var getCurrentArea = function() {
+    if(params["current_el"]) {
+      return params["current_el"]
+    }
+    return null
   };
-  var _drawImageInZone = function(image_url) {
-    var template = params["current_el"].parent().attr("template");
+  return{init:init, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams}
+}(VISH, jQuery);
+VISH.Editor.Video = function(V, $, undefined) {
+  var init = function() {
+    VISH.Editor.Video.HTML5.init();
+    VISH.Editor.Video.Repository.init()
+  };
+  return{init:init}
+}(VISH, jQuery);
+VISH.Editor.Image = function(V, $, undefined) {
+  var onLoadTab = function() {
+  };
+  var drawImage = function(image_url) {
+    var template = VISH.Editor.getTemplate();
+    var current_area = VISH.Editor.getCurrentArea();
+    var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
-    params["current_el"].attr("type", "image");
-    params["current_el"].html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' /><div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>");
-    if(params["current_el"].next().attr("class") === "theslider") {
-      params["current_el"].next().remove()
-    }
-    params["current_el"].after("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    var divPos = params["current_el"].position();
-    var divHeight = params["current_el"].height();
-    $("#sliderId" + nextImageId).css("top", divPos.top + divHeight + 10);
-    $("#sliderId" + nextImageId).css("left", divPos.left);
-    $("#sliderId" + nextImageId).css("margin-left", "12px");
+    current_area.attr("type", "image");
+    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' /><div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>");
+    $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
     $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
       $("#" + idToDragAndResize).width(325 * value)
     }});
-    $("#" + idToDragAndResize).draggable({cursor:"move"});
-    nextImageId += 1
+    $("#" + idToDragAndResize).draggable({cursor:"move"})
   };
-  var _listVideo = function(event) {
-    var template = params["current_el"].parent().attr("template");
-    if($("#ytb_slider_content")) {
-      $("#ytb_slider_content").remove()
-    }
-    if($("#preview_video_button")) {
-      $("#preview_video_button").remove()
-    }
-    if($("#youtube_preview")) {
-      $("#youtube_preview").remove()
-    }
-    var term = $("#youtube_input_text").val();
-    var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + term + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
-    $("#tab_video_youtube_content").append('<div id="ytb_slider_content"> </div>');
-    $("#ytb_slider_content").append('<ul id="ul_ytb_vid"></ul>');
-    $("#ul_ytb_vid").append('<li id="prev_but_ytb" style="width:40px;  "><a id="a_prev_but_ytb" ><img src="images/arrow_left_strech.png"  /></a></li>');
-    $("#ul_ytb_vid").append('<li id="vid_1"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_2"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_3"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_4"></ul>');
-    $("#ul_ytb_vid").append('<li id="vid_5"></ul>');
-    $("#ul_ytb_vid").append('<li id="next_but_ytb" style="width:40px;  "><a id="a_next_but_ytb"><img src="images/arrow_right_strech.png"  /></a></li>');
-    jQuery.getJSON(url_youtube, function(data) {
-      $.each(data.feed.entry, function(i, item) {
-        var title = item["title"]["$t"];
-        var video = item["id"]["$t"];
-        video = video.replace("http://gdata.youtube.com/feeds/api/videos/", "http://www.youtube.com/watch?v=");
-        videoID = video.replace("http://www.youtube.com/watch?v=", "");
-        var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
-        vid_array[i + 1] = '<div class="ytb_slide" style="width:100%; height:100%;"><a href="javascript:VISH.Editor.showYoutubeVideo(\'' + videoID + '\')" id="link_' + i + ' "><img id="img_' + i + '" src="' + image_url + '" width=130px height="97px"></a></div>'
-      });
-      drawYoutubeSlides(1)
-    });
-    $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:350px; padding-left:30%;"></div>')
-  };
-  var _closeFancybox = function() {
-    $.fancybox.close()
-  };
-  return{init:init, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getYoutubeVideo:getYoutubeVideo, pasteHTML5Video:pasteHTML5Video, showYoutubeVideo:showYoutubeVideo, drawYoutubeSlides:drawYoutubeSlides}
+  return{onLoadTab:onLoadTab, drawImage:drawImage}
 }(VISH, jQuery);
-VISH.Editor.Video = function(V, $, undefined) {
-  var dummy = new function() {
-    return""
-  };
-  return{dummy:dummy}
-}(VISH, jQuery);
+VISH.Samples = function(V, undefined) {
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", 
+  "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
+  "body":"Experimento virtual1"}, {"id":"326", "type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish8", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"329", "type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish11", "template":"t2", "elements":[{"id":"330", "type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}, {"id":"vish12", "template":"t2", "elements":[{"id":"331", 
+  "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"center", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish13", 
+  "template":"t1", "elements":[{"id":"333", "type":"text", "areaid":"header", "body":"Example of HTML5 video with autostart"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}]};
+  return{samples:samples}
+}(VISH);
+VISH.Samples.API = function(V, undefined) {
+  var video = {"id":"1534", "title":"Midnight Sun", "description":"Awesome HTML5 video example", "author":"John Doe", "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"};
+  var videoList = {"videos":[{"id":"1534", "title":"HTML5 Demo", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML. HTML5 especifica dos variantes de sintaxis para HTML: un clasico HTML (text/html), la variante conocida como HTML5 y una variante XHTML conocida como sintaxis XHTML5 que debera ser servida como XML (XHTML) (application/xhtml+xml).1 2 Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo.", 
+  "author":"Awesome Videos", "poster":"http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1535", "title":"Paisaje bonito", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
+  "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1536", "title":"Otro paisaje bonito", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg", 
+  "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1537", "title":"Verde", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://www.forodefotos.com/attachments/naturaleza/12983d1281113830-fotos-de-paisaje-fotos-de-paisaje.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + 
+  '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1538", "title":"Noche", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://ro18.blogspot.es/img/paisaje.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1539", 
+  "title":"Puesta de sol", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://walpaper.es/images/wallpapers/Paisaje-fotografia-HDR-656343.jpeg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1540", "title":"Cayuco", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
+  "poster":"http://3.bp.blogspot.com/-a-WrZZf0WJo/TsEBPXjUQXI/AAAAAAAAFBg/kh0aS9Kemag/s1600/PAISAJE+JUANMA.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1541", "title":"Aves", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://images.artelista.com/artelista/obras/fichas/8/3/3/8619208014133041.JPG", 
+  "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1542", "title":"Delfines", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://4.bp.blogspot.com/-CfZKEdXcXtg/TijG57sIFWI/AAAAAAAAARQ/O8FP1OQ0a0w/s1600/delfines-saltando.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + 
+  '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1543", "title":"Gato", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://www.10puntos.com/wp-content/uploads/2010/09/gato-lindo.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + 
+  "]"}, {"id":"1544", "title":"Otro gato", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://neko.koiora.net/files/2011/06/Gato17.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1545", "title":"Gato ninja", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
+  "poster":"http://www.sarda.es/fotos/gato_volador/gato_volador.jpg", "sources":"[" + '{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "mimetype": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}]};
+  return{videoList:videoList}
+}(VISH);
 VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
     $.each(element.children(".appletelement"), function(index, value) {
@@ -10183,6 +10246,32 @@ VISH.AppletPlayer = function() {
     $(".appletelement applet").remove()
   };
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
+}(VISH, jQuery);
+VISH.Debugging = function(V, $, undefined) {
+  var verbose = false;
+  var init = function(debugging) {
+    this.verbose = debugging
+  };
+  var log = function(text) {
+    if(verbose) {
+      console.log(text)
+    }
+  };
+  var shuffleJson = function(json) {
+    return _shuffle(json)
+  };
+  var getVerbose = function() {
+    return verbose
+  };
+  var setVerbose = function(param) {
+    verbose = param
+  };
+  var _shuffle = function(o) {
+    for(var j, x, i = o.length;i;j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
+    }
+    return o
+  };
+  return{init:init, getVerbose:getVerbose, setVerbose:setVerbose, log:log, shuffleJson:shuffleJson}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
@@ -10205,6 +10294,21 @@ VISH.Dummies = function(VISH, undefined) {
   };
   return{getDummy:getDummy}
 }(VISH);
+VISH.Editor.API = function(V, $, undefined) {
+  var init = function() {
+  };
+  var requestVideos = function(text, successCallback, failCallback) {
+    if(typeof successCallback == "function") {
+      successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.videoList["videos"]))
+    }
+  };
+  var requestRecomendedVideos = function(successCallback, failCallback) {
+    if(typeof successCallback == "function") {
+      successCallback(VISH.Samples.API.videoList["videos"])
+    }
+  };
+  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos}
+}(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, rows, callback) {
     var multipleRow = rows > 1;
@@ -10242,18 +10346,20 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     $(wrapperDiv).append(button_next);
     $(wrapperDiv).append(paginationDiv);
     $(mainDiv).children().addClass("carrousel_element_" + rowClass);
-    $(mainDiv).children().click(function(event) {
-      callback(event)
-    });
+    if(callback && typeof callback == "function") {
+      $(mainDiv).children().click(function(event) {
+        callback(event)
+      })
+    }
     if(multipleRow) {
-      applyMultipleRows(wrapperDiv, mainDiv, rows)
+      _applyMultipleRows(wrapperDiv, mainDiv, rows)
     }else {
       $(wrapperDiv).prepend(mainDiv);
-      setMainCarrousel(containerId)
+      _setMainCarrousel(containerId)
     }
     return"Done"
   };
-  var applyMultipleRows = function(wrapperDiv, mainDiv, rows) {
+  var _applyMultipleRows = function(wrapperDiv, mainDiv, rows) {
     var synchronizeIds = [];
     var i;
     for(i = 0;i < rows;i++) {
@@ -10269,16 +10375,16 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     for(i = rows - 1;i >= 0;i--) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i]);
       if(i == 0) {
-        setMainCarrousel(mainDiv.id + "_row" + i, synchronizeIds)
+        _setMainCarrousel(mainDiv.id + "_row" + i, synchronizeIds)
       }else {
-        setRowCarrousel(mainDiv.id + "_row" + i)
+        _setRowCarrousel(mainDiv.id + "_row" + i)
       }
     }
   };
-  var setRowCarrousel = function(id) {
+  var _setRowCarrousel = function(id) {
     $("#" + id).carouFredSel({auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}})
   };
-  var setMainCarrousel = function(id, synchronizeIds) {
+  var _setMainCarrousel = function(id, synchronizeIds) {
     $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}, prev:{button:"#carrousel_prev", key:"left"}, next:{button:"#carrousel_next", key:"right"}, pagination:"#carrousel_pag"});
     if(synchronizeIds) {
       $(synchronizeIds).each(function(index, value) {
@@ -10286,16 +10392,291 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       })
     }
   };
-  return{createCarrousel:createCarrousel}
+  var cleanCarrousel = function(containerId) {
+    var carrouselWrapper = $("#" + containerId).parent().parent();
+    if($(carrouselWrapper).hasClass("image_carousel")) {
+      $(carrouselWrapper).removeClass("image_carousel");
+      $(carrouselWrapper).html("");
+      $(carrouselWrapper).attr("id", containerId)
+    }else {
+    }
+  };
+  return{createCarrousel:createCarrousel, cleanCarrousel:cleanCarrousel}
+}(VISH, jQuery);
+VISH.Editor.Image.Flikr = function(V, $, undefined) {
+  var onLoadTab = function() {
+  };
+  return{onLoadTab:onLoadTab}
+}(VISH, jQuery);
+VISH.Editor.Image.Repository = function(V, $, undefined) {
+  var onLoadTab = function() {
+  };
+  return{onLoadTab:onLoadTab}
+}(VISH, jQuery);
+VISH.Editor.SlidesUtilities = function(V, $, undefined) {
+  function addSlide(slide) {
+    $(".slides").append(slide)
+  }
+  function addThumbnail() {
+    var number_of_slides = slideEls.length + 1;
+    $("#" + "slide_thumb_" + number_of_slides).click(function() {
+      goToSlide(number_of_slides)
+    });
+    $("#" + "slide_thumb_" + number_of_slides).css("cursor", "pointer");
+    $("#" + "slide_thumb_" + number_of_slides + " .slide_number").html(number_of_slides)
+  }
+  function lastSlide() {
+    goToSlide(slideEls.length)
+  }
+  function goToSlide(no) {
+    if(no > slideEls.length || no <= 0) {
+      return
+    }else {
+      if(no > curSlide + 1) {
+        while(curSlide + 1 < no) {
+          nextSlide()
+        }
+      }else {
+        if(no < curSlide + 1) {
+          while(curSlide + 1 > no) {
+            prevSlide()
+          }
+        }
+      }
+    }
+    $(".barbutton").css("background-color", "transparent");
+    $("#" + "slide_thumb_" + no).css("background-color", "blue")
+  }
+  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, addThumbnail:addThumbnail}
+}(VISH, jQuery);
+VISH.Editor.Text = function(V, $, undefined) {
+  var myNicEditor;
+  var init = function() {
+    $(document).on("click", ".textthumb", VISH.Editor.Text.launchTextEditor)
+  };
+  var launchTextEditor = function() {
+    var current_area = VISH.Editor.getCurrentArea();
+    if(myNicEditor == null) {
+      myNicEditor = new nicEditor;
+      myNicEditor.setPanel("slides_panel")
+    }
+    current_area.attr("type", "text");
+    var wysiwygId = "wysiwyg_" + current_area[0].id;
+    var wysiwygWidth = current_area.width() - 10;
+    var wysiwygHeight = current_area.height() - 10;
+    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
+    myNicEditor.addInstance(wysiwygId)
+  };
+  return{init:init, launchTextEditor:launchTextEditor}
+}(VISH, jQuery);
+VISH.Editor.Video.HTML5 = function(V, $, undefined) {
+  var init = function() {
+    var urlInput = $("#tab_video_from_url_content").find("input.url");
+    $(urlInput).watermark("Paste HTML5 video URL");
+    var uploadInput = $("#tab_video_upload_content").find("input.upload");
+    $(uploadInput).watermark("Select video to upload")
+  };
+  var onLoadTab = function(tab) {
+  };
+  var drawVideoWithUrl = function(url) {
+    drawVideo([[url, _getMimetypeFromUrl(url)]])
+  };
+  var _getMimetypeFromUrl = function(url) {
+    return null
+  };
+  var drawVideo = function(sources, options) {
+    var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+    var autoplay = false;
+    if(options) {
+      if(options["poster"]) {
+        var posterUrl = options["poster"]
+      }
+      if(options["autoplay"]) {
+        var autoplay = options["autoplay"]
+      }
+    }
+    var current_area = VISH.Editor.getCurrentArea();
+    var template = VISH.Editor.getTemplate();
+    var nextVideoId = VISH.Editor.getId();
+    var idToDragAndResize = "draggable" + nextVideoId;
+    current_area.attr("type", "video");
+    var videoTag = document.createElement("video");
+    videoTag.setAttribute("id", idToDragAndResize);
+    videoTag.setAttribute("class", template + "_video");
+    videoTag.setAttribute("title", "Click to drag");
+    videoTag.setAttribute("controls", "controls");
+    videoTag.setAttribute("preload", "metadata");
+    videoTag.setAttribute("poster", posterUrl);
+    videoTag.setAttribute("autoplayonslideenter", autoplay);
+    $(sources).each(function(index, source) {
+      var videoSource = document.createElement("source");
+      videoSource.setAttribute("src", source[0]);
+      if(source[1]) {
+        videoSource.setAttribute("type", source[1])
+      }
+      $(videoTag).append(videoSource)
+    });
+    var fallbackText = document.createElement("p");
+    $(fallbackText).html("Your browser does not support HTML5 video.");
+    $(videoTag).append(fallbackText);
+    $(current_area).html("");
+    $(current_area).append(videoTag);
+    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>";
+    $(current_area).append(editTag);
+    $("#menubar").before("<div id='sliderId" + nextVideoId + "' class='theslider'><input id='imageSlider" + nextVideoId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    $("#imageSlider" + nextVideoId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      $("#" + idToDragAndResize).width(325 * value)
+    }});
+    $("#" + idToDragAndResize).draggable({cursor:"move"})
+  };
+  return{init:init, onLoadTab:onLoadTab, drawVideoWithUrl:drawVideoWithUrl, drawVideo:drawVideo}
 }(VISH, jQuery);
 VISH.Editor.Video.Repository = function(V, $, undefined) {
+  var carrouselDivId = "tab_video_repo_content_carrousel";
+  var previewDivId = "tab_video_repo_content_preview";
+  var currentVideos = new Array;
+  var selectedVideo = null;
+  var init = function() {
+    var myInput = $("#tab_video_repo_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        VISH.Editor.Video.Repository.requestData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
   var onLoadTab = function() {
-    VISH.Editor.Carrousel.createCarrousel("tab_video_repo_content_carrousel", 2, VISH.Editor.Video.Repository.onClickCarrouselElement)
+    var previousSearch = $("#tab_video_repo_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _renderVideoPreview(null);
+      _requestInicialData()
+    }
   };
-  var onClickCarrouselElement = function() {
-    console.log("onClickCarrouselElement! in VISH.Editor.Video.Repository!")
+  var _requestInicialData = function() {
+    VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
   };
-  return{onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement}
+  var requestData = function(text) {
+    VISH.Editor.API.requestVideos(text, VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
+  };
+  var onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    currentVideos = new Array;
+    var content = "";
+    $.each(data, function(index, video) {
+      content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>";
+      currentVideos[video.id] = video
+    });
+    $("#" + carrouselDivId).html(content);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement)
+  };
+  var onAPIError = function() {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    console.log("API error")
+  };
+  var onClickCarrouselElement = function(event) {
+    var videoId = $(event.target).attr("videoid");
+    var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId], "preview");
+    _renderVideoPreview(renderedVideo, currentVideos[videoId]);
+    selectedVideo = currentVideos[videoId]
+  };
+  var _renderVideoPreview = function(renderedVideo, video) {
+    var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
+    var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+    $(videoArea).html("");
+    $(metadataArea).html("");
+    if(renderedVideo && video) {
+      $(videoArea).append(renderedVideo);
+      var table = _generateTable(video.author, video.title, video.description);
+      $(metadataArea).html(table)
+    }
+  };
+  var _generateTable = function(author, title, description) {
+    if(!author) {
+      author = ""
+    }
+    if(!title) {
+      title = ""
+    }
+    if(!description) {
+      description = ""
+    }
+    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
+    description + "</div></td>" + "</tr>" + "</table>"
+  };
+  var addSelectedVideo = function() {
+    if(selectedVideo != null) {
+      var sourcesArray = [];
+      var options = new Array;
+      options["poster"] = selectedVideo.poster;
+      var sources = JSON.parse(selectedVideo.sources);
+      $.each(sources, function(index, source) {
+        sourcesArray.push([source.src, source.mimetype])
+      });
+      VISH.Editor.Video.HTML5.drawVideo(sourcesArray, options);
+      $.fancybox.close()
+    }
+  };
+  return{init:init, onLoadTab:onLoadTab, requestData:requestData, onDataReceived:onDataReceived, addSelectedVideo:addSelectedVideo, onClickCarrouselElement:onClickCarrouselElement}
+}(VISH, jQuery);
+VISH.Editor.Video.Youtube = function(V, $, undefined) {
+  var carrouselDivId = "tab_video_youtube_content_carrousel";
+  var queryMaxMaxNumberYoutubeVideo = 20;
+  var hash_youtube_video_id = new Array;
+  var onLoadTab = function() {
+    $("#youtube_preview").remove();
+    $("#preview_video_button").remove();
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var myInput = $("#tab_video_youtube_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        VISH.Editor.Video.Youtube.listVideo($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
+  var drawYoutubeVideo = function(video_id) {
+    var template = VISH.Editor.getTemplate();
+    var current_area = VISH.Editor.getCurrentArea();
+    var nextVideoId = VISH.Editor.getId();
+    $.fancybox.close();
+    var video_embedded = "http://www.youtube.com/embed/" + video_id;
+    var final_video = "<div id='youtube_" + nextVideoId + "' class='iframe_youtube' src='" + video_embedded + "?wmode=transparent' ><iframe type='text/html' class='" + template + "_video'  style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe></div>";
+    var current_area = VISH.Editor.getCurrentArea();
+    current_area.attr("type", "iframe");
+    current_area.html(final_video)
+  };
+  var showYoutubeVideo = function(e) {
+    var video_embedded = "http://www.youtube.com/embed/" + hash_youtube_video_id[e.target.id];
+    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
+    $("#youtube_preview").html(final_video);
+    if($("#preview_video_button")) {
+      $("#preview_video_button").remove()
+    }
+    $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\'' + hash_youtube_video_id[e.target.id] + "')\" >add this video</button>")
+  };
+  var listVideo = function(text) {
+    $("#youtube_preview").remove();
+    $("#preview_video_button").remove();
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
+    var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
+    jQuery.getJSON(url_youtube, function(data) {
+      $.each(data.feed.entry, function(i, item) {
+        var title = item["title"]["$t"];
+        var video = item["id"]["$t"];
+        video = video.replace("http://gdata.youtube.com/feeds/api/videos/", "http://www.youtube.com/watch?v=");
+        videoID = video.replace("http://www.youtube.com/watch?v=", "");
+        hash_youtube_video_id["vid" + i] = videoID;
+        var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
+        $("#" + carrouselDivId).append('<img id="vid' + i + '" src="' + image_url + '" />')
+      });
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.showYoutubeVideo)
+    });
+    $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:240px; padding-left:30%;"></div>')
+  };
+  return{onLoadTab:onLoadTab, drawYoutubeVideo:drawYoutubeVideo, showYoutubeVideo:showYoutubeVideo, listVideo:listVideo}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;
@@ -10340,7 +10721,7 @@ VISH.Renderer = function(V, $, undefined) {
           content += _renderImage(slide.elements[el], slide.template)
         }else {
           if(slide.elements[el].type === "video") {
-            content += _renderVideo(slide.elements[el], slide.template)
+            content += renderVideo(slide.elements[el], slide.template)
           }else {
             if(slide.elements[el].type === "swf") {
               content += _renderSwf(slide.elements[el], slide.template);
@@ -10381,16 +10762,18 @@ VISH.Renderer = function(V, $, undefined) {
   var _renderImage = function(element, template) {
     return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + "'><img class='" + template + "_image' src='" + element["body"] + "' style='" + element["style"] + "' /></div>"
   };
-  var _renderVideo = function(element, template) {
+  var renderVideo = function(element, template) {
     var rendered = "<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + "'>";
-    var controls = element["controls"] ? "controls='controls' " : "";
-    var autoplay = element["autoplay"] ? "autoplayonslideenter='true' " : "";
+    var style = element["style"] ? "style='" + element["style"] + "'" : "";
+    var controls = element["controls"] ? "controls='" + element["controls"] + "' " : "controls='controls' ";
+    var autoplay = element["autoplay"] ? "autoplayonslideenter='" + element["autoplay"] + "' " : "";
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
     var sources = JSON.parse(element["sources"]);
-    rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + controls + autoplay + poster + loop + ">";
-    $.each(sources, function(index, value) {
-      rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
+    rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
+    $.each(sources, function(index, source) {
+      var mimetype = source.mimetype ? "type='" + source.mimetype + "' " : "";
+      rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">"
     });
     if(sources.length > 0) {
       rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
@@ -10431,7 +10814,7 @@ VISH.Renderer = function(V, $, undefined) {
     ret += "<button type='button' class='question_button'>Send</button>";
     return ret
   };
-  return{init:init, renderSlide:renderSlide}
+  return{init:init, renderVideo:renderVideo, renderSlide:renderSlide}
 }(VISH, jQuery);
 VISH.SWFPlayer = function() {
   var loadSWF = function(element) {
@@ -10452,20 +10835,6 @@ VISH.SWFPlayer = function() {
   };
   return{loadSWF:loadSWF, loadIframe:loadIframe, unloadSWF:unloadSWF, unloadIframe:unloadIframe}
 }(VISH, jQuery);
-VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", 
-  "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
-  "body":"Experimento virtual1"}, {"id":"326", "type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish8", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"329", "type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish11", "template":"t2", "elements":[{"id":"330", "type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}, {"id":"vish12", "template":"t2", "elements":[{"id":"331", 
-  "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"center", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish13", 
-  "template":"t1", "elements":[{"id":"333", "type":"text", "areaid":"header", "body":"Example of HTML5 video with autostart"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}]};
-  return{samples:samples}
-}(VISH);
 VISH.Samples2 = function(V, undefined) {
   var samples2 = [{"id":"vish1", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 

@@ -25,7 +25,7 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderImage(slide.elements[el],slide.template);
 			}
 			else if(slide.elements[el].type === "video"){
-				content += _renderVideo(slide.elements[el],slide.template);
+				content += renderVideo(slide.elements[el],slide.template);
 			}
 			else if(slide.elements[el].type === "swf"){
 				content += _renderSwf(slide.elements[el],slide.template);
@@ -71,18 +71,20 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render a video inside an article (a slide)
 	 */
-	var _renderVideo = function(element, template){
+	var renderVideo = function(element, template){
 		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>"
-		var controls=(element['controls'])?"controls='controls' ":""
-		var autoplay=(element['autoplay'])?"autoplayonslideenter='true' ":""
+		var style = (element['style'])?"style='" + element['style'] + "'":""
+		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' "
+		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":""
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
 		var loop=(element['loop'])?"loop='loop' ":""
 		var sources = JSON.parse(element['sources'])
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + controls + autoplay + poster + loop + ">"
+		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">"
 		
-		$.each(sources, function(index, value) {
-			rendered = rendered + "<source src='" + value.src + "' type='" + value.mimetype + "'>"
+		$.each(sources, function(index, source) {
+			var mimetype = (source.mimetype)?"type='" + source.mimetype + "' ":""
+			rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">"
 		});
 		
 		if(sources.length>0){
@@ -162,6 +164,7 @@ VISH.Renderer = (function(V,$,undefined){
 
 	return {
 		init        : init,
+		renderVideo : renderVideo,
 		renderSlide : renderSlide
 	};
 

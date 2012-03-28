@@ -253,37 +253,6 @@ function nextSlide() {
   }
 };
 
-//added by KIKE to go to the last slide when adding a new one
-function lastSlide(){
-  while (curSlide < slideEls.length - 1) {
-    nextSlide();
-  }
-};
-
-//added by KIKE to go to the slide when clicking the thumbnail
-function goToSlide(no){
-  if(no >= slideEls.length - 1){
-  	return;
-  }
-  else if (no > curSlide){
-  	while (curSlide < no) {
-    	nextSlide();
-  	}
-  }
-  else if (no < curSlide){
-  	while (curSlide > no) {
-    	prevSlide();
-  	}
-  }
-  
-};
-
-
-//added by KIKE to add a new slide
-function addSlide(slide){
-  $('.slides').append(slide);
-};
-
 
 /* Slide events */
 
