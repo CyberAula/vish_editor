@@ -209,8 +209,10 @@ VISH.Editor = (function(V,$,undefined){
 		$(this).html(content);
 		
 		$("a.addpicture").fancybox({
+			'autoDimensions' : false,
 			'width': 800,
     		'height': 600,
+			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
@@ -219,8 +221,10 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("a.addflash").fancybox({
+			'autoDimensions' : false,
 			'width': 800,
     		'height': 600,
+			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
@@ -228,8 +232,10 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("a.addvideo").fancybox({
+			'autoDimensions' : false,
 			'width': 800,
     		'height': 600,
+			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
