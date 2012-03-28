@@ -40,65 +40,45 @@
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
-			<div id='menubar'>
+		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
-	      </a>
-          <a onclick="javascript:prevSlide()">
-		    <div id='arrow_left_div' class='barbutton'></div>
-          </a>
-		    <div class='barbutton'>
-				<a id="slide_thumb_1" onclick="javascript:goToSlide(0)">
+	        </a>
+            <div id='arrow_left_div' class='barbutton with_pointer'>
+            </div>
+		    <div class='barbutton' id="slide_thumb_1">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">1</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_2" onclick="javascript:goToSlide(1)">
+		    <div class='barbutton' id="slide_thumb_2" >
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">2</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_3" onclick="javascript:goToSlide(2)">
+		    <div class='barbutton' id="slide_thumb_3">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">3</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_4" onclick="javascript:goToSlide(3)">
+		    <div class='barbutton' id="slide_thumb_4">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">4</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_5" onclick="javascript:goToSlide(4)">
+		    <div class='barbutton' id="slide_thumb_5">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">5</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_6" onclick="javascript:goToSlide(5)">
+		    <div class='barbutton' id="slide_thumb_6">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">6</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_7" onclick="javascript:goToSlide(6)">
+		    <div class='barbutton' id="slide_thumb_7">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">7</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton'>
-				<a id="slide_thumb_8" onclick="javascript:goToSlide(7)">
+		    <div class='barbutton' id="slide_thumb_8">
 				    <img class="image_barbutton" src="/images/slide_thumb.png"/>
-				    <span class="slide_number">8</span>
-				</a>
+				    <span class="slide_number"></span>
 		    </div>
-		    <div class='barbutton' id='arrow_right_div'>
-				<a onclick="javascript:nextSlide()">
-				    <img class="image_barbutton"/>
-				</a>
+		    <div class='barbutton with_pointer' id='arrow_right_div'>
 		    </div>		    
             <a id="save" href="#thumbcontent">
 			    <div id="save_div" class='barbuttonaddsave'>
@@ -121,18 +101,27 @@
 
   
 	  <div style='display:none'>
+	  	
 	    <div id='menuselect'>
-			  <div class='menuicon textthumb' id='textthumb'></div>
+			  <div class='menuicon textthumb'></div>
 	      <a class="addpicture" href="#picture_fancybox">
-	        <div class='menuicon picthumb' id='imgthumb'></div>
+	        <div class='menuicon picthumb'></div>
 	      </a>
 	      <a class="addflash" href="#flash_fancybox">
-	        <div class='menuicon flashthumb' id='flashthumb'></div>
+	        <div class='menuicon flashthumb'></div>
 	      </a>
 	      <a class="addvideo" href="#video_fancybox">
-	        <div class='menuicon' id='videothumb'></div>
+	        <div class='menuicon videothumb'></div>
 	      </a>
 	    </div>
+	    
+	    <div id='menuselect_for_header'>
+			  <div class='menuicon_small textthumb'></div>
+	      <a class="addpicture" href="#picture_fancybox">
+	        <div class='menuicon_small picthumb'></div>
+	      </a>	      
+	    </div>
+	    
 	  </div>
   
   
@@ -208,19 +197,17 @@
 				    </ul>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
-				  Paste html5 video URL
-				  <input id="video_url" type="text" size="25" value="http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"> 
-				  <button type="button" onclick="VISH.Editor.getValueFromFancybox('video_url')">Done</button>
+				  <input id="url_video_input" type="text" class="rounded vishtab url">
+					<button type="button" class="okButton" onclick="VISH.Editor.getValueFromFancybox('video_url')"> Add</button>
 				</div>
 				<div id='tab_video_upload_content' class="fancy_tab_content">
-				  Select video to upload
-				  <input id="upload_video_input" type="text" size="25" value="">
-				  <button type="button" onclick="alert('Uploaded!')">Upload</button>
+					<input id="upload_video_input" type="text" class="rounded vishtab upload">
+          <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">
 				  
 					<div class="search_container">
-					  <input type="search" class="rounded"> </input>
+					  <input type="search" class="rounded vishtab"> </input>
 					</div>
 					
 					<div id="tab_video_repo_content_carrousel"></div>
@@ -230,18 +217,14 @@
 						</div>
 						<div id="tab_video_repo_content_preview_metadata"></div>
 						<div id="tab_video_repo_content_preview_foot">
-							<button type="button" class="okButton" onclick="alert('Go!')">Add</button>
+							<button type="button" class="okButton" onclick="VISH.Editor.Video.Repository.addSelectedVideo()">Add</button>
 						</div>
 					</div>
 				</div>  
 				
-				
-				
 				<div id='tab_video_youtube_content' class="fancy_tab_content">
-				  Search in youtube
-					
 				  <input id="youtube_input_text" type="text" size="25" value="" autofocus placeholder="write text to search"/>
-				  <button id="youtube_search_button" type="button" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
+				  <button id="youtube_search_button" type="button" class="okButton" onclick="VISH.Editor.Video.Youtube.listVideo('youtube_input_text')">Search</button>
 					<!-- Add carrousel -->
 					<div id="tab_video_youtube_content_carrousel"></div>
 				</div>
@@ -283,6 +266,7 @@
     <script type="text/javascript" src="js/VISH.Editor.Image.Flikr.js"></script>
     <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.SlidesUtilities.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 	<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>

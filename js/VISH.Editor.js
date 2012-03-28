@@ -23,15 +23,19 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.edit_pencil', _onEditableClicked);
+		
+		//arrows in button panel
+		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 			
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
 		
 		//Init submodules
-		VISH.Debugging.init(true);
-		VISH.Editor.Text.init();
-		VISH.Editor.Video.init();
+		V.Debugging.init(true);
+		V.Editor.Text.init();
+		V.Editor.Video.init();
 	};
 	
 	
@@ -48,7 +52,7 @@ VISH.Editor = (function(V,$,undefined){
     return "unicID_" + domId;
   }
 	
-	/**
+  /**
    * function to dinamically add a css
    */
   var _loadCSS = function(path){
@@ -61,7 +65,7 @@ VISH.Editor = (function(V,$,undefined){
     });
   };
 
-
+  
 
   /////////////////////////
   /// Fancy Box Functions
@@ -85,16 +89,16 @@ VISH.Editor = (function(V,$,undefined){
 			switch(tab_id)	{		
 				//Image
         case "tab_pic_from_url":
-          VISH.Editor.Image.onLoadTab("url");
+          V.Editor.Image.onLoadTab("url");
           break;
         case "tab_pic_upload":
-          VISH.Editor.Image.onLoadTab("upload");
+          V.Editor.Image.onLoadTab("upload");
           break;
         case "tab_pic_repo":
-          VISH.Editor.Image.Repository.onLoadTab();
+          V.Editor.Image.Repository.onLoadTab();
           break;
         case "tab_pic_flikr":
-          VISH.Editor.Image.Flikr.onLoadTab();
+          V.Editor.Image.Flikr.onLoadTab();
         break;
 				
 				//Video
@@ -116,6 +120,7 @@ VISH.Editor = (function(V,$,undefined){
 			}	
 	};
 
+
   /**
    * Function to get the value from the input identified by the id param and draw it in the zone in params['current_el']
    */
@@ -125,13 +130,13 @@ VISH.Editor = (function(V,$,undefined){
 		//Call the draw function of the submodule
     switch(id_to_get)  {
       case "picture_url":
-        VISH.Editor.Image.drawImage($("#"+id_to_get).val());
+        V.Editor.Image.drawImage($("#"+id_to_get).val());
         break;
       case "flash_embed_code":
         console.log("Feature not implemented: Flash embed code")
         break;
       case "video_url":
-        VISH.Editor.Video.HTML5.drawVideo($("#"+id_to_get).val())
+        V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
         break;
       //case "add_your_input_id_here":
         //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
@@ -152,8 +157,6 @@ VISH.Editor = (function(V,$,undefined){
   };
 
 
-
-
   //////////////////
   ///    Events
   //////////////////
@@ -165,14 +168,15 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		addSlide(slide);		
+		V.Editor.SlidesUtilities.addSlide(slide);		
+		V.Editor.SlidesUtilities.addThumbnail();
 		
 		$.fancybox.close();
 		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
-		setTimeout("lastSlide()", 300);
+		setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300);
 	};
 
 	/**
@@ -186,7 +190,15 @@ VISH.Editor = (function(V,$,undefined){
 		
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
-		var content = $("#menuselect").clone().attr('id','');
+		var content = null;
+		
+		if($(this).attr("areaid")==="header"){
+			content = $("#menuselect_for_header").clone().attr('id','');
+		}
+		else{
+			content = $("#menuselect").clone().attr('id','');
+		}
+				
 		//add zone attr to the a elements to remember where to add the content
 		content.find("a").each(function(index, domElem) {
 			$(domElem).attr("zone", params['current_el'].attr("id"));
@@ -253,7 +265,23 @@ VISH.Editor = (function(V,$,undefined){
             element.style  = $(div).find('img').attr('style');
           } else if(element.type==="iframe"){
             element.body   = $(div).html();
-          }
+          } else if(element.type==="video"){
+						var video = $(div).find("video");
+						element.poster = $(video).attr("poster");
+						element.style  = $(video).attr('style');
+						
+						//Sources
+						var sources= '';				
+						$(video).find('source').each(function(index, source) {
+							if(index!=0){
+								sources = sources + ',';
+							}
+							var mymetipe = (typeof $(source).attr("type") != "undefined")?' "mimetype": "' + $(source).attr("type") + '", ':''
+              sources = sources + '{' + mymetipe + '"src": "' + $(source).attr("src") + '"}'
+            });
+						sources = '[' + sources + ']'
+						element.sources = sources;
+					}
           slide.elements.push(element);
           element = {};
         }
@@ -266,6 +294,7 @@ VISH.Editor = (function(V,$,undefined){
     
     $('article').remove();
     $('#menubar').remove();
+    $('.theslider').remove();
     $(".nicEdit-panelContain").remove();
     V.SlideManager.init(excursion);
     
@@ -286,7 +315,21 @@ VISH.Editor = (function(V,$,undefined){
     
   };
 	
+	/**
+	 * Function to move the slides left one item
+	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
+	 */
+	var _onArrowLeftClicked = function(){
+		V.Editor.SlidesUtilities.goToSlide(curSlide);
+	};
 	
+	/**
+	 * Function to move the slides right one item
+	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
+	 */
+	var _onArrowRightClicked = function(){
+		V.Editor.SlidesUtilities.goToSlide(curSlide+2);
+	};
 	
 	
 	//////////////////
@@ -305,10 +348,10 @@ VISH.Editor = (function(V,$,undefined){
 	}
 	
 	var getCurrentArea = function() {
-    if(params['current_el']){
-      return params['current_el']
-    }
-    return null;
+	    if(params['current_el']){
+	      return params['current_el']
+	    }
+	    return null;
   }
 
 

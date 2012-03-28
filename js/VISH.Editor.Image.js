@@ -11,25 +11,21 @@ VISH.Editor.Image = (function(V,$,undefined){
    */
   var drawImage = function(image_url){
     var template = VISH.Editor.getTemplate();
-		var current_area = VISH.Editor.getCurrentArea();
+	  var current_area = VISH.Editor.getCurrentArea();
 
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr('type','image');
     current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>");
-    if(current_area.next().attr('class')==="theslider"){
-      //already added slider remove it to add a new one
-      current_area.next().remove();
-    }
-    current_area.after("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
+        
+    $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
     
-    //position the slider below the div with the image
-    var divPos = current_area.position();
-    var divHeight = current_area.height();
-    $("#sliderId"+nextImageId).css('top', divPos.top + divHeight +10);
-    $("#sliderId"+nextImageId).css('left', divPos.left);
-    $("#sliderId"+nextImageId).css('margin-left', '12px');
-           
+    //double size if header to insert image
+    //I HAVE NOT DONE IT BECAUSE WE NEED TO CHANGE ALSO THE SLIDESMANAGER TO DISPLAY DOUBLE SIZE
+    //if(current_area.attr('areaid')==="header"){
+    //	current_area.css("height", "48px");
+    //}
+            
     $("#imageSlider"+nextImageId).slider({
       from: 1,
       to: 8,
