@@ -68,6 +68,12 @@ VISH.Editor = (function(V,$,undefined){
     });
   };
 
+  /**
+   * Function to add a delete button to the element
+   */
+  var addDeleteButton = function(element){
+  	element.append("<div class='delete_icon'><img class='delete_icon_img' src='"+VISH.ImagesPath+"delete.png'/></div>");
+  };
   
 
   /////////////////////////
@@ -412,20 +418,21 @@ VISH.Editor = (function(V,$,undefined){
 	
 	var getCurrentArea = function() {
 	    if(params['current_el']){
-	      return params['current_el']
+	      return params['current_el'];
 	    }
 	    return null;
   }
 
 
 	return {
-		init					          : init,
-		loadTab 				        : loadTab,
-		getValueFromFancybox    : getValueFromFancybox,
-		getId                   : getId,
-		getTemplate             : getTemplate,
-		getCurrentArea          : getCurrentArea,
-		getParams               : getParams
+		init					         	: init,
+		addDeleteButton						: addDeleteButton,
+		loadTab 				        	: loadTab,
+		getValueFromFancybox    			: getValueFromFancybox,
+		getId                  		 		: getId,
+		getTemplate            				: getTemplate,
+		getCurrentArea        				: getCurrentArea,
+		getParams            				: getParams
 	};
 
 }) (VISH, jQuery);

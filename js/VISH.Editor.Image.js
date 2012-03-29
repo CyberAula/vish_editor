@@ -16,8 +16,10 @@ VISH.Editor.Image = (function(V,$,undefined){
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr('type','image');
-    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='delete_icon'><img class='delete_icon_img' src='"+VISH.ImagesPath+"delete.png'/></div>");
-        
+    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
+    
+    V.Editor.addDeleteButton(current_area);
+    
     $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
     
     //double size if header to insert image
