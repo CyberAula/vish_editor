@@ -37,7 +37,12 @@ VISH.Editor.Image = (function(V,$,undefined){
           $("#" + idToDragAndResize).width(325*value);
       }
     });
-    $("#" + idToDragAndResize).draggable({cursor: "move"});
+    $("#" + idToDragAndResize).draggable({
+    	cursor: "move",
+    	stop: function(){
+    		$(this).parent().click();  //call parent click to select it in case it was unselected	
+    	}
+    });
   };
 	
 	return {
