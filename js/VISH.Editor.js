@@ -24,6 +24,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
+		$(document).on('click','.selectable', _onSelectableClicked);
 		$(document).on('click','.edit_pencil', _onEditableClicked);
 		
 		//arrows in button panel
@@ -244,6 +245,27 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+
+  /**
+   * function called when user clicks on template zone with class selectable
+   * we change the border to indicate this zone has been selected and show the slider if the type is an image
+   */
+  var _onSelectableClicked = function(){
+  	//change borders
+  	$(".selectable").css("border-style", "none");  	
+  	$(this).css("border", "3px solid #D9BC2B");
+  	
+  	//show sliders
+  	$(".theslider").hide();
+  	if($(this).attr("type")==="image"){
+  		var img_id = $(this).find("img").attr("id");
+  		//the id is "draggableunicID_1" we want to remove "draggable"
+  		img_id = img_id.substring(9);
+  		
+  		$("#sliderId" + img_id).show();  		
+  	}
+  	
+  };
 
   /**
    * function called when user clicks on save
