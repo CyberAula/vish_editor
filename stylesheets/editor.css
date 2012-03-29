@@ -235,7 +235,7 @@
 }
 
 .fancy_tabs li a:hover{
-	background:#999
+	background:#999;
 	color:#FFF;
 	border-right-color:#d3e8f6;
 }
@@ -478,4 +478,9 @@ table.metadata td div.height_wrapper_description{
 .caroufredsel_wrapper{
 	overflow-y: visible;
 	overflow-x: visible;
+}
+
+.image_barbutton{
+	width: 60px;
+	margin-top: 7px;
 }

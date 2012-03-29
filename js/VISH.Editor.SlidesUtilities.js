@@ -10,14 +10,14 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
 	/**
 	 * function to add a thumbnail of the added slide and activate the onlicks of the thumbnail
 	 */
-	function addThumbnail(){
+	function addThumbnail(template_number){
 		var number_of_slides = slideEls.length + 1;  //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		$("#"+ "slide_thumb_"+ number_of_slides).click( function() {
   			goToSlide(number_of_slides);
 		});
 		$("#"+ "slide_thumb_"+ number_of_slides).css("cursor", "pointer");
 		$("#"+ "slide_thumb_"+ number_of_slides + " .slide_number").html(number_of_slides);
-		
+		$("#"+ "slide_thumb_"+ number_of_slides + " img").attr("src", VISH.ImagesPath + "templatesthumbs/t"+template_number + ".png");
 	}
 
   /**

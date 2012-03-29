@@ -171,7 +171,7 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
 		V.Editor.SlidesUtilities.addSlide(slide);		
-		V.Editor.SlidesUtilities.addThumbnail();
+		V.Editor.SlidesUtilities.addThumbnail($(this).attr('template'));
 		
 		$.fancybox.close();
 		
