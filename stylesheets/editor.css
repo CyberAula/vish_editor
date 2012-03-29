@@ -250,7 +250,7 @@
 	text-align:center;
 }
 
-.edit_pencil{
+.delete_icon{
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
@@ -258,7 +258,7 @@
 	height: 30px;
 }
 
-.edit_pencil_img{
+.delete_icon_img{
 	width: 30px;
 	height: 30px;
 }

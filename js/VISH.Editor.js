@@ -25,7 +25,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('click','.edit_pencil', _onEditableClicked);
+		$(document).on('click','.delete_icon', _onDeleteItemClicked);
 		
 		//arrows in button panel
 		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
@@ -245,6 +245,33 @@ VISH.Editor = (function(V,$,undefined){
 		});
 	};
 
+
+  /**
+   * function called when user clicks on the delete icon of the zone
+   */
+  var _onDeleteItemClicked = function(){
+  	params['current_el'] = $(this).parent();
+  	$.fancybox(
+		$("#prompt_form").html(),
+		{
+        	'autoDimensions'	: false,
+			'width'         	: 350,
+			'height'        	: 200,
+			'onClosed'			: function(){
+				//if user has answered "yes"
+				if($("#prompt_answer").val() ==="true"){
+					$("#prompt_answer").val("false");
+					params['current_el'].html("");
+					if(params['current_el'].attr("type")==="image"){
+						$(".theslider").hide();
+						params['current_el'].removeAttr("type");
+					}
+					params['current_el'].addClass("editable");
+				}
+			}
+		}
+	);
+  };
 
   /**
    * function called when user clicks on template zone with class selectable
