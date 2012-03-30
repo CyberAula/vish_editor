@@ -8,7 +8,9 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
    // $("#ytb_slider_content").remove();
     		$("#youtube_preview").remove();
 		$("#preview_video_button").remove();
+		$("#youtube_preview_metadata").remove();
 		$("#youtbue_text_to_search").attr("value","");
+		$("#tab_video_youtube_content_carrousel").children("*").remove();
 		
     //clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
