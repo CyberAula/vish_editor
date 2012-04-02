@@ -6,13 +6,12 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 //function that is called when 
 	var onLoadTab = function(){
 		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
+		//clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
 		
-		console.log("entra en onLoadTab");
-			
+					
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-		console.log("myImput vale:" +myInput);
-		console.log("lo que voy a buscar vale: " + $(myInput).val());
+		
 	  	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
@@ -25,11 +24,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	};
 
 	var listImages = function(text){
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
-
-		console.log("entra en listImages");
-		console.log("lo que voy a buscar vale: " + text);
-	  	
+		
 	    //clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
 
@@ -40,12 +35,13 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		
 		$.getJSON(url_flikr, function(data){
 		            $.each(data.items, function(i,item){
-		
-		            $("#" + carrouselDivId).append('<img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'"/>');
+			//add every image in the carrousel
+		          
+  $("#" + carrouselDivId).append('<img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'" />');
 		
 	          });
       //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
-		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage);
+		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 1, VISH.Editor.Image.Flikr.addImage);
 
 	     });
 	};
