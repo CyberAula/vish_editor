@@ -26,6 +26,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
 		$(document).on('click','.delete_icon', _onDeleteItemClicked);
+		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
 		//arrows in button panel
 		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
@@ -34,9 +35,7 @@ VISH.Editor = (function(V,$,undefined){
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		V.SlideManager.addEnterLeaveEvents();
 		
-		var evt = document.createEvent("Event");
-		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-		document.dispatchEvent(evt);
+		V.Editor.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
 		V.Debugging.init(true);
@@ -49,7 +48,8 @@ VISH.Editor = (function(V,$,undefined){
   ////////////////
   /// Helpers 
   ////////////////
-		
+  
+  
   /**
    * Return a unic id.
    */
@@ -180,17 +180,15 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		V.Editor.SlidesUtilities.addSlide(slide);		
-		V.Editor.SlidesUtilities.addThumbnail($(this).attr('template'));
+		V.Editor.SlidesUtilities.addSlide(slide);	
+		V.Editor.SlidesUtilities.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		//V.SlideManager.addEnterLeaveEvents();
 		
-		var evt = document.createEvent("Event");
-		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-		document.dispatchEvent(evt);
+		V.Editor.SlidesUtilities.redrawSlides();
 		setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300);
 	};
 
@@ -279,6 +277,34 @@ VISH.Editor = (function(V,$,undefined){
 						$(".theslider").hide();	
 					}
 					params['current_el'].addClass("editable");
+				}
+			}
+		}
+	);
+  };
+  
+  /**
+   * function called when user clicks on the delete icon of the zone
+   */
+  var _onDeleteSlideClicked = function(){
+  	var article_to_delete = $(this).parent();
+  	$.fancybox(
+		$("#prompt_form").html(),
+		{
+        	'autoDimensions'	: false,
+			'width'         	: 350,
+			'height'        	: 200,
+			'onClosed'			: function(){
+				//if user has answered "yes"
+				if($("#prompt_answer").val() ==="true"){
+					$("#prompt_answer").val("false");
+					article_to_delete.remove();
+					//set curSlide to the preious one if this was the last one
+					if(curSlide == slideEls.length-1){
+						curSlide -=1;
+					}
+					V.Editor.SlidesUtilities.redrawThumbnails();
+					V.Editor.SlidesUtilities.redrawSlides();					
 				}
 			}
 		}

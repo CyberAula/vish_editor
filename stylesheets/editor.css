@@ -258,6 +258,14 @@
 	height: 30px;
 }
 
+.delete_slide{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 30px;
+	height: 30px;
+}
+
 .delete_icon_img{
 	width: 30px;
 	height: 30px;
