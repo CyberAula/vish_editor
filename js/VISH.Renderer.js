@@ -110,7 +110,8 @@ VISH.Renderer = (function(V,$,undefined){
 	 * when entering a slide with an iframe class we call V.SWFPlayer.loadIframe (see VISH.SlideManager._onslideenter) and it will add the src inside the div
 	 */
 	var _renderIframe = function(element, template){
-		return "<div id='"+element['id']+"' class='iframeelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_iframe"+"' src='"+element['body']+"'></div>";
+		var to_return = '<div id="'+element['id']+'" class="iframeelement '+template+'_'+element['areaid']+'" templateclass="'+template+'_iframe'+'" src="'+element['body']+'"></div>';
+		return to_return;
 	};
 
 	/**

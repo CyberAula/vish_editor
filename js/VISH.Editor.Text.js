@@ -27,6 +27,8 @@ VISH.Editor.Text = (function(V,$,undefined){
           
       }
     });*/
+   
+    V.Editor.addDeleteButton(current_area);
   }
 	
 	

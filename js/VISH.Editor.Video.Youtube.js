@@ -52,6 +52,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
     current_area.attr('src', final_video);
    
     current_area.html(final_video);
+    
+    V.Editor.addDeleteButton(current_area);
   };
 
 

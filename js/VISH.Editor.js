@@ -274,9 +274,9 @@ VISH.Editor = (function(V,$,undefined){
 				if($("#prompt_answer").val() ==="true"){
 					$("#prompt_answer").val("false");
 					params['current_el'].html("");
+					params['current_el'].removeAttr("type");
 					if(params['current_el'].attr("type")==="image"){
-						$(".theslider").hide();
-						params['current_el'].removeAttr("type");
+						$(".theslider").hide();	
 					}
 					params['current_el'].addClass("editable");
 				}
@@ -334,12 +334,12 @@ VISH.Editor = (function(V,$,undefined){
           element.areaid = $(div).attr('areaid');
           if(element.type==="text"){
             //TODO make this text json safe
-            element.body   = $(div).find("div").html();
+            element.body   = $(div).find(".wysiwygInstance").html();
           } else if(element.type==="image"){
             element.body   = $(div).find('img').attr('src');
             element.style  = $(div).find('img').attr('style');
           } else if(element.type==="iframe"){
-            element.body   = $(div).html();
+            element.body   = $(div).attr('src'); //we have the iframe code in the src attribute
           } else if(element.type==="video"){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
