@@ -6,7 +6,7 @@ VISH.SWFPlayer = (function(){
 	 */
 	var loadSWF = function(element){
 		$.each(element.children('.swfelement'),function(index,value){
-			$(value).append("<embed src='"+$(value).attr('src')+"' class='"+$(value).attr('templateclass')+"' />");
+			$(value).html("<embed src='"+$(value).attr('src')+"' class='"+$(value).attr('templateclass')+"' />");
 		});
 	};
 
@@ -15,7 +15,7 @@ VISH.SWFPlayer = (function(){
 	 */
 	var loadIframe = function(element){
 		$.each(element.children('.iframeelement'),function(index,value){
-			$(value).append($(value).attr('src'));
+			$(value).html($(value).attr('src'));
 		});
 	};
 

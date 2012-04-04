@@ -40,10 +40,16 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
     $.fancybox.close();
     //generate embed for the video
     var video_embedded = "http://www.youtube.com/embed/"+video_id;
-    var final_video = "<div id='youtube_"+nextVideoId+"' class='iframe_youtube' src='"+video_embedded+"?wmode=transparent' ><iframe type='text/html' class='"+template+"_video'  style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe></div>";
+    var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
     //insert embed in zone
-		var current_area = VISH.Editor.getCurrentArea();
-    current_area.attr('type','iframe');
+	var current_area = VISH.Editor.getCurrentArea();
+    current_area.addClass('iframeelement');
+    current_area.attr('type', 'iframe');
+    
+    //set class of article to iframe to load and unload the video when entering and leaving the slide
+    current_area.parent().addClass('iframe');
+    //save the src in the element to load and unload the content
+    current_area.attr('src', final_video);
    
     current_area.html(final_video);
   };
@@ -71,8 +77,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
     }
     $("#tab_video_youtube_content").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); 
   
-var table = _generateTable(author,title,subtitle)
-			$("#youtube_preview_metadata").html(table)
+	var table = _generateTable(author,title,subtitle);
+	$("#youtube_preview_metadata").html(table);
 
 };
 

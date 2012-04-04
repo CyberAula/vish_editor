@@ -13,10 +13,11 @@ VISH.SlideManager = (function(V,$,undefined){
 	/**
 	 * function to add enter and leave events
 	 * it is called from vish.excursion.js because we need to add the events before loading slides.js
+	 * it is called with live() because in the editor we need to add this event for articles now and in the future as the user is adding articles on the fly
 	 */
 	var addEnterLeaveEvents = function(){
-		$('article').on('slideenter',_onslideenter);
-		$('article').on('slideleave',_onslideleave);
+		$('article').live('slideenter',_onslideenter);
+		$('article').live('slideleave',_onslideleave);
 	}
 	
 	/**

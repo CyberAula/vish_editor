@@ -30,7 +30,10 @@ VISH.Editor = (function(V,$,undefined){
 		//arrows in button panel
 		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
-			
+		
+		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+		V.SlideManager.addEnterLeaveEvents();
+		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
@@ -181,6 +184,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.SlidesUtilities.addThumbnail($(this).attr('template'));
 		
 		$.fancybox.close();
+		
+		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+		//V.SlideManager.addEnterLeaveEvents();
 		
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
