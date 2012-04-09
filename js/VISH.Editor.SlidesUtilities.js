@@ -87,7 +87,7 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
     }
     //finally add a background color to the selected slide
     $(".barbutton").css("background-color", "transparent");
-    $("#slide_thumb_"+ no).css("background-color", "blue");
+    $("#slide_thumb_"+ no).css("background-color", "#ACACAC");
   };
 
 

@@ -1,11 +1,10 @@
 #menubar {
-	background-color: rgba(55,55,55,0.3);
+	background: url(/images/new2.png);
 	width: 100%;
 	height: 70px;
 	position: fixed;
 	bottom:0px;
 	left: 0px;
-	border-top: 2px solid black;
 	border-radius: 0px 0px 20px 20px;
     -moz-border-radius: 0px 0px 20px 20px;
     -webkit-border-radius: 0px 0px 20px 20px;
