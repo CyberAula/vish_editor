@@ -113,6 +113,428 @@
 }
 
 /*
+	TEMPLATE 3: "fuuuuuu"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t3_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t3_left{
+	margin-top:5px;
+	position:relative;
+	width: 30%;
+	height: 90%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t3_center{
+	margin-top: 5px;
+	position:relative;
+	width: 30%;
+	height: 90%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+.t3_right{
+	margin-top: 5px;
+	position:relative;
+	width: 30%;
+	height: 90%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t3_text{
+	text-align: justify;
+	color: black;
+}
+
+.t3_image{
+	width: 300px;
+}
+
+.t3_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t3_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
+	TEMPLATE 4: "fuuuuuu2"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t4_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t4_left{
+	margin-top:5px;
+	position:relative;
+	width: 60%;
+	height: 90%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t4_right2{
+	margin-top: 5px;
+	position:relative;
+	width: 20%;
+	height: 40%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+.t4_right1{
+	margin-top: 5px;
+	position:relative;
+	width: 20%;
+	height: 40%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t4_text{
+	text-align: justify;
+	color: black;
+}
+
+.t4_image{
+	width: 300px;
+}
+
+.t4_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t4_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
+	TEMPLATE 5: "fuuuuuu3"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t5_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t5_right{
+	margin-top:5px;
+	position:relative;
+	width: 60%;
+	height: 90%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t5_left2{
+	margin-top: 5px;
+	position:relative;
+	width: 20%;
+	height: 40%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+.t5_left1{
+	margin-top: 5px;
+	position:relative;
+	width: 20%;
+	height: 40%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t5_text{
+	text-align: justify;
+	color: black;
+}
+
+.t5_image{
+	width: 300px;
+}
+
+.t5_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t5_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
+	TEMPLATE 6: "fuuuuuu4"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t6_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t6_right1{
+	margin-top:5px;
+	position:relative;
+	width: 50%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t6_right2{
+	margin-top:5px;
+	position:relative;
+	width: 50%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+.t6_left{
+	margin-top: 5px;
+	position:relative;
+	width: 30%;
+	height: 80%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t6_text{
+	text-align: justify;
+	color: black;
+}
+
+.t6_image{
+	width: 300px;
+}
+
+.t6_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t6_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
+	TEMPLATE 7: "fuuuuuu5"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t7_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t7_left1{
+	margin-top:5px;
+	position:relative;
+	width: 50%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t7_left2{
+	margin-top:5px;
+	position:relative;
+	width: 50%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+.t7_right{
+	margin-top: 5px;
+	position:relative;
+	width: 30%;
+	height: 80%;
+	float: right;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t7_text{
+	text-align: justify;
+	color: black;
+}
+
+.t7_image{
+	width: 300px;
+}
+
+.t7_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t7_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
+	TEMPLATE 8: "fuuuuuu6"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t8_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t8_center1{
+	margin-top:5px;
+	position:relative;
+	width: 100%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t8_center2{
+	margin-top:5px;
+	position:relative;
+	width: 100%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;
+}
+.t8_center3{
+	margin-top:5px;
+	position:relative;
+	width: 100%;
+	height: 30%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t8_text{
+	text-align: justify;
+	color: black;
+}
+
+.t8_image{
+	width: 300px;
+}
+
+.t8_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t8_swf{
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+/*
 	OPEN QUESTION SLIDE
 	by Enrique Barra
 
