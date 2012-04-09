@@ -9,13 +9,9 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	margin-left: -60px;
-	padding-left: 60px;
-	margin-right: -60px;
-	padding-right: 60px;
 	font-size: 24px;
-	height: 24px;
-	width: 99%;
+	height: 30px;
+	width: 100%;
 	overflow:hidden;	
 	position: relative;
 }
@@ -73,13 +69,9 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	margin-left: -60px;
-	padding-left: 60px;
-	margin-right: -60px;
-	padding-right: 60px;
 	font-size: 24px;
-	height: 24px;
-	width: 99%;
+	height: 30px;
+	width: 98.5%;
 	overflow: hidden;
 	position: relative;
 }
