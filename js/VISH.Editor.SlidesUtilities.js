@@ -72,6 +72,10 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
    * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
   function goToSlide(no){
+  	//first deselect zone if anyone was selected
+  	$(".selectable").css("border-style", "none");
+  	$(".theslider").hide();
+  	
     if((no > slideEls.length) || (no <= 0)){
   	  return;
     }

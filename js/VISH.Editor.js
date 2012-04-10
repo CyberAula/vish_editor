@@ -261,6 +261,7 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onDeleteItemClicked = function(){
   	params['current_el'] = $(this).parent();
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
   	$.fancybox(
 		$("#prompt_form").html(),
 		{
