@@ -25,7 +25,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('click','.delete_icon', _onDeleteItemClicked);
+		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
 		//arrows in button panel
@@ -75,7 +75,7 @@ VISH.Editor = (function(V,$,undefined){
    * Function to add a delete button to the element
    */
   var addDeleteButton = function(element){
-  	element.append("<div class='delete_icon'><img class='delete_icon_img' src='"+VISH.ImagesPath+"delete.png'/></div>");
+  	element.append("<div class='delete_content'><img class='delete_content_img' src='"+VISH.ImagesPath+"delete_content.png'/></div>");
   };
   
 

@@ -288,6 +288,19 @@
 	height: 22px;
 }
 
+.delete_content{
+	position: absolute;
+	bottom: -2px;
+	right: 0px;
+	width: 40px;
+	height: 40px;
+}
+
+.delete_content_img{
+	width: 40px;
+	height: 40px;
+}
+
 .addpicture {
 	width: 50px;
 	height: 50px;
