@@ -6,8 +6,8 @@
 */
 
 .t1_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
+	padding-top: 10px;
+ 	padding-bottom: .7em;
 	margin-top: -.2em;
 	font-size: 24px;
 	height: 30px;
@@ -17,10 +17,10 @@
 }
 
 .t1_left{
-	margin-top:5px;
+	margin-top:15px;
 	position:relative;
 	width: 48%;
-	height: 90%;
+	height: 85%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
@@ -29,10 +29,10 @@
 }
 
 .t1_right{
-	margin-top: 5px;
+	margin-top: 15px;
 	position:relative;
 	width: 48%;
-	height: 90%;
+	height: 85%;
 	float: right;
 	font-size: 18px;
 	overflow:hidden;	
@@ -66,7 +66,7 @@
 */
 
 .t2_header{
-	padding-top: .2em;
+	padding-top: 15px;
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
@@ -77,10 +77,10 @@
 }
 
 .t2_left{
-	margin-top:5px;
+	margin-top:15px;
 	position:relative;
 	width: 98%;
-	height: 90%;
+	height: 85%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;

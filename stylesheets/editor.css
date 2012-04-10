@@ -157,7 +157,10 @@
 }
 
 .grey_background{
-	background-color: rgba(100,100,100,0.4);
+	background-color: rgba(100,100,100,0.2);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
 }
 
 .editable:hover{
@@ -294,9 +297,11 @@
 	right: 0px;
 	width: 40px;
 	height: 40px;
+	cursor:pointer;
 }
 
 .delete_content_img{
+	cursor:pointer;
 	width: 40px;
 	height: 40px;
 }
