@@ -288,6 +288,7 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onDeleteSlideClicked = function(){
   	var article_to_delete = $(this).parent();
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
   	$.fancybox(
 		$("#prompt_form").html(),
 		{
