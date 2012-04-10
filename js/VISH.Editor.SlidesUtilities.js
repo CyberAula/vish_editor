@@ -27,7 +27,7 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
    		//if we have more than 1 slide, we will highlight the next one to current slide
    		if(slideEls.length > 1){
    			var slide_to_highlight = curSlide + 1;
-   			$("#slide_thumb_"+ slide_to_highlight).css("background-color", "blue");
+   			$("#slide_thumb_"+ slide_to_highlight).css("background-color", "#ACACAC");
    		}
    		
    		//now we add them again
