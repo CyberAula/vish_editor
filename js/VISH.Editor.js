@@ -25,7 +25,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('click','.delete_icon', _onDeleteItemClicked);
+		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
 		//arrows in button panel
@@ -75,7 +75,7 @@ VISH.Editor = (function(V,$,undefined){
    * Function to add a delete button to the element
    */
   var addDeleteButton = function(element){
-  	element.append("<div class='delete_icon'><img class='delete_icon_img' src='"+VISH.ImagesPath+"delete.png'/></div>");
+  	element.append("<div class='delete_content'></div>");
   };
   
 
@@ -98,38 +98,40 @@ VISH.Editor = (function(V,$,undefined){
 	    $("#" + tab_id + "_content").show();
 
       //Submodule callbacks
-			switch(tab_id)	{		
-				//Image
-        case "tab_pic_from_url":
-          V.Editor.Image.onLoadTab("url");
-          break;
-        case "tab_pic_upload":
-          V.Editor.Image.onLoadTab("upload");
-          break;
-        case "tab_pic_repo":
-          V.Editor.Image.Repository.onLoadTab();
-          break;
-        case "tab_pic_flikr":
-          V.Editor.Image.Flikr.onLoadTab();
-        break;
-				
-				//Video
-				case "tab_video_from_url":
-				  VISH.Editor.Video.HTML5.onLoadTab("url");
-				  break;
-				case "tab_video_upload":
-          VISH.Editor.Video.HTML5.onLoadTab("upload");
-          break;
-				case "tab_video_repo":
-				  VISH.Editor.Video.Repository.onLoadTab();
-				  break;
-				case "tab_video_youtube":
-				  VISH.Editor.Video.Youtube.onLoadTab();
+			
+		switch(tab_id) {
+			//Image
+			case "tab_pic_from_url":
+				V.Editor.Image.onLoadTab("url");
 				break;
-				
-				default:
-				  break;
-			}	
+			case "tab_pic_upload":
+				V.Editor.Image.onLoadTab("upload");
+				break;
+			case "tab_pic_repo":
+				V.Editor.Image.Repository.onLoadTab();
+				break;
+			case "tab_pic_flikr":
+				V.Editor.Image.Flikr.onLoadTab();
+				break;
+
+			//Video
+			case "tab_video_from_url":
+				VISH.Editor.Video.HTML5.onLoadTab("url");
+				break;
+			case "tab_video_upload":
+				VISH.Editor.Video.HTML5.onLoadTab("upload");
+				break;
+			case "tab_video_repo":
+				VISH.Editor.Video.Repository.onLoadTab();
+				break;
+			case "tab_video_youtube":
+				VISH.Editor.Video.Youtube.onLoadTab();
+				break;
+
+			default:
+				break;
+		}
+
 	};
 
 
@@ -261,6 +263,7 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onDeleteItemClicked = function(){
   	params['current_el'] = $(this).parent();
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
   	$.fancybox(
 		$("#prompt_form").html(),
 		{
@@ -288,6 +291,7 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onDeleteSlideClicked = function(){
   	var article_to_delete = $(this).parent();
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
   	$.fancybox(
 		$("#prompt_form").html(),
 		{

@@ -150,6 +150,7 @@
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
 	  	<div id='prompt_form'>	  		
+	  		<img id="image_template_prompt" class="image_barbutton" src="/images/templatesthumbs/default.png"/>
 	  		This action will delete this item, are you sure?
 	  		<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button">Yes</a>
 	  		<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="prompt_button">No</a>
@@ -238,8 +239,7 @@
 					<input id="upload_video_input" type="text" class="rounded vishtab upload">
           <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
-				<div id='tab_video_repo_content' class="fancy_tab_content">
-				  
+				<div id='tab_video_repo_content' class="fancy_tab_content">				  
 					<div class="search_container">
 					  <input type="search" class="rounded vishtab" > </input>
 					</div>

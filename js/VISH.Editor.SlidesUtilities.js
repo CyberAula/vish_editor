@@ -27,7 +27,7 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
    		//if we have more than 1 slide, we will highlight the next one to current slide
    		if(slideEls.length > 1){
    			var slide_to_highlight = curSlide + 1;
-   			$("#slide_thumb_"+ slide_to_highlight).css("background-color", "blue");
+   			$("#slide_thumb_"+ slide_to_highlight).css("background-color", "#ACACAC");
    		}
    		
    		//now we add them again
@@ -72,6 +72,10 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
    * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
   function goToSlide(no){
+  	//first deselect zone if anyone was selected
+  	$(".selectable").css("border-style", "none");
+  	$(".theslider").hide();
+  	
     if((no > slideEls.length) || (no <= 0)){
   	  return;
     }

@@ -1,5 +1,5 @@
 #menubar {
-	background: url(/images/new2.png);
+	background: url(/images/menubar.png);
 	width: 100%;
 	height: 70px;
 	position: fixed;
@@ -57,35 +57,35 @@
 }
 
 .textthumb {
-	background: url(/images/txt.png);
+	background: url(/images/text.png);
 }
 
 .textthumb:hover {
-	background: url(/images/hover/txt_hover.png);
+	background: url(/images/hover/text_hover.png);
 }
 
 .textthumb_small {
-	background: url(/images/txt_small.png);
+	background: url(/images/text_small.png);
 }
 
 .textthumb_small:hover {
-	background: url(/images/hover/txt_small_hover.png);
+	background: url(/images/hover/text_small_hover.png);
 }
 
 .picthumb {
-	background: url(/images/img.png);
+	background: url(/images/image.png);
 }
 
 .picthumb:hover {
-	background: url(/images/hover/img_hover.png);
+	background: url(/images/hover/image_hover.png);
 }
 
 .picthumb_small {
-	background: url(/images/img_small.png);
+	background: url(/images/image_small.png);
 }
 
 .picthumb_small:hover {
-	background: url(/images/hover/img_small_hover.png);
+	background: url(/images/hover/image_small_hover.png);
 }
 
 .flashthumb {
@@ -157,7 +157,10 @@
 }
 
 .grey_background{
-	background-color: rgba(100,100,100,0.4);
+	background-color: rgba(100,100,100,0.2);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
 }
 
 .editable:hover{
@@ -178,7 +181,7 @@
 .menuicon_small{
 	float: left;
 	width: 24px;
-	height: 32px;
+	height: 31px;
 	margin-right: 10px;
 	margin-left: 10px;
 	cursor: pointer;
@@ -194,7 +197,9 @@
 	width: 750px;
 	height: 40px;
 	position: absolute;
-	top: 650px;
+	top: 600px;
+	left: 75px;
+	z-index: 10;
 	left: 75px;
 }
 
@@ -275,18 +280,33 @@
 
 .delete_slide{
 	position: absolute;
-	top: -5px;
+	top: 5px;
 	right: 5px;
 	width: 22px;
 	height: 22px;
+	cursor:pointer;
+	background: url(/images/delete.png);
 }
 
-.delete_icon_img{
-	width: 22px;
-	height: 22px;
+.delete_slide:hover{
+	background: url(/images/hover/delete_hover.png);
 }
 
-.addpicture {
+.delete_content{
+	position: absolute;
+	bottom: -2px;
+	right: 0px;
+	width: 40px;
+	height: 40px;
+	cursor:pointer;
+	background: url(/images/delete_content.png);
+}
+
+.delete_content:hover{
+	background: url(/images/hover/delete_content_hover.png);
+}
+
+.addpicture{
 	width: 50px;
 	height: 50px;
 }
