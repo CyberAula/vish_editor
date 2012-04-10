@@ -57,35 +57,35 @@
 }
 
 .textthumb {
-	background: url(/images/txt.png);
+	background: url(/images/text.png);
 }
 
 .textthumb:hover {
-	background: url(/images/hover/txt_hover.png);
+	background: url(/images/hover/text_hover.png);
 }
 
 .textthumb_small {
-	background: url(/images/txt_small.png);
+	background: url(/images/text_small.png);
 }
 
 .textthumb_small:hover {
-	background: url(/images/hover/txt_small_hover.png);
+	background: url(/images/hover/text_small_hover.png);
 }
 
 .picthumb {
-	background: url(/images/img.png);
+	background: url(/images/image.png);
 }
 
 .picthumb:hover {
-	background: url(/images/hover/img_hover.png);
+	background: url(/images/hover/image_hover.png);
 }
 
 .picthumb_small {
-	background: url(/images/img_small.png);
+	background: url(/images/image_small.png);
 }
 
 .picthumb_small:hover {
-	background: url(/images/hover/img_small_hover.png);
+	background: url(/images/hover/image_small_hover.png);
 }
 
 .flashthumb {
