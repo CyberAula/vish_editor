@@ -19,8 +19,8 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 	var onLoadTab = function(){
 		var previousSearch = ($("#tab_video_repo_content").find("input[type='search']").val()!="");
 		if(! previousSearch){
-		 _renderVideoPreview(null);
-     _requestInicialData();
+		 	_renderVideoPreview(null);
+     		_requestInicialData();
 		}
 	}
 	

@@ -3,13 +3,53 @@ VISH.Editor.API = (function(V,$,undefined){
 	var init = function(){
 	}
 	
-	var requestVideos = function(text,successCallback,failCallback){
-		if(typeof successCallback == "function"){
-      successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']));
-    }
+	/**
+	 * function to call to VISH and request videos in json format
+	 * The request is:
+	 * GET /videos.json?q=text
+	 */
+	var requestVideos = function(text, successCallback, failCallback){
+		/*
+		    //POST to http://server/excursions/
+		    var params = {
+		      "excursion[json]": jsonexcursion,
+		      "authenticity_token" : initOptions["token"]
+		    }
+		    
+		    $.post(initOptions["postPath"], params, function(data) {
+		          document.open();
+		      document.write(data);
+		      document.close();
+		      });
+      	*/
+     
+     	$.ajax({
+                type: "GET",
+                url: "videos.json?q="+text,
+                dataType:"html",
+                success:function(response){
+                    if(typeof successCallback == "function"){
+      					successCallback(response);
+    				}
+                },
+                error:function (xhr, ajaxOptions, thrownError){
+                    if(typeof failCallback == "function"){
+                    	failCallback();
+                    }
+                }
+       });
+		
+		/*
+			if(typeof successCallback == "function"){
+	      		successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']));
+	    	}
+    	*/
 	}
 	
-	var requestRecomendedVideos = function(successCallback,failCallback){
+	/**
+	 * function to call to VISH and request recommended videos
+	 */
+	var requestRecomendedVideos = function(successCallback, failCallback){
 		if(typeof successCallback == "function"){
 			successCallback(VISH.Samples.API.videoList['videos']);
 		}
@@ -17,7 +57,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					          : init,
+		init					: init,
 		requestVideos           : requestVideos,
 		requestRecomendedVideos : requestRecomendedVideos
 	};

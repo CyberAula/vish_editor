@@ -98,38 +98,40 @@ VISH.Editor = (function(V,$,undefined){
 	    $("#" + tab_id + "_content").show();
 
       //Submodule callbacks
-			switch(tab_id)	{		
-				//Image
-        case "tab_pic_from_url":
-          V.Editor.Image.onLoadTab("url");
-          break;
-        case "tab_pic_upload":
-          V.Editor.Image.onLoadTab("upload");
-          break;
-        case "tab_pic_repo":
-          V.Editor.Image.Repository.onLoadTab();
-          break;
-        case "tab_pic_flikr":
-          V.Editor.Image.Flikr.onLoadTab();
-        break;
-				
-				//Video
-				case "tab_video_from_url":
-				  VISH.Editor.Video.HTML5.onLoadTab("url");
-				  break;
-				case "tab_video_upload":
-          VISH.Editor.Video.HTML5.onLoadTab("upload");
-          break;
-				case "tab_video_repo":
-				  VISH.Editor.Video.Repository.onLoadTab();
-				  break;
-				case "tab_video_youtube":
-				  VISH.Editor.Video.Youtube.onLoadTab();
+			
+		switch(tab_id) {
+			//Image
+			case "tab_pic_from_url":
+				V.Editor.Image.onLoadTab("url");
 				break;
-				
-				default:
-				  break;
-			}	
+			case "tab_pic_upload":
+				V.Editor.Image.onLoadTab("upload");
+				break;
+			case "tab_pic_repo":
+				V.Editor.Image.Repository.onLoadTab();
+				break;
+			case "tab_pic_flikr":
+				V.Editor.Image.Flikr.onLoadTab();
+				break;
+
+			//Video
+			case "tab_video_from_url":
+				VISH.Editor.Video.HTML5.onLoadTab("url");
+				break;
+			case "tab_video_upload":
+				VISH.Editor.Video.HTML5.onLoadTab("upload");
+				break;
+			case "tab_video_repo":
+				VISH.Editor.Video.Repository.onLoadTab();
+				break;
+			case "tab_video_youtube":
+				VISH.Editor.Video.Youtube.onLoadTab();
+				break;
+
+			default:
+				break;
+		}
+
 	};
 
 
