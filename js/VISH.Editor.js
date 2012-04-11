@@ -323,8 +323,8 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onSelectableClicked = function(){
   	//change borders
-  	$(".selectable").css("border-style", "none");  	
-  	$(this).css("border", "3px solid #D9BC2B");
+  	$(".selectable").css("border-style","none");  	
+  	$(this).css("border", "2px solid rgba(255, 2, 94,0.2)");
   	
   	//show sliders
   	$(".theslider").hide();
