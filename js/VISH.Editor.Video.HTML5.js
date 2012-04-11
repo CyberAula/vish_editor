@@ -73,10 +73,8 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $(current_area).html("");
     $(current_area).append(videoTag)
     
-    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>"
-    $(current_area).append(editTag)
-		
-		
+    VISH.Editor.addDeleteButton($(current_area));
+    	
 		//RESIZE
     
 		$("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");

@@ -9981,16 +9981,17 @@ VISH.Editor = function(V, $, undefined) {
   var params = {current_el:null};
   var init = function(options) {
     initOptions = options;
-    $("a#addslide").fancybox();
+    $("a#addslide").fancybox({"width":800, "height":600});
     $(document).on("click", ".templatethumb", _onTemplateThumbClicked);
     $(document).on("click", "#save", _onSaveButtonClicked);
     $(document).on("click", ".editable", _onEditableClicked);
-    $(document).on("click", ".edit_pencil", _onEditableClicked);
+    $(document).on("click", ".selectable", _onSelectableClicked);
+    $(document).on("click", ".delete_content", _onDeleteItemClicked);
+    $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
     $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
     $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
-    var evt = document.createEvent("Event");
-    evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt);
+    V.SlideManager.addEnterLeaveEvents();
+    V.Editor.SlidesUtilities.redrawSlides();
     V.Debugging.init(true);
     V.Editor.Text.init();
     V.Editor.Video.init()
@@ -10003,6 +10004,9 @@ VISH.Editor = function(V, $, undefined) {
     $("head").append("<link>");
     css = $("head").children(":last");
     css.attr({rel:"stylesheet", type:"text/css", href:path})
+  };
+  var addDeleteButton = function(element) {
+    element.append("<div class='delete_content'><img class='delete_content_img' src='" + VISH.ImagesPath + "delete_content.png'/></div>")
   };
   var loadTab = function(tab_id) {
     $(".fancy_tab").removeClass("fancy_selected");
@@ -10061,11 +10065,9 @@ VISH.Editor = function(V, $, undefined) {
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
     V.Editor.SlidesUtilities.addSlide(slide);
-    V.Editor.SlidesUtilities.addThumbnail();
+    V.Editor.SlidesUtilities.addThumbnail("t" + $(this).attr("template"), slideEls.length + 1);
     $.fancybox.close();
-    var evt = document.createEvent("Event");
-    evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt);
+    V.Editor.SlidesUtilities.redrawSlides();
     setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300)
   };
   var _onEditableClicked = function(event) {
@@ -10081,21 +10083,61 @@ VISH.Editor = function(V, $, undefined) {
       $(domElem).attr("zone", params["current_el"].attr("id"))
     });
     $(this).html(content);
-    $("a.addpicture").fancybox({"onStart":function(data) {
+    $("a.addpicture").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_pic_from_url")
     }});
-    $("a.addflash").fancybox({"onStart":function(data) {
+    $("a.addflash").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_flash_from_url")
     }});
-    $("a.addvideo").fancybox({"onStart":function(data) {
+    $("a.addvideo").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_video_from_url")
     }})
+  };
+  var _onDeleteItemClicked = function() {
+    params["current_el"] = $(this).parent();
+    $("#image_template_prompt").attr("src", VISH.ImagesPath + params["current_el"].attr("type") + ".png");
+    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":200, "onClosed":function() {
+      if($("#prompt_answer").val() === "true") {
+        $("#prompt_answer").val("false");
+        params["current_el"].html("");
+        params["current_el"].removeAttr("type");
+        if(params["current_el"].attr("type") === "image") {
+          $(".theslider").hide()
+        }
+        params["current_el"].addClass("editable")
+      }
+    }})
+  };
+  var _onDeleteSlideClicked = function() {
+    var article_to_delete = $(this).parent();
+    $("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
+    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":200, "onClosed":function() {
+      if($("#prompt_answer").val() === "true") {
+        $("#prompt_answer").val("false");
+        article_to_delete.remove();
+        if(curSlide == slideEls.length - 1) {
+          curSlide -= 1
+        }
+        V.Editor.SlidesUtilities.redrawThumbnails();
+        V.Editor.SlidesUtilities.redrawSlides()
+      }
+    }})
+  };
+  var _onSelectableClicked = function() {
+    $(".selectable").css("border-style", "none");
+    $(this).css("border", "3px solid #D9BC2B");
+    $(".theslider").hide();
+    if($(this).attr("type") === "image") {
+      var img_id = $(this).find("img").attr("id");
+      img_id = img_id.substring(9);
+      $("#sliderId" + img_id).show()
+    }
   };
   var _onSaveButtonClicked = function() {
     var excursion = {};
@@ -10116,14 +10158,14 @@ VISH.Editor = function(V, $, undefined) {
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
           if(element.type === "text") {
-            element.body = $(div).find("div").html()
+            element.body = $(div).find(".wysiwygInstance").html()
           }else {
             if(element.type === "image") {
               element.body = $(div).find("img").attr("src");
               element.style = $(div).find("img").attr("style")
             }else {
               if(element.type === "iframe") {
-                element.body = $(div).html()
+                element.body = $(div).attr("src")
               }else {
                 if(element.type === "video") {
                   var video = $(div).find("video");
@@ -10179,7 +10221,7 @@ VISH.Editor = function(V, $, undefined) {
     }
     return null
   };
-  return{init:init, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams}
+  return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getValueFromFancybox:getValueFromFancybox, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams}
 }(VISH, jQuery);
 VISH.Editor.Video = function(V, $, undefined) {
   var init = function() {
@@ -10197,12 +10239,15 @@ VISH.Editor.Image = function(V, $, undefined) {
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr("type", "image");
-    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' /><div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>");
+    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' />");
+    V.Editor.addDeleteButton(current_area);
     $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
     $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
       $("#" + idToDragAndResize).width(325 * value)
     }});
-    $("#" + idToDragAndResize).draggable({cursor:"move"})
+    $("#" + idToDragAndResize).draggable({cursor:"move", stop:function() {
+      $(this).parent().click()
+    }})
   };
   return{onLoadTab:onLoadTab, drawImage:drawImage}
 }(VISH, jQuery);
@@ -10239,7 +10284,7 @@ VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
     $.each(element.children(".appletelement"), function(index, value) {
       var toAppend = "<applet code='" + $(value).attr("code") + "' width='" + $(value).attr("width") + "' height='" + $(value).attr("height") + "' archive='" + $(value).attr("archive") + "'>" + $(value).attr("params") + "</applet>";
-      $(value).append(toAppend)
+      $(value).html(toAppend)
     })
   };
   var unloadApplet = function(element) {
@@ -10276,7 +10321,8 @@ VISH.Debugging = function(V, $, undefined) {
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
   var nextArticleId = 1;
-  var dummies = ["<article id='article_id_to_change' template='t1'><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background'></div></article>", "<article id='article_id_to_change' template='t2'><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background'></div></article>"];
+  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'><img class='delete_icon_img' src='" + VISH.ImagesPath + "delete.png'/></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'><img class='delete_icon_img' src='" + 
+  VISH.ImagesPath + "delete.png'/></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
   var getDummy = function(template) {
     return _replaceIds(dummies[parseInt(template, 10) - 1])
   };
@@ -10298,9 +10344,16 @@ VISH.Editor.API = function(V, $, undefined) {
   var init = function() {
   };
   var requestVideos = function(text, successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.videoList["videos"]))
-    }
+    $.ajax({type:"GET", url:"/tmp.json", dataType:"html", success:function(response) {
+      if(typeof successCallback == "function") {
+        var resp = JSON.parse(response);
+        successCallback(resp)
+      }
+    }, error:function(xhr, ajaxOptions, thrownError) {
+      if(typeof failCallback == "function") {
+        failCallback()
+      }
+    }})
   };
   var requestRecomendedVideos = function(successCallback, failCallback) {
     if(typeof successCallback == "function") {
@@ -10404,9 +10457,51 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
   return{createCarrousel:createCarrousel, cleanCarrousel:cleanCarrousel}
 }(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
+  var carrouselDivId = "tab_flikr_content_carrousel";
+  var queryMaxNumberFlikrImages = 20;
   var onLoadTab = function() {
+    $("#tab_pic_flikr_content").find("input[type='search']").attr("value", "");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        VISH.Editor.Image.Flikr.listImages($(myInput).val());
+        $(myInput).blur()
+      }
+    })
   };
-  return{onLoadTab:onLoadTab}
+  var listImages = function(text) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
+    var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + text + "&tagmode=any&format=json&jsoncallback=?";
+    $.getJSON(url_flikr, function(data) {
+      $.each(data.items, function(i, item) {
+        $("#" + carrouselDivId).append('<img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" />')
+      });
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Flikr.addImage)
+    })
+  };
+  var addImage = function(event) {
+    var ImageId = $(event.target).attr("imageFlikrId");
+    var image_url = $(event.target).attr("src");
+    var template = VISH.Editor.getTemplate();
+    var current_area = VISH.Editor.getCurrentArea();
+    var nextImageFlikrId = VISH.Editor.getId();
+    $.fancybox.close();
+    var idToDragAndResize = "draggable" + nextImageFlikrId;
+    current_area.attr("type", "image");
+    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' />");
+    V.Editor.addDeleteButton(current_area);
+    $("#menubar").before("<div id='sliderId" + nextImageFlikrId + "' class='theslider'><input id='imageSlider" + nextImageFlikrId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    $("#imageSlider" + nextImageFlikrId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      $("#" + idToDragAndResize).width(325 * value)
+    }});
+    $("#" + idToDragAndResize).draggable({cursor:"move", stop:function() {
+      $(this).parent().click()
+    }})
+  };
+  return{onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
 }(VISH, jQuery);
 VISH.Editor.Image.Repository = function(V, $, undefined) {
   var onLoadTab = function() {
@@ -10414,21 +10509,49 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
   return{onLoadTab:onLoadTab}
 }(VISH, jQuery);
 VISH.Editor.SlidesUtilities = function(V, $, undefined) {
+  var redrawSlides = function() {
+    var evt = document.createEvent("Event");
+    evt.initEvent("OURDOMContentLoaded", false, true);
+    document.dispatchEvent(evt)
+  };
+  var redrawThumbnails = function() {
+    var i = 1;
+    for(i = 1;i < slideEls.length + 1;i++) {
+      $("#slide_thumb_" + i).off("click");
+      $("#slide_thumb_" + i).css("cursor", "auto");
+      $("#slide_thumb_" + i + " .slide_number").html("");
+      $("#slide_thumb_" + i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png")
+    }
+    $(".barbutton").css("background-color", "transparent");
+    if(slideEls.length > 1) {
+      var slide_to_highlight = curSlide + 1;
+      $("#slide_thumb_" + slide_to_highlight).css("background-color", "#ACACAC")
+    }
+    var template = 0;
+    var position = 1;
+    $("article").each(function(index, s) {
+      template = $(s).attr("template");
+      addThumbnail(template, position);
+      position += 1
+    })
+  };
   function addSlide(slide) {
     $(".slides").append(slide)
   }
-  function addThumbnail() {
-    var number_of_slides = slideEls.length + 1;
-    $("#" + "slide_thumb_" + number_of_slides).click(function() {
-      goToSlide(number_of_slides)
+  function addThumbnail(template_number, position) {
+    $("#slide_thumb_" + position).click(function() {
+      goToSlide(position)
     });
-    $("#" + "slide_thumb_" + number_of_slides).css("cursor", "pointer");
-    $("#" + "slide_thumb_" + number_of_slides + " .slide_number").html(number_of_slides)
+    $("#slide_thumb_" + position).css("cursor", "pointer");
+    $("#slide_thumb_" + position + " .slide_number").html(position);
+    $("#slide_thumb_" + position + " img").attr("src", VISH.ImagesPath + "templatesthumbs/" + template_number + ".png")
   }
   function lastSlide() {
     goToSlide(slideEls.length)
   }
   function goToSlide(no) {
+    $(".selectable").css("border-style", "none");
+    $(".theslider").hide();
     if(no > slideEls.length || no <= 0) {
       return
     }else {
@@ -10445,9 +10568,9 @@ VISH.Editor.SlidesUtilities = function(V, $, undefined) {
       }
     }
     $(".barbutton").css("background-color", "transparent");
-    $("#" + "slide_thumb_" + no).css("background-color", "blue")
+    $("#slide_thumb_" + no).css("background-color", "#ACACAC")
   }
-  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, addThumbnail:addThumbnail}
+  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, addThumbnail:addThumbnail, redrawSlides:redrawSlides, redrawThumbnails:redrawThumbnails}
 }(VISH, jQuery);
 VISH.Editor.Text = function(V, $, undefined) {
   var myNicEditor;
@@ -10465,7 +10588,8 @@ VISH.Editor.Text = function(V, $, undefined) {
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
     current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
-    myNicEditor.addInstance(wysiwygId)
+    myNicEditor.addInstance(wysiwygId);
+    V.Editor.addDeleteButton(current_area)
   };
   return{init:init, launchTextEditor:launchTextEditor}
 }(VISH, jQuery);
@@ -10521,8 +10645,7 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
     $(videoTag).append(fallbackText);
     $(current_area).html("");
     $(current_area).append(videoTag);
-    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='" + VISH.ImagesPath + "/edit.png'/></div>";
-    $(current_area).append(editTag);
+    VISH.Editor.addDeleteButton($(current_area));
     $("#menubar").before("<div id='sliderId" + nextVideoId + "' class='theslider'><input id='imageSlider" + nextVideoId + "' type='slider' name='size' value='1' style='display: none; '></div>");
     $("#imageSlider" + nextVideoId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
       $("#" + idToDragAndResize).width(325 * value)
@@ -10609,7 +10732,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       var sourcesArray = [];
       var options = new Array;
       options["poster"] = selectedVideo.poster;
-      var sources = JSON.parse(selectedVideo.sources);
+      var sources = selectedVideo.sources;
       $.each(sources, function(index, source) {
         sourcesArray.push([source.src, source.mimetype])
       });
@@ -10626,6 +10749,9 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var onLoadTab = function() {
     $("#youtube_preview").remove();
     $("#preview_video_button").remove();
+    $("#youtube_preview_metadata").remove();
+    $("#youtube_text_to_search").attr("value", "");
+    $("#tab_video_youtube_content_carrousel").children("*").remove();
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     $(myInput).watermark("Search content");
@@ -10642,39 +10768,68 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     var nextVideoId = VISH.Editor.getId();
     $.fancybox.close();
     var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = "<div id='youtube_" + nextVideoId + "' class='iframe_youtube' src='" + video_embedded + "?wmode=transparent' ><iframe type='text/html' class='" + template + "_video'  style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe></div>";
+    var final_video = "<iframe type='text/html' class='" + template + "_video'  style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
     var current_area = VISH.Editor.getCurrentArea();
+    current_area.addClass("iframeelement");
     current_area.attr("type", "iframe");
-    current_area.html(final_video)
+    current_area.parent().addClass("iframe");
+    current_area.attr("src", final_video);
+    current_area.html(final_video);
+    V.Editor.addDeleteButton(current_area)
   };
   var showYoutubeVideo = function(e) {
     var video_embedded = "http://www.youtube.com/embed/" + hash_youtube_video_id[e.target.id];
-    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:300px; height:225px; padding-top:10px;" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
+    var title = hash_youtube_video_id["title" + e.target.id.replace("vid", "")];
+    var author = hash_youtube_video_id["author" + e.target.id.replace("vid", "")];
+    var subtitle = hash_youtube_video_id["subtitle" + e.target.id.replace("vid", "")];
+    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:350px; height:195px; " src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")) {
       $("#preview_video_button").remove()
     }
-    $("#tab_video_youtube_content").append('<button id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\'' + hash_youtube_video_id[e.target.id] + "')\" >add this video</button>")
+    $("#tab_video_youtube_content").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\'' + hash_youtube_video_id[e.target.id] + "')\" >add this video</button>");
+    var table = _generateTable(author, title, subtitle);
+    $("#youtube_preview_metadata").html(table)
   };
   var listVideo = function(text) {
     $("#youtube_preview").remove();
     $("#preview_video_button").remove();
+    $("#youtube_preview_metadata").remove();
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
     var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
     jQuery.getJSON(url_youtube, function(data) {
       $.each(data.feed.entry, function(i, item) {
-        var title = item["title"]["$t"];
         var video = item["id"]["$t"];
+        var title = item["title"]["$t"];
+        var author = item.author[0].name.$t;
+        var subtitle = item.media$group.media$description.$t;
         video = video.replace("http://gdata.youtube.com/feeds/api/videos/", "http://www.youtube.com/watch?v=");
         videoID = video.replace("http://www.youtube.com/watch?v=", "");
         hash_youtube_video_id["vid" + i] = videoID;
+        hash_youtube_video_id["title" + i] = title;
+        hash_youtube_video_id["author" + i] = author;
+        hash_youtube_video_id["subtitle" + i] = subtitle;
         var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
         $("#" + carrouselDivId).append('<img id="vid' + i + '" src="' + image_url + '" />')
       });
       VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.showYoutubeVideo)
     });
-    $("#tab_video_youtube_content").append('<div id="youtube_preview" style="width:300px; height:240px; padding-left:30%;"></div>')
+    $("#tab_video_youtube_content").append('<div id="youtube_preview" ></div>');
+    $("#tab_video_youtube_content").append('<div id="youtube_preview_metadata"></div>')
+  };
+  var _generateTable = function(author, title, description) {
+    if(!author) {
+      author = ""
+    }
+    if(!title) {
+      title = ""
+    }
+    if(!description) {
+      description = ""
+    }
+    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
+    description + "</div></td>" + "</tr>" + "</table>"
   };
   return{onLoadTab:onLoadTab, drawYoutubeVideo:drawYoutubeVideo, showYoutubeVideo:showYoutubeVideo, listVideo:listVideo}
 }(VISH, jQuery);
@@ -10769,7 +10924,7 @@ VISH.Renderer = function(V, $, undefined) {
     var autoplay = element["autoplay"] ? "autoplayonslideenter='" + element["autoplay"] + "' " : "";
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
-    var sources = JSON.parse(element["sources"]);
+    var sources = element["sources"];
     rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
     $.each(sources, function(index, source) {
       var mimetype = source.mimetype ? "type='" + source.mimetype + "' " : "";
@@ -10785,7 +10940,8 @@ VISH.Renderer = function(V, $, undefined) {
     return"<div id='" + element["id"] + "' class='swfelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_swf" + "' src='" + element["body"] + "'></div>"
   };
   var _renderIframe = function(element, template) {
-    return"<div id='" + element["id"] + "' class='iframeelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_iframe" + "' src='" + element["body"] + "'></div>"
+    var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
+    return to_return
   };
   var _renderApplet = function(element, template) {
     return"<div id='" + element["id"] + "' class='appletelement " + template + "_" + element["areaid"] + "' code='" + element["code"] + "' width='" + element["width"] + "' height='" + element["height"] + "' archive='" + element["archive"] + "' params='" + element["params"] + "' ></div>"
@@ -10819,12 +10975,12 @@ VISH.Renderer = function(V, $, undefined) {
 VISH.SWFPlayer = function() {
   var loadSWF = function(element) {
     $.each(element.children(".swfelement"), function(index, value) {
-      $(value).append("<embed src='" + $(value).attr("src") + "' class='" + $(value).attr("templateclass") + "' />")
+      $(value).html("<embed src='" + $(value).attr("src") + "' class='" + $(value).attr("templateclass") + "' />")
     })
   };
   var loadIframe = function(element) {
     $.each(element.children(".iframeelement"), function(index, value) {
-      $(value).append($(value).attr("src"))
+      $(value).html($(value).attr("src"))
     })
   };
   var unloadSWF = function(element) {
@@ -10854,8 +11010,8 @@ VISH.SlideManager = function(V, $, undefined) {
     V.Excursion.init(mySlides)
   };
   var addEnterLeaveEvents = function() {
-    $("article").on("slideenter", _onslideenter);
-    $("article").on("slideleave", _onslideleave)
+    $("article").live("slideenter", _onslideenter);
+    $("article").live("slideleave", _onslideleave)
   };
   var getStatus = function(slideid) {
     if(!slideStatus[slideid]) {
