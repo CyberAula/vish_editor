@@ -8,8 +8,14 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
 		//clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+		if($("#carrousel_prev")) 
+		$("#carrousel_prev").remove();
+		if($("#carrousel_next")) 
+		$("#carrousel_next").remove();
+		if($("#carrousel_pag")) 
+		$("#carrousel_pag").remove();
 		
-					
+							
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
 		
 	  	$(myInput).watermark('Search content');
@@ -27,7 +33,13 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		
 	    //clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
-
+	if($("#carrousel_prev")) 
+		$("#carrousel_prev").remove();
+		if($("#carrousel_next")) 
+		$("#carrousel_next").remove();
+		if($("#carrousel_pag")) 
+		$("#carrousel_pag").remove();
+		
  
 		//
 		var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
@@ -44,7 +56,18 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 1, VISH.Editor.Image.Flikr.addImage);
 
 	     });
+$("#tab_pic_flikr_content").append('<div id="flikr_preview_metadata"></div>');
 	};
+
+
+var previewMetadata = function(event) {
+
+
+console.log("event" + event);
+//add button + pictura table information
+
+};
+
 
 
 var addImage = function(event){

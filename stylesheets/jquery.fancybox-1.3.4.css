@@ -114,6 +114,10 @@
 	display: none;
 }
 
+#fancybox-close:hover{
+	background: transparent url('/images/fancybox/fancybox_hover.png') -40px 0px;
+}
+
 #fancybox-error {
 	color: #444;
 	font: normal 12px/20px Arial;
