@@ -72,28 +72,28 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a video inside an article (a slide)
 	 */
 	var renderVideo = function(element, template){
-		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>"
-		var style = (element['style'])?"style='" + element['style'] + "'":""
-		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' "
-		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":""
-		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
-		var loop=(element['loop'])?"loop='loop' ":""
-		var sources = JSON.parse(element['sources'])
+		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
+		var style = (element['style'])?"style='" + element['style'] + "'":"";
+		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
+		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":"";
+		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
+		var loop=(element['loop'])?"loop='loop' ":"";
+		var sources = element['sources'];
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">"
+		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
 		$.each(sources, function(index, source) {
-			var mimetype = (source.mimetype)?"type='" + source.mimetype + "' ":""
-			rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">"
+			var mimetype = (source.mimetype)?"type='" + source.mimetype + "' ":"";
+			rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">";
 		});
 		
 		if(sources.length>0){
-			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
+			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>";
 		}
 		
-		rendered = rendered + "</video>"
+		rendered = rendered + "</video>";
 		
-		return rendered
+		return rendered;
 	};
 
 	/**

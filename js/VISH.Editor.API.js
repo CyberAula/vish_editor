@@ -25,11 +25,13 @@ VISH.Editor.API = (function(V,$,undefined){
      
      	$.ajax({
                 type: "GET",
-                url: "videos.json?q="+text,
+                //url: "/videos.json?q="+text,
+                url: "/tmp.json",
                 dataType:"html",
                 success:function(response){
                     if(typeof successCallback == "function"){
-      					successCallback(response);
+                    	var resp = JSON.parse(response);
+      					successCallback(resp);
     				}
                 },
                 error:function (xhr, ajaxOptions, thrownError){

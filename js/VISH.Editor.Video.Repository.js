@@ -43,7 +43,7 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
    */
 	var onDataReceived = function(data){
     //Clean previous content
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId)
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     
     //Clean previous videos
     currentVideos = new Array();  
@@ -52,7 +52,7 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
     
     $.each(data, function(index, video) {
       content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>"
-      currentVideos[video.id]=video
+      currentVideos[video.id]=video;
     });
 
     $("#" + carrouselDivId).html(content);
@@ -60,26 +60,26 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
   }
 	
 	var onAPIError = function(){
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId)
-		console.log("API error")
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		console.log("API error");
   }
 	 
   var onClickCarrouselElement = function(event){
     var videoId = $(event.target).attr("videoid");
-    var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId],"preview")
-	  _renderVideoPreview(renderedVideo,currentVideos[videoId])
+    var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId],"preview");
+	  _renderVideoPreview(renderedVideo,currentVideos[videoId]);
 		selectedVideo = currentVideos[videoId];
   }
 	
 	var _renderVideoPreview = function(renderedVideo,video){
-		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video")
-		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata")
-		$(videoArea).html("")
-		$(metadataArea).html("")
+		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
+		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+		$(videoArea).html("");
+		$(metadataArea).html("");
 		if((renderedVideo)&&(video)){
-			$(videoArea).append(renderedVideo)
-			var table = _generateTable(video.author,video.title,video.description)
-			$(metadataArea).html(table)
+			$(videoArea).append(renderedVideo);
+			var table = _generateTable(video.author,video.title,video.description);
+			$(metadataArea).html(table);
 		}
 	}
 	
@@ -119,9 +119,9 @@ VISH.Editor.Video.Repository = (function(V,$,undefined){
 			var sourcesArray=[];
 			var options = new Array();
       options['poster'] = selectedVideo.poster;
-			var sources = JSON.parse(selectedVideo.sources)
+			var sources = selectedVideo.sources;
 			$.each(sources, function(index, source) {
-				sourcesArray.push([source.src,source.mimetype])
+				sourcesArray.push([source.src,source.mimetype]);
       });
 			VISH.Editor.Video.HTML5.drawVideo(sourcesArray,options);
 			$.fancybox.close();
