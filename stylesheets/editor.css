@@ -280,15 +280,16 @@
 
 .delete_slide{
 	position: absolute;
-	top: -5px;
+	top: 5px;
 	right: 5px;
 	width: 22px;
 	height: 22px;
+	cursor:pointer;
+	background: url(/images/delete.png);
 }
 
-.delete_icon_img{
-	width: 22px;
-	height: 22px;
+.delete_slide:hover{
+	background: url(/images/hover/delete_hover.png);
 }
 
 .delete_content{
@@ -298,15 +299,14 @@
 	width: 40px;
 	height: 40px;
 	cursor:pointer;
+	background: url(/images/delete_content.png);
 }
 
-.delete_content_img{
-	cursor:pointer;
-	width: 40px;
-	height: 40px;
+.delete_content:hover{
+	background: url(/images/hover/delete_content_hover.png);
 }
 
-.addpicture {
+.addpicture{
 	width: 50px;
 	height: 50px;
 }

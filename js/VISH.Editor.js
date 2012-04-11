@@ -75,7 +75,7 @@ VISH.Editor = (function(V,$,undefined){
    * Function to add a delete button to the element
    */
   var addDeleteButton = function(element){
-  	element.append("<div class='delete_content'><img class='delete_content_img' src='"+VISH.ImagesPath+"delete_content.png'/></div>");
+  	element.append("<div class='delete_content'></div>");
   };
   
 
