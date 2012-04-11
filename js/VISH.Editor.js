@@ -269,7 +269,8 @@ VISH.Editor = (function(V,$,undefined){
 		{
         	'autoDimensions'	: false,
 			'width'         	: 350,
-			'height'        	: 200,
+			'height'        	: 150,
+			'showCloseButton'	: false,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
@@ -297,7 +298,8 @@ VISH.Editor = (function(V,$,undefined){
 		{
         	'autoDimensions'	: false,
 			'width'         	: 350,
-			'height'        	: 200,
+			'height'        	: 150,
+			'showCloseButton'	: false,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){

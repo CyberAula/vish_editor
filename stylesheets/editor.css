@@ -528,6 +528,50 @@ table.metadata td div.height_wrapper_description{
 	margin-top: 7px;
 }
 
+.delete_img{
+	margin-left: 25px;
+	margin-top: 30px;
+	height: 50px;
+}
+
+.deltext{
+	text-decoration:none;
+	font-family:Helvetica;
+	font-size:40px;
+	color:#CCC;
+	margin-left: -5px;
+	padding-bottom: 15px;
+}
+
+.delimg{
+	margin-left: -20px;
+}
+.button1 {
+	margin-left: 220px;
+	margin-top: 25px;
+}
+.button {
+	margin-top: 15px;
+    padding: 5px 10px;
+    display: inline;
+	text-decoration:none;
+    background: #CCC repeat-x bottom;
+	color:#FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    }	
+	
+.button:hover {
+	background:#DDD;
+	text-shadow: 1px 1px #666;
+    }
+	
+.button:active {
+}
+
 #youtube_preview{
 	width: 350px;
 	height: 195px;
