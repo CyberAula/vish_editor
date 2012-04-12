@@ -147,9 +147,29 @@ VISH.Samples.API = (function(V,undefined){
                  ']'
     }
     ]};
-
+    
+    var flashList = {
+    'flashes'       : [
+    {
+      'id'     : '1534',
+      'title'         :  'HTML5 Demo',
+      'description'   :  'Flash Object Test',
+      'author'        :  'FlashMan',
+      'content'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'
+    },
+    {
+        'id'     : '1535',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<object width="100%" height="100%" id="player_api" data="flowplayer/flowplayer.commercial-3.1.5.swf" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="cachebusting" value="false"><param name="bgcolor" value="#000000"></object>'
+    },
+    ]};
+    
+    
 	return {
-		videoList: videoList
+		videoList: videoList,
+		flashList: flashList
 	};
 
 })(VISH);

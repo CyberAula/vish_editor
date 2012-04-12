@@ -41,6 +41,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Video.init();
+		V.Editor.Flash.init();
 	};
 	
 	
@@ -128,6 +129,18 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Video.Youtube.onLoadTab();
 				break;
 
+			//Flash
+			case "tab_flash_from_url":
+				VISH.Editor.Flash.onLoadTab("url");
+				break;
+			case "tab_flash_upload":
+				VISH.Editor.Flash.onLoadTab("upload");
+				break;
+			case "tab_flash_repo":
+				VISH.Editor.Flash.Repository.onLoadTab();
+				break;
+				
+				
 			default:
 				break;
 		}

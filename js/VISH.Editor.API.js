@@ -55,13 +55,36 @@ VISH.Editor.API = (function(V,$,undefined){
 		if(typeof successCallback == "function"){
 			successCallback(VISH.Samples.API.videoList['videos']);
 		}
-  }
+    }
+	
+	
+	/**
+	 * function to call to VISH and request flash objects in json format
+	 * Actual version is a skeleton, get sample json from local file.
+	 */
+	var requestFlashes = function(text, successCallback, failCallback){		
+		if(typeof successCallback == "function"){
+	        successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.flashList['flashes']));
+	    }
+	}
+	
+	
+	/**
+	 * function to call to VISH and request recommended flash objects
+	 */
+	var requestRecomendedFlash = function(successCallback, failCallback){
+		if(typeof successCallback == "function"){
+			successCallback(VISH.Samples.API.flashList['flashes']);
+		}
+    }
 	
 	
 	return {
 		init					: init,
 		requestVideos           : requestVideos,
-		requestRecomendedVideos : requestRecomendedVideos
+		requestRecomendedVideos : requestRecomendedVideos,
+		requestFlashes			: requestFlashes,
+		requestRecomendedFlash  : requestRecomendedFlash
 	};
 
 }) (VISH, jQuery);

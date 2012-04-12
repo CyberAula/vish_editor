@@ -14,6 +14,7 @@
     float: left;
 }
 
+
 a.prev, a.next {
     background: url(../images/carrousel_sprite.png) no-repeat transparent;
     width: 45px;
@@ -99,4 +100,9 @@ a.prev span, a.next span {
   height: 150px;
   max-width: 150px;
   max-height: 150px;
+}
+
+.flash_object_carrousel {
+    max-height: 100px;
+    max-width: 100px;
 }

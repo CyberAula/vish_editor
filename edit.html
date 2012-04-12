@@ -33,8 +33,8 @@
 	  <script type="text/javascript" src="js/libs/jquery.ui.widget.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.ui.draggable.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.slider.min.js"></script>
-		<script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
-		<script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>	
+	  <script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>	
 	  
   </head>
   
@@ -204,18 +204,29 @@
 				  </ul>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
-				  Paste flash embed code
-				  <input id="flash_embed_code" type="text" size="25" value="">
-				  <button type="button" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')">Done</button>
+				  <input id="flash_embed_code" type="text" class="rounded vishtab url">
+					<button type="button" class="okButton" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')"> Add</button>
 				</div>
 				<div id='tab_flash_upload_content' class="fancy_tab_content">
-				  Select flash to upload
-				  <input id="upload_flash_input" type="text" size="25" value="">
-				  <button type="button" onclick="alert('Uploaded!')">Upload</button>
+					<input id="upload_flash_input" type="text" class="rounded vishtab upload">
+                    <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
-				<div id='tab_flash_repo_content' class="fancy_tab_content">
-				  Vish repository	    
-				</div>
+				<div id='tab_flash_repo_content' class="fancy_tab_content">				  
+					<div class="search_container">
+					  <input type="search" class="rounded vishtab" > </input>
+					</div>
+					
+					<div id="tab_flash_repo_content_carrousel"></div>
+					<div id="tab_flash_repo_content_preview">
+						<div id="tab_flash_repo_content_preview_flash">
+							
+						</div>
+						<div id="tab_flash_repo_content_preview_metadata"></div>
+						<div id="tab_flash_repo_content_preview_foot">
+							<button type="button" class="okButton" onclick="VISH.Editor.Flash.Repository.addSelectedFlash()">Add</button>
+						</div>
+					</div>
+				</div>	 
 	    </div>
 	  </div>
   
@@ -237,7 +248,7 @@
 				</div>
 				<div id='tab_video_upload_content' class="fancy_tab_content">
 					<input id="upload_video_input" type="text" class="rounded vishtab upload">
-          <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
+                    <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
 				</div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">				  
 					<div class="search_container">
@@ -303,6 +314,8 @@
     <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
     <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>
     <script type="text/javascript" src="js/VISH.Editor.Image.Flikr.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Flash.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Flash.Repository.js"></script>
     <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.SlidesUtilities.js"></script>
