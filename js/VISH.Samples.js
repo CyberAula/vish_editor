@@ -187,7 +187,7 @@ VISH.Samples = (function(V,undefined){
 					'autoplay' : false,
 					'loop' : false,
 					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
-					'sources': '[{ "mimetype": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"mimetype": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
+					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
 				}
 			]
 		},
@@ -213,7 +213,7 @@ VISH.Samples = (function(V,undefined){
 					'areaid' : 'right',
 					'controls' : true,
 					'autoplay' : true,
-					'sources': '[{ "mimetype": "video/webm", "src": "videos/kids.webm"},{"mimetype": "video/mp4","src": "videos/kids.mp4"}]'
+					'sources': '[{ "type": "video/webm", "src": "videos/kids.webm"},{"type": "video/mp4","src": "videos/kids.mp4"}]'
 				}
 			]
 		},
