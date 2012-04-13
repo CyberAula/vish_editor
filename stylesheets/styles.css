@@ -29,6 +29,7 @@ body {
 }
 
 .slides {
+	background-color:rgb(249, 249, 249);
   width: 100%;
   height: 100%;
   left: 0;
@@ -37,7 +38,6 @@ body {
   position: absolute;
 
   -webkit-transform: translate3d(0, 0, 0);
-  background: url("/images/background.jpg");
   border-radius: 20px;
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
