@@ -42,6 +42,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Text.init();
 		V.Editor.Video.init();
 		V.Editor.Flash.init();
+		
+		//Remove overflow from fancybox
+//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 	};
 	
 	
@@ -160,7 +163,7 @@ VISH.Editor = (function(V,$,undefined){
         V.Editor.Image.drawImage($("#"+id_to_get).val());
         break;
       case "flash_embed_code":
-        console.log("Feature not implemented: Flash embed code")
+    	V.Editor.Flash.drawFlashObject($("#"+id_to_get).val())
         break;
       case "video_url":
         V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
@@ -377,31 +380,35 @@ VISH.Editor = (function(V,$,undefined){
           element.id     = $(div).attr('id');
           element.type   = $(div).attr('type');
           element.areaid = $(div).attr('areaid');
-          if(element.type==="text"){
+          if(element.type=="text"){
             //TODO make this text json safe
             element.body   = $(div).find(".wysiwygInstance").html();
-          } else if(element.type==="image"){
+          } else if(element.type=="image"){
             element.body   = $(div).find('img').attr('src');
             element.style  = $(div).find('img').attr('style');
-          } else if(element.type==="iframe"){
+          } else if(element.type=="iframe"){
             element.body   = $(div).attr('src'); //we have the iframe code in the src attribute
-          } else if(element.type==="video"){
-						var video = $(div).find("video");
-						element.poster = $(video).attr("poster");
-						element.style  = $(video).attr('style');
-						
-						//Sources
-						var sources= '';				
-						$(video).find('source').each(function(index, source) {
-							if(index!=0){
-								sources = sources + ',';
-							}
-							var mymetipe = (typeof $(source).attr("type") != "undefined")?' "mimetype": "' + $(source).attr("type") + '", ':''
-              sources = sources + '{' + mymetipe + '"src": "' + $(source).attr("src") + '"}'
+          } else if(element.type=="video"){
+		    var video = $(div).find("video");
+			element.poster = $(video).attr("poster");
+			element.style  = $(video).attr('style');
+			//Sources
+			var sources= '';				
+			$(video).find('source').each(function(index, source) {
+			  if(index!=0){
+			    sources = sources + ',';
+			  }
+			  var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
+              sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
             });
-						sources = '[' + sources + ']'
-						element.sources = sources;
-					}
+			sources = '[' + sources + ']'
+			element.sources = sources;
+	      } else if(element.type=="swf"){
+	    	  var swf = $(div).find("embed");
+	    	  element.body   = $(swf).attr('src');
+	    	  element.style  = $(swf).parent().attr('style');
+	      }
+          
           slide.elements.push(element);
           element = {};
         }

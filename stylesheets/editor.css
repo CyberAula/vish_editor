@@ -579,11 +579,17 @@ table.metadata td div.height_wrapper_description{
 	float: left;
 }
 
-
-
 #youtube_preview_metadata{
 	width: 300px;
 	height: 195px;
 	float: right;
 	overflow: hidden;
+}
+
+
+
+/* Objects wrapper */
+
+div.object_wrapper{
+	border: 10px #9E1F63 solid;
 }

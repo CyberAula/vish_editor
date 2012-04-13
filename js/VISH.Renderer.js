@@ -102,7 +102,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * when entering a slide with a swf class we call V.SWFPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the src inside the div
 	 */
 	var _renderSwf = function(element, template){
-		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
+		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"' swfStyle='" + element['style'] + "'></div>";
 	};
 	
 	/**

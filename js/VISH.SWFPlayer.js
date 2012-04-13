@@ -6,7 +6,7 @@ VISH.SWFPlayer = (function(){
 	 */
 	var loadSWF = function(element){
 		$.each(element.children('.swfelement'),function(index,value){
-			$(value).html("<embed src='"+$(value).attr('src')+"' class='"+$(value).attr('templateclass')+"' />");
+			$(value).html("<embed src='"+$(value).attr('src')+"' class='"+$(value).attr('templateclass')+"' style='" + $(value).attr('swfStyle') + "' />");
 		});
 	};
 

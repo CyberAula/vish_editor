@@ -162,7 +162,7 @@ VISH.Samples.API = (function(V,undefined){
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<object width="100%" height="100%" id="player_api" data="flowplayer/flowplayer.commercial-3.1.5.swf" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="cachebusting" value="false"><param name="bgcolor" value="#000000"></object>'
+        'content'       :  '<object width="100%" height="100%" id="player_api" data="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="cachebusting" value="false"><param name="bgcolor" value="#000000"></object>'
     },
     ]};
     
