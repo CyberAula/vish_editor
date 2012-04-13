@@ -45,6 +45,9 @@
 	width: 100%;
 	z-index: 1100;
 	display: none;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 
 #fancybox-tmp {
@@ -56,6 +59,7 @@
 }
 
 #fancybox-wrap {
+	margin-top: -45px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -112,6 +116,10 @@
 	cursor: pointer;
 	z-index: 1103;
 	display: none;
+}
+
+#fancybox-close:hover{
+	background: transparent url('/assets/fancybox/fancybox_hover.png') -40px 0px;
 }
 
 #fancybox-error {

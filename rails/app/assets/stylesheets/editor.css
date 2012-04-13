@@ -131,7 +131,7 @@
 	width: 100px;
 	height: 75px;
 	background-color: rgb(240,240,240);
-	margin: 15px 10px 5px 15px;
+	margin: 16px 11px 6px 16px;
 	float: left;
 	color: black;
 	cursor: pointer;
@@ -146,14 +146,15 @@
 }
 
 .templatethumb:hover{
-	box-shadow: 5px 5px 5px #888;
-	-moz-box-shadow: 5px 5px 5px #888;
-	-webkit-box-shadow: 5px 5px 5px #888;
-	border: 1px solid black;
+	border: 1px solid rgb(255, 2, 94);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
 	border-radius: 9px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	
+	outline: 0;
+	outline: thin dotted \9;	
 }
 
 .grey_background{
@@ -213,8 +214,6 @@
 	width: 800px;
 	height: 600px;
 }
-.fancy_tab_flickr
-
 .fancy_tabs{
 	background: white;
 }
@@ -280,15 +279,16 @@
 
 .delete_slide{
 	position: absolute;
-	top: -5px;
+	top: 5px;
 	right: 5px;
 	width: 22px;
 	height: 22px;
+	cursor:pointer;
+	background: url(/assets/delete.png);
 }
 
-.delete_icon_img{
-	width: 22px;
-	height: 22px;
+.delete_slide:hover{
+	background: url(/assets/hover/delete_hover.png);
 }
 
 .delete_content{
@@ -298,15 +298,14 @@
 	width: 40px;
 	height: 40px;
 	cursor:pointer;
+	background: url(/assets/delete_content.png);
 }
 
-.delete_content_img{
-	cursor:pointer;
-	width: 40px;
-	height: 40px;
+.delete_content:hover{
+	background: url(/assets/hover/delete_content_hover.png);
 }
 
-.addpicture {
+.addpicture{
 	width: 50px;
 	height: 50px;
 }
@@ -528,6 +527,50 @@ table.metadata td div.height_wrapper_description{
 	margin-top: 7px;
 }
 
+.delete_img{
+	margin-left: 25px;
+	margin-top: 30px;
+	height: 50px;
+}
+
+.deltext{
+	text-decoration:none;
+	font-family:Helvetica;
+	font-size:40px;
+	color:#CCC;
+	margin-left: -5px;
+	padding-bottom: 15px;
+}
+
+.delimg{
+	margin-left: -20px;
+}
+.button1 {
+	margin-left: 220px;
+	margin-top: 25px;
+}
+.button {
+	margin-top: 15px;
+    padding: 5px 10px;
+    display: inline;
+	text-decoration:none;
+    background: #CCC repeat-x bottom;
+	color:#FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    }	
+	
+.button:hover {
+	background:#DDD;
+	text-shadow: 1px 1px #666;
+    }
+	
+.button:active {
+}
+
 #youtube_preview{
 	width: 350px;
 	height: 195px;
@@ -536,11 +579,17 @@ table.metadata td div.height_wrapper_description{
 	float: left;
 }
 
-
-
 #youtube_preview_metadata{
 	width: 300px;
 	height: 195px;
 	float: right;
 	overflow: hidden;
+}
+
+
+
+/* Objects wrapper */
+
+div.object_wrapper{
+	border: 10px #9E1F63 solid;
 }

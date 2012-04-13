@@ -2,7 +2,7 @@ require "bundler/gem_tasks"
 require "rails"
 
 # configure these defaults based on Your needs :
-JS_FILES_AND_DIRS = ['app/assets/js_to_compile/libs', 'app/assets/js_to_compile/VISH.js', 'app/assets/js_to_compile/VISH.Editor.js', 'app/assets/js_to_compile/VISH.Editor.Video.js', 'app/assets/js_to_compile/VISH.Editor.Image.js', 'app/assets/js_to_compile/VISH.Samples.js', 'app/assets/js_to_compile/VISH.Samples.API.js', 'app/assets/js_to_compile', 'app/assets/js_to_compile/mods/fc']
+JS_FILES_AND_DIRS = ['app/assets/js_to_compile/libs', 'app/assets/js_to_compile/VISH.js', 'app/assets/js_to_compile/VISH.Editor.js', 'app/assets/js_to_compile/VISH.Editor.Video.js', 'app/assets/js_to_compile/VISH.Editor.Image.js', 'app/assets/js_to_compile/VISH.Editor.Flash.js', 'app/assets/js_to_compile/VISH.Samples.js', 'app/assets/js_to_compile/VISH.Samples.API.js', 'app/assets/js_to_compile', 'app/assets/js_to_compile/mods/fc']
 
 COMPILER_JAR_PATH = "lib/java/build/compiler.jar" # adjust the jar path !
 # only required if running under JRuby - will compile multiple files
