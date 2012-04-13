@@ -102,7 +102,15 @@ a.prev span, a.next span {
   max-height: 150px;
 }
 
-.flash_object_carrousel {
+.carrousel_object_wrapper {
     max-height: 100px;
     max-width: 100px;
+    margin: 11px;
+    float: left;
+    display: inline;
+    border-top: 10px #9E1F63 solid;
+}
+
+.carrousel_object {
+    
 }

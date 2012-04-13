@@ -155,15 +155,71 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'HTML5 Demo',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1535',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<object width="100%" height="100%" id="player_api" data="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="cachebusting" value="false"><param name="bgcolor" value="#000000"></object>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
+    {
+        'id'     : '1536',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1537',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1538',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1539',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1540',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1541',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1542',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+    },
+    {
+        'id'     : '1543',
+        'title'         :  'HTML5 Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'content'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'
+    }
     ]};
     
     

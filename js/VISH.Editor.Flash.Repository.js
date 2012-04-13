@@ -43,8 +43,6 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
    */
   var onDataReceived = function(data){
 	  
-	console.log("VISH.Editor.Flash.Repository onDataReceived")
-	  
     //Clean previous content
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
   
@@ -55,13 +53,14 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
     
     $.each(data, function(index, flash) {
       //Flash preview... [flashid]
-      content = content + "<div id='" + flash.id + "' class='flash_object_carrousel'>" +  flash.content + "</div>"
+      content = content + "<div style='width:150px' flashid='" + flash.id + "' class='carrousel_object_wrapper'>" +  flash.content + "</div>"
       currentFlash[flash.id]=flash;
     });
 
     $("#" + carrouselDivId).html(content);
-    $(".flash_object_carrousel").children().height($(".flash_object_carrousel").height());
-    $(".flash_object_carrousel").children().width($(".flash_object_carrousel").width());
+    
+    $(".carrousel_object_wrapper").children().addClass("carrousel_object");
+    _autoResizeObjects();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Flash.Repository.onClickCarrouselElement);
   }
 	
@@ -70,25 +69,33 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
 //    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
   }
 	 
+  
   var onClickCarrouselElement = function(event){
-//	var flashId = $(event.target).attr("flashid");
+	var flashId = $(event.target).attr("flashid");
 //	var renderedFlash = VISH.Renderer.renderFlash(currentFlash[flashId],"preview");
 //	_renderFlashPreview(renderedFlash,currentFlash[flashId]);
-//	selectedFlash = currentFlash[flashId];
+	selectedFlash = currentFlash[flashId];
+	addSelectedFlash();
   }
-	
+  
+  
   var _renderFlashPreview = function(renderedFlash,flash){
-    var flashArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-	var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
-	$(flashArea).html("");
-	$(metadataArea).html("");
-	if((renderedFlash)&&(flash)){
-	  $(flashArea).append(renderedFlash);
-	  var table = _generateTable(flash.author,flash.title,flash.description);
-	  $(metadataArea).html(table);
-	}
+//    var flashArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
+//	var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+//	$(flashArea).html("");
+//	$(metadataArea).html("");
+//	if((renderedFlash)&&(flash)){
+//	  $(flashArea).append(renderedFlash);
+//	  var table = _generateTable(flash.author,flash.title,flash.description);
+//	  $(metadataArea).html(table);
+//	}
   }
 	
+  
+  var _autoResizeObjects = function(){
+	  $(".carrousel_object_wrapper").children().height($(".carrousel_object_wrapper").height());
+	  $(".carrousel_object_wrapper").children().width($(".carrousel_object_wrapper").width());
+  }
 	
   var _generateTable = function(author,title,description){
 	
@@ -122,10 +129,23 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
 	
   
   var addSelectedFlash = function(){
-	  if(selectedFlash!=null){
-//		  VISH.Editor.Flash.drawFlash("");
-		  $.fancybox.close();
-	    }
+    if(selectedFlash!=null){
+      var content = $(selectedFlash.content)
+      var src = _getSourceFromObject(content)
+      if(src){
+        VISH.Editor.Flash.drawFlashObject(src);
+      }
+      $.fancybox.close();
+    }
+  }
+  
+  var _getSourceFromObject = function(object){
+	  if ($(object).attr("src").length > 0){
+		  return $(object).attr("src");
+	  } else if($(object).attr("data").length > 0){
+		  return $(object).attr("data");
+	  }
+	  return null;
   }
 	
 	

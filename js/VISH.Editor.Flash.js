@@ -14,7 +14,7 @@ VISH.Editor.Flash = (function(V,$,undefined){
 	}
 	
 	
-	var drawFlashObject = function(url){
+	var drawFlashObject = function(src){
 	  var current_area = VISH.Editor.getCurrentArea();
 	  var template = VISH.Editor.getTemplate();
 
@@ -32,7 +32,7 @@ VISH.Editor.Flash = (function(V,$,undefined){
 	  embedTag.setAttribute('id', idToResize );
 	  embedTag.setAttribute('class', template + "_swf");
 	  embedTag.setAttribute('title', "Click to drag");
-	  embedTag.setAttribute('src', url);
+	  embedTag.setAttribute('src', src);
 	  $(embedDiv).append(embedTag) 
 	  
 	  $(current_area).html("");
