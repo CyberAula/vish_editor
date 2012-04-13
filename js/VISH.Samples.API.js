@@ -155,63 +155,63 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'HTML5 Demo',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1535',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1536',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1537',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1538',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1539',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1540',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1541',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1542',
         'title'         :  'HTML5 Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1543',
