@@ -1,20 +1,8 @@
-VISH.Editor.Flash = (function(V,$,undefined){
+VISH.Editor.Object.Flash = (function(V,$,undefined){
+	
+	
+	var drawFlashObjectWithSource = function(src){
 		
-	var init = function(){
-		VISH.Editor.Flash.Repository.init();
-	    var urlInput = $("#tab_flash_from_url_content").find("input.url");
-	    $(urlInput).watermark('Paste SWF file URL');
-		var uploadInput = $("#tab_flash_upload_content").find("input.upload");
-	    $(uploadInput).watermark('Select SWF file to upload');
-	}	
-	
-	
-	var onLoadTab = function(tab){	
-		
-	}
-	
-	
-	var drawFlashObject = function(src){
 	  var current_area = VISH.Editor.getCurrentArea();
 	  var template = VISH.Editor.getTemplate();
 
@@ -51,29 +39,15 @@ VISH.Editor.Flash = (function(V,$,undefined){
 	    dimension: "x",
 	    skin: "blue",
 	    onstatechange: function( value ){
-	      _resizeObject(idToResize,325*value);
+	      VISH.Editor.Object.resizeObject(idToResize,325*value);
 	    }
 	  });
 
 	  $("#" + idToDrag).draggable({cursor: "move"});
 	}
-	
-	/*
-	 * Resize object and its wrapper automatically
-	 */
-	var _resizeObject = function(id,width){
-		$("#" + id).width(width);
-		var height = $("#" + id).height();
-		
-		var parent = $("#" + id).parent();
-		$(parent).width(width);
-		$(parent).height(height);
-	}
 			
 	return {
-		init: init,
-		onLoadTab: onLoadTab,
-		drawFlashObject : drawFlashObject
+		drawFlashObjectWithSource : drawFlashObjectWithSource
 	};
 
 }) (VISH, jQuery);

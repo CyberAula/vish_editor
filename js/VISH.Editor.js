@@ -41,7 +41,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Video.init();
-		V.Editor.Flash.init();
+		V.Editor.Object.init();
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
@@ -134,13 +134,13 @@ VISH.Editor = (function(V,$,undefined){
 
 			//Flash
 			case "tab_flash_from_url":
-				VISH.Editor.Flash.onLoadTab("url");
+				VISH.Editor.Object.onLoadTab("url");
 				break;
 			case "tab_flash_upload":
-				VISH.Editor.Flash.onLoadTab("upload");
+				VISH.Editor.Object.onLoadTab("upload");
 				break;
 			case "tab_flash_repo":
-				VISH.Editor.Flash.Repository.onLoadTab();
+				VISH.Editor.Object.Repository.onLoadTab();
 				break;
 				
 				
@@ -163,7 +163,7 @@ VISH.Editor = (function(V,$,undefined){
         V.Editor.Image.drawImage($("#"+id_to_get).val());
         break;
       case "flash_embed_code":
-    	V.Editor.Flash.drawFlashObject($("#"+id_to_get).val())
+    	V.Editor.Object.drawObject($("#"+id_to_get).val())
         break;
       case "video_url":
         V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())

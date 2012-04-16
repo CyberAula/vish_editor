@@ -1,16 +1,16 @@
-VISH.Editor.Flash.Repository = (function(V,$,undefined){
+VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
   var carrouselDivId = "tab_flash_repo_content_carrousel";
   var previewDivId = "tab_flash_repo_content_preview";
-  var currentFlash = new Array();
-  var selectedFlash = null;
+  var currentObject = new Array();
+  var selectedObject = null;
   
   var init = function(){
     var myInput = $("#tab_flash_repo_content").find("input[type='search']");
 	$(myInput).watermark('Search content');
 	$(myInput).keydown(function(event) {
 	  if(event.keyCode == 13) {
-        VISH.Editor.Flash.Repository.requestData($(myInput).val());
+        _requestData($(myInput).val());
         $(myInput).blur();
 	  }
     });
@@ -19,7 +19,7 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
   var onLoadTab = function(){
     var previousSearch = ($("#tab_flash_repo_content").find("input[type='search']").val()!="");
 	if(! previousSearch){
-	  _renderFlashPreview(null);
+	  _renderObjectPreview(null);
       _requestInicialData();
 	}
   }
@@ -28,14 +28,14 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
-    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Flash.Repository.onDataReceived,VISH.Editor.Flash.Repository.onAPIError);
+    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Object.Repository.onDataReceived,VISH.Editor.Object.Repository.onAPIError);
   }
 	
   /*
    * Request data to the server.
    */
-  var requestData = function(text){
-    VISH.Editor.API.requestFlashes(text,VISH.Editor.Flash.Repository.onDataReceived,VISH.Editor.Flash.Repository.onAPIError);
+  var _requestData = function(text){
+    VISH.Editor.API.requestFlashes(text,VISH.Editor.Object.Repository.onDataReceived,VISH.Editor.Object.Repository.onAPIError);
   }
 	
   /*
@@ -46,22 +46,39 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
     //Clean previous content
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
   
-    //Clean previous flash
-    currentFlash = new Array();  
+    //Clean previous object
+    currentObject = new Array();  
 	
     var content = "";
     
-    $.each(data, function(index, flash) {
-      //Flash preview... [flashid]
-      content = content + "<div style='width:150px' flashid='" + flash.id + "' class='carrousel_object_wrapper'>" +  flash.content + "</div>"
-      currentFlash[flash.id]=flash;
+    $.each(data, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content)
+      var imageSource = null;        
+      
+      switch (objectInfo.type){
+        case "swf":
+          imageSource = "/images/carrousel/swf.png"
+	      break;
+	    case "youtube":
+	      imageSource = "/images/carrousel/youtube.png"
+	      break;
+	    case "html":
+	      imageSource = "/images/carrousel/iframe.png"
+	      break;
+	    default:
+	      imageSource = "/images/carrousel/object.jpeg"
+	      break;
+      }
+      
+      content = content + "<img src='" + imageSource + "' objectId='" + object.id + "'>"
+      currentObject[object.id]=object;
     });
 
     $("#" + carrouselDivId).html(content);
     
     $(".carrousel_object_wrapper").children().addClass("carrousel_object");
     _autoResizeObjects();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Flash.Repository.onClickCarrouselElement);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Object.Repository.onClickCarrouselElement);
   }
 	
   var onAPIError = function(){
@@ -71,22 +88,22 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
 	 
   
   var onClickCarrouselElement = function(event){
-	var flashId = $(event.target).attr("flashid");
-//	var renderedFlash = VISH.Renderer.renderFlash(currentFlash[flashId],"preview");
-//	_renderFlashPreview(renderedFlash,currentFlash[flashId]);
-	selectedFlash = currentFlash[flashId];
-	addSelectedFlash();
+	var objectId = $(event.target).attr("objectid");
+//	var renderedObject = VISH.Renderer.renderObject(currentObject[objectId],"preview");
+//	_renderObjectPreview(renderedObject,currentObject[objectId]);
+	selectedObject = currentObject[objectId];
+	addSelectedObject();
   }
   
   
-  var _renderFlashPreview = function(renderedFlash,flash){
-//    var flashArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
+  var _renderObjectPreview = function(renderedObject,object){
+//    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
 //	var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
-//	$(flashArea).html("");
+//	$(objectArea).html("");
 //	$(metadataArea).html("");
-//	if((renderedFlash)&&(flash)){
-//	  $(flashArea).append(renderedFlash);
-//	  var table = _generateTable(flash.author,flash.title,flash.description);
+//	if((renderedObject)&&(object)){
+//	  $(objectArea).append(renderedObject);
+//	  var table = _generateTable(object.author,object.title,object.description);
 //	  $(metadataArea).html(table);
 //	}
   }
@@ -128,12 +145,12 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
   }
 	
   
-  var addSelectedFlash = function(){
-    if(selectedFlash!=null){
-      var content = $(selectedFlash.content)
+  var addSelectedObject = function(){
+    if(selectedObject!=null){
+      var content = $(selectedObject.content)
       var src = _getSourceFromObject(content)
       if(src){
-        VISH.Editor.Flash.drawFlashObject(src);
+        VISH.Editor.Object.drawObject(src);
       }
       $.fancybox.close();
     }
@@ -152,10 +169,9 @@ VISH.Editor.Flash.Repository = (function(V,$,undefined){
   return {
     init                    : init,
 	onLoadTab				: onLoadTab,
-	requestData             : requestData,
 	onDataReceived  		: onDataReceived,
 	onAPIError				: onAPIError,
-	addSelectedFlash        : addSelectedFlash,
+	addSelectedObject        : addSelectedObject,
 	onClickCarrouselElement : onClickCarrouselElement
   };
 
