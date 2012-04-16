@@ -215,21 +215,23 @@
 	height: 600px;
 }
 .fancy_tabs{
-	background: white;
+	border-bottom: 1px solid #ff005d;
+	background: #f9f9f9;
 }
 
 .fancy_tabs ul{
 	width: 800px;
 	list-style-type: none;
-	background-color: #DADADA;
-	margin: 0;
+	background-color: #f9f9f9;
+	color: #ff005d;
+	margin: 0px;
 	font-size: 1em;
 	line-height: 1.5;
 	font-weight: bold;
 	padding: 0px;
-	border-radius: 10px 10px 0px 0px;
-	-moz-border-radius: 10px 10px 0px 0px;
-	-webkit-border-radius: 10px 10px 0px 0px;	
+	border-radius: 4px 4px 0px 0px;
+	-moz-border-radius: 4px 4px 0px 0px;
+	-webkit-border-radius: 4px 4px 0px 0px;	
 }
 
 .fancy_tabs li{
@@ -239,34 +241,35 @@
 .fancy_tabs li a{
 	display:block;
 	padding: 0.5em 1.5em;
-	border-right: 1px solid #D3E8F6;
 	text-decoration: none;
-	background: #ededed;
-	color: #C3879D;
+	background: #f9f9f9;
+	color: #ff005d;
 	font-size: 16px;
 	font-family: Helvetica;
 	font-weight: bold;
-	border: solid 1px 1px 1px 1px #9E1F63;
-	border-radius: 10px 10px 0px 0px;
-	-moz-border-radius: 10px 10px 0px 0px;
-	-webkit-border-radius: 10px 10px 0px 0px;
+	border-radius: 4px 4px 0px 0px;
+	-moz-border-radius: 4px 4px 0px 0px;
+	-webkit-border-radius: 4px 4px 0px 0px;
 	
 }
 
 .fancy_tabs li a:hover{
-	background:#999;
-	color:#FFF;
-	border-right-color:#d3e8f6;
+	background:#f9f9f9;
+	color: #ff005d;
+	border:1px solid #ff005d;
+	border-bottom-color: transparent;
 }
 
 .fancy_tabs li a.fancy_selected{
-	background: #FFF;
-	color:#244974;
+	background: #f9f9f9;
+	color: #ff005d;
+	border: 1px solid #ff005d;
+	border-bottom-color: transparent;
 }
 
 .fancy_tab_content{
 	padding: 30px 0px 20px 20px;
-	text-align:center;
+	text-align:left;
 }
 
 .delete_icon{
@@ -412,9 +415,9 @@ input.upload {
 
 input.rounded {
 	border: solid 1px #9E1F63;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 	-moz-box-shadow: 2px 2px 2px #9E1F63;
 	-webkit-box-shadow: 2px 2px 2px #9E1F63;
 	box-shadow: 2px 2px 3px #9E1F63;
