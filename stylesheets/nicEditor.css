@@ -1,14 +1,27 @@
 /*
  * Styles for the NicEditor WYSIWYG
+ * @author GING
  */
 
 .wysiwygInstance {
 	padding: 3px;
 }
 
+/*
 .nicEdit-selected {
-	border: 2px solid #D9BC2B !important;
+	border: 0px solid #0000ff !important;
 }
+*/
+
+*:focus  /* To remove Chrome's orange outline related to focused objects */
+{  
+    outline: none;  
+}  
+
+/**************************************
+ * Style for the panel in which 
+ * the wysiwig buttons are displayed 
+ **************************************/
 
 .nicEdit-panelContain {
 	border-bottom-right-radius: 15px;
@@ -16,7 +29,7 @@
 	background-color: transparent;
 	overflow: hidden;
 	width: 100%;
-	border: 0px solid #cccccc;
+	border: 0px solid #00ff00;
 }
 
 .nicEdit-panel {
