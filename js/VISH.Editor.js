@@ -42,6 +42,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Text.init();
 		V.Editor.Video.init();
 		V.Editor.Flash.init();
+		V.Editor.Image.init();
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')

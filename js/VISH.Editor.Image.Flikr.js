@@ -3,22 +3,9 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	var carrouselDivId = "tab_flikr_content_carrousel";
 	var queryMaxNumberFlikrImages= 20; //maximum video query for youtube API's (999 max)
 	
-//function that is called when 
-	var onLoadTab = function(){
-		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
-		//clean carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
-		if($("#carrousel_prev")) 
-		$("#carrousel_prev").remove();
-		if($("#carrousel_next")) 
-		$("#carrousel_next").remove();
-		if($("#carrousel_pag")) 
-		$("#carrousel_pag").remove();
-		
-							
+	//add events to inputs
+	var init = function(){
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-		
-	  	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 		        	VISH.Editor.Image.Flikr.listImages($(myInput).val());
@@ -28,19 +15,24 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 		});
 	};
+	
+	
+//function that is called when tab loads
+	var onLoadTab = function(){
+		//clean carrousel
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+		
+		//clean search field
+		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
+		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");		
+	  	$(myInput).watermark('Search content');		
+	};
 
 	var listImages = function(text){
 		
 	    //clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
-	if($("#carrousel_prev")) 
-		$("#carrousel_prev").remove();
-		if($("#carrousel_next")) 
-		$("#carrousel_next").remove();
-		if($("#carrousel_pag")) 
-		$("#carrousel_pag").remove();
-		
- 
+
 		//
 		var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
 	    	var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
@@ -53,7 +45,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		
 	          });
       //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
-		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 1, VISH.Editor.Image.Flikr.addImage);
+		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 3, VISH.Editor.Image.Flikr.addImage);
 
 	     });
 $("#tab_pic_flikr_content").append('<div id="flikr_preview_metadata"></div>');
@@ -114,7 +106,8 @@ var addImage = function(event){
 };
 	
 	return {
-		onLoadTab	  : onLoadTab,
+		init        : init,
+		onLoadTab	: onLoadTab,
 		listImages	: listImages,
 		addImage	: addImage
 		
