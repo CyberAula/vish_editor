@@ -1,8 +1,12 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
+	var init = function(){
+		VISH.Editor.Image.Flikr.init();
+	};
+	
 	var onLoadTab = function(){
 		
-	}
+	};
 	
   /**
    * Function to draw an image in a zone of the template
@@ -48,7 +52,8 @@ VISH.Editor.Image = (function(V,$,undefined){
   };
 	
 	return {
-		onLoadTab		: onLoadTab,
+		init        : init,
+		onLoadTab	: onLoadTab,
 		drawImage   : drawImage
 	};
 

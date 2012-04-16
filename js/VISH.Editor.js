@@ -40,6 +40,7 @@ VISH.Editor = (function(V,$,undefined){
 		//Init submodules
 		V.Debugging.init(true);
 		V.Editor.Text.init();
+		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
 		
