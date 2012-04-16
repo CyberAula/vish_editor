@@ -23,7 +23,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
 		
 		//clean search field
-		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
+		// $("#tab_pic_flikr_content").find("input[type='search']").attr("value","");
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");		
 	  	$(myInput).watermark('Search content');		
 	};
