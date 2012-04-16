@@ -11,8 +11,8 @@
 }
 
 .nicEdit-panelContain {
-	border-bottom-right-radius: 15px;
-	border-bottom-left-radius: 15px;
+	border-bottom-top-radius: 15px;
+	border-bottom-top-radius: 15px;
 	background-color: transparent;
 	overflow: hidden;
 	width: 100%;
@@ -22,13 +22,13 @@
 .nicEdit-panel {
 	background-color: #fff !important;
 	border: 1px solid #ccc;
-	width: 740px;
-	margin:0px 2px 2px 50px; /* top margin, right margin, bottom margin, left margin */
-	padding-left: 60px;
+	width: 790px;
+	margin:0px 2px 2px 0px; /* top margin, right margin, bottom margin, left margin */
+	padding-left: 108px;
 	zoom: 1;
 	overflow: hidden;
-	border-bottom-right-radius: 15px;
-	border-bottom-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
 }
 
 .nicEdit-button {
