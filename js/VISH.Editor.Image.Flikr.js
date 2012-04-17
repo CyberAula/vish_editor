@@ -29,26 +29,21 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	};
 
 	var listImages = function(text){
-		
 	    //clean carrousel
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
 
-		//
 		var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
-	    	var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
+	    var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
 		
 		$.getJSON(url_flikr, function(data){
-		            $.each(data.items, function(i,item){
-			//add every image in the carrousel
-		          
-  $("#" + carrouselDivId).append('<img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'" />');
-		
-	          });
-      //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
-		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 3, VISH.Editor.Image.Flikr.addImage);
-
-	     });
-$("#tab_pic_flikr_content").append('<div id="flikr_preview_metadata"></div>');
+	      $.each(data.items, function(i,item){
+	        //add every image in the carrousel
+	        $("#" + carrouselDivId).append('<img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'" />');
+          });
+	      
+        //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
+		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage);
+	   });
 	};
 
 

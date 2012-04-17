@@ -96,8 +96,8 @@ a.prev span, a.next span {
 }
 
 .carrousel_element_multiple_row{
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 90px;
   max-width: 150px;
   max-height: 150px;
 }

@@ -58,16 +58,16 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	}
 		
 	if (multipleRow) {
-	  _applyMultipleRows(wrapperDiv, mainDiv, rows);
+	  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows);
 	} else {
 	  $(wrapperDiv).prepend(mainDiv)
-	  _setMainCarrousel(containerId);
+	  _setMainCarrousel(containerId,containerId, rows);
 	}		
 	return "Done"
   }
 
 
-  var _applyMultipleRows = function(wrapperDiv,mainDiv,rows){
+  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows){
 		
     var synchronizeIds = [];
 		
@@ -91,7 +91,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	for (i=rows-1;i>=0;i--) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
 	  if(i==0){
-	    _setMainCarrousel(mainDiv.id + "_row" + i,synchronizeIds);
+		var newContainerId = mainDiv.id + "_row" + i;
+	    _setMainCarrousel(newContainerId,containerId,synchronizeIds,rows);
 	  } else {
 		_setRowCarrousel(mainDiv.id + "_row" + i);
 	  }
@@ -101,10 +102,12 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   var _setRowCarrousel = function (id){
     $("#" + id).carouFredSel({
       auto    : false,
+      circular: false,
+      infinite: false,
       width   : 750,
 		scroll : {
           //items         : "page",
-          items           : 4,
+          items           : 5,
           fx              : "scroll",
           duration        : 1000,
           pauseDuration   : 2000                
@@ -112,7 +115,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
     }); 
   }
 
-  var _setMainCarrousel = function (id,synchronizeIds){
+  var _setMainCarrousel = function (id,widgetsId,synchronizeIds,rows){
 	$("#" + id).carouFredSel({
 	  circular: false,
 	  infinite: false,
@@ -120,20 +123,20 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	  width   : 750,
 	  scroll : {
 	    //items         : "page",
-	    items           : 4,
+	    items           : 5,
 	    fx              : "scroll",
 	    duration        : 1000,
 	    pauseDuration   : 2000                
 	  },    
 	  prev    : {
-	    button  : "#carrousel_prev" + id,
+	    button  : "#carrousel_prev" + widgetsId,
 	    key     : "left"
 	  },
 	  next    : {
-	    button  : "#carrousel_next" + id,
+	    button  : "#carrousel_next" + widgetsId,
 	    key     : "right"
 	  },
-	  pagination  : "#carrousel_pag"  + id              
+	  pagination  : "#carrousel_pag"  + widgetsId              
 	});  
 		
 	if(synchronizeIds){
@@ -141,16 +144,33 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
         $("#" + id).trigger("configuration", ["synchronise", "#" + value]);
       });
 	}
+	
+	$("#" + id).attr("rows",rows)
   }
 	
   var cleanCarrousel = function(containerId){
+	  //Check if is a multirow carrousel
+	  var containderIdForMultiRow = containerId + "_row0";
+	  if($("#" + containderIdForMultiRow).attr("rows")){
+		  var rows = $("#" + containderIdForMultiRow).attr("rows");
+		  var i;
+		  for(i=0; i<rows;i++){
+			  _cleanOneRowCarrousel(containerId + "_row" + i);
+		  }
+		  $("#" + containderIdForMultiRow).attr("id",containerId)
+	  } else {
+		  _cleanOneRowCarrousel(containerId);
+	  }
+  }
+  
+  var _cleanOneRowCarrousel = function(containerId){
     var carrouselWrapper = $("#" + containerId).parent().parent();
 	  if($(carrouselWrapper).hasClass('image_carousel')){
 	    $(carrouselWrapper).removeClass('image_carousel')
 		$(carrouselWrapper).html("")
 		$(carrouselWrapper).attr("id",containerId)
 	  } else {
-//			console.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
+//				console.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
 	  }
   }
 
