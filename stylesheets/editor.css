@@ -236,6 +236,7 @@
 
 .fancy_tabs li{
 	display: inline-block;
+	margin-bottom: -1px;
 }
 
 .fancy_tabs li a{
