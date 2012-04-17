@@ -3,22 +3,11 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	var carrouselDivId = "tab_video_youtube_content_carrousel";
 	var queryMaxMaxNumberYoutubeVideo= 20; //maximum video query for youtube API's (999 max)
 	var hash_youtube_video_id = new Array(); //to videoID param
-	
-	var onLoadTab = function(){
-   // $("#ytb_slider_content").remove();
-    		$("#youtube_preview").remove();
-		$("#preview_video_button").remove();
-		$("#youtube_preview_metadata").remove();
-		$("#youtube_text_to_search").attr("value","");
-		$("#tab_video_youtube_content_carrousel").children("*").remove();
-		
-    //clean carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
-
-
-	//adding input search type
+	//add event to input
+	var init = function(){
 		var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 	  	$(myInput).watermark('Search content');
+
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 		        	VISH.Editor.Video.Youtube.listVideo($(myInput).val());
@@ -26,6 +15,26 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			}
 	
 		});
+
+};
+
+	//function that is called when tab loads
+	var onLoadTab = function(){
+
+    		$("#youtube_preview").remove();
+		$("#preview_video_button").remove();
+		$("#youtube_preview_metadata").remove();
+		$("#youtube_text_to_search").attr("value","");
+	
+		
+    //clean carrousel
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+var myInput = $("#tab_video_youtube_content").find("input[type='search']");
+	  	$(myInput).watermark('Search content');
+
+
+	//adding input search type
+		
 	};
 
 
@@ -185,6 +194,7 @@ var listVideo = function(text){
 
 
 	return {
+		init		  : init,
 		onLoadTab	  : onLoadTab,
 		drawYoutubeVideo  : drawYoutubeVideo,
 		showYoutubeVideo  : showYoutubeVideo, 

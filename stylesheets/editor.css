@@ -363,12 +363,6 @@
 	overflow: hidden;
 }
 
-#test{
-	width: 300px;
-	height: 195px;
-	max-height: 195px;
-}
-
 .preview_video{
 	max-width: 300px;
 	height: 195px;
@@ -591,9 +585,34 @@ table.metadata td div.height_wrapper_description{
 }
 
 
-
 /* Objects wrapper */
 
 div.object_wrapper{
 	border: 10px #9E1F63 solid;
+}
+
+
+/* Vish Flash */
+
+#tab_flash_repo_content_preview{
+	width: 650px;
+	height: 190px;
+	text-align: center;
+	padding: 9px;
+	margin: auto;
+}
+
+#tab_flash_repo_content_preview_flash{
+	width: 350px;
+	height: 195px;
+	margin-left: auto; 
+	margin-right: auto;
+	float: left;
+}
+
+#tab_flash_repo_content_preview_metadata{
+	width: 300px;
+	height: 195px;
+	float: right;
+	overflow: hidden;
 }
