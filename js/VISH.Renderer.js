@@ -31,6 +31,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderSwf(slide.elements[el],slide.template);
 				classes += "swf ";
 			}
+			else if(slide.elements[el].type === "object"){
+				content += _renderObject(slide.elements[el],slide.template);
+				classes += "object ";
+			}
 			else if(slide.elements[el].type === "iframe"){  //used for youtube videos
 				content += _renderIframe(slide.elements[el],slide.template);
 				classes += "iframe ";
@@ -78,7 +82,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":"";
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
 		var loop=(element['loop'])?"loop='loop' ":"";
-		var sources = element['sources'];
+		var sources = JSON.parse(element['sources']);
 		
 		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
@@ -104,6 +108,15 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderSwf = function(element, template){
 		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"' swfStyle='" + element['style'] + "'></div>";
 	};
+	
+	
+	/**
+	 * Function to render an object inside an article (a slide)
+	 */
+	var _renderObject = function(element, template){
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_object"+"' objectStyle='" + element['style'] + "'>" + element['body'] + "</div>";
+	};
+	
 	
 	/**
 	 * Function to render an iframe inside an article (a slide)	 * 
