@@ -25,7 +25,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * Options: hash with additional data like poster url or autoplay
    */
   var drawVideo = function(sources,options){
-	
+	  
     //Default options
 	var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
 	var autoplay = false;

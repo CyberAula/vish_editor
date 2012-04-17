@@ -118,7 +118,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			var sourcesArray = [];
 			var options = new Array();
 			options['poster'] = selectedVideo.poster;
-			var sources = selectedVideo.sources;
+			var sources = JSON.parse(selectedVideo.sources);			
 			$.each(sources, function(index, source) {
 				sourcesArray.push([source.src, source.type]);
 			});

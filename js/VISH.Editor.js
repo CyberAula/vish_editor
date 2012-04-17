@@ -411,8 +411,8 @@ VISH.Editor = (function(V,$,undefined){
 	    	  element.body   = $(swf).attr('src');
 	    	  element.style  = $(swf).parent().attr('style');
 	      } else if(element.type=="object"){
-	    	  var object = $(div).find(".object_wrapper").children();
-	    	  element.body   = object;
+	    	  var object = $(div).find(".object_wrapper").children()[0];
+	    	  element.body   = $(object)[0].outerHTML;
 	    	  element.style  = $(object).parent().attr('style');
 	      }
           
