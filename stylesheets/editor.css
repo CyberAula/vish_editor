@@ -255,8 +255,6 @@
 }
 
 .fancy_tabs li a:hover{
-	background:#f9f9f9;
-	color: #ff005d;
 	border:1px solid #ff005d;
 	border-bottom-color: transparent;
 }
@@ -552,8 +550,9 @@ table.metadata td div.height_wrapper_description{
     padding: 5px 10px;
     display: inline;
 	text-decoration:none;
-    background: #CCC repeat-x bottom;
-	color:#FFFFFF;
+    background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
     cursor: pointer;
     font-weight: bold;
     border-radius: 5px;
@@ -562,7 +561,7 @@ table.metadata td div.height_wrapper_description{
     }	
 	
 .button:hover {
-	background:#DDD;
+	opacity: 1;
 	text-shadow: 1px 1px #666;
     }
 	
