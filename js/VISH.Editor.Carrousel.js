@@ -105,13 +105,19 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
       circular: false,
       infinite: false,
       width   : 750,
-		scroll : {
-          //items         : "page",
-          items           : 5,
-          fx              : "scroll",
-          duration        : 1000,
-          pauseDuration   : 2000                
-        }     
+	  scroll : {
+        //items         : "page",
+        items           : 5,
+        fx              : "scroll",
+        duration        : 1000,
+        pauseDuration   : 2000                
+      },
+	  items : {
+	    visible    : {
+		  min : 5,
+		  max : 5
+		}
+	  },
     }); 
   }
 
@@ -124,10 +130,16 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	  scroll : {
 	    //items         : "page",
 	    items           : 5,
-	    fx              : "scroll",
+//	    fx              : "scroll",
 	    duration        : 1000,
 	    pauseDuration   : 2000                
-	  },    
+	  },
+	  items       : {
+	     visible    : {
+		  min : 5,
+		  max : 5
+		 }
+	  },
 	  prev    : {
 	    button  : "#carrousel_prev" + widgetsId,
 	    key     : "left"
