@@ -39,7 +39,7 @@
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
-	<section class="slides layout-regular template-default" id="slides_panel">
+	<section tabindex="-1" class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
@@ -123,7 +123,7 @@
   
 	  <div style='display:none'>
 	  	
-	    <div id='menuselect'>
+	    <div id='menuselect' class="menuselect_hide">
 			  <div class='menuicon textthumb'></div>
 	      <a class="addpicture" href="#picture_fancybox">
 	        <div class='menuicon picthumb'></div>
@@ -136,7 +136,7 @@
 	      </a>
 	    </div>
 	    
-	    <div id='menuselect_for_header'>
+	    <div id='menuselect_for_header' class="menuselect_hide">
 			  <div class='menuicon_small textthumb textthumb_small'></div>
 	      <a class="addpicture" href="#picture_fancybox">
 	        <div class='menuicon_small picthumb_small'></div>

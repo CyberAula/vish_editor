@@ -25,6 +25,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
+		$(document).on('focusout', '.selectable', _onSelectableLoseFocus);
 		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
@@ -158,7 +159,7 @@ VISH.Editor = (function(V,$,undefined){
   var getValueFromFancybox = function(id_to_get){
     $.fancybox.close();
     
-		//Call the draw function of the submodule
+	//Call the draw function of the submodule
     switch(id_to_get)  {
       case "picture_url":
         V.Editor.Image.drawImage($("#"+id_to_get).val());
@@ -178,6 +179,11 @@ VISH.Editor = (function(V,$,undefined){
     
     //delete the value
     $("#"+id_to_get).val("");
+    
+    //finally set focus to current_area
+    var current_area = VISH.Editor.getCurrentArea();
+    current_area.trigger("focus");   
+    
   };
 
   /**
@@ -219,7 +225,7 @@ VISH.Editor = (function(V,$,undefined){
 		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
 		params['current_el'] = $(this);
-		
+				
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
 		var content = null;
@@ -338,23 +344,25 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on template zone with class selectable
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
-  var _onSelectableClicked = function(){
-  	//change borders
-  	$(".selectable").css("border-style","none");  	
-  	
-	$(this).css("border", "2px solid rgba(255, 2, 94,0.2)");
-  	
-	
-  	//show sliders
-  	$(".theslider").hide();
+  var _onSelectableClicked = function(){  		
+  	//add menuselect and delete content button
+  	$(this).find(".menuselect_hide").show();
+  	$(this).find(".delete_content").show();
+  		
+  	//show sliders  	
   	if($(this).attr("type")==="image"){
   		var img_id = $(this).find("img").attr("id");
   		//the id is "draggableunicID_1" we want to remove "draggable"
   		img_id = img_id.substring(9);
   		
   		$("#sliderId" + img_id).show();  		
-  	}
-  	
+  	}  	
+  };
+  
+  var _onSelectableLoseFocus = function(){  	
+  	$(".theslider").hide();
+  	$(this).find(".menuselect_hide").hide();
+  	$(this).find(".delete_content").hide();
   };
 
   /**
