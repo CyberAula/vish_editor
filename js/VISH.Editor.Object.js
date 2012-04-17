@@ -9,39 +9,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	var onLoadTab = function(){
-	}
-
-	var drawObject = function(object){
-		var objectInfo = getObjectInfo(object);
-		
-		switch (objectInfo.wrapper){
-	      case null:
-		    //Draw object from source
-		    
-		    switch (objectInfo.type){
-		      case "swf":
-		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
-			    break;
-			  case "youtube":
-			    //V.Editor.Video.Youtube.drawVideoObject(object);
-			    break;
-			  default:
-				 console.log("Unrecognized object source type: " + objectInfo.type) 
-			     break;
-			}
-		
-		  case "EMBED":
-		    break;
-		  case "OBJECT":
-		    break;
-		  case "IFRAME": 
-		    break;  
-		  default:
-			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
-            break;
-		}
-	}
-	
+	}	
 	
 	/*
 	 * Wrapper can be: "embed","object, "iframe" or null if the object is a source url without wrapper.
@@ -94,32 +62,151 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
+	
+	/**
+	 * Patterns
+	 */
+	var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+	var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+	var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
+	                                                                           		
+	
 	var _getTypeFromSource = function(source){
 		if(typeof source != "string"){
 			return "Invalid source"
 		}
-		return source.split('.').pop();
+		var extension = source.split('.').pop();
+		
+		if(source.match(youtube_video_pattern)!=null){
+			return "youtube";
+		}
+		
+		if(extension=="swf"){
+			return extension;
+		}
+		
+		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
+			return "web";
+		}
+		
+		return extension;
 	}
 	
 	/*
 	 * Resize object and its wrapper automatically
 	 */
 	var resizeObject = function(id,width){
+		var proportion = $("#" + id).height()/$("#" + id).width();
+			
 		$("#" + id).width(width);
-		var height = $("#" + id).height();
+		$("#" + id).height(width*proportion);
 		
 		var parent = $("#" + id).parent();
 		$(parent).width(width);
-		$(parent).height(height);
+		$(parent).height(width*proportion);
+	}
+	
+	
+	var renderObjectPreview = function(object){
+		var objectInfo = getObjectInfo(object.content);
+		if(objectInfo.wrapper == null){
+			//Put inside a embed
+			return "<embed class='objectPreview' src='" + object.content + "'></embed>"
+		} else {
+			var wrapperPreview = $(object.content);
+			$(wrapperPreview).addClass('objectPreview')
+			$(wrapperPreview).removeAttr('width')
+			$(wrapperPreview).removeAttr('height')
+			return wrapperPreview;
+		}
+	}
+	
+	
+	var drawObject = function(object){
+		var objectInfo = getObjectInfo(object);
+		switch (objectInfo.wrapper){
+	      case null:
+		    //Draw object from source
+		    
+		    switch (objectInfo.type){
+		      case "swf":
+		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
+			    break;
+			  case "youtube":
+			    //V.Editor.Video.Youtube.drawVideoObject(object);
+			    break;
+			  default:
+				 console.log("Unrecognized object source type: " + objectInfo.type) 
+			     break;
+			}
+		    break;
+		  case "EMBED":
+			drawObjectWithWrapper(object);
+		    break;
+		  case "OBJECT":
+			drawObjectWithWrapper(object);
+		    break;
+		  case "IFRAME": 
+			drawObjectWithWrapper(object);
+		    break;  
+		  default:
+			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+            break;
+		}
+	}
+	
+	
+	var drawObjectWithWrapper = function(wrapper){
+	  var current_area = VISH.Editor.getCurrentArea();
+	  var template = VISH.Editor.getTemplate();
+
+	  var nextWrapperId = VISH.Editor.getId();
+	  var idToDrag = "draggable" + nextWrapperId;
+	  var idToResize = "resizable" + nextWrapperId;
+	  current_area.attr('type','object');
+	   
+	  var wrapperDiv = document.createElement('div');
+	  wrapperDiv.setAttribute('id', idToDrag);
+	  $(wrapperDiv).addClass('object_wrapper')
+	  $(wrapperDiv).addClass(template + "_object")
+	  
+	  var wrapperTag = wrapper
+	  $(wrapperTag).attr('id', idToResize );
+	  $(wrapperTag).attr('class', template + "_object");
+	  $(wrapperTag).attr('title', "Click to drag");
+	  $(wrapperDiv).append(wrapperTag)
+	  
+	  $(current_area).html("");
+	  $(current_area).append(wrapperDiv)
+	  	    
+	  VISH.Editor.addDeleteButton($(current_area));
+	    	
+	  //RESIZE
+	  $("#menubar").before("<div id='sliderId"+nextWrapperId+"' class='theslider'><input id='imageSlider"+nextWrapperId+"' type='slider' name='size' value='1' style='display: none; '></div>");
+	            
+	  $("#imageSlider"+nextWrapperId).slider({
+	    from: 1,
+	    to: 8,
+	    step: 0.5,
+	    round: 1,
+	    dimension: "x",
+	    skin: "blue",
+	    onstatechange: function( value ){
+	      resizeObject(idToResize,325*value);
+	    }
+	  });
+
+	  $("#" + idToDrag).draggable({cursor: "move"});
 	}
 	
 	
 	return {
-		init			: init,
-		onLoadTab 		: onLoadTab,
-		drawObject		: drawObject,
-		getObjectInfo	: getObjectInfo,
-		resizeObject 	: resizeObject
+		init					: init,
+		onLoadTab 				: onLoadTab,
+		drawObject				: drawObject,
+		renderObjectPreview 	: renderObjectPreview,
+		getObjectInfo			: getObjectInfo,
+		resizeObject 			: resizeObject
 	};
 
 }) (VISH, jQuery);

@@ -590,6 +590,11 @@ div.object_wrapper{
 	border: 10px #9E1F63 solid;
 }
 
+.objectPreview {
+	max-width: 80%;
+	max-height: 80%;
+}
+
 
 /* Vish Flash */
 

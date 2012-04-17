@@ -44,27 +44,27 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	var onDataReceived = function(data) {
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		//clean preious preview if any XXX
-		_cleanVideoPreview(); //XXX
+		//clean previous preview if any
+		_cleanVideoPreview(); 
 
 		//Clean previous videos
 		currentVideos = new Array();
 
 		var content = "";
 
-		if(data.videos.length===0){ //XXX
+		if(data.videos.length===0){
 			$("#" + carrouselDivId).html("No results found.");
-		} //XXX
-		else{ //XXX
+		} 
+		else{ 
 			//data.videos is an array with the results
-			$.each(data.videos, function(index, video) {  //XXX changed data.videos
+			$.each(data.videos, function(index, video) {
 				content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>"
 				currentVideos[video.id] = video;
 			});
 	
 			$("#" + carrouselDivId).html(content);
 			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement);
-		} //XXX
+		}
 	};
 	
 	var onAPIError = function() {
@@ -91,7 +91,6 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		}
 	};
 	
-	//XXX
 	var _cleanVideoPreview = function() {
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");

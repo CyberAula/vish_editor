@@ -410,6 +410,10 @@ VISH.Editor = (function(V,$,undefined){
 	    	  var swf = $(div).find("embed");
 	    	  element.body   = $(swf).attr('src');
 	    	  element.style  = $(swf).parent().attr('style');
+	      } else if(element.type=="object"){
+	    	  var object = $(div).find(".object_wrapper").children();
+	    	  element.body   = object;
+	    	  element.style  = $(object).parent().attr('style');
 	      }
           
           slide.elements.push(element);

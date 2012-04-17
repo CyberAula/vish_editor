@@ -2,7 +2,6 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	
 	
 	var drawFlashObjectWithSource = function(src){
-		
 	  var current_area = VISH.Editor.getCurrentArea();
 	  var template = VISH.Editor.getTemplate();
 

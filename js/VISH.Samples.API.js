@@ -152,31 +152,31 @@ VISH.Samples.API = (function(V,undefined){
     'flashes'       : [
     {
       'id'     : '1534',
-      'title'         :  'HTML5 Demo',
+      'title'         :  'Profesor',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
       'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
     },
     {
         'id'     : '1535',
-        'title'         :  'HTML5 Demo',
-        'description'   :  'Flash Object Test 2',
-        'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'title'         :  'Youtube video about HTML5',
+        'description'   :  'HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.',
+        'author'        :  'W3C',
+        'content'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'
     },
     {
         'id'     : '1536',
-        'title'         :  'HTML5 Demo',
-        'description'   :  'Flash Object Test 2',
-        'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'title'         :  'Global excursion',
+        'description'   :  'Iframe example',
+        'author'        :  'Vish',
+        'content'       :  '<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'
     },
     {
         'id'     : '1537',
-        'title'         :  'HTML5 Demo',
-        'description'   :  'Flash Object Test 2',
-        'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        'title'         :  'Image',
+        'description'   :  'Image Embed',
+        'author'        :  'Globedia',
+        'content'       :  '<embed width="100%" height="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'
     },
     {
         'id'     : '1538',

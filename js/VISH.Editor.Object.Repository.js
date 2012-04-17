@@ -62,8 +62,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	    case "youtube":
 	      imageSource = "/images/carrousel/youtube.png"
 	      break;
-	    case "html":
-	      imageSource = "/images/carrousel/iframe.png"
+	    case "web":
+	      if(objectInfo.wrapper=="IFRAME"){
+	        imageSource = "/images/carrousel/iframe.png"
+	      } else {
+	    	imageSource = "/images/carrousel/object.jpeg"
+	      }
 	      break;
 	    default:
 	      imageSource = "/images/carrousel/object.jpeg"
@@ -76,8 +80,6 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 
     $("#" + carrouselDivId).html(content);
     
-    $(".carrousel_object_wrapper").children().addClass("carrousel_object");
-    _autoResizeObjects();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Object.Repository.onClickCarrouselElement);
   }
 	
@@ -89,30 +91,25 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var onClickCarrouselElement = function(event){
 	var objectId = $(event.target).attr("objectid");
-//	var renderedObject = VISH.Renderer.renderObject(currentObject[objectId],"preview");
-//	_renderObjectPreview(renderedObject,currentObject[objectId]);
+	var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId])
+	_renderObjectPreview(renderedObject,currentObject[objectId]);
 	selectedObject = currentObject[objectId];
-	addSelectedObject();
+//	addSelectedObject();
   }
   
   
   var _renderObjectPreview = function(renderedObject,object){
-//    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-//	var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
-//	$(objectArea).html("");
-//	$(metadataArea).html("");
-//	if((renderedObject)&&(object)){
-//	  $(objectArea).append(renderedObject);
-//	  var table = _generateTable(object.author,object.title,object.description);
-//	  $(metadataArea).html(table);
-//	}
+    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
+	var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+	$(objectArea).html("");
+	$(metadataArea).html("");
+	if((renderedObject)&&(object)){
+	  $(objectArea).append(renderedObject);
+	  var table = _generateTable(object.author,object.title,object.description);
+	  $(metadataArea).html(table);
+	}
   }
 	
-  
-  var _autoResizeObjects = function(){
-	  $(".carrousel_object_wrapper").children().height($(".carrousel_object_wrapper").height());
-	  $(".carrousel_object_wrapper").children().width($(".carrousel_object_wrapper").width());
-  }
 	
   var _generateTable = function(author,title,description){
 	
@@ -147,24 +144,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var addSelectedObject = function(){
     if(selectedObject!=null){
-      var content = $(selectedObject.content)
-      var src = _getSourceFromObject(content)
-      if(src){
-        VISH.Editor.Object.drawObject(src);
-      }
+      VISH.Editor.Object.drawObject($(selectedObject.content));
       $.fancybox.close();
     }
   }
-  
-  var _getSourceFromObject = function(object){
-	  if ($(object).attr("src").length > 0){
-		  return $(object).attr("src");
-	  } else if($(object).attr("data").length > 0){
-		  return $(object).attr("data");
-	  }
-	  return null;
-  }
-	
 	
   return {
     init                    : init,
