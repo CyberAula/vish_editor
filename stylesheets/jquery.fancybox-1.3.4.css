@@ -78,9 +78,9 @@
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
-	-webkit-box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 #fancybox-content {
