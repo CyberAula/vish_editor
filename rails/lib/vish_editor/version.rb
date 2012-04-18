@@ -1,3 +1,3 @@
 module VishEditor
-  VERSION = "0.0.10101010101010101010"
+  VERSION = "0.1.0"
 end
