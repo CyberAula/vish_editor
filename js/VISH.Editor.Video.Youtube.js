@@ -42,14 +42,30 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
    * Funcion to get an youtube video and embed into the zone
    */
   var drawYoutubeVideo = function (video_id) {
+  	//default value
+  	var height = 243;
  	var template = VISH.Editor.getTemplate();
 	var current_area = VISH.Editor.getCurrentArea();
-
+	
+	//for 
+	var width = current_area.width();
+	
 	var nextVideoId = VISH.Editor.getId();
     $.fancybox.close();
+    
+    
+    
     //generate embed for the video
+	//it depends on the dimension of the current_area
+	
+	if (width == 663) {
+		
+		var height = current_area.height();
+	} 
+	
+	
     var video_embedded = "http://www.youtube.com/embed/"+video_id;
-    var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
+    var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+"px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
     //insert embed in zone
 	var current_area = VISH.Editor.getCurrentArea();
     current_area.addClass('iframeelement');
