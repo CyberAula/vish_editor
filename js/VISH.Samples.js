@@ -102,15 +102,15 @@ VISH.Samples = (function(V,undefined){
 					'body'   : 'Experimento virtual1'
 				},
 				{
-                    'id'     : '326',
-					'type'   : 'swf',
-					'areaid' : 'left',
-					'body'   : 'swf/virtualexperiment_1.swf'		
-				}
+          'id'     : '7335',
+          'type'   : 'object',
+          'areaid' : 'left',
+          'body'   : '<embed width="99%" height="99%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        }	
 			]
 		},		
 		{
-			'id'       :'vish8',
+			'id'       :'vish6',
 			'template' :'t2',
 			'elements':[
 				{
@@ -124,7 +124,7 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish9',
+			'id'       :'vish7',
 			'template' :'t2',
 			'elements':[				
 				{
@@ -138,7 +138,7 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish10',
+			'id'       :'vish8',
 			'template' :'t2',
 			'elements':[
 				{
@@ -151,7 +151,7 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish11',
+			'id'       :'vish9',
 			'template' :'t2',
 			'elements':[
 				{
@@ -170,7 +170,7 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish12',
+			'id'       :'vish10',
 			'template' :'t2',
 			'elements':[
 				{
@@ -192,7 +192,7 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish13',
+			'id'       :'vish11',
 			'template' :'t1',
 			'elements':[
 				{
@@ -218,50 +218,64 @@ VISH.Samples = (function(V,undefined){
 			]
 		},
 		{
-			'id'       :'vish14',
+			'id'       :'vish12',
 			'template' :'t1',
 			'elements':[
 				{
-                    'id'     : '393',
+          'id'     : '393',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Example of Youtube video'
 				},
 				{
-                    'id'     : '334',
-					'type'   : 'text',
-					'areaid' : 'left',
-					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
-				},
-				{
-                    'id'     : '335',
-					'type'   : 'iframe',
-					'areaid' : 'right',
-					'body'   : '<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'
+          'id'     : '394',
+					'type'   : 'object',
+					'areaid' : 'center',
+					'body'   : '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'
+					
 				}
 			]
 		},
 		{
-			'id'       :'vish15',
+      'id'       :'vish13',
+      'template' :'t2',
+      'elements':[
+        {
+          'id'     : '393',
+          'type'   : 'text',
+          'areaid' : 'header',
+          'body'   : 'Example of Youtube video with style param'
+        },
+        {
+          'id'     : '335',
+          'type'   : 'object',
+          'areaid' : 'center',
+          'body'   : '<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>',
+					'style'  : 'position: relative; left: 163px; top: 110px; width: 325px; height: 215px;'
+        }
+      ]
+    },
+		{
+			'id'       :'vish14',
 			'template' :'t1',
 			'elements':[
 				{
-                    'id'     : '7393',
+          'id'     : '7393',
 					'type'   : 'text',
 					'areaid' : 'header',
 					'body'   : 'Example of generic Object visualization'
 				},
 				{
-                    'id'     : '7334',
+          'id'     : '7334',
 					'type'   : 'text',
 					'areaid' : 'left',
 					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
 				},
 				{
-                    'id'     : '7335',
+          'id'     : '7335',
 					'type'   : 'object',
 					'areaid' : 'right',
-					'body'   : '<embed width="100%" height="100%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+					'body'   : '<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
 				}
 			]
 		}
