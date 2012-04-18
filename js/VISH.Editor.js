@@ -26,7 +26,6 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('focusout', '.selectable', _onSelectableLoseFocus);
 		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
@@ -347,7 +346,8 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on template zone with class selectable
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
-  var _onSelectableClicked = function(){  		
+  var _onSelectableClicked = function(){  
+  	_removeSelectableProperties();		
   	//add menuselect and delete content button
   	$(this).find(".menuselect_hide").show();
   	$(this).find(".delete_content").show();
@@ -359,15 +359,28 @@ VISH.Editor = (function(V,$,undefined){
   		img_id = img_id.substring(9);
   		
   		$("#sliderId" + img_id).show();  		
-  	}  	
+  	}
+  	
+  	//add css
+  	$(this).css("border-color", "rgb(255, 2, 94)");
+	$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("outline", "0");
+	$(this).css("outline", "thin dotted \9");
   };
   
-  var _onSelectableLoseFocus = function(){  	
+  var _removeSelectableProperties = function(){  	
   	$(".theslider").hide();
-  	$(this).find(".menuselect_hide").hide();
-  	if($(this).find(".wysiwygInstance").length === 0){
-  		$(this).find(".delete_content").hide();
-  	}
+  	$(".menuselect_hide").hide();
+  	$(".delete_content").hide();
+  	
+  	//remove css
+  	$(".selectable").css("border-color", "none");
+	$(".selectable").css("-webkit-box-shadow", "none");
+	$(".selectable").css("-moz-box-shadow", "none");
+	$(".selectable").css("box-shadow", "none");
+	$(".selectable").css("outline", "0");
   };
 
   /**
