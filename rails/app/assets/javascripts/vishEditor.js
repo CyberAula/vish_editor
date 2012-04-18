@@ -6506,7 +6506,7 @@
     var a = e.width, c = e.height;
     a = a.toString().indexOf("%") > -1 ? parseInt((b(window).width() - e.margin * 2) * parseFloat(a) / 100, 10) + "px" : a == "auto" ? "auto" : a + "px";
     c = c.toString().indexOf("%") > -1 ? parseInt((b(window).height() - e.margin * 2) * parseFloat(c) / 100, 10) + "px" : c == "auto" ? "auto" : c + "px";
-    m.wrapInner('<div style="width:' + a + ";height:" + c + ";overflow: " + (e.scrolling == "auto" ? "auto" : e.scrolling == "yes" ? "scroll" : "hidden") + ';position:relative;"></div>');
+    m.wrapInner('<div style="width:' + a + ";height:" + c + ";overflow: " + (e.scrolling == "auto" ? "none" : e.scrolling == "yes" ? "scroll" : "hidden") + ';position:relative;"></div>');
     e.width = m.width();
     e.height = m.height();
     Q()
@@ -9986,6 +9986,7 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", "#save", _onSaveButtonClicked);
     $(document).on("click", ".editable", _onEditableClicked);
     $(document).on("click", ".selectable", _onSelectableClicked);
+    $(document).on("focusout", ".selectable", _onSelectableLoseFocus);
     $(document).on("click", ".delete_content", _onDeleteItemClicked);
     $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
     $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
@@ -9994,8 +9995,9 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.SlidesUtilities.redrawSlides();
     V.Debugging.init(true);
     V.Editor.Text.init();
+    V.Editor.Image.init();
     V.Editor.Video.init();
-    V.Editor.Flash.init()
+    V.Editor.Object.init()
   };
   var getId = function() {
     domId = domId + 1;
@@ -10040,13 +10042,13 @@ VISH.Editor = function(V, $, undefined) {
         VISH.Editor.Video.Youtube.onLoadTab();
         break;
       case "tab_flash_from_url":
-        VISH.Editor.Flash.onLoadTab("url");
+        VISH.Editor.Object.onLoadTab("url");
         break;
       case "tab_flash_upload":
-        VISH.Editor.Flash.onLoadTab("upload");
+        VISH.Editor.Object.onLoadTab("upload");
         break;
       case "tab_flash_repo":
-        VISH.Editor.Flash.Repository.onLoadTab();
+        VISH.Editor.Object.Repository.onLoadTab();
         break;
       default:
         break
@@ -10059,7 +10061,7 @@ VISH.Editor = function(V, $, undefined) {
         V.Editor.Image.drawImage($("#" + id_to_get).val());
         break;
       case "flash_embed_code":
-        V.Editor.Flash.drawFlashObject($("#" + id_to_get).val());
+        V.Editor.Object.drawObject($("#" + id_to_get).val());
         break;
       case "video_url":
         V.Editor.Video.HTML5.drawVideoWithUrl($("#" + id_to_get).val());
@@ -10067,7 +10069,9 @@ VISH.Editor = function(V, $, undefined) {
       default:
         break
     }
-    $("#" + id_to_get).val("")
+    $("#" + id_to_get).val("");
+    var current_area = VISH.Editor.getCurrentArea();
+    current_area.trigger("focus")
   };
   var _closeFancybox = function() {
     $.fancybox.close()
@@ -10140,13 +10144,19 @@ VISH.Editor = function(V, $, undefined) {
     }})
   };
   var _onSelectableClicked = function() {
-    $(".selectable").css("border-style", "none");
-    $(this).css("border", "2px solid rgba(255, 2, 94,0.2)");
-    $(".theslider").hide();
+    $(this).find(".menuselect_hide").show();
+    $(this).find(".delete_content").show();
     if($(this).attr("type") === "image") {
       var img_id = $(this).find("img").attr("id");
       img_id = img_id.substring(9);
       $("#sliderId" + img_id).show()
+    }
+  };
+  var _onSelectableLoseFocus = function() {
+    $(".theslider").hide();
+    $(this).find(".menuselect_hide").hide();
+    if($(this).find(".wysiwygInstance").length === 0) {
+      $(this).find(".delete_content").hide()
     }
   };
   var _onSaveButtonClicked = function() {
@@ -10196,6 +10206,12 @@ VISH.Editor = function(V, $, undefined) {
                     var swf = $(div).find("embed");
                     element.body = $(swf).attr("src");
                     element.style = $(swf).parent().attr("style")
+                  }else {
+                    if(element.type == "object") {
+                      var object = $(div).find(".object_wrapper").children()[0];
+                      element.body = $(object)[0].outerHTML;
+                      element.style = $(object).parent().attr("style")
+                    }
                   }
                 }
               }
@@ -10242,11 +10258,15 @@ VISH.Editor = function(V, $, undefined) {
 VISH.Editor.Video = function(V, $, undefined) {
   var init = function() {
     VISH.Editor.Video.HTML5.init();
-    VISH.Editor.Video.Repository.init()
+    VISH.Editor.Video.Repository.init();
+    VISH.Editor.Video.Youtube.init()
   };
   return{init:init}
 }(VISH, jQuery);
 VISH.Editor.Image = function(V, $, undefined) {
+  var init = function() {
+    VISH.Editor.Image.Flikr.init()
+  };
   var onLoadTab = function() {
   };
   var drawImage = function(image_url) {
@@ -10265,52 +10285,147 @@ VISH.Editor.Image = function(V, $, undefined) {
       $(this).parent().click()
     }})
   };
-  return{onLoadTab:onLoadTab, drawImage:drawImage}
+  return{init:init, onLoadTab:onLoadTab, drawImage:drawImage}
 }(VISH, jQuery);
-VISH.Editor.Flash = function(V, $, undefined) {
+VISH.Editor.Object = function(V, $, undefined) {
   var init = function() {
-    VISH.Editor.Flash.Repository.init();
+    VISH.Editor.Object.Repository.init();
     var urlInput = $("#tab_flash_from_url_content").find("input.url");
     $(urlInput).watermark("Paste SWF file URL");
     var uploadInput = $("#tab_flash_upload_content").find("input.upload");
     $(uploadInput).watermark("Select SWF file to upload")
   };
-  var onLoadTab = function(tab) {
+  var onLoadTab = function() {
   };
-  var drawFlashObject = function(src) {
+  function objectInfo(wrapper, sourceType) {
+    this.wrapper = wrapper;
+    this.type = sourceType
+  }
+  var getObjectInfo = function(object) {
+    var wrapper = null;
+    var element = $(object)[0];
+    if(typeof element != "undefined") {
+      var wrapper = element.tagName
+    }
+    var source = _getSourceFromObject(object, wrapper);
+    var type = _getTypeFromSource(source);
+    return new objectInfo(wrapper, type)
+  };
+  var _getSourceFromObject = function(object, wrapper) {
+    switch(wrapper) {
+      case null:
+        return object;
+      case "EMBED":
+        return $(object).attr("src");
+      case "OBJECT":
+        if(typeof $(object).attr("src") != "undefined") {
+          return $(object).attr("src")
+        }
+        if(typeof $(object).attr("data") != "undefined") {
+          return $(object).attr("data")
+        }
+        return"source not founded";
+      case "IFRAME":
+        return $(object).attr("src");
+      default:
+        console.log("Unrecognized object wrapper: " + wrapper);
+        break
+    }
+  };
+  var http_urls_pattern = /(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
+  var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
+  var youtube_video_pattern = /(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g;
+  var _getTypeFromSource = function(source) {
+    if(typeof source != "string") {
+      return"Invalid source"
+    }
+    var extension = source.split(".").pop();
+    if(source.match(youtube_video_pattern) != null) {
+      return"youtube"
+    }
+    if(extension == "swf") {
+      return extension
+    }
+    if(source.match(http_urls_pattern) != null || source.match(www_urls_pattern) != null) {
+      return"web"
+    }
+    return extension
+  };
+  var resizeObject = function(id, width) {
+    var proportion = $("#" + id).height() / $("#" + id).width();
+    $("#" + id).width(width);
+    $("#" + id).height(width * proportion);
+    var parent = $("#" + id).parent();
+    $(parent).width(width);
+    $(parent).height(width * proportion)
+  };
+  var renderObjectPreview = function(object) {
+    var objectInfo = getObjectInfo(object.content);
+    if(objectInfo.wrapper == null) {
+      return"<embed class='objectPreview' src='" + object.content + "'></embed>"
+    }else {
+      var wrapperPreview = $(object.content);
+      $(wrapperPreview).addClass("objectPreview");
+      $(wrapperPreview).removeAttr("width");
+      $(wrapperPreview).removeAttr("height");
+      return wrapperPreview
+    }
+  };
+  var drawObject = function(object) {
+    var objectInfo = getObjectInfo(object);
+    switch(objectInfo.wrapper) {
+      case null:
+        switch(objectInfo.type) {
+          case "swf":
+            V.Editor.Object.Flash.drawFlashObjectWithSource(object);
+            break;
+          case "youtube":
+            break;
+          default:
+            console.log("Unrecognized object source type: " + objectInfo.type);
+            break
+        }
+        break;
+      case "EMBED":
+        drawObjectWithWrapper(object);
+        break;
+      case "OBJECT":
+        drawObjectWithWrapper(object);
+        break;
+      case "IFRAME":
+        drawObjectWithWrapper(object);
+        break;
+      default:
+        console.log("Unrecognized object wrapper: " + objectInfo.wrapper);
+        break
+    }
+  };
+  var drawObjectWithWrapper = function(wrapper) {
     var current_area = VISH.Editor.getCurrentArea();
     var template = VISH.Editor.getTemplate();
-    var nextFlashId = VISH.Editor.getId();
-    var idToDrag = "draggable" + nextFlashId;
-    var idToResize = "resizable" + nextFlashId;
-    current_area.attr("type", "swf");
-    var embedDiv = document.createElement("div");
-    embedDiv.setAttribute("id", idToDrag);
-    $(embedDiv).addClass("object_wrapper");
-    $(embedDiv).addClass(template + "_swf");
-    var embedTag = document.createElement("embed");
-    embedTag.setAttribute("id", idToResize);
-    embedTag.setAttribute("class", template + "_swf");
-    embedTag.setAttribute("title", "Click to drag");
-    embedTag.setAttribute("src", src);
-    $(embedDiv).append(embedTag);
+    var nextWrapperId = VISH.Editor.getId();
+    var idToDrag = "draggable" + nextWrapperId;
+    var idToResize = "resizable" + nextWrapperId;
+    current_area.attr("type", "object");
+    var wrapperDiv = document.createElement("div");
+    wrapperDiv.setAttribute("id", idToDrag);
+    $(wrapperDiv).addClass("object_wrapper");
+    $(wrapperDiv).addClass(template + "_object");
+    var wrapperTag = wrapper;
+    $(wrapperTag).attr("id", idToResize);
+    $(wrapperTag).attr("class", template + "_object");
+    $(wrapperTag).attr("title", "Click to drag");
+    $(wrapperDiv).append(wrapperTag);
     $(current_area).html("");
-    $(current_area).append(embedDiv);
+    $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
-    $("#menubar").before("<div id='sliderId" + nextFlashId + "' class='theslider'><input id='imageSlider" + nextFlashId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextFlashId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      _resizeObject(idToResize, 325 * value)
+    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      resizeObject(idToResize, 325 * value)
     }});
     $("#" + idToDrag).draggable({cursor:"move"})
   };
-  var _resizeObject = function(id, width) {
-    $("#" + id).width(width);
-    var height = $("#" + id).height();
-    var parent = $("#" + id).parent();
-    $(parent).width(width);
-    $(parent).height(height)
-  };
-  return{init:init, onLoadTab:onLoadTab, drawFlashObject:drawFlashObject}
+  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
@@ -10323,7 +10438,8 @@ VISH.Samples = function(V, undefined) {
   "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"center", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish13", 
   "template":"t1", "elements":[{"id":"333", "type":"text", "areaid":"header", "body":"Example of HTML5 video with autostart"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
   {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "type": "video/webm", "src": "videos/kids.webm"},{"type": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}]};
+  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}, {"id":"vish15", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="100%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
   return{samples:samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
@@ -10339,11 +10455,11 @@ VISH.Samples.API = function(V, undefined) {
   '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1543", "title":"Gato", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://www.10puntos.com/wp-content/uploads/2010/09/gato-lindo.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + 
   "]"}, {"id":"1544", "title":"Otro gato", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://neko.koiora.net/files/2011/06/Gato17.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1545", "title":"Gato ninja", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
   "poster":"http://www.sarda.es/fotos/gato_volador/gato_volador.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}]};
-  var flashList = {"flashes":[{"id":"1534", "title":"HTML5 Demo", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1535", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, 
-  {"id":"1536", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1537", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1538", "title":"HTML5 Demo", 
-  "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1539", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1540", "title":"HTML5 Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1541", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1542", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", 
-  "content":'<embed width="100%" height="100%" id="player_api" src="/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1543", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
+  var flashList = {"flashes":[{"id":"1534", "title":"Profesor", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}, 
+  {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}, {"id":"1537", "title":"Image", "description":"Image Embed", "author":"Globedia", "content":'<embed width="100%" height="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'}, {"id":"1538", "title":"HTML5 Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1539", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1540", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", 
+  "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1541", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1542", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, 
+  {"id":"1543", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
   return{videoList:videoList, flashList:flashList}
 }(VISH);
 VISH.AppletPlayer = function() {
@@ -10387,7 +10503,7 @@ VISH.Debugging = function(V, $, undefined) {
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
   var nextArticleId = 1;
-  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
+  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' tabindex='-1' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' tabindex='-1' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
   var getDummy = function(template) {
     return _replaceIds(dummies[parseInt(template, 10) - 1])
   };
@@ -10480,14 +10596,14 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       })
     }
     if(multipleRow) {
-      _applyMultipleRows(wrapperDiv, mainDiv, rows)
+      _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows)
     }else {
       $(wrapperDiv).prepend(mainDiv);
-      _setMainCarrousel(containerId)
+      _setMainCarrousel(containerId, containerId, rows)
     }
     return"Done"
   };
-  var _applyMultipleRows = function(wrapperDiv, mainDiv, rows) {
+  var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows) {
     var synchronizeIds = [];
     var i;
     for(i = 0;i < rows;i++) {
@@ -10503,24 +10619,39 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     for(i = rows - 1;i >= 0;i--) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i]);
       if(i == 0) {
-        _setMainCarrousel(mainDiv.id + "_row" + i, synchronizeIds)
+        var newContainerId = mainDiv.id + "_row" + i;
+        _setMainCarrousel(newContainerId, containerId, synchronizeIds, rows)
       }else {
         _setRowCarrousel(mainDiv.id + "_row" + i)
       }
     }
   };
   var _setRowCarrousel = function(id) {
-    $("#" + id).carouFredSel({auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}})
+    $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:750, scroll:{items:5, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:5, max:5}}})
   };
-  var _setMainCarrousel = function(id, synchronizeIds) {
-    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:4, fx:"scroll", duration:1E3, pauseDuration:2E3}, prev:{button:"#carrousel_prev" + id, key:"left"}, next:{button:"#carrousel_next" + id, key:"right"}, pagination:"#carrousel_pag" + id});
+  var _setMainCarrousel = function(id, widgetsId, synchronizeIds, rows) {
+    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:5, duration:1E3, pauseDuration:2E3}, items:{visible:{min:5, max:5}}, prev:{button:"#carrousel_prev" + widgetsId, key:"left"}, next:{button:"#carrousel_next" + widgetsId, key:"right"}, pagination:"#carrousel_pag" + widgetsId});
     if(synchronizeIds) {
       $(synchronizeIds).each(function(index, value) {
         $("#" + id).trigger("configuration", ["synchronise", "#" + value])
       })
     }
+    $("#" + id).attr("rows", rows)
   };
   var cleanCarrousel = function(containerId) {
+    var containderIdForMultiRow = containerId + "_row0";
+    if($("#" + containderIdForMultiRow).attr("rows")) {
+      var rows = $("#" + containderIdForMultiRow).attr("rows");
+      var i;
+      for(i = 0;i < rows;i++) {
+        _cleanOneRowCarrousel(containerId + "_row" + i)
+      }
+      $("#" + containderIdForMultiRow).attr("id", containerId)
+    }else {
+      _cleanOneRowCarrousel(containerId)
+    }
+  };
+  var _cleanOneRowCarrousel = function(containerId) {
     var carrouselWrapper = $("#" + containerId).parent().parent();
     if($(carrouselWrapper).hasClass("image_carousel")) {
       $(carrouselWrapper).removeClass("image_carousel");
@@ -10531,113 +10662,11 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
   };
   return{createCarrousel:createCarrousel, cleanCarrousel:cleanCarrousel}
 }(VISH, jQuery);
-VISH.Editor.Flash.Repository = function(V, $, undefined) {
-  var carrouselDivId = "tab_flash_repo_content_carrousel";
-  var previewDivId = "tab_flash_repo_content_preview";
-  var currentFlash = new Array;
-  var selectedFlash = null;
-  var init = function() {
-    var myInput = $("#tab_flash_repo_content").find("input[type='search']");
-    $(myInput).watermark("Search content");
-    $(myInput).keydown(function(event) {
-      if(event.keyCode == 13) {
-        VISH.Editor.Flash.Repository.requestData($(myInput).val());
-        $(myInput).blur()
-      }
-    })
-  };
-  var onLoadTab = function() {
-    var previousSearch = $("#tab_flash_repo_content").find("input[type='search']").val() != "";
-    if(!previousSearch) {
-      _renderFlashPreview(null);
-      _requestInicialData()
-    }
-  };
-  var _requestInicialData = function() {
-    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Flash.Repository.onDataReceived, VISH.Editor.Flash.Repository.onAPIError)
-  };
-  var requestData = function(text) {
-    VISH.Editor.API.requestFlashes(text, VISH.Editor.Flash.Repository.onDataReceived, VISH.Editor.Flash.Repository.onAPIError)
-  };
-  var onDataReceived = function(data) {
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    currentFlash = new Array;
-    var content = "";
-    $.each(data, function(index, flash) {
-      content = content + "<div style='width:150px' flashid='" + flash.id + "' class='carrousel_object_wrapper'>" + flash.content + "</div>";
-      currentFlash[flash.id] = flash
-    });
-    $("#" + carrouselDivId).html(content);
-    $(".carrousel_object_wrapper").children().addClass("carrousel_object");
-    _autoResizeObjects();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Flash.Repository.onClickCarrouselElement)
-  };
-  var onAPIError = function() {
-    console.log("API error")
-  };
-  var onClickCarrouselElement = function(event) {
-    var flashId = $(event.target).attr("flashid");
-    selectedFlash = currentFlash[flashId];
-    addSelectedFlash()
-  };
-  var _renderFlashPreview = function(renderedFlash, flash) {
-  };
-  var _autoResizeObjects = function() {
-    $(".carrousel_object_wrapper").children().height($(".carrousel_object_wrapper").height());
-    $(".carrousel_object_wrapper").children().width($(".carrousel_object_wrapper").width())
-  };
-  var _generateTable = function(author, title, description) {
-    if(!author) {
-      author = ""
-    }
-    if(!title) {
-      title = ""
-    }
-    if(!description) {
-      description = ""
-    }
-    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
-    description + "</div></td>" + "</tr>" + "</table>"
-  };
-  var addSelectedFlash = function() {
-    if(selectedFlash != null) {
-      var content = $(selectedFlash.content);
-      var src = _getSourceFromObject(content);
-      if(src) {
-        VISH.Editor.Flash.drawFlashObject(src)
-      }
-      $.fancybox.close()
-    }
-  };
-  var _getSourceFromObject = function(object) {
-    if($(object).attr("src").length > 0) {
-      return $(object).attr("src")
-    }else {
-      if($(object).attr("data").length > 0) {
-        return $(object).attr("data")
-      }
-    }
-    return null
-  };
-  return{init:init, onLoadTab:onLoadTab, requestData:requestData, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedFlash:addSelectedFlash, onClickCarrouselElement:onClickCarrouselElement}
-}(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
   var carrouselDivId = "tab_flikr_content_carrousel";
   var queryMaxNumberFlikrImages = 20;
-  var onLoadTab = function() {
-    $("#tab_pic_flikr_content").find("input[type='search']").attr("value", "");
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    if($("#carrousel_prev")) {
-      $("#carrousel_prev").remove()
-    }
-    if($("#carrousel_next")) {
-      $("#carrousel_next").remove()
-    }
-    if($("#carrousel_pag")) {
-      $("#carrousel_pag").remove()
-    }
+  var init = function() {
     var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-    $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
         VISH.Editor.Image.Flikr.listImages($(myInput).val());
@@ -10645,26 +10674,21 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
       }
     })
   };
+  var onLoadTab = function() {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
+    $(myInput).watermark("Search content")
+  };
   var listImages = function(text) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    if($("#carrousel_prev")) {
-      $("#carrousel_prev").remove()
-    }
-    if($("#carrousel_next")) {
-      $("#carrousel_next").remove()
-    }
-    if($("#carrousel_pag")) {
-      $("#carrousel_pag").remove()
-    }
     var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
     var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + text + "&tagmode=any&format=json&jsoncallback=?";
     $.getJSON(url_flikr, function(data) {
       $.each(data.items, function(i, item) {
         $("#" + carrouselDivId).append('<img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" />')
       });
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Flikr.addImage)
-    });
-    $("#tab_pic_flikr_content").append('<div id="flikr_preview_metadata"></div>')
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage)
+    })
   };
   var previewMetadata = function(event) {
     console.log("event" + event)
@@ -10688,12 +10712,141 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
       $(this).parent().click()
     }})
   };
-  return{onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
+  return{init:init, onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
 }(VISH, jQuery);
 VISH.Editor.Image.Repository = function(V, $, undefined) {
   var onLoadTab = function() {
   };
   return{onLoadTab:onLoadTab}
+}(VISH, jQuery);
+VISH.Editor.Object.Flash = function(V, $, undefined) {
+  var drawFlashObjectWithSource = function(src) {
+    var current_area = VISH.Editor.getCurrentArea();
+    var template = VISH.Editor.getTemplate();
+    var nextFlashId = VISH.Editor.getId();
+    var idToDrag = "draggable" + nextFlashId;
+    var idToResize = "resizable" + nextFlashId;
+    current_area.attr("type", "swf");
+    var embedDiv = document.createElement("div");
+    embedDiv.setAttribute("id", idToDrag);
+    $(embedDiv).addClass("object_wrapper");
+    $(embedDiv).addClass(template + "_swf");
+    var embedTag = document.createElement("embed");
+    embedTag.setAttribute("id", idToResize);
+    embedTag.setAttribute("class", template + "_swf");
+    embedTag.setAttribute("title", "Click to drag");
+    embedTag.setAttribute("src", src);
+    $(embedDiv).append(embedTag);
+    $(current_area).html("");
+    $(current_area).append(embedDiv);
+    VISH.Editor.addDeleteButton($(current_area));
+    $("#menubar").before("<div id='sliderId" + nextFlashId + "' class='theslider'><input id='imageSlider" + nextFlashId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    $("#imageSlider" + nextFlashId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      VISH.Editor.Object.resizeObject(idToResize, 325 * value)
+    }});
+    $("#" + idToDrag).draggable({cursor:"move"})
+  };
+  return{drawFlashObjectWithSource:drawFlashObjectWithSource}
+}(VISH, jQuery);
+VISH.Editor.Object.Repository = function(V, $, undefined) {
+  var carrouselDivId = "tab_flash_repo_content_carrousel";
+  var previewDivId = "tab_flash_repo_content_preview";
+  var currentObject = new Array;
+  var selectedObject = null;
+  var init = function() {
+    var myInput = $("#tab_flash_repo_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        _requestData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
+  var onLoadTab = function() {
+    var previousSearch = $("#tab_flash_repo_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _renderObjectPreview(null);
+      _requestInicialData()
+    }
+  };
+  var _requestInicialData = function() {
+    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError)
+  };
+  var _requestData = function(text) {
+    VISH.Editor.API.requestFlashes(text, VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError)
+  };
+  var onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    currentObject = new Array;
+    var content = "";
+    $.each(data, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content);
+      var imageSource = null;
+      switch(objectInfo.type) {
+        case "swf":
+          imageSource = "/images/carrousel/swf.png";
+          break;
+        case "youtube":
+          imageSource = "/images/carrousel/youtube.png";
+          break;
+        case "web":
+          if(objectInfo.wrapper == "IFRAME") {
+            imageSource = "/images/carrousel/iframe.png"
+          }else {
+            imageSource = "/images/carrousel/object.jpeg"
+          }
+          break;
+        default:
+          imageSource = "/images/carrousel/object.jpeg";
+          break
+      }
+      content = content + "<img src='" + imageSource + "' objectId='" + object.id + "'>";
+      currentObject[object.id] = object
+    });
+    $("#" + carrouselDivId).html(content);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Object.Repository.onClickCarrouselElement)
+  };
+  var onAPIError = function() {
+    console.log("API error")
+  };
+  var onClickCarrouselElement = function(event) {
+    var objectId = $(event.target).attr("objectid");
+    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId]);
+    _renderObjectPreview(renderedObject, currentObject[objectId]);
+    selectedObject = currentObject[objectId]
+  };
+  var _renderObjectPreview = function(renderedObject, object) {
+    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
+    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    if(renderedObject && object) {
+      $(objectArea).append(renderedObject);
+      var table = _generateTable(object.author, object.title, object.description);
+      $(metadataArea).html(table)
+    }
+  };
+  var _generateTable = function(author, title, description) {
+    if(!author) {
+      author = ""
+    }
+    if(!title) {
+      title = ""
+    }
+    if(!description) {
+      description = ""
+    }
+    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
+    description + "</div></td>" + "</tr>" + "</table>"
+  };
+  var addSelectedObject = function() {
+    if(selectedObject != null) {
+      VISH.Editor.Object.drawObject($(selectedObject.content));
+      $.fancybox.close()
+    }
+  };
+  return{init:init, onLoadTab:onLoadTab, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedObject:addSelectedObject, onClickCarrouselElement:onClickCarrouselElement}
 }(VISH, jQuery);
 VISH.Editor.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
@@ -10762,23 +10915,27 @@ VISH.Editor.SlidesUtilities = function(V, $, undefined) {
 VISH.Editor.Text = function(V, $, undefined) {
   var myNicEditor;
   var init = function() {
-    $(document).on("click", ".textthumb", VISH.Editor.Text.launchTextEditor)
+    $(document).on("click", ".textthumb", _launchTextEditor)
   };
-  var launchTextEditor = function() {
-    var current_area = VISH.Editor.getCurrentArea();
+  var _launchTextEditor = function() {
+    var current_area = $(this).parents(".selectable");
     if(myNicEditor == null) {
       myNicEditor = new nicEditor;
       myNicEditor.setPanel("slides_panel")
     }
     current_area.attr("type", "text");
-    var wysiwygId = "wysiwyg_" + current_area[0].id;
+    var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
     current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
     myNicEditor.addInstance(wysiwygId);
-    V.Editor.addDeleteButton(current_area)
+    V.Editor.addDeleteButton(current_area);
+    $(document).on("focusin", "#" + wysiwygId, _onWysiwygLoseFocus)
   };
-  return{init:init, launchTextEditor:launchTextEditor}
+  var _onWysiwygLoseFocus = function() {
+    console.log("salida")
+  };
+  return{init:init}
 }(VISH, jQuery);
 VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   var init = function() {
@@ -10929,7 +11086,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       var sourcesArray = [];
       var options = new Array;
       options["poster"] = selectedVideo.poster;
-      var sources = selectedVideo.sources;
+      var sources = JSON.parse(selectedVideo.sources);
       $.each(sources, function(index, source) {
         sourcesArray.push([source.src, source.type])
       });
@@ -10943,13 +11100,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var carrouselDivId = "tab_video_youtube_content_carrousel";
   var queryMaxMaxNumberYoutubeVideo = 20;
   var hash_youtube_video_id = new Array;
-  var onLoadTab = function() {
-    $("#youtube_preview").remove();
-    $("#preview_video_button").remove();
-    $("#youtube_preview_metadata").remove();
-    $("#youtube_text_to_search").attr("value", "");
-    $("#tab_video_youtube_content_carrousel").children("*").remove();
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+  var init = function() {
     var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
@@ -10958,6 +11109,15 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
         $(myInput).blur()
       }
     })
+  };
+  var onLoadTab = function() {
+    $("#youtube_preview").remove();
+    $("#preview_video_button").remove();
+    $("#youtube_preview_metadata").remove();
+    $("#youtube_text_to_search").attr("value", "");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    var myInput = $("#tab_video_youtube_content").find("input[type='search']");
+    $(myInput).watermark("Search content")
   };
   var drawYoutubeVideo = function(video_id) {
     var template = VISH.Editor.getTemplate();
@@ -11028,7 +11188,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
     description + "</div></td>" + "</tr>" + "</table>"
   };
-  return{onLoadTab:onLoadTab, drawYoutubeVideo:drawYoutubeVideo, showYoutubeVideo:showYoutubeVideo, listVideo:listVideo}
+  return{init:init, onLoadTab:onLoadTab, drawYoutubeVideo:drawYoutubeVideo, showYoutubeVideo:showYoutubeVideo, listVideo:listVideo}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;
@@ -11079,23 +11239,28 @@ VISH.Renderer = function(V, $, undefined) {
               content += _renderSwf(slide.elements[el], slide.template);
               classes += "swf "
             }else {
-              if(slide.elements[el].type === "iframe") {
-                content += _renderIframe(slide.elements[el], slide.template);
-                classes += "iframe "
+              if(slide.elements[el].type === "object") {
+                content += _renderObject(slide.elements[el], slide.template);
+                classes += "object "
               }else {
-                if(slide.elements[el].type === "applet") {
-                  content += _renderApplet(slide.elements[el], slide.template);
-                  classes += "applet "
+                if(slide.elements[el].type === "iframe") {
+                  content += _renderIframe(slide.elements[el], slide.template);
+                  classes += "iframe "
                 }else {
-                  if(slide.elements[el].type === "flashcard") {
-                    content = _renderFlashcard(slide.elements[el], slide.template);
-                    classes += "flashcard"
+                  if(slide.elements[el].type === "applet") {
+                    content += _renderApplet(slide.elements[el], slide.template);
+                    classes += "applet "
                   }else {
-                    if(slide.elements[el].type === "openquestion") {
-                      content = _renderOpenquestion(slide.elements[el], slide.template)
+                    if(slide.elements[el].type === "flashcard") {
+                      content = _renderFlashcard(slide.elements[el], slide.template);
+                      classes += "flashcard"
                     }else {
-                      if(slide.elements[el].type === "mcquestion") {
-                        content = _renderMcquestion(slide.elements[el], slide.template)
+                      if(slide.elements[el].type === "openquestion") {
+                        content = _renderOpenquestion(slide.elements[el], slide.template)
+                      }else {
+                        if(slide.elements[el].type === "mcquestion") {
+                          content = _renderMcquestion(slide.elements[el], slide.template)
+                        }
                       }
                     }
                   }
@@ -11121,7 +11286,7 @@ VISH.Renderer = function(V, $, undefined) {
     var autoplay = element["autoplay"] ? "autoplayonslideenter='" + element["autoplay"] + "' " : "";
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
-    var sources = element["sources"];
+    var sources = JSON.parse(element["sources"]);
     rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
     $.each(sources, function(index, source) {
       var type = source.type ? "type='" + source.type + "' " : "";
@@ -11135,6 +11300,9 @@ VISH.Renderer = function(V, $, undefined) {
   };
   var _renderSwf = function(element, template) {
     return"<div id='" + element["id"] + "' class='swfelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_swf" + "' src='" + element["body"] + "' swfStyle='" + element["style"] + "'></div>"
+  };
+  var _renderObject = function(element, template) {
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_object" + "' objectStyle='" + element["style"] + "'>" + element["body"] + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';

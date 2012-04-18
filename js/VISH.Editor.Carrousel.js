@@ -117,7 +117,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		  min : 5,
 		  max : 5
 		}
-	  },
+	  }
     }); 
   }
 
