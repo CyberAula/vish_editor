@@ -1,8 +1,12 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
+	var init = function(){
+		VISH.Editor.Image.Flikr.init();
+	};
+	
 	var onLoadTab = function(){
 		
-	}
+	};
 	
   /**
    * Function to draw an image in a zone of the template
@@ -16,8 +20,10 @@ VISH.Editor.Image = (function(V,$,undefined){
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr('type','image');
-    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' /><div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>");
-        
+    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
+    
+    V.Editor.addDeleteButton(current_area);
+    
     $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
     
     //double size if header to insert image
@@ -37,11 +43,17 @@ VISH.Editor.Image = (function(V,$,undefined){
           $("#" + idToDragAndResize).width(325*value);
       }
     });
-    $("#" + idToDragAndResize).draggable({cursor: "move"});
+    $("#" + idToDragAndResize).draggable({
+    	cursor: "move",
+    	stop: function(){
+    		$(this).parent().click();  //call parent click to select it in case it was unselected	
+    	}
+    });
   };
 	
 	return {
-		onLoadTab		: onLoadTab,
+		init        : init,
+		onLoadTab	: onLoadTab,
 		drawImage   : drawImage
 	};
 

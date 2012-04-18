@@ -13,11 +13,12 @@ VISH.SlideManager = (function(V,$,undefined){
 	/**
 	 * function to add enter and leave events
 	 * it is called from vish.excursion.js because we need to add the events before loading slides.js
+	 * it is called with live() because in the editor we need to add this event for articles now and in the future as the user is adding articles on the fly
 	 */
 	var addEnterLeaveEvents = function(){
-		$('article').on('slideenter',_onslideenter);
-		$('article').on('slideleave',_onslideleave);
-	}
+		$('article').live('slideenter',_onslideenter);
+		$('article').live('slideleave',_onslideleave);
+	};
 	
 	/**
 	 * function to get the status of the slide, used for flashcards that have a status (showing photo, showing video frame)
@@ -91,6 +92,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var _onslideleave = function(e){
 		//TODO detect class of e.target and unload only when neccesary
+		//XXX optimize detecting class and type
 		V.VideoPlayer.stopVideos(e.target);
 		V.SWFPlayer.unloadSWF();
 		V.SWFPlayer.unloadIframe();

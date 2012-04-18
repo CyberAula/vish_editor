@@ -31,6 +31,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderSwf(slide.elements[el],slide.template);
 				classes += "swf ";
 			}
+			else if(slide.elements[el].type === "object"){
+				content += _renderObject(slide.elements[el],slide.template);
+				classes += "object ";
+			}
 			else if(slide.elements[el].type === "iframe"){  //used for youtube videos
 				content += _renderIframe(slide.elements[el],slide.template);
 				classes += "iframe ";
@@ -72,28 +76,28 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a video inside an article (a slide)
 	 */
 	var renderVideo = function(element, template){
-		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>"
-		var style = (element['style'])?"style='" + element['style'] + "'":""
-		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' "
-		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":""
-		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":""
-		var loop=(element['loop'])?"loop='loop' ":""
-		var sources = JSON.parse(element['sources'])
+		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
+		var style = (element['style'])?"style='" + element['style'] + "'":"";
+		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
+		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":"";
+		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
+		var loop=(element['loop'])?"loop='loop' ":"";
+		var sources = JSON.parse(element['sources']);
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">"
+		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
 		$.each(sources, function(index, source) {
-			var mimetype = (source.mimetype)?"type='" + source.mimetype + "' ":""
-			rendered = rendered + "<source src='" + source.src + "' " + mimetype + ">"
+			var type = (source.type)?"type='" + source.type + "' ":"";
+			rendered = rendered + "<source src='" + source.src + "' " + type + ">";
 		});
 		
 		if(sources.length>0){
-			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>"
+			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>";
 		}
 		
-		rendered = rendered + "</video>"
+		rendered = rendered + "</video>";
 		
-		return rendered
+		return rendered;
 	};
 
 	/**
@@ -102,15 +106,25 @@ VISH.Renderer = (function(V,$,undefined){
 	 * when entering a slide with a swf class we call V.SWFPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the src inside the div
 	 */
 	var _renderSwf = function(element, template){
-		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"'></div>";
+		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"' swfStyle='" + element['style'] + "'></div>";
 	};
+	
+	
+	/**
+	 * Function to render an object inside an article (a slide)
+	 */
+	var _renderObject = function(element, template){
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_object"+"' objectStyle='" + element['style'] + "'>" + element['body'] + "</div>";
+	};
+	
 	
 	/**
 	 * Function to render an iframe inside an article (a slide)	 * 
 	 * when entering a slide with an iframe class we call V.SWFPlayer.loadIframe (see VISH.SlideManager._onslideenter) and it will add the src inside the div
 	 */
 	var _renderIframe = function(element, template){
-		return "<div id='"+element['id']+"' class='iframeelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_iframe"+"' src='"+element['body']+"'></div>";
+		var to_return = '<div id="'+element['id']+'" class="iframeelement '+template+'_'+element['areaid']+'" templateclass="'+template+'_iframe'+'" src="'+element['body']+'"></div>';
+		return to_return;
 	};
 
 	/**

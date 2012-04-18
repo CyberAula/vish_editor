@@ -1,47 +1,46 @@
 VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	
-	var init = function(){
+  var init = function(){
     var urlInput = $("#tab_video_from_url_content").find("input.url");
     $(urlInput).watermark('Paste HTML5 video URL');
-		var uploadInput = $("#tab_video_upload_content").find("input.upload");
+	var uploadInput = $("#tab_video_upload_content").find("input.upload");
     $(uploadInput).watermark('Select video to upload');
   }
 	
-	var onLoadTab = function(tab){
-		
-	}
+  var onLoadTab = function(tab){	
+  }
 
   var drawVideoWithUrl = function (url){
-		drawVideo([[url,_getMimetypeFromUrl(url)]])
-	}
+    drawVideo([[url,_getVideoTypeFromUrl(url)]])
+  }
 	
-	var _getMimetypeFromUrl = function(url) {
-		//Code here...
-		return null;
-	}
+  var _getVideoTypeFromUrl = function(url) {
+    //Code here...
+    return null;
+  }
 
   /**
    * Returns a video object prepared to draw.
-   * Sources: array of arrays [[source src, source mymetipe],...] .
+   * Sources: array of arrays [[source src, source type],...] .
    * Options: hash with additional data like poster url or autoplay
    */
   var drawVideo = function(sources,options){
-    
-		//Default options
-		var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
-		var autoplay = false;
+	  
+    //Default options
+	var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+	var autoplay = false;
 		
-		//Replace defeault options if options hash is defined
-		if(options){
-			if(options['poster']){
-				var posterUrl = options['poster'];
-			}
-			if(options['autoplay']){
+	//Replace defeault options if options hash is defined
+	if(options){
+	  if(options['poster']){
+	    var posterUrl = options['poster'];
+	  }
+	  if(options['autoplay']){
         var autoplay = options['autoplay'];
       }
-		}
+	}
 		
-		var current_area = VISH.Editor.getCurrentArea();
+	var current_area = VISH.Editor.getCurrentArea();
     var template = VISH.Editor.getTemplate();
 
     var nextVideoId = VISH.Editor.getId();
@@ -55,15 +54,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     videoTag.setAttribute('controls', "controls");
     videoTag.setAttribute('preload', "metadata");
     videoTag.setAttribute('poster', posterUrl);
-		videoTag.setAttribute('autoplayonslideenter',autoplay);
+	videoTag.setAttribute('autoplayonslideenter',autoplay);
 		
-		$(sources).each(function(index, source) {
+	$(sources).each(function(index, source) {
       var videoSource = document.createElement('source');
       videoSource.setAttribute('src', source[0]);
-			if(source[1]){
-				videoSource.setAttribute('type', source[1]);
-			}
-			$(videoTag).append(videoSource)
+	  if(source[1]){
+	    videoSource.setAttribute('type', source[1]);
+	  }
+	  $(videoTag).append(videoSource)
     });
     
     var fallbackText = document.createElement('p');
@@ -73,13 +72,10 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $(current_area).html("");
     $(current_area).append(videoTag)
     
-    var editTag = "<div class='edit_pencil'><img class='edit_pencil_img' src='"+VISH.ImagesPath+"/edit.png'/></div>"
-    $(current_area).append(editTag)
-		
-		
-		//RESIZE
-    
-		$("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");
+    VISH.Editor.addDeleteButton($(current_area));
+    	
+	//RESIZE
+    $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");
             
     $("#imageSlider"+nextVideoId).slider({
       from: 1,
@@ -98,11 +94,11 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 
 
 	
-	return {
-		init             : init,
-		onLoadTab				 : onLoadTab,
-		drawVideoWithUrl : drawVideoWithUrl,
-		drawVideo        : drawVideo
-	};
+  return {
+      init             : init,
+	  onLoadTab		   : onLoadTab,
+	  drawVideoWithUrl : drawVideoWithUrl,
+	  drawVideo        : drawVideo
+  };
 
 }) (VISH, jQuery);

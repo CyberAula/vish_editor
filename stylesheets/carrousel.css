@@ -14,6 +14,7 @@
     float: left;
 }
 
+
 a.prev, a.next {
     background: url(../images/carrousel_sprite.png) no-repeat transparent;
     width: 45px;
@@ -88,15 +89,15 @@ a.prev span, a.next span {
 }
 
 .carrousel_element_single_row{
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 90px;
   max-width: 150px;
   max-height: 150px;
 }
 
 .carrousel_element_multiple_row{
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 90px;
   max-width: 150px;
   max-height: 150px;
 }

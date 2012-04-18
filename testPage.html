@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		
+    <title>ViSH Editor</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.fancybox-1.3.4.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/jslider.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/jslider.blue.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/editor.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/nicEditor.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/carrousel.css">
+
+    <style>  
+       .slides > article:not(.fill)::before {
+         content: '';
+         display: block;
+         width: 100px;
+         height: 100px;
+         position: absolute;
+         left: 0;
+         bottom: 0;
+       }
+    </style>
+
+  	<meta name="viewport" content="width=900,height=750">
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+	  <script type="text/javascript" src="js/libs/jquery-ui-1.8.18.custom.min.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.ui.core.min.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.ui.mouse.min.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.ui.widget.min.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.ui.draggable.min.js"></script>
+	  <script type="text/javascript" src="js/libs/jquery.slider.min.js"></script>
+		<script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
+		<script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>	
+	  
+  </head>
+  
+  <body>
+
+
+
+<div id="test">
+<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>
+</div>	
+
+
+
+		
+
+
+	<link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1.css">
+	<!--[if gte IE 8]>
+	  <link rel="stylesheet" type="text/css" href="stylesheets/templates/pack1explorer9.css">
+	<![endif]-->
+	
+	<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="js/libs/json2.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.js"></script>
+	<script type="text/javascript" src="js/VISH.Samples.js"></script>
+	<script type="text/javascript" src="js/VISH.Samples.API.js"></script>
+	<script type="text/javascript" src="js/VISH.Renderer.js"></script>
+	<script type="text/javascript" src="js/VISH.Excursion.js"></script>
+	<script type="text/javascript" src="js/VISH.SWFPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.VideoPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.SlideManager.js"></script>
+	<script type="text/javascript" src="js/VISH.Dummies.js"></script>
+	<script type="text/javascript" src="js/VISH.Debugging.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.Editor.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Image.Flikr.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
+	
+	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
+	<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
+	<script type="text/javascript" src="js/VISH.Utils.text.js"></script>
+	
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.loader.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.player.js"></script>
+	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
+	
+	<script type="text/javascript" src="js/libs/slides.js"></script>
+	
+	<script type="text/javascript" src="js/libs/nicEdit.js" ></script>
+	
+	<script>
+		//First function called when page loads
+		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
+		//uncomment VISH.Editor.init to show the editor
+		function start(){
+		  VISH.Editor.init();
+		}
+	</script>
+		
+  </body>
+</html>
