@@ -24,7 +24,7 @@ namespace :vish_editor do
   end
 
   task :build do
-    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["vish_editor:compile"].invoke
     Rake::Task["build"].invoke
   end
   
