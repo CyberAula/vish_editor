@@ -362,7 +362,7 @@ VISH.Editor = (function(V,$,undefined){
   var _onSelectableLoseFocus = function(){  	
   	$(".theslider").hide();
   	$(this).find(".menuselect_hide").hide();
-  	if(!$(this).find(".wysiwygInstance")){
+  	if($(this).find(".wysiwygInstance").length === 0){
   		$(this).find(".delete_content").hide();
   	}
   };
