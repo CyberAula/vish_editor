@@ -20,7 +20,8 @@ VISH.Editor = (function(V,$,undefined){
 				
 		$("a#addslide").fancybox({
 			'width': 800,
-    		'height': 600});		
+    		'height': 600,
+    		'padding' : 0});		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
@@ -294,6 +295,7 @@ VISH.Editor = (function(V,$,undefined){
 			'width'         	: 350,
 			'height'        	: 150,
 			'showCloseButton'	: false,
+			'padding' 			: 0,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
@@ -323,6 +325,7 @@ VISH.Editor = (function(V,$,undefined){
 			'width'         	: 350,
 			'height'        	: 150,
 			'showCloseButton'	: false,
+			'padding' 			: 0,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
