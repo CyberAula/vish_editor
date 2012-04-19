@@ -42,16 +42,40 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
    * Funcion to get an youtube video and embed into the zone
    */
   var drawYoutubeVideo = function (video_id) {
+  	//default value
+  	var height = 243;
  	var template = VISH.Editor.getTemplate();
 	var current_area = VISH.Editor.getCurrentArea();
-
+	
+	//for 
+	var width = current_area.width();
+	
 	var nextVideoId = VISH.Editor.getId();
+	var idToDrag = "draggable" + nextVideoId;
+	//var nextFlashId = VISH.Editor.getId();
     $.fancybox.close();
+    
+    
+    
     //generate embed for the video
-    var video_embedded = "http://www.youtube.com/embed/"+video_id;
-    var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:324px; height:243px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
+	//it depends on the dimension of the current_area
+	var video_embedded = "http://www.youtube.com/embed/"+video_id;
+	
+	if (width == 663) { //no draggable & full area
+		
+		var height = current_area.height();
+		var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
+    "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
+    
+	} 
+	else if (width==324) { //draggable 
+	var height_drag = height + 40;	
+    var final_video = "<div id='"+idToDrag+"' style='background-color:red; width:"+ width +"px; height:"+height_drag+
+    "px;'><iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
+    "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe></div>";
+   }
     //insert embed in zone
-	var current_area = VISH.Editor.getCurrentArea();
+	
     current_area.addClass('iframeelement');
     current_area.attr('type', 'iframe');
     
@@ -59,8 +83,11 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     current_area.parent().addClass('iframe');
     //save the src in the element to load and unload the content
     current_area.attr('src', final_video);
+    
    
     current_area.html(final_video);
+    //make draggable the div 
+    $("#" + idToDrag).draggable({cursor: "move"});
     
     V.Editor.addDeleteButton(current_area);
   };
