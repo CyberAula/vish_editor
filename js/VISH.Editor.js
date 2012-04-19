@@ -69,9 +69,6 @@ VISH.Editor = (function(V,$,undefined){
 			'hideOnOverlayClick': false,
       		'hideOnContentClick': false,
 			'showCloseButton': false,
-			/*'onClosed': function() {
-	    		$("#excursion_details_error").hide();
-			}*/
 		})
 		// The box is launched when the page is loaded
 		//$("#excursiondetailslauncher").trigger('click');
@@ -235,6 +232,13 @@ VISH.Editor = (function(V,$,undefined){
 	 * the data in order to be stored at the end in the JSON file   
 	 */
 	var _onSaveExcursionDetailsButtonClicked = function(event){
+		if($('#excursion_title').val().length < 1 || $('#excursion_description').val().length < 1) {
+			
+			$('#excursion_details_error').slideDown("slow");
+			$('#excursion_details_error').show();
+			return false;
+		}
+		// save the details in a hash object
 		excursionDetails.title = $('#excursion_title').val();
 		excursionDetails.description = $('#excursion_description').val();
 		$.fancybox.close();
