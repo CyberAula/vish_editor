@@ -236,8 +236,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * the data in order to be stored at the end in the JSON file   
 	 */
 	var _onSaveExcursionDetailsButtonClicked = function(event){
-		if($('#excursion_title').val().length < 1 || $('#excursion_description').val().length < 1) {
-			
+		if($('#excursion_title').val().length < 1) {
 			$('#excursion_details_error').slideDown("slow");
 			$('#excursion_details_error').show();
 			return false;

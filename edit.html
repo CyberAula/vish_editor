@@ -89,28 +89,22 @@
 
       <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
       <div style='display:none'>
-      	<a id="excursiondetailslauncher" href="#excursiondetails"/>      	
+      	<a id="excursiondetailslauncher" href="#excursiondetails"/>     	
       </div>
 	        
-      <div style='display:none'>
+      <div style='display:none'> 
       	<form id='excursiondetails' >
-      		<p>Virtual Excursion Details:</p>
-      		<p id="excursion_details_error" style='display:none'>Please, enter a title</p>
-      		<p>
-      			<label for="excursion_title">
-      				Title
-      			</label>
-      			<input id='excursion_title' class="input_text_fancy formsizefancy1 marginsfancy1" type="text" name="excursion_title" placeholder="Excursion title">	
-      		</p>
-			<p>
-				<label for="excursion_description">
-					Description
-				</label>
-				<textarea id='excursion_description' class="input_text_fancy formsizefancy1 marginsfancy1" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
-			</p>
-			<p>
-				<buttton id='save_excursion_details' class='button'>Save</button>
-			</p>
+        	<img src="/images/intro.png"/>
+      		<label for="excursion_title">
+      			<div class="textintro1 textintromargin1">Title</div>
+      		</label>
+      		<input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">	
+			<label for="excursion_description">
+				<div class="textintro1 textintromargin2">Description</div>
+			</label>
+			<textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+			<input id='save_excursion_details' submit='disable' class='button buttonintro' value='Save'>
+            <p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
       	</form>
       </div>
       
@@ -430,8 +424,8 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  VISH.Editor.init({}, VISH.Samples.one_slide);  //to edit the excursion
-		  //VISH.Editor.init();
+		  //VISH.Editor.init({}, VISH.Samples.one_slide);  //to edit the excursion
+		  VISH.Editor.init();
 		}
 	</script>
 		

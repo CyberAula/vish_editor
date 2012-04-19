@@ -766,5 +766,54 @@ div.object_wrapper{
  ***********************************/ 
 
 #excursion_details_error{
+}
 	
+.formsizefancy3 {
+	width: 650px;
+	height: 30px;
+	margin-left: 70px;
+	margin-top: 10px;
+	font-family:helvetica;
+}
+
+.formsizefancy4 { 
+	margin-left: 70px;
+	margin-top: 5px;
+	width: 650px;
+	height: 70px;
+	resize: none;
+	font-family:helvetica;
+}
+
+.textintro1 {
+	font-family:Helvetica;
+	font-size:24px;
+	color: #ff005d ;
+}
+
+.textintromargin1 {
+	margin-left: 68px;
+}
+
+.textintromargin2 {
+	margin-left: 68px;
+	margin-top: 70px;
+}
+
+.buttonintro {
+	margin-top:100px;
+	margin-left:660px;
+	width:40px;
+}
+
+.error_intro {
+	margin-left: 500px;
+	margin-top: -20px;
+	font-family:Helvetica;
+	font-size:16px;
+	color: #F00;
+}
+
+textarea {
+	font-family:Helvetica;
 }
