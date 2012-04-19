@@ -100,21 +100,19 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 */
   var showYoutubeVideo = function(e) {
     //generate embed for the preview video
-	
+	console.log("entra en showYTVideo");
     var video_embedded = "http://www.youtube.com/embed/"+ hash_youtube_video_id[e.target.id];
     var title =  hash_youtube_video_id["title"+e.target.id.replace("vid","")]; //
     var author = hash_youtube_video_id["author"+e.target.id.replace("vid","")];
     var subtitle = hash_youtube_video_id["subtitle"+e.target.id.replace("vid","")];
 
-	
-
-    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
+	var final_video = '<iframe class="youtube_frame" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")){
    	 $("#preview_video_button").remove();    
     }
-    $("#tab_video_youtube_content").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); 
-  
+  //  $("#tab_video_youtube_content").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>'); 
+    $("#tab_video_youtube_content").children(".box1fancy2").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\''+hash_youtube_video_id[e.target.id]+'\')" >add this video</button>');
 	var table = _generateTable(author,title,subtitle);
 	$("#youtube_preview_metadata").html(table);
 
@@ -179,11 +177,11 @@ var listVideo = function(text){
 
  //draw an empty div to preview the youtube video
 
- $("#tab_video_youtube_content").append('<div id="youtube_preview" ></div>');
-
+ //$("#tab_video_youtube_content").append('<div id="youtube_preview" ></div>');
+$("#tab_video_youtube_content").children(".box1fancy2").append('<div id="youtube_preview" style="z-index:+1;"></div>');
  //draw an empty div to draw a table with the youtube's video metadata content
- $("#tab_video_youtube_content").append('<div id="youtube_preview_metadata"></div>');
-
+ //$("#tab_video_youtube_content").append('<div id="youtube_preview_metadata"></div>');
+$("#tab_video_youtube_content").children(".box1fancy2").append('<div id="youtube_preview_metadata" style="z-index:+1;"></div>');
 };
 
 

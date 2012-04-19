@@ -721,6 +721,16 @@ table.metadata td div.height_wrapper_description{
 	float: right;
 	overflow: hidden;
 }
+#youtube_search_container {
+	
+	float:left;	
+	height:45px;
+}
+
+
+#tab_video_youtube_content_carrousel {
+	float: left;	
+}
 
 
 /* Objects wrapper */
