@@ -71,7 +71,11 @@ VISH.Editor = (function(V,$,undefined){
 			'showCloseButton': false,
 		})
 		// The box is launched when the page is loaded
-		//$("#excursiondetailslauncher").trigger('click');
+		
+		if(excursion === undefined){
+			$("#excursiondetailslauncher").trigger('click');
+		}
+		
 		console.log("sale");
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
