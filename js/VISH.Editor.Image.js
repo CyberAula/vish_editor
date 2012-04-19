@@ -12,11 +12,17 @@ VISH.Editor.Image = (function(V,$,undefined){
    * Function to draw an image in a zone of the template
    * the zone to draw is the one in current_area (params['current_el'])
    * this function also adds the slider and makes the image draggable
+   * param area: optional param indicating the area to add the image, used for editing excursions
    */
-  var drawImage = function(image_url){
-    var template = VISH.Editor.getTemplate();
-	  var current_area = VISH.Editor.getCurrentArea();
-
+  var drawImage = function(image_url, area){    
+	var current_area;
+  	if(area){
+  		current_area = area;
+  	}
+  	else{
+  		current_area = VISH.Editor.getCurrentArea();
+  	}
+  	var template = VISH.Editor.getTemplate(); 
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr('type','image');
