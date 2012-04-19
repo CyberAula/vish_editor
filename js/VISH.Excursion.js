@@ -36,7 +36,7 @@ VISH.Excursion = (function(V,undefined){
 			}
 		}
 		
-		V.VideoPlayer.setVideoTagEvents()
+		V.VideoPlayer.setVideoTagEvents();
 		
 		V.SlideManager.addEnterLeaveEvents();
 		

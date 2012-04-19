@@ -7,6 +7,8 @@ VISH.Editor.SlidesUtilities = (function(V,$,undefined){
   	    var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
+		
+		lastSlide();
   };
 	
   /**

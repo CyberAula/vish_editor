@@ -121,13 +121,23 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
-	
-	var drawObject = function(object){
+  /**
+   * Returns a object prepared to draw.   * 
+   * param area: optional param indicating the area to add the object, used for editing excursions
+   */
+	var drawObject = function(object, area){
+		var current_area;
+	  	if(area){
+	  		current_area = area;
+	  	}
+	  	else{
+	  		current_area = VISH.Editor.getCurrentArea();
+	  	}
+		
 		var objectInfo = getObjectInfo(object);
 		switch (objectInfo.wrapper){
 	      case null:
-		    //Draw object from source
-		    
+		    //Draw object from source		    
 		    switch (objectInfo.type){
 		      case "swf":
 		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
@@ -141,13 +151,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 			}
 		    break;
 		  case "EMBED":
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "OBJECT":
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "IFRAME": 
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;  
 		  default:
 			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
@@ -156,8 +166,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	
-	var drawObjectWithWrapper = function(wrapper){
-	  var current_area = VISH.Editor.getCurrentArea();
+	var drawObjectWithWrapper = function(wrapper, current_area){
 	  var template = VISH.Editor.getTemplate();
 
 	  var nextWrapperId = VISH.Editor.getId();

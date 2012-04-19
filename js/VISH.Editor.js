@@ -3,8 +3,10 @@ VISH.Editor = (function(V,$,undefined){
 	var initOptions;
 	var domId = 0;  //number for next doom element id
 	
+
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
+	var excursion_to_edit = null;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -17,10 +19,18 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
+	 * options is a hash with params and options from the server 
+	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
-	var init = function(options){
+	var init = function(options, excursion){
 		initOptions = options;
 		
+		//if we have to edit
+		if(excursion){
+			excursion_to_edit = excursion;
+			V.Editor.Renderer.init(excursion);
+		}
+				
 		$("a#addslide").fancybox({
 			'width': 800,
     		'height': 600,
@@ -59,12 +69,13 @@ VISH.Editor = (function(V,$,undefined){
 			'hideOnOverlayClick': false,
       		'hideOnContentClick': false,
 			'showCloseButton': false,
-			/*'onClosed': function() {
-	    		$("#excursion_details_error").hide();
-			}*/
 		})
 		// The box is launched when the page is loaded
-		$("#excursiondetailslauncher").trigger('click');
+		
+		if(excursion === undefined){
+			$("#excursiondetailslauncher").trigger('click');
+		}
+		
 		console.log("sale");
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
@@ -225,6 +236,13 @@ VISH.Editor = (function(V,$,undefined){
 	 * the data in order to be stored at the end in the JSON file   
 	 */
 	var _onSaveExcursionDetailsButtonClicked = function(event){
+		if($('#excursion_title').val().length < 1 || $('#excursion_description').val().length < 1) {
+			
+			$('#excursion_details_error').slideDown("slow");
+			$('#excursion_details_error').show();
+			return false;
+		}
+		// save the details in a hash object
 		excursionDetails.title = $('#excursion_title').val();
 		excursionDetails.description = $('#excursion_description').val();
 		$.fancybox.close();
@@ -524,7 +542,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	
-	//////////////////
+  //////////////////
   ///    Getters
   //////////////////
 	
@@ -532,8 +550,15 @@ VISH.Editor = (function(V,$,undefined){
 		return params;
 	}
 	
-	var getTemplate = function() {
-		if(params['current_el']){
+	/**
+	 * function to get the template of the slide of current_el
+	 * param area: optional param indicating the area to get the template, used for editing excursions
+	 */
+	var getTemplate = function(area) {
+		if(area){
+			return area.parent().attr('template');
+		}
+		else if(params['current_el']){
 			return params['current_el'].parent().attr('template');
 		}
 		return null;

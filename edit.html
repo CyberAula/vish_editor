@@ -39,7 +39,7 @@
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
-	<section tabindex="-1" class="slides layout-regular template-default" id="slides_panel">
+	<section class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
 				  <div id="addslide_div" class='barbuttonaddsave'></div>
@@ -95,7 +95,7 @@
       <div style='display:none'>
       	<form id='excursiondetails' >
       		<p>Virtual Excursion Details:</p>
-      		<!--<p id="excursion_details_error">Please, enter a title</p>-->
+      		<p id="excursion_details_error" style='display:none'>Please, enter a title</p>
       		<p>
       			<label for="excursion_title">
       				Title
@@ -396,6 +396,7 @@
 	<script type="text/javascript" src="js/VISH.Debugging.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Editor.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Renderer.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
@@ -429,7 +430,8 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  VISH.Editor.init();
+		  VISH.Editor.init({}, VISH.Samples.one_slide);  //to edit the excursion
+		  //VISH.Editor.init();
 		}
 	</script>
 		
