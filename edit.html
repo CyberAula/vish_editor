@@ -87,6 +87,33 @@
 		</div>
     </section>
 
+      <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
+      <div style='display:none'>
+      	<a id="excursiondetailslauncher" href="#excursiondetails"/>      	
+      </div>
+	        
+      <div style='display:none'>
+      	<form id='excursiondetails' >
+      		<p>Virtual Excursion Details:</p>
+      		<!--<p id="excursion_details_error">Please, enter a title</p>-->
+      		<p>
+      			<label for="excursion_title">
+      				Title
+      			</label>
+      			<input id='excursion_title' type="text" name="excursion_title" placeholder="Excursion title">	
+      		</p>
+			<p>
+				<label for="excursion_description">
+					Description
+				</label>
+				<textarea id='excursion_description' name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+			</p>
+			<p>
+				<buttton id='save_excursion_details' class='button'>Save</button>
+			</p>
+      	</form>
+      </div>
+      
       
 	  <div style='display:none'>
 	    <div id='thumbcontent'>

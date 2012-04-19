@@ -3,6 +3,9 @@ VISH.Editor = (function(V,$,undefined){
 	var initOptions;
 	var domId = 0;  //number for next doom element id
 	
+	// hash to store the excursions details like Title, Description, etc.
+	var excursionDetails = {}; 
+	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
 	var params = {
@@ -17,11 +20,13 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var init = function(options){
 		initOptions = options;
-				
+		
 		$("a#addslide").fancybox({
 			'width': 800,
     		'height': 600,
-    		'padding' : 0});		
+    		'padding': 0
+    	});
+    	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
@@ -45,6 +50,22 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Video.init();
 		V.Editor.Object.init();
 		
+		// Intial box to input the details related to the excursion
+		$("a#excursiondetailslauncher").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'height': 600,
+			'padding': 0,
+			'hideOnOverlayClick': false,
+      		'hideOnContentClick': false,
+			'showCloseButton': false,
+			/*'onClosed': function() {
+	    		$("#excursion_details_error").hide();
+			}*/
+		})
+		// The box is launched when the page is loaded
+		$("#excursiondetailslauncher").trigger('click');
+		console.log("sale");
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 	};
@@ -197,6 +218,17 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+	/**
+	 * function callen when the user clicks on the save button
+	 * in the initial excursion details fancybox to save
+	 * the data in order to be stored at the end in the JSON file   
+	 */
+	var _onSaveExcursionDetailsButtonClicked = function(event){
+		excursionDetails.title = $('#excursion_title').val();
+		excursionDetails.description = $('#excursion_description').val();
+		$.fancybox.close();
+	};
 
 	/**
 	 * function called when user clicks on template
@@ -393,8 +425,8 @@ VISH.Editor = (function(V,$,undefined){
     var excursion = {};
     //TODO decide this params
     excursion.id = '';
-    excursion.title = '';
-    excursion.description = '';
+    excursion.title = excursionDetails.title;
+    excursion.description = excursionDetails.description;
     excursion.author = '';
     excursion.slides = [];
     var slide = {};
