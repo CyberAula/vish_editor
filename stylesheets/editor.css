@@ -21,7 +21,7 @@
 	cursor: pointer;
 	margin-bottom: 20px;
 	margin-right: 5px;
-	margin-left: 14px;
+	margin-left: 10px;
 	background-color: #CCC;
 	border-radius: 5px; 
 }
@@ -137,6 +137,8 @@
 }
 
 .input_text_fancy {
+	font-family:Helvetica;
+	font-size: 16px;
 	background: 5px 50% no-repeat;
 	position:absolute;
 	border: 1px solid #9B999D;
@@ -733,6 +735,9 @@ table.metadata td div.height_wrapper_description{
 	height:45px;
 }
 
+.carrulo {
+	margin-top: 200px;
+}
 
 #tab_video_youtube_content_carrousel {
 	float: left;	

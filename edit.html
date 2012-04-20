@@ -262,16 +262,37 @@
 				  </ul>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
-				  <input id="flash_embed_code" type="text" class="rounded vishtab url">
-					<button type="button" class="okButton" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')"> Add</button>
+                <div class="box1 box1fancy1">
+                	<p class="textfancy"> embed flash </p><br>
+                    <img class="image_add_url" src="/images/url_img.png"/>
+				  	<input id="flash_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
+					<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')"> Upload</button>
+                </div>
+                <div class="box2">
+                				<div class="previewimgbox">
+                    				<img class="documentblank" src="/images/document_black.png"/>
+                    				<button type="button" class="button buttonaddfancy">Add Content</button>
+                    			</div>
+                			</div>
 				</div>
 				<div id='tab_flash_upload_content' class="fancy_tab_content">
-					<input id="upload_flash_input" type="text" class="rounded vishtab upload">
-                    <button type="button" class="okButton" onclick="alert('Uploaded!')"> Upload</button>
+                <div class="box1 box1fancy1">
+                	<p class="textfancy"> upload flash </p><br>
+                    <img class="image_add_url" src="/images/url_img.png"/>
+					<input id="upload_flash_input" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
+                    <button type="button" class="button buttonfancy" onclick="alert('Uploaded!')"> Upload</button>
+                </div>
+                <div class="box2">
+                				<div class="previewimgbox">
+                    				<img class="documentblank" src="/images/document_black.png"/>
+                    				<button type="button" class="button buttonaddfancy">Add Content</button>
+                    			</div>
+                </div>
 				</div>
-				<div id='tab_flash_repo_content' class="fancy_tab_content">				  
+				<div id='tab_flash_repo_content' class="fancy_tab_content">	
+                	<div class="box1 box1fancy2">			  
 					<div class="search_container">
-					  <input type="search" class="rounded vishtab" > </input>
+					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 					</div>
 					
 					<div id="tab_flash_repo_content_carrousel"></div>
@@ -284,7 +305,8 @@
 							<button type="button" class="okButton" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
 						</div>
 					</div>
-				</div>	 
+				</div>
+                </div>	 
 	    </div>
 	  </div>
   
@@ -424,7 +446,7 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  //VISH.Editor.init({}, VISH.Samples.one_slide);  //to edit the excursion
+		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
 		  VISH.Editor.init();
 		}
 	</script>
