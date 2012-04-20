@@ -74,9 +74,14 @@ VISH.SlidesUtilities = (function(V,$,undefined){
    * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
   var goToSlide = function(no){
-  	//first deselect zone if anyone was selected
-  	$(".selectable").css("border-style", "none");
-  	$(".theslider").hide();
+  	if(VISH.Editing){
+  		//first deselect zone if anyone was selected
+  		$(".selectable").css("border-style", "none");
+  		$(".theslider").hide();
+  		//finally add a background color to the selected slide
+    	$(".barbutton").css("background-color", "transparent");
+    	$("#slide_thumb_"+ no).css("background-color", "#ACACAC");
+  	}
   	
     if((no > slideEls.length) || (no <= 0)){
   	  return;
@@ -91,33 +96,32 @@ VISH.SlidesUtilities = (function(V,$,undefined){
     	prevSlide();
   	  }
     }
-    //finally add a background color to the selected slide
-    $(".barbutton").css("background-color", "transparent");
-    $("#slide_thumb_"+ no).css("background-color", "#ACACAC");
   };
   
   /**
    * function to go to previous slide and change the thumbnails and focus 
    */
-  var backOneSlide = function(){
-  	goToSlide(curSlide-1);
+  var backwardOneSlide = function(){
+  	goToSlide(curSlide);
   };
   
   /**
    * function to go to next slide and change the thumbnails and focus 
    */
   var forwardOneSlide = function(){
-  	goToSlide(curSlide+1);
+  	goToSlide(curSlide+2);
   };
 
 
 	return {
-		goToSlide		:  goToSlide,
-		lastSlide		:  lastSlide,
-		addSlide		:  addSlide,
-		addThumbnail	: addThumbnail,
-		redrawSlides	: redrawSlides,
-		redrawThumbnails   : redrawThumbnails
+		goToSlide		  : goToSlide,
+		lastSlide		  : lastSlide,
+		addSlide		  : addSlide,
+		addThumbnail	  : addThumbnail,
+		redrawSlides	  : redrawSlides,
+		redrawThumbnails  : redrawThumbnails,
+		forwardOneSlide   : forwardOneSlide,
+		backwardOneSlide  : backwardOneSlide
 	};
 
 }) (VISH, jQuery);

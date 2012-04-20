@@ -23,12 +23,17 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
+		//first set VISH.Editing to true
+		VISH.Editing = true;
+		
 		initOptions = options;
 		
 		//if we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
 			V.Editor.Renderer.init(excursion);
+			//remove focus from any zone
+			_removeSelectableProperties();
 		}
 				
 		$("a#addslide").fancybox({
@@ -51,7 +56,7 @@ VISH.Editor = (function(V,$,undefined){
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		V.SlideManager.addEnterLeaveEvents();
 		
-		V.Editor.SlidesUtilities.redrawSlides();
+		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
 		V.Debugging.init(true);
@@ -254,16 +259,16 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		V.Editor.SlidesUtilities.addSlide(slide);	
-		V.Editor.SlidesUtilities.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		V.SlidesUtilities.addSlide(slide);	
+		V.SlidesUtilities.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		//V.SlideManager.addEnterLeaveEvents();
 		
-		V.Editor.SlidesUtilities.redrawSlides();
-		setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300);
+		V.SlidesUtilities.redrawSlides();
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
 	};
 
 	/**
@@ -383,8 +388,8 @@ VISH.Editor = (function(V,$,undefined){
 					if(curSlide == slideEls.length-1){
 						curSlide -=1;
 					}
-					V.Editor.SlidesUtilities.redrawThumbnails();
-					V.Editor.SlidesUtilities.redrawSlides();					
+					V.SlidesUtilities.redrawThumbnails();
+					V.SlidesUtilities.redrawSlides();					
 				}
 			}
 		}
@@ -529,7 +534,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
-		V.Editor.SlidesUtilities.goToSlide(curSlide);
+		V.SlidesUtilities.goToSlide(curSlide);
 	};
 	
 	/**
@@ -537,7 +542,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
-		V.Editor.SlidesUtilities.goToSlide(curSlide+2);
+		V.SlidesUtilities.goToSlide(curSlide+2);
 	};
 	
 	

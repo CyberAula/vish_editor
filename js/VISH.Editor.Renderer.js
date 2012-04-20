@@ -21,10 +21,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
 		var scaffold = V.Dummies.getDummy(template, slide.id);  
 		
-		V.Editor.SlidesUtilities.addSlide(scaffold);	
-		V.Editor.SlidesUtilities.addThumbnail("t" + template, position+1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		V.SlidesUtilities.addSlide(scaffold);	
+		V.SlidesUtilities.addThumbnail("t" + template, position+1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 	
-		V.Editor.SlidesUtilities.redrawSlides();
+		V.SlidesUtilities.redrawSlides();
 		
 		for(el in slide.elements){
 			var area = $("#article"+slide.id + " div[areaid='" + slide.elements[el].areaid +"']");

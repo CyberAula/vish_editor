@@ -1,41 +1,79 @@
 VISH.Samples = (function(V,undefined){
 	
-	var one_slide = {
+	var samples = {
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
                 'author'        :  'Enrique Barra',
                 'slides'        : [
 		{
-			'id'       :'vish11',
+			'id'       :'vish1',
+			'author'   : 'John Doe',
 			'template' :'t1',
 			'elements':[
 				{
-                    'id'     : '333',
+                    'id'     : '315',
 					'type'   : 'text',
 					'areaid' : 'header',
-					'body'   : 'Example of HTML5 video with autostart'
+					'body'   : 'Ejemplo de flora'
 				},
 				{
-                    'id'     : '334',
+                    'id'     : '316',
 					'type'   : 'text',
 					'areaid' : 'left',
-					'body'   : '<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>'
+					'body'   : '<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size=\"6\">gato</font></div></div>'
 				},
 				{
-                    'id'     : '335',
-					'type'   : 'video',
+                    'id'     : '317',
+					'type'   : 'image',
 					'areaid' : 'right',
+					'body'   : 'http://www.asturtalla.com/arbol.jpg'		
+				}
+			]
+		},
+		{
+			'id'       :'vish2',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '318',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Ejemplo de fauna...'
+				},
+				{
+                    'id'     : '319',
+					'type'   : 'image',
+					'areaid' : 'left',
+					'body'   : 'http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg'		
+				}
+			]
+		},
+		{
+			'id'       :'vish10',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '331',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Sublime HTML5 video!'
+				},       
+				{
+                    'id'     : '332',
+					'type'   : 'video',
+					'areaid' : 'left',
 					'controls' : true,
-					'autoplay' : true,
-					'sources': '[{ "type": "video/webm", "src": "videos/kids.webm"},{"type": "video/mp4","src": "videos/kids.mp4"}]'
+					'autoplay' : false,
+					'loop' : false,
+					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
 				}
 			]
 		}
-	  ]
-	};
-	
-	var samples = {
+		]};
+		
+	var full_samples = {
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
@@ -317,8 +355,8 @@ VISH.Samples = (function(V,undefined){
 		]};
 
 	return {
-		one_slide  : one_slide,
-		samples    : samples
+		full_samples  : full_samples,
+		samples   	  : samples
 	};
 
 })(VISH);
