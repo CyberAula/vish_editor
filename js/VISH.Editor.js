@@ -260,7 +260,7 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
 		V.SlidesUtilities.addSlide(slide);	
-		V.SlidesUtilities.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		
@@ -388,7 +388,7 @@ VISH.Editor = (function(V,$,undefined){
 					if(curSlide == slideEls.length-1){
 						curSlide -=1;
 					}
-					V.SlidesUtilities.redrawThumbnails();
+					V.Editor.Thumbnails.redrawThumbnails();
 					V.SlidesUtilities.redrawSlides();					
 				}
 			}

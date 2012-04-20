@@ -22,7 +22,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var scaffold = V.Dummies.getDummy(template, slide.id);  
 		
 		V.SlidesUtilities.addSlide(scaffold);	
-		V.SlidesUtilities.addThumbnail("t" + template, position+1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		V.Editor.Thumbnails.addThumbnail("t" + template, position+1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 	
 		V.SlidesUtilities.redrawSlides();
 		
