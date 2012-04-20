@@ -77,9 +77,9 @@ VISH.Editor = (function(V,$,undefined){
 		})
 		// The box is launched when the page is loaded
 		
-		if(excursion === undefined){
-			$("#excursiondetailslauncher").trigger('click');
-		}
+		//if(excursion === undefined){
+		//	$("#excursiondetailslauncher").trigger('click');
+		//}
 		
 		console.log("sale");
 		//Remove overflow from fancybox

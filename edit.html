@@ -42,14 +42,14 @@
 	<section class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
 		    <a id="addslide" href="#thumbcontent">
-				  <div id="addslide_div" class='barbuttonaddsave'></div>
+				  <div id="config_div" class='barbuttonaddsave'></div>
 	        </a>
             <div id='arrow_left_div' class='barbutton with_pointer'>
             </div>
-		    <div class='barbutton' id="slide_thumb_1">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+		    <div class='barbutton' id="slide_thumb_1">				
+					<img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
 				    <span class="slide_number"></span>
-		    </div>
+			</div>
 		    <div class='barbutton' id="slide_thumb_2" >
 				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
 				    <span class="slide_number"></span>
@@ -425,8 +425,8 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  //VISH.Editor.init();
+		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
+		  VISH.Editor.init();
 		}
 	</script>
 		

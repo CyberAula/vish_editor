@@ -157,11 +157,11 @@
 	z-index: 1000;
 }
 	
-#addslide_div {
-	background: url(/images/add.png);
+#config_div {
+	background: url(/images/config.png);
 }
-#addslide_div:hover {
-	background: url(/images/hover/add_hover.png);
+#config_div:hover {
+	background: url(/images/hover/config_hover.png);
 }
 
 #arrow_left_div {
