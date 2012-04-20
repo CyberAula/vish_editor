@@ -160,6 +160,7 @@
 #config_div {
 	background: url(/images/config.png);
 }
+
 #config_div:hover {
 	background: url(/images/hover/config_hover.png);
 }
@@ -525,6 +526,11 @@ input.vishtab {
 input[type=search] {
 	padding: 1px 3px 0 22px;
 	width: 250px;
+}
+
+input[type=search] {
+   -moz-appearance:none;
+   -webkit-appearance:none;
 }
 
 input.url, input.upload{
