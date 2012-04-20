@@ -12,18 +12,18 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	   
 	  var embedDiv = document.createElement('div');
 	  embedDiv.setAttribute('id', idToDrag);
-	  $(embedDiv).addClass('object_wrapper')
-	  $(embedDiv).addClass(template + "_swf")
+	  $(embedDiv).addClass('object_wrapper');
+	  $(embedDiv).addClass(template + "_swf");
 	  
 	  var embedTag = document.createElement('embed');
 	  embedTag.setAttribute('id', idToResize );
 	  embedTag.setAttribute('class', template + "_swf");
 	  embedTag.setAttribute('title', "Click to drag");
 	  embedTag.setAttribute('src', src);
-	  $(embedDiv).append(embedTag) 
+	  $(embedDiv).append(embedTag); 
 	  
 	  $(current_area).html("");
-	  $(current_area).append(embedDiv)
+	  $(current_area).append(embedDiv);
 	  	    
 	  VISH.Editor.addDeleteButton($(current_area));
 	    	
