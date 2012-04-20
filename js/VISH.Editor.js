@@ -1,3 +1,4 @@
+
 VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
@@ -35,12 +36,14 @@ VISH.Editor = (function(V,$,undefined){
 			//remove focus from any zone
 			_removeSelectableProperties();
 		}
-				
+		
+		// fancybox to create a new slide		
 		$("a#addSlideFancybox").fancybox({
 			'width': 800,
     		'height': 600,
     		'padding': 0
     	});
+    	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
     	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
@@ -79,7 +82,6 @@ VISH.Editor = (function(V,$,undefined){
 		if(excursion === undefined){
 			$("#edit_excursion_details").trigger('click');
 		}
-		//
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
@@ -233,6 +235,20 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+	/**
+	 * function callen when the user clicks on the edit
+	 * excursion details button
+	 */
+	var _onEditExcursionDetailsButtonClicked = function(event){
+		// Intial box to input the details related to the excursion
+		$("a#edit_excursion_details").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'height': 600,
+			'padding': 0,
+		})
+	};
   
 	/**
 	 * function callen when the user clicks on the save button
