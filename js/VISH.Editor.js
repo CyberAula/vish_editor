@@ -66,7 +66,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Object.init();
 		
 		// Intial box to input the details related to the excursion
-		$("a#excursiondetailslauncher").fancybox({
+		$("a#edit_excursion_details").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
 			'height': 600,
@@ -76,12 +76,11 @@ VISH.Editor = (function(V,$,undefined){
 			'showCloseButton': false,
 		})
 		// The box is launched when the page is loaded
+		if(excursion === undefined){
+			$("#edit_excursion_details").trigger('click');
+		}
+		//
 		
-		//if(excursion === undefined){
-		//	$("#excursiondetailslauncher").trigger('click');
-		//}
-		
-		console.log("sale");
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 	};
@@ -249,6 +248,7 @@ VISH.Editor = (function(V,$,undefined){
 		// save the details in a hash object
 		excursionDetails.title = $('#excursion_title').val();
 		excursionDetails.description = $('#excursion_description').val();
+		$('#excursion_details_error').hide();
 		$.fancybox.close();
 	};
 

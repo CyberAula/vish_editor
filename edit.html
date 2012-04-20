@@ -41,7 +41,7 @@
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
 		<div id='menubar'>
-		    <a id="addslide" href="#thumbcontent">
+		    <a id="edit_excursion_details" href="#excursiondetails">
 				  <div id="config_div" class='barbuttonaddsave'></div>
 	        </a>
             <div id='arrow_left_div' class='barbutton with_pointer'>
@@ -88,10 +88,6 @@
     </section>
 
       <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
-      <div style='display:none'>
-      	<a id="excursiondetailslauncher" href="#excursiondetails"/>     	
-      </div>
-	        
       <div style='display:none'> 
       	<form id='excursiondetails' >
         	<img src="/images/intro.png"/>
@@ -425,7 +421,7 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
+		  //VISH.Editor.init({}, VISH.Samples.one_slide);  //to edit the excursion
 		  VISH.Editor.init();
 		}
 	</script>
