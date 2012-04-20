@@ -36,7 +36,7 @@ VISH.Editor = (function(V,$,undefined){
 			_removeSelectableProperties();
 		}
 				
-		$("a#addslide").fancybox({
+		$("a#addSlideFancybox").fancybox({
 			'width': 800,
     		'height': 600,
     		'padding': 0
@@ -260,7 +260,7 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
 		V.SlidesUtilities.addSlide(slide);	
-		V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		
@@ -269,6 +269,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		V.SlidesUtilities.redrawSlides();
 		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
+		
 	};
 
 	/**
@@ -387,8 +388,7 @@ VISH.Editor = (function(V,$,undefined){
 					//set curSlide to the preious one if this was the last one
 					if(curSlide == slideEls.length-1){
 						curSlide -=1;
-					}
-					V.Editor.Thumbnails.redrawThumbnails();
+					}					
 					V.SlidesUtilities.redrawSlides();					
 				}
 			}

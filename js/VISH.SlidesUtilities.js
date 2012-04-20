@@ -2,6 +2,7 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 	
   /**
    * function to dispatch the event that redraws the slides
+   * also redraws the thumbnails
    */
   var redrawSlides = function(){
   	    var evt = document.createEvent("Event");
@@ -9,6 +10,7 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 		document.dispatchEvent(evt);
 		
 		lastSlide();
+		V.Editor.Thumbnails.redrawThumbnails();
   };
 
   /**
