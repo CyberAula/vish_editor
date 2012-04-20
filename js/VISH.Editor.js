@@ -470,7 +470,22 @@ VISH.Editor = (function(V,$,undefined){
             element.body   = $(div).find('img').attr('src');
             element.style  = $(div).find('img').attr('style');
           } else if(element.type=="iframe"){
-            element.body   = $(div).attr('src'); //we have the iframe code in the src attribute
+          	//TODO find a beter styling (use numbers to substring)
+          	if($(div).find('draggable')) {
+          		
+          	console.log("guarda iframe draggable");
+          	var style = $(div).children().attr('style'); //here dragged style
+          	var src = $(div).attr('src'); //src to substring 
+          	var src_start = src.substring('style', 42);
+          	var src_end = src.substring(77);
+            element.body   = src_start +"style='"+ style +"'" + src_end;
+          	
+          	} else { //no draggable
+          		console.log("guarda iframe NO draggable");
+          	element.body   = $(div).attr('src'); //we have the iframe code in the src attribute	
+          		
+          	}
+          	
           } else if(element.type=="video"){
 		    var video = $(div).find("video");
 			element.poster = $(video).attr("poster");

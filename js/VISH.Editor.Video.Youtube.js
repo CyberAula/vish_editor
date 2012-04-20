@@ -67,13 +67,15 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 		var height = current_area.height();
 		var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
     "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
-    
+    	var final_vide_to_src = final_video;
 	} 
 	else if (width <= 400) { //draggable 
 	var height_drag = height + 40;	
     var final_video = "<div id='"+idToDrag+"' style='background-color:red; width:"+ width +"px; height:"+height_drag+
     "px;'><iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
     "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe></div>";
+    var final_video_to_src = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
+    "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
    }
     //insert embed in zone
 	
@@ -83,7 +85,7 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     //set class of article to iframe to load and unload the video when entering and leaving the slide
     current_area.parent().addClass('iframe');
     //save the src in the element to load and unload the content
-    current_area.attr('src', final_video);
+    current_area.attr('src', final_video_to_src);
     
    
     current_area.html(final_video);
@@ -101,12 +103,12 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 */
   var showYoutubeVideo = function(e) {
     //generate embed for the preview video
-	console.log("entra en showYTVideo");
+	
     var video_embedded = "http://www.youtube.com/embed/"+ hash_youtube_video_id[e.target.id];
     var title =  hash_youtube_video_id["title"+e.target.id.replace("vid","")]; //
     var author = hash_youtube_video_id["author"+e.target.id.replace("vid","")];
     var subtitle = hash_youtube_video_id["subtitle"+e.target.id.replace("vid","")];
-
+	 
 	var final_video = '<iframe class="youtube_frame" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
     $("#youtube_preview").html(final_video);
     if($("#preview_video_button")){
