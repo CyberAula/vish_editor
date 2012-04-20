@@ -61,14 +61,15 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 	//it depends on the dimension of the current_area
 	var video_embedded = "http://www.youtube.com/embed/"+video_id;
 	
-	if (width == 663) { //no draggable & full area
+	//TODO take a better decission to drag or not to drag, not only bigger than 400
+	if (width > 400) { //no draggable & full area
 		
 		var height = current_area.height();
 		var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
     "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
     
 	} 
-	else if (width==324) { //draggable 
+	else if (width < 400) { //draggable 
 	var height_drag = height + 40;	
     var final_video = "<div id='"+idToDrag+"' style='background-color:red; width:"+ width +"px; height:"+height_drag+
     "px;'><iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
