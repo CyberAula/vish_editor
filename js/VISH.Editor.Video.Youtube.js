@@ -69,7 +69,7 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
     
 	} 
-	else if (width < 400) { //draggable 
+	else if (width <= 400) { //draggable 
 	var height_drag = height + 40;	
     var final_video = "<div id='"+idToDrag+"' style='background-color:red; width:"+ width +"px; height:"+height_drag+
     "px;'><iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
