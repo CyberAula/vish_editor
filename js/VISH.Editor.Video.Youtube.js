@@ -67,7 +67,7 @@ var myInput = $("#tab_video_youtube_content").find("input[type='search']");
 		var height = current_area.height();
 		var final_video = "<iframe type='text/html' class='"+template+"_video'  style='width:"+ width +"px; height:"+height+
     "px;' src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
-    	var final_vide_to_src = final_video;
+    	var final_video_to_src = final_video;
 	} 
 	else if (width <= 400) { //draggable 
 	var height_drag = height + 40;	
