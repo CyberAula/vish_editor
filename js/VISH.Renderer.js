@@ -102,7 +102,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderObject = function(element, template){
 		var style = (element['style'])?"style='" + element['style'] + "'":"";
-		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_object"+"' " + style + ">" + element['body'] + "</div>";
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object"+"' " + style + "objectWrapper='" + element['body'] + "'>" + "" + "</div>";
 	};
 	
 	

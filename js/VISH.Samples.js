@@ -292,7 +292,7 @@ VISH.Samples = (function(V,undefined){
 		},
 		{
 			'id'       :'vish12',
-			'template' :'t1',
+			'template' :'t2',
 			'elements':[
 				{
           'id'     : '393',
