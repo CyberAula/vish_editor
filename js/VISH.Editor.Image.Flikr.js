@@ -12,7 +12,6 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		          	$(myInput).blur();
 			
 			}
-	
 		});
 	};
 	
