@@ -477,7 +477,7 @@
 	font-size: 20px;
 }
 
-#tab_video_repo_content_preview{
+.content_preview{
 	width: 650px;
 	height: 190px;
 	text-align: center;
@@ -485,7 +485,7 @@
 	margin: auto;
 }
 
-#tab_video_repo_content_preview_video{
+.content_preview_video{
 	width: 350px;
 	height: 195px;
 	margin-left: auto; 
@@ -493,7 +493,7 @@
 	float: left;
 }
 
-#tab_video_repo_content_preview_metadata{
+.content_preview_metadata{
 	width: 300px;
 	height: 195px;
 	float: right;
@@ -505,7 +505,7 @@
 	height: 195px;
 }
 
-#tab_video_repo_content_preview_foot{
+.content_preview_foot{
 	outline: none;
 }
 

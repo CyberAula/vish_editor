@@ -72,6 +72,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	                                                                           		
 	
 	var _getTypeFromSource = function(source){
+		
 		if(typeof source != "string"){
 			return "Invalid source"
 		}
@@ -106,6 +107,40 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(parent).height(width*proportion);
 	}
 	
+	
+	/*
+	 * Resize object and its wrapper automatically
+	 */
+	var _adjustWrapperOfObject = function(objectID){
+		var proportion = $("#"+objectID).height()/$("#"+objectID).width();
+		
+		var current_area = VISH.Editor.getCurrentArea();
+		var maxWidth = current_area.width();
+		var maxHeight = current_area.height();
+		
+		var width = $("#"+objectID).width();
+		var height = $("#"+objectID).height();
+		
+		if(width > maxWidth){
+			$("#"+objectID).width(maxWidth);
+			$("#"+objectID).height(width*proportion);
+			width = maxWidth;
+			height = $("#"+objectID).height();
+		}
+		
+		if(height > maxHeight){
+			$("#"+objectID).height(maxHeight);
+			$("#"+objectID).width(height/proportion);
+			width = $("#"+objectID).width();
+			height = maxHeight;
+		}
+		
+		var wrapper = $("#"+objectID).parent();
+		if($(wrapper).hasClass("object_wrapper")){
+			$(wrapper).height($("#"+objectID).height());
+			$(wrapper).width($("#"+objectID).width());
+		}
+	}
 	
 	var renderObjectPreview = function(object){
 		var objectInfo = getObjectInfo(object.content);
@@ -179,7 +214,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  $(wrapperDiv).addClass('object_wrapper')
 	  $(wrapperDiv).addClass(template + "_object")
 	  
-	  var wrapperTag = wrapper
+	  var wrapperTag = $(wrapper)
 	  $(wrapperTag).attr('id', idToResize );
 	  $(wrapperTag).attr('class', template + "_object");
 	  $(wrapperTag).attr('title', "Click to drag");
@@ -206,6 +241,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  });
 
 	  $("#" + idToDrag).draggable({cursor: "move"});
+	  
+	  _adjustWrapperOfObject(idToResize);
 	}
 	
 	
