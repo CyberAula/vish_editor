@@ -12,7 +12,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		
 	//Wrapper main div with a image carousel class container.
 	var wrapperDiv = $("#" + containerId);
-	wrapperDiv.attr("class","image_carousel")
+	wrapperDiv.attr("class","image_carousel image_carousel_"+rowClass)
 	wrapperDiv.removeAttr("id")
 	
 	var mainDiv = document.createElement('div')
@@ -49,6 +49,11 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		 
 	//Element stylesheet
 	$(mainDiv).children().addClass("carrousel_element_" + rowClass)
+	
+	$(mainDiv).children().each(function(index,value){
+		$(value).children().addClass("carrousel_element_" + rowClass)
+	});
+	
 	
 	//Callbacks events
 	if ((callback)&&(typeof callback == "function")) {
@@ -97,6 +102,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		_setRowCarrousel(mainDiv.id + "_row" + i);
 	  }
     }
+	$(".caroufredsel_wrapper").css("margin-bottom","30px")
   }
 
   var _setRowCarrousel = function (id){

@@ -58,7 +58,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		else{ 
 			//data.videos is an array with the results
 			$.each(data.videos, function(index, video) {
-				content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>"
+				content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>"
 				currentVideos[video.id] = video;
 			});
 	

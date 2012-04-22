@@ -716,32 +716,8 @@ table.metadata td div.height_wrapper_description{
 .button:active {
 }
 
-#youtube_preview{
-	width: 350px;
-	height: 195px;
-	margin-left: auto; 
-	margin-right: auto;
-	float: left;
-}
-
-#youtube_preview_metadata{
-	width: 300px;
-	height: 195px;
-	float: right;
-	overflow: hidden;
-}
-#youtube_search_container {
-	
-	float:left;	
-	height:45px;
-}
-
 .carrulo {
 	margin-top: 200px;
-}
-
-#tab_video_youtube_content_carrousel {
-	float: left;	
 }
 
 

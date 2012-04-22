@@ -74,7 +74,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      break;
       }
       
-      content = content + "<img src='" + imageSource + "' objectId='" + object.id + "'>"
+      content = content + "<div><p class='repositoryTitle'>"+object.title+"</p><img src='" + imageSource + "' objectId='" + object.id + "'></div>"
       currentObject[object.id]=object;
     });
 
