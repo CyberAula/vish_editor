@@ -1,8 +1,9 @@
 .image_carousel {
-    padding: 60px 0 10px 5px;
+    padding: 80px 0 25px 5px;
     position: relative;
     width: 750px;
     overflow: hidden;
+    margin: -13px;
 }
 
 .image_carousel img {
