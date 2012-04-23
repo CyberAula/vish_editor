@@ -29,8 +29,8 @@ body {
 }
 
 .slides {
-	background-color:#f9f9f9;
-	/*background-image:url(../images/background.jpg);*/
+	/*background-color:#f9f9f9;*/
+	background-image:url(../images/background.jpg);
   width: 100%;
   height: 100%;
   left: 0;

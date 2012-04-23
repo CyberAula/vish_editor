@@ -8771,7 +8771,7 @@ Function.prototype.closureListener = function() {
 var nicEditorConfig = bkClass.extend({buttons:{"bold":{name:__("Click to Bold"), command:"Bold", tags:["B", "STRONG"], css:{"font-weight":"bold"}, key:"b"}, "italic":{name:__("Click to Italic"), command:"Italic", tags:["EM", "I"], css:{"font-style":"italic"}, key:"i"}, "underline":{name:__("Click to Underline"), command:"Underline", tags:["U"], css:{"text-decoration":"underline"}, key:"u"}, "left":{name:__("Left Align"), command:"justifyleft", noActive:true}, "center":{name:__("Center Align"), command:"justifycenter", 
 noActive:true}, "right":{name:__("Right Align"), command:"justifyright", noActive:true}, "justify":{name:__("Justify Align"), command:"justifyfull", noActive:true}, "ol":{name:__("Insert Ordered List"), command:"insertorderedlist", tags:["OL"]}, "ul":{name:__("Insert Unordered List"), command:"insertunorderedlist", tags:["UL"]}, "subscript":{name:__("Click to Subscript"), command:"subscript", tags:["SUB"]}, "superscript":{name:__("Click to Superscript"), command:"superscript", tags:["SUP"]}, "strikethrough":{name:__("Click to Strike Through"), 
 command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:"/assets/nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", "justify", 
-"ol", "ul", "fontSize", "fontFamily", "fontFormat", "indent", "outdent", "image", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
+"ol", "ul", "fontSize", "fontFamily", "fontFormat", "indent", "outdent", , "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
 var nicEditors = {nicPlugins:[], editors:[], registerPlugin:function(B, A) {
   this.nicPlugins.push({p:B, o:A})
 }, allTextAreas:function(C) {
@@ -9727,9 +9727,9 @@ function handleTouchEnd(event) {
   var dy = Math.abs(touchDY);
   if(dx > PM_TOUCH_SENSITIVITY && dy < dx * 2 / 3) {
     if(touchDX > 0) {
-      prevSlide()
+      VISH.SlidesUtilities.backwardOneSlide()
     }else {
-      nextSlide()
+      VISH.SlidesUtilities.forwardOneSlide()
     }
   }
   cancelTouch()
@@ -9855,18 +9855,18 @@ function handleBodyKeyDown(event) {
     ;
     case 34:
       if(isSlideFocused()) {
-        nextSlide();
+        VISH.SlidesUtilities.forwardOneSlide();
         event.preventDefault()
       }
       break;
     case 37:
       if(isSlideFocused()) {
-        prevSlide();
+        VISH.SlidesUtilities.backwardOneSlide();
         event.preventDefault()
       }
       break;
     case 33:
-      prevSlide();
+      VISH.SlidesUtilities.backwardOneSlide();
       event.preventDefault();
       break;
     case 40:
@@ -9877,7 +9877,7 @@ function handleBodyKeyDown(event) {
         }
       }else {
         if(isSlideFocused()) {
-          nextSlide();
+          VISH.SlidesUtilities.forwardOneSlide();
           event.preventDefault()
         }
       }
@@ -9890,7 +9890,7 @@ function handleBodyKeyDown(event) {
         }
       }else {
         if(isSlideFocused()) {
-          prevSlide();
+          VISH.SlidesUtilities.backwardOneSlide();
           event.preventDefault()
         }
       }
@@ -9975,29 +9975,43 @@ VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
 VISH.ImagesPath = "/assets/";
 VISH.StylesheetsPath = "/assets/";
+VISH.Editing = false;
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
   var domId = 0;
+  var excursionDetails = {};
+  var excursion_to_edit = null;
   var params = {current_el:null};
-  var init = function(options) {
+  var init = function(options, excursion) {
+    VISH.Editing = true;
     initOptions = options;
-    $("a#addslide").fancybox({"width":800, "height":600});
+    if(excursion) {
+      excursion_to_edit = excursion;
+      V.Editor.Renderer.init(excursion);
+      _removeSelectableProperties()
+    }
+    $("a#addSlideFancybox").fancybox({"width":800, "height":600, "padding":0});
+    $(document).on("click", "#edit_excursion_details", _onEditExcursionDetailsButtonClicked);
+    $(document).on("click", "#save_excursion_details", _onSaveExcursionDetailsButtonClicked);
     $(document).on("click", ".templatethumb", _onTemplateThumbClicked);
     $(document).on("click", "#save", _onSaveButtonClicked);
     $(document).on("click", ".editable", _onEditableClicked);
     $(document).on("click", ".selectable", _onSelectableClicked);
-    $(document).on("focusout", ".selectable", _onSelectableLoseFocus);
     $(document).on("click", ".delete_content", _onDeleteItemClicked);
     $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
     $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
     $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
     V.SlideManager.addEnterLeaveEvents();
-    V.Editor.SlidesUtilities.redrawSlides();
+    V.SlidesUtilities.redrawSlides();
     V.Debugging.init(true);
     V.Editor.Text.init();
     V.Editor.Image.init();
     V.Editor.Video.init();
-    V.Editor.Object.init()
+    V.Editor.Object.init();
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
+    if(excursion === undefined) {
+      $("#edit_excursion_details").trigger("click")
+    }
   };
   var getId = function() {
     domId = domId + 1;
@@ -10076,13 +10090,26 @@ VISH.Editor = function(V, $, undefined) {
   var _closeFancybox = function() {
     $.fancybox.close()
   };
+  var _onEditExcursionDetailsButtonClicked = function(event) {
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0})
+  };
+  var _onSaveExcursionDetailsButtonClicked = function(event) {
+    if($("#excursion_title").val().length < 1) {
+      $("#excursion_details_error").slideDown("slow");
+      $("#excursion_details_error").show();
+      return false
+    }
+    excursionDetails.title = $("#excursion_title").val();
+    excursionDetails.description = $("#excursion_description").val();
+    $("#excursion_details_error").hide();
+    $.fancybox.close()
+  };
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
-    V.Editor.SlidesUtilities.addSlide(slide);
-    V.Editor.SlidesUtilities.addThumbnail("t" + $(this).attr("template"), slideEls.length + 1);
+    V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
-    V.Editor.SlidesUtilities.redrawSlides();
-    setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300)
+    V.SlidesUtilities.redrawSlides();
+    setTimeout("VISH.SlidesUtilities.lastSlide()", 300)
   };
   var _onEditableClicked = function(event) {
     $(this).removeClass("editable");
@@ -10116,7 +10143,7 @@ VISH.Editor = function(V, $, undefined) {
   var _onDeleteItemClicked = function() {
     params["current_el"] = $(this).parent();
     $("#image_template_prompt").attr("src", VISH.ImagesPath + params["current_el"].attr("type") + ".png");
-    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "onClosed":function() {
+    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
         params["current_el"].html("");
@@ -10131,19 +10158,19 @@ VISH.Editor = function(V, $, undefined) {
   var _onDeleteSlideClicked = function() {
     var article_to_delete = $(this).parent();
     $("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
-    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "onClosed":function() {
+    $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
         article_to_delete.remove();
         if(curSlide == slideEls.length - 1) {
           curSlide -= 1
         }
-        V.Editor.SlidesUtilities.redrawThumbnails();
-        V.Editor.SlidesUtilities.redrawSlides()
+        V.SlidesUtilities.redrawSlides()
       }
     }})
   };
   var _onSelectableClicked = function() {
+    _removeSelectableProperties();
     $(this).find(".menuselect_hide").show();
     $(this).find(".delete_content").show();
     if($(this).attr("type") === "image") {
@@ -10151,19 +10178,28 @@ VISH.Editor = function(V, $, undefined) {
       img_id = img_id.substring(9);
       $("#sliderId" + img_id).show()
     }
+    $(this).css("border-color", "rgb(255, 2, 94)");
+    $(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(this).css("outline", "0");
+    $(this).css("outline", "thin dotted 9")
   };
-  var _onSelectableLoseFocus = function() {
+  var _removeSelectableProperties = function() {
     $(".theslider").hide();
-    $(this).find(".menuselect_hide").hide();
-    if($(this).find(".wysiwygInstance").length === 0) {
-      $(this).find(".delete_content").hide()
-    }
+    $(".menuselect_hide").hide();
+    $(".delete_content").hide();
+    $(".selectable").css("border-color", "none");
+    $(".selectable").css("-webkit-box-shadow", "none");
+    $(".selectable").css("-moz-box-shadow", "none");
+    $(".selectable").css("box-shadow", "none");
+    $(".selectable").css("outline", "0")
   };
   var _onSaveButtonClicked = function() {
     var excursion = {};
     excursion.id = "";
-    excursion.title = "";
-    excursion.description = "";
+    excursion.title = excursionDetails.title;
+    excursion.description = excursionDetails.description;
     excursion.author = "";
     excursion.slides = [];
     var slide = {};
@@ -10185,7 +10221,16 @@ VISH.Editor = function(V, $, undefined) {
               element.style = $(div).find("img").attr("style")
             }else {
               if(element.type == "iframe") {
-                element.body = $(div).attr("src")
+                if($(div).children().attr("id")) {
+                  var style = $(div).children().attr("style");
+                  var src = $(div).attr("src");
+                  var src_start = src.substring("style", 42);
+                  var src_end = src.substring(77);
+                  element.body = src_start + "style='" + style + "'" + src_end
+                }else {
+                  element.body = $(div).attr("src");
+                  console.log($(div).attr("src"))
+                }
               }else {
                 if(element.type == "video") {
                   var video = $(div).find("video");
@@ -10234,17 +10279,21 @@ VISH.Editor = function(V, $, undefined) {
     })
   };
   var _onArrowLeftClicked = function() {
-    V.Editor.SlidesUtilities.goToSlide(curSlide)
+    V.SlidesUtilities.goToSlide(curSlide)
   };
   var _onArrowRightClicked = function() {
-    V.Editor.SlidesUtilities.goToSlide(curSlide + 2)
+    V.SlidesUtilities.goToSlide(curSlide + 2)
   };
   var getParams = function() {
     return params
   };
-  var getTemplate = function() {
-    if(params["current_el"]) {
-      return params["current_el"].parent().attr("template")
+  var getTemplate = function(area) {
+    if(area) {
+      return area.parent().attr("template")
+    }else {
+      if(params["current_el"]) {
+        return params["current_el"].parent().attr("template")
+      }
     }
     return null
   };
@@ -10270,9 +10319,14 @@ VISH.Editor.Image = function(V, $, undefined) {
   };
   var onLoadTab = function() {
   };
-  var drawImage = function(image_url) {
+  var drawImage = function(image_url, area) {
+    var current_area;
+    if(area) {
+      current_area = area
+    }else {
+      current_area = VISH.Editor.getCurrentArea()
+    }
     var template = VISH.Editor.getTemplate();
-    var current_area = VISH.Editor.getCurrentArea();
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr("type", "image");
@@ -10360,6 +10414,31 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(parent).width(width);
     $(parent).height(width * proportion)
   };
+  var _adjustWrapperOfObject = function(objectID) {
+    var proportion = $("#" + objectID).height() / $("#" + objectID).width();
+    var current_area = VISH.Editor.getCurrentArea();
+    var maxWidth = current_area.width();
+    var maxHeight = current_area.height();
+    var width = $("#" + objectID).width();
+    var height = $("#" + objectID).height();
+    if(width > maxWidth) {
+      $("#" + objectID).width(maxWidth);
+      $("#" + objectID).height(width * proportion);
+      width = maxWidth;
+      height = $("#" + objectID).height()
+    }
+    if(height > maxHeight) {
+      $("#" + objectID).height(maxHeight);
+      $("#" + objectID).width(height / proportion);
+      width = $("#" + objectID).width();
+      height = maxHeight
+    }
+    var wrapper = $("#" + objectID).parent();
+    if($(wrapper).hasClass("object_wrapper")) {
+      $(wrapper).height($("#" + objectID).height());
+      $(wrapper).width($("#" + objectID).width())
+    }
+  };
   var renderObjectPreview = function(object) {
     var objectInfo = getObjectInfo(object.content);
     if(objectInfo.wrapper == null) {
@@ -10372,7 +10451,13 @@ VISH.Editor.Object = function(V, $, undefined) {
       return wrapperPreview
     }
   };
-  var drawObject = function(object) {
+  var drawObject = function(object, area) {
+    var current_area;
+    if(area) {
+      current_area = area
+    }else {
+      current_area = VISH.Editor.getCurrentArea()
+    }
     var objectInfo = getObjectInfo(object);
     switch(objectInfo.wrapper) {
       case null:
@@ -10388,21 +10473,20 @@ VISH.Editor.Object = function(V, $, undefined) {
         }
         break;
       case "EMBED":
-        drawObjectWithWrapper(object);
+        drawObjectWithWrapper(object, current_area);
         break;
       case "OBJECT":
-        drawObjectWithWrapper(object);
+        drawObjectWithWrapper(object, current_area);
         break;
       case "IFRAME":
-        drawObjectWithWrapper(object);
+        drawObjectWithWrapper(object, current_area);
         break;
       default:
         console.log("Unrecognized object wrapper: " + objectInfo.wrapper);
         break
     }
   };
-  var drawObjectWithWrapper = function(wrapper) {
-    var current_area = VISH.Editor.getCurrentArea();
+  var drawObjectWithWrapper = function(wrapper, current_area) {
     var template = VISH.Editor.getTemplate();
     var nextWrapperId = VISH.Editor.getId();
     var idToDrag = "draggable" + nextWrapperId;
@@ -10412,7 +10496,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     wrapperDiv.setAttribute("id", idToDrag);
     $(wrapperDiv).addClass("object_wrapper");
     $(wrapperDiv).addClass(template + "_object");
-    var wrapperTag = wrapper;
+    var wrapperTag = $(wrapper);
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
     $(wrapperTag).attr("title", "Click to drag");
@@ -10424,24 +10508,28 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
       resizeObject(idToResize, 325 * value)
     }});
-    $("#" + idToDrag).draggable({cursor:"move"})
+    $("#" + idToDrag).draggable({cursor:"move"});
+    _adjustWrapperOfObject(idToResize)
   };
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", 
-  "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
+  {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", 
+  "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
+  var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
+  {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
-  "body":"Experimento virtual1"}, {"id":"326", "type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish8", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"329", "type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish11", "template":"t2", "elements":[{"id":"330", "type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}, {"id":"vish12", "template":"t2", "elements":[{"id":"331", 
-  "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"center", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish13", 
+  "body":"Experimento virtual1"}, {"id":"7335", "type":"object", "areaid":"left", "body":'<embed width="99%" height="99%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}, {"id":"vish6", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"left", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish7", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"left", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish8", "template":"t2", "elements":[{"id":"329", "type":"openquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf"}]}, {"id":"vish9", "template":"t2", "elements":[{"id":"330", "type":"mcquestion", "areaid":"header", "body":"Do you like this slide?", "posturl":"http://localhost/quiz/adfklkdf", "options":["yes", "no", "maybe"], "rightanswer":0}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", 
+  "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}, {"id":"vish11", 
   "template":"t1", "elements":[{"id":"333", "type":"text", "areaid":"header", "body":"Example of HTML5 video with autostart"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "type": "video/webm", "src": "videos/kids.webm"},{"type": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"335", "type":"iframe", "areaid":"right", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>'}]}, {"id":"vish15", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
-  {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="100%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
-  return{samples:samples}
+  {"id":"335", "type":"video", "areaid":"right", "controls":true, "autoplay":true, "sources":'[{ "type": "video/webm", "src": "videos/kids.webm"},{"type": "video/mp4","src": "videos/kids.mp4"}]'}]}, {"id":"vish12", "template":"t2", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video"}, {"id":"394", "type":"object", "areaid":"left", "body":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]}, 
+  {"id":"vish13", "template":"t2", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video with style param"}, {"id":"335", "type":"object", "areaid":"left", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>', "style":"position: relative; left: 163px; top: 110px; width: 325px; height: 215px;"}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", 
+  "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
+  {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
+  return{full_samples:full_samples, samples:samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
   var video = {"id":"1534", "title":"Midnight Sun", "description":"Awesome HTML5 video example", "author":"John Doe", "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"};
@@ -10504,19 +10592,27 @@ VISH.Debugging = function(V, $, undefined) {
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
   var nextArticleId = 1;
-  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' tabindex='-1' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' tabindex='-1' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' tabindex='-1' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
-  var getDummy = function(template) {
-    return _replaceIds(dummies[parseInt(template, 10) - 1])
+  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
+  var getDummy = function(template, article_id) {
+    var dum = dummies[parseInt(template, 10) - 1];
+    return _replaceIds(dum, article_id)
   };
-  var _replaceIds = function(string) {
+  var _replaceIds = function(string, article_id) {
     var newString = string;
     while(newString.indexOf("div_id_to_change") != -1) {
       newString = newString.replace("div_id_to_change", "zone" + nextDivId);
       nextDivId++
     }
     while(newString.indexOf("article_id_to_change") != -1) {
-      newString = newString.replace("article_id_to_change", "article" + nextArticleId);
-      nextArticleId++
+      if(article_id) {
+        newString = newString.replace("article_id_to_change", "article" + article_id)
+      }else {
+        newString = newString.replace("article_id_to_change", "article" + nextArticleId);
+        nextArticleId++
+      }
+    }
+    if(article_id) {
+      newString = newString.replace(/editable /g, "")
     }
     return newString
   };
@@ -10563,7 +10659,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       var rowClass = "single_row"
     }
     var wrapperDiv = $("#" + containerId);
-    wrapperDiv.attr("class", "image_carousel");
+    wrapperDiv.attr("class", "image_carousel image_carousel_" + rowClass);
     wrapperDiv.removeAttr("id");
     var mainDiv = document.createElement("div");
     $(mainDiv).html($(wrapperDiv).html());
@@ -10591,6 +10687,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     $(wrapperDiv).append(button_next);
     $(wrapperDiv).append(paginationDiv);
     $(mainDiv).children().addClass("carrousel_element_" + rowClass);
+    $(mainDiv).children().each(function(index, value) {
+      $(value).children().addClass("carrousel_element_" + rowClass)
+    });
     if(callback && typeof callback == "function") {
       $(mainDiv).children().click(function(event) {
         callback(event)
@@ -10626,6 +10725,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
         _setRowCarrousel(mainDiv.id + "_row" + i)
       }
     }
+    $(".caroufredsel_wrapper").css("margin-bottom", "30px")
   };
   var _setRowCarrousel = function(id) {
     $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:750, scroll:{items:5, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:5, max:5}}})
@@ -10686,7 +10786,7 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
     var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + text + "&tagmode=any&format=json&jsoncallback=?";
     $.getJSON(url_flikr, function(data) {
       $.each(data.items, function(i, item) {
-        $("#" + carrouselDivId).append('<img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" />')
+        $("#" + carrouselDivId).append('<div><img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" /></div>')
       });
       VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage)
     })
@@ -10802,7 +10902,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
           imageSource = "/images/carrousel/object.jpeg";
           break
       }
-      content = content + "<img src='" + imageSource + "' objectId='" + object.id + "'>";
+      content = content + "<div><p class='repositoryTitle'>" + object.title + "</p><img src='" + imageSource + "' objectId='" + object.id + "'></div>";
       currentObject[object.id] = object
     });
     $("#" + carrouselDivId).html(content);
@@ -10849,22 +10949,87 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
   };
   return{init:init, onLoadTab:onLoadTab, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedObject:addSelectedObject, onClickCarrouselElement:onClickCarrouselElement}
 }(VISH, jQuery);
-VISH.Editor.SlidesUtilities = function(V, $, undefined) {
-  var redrawSlides = function() {
-    var evt = document.createEvent("Event");
-    evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt)
+VISH.Editor.Renderer = function(V, $, undefined) {
+  var slides = null;
+  var init = function(excursion) {
+    slides = excursion.slides;
+    for(var i = 0;i < slides.length;i++) {
+      _renderSlide(slides[i], i)
+    }
   };
+  var _renderSlide = function(slide, position) {
+    var template = slide.template.substring(1);
+    var scaffold = V.Dummies.getDummy(template, slide.id);
+    V.SlidesUtilities.addSlide(scaffold);
+    V.Editor.Thumbnails.addThumbnail("t" + template, position + 1);
+    V.SlidesUtilities.redrawSlides();
+    for(el in slide.elements) {
+      var area = $("#article" + slide.id + " div[areaid='" + slide.elements[el].areaid + "']");
+      if(slide.elements[el].type === "text") {
+        V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body)
+      }else {
+        if(slide.elements[el].type === "image") {
+          V.Editor.Image.drawImage(slide.elements[el].body, area)
+        }else {
+          if(slide.elements[el].type === "video") {
+            var options = [];
+            options["poster"] = slide.elements[el].poster;
+            options["autoplay"] = slide.elements[el].autoplay;
+            var sourcesArray = [];
+            $.each(JSON.parse(slide.elements[el].sources), function(index, source) {
+              sourcesArray.push([source.src, source.type])
+            });
+            V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area)
+          }else {
+            if(slide.elements[el].type === "object") {
+              V.Editor.Object.drawObject(slide.elements[el].body, area)
+            }
+          }
+        }
+      }
+    }
+  };
+  return{init:init}
+}(VISH, jQuery);
+VISH.Editor.Text = function(V, $, undefined) {
+  var myNicEditor;
+  var init = function() {
+    $(document).on("click", ".textthumb", launchTextEditor)
+  };
+  var launchTextEditor = function(event, area, initial_text) {
+    var current_area;
+    if(area) {
+      current_area = area
+    }else {
+      current_area = $(this).parents(".selectable");
+      initial_text = "Insert text here"
+    }
+    if(myNicEditor == null) {
+      myNicEditor = new nicEditor;
+      myNicEditor.setPanel("slides_panel")
+    }
+    current_area.attr("type", "text");
+    var wysiwygId = "wysiwyg_" + current_area.attr("id");
+    var wysiwygWidth = current_area.width() - 10;
+    var wysiwygHeight = current_area.height() - 10;
+    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>" + initial_text + "</div>");
+    myNicEditor.addInstance(wysiwygId);
+    V.Editor.addDeleteButton(current_area)
+  };
+  return{init:init, launchTextEditor:launchTextEditor}
+}(VISH, jQuery);
+VISH.Editor.Thumbnails = function(V, $, undefined) {
   var redrawThumbnails = function() {
     var i = 1;
-    for(i = 1;i < slideEls.length + 1;i++) {
+    for(i = 1;i < 8;i++) {
       $("#slide_thumb_" + i).off("click");
       $("#slide_thumb_" + i).css("cursor", "auto");
       $("#slide_thumb_" + i + " .slide_number").html("");
-      $("#slide_thumb_" + i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png")
+      $("#slide_thumb_" + i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
+      $("#slide_thumb_" + i + " img").unbind("mouseenter").unbind("mouseleave")
     }
     $(".barbutton").css("background-color", "transparent");
-    if(slideEls.length > 1) {
+    if(slideEls.length > 0) {
       var slide_to_highlight = curSlide + 1;
       $("#slide_thumb_" + slide_to_highlight).css("background-color", "#ACACAC")
     }
@@ -10874,69 +11039,34 @@ VISH.Editor.SlidesUtilities = function(V, $, undefined) {
       template = $(s).attr("template");
       addThumbnail(template, position);
       position += 1
+    });
+    _addPlusButton(position)
+  };
+  var _addPlusButton = function(position) {
+    $("#slide_thumb_" + position).css("cursor", "pointer");
+    $("#slide_thumb_" + position + " img").attr("src", VISH.ImagesPath + "templatesthumbs/add_slide.png");
+    $("#slide_thumb_" + position).click(function() {
+      $("#addSlideFancybox").trigger("click")
+    });
+    $("#slide_thumb_" + position + " img").hover(function() {
+      $(this).attr("src", VISH.ImagesPath + "hover/add_slide.png")
+    }, function() {
+      $(this).attr("src", VISH.ImagesPath + "templatesthumbs/add_slide.png")
     })
   };
-  function addSlide(slide) {
-    $(".slides").append(slide)
-  }
-  function addThumbnail(template_number, position) {
+  var selectThumbnail = function(no) {
+    $(".barbutton").css("background-color", "transparent");
+    $("#slide_thumb_" + no).css("background-color", "#ACACAC")
+  };
+  var addThumbnail = function(template_number, position) {
     $("#slide_thumb_" + position).click(function() {
-      goToSlide(position)
+      V.SlidesUtilities.goToSlide(position)
     });
     $("#slide_thumb_" + position).css("cursor", "pointer");
     $("#slide_thumb_" + position + " .slide_number").html(position);
     $("#slide_thumb_" + position + " img").attr("src", VISH.ImagesPath + "templatesthumbs/" + template_number + ".png")
-  }
-  function lastSlide() {
-    goToSlide(slideEls.length)
-  }
-  function goToSlide(no) {
-    $(".selectable").css("border-style", "none");
-    $(".theslider").hide();
-    if(no > slideEls.length || no <= 0) {
-      return
-    }else {
-      if(no > curSlide + 1) {
-        while(curSlide + 1 < no) {
-          nextSlide()
-        }
-      }else {
-        if(no < curSlide + 1) {
-          while(curSlide + 1 > no) {
-            prevSlide()
-          }
-        }
-      }
-    }
-    $(".barbutton").css("background-color", "transparent");
-    $("#slide_thumb_" + no).css("background-color", "#ACACAC")
-  }
-  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, addThumbnail:addThumbnail, redrawSlides:redrawSlides, redrawThumbnails:redrawThumbnails}
-}(VISH, jQuery);
-VISH.Editor.Text = function(V, $, undefined) {
-  var myNicEditor;
-  var init = function() {
-    $(document).on("click", ".textthumb", _launchTextEditor)
   };
-  var _launchTextEditor = function() {
-    var current_area = $(this).parents(".selectable");
-    if(myNicEditor == null) {
-      myNicEditor = new nicEditor;
-      myNicEditor.setPanel("slides_panel")
-    }
-    current_area.attr("type", "text");
-    var wysiwygId = "wysiwyg_" + current_area.attr("id");
-    var wysiwygWidth = current_area.width() - 10;
-    var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>Insert text here</div>");
-    myNicEditor.addInstance(wysiwygId);
-    V.Editor.addDeleteButton(current_area);
-    $(document).on("focusin", "#" + wysiwygId, _onWysiwygLoseFocus)
-  };
-  var _onWysiwygLoseFocus = function() {
-    console.log("salida")
-  };
-  return{init:init}
+  return{addThumbnail:addThumbnail, redrawThumbnails:redrawThumbnails, selectThumbnail:selectThumbnail}
 }(VISH, jQuery);
 VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   var init = function() {
@@ -10953,19 +11083,24 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   var _getVideoTypeFromUrl = function(url) {
     return null
   };
-  var drawVideo = function(sources, options) {
+  var drawVideo = function(sources, options, area) {
+    var current_area;
+    if(area) {
+      current_area = area
+    }else {
+      current_area = VISH.Editor.getCurrentArea()
+    }
     var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
     var autoplay = false;
     if(options) {
       if(options["poster"]) {
-        var posterUrl = options["poster"]
+        posterUrl = options["poster"]
       }
       if(options["autoplay"]) {
-        var autoplay = options["autoplay"]
+        autoplay = options["autoplay"]
       }
     }
-    var current_area = VISH.Editor.getCurrentArea();
-    var template = VISH.Editor.getTemplate();
+    var template = VISH.Editor.getTemplate(area);
     var nextVideoId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextVideoId;
     current_area.attr("type", "video");
@@ -11017,7 +11152,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
   var onLoadTab = function() {
     var previousSearch = $("#tab_video_repo_content").find("input[type='search']").val() != "";
     if(!previousSearch) {
-      _renderVideoPreview(null);
+      _cleanVideoPreview();
       _requestInicialData()
     }
   };
@@ -11032,11 +11167,11 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     _cleanVideoPreview();
     currentVideos = new Array;
     var content = "";
-    if(data.videos.length === 0) {
+    if(data.videos.length == 0) {
       $("#" + carrouselDivId).html("No results found.")
     }else {
       $.each(data.videos, function(index, video) {
-        content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>";
+        content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>";
         currentVideos[video.id] = video
       });
       $("#" + carrouselDivId).html(content);
@@ -11055,19 +11190,23 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
   var _renderVideoPreview = function(renderedVideo, video) {
     var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
     var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+    var button = $("#" + previewDivId).find(".okButton");
     $(videoArea).html("");
     $(metadataArea).html("");
     if(renderedVideo && video) {
       $(videoArea).append(renderedVideo);
       var table = _generateTable(video.author, video.title, video.description);
-      $(metadataArea).html(table)
+      $(metadataArea).html(table);
+      $(button).show()
     }
   };
   var _cleanVideoPreview = function() {
     var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
     var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+    var button = $("#" + previewDivId).find(".okButton");
     $(videoArea).html("");
-    $(metadataArea).html("")
+    $(metadataArea).html("");
+    $(button).hide()
   };
   var _generateTable = function(author, title, description) {
     if(!author) {
@@ -11099,82 +11238,92 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var carrouselDivId = "tab_video_youtube_content_carrousel";
+  var previewDivId = "tab_video_youtube_content_preview";
   var queryMaxMaxNumberYoutubeVideo = 20;
-  var hash_youtube_video_id = new Array;
+  var currentVideos = new Array;
+  var selectedVideo = null;
   var init = function() {
     var myInput = $("#tab_video_youtube_content").find("input[type='search']");
     $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
-        VISH.Editor.Video.Youtube.listVideo($(myInput).val());
+        VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
         $(myInput).blur()
       }
     })
   };
   var onLoadTab = function() {
-    $("#youtube_preview").remove();
-    $("#preview_video_button").remove();
-    $("#youtube_preview_metadata").remove();
-    $("#youtube_text_to_search").attr("value", "");
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    var myInput = $("#tab_video_youtube_content").find("input[type='search']");
-    $(myInput).watermark("Search content")
-  };
-  var drawYoutubeVideo = function(video_id) {
-    var template = VISH.Editor.getTemplate();
-    var current_area = VISH.Editor.getCurrentArea();
-    var nextVideoId = VISH.Editor.getId();
-    $.fancybox.close();
-    var video_embedded = "http://www.youtube.com/embed/" + video_id;
-    var final_video = "<iframe type='text/html' class='" + template + "_video'  style='width:324px; height:243px;' src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
-    var current_area = VISH.Editor.getCurrentArea();
-    current_area.addClass("iframeelement");
-    current_area.attr("type", "iframe");
-    current_area.parent().addClass("iframe");
-    current_area.attr("src", final_video);
-    current_area.html(final_video);
-    V.Editor.addDeleteButton(current_area)
-  };
-  var showYoutubeVideo = function(e) {
-    var video_embedded = "http://www.youtube.com/embed/" + hash_youtube_video_id[e.target.id];
-    var title = hash_youtube_video_id["title" + e.target.id.replace("vid", "")];
-    var author = hash_youtube_video_id["author" + e.target.id.replace("vid", "")];
-    var subtitle = hash_youtube_video_id["subtitle" + e.target.id.replace("vid", "")];
-    var final_video = '<iframe class="youtube_frame" type="text/html" style="width:350px; height:195px; " src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
-    $("#youtube_preview").html(final_video);
-    if($("#preview_video_button")) {
-      $("#preview_video_button").remove()
+    var previousSearch = $("#tab_video_youtube_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _cleanVideoPreview()
     }
-    $("#tab_video_youtube_content").append('<button class="okButton" id="preview_video_button" onclick="VISH.Editor.Video.Youtube.drawYoutubeVideo(\'' + hash_youtube_video_id[e.target.id] + "')\" >add this video</button>");
-    var table = _generateTable(author, title, subtitle);
-    $("#youtube_preview_metadata").html(table)
   };
-  var listVideo = function(text) {
-    $("#youtube_preview").remove();
-    $("#preview_video_button").remove();
-    $("#youtube_preview_metadata").remove();
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
+  var requestYoutubeData = function(text) {
     var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
     jQuery.getJSON(url_youtube, function(data) {
+      _onDataReceived(data)
+    })
+  };
+  var _onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    _cleanVideoPreview();
+    currentVideos = new Array;
+    var content = "";
+    if(data.feed.entry == 0) {
+      $("#" + carrouselDivId).html("No results found.")
+    }else {
       $.each(data.feed.entry, function(i, item) {
         var video = item["id"]["$t"];
         var title = item["title"]["$t"];
         var author = item.author[0].name.$t;
         var subtitle = item.media$group.media$description.$t;
         video = video.replace("http://gdata.youtube.com/feeds/api/videos/", "http://www.youtube.com/watch?v=");
-        videoID = video.replace("http://www.youtube.com/watch?v=", "");
-        hash_youtube_video_id["vid" + i] = videoID;
-        hash_youtube_video_id["title" + i] = title;
-        hash_youtube_video_id["author" + i] = author;
-        hash_youtube_video_id["subtitle" + i] = subtitle;
+        var videoID = video.replace("http://www.youtube.com/watch?v=", "");
+        currentVideos[videoID] = new Object;
+        currentVideos[videoID].id = videoID;
+        currentVideos[videoID].title = title;
+        currentVideos[videoID].author = author;
+        currentVideos[videoID].subtitle = subtitle;
         var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
-        $("#" + carrouselDivId).append('<img id="vid' + i + '" src="' + image_url + '" />')
+        content = content + '<div><img videoID="' + videoID + '" src="' + image_url + '" /></div>'
       });
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.showYoutubeVideo)
-    });
-    $("#tab_video_youtube_content").append('<div id="youtube_preview" ></div>');
-    $("#tab_video_youtube_content").append('<div id="youtube_preview_metadata"></div>')
+      $("#" + carrouselDivId).html(content);
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement)
+    }
+  };
+  var addSelectedVideo = function() {
+    if(selectedVideo != null) {
+      VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo));
+      $.fancybox.close()
+    }
+  };
+  var onClickCarrouselElement = function(event) {
+    var videoId = $(event.target).attr("videoID");
+    var video_embedded = "http://www.youtube.com/embed/" + videoId;
+    var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
+    _renderVideoPreview(renderedIframe, currentVideos[videoId]);
+    selectedVideo = currentVideos[videoId]
+  };
+  var _renderVideoPreview = function(renderedIframe, video) {
+    var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
+    var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
+    var button = $("#" + previewDivId).find(".okButton");
+    $(videoArea).html("");
+    $(metadataArea).html("");
+    if(renderedIframe && video) {
+      $(videoArea).append(renderedIframe);
+      var table = _generateTable(video.author, video.title, video.description);
+      $(metadataArea).html(table);
+      $(button).show()
+    }
+  };
+  var _cleanVideoPreview = function() {
+    var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
+    var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
+    var button = $("#" + previewDivId).find(".okButton");
+    $(videoArea).html("");
+    $(metadataArea).html("");
+    $(button).hide()
   };
   var _generateTable = function(author, title, description) {
     if(!author) {
@@ -11189,7 +11338,13 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
     description + "</div></td>" + "</tr>" + "</table>"
   };
-  return{init:init, onLoadTab:onLoadTab, drawYoutubeVideo:drawYoutubeVideo, showYoutubeVideo:showYoutubeVideo, listVideo:listVideo}
+  var _generateWrapper = function(video) {
+    var videoID = video.id;
+    var video_embedded = "http://www.youtube.com/embed/" + videoID;
+    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
+    return wrapper
+  };
+  return{init:init, onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement, requestYoutubeData:requestYoutubeData, addSelectedVideo:addSelectedVideo}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;
@@ -11218,6 +11373,20 @@ VISH.Excursion = function(V, undefined) {
   };
   return{init:init}
 }(VISH);
+VISH.ObjectPlayer = function() {
+  var loadObject = function(element) {
+    $.each(element.children(".objectelement"), function(index, value) {
+      $(value).html($(value).attr("objectWrapper"))
+    })
+  };
+  var unloadObject = function() {
+    var element = $(".past, .next");
+    $.each(element.children(".objectelement"), function(index, value) {
+      $(value).html("")
+    })
+  };
+  return{loadObject:loadObject, unloadObject:unloadObject}
+}(VISH, jQuery);
 VISH.Renderer = function(V, $, undefined) {
   var SLIDE_CONTAINER = null;
   var init = function() {
@@ -11236,32 +11405,27 @@ VISH.Renderer = function(V, $, undefined) {
           if(slide.elements[el].type === "video") {
             content += renderVideo(slide.elements[el], slide.template)
           }else {
-            if(slide.elements[el].type === "swf") {
-              content += _renderSwf(slide.elements[el], slide.template);
-              classes += "swf "
+            if(slide.elements[el].type === "object") {
+              content += _renderObject(slide.elements[el], slide.template);
+              classes += "object "
             }else {
-              if(slide.elements[el].type === "object") {
-                content += _renderObject(slide.elements[el], slide.template);
-                classes += "object "
+              if(slide.elements[el].type === "iframe") {
+                content += _renderIframe(slide.elements[el], slide.template);
+                classes += "iframe "
               }else {
-                if(slide.elements[el].type === "iframe") {
-                  content += _renderIframe(slide.elements[el], slide.template);
-                  classes += "iframe "
+                if(slide.elements[el].type === "applet") {
+                  content += _renderApplet(slide.elements[el], slide.template);
+                  classes += "applet "
                 }else {
-                  if(slide.elements[el].type === "applet") {
-                    content += _renderApplet(slide.elements[el], slide.template);
-                    classes += "applet "
+                  if(slide.elements[el].type === "flashcard") {
+                    content = _renderFlashcard(slide.elements[el], slide.template);
+                    classes += "flashcard"
                   }else {
-                    if(slide.elements[el].type === "flashcard") {
-                      content = _renderFlashcard(slide.elements[el], slide.template);
-                      classes += "flashcard"
+                    if(slide.elements[el].type === "openquestion") {
+                      content = _renderOpenquestion(slide.elements[el], slide.template)
                     }else {
-                      if(slide.elements[el].type === "openquestion") {
-                        content = _renderOpenquestion(slide.elements[el], slide.template)
-                      }else {
-                        if(slide.elements[el].type === "mcquestion") {
-                          content = _renderMcquestion(slide.elements[el], slide.template)
-                        }
+                      if(slide.elements[el].type === "mcquestion") {
+                        content = _renderMcquestion(slide.elements[el], slide.template)
                       }
                     }
                   }
@@ -11299,11 +11463,9 @@ VISH.Renderer = function(V, $, undefined) {
     rendered = rendered + "</video>";
     return rendered
   };
-  var _renderSwf = function(element, template) {
-    return"<div id='" + element["id"] + "' class='swfelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_swf" + "' src='" + element["body"] + "' swfStyle='" + element["style"] + "'></div>"
-  };
   var _renderObject = function(element, template) {
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' templateclass='" + template + "_object" + "' objectStyle='" + element["style"] + "'>" + element["body"] + "</div>"
+    var style = element["style"] ? "style='" + element["style"] + "'" : "";
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' " + style + "objectWrapper='" + element["body"] + "'>" + "" + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
@@ -11338,33 +11500,14 @@ VISH.Renderer = function(V, $, undefined) {
   };
   return{init:init, renderVideo:renderVideo, renderSlide:renderSlide}
 }(VISH, jQuery);
-VISH.SWFPlayer = function() {
-  var loadSWF = function(element) {
-    $.each(element.children(".swfelement"), function(index, value) {
-      $(value).html("<embed src='" + $(value).attr("src") + "' class='" + $(value).attr("templateclass") + "' style='" + $(value).attr("swfStyle") + "' />")
-    })
-  };
-  var loadIframe = function(element) {
-    $.each(element.children(".iframeelement"), function(index, value) {
-      $(value).html($(value).attr("src"))
-    })
-  };
-  var unloadSWF = function(element) {
-    $(".swfelement embed").remove()
-  };
-  var unloadIframe = function(element) {
-    $(".iframeelement iframe").remove()
-  };
-  return{loadSWF:loadSWF, loadIframe:loadIframe, unloadSWF:unloadSWF, unloadIframe:unloadIframe}
-}(VISH, jQuery);
 VISH.Samples2 = function(V, undefined) {
   var samples2 = [{"id":"vish1", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"center", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual1"}, 
   {"type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish6", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual2"}, {"type":"applet", "areaid":"left", "archive":"Wave.class", "code":"Wave.class", "width":200, "height":150, "params":'<param name=image value="Banna.jpg"><param name=horizMotion value=0.03>'}]}, {"id":"vish7", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual3"}, {"type":"applet", 
   "areaid":"left", "archive":"applets/Clock.class", "code":"Clock.class", "width":310, "height":160, "params":'<PARAM NAME=text VALUE="#00ff"><PARAM NAME=bgcolor VALUE="#00aaaa"><PARAM NAME=bordersize VALUE="35"><PARAM NAME=border_outside VALUE="#00ffaa"><PARAM NAME=border_inside VALUE="#0000FF"><PARAM NAME=fonttype VALUE="0"><PARAM NAME="GMT" VALUE="true"><PARAM NAME="correction" VALUE="3600000">'}]}, {"id":"vish8", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flashcard pa t\u00ed..."}, 
-  {"type":"flashcard", "areaid":"center", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"FLASHCARD 2..."}, {"type":"flashcard", "areaid":"center", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
+  {"type":"flashcard", "areaid":"left", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]}]}', 
+  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"FLASHCARD 2..."}, {"type":"flashcard", "areaid":"left", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
   "js":"js/mods/fc/VISH.Mods.fc.js"}]}];
   return{samples2:samples2}
 }(VISH);
@@ -11391,15 +11534,11 @@ VISH.SlideManager = function(V, $, undefined) {
   var _onslideenter = function(e) {
     var fcElem, slideId;
     setTimeout(function() {
-      if($(e.target).hasClass("swf")) {
-        V.SWFPlayer.loadSWF($(e.target))
+      if($(e.target).hasClass("object")) {
+        V.ObjectPlayer.loadObject($(e.target))
       }else {
         if($(e.target).hasClass("applet")) {
           V.AppletPlayer.loadApplet($(e.target))
-        }else {
-          if($(e.target).hasClass("iframe")) {
-            V.SWFPlayer.loadIframe($(e.target))
-          }
         }
       }
     }, 500);
@@ -11425,14 +11564,57 @@ VISH.SlideManager = function(V, $, undefined) {
   };
   var _onslideleave = function(e) {
     V.VideoPlayer.stopVideos(e.target);
-    V.SWFPlayer.unloadSWF();
-    V.SWFPlayer.unloadIframe();
+    V.ObjectPlayer.unloadObject();
     V.AppletPlayer.unloadApplet();
     if($(e.target).hasClass("flashcard")) {
       V.Mods.fc.player.clear()
     }
   };
   return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents}
+}(VISH, jQuery);
+VISH.SlidesUtilities = function(V, $, undefined) {
+  var redrawSlides = function() {
+    var evt = document.createEvent("Event");
+    evt.initEvent("OURDOMContentLoaded", false, true);
+    document.dispatchEvent(evt);
+    lastSlide();
+    V.Editor.Thumbnails.redrawThumbnails()
+  };
+  var addSlide = function(slide) {
+    $(".slides").append(slide)
+  };
+  var lastSlide = function() {
+    goToSlide(slideEls.length)
+  };
+  var goToSlide = function(no) {
+    if(VISH.Editing) {
+      $(".selectable").css("border-style", "none");
+      $(".theslider").hide();
+      V.Editor.Thumbnails.selectThumbnail(no)
+    }
+    if(no > slideEls.length || no <= 0) {
+      return
+    }else {
+      if(no > curSlide + 1) {
+        while(curSlide + 1 < no) {
+          nextSlide()
+        }
+      }else {
+        if(no < curSlide + 1) {
+          while(curSlide + 1 > no) {
+            prevSlide()
+          }
+        }
+      }
+    }
+  };
+  var backwardOneSlide = function() {
+    goToSlide(curSlide)
+  };
+  var forwardOneSlide = function() {
+    goToSlide(curSlide + 2)
+  };
+  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {

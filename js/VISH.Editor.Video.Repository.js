@@ -19,7 +19,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	var onLoadTab = function() {
 		var previousSearch = ($("#tab_video_repo_content").find("input[type='search']").val() != "");
 		if(!previousSearch) {
-			_renderVideoPreview(null);
+			_cleanVideoPreview();
 			_requestInicialData();
 		}
 	};
@@ -52,13 +52,13 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 
 		var content = "";
 
-		if(data.videos.length===0){
+		if(data.videos.length==0){
 			$("#" + carrouselDivId).html("No results found.");
 		} 
 		else{ 
 			//data.videos is an array with the results
 			$.each(data.videos, function(index, video) {
-				content = content + "<img src='" + video.poster + "' videoId='" + video.id + "'>"
+				content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>"
 				currentVideos[video.id] = video;
 			});
 	
@@ -82,20 +82,24 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	var _renderVideoPreview = function(renderedVideo, video) {
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+		var button = $("#" + previewDivId).find(".okButton");
 		$(videoArea).html("");
 		$(metadataArea).html("");
 		if((renderedVideo) && (video)) {
 			$(videoArea).append(renderedVideo);
 			var table = _generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
+			$(button).show();
 		}
 	};
 	
 	var _cleanVideoPreview = function() {
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
+		var button = $("#" + previewDivId).find(".okButton");
 		$(videoArea).html("");
 		$(metadataArea).html("");
+		$(button).hide();
 	};
 	
 	var _generateTable = function(author, title, description) {

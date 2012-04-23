@@ -1,8 +1,20 @@
 .image_carousel {
-    padding: 15px 0 10px 5px;
     position: relative;
     width: 750px;
     overflow: hidden;
+    margin-left: -10px;
+}
+
+.image_carousel>div {
+    margin-bottom: 15px;
+}
+
+.image_carousel_single_row {
+    padding: 80px 0 0px 0px;
+}
+
+.image_carousel_multiple_row {
+    padding: 80px 0 60px 0px;
 }
 
 .image_carousel img {
@@ -13,7 +25,6 @@
     display: block;
     float: left;
 }
-
 
 a.prev, a.next {
     background: url(../images/carrousel_sprite.png) no-repeat transparent;
@@ -62,7 +73,8 @@ a.prev span, a.next span {
 
 .pagination {
     text-align: center;
-		margin-right: 22px;
+	margin-right: 22px;
+	margin-top: 35px;
 }
 
 .pagination a {
@@ -88,16 +100,48 @@ a.prev span, a.next span {
     clear: both;
 }
 
-.carrousel_element_single_row{
+div.carrousel_element_single_row{
   width: 100px;
   height: 90px;
   max-width: 150px;
   max-height: 150px;
+  float: left;
+  margin-left: 35px;
 }
 
-.carrousel_element_multiple_row{
+img.carrousel_element_single_row{
   width: 100px;
   height: 90px;
   max-width: 150px;
   max-height: 150px;
+  margin-left: -27px;
+  margin-top: -2px;
+}
+
+div.carrousel_element_multiple_row{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  float: left;
+  margin-left: 35px;
+}
+
+img.carrousel_element_multiple_row{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-left: -27px;
+}
+
+.repositoryTitle{
+	margin: 0px;
+	margin-top: -5px;
+	max-width: 100px;
+	max-height: 13px;
+	overflow: hidden;
+	margin-left: -15px;
+	text-align: center;
+	font-size: 10px;
 }

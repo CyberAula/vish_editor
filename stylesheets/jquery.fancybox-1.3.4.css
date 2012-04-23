@@ -59,11 +59,11 @@
 }
 
 #fancybox-wrap {
-	margin-top: -34px;
+	margin-top: -14px;
+	margin-left: 20px;
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding: 20px;
 	z-index: 1101;
 	outline: none;
 	display: none;

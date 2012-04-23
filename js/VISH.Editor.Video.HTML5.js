@@ -23,9 +23,17 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * Returns a video object prepared to draw.
    * Sources: array of arrays [[source src, source type],...] .
    * Options: hash with additional data like poster url or autoplay
+   * param area: optional param indicating the area to add the video, used for editing excursions
    */
-  var drawVideo = function(sources,options){
-	  
+  var drawVideo = function(sources,options, area){
+	var current_area;
+  	if(area){
+  		current_area = area;
+  	}
+  	else{
+  		current_area = VISH.Editor.getCurrentArea();
+  	}
+  	
     //Default options
 	var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
 	var autoplay = false;
@@ -33,15 +41,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	//Replace defeault options if options hash is defined
 	if(options){
 	  if(options['poster']){
-	    var posterUrl = options['poster'];
+	    posterUrl = options['poster'];
 	  }
 	  if(options['autoplay']){
-        var autoplay = options['autoplay'];
+        autoplay = options['autoplay'];
       }
 	}
 		
-	var current_area = VISH.Editor.getCurrentArea();
-    var template = VISH.Editor.getTemplate();
+	
+    var template = VISH.Editor.getTemplate(area);
 
     var nextVideoId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextVideoId;

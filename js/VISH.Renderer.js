@@ -27,10 +27,6 @@ VISH.Renderer = (function(V,$,undefined){
 			else if(slide.elements[el].type === "video"){
 				content += renderVideo(slide.elements[el],slide.template);
 			}
-			else if(slide.elements[el].type === "swf"){
-				content += _renderSwf(slide.elements[el],slide.template);
-				classes += "swf ";
-			}
 			else if(slide.elements[el].type === "object"){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
@@ -100,21 +96,13 @@ VISH.Renderer = (function(V,$,undefined){
 		return rendered;
 	};
 
-	/**
-	 * Function to render a flash object inside an article (a slide)
-	 * the flash object is not really inside the article but in the src attribute of the div
-	 * when entering a slide with a swf class we call V.SWFPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the src inside the div
-	 */
-	var _renderSwf = function(element, template){
-		return "<div id='"+element['id']+"' class='swfelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_swf"+"' src='"+element['body']+"' swfStyle='" + element['style'] + "'></div>";
-	};
-	
 	
 	/**
 	 * Function to render an object inside an article (a slide)
 	 */
 	var _renderObject = function(element, template){
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+"' templateclass='"+template+"_object"+"' objectStyle='" + element['style'] + "'>" + element['body'] + "</div>";
+		var style = (element['style'])?"style='" + element['style'] + "'":"";
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object"+"' " + style + "objectWrapper='" + element['body'] + "'>" + "" + "</div>";
 	};
 	
 	

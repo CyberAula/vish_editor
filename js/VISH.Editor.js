@@ -1,7 +1,13 @@
+
 VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
 	var domId = 0;  //number for next doom element id
+	
+
+	// hash to store the excursions details like Title, Description, etc.
+	var excursionDetails = {}; 
+	var excursion_to_edit = null;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -14,18 +20,35 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
+	 * options is a hash with params and options from the server 
+	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
-	var init = function(options){
+	var init = function(options, excursion){
+		//first set VISH.Editing to true
+		VISH.Editing = true;
+		
 		initOptions = options;
-				
-		$("a#addslide").fancybox({
+		
+		//if we have to edit
+		if(excursion){
+			excursion_to_edit = excursion;
+			V.Editor.Renderer.init(excursion);
+			//remove focus from any zone
+			_removeSelectableProperties();
+		}
+		
+		// fancybox to create a new slide		
+		$("a#addSlideFancybox").fancybox({
 			'width': 800,
-    		'height': 600});		
+    		'height': 600,
+    		'padding': 0
+    	});
+    	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
+    	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
 		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 		$(document).on('click','#save', _onSaveButtonClicked);
 		$(document).on('click','.editable', _onEditableClicked);
 		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('focusout', '.selectable', _onSelectableLoseFocus);
 		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 		
@@ -36,7 +59,7 @@ VISH.Editor = (function(V,$,undefined){
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		V.SlideManager.addEnterLeaveEvents();
 		
-		V.Editor.SlidesUtilities.redrawSlides();
+		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
 		V.Debugging.init(true);
@@ -44,6 +67,21 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		
+		// Intial box to input the details related to the excursion
+		$("a#edit_excursion_details").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'height': 600,
+			'padding': 0,
+			'hideOnOverlayClick': false,
+      		'hideOnContentClick': false,
+			'showCloseButton': false
+		})
+		// The box is launched when the page is loaded
+		if(excursion === undefined){
+			$("#edit_excursion_details").trigger('click');
+		}
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
@@ -197,6 +235,38 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+	/**
+	 * function callen when the user clicks on the edit
+	 * excursion details button
+	 */
+	var _onEditExcursionDetailsButtonClicked = function(event){
+		// Intial box to input the details related to the excursion
+		$("a#edit_excursion_details").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'height': 600,
+			'padding': 0
+		})
+	};
+  
+	/**
+	 * function callen when the user clicks on the save button
+	 * in the initial excursion details fancybox to save
+	 * the data in order to be stored at the end in the JSON file   
+	 */
+	var _onSaveExcursionDetailsButtonClicked = function(event){
+		if($('#excursion_title').val().length < 1) {
+			$('#excursion_details_error').slideDown("slow");
+			$('#excursion_details_error').show();
+			return false;
+		}
+		// save the details in a hash object
+		excursionDetails.title = $('#excursion_title').val();
+		excursionDetails.description = $('#excursion_description').val();
+		$('#excursion_details_error').hide();
+		$.fancybox.close();
+	};
 
 	/**
 	 * function called when user clicks on template
@@ -205,16 +275,17 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		V.Editor.SlidesUtilities.addSlide(slide);	
-		V.Editor.SlidesUtilities.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
+		V.SlidesUtilities.addSlide(slide);	
+		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 		//V.SlideManager.addEnterLeaveEvents();
 		
-		V.Editor.SlidesUtilities.redrawSlides();
-		setTimeout("VISH.Editor.SlidesUtilities.lastSlide()", 300);
+		V.SlidesUtilities.redrawSlides();
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
+		
 	};
 
 	/**
@@ -294,6 +365,7 @@ VISH.Editor = (function(V,$,undefined){
 			'width'         	: 350,
 			'height'        	: 150,
 			'showCloseButton'	: false,
+			'padding' 			: 0,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
@@ -323,6 +395,7 @@ VISH.Editor = (function(V,$,undefined){
 			'width'         	: 350,
 			'height'        	: 150,
 			'showCloseButton'	: false,
+			'padding' 			: 0,
 			'onClosed'			: function(){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
@@ -331,9 +404,8 @@ VISH.Editor = (function(V,$,undefined){
 					//set curSlide to the preious one if this was the last one
 					if(curSlide == slideEls.length-1){
 						curSlide -=1;
-					}
-					V.Editor.SlidesUtilities.redrawThumbnails();
-					V.Editor.SlidesUtilities.redrawSlides();					
+					}					
+					V.SlidesUtilities.redrawSlides();					
 				}
 			}
 		}
@@ -344,7 +416,8 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on template zone with class selectable
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
-  var _onSelectableClicked = function(){  		
+  var _onSelectableClicked = function(){  
+  	_removeSelectableProperties();		
   	//add menuselect and delete content button
   	$(this).find(".menuselect_hide").show();
   	$(this).find(".delete_content").show();
@@ -356,15 +429,28 @@ VISH.Editor = (function(V,$,undefined){
   		img_id = img_id.substring(9);
   		
   		$("#sliderId" + img_id).show();  		
-  	}  	
+  	}
+  	
+  	//add css
+  	$(this).css("border-color", "rgb(255, 2, 94)");
+	$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+	$(this).css("outline", "0");
+	$(this).css("outline", "thin dotted \9");
   };
   
-  var _onSelectableLoseFocus = function(){  	
+  var _removeSelectableProperties = function(){  	
   	$(".theslider").hide();
-  	$(this).find(".menuselect_hide").hide();
-  	if($(this).find(".wysiwygInstance").length === 0){
-  		$(this).find(".delete_content").hide();
-  	}
+  	$(".menuselect_hide").hide();
+  	$(".delete_content").hide();
+  	
+  	//remove css
+  	$(".selectable").css("border-color", "none");
+	$(".selectable").css("-webkit-box-shadow", "none");
+	$(".selectable").css("-moz-box-shadow", "none");
+	$(".selectable").css("box-shadow", "none");
+	$(".selectable").css("outline", "0");
   };
 
   /**
@@ -377,8 +463,8 @@ VISH.Editor = (function(V,$,undefined){
     var excursion = {};
     //TODO decide this params
     excursion.id = '';
-    excursion.title = '';
-    excursion.description = '';
+    excursion.title = excursionDetails.title;
+    excursion.description = excursionDetails.description;
     excursion.author = '';
     excursion.slides = [];
     var slide = {};
@@ -400,7 +486,21 @@ VISH.Editor = (function(V,$,undefined){
             element.body   = $(div).find('img').attr('src');
             element.style  = $(div).find('img').attr('style');
           } else if(element.type=="iframe"){
-            element.body   = $(div).attr('src'); //we have the iframe code in the src attribute
+          	//TODO find a beter styling (use numbers to substring)
+          	if($(div).children().attr("id")) {
+          
+          		var style = $(div).children().attr('style'); //here dragged style
+          		var src = $(div).attr('src'); //src to substring 
+          		var src_start = src.substring('style', 42);
+          		var src_end = src.substring(77);
+           		element.body   = src_start +"style='"+ style +"'" + src_end;
+          	
+          	} else { //no draggable
+          
+          		element.body   = $(div).attr('src'); //we have the iframe code in the src attribute	
+          		console.log($(div).attr('src'));
+          	}
+          	
           } else if(element.type=="video"){
 		    var video = $(div).find("video");
 			element.poster = $(video).attr("poster");
@@ -465,7 +565,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
-		V.Editor.SlidesUtilities.goToSlide(curSlide);
+		V.SlidesUtilities.goToSlide(curSlide);
 	};
 	
 	/**
@@ -473,11 +573,11 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
-		V.Editor.SlidesUtilities.goToSlide(curSlide+2);
+		V.SlidesUtilities.goToSlide(curSlide+2);
 	};
 	
 	
-	//////////////////
+  //////////////////
   ///    Getters
   //////////////////
 	
@@ -485,8 +585,15 @@ VISH.Editor = (function(V,$,undefined){
 		return params;
 	}
 	
-	var getTemplate = function() {
-		if(params['current_el']){
+	/**
+	 * function to get the template of the slide of current_el
+	 * param area: optional param indicating the area to get the template, used for editing excursions
+	 */
+	var getTemplate = function(area) {
+		if(area){
+			return area.parent().attr('template');
+		}
+		else if(params['current_el']){
 			return params['current_el'].parent().attr('template');
 		}
 		return null;

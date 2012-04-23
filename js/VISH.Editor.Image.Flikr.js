@@ -12,7 +12,6 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		          	$(myInput).blur();
 			
 			}
-	
 		});
 	};
 	
@@ -38,7 +37,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		$.getJSON(url_flikr, function(data){
 	      $.each(data.items, function(i,item){
 	        //add every image in the carrousel
-	        $("#" + carrouselDivId).append('<img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'" />');
+	        $("#" + carrouselDivId).append('<div><img id="img_flkr'+i+'" src="'+ item.media.m +'" imageFlikrId="'+i+'" /></div>');
           });
 	      
         //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)

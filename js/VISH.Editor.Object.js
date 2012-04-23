@@ -72,6 +72,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	                                                                           		
 	
 	var _getTypeFromSource = function(source){
+		
 		if(typeof source != "string"){
 			return "Invalid source"
 		}
@@ -107,6 +108,40 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	
+	/*
+	 * Resize object and its wrapper automatically
+	 */
+	var _adjustWrapperOfObject = function(objectID){
+		var proportion = $("#"+objectID).height()/$("#"+objectID).width();
+		
+		var current_area = VISH.Editor.getCurrentArea();
+		var maxWidth = current_area.width();
+		var maxHeight = current_area.height();
+		
+		var width = $("#"+objectID).width();
+		var height = $("#"+objectID).height();
+		
+		if(width > maxWidth){
+			$("#"+objectID).width(maxWidth);
+			$("#"+objectID).height(width*proportion);
+			width = maxWidth;
+			height = $("#"+objectID).height();
+		}
+		
+		if(height > maxHeight){
+			$("#"+objectID).height(maxHeight);
+			$("#"+objectID).width(height/proportion);
+			width = $("#"+objectID).width();
+			height = maxHeight;
+		}
+		
+		var wrapper = $("#"+objectID).parent();
+		if($(wrapper).hasClass("object_wrapper")){
+			$(wrapper).height($("#"+objectID).height());
+			$(wrapper).width($("#"+objectID).width());
+		}
+	}
+	
 	var renderObjectPreview = function(object){
 		var objectInfo = getObjectInfo(object.content);
 		if(objectInfo.wrapper == null){
@@ -121,13 +156,23 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
-	
-	var drawObject = function(object){
+  /**
+   * Returns a object prepared to draw.   * 
+   * param area: optional param indicating the area to add the object, used for editing excursions
+   */
+	var drawObject = function(object, area){
+		var current_area;
+	  	if(area){
+	  		current_area = area;
+	  	}
+	  	else{
+	  		current_area = VISH.Editor.getCurrentArea();
+	  	}
+		
 		var objectInfo = getObjectInfo(object);
 		switch (objectInfo.wrapper){
 	      case null:
-		    //Draw object from source
-		    
+		    //Draw object from source		    
 		    switch (objectInfo.type){
 		      case "swf":
 		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
@@ -141,13 +186,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 			}
 		    break;
 		  case "EMBED":
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "OBJECT":
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "IFRAME": 
-			drawObjectWithWrapper(object);
+			drawObjectWithWrapper(object, current_area);
 		    break;  
 		  default:
 			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
@@ -156,8 +201,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	
-	var drawObjectWithWrapper = function(wrapper){
-	  var current_area = VISH.Editor.getCurrentArea();
+	var drawObjectWithWrapper = function(wrapper, current_area){
 	  var template = VISH.Editor.getTemplate();
 
 	  var nextWrapperId = VISH.Editor.getId();
@@ -170,7 +214,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  $(wrapperDiv).addClass('object_wrapper')
 	  $(wrapperDiv).addClass(template + "_object")
 	  
-	  var wrapperTag = wrapper
+	  var wrapperTag = $(wrapper)
 	  $(wrapperTag).attr('id', idToResize );
 	  $(wrapperTag).attr('class', template + "_object");
 	  $(wrapperTag).attr('title', "Click to drag");
@@ -197,6 +241,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  });
 
 	  $("#" + idToDrag).draggable({cursor: "move"});
+	  
+	  _adjustWrapperOfObject(idToResize);
 	}
 	
 	

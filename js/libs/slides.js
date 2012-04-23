@@ -323,9 +323,9 @@ function handleTouchEnd(event) {
 
   if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
     if (touchDX > 0) {
-      prevSlide();
+      VISH.SlidesUtilities.backwardOneSlide();
     } else {
-      nextSlide();
+      VISH.SlidesUtilities.forwardOneSlide();
     }
   }
   
@@ -509,19 +509,19 @@ function handleBodyKeyDown(event) {
     case 39: // right arrow
     case 34: // PgDn	
       if(isSlideFocused()) {
-		    nextSlide();
+		    VISH.SlidesUtilities.forwardOneSlide();
 		    event.preventDefault();
       }
       break;
     case 37: // left arrow
     	if(isSlideFocused()) {
-			  prevSlide();
+			VISH.SlidesUtilities.backwardOneSlide();
     		event.preventDefault();    		
     	}
     	break;
     //case 8: // Backspace
     case 33: // PgUp
-      prevSlide();
+      VISH.SlidesUtilities.backwardOneSlide();
       event.preventDefault();
       break;
 
@@ -533,7 +533,7 @@ function handleBodyKeyDown(event) {
         }
       } else {
       	if(isSlideFocused()) {
-      		nextSlide();
+      		VISH.SlidesUtilities.forwardOneSlide();
       		event.preventDefault();	
       	}
       }
@@ -547,7 +547,7 @@ function handleBodyKeyDown(event) {
       	}
       } else {
       	if(isSlideFocused()) {
-			    prevSlide();
+			    VISH.SlidesUtilities.backwardOneSlide();
 			    event.preventDefault();     		
       	}
       }
