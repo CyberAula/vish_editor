@@ -146,7 +146,7 @@
 	position:relative;
 	width: 30%;
 	height: 90%;
-	float: right;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -155,7 +155,7 @@
 	position:relative;
 	width: 30%;
 	height: 90%;
-	float: right;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
