@@ -112,7 +112,7 @@
 }
 
 /*
-	TEMPLATE 3: "fuuuuuu"
+	TEMPLATE 3: "3 blocks"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -130,9 +130,9 @@
 }
 
 .t3_left{
-	margin-top:5px;
+	margin-top:11px;
 	position:relative;
-	width: 30%;
+	width: 33%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
@@ -142,20 +142,20 @@
 }
 
 .t3_center{
-	margin-top: 5px;
+	margin-top: 11px;
 	position:relative;
-	width: 30%;
-	height: 90%;
-	float: right;
+	width: 65%;
+	height: 75%;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
 .t3_right{
-	margin-top: 5px;
+	margin-top: 12px;
 	position:relative;
-	width: 30%;
-	height: 90%;
-	float: right;
+	width: 65%;
+	height: 12%;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -180,7 +180,7 @@
 }
 
 /*
-	TEMPLATE 4: "fuuuuuu2"
+	TEMPLATE 4: "2plusone"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -198,10 +198,10 @@
 }
 
 .t4_left{
-	margin-top:5px;
+	margin-top:11px;
 	position:relative;
-	width: 60%;
-	height: 90%;
+	width: 100%;
+	height: 65%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
@@ -209,21 +209,12 @@
 	overflow:hidden;	
 }
 
-.t4_right2{
-	margin-top: 5px;
+.t4_right{
+	margin-top: 12px;
 	position:relative;
-	width: 20%;
-	height: 40%;
-	float: right;
-	font-size: 18px;
-	overflow:hidden;	
-}
-.t4_right1{
-	margin-top: 5px;
-	position:relative;
-	width: 20%;
-	height: 40%;
-	float: right;
+	width: 100%;
+	height: 25%;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
