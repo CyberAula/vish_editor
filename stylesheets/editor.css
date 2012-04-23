@@ -85,14 +85,14 @@
 
 .documentblank {
 	position:absolute;
-	margin-left: 360px;
+	margin-left: 365px;
 	margin-top: 140px;
 }
 
 .buttonaddfancy {
 	position:absolute;
 	margin-top: 217px;
-	margin-left: 475px;	
+	margin-left: 483px;	
     display: inline;
 	text-decoration:none;
     background: #CCC repeat-x bottom !important;
@@ -709,8 +709,8 @@ table.metadata td div.height_wrapper_description{
 
 .buttonfancy {
 	position:absolute;
-	margin-left: 551px;
-	margin-top:65px;
+	margin-left: 560px;
+	margin-top:75px;
 }
 	
 .button:active {

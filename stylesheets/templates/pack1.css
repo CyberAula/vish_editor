@@ -130,9 +130,9 @@
 }
 
 .t3_left{
-	margin-top:5px;
+	margin-top:11px;
 	position:relative;
-	width: 30%;
+	width: 33%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
@@ -142,19 +142,19 @@
 }
 
 .t3_center{
-	margin-top: 5px;
+	margin-top: 11px;
 	position:relative;
-	width: 30%;
-	height: 90%;
+	width: 65%;
+	height: 75%;
 	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
 .t3_right{
-	margin-top: 5px;
+	margin-top: 12px;
 	position:relative;
-	width: 30%;
-	height: 90%;
+	width: 65%;
+	height: 12%;
 	float: left;
 	font-size: 18px;
 	overflow:hidden;	
