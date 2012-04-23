@@ -552,9 +552,14 @@ VISH.Editor = (function(V,$,undefined){
     }
     
     $.post(initOptions["postPath"], params, function(data) {
-          document.open();
-      document.write(data);
-      document.close();
+        $('article').remove();
+    	$('#menubar').remove();
+    	$('.theslider').remove();
+    	$(".nicEdit-panelContain").remove();  
+        
+        $('#new_excursion_iframe', window.parent.document).height("680"); //to resize the iframe
+        
+        V.SlideManager.init(data);        
       });
       
     

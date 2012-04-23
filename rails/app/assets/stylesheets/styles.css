@@ -422,3 +422,35 @@ article.smaller q::after {
 .slides > article.flashcard{
   padding: 0;
 }
+
+/* buttons next and previous */
+.page-switcher {	
+	background-color: transparent;
+	border: none;
+	bottom: 0;
+	font-size: 40px;
+	padding: 0;
+	position: absolute;
+	margin: 0;
+	max-width: 150px;
+	min-width: 60px;
+	outline: none;
+	top: 0;
+	width: 10%;
+	top: 0px; 
+	padding-bottom: 0px;
+}
+
+.page-switcher:hover,
+.page-switcher:focus,
+.page-switcher.drag-target {
+  background-color: rgba(0,0,0, 0.06);  /* COLOR_NTP_TEXT */
+}
+
+#page-switcher-end{
+	right: 0px;
+}
+
+#page-switcher-start{
+	left: 0px;
+}
