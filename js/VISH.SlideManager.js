@@ -8,6 +8,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
+		
+		$(document).on('click', '#page-switcher-start', prevSlide);
+		$(document).on('click', '#page-switcher-end', nextSlide);
 	};
 
 	/**
