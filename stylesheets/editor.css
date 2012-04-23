@@ -425,7 +425,7 @@
 	width: 22px;
 	height: 22px;
 	cursor:pointer;
-	background: url(/images/delete.png);
+	background: url(/images/delete_slide.png);
 }
 
 .delete_slide:hover{
