@@ -76,7 +76,7 @@ VISH.Editor = (function(V,$,undefined){
 			'padding': 0,
 			'hideOnOverlayClick': false,
       		'hideOnContentClick': false,
-			'showCloseButton': false,
+			'showCloseButton': false
 		})
 		// The box is launched when the page is loaded
 		if(excursion === undefined){
@@ -246,7 +246,7 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'width': 800,
 			'height': 600,
-			'padding': 0,
+			'padding': 0
 		})
 	};
   
