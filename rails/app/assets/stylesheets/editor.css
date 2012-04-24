@@ -30,6 +30,7 @@
 	margin-left: 30px;
 	margin-top: 30px;
 	border: 1px solid #D7D7D7;
+	border
 	border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -84,14 +85,14 @@
 
 .documentblank {
 	position:absolute;
-	margin-left: 360px;
+	margin-left: 365px;
 	margin-top: 140px;
 }
 
 .buttonaddfancy {
 	position:absolute;
 	margin-top: 217px;
-	margin-left: 475px;	
+	margin-left: 483px;	
     display: inline;
 	text-decoration:none;
     background: #CCC repeat-x bottom !important;
@@ -424,7 +425,7 @@
 	width: 22px;
 	height: 22px;
 	cursor:pointer;
-	background: url(/assets/delete.png);
+	background: url(/assets/delete_slide.png);
 }
 
 .delete_slide:hover{
@@ -708,8 +709,8 @@ table.metadata td div.height_wrapper_description{
 
 .buttonfancy {
 	position:absolute;
-	margin-left: 551px;
-	margin-top:65px;
+	margin-left: 560px;
+	margin-top:75px;
 }
 	
 .button:active {

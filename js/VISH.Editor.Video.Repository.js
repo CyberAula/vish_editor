@@ -20,14 +20,14 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		var previousSearch = ($("#tab_video_repo_content").find("input[type='search']").val() != "");
 		if(!previousSearch) {
 			_cleanVideoPreview();
-			_requestInicialData();
+			_requestInitialData();
 		}
 	};
 	
 	/*
 	 * Request inicial data to the server.
 	 */
-	var _requestInicialData = function() {
+	var _requestInitialData = function() {
 		VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError);
 	};
 	
@@ -58,7 +58,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		else{ 
 			//data.videos is an array with the results
 			$.each(data.videos, function(index, video) {
-				content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>"
+				content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>";
 				currentVideos[video.id] = video;
 			});
 	
@@ -69,7 +69,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	var onAPIError = function() {
 		console.log("API error");
-		//    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		//VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 	};
 	
 	var onClickCarrouselElement = function(event) {

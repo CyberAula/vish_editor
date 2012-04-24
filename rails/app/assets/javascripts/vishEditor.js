@@ -10008,10 +10008,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Image.init();
     V.Editor.Video.init();
     V.Editor.Object.init();
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
-    if(excursion === undefined) {
-      $("#edit_excursion_details").trigger("click")
-    }
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false})
   };
   var getId = function() {
     domId = domId + 1;
@@ -10314,7 +10311,8 @@ VISH.Editor.Video = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Image = function(V, $, undefined) {
   var init = function() {
-    VISH.Editor.Image.Flikr.init()
+    VISH.Editor.Image.Flikr.init();
+    VISH.Editor.Image.Repository.init()
   };
   var onLoadTab = function() {
   };
@@ -10531,6 +10529,7 @@ VISH.Samples = function(V, undefined) {
   return{full_samples:full_samples, samples:samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
+  var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"/pictures/54.jpg"}, {"id":55, "title":"ClintEastwoooood.jpg", "description":"this is clint", "author":"Demo", "src":"/pictures/55.jpg"}]};
   var video = {"id":"1534", "title":"Midnight Sun", "description":"Awesome HTML5 video example", "author":"John Doe", "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"};
   var videoList = {"videos":[{"id":"1534", "title":"HTML5 Demo", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML. HTML5 especifica dos variantes de sintaxis para HTML: un clasico HTML (text/html), la variante conocida como HTML5 y una variante XHTML conocida como sintaxis XHTML5 que debera ser servida como XML (XHTML) (application/xhtml+xml).1 2 Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo.", 
   "author":"Awesome Videos", "poster":"http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1535", "title":"Paisaje bonito", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
@@ -10548,7 +10547,7 @@ VISH.Samples.API = function(V, undefined) {
   "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1539", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1540", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", 
   "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1541", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, {"id":"1542", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}, 
   {"id":"1543", "title":"HTML5 Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
-  return{videoList:videoList, flashList:flashList}
+  return{imageList:imageList, videoList:videoList, flashList:flashList}
 }(VISH);
 VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
@@ -10591,7 +10590,9 @@ VISH.Debugging = function(V, $, undefined) {
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
   var nextArticleId = 1;
-  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>"];
+  var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -10621,7 +10622,31 @@ VISH.Editor.API = function(V, $, undefined) {
   var init = function() {
   };
   var requestVideos = function(text, successCallback, failCallback) {
-    $.ajax({type:"GET", url:"/search.json?type=video&q=" + text, dataType:"html", success:function(response) {
+    _requestByType("video", text, successCallback, failCallback)
+  };
+  var requestRecomendedVideos = function(successCallback, failCallback) {
+    if(typeof successCallback == "function") {
+      successCallback(VISH.Samples.API.videoList)
+    }
+  };
+  var requestFlashes = function(text, successCallback, failCallback) {
+    _requestByType("swf", text, successCallback, failCallback)
+  };
+  var requestRecomendedFlash = function(successCallback, failCallback) {
+    if(typeof successCallback == "function") {
+      successCallback(VISH.Samples.API.flashList["flashes"])
+    }
+  };
+  var requestImages = function(text, successCallback, failCallback) {
+    _requestByType("picture", text, successCallback, failCallback)
+  };
+  var requestRecomendedImages = function(successCallback, failCallback) {
+    if(typeof successCallback == "function") {
+      successCallback(VISH.Samples.API.imageList)
+    }
+  };
+  var _requestByType = function(type, query, successCallback, failCallback) {
+    $.ajax({type:"GET", url:"/search.json?type=" + type + "&q=" + query, dataType:"html", success:function(response) {
       if(typeof successCallback == "function") {
         var resp = JSON.parse(response);
         successCallback(resp)
@@ -10632,22 +10657,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
     }})
   };
-  var requestRecomendedVideos = function(successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Samples.API.videoList)
-    }
-  };
-  var requestFlashes = function(text, successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.flashList["flashes"]))
-    }
-  };
-  var requestRecomendedFlash = function(successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Samples.API.flashList["flashes"])
-    }
-  };
-  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestFlashes:requestFlashes, requestRecomendedFlash:requestRecomendedFlash}
+  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlash:requestRecomendedFlash}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, rows, callback) {
@@ -10794,30 +10804,62 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
     console.log("event" + event)
   };
   var addImage = function(event) {
-    var ImageId = $(event.target).attr("imageFlikrId");
     var image_url = $(event.target).attr("src");
-    var template = VISH.Editor.getTemplate();
-    var current_area = VISH.Editor.getCurrentArea();
-    var nextImageFlikrId = VISH.Editor.getId();
-    $.fancybox.close();
-    var idToDragAndResize = "draggable" + nextImageFlikrId;
-    current_area.attr("type", "image");
-    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' />");
-    V.Editor.addDeleteButton(current_area);
-    $("#menubar").before("<div id='sliderId" + nextImageFlikrId + "' class='theslider'><input id='imageSlider" + nextImageFlikrId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextImageFlikrId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      $("#" + idToDragAndResize).width(325 * value)
-    }});
-    $("#" + idToDragAndResize).draggable({cursor:"move", stop:function() {
-      $(this).parent().click()
-    }})
+    V.Editor.Image.drawImage(image_url);
+    $.fancybox.close()
   };
   return{init:init, onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
 }(VISH, jQuery);
 VISH.Editor.Image.Repository = function(V, $, undefined) {
-  var onLoadTab = function() {
+  var carrouselDivId = "tab_pic_repo_content_carrousel";
+  var previewDivId = "tab_pic_repo_content_preview";
+  var currentImages = new Array;
+  var selectedImage = null;
+  var init = function() {
+    var myInput = $("#tab_pic_repo_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        VISH.Editor.Image.Repository.requestData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
   };
-  return{onLoadTab:onLoadTab}
+  var onLoadTab = function() {
+    var previousSearch = $("#tab_pic_repo_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _requestInitialData()
+    }
+  };
+  var _requestInitialData = function() {
+    VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError)
+  };
+  var requestData = function(text) {
+    VISH.Editor.API.requestImages(text, VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError)
+  };
+  var onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    currentImages = new Array;
+    var content = "";
+    if(data.pictures.length == 0) {
+      $("#" + carrouselDivId).html("No results found.")
+    }else {
+      $.each(data.pictures, function(index, image) {
+        content = content + "<div><img src='" + image.src + "' ></div>";
+        currentImages[image.id] = image
+      });
+      $("#" + carrouselDivId).html(content);
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement)
+    }
+  };
+  var onAPIError = function() {
+    console.log("API error")
+  };
+  var onClickCarrouselElement = function(event) {
+    V.Editor.Image.drawImage($(event.target).attr("src"));
+    $.fancybox.close()
+  };
+  return{init:init, onLoadTab:onLoadTab, requestData:requestData, onDataReceived:onDataReceived, onAPIError:onAPIError, onClickCarrouselElement:onClickCarrouselElement}
 }(VISH, jQuery);
 VISH.Editor.Object.Flash = function(V, $, undefined) {
   var drawFlashObjectWithSource = function(src) {
@@ -10885,20 +10927,20 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
       var imageSource = null;
       switch(objectInfo.type) {
         case "swf":
-          imageSource = "/images/carrousel/swf.png";
+          imageSource = VISH.ImagesPath + "carrousel/swf.png";
           break;
         case "youtube":
-          imageSource = "/images/carrousel/youtube.png";
+          imageSource = VISH.ImagesPath + "carrousel/youtube.png";
           break;
         case "web":
           if(objectInfo.wrapper == "IFRAME") {
-            imageSource = "/images/carrousel/iframe.png"
+            imageSource = VISH.ImagesPath + "carrousel/iframe.png"
           }else {
-            imageSource = "/images/carrousel/object.jpeg"
+            imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
           }
           break;
         default:
-          imageSource = "/images/carrousel/object.jpeg";
+          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
           break
       }
       content = content + "<div><p class='repositoryTitle'>" + object.title + "</p><img src='" + imageSource + "' objectId='" + object.id + "'></div>";
@@ -11152,10 +11194,10 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     var previousSearch = $("#tab_video_repo_content").find("input[type='search']").val() != "";
     if(!previousSearch) {
       _cleanVideoPreview();
-      _requestInicialData()
+      _requestInitialData()
     }
   };
-  var _requestInicialData = function() {
+  var _requestInitialData = function() {
     VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
   };
   var requestData = function(text) {
@@ -11515,7 +11557,9 @@ VISH.SlideManager = function(V, $, undefined) {
   var slideStatus = {};
   var init = function(excursion) {
     mySlides = excursion.slides;
-    V.Excursion.init(mySlides)
+    V.Excursion.init(mySlides);
+    $(document).on("click", "#page-switcher-start", prevSlide);
+    $(document).on("click", "#page-switcher-end", nextSlide)
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);

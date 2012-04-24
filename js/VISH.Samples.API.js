@@ -1,5 +1,25 @@
 VISH.Samples.API = (function(V,undefined){
 	
+	var imageList = {
+		'pictures': [
+		{
+			"id":54,
+			"title":"ClintEastwood.jpg",
+			"description":null,
+			"author":"Demo",
+			"src":"/pictures/54.jpg"
+		},
+		{
+			"id":55,
+			"title":"ClintEastwoooood.jpg",
+			"description": "this is clint",
+			"author":"Demo",
+			"src":"/pictures/55.jpg"
+		}
+		]
+	};
+	
+	
 	var video = {
       'id'     : '1534',
       'title'         :  'Midnight Sun',
@@ -224,8 +244,9 @@ VISH.Samples.API = (function(V,undefined){
     
     
 	return {
-		videoList: videoList,
-		flashList: flashList
+		imageList  : imageList,
+		videoList  : videoList,
+		flashList  : flashList
 	};
 
 })(VISH);

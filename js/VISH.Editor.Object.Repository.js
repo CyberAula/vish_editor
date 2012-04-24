@@ -28,14 +28,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
-    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Object.Repository.onDataReceived,VISH.Editor.Object.Repository.onAPIError);
+    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError);
   }
 	
   /*
    * Request data to the server.
    */
   var _requestData = function(text){
-    VISH.Editor.API.requestFlashes(text,VISH.Editor.Object.Repository.onDataReceived,VISH.Editor.Object.Repository.onAPIError);
+    VISH.Editor.API.requestFlashes(text, VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError);
   }
 	
   /*
@@ -57,20 +57,20 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
       
       switch (objectInfo.type){
         case "swf":
-          imageSource = "/images/carrousel/swf.png"
+          imageSource = VISH.ImagesPath + "carrousel/swf.png"
 	      break;
 	    case "youtube":
-	      imageSource = "/images/carrousel/youtube.png"
+	      imageSource = VISH.ImagesPath + "carrousel/youtube.png"
 	      break;
 	    case "web":
 	      if(objectInfo.wrapper=="IFRAME"){
-	        imageSource = "/images/carrousel/iframe.png"
+	        imageSource = VISH.ImagesPath + "carrousel/iframe.png"
 	      } else {
-	    	imageSource = "/images/carrousel/object.jpeg"
+	    	imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
 	      }
 	      break;
 	    default:
-	      imageSource = "/images/carrousel/object.jpeg"
+	      imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
 	      break;
       }
       
