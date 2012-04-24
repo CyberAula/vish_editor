@@ -57,46 +57,9 @@ console.log("event" + event);
 
 
 var addImage = function(event){
-	var ImageId = $(event.target).attr("imageFlikrId");
-	 	var image_url=$(event.target).attr("src");
-	
- 	var template = VISH.Editor.getTemplate();
-	var current_area = VISH.Editor.getCurrentArea();
-
-	var nextImageFlikrId = VISH.Editor.getId();
-    $.fancybox.close();
-
-//copied from VISH.Editor.Images.js 
-
-   var idToDragAndResize = "draggable" + nextImageFlikrId;
-    current_area.attr('type','image');
-    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
-    
-    V.Editor.addDeleteButton(current_area);
-    
-    $("#menubar").before("<div id='sliderId"+nextImageFlikrId+"' class='theslider'><input id='imageSlider"+nextImageFlikrId+"' type='slider' name='size' value='1' style='display: none; '></div>");     
-   
-   
-   $("#imageSlider"+nextImageFlikrId).slider({
-      from: 1,
-      to: 8,
-      step: 0.5,
-      round: 1,
-      dimension: "x",
-      skin: "blue",
-      onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(325*value);
-      }
-    });
-    $("#" + idToDragAndResize).draggable({
-    	cursor: "move",
-    	stop: function(){
-    		$(this).parent().click();  //call parent click to select it in case it was unselected	
-    	}
-    });
-
-
-
+	var image_url = $(event.target).attr("src");
+	V.Editor.Image.drawImage(image_url);
+	$.fancybox.close();
 };
 	
 	return {

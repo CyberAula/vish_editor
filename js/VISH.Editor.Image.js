@@ -2,6 +2,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var init = function(){
 		VISH.Editor.Image.Flikr.init();
+		VISH.Editor.Image.Repository.init();
 	};
 	
 	var onLoadTab = function(){
@@ -56,6 +57,8 @@ VISH.Editor.Image = (function(V,$,undefined){
     	}
     });
   };
+  
+  
 	
 	return {
 		init        : init,
