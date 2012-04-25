@@ -572,8 +572,9 @@ VISH.Editor = (function(V,$,undefined){
     		$('.theslider').remove();
     		$(".nicEdit-panelContain").remove();  
         
-        	$('#new_excursion_iframe', window.parent.document).height("680"); //to resize the iframe        
-        	V.SlideManager.init(data); 
+        	$('#excursion_iframe', window.parent.document).height("680"); //to resize the iframe
+        	var myexcursion = JSON.parse(data);        
+        	V.SlideManager.init(myexcursion); 
     	}    	
     });
     	          
