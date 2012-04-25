@@ -10286,8 +10286,7 @@ VISH.Editor = function(V, $, undefined) {
       $(".theslider").remove();
       $(".nicEdit-panelContain").remove();
       $("#excursion_iframe", window.parent.document).height("680");
-      var myexcursion = JSON.parse(data);
-      V.SlideManager.init(myexcursion)
+      V.SlideManager.init(data)
     }})
   };
   var _onArrowLeftClicked = function() {
