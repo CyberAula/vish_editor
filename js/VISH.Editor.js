@@ -77,7 +77,8 @@ VISH.Editor = (function(V,$,undefined){
 			'hideOnOverlayClick': false,
       		'hideOnContentClick': false,
 			'showCloseButton': false
-		})
+		});
+		
 		// The box is launched when the page is loaded
 		if(excursion === undefined){
 			$("#edit_excursion_details").trigger('click');
@@ -418,6 +419,7 @@ VISH.Editor = (function(V,$,undefined){
    */
   var _onSelectableClicked = function(){  
   	_removeSelectableProperties();		
+  	$(this).css("cursor", "auto");
   	//add menuselect and delete content button
   	$(this).find(".menuselect_hide").show();
   	$(this).find(".delete_content").show();
@@ -451,6 +453,7 @@ VISH.Editor = (function(V,$,undefined){
 	$(".selectable").css("-moz-box-shadow", "none");
 	$(".selectable").css("box-shadow", "none");
 	$(".selectable").css("outline", "0");
+	$(".selectable").css("cursor", "pointer");
   };
 
   /**
