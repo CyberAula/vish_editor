@@ -551,18 +551,29 @@ VISH.Editor = (function(V,$,undefined){
       "authenticity_token" : initOptions["token"]
     }
     
-    $.post(initOptions["postPath"], params, function(data) {
-        $('article').remove();
-    	$('#menubar').remove();
-    	$('.theslider').remove();
-    	$(".nicEdit-panelContain").remove();  
-        
-        $('#new_excursion_iframe', window.parent.document).height("680"); //to resize the iframe
-        
-        V.SlideManager.init(data);        
-      });
-      
+    var send_type;
+    if(excursion_to_edit){
+     	send_type = 'PUT'; //if we are editing
+    }
+    else{
+    	send_type = 'POST'; //if it is a new
+    }    
     
+    $.ajax({
+    	type    : send_type,
+    	url     : initOptions["postPath"],
+    	data    : params,
+    	success : function(data) {
+    		$('article').remove();
+    		$('#menubar').remove();
+    		$('.theslider').remove();
+    		$(".nicEdit-panelContain").remove();  
+        
+        	$('#new_excursion_iframe', window.parent.document).height("680"); //to resize the iframe        
+        	V.SlideManager.init(data); 
+    	}    	
+    });
+    	          
   };
 	
 	/**

@@ -10008,7 +10008,10 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Image.init();
     V.Editor.Video.init();
     V.Editor.Object.init();
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false})
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
+    if(excursion === undefined) {
+      $("#edit_excursion_details").trigger("click")
+    }
   };
   var getId = function() {
     domId = domId + 1;
@@ -10269,14 +10272,20 @@ VISH.Editor = function(V, $, undefined) {
     var jsonexcursion = JSON.stringify(excursion);
     console.log(jsonexcursion);
     var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
-    $.post(initOptions["postPath"], params, function(data) {
+    var send_type;
+    if(excursion_to_edit) {
+      send_type = "PUT"
+    }else {
+      send_type = "POST"
+    }
+    $.ajax({type:send_type, url:initOptions["postPath"], data:params, success:function(data) {
       $("article").remove();
       $("#menubar").remove();
       $(".theslider").remove();
       $(".nicEdit-panelContain").remove();
       $("#new_excursion_iframe", window.parent.document).height("680");
       V.SlideManager.init(data)
-    })
+    }})
   };
   var _onArrowLeftClicked = function() {
     V.SlidesUtilities.goToSlide(curSlide)
