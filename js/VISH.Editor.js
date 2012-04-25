@@ -77,11 +77,12 @@ VISH.Editor = (function(V,$,undefined){
 			'hideOnOverlayClick': false,
       		'hideOnContentClick': false,
 			'showCloseButton': false
-		})
+		});
+		
 		// The box is launched when the page is loaded
-		//if(excursion === undefined){
-		//	$("#edit_excursion_details").trigger('click');
-		//}
+		if(excursion === undefined){
+			$("#edit_excursion_details").trigger('click');
+		}
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
