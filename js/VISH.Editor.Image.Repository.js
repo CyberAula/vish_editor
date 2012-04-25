@@ -28,7 +28,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError);
+		//VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError);
 	};
 	
 	/*

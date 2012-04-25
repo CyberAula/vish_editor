@@ -303,6 +303,10 @@
 	-moz-border-radius: 3px;
 }
 
+.editable{
+	cursor: pointer;
+}
+
 .editable:hover{
 	/*background-color: rgba(217,188,43,0.4);*/
 }

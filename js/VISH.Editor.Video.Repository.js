@@ -28,7 +28,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError);
+		//VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError);
 	};
 	
 	/*
