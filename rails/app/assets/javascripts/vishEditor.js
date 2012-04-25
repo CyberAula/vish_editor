@@ -10171,6 +10171,7 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _onSelectableClicked = function() {
     _removeSelectableProperties();
+    $(this).css("cursor", "auto");
     $(this).find(".menuselect_hide").show();
     $(this).find(".delete_content").show();
     if($(this).attr("type") === "image") {
@@ -10193,7 +10194,8 @@ VISH.Editor = function(V, $, undefined) {
     $(".selectable").css("-webkit-box-shadow", "none");
     $(".selectable").css("-moz-box-shadow", "none");
     $(".selectable").css("box-shadow", "none");
-    $(".selectable").css("outline", "0")
+    $(".selectable").css("outline", "0");
+    $(".selectable").css("cursor", "pointer")
   };
   var _onSaveButtonClicked = function() {
     var excursion = {};
@@ -10845,7 +10847,6 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
     }
   };
   var _requestInitialData = function() {
-    VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError)
   };
   var requestData = function(text) {
     VISH.Editor.API.requestImages(text, VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError)
@@ -11211,7 +11212,6 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     }
   };
   var _requestInitialData = function() {
-    VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
   };
   var requestData = function(text) {
     VISH.Editor.API.requestVideos(text, VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
