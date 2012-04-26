@@ -86,6 +86,9 @@ VISH.Editor = (function(V,$,undefined){
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+		//if click on begginers tutorial->launch it
+		$(document).on('click','#start_tutorial', _startTutorial);
+
 	};
 	
 	
@@ -236,6 +239,13 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+  /**
+   * function to start the walkthrough
+   */
+  var _startTutorial = function(){
+   	WalkMeAPI.startWalkthruById(5033, 0);
+  }
   
 	/**
 	 * function callen when the user clicks on the edit
@@ -469,9 +479,9 @@ VISH.Editor = (function(V,$,undefined){
 			{
 	        	'autoDimensions'	: false,
 				'width'         	: 350,
-				'height'        	: 350,
+				'height'        	: 200,
 				'showCloseButton'	: false,
-				'padding' 			: 0				
+				'padding' 			: 5		
 			}
 		);
     }
