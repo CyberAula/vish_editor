@@ -403,10 +403,10 @@ VISH.Editor = (function(V,$,undefined){
 					$("#prompt_answer").val("false");
 					article_to_delete.remove();
 					//set curSlide to the preious one if this was the last one
-					if(curSlide == slideEls.length-1){
+					if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
 						curSlide -=1;
 					}					
-					V.SlidesUtilities.redrawSlides();					
+					V.SlidesUtilities.redrawSlides();			
 				}
 			}
 		}

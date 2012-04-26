@@ -8,10 +8,10 @@ VISH.SlidesUtilities = (function(V,$,undefined){
   	    var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
-		
-		lastSlide();
+				
 		V.Editor.Thumbnails.redrawThumbnails();
   };
+    
 
   /**
    * function to add a new slide
@@ -38,8 +38,7 @@ VISH.SlidesUtilities = (function(V,$,undefined){
   		$(".selectable").css("border-style", "none");
   		$(".theslider").hide();
   		//finally add a background color to thumbnail of the selected slide
-    	V.Editor.Thumbnails.selectThumbnail(no);
-    	
+    	V.Editor.Thumbnails.selectThumbnail(no);    	
   	}
   	
     if((no > slideEls.length) || (no <= 0)){
