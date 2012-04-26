@@ -10012,6 +10012,7 @@ VISH.Editor = function(V, $, undefined) {
     if(excursion === undefined) {
       $("#edit_excursion_details").trigger("click")
     }
+    $(document).on("click", "#start_tutorial", _startTutorial)
   };
   var getId = function() {
     domId = domId + 1;
@@ -10090,6 +10091,9 @@ VISH.Editor = function(V, $, undefined) {
   var _closeFancybox = function() {
     $.fancybox.close()
   };
+  var _startTutorial = function() {
+    WalkMeAPI.startWalkthruById(5033, 0)
+  };
   var _onEditExcursionDetailsButtonClicked = function(event) {
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0})
   };
@@ -10162,7 +10166,7 @@ VISH.Editor = function(V, $, undefined) {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
         article_to_delete.remove();
-        if(curSlide == slideEls.length - 1) {
+        if(curSlide == slideEls.length - 1 && curSlide != 0) {
           curSlide -= 1
         }
         V.SlidesUtilities.redrawSlides()
@@ -10198,6 +10202,20 @@ VISH.Editor = function(V, $, undefined) {
     $(".selectable").css("cursor", "pointer")
   };
   var _onSaveButtonClicked = function() {
+    if(slideEls.length === 0) {
+      $.fancybox($("#message1_form").html(), {"autoDimensions":false, "width":350, "height":200, "showCloseButton":false, "padding":5})
+    }else {
+      $.fancybox($("#save_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
+        if($("#save_answer").val() === "true") {
+          $("#save_answer").val("false");
+          _saveExcursion()
+        }else {
+          return false
+        }
+      }})
+    }
+  };
+  var _saveExcursion = function() {
     var excursion = {};
     excursion.id = "";
     excursion.title = excursionDetails.title;
@@ -10516,8 +10534,8 @@ VISH.Editor.Object = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
-  {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", 
+  "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", 
   "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
   {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
@@ -10997,6 +11015,8 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
 VISH.Editor.Renderer = function(V, $, undefined) {
   var slides = null;
   var init = function(excursion) {
+    $("#excursion_title").val(excursion.title);
+    $("#excursion_description").val(excursion.description);
     slides = excursion.slides;
     for(var i = 0;i < slides.length;i++) {
       _renderSlide(slides[i], i)
@@ -11623,7 +11643,6 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     var evt = document.createEvent("Event");
     evt.initEvent("OURDOMContentLoaded", false, true);
     document.dispatchEvent(evt);
-    lastSlide();
     V.Editor.Thumbnails.redrawThumbnails()
   };
   var addSlide = function(slide) {
@@ -11633,11 +11652,6 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     goToSlide(slideEls.length)
   };
   var goToSlide = function(no) {
-    if(VISH.Editing) {
-      $(".selectable").css("border-style", "none");
-      $(".theslider").hide();
-      V.Editor.Thumbnails.selectThumbnail(no)
-    }
     if(no > slideEls.length || no <= 0) {
       return
     }else {
@@ -11652,6 +11666,11 @@ VISH.SlidesUtilities = function(V, $, undefined) {
           }
         }
       }
+    }
+    if(VISH.Editing) {
+      $(".selectable").css("border-style", "none");
+      $(".theslider").hide();
+      V.Editor.Thumbnails.selectThumbnail(no)
     }
   };
   var backwardOneSlide = function() {

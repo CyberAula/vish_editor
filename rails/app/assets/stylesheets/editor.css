@@ -680,14 +680,32 @@ table.metadata td div.height_wrapper_description{
 	font-family:Helvetica;
 	font-size:40px;
 	color:#CCC;
-	margin-left: -5px;
 	padding-bottom: 15px;
+}
+
+.buttons_together{
+	margin-top: 5px;
+}
+
+.text_in_fancybox{
+	margin-left: 22px;
+	margin-top: 22px;
+}
+
+#button_accept_when_fail{
+	margin-top: -32px;
+	float: right;
+	margin-right: 25px;
 }
 
 .delimg{
 	margin-left: -20px;
 }
 .button1 {
+	margin-left: 200px;
+	margin-top: 25px;
+}
+.button220 {
 	margin-left: 220px;
 	margin-top: 25px;
 }
@@ -818,4 +836,22 @@ div.object_wrapper{
 
 textarea {
 	font-family:Helvetica;
+}
+
+#start_tutorial {
+	width: 306px;
+	height: 77px;
+	top: -90px;
+	position: relative;
+	left: 50px;
+	background: url(/assets/tutorial.png);
+}
+
+#start_tutorial:hover {
+	background: url(/assets/hover/tutorial_hover.png);
+}
+
+#excursion_details_fields{
+	top: -70px;
+	position: relative;
 }
