@@ -86,6 +86,9 @@ VISH.Editor = (function(V,$,undefined){
 		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+		//if click on begginers tutorial->launch it
+		$(document).on('click','#start_tutorial', _startTutorial);
+
 	};
 	
 	
@@ -236,6 +239,13 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+  /**
+   * function to start the walkthrough
+   */
+  var _startTutorial = function(){
+   	WalkMeAPI.startWalkthruById(5033, 0);
+  }
   
 	/**
 	 * function callen when the user clicks on the edit
@@ -403,10 +413,10 @@ VISH.Editor = (function(V,$,undefined){
 					$("#prompt_answer").val("false");
 					article_to_delete.remove();
 					//set curSlide to the preious one if this was the last one
-					if(curSlide == slideEls.length-1){
+					if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
 						curSlide -=1;
 					}					
-					V.SlidesUtilities.redrawSlides();					
+					V.SlidesUtilities.redrawSlides();			
 				}
 			}
 		}
@@ -463,6 +473,47 @@ VISH.Editor = (function(V,$,undefined){
    * finally calls SlideManager with the generated json
    */
   var _onSaveButtonClicked = function(){
+    if(slideEls.length === 0){
+    	$.fancybox(
+			$("#message1_form").html(),
+			{
+	        	'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 200,
+				'showCloseButton'	: false,
+				'padding' 			: 5		
+			}
+		);
+    }
+    else{    
+	    $.fancybox(
+			$("#save_form").html(),
+			{
+	        	'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+					//if user has answered "yes"
+					if($("#save_answer").val() ==="true"){
+						$("#save_answer").val("false");	
+						_saveExcursion();				
+					}
+					else{
+						return false;
+					}
+				}
+			}
+		);
+	}
+  };
+    
+    
+  /**
+   * function to save the excursion 
+   */
+  var _saveExcursion = function(){
     var excursion = {};
     //TODO decide this params
     excursion.id = '';

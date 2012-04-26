@@ -22,7 +22,6 @@
        }
     </style>
 
-  	<meta name="viewport" content="width=900,height=750">
   	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -34,8 +33,8 @@
 	  <script type="text/javascript" src="js/libs/jquery.ui.draggable.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.slider.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
-	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>	
-	  
+	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>
+	  <script language='javascript' type='text/javascript' src='http://cdn.walkme.com/users/2161/walkme_2161.js'></script>
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
@@ -94,19 +93,22 @@
     <a id="launch_excursion_details" href="#excursiondetails" style="display: none;"></a>
 
       <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
-      <div style='display:none'> 
-		<form id='excursiondetails'>
-        	<img src="/images/intro.png"/>
-      		<label for="excursion_title">
-      			<div class="textintro1 textintromargin1">Title</div>
-      		</label>
-      		<input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">	
-			<label for="excursion_description">
-				<div class="textintro1 textintromargin2">Description</div>
-			</label>
-			<textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
-			<input id='save_excursion_details' submit='disable' class='button buttonintro' value="Save">
-	   		<p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
+      <div style='display:none'>		
+		<form id='excursiondetails'>			
+        	<img src="/images/intro.png"/> 
+        	<div id="start_tutorial"></div>       	
+      		<div id="excursion_details_fields">
+	      		<label for="excursion_title">
+	      			<div class="textintro1 textintromargin1">Title</div>
+	      		</label>
+	      		<input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">	
+				<label for="excursion_description">
+					<div class="textintro1 textintromargin2">Description</div>
+				</label>
+				<textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+				<input id='save_excursion_details' submit='disable' class='button buttonintro' value="Save">
+		   		<p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
+	   		</div>
 	   	</form>
       </div>
       
@@ -169,17 +171,47 @@
 	  </div>
 	  
 	  
-	  <!-- PROMPT USER IF SHE IS SURE -->
+	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
 	  	<div id='prompt_form'>	  		
 	  		<img id="image_template_prompt" class="delete_img" src="/images/templatesthumbs/default.png"/>
-	  		<img id="delimg" class="delimg"src="/images/delete_border.png"><a class="deltext"> are you sure? </a>
-	  		<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button button button1">delete</a>
-	  		<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">no</a>
+	  		<img id="delimg" class="delimg" src="/images/delete_border.png">
+	  		<span class="deltext"> are you sure? </span>
+	  		<div class="buttons_together">
+	  			<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button button button220">delete</a>
+	  			<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">no</a>
+	  		</div>
 	  	</div>
 	  </div>
   
+  
+  	  <!-- PROMPT USER IF SHE IS SURE TO SAVE THE SLIDE -->
+	  <div style='display:none'>
+	  	<input type="hidden" id="save_answer" value="false"></input>
+	  	<div id='save_form'>
+	  		<img id="saveimg" class="delete_img" src="/images/save_document.png">
+	  		<span class="deltext"> are you sure? </span> 		
+	  		<div class="buttons_together">
+	  			<a href="#" onclick="$('#save_answer').val('true'); $.fancybox.close();" class="prompt_button button button1">save</a>
+	  			<a href="#" onclick="$('#save_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">cancel</a>
+	  		</div>
+	  	</div>
+	  </div>
+	  
+	  <!-- PROMPT WHEN THERE IS NO SLIDES AND TRY TO SAVE -->
+	  <div style='display:none'>
+	  	<div id='message1_form'>
+	  		<div class="text_in_fancybox">
+	  			<img id="message1img" src="/images/content_fail.png">
+	  			<span class="deltext"> Create at least one slide before saving. </span>
+	  		</div> 		
+	  		<div id="button_accept_when_fail">
+	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button button">accept</a>
+	  		</div>
+	  	</div>
+	  </div>
+	  
   
   	  <!-- IMAGE -->
 	  <div style='display:none'>

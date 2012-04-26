@@ -8,10 +8,10 @@ VISH.SlidesUtilities = (function(V,$,undefined){
   	    var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
 		document.dispatchEvent(evt);
-		
-		lastSlide();
+				
 		V.Editor.Thumbnails.redrawThumbnails();
   };
+    
 
   /**
    * function to add a new slide
@@ -33,14 +33,6 @@ VISH.SlidesUtilities = (function(V,$,undefined){
    * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
   var goToSlide = function(no){
-  	if(VISH.Editing){
-  		//first deselect zone if anyone was selected
-  		$(".selectable").css("border-style", "none");
-  		$(".theslider").hide();
-  		//finally add a background color to thumbnail of the selected slide
-    	V.Editor.Thumbnails.selectThumbnail(no);
-    	
-  	}
   	
     if((no > slideEls.length) || (no <= 0)){
   	  return;
@@ -55,6 +47,14 @@ VISH.SlidesUtilities = (function(V,$,undefined){
     	prevSlide();
   	  }
     }
+    
+    if(VISH.Editing){
+  		//first deselect zone if anyone was selected
+  		$(".selectable").css("border-style", "none");
+  		$(".theslider").hide();
+  		//finally add a background color to thumbnail of the selected slide
+    	V.Editor.Thumbnails.selectThumbnail(no);    	
+  	}
   };
   
   /**

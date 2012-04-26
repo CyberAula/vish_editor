@@ -6,6 +6,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 */
 	var init = function(excursion){
+		//first set title and description
+		$('#excursion_title').val(excursion.title);
+		$('#excursion_description').val(excursion.description);
+		
 		slides = excursion.slides;
 		for(var i=0;i<slides.length;i++){
 				_renderSlide(slides[i], i);			

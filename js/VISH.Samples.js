@@ -10,13 +10,7 @@ VISH.Samples = (function(V,undefined){
 			'id'       :'vish1',
 			'author'   : 'John Doe',
 			'template' :'t1',
-			'elements':[
-				{
-                    'id'     : '315',
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'Ejemplo de flora'
-				},
+			'elements':[				
 				{
                     'id'     : '316',
 					'type'   : 'text',
