@@ -463,6 +463,47 @@ VISH.Editor = (function(V,$,undefined){
    * finally calls SlideManager with the generated json
    */
   var _onSaveButtonClicked = function(){
+    if(slideEls.length === 0){
+    	$.fancybox(
+			$("#message1_form").html(),
+			{
+	        	'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 350,
+				'showCloseButton'	: false,
+				'padding' 			: 0				
+			}
+		);
+    }
+    else{    
+	    $.fancybox(
+			$("#save_form").html(),
+			{
+	        	'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+					//if user has answered "yes"
+					if($("#save_answer").val() ==="true"){
+						$("#save_answer").val("false");	
+						_saveExcursion();				
+					}
+					else{
+						return false;
+					}
+				}
+			}
+		);
+	}
+  };
+    
+    
+  /**
+   * function to save the excursion 
+   */
+  var _saveExcursion = function(){
     var excursion = {};
     //TODO decide this params
     excursion.id = '';

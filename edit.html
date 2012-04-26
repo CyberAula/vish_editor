@@ -167,17 +167,39 @@
 	  </div>
 	  
 	  
-	  <!-- PROMPT USER IF SHE IS SURE -->
+	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
 	  	<div id='prompt_form'>	  		
 	  		<img id="image_template_prompt" class="delete_img" src="/images/templatesthumbs/default.png"/>
-	  		<img id="delimg" class="delimg"src="/images/delete_border.png"><a class="deltext"> are you sure? </a>
+	  		<img id="delimg" class="delimg" src="/images/delete_border.png">
+	  		<span class="deltext"> are you sure? </span>
 	  		<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button button button1">delete</a>
 	  		<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">no</a>
 	  	</div>
 	  </div>
   
+  
+  	  <!-- PROMPT USER IF SHE IS SURE TO SAVE THE SLIDE -->
+	  <div style='display:none'>
+	  	<input type="hidden" id="save_answer" value="false"></input>
+	  	<div id='save_form'>
+	  		<img id="saveimg" class="delimg" src="/images/save.png">
+	  		<span class="deltext"> are you sure? </span> 		
+	  		<a href="#" onclick="$('#save_answer').val('true'); $.fancybox.close();" class="prompt_button button button1">save</a>
+	  		<a href="#" onclick="$('#save_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">cancel</a>
+	  	</div>
+	  </div>
+	  
+	  <!-- PROMPT WHEN THERE IS NO SLIDES AND TRY TO SAVE -->
+	  <div style='display:none'>
+	  	<div id='message1_form'>
+	  		<img id="message1img" class="delimg" src="/images/save.png">
+	  		<span class="deltext"> Create at least one slide before saving. </span> 		
+	  		<a href="#" onclick="$.fancybox.close();" class="prompt_button button button1">accept</a>
+	  	</div>
+	  </div>
+	  
   
   	  <!-- IMAGE -->
 	  <div style='display:none'>
