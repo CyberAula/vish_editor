@@ -51,6 +51,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * If we have a flashcard init it
 	 */
 	var _onslideenter = function(e){
+		//hide/show page-switcher buttons if neccessary
+		_decideIfPageSwitcher();
+		
 		var fcElem, slideId;
 		setTimeout(function(){
 			if($(e.target).hasClass('object')){
@@ -99,7 +102,26 @@ VISH.SlideManager = (function(V,$,undefined){
 		if($(e.target).hasClass('flashcard')){				
 			V.Mods.fc.player.clear();
 		}
-	}
+	};
+	
+	/**
+	 * function to hide/show the page-switchers buttons in the viewer
+	 * hide the left one if on first slide
+	 * hide the right one if on last slide
+	 * show both otherwise
+	 */
+	var _decideIfPageSwitcher = function(){
+		if(curSlide===0){
+			$("#page-switcher-start").hide();
+		}
+		else if(curSlide === slideEls.length-1){
+			$("#page-switcher-end").hide();
+		}
+		else{
+			$("#page-switcher-start").show();
+			$("#page-switcher-end").show();
+		}
+	};
 
 	return {
 		init          			: init,
