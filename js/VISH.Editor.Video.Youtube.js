@@ -79,6 +79,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
   
   var addSelectedVideo = function() {
 	if(selectedVideo != null) {
+	
+		
 		VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo));
 		$.fancybox.close();
 	}
@@ -157,6 +159,12 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
  var _generateWrapper = function (video) {
    var videoID = video.id;
    var video_embedded = "http://www.youtube.com/embed/"+videoID;
+   current_area=  VISH.Editor.getCurrentArea();
+   var width_height = VISH.SlidesUtilities.dimentionToDraw(
+   	current_area.width(), current_area.height(), 100, 100 );
+   console.log(width_height.width);
+   console.log(width_height.height);
+   
    var wrapper = "<iframe src='"+video_embedded+"?wmode=transparent' frameborder='0'></iframe>";
    return wrapper;
  }
