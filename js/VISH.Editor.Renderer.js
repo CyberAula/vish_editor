@@ -29,6 +29,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		V.Editor.Thumbnails.addThumbnail("t" + template, position+1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 	
 		V.SlidesUtilities.redrawSlides();
+		V.SlidesUtilities.lastSlide();  //important to get the browser to draw everything
 		
 		for(el in slide.elements){
 			var area = $("#article"+slide.id + " div[areaid='" + slide.elements[el].areaid +"']");
@@ -52,7 +53,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Object.drawObject(slide.elements[el].body, area);
 			}
 		}
-		
+	
+		//finally give class "editable" to the empty areas
+		$("div.selectable:empty").addClass("editable");		
 	};
 	
 

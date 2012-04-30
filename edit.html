@@ -34,6 +34,8 @@
 	  <script type="text/javascript" src="js/libs/jquery.slider.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>
+	  
+	  <script>var walkme_load_in_iframe = true;</script>
 	  <script language='javascript' type='text/javascript' src='http://cdn.walkme.com/users/2161/walkme_2161.js'></script>
 
   </head>
@@ -490,8 +492,8 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  VISH.Editor.init();
+		  VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
+		  //VISH.Editor.init();
 		}
 	</script>
 		

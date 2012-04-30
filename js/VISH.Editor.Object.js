@@ -111,10 +111,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
 	 * Resize object and its wrapper automatically
 	 */
-	var _adjustWrapperOfObject = function(objectID){
+	var _adjustWrapperOfObject = function(objectID, current_area){
 		var proportion = $("#"+objectID).height()/$("#"+objectID).width();
 		
-		var current_area = VISH.Editor.getCurrentArea();
 		var maxWidth = current_area.width();
 		var maxHeight = current_area.height();
 		
@@ -242,7 +241,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 	  $("#" + idToDrag).draggable({cursor: "move"});
 	  
-	  _adjustWrapperOfObject(idToResize);
+	  _adjustWrapperOfObject(idToResize, current_area);
 	}
 	
 	
