@@ -12,6 +12,149 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails();
   };
     
+/*
+ * function to draw elements in an area, try to fit in the drawable area 
+ * 
+ */
+var dimentionToDraw = function (w_zone, h_zone, w_element, h_element) {
+var element_type;
+var dimentions_for_drawing = {width:  56, height: 30};
+
+
+if (w_element == h_element) {
+//element is square
+	element_type = "square";
+}
+else if (w_element> h_element) {
+	
+	element_type = "rectangle";
+	
+} else {
+	element_type = "vertical_rectangle";
+	
+	
+}
+		    
+switch(element_type){ 
+//the element to draw is square
+	case "square":	
+	console.log("element square");
+	
+	if(w_zone == h_zone) { //swquare area 
+		console.log("square area");
+	dimentions_for_drawing.width = w_zone;
+	dimentions_for_drawing.height = h_zone;
+	}
+	
+	else if(w_zone > h_zone) {
+		console.log("rectangle area");
+		
+		dimentions_for_drawing.width = h_zone;
+		dimentions_for_drawing.height = h_zone;
+		
+		
+	}
+	
+	else if(w_zone < h_zone) {
+		console.log("vertical rectangle area");
+		
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = w_zone;
+		
+		
+	}
+	else {
+		dimentions_for_drawing.width = w_element;
+		dimentions_for_drawing.height = h_element;
+		
+	}
+	break; 
+//the element to draw is rectangle (width > height)
+	case "rectangle":	
+	console.log("element rectangle");
+	
+	if(w_zone == h_zone) { //square area 
+		console.log("square area");
+		var scale = w_zone/w_element; 
+	dimentions_for_drawing.width = w_zone;
+	dimentions_for_drawing.height = h_element*scale;
+	}
+	
+	else if(w_zone > h_zone) { //rectangle area
+		console.log("rectangle area");
+		var scale = w_zone/w_element; 
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = h_zone*scale;
+		
+		
+	}
+	
+	else if(w_zone < h_zone) {//vertical rectangle area
+		console.log("vertical rectangle area");
+		
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = w_zone*scale;
+		
+		
+	}
+	else {
+		dimentions_for_drawing.width = w_element;
+		dimentions_for_drawing.height = h_element;
+		
+	}
+	 break;
+
+//the element to draw is vertical rectangle (width > height)
+	case "vertical_rectangle":	
+	console.log("element vertical rectangle");
+	
+	if(w_zone == h_zone) { //square area 
+		console.log("square area");
+		var scale = w_zone/w_element; 
+	dimentions_for_drawing.width = w_zone;
+	dimentions_for_drawing.height = h_element*scale;
+	}
+	
+	else if(w_zone > h_zone) { //rectangle area
+		console.log("rectangle area");
+		var scale = w_zone/w_element; 
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = h_zone*scale;
+		
+		
+	}
+	
+	else if(w_zone < h_zone) {//vertical rectangle area
+		console.log("vertical rectangle area");
+		
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = w_zone*scale;
+		
+		
+	}
+	else {
+		dimentions_for_drawing.width = w_element;
+		dimentions_for_drawing.height = h_element;
+		
+	}
+	break;
+
+	default:
+			console.log("Unrecognized element area: " + element_type);
+            break;
+
+}
+
+
+
+
+	console.log("entra en dimentionToDraw");
+	
+	
+	
+	
+		return dimentions_for_drawing;
+};
 
   /**
    * function to add a new slide
@@ -78,7 +221,8 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 		addSlide		  : addSlide,
 		redrawSlides	  : redrawSlides,
 		forwardOneSlide   : forwardOneSlide,
-		backwardOneSlide  : backwardOneSlide
+		backwardOneSlide  : backwardOneSlide,
+		dimentionToDraw   : dimentionToDraw
 	};
 
 }) (VISH, jQuery);

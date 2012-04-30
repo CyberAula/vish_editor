@@ -169,9 +169,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  	}
 		
 		var objectInfo = getObjectInfo(object);
+		
 		switch (objectInfo.wrapper){
 	      case null:
-		    //Draw object from source		    
+		    //Draw object from source	
+		    	    
 		    switch (objectInfo.type){
 		      case "swf":
 		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
@@ -191,7 +193,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "IFRAME": 
-			drawObjectWithWrapper(object, current_area);
+		  
+		  drawObjectWithWrapper(object, current_area);
+			
 		    break;  
 		  default:
 			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
@@ -220,7 +224,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  $(wrapperDiv).append(wrapperTag)
 	  
 	  $(current_area).html("");
-	  $(current_area).append(wrapperDiv)
+	  $(current_area).append(wrapperDiv);
 	  	    
 	  VISH.Editor.addDeleteButton($(current_area));
 	    	
