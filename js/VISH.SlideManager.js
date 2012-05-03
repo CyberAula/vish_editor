@@ -116,6 +116,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		else if(curSlide === slideEls.length-1){
 			$("#page-switcher-end").hide();
+			if(curSlide === 1){
+				$("#page-switcher-start").show();  //case with 2 slides, show the back button
+			}
 		}
 		else{
 			$("#page-switcher-start").show();
