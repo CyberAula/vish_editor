@@ -111,10 +111,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
 	 * Resize object and its wrapper automatically
 	 */
-	var _adjustWrapperOfObject = function(objectID){
+	var _adjustWrapperOfObject = function(objectID, current_area){
 		var proportion = $("#"+objectID).height()/$("#"+objectID).width();
 		
-		var current_area = VISH.Editor.getCurrentArea();
 		var maxWidth = current_area.width();
 		var maxHeight = current_area.height();
 		
@@ -170,9 +169,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  	}
 		
 		var objectInfo = getObjectInfo(object);
+		
 		switch (objectInfo.wrapper){
 	      case null:
-		    //Draw object from source		    
+		    //Draw object from source	
+		    	    
 		    switch (objectInfo.type){
 		      case "swf":
 		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
@@ -192,7 +193,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "IFRAME": 
-			drawObjectWithWrapper(object, current_area);
+		  
+		  drawObjectWithWrapper(object, current_area);
+			
 		    break;  
 		  default:
 			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
@@ -221,7 +224,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  $(wrapperDiv).append(wrapperTag)
 	  
 	  $(current_area).html("");
-	  $(current_area).append(wrapperDiv)
+	  $(current_area).append(wrapperDiv);
 	  	    
 	  VISH.Editor.addDeleteButton($(current_area));
 	    	
@@ -242,7 +245,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 	  $("#" + idToDrag).draggable({cursor: "move"});
 	  
-	  _adjustWrapperOfObject(idToResize);
+	  _adjustWrapperOfObject(idToResize, current_area);
 	}
 	
 	

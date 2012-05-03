@@ -606,7 +606,8 @@ function handleDomLoaded() {
   setupFrames();
 
   addFontStyle();
-  addGeneralStyle();
+  //removed add style, we add it in the html
+  //addGeneralStyle();
   addEventListeners();
 
   updateSlides();
