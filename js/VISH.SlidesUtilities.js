@@ -16,11 +16,30 @@ VISH.SlidesUtilities = (function(V,$,undefined){
  * function to draw elements in an area, try to fit in the drawable area 
  * 
  */
-var dimentionToDraw = function (w_zone, h_zone, w_element, h_element) {
+var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 var element_type;
-var dimentions_for_drawing = {width:  56, height: 30};
+var dimentions_for_drawing = {width:  350, height: 195};
 
+var aspect_ratio_zone = w_zone/h_zone;
+var aspect_ratio_content = w_content/h_content;
 
+if (aspect_ratio_zone>aspect_ratio_content) {
+	
+		dimentions_for_drawing.width = aspect_ratio_content*h_zone;
+		dimentions_for_drawing.height = h_content;
+	return dimentions_for_drawing;
+	
+}
+else {
+	
+		dimentions_for_drawing.width = w_zone;
+		dimentions_for_drawing.height = w_zone/aspect_ratio_content;
+		
+	return  dimentions_for_drawing;
+	
+	
+}
+/*
 if (w_element == h_element) {
 //element is square
 	element_type = "square";
@@ -151,9 +170,9 @@ switch(element_type){
 	console.log("entra en dimentionToDraw");
 	
 	
+	*/
 	
-	
-		return dimentions_for_drawing;
+		
 };
 
   /**
