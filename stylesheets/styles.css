@@ -29,8 +29,14 @@ body {
 }
 
 .slides {
-	/*background-color:#f9f9f9;*/
-	background-image:url(../images/background.jpg);
+	background: #a5c9e5;
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, -moz-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 0%, rgba(178,178,178,1) 100%);
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(178,178,178,1)));
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, -webkit-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 0%,rgba(178,178,178,1) 100%);;
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, -o-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 0%,rgba(178,178,178,1) 100%);
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, -ms-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 0%,rgba(178,178,178,1) 100%);
+	background: url(../images/background1.png) no-repeat 300px, url(../images/background_text.png) no-repeat 300px, radial-gradient(center, ellipse cover, rgba(249,249,249,1) 0%,rgba(178,178,178,1) 100%);
+	background-position: center; 
   width: 100%;
   height: 100%;
   left: 0;
@@ -43,18 +49,17 @@ body {
 }
 
 .slides > article {
-  display: block;
-
-  position: absolute;
+  left: 50%;
+  margin-left: -400px;
+  margin-top: -330px;
   overflow: hidden;
-
+  padding: 40px 60px;
+  position: absolute;
+  top: 50%;
+  display: block;
+  
   width: 800px;
   height: 600px;
-
-  left: 50px;
-  top: 40px;
-  
-  padding: 40px 60px;
 
   box-sizing: border-box;
   -o-box-sizing: border-box;
@@ -65,8 +70,7 @@ body {
   -o-border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-
-  background-color: white;
+  background: whiter
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
   border: 1px solid rgba(0, 0, 0, .3);
