@@ -492,3 +492,12 @@ article.smaller q::after {
     -moz-border-radius: 0px 20px 20px 0px;
     -webkit-border-radius: 0px 20px 20px 0px;
 }
+
+#page-fullscreen{
+	width: 40px;
+	height: 40px;
+	bottom: 0px;
+	left: 50%;
+	position: absolute;
+}
+
