@@ -9936,7 +9936,6 @@ function handleDomLoaded() {
   slideEls = document.querySelectorAll("section.slides > article");
   setupFrames();
   addFontStyle();
-  addGeneralStyle();
   addEventListeners();
   updateSlides();
   setupInteraction();
@@ -10434,9 +10433,8 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(parent).width(width);
     $(parent).height(width * proportion)
   };
-  var _adjustWrapperOfObject = function(objectID) {
+  var _adjustWrapperOfObject = function(objectID, current_area) {
     var proportion = $("#" + objectID).height() / $("#" + objectID).width();
-    var current_area = VISH.Editor.getCurrentArea();
     var maxWidth = current_area.width();
     var maxHeight = current_area.height();
     var width = $("#" + objectID).width();
@@ -10520,16 +10518,23 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
     $(wrapperTag).attr("title", "Click to drag");
-    $(wrapperDiv).append(wrapperTag);
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
-    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      resizeObject(idToResize, 325 * value)
-    }});
-    $("#" + idToDrag).draggable({cursor:"move"});
-    _adjustWrapperOfObject(idToResize)
+    if(getObjectInfo(wrapper).type = "youtube") {
+      var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+      $("#" + idToDrag).attr("style", "width:" + width_height.width + "px; height:" + width_height.height + "px;");
+      $("#" + idToDrag).draggable({cursor:"move"});
+      $(wrapperDiv).append(wrapperTag)
+    }else {
+      $(wrapperDiv).append(wrapperTag);
+      $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+      $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+        resizeObject(idToResize, 325 * value)
+      }});
+      $("#" + idToDrag).draggable({cursor:"move"});
+      _adjustWrapperOfObject(idToResize, current_area)
+    }
   };
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
@@ -10615,7 +10620,9 @@ VISH.Dummies = function(VISH, undefined) {
   var nextArticleId = 1;
   var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>"];
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left selectable'></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11028,6 +11035,7 @@ VISH.Editor.Renderer = function(V, $, undefined) {
     V.SlidesUtilities.addSlide(scaffold);
     V.Editor.Thumbnails.addThumbnail("t" + template, position + 1);
     V.SlidesUtilities.redrawSlides();
+    V.SlidesUtilities.lastSlide();
     for(el in slide.elements) {
       var area = $("#article" + slide.id + " div[areaid='" + slide.elements[el].areaid + "']");
       if(slide.elements[el].type === "text") {
@@ -11053,6 +11061,7 @@ VISH.Editor.Renderer = function(V, $, undefined) {
         }
       }
     }
+    $("div.selectable:empty").addClass("editable")
   };
   return{init:init}
 }(VISH, jQuery);
@@ -11405,7 +11414,9 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var _generateWrapper = function(video) {
     var videoID = video.id;
     var video_embedded = "http://www.youtube.com/embed/" + videoID;
-    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
+    current_area = VISH.Editor.getCurrentArea();
+    var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0' style='width:" + width_height.width + "px; height:" + width_height.height + "px;'></iframe>";
     return wrapper
   };
   return{init:init, onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement, requestYoutubeData:requestYoutubeData, addSelectedVideo:addSelectedVideo}
@@ -11582,7 +11593,43 @@ VISH.SlideManager = function(V, $, undefined) {
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
     $(document).on("click", "#page-switcher-start", prevSlide);
-    $(document).on("click", "#page-switcher-end", nextSlide)
+    $(document).on("click", "#page-switcher-end", nextSlide);
+    $(document).on("click", "#page-fullscreen", toggleFullScreen)
+  };
+  var toggleFullScreen = function() {
+    var isInIFrame = window.location != window.parent.location ? true : false;
+    var myDoc, myElem = null;
+    if(isInIFrame) {
+      myDoc = parent.document
+    }else {
+      myDoc = document
+    }
+    myElem = myDoc.getElementById("excursion_iframe");
+    if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
+      if(myDoc.documentElement.requestFullScreen) {
+        myDoc.getElementById("excursion_iframe").requestFullScreen()
+      }else {
+        if(myDoc.documentElement.mozRequestFullScreen) {
+          myDoc.getElementById("excursion_iframe").mozRequestFullScreen()
+        }else {
+          if(myDoc.documentElement.webkitRequestFullScreen) {
+            myDoc.getElementById("excursion_iframe").webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+          }
+        }
+      }
+    }else {
+      if(myDoc.cancelFullScreen) {
+        myDoc.cancelFullScreen()
+      }else {
+        if(myDoc.mozCancelFullScreen) {
+          myDoc.mozCancelFullScreen()
+        }else {
+          if(myDoc.webkitCancelFullScreen) {
+            myDoc.webkitCancelFullScreen()
+          }
+        }
+      }
+    }
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);
@@ -11598,6 +11645,7 @@ VISH.SlideManager = function(V, $, undefined) {
     slideStatus[slideid] = newStatus
   };
   var _onslideenter = function(e) {
+    _decideIfPageSwitcher();
     var fcElem, slideId;
     setTimeout(function() {
       if($(e.target).hasClass("object")) {
@@ -11636,6 +11684,21 @@ VISH.SlideManager = function(V, $, undefined) {
       V.Mods.fc.player.clear()
     }
   };
+  var _decideIfPageSwitcher = function() {
+    if(curSlide === 0) {
+      $("#page-switcher-start").hide()
+    }else {
+      if(curSlide === slideEls.length - 1) {
+        $("#page-switcher-end").hide();
+        if(curSlide === 1) {
+          $("#page-switcher-start").show()
+        }
+      }else {
+        $("#page-switcher-start").show();
+        $("#page-switcher-end").show()
+      }
+    }
+  };
   return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents}
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
@@ -11644,6 +11707,21 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     evt.initEvent("OURDOMContentLoaded", false, true);
     document.dispatchEvent(evt);
     V.Editor.Thumbnails.redrawThumbnails()
+  };
+  var dimentionToDraw = function(w_zone, h_zone, w_content, h_content) {
+    var element_type;
+    var dimentions_for_drawing = {width:350, height:195};
+    var aspect_ratio_zone = w_zone / h_zone;
+    var aspect_ratio_content = w_content / h_content;
+    if(aspect_ratio_zone > aspect_ratio_content) {
+      dimentions_for_drawing.width = aspect_ratio_content * h_zone;
+      dimentions_for_drawing.height = h_content;
+      return dimentions_for_drawing
+    }else {
+      dimentions_for_drawing.width = w_zone;
+      dimentions_for_drawing.height = w_zone / aspect_ratio_content;
+      return dimentions_for_drawing
+    }
   };
   var addSlide = function(slide) {
     $(".slides").append(slide)
@@ -11679,7 +11757,7 @@ VISH.SlidesUtilities = function(V, $, undefined) {
   var forwardOneSlide = function() {
     goToSlide(curSlide + 2)
   };
-  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide}
+  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
