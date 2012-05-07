@@ -87,11 +87,8 @@ VISH.Editor = (function(V,$,undefined){
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 		//if click on begginers tutorial->launch it
-		//$(document).on('click','#start_tutorial', V.Editor.Tour.startTourWithId('initial_screen_help'));
-		$(document).on('click','#start_tutorial', function(event){
-			V.Editor.Tour.startTourWithId('initial_screen_help');
-		});
-		
+		$(document).on('click','#start_tutorial', _startTutorial);
+
 	};
 	
 	
@@ -100,7 +97,7 @@ VISH.Editor = (function(V,$,undefined){
   /// Helpers 
   ////////////////
   
-    
+  
   /**
    * Return a unic id.
    */
