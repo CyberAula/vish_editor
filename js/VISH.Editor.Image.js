@@ -6,7 +6,38 @@ VISH.Editor.Image = (function(V,$,undefined){
 	};
 	
 	var onLoadTab = function(){
-		
+		var bar = $('.upload_progress_bar');
+    var percent = $('.upload_progress_bar_percent');
+    var status = $('#status');
+	
+	  $("input[name='document[file]']").change(function () {
+      $("input[name='document[title]']").val($("input:file").val());
+      var description = "Uploaded by " + initOptions["ownerName"] + " via Vish Editor"
+      $("input[name='document[description]']").val(description);
+			$("input[name='document[owner_id]']").val(initOptions["ownerId"]);
+			$("input[name='authenticity_token']").val(initOptions["token"]);
+			$(".documentsForm").attr("action",initOptions["documentsPath"])
+    });
+	
+	  $('form').ajaxForm({
+      beforeSend: function() {
+          status.empty();
+          var percentVal = '0%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal)
+          percent.html(percentVal);
+      },
+      complete: function(xhr) {
+          status.html(xhr.responseText);
+          var percentVal = '100%';
+          bar.width(percentVal)
+          percent.html(percentVal);
+      }
+    });
 	};
 	
   /**

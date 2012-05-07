@@ -881,3 +881,32 @@ textarea {
 	top: -70px;
 	position: relative;
 }
+
+
+/* Upload stylessheet */
+
+form { 
+  display: block; 
+	margin: 20px auto; 
+	background: #eee; 
+	border-radius: 10px; 
+	padding: 15px 
+}
+.upload_progress_bar_wrapper { 
+  position:relative; width:400px; 
+	border: 1px solid #ddd; 
+	padding: 1px; 
+	border-radius: 3px; 
+}
+.upload_progress_bar { 
+  background-color: #B4F5B4; 
+	width:0%; 
+	height:20px; 
+	border-radius: 3px; 
+}
+.upload_progress_bar_percent { 
+  position:absolute; 
+	display:inline-block; 
+	top:3px; 
+	left:48%; 
+}
