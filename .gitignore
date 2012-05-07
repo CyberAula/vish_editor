@@ -2,3 +2,4 @@
 .komodoproject
 .project
 rails/compiler/
+.settings

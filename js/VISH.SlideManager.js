@@ -11,8 +11,47 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		$(document).on('click', '#page-switcher-start', prevSlide);
 		$(document).on('click', '#page-switcher-end', nextSlide);
+		$(document).on('click', '#page-fullscreen', toggleFullScreen);
 	};
 
+		
+	/**
+	 * function to enter and exit fullscreen
+	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
+	 */
+	var toggleFullScreen = function () {
+		  
+		var isInIFrame = (window.location != window.parent.location) ? true : false;
+		var myDoc, myElem = null;
+		
+		if(isInIFrame){
+			myDoc = parent.document;
+		} else {
+			myDoc = document;
+		}
+		myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
+		
+		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
+		    if (myDoc.documentElement.requestFullScreen) {
+		    	myDoc.getElementById('excursion_iframe').requestFullScreen();
+		    } else if (myDoc.documentElement.mozRequestFullScreen) {
+		    	myDoc.getElementById('excursion_iframe').mozRequestFullScreen();
+		    } else if (myDoc.documentElement.webkitRequestFullScreen) {
+		    	myDoc.getElementById('excursion_iframe').webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
+		    }
+		  } else {
+		    if (myDoc.cancelFullScreen) {
+		    	myDoc.cancelFullScreen();
+		    } else if (myDoc.mozCancelFullScreen) {
+		    	myDoc.mozCancelFullScreen();
+		    } else if (myDoc.webkitCancelFullScreen) {
+		    	myDoc.webkitCancelFullScreen();
+		    }
+		  }
+		
+	};
+	
+	
 	/**
 	 * function to add enter and leave events
 	 * it is called from vish.excursion.js because we need to add the events before loading slides.js

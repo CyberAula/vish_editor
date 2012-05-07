@@ -170,6 +170,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		var objectInfo = getObjectInfo(object);
 		
+		
 		switch (objectInfo.wrapper){
 	      case null:
 		    //Draw object from source	
@@ -190,8 +191,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 			drawObjectWithWrapper(object, current_area);
 		    break;
 		  case "OBJECT":
-			drawObjectWithWrapper(object, current_area);
-		    break;
+		 
+			drawObjectWithWrapper(object, current_area); 	 
+			     break;
+		 
 		  case "IFRAME": 
 		  
 		  drawObjectWithWrapper(object, current_area);
@@ -205,29 +208,52 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	
 	var drawObjectWithWrapper = function(wrapper, current_area){
-	  var template = VISH.Editor.getTemplate();
+	 var template = VISH.Editor.getTemplate();
 
 	  var nextWrapperId = VISH.Editor.getId();
-	  var idToDrag = "draggable" + nextWrapperId;
+	 var idToDrag = "draggable" + nextWrapperId;
+	 
 	  var idToResize = "resizable" + nextWrapperId;
 	  current_area.attr('type','object');
-	   
-	  var wrapperDiv = document.createElement('div');
+	 var wrapperDiv = document.createElement('div');
 	  wrapperDiv.setAttribute('id', idToDrag);
-	  $(wrapperDiv).addClass('object_wrapper')
-	  $(wrapperDiv).addClass(template + "_object")
 	  
-	  var wrapperTag = $(wrapper)
+	  $(wrapperDiv).addClass('object_wrapper');
+	  $(wrapperDiv).addClass(template + "_object");
+	  
+	  
+	  var wrapperTag = $(wrapper);
 	  $(wrapperTag).attr('id', idToResize );
 	  $(wrapperTag).attr('class', template + "_object");
 	  $(wrapperTag).attr('title', "Click to drag");
-	  $(wrapperDiv).append(wrapperTag)
+	  
 	  
 	  $(current_area).html("");
 	  $(current_area).append(wrapperDiv);
-	  	    
+	   	  	    
 	  VISH.Editor.addDeleteButton($(current_area));
-	    	
+	 
+	 
+	 //separete for diferent objects 
+	 
+	 //for youtube video
+	 if(getObjectInfo(wrapper).type = "youtube") {
+	 	
+	 
+	  var width_height = VISH.SlidesUtilities.dimentionToDraw(
+   	  current_area.width(), current_area.height(), 325, 243 );
+   
+	 $("#" + idToDrag).attr('style', "width:"+width_height.width+ "px; height:"+ width_height.height+ "px;");
+	 
+	// $(wrapperTag).attr('style', "width:"+width_height.width+ "; height:"+ width_height.height+ ";");
+	 $("#" + idToDrag).draggable({cursor: "move"});
+	  $(wrapperDiv).append(wrapperTag);
+	 //youtube don't need resize
+	 	
+	 }
+	 //diferent from youtube
+	 else { 
+	 $(wrapperDiv).append(wrapperTag)
 	  //RESIZE
 	  $("#menubar").before("<div id='sliderId"+nextWrapperId+"' class='theslider'><input id='imageSlider"+nextWrapperId+"' type='slider' name='size' value='1' style='display: none; '></div>");
 	            
@@ -246,7 +272,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  $("#" + idToDrag).draggable({cursor: "move"});
 	  
 	  _adjustWrapperOfObject(idToResize, current_area);
-	}
+	  
+	 }
+	};
 	
 	
 	return {

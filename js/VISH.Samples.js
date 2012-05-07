@@ -42,6 +42,28 @@ VISH.Samples = (function(V,undefined){
 					'body'   : 'http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg'		
 				}
 			]
+		},
+		{
+			'id'       :'vish10',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '331',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Sublime HTML5 video!'
+				},       
+				{
+                    'id'     : '332',
+					'type'   : 'video',
+					'areaid' : 'left',
+					'controls' : true,
+					'autoplay' : false,
+					'loop' : false,
+					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
+				}
+			]
 		}
 		]};
 		
