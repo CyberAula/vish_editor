@@ -11885,6 +11885,12 @@ VISH.Editor.Renderer = function(V, $, undefined) {
   var init = function(excursion) {
     $("#excursion_title").val(excursion.title);
     $("#excursion_description").val(excursion.description);
+    $("#excursion_avatar").val(excursion.avatar);
+    $("thumbnails_in_excursion_details .carrousel_element_single_row img").each(function(index, elem) {
+      if(elem.attr("src") === excursion.avatar) {
+      }
+      elem.addClass("carrousel_element_selected")
+    });
     slides = excursion.slides;
     for(var i = 0;i < slides.length;i++) {
       _renderSlide(slides[i], i)
