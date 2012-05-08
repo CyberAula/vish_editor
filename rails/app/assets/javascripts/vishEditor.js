@@ -10528,22 +10528,30 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
     $(wrapperTag).attr("title", "Click to drag");
-    $(wrapperDiv).append(wrapperTag);
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
-    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      resizeObject(idToResize, 325 * value)
-    }});
-    $("#" + idToDrag).draggable({cursor:"move"});
-    _adjustWrapperOfObject(idToResize, current_area)
+    if(getObjectInfo(wrapper).type = "youtube") {
+      var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+      $("#" + idToDrag).attr("style", "width:" + width_height.width + "px; height:" + width_height.height + "px;");
+      $("#" + idToDrag).draggable({cursor:"move"});
+      $(wrapperDiv).append(wrapperTag)
+    }else {
+      $(wrapperDiv).append(wrapperTag);
+      $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+      $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+        resizeObject(idToResize, 325 * value)
+      }});
+      $("#" + idToDrag).draggable({cursor:"move"});
+      _adjustWrapperOfObject(idToResize, current_area)
+    }
   };
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", 
-  "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}]};
+  "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", 
+  "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
   {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -10622,7 +10630,9 @@ VISH.Dummies = function(VISH, undefined) {
   var nextArticleId = 1;
   var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>"];
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left selectable'></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11415,10 +11425,8 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     var videoID = video.id;
     var video_embedded = "http://www.youtube.com/embed/" + videoID;
     current_area = VISH.Editor.getCurrentArea();
-    var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 100, 100);
-    console.log(width_height.width);
-    console.log(width_height.height);
-    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0'></iframe>";
+    var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0' style='width:" + width_height.width + "px; height:" + width_height.height + "px;'></iframe>";
     return wrapper
   };
   return{init:init, onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement, requestYoutubeData:requestYoutubeData, addSelectedVideo:addSelectedVideo}
@@ -11595,7 +11603,43 @@ VISH.SlideManager = function(V, $, undefined) {
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
     $(document).on("click", "#page-switcher-start", prevSlide);
-    $(document).on("click", "#page-switcher-end", nextSlide)
+    $(document).on("click", "#page-switcher-end", nextSlide);
+    $(document).on("click", "#page-fullscreen", toggleFullScreen)
+  };
+  var toggleFullScreen = function() {
+    var isInIFrame = window.location != window.parent.location ? true : false;
+    var myDoc, myElem = null;
+    if(isInIFrame) {
+      myDoc = parent.document
+    }else {
+      myDoc = document
+    }
+    myElem = myDoc.getElementById("excursion_iframe");
+    if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
+      if(myDoc.documentElement.requestFullScreen) {
+        myDoc.getElementById("excursion_iframe").requestFullScreen()
+      }else {
+        if(myDoc.documentElement.mozRequestFullScreen) {
+          myDoc.getElementById("excursion_iframe").mozRequestFullScreen()
+        }else {
+          if(myDoc.documentElement.webkitRequestFullScreen) {
+            myDoc.getElementById("excursion_iframe").webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+          }
+        }
+      }
+    }else {
+      if(myDoc.cancelFullScreen) {
+        myDoc.cancelFullScreen()
+      }else {
+        if(myDoc.mozCancelFullScreen) {
+          myDoc.mozCancelFullScreen()
+        }else {
+          if(myDoc.webkitCancelFullScreen) {
+            myDoc.webkitCancelFullScreen()
+          }
+        }
+      }
+    }
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);
@@ -11674,98 +11718,20 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     document.dispatchEvent(evt);
     V.Editor.Thumbnails.redrawThumbnails()
   };
-  var dimentionToDraw = function(w_zone, h_zone, w_element, h_element) {
+  var dimentionToDraw = function(w_zone, h_zone, w_content, h_content) {
     var element_type;
-    var dimentions_for_drawing = {width:56, height:30};
-    if(w_element == h_element) {
-      element_type = "square"
+    var dimentions_for_drawing = {width:350, height:195};
+    var aspect_ratio_zone = w_zone / h_zone;
+    var aspect_ratio_content = w_content / h_content;
+    if(aspect_ratio_zone > aspect_ratio_content) {
+      dimentions_for_drawing.width = aspect_ratio_content * h_zone;
+      dimentions_for_drawing.height = h_content;
+      return dimentions_for_drawing
     }else {
-      if(w_element > h_element) {
-        element_type = "rectangle"
-      }else {
-        element_type = "vertical_rectangle"
-      }
+      dimentions_for_drawing.width = w_zone;
+      dimentions_for_drawing.height = w_zone / aspect_ratio_content;
+      return dimentions_for_drawing
     }
-    switch(element_type) {
-      case "square":
-        console.log("element square");
-        if(w_zone == h_zone) {
-          console.log("square area");
-          dimentions_for_drawing.width = w_zone;
-          dimentions_for_drawing.height = h_zone
-        }else {
-          if(w_zone > h_zone) {
-            console.log("rectangle area");
-            dimentions_for_drawing.width = h_zone;
-            dimentions_for_drawing.height = h_zone
-          }else {
-            if(w_zone < h_zone) {
-              console.log("vertical rectangle area");
-              dimentions_for_drawing.width = w_zone;
-              dimentions_for_drawing.height = w_zone
-            }else {
-              dimentions_for_drawing.width = w_element;
-              dimentions_for_drawing.height = h_element
-            }
-          }
-        }
-        break;
-      case "rectangle":
-        console.log("element rectangle");
-        if(w_zone == h_zone) {
-          console.log("square area");
-          var scale = w_zone / w_element;
-          dimentions_for_drawing.width = w_zone;
-          dimentions_for_drawing.height = h_element * scale
-        }else {
-          if(w_zone > h_zone) {
-            console.log("rectangle area");
-            var scale = w_zone / w_element;
-            dimentions_for_drawing.width = w_zone;
-            dimentions_for_drawing.height = h_zone * scale
-          }else {
-            if(w_zone < h_zone) {
-              console.log("vertical rectangle area");
-              dimentions_for_drawing.width = w_zone;
-              dimentions_for_drawing.height = w_zone * scale
-            }else {
-              dimentions_for_drawing.width = w_element;
-              dimentions_for_drawing.height = h_element
-            }
-          }
-        }
-        break;
-      case "vertical_rectangle":
-        console.log("element vertical rectangle");
-        if(w_zone == h_zone) {
-          console.log("square area");
-          var scale = w_zone / w_element;
-          dimentions_for_drawing.width = w_zone;
-          dimentions_for_drawing.height = h_element * scale
-        }else {
-          if(w_zone > h_zone) {
-            console.log("rectangle area");
-            var scale = w_zone / w_element;
-            dimentions_for_drawing.width = w_zone;
-            dimentions_for_drawing.height = h_zone * scale
-          }else {
-            if(w_zone < h_zone) {
-              console.log("vertical rectangle area");
-              dimentions_for_drawing.width = w_zone;
-              dimentions_for_drawing.height = w_zone * scale
-            }else {
-              dimentions_for_drawing.width = w_element;
-              dimentions_for_drawing.height = h_element
-            }
-          }
-        }
-        break;
-      default:
-        console.log("Unrecognized element area: " + element_type);
-        break
-    }
-    console.log("entra en dimentionToDraw");
-    return dimentions_for_drawing
   };
   var addSlide = function(slide) {
     $(".slides").append(slide)
