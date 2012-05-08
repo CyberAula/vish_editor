@@ -62,7 +62,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
-		V.Editor.AvatarPicker.init();
+		//V.Editor.AvatarPicker.init();
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
