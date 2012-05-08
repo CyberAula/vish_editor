@@ -10877,11 +10877,13 @@ VISH.Editor = function(V, $, undefined) {
     }
     excursionDetails.title = $("#excursion_title").val();
     excursionDetails.description = $("#excursion_description").val();
+    excursionDetails.avatar = $("#excursion_avatar").val();
     $("#excursion_details_error").hide();
     $.fancybox.close()
   };
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
+    console.log("slide es" + slide);
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
@@ -10950,10 +10952,21 @@ VISH.Editor = function(V, $, undefined) {
     $(this).css("cursor", "auto");
     $(this).find(".menuselect_hide").show();
     $(this).find(".delete_content").show();
-    if($(this).attr("type") === "image") {
-      var img_id = $(this).find("img").attr("id");
-      img_id = img_id.substring(9);
-      $("#sliderId" + img_id).show()
+    if($(this).attr("type") === "image" || $(this).attr("type") === "object" || $(this).attr("type") === "video") {
+      var the_id;
+      switch($(this).attr("type")) {
+        case "image":
+          the_id = $(this).find("img").attr("id");
+          break;
+        case "object":
+          the_id = $(this).find(".object_wrapper").attr("id");
+          break;
+        case "video":
+          the_id = $(this).find("video").attr("id");
+          break
+      }
+      the_id = the_id.substring(9);
+      $("#sliderId" + the_id).show()
     }
     $(this).css("border-color", "rgb(255, 2, 94)");
     $(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
@@ -11005,6 +11018,7 @@ VISH.Editor = function(V, $, undefined) {
           element.id = $(div).attr("id");
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
+          console.log("element.type " + element.type);
           if(element.type == "text") {
             element.body = $(div).find(".wysiwygInstance").html()
           }else {
@@ -11048,6 +11062,10 @@ VISH.Editor = function(V, $, undefined) {
                       var object = $(div).find(".object_wrapper").children()[0];
                       element.body = $(object)[0].outerHTML;
                       element.style = $(object).parent().attr("style")
+                    }else {
+                      if(element.type == "openquestion") {
+                        console.log("entra en openquestion")
+                      }
                     }
                   }
                 }
@@ -11175,20 +11193,27 @@ VISH.Editor.Image = function(V, $, undefined) {
     }catch(e) {
     }
   };
-  var drawImage = function(image_url, area) {
+  var drawImage = function(image_url, area, style) {
     var current_area;
+    var image_width = 325;
+    var image_style = "";
     if(area) {
       current_area = area
     }else {
       current_area = VISH.Editor.getCurrentArea()
     }
+    if(style) {
+      image_style = style;
+      image_width = V.SlidesUtilities.getWidthFromStyle(style)
+    }
     var template = VISH.Editor.getTemplate();
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr("type", "image");
-    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' />");
+    current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' style='" + style + "'/>");
     V.Editor.addDeleteButton(current_area);
-    $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='1' style='display: none; '></div>");
+    var thevalue = image_width / 325;
+    $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='" + thevalue + "' style='display: none; '></div>");
     $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
       $("#" + idToDragAndResize).width(325 * value)
     }});
@@ -11306,19 +11331,23 @@ VISH.Editor.Object = function(V, $, undefined) {
       return wrapperPreview
     }
   };
-  var drawObject = function(object, area) {
+  var drawObject = function(object, area, style) {
     var current_area;
+    var object_style = "";
     if(area) {
       current_area = area
     }else {
       current_area = VISH.Editor.getCurrentArea()
+    }
+    if(style) {
+      object_style = style
     }
     var objectInfo = getObjectInfo(object);
     switch(objectInfo.wrapper) {
       case null:
         switch(objectInfo.type) {
           case "swf":
-            V.Editor.Object.Flash.drawFlashObjectWithSource(object);
+            V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
             break;
           case "youtube":
             break;
@@ -11328,27 +11357,30 @@ VISH.Editor.Object = function(V, $, undefined) {
         }
         break;
       case "EMBED":
-        drawObjectWithWrapper(object, current_area);
+        drawObjectWithWrapper(object, current_area, object_style);
         break;
       case "OBJECT":
-        drawObjectWithWrapper(object, current_area);
+        drawObjectWithWrapper(object, current_area, object_style);
         break;
       case "IFRAME":
-        drawObjectWithWrapper(object, current_area);
+        drawObjectWithWrapper(object, current_area, object_style);
         break;
       default:
         console.log("Unrecognized object wrapper: " + objectInfo.wrapper);
         break
     }
   };
-  var drawObjectWithWrapper = function(wrapper, current_area) {
-    var template = VISH.Editor.getTemplate();
-    var nextWrapperId = VISH.Editor.getId();
+  var drawObjectWithWrapper = function(wrapper, current_area, style) {
+    var template = V.Editor.getTemplate(current_area);
+    var nextWrapperId = V.Editor.getId();
     var idToDrag = "draggable" + nextWrapperId;
     var idToResize = "resizable" + nextWrapperId;
     current_area.attr("type", "object");
     var wrapperDiv = document.createElement("div");
     wrapperDiv.setAttribute("id", idToDrag);
+    if(style) {
+      wrapperDiv.setAttribute("style", style)
+    }
     $(wrapperDiv).addClass("object_wrapper");
     $(wrapperDiv).addClass(template + "_object");
     var wrapperTag = $(wrapper);
@@ -11358,16 +11390,25 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
-    if(getObjectInfo(wrapper).type = "youtube") {
-      var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
-      $("#" + idToDrag).attr("style", "width:" + width_height.width + "px; height:" + width_height.height + "px;");
+    if(getObjectInfo(wrapper).type === "youtube") {
+      var width_height = V.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+      if(style === null || style === "") {
+        $("#" + idToDrag).attr("style", "width:" + width_height.width + "px; height:" + width_height.height + "px;")
+      }
       $("#" + idToDrag).draggable({cursor:"move"});
       $(wrapperDiv).append(wrapperTag)
     }else {
       $(wrapperDiv).append(wrapperTag);
-      $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-      $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-        resizeObject(idToResize, 325 * value)
+      var width, value;
+      if(style) {
+        width = V.SlidesUtilities.getWidthFromStyle(style);
+        value = width / 80
+      }else {
+        value = 4
+      }
+      $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='" + value + "' style='display: none; '></div>");
+      $("#imageSlider" + nextWrapperId).slider({from:1, to:8, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+        resizeObject(idToResize, 80 * value)
       }});
       $("#" + idToDrag).draggable({cursor:"move"});
       _adjustWrapperOfObject(idToResize, current_area)
@@ -11376,11 +11417,12 @@ VISH.Editor.Object = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", 
-  "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", 
-  "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
-  var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, 
-  {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
+  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width:324px; height:242.25230769230768px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"width: 324px; height: 242.25230769230768px; position: relative; left: -7px; top: 56px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", "areaid":"header", "body":"flash"}, 
+  {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_12.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"width: 324px; height: 242.25230769230768px; position: relative; left: -11px; top: 95px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", "body":"Sublime HTML5 video!"}, {"id":"332", 
+  "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
+  var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
+  "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
   "body":"Experimento virtual1"}, {"id":"7335", "type":"object", "areaid":"left", "body":'<embed width="99%" height="99%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}, {"id":"vish6", "template":"t2", "elements":[{"id":"327", "type":"flashcard", "areaid":"left", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\ufffdntalo es un elemento qu\ufffdmico de n\ufffdmero at\ufffdmico 73, que se sit\ufffda en el grupo 5 de la tabla peri\ufffddica de los elementos. Su s\ufffdmbolo es Ta. Se trata de un metal de transici\ufffdn raro, azul gris\ufffdceo, duro, que presenta brillo met\ufffdlico y resiste muy bien la corrosi\ufffdn. Se encuentra en el mineral tantalita. Es fisiol\ufffdgicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\ufffdn de instrumentos quir\ufffdrgicos y en implantes. En ocasiones se le llama t\ufffdntalo, pero el \ufffdnico nombre reconocido por la Real Academia Espa\ufffdola es tantalio."}]}]}', 
   "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish7", "template":"t2", "elements":[{"id":"328", "type":"flashcard", "areaid":"left", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
@@ -11459,7 +11501,7 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left selectable'></div></article>"];
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left selectable' type='openquestion'><h2 class='title_openquestion'>Write question:</h2><textarea rows='4' cols='50' class='textarea_openquestion' ></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11525,6 +11567,39 @@ VISH.Editor.API = function(V, $, undefined) {
     }})
   };
   return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlash:requestRecomendedFlash}
+}(VISH, jQuery);
+VISH.Editor.AvatarPicker = function(V, $, undefined) {
+  var avatars = null;
+  var init = function() {
+    if(avatars === null) {
+      _getAvatars()
+    }
+    if(avatars === null) {
+      $("#thumbnails_in_excursion_details").remove();
+      return
+    }
+    var content = "";
+    $.each(avatars.pictures, function(i, item) {
+      content = content + '<div><img src="' + item.src + '" /></div>'
+    });
+    $("#avatars_carrousel").html(content);
+    V.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar)
+  };
+  var selectAvatar = function(event) {
+    $(".carrousel_element_single_row").removeClass("carrousel_element_selected");
+    $(event.target).addClass("carrousel_element_selected");
+    $("#excursion_avatar").val($(event.target).attr("src"))
+  };
+  var _getAvatars = function() {
+    $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
+      console.log("success getting excursion avatars");
+      avatars = data
+    }, error:function(xhr, ajaxOptions, thrownError) {
+      console.log("status returned by server:" + xhr.status);
+      console.log("Error in client: " + thrownError)
+    }})
+  };
+  return{init:init, selectAvatar:selectAvatar}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, rows, callback) {
@@ -11748,9 +11823,9 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
     $(current_area).html("");
     $(current_area).append(embedDiv);
     VISH.Editor.addDeleteButton($(current_area));
-    $("#menubar").before("<div id='sliderId" + nextFlashId + "' class='theslider'><input id='imageSlider" + nextFlashId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextFlashId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      VISH.Editor.Object.resizeObject(idToResize, 325 * value)
+    $("#menubar").before("<div id='sliderId" + nextFlashId + "' class='theslider'><input id='imageSlider" + nextFlashId + "' type='slider' name='size' value='4' style='display: none; '></div>");
+    $("#imageSlider" + nextFlashId).slider({from:1, to:8, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      VISH.Editor.Object.resizeObject(idToResize, 80 * value)
     }});
     $("#" + idToDrag).draggable({cursor:"move"})
   };
@@ -11861,6 +11936,12 @@ VISH.Editor.Renderer = function(V, $, undefined) {
   var init = function(excursion) {
     $("#excursion_title").val(excursion.title);
     $("#excursion_description").val(excursion.description);
+    $("#excursion_avatar").val(excursion.avatar);
+    $("thumbnails_in_excursion_details .carrousel_element_single_row img").each(function(index, elem) {
+      if(elem.attr("src") === excursion.avatar) {
+      }
+      elem.addClass("carrousel_element_selected")
+    });
     slides = excursion.slides;
     for(var i = 0;i < slides.length;i++) {
       _renderSlide(slides[i], i)
@@ -11879,7 +11960,7 @@ VISH.Editor.Renderer = function(V, $, undefined) {
         V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body)
       }else {
         if(slide.elements[el].type === "image") {
-          V.Editor.Image.drawImage(slide.elements[el].body, area)
+          V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style)
         }else {
           if(slide.elements[el].type === "video") {
             var options = [];
@@ -11892,7 +11973,7 @@ VISH.Editor.Renderer = function(V, $, undefined) {
             V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area)
           }else {
             if(slide.elements[el].type === "object") {
-              V.Editor.Object.drawObject(slide.elements[el].body, area)
+              V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style)
             }
           }
         }
@@ -11994,7 +12075,7 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   var _getVideoTypeFromUrl = function(url) {
     return null
   };
-  var drawVideo = function(sources, options, area) {
+  var drawVideo = function(sources, options, area, style) {
     var current_area;
     if(area) {
       current_area = area
@@ -12023,6 +12104,9 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
     videoTag.setAttribute("preload", "metadata");
     videoTag.setAttribute("poster", posterUrl);
     videoTag.setAttribute("autoplayonslideenter", autoplay);
+    if(style) {
+      videoTag.setAttribute("style", style)
+    }
     $(sources).each(function(index, source) {
       var videoSource = document.createElement("source");
       videoSource.setAttribute("src", source[0]);
@@ -12037,9 +12121,16 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
     $(current_area).html("");
     $(current_area).append(videoTag);
     VISH.Editor.addDeleteButton($(current_area));
-    $("#menubar").before("<div id='sliderId" + nextVideoId + "' class='theslider'><input id='imageSlider" + nextVideoId + "' type='slider' name='size' value='1' style='display: none; '></div>");
-    $("#imageSlider" + nextVideoId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      $("#" + idToDragAndResize).width(325 * value)
+    var width, value;
+    if(style) {
+      width = V.SlidesUtilities.getWidthFromStyle(style);
+      value = width / 80
+    }else {
+      value = 4
+    }
+    $("#menubar").before("<div id='sliderId" + nextVideoId + "' class='theslider'><input id='imageSlider" + nextVideoId + "' type='slider' name='size' value='" + value + "' style='display: none; '></div>");
+    $("#imageSlider" + nextVideoId).slider({from:1, to:8, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      $("#" + idToDragAndResize).width(80 * value)
     }});
     $("#" + idToDragAndResize).draggable({cursor:"move"})
   };
@@ -12594,7 +12685,16 @@ VISH.SlidesUtilities = function(V, $, undefined) {
   var forwardOneSlide = function() {
     goToSlide(curSlide + 2)
   };
-  return{goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw}
+  var getWidthFromStyle = function(style) {
+    var width;
+    $.each(style.split(";"), function(index, property) {
+      if(property.indexOf("width") !== -1) {
+        width = parseFloat(property.substring(property.indexOf("width") + 7, property.indexOf("px")))
+      }
+    });
+    return width
+  };
+  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {

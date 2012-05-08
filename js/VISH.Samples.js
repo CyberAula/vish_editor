@@ -4,45 +4,54 @@ VISH.Samples = (function(V,undefined){
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
+                'avatar'        :  '/assets/logos/original/excursion-01.png',
                 'author'        :  'Enrique Barra',
                 'slides'        : [
 		{
-			'id'       :'vish1',
-			'author'   : 'John Doe',
-			'template' :'t1',
-			'elements':[				
+			"id": "article1",
+			"template": "t1",
+			"elements":[
 				{
-                    'id'     : '316',
-					'type'   : 'text',
-					'areaid' : 'left',
-					'body'   : '<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size=\"6\">gato</font></div></div>'
+					"id": "zone1",
+					"type": "text",
+					"areaid": "header",
+					"body": "<font size=\"4\">titulo</font>"
+					},
+				{
+					"id": "zone2",
+					"type": "image",
+					"areaid": "left",
+					"body": "http://www.peligrodeextincion.info/files/tigre-blanco.jpg",
+					"style": "position: relative; width: 487.5px; left: -124px; top: 22px; "
 				},
 				{
-                    'id'     : '317',
-					'type'   : 'image',
-					'areaid' : 'right',
-					'body'   : 'http://www.asturtalla.com/arbol.jpg'		
+					"id": "zone3",
+					"type": "object",
+					"areaid": "right",
+					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width:324px; height:242.25230769230768px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
+					"style": "width: 324px; height: 242.25230769230768px; position: relative; left: -7px; top: 56px; "
 				}
 			]
 		},
 		{
-			'id'       :'vish2',
-			'template' :'t2',
-			'elements':[
+			"id": "article2",
+			"template": "t1",
+			"elements":[
 				{
-                    'id'     : '318',
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'Ejemplo de fauna...'
+					"id": "zone4",
+					"type": "text",
+					"areaid": "header",
+					"body": "flash"
 				},
 				{
-                    'id'     : '319',
-					'type'   : 'image',
-					'areaid' : 'left',
-					'body'   : 'http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg'		
+					"id": "zone5",
+					"type": "object",
+					"areaid": "left",
+					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_12.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">","style":"width: 324px; height: 242.25230769230768px; position: relative; left: -11px; top: 95px; "},{"id":"zone6","areaid":"right"
 				}
 			]
-		},
+		}
+		,
 		{
 			'id'       :'vish10',
 			'template' :'t2',
@@ -61,6 +70,7 @@ VISH.Samples = (function(V,undefined){
 					'autoplay' : false,
 					'loop' : false,
 					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+					'style'  : "position: relative; left: 2px; top: 110px; width: 325px;",
 					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
 				}
 			]
@@ -71,6 +81,7 @@ VISH.Samples = (function(V,undefined){
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
+                'avatar'        :  '/assets/logos/original/excursion-02.png',
                 'author'        :  'Enrique Barra',
                 'slides'        : [
 		{

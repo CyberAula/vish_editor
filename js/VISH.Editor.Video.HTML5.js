@@ -24,8 +24,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * Sources: array of arrays [[source src, source type],...] .
    * Options: hash with additional data like poster url or autoplay
    * param area: optional param indicating the area to add the video, used for editing excursions
+   * param style: optional param with the style, used in editing excursion
    */
-  var drawVideo = function(sources,options, area){
+  var drawVideo = function(sources,options, area, style){
 	var current_area;
   	if(area){
   		current_area = area;
@@ -33,6 +34,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	else{
   		current_area = VISH.Editor.getCurrentArea();
   	}
+  	
   	
     //Default options
 	var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
@@ -63,6 +65,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     videoTag.setAttribute('preload', "metadata");
     videoTag.setAttribute('poster', posterUrl);
 	videoTag.setAttribute('autoplayonslideenter',autoplay);
+	if(style){
+		videoTag.setAttribute('style', style);
+	}
 		
 	$(sources).each(function(index, source) {
       var videoSource = document.createElement('source');
@@ -83,17 +88,25 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     VISH.Editor.addDeleteButton($(current_area));
     	
 	//RESIZE
-    $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='1' style='display: none; '></div>");
+	var width, value;
+	if(style){
+	   width = V.SlidesUtilities.getWidthFromStyle(style);
+	   value = width/80;
+	}
+	else{
+		value = 4;
+	}
+    $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
             
     $("#imageSlider"+nextVideoId).slider({
       from: 1,
       to: 8,
-      step: 0.5,
+      step: 0.2,
       round: 1,
       dimension: "x",
       skin: "blue",
       onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(325*value);
+          $("#" + idToDragAndResize).width(80*value);
       }
     });
 

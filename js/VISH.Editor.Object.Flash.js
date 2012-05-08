@@ -28,17 +28,17 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  VISH.Editor.addDeleteButton($(current_area));
 	    	
 	  //RESIZE
-	  $("#menubar").before("<div id='sliderId"+nextFlashId+"' class='theslider'><input id='imageSlider"+nextFlashId+"' type='slider' name='size' value='1' style='display: none; '></div>");
+	  $("#menubar").before("<div id='sliderId"+nextFlashId+"' class='theslider'><input id='imageSlider"+nextFlashId+"' type='slider' name='size' value='4' style='display: none; '></div>");
 	            
 	  $("#imageSlider"+nextFlashId).slider({
 	    from: 1,
 	    to: 8,
-	    step: 0.5,
+	    step: 0.2,
 	    round: 1,
 	    dimension: "x",
 	    skin: "blue",
 	    onstatechange: function( value ){
-	      VISH.Editor.Object.resizeObject(idToResize,325*value);
+	      VISH.Editor.Object.resizeObject(idToResize,80*value);
 	    }
 	  });
 

@@ -17,162 +17,28 @@ VISH.SlidesUtilities = (function(V,$,undefined){
  * 
  */
 var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
-var element_type;
-var dimentions_for_drawing = {width:  350, height: 195};
-
-var aspect_ratio_zone = w_zone/h_zone;
-var aspect_ratio_content = w_content/h_content;
-
-if (aspect_ratio_zone>aspect_ratio_content) {
+	var element_type;
+	var dimentions_for_drawing = {width:  350, height: 195};
 	
-		dimentions_for_drawing.width = aspect_ratio_content*h_zone;
-		dimentions_for_drawing.height = h_content;
-	return dimentions_for_drawing;
+	var aspect_ratio_zone = w_zone/h_zone;
+	var aspect_ratio_content = w_content/h_content;
 	
-}
-else {
-	
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = w_zone/aspect_ratio_content;
+	if (aspect_ratio_zone>aspect_ratio_content) {
 		
-	return  dimentions_for_drawing;
-	
-	
-}
-/*
-if (w_element == h_element) {
-//element is square
-	element_type = "square";
-}
-else if (w_element> h_element) {
-	
-	element_type = "rectangle";
-	
-} else {
-	element_type = "vertical_rectangle";
-	
-	
-}
-		    
-switch(element_type){ 
-//the element to draw is square
-	case "square":	
-	console.log("element square");
-	
-	if(w_zone == h_zone) { //swquare area 
-		console.log("square area");
-	dimentions_for_drawing.width = w_zone;
-	dimentions_for_drawing.height = h_zone;
-	}
-	
-	else if(w_zone > h_zone) {
-		console.log("rectangle area");
-		
-		dimentions_for_drawing.width = h_zone;
-		dimentions_for_drawing.height = h_zone;
-		
-		
-	}
-	
-	else if(w_zone < h_zone) {
-		console.log("vertical rectangle area");
-		
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = w_zone;
-		
+			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
+			dimentions_for_drawing.height = h_content;
+		return dimentions_for_drawing;
 		
 	}
 	else {
-		dimentions_for_drawing.width = w_element;
-		dimentions_for_drawing.height = h_element;
 		
-	}
-	break; 
-//the element to draw is rectangle (width > height)
-	case "rectangle":	
-	console.log("element rectangle");
-	
-	if(w_zone == h_zone) { //square area 
-		console.log("square area");
-		var scale = w_zone/w_element; 
-	dimentions_for_drawing.width = w_zone;
-	dimentions_for_drawing.height = h_element*scale;
-	}
-	
-	else if(w_zone > h_zone) { //rectangle area
-		console.log("rectangle area");
-		var scale = w_zone/w_element; 
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = h_zone*scale;
+			dimentions_for_drawing.width = w_zone;
+			dimentions_for_drawing.height = w_zone/aspect_ratio_content;
+			
+		return  dimentions_for_drawing;
 		
 		
-	}
-	
-	else if(w_zone < h_zone) {//vertical rectangle area
-		console.log("vertical rectangle area");
-		
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = w_zone*scale;
-		
-		
-	}
-	else {
-		dimentions_for_drawing.width = w_element;
-		dimentions_for_drawing.height = h_element;
-		
-	}
-	 break;
-
-//the element to draw is vertical rectangle (width > height)
-	case "vertical_rectangle":	
-	console.log("element vertical rectangle");
-	
-	if(w_zone == h_zone) { //square area 
-		console.log("square area");
-		var scale = w_zone/w_element; 
-	dimentions_for_drawing.width = w_zone;
-	dimentions_for_drawing.height = h_element*scale;
-	}
-	
-	else if(w_zone > h_zone) { //rectangle area
-		console.log("rectangle area");
-		var scale = w_zone/w_element; 
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = h_zone*scale;
-		
-		
-	}
-	
-	else if(w_zone < h_zone) {//vertical rectangle area
-		console.log("vertical rectangle area");
-		
-		dimentions_for_drawing.width = w_zone;
-		dimentions_for_drawing.height = w_zone*scale;
-		
-		
-	}
-	else {
-		dimentions_for_drawing.width = w_element;
-		dimentions_for_drawing.height = h_element;
-		
-	}
-	break;
-
-	default:
-			console.log("Unrecognized element area: " + element_type);
-            break;
-
-}
-
-
-
-
-	console.log("entra en dimentionToDraw");
-	
-	
-	*/
-	
-		
+	}	
 };
 
   /**
@@ -232,9 +98,24 @@ switch(element_type){
   var forwardOneSlide = function(){
   	goToSlide(curSlide+2);
   };
-
+	
+	/**
+	 * function to get width in pixels from a style attribute
+	 */
+	var getWidthFromStyle = function(style){
+		var width;
+		$.each(style.split(";"), function(index, property){  //split style string by ";"
+  			//look for property starting by width
+  			if(property.indexOf("width") !== -1){
+  				width = parseFloat(property.substring(property.indexOf("width")+7, property.indexOf("px"))); 
+  				//TODO what happens is not a float, check that it does not die
+  			}  			
+  		});
+  		return width;
+	};
 
 	return {
+		getWidthFromStyle : getWidthFromStyle,
 		goToSlide		  : goToSlide,
 		lastSlide		  : lastSlide,
 		addSlide		  : addSlide,

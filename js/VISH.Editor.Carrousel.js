@@ -5,17 +5,17 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	var multipleRow = (rows>1);
 		
 	if(multipleRow){
-	  var rowClass = "multiple_row"
+	  var rowClass = "multiple_row";
     } else {
-      var rowClass = "single_row"
+      var rowClass = "single_row";
     }		
 		
 	//Wrapper main div with a image carousel class container.
 	var wrapperDiv = $("#" + containerId);
-	wrapperDiv.attr("class","image_carousel image_carousel_"+rowClass)
-	wrapperDiv.removeAttr("id")
+	wrapperDiv.attr("class","image_carousel image_carousel_"+rowClass);
+	wrapperDiv.removeAttr("id");
 	
-	var mainDiv = document.createElement('div')
+	var mainDiv = document.createElement('div');
 	$(mainDiv).html($(wrapperDiv).html());
 	$(wrapperDiv).html("");
 	mainDiv.setAttribute('id', containerId);
@@ -29,8 +29,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	
 	button_prev.setAttribute('class', "prev");
 	button_next.setAttribute('class', "next");
-	$(button_prev).addClass("prev_" + rowClass)
-	$(button_next).addClass("next_" + rowClass)
+	$(button_prev).addClass("prev_" + rowClass);
+	$(button_next).addClass("next_" + rowClass);
 	button_prev.setAttribute('href', "#");
     button_next.setAttribute('href', "#");
 	button_prev.setAttribute('id', "carrousel_prev" + containerId);
@@ -39,33 +39,33 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
     $(button_next).html("<span>next</span>");
 		
 	var paginationDiv = document.createElement('div');
-	paginationDiv.setAttribute('class','pagination')
-	paginationDiv.setAttribute('id','carrousel_pag' + containerId)
+	paginationDiv.setAttribute('class','pagination');
+	paginationDiv.setAttribute('id','carrousel_pag' + containerId);
 		     		 
-	$(wrapperDiv).append(clearFix)
-	$(wrapperDiv).append(button_prev)
-    $(wrapperDiv).append(button_next)
-	$(wrapperDiv).append(paginationDiv)
+	$(wrapperDiv).append(clearFix);
+	$(wrapperDiv).append(button_prev);
+    $(wrapperDiv).append(button_next);
+	$(wrapperDiv).append(paginationDiv);
 		 
 	//Element stylesheet
-	$(mainDiv).children().addClass("carrousel_element_" + rowClass)
+	$(mainDiv).children().addClass("carrousel_element_" + rowClass);
 	
 	$(mainDiv).children().each(function(index,value){
-		$(value).children().addClass("carrousel_element_" + rowClass)
+		$(value).children().addClass("carrousel_element_" + rowClass);
 	});
 	
 	
 	//Callbacks events
 	if ((callback)&&(typeof callback == "function")) {
 		$(mainDiv).children().click(function(event){
-			callback(event)
+			callback(event);
 		});
 	}
 		
 	if (multipleRow) {
 	  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows);
 	} else {
-	  $(wrapperDiv).prepend(mainDiv)
+	  $(wrapperDiv).prepend(mainDiv);
 	  _setMainCarrousel(containerId,containerId, rows);
 	}		
 	return "Done"

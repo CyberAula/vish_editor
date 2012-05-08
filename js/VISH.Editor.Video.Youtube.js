@@ -66,7 +66,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	        	currentVideos[videoID].subtitle = subtitle;
 
 	        	var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-	        	content = content + '<div><img videoID="'+videoID+'" src="'+image_url+'" /></div>'
+	        	content = content + '<div><img videoID="'+videoID+'" src="'+image_url+'" /></div>';
 			});
 			
 			$("#" + carrouselDivId).html(content);
