@@ -244,7 +244,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//separete for diferent objects
 
 		//for youtube video
-		if(getObjectInfo(wrapper).type = "youtube") {
+		if(getObjectInfo(wrapper).type === "youtube") {
 
 			var width_height = V.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
 			if(style===null || style === ""){
@@ -266,22 +266,22 @@ VISH.Editor.Object = (function(V,$,undefined){
 			var width, value;
 			if(style){
 			   width = V.SlidesUtilities.getWidthFromStyle(style);
-			   value = width/325;
+			   value = width/80;
 			}
 			else{
-				value = 1;
+				value = 4;
 			}
 			$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
 
 			$("#imageSlider" + nextWrapperId).slider({
 				from : 1,
 				to : 8,
-				step : 0.5,
+				step : 0.2,
 				round : 1,
 				dimension : "x",
 				skin : "blue",
 				onstatechange : function(value) {
-					resizeObject(idToResize, 325 * value);
+					resizeObject(idToResize, 80 * value);
 				}
 			});
 

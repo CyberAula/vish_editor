@@ -91,22 +91,22 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	var width, value;
 	if(style){
 	   width = V.SlidesUtilities.getWidthFromStyle(style);
-	   value = width/325;
+	   value = width/80;
 	}
 	else{
-		value = 1;
+		value = 4;
 	}
     $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
             
     $("#imageSlider"+nextVideoId).slider({
       from: 1,
       to: 8,
-      step: 0.5,
+      step: 0.2,
       round: 1,
       dimension: "x",
       skin: "blue",
       onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(325*value);
+          $("#" + idToDragAndResize).width(80*value);
       }
     });
 

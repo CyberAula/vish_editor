@@ -437,12 +437,24 @@ VISH.Editor = (function(V,$,undefined){
   	$(this).find(".delete_content").show();
   		
   	//show sliders  	
-  	if($(this).attr("type")==="image"){
-  		var img_id = $(this).find("img").attr("id");
-  		//the id is "draggableunicID_1" we want to remove "draggable"
-  		img_id = img_id.substring(9);
+  	if($(this).attr("type")==="image" || $(this).attr("type")==="object" || $(this).attr("type")==="video"){
+  		var the_id;
+  		switch($(this).attr("type")){
+  			case "image":
+  				the_id = $(this).find("img").attr("id");
+  				break;
+  			case "object":
+  				the_id = $(this).find(".object_wrapper").attr("id");
+  				break;
+  			case "video":
+  				the_id = $(this).find("video").attr("id");
+  				break;
+  		}
   		
-  		$("#sliderId" + img_id).show();  		
+  		//the id is "draggableunicID_1" we want to remove "draggable"
+  		the_id = the_id.substring(9);
+  		
+  		$("#sliderId" + the_id).show();  		
   	}
   	
   	//add css
