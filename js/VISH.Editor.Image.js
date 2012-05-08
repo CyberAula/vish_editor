@@ -5,23 +5,46 @@ VISH.Editor.Image = (function(V,$,undefined){
 		VISH.Editor.Image.Repository.init();
 	};
 	
+	
 	var onLoadTab = function(){
+		
+		var options = VISH.Editor.getOptions();
+	
 		var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
-    var status = $('#status');
-	
+		
+		//Reset fields
+    bar.width('0%');
+    percent.html('0%');
+		$("#tab_pic_upload_content .previewimgbox button").hide()
+		$("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
+		if (previewBackground) {
+		  $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground);
+	  }
+		$("input[name='document[file]']").val("");
+		$("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin")
+		$("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+		
 	  $("input[name='document[file]']").change(function () {
       $("input[name='document[title]']").val($("input:file").val());
-      var description = "Uploaded by " + initOptions["ownerName"] + " via Vish Editor"
-      $("input[name='document[description]']").val(description);
-			$("input[name='document[owner_id]']").val(initOptions["ownerId"]);
-			$("input[name='authenticity_token']").val(initOptions["token"]);
-			$(".documentsForm").attr("action",initOptions["documentsPath"])
+    });
+			
+		$("#tab_pic_upload_content #upload_document_submit").click(function(event) {
+			if($("input[name='document[file]']").val()==""){
+        event.preventDefault();
+			}else{
+				if (options) {
+	        var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
+	        $("input[name='document[description]']").val(description);
+	        $("input[name='document[owner_id]']").val(options["ownerId"]);
+	        $("input[name='authenticity_token']").val(options["token"]);
+	        $(".documentsForm").attr("action", options["documentsPath"]);
+        }
+			}
     });
 	
 	  $('form').ajaxForm({
       beforeSend: function() {
-          status.empty();
           var percentVal = '0%';
           bar.width(percentVal);
           percent.html(percentVal);
@@ -32,13 +55,40 @@ VISH.Editor.Image = (function(V,$,undefined){
           percent.html(percentVal);
       },
       complete: function(xhr) {
-          status.html(xhr.responseText);
+          console.log(xhr.responseText);
+					processResponse(xhr.responseText);
           var percentVal = '100%';
           bar.width(percentVal)
           percent.html(percentVal);
       }
     });
 	};
+	
+	
+	var drawUploadedElement = function(){
+		drawImage( $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").attr("src"));
+		$.fancybox.close();
+	}
+	
+	
+	var previewBackground;
+	
+	var processResponse = function(response){
+		try  {
+	    var jsonResponse = JSON.parse(response)
+	    if(jsonResponse.src){
+	       previewBackground = $("#tab_pic_upload_content .previewimgbox").css("background-image");
+	       $("#tab_pic_upload_content .previewimgbox").css("background-image","none");
+	       $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
+	       $("#tab_pic_upload_content .previewimgbox").append("<img class='uploadPreviewImage' src='" + jsonResponse.src + "'></img>");
+				 $("#tab_pic_upload_content .previewimgbox button").show();
+         $("#tab_pic_upload_content .documentblank").addClass("documentblank_extraMargin")
+         $("#tab_pic_upload_content .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+	    }
+    } catch(e) {
+      //No JSON response
+    }
+	}
 	
   /**
    * Function to draw an image in a zone of the template
@@ -47,11 +97,10 @@ VISH.Editor.Image = (function(V,$,undefined){
    * param area: optional param indicating the area to add the image, used for editing excursions
    */
   var drawImage = function(image_url, area){    
-	var current_area;
+	  var current_area;
   	if(area){
   		current_area = area;
-  	}
-  	else{
+  	}	else {
   		current_area = VISH.Editor.getCurrentArea();
   	}
   	var template = VISH.Editor.getTemplate(); 
@@ -90,11 +139,11 @@ VISH.Editor.Image = (function(V,$,undefined){
   };
   
   
-	
 	return {
-		init        : init,
-		onLoadTab	: onLoadTab,
-		drawImage   : drawImage
+		init                : init,
+		onLoadTab	          : onLoadTab,
+		drawImage           : drawImage,
+		drawUploadedElement : drawUploadedElement
 	};
 
 }) (VISH, jQuery);
