@@ -118,6 +118,10 @@ img.carrousel_element_single_row{
   margin-top: -2px;
 }
 
+img.carrousel_element_selected{
+  background-color: #CCC;
+}
+
 div.carrousel_element_multiple_row{
   width: 100px;
   height: 90px;

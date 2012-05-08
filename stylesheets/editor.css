@@ -845,10 +845,15 @@ div.object_wrapper{
 	margin-top: 70px;
 }
 
+.textintromargin3 {
+	margin-left: 68px;
+	margin-top: 100px;
+}
+
 .buttonintro {
 	margin-top:100px;
-	margin-left:660px;
-	width:40px;
+	margin-left:640px;
+	width:60px;
 	text-align: center;
 }
 
@@ -867,7 +872,6 @@ textarea {
 #start_tutorial {
 	width: 306px;
 	height: 77px;
-	top: -90px;
 	position: relative;
 	left: 50px;
 	background: url(/images/tutorial.png);
@@ -878,7 +882,6 @@ textarea {
 }
 
 #excursion_details_fields{
-	top: -70px;
 	position: relative;
 }
 

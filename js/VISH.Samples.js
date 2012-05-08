@@ -4,6 +4,7 @@ VISH.Samples = (function(V,undefined){
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
+                'avatar'        :  '/assets/logos/original/excursion-01.png',
                 'author'        :  'Enrique Barra',
                 'slides'        : [
 		{
@@ -80,6 +81,7 @@ VISH.Samples = (function(V,undefined){
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
                 'description'   :  'This excursion is about nanotechnology',
+                'avatar'        :  '/assets/logos/original/excursion-02.png',
                 'author'        :  'Enrique Barra',
                 'slides'        : [
 		{
