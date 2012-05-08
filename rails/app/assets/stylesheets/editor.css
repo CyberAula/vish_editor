@@ -845,10 +845,15 @@ div.object_wrapper{
 	margin-top: 70px;
 }
 
+.textintromargin3 {
+	margin-left: 68px;
+	margin-top: 100px;
+}
+
 .buttonintro {
 	margin-top:100px;
-	margin-left:660px;
-	width:40px;
+	margin-left:640px;
+	width:60px;
 	text-align: center;
 }
 

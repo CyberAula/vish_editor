@@ -9,6 +9,13 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		//first set title and description
 		$('#excursion_title').val(excursion.title);
 		$('#excursion_description').val(excursion.description);
+		$('#excursion_avatar').val(excursion.avatar);
+		//select the avatar from the carrousel
+		$("thumbnails_in_excursion_details .carrousel_element_single_row img").each(function(index, elem) {
+				if(elem.attr("src")===excursion.avatar);
+				elem.addClass("carrousel_element_selected");
+				//TODO move the carrousel to the page with the element
+		});
 		
 		slides = excursion.slides;
 		for(var i=0;i<slides.length;i++){

@@ -62,6 +62,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
+		V.Editor.AvatarPicker.init();
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
@@ -275,6 +276,7 @@ VISH.Editor = (function(V,$,undefined){
 		// save the details in a hash object
 		excursionDetails.title = $('#excursion_title').val();
 		excursionDetails.description = $('#excursion_description').val();
+		excursionDetails.avatar = $('#excursion_avatar').val();
 		$('#excursion_details_error').hide();
 		$.fancybox.close();
 	};
