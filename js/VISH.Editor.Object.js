@@ -158,122 +158,141 @@ VISH.Editor.Object = (function(V,$,undefined){
   /**
    * Returns a object prepared to draw.   * 
    * param area: optional param indicating the area to add the object, used for editing excursions
+   * param style: optional param with the style, used in editing excursion
    */
-	var drawObject = function(object, area){
+	var drawObject = function(object, area, style){
 		var current_area;
+		var object_style = "";
 	  	if(area){
 	  		current_area = area;
 	  	}
 	  	else{
 	  		current_area = VISH.Editor.getCurrentArea();
 	  	}
-		
+		if(style){
+	  		object_style = style;	  		
+	  	}
 		var objectInfo = getObjectInfo(object);
 		
 		
-		switch (objectInfo.wrapper){
-	      case null:
-		    //Draw object from source	
-		    	    
-		    switch (objectInfo.type){
-		      case "swf":
-		        V.Editor.Object.Flash.drawFlashObjectWithSource(object);
-			    break;
-			  case "youtube":
-			    //V.Editor.Video.Youtube.drawVideoObject(object);
-			    break;
-			  default:
-				 console.log("Unrecognized object source type: " + objectInfo.type) 
-			     break;
-			}
-		    break;
-		  case "EMBED":
-			drawObjectWithWrapper(object, current_area);
-		    break;
-		  case "OBJECT":
-		 
-			drawObjectWithWrapper(object, current_area); 	 
-			     break;
-		 
-		  case "IFRAME": 
-		  
-		  drawObjectWithWrapper(object, current_area);
-			
-		    break;  
-		  default:
-			console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
-            break;
+		
+		switch (objectInfo.wrapper) {
+			case null:
+				//Draw object from source
+				switch (objectInfo.type) {
+					case "swf":
+						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
+						break;
+						
+					case "youtube":
+						//V.Editor.Video.Youtube.drawVideoObject(object);
+						break;
+						
+					default:
+						console.log("Unrecognized object source type: " + objectInfo.type)
+						break;
+				}
+				break;
+				
+			case "EMBED":
+				drawObjectWithWrapper(object, current_area, object_style);
+				break;
+				
+			case "OBJECT":
+				drawObjectWithWrapper(object, current_area, object_style);
+				break;
+
+			case "IFRAME":
+				drawObjectWithWrapper(object, current_area, object_style);
+				break;
+				
+			default:
+				console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				break;
 		}
+
 	}
 	
-	
-	var drawObjectWithWrapper = function(wrapper, current_area){
-	 var template = VISH.Editor.getTemplate();
+	/**
+	 * param style: optional param with the style, used in editing excursion
+	 */
+	var drawObjectWithWrapper = function(wrapper, current_area, style){
+	 
+		var template = V.Editor.getTemplate(current_area);
+		var nextWrapperId = V.Editor.getId();
+		var idToDrag = "draggable" + nextWrapperId;
+		var idToResize = "resizable" + nextWrapperId;
+		current_area.attr('type', 'object');
+		var wrapperDiv = document.createElement('div');
+		wrapperDiv.setAttribute('id', idToDrag);
+		if(style){
+			wrapperDiv.setAttribute('style', style);
+		}
+		$(wrapperDiv).addClass('object_wrapper');
+		$(wrapperDiv).addClass(template + "_object");
 
-	  var nextWrapperId = VISH.Editor.getId();
-	 var idToDrag = "draggable" + nextWrapperId;
-	 
-	  var idToResize = "resizable" + nextWrapperId;
-	  current_area.attr('type','object');
-	 var wrapperDiv = document.createElement('div');
-	  wrapperDiv.setAttribute('id', idToDrag);
-	  
-	  $(wrapperDiv).addClass('object_wrapper');
-	  $(wrapperDiv).addClass(template + "_object");
-	  
-	  
-	  var wrapperTag = $(wrapper);
-	  $(wrapperTag).attr('id', idToResize );
-	  $(wrapperTag).attr('class', template + "_object");
-	  $(wrapperTag).attr('title', "Click to drag");
-	  
-	  
-	  $(current_area).html("");
-	  $(current_area).append(wrapperDiv);
-	   	  	    
-	  VISH.Editor.addDeleteButton($(current_area));
-	 
-	 
-	 //separete for diferent objects 
-	 
-	 //for youtube video
-	 if(getObjectInfo(wrapper).type = "youtube") {
-	 	
-	 
-	  var width_height = VISH.SlidesUtilities.dimentionToDraw(
-   	  current_area.width(), current_area.height(), 325, 243 );
-   
-	 $("#" + idToDrag).attr('style', "width:"+width_height.width+ "px; height:"+ width_height.height+ "px;");
-	 
-	// $(wrapperTag).attr('style', "width:"+width_height.width+ "; height:"+ width_height.height+ ";");
-	 $("#" + idToDrag).draggable({cursor: "move"});
-	  $(wrapperDiv).append(wrapperTag);
-	 //youtube don't need resize
-	 	
-	 }
-	 //diferent from youtube
-	 else { 
-	 $(wrapperDiv).append(wrapperTag)
-	  //RESIZE
-	  $("#menubar").before("<div id='sliderId"+nextWrapperId+"' class='theslider'><input id='imageSlider"+nextWrapperId+"' type='slider' name='size' value='1' style='display: none; '></div>");
-	            
-	  $("#imageSlider"+nextWrapperId).slider({
-	    from: 1,
-	    to: 8,
-	    step: 0.5,
-	    round: 1,
-	    dimension: "x",
-	    skin: "blue",
-	    onstatechange: function( value ){
-	      resizeObject(idToResize,325*value);
-	    }
-	  });
+		var wrapperTag = $(wrapper);
+		$(wrapperTag).attr('id', idToResize);
+		$(wrapperTag).attr('class', template + "_object");
+		$(wrapperTag).attr('title', "Click to drag");
 
-	  $("#" + idToDrag).draggable({cursor: "move"});
-	  
-	  _adjustWrapperOfObject(idToResize, current_area);
-	  
-	 }
+		$(current_area).html("");
+		$(current_area).append(wrapperDiv);
+
+		VISH.Editor.addDeleteButton($(current_area));
+
+		//separete for diferent objects
+
+		//for youtube video
+		if(getObjectInfo(wrapper).type = "youtube") {
+
+			var width_height = V.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
+			if(style===null || style === ""){
+				$("#" + idToDrag).attr('style', "width:" + width_height.width + "px; height:" + width_height.height + "px;");
+			}
+
+			// $(wrapperTag).attr('style', "width:"+width_height.width+ "; height:"+ width_height.height+ ";");
+			$("#" + idToDrag).draggable({
+				cursor : "move"
+			});
+			$(wrapperDiv).append(wrapperTag);
+			//youtube don't need resize
+
+		}
+		//diferent from youtube
+		else {
+			$(wrapperDiv).append(wrapperTag);
+			//RESIZE
+			var width, value;
+			if(style){
+			   width = V.SlidesUtilities.getWidthFromStyle(style);
+			   value = width/325;
+			}
+			else{
+				value = 1;
+			}
+			$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
+
+			$("#imageSlider" + nextWrapperId).slider({
+				from : 1,
+				to : 8,
+				step : 0.5,
+				round : 1,
+				dimension : "x",
+				skin : "blue",
+				onstatechange : function(value) {
+					resizeObject(idToResize, 325 * value);
+				}
+			});
+
+			$("#" + idToDrag).draggable({
+				cursor : "move"
+			});
+
+			_adjustWrapperOfObject(idToResize, current_area);
+
+		}
+
 	};
 	
 	

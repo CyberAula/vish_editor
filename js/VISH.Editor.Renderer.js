@@ -37,7 +37,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
 			}
 			else if(slide.elements[el].type === "image"){
-				V.Editor.Image.drawImage(slide.elements[el].body, area);
+				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style);
 			}
 			else if(slide.elements[el].type === "video"){
 				var options = [];
@@ -50,7 +50,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
 			}
 			else if(slide.elements[el].type === "object"){				
-				V.Editor.Object.drawObject(slide.elements[el].body, area);
+				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style);
 			}
 		}
 	

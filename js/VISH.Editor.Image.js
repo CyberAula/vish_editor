@@ -14,24 +14,33 @@ VISH.Editor.Image = (function(V,$,undefined){
    * the zone to draw is the one in current_area (params['current_el'])
    * this function also adds the slider and makes the image draggable
    * param area: optional param indicating the area to add the image, used for editing excursions
+   * param style: optional param with the style, used in editing excursion
    */
-  var drawImage = function(image_url, area){    
+  var drawImage = function(image_url, area, style){    
 	var current_area;
+	var image_width = 325;  //initial image width
+	var image_style = "";
   	if(area){
   		current_area = area;
   	}
   	else{
   		current_area = VISH.Editor.getCurrentArea();
   	}
+  	if(style){
+  		image_style = style;
+  		image_width = V.SlidesUtilities.getWidthFromStyle(style);
+  	}
   	var template = VISH.Editor.getTemplate(); 
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
     current_area.attr('type','image');
-    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' />");
+    current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
     
     V.Editor.addDeleteButton(current_area);
     
-    $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='1' style='display: none; '></div>");      
+    //the value to set the slider depends on the width if passed in the style, we have saved that value in image_width    
+    var thevalue = image_width/325;
+    $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='"+thevalue+"' style='display: none; '></div>");      
     
     //double size if header to insert image
     //I HAVE NOT DONE IT BECAUSE WE NEED TO CHANGE ALSO THE SLIDESMANAGER TO DISPLAY DOUBLE SIZE
