@@ -215,7 +215,8 @@ VISH.Editor = (function(V,$,undefined){
     	V.Editor.Object.drawObject($("#"+id_to_get).val())
         break;
       case "video_url":
-        V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
+        //V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
+				V.Editor.Object.drawObject($("#"+id_to_get).val())
         break;
       //case "add_your_input_id_here":
         //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())

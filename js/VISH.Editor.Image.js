@@ -6,44 +6,51 @@ VISH.Editor.Image = (function(V,$,undefined){
 	};
 	
 	
-	var onLoadTab = function(){
-		
-		var options = VISH.Editor.getOptions();
+	var onLoadTab = function(tab){	
+		if(tab=="upload"){
+			onLoadUploadTab();
+		}
+	};
 	
-		var bar = $('.upload_progress_bar');
+	
+	var onLoadUploadTab = function(){
+		    
+    var options = VISH.Editor.getOptions();
+  
+    var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
-		
-		//Reset fields
+    
+    //Reset fields
     bar.width('0%');
     percent.html('0%');
-		$("#tab_pic_upload_content .previewimgbox button").hide()
-		$("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-		if (previewBackground) {
-		  $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground);
-	  }
-		$("input[name='document[file]']").val("");
-		$("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin")
-		$("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
-		
-	  $("input[name='document[file]']").change(function () {
+    $("#tab_pic_upload_content .previewimgbox button").hide()
+    $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
+    if (previewBackground) {
+      $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground);
+    }
+    $("input[name='document[file]']").val("");
+    $("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin")
+    $("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+    
+    $("input[name='document[file]']").change(function () {
       $("input[name='document[title]']").val($("input:file").val());
     });
-			
-		$("#tab_pic_upload_content #upload_document_submit").click(function(event) {
-			if($("input[name='document[file]']").val()==""){
+      
+    $("#tab_pic_upload_content #upload_document_submit").click(function(event) {
+      if($("input[name='document[file]']").val()==""){
         event.preventDefault();
-			}else{
-				if (options) {
-	        var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
-	        $("input[name='document[description]']").val(description);
-	        $("input[name='document[owner_id]']").val(options["ownerId"]);
-	        $("input[name='authenticity_token']").val(options["token"]);
-	        $(".documentsForm").attr("action", options["documentsPath"]);
+      }else{
+        if (options) {
+          var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
+          $("input[name='document[description]']").val(description);
+          $("input[name='document[owner_id]']").val(options["ownerId"]);
+          $("input[name='authenticity_token']").val(options["token"]);
+          $(".documentsForm").attr("action", options["documentsPath"]);
         }
-			}
+      }
     });
-	
-	  $('form').ajaxForm({
+  
+    $('form').ajaxForm({
       beforeSend: function() {
           var percentVal = '0%';
           bar.width(percentVal);
@@ -56,13 +63,13 @@ VISH.Editor.Image = (function(V,$,undefined){
       },
       complete: function(xhr) {
           console.log(xhr.responseText);
-					processResponse(xhr.responseText);
+          processResponse(xhr.responseText);
           var percentVal = '100%';
           bar.width(percentVal)
           percent.html(percentVal);
       }
     });
-	};
+	}
 	
 	
 	var drawUploadedElement = function(){
