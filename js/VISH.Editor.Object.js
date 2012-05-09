@@ -241,57 +241,39 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		VISH.Editor.addDeleteButton($(current_area));
 
-		//separete for diferent objects
-
-		//for youtube video
-		if(getObjectInfo(wrapper).type === "youtube") {
-
-			var width_height = V.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
-			if(style===null || style === ""){
-				$("#" + idToDrag).attr('style', "width:" + width_height.width + "px; height:" + width_height.height + "px;");
-			}
-
-			// $(wrapperTag).attr('style', "width:"+width_height.width+ "; height:"+ width_height.height+ ";");
-			$("#" + idToDrag).draggable({
-				cursor : "move"
-			});
-			$(wrapperDiv).append(wrapperTag);
-			//youtube don't need resize
-
+				
+		$(wrapperDiv).append(wrapperTag);
+		//RESIZE
+		var width, value;
+		if(style){
+		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   value = 10*width/$(current_area).width();
 		}
-		//diferent from youtube
-		else {
-			$(wrapperDiv).append(wrapperTag);
-			//RESIZE
-			var width, value;
-			if(style){
-			   width = V.SlidesUtilities.getWidthFromStyle(style);
-			   value = width/80;
-			}
-			else{
-				value = 4;
-			}
-			$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-
-			$("#imageSlider" + nextWrapperId).slider({
-				from : 1,
-				to : 8,
-				step : 0.2,
-				round : 1,
-				dimension : "x",
-				skin : "blue",
-				onstatechange : function(value) {
-					resizeObject(idToResize, 80 * value);
-				}
-			});
-
-			$("#" + idToDrag).draggable({
-				cursor : "move"
-			});
-
-			_adjustWrapperOfObject(idToResize, current_area);
-
+		else{			
+			value = 10; //we set it to the maximum value
 		}
+		var mystep = $(current_area).width()/10; //the step to multiply the value
+		$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
+
+		$("#imageSlider" + nextWrapperId).slider({
+			from : 1,
+			to : 10,
+			step : 0.2,
+			round : 1,
+			dimension : "x",
+			skin : "blue",
+			onstatechange : function(value) {
+				resizeObject(idToResize, mystep * value);
+			}
+		});
+
+		$("#" + idToDrag).draggable({
+			cursor : "move"
+		});
+
+		_adjustWrapperOfObject(idToResize, current_area);
+
+
 
 	};
 	

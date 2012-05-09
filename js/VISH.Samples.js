@@ -28,8 +28,8 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone3",
 					"type": "object",
 					"areaid": "right",
-					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width:324px; height:242.25230769230768px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
-					"style": "width: 324px; height: 242.25230769230768px; position: relative; left: -7px; top: 56px; "
+					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
+					"style": "position: relative; width: 246.23999999999998px; height: 174.88065306122448px; left: 33px; top: 92px; "
 				}
 			]
 		},
@@ -47,7 +47,7 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone5",
 					"type": "object",
 					"areaid": "left",
-					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_12.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">","style":"width: 324px; height: 242.25230769230768px; position: relative; left: -11px; top: 95px; "},{"id":"zone6","areaid":"right"
+					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">","style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "},{"id":"zone6","areaid":"right"
 				}
 			]
 		}
