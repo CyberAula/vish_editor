@@ -107,6 +107,10 @@ VISH.Editor = (function(V,$,undefined){
     return "unicID_" + domId;
   }
 	
+	var getOptions = function(){
+		return initOptions;
+	}
+	
   /**
    * function to dinamically add a css
    */
@@ -681,14 +685,15 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	return {
-		init					         	: init,
+		init					         	  : init,
 		addDeleteButton						: addDeleteButton,
 		loadTab 				        	: loadTab,
-		getValueFromFancybox    			: getValueFromFancybox,
-		getId                  		 		: getId,
-		getTemplate            				: getTemplate,
-		getCurrentArea        				: getCurrentArea,
-		getParams            				: getParams
+		getValueFromFancybox    	: getValueFromFancybox,
+		getId                  		: getId,
+		getTemplate            		: getTemplate,
+		getCurrentArea        		: getCurrentArea,
+		getParams            			: getParams,
+		getOptions                : getOptions
 	};
 
 }) (VISH, jQuery);
