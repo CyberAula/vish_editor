@@ -70,7 +70,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			});
 			
 			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement);
+			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5);
 		}
 	};
 

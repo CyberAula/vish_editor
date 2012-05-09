@@ -62,12 +62,12 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
-		//V.Editor.AvatarPicker.init();
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		V.Editor.AvatarPicker.init();
 		
 		// Intial box to input the details related to the excursion
 		$("a#edit_excursion_details").fancybox({

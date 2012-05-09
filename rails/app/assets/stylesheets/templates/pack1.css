@@ -53,9 +53,13 @@
 }
 
 .t1_object{
-	height: 100%;
+	
 }
 
+.t1_swf{
+	width: 100%;
+	height: 100%;
+}
 
 /*
 	TEMPLATE 2: "Espiritu minimalista"
@@ -97,11 +101,15 @@
 }
 
 .t2_object{
+		
+}
+
+.t2_applet{
 	width: 100%;
 	height: 100%;
 }
 
-.t2_applet{
+.t2_swf{
 	width: 100%;
 	height: 100%;
 }
@@ -175,8 +183,12 @@
 }
 
 .t3_object{
+	
+}
+
+.t3_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*
@@ -234,8 +246,12 @@
 }
 
 .t4_object{
+	
+}
+
+.t4_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*
@@ -302,8 +318,12 @@
 }
 
 .t5_object{
+	
+}
+
+.t5_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*
@@ -372,8 +392,12 @@
 }
 
 .t6_object{
+	
+}
+
+.t6_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*
@@ -442,8 +466,12 @@
 }
 
 .t7_object{
+	
+}
+
+.t7_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*
@@ -514,8 +542,12 @@
 }
 
 .t8_object{
+	
+}
+
+.t8_swf{
+	width: 100%;
 	height: 100%;
-	bottom: 0;
 }
 
 /*

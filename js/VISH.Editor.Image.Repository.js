@@ -62,7 +62,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 			});
 	
 			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement);
+			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5);
 		}
 	};
 	

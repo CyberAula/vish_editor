@@ -97,25 +97,66 @@
     <!-- Hidden link to open fancybox when creating a new excursion -->
     <a id="launch_excursion_details" href="#excursiondetails" style="display: none;"></a>
 
-      <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
-      <div style='display:none'>		
-		<form id='excursiondetails'>			
-        	<img src="/images/intro.png"/> 
-        	<div id="start_tutorial"></div>       	
-      		<div id="excursion_details_fields">
-	      		<label for="excursion_title">
-	      			<div class="textintro1 textintromargin1">Title</div>
-	      		</label>
-	      		<input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">	
-				<label for="excursion_description">
-					<div class="textintro1 textintromargin2">Description</div>
-				</label>
-				<textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
-				<input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
-		   		<p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
-	   		</div>
-	   	</form>
-      </div>
+    <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
+    <div style='display:none'>    
+      <form id='excursiondetails'> 
+			    <img class="imgintro" src="/images/intro.png"/>
+          <div id="start_tutorial"></div>         
+          <div id="excursion_details_fields">
+            <label for="excursion_title">
+              <div class="textintro1 textintromargin1">Title</div>
+            </label>
+            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">  
+        <label for="excursion_description">
+          <div class="textintro1 textintromargin2">Description</div>
+        </label>
+        <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+        
+        <div id="thumbnails_in_excursion_details">
+          <label for="excursion_avatar">
+            <div class="textintro1 textintromargin3">Thumbnail</div>
+          </label>
+          <div id="avatars_carrousel">
+          	<div>
+<img src="http://0.0.0.0:3000http://0.0.0.0:3000/assets/logos/original/excursion-01.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000http://0.0.0.0:3000/assets/logos/original/excursion-02.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-03.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-04.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-05.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-06.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-07.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-08.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-09.png">
+</div>
+<div>
+<img src="http://0.0.0.0:3000/assets/logos/original/excursion-10.png">
+</div>
+						
+          </div>
+          <input type="hidden" id="excursion_avatar" value="">
+        </div>
+        
+        <input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
+          <p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
+        </div>
+      </form>
+    </div>  
       
       
 	  <div style='display:none'>
