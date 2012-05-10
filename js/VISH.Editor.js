@@ -292,7 +292,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
-		console.log("slide es" +slide);
+		
 		V.SlidesUtilities.addSlide(slide);	
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
@@ -552,8 +552,7 @@ VISH.Editor = (function(V,$,undefined){
           element.id     = $(div).attr('id');
           element.type   = $(div).attr('type');
           element.areaid = $(div).attr('areaid');
-          console.log("element.type " +element.type);
-          
+                   
           if(element.type=="text"){
             //TODO make this text json safe
             element.body   = $(div).find(".wysiwygInstance").html();
@@ -607,9 +606,7 @@ VISH.Editor = (function(V,$,undefined){
 	      */
 	      else if (element.type=="openquestion") {
 	      	
-	      		      	console.log ("entra en openquestion");
-	      		      	console.log ("bucsamos title area: " + $(div).find(".title_openquestion").val());
-	      		      	console.log ("bucsamos text area: " + $(div).find(".value_openquestion").val());
+	      		   
 	      	element.title   = $(div).find(".title_openquestion").val();
 	     element.question   = $(div).find(".value_openquestion").val();
 	     
