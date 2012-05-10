@@ -600,9 +600,19 @@ VISH.Editor = (function(V,$,undefined){
 	    	  element.body   = $(object)[0].outerHTML;
 	    	  element.style  = $(object).parent().attr('style');
 	      }
+	       /*else if (element.type=="title_openquestion") {
+	      	console.log ("entra en title_openquestion");
+	      	element.body   = $(div).find(".title_openquestion").html();
+	      }
+	      */
 	      else if (element.type=="openquestion") {
-	      	console.log ("entra en openquestion");
 	      	
+	      		      	console.log ("entra en openquestion");
+	      		      	console.log ("bucsamos title area: " + $(div).find(".title_openquestion").val());
+	      		      	console.log ("bucsamos text area: " + $(div).find(".value_openquestion").val());
+	      	element.title   = $(div).find(".title_openquestion").val();
+	     element.question   = $(div).find(".value_openquestion").val();
+	     
 	      }
           
           slide.elements.push(element);
