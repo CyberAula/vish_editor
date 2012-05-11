@@ -16,7 +16,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
    * Callback function to select an avatar
    */
   var selectAvatar = function(event){
-  	$(".carrousel_element_single_row").removeClass("carrousel_element_selected");
+  	$(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
   	$(event.target).addClass("carrousel_element_selected");
   	$('#excursion_avatar').val($(event.target).attr("src"));
   };

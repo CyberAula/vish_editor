@@ -20,14 +20,19 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
-	 * options is a hash with params and options from the server 
+	 * options is a hash with params and options from the server, example of full options hash:
+	 * {"token"; "453452453", "ownerId":"ebarra", "ownerName": "Enrique Barra", "postPath": "/excursions.json", "documentsPath": "/documents.json", "lang": "es"}
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
 		//first set VISH.Editing to true
 		VISH.Editing = true;
-		
-		initOptions = options;
+		if(options){
+			initOptions = options;
+		}
+		else{
+			initOptions = {};
+		}
 		
 		//if we have to edit
 		if(excursion){
@@ -68,6 +73,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Video.init();
 		V.Editor.Object.init();
 		V.Editor.AvatarPicker.init();
+		V.Editor.I18n.init(options["lang"]);
 		
 		// Intial box to input the details related to the excursion
 		$("a#edit_excursion_details").fancybox({
