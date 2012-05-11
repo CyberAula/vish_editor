@@ -32,7 +32,7 @@ a.prev, a.next {
     height: 50px;
     display: block;
     position: absolute;
-	outline: none;
+	  outline: none;
 }
 
 a.prev_single_row, a.next_single_row{
@@ -149,3 +149,34 @@ img.carrousel_element_multiple_row{
 	text-align: center;
 	font-size: 10px;
 }
+
+
+/* CSS for Thumbnails Carrousel */
+
+.image_carousel_single_row_thumbnails {
+    padding: 10px 0 0px 0px;
+		margin-left: 25px;
+}
+
+div.carrousel_element_single_row_thumbnails{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  float: left;
+  margin-left: 35px;
+}
+
+img.carrousel_element_single_row_thumbnails{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-left: -27px;
+  margin-top: -2px;
+}
+
+a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
+  top: 40px;
+}
+

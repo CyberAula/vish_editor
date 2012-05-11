@@ -5,29 +5,18 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
     * function to create the carrousel with the avatars in the div with id "avatars_carrousel"
     */
    var init = function(){
-   	  if(avatars===null){
+	 	  $("#thumbnails_in_excursion_details").hide();
+   	  if(avatars==null){
    	  	_getAvatars();
    	  }
-   	  //if it is still null, we will have no thumbnails
-   	  if(avatars===null){
-   	  	$("#thumbnails_in_excursion_details").remove();
-   	  	return;
-   	  }
-   	  var content = "";
-   	  $.each(avatars.pictures, function(i, item) {
-   	  	content = content + '<div><img src="'+item.src+'" /></div>';
-   	  });
-   	  $("#avatars_carrousel").html(content);
-   	  V.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar);
-   	  
    }; 	
    
     
   /**
-   * callback function to select an avatar
+   * Callback function to select an avatar
    */
   var selectAvatar = function(event){
-  	$(".carrousel_element_single_row").removeClass("carrousel_element_selected");
+  	$(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
   	$(event.target).addClass("carrousel_element_selected");
   	$('#excursion_avatar').val($(event.target).attr("src"));
   };
@@ -44,10 +33,27 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		  success: function(data) {
 		    console.log("success getting excursion avatars");
 		    avatars = data;
+	
+				//Clean previous carrousel
+        VISH.Editor.Carrousel.cleanCarrousel("avatars_carrousel");
+				
+				//Build new carrousel
+        var content = "";
+        $.each(avatars.pictures, function(i, item) {
+          content = content + '<div><img src="'+item.src+'" /></div>';
+        });
+        $("#avatars_carrousel").html(content);
+				setTimeout(function() { 
+				 $("#thumbnails_in_excursion_details").show(); 
+				 VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,"thumbnails");
+				 $(".buttonintro").addClass("buttonintro_extramargin");
+				},500);
 		  },
 		  error: function(xhr, ajaxOptions, thrownError){
             console.log("status returned by server:" + xhr.status);
             console.log("Error in client: " + thrownError);  
+						console.log("ERROR!" + thrownError)
+						//$("#thumbnails_in_excursion_details").remove();
 		  }
 		});
 	};

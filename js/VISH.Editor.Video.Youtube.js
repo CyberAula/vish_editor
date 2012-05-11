@@ -52,76 +52,99 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		} else{ 
 			$.each(data.feed.entry, function(i, item) {
 				var video = item['id']['$t'];
-			    var title = item['title']['$t']; //not used yet
+			  var title = item['title']['$t']; //not used yet
 				var author = item.author[0].name.$t;
 				var subtitle = item.media$group.media$description.$t;
 
-			    video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
-			    var videoID = video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
+			  video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
+			  var videoID = video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
 				//url's video thumbnail 
-	        	currentVideos[videoID] = new Object();
-			    currentVideos[videoID].id = videoID;
-	        	currentVideos[videoID].title = title;
-	        	currentVideos[videoID].author = author;
-	        	currentVideos[videoID].subtitle = subtitle;
+	      currentVideos[videoID] = new Object();
+			  currentVideos[videoID].id = videoID;
+	      currentVideos[videoID].title = title;
+	      currentVideos[videoID].author = author;
+	      currentVideos[videoID].subtitle = subtitle;
 
-	        	var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-	        	content = content + '<div><img videoID="'+videoID+'" src="'+image_url+'" /></div>';
+	      var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
+	      content = content + '<div><img videoID="'+videoID+'" src="'+image_url+'" /></div>';
 			});
 			
 			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement);
+			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5);
 		}
 	};
 
-	
-  
-  var addSelectedVideo = function() {
-	if(selectedVideo != null) {
-	
+
+  var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g
+	var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g
+
+  var _getYoutubeIdFromURL = function(url){	
+		var id = null;
 		
-		VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo));
-		$.fancybox.close();
+		if(url.match(youtube_video_pattern_1)!=null){
+			var result = youtube_video_pattern_1.exec(url)
+      if(result[1]){
+				id = result[1];
+			}
+			return id;
+    }
+		
+		if(url.match(youtube_video_pattern_2)!=null){
+			var result = url.split("&")[0];
+      var result = youtube_video_pattern_2.exec(url)
+      if(result[3]){
+        id = result[3];
+      }
+			return id;
+    }
+		
+		return id;
 	}
+	
+  var addSelectedVideo = function() {
+	  if(selectedVideo != null) {
+		  VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo.id));
+		  $.fancybox.close();
+	  }
   };
 
 
   /** 
    * Funcion to show a preview youtube video and select to embed into the zone
    * video_id    
-*/
+   */
   var onClickCarrouselElement = function(event) {
     var videoId = $(event.target).attr("videoID");
     var video_embedded = "http://www.youtube.com/embed/"+ videoId;
     
-	var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
-	_renderVideoPreview(renderedIframe, currentVideos[videoId]);
-	selectedVideo = currentVideos[videoId];	
+	  var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
+	  _renderVideoPreview(renderedIframe, currentVideos[videoId]);
+	  selectedVideo = currentVideos[videoId];	
   };
 
   
   var _renderVideoPreview = function(renderedIframe, video) {
-	var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
-	var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
-	var button = $("#" + previewDivId).find(".okButton");
-	$(videoArea).html("");
-	$(metadataArea).html("");
-	if((renderedIframe) && (video)) {
-		$(videoArea).append(renderedIframe);
-		var table = _generateTable(video.author, video.title, video.description);
-		$(metadataArea).html(table);
-		$(button).show();
-	}
+		var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
+		var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
+		var button = $("#" + previewDivId).find(".okButton");
+		$(videoArea).html("");
+		$(metadataArea).html("");
+		if((renderedIframe) && (video)) {
+			$(videoArea).append(renderedIframe);
+			var table = _generateTable(video.author, video.title, video.description);
+			$(metadataArea).html(table);
+			$(button).show();
+		}
   };
   
   
   var _cleanVideoPreview = function() {
-	var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
-	var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
-	var button = $("#" + previewDivId).find(".okButton");
-	$(videoArea).html("");
-	$(metadataArea).html("");
-	$(button).hide();
+		var videoArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_video");
+		var metadataArea = $("#" + previewDivId).find("#tab_video_youtube_content_preview_metadata");
+		var button = $("#" + previewDivId).find(".okButton");
+		$(videoArea).html("");
+		$(metadataArea).html("");
+		$(button).hide();
   };
 
 
@@ -155,28 +178,32 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	"</table>";
   }
 
-  
- var _generateWrapper = function (video) {
-   var videoID = video.id;
-   var video_embedded = "http://www.youtube.com/embed/"+videoID;
+ 
+ var _generateWrapper = function (videoId) {
+   var video_embedded = "http://www.youtube.com/embed/"+videoId;
    current_area=  VISH.Editor.getCurrentArea();
- var width_height = VISH.SlidesUtilities.dimentionToDraw(
-   	  current_area.width(), current_area.height(), 325, 243 );
-   	   
+   var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
    var wrapper = "<iframe src='"+video_embedded+"?wmode=transparent' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
    return wrapper;
  }
-
-
  
+ var generateWrapperForYoutubeVideoUrl = function (url){
+ 	 var videoId = _getYoutubeIdFromURL(url);
+	 if(videoId!=null){
+	 	 return _generateWrapper(videoId);
+	 } else {
+	 	 return "Youtube Video ID can't be founded."
+	 }
+ }
+
+
   return {
-	init		  			: init,
-	onLoadTab	  			: onLoadTab,
-	onClickCarrouselElement : onClickCarrouselElement, 
-	requestYoutubeData      : requestYoutubeData,
-	addSelectedVideo		: addSelectedVideo
-	
-	
+		init		  			                  : init,
+		onLoadTab	  			                : onLoadTab,
+		onClickCarrouselElement           : onClickCarrouselElement, 
+		requestYoutubeData                : requestYoutubeData,
+		addSelectedVideo		              : addSelectedVideo,
+		generateWrapperForYoutubeVideoUrl : generateWrapperForYoutubeVideoUrl
   };
 
 }) (VISH, jQuery);

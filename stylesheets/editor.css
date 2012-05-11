@@ -63,8 +63,10 @@
 	width: 250px;
 	height: 250px;
 	border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 
@@ -84,17 +86,17 @@
 
 .documentblank {
 	position:absolute;
-	margin-left: 365px;
-	margin-top: 140px;
+	margin-left: 93%;
+	margin-top: 56%;
 }
 
 .buttonaddfancy {
 	position:absolute;
-	margin-top: 217px;
-	margin-left: 483px;	
-    display: inline;
+	margin-top: 86%;
+	margin-left: 145%;	
+  display: inline;
 	text-decoration:none;
-    background: #CCC repeat-x bottom !important;
+  background: #CCC repeat-x bottom !important;
 	width: 150px !important;
 	opacity: 0.6;
 	color:#f9f9f9;
@@ -159,7 +161,8 @@
 	z-index: 1000;
 }
 
-.textarea_openquestion {
+.value_openquestion {
+	
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -170,7 +173,20 @@
     position: absolute;
     z-index: 1000;
     }
+
+
 .title_openquestion {
+	background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: absolute;
+    z-index: 1000;
+    }
+.header_openquestion {
 	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
@@ -851,10 +867,18 @@ div.object_wrapper{
 }
 
 .buttonintro {
-	margin-top:100px;
+	margin-top:125px;
 	margin-left:640px;
-	width:60px;
+	width:75px;
 	text-align: center;
+}
+
+.buttonintro_extramargin {
+  margin-top:10px;
+}
+
+.imgintro{
+	height: 100px;
 }
 
 .error_intro {
@@ -890,28 +914,54 @@ textarea {
 
 /* Upload stylessheet */
 
-form { 
-  display: block; 
-	margin: 20px auto; 
-	background: #eee; 
-	border-radius: 10px; 
-	padding: 15px 
+.documentsForm { 
+  display: inline;
+	position: absolute;
+	margin-left: 1.5%;
+  margin-top: 3.7%;
 }
+
 .upload_progress_bar_wrapper { 
-  position:relative; width:400px; 
+  position:relative; width: 415px; 
 	border: 1px solid #ddd; 
 	padding: 1px; 
 	border-radius: 3px; 
+	margin-left: 71px;
+  margin-top: 10px;
 }
+
 .upload_progress_bar { 
   background-color: #B4F5B4; 
 	width:0%; 
 	height:20px; 
 	border-radius: 3px; 
 }
+
 .upload_progress_bar_percent { 
   position:absolute; 
 	display:inline-block; 
-	top:3px; 
-	left:48%; 
+	top:2px; 
+	left:44%; 
+	font-family:Helvetica;
+  font-size: 16px;
+}
+
+.uploadPreviewImage{
+	width: 80%;
+	height: 80%;
+	margin-top: 9%;
+}
+
+.buttonaddfancy_extraMargin {
+	margin-left: 195%;
+}
+
+.documentblank_extraMargin {
+	margin-left: 133%;
+}
+
+.upload_file_input{
+	font-family:Helvetica;
+  font-size: 16px;
+  background: 5px 50% no-repeat;
 }

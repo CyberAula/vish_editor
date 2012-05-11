@@ -20,14 +20,19 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
-	 * options is a hash with params and options from the server 
+	 * options is a hash with params and options from the server, example of full options hash:
+	 * {"token"; "453452453", "ownerId":"ebarra", "ownerName": "Enrique Barra", "postPath": "/excursions.json", "documentsPath": "/documents.json", "lang": "es"}
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
 		//first set VISH.Editing to true
 		VISH.Editing = true;
-		
-		initOptions = options;
+		if(options){
+			initOptions = options;
+		}
+		else{
+			initOptions = {};
+		}
 		
 		//if we have to edit
 		if(excursion){
@@ -62,12 +67,13 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();
 		
 		//Init submodules
-		V.Editor.AvatarPicker.init();
 		V.Debugging.init(true);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		V.Editor.AvatarPicker.init();
+		V.Editor.I18n.init(options["lang"]);
 		
 		// Intial box to input the details related to the excursion
 		$("a#edit_excursion_details").fancybox({
@@ -106,6 +112,10 @@ VISH.Editor = (function(V,$,undefined){
     domId = domId +1;
     return "unicID_" + domId;
   }
+	
+	var getOptions = function(){
+		return initOptions;
+	}
 	
   /**
    * function to dinamically add a css
@@ -211,7 +221,8 @@ VISH.Editor = (function(V,$,undefined){
     	V.Editor.Object.drawObject($("#"+id_to_get).val())
         break;
       case "video_url":
-        V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
+        //V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
+				V.Editor.Object.drawObject($("#"+id_to_get).val())
         break;
       //case "add_your_input_id_here":
         //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
@@ -287,7 +298,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
-		console.log("slide es" +slide);
+		
 		V.SlidesUtilities.addSlide(slide);	
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
@@ -437,12 +448,24 @@ VISH.Editor = (function(V,$,undefined){
   	$(this).find(".delete_content").show();
   		
   	//show sliders  	
-  	if($(this).attr("type")==="image"){
-  		var img_id = $(this).find("img").attr("id");
-  		//the id is "draggableunicID_1" we want to remove "draggable"
-  		img_id = img_id.substring(9);
+  	if($(this).attr("type")==="image" || $(this).attr("type")==="object" || $(this).attr("type")==="video"){
+  		var the_id;
+  		switch($(this).attr("type")){
+  			case "image":
+  				the_id = $(this).find("img").attr("id");
+  				break;
+  			case "object":
+  				the_id = $(this).find(".object_wrapper").attr("id");
+  				break;
+  			case "video":
+  				the_id = $(this).find("video").attr("id");
+  				break;
+  		}
   		
-  		$("#sliderId" + img_id).show();  		
+  		//the id is "draggableunicID_1" we want to remove "draggable"
+  		the_id = the_id.substring(9);
+  		
+  		$("#sliderId" + the_id).show();  		
   	}
   	
   	//add css
@@ -535,8 +558,7 @@ VISH.Editor = (function(V,$,undefined){
           element.id     = $(div).attr('id');
           element.type   = $(div).attr('type');
           element.areaid = $(div).attr('areaid');
-          console.log("element.type " +element.type);
-          
+                   
           if(element.type=="text"){
             //TODO make this text json safe
             element.body   = $(div).find(".wysiwygInstance").html();
@@ -583,9 +605,17 @@ VISH.Editor = (function(V,$,undefined){
 	    	  element.body   = $(object)[0].outerHTML;
 	    	  element.style  = $(object).parent().attr('style');
 	      }
+	       /*else if (element.type=="title_openquestion") {
+	      	console.log ("entra en title_openquestion");
+	      	element.body   = $(div).find(".title_openquestion").html();
+	      }
+	      */
 	      else if (element.type=="openquestion") {
-	      	console.log ("entra en openquestion");
 	      	
+	      		   
+	      	element.title   = $(div).find(".title_openquestion").val();
+	     element.question   = $(div).find(".value_openquestion").val();
+	     
 	      }
           
           slide.elements.push(element);
@@ -687,14 +717,15 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	return {
-		init					         	: init,
+		init					         	  : init,
 		addDeleteButton						: addDeleteButton,
 		loadTab 				        	: loadTab,
-		getValueFromFancybox    			: getValueFromFancybox,
-		getId                  		 		: getId,
-		getTemplate            				: getTemplate,
-		getCurrentArea        				: getCurrentArea,
-		getParams            				: getParams
+		getValueFromFancybox    	: getValueFromFancybox,
+		getId                  		: getId,
+		getTemplate            		: getTemplate,
+		getCurrentArea        		: getCurrentArea,
+		getParams            			: getParams,
+		getOptions                : getOptions
 	};
 
 }) (VISH, jQuery);

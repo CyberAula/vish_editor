@@ -80,7 +80,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 
     $("#" + carrouselDivId).html(content);
     
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Object.Repository.onClickCarrouselElement);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,VISH.Editor.Object.Repository.onClickCarrouselElement,5);
   }
 	
   var onAPIError = function(){

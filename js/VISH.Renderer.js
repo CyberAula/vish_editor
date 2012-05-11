@@ -137,13 +137,19 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an open question form inside an article (a slide)
 	 */
 	var _renderOpenquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
+		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
+		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name: </label>";
+		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+		ret += "<label class='question_name'>Name:  </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";
 		ret += "<label class='question_answer'>Answer: </label>";
 		ret += "<textarea class='question_answer_input'></textarea>";
+		
+		
 		ret += "<button type='button' class='question_button'>Send</button>";
+		
+		
 		return ret;		
 	};
 	

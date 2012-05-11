@@ -41,7 +41,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
           });
 	      
         //call createCarrousel ( div_Carrousel_id, 1 , callbackFunction)
-		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage);
+		VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage,5);
 	   });
 	};
 

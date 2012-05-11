@@ -69,7 +69,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 	var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 	var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
-	                                                                           		
+	var html5VideoFormats = ["mp4","webm","ogg"]                                                                           		
 	
 	var _getTypeFromSource = function(source){
 		
@@ -84,6 +84,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		if(extension=="swf"){
 			return extension;
+		}
+		
+		if(html5VideoFormats.indexOf(extension)!="-1"){
+			return "HTML5";
 		}
 		
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
@@ -161,20 +165,19 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
 	var drawObject = function(object, area, style){
+		
 		var current_area;
 		var object_style = "";
-	  	if(area){
-	  		current_area = area;
-	  	}
-	  	else{
+	  if(area){
+	  	current_area = area;
+	  } else {
 	  		current_area = VISH.Editor.getCurrentArea();
-	  	}
+	 	}
 		if(style){
 	  		object_style = style;	  		
-	  	}
+	 	}
+		
 		var objectInfo = getObjectInfo(object);
-		
-		
 		
 		switch (objectInfo.wrapper) {
 			case null:
@@ -185,8 +188,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 						break;
 						
 					case "youtube":
-						//V.Editor.Video.Youtube.drawVideoObject(object);
+						VISH.Editor.Object.drawObject(VISH.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
 						break;
+						
+					case "HTML5":
+					  V.Editor.Video.HTML5.drawVideoWithUrl(object)
+					  break;
 						
 					default:
 						console.log("Unrecognized object source type: " + objectInfo.type)
@@ -241,57 +248,39 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		VISH.Editor.addDeleteButton($(current_area));
 
-		//separete for diferent objects
-
-		//for youtube video
-		if(getObjectInfo(wrapper).type = "youtube") {
-
-			var width_height = V.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
-			if(style===null || style === ""){
-				$("#" + idToDrag).attr('style', "width:" + width_height.width + "px; height:" + width_height.height + "px;");
-			}
-
-			// $(wrapperTag).attr('style', "width:"+width_height.width+ "; height:"+ width_height.height+ ";");
-			$("#" + idToDrag).draggable({
-				cursor : "move"
-			});
-			$(wrapperDiv).append(wrapperTag);
-			//youtube don't need resize
-
+				
+		$(wrapperDiv).append(wrapperTag);
+		//RESIZE
+		var width, value;
+		if(style){
+		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   value = 10*width/$(current_area).width();
 		}
-		//diferent from youtube
-		else {
-			$(wrapperDiv).append(wrapperTag);
-			//RESIZE
-			var width, value;
-			if(style){
-			   width = V.SlidesUtilities.getWidthFromStyle(style);
-			   value = width/325;
-			}
-			else{
-				value = 1;
-			}
-			$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-
-			$("#imageSlider" + nextWrapperId).slider({
-				from : 1,
-				to : 8,
-				step : 0.5,
-				round : 1,
-				dimension : "x",
-				skin : "blue",
-				onstatechange : function(value) {
-					resizeObject(idToResize, 325 * value);
-				}
-			});
-
-			$("#" + idToDrag).draggable({
-				cursor : "move"
-			});
-
-			_adjustWrapperOfObject(idToResize, current_area);
-
+		else{			
+			value = 10; //we set it to the maximum value
 		}
+		var mystep = $(current_area).width()/10; //the step to multiply the value
+		$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
+
+		$("#imageSlider" + nextWrapperId).slider({
+			from : 1,
+			to : 10,
+			step : 0.2,
+			round : 1,
+			dimension : "x",
+			skin : "blue",
+			onstatechange : function(value) {
+				resizeObject(idToResize, mystep * value);
+			}
+		});
+
+		$("#" + idToDrag).draggable({
+			cursor : "move"
+		});
+
+		_adjustWrapperOfObject(idToResize, current_area);
+
+
 
 	};
 	

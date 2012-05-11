@@ -97,25 +97,36 @@
     <!-- Hidden link to open fancybox when creating a new excursion -->
     <a id="launch_excursion_details" href="#excursiondetails" style="display: none;"></a>
 
-      <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
-      <div style='display:none'>		
-		<form id='excursiondetails'>			
-        	<img src="/images/intro.png"/> 
-        	<div id="start_tutorial"></div>       	
-      		<div id="excursion_details_fields">
-	      		<label for="excursion_title">
-	      			<div class="textintro1 textintromargin1">Title</div>
-	      		</label>
-	      		<input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">	
-				<label for="excursion_description">
-					<div class="textintro1 textintromargin2">Description</div>
-				</label>
-				<textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
-				<input id='save_excursion_details' submit='disable' class='button buttonintro' value="Save">
-		   		<p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
-	   		</div>
-	   	</form>
-      </div>
+    <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
+    <div style='display:none'>    
+      <form id='excursiondetails'> 
+			    <img class="imgintro" src="/images/intro.png"/>
+          <div id="start_tutorial"></div>         
+          <div id="excursion_details_fields">
+            <label for="excursion_title">
+              <div class="textintro1 textintromargin1">Title</div>
+            </label>
+            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title">  
+        <label for="excursion_description">
+          <div class="textintro1 textintromargin2">Description</div>
+        </label>
+        <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+        
+        <div id="thumbnails_in_excursion_details">
+          <label for="excursion_avatar">
+            <div class="textintro1 textintromargin3">Thumbnail</div>
+          </label>
+          <div id="avatars_carrousel">
+          							
+          </div>
+          <input type="hidden" id="excursion_avatar" value="">
+        </div>
+        
+        <input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
+          <p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
+        </div>
+      </form>
+    </div>  
       
       
 	  <div style='display:none'>
@@ -247,28 +258,26 @@
               <div class="box1 box1fancy1">
 				  			<p class="textfancy">Select picture to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
-						    <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
-						        <input type="file" name="document[file]"><br>
-						        <input type="hidden" name="document[title]">
-						        <input type="hidden" name="document[description]">
-						        <input type="hidden" name="document[owner_id]">
-						        <input type="hidden" name="authenticity_token">
-						        <input id="upload_document_submit" type="submit" value="Upload">
-						    </form>
-						    
-						    <div class="upload_progress_bar_wrapper">
-						        <div class="upload_progress_bar"></div >
-						        <div class="upload_progress_bar_percent">0%</div >
-						    </div>
-						    
-						    <div id="status"></div>
-									
+								
+							    <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+							        <input type="file" name="document[file]" class="upload_file_input">
+							        <input type="hidden" name="document[title]">
+							        <input type="hidden" name="document[description]">
+							        <input type="hidden" name="document[owner_id]">
+							        <input type="hidden" name="authenticity_token">
+							        <input id="upload_document_submit" type="submit" class="button" value="Upload">
+							    </form>
+							    
+							    <div class="upload_progress_bar_wrapper">
+							        <div class="upload_progress_bar"></div >
+							        <div class="upload_progress_bar_percent">0%</div >
+							    </div>
 									
 							</div>
               <div class="box2">
               				<div class="previewimgbox">
                   				<img class="documentblank" src="/images/document_black.png"/>
-                  				<button type="button" class="button buttonaddfancy">Add Content</button>
+                  				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawUploadedElement()">Add Content</button>
                       </div>
               </div>
         </div>            
@@ -490,6 +499,10 @@
     <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Thumbnails.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.AvatarPicker.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
+	<script type="text/javascript" src="js/lang/translations.en.js"></script>
+	
 	
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 	<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
@@ -509,8 +522,8 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
-		  VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  //VISH.Editor.init();
+		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
+		  VISH.Editor.init({});
 		}
 	</script>
 		

@@ -63,7 +63,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			});
 	
 			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement);
+			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement,5);
 		}
 	};
 	
