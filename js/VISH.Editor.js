@@ -605,11 +605,7 @@ VISH.Editor = (function(V,$,undefined){
 	    	  element.body   = $(object)[0].outerHTML;
 	    	  element.style  = $(object).parent().attr('style');
 	      }
-	       /*else if (element.type=="title_openquestion") {
-	      	console.log ("entra en title_openquestion");
-	      	element.body   = $(div).find(".title_openquestion").html();
-	      }
-	      */
+	    
 	      else if (element.type=="openquestion") {
 	      	
 	      		   
@@ -617,6 +613,15 @@ VISH.Editor = (function(V,$,undefined){
 	     element.question   = $(div).find(".value_openquestion").val();
 	     
 	      }
+	      else if (element.type=="mcquestion") {
+	      	
+	      		   
+	      	element.title   = $(div).find(".value_multiplechoice_question").val();
+	     
+	     
+	      }
+	      
+	      
           
           slide.elements.push(element);
           element = {};
