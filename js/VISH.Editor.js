@@ -56,7 +56,6 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','.selectable', _onSelectableClicked);
 		$(document).on('click','.delete_content', _onDeleteItemClicked);
 		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		
 		//arrows in button panel
 		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
@@ -614,10 +613,14 @@ VISH.Editor = (function(V,$,undefined){
 	     
 	      }
 	      else if (element.type=="mcquestion") {
-	      	
-	      		   
+	      	var i;
+	      		      		   
 	      	element.title   = $(div).find(".value_multiplechoice_question").val();
+	     var array_options = $(div).find(".multiplechoice_radio");
+	     //	for (i=0; i<$(div).(find(".multimplechoice_radio"))) 
 	     
+	     	//element['options']
+	     	
 	     
 	      }
 	      
