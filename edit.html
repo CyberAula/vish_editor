@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+	<meta charset="UTF-8">
 		
     <title>ViSH Editor</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/jquery.fancybox-1.3.4.css">
@@ -193,7 +194,7 @@
 	  	<div id='prompt_form'>	  		
 	  		<img id="image_template_prompt" class="delete_img" src="/images/templatesthumbs/default.png"/>
 	  		<img id="delimg" class="delimg" src="/images/delete_border.png">
-	  		<span class="deltext"> are you sure? </span>
+	  		<span class="deltext">are you sure?</span>
 	  		<div class="buttons_together">
 	  			<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button button button220">delete</a>
 	  			<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">no</a>
@@ -207,7 +208,7 @@
 	  	<input type="hidden" id="save_answer" value="false"></input>
 	  	<div id='save_form'>
 	  		<img id="saveimg" class="delete_img" src="/images/save_document.png">
-	  		<span class="deltext"> are you sure? </span> 		
+	  		<span class="deltext">are you sure?</span> 		
 	  		<div class="buttons_together">
 	  			<a href="#" onclick="$('#save_answer').val('true'); $.fancybox.close();" class="prompt_button button button1">save</a>
 	  			<a href="#" onclick="$('#save_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">cancel</a>
@@ -220,7 +221,7 @@
 	  	<div id='message1_form'>
 	  		<div class="text_in_fancybox">
 	  			<img id="message1img" src="/images/content_fail.png">
-	  			<span class="deltext"> Create at least one slide before saving. </span>
+	  			<span class="deltext">Create at least one slide before saving.</span>
 	  		</div> 		
 	  		<div id="button_accept_when_fail">
 	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button button">accept</a>
@@ -242,7 +243,7 @@
 				</div>
 						<div id='tab_pic_from_url_content' class="fancy_tab_content">
                 			<div class="box1 box1fancy1">
-				    			<p class="textfancy"> add image url </p><br>
+				    			<p class="textfancy">add image url</p><br>
                     			<img class="image_add_url" src="/images/url_img.png"/>
 				    			<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
 				    			<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('picture_url')">Upload</button>
@@ -327,10 +328,10 @@
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
                 <div class="box1 box1fancy1">
-                	<p class="textfancy"> embed flash </p><br>
+                	<p class="textfancy">embed flash</p><br>
                     <img class="image_add_url" src="/images/url_img.png"/>
 				  	<input id="flash_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
-					<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')"> Upload</button>
+					<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')">Upload</button>
                 </div>
                 <div class="box2">
                 				<div class="previewimgbox">
@@ -341,10 +342,10 @@
 				</div>
 				<div id='tab_flash_upload_content' class="fancy_tab_content">
                 <div class="box1 box1fancy1">
-                	<p class="textfancy"> upload flash </p><br>
+                	<p class="textfancy">upload flash</p><br>
                     <img class="image_add_url" src="/images/url_img.png"/>
 					<input id="upload_flash_input" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
-                    <button type="button" class="button buttonfancy" onclick="alert('Uploaded!')"> Upload</button>
+                    <button type="button" class="button buttonfancy" onclick="alert('Uploaded!')">Upload</button>
                 </div>
                 <div class="box2">
                 				<div class="previewimgbox">
@@ -388,10 +389,10 @@
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
                 	<div id="box1" class="box1 box1fancy1">
-                    	<p class="textfancy"> add video url </p><br>
+                    	<p class="textfancy">add video url</p><br>
                     	<img id="image_add_url" class="image_add_url" src="/images/url_img.png"/>
 				    	<input id="video_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="video_url">
-						<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('video_url')"> Upload</button>
+						<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('video_url')">Upload</button>
                   	</div>
                     <div id="box2" class="box2">
                 		<div id="previewimgbox" class="previewimgbox">
@@ -402,10 +403,10 @@
                 </div>
                     <div id='tab_video_upload_content' class="fancy_tab_content">
                     	<div id="box1" class="box1 box1fancy1">
-                    		<p class="textfancy"> Select video to upload </p><br>
+                    		<p class="textfancy">Select video to upload</p><br>
                             <img id="image_add_url" class="image_add_url" src="/images/url_upl.png"/>
 							<input id="upload_video_input" class="input_text_fancy formsizefancy1 marginsfancy1" type="upload_video_input">
-                    		<button type="button" class="button buttonfancy" onclick="alert('Uploaded!')"> Upload</button>
+                    		<button type="button" class="button buttonfancy" onclick="alert('Uploaded!')">Upload</button>
                    	    </div>
                         <div id="box2" class="box2">
                 			<div id="previewimgbox" class="previewimgbox">
@@ -501,8 +502,7 @@
 	<script type="text/javascript" src="js/VISH.Editor.Thumbnails.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.AvatarPicker.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
-	<script type="text/javascript" src="js/lang/translations.en.js"></script>
-	
+	<script type="text/javascript" src="js/lang/translations.es.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 	<script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
