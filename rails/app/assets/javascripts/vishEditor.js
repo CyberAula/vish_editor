@@ -11070,6 +11070,10 @@ VISH.Editor = function(V, $, undefined) {
                       if(element.type == "openquestion") {
                         element.title = $(div).find(".title_openquestion").val();
                         element.question = $(div).find(".value_openquestion").val()
+                      }else {
+                        if(element.type == "mcquestion") {
+                          element.title = $(div).find(".value_multiplechoice_question").val()
+                        }
                       }
                     }
                   }
@@ -11521,7 +11525,7 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion'></textarea></div></article>"];
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question'></textarea></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11744,15 +11748,42 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
 VISH.Editor.I18n = function(V, $, undefined) {
   var init = function() {
     var initTime = (new Date).getTime();
+    _filterAndSubText("div");
+    _filterAndSubText("a");
+    _filterAndSubText("p");
+    _filterAndSubText("span");
+    _filterAndSubText("button");
+    $("div[title]").each(function(index, elem) {
+      $(elem).attr("title", _getTrans($(elem).attr("title")))
+    });
+    $("input").each(function(index, elem) {
+      if($(elem).val() !== "") {
+        $(elem).val(_getTrans($(elem).val()))
+      }
+      if($(elem).attr("placeholder")) {
+        $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
+      }
+    });
+    $("textarea[placeholder]").each(function(index, elem) {
+      $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
+    });
     var duration = (new Date).getTime() - initTime;
     console.log("Internationalization took " + duration + " ms.")
   };
-  function _(s) {
+  var _filterAndSubText = function(elemType) {
+    $(elemType).filter(function(index) {
+      return $(this).children().length < 1 && $(this).text().trim() !== ""
+    }).each(function(index, elem) {
+      $(elem).text(_getTrans($(elem).text()))
+    })
+  };
+  var _getTrans = function(s) {
     if(typeof i18n != "undefined" && i18n[s]) {
       return i18n[s]
     }
+    console.log("Text without translation: " + s);
     return s
-  }
+  };
   return{init:init}
 }(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
@@ -12564,13 +12595,11 @@ VISH.Renderer = function(V, $, undefined) {
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["body"] + "</div>";
+    console.log("entra en _renderMcquestion");
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["title"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
-    for(var i = 0;i < element["options"].length;i++) {
-      ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>" + element["options"][i] + "</label>"
-    }
     ret += "<button type='button' class='question_button'>Send</button>";
     return ret
   };
