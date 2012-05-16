@@ -20,6 +20,15 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   	$(event.target).addClass("carrousel_element_selected");
   	$('#excursion_avatar').val($(event.target).attr("src"));
   };
+  
+  /**
+   * function to select a random avatar, it will be chosen between the first and the max (to be in the first carrousel page)
+   */
+  var selectRandom = function(max){
+  	var randomnumber=Math.ceil(Math.random()*max);
+  	$("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").addClass("carrousel_element_selected");
+  	$('#excursion_avatar').val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").attr("src"));
+  };
     
   /**
 	 * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
@@ -47,6 +56,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 				 $("#thumbnails_in_excursion_details").show(); 
 				 VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,"thumbnails");
 				 $(".buttonintro").addClass("buttonintro_extramargin");
+				 VISH.Editor.AvatarPicker.selectRandom(5);  //randomly select one between first page
+				 
 				},500);
 		  },
 		  error: function(xhr, ajaxOptions, thrownError){
@@ -61,7 +72,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   
 	return {
 		init	       : init,
-		selectAvatar   : selectAvatar
+		selectAvatar   : selectAvatar,
+		selectRandom   : selectRandom
 		
 	};
 
