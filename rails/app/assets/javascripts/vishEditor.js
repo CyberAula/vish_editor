@@ -11010,6 +11010,7 @@ VISH.Editor = function(V, $, undefined) {
     excursion.id = "";
     excursion.title = excursionDetails.title;
     excursion.description = excursionDetails.description;
+    excursion.avatar = excursionDetails.avatar;
     excursion.author = "";
     excursion.slides = [];
     var slide = {};
@@ -11072,7 +11073,9 @@ VISH.Editor = function(V, $, undefined) {
                         element.question = $(div).find(".value_openquestion").val()
                       }else {
                         if(element.type == "mcquestion") {
-                          element.title = $(div).find(".value_multiplechoice_question").val()
+                          var i;
+                          element.title = $(div).find(".value_multiplechoice_question").val();
+                          var array_options = $(div).find(".multiplechoice_radio")
                         }
                       }
                     }
@@ -11525,7 +11528,8 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question'></textarea></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion'></textarea></div></article>"];
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><img src='images/add_quiz_option.png' id='add_quiz_option'/> </div></article>", 
+  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11605,6 +11609,11 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
     $(event.target).addClass("carrousel_element_selected");
     $("#excursion_avatar").val($(event.target).attr("src"))
   };
+  var selectRandom = function(max) {
+    var randomnumber = Math.ceil(Math.random() * max);
+    $("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").addClass("carrousel_element_selected");
+    $("#excursion_avatar").val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").attr("src"))
+  };
   var _getAvatars = function() {
     $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
       console.log("success getting excursion avatars");
@@ -11618,7 +11627,8 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
       setTimeout(function() {
         $("#thumbnails_in_excursion_details").show();
         VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, "thumbnails");
-        $(".buttonintro").addClass("buttonintro_extramargin")
+        $(".buttonintro").addClass("buttonintro_extramargin");
+        VISH.Editor.AvatarPicker.selectRandom(5)
       }, 500)
     }, error:function(xhr, ajaxOptions, thrownError) {
       console.log("status returned by server:" + xhr.status);
@@ -11626,7 +11636,7 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
       console.log("ERROR!" + thrownError)
     }})
   };
-  return{init:init, selectAvatar:selectAvatar}
+  return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, rows, callback, scrollItems, styleClass) {
