@@ -22,7 +22,7 @@ var i18n =
 			"Image"				: "Imagen",
 			"no"				: "no",
 			"Please, enter a title"  : "Por favor, introduzca un título",
-			"save"				: "save",
+			"save"				: "guardar",
 			"Save slides"		: "Salvar las diapositivas",
 			"Search content"	: "Buscar contenido",
 			"Select picture to upload"  : "Seleccionar imagen para subir",
