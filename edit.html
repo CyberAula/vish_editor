@@ -523,8 +523,17 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
+			var options = {};
+			var lang = getURLParameter("lang");
+			if(lang!="null"){
+				options["lang"] = lang;
+			}
 		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  VISH.Editor.init({});
+		  VISH.Editor.init(options);
+		}
+		
+		function getURLParameter(name) {
+    		return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);  
 		}
 	</script>
 		
