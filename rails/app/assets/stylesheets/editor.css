@@ -1,3 +1,8 @@
+
+.slides > article {
+  margin-top: -330px;	
+}
+
 #menubar {
 	background: url(/assets/menubar.png);
 	width: 100%;
@@ -8,6 +13,11 @@
 	border-radius: 0px 0px 20px 20px;
     -moz-border-radius: 0px 0px 20px 20px;
     -webkit-border-radius: 0px 0px 20px 20px;
+}
+
+#excursiondetails {
+	background: url(../assets/excursiondetails_bg.png) no-repeat top;
+	
 }
 
 .barbuttonaddsave{
@@ -161,7 +171,8 @@
 	z-index: 1000;
 }
 
-.textarea_openquestion {
+.value_openquestion {
+	
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -172,7 +183,20 @@
     position: absolute;
     z-index: 1000;
     }
+
+
 .title_openquestion {
+	background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: absolute;
+    z-index: 1000;
+    }
+.header_openquestion {
 	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
@@ -183,6 +207,39 @@
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;
+	
+}
+
+.header_multiplechoice_question {
+	
+	background: none repeat scroll 0 0 #F9F9F9;
+    border-radius: 4px 4px 0 0;
+    color: #FF005D;
+    display: block;
+    font-family: Helvetica;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    text-decoration: none;	
+	
+}
+.value_multiplechoice_question {
+	
+	background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: relative;
+    z-index: 1000;
+    }
+
+.multiplechoice_radio {
+	
+	
+	
 	
 }
 
@@ -839,6 +896,7 @@ div.object_wrapper{
 }
 
 .textintromargin1 {
+	margin-top: 100px;
 	margin-left: 68px;
 }
 
@@ -877,6 +935,10 @@ div.object_wrapper{
 
 textarea {
 	font-family:Helvetica;
+}
+
+.title1 {
+	width: 300px;
 }
 
 #start_tutorial {

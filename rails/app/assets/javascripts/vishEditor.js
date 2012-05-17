@@ -10753,7 +10753,11 @@ VISH.Editor = function(V, $, undefined) {
   var params = {current_el:null};
   var init = function(options, excursion) {
     VISH.Editing = true;
-    initOptions = options;
+    if(options) {
+      initOptions = options
+    }else {
+      initOptions = {}
+    }
     if(excursion) {
       excursion_to_edit = excursion;
       V.Editor.Renderer.init(excursion);
@@ -10778,6 +10782,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Video.init();
     V.Editor.Object.init();
     V.Editor.AvatarPicker.init();
+    V.Editor.I18n.init(options["lang"]);
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
     if(excursion === undefined) {
       $("#edit_excursion_details").trigger("click")
@@ -10884,8 +10889,18 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
-    console.log("slide es" + slide);
+    console.log("slide es: " + slide);
     V.SlidesUtilities.addSlide(slide);
+    if($(".add_quiz_option")) {
+      console.log("buscamos class de a: " + $(".add_quiz_option").src);
+      $(".add_quiz_option").on("click", function() {
+        var add_option = "<br><input id='radio_option_2' type='radio' class='multiplechoice_radio' /><input id='radio_text_2' type='text' placeholder='insert text option here' />";
+        add_option += "<a src='' id='add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
+        $(".add_quiz_option").remove();
+        $(".mcquestion").append(add_option);
+        console.log("add_option : " + add_option)
+      })
+    }
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
     setTimeout("VISH.SlidesUtilities.lastSlide()", 300)
@@ -11006,6 +11021,7 @@ VISH.Editor = function(V, $, undefined) {
     excursion.id = "";
     excursion.title = excursionDetails.title;
     excursion.description = excursionDetails.description;
+    excursion.avatar = excursionDetails.avatar;
     excursion.author = "";
     excursion.slides = [];
     var slide = {};
@@ -11019,7 +11035,6 @@ VISH.Editor = function(V, $, undefined) {
           element.id = $(div).attr("id");
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
-          console.log("element.type " + element.type);
           if(element.type == "text") {
             element.body = $(div).find(".wysiwygInstance").html()
           }else {
@@ -11065,7 +11080,14 @@ VISH.Editor = function(V, $, undefined) {
                       element.style = $(object).parent().attr("style")
                     }else {
                       if(element.type == "openquestion") {
-                        console.log("entra en openquestion")
+                        element.title = $(div).find(".title_openquestion").val();
+                        element.question = $(div).find(".value_openquestion").val()
+                      }else {
+                        if(element.type == "mcquestion") {
+                          var i;
+                          element.title = $(div).find(".value_multiplechoice_question").val();
+                          var array_options = $(div).find(".multiplechoice_radio")
+                        }
                       }
                     }
                   }
@@ -11132,6 +11154,18 @@ VISH.Editor.Image = function(V, $, undefined) {
     if(tab == "upload") {
       onLoadUploadTab()
     }
+    if(tab == "url") {
+      onLoadURLTab()
+    }
+  };
+  var onLoadURLTab = function() {
+    resetPreview("tab_pic_from_url_content");
+    $("#picture_url").val("");
+    $("#tab_pic_from_url_content .previewButton").click(function(event) {
+      if($("#picture_url").val() != "") {
+        drawPreview("tab_pic_from_url_content", $("#picture_url").val())
+      }
+    })
   };
   var onLoadUploadTab = function() {
     var options = VISH.Editor.getOptions();
@@ -11139,14 +11173,8 @@ VISH.Editor.Image = function(V, $, undefined) {
     var percent = $(".upload_progress_bar_percent");
     bar.width("0%");
     percent.html("0%");
-    $("#tab_pic_upload_content .previewimgbox button").hide();
-    $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-    if(previewBackground) {
-      $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground)
-    }
+    resetPreview("tab_pic_upload_content");
     $("input[name='document[file]']").val("");
-    $("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin");
-    $("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin");
     $("input[name='document[file]']").change(function() {
       $("input[name='document[title]']").val($("input:file").val())
     });
@@ -11179,25 +11207,37 @@ VISH.Editor.Image = function(V, $, undefined) {
       percent.html(percentVal)
     }})
   };
-  var drawUploadedElement = function() {
-    drawImage($("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").attr("src"));
-    $.fancybox.close()
-  };
-  var previewBackground;
   var processResponse = function(response) {
     try {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
-        previewBackground = $("#tab_pic_upload_content .previewimgbox").css("background-image");
-        $("#tab_pic_upload_content .previewimgbox").css("background-image", "none");
-        $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-        $("#tab_pic_upload_content .previewimgbox").append("<img class='uploadPreviewImage' src='" + jsonResponse.src + "'></img>");
-        $("#tab_pic_upload_content .previewimgbox button").show();
-        $("#tab_pic_upload_content .documentblank").addClass("documentblank_extraMargin");
-        $("#tab_pic_upload_content .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+        drawPreview("tab_pic_upload_content", jsonResponse.src)
       }
     }catch(e) {
     }
+  };
+  var previewBackground;
+  var drawPreview = function(divId, src) {
+    previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
+    $("#" + divId + " .previewimgbox").css("background-image", "none");
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    $("#" + divId + " .previewimgbox").append("<img class='uploadPreviewImage' src='" + src + "'></img>");
+    $("#" + divId + " .previewimgbox button").show();
+    $("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+  };
+  var resetPreview = function(divId) {
+    $("#" + divId + " .previewimgbox button").hide();
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    if(previewBackground) {
+      $("#" + divId + " .previewimgbox").css("background-image", previewBackground)
+    }
+    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+  };
+  var drawPreviewElement = function(divId) {
+    drawImage($("#" + divId + " .previewimgbox img.uploadPreviewImage").attr("src"));
+    $.fancybox.close()
   };
   var drawImage = function(image_url, area, style) {
     var current_area;
@@ -11227,7 +11267,7 @@ VISH.Editor.Image = function(V, $, undefined) {
       $(this).parent().click()
     }})
   };
-  return{init:init, onLoadTab:onLoadTab, drawImage:drawImage, drawUploadedElement:drawUploadedElement}
+  return{init:init, onLoadTab:onLoadTab, drawImage:drawImage, drawPreviewElement:drawPreviewElement}
 }(VISH, jQuery);
 VISH.Editor.Object = function(V, $, undefined) {
   var init = function() {
@@ -11507,7 +11547,8 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left selectable' type='openquestion'><h2 class='title_openquestion'>Write question:</h2><textarea rows='4' cols='50' class='textarea_openquestion' ></textarea></div></article>"];
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><a src='' id='add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11583,9 +11624,14 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
     }
   };
   var selectAvatar = function(event) {
-    $(".carrousel_element_single_row").removeClass("carrousel_element_selected");
+    $(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
     $(event.target).addClass("carrousel_element_selected");
     $("#excursion_avatar").val($(event.target).attr("src"))
+  };
+  var selectRandom = function(max) {
+    var randomnumber = Math.ceil(Math.random() * max);
+    $("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").addClass("carrousel_element_selected");
+    $("#excursion_avatar").val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").attr("src"))
   };
   var _getAvatars = function() {
     $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
@@ -11600,7 +11646,8 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
       setTimeout(function() {
         $("#thumbnails_in_excursion_details").show();
         VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, "thumbnails");
-        $(".buttonintro").addClass("buttonintro_extramargin")
+        $(".buttonintro").addClass("buttonintro_extramargin");
+        VISH.Editor.AvatarPicker.selectRandom(5)
       }, 500)
     }, error:function(xhr, ajaxOptions, thrownError) {
       console.log("status returned by server:" + xhr.status);
@@ -11608,7 +11655,7 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
       console.log("ERROR!" + thrownError)
     }})
   };
-  return{init:init, selectAvatar:selectAvatar}
+  return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, rows, callback, scrollItems, styleClass) {
@@ -11726,6 +11773,52 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     }
   };
   return{createCarrousel:createCarrousel, cleanCarrousel:cleanCarrousel}
+}(VISH, jQuery);
+VISH.Editor.I18n = function(V, $, undefined) {
+  var language;
+  var init = function(lang) {
+    var initTime = (new Date).getTime();
+    language = lang;
+    if(typeof i18n[language] === "undefined") {
+      return
+    }
+    _filterAndSubText("div");
+    _filterAndSubText("a");
+    _filterAndSubText("p");
+    _filterAndSubText("span");
+    _filterAndSubText("button");
+    $("div[title]").each(function(index, elem) {
+      $(elem).attr("title", _getTrans($(elem).attr("title")))
+    });
+    $("input").each(function(index, elem) {
+      if($(elem).val() !== "") {
+        $(elem).val(_getTrans($(elem).val()))
+      }
+      if($(elem).attr("placeholder")) {
+        $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
+      }
+    });
+    $("textarea[placeholder]").each(function(index, elem) {
+      $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
+    });
+    var duration = (new Date).getTime() - initTime;
+    console.log("Internationalization took " + duration + " ms.")
+  };
+  var _filterAndSubText = function(elemType) {
+    $(elemType).filter(function(index) {
+      return $(this).children().length < 1 && $(this).text().trim() !== ""
+    }).each(function(index, elem) {
+      $(elem).text(_getTrans($(elem).text()))
+    })
+  };
+  var _getTrans = function(s) {
+    if(typeof i18n[language] != "undefined" && i18n[language][s]) {
+      return i18n[language][s]
+    }
+    console.log("Text without translation: " + s);
+    return s
+  };
+  return{init:init}
 }(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
   var carrouselDivId = "tab_flikr_content_carrousel";
@@ -12525,9 +12618,10 @@ VISH.Renderer = function(V, $, undefined) {
     return"<div id='" + element["id"] + "' class='template_flashcard'><canvas id='" + element["canvasid"] + "'>Your browser does not support canvas</canvas></div>"
   };
   var _renderOpenquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["body"] + "</div>";
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["title"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
-    ret += "<label class='question_name'>Name: </label>";
+    ret += "<label class='question'> Question: " + element["question"] + "  </label>";
+    ret += "<label class='question_name'>Name:  </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
     ret += "<label class='question_answer'>Answer: </label>";
     ret += "<textarea class='question_answer_input'></textarea>";
@@ -12535,13 +12629,11 @@ VISH.Renderer = function(V, $, undefined) {
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["body"] + "</div>";
+    console.log("entra en _renderMcquestion");
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["title"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
-    for(var i = 0;i < element["options"].length;i++) {
-      ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>" + element["options"][i] + "</label>"
-    }
     ret += "<button type='button' class='question_button'>Send</button>";
     return ret
   };

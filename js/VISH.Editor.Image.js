@@ -10,8 +10,22 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(tab=="upload"){
 			onLoadUploadTab();
 		}
+		if(tab=="url"){
+			onLoadURLTab();
+		}
 	};
 	
+	
+	var onLoadURLTab = function(){
+		resetPreview("tab_pic_from_url_content");
+		$("#picture_url").val("");
+		
+		$("#tab_pic_from_url_content .previewButton").click(function(event) {
+			if ($("#picture_url").val() != "") {
+	  	  drawPreview("tab_pic_from_url_content", $("#picture_url").val())
+	    }
+    });
+  }
 	
 	var onLoadUploadTab = function(){
 		    
@@ -23,14 +37,8 @@ VISH.Editor.Image = (function(V,$,undefined){
     //Reset fields
     bar.width('0%');
     percent.html('0%');
-    $("#tab_pic_upload_content .previewimgbox button").hide()
-    $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-    if (previewBackground) {
-      $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground);
-    }
+		resetPreview("tab_pic_upload_content")
     $("input[name='document[file]']").val("");
-    $("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin")
-    $("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
     
     $("input[name='document[file]']").change(function () {
       $("input[name='document[title]']").val($("input:file").val());
@@ -72,30 +80,44 @@ VISH.Editor.Image = (function(V,$,undefined){
 	}
 	
 	
-	var drawUploadedElement = function(){
-		drawImage( $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").attr("src"));
-		$.fancybox.close();
-	}
-	
-	
-	var previewBackground;
-	
 	var processResponse = function(response){
 		try  {
 	    var jsonResponse = JSON.parse(response)
 	    if(jsonResponse.src){
-	       previewBackground = $("#tab_pic_upload_content .previewimgbox").css("background-image");
-	       $("#tab_pic_upload_content .previewimgbox").css("background-image","none");
-	       $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-	       $("#tab_pic_upload_content .previewimgbox").append("<img class='uploadPreviewImage' src='" + jsonResponse.src + "'></img>");
-				 $("#tab_pic_upload_content .previewimgbox button").show();
-         $("#tab_pic_upload_content .documentblank").addClass("documentblank_extraMargin")
-         $("#tab_pic_upload_content .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+				 drawPreview("tab_pic_upload_content",jsonResponse.src)
 	    }
     } catch(e) {
       //No JSON response
     }
 	}
+	
+	
+	var previewBackground;
+  
+	var drawPreview = function(divId,src){
+		previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
+	  $("#" + divId + " .previewimgbox").css("background-image","none");
+	  $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+	  $("#" + divId + " .previewimgbox").append("<img class='uploadPreviewImage' src='" + src + "'></img>");
+	  $("#" + divId + " .previewimgbox button").show();
+	  $("#" + divId + " .documentblank").addClass("documentblank_extraMargin")
+	  $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+	}
+	
+	var resetPreview = function(divId){
+		$("#" + divId + " .previewimgbox button").hide()
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    if (previewBackground) {
+      $("#" + divId + " .previewimgbox").css("background-image", previewBackground);
+    }
+    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin")
+    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+	}
+	
+	var drawPreviewElement = function(divId){
+    drawImage( $("#" + divId + " .previewimgbox img.uploadPreviewImage").attr("src"));
+    $.fancybox.close();
+  }
 	
   /**
    * Function to draw an image in a zone of the template
@@ -161,7 +183,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		init                : init,
 		onLoadTab	          : onLoadTab,
 		drawImage           : drawImage,
-		drawUploadedElement : drawUploadedElement
+		drawPreviewElement  : drawPreviewElement
 	};
 
 }) (VISH, jQuery);
