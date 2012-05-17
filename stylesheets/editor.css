@@ -10,6 +10,11 @@
     -webkit-border-radius: 0px 0px 20px 20px;
 }
 
+#excursiondetails {
+	background: url(../images/excursiondetails_bg.png) no-repeat top;
+	
+}
+
 .barbuttonaddsave{
 	position: relative;
 	top: 5px;
@@ -886,6 +891,7 @@ div.object_wrapper{
 }
 
 .textintromargin1 {
+	margin-top: 100px;
 	margin-left: 68px;
 }
 
@@ -924,6 +930,10 @@ div.object_wrapper{
 
 textarea {
 	font-family:Helvetica;
+}
+
+.title1 {
+	width: 300px;
 }
 
 #start_tutorial {
