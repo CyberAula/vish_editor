@@ -543,6 +543,7 @@ VISH.Editor = (function(V,$,undefined){
     excursion.id = '';
     excursion.title = excursionDetails.title;
     excursion.description = excursionDetails.description;
+    excursion.avatar = excursionDetails.avatar;
     excursion.author = '';
     excursion.slides = [];
     var slide = {};
