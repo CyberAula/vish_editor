@@ -303,23 +303,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.addSlide(slide);	//undefined 
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
-		if( $(".add_quiz_option") ) {
-			//	console.log("buscamos class de a: " + $(".add_quiz_option").src );
-		/*$(".add_quiz_option").on("click", function() {
-			var add_option = "<br><input id='radio_option_2' type='radio' class='multiplechoice_radio' /><input id='radio_text_2' type='text' placeholder='insert text option here' />";
-			add_option += "<a src='' id='add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
-			
-			$(".add_quiz_option").remove();
-			
-			$(".mcquestion").append(add_option);	
-			
-			console.log("add_option : " +add_option);
-		} );
-		
-		*/
-		console.log("Entramos en if ");
-		
-		}
 		$.fancybox.close();
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
