@@ -941,19 +941,6 @@ textarea {
 	width: 300px;
 }
 
-#start_tutorial {
-	width: 306px;
-	height: 77px;
-	top: -90px;
-	position: relative;
-	left: 50px;
-	background: url(/images/tutorial.png);
-}
-
-#start_tutorial:hover {
-	background: url(/images/hover/tutorial_hover.png);
-}
-
 #excursion_details_fields{
 	top: -70px;
 	position: relative;
