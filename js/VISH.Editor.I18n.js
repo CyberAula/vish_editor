@@ -1,9 +1,18 @@
 VISH.Editor.I18n = (function(V,$,undefined){
+	var language;
 	
-	
-	var init = function(){
+	/**
+	 * function to do the languaje translation
+	 * if this function is called there should be defined an i18n array with the translations 
+	 */
+	var init = function(lang){
 		var initTime = new Date().getTime();
 		
+		language = lang;  
+		//check that we have the language and if not return
+		if (typeof(i18n[language])==='undefined'){
+			return;
+		}
 		//cover all divs and translate their content		
 		_filterAndSubText('div');
 		_filterAndSubText('a');
@@ -11,7 +20,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		_filterAndSubText('span');
   		_filterAndSubText('button');
   		
-  		//now the div titles (used for help)
+  		//now the div titles (used as tooltips for help)
   		$('div[title]').each(function(index, elem){
   			$(elem).attr("title", _getTrans($(elem).attr("title")));
   		});
@@ -52,8 +61,8 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	 * function to translate a text
 	 */
 	var _getTrans = function (s) {
-	  if (typeof(i18n)!='undefined' && i18n[s]) {
-	    return i18n[s];
+	  if (typeof(i18n[language])!='undefined' && i18n[language][s]) {
+	    return i18n[language][s];
 	  }
 	  console.log("Text without translation: " + s);
 	  return s;

@@ -113,7 +113,7 @@
             <label for="excursion_title">
               <div class="textintro1 textintromargin1">Title</div>
             </label>
-            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> 
+            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img class="tutorialicon" src="/images/tutorialimage_blank.png"/>
         <label for="excursion_description">
           <div class="textintro1 textintromargin2">Description</div>
         </label>
@@ -236,7 +236,7 @@
 	  </div>
 	  
   
-  	  <!-- IMAGE -->
+  	<!-- IMAGE -->
 	  <div style='display:none'>
 	    <div id="picture_fancybox" class="outer_box">
 				<div class="fancy_tabs">	   
@@ -247,20 +247,20 @@
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab"><img src='/images/flickr.png'/></a></li>
 				  </ul>
 				</div>
-						<div id='tab_pic_from_url_content' class="fancy_tab_content">
-                			<div class="box1 box1fancy1">
-				    			<p class="textfancy">add image url</p><br>
-                    			<img class="image_add_url" src="/images/url_img.png"/>
-				    			<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
-				    			<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('picture_url')">Upload</button>
-                  			</div>
-                			<div class="box2">
-                				<div class="previewimgbox">
-                    				<img class="documentblank" src="/images/document_black.png"/>
-                    				<button type="button" class="button buttonaddfancy">Add Content</button>
-                    			</div>
+				<div id='tab_pic_from_url_content' class="fancy_tab_content">
+            			<div class="box1 box1fancy1">
+					    			<p class="textfancy">add image url</p><br>
+	                  <img class="image_add_url" src="/images/url_img.png"/>
+					    			<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
+					    			<button type="button" class="button buttonfancy previewButton">Preview</button>
+              		</div>
+            			<div class="box2">
+            				<div class="previewimgbox">
+                				<img class="documentblank" src="/images/document_black.png"/>
+                				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement('tab_pic_from_url_content')">Add Content</button>
                 			</div>
-						</div>      
+            			</div>
+				</div>      
 				<div id='tab_pic_upload_content' class="fancy_tab_content">
               <div class="box1 box1fancy1">
 				  			<p class="textfancy">Select picture to upload</p><br>
@@ -284,7 +284,7 @@
               <div class="box2">
               				<div class="previewimgbox">
                   				<img class="documentblank" src="/images/document_black.png"/>
-                  				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawUploadedElement()">Add Content</button>
+                  				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement('tab_pic_upload_content')">Add Content</button>
                       </div>
               </div>
         </div>            
@@ -503,6 +503,7 @@
 	<script type="text/javascript" src="js/VISH.Editor.Thumbnails.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.AvatarPicker.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
+		<script type="text/javascript" src="js/VISH.Editor.Quiz.js"></script>
 	<script type="text/javascript" src="js/lang/translations.es.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
@@ -523,8 +524,17 @@
 		//uncomment VISH.SlideManager.init to show the example presentation (the json in VISH.Samples)
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
+			var options = {};
+			var lang = getURLParameter("lang");
+			if(lang!="null"){
+				options["lang"] = lang;
+			}
 		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  VISH.Editor.init({});
+		  VISH.Editor.init(options);
+		}
+		
+		function getURLParameter(name) {
+    		return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);  
 		}
 	</script>
 		

@@ -10783,6 +10783,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Object.init();
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
+    V.Editor.Quiz.init();
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
     if(excursion === undefined) {
       $("#edit_excursion_details").trigger("click")
@@ -10889,6 +10890,7 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
+    console.log("slide es: " + slide);
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
@@ -11153,6 +11155,18 @@ VISH.Editor.Image = function(V, $, undefined) {
     if(tab == "upload") {
       onLoadUploadTab()
     }
+    if(tab == "url") {
+      onLoadURLTab()
+    }
+  };
+  var onLoadURLTab = function() {
+    resetPreview("tab_pic_from_url_content");
+    $("#picture_url").val("");
+    $("#tab_pic_from_url_content .previewButton").click(function(event) {
+      if($("#picture_url").val() != "") {
+        drawPreview("tab_pic_from_url_content", $("#picture_url").val())
+      }
+    })
   };
   var onLoadUploadTab = function() {
     var options = VISH.Editor.getOptions();
@@ -11160,14 +11174,8 @@ VISH.Editor.Image = function(V, $, undefined) {
     var percent = $(".upload_progress_bar_percent");
     bar.width("0%");
     percent.html("0%");
-    $("#tab_pic_upload_content .previewimgbox button").hide();
-    $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-    if(previewBackground) {
-      $("#tab_pic_upload_content .previewimgbox").css("background-image", previewBackground)
-    }
+    resetPreview("tab_pic_upload_content");
     $("input[name='document[file]']").val("");
-    $("#tab_pic_upload_content .documentblank").removeClass("documentblank_extraMargin");
-    $("#tab_pic_upload_content .buttonaddfancy").removeClass("buttonaddfancy_extraMargin");
     $("input[name='document[file]']").change(function() {
       $("input[name='document[title]']").val($("input:file").val())
     });
@@ -11200,25 +11208,37 @@ VISH.Editor.Image = function(V, $, undefined) {
       percent.html(percentVal)
     }})
   };
-  var drawUploadedElement = function() {
-    drawImage($("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").attr("src"));
-    $.fancybox.close()
-  };
-  var previewBackground;
   var processResponse = function(response) {
     try {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
-        previewBackground = $("#tab_pic_upload_content .previewimgbox").css("background-image");
-        $("#tab_pic_upload_content .previewimgbox").css("background-image", "none");
-        $("#tab_pic_upload_content .previewimgbox img.uploadPreviewImage").remove();
-        $("#tab_pic_upload_content .previewimgbox").append("<img class='uploadPreviewImage' src='" + jsonResponse.src + "'></img>");
-        $("#tab_pic_upload_content .previewimgbox button").show();
-        $("#tab_pic_upload_content .documentblank").addClass("documentblank_extraMargin");
-        $("#tab_pic_upload_content .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+        drawPreview("tab_pic_upload_content", jsonResponse.src)
       }
     }catch(e) {
     }
+  };
+  var previewBackground;
+  var drawPreview = function(divId, src) {
+    previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
+    $("#" + divId + " .previewimgbox").css("background-image", "none");
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    $("#" + divId + " .previewimgbox").append("<img class='uploadPreviewImage' src='" + src + "'></img>");
+    $("#" + divId + " .previewimgbox button").show();
+    $("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+  };
+  var resetPreview = function(divId) {
+    $("#" + divId + " .previewimgbox button").hide();
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    if(previewBackground) {
+      $("#" + divId + " .previewimgbox").css("background-image", previewBackground)
+    }
+    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+  };
+  var drawPreviewElement = function(divId) {
+    drawImage($("#" + divId + " .previewimgbox img.uploadPreviewImage").attr("src"));
+    $.fancybox.close()
   };
   var drawImage = function(image_url, area, style) {
     var current_area;
@@ -11248,7 +11268,7 @@ VISH.Editor.Image = function(V, $, undefined) {
       $(this).parent().click()
     }})
   };
-  return{init:init, onLoadTab:onLoadTab, drawImage:drawImage, drawUploadedElement:drawUploadedElement}
+  return{init:init, onLoadTab:onLoadTab, drawImage:drawImage, drawPreviewElement:drawPreviewElement}
 }(VISH, jQuery);
 VISH.Editor.Object = function(V, $, undefined) {
   var init = function() {
@@ -11528,8 +11548,8 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><img src='images/add_quiz_option.png' id='add_quiz_option'/> </div></article>", 
-  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='mchoice_radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11756,8 +11776,13 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
   return{createCarrousel:createCarrousel, cleanCarrousel:cleanCarrousel}
 }(VISH, jQuery);
 VISH.Editor.I18n = function(V, $, undefined) {
-  var init = function() {
+  var language;
+  var init = function(lang) {
     var initTime = (new Date).getTime();
+    language = lang;
+    if(typeof i18n[language] === "undefined") {
+      return
+    }
     _filterAndSubText("div");
     _filterAndSubText("a");
     _filterAndSubText("p");
@@ -11788,8 +11813,8 @@ VISH.Editor.I18n = function(V, $, undefined) {
     })
   };
   var _getTrans = function(s) {
-    if(typeof i18n != "undefined" && i18n[s]) {
-      return i18n[s]
+    if(typeof i18n[language] != "undefined" && i18n[language][s]) {
+      return i18n[language][s]
     }
     console.log("Text without translation: " + s);
     return s
@@ -12015,6 +12040,31 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     }
   };
   return{init:init, onLoadTab:onLoadTab, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedObject:addSelectedObject, onClickCarrouselElement:onClickCarrouselElement}
+}(VISH, jQuery);
+VISH.Editor.Quiz = function(V, $, undefined) {
+  var buttonAddOptionId = "a_add_quiz_option";
+  var MultipleChoiceoptionClass = "multiplechoice_radio";
+  var searchOptionText = "mchoice_radio_option_";
+  var number_patern = /[0-9]/;
+  var init = function() {
+    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption);
+    console.log("Entramos en init (Quiz) y buscamos class de a: " + $(".add_quiz_option"))
+  };
+  var addMultipleChoiceOption = function(event) {
+    console.log("Entramos en addMultipleChoiceOption (Quiz)");
+    var text = $("<div>").append($("." + MultipleChoiceoptionClass).clone()).html();
+    console.log("text vale:  " + text);
+    var number = text.substr(32, 1);
+    var next_num = parseInt(number) + 1;
+    console.log("number con patrones y match vale:  " + number);
+    console.log("next_number :  " + next_num);
+    var add_option = "<br><input id='mchoice_radio_option_" + next_num + "' type='radio' class='multiplechoice_radio' /><input id='radio_text_" + next_num + "' type='text' placeholder='insert text option here' />";
+    add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
+    $(".add_quiz_option").remove();
+    $(".mcquestion").append(add_option);
+    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
+  };
+  return{init:init, addMultipleChoiceOption:addMultipleChoiceOption}
 }(VISH, jQuery);
 VISH.Editor.Renderer = function(V, $, undefined) {
   var slides = null;

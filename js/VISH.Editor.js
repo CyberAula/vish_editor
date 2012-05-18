@@ -73,7 +73,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Object.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.I18n.init(options["lang"]);
-		
+		V.Editor.Quiz.init();
 		// Intial box to input the details related to the excursion
 		$("a#edit_excursion_details").fancybox({
 			'autoDimensions' : false,
@@ -298,7 +298,9 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		V.SlidesUtilities.addSlide(slide);	
+		console.log("slide es: " + slide );
+				
+		V.SlidesUtilities.addSlide(slide);	//undefined 
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
