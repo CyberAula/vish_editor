@@ -1015,13 +1015,12 @@ textarea {
 }
 
 .tutorialicon {
-	background-image: url(../images/tutorialicon.png);
+	background-image:url(../images/tutorialimage.png);
 	position:absolute;
-	margin-left: 715px;
-	margin-top: 17px;
+	margin-left: 484px;
+	margin-top: 10px;
 }
 
 .tutorialicon:hover {
-	background-i: url(../images/hover/tutorialicon_hover.png)
-	image: url(../images/hover/tutorialicon_hover.png);
+	background-image:url(../images/hover/tutorialimage_hover.png);
 }
