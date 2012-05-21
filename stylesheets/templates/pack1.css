@@ -292,7 +292,7 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 1%;
-	margin-left: 2%
+	margin-left: 2%;
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -426,7 +426,7 @@
 	position:relative;
 	width: 65%;
 	height: 89%;
-	float: left;
+	float: right;
 	border: 2px double transparent;
 	
 	font-size: 18px;

@@ -1,7 +1,7 @@
 VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 	var carrouselDivId = "tab_flikr_content_carrousel";
-	var queryMaxNumberFlikrImages= 20; //maximum video query for youtube API's (999 max)
+	var queryMaxNumberFlikrImages= 80; //maximum video query for youtube API's (999 max)
 	
 	//add events to inputs
 	var init = function(){
