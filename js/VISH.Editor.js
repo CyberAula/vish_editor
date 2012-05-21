@@ -620,12 +620,37 @@ VISH.Editor = (function(V,$,undefined){
 	      else if (element.type=="mcquestion") {
 	      	var i;
 	      		      		   
-	      	element.title   = $(div).find(".value_multiplechoice_question").val();
-	     var array_options = $(div).find(".multiplechoice_radio");
-	     //	for (i=0; i<$(div).(find(".multimplechoice_radio"))) 
+	      	//element.title   = $(div).find(".value_multiplechoice_question").val();
+	      	
+	      	element.question   = $(div).find(".value_multiplechoice_question").val();
+	      /*	console.log("La pregunta es: "+ $(div).find(".value_multiplechoice_question").val());
+	      	
+	     var array_options = $(div).find(".multiplechoice_text");
 	     
-	     	//element['options']
+	     $('.multiplechoice_text').each(function(i){
+ total = i;
+}); 		
+	     console.log("total vale: " + parseInt(total)+1);
+	     
+	     
+	     	for (i=1; i<= parseInt(total)+1; i++) 	{
+	     		
+	     		console.log ("entra en for e i vale: "+ i)
+	     	//element['options'][i];
 	     	
+	     	} 
+	     		for (op in array_options) 	{ 
+	     			
+	     			console.log("El array_options(op) es: " +array_options[op] );
+	     			console.log("op vale : " + op);
+	     			
+	     	
+	     			
+	     			console.log("El value de array_options(op) es: " + array_options[op].value );
+	     				//element['options'][parseInt(op)+1]= array_options[op].value ;	
+	     }
+	     	//element['options']
+	     */	
 	     
 	      }
 	      

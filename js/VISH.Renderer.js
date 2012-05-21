@@ -158,7 +158,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderMcquestion = function(element, template){
 		console.log("entra en _renderMcquestion");
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
+		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";
