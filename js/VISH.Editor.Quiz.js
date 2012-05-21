@@ -36,7 +36,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			console.log("next_number :  "+ next_num );
 		  
 		    //the next radio input   
-			var add_option = "<br><input id='mchoice_radio_option_"+next_num+"' type='radio' class='multiplechoice_radio' /><input id='radio_text_"+next_num+"' type='text' placeholder='insert text option here' />";
+			var add_option = "<br><input id='radio_text_"+next_num+"' class='multiplechoice_radio' type='text' placeholder='insert text option here' />";
 			add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
 			
 			//remove button + 
@@ -46,7 +46,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 		} else if (next_num = num_options) {
 			
-			var add_option = "<br><input id='mchoice_radio_option_"+next_num+"' type='radio' class='multiplechoice_radio' /><input id='radio_text_"+next_num+"' type='text' placeholder='insert text option here' />";
+			var add_option = "<br><input id='radio_text_"+next_num+"' class='multiplechoice_radio' type='text' placeholder='insert text option here' />";
 			add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
 			
 			$(".add_quiz_option").remove();
