@@ -37,6 +37,9 @@ VISH.Editor = (function(V,$,undefined){
 		//if we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
+			excursionDetails.title = excursion.title;
+			excursionDetails.description = excursion.description;
+			excursionDetails.avatar = excursion.avatar;
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
 			_removeSelectableProperties();
@@ -395,11 +398,9 @@ VISH.Editor = (function(V,$,undefined){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
 					$("#prompt_answer").val("false");
-					params['current_el'].html("");
+					params['current_el'].html("");					
+					$(".theslider").hide();	
 					params['current_el'].removeAttr("type");
-					if(params['current_el'].attr("type")==="image"){
-						$(".theslider").hide();	
-					}
 					params['current_el'].addClass("editable");
 				}
 			}
@@ -425,6 +426,7 @@ VISH.Editor = (function(V,$,undefined){
 				//if user has answered "yes"
 				if($("#prompt_answer").val() ==="true"){
 					$("#prompt_answer").val("false");
+					$(".theslider").hide();	
 					article_to_delete.remove();
 					//set curSlide to the preious one if this was the last one
 					if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
