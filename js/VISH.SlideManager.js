@@ -9,9 +9,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		
-		$(document).on('click', '#page-switcher-start', prevSlide);
-		$(document).on('click', '#page-switcher-end', nextSlide);
+		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
+		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		$(document).on('click', '#page-fullscreen', toggleFullScreen);
+		VISH.SlidesUtilities.updateSlideCounter();
 	};
 
 		

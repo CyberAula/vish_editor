@@ -83,6 +83,10 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
   		//finally add a background color to thumbnail of the selected slide
     	V.Editor.Thumbnails.selectThumbnail(no);    	
   	}
+  	else{
+  		//update slide counter
+  		updateSlideCounter();
+  	}
   };
   
   /**
@@ -113,16 +117,27 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
   		});
   		return width;
 	};
-
+	
+	/**
+	 * function to update the number that indicates what slide is diplayed
+	 * with this format: 1/12 2/12
+	 */
+	var updateSlideCounter = function(){
+		var number_of_slides = slideEls.length;
+		var slide_number = curSlide + 1;
+		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
+	};
+	
 	return {
-		getWidthFromStyle : getWidthFromStyle,
-		goToSlide		  : goToSlide,
-		lastSlide		  : lastSlide,
-		addSlide		  : addSlide,
-		redrawSlides	  : redrawSlides,
-		forwardOneSlide   : forwardOneSlide,
-		backwardOneSlide  : backwardOneSlide,
-		dimentionToDraw   : dimentionToDraw
+		getWidthFromStyle   : getWidthFromStyle,
+		goToSlide		    : goToSlide,
+		lastSlide		    : lastSlide,
+		addSlide		    : addSlide,
+		redrawSlides	    : redrawSlides,
+		forwardOneSlide     : forwardOneSlide,
+		backwardOneSlide    : backwardOneSlide,
+		dimentionToDraw     : dimentionToDraw,
+		updateSlideCounter  : updateSlideCounter
 	};
 
 }) (VISH, jQuery);

@@ -107,13 +107,12 @@
 
     <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
     <div style='display:none'>    
-      <form id='excursiondetails'> 
-          <div id="start_tutorial"></div>         
+      <form id='excursiondetails'>         
           <div id="excursion_details_fields">
             <label for="excursion_title">
               <div class="textintro1 textintromargin1">Title</div>
             </label>
-            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img class="tutorialicon" src="/images/tutorialimage_blank.png"/>
+            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/images/tutorialimage_blank.png"/>
         <label for="excursion_description">
           <div class="textintro1 textintromargin2">Description</div>
         </label>
@@ -256,7 +255,6 @@
               		</div>
             			<div class="box2">
             				<div class="previewimgbox">
-                				<img class="documentblank" src="/images/document_black.png"/>
                 				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement('tab_pic_from_url_content')">Add Content</button>
                 			</div>
             			</div>
@@ -283,14 +281,13 @@
 							</div>
               <div class="box2">
               				<div class="previewimgbox">
-                  				<img class="documentblank" src="/images/document_black.png"/>
                   				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement('tab_pic_upload_content')">Add Content</button>
                       </div>
               </div>
         </div>            
 				<div id='tab_pic_repo_content' class="fancy_tab_content">
                 	<div class="box1 box1fancy2">
-                    				  		  
+                    <img src="images/repositoryimg.png" class="imagelogotab">				  		  
 					<div class="search_container">
 					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 					</div>
@@ -312,6 +309,7 @@
 				</div>
 				<div id='tab_pic_flikr_content' class="fancy_tab_content">
                 	  <div class="box1 box1fancy2">
+                      <img src="images/flickrlogo.png" class="imagelogotab">
 				      	<div class="search_container">
 				  	   		<input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
     				     </div>	
@@ -341,7 +339,6 @@
                 </div>
                 <div class="box2">
                 				<div class="previewimgbox">
-                    				<img class="documentblank" src="/images/document_black.png"/>
                     				<button type="button" class="button buttonaddfancy">Add Content</button>
                     			</div>
                 			</div>
@@ -355,13 +352,13 @@
                 </div>
                 <div class="box2">
                 				<div class="previewimgbox">
-                    				<img class="documentblank" src="/images/document_black.png"/>
                     				<button type="button" class="button buttonaddfancy">Add Content</button>
                     			</div>
                 </div>
 				</div>
 				<div id='tab_flash_repo_content' class="fancy_tab_content">	
-                	<div class="box1 box1fancy2">			  
+                	<div class="box1 box1fancy2">
+                    <img src="images/repositoryimg.png" class="imagelogotab">				  
 					<div class="search_container">
 					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 					</div>
@@ -402,7 +399,6 @@
                   	</div>
                     <div id="box2" class="box2">
                 		<div id="previewimgbox" class="previewimgbox">
-                    	<img id="documentblank" class="documentblank" src="/images/document_black.png"/>
                     	<button type="button" class="button buttonaddfancy">Add Content</button>
                         </div>
                     </div>
@@ -416,13 +412,13 @@
                    	    </div>
                         <div id="box2" class="box2">
                 			<div id="previewimgbox" class="previewimgbox">
-                    			<img id="documentblank" class="documentblank" src="/images/document_black.png"/>
                     			<button type="button" class="button buttonaddfancy">Add Content</button>
                    	    	</div>
                         </div>
 				   </div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">		
-                    <div class="box1 box1fancy2">		  
+                    <div class="box1 box1fancy2">	
+                    <img src="images/repositoryimg.png" class="imagelogotab">	  
 						<div class="search_container">
 						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
@@ -442,7 +438,7 @@
 				
 				<div id='tab_video_youtube_content' class="fancy_tab_content">
                   <div class="box1 box1fancy2">
-					
+					<img src="images/youtubelogo.png" class="imagelogotab">
 					<div class="search_container" id="youtube_search_container">
 					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="youtube_text_to_search"> </input>
 					</div>
@@ -529,8 +525,8 @@
 			if(lang!="null"){
 				options["lang"] = lang;
 			}
-		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
-		  VISH.Editor.init(options);
+		  VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
+		  //VISH.Editor.init(options);
 		}
 		
 		function getURLParameter(name) {
