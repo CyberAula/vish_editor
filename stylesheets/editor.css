@@ -234,9 +234,17 @@
     z-index: 1000;
     }
 
-.multiplechoice_radio {
+.multiplechoice_text {
 	
-	
+		background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: relative;
+    z-index: 1000;
 	
 	
 }
