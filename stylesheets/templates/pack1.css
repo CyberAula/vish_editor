@@ -447,7 +447,7 @@
 
 .t7_right{
 	margin-top: 12px;
-	position:relative fixed;
+	position:relative;
 	width: 32%;
 	height: 50%;
 	float: left;
