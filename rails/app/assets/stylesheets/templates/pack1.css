@@ -141,7 +141,7 @@
 	margin-top:11px;
 	position:relative;
 	width: 33%;
-	height: 90%;
+	height: 89%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
@@ -192,7 +192,7 @@
 }
 
 /*
-	TEMPLATE 4: "2plusone"
+	TEMPLATE 4: "t4"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -255,7 +255,7 @@
 }
 
 /*
-	TEMPLATE 5: "fuuuuuu3"
+	TEMPLATE 5: "t5"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -272,10 +272,10 @@
 	position: relative;
 }
 
-.t5_right{
-	margin-top:5px;
+.t5_left{
+	margin-top:11px;
 	position:relative;
-	width: 60%;
+	width: 31%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
@@ -284,23 +284,28 @@
 	overflow:hidden;	
 }
 
-.t5_left2{
-	margin-top: 5px;
+.t5_center{
+	margin-top:11px;
 	position:relative;
-	width: 20%;
-	height: 40%;
-	float: right;
+	width: 32%;
+	height: 90%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 1%;
+	margin-left: 2%;
 	font-size: 18px;
 	overflow:hidden;	
 }
-.t5_left1{
-	margin-top: 5px;
+.t5_right{
+	margin-top:11px;
 	position:relative;
-	width: 20%;
-	height: 40%;
-	float: right;
+	width: 31%;
+	height: 90%;
+	float: left;
+	border: 2px double transparent;
+	margin-left: 1%;
 	font-size: 18px;
-	overflow:hidden;	
+	overflow:hidden;		
 }
 
 .t5_text{
@@ -327,7 +332,7 @@
 }
 
 /*
-	TEMPLATE 6: "fuuuuuu4"
+	TEMPLATE 6: "t6"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -344,11 +349,11 @@
 	position: relative;
 }
 
-.t6_right1{
-	margin-top:5px;
+.t6_left{
+	margin-top:11px;
 	position:relative;
-	width: 50%;
-	height: 30%;
+	width: 65%;
+	height: 89%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
@@ -356,23 +361,21 @@
 	overflow:hidden;	
 }
 
-.t6_right2{
-	margin-top:5px;
+.t6_center{
+	margin-top: 11px;
 	position:relative;
-	width: 50%;
-	height: 30%;
+	width: 32%;
+	height: 37%;
 	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
 	font-size: 18px;
 	overflow:hidden;	
 }
-.t6_left{
-	margin-top: 5px;
+.t6_right{
+	margin-top: 12px;
 	position:relative;
-	width: 30%;
-	height: 80%;
-	float: right;
+	width: 32%;
+	height: 50%;
+	float: left;
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -401,7 +404,7 @@
 }
 
 /*
-	TEMPLATE 7: "fuuuuuu5"
+	TEMPLATE 7: "t7"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
@@ -418,11 +421,23 @@
 	position: relative;
 }
 
-.t7_left1{
-	margin-top:5px;
+.t7_center{
+	margin-top:11px;
 	position:relative;
-	width: 50%;
-	height: 30%;
+	width: 65%;
+	height: 89%;
+	float: right;
+	border: 2px double transparent;
+	
+	font-size: 18px;
+	overflow:hidden;	
+}
+
+.t7_left{
+	margin-top:11px;
+	position:relative;
+	width: 32%;
+	height: 37%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
@@ -430,25 +445,16 @@
 	overflow:hidden;	
 }
 
-.t7_left2{
-	margin-top:5px;
+.t7_right{
+	margin-top: 12px;
 	position:relative;
-	width: 50%;
-	height: 30%;
+	width: 32%;
+	height: 50%;
 	float: left;
-	border: 2px double transparent;
 	margin-right: 2%;
 	font-size: 18px;
-	overflow:hidden;	
-}
-.t7_right{
-	margin-top: 5px;
-	position:relative;
-	width: 30%;
-	height: 80%;
-	float: right;
-	font-size: 18px;
-	overflow:hidden;	
+	overflow:hidden;
+		
 }
 
 .t7_text{
@@ -470,82 +476,6 @@
 }
 
 .t7_swf{
-	width: 100%;
-	height: 100%;
-}
-
-/*
-	TEMPLATE 8: "fuuuuuu6"
-	by Néstor Toribio
-
-	Cuatro Bloques: título + texto + imágen + texto;
-*/
-
-.t8_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	font-size: 24px;
-	height: 30px;
-	width: 100%;
-	overflow:hidden;	
-	position: relative;
-}
-
-.t8_center1{
-	margin-top:5px;
-	position:relative;
-	width: 100%;
-	height: 30%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 18px;
-	overflow:hidden;	
-}
-
-.t8_center2{
-	margin-top:5px;
-	position:relative;
-	width: 100%;
-	height: 30%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 18px;
-	overflow:hidden;
-}
-.t8_center3{
-	margin-top:5px;
-	position:relative;
-	width: 100%;
-	height: 30%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 18px;
-	overflow:hidden;	
-}
-
-.t8_text{
-	text-align: justify;
-	color: black;
-}
-
-.t8_image{
-	width: 300px;
-}
-
-.t8_video{
-	max-width: 100%;
-	max-height: 100%;
-}
-
-.t8_object{
-	
-}
-
-.t8_swf{
 	width: 100%;
 	height: 100%;
 }

@@ -10763,6 +10763,9 @@ VISH.Editor = function(V, $, undefined) {
     }
     if(excursion) {
       excursion_to_edit = excursion;
+      excursionDetails.title = excursion.title;
+      excursionDetails.description = excursion.description;
+      excursionDetails.avatar = excursion.avatar;
       V.Editor.Renderer.init(excursion);
       _removeSelectableProperties()
     }
@@ -10935,10 +10938,8 @@ VISH.Editor = function(V, $, undefined) {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
         params["current_el"].html("");
+        $(".theslider").hide();
         params["current_el"].removeAttr("type");
-        if(params["current_el"].attr("type") === "image") {
-          $(".theslider").hide()
-        }
         params["current_el"].addClass("editable")
       }
     }})
@@ -10949,6 +10950,7 @@ VISH.Editor = function(V, $, undefined) {
     $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
+        $(".theslider").hide();
         article_to_delete.remove();
         if(curSlide == slideEls.length - 1 && curSlide != 0) {
           curSlide -= 1
@@ -11549,9 +11551,10 @@ VISH.Dummies = function(VISH, undefined) {
   var nextArticleId = 1;
   var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='mchoice_radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t5_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t7_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='mchoice_radio_option_0' type='radio' class='multiplechoice_radio' /><input id='radio_text_0' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
   "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
@@ -11826,7 +11829,7 @@ VISH.Editor.I18n = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
   var carrouselDivId = "tab_flikr_content_carrousel";
-  var queryMaxNumberFlikrImages = 20;
+  var queryMaxNumberFlikrImages = 80;
   var init = function() {
     var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
     $(myInput).keydown(function(event) {
@@ -12048,24 +12051,32 @@ VISH.Editor.Quiz = function(V, $, undefined) {
   var buttonAddOptionId = "a_add_quiz_option";
   var MultipleChoiceoptionClass = "multiplechoice_radio";
   var searchOptionText = "mchoice_radio_option_";
-  var number_patern = /[0-9]/;
+  var num_options = 5;
   var init = function() {
-    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption);
-    console.log("Entramos en init (Quiz) y buscamos class de a: " + $(".add_quiz_option"))
+    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
   };
   var addMultipleChoiceOption = function(event) {
     console.log("Entramos en addMultipleChoiceOption (Quiz)");
     var text = $("<div>").append($("." + MultipleChoiceoptionClass).clone()).html();
-    console.log("text vale:  " + text);
-    var number = text.substr(32, 1);
-    var next_num = parseInt(number) + 1;
-    console.log("number con patrones y match vale:  " + number);
-    console.log("next_number :  " + next_num);
-    var add_option = "<br><input id='mchoice_radio_option_" + next_num + "' type='radio' class='multiplechoice_radio' /><input id='radio_text_" + next_num + "' type='text' placeholder='insert text option here' />";
-    add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
-    $(".add_quiz_option").remove();
-    $(".mcquestion").append(add_option);
-    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
+    var total = 0;
+    $("." + MultipleChoiceoptionClass).each(function(i) {
+      total = i
+    });
+    var next_num = parseInt(total) + 1;
+    if(next_num < num_options) {
+      console.log("next_number :  " + next_num);
+      var add_option = "<br><input id='mchoice_radio_option_" + next_num + "' type='radio' class='multiplechoice_radio' /><input id='radio_text_" + next_num + "' type='text' placeholder='insert text option here' />";
+      add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
+      $(".add_quiz_option").remove();
+      $(".mcquestion").append(add_option)
+    }else {
+      if(next_num = num_options) {
+        var add_option = "<br><input id='mchoice_radio_option_" + next_num + "' type='radio' class='multiplechoice_radio' /><input id='radio_text_" + next_num + "' type='text' placeholder='insert text option here' />";
+        add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'>";
+        $(".add_quiz_option").remove();
+        $(".mcquestion").append(add_option)
+      }
+    }
   };
   return{init:init, addMultipleChoiceOption:addMultipleChoiceOption}
 }(VISH, jQuery);
@@ -12685,9 +12696,10 @@ VISH.SlideManager = function(V, $, undefined) {
   var init = function(excursion) {
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
-    $(document).on("click", "#page-switcher-start", prevSlide);
-    $(document).on("click", "#page-switcher-end", nextSlide);
-    $(document).on("click", "#page-fullscreen", toggleFullScreen)
+    $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
+    $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
+    $(document).on("click", "#page-fullscreen", toggleFullScreen);
+    VISH.SlidesUtilities.updateSlideCounter()
   };
   var toggleFullScreen = function() {
     var isInIFrame = window.location != window.parent.location ? true : false;
@@ -12842,6 +12854,8 @@ VISH.SlidesUtilities = function(V, $, undefined) {
       $(".selectable").css("border-style", "none");
       $(".theslider").hide();
       V.Editor.Thumbnails.selectThumbnail(no)
+    }else {
+      updateSlideCounter()
     }
   };
   var backwardOneSlide = function() {
@@ -12859,7 +12873,12 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     });
     return width
   };
-  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw}
+  var updateSlideCounter = function() {
+    var number_of_slides = slideEls.length;
+    var slide_number = curSlide + 1;
+    $("#slide-counter").html(slide_number + "/" + number_of_slides)
+  };
+  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
