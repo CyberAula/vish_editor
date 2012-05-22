@@ -468,9 +468,9 @@ article.smaller q::after {
 	background: linear-gradient(left, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d000000', endColorstr='#00000000',GradientType=1 ); /* IE6-8 */
 	color: white;
-	border-radius: 20px 0px 0px 20px;
-    -moz-border-radius: 20px 0px 0px 20px;
-    -webkit-border-radius: 20px 0px 0px 20px;
+	border-radius: 37px 0px 0px 0px;
+    -moz-border-radius: 37px 0px 0px 0px;
+    -webkit-border-radius: 37px 0px 0px 0px;
 }
 
 #page-switcher-start{
@@ -488,16 +488,60 @@ article.smaller q::after {
 	background: linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#4d000000',GradientType=1 ); /* IE6-8 */
 	color: white;
-	border-radius: 0px 20px 20px 0px;
-    -moz-border-radius: 0px 20px 20px 0px;
-    -webkit-border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 38px 0px 0px;
+    -moz-border-radius: 0px 38px 0px 0px;
+    -webkit-border-radius: 0px 38px 0px 0px;
 }
 
 #page-fullscreen{
-	width: 40px;
+    background-image: url(../images/fullscreen.png);
+	background-repeat:no-repeat;
+	background-position:center;
+    bottom: 0;
+    right: 6%;
+    opacity: 1.0;
+    position: fixed;
+    text-align: center;
+    width: 50px;
 	height: 40px;
-	bottom: 0px;
-	left: 50%;
-	position: absolute;
+	border: none;
+	color: none;
 }
 
+#page-fullscreen:hover{
+    background-image: url(../images/hover/fullscreen_hover.png);
+}
+
+#slide-counter {
+	z-index: 10;
+	font-family: Helvetica;
+	font-size:18px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.viewbar:hover {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -200px;
+    opacity: 1.0;
+    position: fixed;
+    text-align: center;
+    width: 400px;
+}
+
+.viewbar {
+	background-image: url(../images/viewbar.png) ;
+	height: 40px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -200px;
+    opacity: 0.5;
+    position: fixed;
+    text-align: center;
+    width: 400px;
+}

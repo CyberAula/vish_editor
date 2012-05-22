@@ -26,7 +26,7 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	if (aspect_ratio_zone>aspect_ratio_content) {
 		
 			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
-			dimentions_for_drawing.height = h_content;
+			dimentions_for_drawing.height = h_zone;
 		return dimentions_for_drawing;
 		
 	}

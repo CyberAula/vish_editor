@@ -42,7 +42,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursionDetails.avatar = excursion.avatar;
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
-			_removeSelectableProperties();
+			_removeSelectableProperties();			
 		}
 		
 		// fancybox to create a new slide		
@@ -64,9 +64,14 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		V.SlideManager.addEnterLeaveEvents();
+		_addEditorEnterLeaveEvents();
 		
 		V.SlidesUtilities.redrawSlides();
+		
+		if(excursion){
+			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide()
+		}
 		
 		//Init submodules
 		V.Debugging.init(true);
@@ -255,6 +260,31 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   
   /**
+   * function to add enter and leave events only for the VISH editor
+   */
+  var _addEditorEnterLeaveEvents = function(){
+  	$('article').live('slideenter',_onslideenterEditor);
+	$('article').live('slideleave',_onslideleaveEditor);
+  };
+  
+  /**
+   * function called when entering slide in editor, we have to show the objects
+   */
+  var _onslideenterEditor = function(e){
+  	setTimeout(function(){
+  		$(e.target).find('.object_wrapper').show();
+  	},500);
+  };
+  
+  /**
+   * function called when leaving slide in editor, we have to hide the objects
+   */
+  var _onslideleaveEditor = function(){
+  	//radical way
+  	$('.object_wrapper').hide();
+  };
+  
+  /**
    * function to start the walkthrough
    */
   var _startTutorial = function(){
@@ -307,9 +337,6 @@ VISH.Editor = (function(V,$,undefined){
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
-		
-		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		//V.SlideManager.addEnterLeaveEvents();
 		
 		V.SlidesUtilities.redrawSlides();
 		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
@@ -542,6 +569,10 @@ VISH.Editor = (function(V,$,undefined){
    * function to save the excursion 
    */
   var _saveExcursion = function(){
+  	//first of all show all objects that have been hidden because they are in previous and next slides
+  	//so they are not saved with style hidden
+  	$('.object_wrapper').show();
+  	//now save the excursion
     var excursion = {};
     //TODO decide this params
     excursion.id = '';
@@ -607,6 +638,11 @@ VISH.Editor = (function(V,$,undefined){
 	      } else if(element.type=="object"){
 	    	  var object = $(div).find(".object_wrapper").children()[0];
 	    	  element.body   = $(object)[0].outerHTML;
+	    	  //in some old browsers (before firefox 11 for example) outerHTML does not work
+	    	  //we do a trick
+	    	  if (typeof($(object)[0].outerHTML)==='undefined'){
+	    	  	element.body   = $(object).clone().wrap('<div></div>').parent().html();
+	    	  }
 	    	  element.style  = $(object).parent().attr('style');
 	      }
 	    
@@ -620,12 +656,37 @@ VISH.Editor = (function(V,$,undefined){
 	      else if (element.type=="mcquestion") {
 	      	var i;
 	      		      		   
-	      	element.title   = $(div).find(".value_multiplechoice_question").val();
-	     var array_options = $(div).find(".multiplechoice_radio");
-	     //	for (i=0; i<$(div).(find(".multimplechoice_radio"))) 
+	      	//element.title   = $(div).find(".value_multiplechoice_question").val();
+	      	
+	      	element.question   = $(div).find(".value_multiplechoice_question").val();
+	      /*	console.log("La pregunta es: "+ $(div).find(".value_multiplechoice_question").val());
+	      	
+	     var array_options = $(div).find(".multiplechoice_text");
 	     
-	     	//element['options']
+	     $('.multiplechoice_text').each(function(i){
+ total = i;
+}); 		
+	     console.log("total vale: " + parseInt(total)+1);
+	     
+	     
+	     	for (i=1; i<= parseInt(total)+1; i++) 	{
+	     		
+	     		console.log ("entra en for e i vale: "+ i)
+	     	//element['options'][i];
 	     	
+	     	} 
+	     		for (op in array_options) 	{ 
+	     			
+	     			console.log("El array_options(op) es: " +array_options[op] );
+	     			console.log("op vale : " + op);
+	     			
+	     	
+	     			
+	     			console.log("El value de array_options(op) es: " + array_options[op].value );
+	     				//element['options'][parseInt(op)+1]= array_options[op].value ;	
+	     }
+	     	//element['options']
+	     */	
 	     
 	      }
 	      
