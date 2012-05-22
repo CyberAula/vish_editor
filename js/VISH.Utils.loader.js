@@ -59,12 +59,26 @@ VISH.Utils.loader = (function(V,undefined){
       return deferred.promise();
     };
     
+		//Load images contained in imagesArray and invoke callback after
+    var waitForLoadImages = function(imagesArray,callback){
+	    var imagesLength = imagesArray.length;
+	    var imagesLoaded = 0;
+	    $.each(imagesArray, function(i, image) {
+	      $(image).load(function() {
+	        imagesLoaded = imagesLoaded + 1;
+	        if(imagesLoaded == imagesLength){
+	          callback();
+	        }
+	      })
+	    });
+	  }
 
     return {
             getImage        : getImage,
             getVideo        : getVideo,
             loadImage       : loadImage,
-            loadVideo       : loadVideo
+            loadVideo       : loadVideo,
+						waitForLoadImages : waitForLoadImages
     };
 
 }) (VISH);

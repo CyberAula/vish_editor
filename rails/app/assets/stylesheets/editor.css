@@ -1,6 +1,5 @@
 
-.slides > article {
-  margin-top: -330px;	
+.slides > article {	
 }
 
 #menubar {
@@ -17,7 +16,6 @@
 
 #excursiondetails {
 	background: url(../assets/excursiondetails_bg.png) no-repeat top;
-	
 }
 
 .barbuttonaddsave{
@@ -143,7 +141,7 @@
 }
 
 .marginsfancy2 {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-left: 430px;
 }
 
@@ -236,9 +234,17 @@
     z-index: 1000;
     }
 
-.multiplechoice_radio {
+.multiplechoice_text {
 	
-	
+		background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: relative;
+    z-index: 1000;
 	
 	
 }
@@ -661,13 +667,16 @@ input.rounded:focus {
     height: 50px;
     border: none;
     margin-right: 25px;
-    margin-top: 10px;
+    /*margin-top: 450px;*/
+	margin-left: 300px;
     color: white;
     font-size: 14px;
     font-weight: bold;
     padding-bottom: 5px;  
     outline: none;
     border: none;
+	/*position: absolute;*/
+	
 }
 
 .okButton:hover {
@@ -874,7 +883,7 @@ div.object_wrapper{
 	
 .formsizefancy3 {
 	width: 650px;
-	height: 30px;
+	height: 25px;
 	margin-left: 70px;
 	margin-top: 10px;
 	font-family:helvetica;
@@ -896,18 +905,19 @@ div.object_wrapper{
 }
 
 .textintromargin1 {
-	margin-top: 100px;
 	margin-left: 68px;
+	padding-top: 115px;
 }
 
 .textintromargin2 {
 	margin-left: 68px;
-	margin-top: 70px;
+	margin-top: 65px;
+	margin-bottom: 5px;
 }
 
 .textintromargin3 {
 	margin-left: 68px;
-	margin-top: 100px;
+	margin-top: 107px;
 }
 
 .buttonintro {
@@ -918,7 +928,7 @@ div.object_wrapper{
 }
 
 .buttonintro_extramargin {
-  margin-top:10px;
+  margin-top:0px;
 }
 
 .imgintro{
@@ -926,8 +936,8 @@ div.object_wrapper{
 }
 
 .error_intro {
-	margin-left: 500px;
-	margin-top: -20px;
+	margin-left: 75px;
+	margin-top: -30px;
 	font-family:Helvetica;
 	font-size:16px;
 	color: #F00;
@@ -942,20 +952,17 @@ textarea {
 }
 
 #start_tutorial {
-	width: 306px;
-	height: 77px;
-	top: -90px;
-	position: relative;
-	left: 50px;
-	background: url(/assets/tutorial.png);
+	background-image:url(../assets/tutorialimage.png);
+	position:absolute;
+	margin-left: 484px;
+	margin-top: 10px;
 }
 
 #start_tutorial:hover {
-	background: url(/assets/hover/tutorial_hover.png);
+	background-image:url(../assets/hover/tutorialimage_hover.png);
 }
 
 #excursion_details_fields{
-	top: -70px;
 	position: relative;
 }
 
@@ -1012,4 +1019,11 @@ textarea {
 	font-family:Helvetica;
   font-size: 16px;
   background: 5px 50% no-repeat;
+}
+
+.imagelogotab {
+	z-index: 10000px;
+	padding-top: 20px;
+	padding-left: 35px;
+	position: absolute;
 }

@@ -1,6 +1,5 @@
 var VISH = VISH || {};
 
-VISH.Utils || (VISH.Utils = {});
 VISH.Mods || (VISH.Mods = {});
 
 VISH.VERSION = '0.1';
