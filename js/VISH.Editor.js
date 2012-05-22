@@ -569,6 +569,10 @@ VISH.Editor = (function(V,$,undefined){
    * function to save the excursion 
    */
   var _saveExcursion = function(){
+  	//first of all show all objects that have been hidden because they are in previous and next slides
+  	//so they are not saved with style hidden
+  	$('.object_wrapper').show();
+  	//now save the excursion
     var excursion = {};
     //TODO decide this params
     excursion.id = '';
@@ -634,6 +638,11 @@ VISH.Editor = (function(V,$,undefined){
 	      } else if(element.type=="object"){
 	    	  var object = $(div).find(".object_wrapper").children()[0];
 	    	  element.body   = $(object)[0].outerHTML;
+	    	  //in some old browsers (before firefox 11 for example) outerHTML does not work
+	    	  //we do a trick
+	    	  if (typeof($(object)[0].outerHTML)==='undefined'){
+	    	  	element.body   = $(object).clone().wrap('<div></div>').parent().html();
+	    	  }
 	    	  element.style  = $(object).parent().attr('style');
 	      }
 	    
