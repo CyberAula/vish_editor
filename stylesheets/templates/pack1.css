@@ -279,7 +279,7 @@
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
-	margin-right: 2%;
+	margin-right: 1%;
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -287,12 +287,12 @@
 .t5_center{
 	margin-top:11px;
 	position:relative;
-	width: 32%;
+	width: 33%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
 	margin-right: 1%;
-	margin-left: 2%;
+	margin-left: 1%;
 	font-size: 18px;
 	overflow:hidden;	
 }
