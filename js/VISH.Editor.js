@@ -42,7 +42,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursionDetails.avatar = excursion.avatar;
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
-			_removeSelectableProperties();
+			_removeSelectableProperties();			
 		}
 		
 		// fancybox to create a new slide		
@@ -64,9 +64,14 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 		
 		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		V.SlideManager.addEnterLeaveEvents();
+		_addEditorEnterLeaveEvents();
 		
 		V.SlidesUtilities.redrawSlides();
+		
+		if(excursion){
+			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide()
+		}
 		
 		//Init submodules
 		V.Debugging.init(true);
@@ -255,6 +260,31 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   
   /**
+   * function to add enter and leave events only for the VISH editor
+   */
+  var _addEditorEnterLeaveEvents = function(){
+  	$('article').live('slideenter',_onslideenterEditor);
+	$('article').live('slideleave',_onslideleaveEditor);
+  };
+  
+  /**
+   * function called when entering slide in editor, we have to show the objects
+   */
+  var _onslideenterEditor = function(e){
+  	setTimeout(function(){
+  		$(e.target).find('.object_wrapper').show();
+  	},500);
+  };
+  
+  /**
+   * function called when leaving slide in editor, we have to hide the objects
+   */
+  var _onslideleaveEditor = function(){
+  	//radical way
+  	$('.object_wrapper').hide();
+  };
+  
+  /**
    * function to start the walkthrough
    */
   var _startTutorial = function(){
@@ -307,9 +337,6 @@ VISH.Editor = (function(V,$,undefined){
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
-		
-		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		//V.SlideManager.addEnterLeaveEvents();
 		
 		V.SlidesUtilities.redrawSlides();
 		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
