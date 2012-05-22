@@ -10692,13 +10692,28 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
 }else {
   initialize()
 }
-;var VISH = VISH || {};
+;var i18n = {"es":{"0%":"0%", "accept":"aceptar", "Add":"A\u00f1adir", "add image url":"a\u00f1adir URL de imagen", "Add Content":"A\u00f1adir Contenido", "add video url":"a\u00f1adir URL de video", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Continue":"Continuar", "Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "delete":"borrar", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", 
+"Edit details":"Editar detalles", "embed":"embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Image":"Imagen", "no":"no", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "save":"guardar", "Save slides":"Salvar las diapositivas", "Search content":"Buscar contenido", "Select picture to upload":"Seleccionar imagen para subir", "Select video to upload":"Seleccionar video para subir", "Text":"Texto", "Title":"Titulo", "Thumbnail":"Miniatura", 
+"Upload":"Subir", "upload":"subir", "upload flash":"subir flash", "url":"url", "Video":"Video", "vish":"vish"}};
+var VISH = VISH || {};
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
 VISH.ImagesPath = "/assets/";
 VISH.StylesheetsPath = "/assets/";
 VISH.Editing = false;
+VISH.Utils = function(V, undefined) {
+  var init = function() {
+  };
+  var getOuterHTML = function(tag) {
+    if(typeof $(tag)[0].outerHTML == "undefined") {
+      return $(tag).clone().wrap("<div></div>").parent().html()
+    }else {
+      return $(tag)[0].outerHTML
+    }
+  };
+  return{init:init, getOuterHTML:getOuterHTML}
+}(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
   var domId = 0;
@@ -12942,18 +12957,6 @@ VISH.Utils.canvas = function(V, undefined) {
     ctx.restore()
   };
   return{drawImageWithAspectRatioAndRoundedCorners:drawImageWithAspectRatioAndRoundedCorners, drawImageWithAspectRatio:drawImageWithAspectRatio, drawRoundedCorners:drawRoundedCorners}
-}(VISH);
-VISH.Utils = function(V, undefined) {
-  var init = function() {
-  };
-  var getOuterHTML = function(tag) {
-    if(typeof $(tag)[0].outerHTML == "undefined") {
-      return $(tag).clone().wrap("<div></div>").parent().html()
-    }else {
-      return $(tag)[0].outerHTML
-    }
-  };
-  return{init:init, getOuterHTML:getOuterHTML}
 }(VISH);
 VISH.Utils.loader = function(V, undefined) {
   var libVideos = {};
