@@ -275,7 +275,7 @@
 .t5_left{
 	margin-top:11px;
 	position:relative;
-	width: 32%;
+	width: 31%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
@@ -292,14 +292,14 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 1%;
-	margin-left: 1%
+	margin-left: 2%
 	font-size: 18px;
 	overflow:hidden;	
 }
 .t5_right{
 	margin-top:11px;
 	position:relative;
-	width: 32%;
+	width: 31%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
