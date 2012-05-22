@@ -202,14 +202,15 @@ function updateSlides(goingRight) {
   }
   triggerEnterEvent(curSlide);
 
-  window.setTimeout(function() {
-    // Hide after the slide
-    disableSlideFrames(curSlide - 2);
-  }, 301);
-
-  enableSlideFrames(curSlide - 1);
-  enableSlideFrames(curSlide + 2);
-  
+  /* REMOVED BY KIKE, BECAUSE WE DO IT IN OUR CODE
+	  window.setTimeout(function() {
+	    // Hide after the slide
+	    disableSlideFrames(curSlide - 2);
+	  }, 301);
+	
+	  enableSlideFrames(curSlide - 1);
+	  enableSlideFrames(curSlide + 2);
+  */
   if (isChromeVoxActive()) {
     speakAndSyncToNode(slideEls[curSlide]);
   }  
@@ -338,7 +339,7 @@ function cancelTouch() {
 };
 
 /* Preloading frames */
-
+/* REMOVED BY KIKE BECAUSE WE DO THE SAME IN OUR CODE
 function disableSlideFrames(no) {
   var el = getSlideEl(no);
   if (!el) {
@@ -386,6 +387,8 @@ function setupFrames() {
   enableSlideFrames(curSlide + 1);
   enableSlideFrames(curSlide + 2);  
 };
+*/
+
 
 function setupInteraction() {
   /* Clicking and tapping */
@@ -603,7 +606,7 @@ function makeBuildLists() {
 function handleDomLoaded() {
   slideEls = document.querySelectorAll('section.slides > article');
 
-  setupFrames();
+  /*setupFrames(); REMOVED BY KIKE BECAUSE WE LOAD AND UNLOAD OUR IFRAMES IN OUR CODE DIRECTLY*/
 
   addFontStyle();
   //removed add style, we add it in the html
