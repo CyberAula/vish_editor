@@ -132,7 +132,7 @@
 	margin-top: -.2em;
 	font-size: 24px;
 	height: 30px;
-	width: 100%;
+	width: 99%;
 	overflow:hidden;	
 	position: relative;
 }
@@ -152,7 +152,7 @@
 .t3_center{
 	margin-top: 11px;
 	position:relative;
-	width: 65%;
+	width: 64%;
 	height: 75%;
 	float: left;
 	font-size: 18px;
@@ -161,7 +161,7 @@
 .t3_right{
 	margin-top: 12px;
 	position:relative;
-	width: 65%;
+	width: 64%;
 	height: 12%;
 	float: left;
 	font-size: 18px;
@@ -267,7 +267,7 @@
 	margin-top: -.2em;
 	font-size: 24px;
 	height: 30px;
-	width: 100%;
+	width: 98%;
 	overflow:hidden;	
 	position: relative;
 }
@@ -275,7 +275,7 @@
 .t5_left{
 	margin-top:11px;
 	position:relative;
-	width: 31%;
+	width: 30%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
@@ -344,7 +344,7 @@
 	margin-top: -.2em;
 	font-size: 24px;
 	height: 30px;
-	width: 100%;
+	width: 99%;
 	overflow:hidden;	
 	position: relative;
 }
@@ -427,6 +427,7 @@
 	width: 65%;
 	height: 89%;
 	float: right;
+	margin-right: 4px;
 	border: 2px double transparent;
 	
 	font-size: 18px;
@@ -436,7 +437,7 @@
 .t7_left{
 	margin-top:11px;
 	position:relative;
-	width: 32%;
+	width: 31%;
 	height: 37%;
 	float: left;
 	border: 2px double transparent;
@@ -448,7 +449,7 @@
 .t7_right{
 	margin-top: 12px;
 	position:relative;
-	width: 32%;
+	width: 31%;
 	height: 50%;
 	float: left;
 	margin-right: 2%;
