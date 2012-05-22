@@ -364,7 +364,7 @@
 .t6_center{
 	margin-top: 11px;
 	position:relative;
-	width: 33%;
+	width: 32%;
 	height: 37%;
 	float: left;
 	font-size: 18px;
@@ -373,7 +373,7 @@
 .t6_right{
 	margin-top: 12px;
 	position:relative;
-	width: 33%;
+	width: 32%;
 	height: 50%;
 	float: left;
 	font-size: 18px;
@@ -424,10 +424,11 @@
 .t7_center{
 	margin-top:11px;
 	position:relative;
-	width: 63%;
+	width: 65%;
 	height: 89%;
-	float: right;
+	float: left;
 	border: 2px double transparent;
+	
 	font-size: 18px;
 	overflow:hidden;	
 }
@@ -435,7 +436,7 @@
 .t7_left{
 	margin-top:11px;
 	position:relative;
-	width: 35%;
+	width: 32%;
 	height: 37%;
 	float: left;
 	border: 2px double transparent;
@@ -446,10 +447,11 @@
 
 .t7_right{
 	margin-top: 12px;
-	position:relative;
-	width: 35%;
+	position:relative fixed;
+	width: 32%;
 	height: 50%;
 	float: left;
+	margin-right: 2%;
 	font-size: 18px;
 	overflow:hidden;
 		
