@@ -28,7 +28,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		//VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError);
+		VISH.Editor.API.requestRecomendedImages(VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError);
 	};
 	
 	/*
@@ -63,16 +63,14 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 				var myImg = $("<img src=" + image.src + " >")
 				carrouselImages.push(myImg);
 				currentImages[image.id] = image;
-				$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>');
-				
 			});
-	    VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
+			VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 		}
 	};
 	
 	var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5,5);
   }
 	
 	var onAPIError = function() {

@@ -8,7 +8,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	
 	var init = function(){
 		var myInput = $("#tab_video_youtube_content").find("input[type='search']");
-	  	$(myInput).watermark('Search content');
+	  $(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 		        	VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
@@ -72,17 +72,16 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
         var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" 
         var myImg = $("<img videoID="+videoID+" src="+image_url+" />")
-        carrouselImages.push(myImg);
-        $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>');
+        carrouselImages.push(myImg); 
 			});
 			
-			VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
+			VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 		}
 	};
 
   var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5,5);
   }
 	
 	

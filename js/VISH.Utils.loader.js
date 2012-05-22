@@ -59,26 +59,35 @@ VISH.Utils.loader = (function(V,undefined){
       return deferred.promise();
     };
     
-		//Load images contained in imagesArray and invoke callback after
-    var waitForLoadImages = function(imagesArray,callback){
-	    var imagesLength = imagesArray.length;
-	    var imagesLoaded = 0;
-	    $.each(imagesArray, function(i, image) {
-	      $(image).load(function() {
-	        imagesLoaded = imagesLoaded + 1;
-	        if(imagesLoaded == imagesLength){
-	          callback();
-	        }
-	      })
-	    });
-	  }
+		
+		var loadImagesOnCarrousel = function(imagesArray,callback,carrouselDivId){
+			var imagesLength = imagesArray.length;
+      var imagesLoaded = 0;
+			
+      $.each(imagesArray, function(i, image) {
+        $(image).load(function(response) {
+					$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
+          imagesLoaded = imagesLoaded + 1;
+          if(imagesLoaded == imagesLength){
+            callback();
+          }
+        })
+        $(image).error(function(response) {
+          imagesLoaded = imagesLoaded + 1;
+          if(imagesLoaded == imagesLength){
+            callback();
+          }
+        })
+      });
+		}
+		
 
     return {
             getImage        : getImage,
             getVideo        : getVideo,
             loadImage       : loadImage,
             loadVideo       : loadVideo,
-						waitForLoadImages : waitForLoadImages
+						loadImagesOnCarrousel : loadImagesOnCarrousel
     };
 
 }) (VISH);

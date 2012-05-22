@@ -29,6 +29,9 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editing = true;
 		if(options){
 			initOptions = options;
+			if(options['developping']){
+				VISH.Debugging.enableDevelopingMode();
+			}
 		}
 		else{
 			initOptions = {};

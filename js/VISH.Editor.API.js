@@ -51,13 +51,14 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * The request is:
 	 * GET /search.json?type=picture&q=text
 	 */
-	var requestImages = function(text, successCallback, failCallback){		     
-     	_requestByType("picture", text, successCallback, failCallback);		
-		/*
-			if(typeof successCallback == "function"){
-	      		successCallback(VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']));
-	    	}
-    	*/
+	var requestImages = function(text, successCallback, failCallback){
+		if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+            successCallback(VISH.Samples.API.imageList);
+      }
+			return;
+	  }		     
+    _requestByType("picture", text, successCallback, failCallback);		
 	};
 	
 	/**
@@ -65,7 +66,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	 */
 	var requestRecomendedImages = function(successCallback, failCallback){
 		if(typeof successCallback == "function"){
-			successCallback(VISH.Samples.API.imageList);
+			if (VISH.Debugging.isDevelopping()) {
+	  	  successCallback(VISH.Samples.API.imageList);
+	    }
+			return
 		}
    };
     
@@ -83,8 +87,8 @@ VISH.Editor.API = (function(V,$,undefined){
                 success:function(response){
                     if(typeof successCallback == "function"){
                     	var resp = JSON.parse(response);
-      					successCallback(resp);
-    				}
+      					      successCallback(resp);
+    				        }
                 },
                 error:function (xhr, ajaxOptions, thrownError){
                     if(typeof failCallback == "function"){

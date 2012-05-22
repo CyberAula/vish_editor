@@ -41,10 +41,9 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	      //add every image in the carrousel
 				var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m + " imageFlikrId=" + i + "/>")
 				carrouselImages.push(myImg);
-	      $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>');
       });
 	    
-			VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
+			VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	  });
   };
 
@@ -58,7 +57,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 	var _onImagesLoaded = function(){
 		$("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage,5);
+    VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage,4,5);
   }
 	
 	return {

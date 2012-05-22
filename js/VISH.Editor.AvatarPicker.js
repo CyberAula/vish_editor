@@ -51,12 +51,9 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
         $.each(avatars.pictures, function(i, item) {
 					var myImg = $("<img src="+item.src+" />")
 					carrouselImages.push(myImg)
-          content = content + '<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>';
         });
-        $("#avatars_carrousel").html(content);
 				
-				//Load images
-				VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
+				VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,"avatars_carrousel");
 				
 		  },
 		  error: function(xhr, ajaxOptions, thrownError){
@@ -71,7 +68,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	
 	var _onImagesLoaded = function(){
     $("#thumbnails_in_excursion_details").show(); 
-    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,"thumbnails");
+    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,5,"thumbnails");
     $(".buttonintro").addClass("buttonintro_extramargin");
     VISH.Editor.AvatarPicker.selectRandom(5);  //randomly select one between first page
 	}
