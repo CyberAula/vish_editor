@@ -48,7 +48,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	  $(button_next).html("<span>next</span>");
 			
 		var paginationDiv = document.createElement('div');
-		paginationDiv.setAttribute('class','pagination');
+		paginationDiv.setAttribute('class','pagination pagination_' + rowClass);
 		paginationDiv.setAttribute('id','carrousel_pag' + containerId);
 			     		 
 		$(wrapperDiv).append(clearFix);

@@ -10,7 +10,7 @@
 }
 
 .image_carousel_single_row {
-    padding: 80px 0 0px 0px;
+    padding: 85px 0 0px 0px;
 }
 
 .image_carousel_multiple_row {
@@ -35,11 +35,11 @@ a.prev, a.next {
 }
 
 a.prev_single_row, a.next_single_row{
-	top: 85px;
+	top: 90px;
 }
 
 a.prev_multiple_row, a.next_multiple_row{
-    top: 85px;
+    top: 90px;
 }
 
 a.prev {
@@ -67,31 +67,31 @@ a.prev.disabled, a.next.disabled {
 }
    
 a.prev span, a.next span {
-    display: none;
+  display: none;
 }
 
 .pagination {
-    text-align: center;
+  text-align: center;
 	margin-right: 22px;
-	margin-top: 35px;
+	margin-top: 30px;
 }
 
 .pagination a {
-    background: url(../images/carrousel_sprite.png) 0 -300px no-repeat transparent;
-    width: 15px;
-    height: 15px;
-    margin: 0 5px 0 0;
-    display: inline-block;
+  background: url(../images/carrousel_sprite.png) 0 -300px no-repeat transparent;
+  width: 15px;
+  height: 15px;
+  margin: 0 5px 0 0;
+  display: inline-block;
 	outline: none;
 }
 
 .pagination a.selected {
-    background-position: -25px -300px;
-    cursor: default;
+  background-position: -25px -300px;
+  cursor: default;
 }
 
 .pagination a span {
-    display: none;
+  display: none;
 }
 
 .clearfix {
@@ -113,8 +113,8 @@ img.carrousel_element_single_row{
   height: 90px;
   max-width: 150px;
   max-height: 150px;
-  margin-left: -27px;
-  margin-top: -2px;
+  margin-left: -21px;
+  margin-top: 15px;
 }
 
 img.carrousel_element_selected{
@@ -153,15 +153,49 @@ div.carrousel_wrapper_multiple_row{
 }
 
 
+/* CSS for Title Carrousel */
+
+.image_carousel_single_row_title {
+    padding: 70px 0 0px 0px;
+}
+
+div.carrousel_element_single_row_title{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  float: left;
+  margin-left: 35px;
+}
+
+img.carrousel_element_single_row_title{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-left: -17px;
+  margin-top: 8px;
+}
+
+a.prev_single_row_title, a.next_single_row_title{
+  top: 111px;
+}
+
+/** ADD style to pagination class (Optional) */
+.pagination_single_row_title {
+  margin-top: 55px;
+}
+
 .repositoryTitle{
-	margin: 0px;
-	margin-top: -5px;
-	max-width: 100px;
-	max-height: 13px;
-	overflow: hidden;
-	margin-left: -15px;
-	text-align: center;
-	font-size: 10px;
+  margin: 0px;
+  margin-top: 15px;
+  max-width: 100px;
+  max-height: 20px;
+  overflow: hidden;
+  margin-left: -15px;
+  text-align: center;
+  font-size: 15px;
+	font-family: Helvetica;
 }
 
 

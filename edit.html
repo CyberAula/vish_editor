@@ -324,15 +324,15 @@
 				  </ul>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
-                <div class="box1 box1fancy1">
-                	<p class="textfancy">embed flash</p><br>
-                    <img class="image_add_url" src="/images/url_img.png"/>
+          <div class="box1 box1fancy1">
+            <p class="textfancy">embed flash</p><br>
+            <img class="image_add_url" src="/images/url_img.png"/>
 				  	<input id="flash_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
-					<button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('flash_embed_code')">Upload</button>
-                </div>
+					  <button type="button" class="button buttonfancy previewButton">Preview</button>
+          </div>
                 <div class="box2">
                 				<div class="previewimgbox">
-                    				<button type="button" class="button buttonaddfancy">Add Content</button>
+                    				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement('tab_flash_from_url_content')">Add Content</button>
                     			</div>
                 			</div>
 				</div>
@@ -350,29 +350,27 @@
                 </div>
 				</div>
 				<div id='tab_flash_repo_content' class="fancy_tab_content">	
-                	<div class="box1 box1fancy2">
-                    <img src="images/repositoryimg.png" class="imagelogotab">				  
-					<div class="search_container">
-					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
-					</div>
-					
-					<div id="tab_flash_repo_content_carrousel"></div>
-					<div id="tab_flash_repo_content_preview">
-						<div id="tab_flash_repo_content_preview_flash">
-							
+          <div class="box1 box1fancy2">
+	          <img src="images/repositoryimg.png" class="imagelogotab">				  
+						<div class="search_container">
+						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
-						<div id="tab_flash_repo_content_preview_metadata"></div>
-						<div id="tab_flash_repo_content_preview_foot">
-							<button type="button" class="okButton" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
-						</div>
-					</div>
-				</div>
-                </div>	 
+						
+						<div id="tab_flash_repo_content_carrousel"></div>
+						<div id="tab_flash_repo_content_preview" class="content_preview">
+							<div id="tab_flash_repo_content_preview_flash" class="content_preview_data"></div>
+							<div id="tab_flash_repo_content_preview_metadata" class="content_preview_metadata"></div>
+							<div id="tab_flash_repo_content_preview_foot" class="content_preview_foot">
+								<button type="button" class="okButton" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
+							</div>
+						</div>				
+				  </div>
+        </div>	 
 	    </div>
 	  </div>
   
   
-  	  <!-- VIDEO -->
+  	<!-- VIDEO -->
 	  <div style='display:none'>
 	    <div id="video_fancybox" class="outer_box">
 				<div class="fancy_tabs">	   
@@ -404,7 +402,7 @@
 							
 							<div id="tab_video_repo_content_carrousel"></div>
 							<div id="tab_video_repo_content_preview" class="content_preview">
-								<div id="tab_video_repo_content_preview_video" class="content_preview_video">
+								<div id="tab_video_repo_content_preview_video" class="content_preview_data">
 									
 								</div>
 								<div id="tab_video_repo_content_preview_metadata" class="content_preview_metadata"></div>
@@ -425,7 +423,7 @@
 				
 					<div id="tab_video_youtube_content_carrousel"></div>
 					<div id="tab_video_youtube_content_preview" class="content_preview">
-						<div id="tab_video_youtube_content_preview_video" class="content_preview_video">
+						<div id="tab_video_youtube_content_preview_video" class="content_preview_data">
 							
 						</div>
 						<div id="tab_video_youtube_content_preview_metadata" class="content_preview_metadata"></div>

@@ -60,13 +60,17 @@ VISH.Utils.loader = (function(V,undefined){
     };
     
 		
-		var loadImagesOnCarrousel = function(imagesArray,callback,carrouselDivId){
+		var loadImagesOnCarrousel = function(imagesArray,callback,carrouselDivId,titleArray){
 			var imagesLength = imagesArray.length;
       var imagesLoaded = 0;
 			
       $.each(imagesArray, function(i, image) {
         $(image).load(function(response) {
-					$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
+					if(titleArray){
+						$("#" + carrouselDivId).append("<div><p class='repositoryTitle'>"+titleArray[i]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+					} else {
+						$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
+					}
           imagesLoaded = imagesLoaded + 1;
           if(imagesLoaded == imagesLength){
             callback();
