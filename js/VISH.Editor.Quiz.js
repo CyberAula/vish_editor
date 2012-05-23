@@ -47,7 +47,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		} else if (next_num = num_options) {
 			
 			var add_option = "<br><input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
-			add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
+			//add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
 			
 			$(".add_quiz_option").remove();
 			

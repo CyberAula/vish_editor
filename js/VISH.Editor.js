@@ -653,43 +653,22 @@ VISH.Editor = (function(V,$,undefined){
 	     
 	      }
 	      else if (element.type=="mcquestion") {
-	      	var i;
-	      		      		   
-	      	//element.title   = $(div).find(".value_multiplechoice_question").val();
-	      	
+	      		      		      	
 	      	element.question   = $(div).find(".value_multiplechoice_question").val();
-	      /*	console.log("La pregunta es: "+ $(div).find(".value_multiplechoice_question").val());
 	      	
+	    element.options = [];  	
 	     var array_options = $(div).find(".multiplechoice_text");
 	     
-	     $('.multiplechoice_text').each(function(i){
- total = i;
+	     $('.multiplechoice_text').each(function(i, input_text){
+   	
+			 element.options[i] = input_text.value;
+ 
+ 
 }); 		
-	     //console.log("total vale: " + parseInt(total)+1);
-	     
-	     
-	     	for (i=1; i<= parseInt(total)+1; i++) 	{
-	     		
-	     		//console.log ("entra en for e i vale: "+ i)
-	     	//element['options'][i];
-	     	
-	     	} 
-	     		for (op in array_options) 	{ 
-	     			
-	     			//console.log("El array_options(op) es: " +array_options[op] );
-	     			//console.log("op vale : " + op);
-	     			
-	     	
-	     			
-	     			//console.log("El value de array_options(op) es: " + array_options[op].value );
-	     				//element['options'][parseInt(op)+1]= array_options[op].value ;	
-	     }
-	     	//element['options']
-	     */	
+	       	//element['options']
 	     
 	      }
-	      
-	      
+	     
           
           slide.elements.push(element);
           element = {};
@@ -699,7 +678,7 @@ VISH.Editor = (function(V,$,undefined){
       slide = {};
     });
     var jsonexcursion = JSON.stringify(excursion);
-    //console.log(jsonexcursion);
+    VISH.Debugging.log(jsonexcursion);
     
     $('article').remove();
     $('#menubar').remove();

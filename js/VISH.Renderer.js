@@ -163,10 +163,11 @@ VISH.Renderer = (function(V,$,undefined){
 		ret += "<label class='question_name'>Name: </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";
 		
-		/*for(var i = 0; i<element['options'].length; i++){
+		
+		for(var i = 0; i<element['options'].length; i++){
 			ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
 		}
-		*/
+		
 		ret += "<button type='button' class='question_button'>Send</button>";
 		return ret;
 	};
