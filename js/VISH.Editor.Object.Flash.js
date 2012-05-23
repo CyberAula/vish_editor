@@ -18,7 +18,9 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  var embedTag = document.createElement('embed');
 	  embedTag.setAttribute('id', idToResize );
 	  embedTag.setAttribute('class', template + "_swf");
-	  embedTag.setAttribute('title', "Click to drag");
+	  //remove click to drag message because you can´t drag the flash object by clicking it and 
+	  //this message remains after save
+	  //embedTag.setAttribute('title', "Click to drag");
 	  embedTag.setAttribute('src', src);
 	  embedTag.setAttribute('wmode', 'transparent');
 	  $(embedDiv).append(embedTag); 

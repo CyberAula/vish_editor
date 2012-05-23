@@ -241,7 +241,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
 		$(wrapperTag).attr('class', template + "_object");
-		$(wrapperTag).attr('title', "Click to drag");
+		//remove click to drag message because you can´t drag the flash object by clicking it and 
+	    //this message remains after save
+		//$(wrapperTag).attr('title', "Click to drag");
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
