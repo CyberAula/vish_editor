@@ -637,12 +637,7 @@ VISH.Editor = (function(V,$,undefined){
 	    	  element.style  = $(swf).parent().attr('style');
 	      } else if(element.type=="object"){
 	    	  var object = $(div).find(".object_wrapper").children()[0];
-	    	  element.body   = $(object)[0].outerHTML;
-	    	  //in some old browsers (before firefox 11 for example) outerHTML does not work
-	    	  //we do a trick
-	    	  if (typeof($(object)[0].outerHTML)==='undefined'){
-	    	  	element.body   = $(object).clone().wrap('<div></div>').parent().html();
-	    	  }
+	    	  element.body   = VISH.Utils.getOuterHTML(object);
 	    	  element.style  = $(object).parent().attr('style');
 	      }
 	    

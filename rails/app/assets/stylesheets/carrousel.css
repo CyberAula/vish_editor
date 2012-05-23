@@ -20,7 +20,6 @@
 .image_carousel img {
     border: 1px solid #ccc;
     background-color: white;
-    padding: 9px;
     margin: 6px;
     display: block;
     float: left;
@@ -119,7 +118,16 @@ img.carrousel_element_single_row{
 }
 
 img.carrousel_element_selected{
-  background-color: #CCC;
+  	border: 10px solid rgba(255, 2, 94, 0.9);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	border-radius: 13px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	outline: 0;
+	outline: thin dotted \9;
+	opacity: 1.0 !important;
 }
 
 div.carrousel_element_multiple_row{
@@ -175,6 +183,18 @@ img.carrousel_element_single_row_thumbnails{
   margin-left: -27px;
   margin-top: -2px;
   border: none;
+  opacity: 0.2;
+}
+
+img.carrousel_element_single_row_thumbnails:hover{
+  width: 100px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-left: -27px;
+  margin-top: -2px;
+  border: none;
+  opacity: 1.0;
 }
 
 .image_carrusel img {
@@ -185,3 +205,6 @@ a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
   top: 40px;
 }
 
+.carrousel_element_selected {
+	color: #0F9;
+}

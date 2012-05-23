@@ -19,10 +19,11 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 	
 	var onLoadTab = function(){
-		var previousSearch = ($("#tab_video_youtube_content").find("input[type='search']").val() != "");
-		if(!previousSearch) {
-			_cleanVideoPreview();
-		}
+		//Clean previous content
+		$("#tab_video_youtube_content").find("input[type='search']").val("");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+		_cleanVideoPreview();
 	};
 
 	
@@ -39,11 +40,15 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	var _onDataReceived = function(data) {
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$("#" + carrouselDivId).hide();
 		//clean previous preview if any
 		_cleanVideoPreview();
 
 		//Clean previous videos
 		currentVideos = new Array();
+
+    //Clean carrousel images
+    var carrouselImages = [];
 
 		var content = "";
 
@@ -65,16 +70,22 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	      currentVideos[videoID].author = author;
 	      currentVideos[videoID].subtitle = subtitle;
 
-	      var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" ;
-	      content = content + '<div><img videoID="'+videoID+'" src="'+image_url+'" /></div>';
+        var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" 
+        var myImg = $("<img videoID="+videoID+" src="+image_url+" />")
+        carrouselImages.push(myImg);
+        $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>');
 			});
 			
-			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5);
+			VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
 		}
 	};
 
-
+  var _onImagesLoaded = function(){
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5);
+  }
+	
+	
   var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g
 	var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g
 

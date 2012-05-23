@@ -10410,11 +10410,6 @@ function updateSlides(goingRight) {
     triggerLeaveEvent(curSlide + 1)
   }
   triggerEnterEvent(curSlide);
-  window.setTimeout(function() {
-    disableSlideFrames(curSlide - 2)
-  }, 301);
-  enableSlideFrames(curSlide - 1);
-  enableSlideFrames(curSlide + 2);
   if(isChromeVoxActive()) {
     speakAndSyncToNode(slideEls[curSlide])
   }
@@ -10507,45 +10502,6 @@ function handleTouchEnd(event) {
 function cancelTouch() {
   document.body.removeEventListener("touchmove", handleTouchMove, true);
   document.body.removeEventListener("touchend", handleTouchEnd, true)
-}
-function disableSlideFrames(no) {
-  var el = getSlideEl(no);
-  if(!el) {
-    return
-  }
-  var frames = el.getElementsByTagName("iframe");
-  for(var i = 0, frame;frame = frames[i];i++) {
-    disableFrame(frame)
-  }
-}
-function enableSlideFrames(no) {
-  var el = getSlideEl(no);
-  if(!el) {
-    return
-  }
-  var frames = el.getElementsByTagName("iframe");
-  for(var i = 0, frame;frame = frames[i];i++) {
-    enableFrame(frame)
-  }
-}
-function disableFrame(frame) {
-  frame.src = "about:blank"
-}
-function enableFrame(frame) {
-  var src = frame._src;
-  if(frame.src != src && src != "about:blank") {
-    frame.src = src
-  }
-}
-function setupFrames() {
-  var frames = document.querySelectorAll("iframe");
-  for(var i = 0, frame;frame = frames[i];i++) {
-    frame._src = frame.src;
-    disableFrame(frame)
-  }
-  enableSlideFrames(curSlide);
-  enableSlideFrames(curSlide + 1);
-  enableSlideFrames(curSlide + 2)
 }
 function setupInteraction() {
   document.body.addEventListener("touchstart", handleTouchStart, false)
@@ -10704,7 +10660,6 @@ function makeBuildLists() {
 }
 function handleDomLoaded() {
   slideEls = document.querySelectorAll("section.slides > article");
-  setupFrames();
   addFontStyle();
   addEventListeners();
   updateSlides();
@@ -10738,7 +10693,6 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
   initialize()
 }
 ;var VISH = VISH || {};
-VISH.Utils || (VISH.Utils = {});
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
@@ -10760,6 +10714,9 @@ VISH.Editor = function(V, $, undefined) {
     }
     if(excursion) {
       excursion_to_edit = excursion;
+      excursionDetails.title = excursion.title;
+      excursionDetails.description = excursion.description;
+      excursionDetails.avatar = excursion.avatar;
       V.Editor.Renderer.init(excursion);
       _removeSelectableProperties()
     }
@@ -10774,8 +10731,11 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
     $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
     $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
-    V.SlideManager.addEnterLeaveEvents();
+    _addEditorEnterLeaveEvents();
     V.SlidesUtilities.redrawSlides();
+    if(excursion) {
+      $(".object_wrapper").hide()
+    }
     V.Debugging.init(true);
     V.Editor.Text.init();
     V.Editor.Image.init();
@@ -10783,6 +10743,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Object.init();
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
+    V.Editor.Quiz.init();
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
     if(excursion === undefined) {
       $("#edit_excursion_details").trigger("click")
@@ -10869,6 +10830,18 @@ VISH.Editor = function(V, $, undefined) {
   var _closeFancybox = function() {
     $.fancybox.close()
   };
+  var _addEditorEnterLeaveEvents = function() {
+    $("article").live("slideenter", _onslideenterEditor);
+    $("article").live("slideleave", _onslideleaveEditor)
+  };
+  var _onslideenterEditor = function(e) {
+    setTimeout(function() {
+      $(e.target).find(".object_wrapper").show()
+    }, 500)
+  };
+  var _onslideleaveEditor = function() {
+    $(".object_wrapper").hide()
+  };
   var _startTutorial = function() {
     WalkMeAPI.startWalkthruById(5033, 0)
   };
@@ -10891,16 +10864,6 @@ VISH.Editor = function(V, $, undefined) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
     console.log("slide es: " + slide);
     V.SlidesUtilities.addSlide(slide);
-    if($(".add_quiz_option")) {
-      console.log("buscamos class de a: " + $(".add_quiz_option").src);
-      $(".add_quiz_option").on("click", function() {
-        var add_option = "<br><input id='radio_option_2' type='radio' class='multiplechoice_radio' /><input id='radio_text_2' type='text' placeholder='insert text option here' />";
-        add_option += "<a src='' id='add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
-        $(".add_quiz_option").remove();
-        $(".mcquestion").append(add_option);
-        console.log("add_option : " + add_option)
-      })
-    }
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
     setTimeout("VISH.SlidesUtilities.lastSlide()", 300)
@@ -10941,10 +10904,8 @@ VISH.Editor = function(V, $, undefined) {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
         params["current_el"].html("");
+        $(".theslider").hide();
         params["current_el"].removeAttr("type");
-        if(params["current_el"].attr("type") === "image") {
-          $(".theslider").hide()
-        }
         params["current_el"].addClass("editable")
       }
     }})
@@ -10955,6 +10916,7 @@ VISH.Editor = function(V, $, undefined) {
     $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
+        $(".theslider").hide();
         article_to_delete.remove();
         if(curSlide == slideEls.length - 1 && curSlide != 0) {
           curSlide -= 1
@@ -11017,6 +10979,7 @@ VISH.Editor = function(V, $, undefined) {
     }
   };
   var _saveExcursion = function() {
+    $(".object_wrapper").show();
     var excursion = {};
     excursion.id = "";
     excursion.title = excursionDetails.title;
@@ -11076,7 +11039,7 @@ VISH.Editor = function(V, $, undefined) {
                   }else {
                     if(element.type == "object") {
                       var object = $(div).find(".object_wrapper").children()[0];
-                      element.body = $(object)[0].outerHTML;
+                      element.body = VISH.Utils.getOuterHTML(object);
                       element.style = $(object).parent().attr("style")
                     }else {
                       if(element.type == "openquestion") {
@@ -11085,8 +11048,7 @@ VISH.Editor = function(V, $, undefined) {
                       }else {
                         if(element.type == "mcquestion") {
                           var i;
-                          element.title = $(div).find(".value_multiplechoice_question").val();
-                          var array_options = $(div).find(".multiplechoice_radio")
+                          element.question = $(div).find(".value_multiplechoice_question").val()
                         }
                       }
                     }
@@ -11545,10 +11507,11 @@ VISH.Dummies = function(VISH, undefined) {
   var nextArticleId = 1;
   var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t1_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t2_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_option_1' type='radio' class='multiplechoice_radio' /><input id='radio_text_1' type='text' placeholder='insert text option here' /><a src='' id='add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
-  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
+  "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t5_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t7_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -11635,25 +11598,28 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
   };
   var _getAvatars = function() {
     $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
-      console.log("success getting excursion avatars");
       avatars = data;
       VISH.Editor.Carrousel.cleanCarrousel("avatars_carrousel");
       var content = "";
+      var carrouselImages = [];
       $.each(avatars.pictures, function(i, item) {
-        content = content + '<div><img src="' + item.src + '" /></div>'
+        var myImg = $("<img src=" + item.src + " />");
+        carrouselImages.push(myImg);
+        content = content + "<div>" + VISH.Utils.getOuterHTML(myImg) + "</div>"
       });
       $("#avatars_carrousel").html(content);
-      setTimeout(function() {
-        $("#thumbnails_in_excursion_details").show();
-        VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, "thumbnails");
-        $(".buttonintro").addClass("buttonintro_extramargin");
-        VISH.Editor.AvatarPicker.selectRandom(5)
-      }, 500)
+      VISH.Utils.loader.waitForLoadImages(carrouselImages, _onImagesLoaded)
     }, error:function(xhr, ajaxOptions, thrownError) {
       console.log("status returned by server:" + xhr.status);
       console.log("Error in client: " + thrownError);
       console.log("ERROR!" + thrownError)
     }})
+  };
+  var _onImagesLoaded = function() {
+    $("#thumbnails_in_excursion_details").show();
+    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, "thumbnails");
+    $(".buttonintro").addClass("buttonintro_extramargin");
+    VISH.Editor.AvatarPicker.selectRandom(5)
   };
   return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom}
 }(VISH, jQuery);
@@ -11822,9 +11788,10 @@ VISH.Editor.I18n = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Image.Flikr = function(V, $, undefined) {
   var carrouselDivId = "tab_flikr_content_carrousel";
-  var queryMaxNumberFlikrImages = 20;
+  var queryMaxNumberFlikrImages = 80;
   var init = function() {
     var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
         VISH.Editor.Image.Flikr.listImages($(myInput).val());
@@ -11834,27 +11801,32 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
   };
   var onLoadTab = function() {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-    $(myInput).watermark("Search content")
+    $("#" + carrouselDivId).hide();
+    $("#tab_pic_flikr_content").find("input[type='search']").attr("value", "")
   };
   var listImages = function(text) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
     var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + text + "&tagmode=any&format=json&jsoncallback=?";
+    var carrouselImages = [];
     $.getJSON(url_flikr, function(data) {
       $.each(data.items, function(i, item) {
-        $("#" + carrouselDivId).append('<div><img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" /></div>')
+        var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m + " imageFlikrId=" + i + "/>");
+        carrouselImages.push(myImg);
+        $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(myImg) + "</div>")
       });
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage, 5)
+      VISH.Utils.loader.waitForLoadImages(carrouselImages, _onImagesLoaded)
     })
-  };
-  var previewMetadata = function(event) {
-    console.log("event" + event)
   };
   var addImage = function(event) {
     var image_url = $(event.target).attr("src");
     V.Editor.Image.drawImage(image_url);
     $.fancybox.close()
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage, 5)
   };
   return{init:init, onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
 }(VISH, jQuery);
@@ -11886,18 +11858,25 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
   };
   var onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     currentImages = new Array;
+    var carrouselImages = [];
     var content = "";
     if(data.pictures.length == 0) {
       $("#" + carrouselDivId).html("No results found.")
     }else {
       $.each(data.pictures, function(index, image) {
-        content = content + "<div><img src='" + image.src + "' ></div>";
-        currentImages[image.id] = image
+        var myImg = $("<img src=" + image.src + " >");
+        carrouselImages.push(myImg);
+        currentImages[image.id] = image;
+        $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(myImg) + "</div>")
       });
-      $("#" + carrouselDivId).html(content);
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement, 5)
+      VISH.Utils.loader.waitForLoadImages(carrouselImages, _onImagesLoaded)
     }
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement, 5)
   };
   var onAPIError = function() {
     console.log("API error")
@@ -12039,6 +12018,39 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     }
   };
   return{init:init, onLoadTab:onLoadTab, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedObject:addSelectedObject, onClickCarrouselElement:onClickCarrouselElement}
+}(VISH, jQuery);
+VISH.Editor.Quiz = function(V, $, undefined) {
+  var buttonAddOptionId = "a_add_quiz_option";
+  var MultipleChoiceOptionClass = "multiplechoice_text";
+  var searchOptionText = "mchoice_radio_option_";
+  var num_options = 5;
+  var init = function() {
+    $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
+  };
+  var addMultipleChoiceOption = function(event) {
+    console.log("Entramos en addMultipleChoiceOption (Quiz)");
+    var text = $("<div>").append($("." + MultipleChoiceOptionClass).clone()).html();
+    var total = 0;
+    $("." + MultipleChoiceOptionClass).each(function(i) {
+      total = i
+    });
+    var next_num = parseInt(total) + 1;
+    if(next_num < num_options) {
+      console.log("next_number :  " + next_num);
+      var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+      add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
+      $(".add_quiz_option").remove();
+      $(".mcquestion").append(add_option)
+    }else {
+      if(next_num = num_options) {
+        var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+        add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'>";
+        $(".add_quiz_option").remove();
+        $(".mcquestion").append(add_option)
+      }
+    }
+  };
+  return{init:init, addMultipleChoiceOption:addMultipleChoiceOption}
 }(VISH, jQuery);
 VISH.Editor.Renderer = function(V, $, undefined) {
   var slides = null;
@@ -12363,10 +12375,10 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     })
   };
   var onLoadTab = function() {
-    var previousSearch = $("#tab_video_youtube_content").find("input[type='search']").val() != "";
-    if(!previousSearch) {
-      _cleanVideoPreview()
-    }
+    $("#tab_video_youtube_content").find("input[type='search']").val("");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanVideoPreview()
   };
   var requestYoutubeData = function(text) {
     var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
@@ -12376,8 +12388,10 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   };
   var _onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     _cleanVideoPreview();
     currentVideos = new Array;
+    var carrouselImages = [];
     var content = "";
     if(data.feed.entry == 0) {
       $("#" + carrouselDivId).html("No results found.")
@@ -12395,11 +12409,16 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
         currentVideos[videoID].author = author;
         currentVideos[videoID].subtitle = subtitle;
         var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
-        content = content + '<div><img videoID="' + videoID + '" src="' + image_url + '" /></div>'
+        var myImg = $("<img videoID=" + videoID + " src=" + image_url + " />");
+        carrouselImages.push(myImg);
+        $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(myImg) + "</div>")
       });
-      $("#" + carrouselDivId).html(content);
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement, 5)
+      VISH.Utils.loader.waitForLoadImages(carrouselImages, _onImagesLoaded)
     }
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement, 5)
   };
   var youtube_video_pattern_1 = /https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g;
   var youtube_video_pattern_2 = /(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g;
@@ -12630,7 +12649,7 @@ VISH.Renderer = function(V, $, undefined) {
   };
   var _renderMcquestion = function(element, template) {
     console.log("entra en _renderMcquestion");
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["title"] + "</div>";
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["question"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
@@ -12656,9 +12675,10 @@ VISH.SlideManager = function(V, $, undefined) {
   var init = function(excursion) {
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
-    $(document).on("click", "#page-switcher-start", prevSlide);
-    $(document).on("click", "#page-switcher-end", nextSlide);
-    $(document).on("click", "#page-fullscreen", toggleFullScreen)
+    $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
+    $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
+    $(document).on("click", "#page-fullscreen", toggleFullScreen);
+    VISH.SlidesUtilities.updateSlideCounter()
   };
   var toggleFullScreen = function() {
     var isInIFrame = window.location != window.parent.location ? true : false;
@@ -12779,7 +12799,7 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     var aspect_ratio_content = w_content / h_content;
     if(aspect_ratio_zone > aspect_ratio_content) {
       dimentions_for_drawing.width = aspect_ratio_content * h_zone;
-      dimentions_for_drawing.height = h_content;
+      dimentions_for_drawing.height = h_zone;
       return dimentions_for_drawing
     }else {
       dimentions_for_drawing.width = w_zone;
@@ -12813,6 +12833,8 @@ VISH.SlidesUtilities = function(V, $, undefined) {
       $(".selectable").css("border-style", "none");
       $(".theslider").hide();
       V.Editor.Thumbnails.selectThumbnail(no)
+    }else {
+      updateSlideCounter()
     }
   };
   var backwardOneSlide = function() {
@@ -12830,7 +12852,12 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     });
     return width
   };
-  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw}
+  var updateSlideCounter = function() {
+    var number_of_slides = slideEls.length;
+    var slide_number = curSlide + 1;
+    $("#slide-counter").html(slide_number + "/" + number_of_slides)
+  };
+  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
@@ -12916,6 +12943,18 @@ VISH.Utils.canvas = function(V, undefined) {
   };
   return{drawImageWithAspectRatioAndRoundedCorners:drawImageWithAspectRatioAndRoundedCorners, drawImageWithAspectRatio:drawImageWithAspectRatio, drawRoundedCorners:drawRoundedCorners}
 }(VISH);
+VISH.Utils = function(V, undefined) {
+  var init = function() {
+  };
+  var getOuterHTML = function(tag) {
+    if(typeof $(tag)[0].outerHTML == "undefined") {
+      return $(tag).clone().wrap("<div></div>").parent().html()
+    }else {
+      return $(tag)[0].outerHTML
+    }
+  };
+  return{init:init, getOuterHTML:getOuterHTML}
+}(VISH);
 VISH.Utils.loader = function(V, undefined) {
   var libVideos = {};
   var libImages = {};
@@ -12961,7 +13000,19 @@ VISH.Utils.loader = function(V, undefined) {
     libVideos[videoSrc] = v;
     return deferred.promise()
   };
-  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo}
+  var waitForLoadImages = function(imagesArray, callback) {
+    var imagesLength = imagesArray.length;
+    var imagesLoaded = 0;
+    $.each(imagesArray, function(i, image) {
+      $(image).load(function() {
+        imagesLoaded = imagesLoaded + 1;
+        if(imagesLoaded == imagesLength) {
+          callback()
+        }
+      })
+    })
+  };
+  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, waitForLoadImages:waitForLoadImages}
 }(VISH);
 VISH.Utils.text = function(V, undefined) {
   var getLines = function(ctx, phrase, maxPxLength, textStyle) {

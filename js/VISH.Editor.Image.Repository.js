@@ -42,11 +42,14 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 * Fill tab_pic_repo_content_carrousel div with server data.
 	 */
 	var onDataReceived = function(data) {
+		
 		//Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
 
 		//Clean previous Images
 		currentImages = new Array();
+		var carrouselImages = [];
 
 		var content = "";
 
@@ -57,14 +60,20 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		else{ 
 			//data.images is an array with the results
 			$.each(data.pictures, function(index, image) {
-				content = content + "<div><img src='" + image.src + "' ></div>";
+				var myImg = $("<img src=" + image.src + " >")
+				carrouselImages.push(myImg);
 				currentImages[image.id] = image;
+				$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(myImg) + '</div>');
+				
 			});
-	
-			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5);
+	    VISH.Utils.loader.waitForLoadImages(carrouselImages,_onImagesLoaded);
 		}
 	};
+	
+	var _onImagesLoaded = function(){
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5);
+  }
 	
 	var onAPIError = function() {
 		console.log("API error");
