@@ -71,6 +71,8 @@ VISH.Editor = (function(V,$,undefined){
 		
 		V.SlidesUtilities.redrawSlides();
 		
+		addEventListeners(); //comes from slides.js to be called only once
+		
 		if(excursion){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
 			$('.object_wrapper').hide()

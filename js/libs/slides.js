@@ -615,7 +615,7 @@ function handleDomLoaded() {
   addFontStyle();
   //removed add style, we add it in the html
   //addGeneralStyle();
-  addEventListeners();
+  //addEventListeners();  //REMOVED BY KIKE -> now done in VISH.Editor.init()
 
   updateSlides();
 
