@@ -131,22 +131,27 @@ img.carrousel_element_selected{
 }
 
 div.carrousel_element_multiple_row{
-  width: 100px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
   max-width: 150px;
   max-height: 150px;
   float: left;
-  margin-left: 35px;
+  margin-left: 10px;
 }
 
 img.carrousel_element_multiple_row{
-  width: 100px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
   max-width: 150px;
   max-height: 150px;
-  margin-left: -27px;
+  margin-left: -6px;
 	padding: 0px 0 0px 0px;
 }
+
+div.carrousel_wrapper_multiple_row{
+  /** margin-top: 20px; */
+}
+
 
 .repositoryTitle{
 	margin: 0px;

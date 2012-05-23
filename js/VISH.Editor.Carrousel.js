@@ -72,7 +72,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if (multipleRow) {
-		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems);
+		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass);
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
 		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems);
@@ -81,7 +81,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 	
-  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems){
+  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass){
 		
     var synchronizeIds = [];
 		
@@ -90,6 +90,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	for (i=0;i<rows;i++) {
 	  window[mainDiv.id + "_row" + i ] = document.createElement('div');
 	  window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
+		window[mainDiv.id + "_row" + i ].setAttribute('class',"carrousel_wrapper_" + rowClass);
 	  if(i!=0){
 	    synchronizeIds.push(mainDiv.id + "_row" + i)
 	  }
