@@ -667,7 +667,6 @@ input.rounded:focus {
     height: 50px;
     border: none;
     margin-right: 25px;
-    /*margin-top: 450px;*/
 	margin-left: 300px;
     color: white;
     font-size: 14px;
@@ -675,7 +674,6 @@ input.rounded:focus {
     padding-bottom: 5px;  
     outline: none;
     border: none;
-	/*position: absolute;*/
 	
 }
 
@@ -955,8 +953,9 @@ textarea {
 #start_tutorial {
 	background-image:url(../images/tutorialimage.png);
 	position:absolute;
-	margin-left: 484px;
-	margin-top: 10px;
+	margin-left: 384px;
+	width: 358px;
+	height: 120px;
 }
 
 #start_tutorial:hover {

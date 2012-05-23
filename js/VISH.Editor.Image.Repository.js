@@ -70,7 +70,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	
 	var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement,5,5);
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Repository.onClickCarrouselElement,4,4);
   }
 	
 	var onAPIError = function() {

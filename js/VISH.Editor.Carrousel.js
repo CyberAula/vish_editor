@@ -72,7 +72,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if (multipleRow) {
-		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems);
+		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass);
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
 		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems);
@@ -81,38 +81,40 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 	
-  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems){
+  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass){
 		
     var synchronizeIds = [];
 		
-	//Create one div for each row.
-	var i;
-	for (i=0;i<rows;i++) {
-	  window[mainDiv.id + "_row" + i ] = document.createElement('div');
-	  window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
-	  if(i!=0){
-	    synchronizeIds.push(mainDiv.id + "_row" + i)
+		//Create one div for each row.
+		var i;
+		for (i=0;i<rows;i++) {
+		  window[mainDiv.id + "_row" + i ] = document.createElement('div');
+		  window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
+			window[mainDiv.id + "_row" + i ].setAttribute('class',"carrousel_wrapper_" + rowClass);
+		  if(i!=0){
+		    synchronizeIds.push(mainDiv.id + "_row" + i)
+		  }
 	  }
-    }
-		
-	//Divide children into the different divs.
-	$(mainDiv).children().each(function(index,value){
-	  $(window[mainDiv.id + "_row" + index%rows  ]).append(value)
-	});
-		
-		
-	//Add divs to the wrapper and invoke carrousel Plugin
-	for (i=rows-1;i>=0;i--) {
-      $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
-	  if(i==0){
-		var newContainerId = mainDiv.id + "_row" + i;
-	    _setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems);
-	  } else {
-		_setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems);
+			
+		//Divide children into the different divs.
+		$(mainDiv).children().each(function(index,value){
+		  $(window[mainDiv.id + "_row" + index%rows  ]).append(value)
+		});
+			
+			
+		//Add divs to the wrapper and invoke carrousel Plugin
+		for (i=rows-1;i>=0;i--) {
+	    $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
+		  if(i==0){
+			  var newContainerId = mainDiv.id + "_row" + i;
+		    _setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems);
+		  } else {
+			  _setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems);
+		  }
 	  }
-    }
-	$(".caroufredsel_wrapper").css("margin-bottom","30px")
+		$(".caroufredsel_wrapper").css("margin-bottom","30px")
   }
+
 
   var _setRowCarrousel = function (id,rowItems,scrollItems){
     $("#" + id).carouFredSel({
@@ -120,60 +122,62 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
       circular: false,
       infinite: false,
       width   : 750,
-	  scroll : {
+	    scroll : {
         //items         : "page",
         items           : scrollItems,
         fx              : "scroll",
         duration        : 1000,
         pauseDuration   : 2000                
       },
-	  items : {
-	    visible    : {
-		  min : rowItems,
-		  max : rowItems
-		}
-	  }
+	    items : {
+	      visible    : {
+		      min : rowItems,
+		      max : rowItems
+		    }
+	    }
     }); 
   }
 
+
   var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems){
-	$("#" + id).carouFredSel({
-	  circular: false,
-	  infinite: false,
-	  auto    : false,
-	  width   : 750,
-	  scroll : {
-	    //items         : "page",
-	    items           : scrollItems,
-//	    fx              : "scroll",
-	    duration        : 1000,
-	    pauseDuration   : 2000                
-	  },
-	  items       : {
-	     visible    : {
-		  min : rowItems,
-		  max : rowItems
-		 }
-	  },
-	  prev    : {
-	    button  : "#carrousel_prev" + widgetsId,
-	    key     : "left"
-	  },
-	  next    : {
-	    button  : "#carrousel_next" + widgetsId,
-	    key     : "right"
-	  },
-	  pagination  : "#carrousel_pag"  + widgetsId              
-	});  
-		
-	if(synchronizeIds){
-	  $(synchronizeIds).each(function(index,value){
-        $("#" + id).trigger("configuration", ["synchronise", "#" + value]);
-      });
-	}
+		$("#" + id).carouFredSel({
+		  circular: false,
+		  infinite: false,
+		  auto    : false,
+		  width   : 750,
+		  scroll : {
+		    //items         : "page",
+		    items           : scrollItems,
+	      //fx              : "scroll",
+		    duration        : 1000,
+		    pauseDuration   : 2000                
+		  },
+		  items       : {
+		    visible    : {
+			    min : rowItems,
+			    max : rowItems
+			  }
+		  },
+		  prev    : {
+		    button  : "#carrousel_prev" + widgetsId,
+		    key     : "left"
+		  },
+		  next    : {
+		    button  : "#carrousel_next" + widgetsId,
+		    key     : "right"
+		  },
+		  pagination  : "#carrousel_pag"  + widgetsId              
+		});  
+			
+		if(synchronizeIds){
+		  $(synchronizeIds).each(function(index,value){
+	      $("#" + id).trigger("configuration", ["synchronise", "#" + value]);
+	    });
+		}
 	
-	$("#" + id).attr("rows",rows)
+	  $("#" + id).attr("rows",rows)
   }
+	
 	
   var cleanCarrousel = function(containerId){
 	  //Check if is a multirow carrousel
@@ -194,8 +198,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
     var carrouselWrapper = $("#" + containerId).parent().parent();
 	  if($(carrouselWrapper).hasClass('image_carousel')){
 	    $(carrouselWrapper).removeClass('image_carousel')
-		$(carrouselWrapper).html("")
-		$(carrouselWrapper).attr("id",containerId)
+		  $(carrouselWrapper).html("")
+		  $(carrouselWrapper).attr("id",containerId)
 	  } else {
 //				VISH.Debugging.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
 	  }
