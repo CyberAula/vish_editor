@@ -57,10 +57,10 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 				
 		  },
 		  error: function(xhr, ajaxOptions, thrownError){
-            console.log("status returned by server:" + xhr.status);
-            console.log("Error in client: " + thrownError);  
-						console.log("ERROR!" + thrownError)
-						//$("#thumbnails_in_excursion_details").remove();
+            VISH.Debugging.log("status returned by server:" + xhr.status);
+            VISH.Debugging.log("Error in client: " + thrownError);  
+			VISH.Debugging.log("ERROR!" + thrownError)
+			//$("#thumbnails_in_excursion_details").remove();
 		  }
 		});
 	};

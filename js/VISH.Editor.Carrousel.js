@@ -197,7 +197,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		$(carrouselWrapper).html("")
 		$(carrouselWrapper).attr("id",containerId)
 	  } else {
-//				console.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
+//				VISH.Debugging.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
 	  }
   }
 

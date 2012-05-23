@@ -7,7 +7,9 @@ VISH.Debugging = (function(V,$,undefined){
 	var developping = false;
 	
 	var init = function(debugging){
-		this.verbose = debugging;
+		if (navigator.appName !== 'Microsoft Internet Explorer') {
+			verbose = debugging;
+		}		
 	};
 	
 	var log = function(text){

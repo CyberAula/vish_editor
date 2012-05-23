@@ -100,7 +100,6 @@ VISH.Editor = (function(V,$,undefined){
 		if(excursion === undefined){
 			$("#edit_excursion_details").trigger('click');
 		}
-		
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 		//if click on begginers tutorial->launch it
@@ -334,7 +333,7 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		console.log("slide es: " + slide );
+		//console.log("slide es: " + slide );
 				
 		V.SlidesUtilities.addSlide(slide);	//undefined 
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
@@ -616,7 +615,7 @@ VISH.Editor = (function(V,$,undefined){
           	} else { //no draggable
           
           		element.body   = $(div).attr('src'); //we have the iframe code in the src attribute	
-          		console.log($(div).attr('src'));
+          		//console.log($(div).attr('src'));
           	}
           	
           } else if(element.type=="video"){
@@ -664,23 +663,23 @@ VISH.Editor = (function(V,$,undefined){
 	     $('.multiplechoice_text').each(function(i){
  total = i;
 }); 		
-	     console.log("total vale: " + parseInt(total)+1);
+	     //console.log("total vale: " + parseInt(total)+1);
 	     
 	     
 	     	for (i=1; i<= parseInt(total)+1; i++) 	{
 	     		
-	     		console.log ("entra en for e i vale: "+ i)
+	     		//console.log ("entra en for e i vale: "+ i)
 	     	//element['options'][i];
 	     	
 	     	} 
 	     		for (op in array_options) 	{ 
 	     			
-	     			console.log("El array_options(op) es: " +array_options[op] );
-	     			console.log("op vale : " + op);
+	     			//console.log("El array_options(op) es: " +array_options[op] );
+	     			//console.log("op vale : " + op);
 	     			
 	     	
 	     			
-	     			console.log("El value de array_options(op) es: " + array_options[op].value );
+	     			//console.log("El value de array_options(op) es: " + array_options[op].value );
 	     				//element['options'][parseInt(op)+1]= array_options[op].value ;	
 	     }
 	     	//element['options']
@@ -698,7 +697,7 @@ VISH.Editor = (function(V,$,undefined){
       slide = {};
     });
     var jsonexcursion = JSON.stringify(excursion);
-    console.log(jsonexcursion);
+    //console.log(jsonexcursion);
     
     $('article').remove();
     $('#menubar').remove();

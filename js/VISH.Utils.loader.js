@@ -8,7 +8,7 @@ VISH.Utils.loader = (function(V,undefined){
             return libImages[imagePath];
         }
         else{
-            console.log("Error, Image with path " + imagePath +" was not preloaded");
+            VISH.Debugging.log("Error, Image with path " + imagePath +" was not preloaded");
             return null;
         }
     };
@@ -18,7 +18,7 @@ VISH.Utils.loader = (function(V,undefined){
             return libVideos[videoPath];
         }
         else{
-            console.log("Error, Video with path " + videoPath +" was not preloaded");
+            VISH.Debugging.log("Error, Video with path " + videoPath +" was not preloaded");
             return null;
         }
     };

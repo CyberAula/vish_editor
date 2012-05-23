@@ -304,8 +304,10 @@ function handleTouchStart(event) {
     touchStartX = event.touches[0].pageX;
     touchStartY = event.touches[0].pageY;
 
-    document.body.addEventListener('touchmove', handleTouchMove, true);
-    document.body.addEventListener('touchend', handleTouchEnd, true);
+    //document.body.addEventListener('touchmove', handleTouchMove, true);
+    //document.body.addEventListener('touchend', handleTouchEnd, true);
+    $(document).bind('touchmove', handleTouchMove);  
+    $(document).bind('touchend', handleTouchEnd);  
   }
 };
 
@@ -407,7 +409,8 @@ function setupInteraction() {
   
   /* Swiping */
   
-  document.body.addEventListener('touchstart', handleTouchStart, false);
+  //document.body.addEventListener('touchstart', handleTouchStart, false);
+  $(document).bind('touchstart', handleTouchStart); 
 }
 
 /* ChromeVox support */
@@ -559,7 +562,8 @@ function handleBodyKeyDown(event) {
 };
 
 function addEventListeners() {
-  document.addEventListener('keydown', handleBodyKeyDown, false);  
+  //document.addEventListener('keydown', handleBodyKeyDown, false);
+  $(document).bind('keydown', handleBodyKeyDown);  
 };
 
 /* Initialization */
@@ -631,7 +635,14 @@ function initialize() {
   if (window['_DCL']) {
     handleDomLoaded();
   } else {
-    document.addEventListener('OURDOMContentLoaded', handleDomLoaded, false);
+  	/*ADDED BY KIKE to make it work with explorer*/
+  	//if (document.addEventListener){
+  	//	document.addEventListener('OURDOMContentLoaded', handleDomLoaded, false);
+	//} else if (document.attachEvent){
+  	//	document.attachEvent('OURDOMContentLoaded', handleDomLoaded);
+	//}
+	$(document).bind('OURDOMContentLoaded', handleDomLoaded);
+    
   }
 }
 

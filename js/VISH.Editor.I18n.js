@@ -40,7 +40,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
   		
 				
 		var duration = new Date().getTime() - initTime;
-		console.log("Internationalization took " + duration + " ms.");
+		VISH.Debugging.log("Internationalization took " + duration + " ms.");
 	};
 	
 	
@@ -64,7 +64,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	  if (typeof(i18n[language])!='undefined' && i18n[language][s]) {
 	    return i18n[language][s];
 	  }
-	  console.log("Text without translation: " + s);
+	  VISH.Debugging.log("Text without translation: " + s);
 	  return s;
 	};
 	

@@ -74,7 +74,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
   }
 	
 	var onAPIError = function() {
-		console.log("API error");
+		VISH.Debugging.log("API error");
 		//VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 	};
 	

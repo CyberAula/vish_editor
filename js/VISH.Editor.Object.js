@@ -57,7 +57,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		case "IFRAME": 
 		  return $(object).attr("src");
 		default:
-			console.log("Unrecognized object wrapper: " + wrapper)
+			VISH.Debugging.log("Unrecognized object wrapper: " + wrapper)
             break;
 		}
 	}
@@ -196,7 +196,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					  break;
 						
 					default:
-						console.log("Unrecognized object source type: " + objectInfo.type)
+						VISH.Debugging.log("Unrecognized object source type: " + objectInfo.type)
 						break;
 				}
 				break;
@@ -214,7 +214,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 				
 			default:
-				console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
 				break;
 		}
 
