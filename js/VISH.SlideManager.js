@@ -11,7 +11,15 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
 		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
-		$(document).on('click', '#page-fullscreen', toggleFullScreen);
+		
+		var elem = document.getElementById("page-fullscreen");  
+		if (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen) {  
+		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
+		}
+		else{
+		  $("#page-fullscreen").hide();
+		}
+		
 		VISH.SlidesUtilities.updateSlideCounter();
 	};
 
