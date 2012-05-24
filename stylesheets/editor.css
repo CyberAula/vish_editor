@@ -955,8 +955,9 @@ textarea {
 #start_tutorial {
 	background-image:url(../images/tutorialimage.png);
 	position:absolute;
-	margin-left: 484px;
-	margin-top: 10px;
+	margin-left: 384px;
+	width: 358px;
+	height: 120px;
 }
 
 #start_tutorial:hover {
