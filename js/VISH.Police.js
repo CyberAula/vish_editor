@@ -8,6 +8,7 @@ VISH.Police = (function(V,$,undefined){
 	var valid_url_pattern=/((http(s)?:\/\/)|(www[.]))(.*)/g
 	
 	var validateObject = function(object,callback){
+		
 		if(!object){
 			return [false,"Object is null or undefined"];
 		}
@@ -25,9 +26,9 @@ VISH.Police = (function(V,$,undefined){
 	 	  return [false,"Can't recognize object source"];
 	  }
 				
-		if(objectInfo.source.match(valid_url_pattern)==null){
-      return [false,"Not valid URL"];
-    }
+//		if(objectInfo.source.match(valid_url_pattern)==null){
+//      return [false,"Not valid URL"];
+//    }
 		
 		
 		//Add more conditions here...
@@ -67,10 +68,20 @@ VISH.Police = (function(V,$,undefined){
     });
   }
 
+  var validateFileUpload = function(fileName){
+		if(!fileName){
+			return [false,"Name is null or undefined"];
+		}
+		if(fileName.trim()==""){
+      return [false,"Name is an empty string"];
+    }
+		return true;
+	}
 	
 	return {
 		init            : init,
-		validateObject  : validateObject
+		validateObject  : validateObject,
+		validateFileUpload : validateFileUpload
 	};
 
 }) (VISH, jQuery);

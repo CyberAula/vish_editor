@@ -150,6 +150,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(typeof source != "string"){
 			return null
 		}
+		
+		//Purge options
+		source = source.split('?')[0]
+		
 		var extension = (source.split('.').pop()).toLowerCase();
 		
 		if(source.match(youtube_video_pattern)!=null){
@@ -303,6 +307,10 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
 	var drawObject = function(object, area, style){
+			
+		if(!VISH.Police.validateObject(object)[0]){
+			return;
+		}
 		
 		var current_area;
 		var object_style = "";

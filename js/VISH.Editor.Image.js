@@ -8,7 +8,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		
 		//Load from URL
 		$("#tab_pic_from_url_content .previewButton").click(function(event) {
-      if ($("#picture_url").val() != "") {
+      if(VISH.Police.validateObject($("#picture_url").val())[0]){
         VISH.Editor.Object.drawPreview("tab_pic_from_url_content", $("#picture_url").val())
 				contentToAdd = $("#picture_url").val()
       }
@@ -24,9 +24,9 @@ VISH.Editor.Image = (function(V,$,undefined){
     });
       
     $("#tab_pic_upload_content #upload_document_submit").click(function(event) {
-      if($("input[name='document[file]']").val()==""){
+			if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])){
         event.preventDefault();
-      }else{
+      } else {
         if (options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
           $("input[name='document[description]']").val(description);
@@ -90,7 +90,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 		try  {
 	    var jsonResponse = JSON.parse(response)
 	    if(jsonResponse.src){
-				 drawPreview("tab_pic_upload_content",jsonResponse.src)
+				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
+				  VISH.Editor.Object.drawPreview("tab_pic_upload_content",jsonResponse.src)
+          contentToAdd = jsonResponse.src
+		    }
 	    }
     } catch(e) {
       //No JSON response
