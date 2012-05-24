@@ -456,7 +456,7 @@
 .fancy_tabs ul{
 	width: 800px;
 	list-style-type: none;
-	background-color: #f9f9f9;
+	background-color: #ffffff;
 	color: #ff005d;
 	margin: 0px;
 	font-size: 1em;
@@ -477,7 +477,7 @@
 	display:block;
 	padding: 0.5em 1.5em;
 	text-decoration: none;
-	background: #f9f9f9;
+	background: #ffffff;
 	color: #ff005d;
 	font-size: 16px;
 	font-family: Helvetica;
@@ -494,7 +494,7 @@
 }
 
 .fancy_tabs li a.fancy_selected{
-	background: #f9f9f9;
+	background: #ffffff;
 	color: #ff005d;
 	border: 1px solid #ff005d;
 	border-bottom-color: transparent;
@@ -793,7 +793,8 @@ table.metadata td div.height_wrapper_description{
 }
 
 .delimg{
-	margin-left: -20px;
+	margin-left: -18px;
+	margin-bottom: 35px;
 }
 .button1 {
 	margin-left: 200px;
