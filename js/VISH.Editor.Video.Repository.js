@@ -10,7 +10,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-				VISH.Editor.Video.Repository.requestData($(myInput).val());
+				_requestData($(myInput).val());
 				$(myInput).blur();
 			}
 		});
@@ -28,20 +28,20 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		//VISH.Editor.API.requestRecomendedVideos(VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError);
+		VISH.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Request data to the server.
 	 */
-	var requestData = function(text) {
-		VISH.Editor.API.requestVideos(text, VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError);
+	var _requestData = function(text) {
+		VISH.Editor.API.requestVideos(text, _onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Fill tab_video_repo_content_carrousel div with server data.
 	 */
-	var onDataReceived = function(data) {
+	var _onDataReceived = function(data) {
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		//clean previous preview if any
@@ -63,16 +63,15 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			});
 	
 			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement,5,5);
+			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, _onClickCarrouselElement,5,5);
 		}
 	};
 	
-	var onAPIError = function() {
-		console.log("API error");
-		//VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+	var _onAPIError = function() {
+		//VISH.Debugging.log("API error");
 	};
 	
-	var onClickCarrouselElement = function(event) {
+	var _onClickCarrouselElement = function(event) {
 		var videoId = $(event.target).attr("videoid");
 		var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId], "preview");
 		_renderVideoPreview(renderedVideo, currentVideos[videoId]);
@@ -134,11 +133,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	return {
 		init : init,
 		onLoadTab : onLoadTab,
-		requestData : requestData,
-		onDataReceived : onDataReceived,
-		onAPIError : onAPIError,
-		addSelectedVideo : addSelectedVideo,
-		onClickCarrouselElement : onClickCarrouselElement
+		addSelectedVideo : addSelectedVideo
 	};
 
 })(VISH, jQuery);

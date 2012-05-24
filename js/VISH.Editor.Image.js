@@ -8,15 +8,15 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var onLoadTab = function(tab){	
 		if(tab=="upload"){
-			onLoadUploadTab();
+			_onLoadUploadTab();
 		}
 		if(tab=="url"){
-			onLoadURLTab();
+			_onLoadURLTab();
 		}
 	};
 	
 	
-	var onLoadURLTab = function(){
+	var _onLoadURLTab = function(){
 		resetPreview("tab_pic_from_url_content");
 		$("#picture_url").val("");
 		
@@ -27,7 +27,7 @@ VISH.Editor.Image = (function(V,$,undefined){
     });
   }
 	
-	var onLoadUploadTab = function(){
+	var _onLoadUploadTab = function(){
 		    
     var options = VISH.Editor.getOptions();
   
@@ -70,7 +70,7 @@ VISH.Editor.Image = (function(V,$,undefined){
           percent.html(percentVal);
       },
       complete: function(xhr) {
-          console.log(xhr.responseText);
+          //console.log(xhr.responseText);
           processResponse(xhr.responseText);
           var percentVal = '100%';
           bar.width(percentVal)

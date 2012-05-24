@@ -15,7 +15,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		console.log("Entramos en addMultipleChoiceOption (Quiz)");
+		//console.log("Entramos en addMultipleChoiceOption (Quiz)");
 		
 		//var radio_option = $("."+MultipleChoiceoptionClass);
 		//console.log("MultipleChoice Option Class :  "+ radio_option );
@@ -33,7 +33,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 }); 		
 		var next_num = parseInt(total)+1;
 		if (next_num < num_options) {
-			console.log("next_number :  "+ next_num );
+			//console.log("next_number :  "+ next_num );
 		  
 		    //the next radio input   
 			var add_option = "<br><input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
@@ -47,7 +47,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		} else if (next_num = num_options) {
 			
 			var add_option = "<br><input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
-			add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
+			//add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
 			
 			$(".add_quiz_option").remove();
 			

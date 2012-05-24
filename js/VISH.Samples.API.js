@@ -130,7 +130,7 @@ VISH.Samples.API = (function(V,undefined){
                  ']'
     };
     
-    var videoList = {
+  var videoList = {
     'videos'        : [
     {
       'id'     : '1534',
@@ -266,7 +266,7 @@ VISH.Samples.API = (function(V,undefined){
     }
     ]};
     
-    var flashList = {
+  var flashList = {
     'flashes'       : [
     {
       'id'     : '1534',

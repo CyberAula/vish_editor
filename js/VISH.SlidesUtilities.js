@@ -4,11 +4,10 @@ VISH.SlidesUtilities = (function(V,$,undefined){
    * function to dispatch the event that redraws the slides
    * also redraws the thumbnails
    */
-  var redrawSlides = function(){
-  	    var evt = document.createEvent("Event");
-		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-		document.dispatchEvent(evt);
-				
+  var redrawSlides = function(){  	    
+		
+		$(document).trigger('OURDOMContentLoaded');
+		
 		V.Editor.Thumbnails.redrawThumbnails();
   };
     
@@ -45,6 +44,8 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    * function to add a new slide
    */
   var addSlide = function(slide){
+  	//console.log("slide es " + slide);
+  	//console.log(".slides es " + $('.slides'));
   	$('.slides').append(slide);
   };
 
