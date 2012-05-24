@@ -667,7 +667,6 @@ input.rounded:focus {
     height: 50px;
     border: none;
     margin-right: 25px;
-    /*margin-top: 450px;*/
 	margin-left: 300px;
     color: white;
     font-size: 14px;
@@ -675,7 +674,6 @@ input.rounded:focus {
     padding-bottom: 5px;  
     outline: none;
     border: none;
-	/*position: absolute;*/
 	
 }
 
