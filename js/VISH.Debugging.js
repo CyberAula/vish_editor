@@ -4,9 +4,12 @@
 VISH.Debugging = (function(V,$,undefined){
 	
 	var verbose = false;
+	var developping = false;
 	
 	var init = function(debugging){
-		this.verbose = debugging;
+		if (navigator.appName !== 'Microsoft Internet Explorer') {
+			verbose = debugging;
+		}		
 	};
 	
 	var log = function(text){
@@ -32,12 +35,27 @@ VISH.Debugging = (function(V,$,undefined){
 	  return o;
   };
 	
+	var enableDevelopingMode = function(){
+		developping = true;
+	}
+	
+	var disableDevelopingMode = function(){
+    developping = false;
+  } 
+	
+	var isDevelopping = function(){
+		return developping;
+	}
+	
 	return {
 		init                    : init,
 		getVerbose              : getVerbose,
 		setVerbose              : setVerbose,
 		log                     : log,
-		shuffleJson             : shuffleJson
+		shuffleJson             : shuffleJson,
+		enableDevelopingMode    : enableDevelopingMode,
+		disableDevelopingMode   : disableDevelopingMode,
+		isDevelopping           : isDevelopping
 	};
 
 }) (VISH, jQuery);

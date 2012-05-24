@@ -2,14 +2,75 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 	var init = function(){
 		VISH.Editor.Object.Repository.init();
-	    var urlInput = $("#tab_flash_from_url_content").find("input.url");
-	    $(urlInput).watermark('Paste SWF file URL');
-		var uploadInput = $("#tab_flash_upload_content").find("input.upload");
-	    $(uploadInput).watermark('Select SWF file to upload');
+	  var urlInput = $("#tab_flash_from_url_content").find("input");
+	  $(urlInput).watermark('Paste SWF file URL');
+		var uploadInput = $("#tab_flash_upload_content").find("input");
+	  $(uploadInput).watermark('Select SWF file to upload');
 	}
 	
-	var onLoadTab = function(){
+	var onLoadTab = function(tab){
+    if(tab=="upload"){
+      _onLoadUploadTab();
+    }
+    if(tab=="url"){
+      _onLoadURLTab();
+    }
 	}	
+	
+	var _onLoadURLTab = function() {
+		_resetPreview("tab_flash_from_url_content");
+		
+		var urlInput = $("#tab_flash_from_url_content").find("input");
+		
+		if(VISH.Debugging.isDevelopping()){
+			$(urlInput).val('http://localhost/media/swf/virtualexperiment_1.swf');
+		}
+		
+		$("#tab_flash_from_url_content .previewButton").click(function(event) {
+      if ($(urlInput).val() != "") {
+        _drawPreview("tab_flash_from_url_content", $(urlInput).val())
+      }
+    });
+		
+	}
+	
+	
+	var _onLoadUploadTab = function() {
+    
+  }
+	
+	
+	var previewBackground;
+	
+	var _drawPreview = function(divId,src){
+    previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
+    $("#" + divId + " .previewimgbox").css("background-image","none");
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();;
+		var wrapper = renderObjectPreview(src)
+		if($("#" + divId + " .previewimgbox .objectPreview").length>0){
+			$("#" + divId + " .previewimgbox .objectPreview").remove();
+		}
+		$("#" + divId + " .previewimgbox").append(wrapper);
+    $("#" + divId + " .previewimgbox button").show();
+    $("#" + divId + " .documentblank").addClass("documentblank_extraMargin")
+    $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+  }
+	
+	var _resetPreview = function(divId){
+    $("#" + divId + " .previewimgbox button").hide()
+    $("#" + divId + " .previewimgbox .objectPreview").remove();
+    if (previewBackground) {
+      $("#" + divId + " .previewimgbox").css("background-image", previewBackground);
+    }
+    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin")
+    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+  }
+	
+	var drawPreviewElement = function(divId){
+    drawObject(VISH.Utils.getOuterHTML($("#" + divId + " .previewimgbox .objectPreview")));
+    $.fancybox.close();
+  }
+	
 	
 	/*
 	 * Wrapper can be: "embed","object, "iframe" or null if the object is a source url without wrapper.
@@ -57,7 +118,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		case "IFRAME": 
 		  return $(object).attr("src");
 		default:
-			console.log("Unrecognized object wrapper: " + wrapper)
+			VISH.Debugging.log("Unrecognized object wrapper: " + wrapper)
             break;
 		}
 	}
@@ -146,12 +207,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	var renderObjectPreview = function(object){
-		var objectInfo = getObjectInfo(object.content);
+		var objectInfo = getObjectInfo(object);
 		if(objectInfo.wrapper == null){
 			//Put inside a embed
-			return "<embed class='objectPreview' src='" + object.content + "'></embed>"
+			return "<embed class='objectPreview' src='" + object + "'></embed>"
 		} else {
-			var wrapperPreview = $(object.content);
+			var wrapperPreview = $(object);
 			$(wrapperPreview).addClass('objectPreview')
 			$(wrapperPreview).removeAttr('width')
 			$(wrapperPreview).removeAttr('height')
@@ -196,7 +257,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					  break;
 						
 					default:
-						console.log("Unrecognized object source type: " + objectInfo.type)
+						VISH.Debugging.log("Unrecognized object source type: " + objectInfo.type)
 						break;
 				}
 				break;
@@ -214,7 +275,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 				
 			default:
-				console.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
 				break;
 		}
 
@@ -241,7 +302,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
 		$(wrapperTag).attr('class', template + "_object");
-		$(wrapperTag).attr('title', "Click to drag");
+		//remove click to drag message because you can´t drag the flash object by clicking it and 
+	    //this message remains after save
+		//$(wrapperTag).attr('title', "Click to drag");
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
@@ -286,12 +349,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	
 	return {
-		init					: init,
-		onLoadTab 				: onLoadTab,
-		drawObject				: drawObject,
-		renderObjectPreview 	: renderObjectPreview,
-		getObjectInfo			: getObjectInfo,
-		resizeObject 			: resizeObject
+		init					       : init,
+		onLoadTab 				   : onLoadTab,
+		drawObject				   : drawObject,
+		renderObjectPreview  : renderObjectPreview,
+		getObjectInfo			   : getObjectInfo,
+		resizeObject 			   : resizeObject,
+		drawPreviewElement   : drawPreviewElement
 	};
 
 }) (VISH, jQuery);

@@ -8,10 +8,19 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
+		addEventListeners(); //for the arrow keys
 		
 		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
 		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
-		$(document).on('click', '#page-fullscreen', toggleFullScreen);
+		
+		var elem = document.getElementById("page-fullscreen");  
+		if (elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {  
+		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
+		}
+		else{
+		  $("#page-fullscreen").hide();
+		}
+		
 		VISH.SlidesUtilities.updateSlideCounter();
 	};
 
@@ -154,14 +163,14 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(curSlide===0){
 			$("#page-switcher-start").hide();
 		}
-		else if(curSlide === slideEls.length-1){
-			$("#page-switcher-end").hide();
-			if(curSlide === 1){
-				$("#page-switcher-start").show();  //case with 2 slides, show the back button
-			}
-		}
 		else{
 			$("#page-switcher-start").show();
+		}
+		
+		if(curSlide === slideEls.length-1){
+			$("#page-switcher-end").hide();			
+		}
+		else{
 			$("#page-switcher-end").show();
 		}
 	};

@@ -8,7 +8,7 @@ VISH.Utils.loader = (function(V,undefined){
             return libImages[imagePath];
         }
         else{
-            console.log("Error, Image with path " + imagePath +" was not preloaded");
+            VISH.Debugging.log("Error, Image with path " + imagePath +" was not preloaded");
             return null;
         }
     };
@@ -18,7 +18,7 @@ VISH.Utils.loader = (function(V,undefined){
             return libVideos[videoPath];
         }
         else{
-            console.log("Error, Video with path " + videoPath +" was not preloaded");
+            VISH.Debugging.log("Error, Video with path " + videoPath +" was not preloaded");
             return null;
         }
     };
@@ -59,12 +59,39 @@ VISH.Utils.loader = (function(V,undefined){
       return deferred.promise();
     };
     
+		
+		var loadImagesOnCarrousel = function(imagesArray,callback,carrouselDivId,titleArray){
+			var imagesLength = imagesArray.length;
+      var imagesLoaded = 0;
+			
+      $.each(imagesArray, function(i, image) {
+        $(image).load(function(response) {
+					if(titleArray){
+						$("#" + carrouselDivId).append("<div><p class='repositoryTitle'>"+titleArray[i]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+					} else {
+						$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
+					}
+          imagesLoaded = imagesLoaded + 1;
+          if(imagesLoaded == imagesLength){
+            callback();
+          }
+        })
+        $(image).error(function(response) {
+          imagesLoaded = imagesLoaded + 1;
+          if(imagesLoaded == imagesLength){
+            callback();
+          }
+        })
+      });
+		}
+		
 
     return {
             getImage        : getImage,
             getVideo        : getVideo,
             loadImage       : loadImage,
-            loadVideo       : loadVideo
+            loadVideo       : loadVideo,
+						loadImagesOnCarrousel : loadImagesOnCarrousel
     };
 
 }) (VISH);

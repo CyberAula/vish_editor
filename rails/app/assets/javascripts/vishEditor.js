@@ -10475,8 +10475,8 @@ function handleTouchStart(event) {
     touchDY = 0;
     touchStartX = event.touches[0].pageX;
     touchStartY = event.touches[0].pageY;
-    document.body.addEventListener("touchmove", handleTouchMove, true);
-    document.body.addEventListener("touchend", handleTouchEnd, true)
+    $(document).bind("touchmove", handleTouchMove);
+    $(document).bind("touchend", handleTouchEnd)
   }
 }
 function handleTouchMove(event) {
@@ -10504,7 +10504,7 @@ function cancelTouch() {
   document.body.removeEventListener("touchend", handleTouchEnd, true)
 }
 function setupInteraction() {
-  document.body.addEventListener("touchstart", handleTouchStart, false)
+  $(document).bind("touchstart", handleTouchStart)
 }
 function isChromeVoxActive() {
   if(typeof cvox == "undefined") {
@@ -10624,7 +10624,7 @@ function handleBodyKeyDown(event) {
   }
 }
 function addEventListeners() {
-  document.addEventListener("keydown", handleBodyKeyDown, false)
+  $(document).bind("keydown", handleBodyKeyDown)
 }
 function addFontStyle() {
   var el = document.createElement("link");
@@ -10661,7 +10661,6 @@ function makeBuildLists() {
 function handleDomLoaded() {
   slideEls = document.querySelectorAll("section.slides > article");
   addFontStyle();
-  addEventListeners();
   updateSlides();
   setupInteraction();
   makeBuildLists();
@@ -10675,7 +10674,7 @@ function initialize() {
   if(window["_DCL"]) {
     handleDomLoaded()
   }else {
-    document.addEventListener("OURDOMContentLoaded", handleDomLoaded, false)
+    $(document).bind("OURDOMContentLoaded", handleDomLoaded)
   }
 }
 if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
@@ -10696,13 +10695,37 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
 "Edit details":"Editar detalles", "embed":"embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Image":"Imagen", "no":"no", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "save":"guardar", "Save slides":"Salvar las diapositivas", "Search content":"Buscar contenido", "Select picture to upload":"Seleccionar imagen para subir", "Select video to upload":"Seleccionar video para subir", "Text":"Texto", "Title":"Titulo", "Thumbnail":"Miniatura", 
 "Upload":"Subir", "upload":"subir", "upload flash":"subir flash", "url":"url", "Video":"Video", "vish":"vish"}};
 var VISH = VISH || {};
-VISH.Utils || (VISH.Utils = {});
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
 VISH.ImagesPath = "/assets/";
 VISH.StylesheetsPath = "/assets/";
 VISH.Editing = false;
+VISH.Utils = function(V, undefined) {
+  var init = function() {
+  };
+  var getOuterHTML = function(tag) {
+    if(typeof $(tag)[0].outerHTML == "undefined") {
+      return $(tag).clone().wrap("<div></div>").parent().html()
+    }else {
+      return $(tag)[0].outerHTML
+    }
+  };
+  var generateTable = function(author, title, description) {
+    if(!author) {
+      author = ""
+    }
+    if(!title) {
+      title = ""
+    }
+    if(!description) {
+      description = ""
+    }
+    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
+    description + "</div></td>" + "</tr>" + "</table>"
+  };
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable}
+}(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
   var domId = 0;
@@ -10712,7 +10735,10 @@ VISH.Editor = function(V, $, undefined) {
   var init = function(options, excursion) {
     VISH.Editing = true;
     if(options) {
-      initOptions = options
+      initOptions = options;
+      if(options["developping"]) {
+        VISH.Debugging.enableDevelopingMode()
+      }
     }else {
       initOptions = {}
     }
@@ -10737,6 +10763,7 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
     _addEditorEnterLeaveEvents();
     V.SlidesUtilities.redrawSlides();
+    addEventListeners();
     if(excursion) {
       $(".object_wrapper").hide()
     }
@@ -10866,7 +10893,6 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _onTemplateThumbClicked = function(event) {
     var slide = V.Dummies.getDummy($(this).attr("template"));
-    console.log("slide es: " + slide);
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
@@ -11017,8 +11043,7 @@ VISH.Editor = function(V, $, undefined) {
                   var src_end = src.substring(77);
                   element.body = src_start + "style='" + style + "'" + src_end
                 }else {
-                  element.body = $(div).attr("src");
-                  console.log($(div).attr("src"))
+                  element.body = $(div).attr("src")
                 }
               }else {
                 if(element.type == "video") {
@@ -11043,10 +11068,7 @@ VISH.Editor = function(V, $, undefined) {
                   }else {
                     if(element.type == "object") {
                       var object = $(div).find(".object_wrapper").children()[0];
-                      element.body = $(object)[0].outerHTML;
-                      if(typeof $(object)[0].outerHTML === "undefined") {
-                        element.body = $(object).clone().wrap("<div></div>").parent().html()
-                      }
+                      element.body = VISH.Utils.getOuterHTML(object);
                       element.style = $(object).parent().attr("style")
                     }else {
                       if(element.type == "openquestion") {
@@ -11054,8 +11076,12 @@ VISH.Editor = function(V, $, undefined) {
                         element.question = $(div).find(".value_openquestion").val()
                       }else {
                         if(element.type == "mcquestion") {
-                          var i;
-                          element.question = $(div).find(".value_multiplechoice_question").val()
+                          element.question = $(div).find(".value_multiplechoice_question").val();
+                          element.options = [];
+                          var array_options = $(div).find(".multiplechoice_text");
+                          $(".multiplechoice_text").each(function(i, input_text) {
+                            element.options[i] = input_text.value
+                          })
                         }
                       }
                     }
@@ -11072,7 +11098,7 @@ VISH.Editor = function(V, $, undefined) {
       slide = {}
     });
     var jsonexcursion = JSON.stringify(excursion);
-    console.log(jsonexcursion);
+    VISH.Debugging.log(jsonexcursion);
     var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
     var send_type;
     if(excursion_to_edit) {
@@ -11131,13 +11157,13 @@ VISH.Editor.Image = function(V, $, undefined) {
   };
   var onLoadTab = function(tab) {
     if(tab == "upload") {
-      onLoadUploadTab()
+      _onLoadUploadTab()
     }
     if(tab == "url") {
-      onLoadURLTab()
+      _onLoadURLTab()
     }
   };
-  var onLoadURLTab = function() {
+  var _onLoadURLTab = function() {
     resetPreview("tab_pic_from_url_content");
     $("#picture_url").val("");
     $("#tab_pic_from_url_content .previewButton").click(function(event) {
@@ -11146,7 +11172,7 @@ VISH.Editor.Image = function(V, $, undefined) {
       }
     })
   };
-  var onLoadUploadTab = function() {
+  var _onLoadUploadTab = function() {
     var options = VISH.Editor.getOptions();
     var bar = $(".upload_progress_bar");
     var percent = $(".upload_progress_bar_percent");
@@ -11179,7 +11205,6 @@ VISH.Editor.Image = function(V, $, undefined) {
       bar.width(percentVal);
       percent.html(percentVal)
     }, complete:function(xhr) {
-      console.log(xhr.responseText);
       processResponse(xhr.responseText);
       var percentVal = "100%";
       bar.width(percentVal);
@@ -11251,12 +11276,59 @@ VISH.Editor.Image = function(V, $, undefined) {
 VISH.Editor.Object = function(V, $, undefined) {
   var init = function() {
     VISH.Editor.Object.Repository.init();
-    var urlInput = $("#tab_flash_from_url_content").find("input.url");
+    var urlInput = $("#tab_flash_from_url_content").find("input");
     $(urlInput).watermark("Paste SWF file URL");
-    var uploadInput = $("#tab_flash_upload_content").find("input.upload");
+    var uploadInput = $("#tab_flash_upload_content").find("input");
     $(uploadInput).watermark("Select SWF file to upload")
   };
-  var onLoadTab = function() {
+  var onLoadTab = function(tab) {
+    if(tab == "upload") {
+      _onLoadUploadTab()
+    }
+    if(tab == "url") {
+      _onLoadURLTab()
+    }
+  };
+  var _onLoadURLTab = function() {
+    _resetPreview("tab_flash_from_url_content");
+    var urlInput = $("#tab_flash_from_url_content").find("input");
+    if(VISH.Debugging.isDevelopping()) {
+      $(urlInput).val("http://localhost/media/swf/virtualexperiment_1.swf")
+    }
+    $("#tab_flash_from_url_content .previewButton").click(function(event) {
+      if($(urlInput).val() != "") {
+        _drawPreview("tab_flash_from_url_content", $(urlInput).val())
+      }
+    })
+  };
+  var _onLoadUploadTab = function() {
+  };
+  var previewBackground;
+  var _drawPreview = function(divId, src) {
+    previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
+    $("#" + divId + " .previewimgbox").css("background-image", "none");
+    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    var wrapper = renderObjectPreview(src);
+    if($("#" + divId + " .previewimgbox .objectPreview").length > 0) {
+      $("#" + divId + " .previewimgbox .objectPreview").remove()
+    }
+    $("#" + divId + " .previewimgbox").append(wrapper);
+    $("#" + divId + " .previewimgbox button").show();
+    $("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
+  };
+  var _resetPreview = function(divId) {
+    $("#" + divId + " .previewimgbox button").hide();
+    $("#" + divId + " .previewimgbox .objectPreview").remove();
+    if(previewBackground) {
+      $("#" + divId + " .previewimgbox").css("background-image", previewBackground)
+    }
+    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
+    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
+  };
+  var drawPreviewElement = function(divId) {
+    drawObject(VISH.Utils.getOuterHTML($("#" + divId + " .previewimgbox .objectPreview")));
+    $.fancybox.close()
   };
   function objectInfo(wrapper, sourceType) {
     this.wrapper = wrapper;
@@ -11289,7 +11361,7 @@ VISH.Editor.Object = function(V, $, undefined) {
       case "IFRAME":
         return $(object).attr("src");
       default:
-        console.log("Unrecognized object wrapper: " + wrapper);
+        VISH.Debugging.log("Unrecognized object wrapper: " + wrapper);
         break
     }
   };
@@ -11349,11 +11421,11 @@ VISH.Editor.Object = function(V, $, undefined) {
     }
   };
   var renderObjectPreview = function(object) {
-    var objectInfo = getObjectInfo(object.content);
+    var objectInfo = getObjectInfo(object);
     if(objectInfo.wrapper == null) {
-      return"<embed class='objectPreview' src='" + object.content + "'></embed>"
+      return"<embed class='objectPreview' src='" + object + "'></embed>"
     }else {
-      var wrapperPreview = $(object.content);
+      var wrapperPreview = $(object);
       $(wrapperPreview).addClass("objectPreview");
       $(wrapperPreview).removeAttr("width");
       $(wrapperPreview).removeAttr("height");
@@ -11385,7 +11457,7 @@ VISH.Editor.Object = function(V, $, undefined) {
             V.Editor.Video.HTML5.drawVideoWithUrl(object);
             break;
           default:
-            console.log("Unrecognized object source type: " + objectInfo.type);
+            VISH.Debugging.log("Unrecognized object source type: " + objectInfo.type);
             break
         }
         break;
@@ -11399,7 +11471,7 @@ VISH.Editor.Object = function(V, $, undefined) {
         drawObjectWithWrapper(object, current_area, object_style);
         break;
       default:
-        console.log("Unrecognized object wrapper: " + objectInfo.wrapper);
+        VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
         break
     }
   };
@@ -11419,7 +11491,6 @@ VISH.Editor.Object = function(V, $, undefined) {
     var wrapperTag = $(wrapper);
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
-    $(wrapperTag).attr("title", "Click to drag");
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
@@ -11439,7 +11510,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + idToDrag).draggable({cursor:"move"});
     _adjustWrapperOfObject(idToResize, current_area)
   };
-  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject}
+  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreviewElement:drawPreviewElement}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
@@ -11461,7 +11532,12 @@ VISH.Samples = function(V, undefined) {
   return{full_samples:full_samples, samples:samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
-  var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"/pictures/54.jpg"}, {"id":55, "title":"ClintEastwoooood.jpg", "description":"this is clint", "author":"Demo", "src":"/pictures/55.jpg"}]};
+  var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.dan-dare.org/dan%20simpsons/TheSimpsonsEveryoneEver800.jpg"}, {"id":55, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://3.bp.blogspot.com/--H0o8mc28bA/TxrsnMAFMDI/AAAAAAAAARs/eOCVIXKlm9I/s1600/sala-cine.jpg"}, {"id":56, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, 
+  {"id":57, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.granadablogs.com/pateandoelmundo/wp-content/uploads/2009/10/_061.jpg"}, {"id":58, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.revistaintime.com/wp-content/uploads/2012/03/el-padrino-2.jpg"}, {"id":59, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://cinealdesnudo.files.wordpress.com/2011/12/el-indomable-will-hunting.jpg"}, {"id":60, 
+  "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://politicamenteconservador.blogia.com/upload/20060818041914-el-senor-de-los-anillos2.jpg"}, {"id":61, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://despertando.me/wp-content/uploads/2012/04/el-se%C3%B1or-de-los-anillos.jpg"}, {"id":62, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://4.bp.blogspot.com/-Fh_v8PYbVg0/TyGdKEiYmKI/AAAAAAAAAPI/MKdfZ224aEQ/s1600/el_senor_de_los_anillos_la_batalla_por_la_tierra_media_2_the_rise_of_the_witchking-181035.jpg"}, 
+  {"id":63, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://1.bp.blogspot.com/_9PpLM82o3g0/S8uPONu3kaI/AAAAAAAAC9A/thHNALuFxdE/s1600/Gandalf-vs-El-Balrog-gandalf-7018563-1280-960.jpg"}, {"id":64, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"NOVAACARGAR"}, {"id":65, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, {"id":66, "title":"ClintEastwood.jpg", 
+  "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, {"id":67, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, {"id":68, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, {"id":69, "title":"ClintEastwoooood.jpg", "description":"this is clint", 
+  "author":"Demo", "src":"http://upload.wikimedia.org/wikipedia/en/4/47/Simpsons_on_Tracey_Ullman.png"}]};
   var video = {"id":"1534", "title":"Midnight Sun", "description":"Awesome HTML5 video example", "author":"John Doe", "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"};
   var videoList = {"videos":[{"id":"1534", "title":"HTML5 Demo", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML. HTML5 especifica dos variantes de sintaxis para HTML: un clasico HTML (text/html), la variante conocida como HTML5 y una variante XHTML conocida como sintaxis XHTML5 que debera ser servida como XML (XHTML) (application/xhtml+xml).1 2 Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo.", 
   "author":"Awesome Videos", "poster":"http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1535", "title":"Paisaje bonito", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", 
@@ -11495,8 +11571,11 @@ VISH.AppletPlayer = function() {
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
   var verbose = false;
+  var developping = false;
   var init = function(debugging) {
-    this.verbose = debugging
+    if(navigator.appName !== "Microsoft Internet Explorer") {
+      verbose = debugging
+    }
   };
   var log = function(text) {
     if(verbose) {
@@ -11517,7 +11596,16 @@ VISH.Debugging = function(V, $, undefined) {
     }
     return o
   };
-  return{init:init, getVerbose:getVerbose, setVerbose:setVerbose, log:log, shuffleJson:shuffleJson}
+  var enableDevelopingMode = function() {
+    developping = true
+  };
+  var disableDevelopingMode = function() {
+    developping = false
+  };
+  var isDevelopping = function() {
+    return developping
+  };
+  return{init:init, getVerbose:getVerbose, setVerbose:setVerbose, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
@@ -11558,27 +11646,65 @@ VISH.Editor.API = function(V, $, undefined) {
   var init = function() {
   };
   var requestVideos = function(text, successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.videoList;
+        result["videos"] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList["videos"]);
+        successCallback(result)
+      }
+      return
+    }
     _requestByType("video", text, successCallback, failCallback)
   };
   var requestRecomendedVideos = function(successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Samples.API.videoList)
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.videoList;
+        result["videos"] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList["videos"]);
+        successCallback(result)
+      }
+      return
     }
   };
   var requestFlashes = function(text, successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.flashList;
+        result["flashes"] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList["flashes"]);
+        successCallback(result)
+      }
+      return
+    }
     _requestByType("swf", text, successCallback, failCallback)
   };
   var requestRecomendedFlash = function(successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Samples.API.flashList["flashes"])
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.flashList;
+        result["flashes"] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList["flashes"]);
+        successCallback(result)
+      }
     }
   };
   var requestImages = function(text, successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.imageList;
+        result["pictures"] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList["pictures"]);
+        successCallback(result)
+      }
+      return
+    }
     _requestByType("picture", text, successCallback, failCallback)
   };
   var requestRecomendedImages = function(successCallback, failCallback) {
-    if(typeof successCallback == "function") {
-      successCallback(VISH.Samples.API.imageList)
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.imageList;
+        result["pictures"] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList["pictures"]);
+        successCallback(result)
+      }
+      return
     }
   };
   var _requestByType = function(type, query, successCallback, failCallback) {
@@ -11615,34 +11741,38 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
   };
   var _getAvatars = function() {
     $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
-      console.log("success getting excursion avatars");
       avatars = data;
       VISH.Editor.Carrousel.cleanCarrousel("avatars_carrousel");
       var content = "";
+      var carrouselImages = [];
       $.each(avatars.pictures, function(i, item) {
-        content = content + '<div><img src="' + item.src + '" /></div>'
+        var myImg = $("<img src=" + item.src + " />");
+        carrouselImages.push(myImg)
       });
-      $("#avatars_carrousel").html(content);
-      setTimeout(function() {
-        $("#thumbnails_in_excursion_details").show();
-        VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, "thumbnails");
-        $(".buttonintro").addClass("buttonintro_extramargin");
-        VISH.Editor.AvatarPicker.selectRandom(5)
-      }, 500)
+      VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, "avatars_carrousel")
     }, error:function(xhr, ajaxOptions, thrownError) {
-      console.log("status returned by server:" + xhr.status);
-      console.log("Error in client: " + thrownError);
-      console.log("ERROR!" + thrownError)
+      VISH.Debugging.log("status returned by server:" + xhr.status);
+      VISH.Debugging.log("Error in client: " + thrownError);
+      VISH.Debugging.log("ERROR!" + thrownError)
     }})
+  };
+  var _onImagesLoaded = function() {
+    $("#thumbnails_in_excursion_details").show();
+    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar, 5, 5, "thumbnails");
+    $(".buttonintro").addClass("buttonintro_extramargin");
+    VISH.Editor.AvatarPicker.selectRandom(5)
   };
   return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
-  var createCarrousel = function(containerId, rows, callback, scrollItems, styleClass) {
+  var createCarrousel = function(containerId, rows, callback, rowItems, scrollItems, styleClass) {
     var multipleRow = rows > 1;
     var carrouselClass = "";
     if(styleClass) {
       carrouselClass = "_" + styleClass
+    }
+    if(!scrollItems) {
+      scrollItems = rowItems
     }
     if(multipleRow) {
       var rowClass = "multiple_row" + carrouselClass
@@ -11671,7 +11801,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     $(button_prev).html("<span>prev</span>");
     $(button_next).html("<span>next</span>");
     var paginationDiv = document.createElement("div");
-    paginationDiv.setAttribute("class", "pagination");
+    paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
     paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
     $(wrapperDiv).append(clearFix);
     $(wrapperDiv).append(button_prev);
@@ -11687,19 +11817,20 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       })
     }
     if(multipleRow) {
-      _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, scrollItems)
+      _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass)
     }else {
       $(wrapperDiv).prepend(mainDiv);
-      _setMainCarrousel(containerId, containerId, rows, [], scrollItems)
+      _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems)
     }
     return"Done"
   };
-  var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, scrollItems) {
+  var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass) {
     var synchronizeIds = [];
     var i;
     for(i = 0;i < rows;i++) {
       window[mainDiv.id + "_row" + i] = document.createElement("div");
       window[mainDiv.id + "_row" + i].setAttribute("id", mainDiv.id + "_row" + i);
+      window[mainDiv.id + "_row" + i].setAttribute("class", "carrousel_wrapper_" + rowClass);
       if(i != 0) {
         synchronizeIds.push(mainDiv.id + "_row" + i)
       }
@@ -11711,18 +11842,18 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i]);
       if(i == 0) {
         var newContainerId = mainDiv.id + "_row" + i;
-        _setMainCarrousel(newContainerId, containerId, rows, synchronizeIds, scrollItems)
+        _setMainCarrousel(newContainerId, containerId, rows, synchronizeIds, rowItems, scrollItems)
       }else {
-        _setRowCarrousel(mainDiv.id + "_row" + i, scrollItems)
+        _setRowCarrousel(mainDiv.id + "_row" + i, rowItems, scrollItems)
       }
     }
     $(".caroufredsel_wrapper").css("margin-bottom", "30px")
   };
-  var _setRowCarrousel = function(id, scrollItems) {
-    $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:750, scroll:{items:scrollItems, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:5, max:5}}})
+  var _setRowCarrousel = function(id, rowItems, scrollItems) {
+    $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:750, scroll:{items:scrollItems, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}}})
   };
-  var _setMainCarrousel = function(id, widgetsId, rows, synchronizeIds, scrollItems) {
-    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:scrollItems, duration:1E3, pauseDuration:2E3}, items:{visible:{min:5, max:5}}, prev:{button:"#carrousel_prev" + widgetsId, key:"left"}, next:{button:"#carrousel_next" + widgetsId, key:"right"}, pagination:"#carrousel_pag" + widgetsId});
+  var _setMainCarrousel = function(id, widgetsId, rows, synchronizeIds, rowItems, scrollItems) {
+    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:scrollItems, duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}}, prev:{button:"#carrousel_prev" + widgetsId, key:"left"}, next:{button:"#carrousel_next" + widgetsId, key:"right"}, pagination:"#carrousel_pag" + widgetsId});
     if(synchronizeIds) {
       $(synchronizeIds).each(function(index, value) {
         $("#" + id).trigger("configuration", ["synchronise", "#" + value])
@@ -11782,7 +11913,7 @@ VISH.Editor.I18n = function(V, $, undefined) {
       $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
     });
     var duration = (new Date).getTime() - initTime;
-    console.log("Internationalization took " + duration + " ms.")
+    VISH.Debugging.log("Internationalization took " + duration + " ms.")
   };
   var _filterAndSubText = function(elemType) {
     $(elemType).filter(function(index) {
@@ -11795,7 +11926,7 @@ VISH.Editor.I18n = function(V, $, undefined) {
     if(typeof i18n[language] != "undefined" && i18n[language][s]) {
       return i18n[language][s]
     }
-    console.log("Text without translation: " + s);
+    VISH.Debugging.log("Text without translation: " + s);
     return s
   };
   return{init:init}
@@ -11805,6 +11936,7 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
   var queryMaxNumberFlikrImages = 80;
   var init = function() {
     var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
         VISH.Editor.Image.Flikr.listImages($(myInput).val());
@@ -11814,27 +11946,31 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
   };
   var onLoadTab = function() {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-    $(myInput).watermark("Search content")
+    $("#" + carrouselDivId).hide();
+    $("#tab_pic_flikr_content").find("input[type='search']").attr("value", "")
   };
   var listImages = function(text) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     var template = VISH.Editor.getParams()["current_el"].parent().attr("template");
     var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + text + "&tagmode=any&format=json&jsoncallback=?";
+    var carrouselImages = [];
     $.getJSON(url_flikr, function(data) {
       $.each(data.items, function(i, item) {
-        $("#" + carrouselDivId).append('<div><img id="img_flkr' + i + '" src="' + item.media.m + '" imageFlikrId="' + i + '" /></div>')
+        var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m + " imageFlikrId=" + i + "/>");
+        carrouselImages.push(myImg)
       });
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage, 5)
+      VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId)
     })
-  };
-  var previewMetadata = function(event) {
-    console.log("event" + event)
   };
   var addImage = function(event) {
     var image_url = $(event.target).attr("src");
     V.Editor.Image.drawImage(image_url);
     $.fancybox.close()
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage, 4, 4)
   };
   return{init:init, onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
 }(VISH, jQuery);
@@ -11848,7 +11984,7 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
     $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
-        VISH.Editor.Image.Repository.requestData($(myInput).val());
+        _requestData($(myInput).val());
         $(myInput).blur()
       }
     })
@@ -11860,33 +11996,40 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
     }
   };
   var _requestInitialData = function() {
+    VISH.Editor.API.requestRecomendedImages(_onDataReceived, _onAPIError)
   };
-  var requestData = function(text) {
-    VISH.Editor.API.requestImages(text, VISH.Editor.Image.Repository.onDataReceived, VISH.Editor.Image.Repository.onAPIError)
+  var _requestData = function(text) {
+    VISH.Editor.API.requestImages(text, _onDataReceived, _onAPIError)
   };
-  var onDataReceived = function(data) {
+  var _onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     currentImages = new Array;
+    var carrouselImages = [];
     var content = "";
     if(data.pictures.length == 0) {
-      $("#" + carrouselDivId).html("No results found.")
-    }else {
-      $.each(data.pictures, function(index, image) {
-        content = content + "<div><img src='" + image.src + "' ></div>";
-        currentImages[image.id] = image
-      });
-      $("#" + carrouselDivId).html(content);
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Image.Repository.onClickCarrouselElement, 5)
+      $("#" + carrouselDivId).html("No results found.");
+      return
     }
+    $.each(data.pictures, function(index, image) {
+      var myImg = $("<img src=" + image.src + " >");
+      carrouselImages.push(myImg);
+      currentImages[image.id] = image
+    });
+    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId)
   };
-  var onAPIError = function() {
-    console.log("API error")
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 2, _onClickCarrouselElement, 4, 4)
   };
-  var onClickCarrouselElement = function(event) {
+  var _onAPIError = function() {
+    VISH.Debugging.log("API error")
+  };
+  var _onClickCarrouselElement = function(event) {
     V.Editor.Image.drawImage($(event.target).attr("src"));
     $.fancybox.close()
   };
-  return{init:init, onLoadTab:onLoadTab, requestData:requestData, onDataReceived:onDataReceived, onAPIError:onAPIError, onClickCarrouselElement:onClickCarrouselElement}
+  return{init:init, onLoadTab:onLoadTab}
 }(VISH, jQuery);
 VISH.Editor.Object.Flash = function(V, $, undefined) {
   var drawFlashObjectWithSource = function(src) {
@@ -11903,7 +12046,6 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
     var embedTag = document.createElement("embed");
     embedTag.setAttribute("id", idToResize);
     embedTag.setAttribute("class", template + "_swf");
-    embedTag.setAttribute("title", "Click to drag");
     embedTag.setAttribute("src", src);
     embedTag.setAttribute("wmode", "transparent");
     $(embedDiv).append(embedTag);
@@ -11923,6 +12065,7 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
 VISH.Editor.Object.Repository = function(V, $, undefined) {
   var carrouselDivId = "tab_flash_repo_content_carrousel";
   var previewDivId = "tab_flash_repo_content_preview";
+  var footId = "tab_flash_repo_content_preview_foot";
   var currentObject = new Array;
   var selectedObject = null;
   var init = function() {
@@ -11938,21 +12081,30 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
   var onLoadTab = function() {
     var previousSearch = $("#tab_flash_repo_content").find("input[type='search']").val() != "";
     if(!previousSearch) {
-      _renderObjectPreview(null);
+      _cleanObjectPreview();
       _requestInicialData()
     }
+    $("#" + footId).find(".okButton").hide()
   };
   var _requestInicialData = function() {
-    VISH.Editor.API.requestRecomendedFlash(VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError)
+    VISH.Editor.API.requestRecomendedFlash(_onDataReceived, _onAPIError)
   };
   var _requestData = function(text) {
-    VISH.Editor.API.requestFlashes(text, VISH.Editor.Object.Repository.onDataReceived, VISH.Editor.Object.Repository.onAPIError)
+    VISH.Editor.API.requestFlashes(text, _onDataReceived, _onAPIError)
   };
-  var onDataReceived = function(data) {
+  var _onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanObjectPreview();
     currentObject = new Array;
+    var carrouselImages = [];
+    var carrouselImagesTitles = [];
     var content = "";
-    $.each(data, function(index, object) {
+    if(!data.flashes || data.flashes.length == 0) {
+      $("#" + carrouselDivId).html("No results found.");
+      return
+    }
+    $.each(data.flashes, function(index, object) {
       var objectInfo = VISH.Editor.Object.getObjectInfo(object.content);
       var imageSource = null;
       switch(objectInfo.type) {
@@ -11973,18 +12125,23 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
           imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
           break
       }
-      content = content + "<div><p class='repositoryTitle'>" + object.title + "</p><img src='" + imageSource + "' objectId='" + object.id + "'></div>";
+      var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
+      carrouselImages.push(myImg);
+      carrouselImagesTitles.push(object.title);
       currentObject[object.id] = object
     });
-    $("#" + carrouselDivId).html(content);
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Object.Repository.onClickCarrouselElement, 5)
+    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId, carrouselImagesTitles)
   };
-  var onAPIError = function() {
-    console.log("API error")
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, _onClickCarrouselElement, 5, 5, "title")
   };
-  var onClickCarrouselElement = function(event) {
+  var _onAPIError = function() {
+    VISH.Debugging.log("Error")
+  };
+  var _onClickCarrouselElement = function(event) {
     var objectId = $(event.target).attr("objectid");
-    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId]);
+    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content);
     _renderObjectPreview(renderedObject, currentObject[objectId]);
     selectedObject = currentObject[objectId]
   };
@@ -11995,22 +12152,17 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     $(metadataArea).html("");
     if(renderedObject && object) {
       $(objectArea).append(renderedObject);
-      var table = _generateTable(object.author, object.title, object.description);
-      $(metadataArea).html(table)
+      var table = VISH.Utils.generateTable(object.author, object.title, object.description);
+      $(metadataArea).html(table);
+      $("#" + footId).find(".okButton").show()
     }
   };
-  var _generateTable = function(author, title, description) {
-    if(!author) {
-      author = ""
-    }
-    if(!title) {
-      title = ""
-    }
-    if(!description) {
-      description = ""
-    }
-    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
-    description + "</div></td>" + "</tr>" + "</table>"
+  var _cleanObjectPreview = function() {
+    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
+    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    $("#" + footId).find(".okButton").hide()
   };
   var addSelectedObject = function() {
     if(selectedObject != null) {
@@ -12018,7 +12170,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
       $.fancybox.close()
     }
   };
-  return{init:init, onLoadTab:onLoadTab, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedObject:addSelectedObject, onClickCarrouselElement:onClickCarrouselElement}
+  return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
 }(VISH, jQuery);
 VISH.Editor.Quiz = function(V, $, undefined) {
   var buttonAddOptionId = "a_add_quiz_option";
@@ -12029,7 +12181,6 @@ VISH.Editor.Quiz = function(V, $, undefined) {
     $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
   };
   var addMultipleChoiceOption = function(event) {
-    console.log("Entramos en addMultipleChoiceOption (Quiz)");
     var text = $("<div>").append($("." + MultipleChoiceOptionClass).clone()).html();
     var total = 0;
     $("." + MultipleChoiceOptionClass).each(function(i) {
@@ -12037,7 +12188,6 @@ VISH.Editor.Quiz = function(V, $, undefined) {
     });
     var next_num = parseInt(total) + 1;
     if(next_num < num_options) {
-      console.log("next_number :  " + next_num);
       var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
       add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
       $(".add_quiz_option").remove();
@@ -12045,7 +12195,6 @@ VISH.Editor.Quiz = function(V, $, undefined) {
     }else {
       if(next_num = num_options) {
         var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
-        add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'>";
         $(".add_quiz_option").remove();
         $(".mcquestion").append(add_option)
       }
@@ -12268,7 +12417,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
-        VISH.Editor.Video.Repository.requestData($(myInput).val());
+        _requestData($(myInput).val());
         $(myInput).blur()
       }
     })
@@ -12281,11 +12430,12 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     }
   };
   var _requestInitialData = function() {
+    VISH.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError)
   };
-  var requestData = function(text) {
-    VISH.Editor.API.requestVideos(text, VISH.Editor.Video.Repository.onDataReceived, VISH.Editor.Video.Repository.onAPIError)
+  var _requestData = function(text) {
+    VISH.Editor.API.requestVideos(text, _onDataReceived, _onAPIError)
   };
-  var onDataReceived = function(data) {
+  var _onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     _cleanVideoPreview();
     currentVideos = new Array;
@@ -12298,13 +12448,12 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
         currentVideos[video.id] = video
       });
       $("#" + carrouselDivId).html(content);
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Repository.onClickCarrouselElement, 5)
+      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, _onClickCarrouselElement, 5, 5)
     }
   };
-  var onAPIError = function() {
-    console.log("API error")
+  var _onAPIError = function() {
   };
-  var onClickCarrouselElement = function(event) {
+  var _onClickCarrouselElement = function(event) {
     var videoId = $(event.target).attr("videoid");
     var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId], "preview");
     _renderVideoPreview(renderedVideo, currentVideos[videoId]);
@@ -12357,7 +12506,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       $.fancybox.close()
     }
   };
-  return{init:init, onLoadTab:onLoadTab, requestData:requestData, onDataReceived:onDataReceived, onAPIError:onAPIError, addSelectedVideo:addSelectedVideo, onClickCarrouselElement:onClickCarrouselElement}
+  return{init:init, onLoadTab:onLoadTab, addSelectedVideo:addSelectedVideo}
 }(VISH, jQuery);
 VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var carrouselDivId = "tab_video_youtube_content_carrousel";
@@ -12376,10 +12525,10 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     })
   };
   var onLoadTab = function() {
-    var previousSearch = $("#tab_video_youtube_content").find("input[type='search']").val() != "";
-    if(!previousSearch) {
-      _cleanVideoPreview()
-    }
+    $("#tab_video_youtube_content").find("input[type='search']").val("");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanVideoPreview()
   };
   var requestYoutubeData = function(text) {
     var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
@@ -12389,8 +12538,10 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   };
   var _onDataReceived = function(data) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
     _cleanVideoPreview();
     currentVideos = new Array;
+    var carrouselImages = [];
     var content = "";
     if(data.feed.entry == 0) {
       $("#" + carrouselDivId).html("No results found.")
@@ -12408,11 +12559,15 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
         currentVideos[videoID].author = author;
         currentVideos[videoID].subtitle = subtitle;
         var image_url = "http://img.youtube.com/vi/" + videoID + "/0.jpg";
-        content = content + '<div><img videoID="' + videoID + '" src="' + image_url + '" /></div>'
+        var myImg = $("<img videoID=" + videoID + " src=" + image_url + " />");
+        carrouselImages.push(myImg)
       });
-      $("#" + carrouselDivId).html(content);
-      VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement, 5)
+      VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId)
     }
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement, 5, 5)
   };
   var youtube_video_pattern_1 = /https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g;
   var youtube_video_pattern_2 = /(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g;
@@ -12642,36 +12797,33 @@ VISH.Renderer = function(V, $, undefined) {
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    console.log("entra en _renderMcquestion");
     var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["question"] + "</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
+    for(var i = 0;i < element["options"].length;i++) {
+      ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>" + element["options"][i] + "</label>"
+    }
     ret += "<button type='button' class='question_button'>Send</button>";
     return ret
   };
   return{init:init, renderVideo:renderVideo, renderSlide:renderSlide}
 }(VISH, jQuery);
-VISH.Samples2 = function(V, undefined) {
-  var samples2 = [{"id":"vish1", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"type":"image", "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"type":"text", "areaid":"header", "body":"Sensores"}, {"type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
-  {"type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual1"}, 
-  {"type":"swf", "areaid":"left", "body":"swf/virtualexperiment_1.swf"}]}, {"id":"vish6", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual2"}, {"type":"applet", "areaid":"left", "archive":"Wave.class", "code":"Wave.class", "width":200, "height":150, "params":'<param name=image value="Banna.jpg"><param name=horizMotion value=0.03>'}]}, {"id":"vish7", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Experimento virtual3"}, {"type":"applet", 
-  "areaid":"left", "archive":"applets/Clock.class", "code":"Clock.class", "width":310, "height":160, "params":'<PARAM NAME=text VALUE="#00ff"><PARAM NAME=bgcolor VALUE="#00aaaa"><PARAM NAME=bordersize VALUE="35"><PARAM NAME=border_outside VALUE="#00ffaa"><PARAM NAME=border_inside VALUE="#0000FF"><PARAM NAME=fonttype VALUE="0"><PARAM NAME="GMT" VALUE="true"><PARAM NAME="correction" VALUE="3600000">'}]}, {"id":"vish8", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"Ejemplo de flashcard pa t\u00ed..."}, 
-  {"type":"flashcard", "areaid":"left", "canvasid":"myCanvas", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t\u00e1ntalo es un elemento qu\u00edmico de n\u00famero at\u00f3mico 73, que se sit\u00faa en el grupo 5 de la tabla peri\u00f3dica de los elementos. Su s\u00edmbolo es Ta. Se trata de un metal de transici\u00f3n raro, azul gris\u00e1ceo, duro, que presenta brillo met\u00e1lico y resiste muy bien la corrosi\u00f3n. Se encuentra en el mineral tantalita. Es fisiol\u00f3gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci\u00f3n de instrumentos quir\u00fargicos y en implantes. En ocasiones se le llama t\u00e1ntalo, pero el \u00fanico nombre reconocido por la Real Academia Espa\u00f1ola es tantalio."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}, {"id":"vish9", "template":"t2", "elements":[{"type":"text", "areaid":"header", "body":"FLASHCARD 2..."}, {"type":"flashcard", "areaid":"left", "canvasid":"myCanvas2", "jsoncontent":'{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}', 
-  "js":"js/mods/fc/VISH.Mods.fc.js"}]}];
-  return{samples2:samples2}
-}(VISH);
 VISH.SlideManager = function(V, $, undefined) {
   var mySlides = null;
   var slideStatus = {};
   var init = function(excursion) {
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
+    addEventListeners();
     $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
     $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
-    $(document).on("click", "#page-fullscreen", toggleFullScreen);
+    var elem = document.getElementById("page-fullscreen");
+    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+      $(document).on("click", "#page-fullscreen", toggleFullScreen)
+    }else {
+      $("#page-fullscreen").hide()
+    }
     VISH.SlidesUtilities.updateSlideCounter()
   };
   var toggleFullScreen = function() {
@@ -12766,24 +12918,19 @@ VISH.SlideManager = function(V, $, undefined) {
     if(curSlide === 0) {
       $("#page-switcher-start").hide()
     }else {
-      if(curSlide === slideEls.length - 1) {
-        $("#page-switcher-end").hide();
-        if(curSlide === 1) {
-          $("#page-switcher-start").show()
-        }
-      }else {
-        $("#page-switcher-start").show();
-        $("#page-switcher-end").show()
-      }
+      $("#page-switcher-start").show()
+    }
+    if(curSlide === slideEls.length - 1) {
+      $("#page-switcher-end").hide()
+    }else {
+      $("#page-switcher-end").show()
     }
   };
   return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents}
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
-    var evt = document.createEvent("Event");
-    evt.initEvent("OURDOMContentLoaded", false, true);
-    document.dispatchEvent(evt);
+    $(document).trigger("OURDOMContentLoaded");
     V.Editor.Thumbnails.redrawThumbnails()
   };
   var dimentionToDraw = function(w_zone, h_zone, w_content, h_content) {
@@ -12944,7 +13091,7 @@ VISH.Utils.loader = function(V, undefined) {
     if(libImages[imagePath]) {
       return libImages[imagePath]
     }else {
-      console.log("Error, Image with path " + imagePath + " was not preloaded");
+      VISH.Debugging.log("Error, Image with path " + imagePath + " was not preloaded");
       return null
     }
   };
@@ -12952,7 +13099,7 @@ VISH.Utils.loader = function(V, undefined) {
     if(libVideos[videoPath]) {
       return libVideos[videoPath]
     }else {
-      console.log("Error, Video with path " + videoPath + " was not preloaded");
+      VISH.Debugging.log("Error, Video with path " + videoPath + " was not preloaded");
       return null
     }
   };
@@ -12982,7 +13129,30 @@ VISH.Utils.loader = function(V, undefined) {
     libVideos[videoSrc] = v;
     return deferred.promise()
   };
-  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo}
+  var loadImagesOnCarrousel = function(imagesArray, callback, carrouselDivId, titleArray) {
+    var imagesLength = imagesArray.length;
+    var imagesLoaded = 0;
+    $.each(imagesArray, function(i, image) {
+      $(image).load(function(response) {
+        if(titleArray) {
+          $("#" + carrouselDivId).append("<div><p class='repositoryTitle'>" + titleArray[i] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
+        }else {
+          $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(image) + "</div>")
+        }
+        imagesLoaded = imagesLoaded + 1;
+        if(imagesLoaded == imagesLength) {
+          callback()
+        }
+      });
+      $(image).error(function(response) {
+        imagesLoaded = imagesLoaded + 1;
+        if(imagesLoaded == imagesLength) {
+          callback()
+        }
+      })
+    })
+  };
+  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, loadImagesOnCarrousel:loadImagesOnCarrousel}
 }(VISH);
 VISH.Utils.text = function(V, undefined) {
   var getLines = function(ctx, phrase, maxPxLength, textStyle) {
@@ -13084,7 +13254,6 @@ VISH.Mods.fc.loader = function(V, undefined) {
       }
     }
     $.when.apply(null, loaders).done(function() {
-      console.log("Flashcard preloaded!")
     })
   };
   return{init:init}

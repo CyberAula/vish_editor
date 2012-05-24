@@ -40,7 +40,6 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		  url: '/excursion_thumbnails.json',
 		  dataType: 'json',
 		  success: function(data) {
-		    console.log("success getting excursion avatars");
 		    avatars = data;
 	
 				//Clean previous carrousel
@@ -48,26 +47,31 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 				
 				//Build new carrousel
         var content = "";
+				var carrouselImages = [];
         $.each(avatars.pictures, function(i, item) {
-          content = content + '<div><img src="'+item.src+'" /></div>';
+					var myImg = $("<img src="+item.src+" />")
+					carrouselImages.push(myImg)
         });
-        $("#avatars_carrousel").html(content);
-				setTimeout(function() { 
-				 $("#thumbnails_in_excursion_details").show(); 
-				 VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,"thumbnails");
-				 $(".buttonintro").addClass("buttonintro_extramargin");
-				 VISH.Editor.AvatarPicker.selectRandom(5);  //randomly select one between first page
-				 
-				},500);
+				
+				VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,"avatars_carrousel");
+				
 		  },
 		  error: function(xhr, ajaxOptions, thrownError){
-            console.log("status returned by server:" + xhr.status);
-            console.log("Error in client: " + thrownError);  
-						console.log("ERROR!" + thrownError)
-						//$("#thumbnails_in_excursion_details").remove();
+            VISH.Debugging.log("status returned by server:" + xhr.status);
+            VISH.Debugging.log("Error in client: " + thrownError);  
+			VISH.Debugging.log("ERROR!" + thrownError)
+			//$("#thumbnails_in_excursion_details").remove();
 		  }
 		});
 	};
+	
+	
+	var _onImagesLoaded = function(){
+    $("#thumbnails_in_excursion_details").show(); 
+    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,5,"thumbnails");
+    $(".buttonintro").addClass("buttonintro_extramargin");
+    VISH.Editor.AvatarPicker.selectRandom(5);  //randomly select one between first page
+	}
   
   
 	return {

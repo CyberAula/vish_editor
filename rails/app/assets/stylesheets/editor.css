@@ -456,7 +456,7 @@
 .fancy_tabs ul{
 	width: 800px;
 	list-style-type: none;
-	background-color: #f9f9f9;
+	background-color: #ffffff;
 	color: #ff005d;
 	margin: 0px;
 	font-size: 1em;
@@ -477,7 +477,7 @@
 	display:block;
 	padding: 0.5em 1.5em;
 	text-decoration: none;
-	background: #f9f9f9;
+	background: #ffffff;
 	color: #ff005d;
 	font-size: 16px;
 	font-family: Helvetica;
@@ -494,7 +494,7 @@
 }
 
 .fancy_tabs li a.fancy_selected{
-	background: #f9f9f9;
+	background: #ffffff;
 	color: #ff005d;
 	border: 1px solid #ff005d;
 	border-bottom-color: transparent;
@@ -575,11 +575,11 @@
 	width: 650px;
 	height: 190px;
 	text-align: center;
-	padding: 9px;
+	padding-top: -10px;
 	margin: auto;
 }
 
-.content_preview_video{
+.content_preview_data{
 	width: 350px;
 	height: 195px;
 	margin-left: auto; 
@@ -601,6 +601,8 @@
 
 .content_preview_foot{
 	outline: none;
+	text-align: center;
+  margin-left: 70px;
 }
 
 div.search_container {
@@ -666,17 +668,13 @@ input.rounded:focus {
     width: 150px;
     height: 50px;
     border: none;
-    margin-right: 25px;
-    /*margin-top: 450px;*/
-	margin-left: 300px;
+	margin-left: 420px;
     color: white;
     font-size: 14px;
     font-weight: bold;
     padding-bottom: 5px;  
     outline: none;
     border: none;
-	/*position: absolute;*/
-	
 }
 
 .okButton:hover {
@@ -731,20 +729,20 @@ table.metadata td.info_description{
 
 table.metadata tr.even{
 	color: white;
-	background: #9E1F63;
+	background: #FF005D;
 } 
 
 table.metadata tr.odd{
 	color: #24497D;
-	background: #F2E6EA;
+	border:#0F3;
 } 
 
 table.metadata td.header_left{
-	background: url("/assets/table_left.png") no-repeat scroll left -1px #9E1F63;
+	background: url("/assets/table_left.png") no-repeat scroll left -1px #FF005D;
 } 
 
 table.metadata td.header_right{
-	background: url("/assets/table_right.png") no-repeat scroll right -1px #9E1F63;
+	background: url("/assets/table_right.png") no-repeat scroll right -1px #FF005D;
 }
 
 table.metadata td div.height_wrapper_description{
@@ -793,7 +791,8 @@ table.metadata td div.height_wrapper_description{
 }
 
 .delimg{
-	margin-left: -20px;
+	margin-left: -18px;
+	margin-bottom: 35px;
 }
 .button1 {
 	margin-left: 200px;
@@ -845,32 +844,6 @@ div.object_wrapper{
 .objectPreview {
 	max-width: 80%;
 	max-height: 80%;
-}
-
-
-/* Vish Flash */
-
-#tab_flash_repo_content_preview{
-	width: 650px;
-	height: 190px;
-	text-align: center;
-	padding: 9px;
-	margin: auto;
-}
-
-#tab_flash_repo_content_preview_flash{
-	width: 350px;
-	height: 195px;
-	margin-left: auto; 
-	margin-right: auto;
-	float: left;
-}
-
-#tab_flash_repo_content_preview_metadata{
-	width: 300px;
-	height: 195px;
-	float: right;
-	overflow: hidden;
 }
 
 
@@ -954,8 +927,9 @@ textarea {
 #start_tutorial {
 	background-image:url(../assets/tutorialimage.png);
 	position:absolute;
-	margin-left: 484px;
-	margin-top: 10px;
+	margin-left: 384px;
+	width: 358px;
+	height: 120px;
 }
 
 #start_tutorial:hover {
