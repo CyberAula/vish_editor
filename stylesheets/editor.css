@@ -8,10 +8,7 @@
 	height: 70px;
 	position: fixed;
 	bottom:0px;
-	left: 0px;
-	border-radius: 0px 0px 20px 20px;
-    -moz-border-radius: 0px 0px 20px 20px;
-    -webkit-border-radius: 0px 0px 20px 20px;
+	left: 0px;	
 }
 
 #excursiondetails {
