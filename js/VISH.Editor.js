@@ -186,10 +186,7 @@ VISH.Editor = (function(V,$,undefined){
 
 			//Video
 			case "tab_video_from_url":
-				VISH.Editor.Video.HTML5.onLoadTab("url");
-				break;
-			case "tab_video_upload":
-				VISH.Editor.Video.HTML5.onLoadTab("upload");
+				VISH.Editor.Video.onLoadTab();
 				break;
 			case "tab_video_repo":
 				VISH.Editor.Video.Repository.onLoadTab();

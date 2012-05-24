@@ -265,7 +265,7 @@
               		</div>
             			<div class="box2">
             				<div class="previewimgbox">
-                				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement('tab_pic_from_url_content')">Add Content</button>
+                				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
                 			</div>
             			</div>
 				</div>      
@@ -341,7 +341,7 @@
           </div>
                 <div class="box2">
                 				<div class="previewimgbox">
-                    				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement('tab_flash_from_url_content')">Add Content</button>
+                    				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
                     			</div>
                 			</div>
 				</div>
@@ -394,11 +394,11 @@
 	             <p class="textfancy">add video url</p><br>
 	             <img id="image_add_url" class="image_add_url" src="/images/url_img.png"/>
 	    	       <input id="video_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="video_url">
-			        <button type="button" class="button buttonfancy" onclick="VISH.Editor.getValueFromFancybox('video_url')">Upload</button>
+			        <button type="button" class="button buttonfancy previewButton">Preview</button>
 	          </div>
 	          <div id="box2" class="box2">
 	        		<div id="previewimgbox" class="previewimgbox">
-	            	<button type="button" class="button buttonaddfancy">Add Content</button>
+	            	<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Video.drawPreviewElement()">Add Content</button>
 	            </div>
 	          </div>
        </div>
@@ -466,6 +466,7 @@
 	<script type="text/javascript" src="js/VISH.Dummies.js"></script>
 	<script type="text/javascript" src="js/VISH.Debugging.js"></script>
 	<script type="text/javascript" src="js/VISH.SlidesUtilities.js"></script>
+	<script type="text/javascript" src="js/VISH.Police.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Editor.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Renderer.js"></script>

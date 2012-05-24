@@ -839,8 +839,8 @@ div.object_wrapper{
 }
 
 .objectPreview {
-	max-width: 80%;
-	max-height: 80%;
+	max-width: 90%;
+	max-height: 90%;
 }
 
 
@@ -972,7 +972,7 @@ textarea {
   font-size: 16px;
 }
 
-.uploadPreviewImage{
+.imagePreview{
 	width: 80%;
 	height: 80%;
 	margin-top: 9%;
