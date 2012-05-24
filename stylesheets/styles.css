@@ -519,18 +519,6 @@ article.smaller q::after {
 	margin-top: 10px;
 }
 
-.viewbar:hover {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    bottom: 0;
-    left: 50%;
-    margin-left: -200px;
-    opacity: 1.0;
-    position: fixed;
-    text-align: center;
-    width: 400px;
-}
-
 .viewbar {
 	background-image: url(../images/viewbar.png) ;
 	height: 40px;
@@ -539,7 +527,7 @@ article.smaller q::after {
     bottom: 0;
     left: 50%;
     margin-left: -200px;
-    opacity: 0.5;
+    opacity: 1.0;
     position: fixed;
     text-align: center;
     width: 400px;
