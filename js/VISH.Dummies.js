@@ -59,7 +59,7 @@ VISH.Dummies = (function(VISH,undefined){
 var _onaddRadioChoiceClicked = function() {
 	
 	var radio_elements = $(".multiplechoice_radio");
-		//console.log("entra en _onaddRadioChoiceClicked");
+		//VISH.Debugging.log("entra en _onaddRadioChoiceClicked");
 		
 	
 }; 

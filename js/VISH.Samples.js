@@ -47,7 +47,12 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone5",
 					"type": "object",
 					"areaid": "left",
-					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">","style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "},{"id":"zone6","areaid":"right"
+					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">",
+					"style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "
+				},
+				{
+					"id":"zone6",
+					"areaid":"right"
 				}
 			]
 		}

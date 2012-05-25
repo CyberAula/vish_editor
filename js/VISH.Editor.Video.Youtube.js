@@ -126,7 +126,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
   var onClickCarrouselElement = function(event) {
     var videoId = $(event.target).attr("videoID");
     var video_embedded = "http://www.youtube.com/embed/"+ videoId;
-    
 	  var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
 	  _renderVideoPreview(renderedIframe, currentVideos[videoId]);
 	  selectedVideo = currentVideos[videoId];	
@@ -141,7 +140,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedIframe) && (video)) {
 			$(videoArea).append(renderedIframe);
-			var table = _generateTable(video.author, video.title, video.description);
+			var table = VISH.Utils.generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
 			$(button).show();
 		}
@@ -156,37 +155,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(metadataArea).html("");
 		$(button).hide();
   };
-
-
-  var _generateTable = function(author,title,description){
-	
-	if(!author){
-	  author = "";
-	}
-	if(!title){
-	  title = "";
-	}
-	if(!description){
-	  description = "";
-	}
-	
-	return "<table class=\"metadata\">"+
-	  "<tr class=\"even\">" +
-	    "<td class=\"title header_left\">Author</td>" + 
-	    "<td class=\"title header_right\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
-	  "</tr>" + 
-	  "<tr class=\"odd\">" + 
-	  	"<td class=\"title\">Title</td>" + 
-	    "<td class=\"info\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
-	  "</tr>" + 
-	  "<tr class=\"even\">" + 
-	    "<td colspan=\"2\" class=\"title_description\">Description</td>" + 
-	  "</tr>" + 
-	  "<tr class=\"odd\">" + 
-	  	"<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 
-	  "</tr>" + 
-	"</table>";
-  }
 
  
  var _generateWrapper = function (videoId) {

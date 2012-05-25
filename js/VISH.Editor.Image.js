@@ -49,7 +49,6 @@ VISH.Editor.Image = (function(V,$,undefined){
           percent.html(percentVal);
       },
       complete: function(xhr) {
-          //console.log(xhr.responseText);
           processResponse(xhr.responseText);
           var percentVal = '100%';
           bar.width(percentVal)

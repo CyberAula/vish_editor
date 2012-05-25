@@ -332,7 +332,7 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		//console.log("slide es: " + slide );
+		//VISH.Debugging.log("slide es: " + slide );
 				
 		V.SlidesUtilities.addSlide(slide);	//undefined 
 		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
@@ -601,72 +601,36 @@ VISH.Editor = (function(V,$,undefined){
           } else if(element.type=="image"){
             element.body   = $(div).find('img').attr('src');
             element.style  = $(div).find('img').attr('style');
-          } else if(element.type=="iframe"){
-          	//TODO find a beter styling (use numbers to substring)
-          	if($(div).children().attr("id")) {
-          
-          		var style = $(div).children().attr('style'); //here dragged style
-          		var src = $(div).attr('src'); //src to substring 
-          		var src_start = src.substring('style', 42);
-          		var src_end = src.substring(77);
-           		element.body   = src_start +"style='"+ style +"'" + src_end;
-          	
-          	} else { //no draggable
-          
-          		element.body   = $(div).attr('src'); //we have the iframe code in the src attribute	
-          		//console.log($(div).attr('src'));
-          	}
-          	
           } else if(element.type=="video"){
-		    var video = $(div).find("video");
-			element.poster = $(video).attr("poster");
-			element.style  = $(video).attr('style');
-			//Sources
-			var sources= '';				
-			$(video).find('source').each(function(index, source) {
-			  if(index!=0){
-			    sources = sources + ',';
-			  }
-			  var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
-              sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
-            });
-			sources = '[' + sources + ']'
-			element.sources = sources;
-	      } else if(element.type=="swf"){
-	    	  var swf = $(div).find("embed");
-	    	  element.body   = $(swf).attr('src');
-	    	  element.style  = $(swf).parent().attr('style');
-	      } else if(element.type=="object"){
-	    	  var object = $(div).find(".object_wrapper").children()[0];
-	    	  element.body   = VISH.Utils.getOuterHTML(object);
-	    	  element.style  = $(object).parent().attr('style');
-	      }
-	    
-	      else if (element.type=="openquestion") {
-	      	
-	      		   
-	      	element.title   = $(div).find(".title_openquestion").val();
-	     element.question   = $(div).find(".value_openquestion").val();
-	     
-	      }
-	      else if (element.type=="mcquestion") {
-	      		      		      	
-	      	element.question   = $(div).find(".value_multiplechoice_question").val();
-	      	
-	    element.options = [];  	
-	     var array_options = $(div).find(".multiplechoice_text");
-	     
-	     $('.multiplechoice_text').each(function(i, input_text){
-   	
-			 element.options[i] = input_text.value;
- 
- 
-}); 		
-	       	//element['options']
-	     
-	      }
-	     
-          
+		          var video = $(div).find("video");
+							element.poster = $(video).attr("poster");
+							element.style  = $(video).attr('style');
+							//Sources
+							var sources= '';				
+							$(video).find('source').each(function(index, source) {
+							  if(index!=0){
+							    sources = sources + ',';
+							  }
+							  var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
+				        sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
+				      });
+							sources = '[' + sources + ']'
+							element.sources = sources;
+		      } else if(element.type=="object"){
+		    	    var object = $(div).find(".object_wrapper").children()[0];
+		    	    element.body   = VISH.Utils.getOuterHTML(object);
+		    	    element.style  = $(object).parent().attr('style');
+		      } else if (element.type=="openquestion") {	   
+		      	element.title   = $(div).find(".title_openquestion").val();
+		        element.question   = $(div).find(".value_openquestion").val();
+		      } else if (element.type=="mcquestion") {     		      	
+		      	element.question   = $(div).find(".value_multiplechoice_question").val();
+		        element.options = [];  	
+		        var array_options = $(div).find(".multiplechoice_text");
+		        $('.multiplechoice_text').each(function(i, input_text){
+				      element.options[i] = input_text.value;
+	          }); 		
+		      }
           slide.elements.push(element);
           element = {};
         }
