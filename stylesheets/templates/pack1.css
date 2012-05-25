@@ -26,7 +26,7 @@
 	margin-right: 2%;
 	font-size: 17px;
 	line-height: 20px;
-	overflow:hidden;	
+	overflow:hidden;
 }
 
 .t1_right{
@@ -37,7 +37,7 @@
 	float: right;
 	font-size: 17px;
 	line-height: 20px;
-	overflow:hidden;	
+	overflow:hidden;
 }
 
 .t1_text{
@@ -352,7 +352,7 @@
 	margin-top: -.2em;
 	font-size: 24px;
 	height: 30px;
-	width: 100%;
+	width: 99%;
 	overflow:hidden;	
 	position: relative;
 }
@@ -360,7 +360,7 @@
 .t6_left{
 	margin-top:11px;
 	position:relative;
-	width: 65%;
+	width: 64%;
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
