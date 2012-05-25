@@ -2,10 +2,6 @@
  *	styles for explorer
  */
  
-#div {
-  height: 300px\0/;
-}
-
 .slides {
-	background: red !important;	
+	background-image:url(../images/background_ie.png);	
 }
