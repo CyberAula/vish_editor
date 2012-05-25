@@ -1,23 +1,16 @@
 VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	
   var init = function(){
-    var urlInput = $("#tab_video_from_url_content").find("input.url");
-    $(urlInput).watermark('Paste HTML5 video URL');
-	var uploadInput = $("#tab_video_upload_content").find("input.upload");
-    $(uploadInput).watermark('Select video to upload');
   }
 	
-  var onLoadTab = function(tab){	
-  }
-
   var drawVideoWithUrl = function (url){
-    drawVideo([[url,_getVideoTypeFromUrl(url)]])
+    drawVideo([[url,_getVideoType(url)]])
   }
 	
-  var _getVideoTypeFromUrl = function(url) {
-    //Code here...
-    return null;
-  }
+	var _getVideoType = function(url){
+		var source = (VISH.Editor.Object.getObjectInfo(url)).source;
+    return "video/" + source.split('.').pop();
+	}
 
   /**
    * Returns a video object prepared to draw.
@@ -27,28 +20,26 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
   var drawVideo = function(sources,options, area, style){
-	var current_area;
+	  var current_area;
   	if(area){
   		current_area = area;
-  	}
-  	else{
+  	}	else {
   		current_area = VISH.Editor.getCurrentArea();
   	}
   	
-  	
     //Default options
-	var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
-	var autoplay = false;
+	  var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+	  var autoplay = false;
 		
 	//Replace defeault options if options hash is defined
-	if(options){
-	  if(options['poster']){
-	    posterUrl = options['poster'];
-	  }
-	  if(options['autoplay']){
-        autoplay = options['autoplay'];
-      }
-	}
+		if(options){
+		  if(options['poster']){
+		    posterUrl = options['poster'];
+		  }
+		  if(options['autoplay']){
+	        autoplay = options['autoplay'];
+	    }
+		}
 		
 	
     var template = VISH.Editor.getTemplate(area);
@@ -64,18 +55,18 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     videoTag.setAttribute('controls', "controls");
     videoTag.setAttribute('preload', "metadata");
     videoTag.setAttribute('poster', posterUrl);
-	videoTag.setAttribute('autoplayonslideenter',autoplay);
-	if(style){
-		videoTag.setAttribute('style', style);
-	}
+		videoTag.setAttribute('autoplayonslideenter',autoplay);
+		if(style){
+			videoTag.setAttribute('style', style);
+		}
 		
-	$(sources).each(function(index, source) {
+	  $(sources).each(function(index, source) {
       var videoSource = document.createElement('source');
       videoSource.setAttribute('src', source[0]);
-	  if(source[1]){
-	    videoSource.setAttribute('type', source[1]);
-	  }
-	  $(videoTag).append(videoSource)
+		  if(source[1]){
+		    videoSource.setAttribute('type', source[1]);
+		  }
+		  $(videoTag).append(videoSource)
     });
     
     var fallbackText = document.createElement('p');
@@ -87,15 +78,14 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     
     VISH.Editor.addDeleteButton($(current_area));
     	
-	//RESIZE
-	var width, value;
-	if(style){
-	   width = V.SlidesUtilities.getWidthFromStyle(style);
-	   value = width/80;
-	}
-	else{
-		value = 4;
-	}
+	  //RESIZE
+		var width, value;
+		if(style){
+		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   value = width/80;
+		} else {
+			value = 4;
+		}
     $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
             
     $("#imageSlider"+nextVideoId).slider({
@@ -113,13 +103,22 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $("#" + idToDragAndResize).draggable({cursor: "move"});
   }
 
-
+  var renderVideoFromSources = function(sources){
+    var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+    var rendered = "<video class='preview_video objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
+		$.each(sources, function(index, source) {
+       rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";
+    });   
+    rendered = rendered + "</video>";
+    return rendered;
+  };
 	
+
   return {
-      init             : init,
-	  onLoadTab		   : onLoadTab,
+    init             : init,
 	  drawVideoWithUrl : drawVideoWithUrl,
-	  drawVideo        : drawVideo
+	  drawVideo        : drawVideo,
+		renderVideoFromSources : renderVideoFromSources
   };
 
 }) (VISH, jQuery);

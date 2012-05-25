@@ -1,11 +1,23 @@
 VISH.Editor.Object = (function(V,$,undefined){
 		
+	var contentToAdd = null;	
+		
 	var init = function(){
 		VISH.Editor.Object.Repository.init();
+		
 	  var urlInput = $("#tab_flash_from_url_content").find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
 		var uploadInput = $("#tab_flash_upload_content").find("input");
 	  $(uploadInput).watermark('Select SWF file to upload');
+		
+		$("#tab_flash_from_url_content .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($(urlInput).val())[0]){
+        contentToAdd = $(urlInput).val();
+        drawPreview("tab_flash_from_url_content", contentToAdd)
+      } else {
+        contentToAdd = null;
+      }
+    });
 	}
 	
 	var onLoadTab = function(tab){
@@ -16,36 +28,22 @@ VISH.Editor.Object = (function(V,$,undefined){
       _onLoadURLTab();
     }
 	}	
-	
+
 	var _onLoadURLTab = function() {
-		_resetPreview("tab_flash_from_url_content");
-		
-		var urlInput = $("#tab_flash_from_url_content").find("input");
-		
-		if(VISH.Debugging.isDevelopping()){
-			$(urlInput).val('http://localhost/media/swf/virtualexperiment_1.swf');
-		}
-		
-		$("#tab_flash_from_url_content .previewButton").click(function(event) {
-      if ($(urlInput).val() != "") {
-        _drawPreview("tab_flash_from_url_content", $(urlInput).val())
-      }
-    });
-		
+		$("#tab_flash_from_url_content").find("input").val("");
+		resetPreview("tab_flash_from_url_content");
 	}
 	
-	
 	var _onLoadUploadTab = function() {
-    
   }
 	
-	
+	//Preview generation for load and upload tabs
 	var previewBackground;
 	
-	var _drawPreview = function(divId,src){
+	var drawPreview = function(divId,src){
     previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
     $("#" + divId + " .previewimgbox").css("background-image","none");
-    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();;
+    $("#" + divId + " .previewimgbox img.imagePreview").remove();
 		var wrapper = renderObjectPreview(src)
 		if($("#" + divId + " .previewimgbox .objectPreview").length>0){
 			$("#" + divId + " .previewimgbox .objectPreview").remove();
@@ -56,8 +54,9 @@ VISH.Editor.Object = (function(V,$,undefined){
     $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
   }
 	
-	var _resetPreview = function(divId){
+	var resetPreview = function(divId){
     $("#" + divId + " .previewimgbox button").hide()
+		$("#" + divId + " .previewimgbox img.imagePreview").remove();
     $("#" + divId + " .previewimgbox .objectPreview").remove();
     if (previewBackground) {
       $("#" + divId + " .previewimgbox").css("background-image", previewBackground);
@@ -66,19 +65,31 @@ VISH.Editor.Object = (function(V,$,undefined){
     $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
   }
 	
-	var drawPreviewElement = function(divId){
-    drawObject(VISH.Utils.getOuterHTML($("#" + divId + " .previewimgbox .objectPreview")));
-    $.fancybox.close();
+	var drawPreviewElement = function(){
+		drawPreviewObject(contentToAdd);
+	}
+	
+	var drawPreviewObject = function(content){
+		if(content){
+		  drawObject(content);
+      $.fancybox.close();
+		}
   }
 	
+	
+	
+	///////////////////////////////////////
+	/// OBJECT INFO
+	///////////////////////////////////////
 	
 	/*
 	 * Wrapper can be: "embed","object, "iframe" or null if the object is a source url without wrapper.
 	 * Type is the source type and can be: "swf" , "youtube" , etc.
 	 * 
 	 */
-	function objectInfo(wrapper,sourceType) {
+	function objectInfo(wrapper,source,sourceType) {
 		this.wrapper=wrapper;
+		this.source = source;
 		this.type=sourceType;
 	} 
 	
@@ -98,7 +109,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var source = _getSourceFromObject(object,wrapper);
 		var type = _getTypeFromSource(source);
 
-		return new objectInfo(wrapper,type);
+		return new objectInfo(wrapper,source,type);
 	}
 	
 	var _getSourceFromObject = function (object,wrapper){
@@ -107,19 +118,20 @@ VISH.Editor.Object = (function(V,$,undefined){
 	      return object;
 	    case "EMBED":
 	      return $(object).attr("src");
-		case "OBJECT":
+		  case "OBJECT":
 	      if (typeof $(object).attr("src") != 'undefined'){
 	    	  return $(object).attr("src");
 	      }
 	      if (typeof $(object).attr("data") != 'undefined'){
 	    	  return $(object).attr("data");
 	      }
-		  return "source not founded";
-		case "IFRAME": 
-		  return $(object).attr("src");
-		default:
-			VISH.Debugging.log("Unrecognized object wrapper: " + wrapper)
-            break;
+		    return "source not founded";
+		  case "IFRAME": 
+		    return $(object).attr("src");
+		  default:
+			  VISH.Debugging.log("Unrecognized object wrapper: " + wrapper)
+				return null;
+        break;
 		}
 	}
 	
@@ -130,21 +142,30 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 	var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 	var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
-	var html5VideoFormats = ["mp4","webm","ogg"]                                                                           		
+	var html5VideoFormats = ["mp4","webm","ogg"]        
+	var imageFormats = ["jpg","png","gif","bmp"]                                                         		
 	
 	var _getTypeFromSource = function(source){
 		
 		if(typeof source != "string"){
-			return "Invalid source"
+			return null
 		}
-		var extension = source.split('.').pop();
+		
+		//Purge options
+		source = source.split('?')[0]
+		
+		var extension = (source.split('.').pop()).toLowerCase();
 		
 		if(source.match(youtube_video_pattern)!=null){
 			return "youtube";
 		}
 		
+		if(imageFormats.indexOf(extension)!="-1"){
+      return "image";
+    }
+		
 		if(extension=="swf"){
-			return extension;
+			return "swf";
 		}
 		
 		if(html5VideoFormats.indexOf(extension)!="-1"){
@@ -157,6 +178,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		return extension;
 	}
+	
+	
+	
+	///////////////////////////////////////
+  /// OBJECT RESIZING
+  ///////////////////////////////////////
 	
 	/*
 	 * Resize object and its wrapper automatically
@@ -206,19 +233,73 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
+	
+	///////////////////////////////////////
+  /// OBJECT DRAW: PREVIEWS
+  ///////////////////////////////////////
+	
 	var renderObjectPreview = function(object){
 		var objectInfo = getObjectInfo(object);
-		if(objectInfo.wrapper == null){
-			//Put inside a embed
-			return "<embed class='objectPreview' src='" + object + "'></embed>"
-		} else {
-			var wrapperPreview = $(object);
-			$(wrapperPreview).addClass('objectPreview')
-			$(wrapperPreview).removeAttr('width')
-			$(wrapperPreview).removeAttr('height')
-			return wrapperPreview;
-		}
+		
+		switch (objectInfo.wrapper) {
+      case null:
+        //Draw object preview from source
+        switch (objectInfo.type) {
+					
+					case "image":
+					  return "<img class='imagePreview' src='" + object + "'></img>"
+					  break;
+					
+          case "swf":
+            return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
+            break;
+            
+          case "youtube":
+            return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
+            break;
+            
+          case "HTML5":
+            return VISH.Editor.Video.HTML5.renderVideoFromSources([object])
+            break;
+            
+          default:
+            VISH.Debugging.log("Unrecognized object source type")
+            break;
+        }
+        break;
+        
+      case "EMBED":
+        return _genericWrapperPreview(object)
+        break;
+        
+      case "OBJECT":
+        return _genericWrapperPreview(object)
+        break;
+
+      case "IFRAME":
+        return _genericWrapperPreview(object)
+        break;
+        
+      default:
+        VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+        break;
+    }
 	}
+	
+	var _genericWrapperPreview = function(object){
+		var wrapperPreview = $(object);
+    $(wrapperPreview).addClass('objectPreview')
+    $(wrapperPreview).addAttr('wmode','transparent')
+    $(wrapperPreview).removeAttr('width')
+    $(wrapperPreview).removeAttr('height')
+    return wrapperPreview;
+	}
+	
+	
+	
+	///////////////////////////////////////
+  /// OBJECT DRAW: Draw objects in slides
+  ///////////////////////////////////////
 	
   /**
    * Returns a object prepared to draw.   * 
@@ -226,13 +307,17 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
 	var drawObject = function(object, area, style){
+			
+		if(!VISH.Police.validateObject(object)[0]){
+			return;
+		}
 		
 		var current_area;
 		var object_style = "";
 	  if(area){
 	  	current_area = area;
 	  } else {
-	  		current_area = VISH.Editor.getCurrentArea();
+	  	current_area = VISH.Editor.getCurrentArea();
 	 	}
 		if(style){
 	  		object_style = style;	  		
@@ -244,6 +329,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 			case null:
 				//Draw object from source
 				switch (objectInfo.type) {
+					
+					case "image":
+					  V.Editor.Image.drawImage(object)
+					  break;
+					
 					case "swf":
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
@@ -302,24 +392,21 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
 		$(wrapperTag).attr('class', template + "_object");
-		//remove click to drag message because you can´t drag the flash object by clicking it and 
-	    //this message remains after save
-		//$(wrapperTag).attr('title', "Click to drag");
+		$(wrapperTag).attr('wmode', "transparent");
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
 
 		VISH.Editor.addDeleteButton($(current_area));
-
-				
+			
 		$(wrapperDiv).append(wrapperTag);
+		
 		//RESIZE
 		var width, value;
 		if(style){
 		   width = V.SlidesUtilities.getWidthFromStyle(style);
 		   value = 10*width/$(current_area).width();
-		}
-		else{			
+		}	else {			
 			value = 10; //we set it to the maximum value
 		}
 		var mystep = $(current_area).width()/10; //the step to multiply the value
@@ -343,8 +430,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		_adjustWrapperOfObject(idToResize, current_area);
 
-
-
 	};
 	
 	
@@ -355,7 +440,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		renderObjectPreview  : renderObjectPreview,
 		getObjectInfo			   : getObjectInfo,
 		resizeObject 			   : resizeObject,
-		drawPreviewElement   : drawPreviewElement
+		drawPreview          : drawPreview,
+		resetPreview         : resetPreview,
+		drawPreviewElement   : drawPreviewElement,
+		drawPreviewObject    : drawPreviewObject
 	};
 
 }) (VISH, jQuery);

@@ -10815,10 +10815,7 @@ VISH.Editor = function(V, $, undefined) {
         V.Editor.Image.Flikr.onLoadTab();
         break;
       case "tab_video_from_url":
-        VISH.Editor.Video.HTML5.onLoadTab("url");
-        break;
-      case "tab_video_upload":
-        VISH.Editor.Video.HTML5.onLoadTab("upload");
+        VISH.Editor.Video.onLoadTab();
         break;
       case "tab_video_repo":
         VISH.Editor.Video.Repository.onLoadTab();
@@ -11146,45 +11143,46 @@ VISH.Editor.Video = function(V, $, undefined) {
   var init = function() {
     VISH.Editor.Video.HTML5.init();
     VISH.Editor.Video.Repository.init();
-    VISH.Editor.Video.Youtube.init()
-  };
-  return{init:init}
-}(VISH, jQuery);
-VISH.Editor.Image = function(V, $, undefined) {
-  var init = function() {
-    VISH.Editor.Image.Flikr.init();
-    VISH.Editor.Image.Repository.init()
-  };
-  var onLoadTab = function(tab) {
-    if(tab == "upload") {
-      _onLoadUploadTab()
-    }
-    if(tab == "url") {
-      _onLoadURLTab()
-    }
-  };
-  var _onLoadURLTab = function() {
-    resetPreview("tab_pic_from_url_content");
-    $("#picture_url").val("");
-    $("#tab_pic_from_url_content .previewButton").click(function(event) {
-      if($("#picture_url").val() != "") {
-        drawPreview("tab_pic_from_url_content", $("#picture_url").val())
+    VISH.Editor.Video.Youtube.init();
+    var urlInput = $("#tab_video_from_url_content").find("input");
+    $(urlInput).watermark("Paste video URL");
+    $("#tab_video_from_url_content .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($(urlInput).val())[0]) {
+        contentToAdd = $(urlInput).val();
+        VISH.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
+      }else {
+        contentToAdd = null
       }
     })
   };
-  var _onLoadUploadTab = function() {
+  var onLoadTab = function(tab) {
+    $("#tab_video_from_url_content").find("input").val("");
+    VISH.Editor.Object.resetPreview("tab_video_from_url_content")
+  };
+  var drawPreviewElement = function() {
+    VISH.Editor.Object.drawPreviewObject(contentToAdd)
+  };
+  return{init:init, onLoadTab:onLoadTab, drawPreviewElement:drawPreviewElement}
+}(VISH, jQuery);
+VISH.Editor.Image = function(V, $, undefined) {
+  var contentToAdd = null;
+  var init = function() {
+    VISH.Editor.Image.Flikr.init();
+    VISH.Editor.Image.Repository.init();
+    $("#tab_pic_from_url_content .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#picture_url").val())[0]) {
+        VISH.Editor.Object.drawPreview("tab_pic_from_url_content", $("#picture_url").val());
+        contentToAdd = $("#picture_url").val()
+      }
+    });
     var options = VISH.Editor.getOptions();
     var bar = $(".upload_progress_bar");
     var percent = $(".upload_progress_bar_percent");
-    bar.width("0%");
-    percent.html("0%");
-    resetPreview("tab_pic_upload_content");
-    $("input[name='document[file]']").val("");
     $("input[name='document[file]']").change(function() {
       $("input[name='document[title]']").val($("input:file").val())
     });
     $("#tab_pic_upload_content #upload_document_submit").click(function(event) {
-      if($("input[name='document[file]']").val() == "") {
+      if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])) {
         event.preventDefault()
       }else {
         if(options) {
@@ -11211,37 +11209,40 @@ VISH.Editor.Image = function(V, $, undefined) {
       percent.html(percentVal)
     }})
   };
+  var onLoadTab = function(tab) {
+    if(tab == "upload") {
+      _onLoadUploadTab()
+    }
+    if(tab == "url") {
+      _onLoadURLTab()
+    }
+  };
+  var _onLoadURLTab = function() {
+    VISH.Editor.Object.resetPreview("tab_pic_from_url_content");
+    $("#picture_url").val("")
+  };
+  var _onLoadUploadTab = function() {
+    var bar = $(".upload_progress_bar");
+    var percent = $(".upload_progress_bar_percent");
+    bar.width("0%");
+    percent.html("0%");
+    VISH.Editor.Object.resetPreview("tab_pic_upload_content");
+    $("input[name='document[file]']").val("")
+  };
   var processResponse = function(response) {
     try {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
-        drawPreview("tab_pic_upload_content", jsonResponse.src)
+        if(VISH.Police.validateObject(jsonResponse.src)[0]) {
+          VISH.Editor.Object.drawPreview("tab_pic_upload_content", jsonResponse.src);
+          contentToAdd = jsonResponse.src
+        }
       }
     }catch(e) {
     }
   };
-  var previewBackground;
-  var drawPreview = function(divId, src) {
-    previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
-    $("#" + divId + " .previewimgbox").css("background-image", "none");
-    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
-    $("#" + divId + " .previewimgbox").append("<img class='uploadPreviewImage' src='" + src + "'></img>");
-    $("#" + divId + " .previewimgbox button").show();
-    $("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
-    $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
-  };
-  var resetPreview = function(divId) {
-    $("#" + divId + " .previewimgbox button").hide();
-    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
-    if(previewBackground) {
-      $("#" + divId + " .previewimgbox").css("background-image", previewBackground)
-    }
-    $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
-    $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
-  };
   var drawPreviewElement = function(divId) {
-    drawImage($("#" + divId + " .previewimgbox img.uploadPreviewImage").attr("src"));
-    $.fancybox.close()
+    VISH.Editor.Object.drawPreviewObject(contentToAdd)
   };
   var drawImage = function(image_url, area, style) {
     var current_area;
@@ -11274,12 +11275,21 @@ VISH.Editor.Image = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawImage:drawImage, drawPreviewElement:drawPreviewElement}
 }(VISH, jQuery);
 VISH.Editor.Object = function(V, $, undefined) {
+  var contentToAdd = null;
   var init = function() {
     VISH.Editor.Object.Repository.init();
     var urlInput = $("#tab_flash_from_url_content").find("input");
     $(urlInput).watermark("Paste SWF file URL");
     var uploadInput = $("#tab_flash_upload_content").find("input");
-    $(uploadInput).watermark("Select SWF file to upload")
+    $(uploadInput).watermark("Select SWF file to upload");
+    $("#tab_flash_from_url_content .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($(urlInput).val())[0]) {
+        contentToAdd = $(urlInput).val();
+        drawPreview("tab_flash_from_url_content", contentToAdd)
+      }else {
+        contentToAdd = null
+      }
+    })
   };
   var onLoadTab = function(tab) {
     if(tab == "upload") {
@@ -11290,24 +11300,16 @@ VISH.Editor.Object = function(V, $, undefined) {
     }
   };
   var _onLoadURLTab = function() {
-    _resetPreview("tab_flash_from_url_content");
-    var urlInput = $("#tab_flash_from_url_content").find("input");
-    if(VISH.Debugging.isDevelopping()) {
-      $(urlInput).val("http://localhost/media/swf/virtualexperiment_1.swf")
-    }
-    $("#tab_flash_from_url_content .previewButton").click(function(event) {
-      if($(urlInput).val() != "") {
-        _drawPreview("tab_flash_from_url_content", $(urlInput).val())
-      }
-    })
+    $("#tab_flash_from_url_content").find("input").val("");
+    resetPreview("tab_flash_from_url_content")
   };
   var _onLoadUploadTab = function() {
   };
   var previewBackground;
-  var _drawPreview = function(divId, src) {
+  var drawPreview = function(divId, src) {
     previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
     $("#" + divId + " .previewimgbox").css("background-image", "none");
-    $("#" + divId + " .previewimgbox img.uploadPreviewImage").remove();
+    $("#" + divId + " .previewimgbox img.imagePreview").remove();
     var wrapper = renderObjectPreview(src);
     if($("#" + divId + " .previewimgbox .objectPreview").length > 0) {
       $("#" + divId + " .previewimgbox .objectPreview").remove()
@@ -11317,8 +11319,9 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
     $("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
   };
-  var _resetPreview = function(divId) {
+  var resetPreview = function(divId) {
     $("#" + divId + " .previewimgbox button").hide();
+    $("#" + divId + " .previewimgbox img.imagePreview").remove();
     $("#" + divId + " .previewimgbox .objectPreview").remove();
     if(previewBackground) {
       $("#" + divId + " .previewimgbox").css("background-image", previewBackground)
@@ -11326,12 +11329,18 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
     $("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
   };
-  var drawPreviewElement = function(divId) {
-    drawObject(VISH.Utils.getOuterHTML($("#" + divId + " .previewimgbox .objectPreview")));
-    $.fancybox.close()
+  var drawPreviewElement = function() {
+    drawPreviewObject(contentToAdd)
   };
-  function objectInfo(wrapper, sourceType) {
+  var drawPreviewObject = function(content) {
+    if(content) {
+      drawObject(content);
+      $.fancybox.close()
+    }
+  };
+  function objectInfo(wrapper, source, sourceType) {
     this.wrapper = wrapper;
+    this.source = source;
     this.type = sourceType
   }
   var getObjectInfo = function(object) {
@@ -11342,7 +11351,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     }
     var source = _getSourceFromObject(object, wrapper);
     var type = _getTypeFromSource(source);
-    return new objectInfo(wrapper, type)
+    return new objectInfo(wrapper, source, type)
   };
   var _getSourceFromObject = function(object, wrapper) {
     switch(wrapper) {
@@ -11362,6 +11371,7 @@ VISH.Editor.Object = function(V, $, undefined) {
         return $(object).attr("src");
       default:
         VISH.Debugging.log("Unrecognized object wrapper: " + wrapper);
+        return null;
         break
     }
   };
@@ -11369,16 +11379,21 @@ VISH.Editor.Object = function(V, $, undefined) {
   var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
   var youtube_video_pattern = /(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g;
   var html5VideoFormats = ["mp4", "webm", "ogg"];
+  var imageFormats = ["jpg", "png", "gif", "bmp"];
   var _getTypeFromSource = function(source) {
     if(typeof source != "string") {
-      return"Invalid source"
+      return null
     }
-    var extension = source.split(".").pop();
+    source = source.split("?")[0];
+    var extension = source.split(".").pop().toLowerCase();
     if(source.match(youtube_video_pattern) != null) {
       return"youtube"
     }
+    if(imageFormats.indexOf(extension) != "-1") {
+      return"image"
+    }
     if(extension == "swf") {
-      return extension
+      return"swf"
     }
     if(html5VideoFormats.indexOf(extension) != "-1") {
       return"HTML5"
@@ -11422,17 +11437,52 @@ VISH.Editor.Object = function(V, $, undefined) {
   };
   var renderObjectPreview = function(object) {
     var objectInfo = getObjectInfo(object);
-    if(objectInfo.wrapper == null) {
-      return"<embed class='objectPreview' src='" + object + "'></embed>"
-    }else {
-      var wrapperPreview = $(object);
-      $(wrapperPreview).addClass("objectPreview");
-      $(wrapperPreview).removeAttr("width");
-      $(wrapperPreview).removeAttr("height");
-      return wrapperPreview
+    switch(objectInfo.wrapper) {
+      case null:
+        switch(objectInfo.type) {
+          case "image":
+            return"<img class='imagePreview' src='" + object + "'></img>";
+            break;
+          case "swf":
+            return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
+            break;
+          case "youtube":
+            return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
+            break;
+          case "HTML5":
+            return VISH.Editor.Video.HTML5.renderVideoFromSources([object]);
+            break;
+          default:
+            VISH.Debugging.log("Unrecognized object source type");
+            break
+        }
+        break;
+      case "EMBED":
+        return _genericWrapperPreview(object);
+        break;
+      case "OBJECT":
+        return _genericWrapperPreview(object);
+        break;
+      case "IFRAME":
+        return _genericWrapperPreview(object);
+        break;
+      default:
+        VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
+        break
     }
   };
+  var _genericWrapperPreview = function(object) {
+    var wrapperPreview = $(object);
+    $(wrapperPreview).addClass("objectPreview");
+    $(wrapperPreview).addAttr("wmode", "transparent");
+    $(wrapperPreview).removeAttr("width");
+    $(wrapperPreview).removeAttr("height");
+    return wrapperPreview
+  };
   var drawObject = function(object, area, style) {
+    if(!VISH.Police.validateObject(object)[0]) {
+      return
+    }
     var current_area;
     var object_style = "";
     if(area) {
@@ -11447,6 +11497,9 @@ VISH.Editor.Object = function(V, $, undefined) {
     switch(objectInfo.wrapper) {
       case null:
         switch(objectInfo.type) {
+          case "image":
+            V.Editor.Image.drawImage(object);
+            break;
           case "swf":
             V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
             break;
@@ -11491,6 +11544,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     var wrapperTag = $(wrapper);
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
+    $(wrapperTag).attr("wmode", "transparent");
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
@@ -11510,7 +11564,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + idToDrag).draggable({cursor:"move"});
     _adjustWrapperOfObject(idToResize, current_area)
   };
-  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreviewElement:drawPreviewElement}
+  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
@@ -11615,7 +11669,7 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t5_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t7_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
   "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
@@ -12187,14 +12241,16 @@ VISH.Editor.Quiz = function(V, $, undefined) {
       total = i
     });
     var next_num = parseInt(total) + 1;
+    var next_index = "a".charCodeAt(0) + next_num;
+    next_index = String.fromCharCode(next_index);
     if(next_num < num_options) {
-      var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+      var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
       add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
       $(".add_quiz_option").remove();
       $(".mcquestion").append(add_option)
     }else {
       if(next_num = num_options) {
-        var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+        var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
         $(".add_quiz_option").remove();
         $(".mcquestion").append(add_option)
       }
@@ -12333,18 +12389,13 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   var init = function() {
-    var urlInput = $("#tab_video_from_url_content").find("input.url");
-    $(urlInput).watermark("Paste HTML5 video URL");
-    var uploadInput = $("#tab_video_upload_content").find("input.upload");
-    $(uploadInput).watermark("Select video to upload")
-  };
-  var onLoadTab = function(tab) {
   };
   var drawVideoWithUrl = function(url) {
-    drawVideo([[url, _getVideoTypeFromUrl(url)]])
+    drawVideo([[url, _getVideoType(url)]])
   };
-  var _getVideoTypeFromUrl = function(url) {
-    return null
+  var _getVideoType = function(url) {
+    var source = VISH.Editor.Object.getObjectInfo(url).source;
+    return"video/" + source.split(".").pop()
   };
   var drawVideo = function(sources, options, area, style) {
     var current_area;
@@ -12405,7 +12456,16 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
     }});
     $("#" + idToDragAndResize).draggable({cursor:"move"})
   };
-  return{init:init, onLoadTab:onLoadTab, drawVideoWithUrl:drawVideoWithUrl, drawVideo:drawVideo}
+  var renderVideoFromSources = function(sources) {
+    var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+    var rendered = "<video class='preview_video objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
+    $.each(sources, function(index, source) {
+      rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">"
+    });
+    rendered = rendered + "</video>";
+    return rendered
+  };
+  return{init:init, drawVideoWithUrl:drawVideoWithUrl, drawVideo:drawVideo, renderVideoFromSources:renderVideoFromSources}
 }(VISH, jQuery);
 VISH.Editor.Video.Repository = function(V, $, undefined) {
   var carrouselDivId = "tab_video_repo_content_carrousel";
@@ -12694,6 +12754,56 @@ VISH.ObjectPlayer = function() {
     })
   };
   return{loadObject:loadObject, unloadObject:unloadObject}
+}(VISH, jQuery);
+VISH.Police = function(V, $, undefined) {
+  var init = function() {
+  };
+  var valid_url_pattern = /((http(s)?:\/\/)|(www[.]))(.*)/g;
+  var validateObject = function(object, callback) {
+    if(!object) {
+      return[false, "Object is null or undefined"]
+    }
+    if(object.trim() == "") {
+      return[false, "Object is an empty string"]
+    }
+    var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+    if(!objectInfo) {
+      return[false, "Can't get Object info"]
+    }
+    if(!objectInfo.source || !objectInfo.type) {
+      return[false, "Can't recognize object source"]
+    }
+    if(typeof callback == "function") {
+      _validateUrl(objectInfo.source, callback)
+    }
+    return[true, "Validation Ok"]
+  };
+  function _validateUrl(url, callback) {
+    _checkUrl(url, function(status) {
+      if(status === 404) {
+        callback([false, "HTTP 404: Not found"])
+      }else {
+        callback([true, "Validation Ok"])
+      }
+    })
+  }
+  function _checkUrl(url, cb) {
+    jQuery.ajax({url:url, dataType:"text", type:"GET", complete:function(xhr) {
+      if(typeof cb === "function") {
+        cb.apply(this, [xhr.status])
+      }
+    }})
+  }
+  var validateFileUpload = function(fileName) {
+    if(!fileName) {
+      return[false, "Name is null or undefined"]
+    }
+    if(fileName.trim() == "") {
+      return[false, "Name is an empty string"]
+    }
+    return true
+  };
+  return{init:init, validateObject:validateObject, validateFileUpload:validateFileUpload}
 }(VISH, jQuery);
 VISH.Renderer = function(V, $, undefined) {
   var SLIDE_CONTAINER = null;

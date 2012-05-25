@@ -35,7 +35,7 @@
 	left: 0;
 	width: 40px;
 	height: 480px;
-	background-image: url('/assets/fancybox/fancybox.png');
+	background-image: url('/images/fancybox/fancybox.png');
 }
 
 #fancybox-overlay {
@@ -112,14 +112,14 @@
 	right: 2px;
 	width: 22px;
 	height: 22px;
-	background: transparent url('/assets/delete_slide.png');
+	background: transparent url('/images/delete_slide.png');
 	cursor: pointer;
 	z-index: 1103;
 	display: none;
 }
 
 #fancybox-close:hover{
-	background: transparent url('/assets/hover/delete_hover.png');
+	background: transparent url('/images/hover/delete_hover.png');
 }
 
 #fancybox-error {
@@ -154,7 +154,7 @@
 	width: 35%;
 	cursor: pointer;
 	outline: none;
-	background: transparent url('/assets/fancybox/blank.gif');
+	background: transparent url('/images/fancybox/blank.gif');
 	z-index: 1102;
 	display: none;
 }
@@ -180,12 +180,12 @@
 }
 
 #fancybox-left-ico {
-	background-image: url('/assets/fancybox/fancybox.png');
+	background-image: url('/images/fancybox/fancybox.png');
 	background-position: -40px -30px;
 }
 
 #fancybox-right-ico {
-	background-image: url('/assets/fancybox/fancybox.png');
+	background-image: url('/images/fancybox/fancybox.png');
 	background-position: -40px -60px;
 }
 
@@ -291,7 +291,7 @@
 
 #fancybox-title-over {
 	padding: 10px;
-	background-image: url('/assets/fancybox/fancy_title_over.png');
+	background-image: url('/images/fancybox/fancy_title_over.png');
 	display: block;
 }
 
@@ -315,7 +315,7 @@
 
 #fancybox-title-float-left {
 	padding: 0 0 0 15px;
-	background: url('/assets/fancybox/fancybox.png') -40px -90px no-repeat;
+	background: url('/images/fancybox/fancybox.png') -40px -90px no-repeat;
 }
 
 #fancybox-title-float-main {
@@ -323,12 +323,12 @@
 	line-height: 29px;
 	font-weight: bold;
 	padding: 0 0 3px 0;
-	background: url('/assets/fancybox/fancybox-x.png') 0px -40px;
+	background: url('/images/fancybox/fancybox-x.png') 0px -40px;
 }
 
 #fancybox-title-float-right {
 	padding: 0 0 0 15px;
-	background: url('/assets/fancybox/fancybox.png') -55px -90px no-repeat;
+	background: url('/images/fancybox/fancybox.png') -55px -90px no-repeat;
 }
 
 /* IE6 */

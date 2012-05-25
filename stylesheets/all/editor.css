@@ -3,7 +3,7 @@
 }
 
 #menubar {
-	background: url(/assets/menubar.png);
+	background: url(/images/menubar.png);
 	width: 100%;
 	height: 70px;
 	position: fixed;
@@ -12,7 +12,7 @@
 }
 
 #excursiondetails {
-	background: url(../assets/excursiondetails_bg.png) no-repeat top;
+	background: url(/images/excursiondetails_bg.png) no-repeat top;
 }
 
 .barbuttonaddsave{
@@ -62,7 +62,7 @@
 
 .previewimgbox {
 	position:absolute;
-	background: url(../assets/imgprev.png);
+	background: url(/images/imgprev.png);
 	margin-left: 65px;
 	margin-top: 25px;
 	width: 250px;
@@ -248,82 +248,82 @@
 
 	
 #config_div {
-	background: url(/assets/config.png);
+	background: url(/images/config.png);
 }
 
 #config_div:hover {
-	background: url(/assets/hover/config_hover.png);
+	background: url(/images/hover/config_hover.png);
 }
 
 #arrow_left_div {
-	background: url(/assets/arrow_left.png);
+	background: url(/images/arrow_left.png);
 }
 
 #arrow_left_div:hover {
-	background: url(/assets/hover/arrow_left_hover.png);
+	background: url(/images/hover/arrow_left_hover.png);
 }
 
 #arrow_right_div {
-	background: url(/assets/arrow_right.png);
+	background: url(/images/arrow_right.png);
 }
 
 #arrow_right_div:hover {
-	background: url(/assets/hover/arrow_right_hover.png);
+	background: url(/images/hover/arrow_right_hover.png);
 }
 
 #save_div{
-	background: url(/assets/save.png);
+	background: url(/images/save.png);
 }
 #save_div:hover{
-	background: url(/assets/hover/save_hover.png);
+	background: url(/images/hover/save_hover.png);
 }
 
 .textthumb {
-	background: url(/assets/text.png);
+	background: url(/images/text.png);
 }
 
 .textthumb:hover {
-	background: url(/assets/hover/text_hover.png);
+	background: url(/images/hover/text_hover.png);
 }
 
 .textthumb_small {
-	background: url(/assets/text_small.png);
+	background: url(/images/text_small.png);
 }
 
 .textthumb_small:hover {
-	background: url(/assets/hover/text_small_hover.png);
+	background: url(/images/hover/text_small_hover.png);
 }
 
 .picthumb {
-	background: url(/assets/image.png);
+	background: url(/images/image.png);
 }
 
 .picthumb:hover {
-	background: url(/assets/hover/image_hover.png);
+	background: url(/images/hover/image_hover.png);
 }
 
 .picthumb_small {
-	background: url(/assets/image_small.png);
+	background: url(/images/image_small.png);
 }
 
 .picthumb_small:hover {
-	background: url(/assets/hover/image_small_hover.png);
+	background: url(/images/hover/image_small_hover.png);
 }
 
 .flashthumb {
-	background: url(/assets/flash.png);
+	background: url(/images/flash.png);
 }
 
 .flashthumb:hover {
-	background: url(/assets/hover/flash_hover.png);
+	background: url(/images/hover/flash_hover.png);
 }
 
 .videothumb {
-	background: url(/assets/video.png);
+	background: url(/images/video.png);
 }
 
 .videothumb:hover {
-	background: url(/assets/hover/video_hover.png);
+	background: url(/images/hover/video_hover.png);
 }
 
 .barbutton {
@@ -516,11 +516,11 @@
 	width: 22px;
 	height: 22px;
 	cursor:pointer;
-	background: url(/assets/delete_slide.png);
+	background: url(/images/delete_slide.png);
 }
 
 .delete_slide:hover{
-	background: url(/assets/hover/delete_hover.png);
+	background: url(/images/hover/delete_hover.png);
 }
 
 .delete_content{
@@ -530,11 +530,11 @@
 	width: 40px;
 	height: 40px;
 	cursor:pointer;
-	background: url(/assets/delete_content.png);
+	background: url(/images/delete_content.png);
 }
 
 .delete_content:hover{
-	background: url(/assets/hover/delete_content_hover.png);
+	background: url(/images/hover/delete_content_hover.png);
 }
 
 .addpicture{
@@ -543,19 +543,19 @@
 }
 
 #picture_fancybox{
-	background: url(/assets/background_img_fancybox.png);
+	background: url(/images/background_img_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
 
 #flash_fancybox{
-	background: url(/assets/background_flash_fancybox.png);
+	background: url(/images/background_flash_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
 
 #video_fancybox{
-	background: url(/assets/background_video_fancybox.png);
+	background: url(/images/background_video_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
@@ -635,11 +635,11 @@ input.url, input.upload{
 }
 
 input.url {
-	background: url('/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
+	background: url('/images/url_icon.png') 5px 50% no-repeat #F2E6EA;
 }
 
 input.upload {
-  background: url('/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
+  background: url('/images/url_icon.png') 5px 50% no-repeat #F2E6EA;
 }
 
 input.rounded {
@@ -660,7 +660,7 @@ input.rounded:focus {
 
 
 .okButton {
-    background: url(../assets/carrousel_sprite.png) 0 -150px no-repeat transparent;
+    background: url(/images/carrousel_sprite.png) 0 -150px no-repeat transparent;
     cursor:pointer;
     width: 150px;
     height: 50px;
@@ -675,7 +675,7 @@ input.rounded:focus {
 }
 
 .okButton:hover {
-    background: url(../assets/carrousel_sprite.png) 0 -200px no-repeat transparent;
+    background: url(/images/carrousel_sprite.png) 0 -200px no-repeat transparent;
 }
 
 .okButton::-moz-focus-inner {
@@ -735,11 +735,11 @@ table.metadata tr.odd{
 } 
 
 table.metadata td.header_left{
-	background: url("/assets/table_left.png") no-repeat scroll left -1px #FF005D;
+	background: url("/images/table_left.png") no-repeat scroll left -1px #FF005D;
 } 
 
 table.metadata td.header_right{
-	background: url("/assets/table_right.png") no-repeat scroll right -1px #FF005D;
+	background: url("/images/table_right.png") no-repeat scroll right -1px #FF005D;
 }
 
 table.metadata td div.height_wrapper_description{
@@ -839,8 +839,8 @@ div.object_wrapper{
 }
 
 .objectPreview {
-	max-width: 80%;
-	max-height: 80%;
+	max-width: 90%;
+	max-height: 90%;
 }
 
 
@@ -922,7 +922,7 @@ textarea {
 }
 
 #start_tutorial {
-	background-image:url(../assets/tutorialimage.png);
+	background-image:url(/images/tutorialimage.png);
 	position:absolute;
 	margin-left: 384px;
 	width: 358px;
@@ -930,7 +930,7 @@ textarea {
 }
 
 #start_tutorial:hover {
-	background-image:url(../assets/hover/tutorialimage_hover.png);
+	background-image:url(/images/hover/tutorialimage_hover.png);
 }
 
 #excursion_details_fields{
@@ -972,7 +972,7 @@ textarea {
   font-size: 16px;
 }
 
-.uploadPreviewImage{
+.imagePreview{
 	width: 80%;
 	height: 80%;
 	margin-top: 9%;

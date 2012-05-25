@@ -12,7 +12,7 @@
 }
 
 #excursiondetails {
-	background: url(../images/excursiondetails_bg.png) no-repeat top;
+	background: url(/images/excursiondetails_bg.png) no-repeat top;
 }
 
 .barbuttonaddsave{
@@ -62,7 +62,7 @@
 
 .previewimgbox {
 	position:absolute;
-	background: url(../images/imgprev.png);
+	background: url(/images/imgprev.png);
 	margin-left: 65px;
 	margin-top: 25px;
 	width: 250px;
@@ -660,7 +660,7 @@ input.rounded:focus {
 
 
 .okButton {
-    background: url(../images/carrousel_sprite.png) 0 -150px no-repeat transparent;
+    background: url(/images/carrousel_sprite.png) 0 -150px no-repeat transparent;
     cursor:pointer;
     width: 150px;
     height: 50px;
@@ -675,7 +675,7 @@ input.rounded:focus {
 }
 
 .okButton:hover {
-    background: url(../images/carrousel_sprite.png) 0 -200px no-repeat transparent;
+    background: url(/images/carrousel_sprite.png) 0 -200px no-repeat transparent;
 }
 
 .okButton::-moz-focus-inner {
@@ -839,8 +839,8 @@ div.object_wrapper{
 }
 
 .objectPreview {
-	max-width: 80%;
-	max-height: 80%;
+	max-width: 90%;
+	max-height: 90%;
 }
 
 
@@ -922,7 +922,7 @@ textarea {
 }
 
 #start_tutorial {
-	background-image:url(../images/tutorialimage.png);
+	background-image:url(/images/tutorialimage.png);
 	position:absolute;
 	margin-left: 384px;
 	width: 358px;
@@ -930,7 +930,7 @@ textarea {
 }
 
 #start_tutorial:hover {
-	background-image:url(../images/hover/tutorialimage_hover.png);
+	background-image:url(/images/hover/tutorialimage_hover.png);
 }
 
 #excursion_details_fields{
@@ -972,7 +972,7 @@ textarea {
   font-size: 16px;
 }
 
-.uploadPreviewImage{
+.imagePreview{
 	width: 80%;
 	height: 80%;
 	margin-top: 9%;
