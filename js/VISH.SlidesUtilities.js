@@ -44,8 +44,8 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    * function to add a new slide
    */
   var addSlide = function(slide){
-  	//console.log("slide es " + slide);
-  	//console.log(".slides es " + $('.slides'));
+  	//VISH.Debugging.log("slide es " + slide);
+  	//VISH.Debugging.log(".slides es " + $('.slides'));
   	$('.slides').append(slide);
   };
 

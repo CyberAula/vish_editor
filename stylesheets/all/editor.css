@@ -771,9 +771,26 @@ table.metadata td div.height_wrapper_description{
 .deltext{
 	text-decoration:none;
 	font-family:Helvetica;
-	font-size:40px;
+	font-size:32px;
 	color:#CCC;
 	padding-bottom: 15px;
+}
+
+.buttonfail {
+	position: absolute;
+    padding: 5px 20px;
+    display: inline;
+	text-decoration:none;
+    background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+	margin-left: -75px;
+	margin-top: 45px;
 }
 
 .buttons_together{
@@ -796,7 +813,7 @@ table.metadata td div.height_wrapper_description{
 	margin-bottom: 35px;
 }
 .button1 {
-	margin-left: 200px;
+	margin-left: 170px;
 	margin-top: 25px;
 }
 .button220 {

@@ -86,7 +86,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(metadataArea).html("");
 		if((renderedVideo) && (video)) {
 			$(videoArea).append(renderedVideo);
-			var table = _generateTable(video.author, video.title, video.description);
+			var table = VISH.Utils.generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
 			$(button).show();
 		}
@@ -101,27 +101,15 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(button).hide();
 	};
 	
-	var _generateTable = function(author, title, description) {
-
-		if(!author) {
-			author = "";
-		}
-		if(!title) {
-			title = "";
-		}
-		if(!description) {
-			description = "";
-		}
-
-		return "<table class=\"metadata\">" + "<tr class=\"even\">" + "<td class=\"title header_left\">Author</td>" + "<td class=\"title header_right\"><div class=\"height_wrapper\">" + author + "</div></td>" + "</tr>" + "<tr class=\"odd\">" + "<td class=\"title\">Title</td>" + "<td class=\"info\"><div class=\"height_wrapper\">" + title + "</div></td>" + "</tr>" + "<tr class=\"even\">" + "<td colspan=\"2\" class=\"title_description\">Description</td>" + "</tr>" + "<tr class=\"odd\">" + "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + "</tr>" + "</table>";
-	};
-	
 	var addSelectedVideo = function() {
 		if(selectedVideo != null) {
 			var sourcesArray = [];
 			var options = new Array();
 			options['poster'] = selectedVideo.poster;
-			var sources = selectedVideo.sources;			
+			var sources = selectedVideo.sources;
+			if(typeof sources == "string"){
+        sources = JSON.parse(sources)
+      }
 			$.each(sources, function(index, source) {
 				sourcesArray.push([source.src, source.type]);
 			});

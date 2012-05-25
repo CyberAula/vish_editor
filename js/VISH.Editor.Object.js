@@ -18,7 +18,64 @@ VISH.Editor.Object = (function(V,$,undefined){
         contentToAdd = null;
       }
     });
+		
+		
+		//Upload content
+    var options = VISH.Editor.getOptions();
+    var bar = $('.upload_progress_bar');
+    var percent = $('.upload_progress_bar_percent');
+    
+    $("input[name='document[file]']").change(function () {
+      $("input[name='document[title]']").val($("input:file").val());
+    });
+      
+    $("#tab_flash_upload_content #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])){
+        event.preventDefault();
+      } else {
+        if (options) {
+          var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
+          $("input[name='document[description]']").val(description);
+          $("input[name='document[owner_id]']").val(options["ownerId"]);
+          $("input[name='authenticity_token']").val(options["token"]);
+          $(".documentsForm").attr("action", options["documentsPath"]);
+        }
+      }
+    });
+  
+    $('form').ajaxForm({
+      beforeSend: function() {
+          var percentVal = '0%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal)
+          percent.html(percentVal);
+      },
+      complete: function(xhr) {
+          processResponse(xhr.responseText);
+          var percentVal = '100%';
+          bar.width(percentVal)
+          percent.html(percentVal);
+      }
+    });
 	}
+	
+	 var processResponse = function(response){
+    try  {
+      var jsonResponse = JSON.parse(response)
+      if(jsonResponse.src){
+        if (VISH.Police.validateObject(jsonResponse.src)[0]) {
+          VISH.Editor.Object.drawPreview("tab_flash_upload_content",jsonResponse.src)
+          contentToAdd = jsonResponse.src
+        }
+      }
+    } catch(e) {
+      //No JSON response
+    }
+  }
 	
 	var onLoadTab = function(tab){
     if(tab=="upload"){
@@ -32,9 +89,19 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var _onLoadURLTab = function() {
 		$("#tab_flash_from_url_content").find("input").val("");
 		resetPreview("tab_flash_from_url_content");
+		contentToAdd = null;
 	}
 	
 	var _onLoadUploadTab = function() {
+		var bar = $('.upload_progress_bar');
+    var percent = $('.upload_progress_bar_percent');
+    
+    //Reset fields
+    bar.width('0%');
+    percent.html('0%');
+    resetPreview("tab_flash_upload_content")
+    $("input[name='document[file]']").val("");
+		contentToAdd = null;
   }
 	
 	//Preview generation for load and upload tabs
@@ -289,7 +356,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
     $(wrapperPreview).addClass('objectPreview')
-    $(wrapperPreview).addAttr('wmode','transparent')
+    $(wrapperPreview).attr('wmode','transparent')
     $(wrapperPreview).removeAttr('width')
     $(wrapperPreview).removeAttr('height')
     return wrapperPreview;

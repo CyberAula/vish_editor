@@ -224,7 +224,7 @@ img.carrousel_element_single_row_thumbnails{
   margin-left: -27px;
   margin-top: -2px;
   border: none;
-  opacity: 0.2;
+  opacity: 0.4;
 }
 
 img.carrousel_element_single_row_thumbnails:hover{
@@ -235,7 +235,7 @@ img.carrousel_element_single_row_thumbnails:hover{
   margin-left: -27px;
   margin-top: -2px;
   border: none;
-  opacity: 1.0;
+  opacity: 0.8;
 }
 
 a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
