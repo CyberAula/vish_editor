@@ -575,7 +575,7 @@
 	width: 650px;
 	height: 190px;
 	text-align: center;
-	padding: 9px;
+	padding-top: -10px;
 	margin: auto;
 }
 
@@ -668,15 +668,13 @@ input.rounded:focus {
     width: 150px;
     height: 50px;
     border: none;
-    margin-right: 25px;
-	margin-left: 300px;
+	margin-left: 420px;
     color: white;
     font-size: 14px;
     font-weight: bold;
     padding-bottom: 5px;  
     outline: none;
     border: none;
-	
 }
 
 .okButton:hover {
@@ -731,20 +729,20 @@ table.metadata td.info_description{
 
 table.metadata tr.even{
 	color: white;
-	background: #9E1F63;
+	background: #FF005D;
 } 
 
 table.metadata tr.odd{
 	color: #24497D;
-	background: #F2E6EA;
+	border:#0F3;
 } 
 
 table.metadata td.header_left{
-	background: url("/images/table_left.png") no-repeat scroll left -1px #9E1F63;
+	background: url("/images/table_left.png") no-repeat scroll left -1px #FF005D;
 } 
 
 table.metadata td.header_right{
-	background: url("/images/table_right.png") no-repeat scroll right -1px #9E1F63;
+	background: url("/images/table_right.png") no-repeat scroll right -1px #FF005D;
 }
 
 table.metadata td div.height_wrapper_description{
