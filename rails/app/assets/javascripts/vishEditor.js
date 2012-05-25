@@ -11032,55 +11032,37 @@ VISH.Editor = function(V, $, undefined) {
               element.body = $(div).find("img").attr("src");
               element.style = $(div).find("img").attr("style")
             }else {
-              if(element.type == "iframe") {
-                if($(div).children().attr("id")) {
-                  var style = $(div).children().attr("style");
-                  var src = $(div).attr("src");
-                  var src_start = src.substring("style", 42);
-                  var src_end = src.substring(77);
-                  element.body = src_start + "style='" + style + "'" + src_end
-                }else {
-                  element.body = $(div).attr("src")
-                }
+              if(element.type == "video") {
+                var video = $(div).find("video");
+                element.poster = $(video).attr("poster");
+                element.style = $(video).attr("style");
+                var sources = "";
+                $(video).find("source").each(function(index, source) {
+                  if(index != 0) {
+                    sources = sources + ","
+                  }
+                  var type = typeof $(source).attr("type") != "undefined" ? ' "type": "' + $(source).attr("type") + '", ' : "";
+                  sources = sources + "{" + type + '"src": "' + $(source).attr("src") + '"}'
+                });
+                sources = "[" + sources + "]";
+                element.sources = sources
               }else {
-                if(element.type == "video") {
-                  var video = $(div).find("video");
-                  element.poster = $(video).attr("poster");
-                  element.style = $(video).attr("style");
-                  var sources = "";
-                  $(video).find("source").each(function(index, source) {
-                    if(index != 0) {
-                      sources = sources + ","
-                    }
-                    var type = typeof $(source).attr("type") != "undefined" ? ' "type": "' + $(source).attr("type") + '", ' : "";
-                    sources = sources + "{" + type + '"src": "' + $(source).attr("src") + '"}'
-                  });
-                  sources = "[" + sources + "]";
-                  element.sources = sources
+                if(element.type == "object") {
+                  var object = $(div).find(".object_wrapper").children()[0];
+                  element.body = VISH.Utils.getOuterHTML(object);
+                  element.style = $(object).parent().attr("style")
                 }else {
-                  if(element.type == "swf") {
-                    var swf = $(div).find("embed");
-                    element.body = $(swf).attr("src");
-                    element.style = $(swf).parent().attr("style")
+                  if(element.type == "openquestion") {
+                    element.title = $(div).find(".title_openquestion").val();
+                    element.question = $(div).find(".value_openquestion").val()
                   }else {
-                    if(element.type == "object") {
-                      var object = $(div).find(".object_wrapper").children()[0];
-                      element.body = VISH.Utils.getOuterHTML(object);
-                      element.style = $(object).parent().attr("style")
-                    }else {
-                      if(element.type == "openquestion") {
-                        element.title = $(div).find(".title_openquestion").val();
-                        element.question = $(div).find(".value_openquestion").val()
-                      }else {
-                        if(element.type == "mcquestion") {
-                          element.question = $(div).find(".value_multiplechoice_question").val();
-                          element.options = [];
-                          var array_options = $(div).find(".multiplechoice_text");
-                          $(".multiplechoice_text").each(function(i, input_text) {
-                            element.options[i] = input_text.value
-                          })
-                        }
-                      }
+                    if(element.type == "mcquestion") {
+                      element.question = $(div).find(".value_multiplechoice_question").val();
+                      element.options = [];
+                      var array_options = $(div).find(".multiplechoice_text");
+                      $(".multiplechoice_text").each(function(i, input_text) {
+                        element.options[i] = input_text.value
+                      })
                     }
                   }
                 }
@@ -11209,7 +11191,8 @@ VISH.Editor.Image = function(V, $, undefined) {
   };
   var _onLoadURLTab = function() {
     VISH.Editor.Object.resetPreview("tab_pic_from_url_content");
-    $("#picture_url").val("")
+    $("#picture_url").val("");
+    contentToAdd = null
   };
   var _onLoadUploadTab = function() {
     var bar = $(".upload_progress_bar");
@@ -11217,7 +11200,8 @@ VISH.Editor.Image = function(V, $, undefined) {
     bar.width("0%");
     percent.html("0%");
     VISH.Editor.Object.resetPreview("tab_pic_upload_content");
-    $("input[name='document[file]']").val("")
+    $("input[name='document[file]']").val("");
+    contentToAdd = null
   };
   var processResponse = function(response) {
     try {
@@ -11279,7 +11263,52 @@ VISH.Editor.Object = function(V, $, undefined) {
       }else {
         contentToAdd = null
       }
-    })
+    });
+    var options = VISH.Editor.getOptions();
+    var bar = $(".upload_progress_bar");
+    var percent = $(".upload_progress_bar_percent");
+    $("input[name='document[file]']").change(function() {
+      $("input[name='document[title]']").val($("input:file").val())
+    });
+    $("#tab_flash_upload_content #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])) {
+        event.preventDefault()
+      }else {
+        if(options) {
+          var description = "Uploaded by " + options["ownerName"] + " via Vish Editor";
+          $("input[name='document[description]']").val(description);
+          $("input[name='document[owner_id]']").val(options["ownerId"]);
+          $("input[name='authenticity_token']").val(options["token"]);
+          $(".documentsForm").attr("action", options["documentsPath"])
+        }
+      }
+    });
+    $("form").ajaxForm({beforeSend:function() {
+      var percentVal = "0%";
+      bar.width(percentVal);
+      percent.html(percentVal)
+    }, uploadProgress:function(event, position, total, percentComplete) {
+      var percentVal = percentComplete + "%";
+      bar.width(percentVal);
+      percent.html(percentVal)
+    }, complete:function(xhr) {
+      processResponse(xhr.responseText);
+      var percentVal = "100%";
+      bar.width(percentVal);
+      percent.html(percentVal)
+    }})
+  };
+  var processResponse = function(response) {
+    try {
+      var jsonResponse = JSON.parse(response);
+      if(jsonResponse.src) {
+        if(VISH.Police.validateObject(jsonResponse.src)[0]) {
+          VISH.Editor.Object.drawPreview("tab_flash_upload_content", jsonResponse.src);
+          contentToAdd = jsonResponse.src
+        }
+      }
+    }catch(e) {
+    }
   };
   var onLoadTab = function(tab) {
     if(tab == "upload") {
@@ -11291,9 +11320,17 @@ VISH.Editor.Object = function(V, $, undefined) {
   };
   var _onLoadURLTab = function() {
     $("#tab_flash_from_url_content").find("input").val("");
-    resetPreview("tab_flash_from_url_content")
+    resetPreview("tab_flash_from_url_content");
+    contentToAdd = null
   };
   var _onLoadUploadTab = function() {
+    var bar = $(".upload_progress_bar");
+    var percent = $(".upload_progress_bar_percent");
+    bar.width("0%");
+    percent.html("0%");
+    resetPreview("tab_flash_upload_content");
+    $("input[name='document[file]']").val("");
+    contentToAdd = null
   };
   var previewBackground;
   var drawPreview = function(divId, src) {
@@ -11464,7 +11501,7 @@ VISH.Editor.Object = function(V, $, undefined) {
   var _genericWrapperPreview = function(object) {
     var wrapperPreview = $(object);
     $(wrapperPreview).addClass("objectPreview");
-    $(wrapperPreview).addAttr("wmode", "transparent");
+    $(wrapperPreview).attr("wmode", "transparent");
     $(wrapperPreview).removeAttr("width");
     $(wrapperPreview).removeAttr("height");
     return wrapperPreview
@@ -11614,26 +11651,17 @@ VISH.AppletPlayer = function() {
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
-  var verbose = false;
   var developping = false;
-  var init = function(debugging) {
-    if(navigator.appName !== "Microsoft Internet Explorer") {
-      verbose = debugging
-    }
+  var init = function(developping) {
+    verbose = developping
   };
   var log = function(text) {
-    if(verbose) {
+    if(window.console && window.console.log && developping) {
       console.log(text)
     }
   };
   var shuffleJson = function(json) {
     return _shuffle(json)
-  };
-  var getVerbose = function() {
-    return verbose
-  };
-  var setVerbose = function(param) {
-    verbose = param
   };
   var _shuffle = function(o) {
     for(var j, x, i = o.length;i;j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
@@ -11649,7 +11677,7 @@ VISH.Debugging = function(V, $, undefined) {
   var isDevelopping = function() {
     return developping
   };
-  return{init:init, getVerbose:getVerbose, setVerbose:setVerbose, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping}
+  return{init:init, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
@@ -12084,14 +12112,14 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
     var nextFlashId = VISH.Editor.getId();
     var idToDrag = "draggable" + nextFlashId;
     var idToResize = "resizable" + nextFlashId;
-    current_area.attr("type", "swf");
+    current_area.attr("type", "object");
     var embedDiv = document.createElement("div");
     embedDiv.setAttribute("id", idToDrag);
     $(embedDiv).addClass("object_wrapper");
-    $(embedDiv).addClass(template + "_swf");
+    $(embedDiv).addClass(template + "_object");
     var embedTag = document.createElement("embed");
     embedTag.setAttribute("id", idToResize);
-    embedTag.setAttribute("class", template + "_swf");
+    embedTag.setAttribute("class", template + "_object");
     embedTag.setAttribute("src", src);
     embedTag.setAttribute("wmode", "transparent");
     $(embedDiv).append(embedTag);
@@ -12519,7 +12547,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     $(metadataArea).html("");
     if(renderedVideo && video) {
       $(videoArea).append(renderedVideo);
-      var table = _generateTable(video.author, video.title, video.description);
+      var table = VISH.Utils.generateTable(video.author, video.title, video.description);
       $(metadataArea).html(table);
       $(button).show()
     }
@@ -12532,25 +12560,15 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     $(metadataArea).html("");
     $(button).hide()
   };
-  var _generateTable = function(author, title, description) {
-    if(!author) {
-      author = ""
-    }
-    if(!title) {
-      title = ""
-    }
-    if(!description) {
-      description = ""
-    }
-    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
-    description + "</div></td>" + "</tr>" + "</table>"
-  };
   var addSelectedVideo = function() {
     if(selectedVideo != null) {
       var sourcesArray = [];
       var options = new Array;
       options["poster"] = selectedVideo.poster;
       var sources = selectedVideo.sources;
+      if(typeof sources == "string") {
+        sources = JSON.parse(sources)
+      }
       $.each(sources, function(index, source) {
         sourcesArray.push([source.src, source.type])
       });
@@ -12663,7 +12681,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     $(metadataArea).html("");
     if(renderedIframe && video) {
       $(videoArea).append(renderedIframe);
-      var table = _generateTable(video.author, video.title, video.description);
+      var table = VISH.Utils.generateTable(video.author, video.title, video.description);
       $(metadataArea).html(table);
       $(button).show()
     }
@@ -12675,19 +12693,6 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     $(videoArea).html("");
     $(metadataArea).html("");
     $(button).hide()
-  };
-  var _generateTable = function(author, title, description) {
-    if(!author) {
-      author = ""
-    }
-    if(!title) {
-      title = ""
-    }
-    if(!description) {
-      description = ""
-    }
-    return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
-    description + "</div></td>" + "</tr>" + "</table>"
   };
   var _generateWrapper = function(videoId) {
     var video_embedded = "http://www.youtube.com/embed/" + videoId;
@@ -12755,7 +12760,7 @@ VISH.Police = function(V, $, undefined) {
     if(!object) {
       return[false, "Object is null or undefined"]
     }
-    if(object.trim() == "") {
+    if(typeof object == "string" && object.trim() == "") {
       return[false, "Object is an empty string"]
     }
     var objectInfo = VISH.Editor.Object.getObjectInfo(object);
@@ -12764,6 +12769,9 @@ VISH.Police = function(V, $, undefined) {
     }
     if(!objectInfo.source || !objectInfo.type) {
       return[false, "Can't recognize object source"]
+    }
+    if(objectInfo.source.trim() == "") {
+      return[false, "Object source is an empty string"]
     }
     if(typeof callback == "function") {
       _validateUrl(objectInfo.source, callback)
@@ -12819,24 +12827,19 @@ VISH.Renderer = function(V, $, undefined) {
               content += _renderObject(slide.elements[el], slide.template);
               classes += "object "
             }else {
-              if(slide.elements[el].type === "iframe") {
-                content += _renderIframe(slide.elements[el], slide.template);
-                classes += "iframe "
+              if(slide.elements[el].type === "applet") {
+                content += _renderApplet(slide.elements[el], slide.template);
+                classes += "applet "
               }else {
-                if(slide.elements[el].type === "applet") {
-                  content += _renderApplet(slide.elements[el], slide.template);
-                  classes += "applet "
+                if(slide.elements[el].type === "flashcard") {
+                  content = _renderFlashcard(slide.elements[el], slide.template);
+                  classes += "flashcard"
                 }else {
-                  if(slide.elements[el].type === "flashcard") {
-                    content = _renderFlashcard(slide.elements[el], slide.template);
-                    classes += "flashcard"
+                  if(slide.elements[el].type === "openquestion") {
+                    content = _renderOpenquestion(slide.elements[el], slide.template)
                   }else {
-                    if(slide.elements[el].type === "openquestion") {
-                      content = _renderOpenquestion(slide.elements[el], slide.template)
-                    }else {
-                      if(slide.elements[el].type === "mcquestion") {
-                        content = _renderMcquestion(slide.elements[el], slide.template)
-                      }
+                    if(slide.elements[el].type === "mcquestion") {
+                      content = _renderMcquestion(slide.elements[el], slide.template)
                     }
                   }
                 }
@@ -12862,6 +12865,9 @@ VISH.Renderer = function(V, $, undefined) {
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
     var sources = element["sources"];
+    if(typeof sources == "string") {
+      sources = JSON.parse(sources)
+    }
     rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
     $.each(sources, function(index, source) {
       var type = source.type ? "type='" + source.type + "' " : "";

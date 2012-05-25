@@ -71,6 +71,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	var _onLoadURLTab = function(){
 		VISH.Editor.Object.resetPreview("tab_pic_from_url_content");
 		$("#picture_url").val("");
+		contentToAdd = null;
   }
 	
 	var _onLoadUploadTab = function(){
@@ -82,6 +83,7 @@ VISH.Editor.Image = (function(V,$,undefined){
     percent.html('0%');
 		VISH.Editor.Object.resetPreview("tab_pic_upload_content")
     $("input[name='document[file]']").val("");
+		contentToAdd = null;
 	}
 	
 	
