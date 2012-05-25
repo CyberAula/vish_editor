@@ -11659,7 +11659,7 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t5_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t7_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br><input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
+  "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t8_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t8_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>", 
   "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t9_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t9_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
@@ -11708,6 +11708,8 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }else {
+      _requestByType("video", "", successCallback, failCallback)
     }
   };
   var requestFlashes = function(text, successCallback, failCallback) {
@@ -11719,7 +11721,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
       return
     }
-    _requestByType("swf", text, successCallback, failCallback)
+    _requestByType("swfs", text, successCallback, failCallback)
   };
   var requestRecomendedFlash = function(successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -12231,14 +12233,16 @@ VISH.Editor.Quiz = function(V, $, undefined) {
       total = i
     });
     var next_num = parseInt(total) + 1;
+    var next_index = "a".charCodeAt(0) + next_num;
+    next_index = String.fromCharCode(next_index);
     if(next_num < num_options) {
-      var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+      var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
       add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
       $(".add_quiz_option").remove();
       $(".mcquestion").append(add_option)
     }else {
       if(next_num = num_options) {
-        var add_option = "<br><input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+        var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
         $(".add_quiz_option").remove();
         $(".mcquestion").append(add_option)
       }
@@ -12546,7 +12550,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       var sourcesArray = [];
       var options = new Array;
       options["poster"] = selectedVideo.poster;
-      var sources = JSON.parse(selectedVideo.sources);
+      var sources = selectedVideo.sources;
       $.each(sources, function(index, source) {
         sourcesArray.push([source.src, source.type])
       });
@@ -12857,7 +12861,7 @@ VISH.Renderer = function(V, $, undefined) {
     var autoplay = element["autoplay"] ? "autoplayonslideenter='" + element["autoplay"] + "' " : "";
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
-    var sources = JSON.parse(element["sources"]);
+    var sources = element["sources"];
     rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
     $.each(sources, function(index, source) {
       var type = source.type ? "type='" + source.type + "' " : "";

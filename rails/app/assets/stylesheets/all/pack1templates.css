@@ -10,6 +10,7 @@
  	padding-bottom: .7em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -75,6 +76,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 98.5%;
 	overflow: hidden;
@@ -134,6 +136,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -170,7 +173,7 @@
 	height: 12%;
 	float: right;
 	font-size: 13px;
-	line-height: 17px;
+	line-height: 15px;
 	overflow:hidden;	
 }
 
@@ -209,6 +212,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -274,6 +278,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -351,6 +356,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 99%;
 	overflow:hidden;	
@@ -377,7 +383,7 @@
 	height: 38%;
 	float: left;
 	font-size: 14px;
-	line-height: 17px;
+	line-height: 16px;
 	overflow:hidden;	
 }
 .t6_right{
@@ -387,7 +393,7 @@
 	height: 50%;
 	float: left;
 	font-size: 14px;
-	line-height: 17px;
+	line-height: 16px;
 	overflow:hidden;	
 }
 
@@ -426,6 +432,7 @@
  	padding-bottom: .3em;
 	margin-top: -.2em;
 	font-size: 24px;
+	line-height: 15px;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -453,7 +460,7 @@
 	float: left;
 	border: 2px double transparent;
 	font-size: 14px;
-	line-height: 17px;
+	line-height: 16px;
 	overflow:hidden;	
 }
 
@@ -464,7 +471,7 @@
 	height: 50%;
 	float: left;
 	font-size: 14px;
-	line-height: 17px;
+	line-height: 16px;
 	overflow:hidden;
 		
 }
