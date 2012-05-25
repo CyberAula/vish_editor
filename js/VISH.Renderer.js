@@ -78,7 +78,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":"";
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
 		var loop=(element['loop'])?"loop='loop' ":"";
-		var sources = JSON.parse(element['sources']);
+		var sources = element['sources'];
 		
 		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
