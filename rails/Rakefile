@@ -29,7 +29,6 @@ namespace :vish_editor do
   end
   
   task :prepare do
-    system "mv app/assets/stylesheets/vish_editor.css app/assets/vish_editor.css"
     system "rm -rf app/assets/images"
     system "rm -rf app/assets/js_to_compile"
     system "rm -rf app/assets/stylesheets"
@@ -43,7 +42,6 @@ namespace :vish_editor do
     system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/VISH.js"
     system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/libs/nicEdit.js"
     system "sed -i \'s/\\/stylesheets/\\/assets/g\' app/assets/js_to_compile/VISH.js"
-    system "mv app/assets/vish_editor.css app/assets/stylesheets/vish_editor.css"
   end
 
   task :clean do
