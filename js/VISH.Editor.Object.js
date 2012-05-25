@@ -289,7 +289,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
     $(wrapperPreview).addClass('objectPreview')
-    $(wrapperPreview).addAttr('wmode','transparent')
+    $(wrapperPreview).attr('wmode','transparent')
     $(wrapperPreview).removeAttr('width')
     $(wrapperPreview).removeAttr('height')
     return wrapperPreview;
