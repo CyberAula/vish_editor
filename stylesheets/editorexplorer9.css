@@ -1,7 +1,11 @@
 /*
  *	styles for explorer
  */
+ 
+#div {
+  height: 300px\0/;
+}
 
 .slides {
-  background: url(../images/background_ie.jpg);	
+	background: red !important;	
 }
