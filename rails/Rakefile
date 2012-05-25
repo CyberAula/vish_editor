@@ -39,7 +39,7 @@ namespace :vish_editor do
     system "cp -r ../js/ app/assets/js_to_compile/"
     system "cp -r ../stylesheets/ app/assets/stylesheets/"
     #replace path /images and /stylesheets by /assets    
-    system "sed -i 's/\\/images/\\/assets/g' app/assets/stylesheets/*css"
+    system "sed -i 's/\\/images/\\/assets/g' app/assets/stylesheets/*/*css"
     system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/VISH.js"
     system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/libs/nicEdit.js"
     system "sed -i \'s/\\/stylesheets/\\/assets/g\' app/assets/js_to_compile/VISH.js"
