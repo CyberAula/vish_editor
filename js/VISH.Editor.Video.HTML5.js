@@ -20,9 +20,6 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
   var drawVideo = function(sources,options, area, style){
-	      
-    alert(sources)
-    alert(typeof sources)
 		
 		var current_area;
   	if(area){
