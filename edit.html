@@ -394,6 +394,7 @@
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_from_url')" id="tab_video_from_url" class="fancy_tab">url</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_repo')" id="tab_video_repo" class="fancy_tab">vish</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/images/youtube.png'/></a></li>
+				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/images/vimeo.png'/></a></li>
 				    </ul>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
@@ -450,6 +451,32 @@
 					
 				  </div>
                 </div>
+                <div id='tab_video_vimeo_content' class="fancy_tab_content">
+                  <div class="box1 box1fancy2">
+					<img src="images/vimeo.png" class="imagelogotab">
+					<div class="search_container" id="vimeo_search_container">
+					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
+					</div>
+				 
+				
+					<div id="tab_video_vimeo_content_carrousel"></div>
+					<div id="tab_video_vimeo_content_preview" class="content_preview">
+						<div id="tab_video_vimeo_content_preview_video" class="content_preview_data">
+							
+						</div>
+						<div id="tab_video_vimeo_content_preview_metadata" class="content_preview_metadata"></div>
+						<div id="tab_video_vimeo_content_preview_foot" class="content_preview_foot">
+							<button type="button" class="okButton" onclick="VISH.Editor.Video.vimeo.addSelectedVideo()">Add</button>
+						</div>
+					</div>
+					
+				  </div>
+                </div>
+                
+                
+                
+                
+                
           </div>
 	    </div>
 	  </div>
@@ -480,7 +507,8 @@
 	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
-  <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Vimeo.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>

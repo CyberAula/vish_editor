@@ -194,6 +194,10 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_video_youtube":
 				VISH.Editor.Video.Youtube.onLoadTab();
 				break;
+			case "tab_video_vimeo":
+				VISH.Editor.Video.Vimeo.onLoadTab();
+				break;
+				
 
 			//Flash
 			case "tab_flash_from_url":
