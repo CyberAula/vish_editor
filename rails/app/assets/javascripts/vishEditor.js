@@ -11718,6 +11718,8 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }else {
+      _requestByType("video", "", successCallback, failCallback)
     }
   };
   var requestFlashes = function(text, successCallback, failCallback) {
@@ -11729,7 +11731,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
       return
     }
-    _requestByType("swf", text, successCallback, failCallback)
+    _requestByType("swfs", text, successCallback, failCallback)
   };
   var requestRecomendedFlash = function(successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -12558,7 +12560,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       var sourcesArray = [];
       var options = new Array;
       options["poster"] = selectedVideo.poster;
-      var sources = JSON.parse(selectedVideo.sources);
+      var sources = selectedVideo.sources;
       $.each(sources, function(index, source) {
         sourcesArray.push([source.src, source.type])
       });
@@ -12869,7 +12871,7 @@ VISH.Renderer = function(V, $, undefined) {
     var autoplay = element["autoplay"] ? "autoplayonslideenter='" + element["autoplay"] + "' " : "";
     var poster = element["poster"] ? "poster='" + element["poster"] + "' " : "";
     var loop = element["loop"] ? "loop='loop' " : "";
-    var sources = JSON.parse(element["sources"]);
+    var sources = element["sources"];
     rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
     $.each(sources, function(index, source) {
       var type = source.type ? "type='" + source.type + "' " : "";

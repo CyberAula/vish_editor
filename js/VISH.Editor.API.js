@@ -26,13 +26,16 @@ VISH.Editor.API = (function(V,$,undefined){
 	 */
 	var requestRecomendedVideos = function(successCallback, failCallback){
 		if (VISH.Debugging.isDevelopping()) {
-      if(typeof successCallback == "function"){
-            var result = VISH.Samples.API.videoList;
-            result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']);
-            successCallback(result);
-      }
-      return;
-    }
+	      if(typeof successCallback == "function"){
+	            var result = VISH.Samples.API.videoList;
+	            result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']);
+	            successCallback(result);
+	      }
+          return;
+        }
+        else{
+        	_requestByType("video", "", successCallback, failCallback);
+        }
   };
 	
 	
@@ -50,7 +53,7 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }		
-		_requestByType("swf", text, successCallback, failCallback);	
+		_requestByType("swfs", text, successCallback, failCallback);	
 	};
 	
 	
