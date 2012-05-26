@@ -3,5 +3,21 @@
  */
  
 .slides {
-	background-image:url(/images/background_ie.png);	
+	background-color: #ededed;
+	background-position: top;
+	background-image:url(/images/background_ie.png);
+	background-repeat: no-repeat !important;	
+}
+
+img.carrousel_element_single_row_thumbnails{
+  border: none;
+  opacity: 0.4;
+}
+
+img.carrousel_element_single_row_thumbnails:hover{
+	background: #ff025e;
+}
+
+img.carrousel_element_selected{
+	background: #ff025e;
 }
