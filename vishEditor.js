@@ -79,7 +79,7 @@ VISH.Editor = function(V, $, undefined) {
   };
   var drawYoutubeSlides = function(page) {
     if(vid_array.length == 0) {
-      console.log("empty array")
+      //VISH.Debugging.log("empty array")
     }else {
       var count = 0;
       count = page * 5 + 1 - 5;

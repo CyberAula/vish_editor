@@ -7,13 +7,13 @@ VISH.VideoPlayer = (function(){
 		var videos = $("video")
 		$.each(videos, function(index, video) {
 			video.addEventListener('play', function () {
-				  //console.log("Play " + video.currentTime)
+				  //VISH.Debugging.log("Play " + video.currentTime)
 			}, false);
 			video.addEventListener('pause', function () {
-				//console.log("Pause " + video.currentTime);
+				//VISH.Debugging.log("Pause " + video.currentTime);
 			}, false);
 			video.addEventListener('ended', function () {
-				//console.log("Ended " + video.currentTime)
+				//VISH.Debugging.log("Ended " + video.currentTime)
 			}, false);
 			
 			//PREVENT KEYBOARD EVENTS ON FIREFOX!

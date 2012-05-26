@@ -3,31 +3,23 @@
  */
 VISH.Debugging = (function(V,$,undefined){
 	
-	var verbose = false;
 	var developping = false;
 	
-	var init = function(debugging){
-		if (navigator.appName !== 'Microsoft Internet Explorer') {
-			verbose = debugging;
-		}		
+	var init = function(developping){
+			verbose = developping;
 	};
 	
 	var log = function(text){
-		if (verbose) {
+//		if (navigator.appName !== 'Microsoft Internet Explorer') {
+//			return;
+//    }
+		if ((window.console && window.console.log) && (developping)) {
 		  console.log(text);
 	  }
 	};
 	
 	var shuffleJson = function(json){
 		return _shuffle(json);
-	};
-	
-	var getVerbose = function(){
-		return verbose;
-	};
-	
-	var setVerbose = function(param){
-		verbose = param;
 	};
 	
 	var _shuffle = function(o){
@@ -49,8 +41,6 @@ VISH.Debugging = (function(V,$,undefined){
 	
 	return {
 		init                    : init,
-		getVerbose              : getVerbose,
-		setVerbose              : setVerbose,
 		log                     : log,
 		shuffleJson             : shuffleJson,
 		enableDevelopingMode    : enableDevelopingMode,

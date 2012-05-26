@@ -31,10 +31,6 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
 			}
-			else if(slide.elements[el].type === "iframe"){  //used for youtube videos
-				content += _renderIframe(slide.elements[el],slide.template);
-				classes += "iframe ";
-			}
 			else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
@@ -79,6 +75,9 @@ VISH.Renderer = (function(V,$,undefined){
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
 		var loop=(element['loop'])?"loop='loop' ":"";
 		var sources = element['sources'];
+		if(typeof sources == "string"){
+			sources = JSON.parse(sources)
+		}
 		
 		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
@@ -157,7 +156,6 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
 	var _renderMcquestion = function(element, template){
-		//console.log("entra en _renderMcquestion");
 		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
