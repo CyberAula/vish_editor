@@ -11,7 +11,7 @@
   .jslider table tr td { width: 100%; vertical-align: top; }
 
   .jslider .jslider-bg { position: relative; }
-  .jslider .jslider-bg i { height: 5px; position: absolute; font-size: 0; top: 0; }
+  .jslider .jslider-bg i { height: 5px; position: absolute; font-size: 0; top: 15px; }
   .jslider .jslider-bg .l { width: 50%; background-position: 0 0; left: 0; }
   .jslider .jslider-bg .r { width: 50%; left: 50%; background-position: right 0; }
   .jslider .jslider-bg .v { position: absolute; width: 60%; left: 20%; top: 0; height: 5px; background-position: 0 -20px; }
@@ -20,10 +20,10 @@
   .jslider .jslider-pointer-hover { background-position: -20px -40px; }
   .jslider .jslider-pointer-to { left: 80%; }
 
-  .jslider .jslider-label { font-size: 9px; line-height: 12px; color: black; opacity: 0.4; white-space: nowrap; padding: 0px 2px; position: absolute; top: -18px; left: 0px; }
+  .jslider .jslider-label { font-size: 9px; line-height: 12px; color: black; opacity: 0.4; white-space: nowrap; padding: 0px 2px; position: absolute; top: -10px; left: 0px; }
   .jslider .jslider-label-to { left: auto; right: 0; }
 
-  .jslider .jslider-value { font-size: 9px; white-space: nowrap; padding: 1px 2px 0; position: absolute; top: -19px; left: 20%; background: white; line-height: 12px; -moz-border-radius: 2px; -webkit-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; }
+  .jslider .jslider-value { font-size: 9px; white-space: nowrap; padding: 1px 2px 0; position: absolute; top: 23px; left: 20%; background: white; line-height: 12px; -moz-border-radius: 2px; -webkit-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; }
   .jslider .jslider-value-to { left: 80%; }
 
   .jslider .jslider-label small,
