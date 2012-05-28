@@ -105,8 +105,7 @@ VISH.Editor = (function(V,$,undefined){
 		//Remove overflow from fancybox
 //		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 		//if click on begginers tutorial->launch it
-		$(document).on('click','#start_tutorial', _startTutorial);
-
+		_addTutorialEvents();
 	};
 	
 	
@@ -265,6 +264,18 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   
   /**
+   * function to add the events to the help buttons to launch joy ride bubbles
+   */
+  var _addTutorialEvents = function(){
+  	$(document).on('click','#start_tutorial', function(){
+			V.Editor.Tour.startTourWithId('initial_screen_help', 'bottom');
+	});
+	$(document).on('click','#help_right', function(){
+			V.Editor.Tour.startTourWithId('menubar_help', 'top');
+	});
+  };
+  
+  /**
    * function to add enter and leave events only for the VISH editor
    */
   var _addEditorEnterLeaveEvents = function(){
@@ -289,13 +300,7 @@ VISH.Editor = (function(V,$,undefined){
   	$('.object_wrapper').hide();
   };
   
-  /**
-   * function to start the walkthrough
-   */
-  var _startTutorial = function(){
-   	WalkMeAPI.startWalkthruById(5033, 0);
-  }
-  
+   
 	/**
 	 * function callen when the user clicks on the edit
 	 * excursion details button

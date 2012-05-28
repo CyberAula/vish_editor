@@ -1021,3 +1021,9 @@ textarea {
 	position: absolute;
 	border: none !important;
 }
+
+#help_right{
+	position: absolute;
+	right: 0px;
+	top: 30px;
+}
