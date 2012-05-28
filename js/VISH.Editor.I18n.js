@@ -38,6 +38,16 @@ VISH.Editor.I18n = (function(V,$,undefined){
 				$(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")));
 		});
   		
+  		if (typeof(i18n[language])!='undefined'){
+  			//replace start_tutorial image
+  			$("#start_tutorial").css("background-image", "/images/tutorialimage-"+language+".png");
+  			//replace hover in that image
+  			$("#start_tutorial").hover(function(){
+			    $(this).css("background-image", "url(/images/hover/tutorialimage-"+language+".png)");
+			}, function() {
+			    $(this).css("background-image", "url(/images/tutorialimage-"+language+".png)");
+			});
+  		}
 				
 		var duration = new Date().getTime() - initTime;
 		VISH.Debugging.log("Internationalization took " + duration + " ms.");
