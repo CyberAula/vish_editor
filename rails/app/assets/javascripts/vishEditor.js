@@ -11231,7 +11231,41 @@ VISH.Utils = function(V, undefined) {
     return'<table class="metadata">' + '<tr class="even">' + '<td class="title header_left">Author</td>' + '<td class="title header_right"><div class="height_wrapper">' + author + "</div></td>" + "</tr>" + '<tr class="odd">' + '<td class="title">Title</td>' + '<td class="info"><div class="height_wrapper">' + title + "</div></td>" + "</tr>" + '<tr class="even">' + '<td colspan="2" class="title_description">Description</td>' + "</tr>" + '<tr class="odd">' + '<td colspan="2" class="info_description"><div class="height_wrapper_description">' + 
     description + "</div></td>" + "</tr>" + "</table>"
   };
-  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable}
+  var checkMiniumRequirements = function() {
+    var browserRequirements = true;
+    if(navigator.appName == "Microsoft Internet Explorer" && _getInternetExplorerVersion() < 9) {
+      browserRequirements = false
+    }
+    if(!browserRequirements) {
+      $.fancybox($("#requirements_form_wrapper").html(), {"autoDimensions":false, "width":650, "height":400, "showCloseButton":false, "padding":0, "onClosed":function() {
+      }});
+      return false
+    }
+    return true
+  };
+  function _getInternetExplorerVersion() {
+    var rv = -1;
+    if(navigator.appName == "Microsoft Internet Explorer") {
+      var ua = navigator.userAgent;
+      var re = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
+      if(re.exec(ua) != null) {
+        rv = parseFloat(RegExp.$1)
+      }
+    }
+    return rv
+  }
+  function _getFirefoxVersion() {
+    var rv = -1;
+    if(navigator.appName == "Netscape") {
+      var ua = navigator.userAgent;
+      var re = new RegExp(".* Firefox/([0-9.]+)");
+      if(re.exec(ua) != null) {
+        rv = parseFloat(RegExp.$1)
+      }
+    }
+    return rv
+  }
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
@@ -11240,6 +11274,9 @@ VISH.Editor = function(V, $, undefined) {
   var excursion_to_edit = null;
   var params = {current_el:null};
   var init = function(options, excursion) {
+    if(!VISH.Utils.checkMiniumRequirements()) {
+      return
+    }
     VISH.Editing = true;
     if(options) {
       initOptions = options;
@@ -12223,8 +12260,8 @@ VISH.AppletPlayer = function() {
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
   var developping = false;
-  var init = function(developping) {
-    verbose = developping
+  var init = function(bol) {
+    developping = bol
   };
   var log = function(text) {
     if(window.console && window.console.log && developping) {
