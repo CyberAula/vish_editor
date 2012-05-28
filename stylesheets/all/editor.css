@@ -935,7 +935,7 @@ div.object_wrapper{
 }
 
 textarea {
-	font-family:Helvetica;
+	font-family: Helvetica;
 }
 
 .title1 {
@@ -943,15 +943,16 @@ textarea {
 }
 
 #start_tutorial {
-	background-image:url(/images/tutorialimage.png);
-	position:absolute;
+	background-image: url(/images/tutorial_image.png);
+	background-position: 0px -120px;
+	position: absolute;
 	margin-left: 384px;
-	width: 358px;
+	width: 360px;
 	height: 120px;
 }
 
 #start_tutorial:hover {
-	background-image:url(/images/hover/tutorialimage_hover.png);
+	background-position: 0px -240px;
 }
 
 #excursion_details_fields{
