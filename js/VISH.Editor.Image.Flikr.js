@@ -37,6 +37,13 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		var carrouselImages = [];
      
 		$.getJSON(url_flikr, function(data){
+			
+			if(! data.items.length > 0){
+        $("#" + carrouselDivId).show();
+				$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+				return;
+			}
+				
 	    $.each(data.items, function(i,item){
 	      //add every image in the carrousel
 				var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m + " imageFlikrId=" + i + "/>")

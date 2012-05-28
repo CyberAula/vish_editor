@@ -58,7 +58,8 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
     var content = "";
     
 		if((!data.flashes)||(data.flashes.length==0)){
-      $("#" + carrouselDivId).html("No results found.");
+      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+      $("#" + carrouselDivId).show();
 			return;
     } 
 		

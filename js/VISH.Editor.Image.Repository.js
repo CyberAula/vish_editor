@@ -54,8 +54,9 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		var content = "";
 
 		//the received data has an array called "pictures", see VISH.Samples.API.imageList for an example
-		if(data.pictures.length==0){
-			$("#" + carrouselDivId).html("No results found.");
+		if((!data.pictures)||(data.pictures.length==0)){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+			$("#" + carrouselDivId).show();
 			return
 		} 
 		

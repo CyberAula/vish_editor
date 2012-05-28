@@ -117,6 +117,37 @@ VISH.Samples.API = (function(V,undefined){
 		]
 	};
 	
+	var imageListLittle = {
+    'pictures': [
+    {
+      "id":54,
+      "title":"ClintEastwood.jpg",
+      "description":null,
+      "author":"Demo",
+      "src":"http://www.dan-dare.org/dan%20simpsons/TheSimpsonsEveryoneEver800.jpg"
+    },
+    {
+      "id":55,
+      "title":"ClintEastwood.jpg",
+      "description":null,
+      "author":"Demo",
+      "src":"http://3.bp.blogspot.com/--H0o8mc28bA/TxrsnMAFMDI/AAAAAAAAARs/eOCVIXKlm9I/s1600/sala-cine.jpg"
+    },
+    {
+      "id":56,
+      "title":"ClintEastwood.jpg",
+      "description":null,
+      "author":"Demo",
+      "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"
+    }
+    ]
+  };
+	
+	
+	 var imageListDummy = {
+    'pictures': []
+  };
+	
 	
 	var video = {
       'id'     : '1534',
@@ -265,7 +296,51 @@ VISH.Samples.API = (function(V,undefined){
                  ']'
     }
     ]};
+		
+		
+	var videoListLittle = {
+    'videos'        : [
+    {
+      'id'     : '1534',
+      'title'         :  'HTML5 Demo',
+      'description'   :  'HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML. HTML5 especifica dos variantes de sintaxis para HTML: un clasico HTML (text/html), la variante conocida como HTML5 y una variante XHTML conocida como sintaxis XHTML5 que debera ser servida como XML (XHTML) (application/xhtml+xml).1 2 Esta es la primera vez que HTML y XHTML se han desarrollado en paralelo.',
+      'author'        :  'Awesome Videos',
+      'poster' : "http://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sasso_lungo_da_passo_pordoi.jpg/250px-Sasso_lungo_da_passo_pordoi.jpg",
+      'sources': '['                                                                                                         +
+                    '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},'  + 
+                    '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }'   +
+                 ']'
+    },
+    {
+      'id'     : '1535',
+      'title'         :  'Paisaje bonito',
+      'description'   :  'Awesome HTML5 video example',
+      'author'        :  'Aldo Gordillo',
+      'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+      'sources': '['                                                                                                         +
+                    '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},'  + 
+                    '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }'   +
+                 ']'
+    },
+    {
+      'id'     : '1536',
+      'title'         :  'Otro paisaje bonito',
+      'description'   :  'Awesome HTML5 video example',
+      'author'        :  'Aldo Gordillo',
+      'poster' : "http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg",
+      'sources': '['                                                                                                         +
+                    '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},'  + 
+                    '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }'   +
+                 ']'
+    }
+    ]};
+		
+		
+	var videoListDummy = {
+    'videos'        : []
+	};	
     
+		
   var flashList = {
     'flashes'       : [
     {
@@ -340,11 +415,47 @@ VISH.Samples.API = (function(V,undefined){
     }
     ]};
     
+		
+		var flashListLittle = {
+    'flashes'       : [
+    {
+      'id'     : '1534',
+      'title'         :  'Profe',
+      'description'   :  'Flash Object Test',
+      'author'        :  'FlashMan',
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'
+    },
+    {
+        'id'     : '1535',
+        'title'         :  'Youtube video about HTML5',
+        'description'   :  'HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.',
+        'author'        :  'W3C',
+        'content'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'
+    },
+    {
+        'id'     : '1536',
+        'title'         :  'Global excursion',
+        'description'   :  'Iframe example',
+        'author'        :  'Vish',
+        'content'       :  '<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'
+    }
+    ]};
+		
+		
+	 var flashListDummy = {
+    'flashes'       : []
+	 };
     
 	return {
 		imageList  : imageList,
+		imageListLittle : imageListLittle,
+		imageListDummy : imageListDummy,
 		videoList  : videoList,
-		flashList  : flashList
+		videoListLittle  : videoListLittle,
+		videoListDummy  : videoListDummy,
+		flashList  : flashList,
+		flashListLittle  : flashListLittle,
+		flashListDummy  : flashListDummy
 	};
 
 })(VISH);

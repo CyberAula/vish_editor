@@ -1022,10 +1022,21 @@ textarea {
 	border: none !important;
 }
 
+<<<<<<< Updated upstream
 #help_right{
 	position: absolute;
 	right: 0px;
 	top: 30px;
+=======
+.carrouselNoResults{
+	margin: auto;
+	margin-top: 32%;
+	font-family:Helvetica;
+  font-size: 23px;
+	text-align: center;
+	padding: 5px;
+	color: #FF005D;
+>>>>>>> Stashed changes
 }
 
 .help_in_template{
