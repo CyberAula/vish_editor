@@ -1021,3 +1021,51 @@ textarea {
 	position: absolute;
 	border: none !important;
 }
+
+.carrouselNoResults{
+	margin: auto;
+	margin-top: 32%;
+	font-family:Helvetica;
+  font-size: 23px;
+	text-align: center;
+	padding: 5px;
+	color: #FF005D;
+}
+
+#help_right{
+	background-image:url(../../assets/helptutorial.png);
+	position: absolute;
+	right: 0px;
+	top: 620px;
+}
+
+#help_right:hover {
+	background-image:url(../../assets/hover/helptutorial_hover.png);
+	position: absolute;
+	right: 0px;
+	top: 620px;
+}
+
+#help_right:hover {
+	background-image:url(../../assets/hover/helptutorial_hover.png);
+	position: absolute;
+	right: 0px;
+	top: 620px;
+=======
+	color: #FF005D;
+>>>>>>> 1c94135473593bda0797995d53b1264488feab1e
+}
+
+.help_in_template{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
+.help_in_fancybox{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
+
