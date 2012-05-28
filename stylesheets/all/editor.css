@@ -1022,16 +1022,6 @@ textarea {
 	border: none !important;
 }
 
-<<<<<<< HEAD
-=======
-
-#help_right{
-	position: absolute;
-	right: 0px;
-	top: 30px;
-}
-
->>>>>>> 1c94135473593bda0797995d53b1264488feab1e
 .carrouselNoResults{
 	margin: auto;
 	margin-top: 32%;
@@ -1039,7 +1029,6 @@ textarea {
   font-size: 23px;
 	text-align: center;
 	padding: 5px;
-<<<<<<< HEAD
 	color: #FF005D;
 }
 
