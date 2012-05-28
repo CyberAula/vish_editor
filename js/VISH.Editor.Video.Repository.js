@@ -44,28 +44,42 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	var _onDataReceived = function(data) {
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$("#" + carrouselDivId).hide();
+		
 		//clean previous preview if any
 		_cleanVideoPreview(); 
 
 		//Clean previous videos
 		currentVideos = new Array();
+		
+		 //Clean carrousel images
+    var carrouselImages = [];
 
 		var content = "";
 
-		if(data.videos.length==0){
-			$("#" + carrouselDivId).html("No results found.");
-		} 
-		else{ 
-			//data.videos is an array with the results
-			$.each(data.videos, function(index, video) {
-				content = content + "<div><img src='" + video.poster + "' videoId='" + video.id + "'></div>";
-				currentVideos[video.id] = video;
-			});
-	
-			$("#" + carrouselDivId).html(content);
-			VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, _onClickCarrouselElement,5,5);
-		}
+    if((!data.videos)||(data.videos.length==0)){
+      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+      $("#" + carrouselDivId).show();
+      return;
+    } 
+
+		//data.videos is an array with the results
+		$.each(data.videos, function(index, video) {
+      var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "'/>")
+      carrouselImages.push(myImg);
+			currentVideos[video.id] = video;
+		});
+
+		VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		
 	};
+	
+	
+	var _onImagesLoaded = function(){
+    $("#" + carrouselDivId).show();
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, _onClickCarrouselElement,5,5);
+  }
+	
 	
 	var _onAPIError = function() {
 		//VISH.Debugging.log("API error");

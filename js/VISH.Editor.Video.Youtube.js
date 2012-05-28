@@ -52,31 +52,33 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 		var content = "";
 
-		if(data.feed.entry==0){
-			$("#" + carrouselDivId).html("No results found.");
-		} else{ 
-			$.each(data.feed.entry, function(i, item) {
-				var video = item['id']['$t'];
-			  var title = item['title']['$t']; //not used yet
-				var author = item.author[0].name.$t;
-				var subtitle = item.media$group.media$description.$t;
+    if((!data.feed)||(data.feed.length==0)||(!data.feed.entry)){
+      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+      $("#" + carrouselDivId).show();
+      return
+    } 
 
-			  video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
-			  var videoID = video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
-				//url's video thumbnail 
-	      currentVideos[videoID] = new Object();
-			  currentVideos[videoID].id = videoID;
-	      currentVideos[videoID].title = title;
-	      currentVideos[videoID].author = author;
-	      currentVideos[videoID].subtitle = subtitle;
+		$.each(data.feed.entry, function(i, item) {
+			var video = item['id']['$t'];
+		  var title = item['title']['$t']; //not used yet
+			var author = item.author[0].name.$t;
+			var subtitle = item.media$group.media$description.$t;
 
-        var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" 
-        var myImg = $("<img videoID="+videoID+" src="+image_url+" />")
-        carrouselImages.push(myImg); 
-			});
+		  video=video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
+		  var videoID = video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
+			//url's video thumbnail 
+      currentVideos[videoID] = new Object();
+		  currentVideos[videoID].id = videoID;
+      currentVideos[videoID].title = title;
+      currentVideos[videoID].author = author;
+      currentVideos[videoID].subtitle = subtitle;
+
+      var image_url = "http://img.youtube.com/vi/"+videoID+"/0.jpg" 
+      var myImg = $("<img videoID="+videoID+" src="+image_url+" />")
+      carrouselImages.push(myImg); 
+		});
 			
 			VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
-		}
 	};
 
   var _onImagesLoaded = function(){
@@ -173,7 +175,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	 	 return "Youtube Video ID can't be founded."
 	 }
  }
-
 
   return {
 		init		  			                  : init,

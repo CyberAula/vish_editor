@@ -9,14 +9,27 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET /search.json?type=video&q=text
 	 */
 	var requestVideos = function(text, successCallback, failCallback){
+		
 		if (VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function"){
-            var result = VISH.Samples.API.videoList;
+        var result = jQuery.extend({}, VISH.Samples.API.videoList);
+
+        switch(text){
+          case "dummy":
+            result['videos'] = VISH.Samples.API.videoListDummy['videos'];
+            break;
+          case "little":
+            result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoListLittle['videos']);
+            break;
+          default:
             result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']);
-            successCallback(result);
+        }
+            
+        successCallback(result);
       }
       return;
     }
+		
 		_requestByType("video", text, successCallback, failCallback);		
 	};
 	
@@ -45,14 +58,27 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET /search.json?type=flash&q=text
 	 */
 	var requestFlashes = function(text, successCallback, failCallback){
+		
 		if (VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function"){
-				    var result = VISH.Samples.API.flashList;
+        var result = jQuery.extend({}, VISH.Samples.API.flashList);
+
+        switch(text){
+          case "dummy":
+            result['flashes'] = VISH.Samples.API.flashListDummy['flashes'];
+            break;
+          case "little":
+            result['flashes'] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashListLittle['flashes']);
+            break;
+          default:
             result['flashes'] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList['flashes']);
-            successCallback(result);
+        }
+            
+        successCallback(result);
       }
       return;
-    }		
+    }
+		
 		_requestByType("swfs", text, successCallback, failCallback);	
 	};
 	
@@ -79,12 +105,24 @@ VISH.Editor.API = (function(V,$,undefined){
 	var requestImages = function(text, successCallback, failCallback){
 		if (VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function"){
-            var result = VISH.Samples.API.imageList;
-            result['pictures'] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList['pictures']);
-            successCallback(result);
+				var result = jQuery.extend({}, VISH.Samples.API.imageList);
+
+			  switch(text){
+					case "dummy":
+	          result['pictures'] = VISH.Samples.API.imageListDummy['pictures'];
+					  break;
+					case "little":
+	          result['pictures'] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageListLittle['pictures']);
+					  break;
+					default:
+	          result['pictures'] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList['pictures']);
+				}
+            
+        successCallback(result);
       }
       return;
-    } 		     
+    }
+		 		     
     _requestByType("picture", text, successCallback, failCallback);		
 	};
 	

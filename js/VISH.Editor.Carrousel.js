@@ -76,7 +76,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
 		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems);
-		}		
+		}	
+			
+		_forceShowPagination(containerId)
 		return "Done"
   }
 
@@ -180,6 +182,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	
 	
   var cleanCarrousel = function(containerId){
+		//Remove content
+		$("#" + containerId).html("");
+		
 	  //Check if is a multirow carrousel
 	  var containderIdForMultiRow = containerId + "_row0";
 	  if($("#" + containderIdForMultiRow).attr("rows")){
@@ -197,13 +202,20 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   var _cleanOneRowCarrousel = function(containerId){
     var carrouselWrapper = $("#" + containerId).parent().parent();
 	  if($(carrouselWrapper).hasClass('image_carousel')){
-	    $(carrouselWrapper).removeClass('image_carousel')
+	    $(carrouselWrapper).removeClass()
 		  $(carrouselWrapper).html("")
 		  $(carrouselWrapper).attr("id",containerId)
 	  } else {
-//				VISH.Debugging.log("Vish.Editor.Carrousel.cleanCarrousel: Id not valid")
+//				VISH.Debugging.log("Vish.Editor.Carrousel.cleanCarrousel: Single carrousel not created or incorrect id")
 	  }
   }
+	
+	var _forceShowPagination = function(containerId){
+		var parent = $("#" + containerId).parent().parent();
+		if ($(parent).hasClass("image_carousel")){
+			$(parent).find(".pagination").attr("style","");
+		}
+	}
 
 
   return {
