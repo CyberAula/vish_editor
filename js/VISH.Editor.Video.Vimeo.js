@@ -92,7 +92,7 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 
   return {
 		init		  			                  : init,
-		onLoadTab	  			                : onLoadTab,
+		onLoadTab	  			                : onLoadTab
   };
 
 }) (VISH, jQuery);

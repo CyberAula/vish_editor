@@ -10823,6 +10823,9 @@ VISH.Editor = function(V, $, undefined) {
       case "tab_video_youtube":
         VISH.Editor.Video.Youtube.onLoadTab();
         break;
+      case "tab_video_vimeo":
+        VISH.Editor.Video.Vimeo.onLoadTab();
+        break;
       case "tab_flash_from_url":
         VISH.Editor.Object.onLoadTab("url");
         break;
@@ -11126,6 +11129,7 @@ VISH.Editor.Video = function(V, $, undefined) {
     VISH.Editor.Video.HTML5.init();
     VISH.Editor.Video.Repository.init();
     VISH.Editor.Video.Youtube.init();
+    VISH.Editor.Video.Vimeo.init();
     var urlInput = $("#tab_video_from_url_content").find("input");
     $(urlInput).watermark("Paste video URL");
     $("#tab_video_from_url_content .previewButton").click(function(event) {
@@ -11996,6 +12000,20 @@ VISH.Editor.I18n = function(V, $, undefined) {
     $("textarea[placeholder]").each(function(index, elem) {
       $(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")))
     });
+    if(typeof i18n[language] != "undefined") {
+      var factor;
+      if(language === "es") {
+        factor = 2
+      }
+      var normal_pos = 360;
+      var hover_pos = 480;
+      $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
+      $("#start_tutorial").hover(function() {
+        $("#start_tutorial").css("background-position", "0px -" + hover_pos + "px")
+      }, function() {
+        $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px")
+      })
+    }
     var duration = (new Date).getTime() - initTime;
     VISH.Debugging.log("Internationalization took " + duration + " ms.")
   };
@@ -12587,6 +12605,58 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
     }
   };
   return{init:init, onLoadTab:onLoadTab, addSelectedVideo:addSelectedVideo}
+}(VISH, jQuery);
+VISH.Editor.Video.Vimeo = function(V, $, undefined) {
+  var carrouselDivId = "tab_video_vimeo_content_carrousel";
+  var previewDivId = "tab_video_vimeo_content_preview";
+  var queryMaxMaxNumberYoutubeVideo = 20;
+  var currentVideos = new Array;
+  var selectedVideo = null;
+  var init = function() {
+    var myInput = $("#tab_video_vimeo_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        VISH.Editor.Video.Vimeo.requestVimeoData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
+  var onLoadTab = function() {
+    $("#tab_video_vimeo_content").find("input[type='search']").val("");
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanVideoPreview()
+  };
+  var requestVimeoData = function(text) {
+    VISH.Debugging.log("entra en requesVimeoData");
+    var url_vimeo = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
+    jQuery.getJSON(url_youtube, function(data) {
+      _onDataReceived(data)
+    })
+  };
+  var _onDataReceived = function(data) {
+    VISH.Debugging.log("entra en _onDataReceived")
+  };
+  var _onImagesLoaded = function() {
+  };
+  var vimeo_video_pattern_1 = /https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g;
+  var vimeo_video_pattern_2 = /(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g;
+  var _getYoutubeIdFromURL = function(url) {
+  };
+  var addSelectedVideo = function() {
+  };
+  var onClickCarrouselElement = function(event) {
+  };
+  var _renderVideoPreview = function(renderedIframe, video) {
+  };
+  var _cleanVideoPreview = function() {
+  };
+  var _generateWrapper = function(videoId) {
+  };
+  var generateWrapperForYoutubeVideoUrl = function(url) {
+  };
+  return{init:init, onLoadTab:onLoadTab}
 }(VISH, jQuery);
 VISH.Editor.Video.Youtube = function(V, $, undefined) {
   var carrouselDivId = "tab_video_youtube_content_carrousel";
