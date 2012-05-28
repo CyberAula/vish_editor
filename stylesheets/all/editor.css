@@ -1038,3 +1038,15 @@ textarea {
 	padding: 5px;
 	color: #FF005D;
 }
+
+.help_in_template{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
+.help_in_fancybox{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
