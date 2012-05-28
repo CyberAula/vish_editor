@@ -1044,16 +1044,7 @@ textarea {
 	position: absolute;
 	right: 0px;
 	top: 620px;
-}
-
-#help_right:hover {
-	background-image:url(../../images/hover/helptutorial_hover.png);
-	position: absolute;
-	right: 0px;
-	top: 620px;
-=======
 	color: #FF005D;
->>>>>>> 1c94135473593bda0797995d53b1264488feab1e
 }
 
 .help_in_template{
@@ -1068,4 +1059,48 @@ textarea {
 	right: 30px;
 }
 
+#requirements_form{
+	text-align: center;
+	padding: 5px;
+}
 
+#recomended_browsers{
+	margin-top: 25px;
+}
+
+.buttons_requirements_wrapper{
+	margin-top: 30px;
+	text-align: center;
+}
+
+.buttons_requirements{
+  padding: 10px 15px;
+}
+
+.browser_img{
+	max-height: 70px;
+  max-width: 70px;
+	display: block;
+	margin: auto;
+}
+
+.browserTitle{
+	font-family:Helvetica;
+  font-size: 15px;
+	display: block;
+	padding: 5px;
+}
+
+.recomended_browser{
+	display: inline-block;
+	padding: 10px 20px;
+}
+
+.warning_requirements{
+	height: 80px;
+  margin-left: 25px;
+  margin-top: 1px;
+}
+
+.requirementsText{
+}

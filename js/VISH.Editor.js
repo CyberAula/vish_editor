@@ -25,15 +25,21 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
+		
+		//Check minium requirements
+		if(!VISH.Utils.checkMiniumRequirements()){
+			return;
+		}
+		
 		//first set VISH.Editing to true
 		VISH.Editing = true;
+		
 		if(options){
 			initOptions = options;
 			if(options['developping']){
 				VISH.Debugging.enableDevelopingMode();
 			}
-		}
-		else{
+		}	else {
 			initOptions = {};
 		}
 		
@@ -56,56 +62,56 @@ VISH.Editor = (function(V,$,undefined){
     	});
     	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
     	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
-		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
-		$(document).on('click','#save', _onSaveButtonClicked);
-		$(document).on('click','.editable', _onEditableClicked);
-		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('click','.delete_content', _onDeleteItemClicked);
-		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		//arrows in button panel
-		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
+		  $(document).on('click','.templatethumb', _onTemplateThumbClicked);
+		  $(document).on('click','#save', _onSaveButtonClicked);
+		  $(document).on('click','.editable', _onEditableClicked);
+		  $(document).on('click','.selectable', _onSelectableClicked);
+		  $(document).on('click','.delete_content', _onDeleteItemClicked);
+		  $(document).on('click','.delete_slide', _onDeleteSlideClicked);
+		  //arrows in button panel
+		  $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+		  $(document).on('click','#arrow_right_div', _onArrowRightClicked);
 		
-		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		_addEditorEnterLeaveEvents();
+		  //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+		  _addEditorEnterLeaveEvents();
 		
-		V.SlidesUtilities.redrawSlides();
+		  V.SlidesUtilities.redrawSlides();
 		
-		addEventListeners(); //comes from slides.js to be called only once
+		  addEventListeners(); //comes from slides.js to be called only once
 		
-		if(excursion){
-			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide()
-		}
+			if(excursion){
+				//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+				$('.object_wrapper').hide()
+			}
 		
-		//Init submodules
-		V.Debugging.init(true);
-		V.Editor.Text.init();
-		V.Editor.Image.init();
-		V.Editor.Video.init();
-		V.Editor.Object.init();
-		V.Editor.AvatarPicker.init();
-		V.Editor.I18n.init(options["lang"]);
-		V.Editor.Quiz.init();
-		// Intial box to input the details related to the excursion
-		$("a#edit_excursion_details").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'height': 600,
-			'padding': 0,
-			'hideOnOverlayClick': false,
-      		'hideOnContentClick': false,
-			'showCloseButton': false
-		});
-		
-		// The box is launched when the page is loaded
-		if(excursion === undefined){
-			$("#edit_excursion_details").trigger('click');
-		}
-		//Remove overflow from fancybox
-//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
-		//if click on begginers tutorial->launch it
-		_addTutorialEvents();
+			//Init submodules
+			V.Debugging.init(true);
+			V.Editor.Text.init();
+			V.Editor.Image.init();
+			V.Editor.Video.init();
+			V.Editor.Object.init();
+			V.Editor.AvatarPicker.init();
+			V.Editor.I18n.init(options["lang"]);
+			V.Editor.Quiz.init();
+			// Intial box to input the details related to the excursion
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'width': 800,
+				'height': 600,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+	      		'hideOnContentClick': false,
+				'showCloseButton': false
+			});
+			
+			// The box is launched when the page is loaded
+			if(excursion === undefined){
+				$("#edit_excursion_details").trigger('click');
+			}
+			//Remove overflow from fancybox
+	//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+			//if click on begginers tutorial->launch it
+			_addTutorialEvents();
 	};
 	
 	
@@ -483,25 +489,25 @@ VISH.Editor = (function(V,$,undefined){
   	params['current_el'] = $(this).parent();
   	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
   	$.fancybox(
-		$("#prompt_form").html(),
-		{
-        	'autoDimensions'	: false,
-			'width'         	: 350,
-			'height'        	: 150,
-			'showCloseButton'	: false,
-			'padding' 			: 0,
-			'onClosed'			: function(){
-				//if user has answered "yes"
-				if($("#prompt_answer").val() ==="true"){
-					$("#prompt_answer").val("false");
-					params['current_el'].html("");					
-					$(".theslider").hide();	
-					params['current_el'].removeAttr("type");
-					params['current_el'].addClass("editable");
+			$("#prompt_form").html(),
+			{
+	        	'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+					//if user has answered "yes"
+					if($("#prompt_answer").val() ==="true"){
+						$("#prompt_answer").val("false");
+						params['current_el'].html("");					
+						$(".theslider").hide();	
+						params['current_el'].removeAttr("type");
+						params['current_el'].addClass("editable");
+					}
 				}
 			}
-		}
-	);
+	  );
   };
   
   /**
