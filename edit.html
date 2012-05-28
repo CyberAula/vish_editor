@@ -7,20 +7,11 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/all/fonts.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/styles.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/pack1templates.css">
-	<!--[if gte IE 7]>
-      <script type="text/javascript">
-        document.createElement("nav");
-        document.createElement("header");
-        document.createElement("footer");
-        document.createElement("section");
-        document.createElement("article");
-        document.createElement("aside");
-        document.createElement("hgroup");
-      </script>
+	<!--[if gte IE 8]>      
 	  <link type="text/css" rel="stylesheet" href="stylesheets/ie/pack1explorer9.css">
 	  <link type="text/css" rel="stylesheet" href="stylesheets/ie/editorexplorer9.css">
 	<![endif]-->
-    	
+	    	
     <link rel="stylesheet" type="text/css" href="stylesheets/all/jquery.fancybox-1.3.4.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/all/jslider.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/all/editor.css">
@@ -41,7 +32,7 @@
 
   	<meta name="apple-mobile-web-app-capable" content="yes">
 
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 	  <script type="text/javascript" src="js/libs/jquery-ui-1.8.18.custom.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.ui.core.min.js"></script>
@@ -53,7 +44,9 @@
 	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>
 		<script type="text/javascript" src="js/libs/jquery.form.js"></script>
 		
-	  
+	  <!--[if lt IE 9]>
+		  <script src="js/libs/html5shiv.js"></script>
+		<![endif]-->
 	  <script>var walkme_load_in_iframe = true;</script>
 	  <script language='javascript' type='text/javascript' src='http://cdn.walkme.com/users/2161/walkme_2161.js'></script>
 
@@ -238,7 +231,7 @@
 	  			<span class="deltext">Create at least one slide before saving.</span>
 	  		</div> 		
 	  		<div id="button_accept_when_fail">
-	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button button">accept</a>
+	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
 	  		</div>
 	  	</div>
 	  </div>
@@ -344,19 +337,34 @@
                     			</div>
                 			</div>
 				</div>
+				
 				<div id='tab_flash_upload_content' class="fancy_tab_content">
-                <div class="box1 box1fancy1">
-                	<p class="textfancy">upload flash</p><br>
-                    <img class="image_add_url" src="/images/url_img.png"/>
-					<input id="upload_flash_input" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
-                    <button type="button" class="button buttonfancy" onclick="alert('Uploaded!')">Upload</button>
-                </div>
-                <div class="box2">
-                				<div class="previewimgbox">
-                    				<button type="button" class="button buttonaddfancy">Add Content</button>
-                    			</div>
-                </div>
-				</div>
+              <div class="box1 box1fancy1">
+                <p class="textfancy">Select SWF file to upload</p><br>
+                <img class="image_add_url" src="/images/url_upl.png"/>
+                
+                  <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                      <input type="file" name="document[file]" class="upload_file_input">
+                      <input type="hidden" name="document[title]">
+                      <input type="hidden" name="document[description]">
+                      <input type="hidden" name="document[owner_id]">
+                      <input type="hidden" name="authenticity_token">
+                      <input id="upload_document_submit" type="submit" class="button" value="Upload">
+                  </form>
+                  
+                  <div class="upload_progress_bar_wrapper">
+                      <div class="upload_progress_bar"></div >
+                      <div class="upload_progress_bar_percent">0%</div >
+                  </div>
+                  
+              </div>
+              <div class="box2">
+                      <div class="previewimgbox">
+                          <button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
+                      </div>
+              </div>
+        </div> 
+				
 				<div id='tab_flash_repo_content' class="fancy_tab_content">	
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  
@@ -386,6 +394,7 @@
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_from_url')" id="tab_video_from_url" class="fancy_tab">url</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_repo')" id="tab_video_repo" class="fancy_tab">vish</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/images/youtube.png'/></a></li>
+				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/images/vimeo.png'/></a></li>
 				    </ul>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
@@ -442,6 +451,32 @@
 					
 				  </div>
                 </div>
+                <div id='tab_video_vimeo_content' class="fancy_tab_content">
+                  <div class="box1 box1fancy2">
+					<img src="images/vimeo.png" class="imagelogotab">
+					<div class="search_container" id="vimeo_search_container">
+					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
+					</div>
+				 
+				
+					<div id="tab_video_vimeo_content_carrousel"></div>
+					<div id="tab_video_vimeo_content_preview" class="content_preview">
+						<div id="tab_video_vimeo_content_preview_video" class="content_preview_data">
+							
+						</div>
+						<div id="tab_video_vimeo_content_preview_metadata" class="content_preview_metadata"></div>
+						<div id="tab_video_vimeo_content_preview_foot" class="content_preview_foot">
+							<button type="button" class="okButton" onclick="VISH.Editor.Video.vimeo.addSelectedVideo()">Add</button>
+						</div>
+					</div>
+					
+				  </div>
+                </div>
+                
+                
+                
+                
+                
           </div>
 	    </div>
 	  </div>
@@ -472,7 +507,8 @@
 	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
-  <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+    <script type="text/javascript" src="js/VISH.Editor.Video.Vimeo.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>

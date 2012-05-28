@@ -4,6 +4,7 @@ VISH.Editor.Video = (function(V,$,undefined){
 		VISH.Editor.Video.HTML5.init();
 		VISH.Editor.Video.Repository.init();
 		VISH.Editor.Video.Youtube.init();
+		VISH.Editor.Video.Vimeo.init();
 
     var urlInput = $("#tab_video_from_url_content").find("input");
     $(urlInput).watermark('Paste video URL');

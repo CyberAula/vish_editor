@@ -8,16 +8,16 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  var nextFlashId = VISH.Editor.getId();
 	  var idToDrag = "draggable" + nextFlashId;
 	  var idToResize = "resizable" + nextFlashId;
-	  current_area.attr('type','swf');
+	  current_area.attr('type','object');
 	   
 	  var embedDiv = document.createElement('div');
 	  embedDiv.setAttribute('id', idToDrag);
 	  $(embedDiv).addClass('object_wrapper');
-	  $(embedDiv).addClass(template + "_swf");
+	  $(embedDiv).addClass(template + "_object");
 	  
 	  var embedTag = document.createElement('embed');
 	  embedTag.setAttribute('id', idToResize );
-	  embedTag.setAttribute('class', template + "_swf");
+	  embedTag.setAttribute('class', template + "_object");
 	  embedTag.setAttribute('src', src);
 	  embedTag.setAttribute('wmode', 'transparent');
 	  $(embedDiv).append(embedTag); 

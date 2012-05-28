@@ -8,11 +8,12 @@ VISH.Police = (function(V,$,undefined){
 	var valid_url_pattern=/((http(s)?:\/\/)|(www[.]))(.*)/g
 	
 	var validateObject = function(object,callback){
-		
+
 		if(!object){
 			return [false,"Object is null or undefined"];
 		}
-		if(object.trim()==""){
+		
+		if((typeof object == "string")&&(object.trim()=="")){
 			return [false,"Object is an empty string"];
 		}
 		
@@ -25,6 +26,10 @@ VISH.Police = (function(V,$,undefined){
 	  if((!objectInfo.source)||(!objectInfo.type)){
 	 	  return [false,"Can't recognize object source"];
 	  }
+		
+		if(objectInfo.source.trim()==""){
+      return [false,"Object source is an empty string"];
+    }
 				
 //		if(objectInfo.source.match(valid_url_pattern)==null){
 //      return [false,"Not valid URL"];

@@ -38,6 +38,22 @@ VISH.Editor.I18n = (function(V,$,undefined){
 				$(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")));
 		});
   		
+  		if (typeof(i18n[language])!='undefined'){
+  			//replace start_tutorial image
+  			var factor;
+  			if(language === "es"){
+  				factor = 2;
+  			}
+  			var normal_pos = 360; //120 + 120*factor;
+  			var hover_pos = 480; //240 + 120*factor;
+  			$("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
+  			//replace hover in that image
+  			$("#start_tutorial").hover(function(){
+			    $("#start_tutorial").css("background-position", "0px -" + hover_pos + "px");
+			}, function() {
+			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
+			});
+  		}
 				
 		var duration = new Date().getTime() - initTime;
 		VISH.Debugging.log("Internationalization took " + duration + " ms.");

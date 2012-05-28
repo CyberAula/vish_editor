@@ -11,19 +11,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 	};	
 	/*
-	 Function that add an input radio option for the Multiple Choice Quiz  
+	 Function that add an input text option for the Multiple Choice Quiz  
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		//console.log("Entramos en addMultipleChoiceOption (Quiz)");
-		
-		//var radio_option = $("."+MultipleChoiceoptionClass);
-		//console.log("MultipleChoice Option Class :  "+ radio_option );
 		
 		//the input in text type  
 		var text  = $('<div>').append($('.' +MultipleChoiceOptionClass).clone()).html();
 		
-		//console.log("text vale:  "+ text);
 		
 		var total = 0;
 		
@@ -36,8 +31,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var next_index = "a".charCodeAt(0) + next_num; 
 			next_index = String.fromCharCode(next_index);
 		if (next_num < num_options) {
-			//console.log("next_number :  "+ next_num );
-		  
+
 		    //the next radio input   
 			var add_option = "<br>"+next_index+") <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
 			add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
@@ -50,7 +44,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		} else if (next_num = num_options) {
 			
 			var add_option = "<br>"+next_index+") <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
-			//add_option += "<a src='' id='"+buttonAddOptionId+"' class='add_quiz_option'>";
+			
 			
 			$(".add_quiz_option").remove();
 			
