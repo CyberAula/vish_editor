@@ -30,7 +30,7 @@ body {
 
 .slides {
 	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -moz-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%, rgba(237,237,237,1) 100%);
-	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(237,237,237,1))));
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(237,237,237,1)));
 	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -webkit-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);;
 	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -o-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
 	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -ms-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
