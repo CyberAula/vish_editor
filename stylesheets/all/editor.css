@@ -1027,3 +1027,15 @@ textarea {
 	right: 0px;
 	top: 30px;
 }
+
+.help_in_template{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
+.help_in_fancybox{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}

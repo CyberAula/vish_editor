@@ -1,5 +1,5 @@
 /* Artfully masterminded by ZURB */
-#joyRideTipContent { display: none; }
+.joyRideTipContent { display: none; }
 
 /* Default styles for the container */
 .joyride-tip-guide {

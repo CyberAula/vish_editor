@@ -242,13 +242,17 @@
   	<!-- IMAGE -->
 	  <div style='display:none'>
 	    <div id="picture_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="images_fancy_tabs_id">	   
 				  <ul>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab tabbable">url</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">vish</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab"><img src='/images/flickr.png'/></a></li>
 				  </ul>
+				  <img class='help_in_fancybox' id='tab_pic_from_url_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_upload_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_repo_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_flikr_help' src='/images/helptutorial.png'/>
 				</div>
 				<div id='tab_pic_from_url_content' class="fancy_tab_content">
             			<div class="box1 box1fancy1">
@@ -268,7 +272,7 @@
 				  			<p class="textfancy">Select picture to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
 								
-							    <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+							    <form id="upload_picture_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
 							        <input type="file" name="document[file]" class="upload_file_input">
 							        <input type="hidden" name="document[title]">
 							        <input type="hidden" name="document[description]">
@@ -293,7 +297,7 @@
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  		  
 						<div class="search_container">
-						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
 						
 						<div id="tab_pic_repo_content_carrousel"></div>
@@ -307,7 +311,7 @@
                 	  <div class="box1 box1fancy2">
                       <img src="images/flickrlogo.png" class="imagelogotab">
 				      	<div class="search_container">
-				  	   		<input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+				  	   		<input id="search_flickr_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
     				     </div>	
 				<div id="tab_flikr_content_carrousel"></div>
                 </div>
@@ -319,12 +323,15 @@
   	  <!-- FLASH -->
 	  <div style='display:none'>
 	    <div id="flash_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="flash_fancy_tabs_id">	   
 				  <ul>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_from_url')" id="tab_flash_from_url" class="fancy_tab">embed</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_upload')" id="tab_flash_upload" class="fancy_tab">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_repo')" id="tab_flash_repo" class="fancy_tab">vish</a></li>
 				  </ul>
+				  <img class='help_in_fancybox' id='tab_flash_from_url_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_upload_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_repo_help' src='/images/helptutorial.png'/>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">
@@ -345,7 +352,7 @@
                 <p class="textfancy">Select SWF file to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
                 
-                  <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                  <form id="upload_flash_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
                       <input type="file" name="document[file]" class="upload_file_input">
                       <input type="hidden" name="document[title]">
                       <input type="hidden" name="document[description]">
@@ -371,7 +378,7 @@
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  
 						<div class="search_container">
-						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						  <input id="search_flash" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
 						
 						<div id="tab_flash_repo_content_carrousel"></div>
@@ -391,13 +398,17 @@
   	<!-- VIDEO -->
 	  <div style='display:none'>
 	    <div id="video_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="video_fancy_tabs_id">	   
 				    <ul>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_from_url')" id="tab_video_from_url" class="fancy_tab">url</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_repo')" id="tab_video_repo" class="fancy_tab">vish</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/images/youtube.png'/></a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/images/vimeo.png'/></a></li>
 				    </ul>
+				    <img class='help_in_fancybox' id='tab_video_from_url_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_repo_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_youtube_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_vimeo_help' src='/images/helptutorial.png'/>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
 	        	<div id="box1" class="box1 box1fancy1">
@@ -416,7 +427,7 @@
             <div class="box1 box1fancy2">	
 	            <img src="images/repositoryimg.png" class="imagelogotab">	  
 							<div class="search_container">
-							  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+							  <input id="search_video" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 							</div>
 							
 							<div id="tab_video_repo_content_carrousel"></div>
@@ -436,7 +447,7 @@
                   <div class="box1 box1fancy2">
 					<img src="images/youtubelogo.png" class="imagelogotab">
 					<div class="search_container" id="youtube_search_container">
-					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="youtube_text_to_search"> </input>
+					  <input id="search_youtube_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="youtube_text_to_search"> </input>
 					</div>
 				 
 				
@@ -457,7 +468,7 @@
                   <div class="box1 box1fancy2">
 					<img src="images/vimeologo.png" class="imagelogotab">
 					<div class="search_container" id="vimeo_search_container">
-					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
+					  <input id="search_vimeo_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
 					</div>
 				 
 				
@@ -478,7 +489,7 @@
 	    </div>
 	    
 	   <!-- WALKTHROUGH HELP SECTION -->
-	    <!-- INITIAL SCREEN -->
+	    <!-- help for initial screen -->
 	    <ol id="initial_screen_help" class="joyRideTipContent">
 	  	  <li data-id="excursion_title" data-text="Next" class="custom">
 	  	    <h2>Stop #1</h2>
@@ -500,8 +511,98 @@
 	        <p>jose Now what are you waiting for? Add this to your projects and get the most out of your apps!</p>
 	  	  </li>
 	  	</ol>
+	  	
+	  	<!--help for template-->
+	  	<ol id="template_help" class="joyRideTipContent">
+	  	  <li data-id="zone1" data-text="Next" class="custom">
+	  	    <h2>header</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
     
-
+    	<!--help for fancybox of images-->
+		<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="images_fancy_tabs_id" data-text="Next" class="custom">
+	  	    <h2>tabs</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  		  	
+	  	<ol id="upload_picture_form_help" class="joyRideTipContent">
+	  	  <li data-id="upload_picture_form" data-text="Next" class="custom">
+	  	    <h2>upload</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_picture_help" class="joyRideTipContent">
+	  	  <li data-id="search_picture" data-text="Next" class="custom">
+	  	    <h2>vish</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_flickr_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_flickr_fancy" data-text="Next" class="custom">
+	  	    <h2>flickr</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
+	  	<!--help for fancybox of flash-->
+		<ol id="flash_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom">
+	  	    <h2>tabs</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  		  	
+	  	<ol id="upload_flash_form_help" class="joyRideTipContent">
+	  	  <li data-id="upload_flash_form" data-text="Next" class="custom">
+	  	    <h2>upload</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_flash_help" class="joyRideTipContent">
+	  	  <li data-id="search_flash" data-text="Next" class="custom">
+	  	    <h2>vish</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
+	  	<!--help for fancybox of videos-->
+		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom">
+	  	    <h2>tabs</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_video_help" class="joyRideTipContent">
+	  	  <li data-id="search_video" data-text="Next" class="custom">
+	  	    <h2>vish</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	  	
+	  	<ol id="search_youtube_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_youtube_fancy" data-text="Next" class="custom">
+	  	    <h2>upload</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_vimeo_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_vimeo_fancy" data-text="Next" class="custom">
+	  	    <h2>flickr</h2>
+	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
 	<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
 	<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
 	<script type="text/javascript" src="js/libs/json2.js"></script>

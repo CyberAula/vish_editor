@@ -154,6 +154,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	/**
 	 * function to load a tab and its content in the fancybox
+	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
 	    //deselect all of them
@@ -166,8 +167,12 @@ VISH.Editor = (function(V,$,undefined){
 	    //show content
 	    $("#" + tab_id + "_content").show();
 
-      //Submodule callbacks
-			
+		//hide previous help button
+		$(".help_in_fancybox").hide();
+		//show correct one
+		$("#"+ tab_id + "_help").show();
+		
+        //Submodule callbacks	
 		switch(tab_id) {
 			//Image
 			case "tab_pic_from_url":
@@ -273,6 +278,60 @@ VISH.Editor = (function(V,$,undefined){
 	$(document).on('click','#help_right', function(){
 			V.Editor.Tour.startTourWithId('menubar_help', 'top');
 	});
+	
+	//template
+	$(document).on('click','#help_template_image', function(){
+			//first we need to set up the li data-id attribute to point to the header id
+			var zone;
+			if($(slideEls[curSlide]) && $(slideEls[curSlide]).find("[areaid=header]")){
+				zone = $(slideEls[curSlide]).find("[areaid=header]").attr("id");
+			}
+			else{
+				zone = "zone1";
+			}
+			$("#template_help > li").attr("data-id",zone);
+			V.Editor.Tour.startTourWithId('template_help', 'bottom');
+	});
+	
+	//image fancybox, one help button in each tab
+	$(document).on('click','#tab_pic_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_pic_upload_help', function(){
+			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
+	});
+	$(document).on('click','#tab_pic_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_picture_help', 'top');
+	});
+	$(document).on('click','#tab_pic_flikr_help', function(){
+			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'top');
+	});
+	
+	//flash fancybox, one help button in each tab
+	$(document).on('click','#tab_flash_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('flash_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_flash_upload_help', function(){
+			V.Editor.Tour.startTourWithId('upload_flash_form_help', 'top');
+	});
+	$(document).on('click','#tab_flash_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_flash_help', 'top');
+	});
+	
+	//video fancybox, one help button in each tab
+	$(document).on('click','#tab_video_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_video_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_video_help', 'top');
+	});
+	$(document).on('click','#tab_video_youtube_help', function(){
+			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'top');
+	});
+	$(document).on('click','#tab_video_vimeo_help', function(){
+			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'top');
+	});
+	
   };
   
   /**
