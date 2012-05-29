@@ -262,6 +262,11 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
 	});
 	
+	//template selection fancybox	
+	$(document).on('click','#help_template_selection', function(){
+			V.Editor.Tour.startTourWithId('help_template_selection_help', 'top');
+	});	
+	
 	//image fancybox, one help button in each tab
 	$(document).on('click','#tab_pic_from_url_help', function(){
 			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');

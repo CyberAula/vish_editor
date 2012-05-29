@@ -4,17 +4,20 @@
 /* Default styles for the container */
 .joyride-tip-guide {
   position: absolute;
-  background: url(../../images/tutorial_bg.png);
-  background: #ffffff;
-  
-  color: #fff;
+  background: url(../../images/tutorial_bg.png) #FFF;
+  color: #000;
   width: 300px;
+  border: 1px solid #000;
+  margin: -1px;
   z-index: 10000;
   font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica", Helvetica, Arial, Lucida, sans-serif;
   font-weight: normal;
-     -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-          border-radius: 5px;
+     -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+          border-radius: 20px;
+		  box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
+  -moz-box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
+  -webkit-box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
 }
 .joyride-content-wrapper
 {
@@ -52,8 +55,8 @@ width: 100%;
   border-top-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
-  border-bottom-color: #000;
-  border-bottom-color: rgba(0,0,0,0.8);
+  border-bottom-color: #4866FA;
+  border-bottom-color: #4866FA;
   top: -28px;
   bottom: none;
 }
@@ -73,10 +76,10 @@ width: 100%;
   line-height: 1.25;
   margin: 0;
   font-weight: bold;
-  color: #fff;
 }
 .joyride-tip-guide h1 { font-size: 30px; }
-.joyride-tip-guide h2 { font-size: 26px; }
+.joyride-tip-guide h2 { font-size: 26px; 
+						color: #4866FA;  }
 .joyride-tip-guide h3 { font-size: 22px; }
 .joyride-tip-guide h4 { font-size: 18px; }
 .joyride-tip-guide h5 { font-size: 16px; }
@@ -108,7 +111,7 @@ width: 100%;
   color: rgb(255,255,255);
   float: left;
   margin: 0 6px 8px 0px;
-  border: solid 1px rgb(0,60,180);
+  border: solid 1px rgb #FF005D;
   background: rgb(0,99,255);
   background: -moz-linear-gradient(top, rgb(0,99,255) 0%, rgb(0,85,214) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(0,99,255)), color-stop(100%,rgb(0,85,214)));
