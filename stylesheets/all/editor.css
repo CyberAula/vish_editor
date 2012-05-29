@@ -1036,7 +1036,14 @@ textarea {
 	background-image:url(../../images/helptutorial.png);
 	position: absolute;
 	right: 0px;
-	top: 30px;
+	top: 620px;
+}
+
+#help_right:hover {
+	background-image:url(../../images/hover/helptutorial_hover.png);
+	position: absolute;
+	right: 0px;
+	top: 620px;
 }
 
 #help_right:hover {
