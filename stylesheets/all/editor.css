@@ -1022,12 +1022,6 @@ textarea {
 	border: none !important;
 }
 
-<<<<<<< Updated upstream
-#help_right{
-	position: absolute;
-	right: 0px;
-	top: 30px;
-=======
 .carrouselNoResults{
 	margin: auto;
 	margin-top: 32%;
@@ -1036,7 +1030,20 @@ textarea {
 	text-align: center;
 	padding: 5px;
 	color: #FF005D;
->>>>>>> Stashed changes
+}
+
+#help_right{
+	background-image:url(../../images/helptutorial.png);
+	position: absolute;
+	right: 0px;
+	top: 30px;
+}
+
+#help_right:hover {
+	background-image:url(../../images/hover/helptutorial_hover.png);
+	position: absolute;
+	right: 0px;
+	top: 620px;
 }
 
 .help_in_template{
@@ -1050,3 +1057,5 @@ textarea {
 	top: 0px;
 	right: 30px;
 }
+
+
