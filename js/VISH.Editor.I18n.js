@@ -43,7 +43,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
   			$("#start_tutorial").css("background-image", "/images/tutorialimage-"+language+".png");
   			//replace hover in that image
   			$("#start_tutorial").hover(function(){
-			    $(this).css("background-image", "url(/images/hover/tutorialimage-"+language+".png)");
+			    $(this).css("background-image", "url(/images/hover/tutorialimage_hover-"+language+".png)");
 			}, function() {
 			    $(this).css("background-image", "url(/images/tutorialimage-"+language+".png)");
 			});
