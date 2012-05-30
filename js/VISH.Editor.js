@@ -163,15 +163,15 @@ VISH.Editor = (function(V,$,undefined){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
-	    //deselect all of them
-	    $(".fancy_tab").removeClass("fancy_selected");
-	    //select the correct one
-	    $("#" + tab_id).addClass("fancy_selected");
+	  //deselect all of them
+	  $(".fancy_tab").removeClass("fancy_selected");
+	  //select the correct one
+	  $("#" + tab_id).addClass("fancy_selected");
 	    
-	    //hide previous tab
-	    $(".fancy_tab_content").hide();
-	    //show content
-	    $("#" + tab_id + "_content").show();
+	  //hide previous tab
+	  $(".fancy_tab_content").hide();
+	  //show content
+	  $("#" + tab_id + "_content").show();
 
 		//hide previous help button
 		$(".help_in_fancybox").hide();
@@ -219,48 +219,11 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_repo":
 				VISH.Editor.Object.Repository.onLoadTab();
 				break;
-				
-				
 			default:
 				break;
 		}
 
 	};
-
-
-  /**
-   * Function to get the value from the input identified by the id param and draw it in the zone in params['current_el']
-   */
-  var getValueFromFancybox = function(id_to_get){
-    $.fancybox.close();
-    
-	//Call the draw function of the submodule
-    switch(id_to_get)  {
-      case "picture_url":
-        V.Editor.Image.drawImage($("#"+id_to_get).val());
-        break;
-      case "flash_embed_code":
-    	V.Editor.Object.drawObject($("#"+id_to_get).val())
-        break;
-      case "video_url":
-        //V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
-				V.Editor.Object.drawObject($("#"+id_to_get).val())
-        break;
-      //case "add_your_input_id_here":
-        //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
-      // break;
-      default:
-        break;
-    }
-    
-    //delete the value
-    $("#"+id_to_get).val("");
-    
-    //finally set focus to current_area
-    var current_area = VISH.Editor.getCurrentArea();
-    current_area.trigger("focus");   
-    
-  };
 
   /**
    * Removes the lightbox
@@ -438,8 +401,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if($(this).attr("areaid")==="header"){
 			content = $("#menuselect_for_header").clone().attr('id','');
-		}
-		else{
+		}	else {
 			content = $("#menuselect").clone().attr('id','');
 		}
 				
@@ -453,7 +415,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
@@ -465,7 +427,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addflash").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -476,7 +438,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addvideo").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -496,7 +458,7 @@ VISH.Editor = (function(V,$,undefined){
   	$.fancybox(
 			$("#prompt_form").html(),
 			{
-	        	'autoDimensions'	: false,
+	      'autoDimensions'	: false,
 				'width'         	: 350,
 				'height'        	: 150,
 				'showCloseButton'	: false,
@@ -522,28 +484,28 @@ VISH.Editor = (function(V,$,undefined){
   	var article_to_delete = $(this).parent();
   	$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
   	$.fancybox(
-		$("#prompt_form").html(),
-		{
-        	'autoDimensions'	: false,
-			'width'         	: 350,
-			'height'        	: 150,
-			'showCloseButton'	: false,
-			'padding' 			: 0,
-			'onClosed'			: function(){
-				//if user has answered "yes"
-				if($("#prompt_answer").val() ==="true"){
-					$("#prompt_answer").val("false");
-					$(".theslider").hide();	
-					article_to_delete.remove();
-					//set curSlide to the preious one if this was the last one
-					if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
-						curSlide -=1;
-					}					
-					V.SlidesUtilities.redrawSlides();			
+		  $("#prompt_form").html(),
+		  {
+	      'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+				  //if user has answered "yes"
+					if($("#prompt_answer").val() ==="true"){
+						$("#prompt_answer").val("false");
+						$(".theslider").hide();	
+						article_to_delete.remove();
+						//set curSlide to the preious one if this was the last one
+						if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
+							curSlide -=1;
+						}					
+						V.SlidesUtilities.redrawSlides();			
+					}
 				}
-			}
-		}
-	);
+		  }
+	  );
   };
 
   /**
@@ -574,17 +536,16 @@ VISH.Editor = (function(V,$,undefined){
   		
   		//the id is "draggableunicID_1" we want to remove "draggable"
   		the_id = the_id.substring(9);
-  		
   		$("#sliderId" + the_id).show();  		
   	}
   	
   	//add css
   	$(this).css("border-color", "rgb(255, 2, 94)");
-	$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("outline", "0");
-	$(this).css("outline", "thin dotted \9");
+		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("outline", "0");
+		$(this).css("outline", "thin dotted \9");
   };
   
   var _removeSelectableProperties = function(){  	
@@ -593,12 +554,12 @@ VISH.Editor = (function(V,$,undefined){
   	$(".delete_content").hide();
   	
   	//remove css
-  	$(".selectable").css("border-color", "none");
-	$(".selectable").css("-webkit-box-shadow", "none");
-	$(".selectable").css("-moz-box-shadow", "none");
-	$(".selectable").css("box-shadow", "none");
-	$(".selectable").css("outline", "0");
-	$(".selectable").css("cursor", "pointer");
+	  $(".selectable").css("border-color", "none");
+		$(".selectable").css("-webkit-box-shadow", "none");
+		$(".selectable").css("-moz-box-shadow", "none");
+		$(".selectable").css("box-shadow", "none");
+		$(".selectable").css("outline", "0");
+		$(".selectable").css("cursor", "pointer");
   };
 
   /**
@@ -610,38 +571,36 @@ VISH.Editor = (function(V,$,undefined){
   var _onSaveButtonClicked = function(){
     if(slideEls.length === 0){
     	$.fancybox(
-			$("#message1_form").html(),
-			{
-	        	'autoDimensions'	: false,
-				'width'         	: 350,
-				'height'        	: 200,
-				'showCloseButton'	: false,
-				'padding' 			: 5		
-			}
-		);
-    }
-    else{    
+			  $("#message1_form").html(),
+			  {
+		      'autoDimensions'	: false,
+					'width'         	: 350,
+					'height'        	: 200,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+			  }
+		  );
+    } else {    
 	    $.fancybox(
-			$("#save_form").html(),
-			{
-	        	'autoDimensions'	: false,
-				'width'         	: 350,
-				'height'        	: 150,
-				'showCloseButton'	: false,
-				'padding' 			: 0,
-				'onClosed'			: function(){
-					//if user has answered "yes"
-					if($("#save_answer").val() ==="true"){
-						$("#save_answer").val("false");	
-						_saveExcursion();				
+			  $("#save_form").html(),
+			  {
+		      'autoDimensions'	: false,
+					'width'         	: 350,
+					'height'        	: 150,
+					'showCloseButton'	: false,
+					'padding' 			: 0,
+					'onClosed'			: function(){
+							//if user has answered "yes"
+							if($("#save_answer").val() ==="true"){
+								$("#save_answer").val("false");	
+								_saveExcursion();				
+							}	else {
+								return false;
+							}
 					}
-					else{
-						return false;
-					}
-				}
-			}
-		);
-	}
+			  }
+		  );
+	  }
   };
     
     
@@ -775,18 +734,17 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}
-		else if(params['current_el']){
+		}	else if(params['current_el']){
 			return params['current_el'].parent().attr('template');
 		}
 		return null;
 	}
 	
 	var getCurrentArea = function() {
-	    if(params['current_el']){
-	      return params['current_el'];
-	    }
-	    return null;
+    if(params['current_el']){
+      return params['current_el'];
+    }
+    return null;
   }
 
 
@@ -794,7 +752,6 @@ VISH.Editor = (function(V,$,undefined){
 		init					         	  : init,
 		addDeleteButton						: addDeleteButton,
 		loadTab 				        	: loadTab,
-		getValueFromFancybox    	: getValueFromFancybox,
 		getId                  		: getId,
 		getTemplate            		: getTemplate,
 		getCurrentArea        		: getCurrentArea,
