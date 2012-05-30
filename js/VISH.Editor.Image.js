@@ -21,7 +21,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
 		
-		$("input[name='document[file]']").change(function () {
+		$("#" + uploadDiv + " input[name='document[file]']").change(function () {
       $("input[name='document[title]']").val($("input:file").val());
     });
       
@@ -40,7 +40,7 @@ VISH.Editor.Image = (function(V,$,undefined){
       }
     });
   
-    $('form').ajaxForm({
+    $("#" + uploadDiv + ' form').ajaxForm({
       beforeSend: function() {
           var percentVal = '0%';
           bar.width(percentVal);
@@ -120,14 +120,13 @@ VISH.Editor.Image = (function(V,$,undefined){
 	        }
 	        $(tagList).append("<li>" + tag + "</li>")
         });
+				
+				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
+          //tag==tagName
+          //action==["moved","added","popped" (remove)]
+          } 
+        });
 		 }
-
-		 
-     $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
-        //tag==tagName
-        //action==["moved","added","popped" (remove)]
-       } 
-     });
   }
 	
 	

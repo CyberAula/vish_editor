@@ -36,8 +36,8 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(options){
 			initOptions = options;
-			if(options['developping']){
-				VISH.Debugging.enableDevelopingMode();
+			if(options['developping']==true){
+				VISH.Debugging.init(true);
 			}
 		}	else {
 			initOptions = {};
@@ -85,7 +85,6 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		
 			//Init submodules
-			V.Debugging.init(true);
 			V.Editor.Text.init();
 			V.Editor.Image.init();
 			V.Editor.Video.init();
