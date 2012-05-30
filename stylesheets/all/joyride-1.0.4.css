@@ -4,17 +4,17 @@
 /* Default styles for the container */
 .joyride-tip-guide {
   position: absolute;
-  background: #000;
-  background: rgba(0,0,0,0.8);
+  background: url(../../images/tutorial_bg.png);
+  background: #ffffff;
   
   color: #fff;
   width: 300px;
   z-index: 10000;
   font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica", Helvetica, Arial, Lucida, sans-serif;
   font-weight: normal;
-     -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
+     -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
 }
 .joyride-content-wrapper
 {

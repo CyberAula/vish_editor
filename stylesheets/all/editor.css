@@ -7,12 +7,13 @@ img {
 }
 
 #menubar {
-	background: url(/images/menubar.png);
+	background: url(/images/menubar.png) no-repeat;
 	width: 100%;
 	height: 70px;
 	position: fixed;
 	bottom:0px;
 	left: 0px;	
+	margin-top: 50px;
 }
 
 #excursiondetails {
@@ -21,7 +22,7 @@ img {
 
 .barbuttonaddsave{
 	position: relative;
-	top: 5px;
+	top: 8px;
 	left: 5px;
 	right: 5px;
 	width: 60px;
@@ -332,11 +333,11 @@ img {
 
 .barbutton {
 	position: relative;
-	top: 5px;
+	top: 6px;
 	left: 5px;
 	right: 5px;
 	width: 60px;
-	height: 60px;
+	height: 59px;
 	float: left;
 	margin-bottom: 20px;
 	margin-right: 7px;
@@ -759,7 +760,7 @@ table.metadata td div.height_wrapper_description{
 
 .image_barbutton{
 	width: 60px;
-	margin-top: 7px;
+	margin-top: 6px;
 }
 
 .delete_img{
@@ -953,6 +954,7 @@ textarea {
 
 #start_tutorial:hover {
 	background-position: 0px -240px;
+	cursor: pointer;
 }
 
 #excursion_details_fields{
@@ -1034,14 +1036,16 @@ textarea {
 }
 
 #help_right{
-	background-image:url(../../images/helptutorial.png);
+	background-image:url(../../images/helptutorial_circle_bg.png);
 	position: absolute;
-	right: 0px;
-	top: 620px;
+	right: -2px;
+	top: 642px;
+	z-index: 1000;
 }
 
 #help_right:hover {
-	background-image:url(../../images/hover/helptutorial_hover.png);
+	background-image:url(../../images/hover/helptutorial_circle_hover_bg.png);
+	cursor: pointer;
 }
 
 .help_in_template{
@@ -1057,6 +1061,7 @@ textarea {
 
 .help_in_template:hover{
 	background-image:url(../../images/hover/helptutorial_circle_hover.png);
+	cursor: pointer;
 }
 
 .help_in_fancybox{
@@ -1072,6 +1077,7 @@ textarea {
 
 .help_in_fancybox:hover{
 	background-image:url(../../images/hover/helptutorial_circle_hover.png);
+	cursor: pointer;
 }
 
 #requirements_form{
@@ -1118,4 +1124,11 @@ textarea {
 }
 
 .requirementsText{
+}
+
+#menubar_helpsection {
+	position: absolute;
+	right: -2px;
+	top: 632px;
+	z-index: 100;
 }
