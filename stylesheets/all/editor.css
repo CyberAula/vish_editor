@@ -1010,8 +1010,8 @@ textarea {
 
 .upload_file_input{
 	font-family:Helvetica;
-  font-size: 16px;
-  background: 5px 50% no-repeat;
+  	font-size: 16px;
+  	background: 5px 50% no-repeat;
 }
 
 .imagelogotab {
@@ -1028,6 +1028,7 @@ textarea {
 	font-family:Helvetica;
   font-size: 23px;
 	text-align: center;
+	padding: 5px;
 	padding: 5px;
 	color: #FF005D;
 }
@@ -1048,6 +1049,10 @@ textarea {
 	position: absolute;
 	top: 2px;
 	right: 27px;
+	position: absolute;
+	right: 0px;
+	top: 620px;
+	color: #FF005D;
 }
 
 .help_in_template:hover{
@@ -1069,3 +1074,48 @@ textarea {
 	background-image:url(../../images/hover/helptutorial_circle_hover.png);
 }
 
+#requirements_form{
+	text-align: center;
+	padding: 5px;
+}
+
+#recomended_browsers{
+	margin-top: 25px;
+}
+
+.buttons_requirements_wrapper{
+	margin-top: 30px;
+	text-align: center;
+}
+
+.buttons_requirements{
+  padding: 10px 15px;
+}
+
+.browser_img{
+	max-height: 70px;
+  max-width: 70px;
+	display: block;
+	margin: auto;
+}
+
+.browserTitle{
+	font-family:Helvetica;
+  font-size: 15px;
+	display: block;
+	padding: 5px;
+}
+
+.recomended_browser{
+	display: inline-block;
+	padding: 10px 20px;
+}
+
+.warning_requirements{
+	height: 80px;
+  margin-left: 25px;
+  margin-top: 1px;
+}
+
+.requirementsText{
+}

@@ -5,14 +5,11 @@ VISH.Debugging = (function(V,$,undefined){
 	
 	var developping = false;
 	
-	var init = function(developping){
-			verbose = developping;
+	var init = function(bol){
+			developping = bol;
 	};
 	
 	var log = function(text){
-//		if (navigator.appName !== 'Microsoft Internet Explorer') {
-//			return;
-//    }
 		if ((window.console && window.console.log) && (developping)) {
 		  console.log(text);
 	  }
