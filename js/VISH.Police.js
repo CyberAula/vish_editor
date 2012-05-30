@@ -80,7 +80,7 @@ VISH.Police = (function(V,$,undefined){
 		if(fileName.trim()==""){
       return [false,"Name is an empty string"];
     }
-		return true;
+		return [true,"Validation Ok"];
 	}
 	
 	return {

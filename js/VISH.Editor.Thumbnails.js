@@ -9,13 +9,15 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
    		var i = 1;
    		for(i = 1; i < 8; i++){
    			$("#slide_thumb_"+ i).off("click");
-			$("#slide_thumb_"+ i).css("cursor", "auto");
-			$("#slide_thumb_"+ i + " .slide_number").html("");
-			$("#slide_thumb_"+ i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
-			$("#slide_thumb_"+ i + " img").unbind('mouseenter').unbind('mouseleave');
+			  $("#slide_thumb_"+ i).css("cursor", "auto");
+			  $("#slide_thumb_"+ i + " .slide_number").html("");
+			  $("#slide_thumb_"+ i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
+			  $("#slide_thumb_"+ i + " img").unbind('mouseenter').unbind('mouseleave');
    		}
+			
    		//unselect all thumbnails
    		$(".barbutton").css("background-color", "transparent");
+			
    		//if we have more than 1 slide, we will highlight the next one to current slide
    		if(slideEls.length > 0){
    			var slide_to_highlight = curSlide + 1;

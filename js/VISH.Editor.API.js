@@ -166,6 +166,45 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	
+	/**
+   * function to call to VISH and request tags
+   */
+	var tags;
+	
+  var requestTags = function(successCallback, failCallback){
+		
+		if((tags)&&(typeof successCallback == "function")){
+			successCallback(tags);
+			return;
+		}
+		
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+				    tags = VISH.Samples.API.tagsList['tags'];
+            successCallback(VISH.Samples.API.tagsList['tags']);
+      }
+      return;
+    }
+		
+    $.ajax({
+        type: "GET",
+        url: "tags.json?tag=",
+        dataType:"html",
+        success:function(response){
+            if(typeof successCallback == "function"){
+              tags = JSON.parse(response);
+              successCallback(tags);
+            }
+        },
+        error:function (xhr, ajaxOptions, thrownError){
+            if(typeof failCallback == "function"){
+              failCallback();
+            }
+        }
+    });
+  };
+	
+	
 	return {
 		init					          : init,
 		requestVideos           : requestVideos,
@@ -173,7 +212,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestImages           : requestImages,
 		requestRecomendedImages : requestRecomendedImages,
 		requestFlashes			    : requestFlashes,
-		requestRecomendedFlash  : requestRecomendedFlash
+		requestRecomendedFlash  : requestRecomendedFlash,
+		requestTags             : requestTags
 	};
 
 }) (VISH, jQuery);

@@ -445,7 +445,14 @@ VISH.Samples.API = (function(V,undefined){
 	 var flashListDummy = {
     'flashes'       : []
 	 };
-    
+	 
+	 
+	 var tagsList = {
+   	'tags': ["ActionScript","AppleScript","Asp","BASIC","C","C++","Clojure","COBOL","ColdFusion","Erlang",
+		"Fortran","Groovy","Haskell","Java","JavaScript","Lisp","Perl","PHP","Python","Ruby","Scala","Scheme"]
+   };
+                
+		
 	return {
 		imageList  : imageList,
 		imageListLittle : imageListLittle,
@@ -455,7 +462,8 @@ VISH.Samples.API = (function(V,undefined){
 		videoListDummy  : videoListDummy,
 		flashList  : flashList,
 		flashListLittle  : flashListLittle,
-		flashListDummy  : flashListDummy
+		flashListDummy  : flashListDummy,
+		tagsList : tagsList
 	};
 
 })(VISH);

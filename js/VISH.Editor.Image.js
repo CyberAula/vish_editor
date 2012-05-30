@@ -1,6 +1,7 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
+	var uploadDiv = "tab_pic_upload_content";
 	
 	var init = function(){
 		VISH.Editor.Image.Flikr.init();
@@ -16,6 +17,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		
 		//Upload content
 		var options = VISH.Editor.getOptions();
+		var tagList = $("#" + uploadDiv + " .tagList")
 		var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
 		
@@ -23,16 +25,17 @@ VISH.Editor.Image = (function(V,$,undefined){
       $("input[name='document[title]']").val($("input:file").val());
     });
       
-    $("#tab_pic_upload_content #upload_document_submit").click(function(event) {
-			if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])){
+    $("#" + uploadDiv + " #upload_document_submit").click(function(event) {
+			if(!VISH.Police.validateFileUpload($("#" + uploadDiv + " input[name='document[file]']").val())[0]){
         event.preventDefault();
       } else {
         if (options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
-          $("input[name='document[description]']").val(description);
-          $("input[name='document[owner_id]']").val(options["ownerId"]);
-          $("input[name='authenticity_token']").val(options["token"]);
-          $(".documentsForm").attr("action", options["documentsPath"]);
+          $("#" + uploadDiv + " input[name='document[description]']").val(description);
+          $("#" + uploadDiv + " input[name='document[owner_id]']").val(options["ownerId"]);
+          $("#" + uploadDiv + " input[name='authenticity_token']").val(options["token"]);
+          $("#" + uploadDiv + " .documentsForm").attr("action", options["documentsPath"]);
+					$("#" + uploadDiv + " input[name='tags']").val(_convertToTagsArray($(tagList).tagit("tags")));
         }
       }
     });
@@ -54,9 +57,23 @@ VISH.Editor.Image = (function(V,$,undefined){
           bar.width(percentVal)
           percent.html(percentVal);
       }
-    });
+    });	
+		
 	};
 	
+	var _convertToTagsArray= function(tags){
+		var tagsArray = [];
+		
+		if((!tags)||(tags.length==0)){
+			return tagsArray;
+		}
+		
+    $.each(tags, function(index, tag) {
+      tagsArray.push(tag.value)
+    });
+		
+		return tagsArray;
+	}
 	
 	var onLoadTab = function(tab){	
 		if(tab=="upload"){
@@ -81,10 +98,37 @@ VISH.Editor.Image = (function(V,$,undefined){
     //Reset fields
     bar.width('0%');
     percent.html('0%');
-		VISH.Editor.Object.resetPreview("tab_pic_upload_content")
+		VISH.Editor.Object.resetPreview(uploadDiv)
     $("input[name='document[file]']").val("");
 		contentToAdd = null;
+		
+    //Reset tags
+		var tagList = $("#" + uploadDiv + " .tagList")
+		$(tagList).tagit("reset")
+    VISH.Editor.API.requestTags(_onTagsReceived)
 	}
+	
+	 
+  var _onTagsReceived = function(data){
+		 var tagList = $("#" + uploadDiv + " .tagList");
+		 
+		 //Insert the three first tags.
+		 if ($(tagList).children().length == 0){
+		 	  $.each(data, function(index, tag) {
+	        if(index==3){
+	          return false; //break the bucle
+	        }
+	        $(tagList).append("<li>" + tag + "</li>")
+        });
+		 }
+
+		 
+     $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
+        //tag==tagName
+        //action==["moved","added","popped" (remove)]
+       } 
+     });
+  }
 	
 	
 	var processResponse = function(response){
@@ -92,7 +136,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	    var jsonResponse = JSON.parse(response)
 	    if(jsonResponse.src){
 				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-				  VISH.Editor.Object.drawPreview("tab_pic_upload_content",jsonResponse.src)
+				  VISH.Editor.Object.drawPreview(uploadDiv,jsonResponse.src)
           contentToAdd = jsonResponse.src
 		    }
 	    }
