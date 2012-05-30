@@ -1094,12 +1094,12 @@ textarea {
 }
 
 .buttons_requirements{
-  padding: 10px 15px;
+  	padding: 10px 15px;
 }
 
 .browser_img{
 	max-height: 70px;
-  max-width: 70px;
+  	max-width: 70px;
 	display: block;
 	margin: auto;
 }
@@ -1118,8 +1118,8 @@ textarea {
 
 .warning_requirements{
 	height: 80px;
-  margin-left: 25px;
-  margin-top: 1px;
+  	margin-left: 25px;
+  	margin-top: 1px;
 }
 
 .requirementsText{
@@ -1131,3 +1131,16 @@ textarea {
 	top: 632px;
 	z-index: 100;
 }
+
+#help_template_selection {
+	background-image:url(../../images/helptutorial_circle_tp.png);
+	position: absolute;
+	margin-top: -13px;
+	right: 20px;
+}
+
+#help_template_selection:hover {
+	background-image:url(../../images/hover/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
+}
+	

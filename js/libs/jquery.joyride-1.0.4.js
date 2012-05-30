@@ -6,6 +6,13 @@
  * http://www.opensource.org/licenses/mit-license.php
 */
 
+/* 
+ * NESTOR:
+ * I deleted the "x" in this line 55:
+ *"$(self).html() + buttonText + '<a href="#close" class="joyride-close-tip">X</a>' +"
+*/
+
+
 (function($) {
   $.fn.joyride = function(options) {
 
@@ -18,7 +25,7 @@
       'timer': 0, // 0 = no timer, all other numbers = timer in milliseconds
       'startTimerOnClick': false, // true or false - true requires clicking the first button start the timer
       'nextButton': true, // true or false to control whether a next button is used
-      'tipAnimation': 'pop', // 'pop' or 'fade' in each tip
+      'tipAnimation': 'fade', // 'pop' or 'fade' in each tip
       'tipAnimationFadeSpeed': 300, // when tipAnimation = 'fade' this is speed in milliseconds for the transition
       'cookieMonster': false, // true or false to control whether cookies are used
       'cookieName': 'JoyRide', // Name the cookie you'll use
@@ -46,7 +53,7 @@
       timerIndicatorTemplate = '<div class="joyride-timer-indicator-wrap"><span class="joyride-timer-indicator"></span></div>',
       tipTemplate = function(tipClass, index, buttonText, self) { return '<div class="joyride-tip-guide ' +
         tipClass + '" id="joyRidePopup' + index + '"><span class="joyride-nub"></span><div class="joyride-content-wrapper">' +
-        $(self).html() + buttonText + '<a href="#close" class="joyride-close-tip">X</a>' +
+        $(self).html() + buttonText + '<a href="#close" class="joyride-close-tip"></a>' +
         timerIndicatorInstance + '</div></div>'; },
       tipLayout = function(tipClass, index, buttonText, self) {
         if (index == 0 && settings.startTimerOnClick && settings.timer > 0 || settings.timer == 0) {

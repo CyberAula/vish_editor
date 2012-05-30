@@ -5,8 +5,9 @@
 .joyride-tip-guide {
   position: absolute;
   background: url(../../images/tutorial_bg.png) #FFF;
+  animation-direction: alternate;
   color: #000;
-  width: 300px;
+  width: 400px;
   border: 1px solid #000;
   margin: -1px;
   z-index: 10000;
@@ -18,6 +19,7 @@
 		  box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
   -moz-box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
   -webkit-box-shadow: 15px 15px 15px rgba(0,0,0,.15); 
+  
 }
 .joyride-content-wrapper
 {
@@ -64,8 +66,8 @@ width: 100%;
   border-bottom-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
-  border-top-color: #000;
-  border-top-color: rgba(0,0,0,0.8) !important;
+  border-top-color:  #4866FA;
+  border-top-color: #4866FA;
   bottom: -28px;
   bottom: none;
 }
@@ -160,13 +162,10 @@ width: 100%;
   position: absolute;
   right: 10px;
   top: 10px;
-  color: rgba(255,255,255,0.4) !important;
-  text-decoration: none;
-  font-family: Verdana, sans-serif;
-  font-size: 10px;
-  font-weight: bold;
-  border-bottom: none !important;
+  height: 22px;
+  width: 22px;
+  background-image:url(../../images/delete.png);
 }
 .joyride-close-tip:hover {
-  color: rgba(255,255,255,0.9) !important;
+  background-image: url(../../images/hover/delete_hover.png);
 }
