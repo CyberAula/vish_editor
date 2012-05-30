@@ -109,7 +109,7 @@
       <form id='excursiondetails'>         
           <div id="excursion_details_fields">
             <label for="excursion_title">
-              <div class="textintro1 textintromargin1">Title</div>
+              <div id="tutorialstart" class="textintro1 textintromargin1">Title</div>
             </label>
             <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/images/tutorialimage_blank.png"/>
         <label for="excursion_description">
@@ -517,13 +517,27 @@
 	   <!-- WALKTHROUGH HELP SECTION -->
 	    <!-- help for initial screen -->
 	    <ol id="initial_screen_help" class="joyRideTipContent">
-	  	  <li data-id="excursion_title" data-text="Next" class="custom">
-	  	    <h2>Add a title (Obligatory)</h2>
-	  	    <p>Choose wisely the title, as it will be an important thing to make attractive your excursion to other users. Press "Enter" to continue.</p>
+          	<li data-id="tutorialstart" data-text="Next" class="Next">
+	  	    <h2>Welcome to ViSH editor!</h2>
+	  	    <p>Using the "Walkthrough icon"<img src="images/helptutorial_circle.png"> around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.
+ </p>
 	  	  </li>
-	  	  <li data-id="excursion_description" data-text="Close">
-	  	    <h2>Stop #3</h2>
-	        <p>Now what are you waiting for? Add this to your projects and get the most out of your apps!</p>
+	  	  <li data-id="excursion_title" data-text="Next" class="Next">
+	  	    <h2>First, Let´s write a title (Obligatory)</h2>
+	  	    <p>This black space will allow you to write a title to name your excursions. The title in the excursion it is obligatory cause with this feature other user can find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
+	  	  </li>
+	  	  <li data-id="excursion_description" data-text="Next">
+	  	    <h2>Write a description (optional)</h2>
+	        <p>Here you can explain in a little more detail what the excursion is about.
+Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="avatars_carrousel" data-text="Next">
+	  	    <h2>Choose an image that will represent your excursion</h2>
+	        <p>In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
+	  	  </li>
+          <li data-id="save_excursion_details"  class="custom-class" data-options="tipLocation:none;inline:false" data-text="Close">
+	  	    <h2>Choose an image that will represent your excursion</h2>
+	        <p>Once you click on the close button, you will be able to click on continue to save your excursion details, and to start adding content to your excursion.</p>
 	  	  </li>
 	  	</ol>
 	  	

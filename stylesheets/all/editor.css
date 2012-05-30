@@ -1143,4 +1143,13 @@ textarea {
 	background-image:url(../../images/hover/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
+
+/* Joyride positions */
+.custom-class{
+	top: 400px;
 	
+}
+
+.custom-class span{
+	left: 340px;
+}

@@ -80,14 +80,15 @@ width: 100%;
   font-weight: bold;
 }
 .joyride-tip-guide h1 { font-size: 30px; }
-.joyride-tip-guide h2 { font-size: 26px; 
-						color: #4866FA;  }
+.joyride-tip-guide h2 { font-size: 17px; 
+						color: #4866FA;
+						padding-bottom: 5px;  }
 .joyride-tip-guide h3 { font-size: 22px; }
 .joyride-tip-guide h4 { font-size: 18px; }
 .joyride-tip-guide h5 { font-size: 16px; }
 .joyride-tip-guide h6 { font-size: 14px; }
 .joyride-tip-guide p {
-  margin: 0 0 18px 0;
+  margin: 0 0 10px 0;
   font-size: 14px;
   line-height: 18px;
 }
@@ -111,7 +112,7 @@ width: 100%;
   font-size: 13px;
   text-decoration: none;
   color: rgb(255,255,255);
-  float: left;
+  float: right;
   margin: 0 6px 8px 0px;
   border: solid 1px rgb #FF005D;
   background: rgb(0,99,255);
