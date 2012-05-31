@@ -7,12 +7,13 @@ img {
 }
 
 #menubar {
-	background: url(/images/menubar.png);
+	background: url(/images/menubar.png) no-repeat;
 	width: 100%;
 	height: 70px;
 	position: fixed;
 	bottom:0px;
 	left: 0px;	
+	margin-top: 50px;
 }
 
 #excursiondetails {
@@ -21,7 +22,7 @@ img {
 
 .barbuttonaddsave{
 	position: relative;
-	top: 5px;
+	top: 8px;
 	left: 5px;
 	right: 5px;
 	width: 60px;
@@ -52,6 +53,10 @@ img {
 	width: 730px;
 	height: 500px;
 }
+.box1fancy3 {
+  width: 730px;
+  height: 210px;
+}
 
 .box2 {
 	margin-left: 30px;
@@ -60,8 +65,13 @@ img {
 	width: 730px;
 	height: 300px;
 	border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.box2_upload {
+  margin-top: 15px;
+  height: 285px;
 }
 
 .previewimgbox {
@@ -103,9 +113,9 @@ img {
 	position:absolute;
 	margin-top: 86%;
 	margin-left: 145%;	
-  display: inline;
+    display: inline;
 	text-decoration:none;
-  background: #CCC repeat-x bottom !important;
+    background: #CCC repeat-x bottom !important;
 	width: 150px !important;
 	opacity: 0.6;
 	color:#f9f9f9;
@@ -332,11 +342,11 @@ img {
 
 .barbutton {
 	position: relative;
-	top: 5px;
+	top: 6px;
 	left: 5px;
 	right: 5px;
 	width: 60px;
-	height: 60px;
+	height: 59px;
 	float: left;
 	margin-bottom: 20px;
 	margin-right: 7px;
@@ -759,7 +769,7 @@ table.metadata td div.height_wrapper_description{
 
 .image_barbutton{
 	width: 60px;
-	margin-top: 7px;
+	margin-top: 6px;
 }
 
 .delete_img{
@@ -953,6 +963,7 @@ textarea {
 
 #start_tutorial:hover {
 	background-position: 0px -240px;
+	cursor: pointer;
 }
 
 #excursion_details_fields{
@@ -1010,8 +1021,8 @@ textarea {
 
 .upload_file_input{
 	font-family:Helvetica;
-  font-size: 16px;
-  background: 5px 50% no-repeat;
+  	font-size: 16px;
+  	background: 5px 50% no-repeat;
 }
 
 .imagelogotab {
@@ -1019,5 +1030,276 @@ textarea {
 	padding-top: 20px;
 	padding-left: 35px;
 	position: absolute;
-	border: none !important;
 }
+
+.carrouselNoResults{
+	margin: auto;
+	margin-top: 32%;
+	font-family:Helvetica;
+  font-size: 23px;
+	text-align: center;
+	padding: 5px;
+	padding: 5px;
+	color: #FF005D;
+}
+
+#help_right{
+	background-image:url(../../images/helptutorial_circle_bg.png);
+	position: absolute;
+	right: -2px;
+	top: 642px;
+	z-index: 1000;
+}
+
+#help_right:hover {
+	background-image:url(../../images/hover/helptutorial_circle_hover_bg.png);
+	cursor: pointer;
+}
+
+.help_in_template{
+	background-image:url(../../images/helptutorial_circle.png);
+	position: absolute;
+	top: 2px;
+	right: 27px;
+	position: absolute;
+	right: 27px;
+	top: 2px;
+	color: #FF005D;
+}
+
+.help_in_template:hover{
+	background-image:url(../../images/hover/helptutorial_circle_hover.png);
+	cursor: pointer;
+}
+
+.help_in_fancybox{
+	background-image:url(../../images/helptutorial_circle.png);
+	position: absolute;
+	margin-top: -1px;
+	margin-right: -5px;
+	top: 0px;
+	right: 30px;
+	margin-top: -1px;
+	margin-right: -5px;
+}
+
+.help_in_fancybox:hover{
+	background-image:url(../../images/hover/helptutorial_circle_hover.png);
+	cursor: pointer;
+}
+
+#requirements_form{
+	text-align: center;
+	padding: 5px;
+}
+
+#recomended_browsers{
+	margin-top: 25px;
+}
+
+.buttons_requirements_wrapper{
+	margin-top: 30px;
+	text-align: center;
+}
+
+.buttons_requirements{
+  	padding: 10px 15px;
+}
+
+.browser_img{
+	max-height: 70px;
+  	max-width: 70px;
+	display: block;
+	margin: auto;
+}
+
+.browserTitle{
+	font-family:Helvetica;
+  font-size: 15px;
+	display: block;
+	padding: 5px;
+}
+
+.recomended_browser{
+	display: inline-block;
+	padding: 10px 20px;
+}
+
+.warning_requirements{
+	height: 80px;
+  	margin-left: 25px;
+  	margin-top: 1px;
+}
+
+.requirementsText{
+}
+
+#menubar_helpsection {
+	position: absolute;
+	right: -2px;
+	top: 632px;
+	z-index: 100;
+}
+
+#help_template_selection {
+	background-image:url(../../images/helptutorial_circle_tp.png);
+	position: absolute;
+	margin-top: -13px;
+	right: 20px;
+}
+
+#help_template_selection:hover {
+	background-image:url(../../images/hover/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
+}
+
+/* Joyride positions */
+
+.tut_with_arrow span.joyride-nub {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color:  #4866FA;
+}
+
+.tut_without_arrow span.joyride-nub{
+  display: none;
+}
+
+.tut_welcome{
+	top: 190px;
+	left: 450px;
+}
+
+.tut_savedetails{
+	top: 410px;
+	left: 394px;
+}
+
+.tut_savedetails span.joyride-nub{
+  bottom: -28px;
+  left: 341px;
+}
+
+.tut_welcome_exc{
+	top: 300px;
+	left: 255px;
+}
+
+.tut_menubar{
+  top: 510px;
+  left: 255px ;
+}
+
+.tut_menubar span.joyride-nub{
+  bottom: -28px;
+  left: 190px;
+}
+
+.tut_saveexcursion{
+	top: 555px;
+	left: 505px;
+}
+
+.tut_saveexcursion span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  #4866FA !important;
+  border-top-color: #4866FA !important;
+  bottom: -28px;
+  bottom: none;
+  left: 341px !important;
+}
+
+.tut_addslide{
+	top: 480px;
+	left: 160px;
+}
+
+.tut_addslide span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  #4866FA !important;
+  border-top-color: #4866FA !important;
+  bottom: -28px;
+  bottom: none;
+}
+
+.tut_templatesel{
+	top: 520px !important;
+}
+
+.tut_templatesel span{
+  left: 180px !Important;
+}
+
+.tut_template{
+	top: 58px !important;
+	left: 53px !important;
+	width: 800px !important;
+}
+
+.tut_template span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+#textimagetut {
+	padding-left: 82px;
+	padding-top:3px;
+}
+
+#imageimagetut {
+	padding-left: 62px;
+}
+#flashimagetut {
+	padding-left: 20px;
+}
+#videoimagetut {
+	padding-left: 65px;
+}
+
+#deleteimagetut {
+	padding-left: 19px;
+}
+
+#delimagetut {
+	padding-left: 19px;
+}
+
+.tut_fancy_index {
+	top: 200px !important;
+	left: 417px !important;
+}
+
+.tut_fancy_index span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+.tut_preview {
+	top: 334px !important;
+	left: 410px !important;
+}
+
+.tut_preview span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+.tut_search {
+	left:400px !important;
+}
+
+.tut_search span {
+	left: 340px !important;
+}
+	

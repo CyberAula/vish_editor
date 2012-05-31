@@ -1,6 +1,7 @@
 VISH.Editor.Object = (function(V,$,undefined){
 		
 	var contentToAdd = null;	
+	var uploadDiv = "tab_flash_upload_content";
 		
 	var init = function(){
 		VISH.Editor.Object.Repository.init();
@@ -24,26 +25,27 @@ VISH.Editor.Object = (function(V,$,undefined){
     var options = VISH.Editor.getOptions();
     var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
-    
-    $("input[name='document[file]']").change(function () {
+		
+	  $("#" + uploadDiv + " input[name='document[file]']").change(function () {
       $("input[name='document[title]']").val($("input:file").val());
     });
       
-    $("#tab_flash_upload_content #upload_document_submit").click(function(event) {
-      if(!VISH.Police.validateFileUpload($("input[name='document[file]']").val()[0])){
+    $("#" + uploadDiv + " #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("#" + uploadDiv + " input[name='document[file]']").val())[0]){
         event.preventDefault();
       } else {
         if (options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
-          $("input[name='document[description]']").val(description);
-          $("input[name='document[owner_id]']").val(options["ownerId"]);
-          $("input[name='authenticity_token']").val(options["token"]);
-          $(".documentsForm").attr("action", options["documentsPath"]);
+          $("#" + uploadDiv + " input[name='document[description]']").val(description);
+          $("#" + uploadDiv + " input[name='document[owner_id]']").val(options["ownerId"]);
+          $("#" + uploadDiv + " input[name='authenticity_token']").val(options["token"]);
+          $("#" + uploadDiv + " .documentsForm").attr("action", options["documentsPath"]);
+          //$("#" + uploadDiv + " input[name='tags']").val(_convertToTagsArray($(tagList).tagit("tags")));
         }
       }
     });
   
-    $('form').ajaxForm({
+    $("#" + uploadDiv + ' form').ajaxForm({
       beforeSend: function() {
           var percentVal = '0%';
           bar.width(percentVal);
@@ -68,7 +70,7 @@ VISH.Editor.Object = (function(V,$,undefined){
       var jsonResponse = JSON.parse(response)
       if(jsonResponse.src){
         if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-          VISH.Editor.Object.drawPreview("tab_flash_upload_content",jsonResponse.src)
+          drawPreview(uploadDiv,jsonResponse.src)
           contentToAdd = jsonResponse.src
         }
       }
@@ -99,7 +101,7 @@ VISH.Editor.Object = (function(V,$,undefined){
     //Reset fields
     bar.width('0%');
     percent.html('0%');
-    resetPreview("tab_flash_upload_content")
+    resetPreview(uploadDiv)
     $("input[name='document[file]']").val("");
 		contentToAdd = null;
   }
@@ -210,7 +212,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 	var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
 	var html5VideoFormats = ["mp4","webm","ogg"]        
-	var imageFormats = ["jpg","png","gif","bmp"]                                                         		
+	var imageFormats = ["jpg","jpeg","png","gif","bmp"]                                                         		
 	
 	var _getTypeFromSource = function(source){
 		

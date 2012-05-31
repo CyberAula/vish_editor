@@ -236,6 +236,7 @@ img.carrousel_element_single_row_thumbnails:hover{
   margin-top: -2px;
   border: none;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 a.prev_single_row_thumbnails, a.next_single_row_thumbnails{

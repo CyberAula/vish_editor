@@ -3,8 +3,8 @@
     <head>
 	<meta charset="UTF-8">
 		
-    <title>ViSH Editor</title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/all/fonts.css">
+  <title>ViSH Editor</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/all/fonts.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/styles.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/pack1templates.css">
 	<!--[if gte IE 8]>      
@@ -12,11 +12,14 @@
 	  <link type="text/css" rel="stylesheet" href="stylesheets/ie/editorexplorer9.css">
 	<![endif]-->
 	    	
-    <link rel="stylesheet" type="text/css" href="stylesheets/all/jquery.fancybox-1.3.4.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/all/jslider.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/all/editor.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/all/nicEditor.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/all/joyride-1.0.4.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/all/jquery.fancybox-1.3.4.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/all/jquery-ui-base-1.8.20.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/all/jslider.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/all/editor.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/all/nicEditor.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/carrousel.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/all/tags.css">
 
     <style>  
        .slides > article:not(.fill)::before {
@@ -32,9 +35,10 @@
 
   	<meta name="apple-mobile-web-app-capable" content="yes">
 
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		
 	  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-	  <script type="text/javascript" src="js/libs/jquery-ui-1.8.18.custom.min.js"></script>
+		<script type="text/javascript" src="js/libs/jquery-ui.1.8.20.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.ui.core.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.ui.mouse.min.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.ui.widget.min.js"></script>
@@ -43,17 +47,14 @@
 	  <script type="text/javascript" src="js/libs/jquery.carouFredSel-5.5.0.js"></script>
 	  <script type="text/javascript" src="js/libs/jquery.watermark.min.js"></script>
 		<script type="text/javascript" src="js/libs/jquery.form.js"></script>
+		<script type="text/javascript" src="js/libs/tagit.js"></script>
 		
-	  <!--[if lt IE 9]>
-		  <script src="js/libs/html5shiv.js"></script>
-		<![endif]-->
-	  <script>var walkme_load_in_iframe = true;</script>
-	  <script language='javascript' type='text/javascript' src='http://cdn.walkme.com/users/2161/walkme_2161.js'></script>
-
   </head>
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
+    	<div id="menubar_helpsection"><img src="images/menubar_helpsection.png"/></div>
+		<div id="joyride_help_button"><img id="help_right" src="/images/helptutorial_circle.png"/></div>
 		<div id='menubar'>
 		    <a id="edit_excursion_details" href="#excursiondetails">
 				  <div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
@@ -61,7 +62,7 @@
             <div class='barbutton with_pointer' id=''>
             </div>
 		    <div class='barbutton' id="slide_thumb_1">				
-					<img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+					<img id="addslidebutton" class="image_barbutton" src="/images/templatesthumbs/default.png"/>
 				    <span class="slide_number"></span>
 			</div>
 		    <div class='barbutton' id="slide_thumb_2" >
@@ -112,7 +113,7 @@
       <form id='excursiondetails'>         
           <div id="excursion_details_fields">
             <label for="excursion_title">
-              <div class="textintro1 textintromargin1">Title</div>
+              <div id="tutorialstart" class="textintro1 textintromargin1">Title</div>
             </label>
             <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/images/tutorialimage_blank.png"/>
         <label for="excursion_description">
@@ -139,6 +140,7 @@
       
 	  <div style='display:none'>
 	    <div id='thumbcontent'>
+	      <img id='help_template_selection' src='/images/helptutorial_circle_blank.png'/>
 	      <div class='templatethumb' template='1'>
 		      <img src='/images/templatesthumbs/t1.png' />
 	      </div>
@@ -209,6 +211,36 @@
 	  	</div>
 	  </div>
   
+	 <!-- PROMPT USER WHEN NOT MET MINIMUM REQUIREMENTS -->
+    <div style='display:none'>
+      <div id='requirements_form_wrapper'>
+      	<div id='requirements_form'>      
+	        <img id="image_template_prompt" class="warning_requirements" src="/images/warning.png"/>
+	        <span class="deltext requirementsText">Your browser does not meet the minimum requirements to init Vish Editor, please update your browser.</span> 
+					<div id="recomended_browsers">
+						<div class="recomended_browser">
+						  <span class="browserTitle">Google Chrome</span>
+						  <a href="https://www.google.com/chrome"><img class="browser_img" src="/images/browsers/google_chrome.png"/></a>
+						</div>
+						<div class="recomended_browser">
+              <span class="browserTitle">Mozilla Firefox</span>
+              <a href="http://www.mozilla.org/en-US/firefox/new"><img class="browser_img" src="/images/browsers/firefox.png"/></a>
+            </div>
+						<div class="recomended_browser">
+              <span class="browserTitle">Internet Explorer 9</span>
+              <a href="http://windows.microsoft.com/en-GB/internet-explorer/downloads/ie-9/worldwide-languages"><img class="browser_img" src="/images/browsers/internetexplorer.png"/></a>
+            </div>
+						<div class="recomended_browser">
+              <span class="browserTitle">Opera</span>
+              <a href="http://www.opera.com/download"><img class="browser_img" src="/images/browsers/opera.png"/></a>
+            </div>
+					</div>
+					<div class="buttons_requirements_wrapper">
+            <a href="#" onclick="$.fancybox.close();" class="prompt_button button buttons_requirements">OK</a>
+          </div>
+				</div>
+      </div>
+    </div>
   
   	  <!-- PROMPT USER IF SHE IS SURE TO SAVE THE SLIDE -->
 	  <div style='display:none'>
@@ -240,13 +272,17 @@
   	<!-- IMAGE -->
 	  <div style='display:none'>
 	    <div id="picture_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="images_fancy_tabs_id">	   
 				  <ul>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab tabbable">url</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">vish</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab"><img src='/images/flickr.png'/></a></li>
 				  </ul>
+				  <img class='help_in_fancybox' id='tab_pic_from_url_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_upload_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_repo_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_pic_flikr_help' src='/images/helptutorial_circle_blank.png'/>
 				</div>
 				<div id='tab_pic_from_url_content' class="fancy_tab_content">
             			<div class="box1 box1fancy1">
@@ -256,22 +292,23 @@
 					    			<button type="button" class="button buttonfancy previewButton">Preview</button>
               		</div>
             			<div class="box2">
-            				<div class="previewimgbox">
+            				<div id="picture_preview" class="previewimgbox">
                 				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
                 			</div>
             			</div>
 				</div>      
 				<div id='tab_pic_upload_content' class="fancy_tab_content">
-              <div class="box1 box1fancy1">
+              <div class="box1 box1fancy3">
 				  			<p class="textfancy">Select picture to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
 								
-							    <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
-							        <input type="file" name="document[file]" class="upload_file_input">
+							    <form id="upload_picture_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+							        <input id="upload_file_input" type="file" name="document[file]" class="upload_file_input">
 							        <input type="hidden" name="document[title]">
 							        <input type="hidden" name="document[description]">
 							        <input type="hidden" name="document[owner_id]">
 							        <input type="hidden" name="authenticity_token">
+											<input type="hidden" name="tags">
 							        <input id="upload_document_submit" type="submit" class="button" value="Upload">
 							    </form>
 							    
@@ -280,18 +317,22 @@
 							        <div class="upload_progress_bar_percent">0%</div >
 							    </div>
 									
+									<div class="tagBox">
+				            <ul class="tagList"></ul>
+                  </div>
+									
 							</div>
-              <div class="box2">
-              				<div class="previewimgbox">
-                  				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
-                      </div>
-              </div>
+              <div class="box2 box2_upload">
+            				<div class="previewimgbox">
+                				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
+                    </div>
+							</div>
         </div>            
 				<div id='tab_pic_repo_content' class="fancy_tab_content">
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  		  
 						<div class="search_container">
-						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
 						
 						<div id="tab_pic_repo_content_carrousel"></div>
@@ -305,7 +346,7 @@
                 	  <div class="box1 box1fancy2">
                       <img src="/images/flickrlogo.png" class="imagelogotab">
 				      	<div class="search_container">
-				  	   		<input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+				  	   		<input id="search_flickr_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
     				     </div>	
 				<div id="tab_flikr_content_carrousel"></div>
                 </div>
@@ -317,12 +358,15 @@
   	  <!-- FLASH -->
 	  <div style='display:none'>
 	    <div id="flash_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="flash_fancy_tabs_id">	   
 				  <ul>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_from_url')" id="tab_flash_from_url" class="fancy_tab">embed</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_upload')" id="tab_flash_upload" class="fancy_tab">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_repo')" id="tab_flash_repo" class="fancy_tab">vish</a></li>
 				  </ul>
+				  <img class='help_in_fancybox' id='tab_flash_from_url_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_upload_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_repo_help' src='/images/helptutorial.png'/>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">
@@ -332,7 +376,7 @@
 					  <button type="button" class="button buttonfancy previewButton">Preview</button>
           </div>
                 <div class="box2">
-                				<div class="previewimgbox">
+                				<div id="picture_preview" class="previewimgbox">
                     				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
                     			</div>
                 			</div>
@@ -343,7 +387,7 @@
                 <p class="textfancy">Select SWF file to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
                 
-                  <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                  <form id="upload_flash_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
                       <input type="file" name="document[file]" class="upload_file_input">
                       <input type="hidden" name="document[title]">
                       <input type="hidden" name="document[description]">
@@ -359,7 +403,7 @@
                   
               </div>
               <div class="box2">
-                      <div class="previewimgbox">
+                      <div id="picture_preview" class="previewimgbox">
                           <button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
                       </div>
               </div>
@@ -369,7 +413,7 @@
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  
 						<div class="search_container">
-						  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						  <input id="search_flash" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
 						
 						<div id="tab_flash_repo_content_carrousel"></div>
@@ -389,13 +433,17 @@
   	<!-- VIDEO -->
 	  <div style='display:none'>
 	    <div id="video_fancybox" class="outer_box">
-				<div class="fancy_tabs">	   
+				<div class="fancy_tabs" id="video_fancy_tabs_id">	   
 				    <ul>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_from_url')" id="tab_video_from_url" class="fancy_tab">url</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_repo')" id="tab_video_repo" class="fancy_tab">vish</a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/images/youtube.png'/></a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/images/vimeo.png'/></a></li>
 				    </ul>
+				    <img class='help_in_fancybox' id='tab_video_from_url_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_repo_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_youtube_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_vimeo_help' src='/images/helptutorial.png'/>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
 	        	<div id="box1" class="box1 box1fancy1">
@@ -414,7 +462,7 @@
             <div class="box1 box1fancy2">	
 	            <img src="images/repositoryimg.png" class="imagelogotab">	  
 							<div class="search_container">
-							  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+							  <input id="search_video" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 							</div>
 							
 							<div id="tab_video_repo_content_carrousel"></div>
@@ -434,7 +482,7 @@
                   <div class="box1 box1fancy2">
 					<img src="images/youtubelogo.png" class="imagelogotab">
 					<div class="search_container" id="youtube_search_container">
-					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="youtube_text_to_search"> </input>
+					  <input id="search_youtube_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="youtube_text_to_search"> </input>
 					</div>
 				 
 				
@@ -453,9 +501,9 @@
                 </div>
                 <div id='tab_video_vimeo_content' class="fancy_tab_content">
                   <div class="box1 box1fancy2">
-					<img src="images/vimeo.png" class="imagelogotab">
+					<img src="images/vimeologo.png" class="imagelogotab">
 					<div class="search_container" id="vimeo_search_container">
-					  <input type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
+					  <input id="search_vimeo_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
 					</div>
 				 
 				
@@ -472,21 +520,303 @@
 					
 				  </div>
                 </div>
-                
-                
-                
-                
-                
           </div>
 	    </div>
-	  </div>
+	    
+	   <!-- WALKTHROUGH HELP SECTION -->
+	    <!-- help for initial screen -->
+	    <ol id="initial_screen_help" class="joyRideTipContent">
+          	<li data-id="tutorialstart" data-text="Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
+	  	    <h2>Welcome to ViSH editor!</h2>
+	  	    <p>Using the "Walkthrough icon"<img src="images/helptutorial_circle.png"> around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.
+ </p>
+	  	  </li>
+	  	  <li data-id="excursion_title" data-text="Next" data-options="tipLocation:bottom;" class="Next">
+	  	    <h2>Let´s write a title (Obligatory)</h2>
+	  	    <p>This black space will allow you to write a title to name your excursions. The title in the excursion it is obligatory cause with this feature other user can find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
+	  	  </li>
+	  	  <li data-id="excursion_description" data-text="Next">
+	  	    <h2>Write a description (optional)</h2>
+	        <p>Here you can explain in a little more detail what the excursion is about.
+Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="avatars_carrousel" data-text="Next">
+	  	    <h2>Choose an image that will represent your excursion</h2>
+	        <p>In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
+	  	  </li>
+          <li data-id="save_excursion_details"  class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close">
+	  	    <h2>Save your excursion details</h2>
+	        <p>Once you click on the close button, you will be able to click on continue to save your excursion details, and to start adding content to your excursion.</p>
+	  	  </li>
+	  	</ol>
+	  	
+	  	<ol id="menubar_help" class="joyRideTipContent">
+          <li data-id="menubar" data-text="Next" class="tut_welcome_exc tut_without_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is ViSH editor!</h2>
+	  	    <p>Remember that you can use the "Walkthrough icon"<img src="images/helptutorial_circle.png"> when you need any help around the application. This is the application desktop where you can create your excursions.Click on "Next" to continue.
+ </p>
+	  	  </li>
+          <li data-id="menubar" data-text="Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is the tools menu</h2>
+	  	    <p>In this bar you can see all the options provided to create and manage a new virtual excursion in ViSH.
+Click on "Next" to continue.
+ </p>
+	  	  </li>
+	  	  <li data-id="config_div" data-text="Next" data-options="tipLocation:top">
+	  	    <h2>Configuration Button</h2>
+	        <p>Clicking this button will get you to the first screen where you added the title and the description to your excursion.Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="menubar" data-text="Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is the tools menu</h2>
+	  	    <p>In this zone you will manage all the slides in the grey spaces at the bottom. Every next slide available will be appearing at the grey zones. Click on "Next" to continue.
+ </p>
+ </li>
+           <li data-id="save_excursion_details"  class="tut_saveexcursion" data-options="tipLocation:none;inline:false" data-text="Next">
+	  	    <h2>Save Button</h2>
+	        <p>This button will able you to save your excursion.Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="addslidebutton" class="tut_addslide" data-text="Close">
+	  	    <h2>Add new slide button</h2>
+	        <p>This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as a icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walkthrough and start adding content to your excursion.</p>
+	  	  </li>
+	  	</ol>
+	  	
+	  	<!--help for template-->
+	  	<ol id="template_help" class="joyRideTipContent">
+	  	  <li data-id="zone1" data-text="Close" class="custom tut_template">
+	  	    <h2>Adding content to a slide</h2>
+	  	    <p>To fill the slide you choosen with content, you can click the grey spaces in the template.
+            If you click on one of them,</p>
+            <p>the content icons will appear: </p>
+            <ul>
+            <li><h1>Text<img id="textimagetut" src="images/text_small.png"></h1> 
+            </li>
+            Images <img id="imageimagetut" src="images/image_small.png"><br>
+            Flash Content <img id="flashimagetut" src="images/flash_small.png"><br>
+            Videos <img id="videoimagetut" src="images/video_small.png"><br>
+            <br>
+            If you click one of these icons (depending on which content do you choose to fill the grey space) another
+            window will<br>
+            pop-up to help you, for an exception of the text icon, which will make appear a text tools bar at 
+            the top of the application that will help you defining the style for your text.
+            <br>
+            <img id="textedimagetut" src="images/textedimg.png"><br>
+            <br>
+            Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, 
+            and in case you want to delete the content you can use the icon at the right bottom corner on your space:
+            <br>
+            Delete Content<img id="deleteimagetut" src="images/del_content_small.png"><br> 
+            <br>
+            If you want to delete a slide you can use the close icon to do the task at the right upper corner:
+            <br>
+            Close or Delete<img id="delimagetut" src="images/delete.png"><br>
+            <br>
+            If you need any help with any of the content you can always use the help icons in their respective windows.
+            Click on "Close" to finish this walkthrough.            
+	  	  </li>	  	  
+	  	</ol>
     
-
-	
-	
+    	<!--help for template selection fancybox-->
+	  	<ol id="help_template_selection_help" class="joyRideTipContent">
+	  	  <li data-id="thumbcontent" data-text="Close" class="custom tut_templatesel">
+	  	    <h2>Selecting a Slide</h2>
+	  	    <p>This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.<br>
+Click on "Close" to finish this walkthrough.
+            </p>
+	  	  </li>	 	  
+	  	</ol>
+    
+    	<!--help for fancybox of images-->
+		<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
+	  	    <li data-id="thumbcontent" data-text="Next" class="custom tut_fancy_index">
+	  	    <h2>Adding Images</h2>
+	  	    <p>This window will help you in order to add images to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Url</h1>    (add image by pasting a url)</li>
+            <li><h1>Upload</h1> (add image by upload it from your computer)</li>
+            <li><h1>Vish</h1>   (add an image by choosing one from the ViSH repository)</li>
+            <li><h1>Flickr</h1> (add an image by choosing one from Flickr)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>	 
+          <li data-id="picture_url" data-text="Next" class="custom">
+	  	    <h2>Adding images by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains an image, by example:<br>
+            <h1>"http://www.####.com/example.jpg"</h1><br>
+            This supports almost every image format files (jpg,tiff,png,gif...)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the image before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the image you are going to add.<br>
+               Once you are ready to add the image, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the image is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>
+	  	</ol>
+	  		  	
+	  	<ol id="upload_picture_form_help" class="joyRideTipContent">
+	  	  <li data-id="upload_file_input" data-text="Next" class="custom">
+	  	    <h2>Adding images by upload</h2>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose an image from your device.Once you do that, you can click the "upload" button in order to preview the image in zone below.<br>
+            This supports almost every image format files (jpg,tiff,png,gif...)<br>
+            Click on "Next" to continue<br>
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the image before you add it</h2>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the image you are going to add.<br>
+               Once you are ready to add the image, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the image is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>
+	  	</ol>
+	  	
+	  	<ol id="search_picture_help" class="joyRideTipContent">
+	  	  <li data-id="search_picture" data-text="Close" class="custom tut_search">
+	  	    <h2>Search images in Vish repository</h2>
+	  	    <p>This box will allow you to search for images in the vish repository.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+            Click on "Close" to finish this walkthrough.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_flickr_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_flickr_fancy" data-text="Close" class="custom tut_search">
+	  	    <h2>Search images in Flickr</h2>
+	  	    <p>This box will allow you to search for images in Flickr.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+            Click on "Close" to finish this walkthrough.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
+	  	<!--help for fancybox of flash-->
+		<ol id="flash_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+          	<h2>Adding flash content</h2>
+	  	    <p>This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Embed</h1>    (add flash content by pasting a url)</li>
+            <li><h1>Upload</h1> (add flash content by upload it from your computer)</li>
+            <li><h1>Vish</h1>   (add flash content by choosing one from the ViSH repository)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>
+          <li data-id="flash_embed_code" data-text="Next" class="custom">
+	  	    <h2>Adding Flash content by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a flash content, by example:<br>
+            <h1>"http://www.####.com/example.swf"</h1><br>
+            This supports Flash content like swf files)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the content before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.<br>
+               Once you are ready to add the content, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>	  
+	  	</ol>
+	  		  	
+	  	<ol id="upload_flash_form_help" class="joyRideTipContent">
+	  	  <li data-id="upload_flash_form" data-text="Next" class="custom">
+	  	    <h2>Adding flash content by upload</h2>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device.Once you do that, you can click the "upload" button in order to preview the content in zone below.<br>
+            This supports almost every swf file.<br>
+            Click on "Next" to continue<br>
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the content before you add it</h2>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the content you are going to add.<br>
+               Once you are ready to add it to the slide, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_flash_help" class="joyRideTipContent">
+	  	  <li data-id="search_flash" data-text="Close" class="custom tut_search">
+	  	    <h2>Search flash content </h2>
+	  	    <p>This box will allow you to search for flash content in the ViSH repository.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
+	  	<!--help for fancybox of videos-->
+		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+	  	    <h2>Adding Video</h2>
+	  	    <p>This window will help you in order to add videos to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Url</h1>   (add video by pasting a url)</li>
+            <li><h1>Vish</h1>  (add video from the ViSH repository)</li>
+            <li><h1>Youtube</h1>(add video by choosing one from Youtube)</li>
+            <li><h1>Vimeo</h1>  (add video by choosing one from Vimeo)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>	 
+          <li data-id="video_url" data-text="Next" class="custom">
+	  	    <h2>Adding video by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a video, by example:<br>
+            <h1>"http://www.####.com/example.avi"</h1><br>
+            This supports almost every image format files (avi,mpg,flv...)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the video before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the video you are going to add.<br>
+               Once you are ready to add the ideo, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the video is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li> 	  
+	  	</ol>
+	  	
+	  	<ol id="search_video_help" class="joyRideTipContent">
+	  	  <li data-id="search_video" data-text="Close" class="custom tut_search">
+<h2>Search videos in Vish repository</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
+            </p>
+	  	  </li>	  	  	  
+	  	</ol>
+	  	  	
+	  	<ol id="search_youtube_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_youtube_fancy" data-text="Close" class="custom tut_search">
+<h2>Search videos in Youtube</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	<ol id="search_vimeo_fancy_help" class="joyRideTipContent">
+	  	  <li data-id="search_vimeo_fancy" data-text="Close" class="custom tut_search">
+<h2>Search videos in Vimeo</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
+	  	  </li>	  	  
+	  	</ol>
+	  	
+	  	
 	<script type="text/javascript" src="js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
 	<script type="text/javascript" src="js/libs/jquery.fancybox-1.3.4.pack.js"></script>
 	<script type="text/javascript" src="js/libs/json2.js"></script>
+	<script type="text/javascript" src="js/libs/modernizr.foundation.js"></script>
+	<script type="text/javascript" src="js/libs/jquery.joyride-1.0.4.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.js"></script>
 	<script type="text/javascript" src="js/VISH.Samples.js"></script>
@@ -523,6 +853,7 @@
 	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Quiz.js"></script>
 	<script type="text/javascript" src="js/lang/translations.es.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Tour.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.js"></script>
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>

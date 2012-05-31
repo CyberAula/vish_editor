@@ -48,7 +48,7 @@ VISH.Mods.fc.loader = (function(V, undefined){
         
         //after everything have been loaded continue
         $.when.apply(null, loaders).done(function() {
-              //console.log("Flashcard preloaded!");
+              //VISH.Debugging.log("Flashcard preloaded!");
               // callback when everything was loaded
               //finally init canvasState and create the pois
               //canvasState.init();

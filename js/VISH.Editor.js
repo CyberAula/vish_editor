@@ -25,15 +25,21 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
+		
+		//Check minium requirements
+		if(!VISH.Utils.checkMiniumRequirements()){
+			return;
+		}
+		
 		//first set VISH.Editing to true
 		VISH.Editing = true;
+		
 		if(options){
 			initOptions = options;
-			if(options['developping']){
-				VISH.Debugging.enableDevelopingMode();
+			if(options['developping']==true){
+				VISH.Debugging.init(true);
 			}
-		}
-		else{
+		}	else {
 			initOptions = {};
 		}
 		
@@ -56,57 +62,55 @@ VISH.Editor = (function(V,$,undefined){
     	});
     	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
     	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
-		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
-		$(document).on('click','#save', _onSaveButtonClicked);
-		$(document).on('click','.editable', _onEditableClicked);
-		$(document).on('click','.selectable', _onSelectableClicked);
-		$(document).on('click','.delete_content', _onDeleteItemClicked);
-		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		//arrows in button panel
-		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
+		  $(document).on('click','.templatethumb', _onTemplateThumbClicked);
+		  $(document).on('click','#save', _onSaveButtonClicked);
+		  $(document).on('click','.editable', _onEditableClicked);
+		  $(document).on('click','.selectable', _onSelectableClicked);
+		  $(document).on('click','.delete_content', _onDeleteItemClicked);
+		  $(document).on('click','.delete_slide', _onDeleteSlideClicked);
+		  //arrows in button panel
+		  $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+		  $(document).on('click','#arrow_right_div', _onArrowRightClicked);
 		
-		//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		_addEditorEnterLeaveEvents();
+		  //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+		  _addEditorEnterLeaveEvents();
 		
-		V.SlidesUtilities.redrawSlides();
+		  V.SlidesUtilities.redrawSlides();
 		
-		addEventListeners(); //comes from slides.js to be called only once
+		  addEventListeners(); //comes from slides.js to be called only once
 		
-		if(excursion){
-			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide()
-		}
+			if(excursion){
+				//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+				$('.object_wrapper').hide()
+			}
 		
-		//Init submodules
-		V.Debugging.init(true);
-		V.Editor.Text.init();
-		V.Editor.Image.init();
-		V.Editor.Video.init();
-		V.Editor.Object.init();
-		V.Editor.AvatarPicker.init();
-		V.Editor.I18n.init(options["lang"]);
-		V.Editor.Quiz.init();
-		// Intial box to input the details related to the excursion
-		$("a#edit_excursion_details").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'height': 600,
-			'padding': 0,
-			'hideOnOverlayClick': false,
-      		'hideOnContentClick': false,
-			'showCloseButton': false
-		});
-		
-		// The box is launched when the page is loaded
-		if(excursion === undefined){
-			$("#edit_excursion_details").trigger('click');
-		}
-		//Remove overflow from fancybox
-//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
-		//if click on begginers tutorial->launch it
-		$(document).on('click','#start_tutorial', _startTutorial);
-
+			//Init submodules
+			V.Editor.Text.init();
+			V.Editor.Image.init();
+			V.Editor.Video.init();
+			V.Editor.Object.init();
+			V.Editor.AvatarPicker.init();
+			V.Editor.I18n.init(options["lang"]);
+			V.Editor.Quiz.init();
+			// Intial box to input the details related to the excursion
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'width': 800,
+				'height': 600,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+	      		'hideOnContentClick': false,
+				'showCloseButton': false
+			});
+			
+			// The box is launched when the page is loaded
+			if(excursion === undefined){
+				$("#edit_excursion_details").trigger('click');
+			}
+			//Remove overflow from fancybox
+	//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+			//if click on begginers tutorial->launch it
+			_addTutorialEvents();
 	};
 	
 	
@@ -155,20 +159,25 @@ VISH.Editor = (function(V,$,undefined){
 
 	/**
 	 * function to load a tab and its content in the fancybox
+	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
-	    //deselect all of them
-	    $(".fancy_tab").removeClass("fancy_selected");
-	    //select the correct one
-	    $("#" + tab_id).addClass("fancy_selected");
+	  //deselect all of them
+	  $(".fancy_tab").removeClass("fancy_selected");
+	  //select the correct one
+	  $("#" + tab_id).addClass("fancy_selected");
 	    
-	    //hide previous tab
-	    $(".fancy_tab_content").hide();
-	    //show content
-	    $("#" + tab_id + "_content").show();
+	  //hide previous tab
+	  $(".fancy_tab_content").hide();
+	  //show content
+	  $("#" + tab_id + "_content").show();
 
-      //Submodule callbacks
-			
+		//hide previous help button
+		$(".help_in_fancybox").hide();
+		//show correct one
+		$("#"+ tab_id + "_help").show();
+		
+        //Submodule callbacks	
 		switch(tab_id) {
 			//Image
 			case "tab_pic_from_url":
@@ -209,48 +218,11 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_repo":
 				VISH.Editor.Object.Repository.onLoadTab();
 				break;
-				
-				
 			default:
 				break;
 		}
 
 	};
-
-
-  /**
-   * Function to get the value from the input identified by the id param and draw it in the zone in params['current_el']
-   */
-  var getValueFromFancybox = function(id_to_get){
-    $.fancybox.close();
-    
-	//Call the draw function of the submodule
-    switch(id_to_get)  {
-      case "picture_url":
-        V.Editor.Image.drawImage($("#"+id_to_get).val());
-        break;
-      case "flash_embed_code":
-    	V.Editor.Object.drawObject($("#"+id_to_get).val())
-        break;
-      case "video_url":
-        //V.Editor.Video.HTML5.drawVideoWithUrl($("#"+id_to_get).val())
-				V.Editor.Object.drawObject($("#"+id_to_get).val())
-        break;
-      //case "add_your_input_id_here":
-        //VISH.Editor.Resource.Module.function($("#"+id_to_get).val())
-      // break;
-      default:
-        break;
-    }
-    
-    //delete the value
-    $("#"+id_to_get).val("");
-    
-    //finally set focus to current_area
-    var current_area = VISH.Editor.getCurrentArea();
-    current_area.trigger("focus");   
-    
-  };
 
   /**
    * Removes the lightbox
@@ -263,6 +235,77 @@ VISH.Editor = (function(V,$,undefined){
   //////////////////
   ///    Events
   //////////////////
+  
+  /**
+   * function to add the events to the help buttons to launch joy ride bubbles
+   */
+  var _addTutorialEvents = function(){
+  	$(document).on('click','#start_tutorial', function(){
+			V.Editor.Tour.startTourWithId('initial_screen_help', 'bottom');
+	});
+	$(document).on('click','#help_right', function(){
+			V.Editor.Tour.startTourWithId('menubar_help', 'top');
+	});
+	
+	//template
+	$(document).on('click','#help_template_image', function(){
+			//first we need to set up the li data-id attribute to point to the header id
+			var zone;
+			if($(slideEls[curSlide]) && $(slideEls[curSlide]).find("[areaid=header]")){
+				zone = $(slideEls[curSlide]).find("[areaid=header]").attr("id");
+			}
+			else{
+				zone = "zone1";
+			}
+			$("#template_help > li").attr("data-id",zone);
+			V.Editor.Tour.startTourWithId('template_help', 'bottom');
+	});
+	
+	//template selection fancybox	
+	$(document).on('click','#help_template_selection', function(){
+			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
+	});	
+	
+	//image fancybox, one help button in each tab
+	$(document).on('click','#tab_pic_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_pic_upload_help', function(){
+			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
+	});
+	$(document).on('click','#tab_pic_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
+	});
+	$(document).on('click','#tab_pic_flikr_help', function(){
+			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
+	});
+	
+	//flash fancybox, one help button in each tab
+	$(document).on('click','#tab_flash_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('flash_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_flash_upload_help', function(){
+			V.Editor.Tour.startTourWithId('upload_flash_form_help', 'top');
+	});
+	$(document).on('click','#tab_flash_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_flash_help', 'bottom');
+	});
+	
+	//video fancybox, one help button in each tab
+	$(document).on('click','#tab_video_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+	});	
+	$(document).on('click','#tab_video_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_video_help', 'top');
+	});
+	$(document).on('click','#tab_video_youtube_help', function(){
+			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
+	});
+	$(document).on('click','#tab_video_vimeo_help', function(){
+			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
+	});
+	
+  };
   
   /**
    * function to add enter and leave events only for the VISH editor
@@ -289,13 +332,7 @@ VISH.Editor = (function(V,$,undefined){
   	$('.object_wrapper').hide();
   };
   
-  /**
-   * function to start the walkthrough
-   */
-  var _startTutorial = function(){
-   	WalkMeAPI.startWalkthruById(5033, 0);
-  }
-  
+   
 	/**
 	 * function callen when the user clicks on the edit
 	 * excursion details button
@@ -363,8 +400,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if($(this).attr("areaid")==="header"){
 			content = $("#menuselect_for_header").clone().attr('id','');
-		}
-		else{
+		}	else {
 			content = $("#menuselect").clone().attr('id','');
 		}
 				
@@ -378,7 +414,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
@@ -390,7 +426,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addflash").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -401,7 +437,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addvideo").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -419,25 +455,25 @@ VISH.Editor = (function(V,$,undefined){
   	params['current_el'] = $(this).parent();
   	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
   	$.fancybox(
-		$("#prompt_form").html(),
-		{
-        	'autoDimensions'	: false,
-			'width'         	: 350,
-			'height'        	: 150,
-			'showCloseButton'	: false,
-			'padding' 			: 0,
-			'onClosed'			: function(){
-				//if user has answered "yes"
-				if($("#prompt_answer").val() ==="true"){
-					$("#prompt_answer").val("false");
-					params['current_el'].html("");					
-					$(".theslider").hide();	
-					params['current_el'].removeAttr("type");
-					params['current_el'].addClass("editable");
+			$("#prompt_form").html(),
+			{
+	      'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+					//if user has answered "yes"
+					if($("#prompt_answer").val() ==="true"){
+						$("#prompt_answer").val("false");
+						params['current_el'].html("");					
+						$(".theslider").hide();	
+						params['current_el'].removeAttr("type");
+						params['current_el'].addClass("editable");
+					}
 				}
 			}
-		}
-	);
+	  );
   };
   
   /**
@@ -447,28 +483,28 @@ VISH.Editor = (function(V,$,undefined){
   	var article_to_delete = $(this).parent();
   	$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
   	$.fancybox(
-		$("#prompt_form").html(),
-		{
-        	'autoDimensions'	: false,
-			'width'         	: 350,
-			'height'        	: 150,
-			'showCloseButton'	: false,
-			'padding' 			: 0,
-			'onClosed'			: function(){
-				//if user has answered "yes"
-				if($("#prompt_answer").val() ==="true"){
-					$("#prompt_answer").val("false");
-					$(".theslider").hide();	
-					article_to_delete.remove();
-					//set curSlide to the preious one if this was the last one
-					if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
-						curSlide -=1;
-					}					
-					V.SlidesUtilities.redrawSlides();			
+		  $("#prompt_form").html(),
+		  {
+	      'autoDimensions'	: false,
+				'width'         	: 350,
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+				  //if user has answered "yes"
+					if($("#prompt_answer").val() ==="true"){
+						$("#prompt_answer").val("false");
+						$(".theslider").hide();	
+						article_to_delete.remove();
+						//set curSlide to the preious one if this was the last one
+						if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
+							curSlide -=1;
+						}					
+						V.SlidesUtilities.redrawSlides();			
+					}
 				}
-			}
-		}
-	);
+		  }
+	  );
   };
 
   /**
@@ -499,17 +535,16 @@ VISH.Editor = (function(V,$,undefined){
   		
   		//the id is "draggableunicID_1" we want to remove "draggable"
   		the_id = the_id.substring(9);
-  		
   		$("#sliderId" + the_id).show();  		
   	}
   	
   	//add css
   	$(this).css("border-color", "rgb(255, 2, 94)");
-	$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-	$(this).css("outline", "0");
-	$(this).css("outline", "thin dotted \9");
+		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(this).css("outline", "0");
+		$(this).css("outline", "thin dotted \9");
   };
   
   var _removeSelectableProperties = function(){  	
@@ -518,12 +553,12 @@ VISH.Editor = (function(V,$,undefined){
   	$(".delete_content").hide();
   	
   	//remove css
-  	$(".selectable").css("border-color", "none");
-	$(".selectable").css("-webkit-box-shadow", "none");
-	$(".selectable").css("-moz-box-shadow", "none");
-	$(".selectable").css("box-shadow", "none");
-	$(".selectable").css("outline", "0");
-	$(".selectable").css("cursor", "pointer");
+	  $(".selectable").css("border-color", "none");
+		$(".selectable").css("-webkit-box-shadow", "none");
+		$(".selectable").css("-moz-box-shadow", "none");
+		$(".selectable").css("box-shadow", "none");
+		$(".selectable").css("outline", "0");
+		$(".selectable").css("cursor", "pointer");
   };
 
   /**
@@ -535,38 +570,36 @@ VISH.Editor = (function(V,$,undefined){
   var _onSaveButtonClicked = function(){
     if(slideEls.length === 0){
     	$.fancybox(
-			$("#message1_form").html(),
-			{
-	        	'autoDimensions'	: false,
-				'width'         	: 350,
-				'height'        	: 200,
-				'showCloseButton'	: false,
-				'padding' 			: 5		
-			}
-		);
-    }
-    else{    
+			  $("#message1_form").html(),
+			  {
+		      'autoDimensions'	: false,
+					'width'         	: 350,
+					'height'        	: 200,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+			  }
+		  );
+    } else {    
 	    $.fancybox(
-			$("#save_form").html(),
-			{
-	        	'autoDimensions'	: false,
-				'width'         	: 350,
-				'height'        	: 150,
-				'showCloseButton'	: false,
-				'padding' 			: 0,
-				'onClosed'			: function(){
-					//if user has answered "yes"
-					if($("#save_answer").val() ==="true"){
-						$("#save_answer").val("false");	
-						_saveExcursion();				
+			  $("#save_form").html(),
+			  {
+		      'autoDimensions'	: false,
+					'width'         	: 350,
+					'height'        	: 150,
+					'showCloseButton'	: false,
+					'padding' 			: 0,
+					'onClosed'			: function(){
+							//if user has answered "yes"
+							if($("#save_answer").val() ==="true"){
+								$("#save_answer").val("false");	
+								_saveExcursion();				
+							}	else {
+								return false;
+							}
 					}
-					else{
-						return false;
-					}
-				}
-			}
-		);
-	}
+			  }
+		  );
+	  }
   };
     
     
@@ -718,18 +751,17 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}
-		else if(params['current_el']){
+		}	else if(params['current_el']){
 			return params['current_el'].parent().attr('template');
 		}
 		return null;
 	}
 	
 	var getCurrentArea = function() {
-	    if(params['current_el']){
-	      return params['current_el'];
-	    }
-	    return null;
+    if(params['current_el']){
+      return params['current_el'];
+    }
+    return null;
   }
 
 
@@ -737,7 +769,6 @@ VISH.Editor = (function(V,$,undefined){
 		init					         	  : init,
 		addDeleteButton						: addDeleteButton,
 		loadTab 				        	: loadTab,
-		getValueFromFancybox    	: getValueFromFancybox,
 		getId                  		: getId,
 		getTemplate            		: getTemplate,
 		getCurrentArea        		: getCurrentArea,
