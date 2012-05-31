@@ -13038,7 +13038,7 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("template_help", "bottom")
     });
     $(document).on("click", "#help_template_selection", function() {
-      V.Editor.Tour.startTourWithId("help_template_selection_help", "top")
+      V.Editor.Tour.startTourWithId("help_template_selection_help", "bottom")
     });
     $(document).on("click", "#tab_pic_from_url_help", function() {
       V.Editor.Tour.startTourWithId("images_fancy_tabs_id_help", "top")
@@ -13047,10 +13047,10 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("upload_picture_form_help", "top")
     });
     $(document).on("click", "#tab_pic_repo_help", function() {
-      V.Editor.Tour.startTourWithId("search_picture_help", "top")
+      V.Editor.Tour.startTourWithId("search_picture_help", "bottom")
     });
     $(document).on("click", "#tab_pic_flikr_help", function() {
-      V.Editor.Tour.startTourWithId("search_flickr_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_flickr_fancy_help", "bottom")
     });
     $(document).on("click", "#tab_flash_from_url_help", function() {
       V.Editor.Tour.startTourWithId("flash_fancy_tabs_id_help", "top")
@@ -13059,7 +13059,7 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("upload_flash_form_help", "top")
     });
     $(document).on("click", "#tab_flash_repo_help", function() {
-      V.Editor.Tour.startTourWithId("search_flash_help", "top")
+      V.Editor.Tour.startTourWithId("search_flash_help", "bottom")
     });
     $(document).on("click", "#tab_video_from_url_help", function() {
       V.Editor.Tour.startTourWithId("video_fancy_tabs_id_help", "top")
@@ -13068,10 +13068,10 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("search_video_help", "top")
     });
     $(document).on("click", "#tab_video_youtube_help", function() {
-      V.Editor.Tour.startTourWithId("search_youtube_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_youtube_fancy_help", "bottom")
     });
     $(document).on("click", "#tab_video_vimeo_help", function() {
-      V.Editor.Tour.startTourWithId("search_vimeo_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_vimeo_fancy_help", "bottom")
     })
   };
   var _addEditorEnterLeaveEvents = function() {
@@ -13457,12 +13457,10 @@ VISH.Editor.Image = function(V, $, undefined) {
     }
   };
   var processResponse = function(response) {
-    console.log("process resposne " + response);
     try {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
         if(VISH.Police.validateObject(jsonResponse.src)[0]) {
-          console.log("validate");
           VISH.Editor.Object.drawPreview(uploadDiv, jsonResponse.src);
           contentToAdd = jsonResponse.src
         }
@@ -13590,8 +13588,6 @@ VISH.Editor.Object = function(V, $, undefined) {
   };
   var previewBackground;
   var drawPreview = function(divId, src) {
-    console.log("Drawpreview divId: " + divId);
-    console.log("Drawpreview src: " + src);
     previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
     $("#" + divId + " .previewimgbox").css("background-image", "none");
     $("#" + divId + " .previewimgbox img.imagePreview").remove();
@@ -14046,6 +14042,8 @@ VISH.Editor.API = function(V, $, undefined) {
         result["flashes"] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList["flashes"]);
         successCallback(result)
       }
+    }else {
+      _requestByType("swfs", "", successCallback, failCallback)
     }
   };
   var requestImages = function(text, successCallback, failCallback) {
@@ -14076,6 +14074,8 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }else {
+      _requestByType("picture", "", successCallback, failCallback)
     }
   };
   var _requestByType = function(type, query, successCallback, failCallback) {
