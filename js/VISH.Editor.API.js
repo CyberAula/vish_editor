@@ -188,11 +188,12 @@ VISH.Editor.API = (function(V,$,undefined){
 		
     $.ajax({
         type: "GET",
-        url: "/tags.json?tag=",
+        url: "/tags.json?mode=popular&limit=100",
         dataType:"html",
         success:function(response){
             if(typeof successCallback == "function"){
               tags = JSON.parse(response);
+							console.log(tags)
               successCallback(tags);
             }
         },

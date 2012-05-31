@@ -18,6 +18,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		//Upload content
 		var options = VISH.Editor.getOptions();
 		var tagList = $("#" + uploadDiv + " .tagList")
+		var tagit_input = $(tagList).find(".tagit-input")
 		var bar = $('.upload_progress_bar');
     var percent = $('.upload_progress_bar_percent');
 		
