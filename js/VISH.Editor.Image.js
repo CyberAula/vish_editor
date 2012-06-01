@@ -12,7 +12,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-        VISH.Editor.Object.drawPreview("#" + urlDivId, $("#" + urlInputId).val())
+        VISH.Editor.Object.drawPreview(urlDivId, $("#" + urlInputId).val())
 				contentToAdd = $("#" + urlInputId).val()
       }
     });

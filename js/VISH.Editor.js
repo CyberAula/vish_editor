@@ -92,17 +92,20 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.AvatarPicker.init();
 			V.Editor.I18n.init(options["lang"]);
 			V.Editor.Quiz.init();
+			
 			// Intial box to input the details related to the excursion
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
-				'height': 600,
+				'height': 650,
 				'padding': 0,
 				'hideOnOverlayClick': false,
-	      		'hideOnContentClick': false,
+	      'hideOnContentClick': false,
 				'showCloseButton': false
 			});
+			//Request initial tags for excursion details form
+			VISH.Editor.API.requestTags(_onInitialTagsReceived)
 			
 			// The box is launched when the page is loaded
 			if(excursion === undefined){
@@ -240,6 +243,31 @@ VISH.Editor = (function(V,$,undefined){
   ///    Events
   //////////////////
   
+	
+	var _onInitialTagsReceived = function(data){
+		 var tagList = $(".tagBoxIntro .tagList");
+     
+		 console.log("_onInitialTagsReceived: " + data)
+		 console.log("taglist: " + $(tagList)[0])
+		 
+     //Insert the two first tags.
+     if ($(tagList).children().length == 0){
+        $.each(data, function(index, tag) {
+          if(index==2){
+            return false; //break the bucle
+          }
+          $(tagList).append("<li>" + tag + "</li>")
+        });
+        
+				console.log("tagit called!")
+        $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , tagsChanged:function (tag, action) {
+          //tag==tagName
+          //action==["moved","added","popped" (remove)]
+          } 
+        });
+     }
+	}
+	
   /**
    * function to add the events to the help buttons to launch joy ride bubbles
    */

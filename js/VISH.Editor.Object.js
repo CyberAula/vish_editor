@@ -16,7 +16,7 @@ VISH.Editor.Object = (function(V,$,undefined){
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = $("#" + urlInputId).val()
-        drawPreview("#" + urlDivId, contentToAdd)    
+        drawPreview(urlDivId, contentToAdd)    
       }
     });
 		
