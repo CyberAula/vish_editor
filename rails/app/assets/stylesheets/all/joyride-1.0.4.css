@@ -51,25 +51,20 @@ width: 100%;
   width: 0;
   height: 0;
   border: solid 14px;
-  border: solid 14px;
 }
 .joyride-tip-guide span.joyride-nub.top {
   border-top-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
   border-bottom-color: #4866FA;
-  border-bottom-color: #4866FA;
   top: -28px;
-  bottom: none;
 }
 .joyride-tip-guide span.joyride-nub.bottom {
   border-bottom-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
   border-top-color:  #4866FA;
-  border-top-color: #4866FA;
   bottom: -28px;
-  bottom: none;
 }
 
 
@@ -79,7 +74,10 @@ width: 100%;
   margin: 0;
   font-weight: bold;
 }
-.joyride-tip-guide h1 { font-size: 30px; }
+.joyride-tip-guide h1 { font-size: 16px;
+						color: #03C;
+						font-style:italic;
+						margin: 5px; }
 .joyride-tip-guide h2 { font-size: 17px; 
 						color: #4866FA;
 						padding-bottom: 5px;  }
@@ -88,7 +86,6 @@ width: 100%;
 .joyride-tip-guide h5 { font-size: 16px; }
 .joyride-tip-guide h6 { font-size: 14px; }
 .joyride-tip-guide p {
-  margin: 0 0 10px 0;
   font-size: 14px;
   line-height: 18px;
 }

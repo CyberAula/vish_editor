@@ -12511,7 +12511,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
   initialize()
 }
 ;(function($) {
-  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, tagsChanged:function(tagValue, action, element) {
+  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Write more tags", watermarkDenyMessage:"Tags limit reached", tagsChanged:function(tagValue, action, element) {
   }}, _splitAt:/\ |,/g, _existingAtIndex:0, _pasteMetaKeyPressed:false, _keys:{backspace:[8], enter:[13], space:[32], comma:[44, 188], tab:[9]}, _sortable:{sorting:-1}, _create:function() {
     var self = this;
     this.tagsArray = [];
@@ -12536,6 +12536,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
     this.input = this.element.find(".tagit-input");
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
+    }
     $(this.element).click(function(e) {
       if($(e.target).hasClass("tagit-close")) {
         var parent = $(e.target).parent();
@@ -12612,7 +12615,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this.input.blur(function(e) {
       self.currentLabel = $(this).val();
       self.currentValue = $(this).attr("tagValue");
-      if(self.options.allowNewTags) {
+      if(self.options.allowNewTags && self.currentLabel) {
         self.timer = setTimeout(function() {
           self._addTag(self.currentLabel, self.currentValue);
           self.currentValue = "";
@@ -12620,7 +12623,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
         }, 400)
       }
       $(this).val("").removeAttr("tagValue");
-      return false
+      return true
     });
     if(!String.prototype.trim) {
       String.prototype.trim = function() {
@@ -12662,6 +12665,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }else {
       this.tagsArray.splice(tag.index, 1)
     }
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
+    }
     for(var ind in this.tagsArray) {
       this.tagsArray[ind].index = ind
     }
@@ -12673,6 +12679,15 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     return
   }, _addTag:function(label, value) {
+    if(this.tagsArray.length > this.options.maxTags - 1) {
+      return
+    }
+    if(this.tagsArray.length == this.options.maxTags - 1) {
+      if(typeof $.watermark == "object") {
+        this.input.watermark(this.options.watermarkDenyMessage)
+      }
+      $(this.input).blur()
+    }
     this.input.autocomplete("close").val("");
     if(this._splitAt && label.search(this._splitAt) > 0) {
       var result = label.split(this._splitAt);
@@ -12812,6 +12827,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this._initialTags();
     if(this.options.tagsChanged) {
       this.options.tagsChanged(null, "reset", null)
+    }
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
     }
   }, fill:function(tags) {
     if(tags !== undefined) {
@@ -13038,7 +13056,7 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("template_help", "bottom")
     });
     $(document).on("click", "#help_template_selection", function() {
-      V.Editor.Tour.startTourWithId("help_template_selection_help", "top")
+      V.Editor.Tour.startTourWithId("help_template_selection_help", "bottom")
     });
     $(document).on("click", "#tab_pic_from_url_help", function() {
       V.Editor.Tour.startTourWithId("images_fancy_tabs_id_help", "top")
@@ -13047,10 +13065,10 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("upload_picture_form_help", "top")
     });
     $(document).on("click", "#tab_pic_repo_help", function() {
-      V.Editor.Tour.startTourWithId("search_picture_help", "top")
+      V.Editor.Tour.startTourWithId("search_picture_help", "bottom")
     });
     $(document).on("click", "#tab_pic_flikr_help", function() {
-      V.Editor.Tour.startTourWithId("search_flickr_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_flickr_fancy_help", "bottom")
     });
     $(document).on("click", "#tab_flash_from_url_help", function() {
       V.Editor.Tour.startTourWithId("flash_fancy_tabs_id_help", "top")
@@ -13059,7 +13077,7 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("upload_flash_form_help", "top")
     });
     $(document).on("click", "#tab_flash_repo_help", function() {
-      V.Editor.Tour.startTourWithId("search_flash_help", "top")
+      V.Editor.Tour.startTourWithId("search_flash_help", "bottom")
     });
     $(document).on("click", "#tab_video_from_url_help", function() {
       V.Editor.Tour.startTourWithId("video_fancy_tabs_id_help", "top")
@@ -13068,10 +13086,10 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("search_video_help", "top")
     });
     $(document).on("click", "#tab_video_youtube_help", function() {
-      V.Editor.Tour.startTourWithId("search_youtube_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_youtube_fancy_help", "bottom")
     });
     $(document).on("click", "#tab_video_vimeo_help", function() {
-      V.Editor.Tour.startTourWithId("search_vimeo_fancy_help", "top")
+      V.Editor.Tour.startTourWithId("search_vimeo_fancy_help", "bottom")
     })
   };
   var _addEditorEnterLeaveEvents = function() {
@@ -13447,12 +13465,10 @@ VISH.Editor.Image = function(V, $, undefined) {
     }
   };
   var processResponse = function(response) {
-    console.log("process resposne " + response);
     try {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
         if(VISH.Police.validateObject(jsonResponse.src)[0]) {
-          console.log("validate");
           VISH.Editor.Object.drawPreview(uploadDiv, jsonResponse.src);
           contentToAdd = jsonResponse.src
         }
@@ -13580,8 +13596,6 @@ VISH.Editor.Object = function(V, $, undefined) {
   };
   var previewBackground;
   var drawPreview = function(divId, src) {
-    console.log("Drawpreview divId: " + divId);
-    console.log("Drawpreview src: " + src);
     previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
     $("#" + divId + " .previewimgbox").css("background-image", "none");
     $("#" + divId + " .previewimgbox img.imagePreview").remove();
@@ -14093,9 +14107,13 @@ VISH.Editor.API = function(V, $, undefined) {
       }
       return
     }
-    $.ajax({type:"GET", url:"/tags.json?tag=", dataType:"html", success:function(response) {
+    $.ajax({type:"GET", url:"/tags.json?mode=popular&limit=100", dataType:"html", success:function(response) {
       if(typeof successCallback == "function") {
-        tags = JSON.parse(response);
+        var tagsJSON = JSON.parse(response);
+        tags = [];
+        $.each(tagsJSON, function(index, tagJSON) {
+          tags.push(tagJSON.value)
+        });
         successCallback(tags)
       }
     }, error:function(xhr, ajaxOptions, thrownError) {
