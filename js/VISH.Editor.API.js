@@ -192,9 +192,14 @@ VISH.Editor.API = (function(V,$,undefined){
         dataType:"html",
         success:function(response){
             if(typeof successCallback == "function"){
-              tags = JSON.parse(response);
-							console.log(tags)
-              successCallback(tags);
+              var tagsJSON = JSON.parse(response);
+							if(tagsJSON.length>0){
+								 tags = [];
+		             $.each(tagsJSON, function(index, tagJSON) {
+		               tags.push(tagJSON.value)
+		             });
+		             successCallback(tags);
+							}
             }
         },
         error:function (xhr, ajaxOptions, thrownError){

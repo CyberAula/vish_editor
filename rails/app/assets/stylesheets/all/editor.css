@@ -1154,11 +1154,152 @@ textarea {
 }
 
 /* Joyride positions */
-.custom-class{
-	top: 400px;
-	
+
+.tut_with_arrow span.joyride-nub {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color:  #4866FA;
 }
 
-.custom-class span{
-	left: 340px;
+.tut_without_arrow span.joyride-nub{
+  display: none;
 }
+
+.tut_welcome{
+	top: 190px;
+	left: 450px;
+}
+
+.tut_savedetails{
+	top: 410px;
+	left: 394px;
+}
+
+.tut_savedetails span.joyride-nub{
+  bottom: -28px;
+  left: 341px;
+}
+
+.tut_welcome_exc{
+	top: 300px;
+	left: 255px;
+}
+
+.tut_menubar{
+  top: 510px;
+  left: 255px ;
+}
+
+.tut_menubar span.joyride-nub{
+  bottom: -28px;
+  left: 190px;
+}
+
+.tut_saveexcursion{
+	top: 555px;
+	left: 505px;
+}
+
+.tut_saveexcursion span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  #4866FA !important;
+  border-top-color: #4866FA !important;
+  bottom: -28px;
+  bottom: none;
+  left: 341px !important;
+}
+
+.tut_addslide{
+	top: 480px;
+	left: 160px;
+}
+
+.tut_addslide span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  #4866FA !important;
+  border-top-color: #4866FA !important;
+  bottom: -28px;
+  bottom: none;
+}
+
+.tut_templatesel{
+	top: 520px !important;
+}
+
+.tut_templatesel span{
+  left: 180px !Important;
+}
+
+.tut_template{
+	top: 58px !important;
+	left: 53px !important;
+	width: 800px !important;
+}
+
+.tut_template span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+#textimagetut {
+	padding-left: 82px;
+	padding-top:3px;
+}
+
+#imageimagetut {
+	padding-left: 62px;
+}
+#flashimagetut {
+	padding-left: 20px;
+}
+#videoimagetut {
+	padding-left: 65px;
+}
+
+#deleteimagetut {
+	padding-left: 19px;
+}
+
+#delimagetut {
+	padding-left: 19px;
+}
+
+.tut_fancy_index {
+	top: 200px !important;
+	left: 417px !important;
+}
+
+.tut_fancy_index span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+.tut_preview {
+	top: 334px !important;
+	left: 410px !important;
+}
+
+.tut_preview span{
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color:  transparent !important;
+}
+
+.tut_search {
+	left:400px !important;
+}
+
+.tut_search span {
+	left: 340px !important;
+}
+	
