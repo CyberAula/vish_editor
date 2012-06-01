@@ -33,6 +33,8 @@
             highlightOnExistColor:'#0F0',
             //empty search on focus
             emptySearch:true,
+						watermarkAllowMessage: "Write more tags",
+						watermarkDenyMessage: "Tags limit reached",
             //callback function for when tags are changed
                 //tagValue: value of tag that was changed
                 //action e.g. removed, added, sorted
@@ -86,6 +88,11 @@
             this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
 
             this.input = this.element.find(".tagit-input");
+						
+						//Add watermark
+						if(typeof $.watermark == "object"){
+							this.input.watermark(this.options.watermarkAllowMessage)
+						}					
 
             //setup click handler
             $(this.element).click(function (e) {
@@ -181,7 +188,7 @@
             this.input.blur(function (e) {
                 self.currentLabel = $(this).val();
                 self.currentValue = $(this).attr('tagValue');
-                if (self.options.allowNewTags) {
+                if ((self.options.allowNewTags)&&(self.currentLabel)) {
                     self.timer = setTimeout(function () {
                         self._addTag(self.currentLabel, self.currentValue);
                         self.currentValue = '';
@@ -189,7 +196,7 @@
                     }, 400);
                 }
                 $(this).val('').removeAttr('tagValue');
-                return false;
+                return true;
             });
 
             //define missing trim function for strings
@@ -250,11 +257,16 @@
         _popTag:function (tag) {
 
             //are we removing the last tag or a specific tag?
-            if (tag === undefined)
-                tag = this.tagsArray.pop();
-            else
-                this.tagsArray.splice(tag.index, 1);
-
+            if (tag === undefined){
+							tag = this.tagsArray.pop();
+						} else {
+							this.tagsArray.splice(tag.index, 1);
+						}
+            
+						//Restart watermark    
+            if(typeof $.watermark == "object"){
+              this.input.watermark(this.options.watermarkAllowMessage)
+            } 
 
             //maintain the indexes
             for (var ind in this.tagsArray)
@@ -267,7 +279,19 @@
             return;
         },
 
-        _addTag:function (label, value) {
+        _addTag:function (label, value) {        
+
+            if(this.tagsArray.length > (this.options.maxTags-1)){
+              return;
+            }
+
+            if(this.tagsArray.length == (this.options.maxTags-1)){
+							//Last tag
+							if(typeof $.watermark == "object"){
+                this.input.watermark(this.options.watermarkDenyMessage)
+              }
+							$(this.input).blur();
+						}
 
             this.input.autocomplete('close').val("");
 
@@ -300,10 +324,14 @@
 
             this.input.val("");
 
-            if (this.options.select)
-                this._addSelect(tag);
-            if (this.options.tagsChanged)
-                this.options.tagsChanged(tag.label, 'added', tag.element);
+            if (this.options.select){
+							this._addSelect(tag);
+						}
+               
+            if (this.options.tagsChanged){
+							this.options.tagsChanged(tag.label, 'added', tag.element);
+						}
+						
             return true;
         },
 				
@@ -441,8 +469,12 @@
                 this.select.change();
             }
             this._initialTags();
-            if (this.options.tagsChanged)
-                this.options.tagsChanged(null, 'reset', null);
+            if (this.options.tagsChanged){
+							this.options.tagsChanged(null, 'reset', null);
+						}
+            if(typeof $.watermark == "object"){
+              this.input.watermark(this.options.watermarkAllowMessage)
+            }   
         },
 
         fill:function (tags) {
