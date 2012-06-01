@@ -62,7 +62,7 @@
             <div class='barbutton with_pointer' id=''>
             </div>
 		    <div class='barbutton' id="slide_thumb_1">				
-					<img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+					<img id="addslidebutton" class="image_barbutton" src="/images/templatesthumbs/default.png"/>
 				    <span class="slide_number"></span>
 			</div>
 		    <div class='barbutton' id="slide_thumb_2" >
@@ -292,7 +292,7 @@
 					    			<button type="button" class="button buttonfancy previewButton">Preview</button>
               		</div>
             			<div class="box2">
-            				<div class="previewimgbox">
+            				<div id="picture_preview" class="previewimgbox">
                 				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
                 			</div>
             			</div>
@@ -303,7 +303,7 @@
                 <img class="image_add_url" src="/images/url_upl.png"/>
 								
 							    <form id="upload_picture_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
-							        <input type="file" name="document[file]" class="upload_file_input">
+							        <input id="upload_file_input" type="file" name="document[file]" class="upload_file_input">
 							        <input type="hidden" name="document[title]">
 							        <input type="hidden" name="document[description]">
 							        <input type="hidden" name="document[owner_id]">
@@ -322,8 +322,13 @@
                   </div>
 									
 							</div>
+<<<<<<< Updated upstream
               <div class="box2 box2_upload">
               				<div class="previewimgbox">
+=======
+              <div class="box2">
+              				<div id="picture_preview" class="previewimgbox">
+>>>>>>> Stashed changes
                   				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
                       </div>
               </div>
@@ -376,7 +381,7 @@
 					  <button type="button" class="button buttonfancy previewButton">Preview</button>
           </div>
                 <div class="box2">
-                				<div class="previewimgbox">
+                				<div id="picture_preview" class="previewimgbox">
                     				<button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
                     			</div>
                 			</div>
@@ -403,7 +408,7 @@
                   
               </div>
               <div class="box2">
-                      <div class="previewimgbox">
+                      <div id="picture_preview" class="previewimgbox">
                           <button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.drawPreviewElement()">Add Content</button>
                       </div>
               </div>
@@ -526,13 +531,13 @@
 	   <!-- WALKTHROUGH HELP SECTION -->
 	    <!-- help for initial screen -->
 	    <ol id="initial_screen_help" class="joyRideTipContent">
-          	<li data-id="tutorialstart" data-text="Next" class="Next">
+          	<li data-id="tutorialstart" data-text="Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
 	  	    <h2>Welcome to ViSH editor!</h2>
 	  	    <p>Using the "Walkthrough icon"<img src="images/helptutorial_circle.png"> around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.
  </p>
 	  	  </li>
-	  	  <li data-id="excursion_title" data-text="Next" class="Next">
-	  	    <h2>First, Let´s write a title (Obligatory)</h2>
+	  	  <li data-id="excursion_title" data-text="Next" data-options="tipLocation:bottom;" class="Next">
+	  	    <h2>Let´s write a title (Obligatory)</h2>
 	  	    <p>This black space will allow you to write a title to name your excursions. The title in the excursion it is obligatory cause with this feature other user can find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
 	  	  </li>
 	  	  <li data-id="excursion_description" data-text="Next">
@@ -544,118 +549,270 @@ Click on "Next" to continue.</p>
 	  	    <h2>Choose an image that will represent your excursion</h2>
 	        <p>In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
 	  	  </li>
-          <li data-id="save_excursion_details"  class="custom-class" data-options="tipLocation:none;inline:false" data-text="Close">
-	  	    <h2>Choose an image that will represent your excursion</h2>
+          <li data-id="save_excursion_details"  class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close">
+	  	    <h2>Save your excursion details</h2>
 	        <p>Once you click on the close button, you will be able to click on continue to save your excursion details, and to start adding content to your excursion.</p>
 	  	  </li>
 	  	</ol>
 	  	
 	  	<ol id="menubar_help" class="joyRideTipContent">
-	  	  <li data-id="menubar" data-text="Next" class="custom">
-	  	    <h2>Stop #1</h2>
-	  	    <p>pepe You can contro TML will work inside of Joyride.</p>
+          <li data-id="menubar" data-text="Next" class="tut_welcome_exc tut_without_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is ViSH editor!</h2>
+	  	    <p>Remember that you can use the "Walkthrough icon"<img src="images/helptutorial_circle.png"> when you need any help around the application. This is the application desktop where you can create your excursions.Click on "Next" to continue.
+ </p>
 	  	  </li>
-	  	  <li data-id="config_div" data-text="Close">
-	  	    <h2>Stop #4</h2>
-	        <p>jose Now what are you waiting for? Add this to your projects and get the most out of your apps!</p>
+          <li data-id="menubar" data-text="Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is the tools menu</h2>
+	  	    <p>In this bar you can see all the options provided to create and manage a new virtual excursion in ViSH.
+Click on "Next" to continue.
+ </p>
+	  	  </li>
+	  	  <li data-id="config_div" data-text="Next" data-options="tipLocation:top">
+	  	    <h2>Configuration Button</h2>
+	        <p>Clicking this button will get you to the first screen where you added the title and the description to your excursion.Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="menubar" data-text="Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+	  	    <h2>This is the tools menu</h2>
+	  	    <p>In this zone you will manage all the slides in the grey spaces at the bottom. Every next slide available will be appearing at the grey zones. Click on "Next" to continue.
+ </p>
+ </li>
+           <li data-id="save_excursion_details"  class="tut_saveexcursion" data-options="tipLocation:none;inline:false" data-text="Next">
+	  	    <h2>Save Button</h2>
+	        <p>This button will able you to save your excursion.Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="addslidebutton" class="tut_addslide" data-text="Close">
+	  	    <h2>Add new slide button</h2>
+	        <p>This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as a icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walkthrough and start adding content to your excursion.</p>
 	  	  </li>
 	  	</ol>
 	  	
 	  	<!--help for template-->
 	  	<ol id="template_help" class="joyRideTipContent">
-	  	  <li data-id="zone1" data-text="Next" class="custom">
-	  	    <h2>header</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="zone1" data-text="Close" class="custom tut_template">
+	  	    <h2>Adding content to a slide</h2>
+	  	    <p>To fill the slide you choosen with content, you can click the grey spaces in the template.
+            If you click on one of them,</p>
+            <p>the content icons will appear: </p>
+            <ul>
+            <li><h1>Text<img id="textimagetut" src="images/text_small.png"></h1> 
+            </li>
+            Images <img id="imageimagetut" src="images/image_small.png"><br>
+            Flash Content <img id="flashimagetut" src="images/flash_small.png"><br>
+            Videos <img id="videoimagetut" src="images/video_small.png"><br>
+            <br>
+            If you click one of these icons (depending on which content do you choose to fill the grey space) another
+            window will<br>
+            pop-up to help you, for an exception of the text icon, which will make appear a text tools bar at 
+            the top of the application that will help you defining the style for your text.
+            <br>
+            <img id="textedimagetut" src="images/textedimg.png"><br>
+            <br>
+            Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, 
+            and in case you want to delete the content you can use the icon at the right bottom corner on your space:
+            <br>
+            Delete Content<img id="deleteimagetut" src="images/del_content_small.png"><br> 
+            <br>
+            If you want to delete a slide you can use the close icon to do the task at the right upper corner:
+            <br>
+            Close or Delete<img id="delimagetut" src="images/delete.png"><br>
+            <br>
+            If you need any help with any of the content you can always use the help icons in their respective windows.
+            Click on "Close" to finish this walkthrough.            
 	  	  </li>	  	  
 	  	</ol>
     
     	<!--help for template selection fancybox-->
 	  	<ol id="help_template_selection_help" class="joyRideTipContent">
-	  	  <li data-id="thumbcontent" data-text="Next" class="custom">
-	  	    <h2>templates</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	  <li data-id="thumbcontent" data-text="Close" class="custom tut_templatesel">
+	  	    <h2>Selecting a Slide</h2>
+	  	    <p>This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.<br>
+Click on "Close" to finish this walkthrough.
+            </p>
+	  	  </li>	 	  
 	  	</ol>
     
     	<!--help for fancybox of images-->
 		<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="images_fancy_tabs_id" data-text="Next" class="custom">
-	  	    <h2>tabs</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	    <li data-id="thumbcontent" data-text="Next" class="custom tut_fancy_index">
+	  	    <h2>Adding Images</h2>
+	  	    <p>This window will help you in order to add images to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Url</h1>    (add image by pasting a url)</li>
+            <li><h1>Upload</h1> (add image by upload it from your computer)</li>
+            <li><h1>Vish</h1>   (add an image by choosing one from the ViSH repository)</li>
+            <li><h1>Flickr</h1> (add an image by choosing one from Flickr)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>	 
+          <li data-id="picture_url" data-text="Next" class="custom">
+	  	    <h2>Adding images by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains an image, by example:<br>
+            <h1>"http://www.####.com/example.jpg"</h1><br>
+            This supports almost every image format files (jpg,tiff,png,gif...)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the image before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the image you are going to add.<br>
+               Once you are ready to add the image, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the image is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>
 	  	</ol>
 	  		  	
 	  	<ol id="upload_picture_form_help" class="joyRideTipContent">
-	  	  <li data-id="upload_picture_form" data-text="Next" class="custom">
-	  	    <h2>upload</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	  <li data-id="upload_file_input" data-text="Next" class="custom">
+	  	    <h2>Adding images by upload</h2>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose an image from your device.Once you do that, you can click the "upload" button in order to preview the image in zone below.<br>
+            This supports almost every image format files (jpg,tiff,png,gif...)<br>
+            Click on "Next" to continue<br>
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the image before you add it</h2>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the image you are going to add.<br>
+               Once you are ready to add the image, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the image is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>
 	  	</ol>
 	  	
 	  	<ol id="search_picture_help" class="joyRideTipContent">
-	  	  <li data-id="search_picture" data-text="Next" class="custom">
-	  	    <h2>vish</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="search_picture" data-text="Close" class="custom tut_search">
+	  	    <h2>Search images in Vish repository</h2>
+	  	    <p>This box will allow you to search for images in the vish repository.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+            Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_flickr_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_flickr_fancy" data-text="Next" class="custom">
-	  	    <h2>flickr</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="search_flickr_fancy" data-text="Close" class="custom tut_search">
+	  	    <h2>Search images in Flickr</h2>
+	  	    <p>This box will allow you to search for images in Flickr.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+            Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	
 	  	<!--help for fancybox of flash-->
 		<ol id="flash_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom">
-	  	    <h2>tabs</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+          	<h2>Adding flash content</h2>
+	  	    <p>This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Embed</h1>    (add flash content by pasting a url)</li>
+            <li><h1>Upload</h1> (add flash content by upload it from your computer)</li>
+            <li><h1>Vish</h1>   (add flash content by choosing one from the ViSH repository)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>
+          <li data-id="flash_embed_code" data-text="Next" class="custom">
+	  	    <h2>Adding Flash content by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a flash content, by example:<br>
+            <h1>"http://www.####.com/example.swf"</h1><br>
+            This supports Flash content like swf files)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the content before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.<br>
+               Once you are ready to add the content, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li>	  
 	  	</ol>
 	  		  	
 	  	<ol id="upload_flash_form_help" class="joyRideTipContent">
 	  	  <li data-id="upload_flash_form" data-text="Next" class="custom">
-	  	    <h2>upload</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	    <h2>Adding flash content by upload</h2>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device.Once you do that, you can click the "upload" button in order to preview the content in zone below.<br>
+            This supports almost every swf file.<br>
+            Click on "Next" to continue<br>
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the content before you add it</h2>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the content you are going to add.<br>
+               Once you are ready to add it to the slide, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_flash_help" class="joyRideTipContent">
-	  	  <li data-id="search_flash" data-text="Next" class="custom">
-	  	    <h2>vish</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="search_flash" data-text="Close" class="custom tut_search">
+	  	    <h2>Search flash content </h2>
+	  	    <p>This box will allow you to search for flash content in the ViSH repository.<br>
+            Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	
 	  	<!--help for fancybox of videos-->
 		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom">
-	  	    <h2>tabs</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+	  	    <h2>Adding Video</h2>
+	  	    <p>This window will help you in order to add videos to the slide. As you can see in the top zone of this window there are few choices: <br>
+            <ul>
+            <li><h1>Url</h1>   (add video by pasting a url)</li>
+            <li><h1>Vish</h1>  (add video from the ViSH repository)</li>
+            <li><h1>Youtube</h1>(add video by choosing one from Youtube)</li>
+            <li><h1>Vimeo</h1>  (add video by choosing one from Vimeo)</li>
+            </ul>
+            Now, you are on the url section, Click on "Next" to continue.
+            </p>
+	  	  </li>	 
+          <li data-id="video_url" data-text="Next" class="custom">
+	  	    <h2>Adding video by url</h2>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a video, by example:<br>
+            <h1>"http://www.####.com/example.avi"</h1><br>
+            This supports almost every image format files (avi,mpg,flv...)<br>
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	    <h2>See the video before you add it </h2>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the video you are going to add.<br>
+               Once you are ready to add the ideo, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the video is on preview).<br>
+               Click on "Close" to finish this Walkthrough.
+            </p>
+	  	  </li> 	  
 	  	</ol>
 	  	
 	  	<ol id="search_video_help" class="joyRideTipContent">
-	  	  <li data-id="search_video" data-text="Next" class="custom">
-	  	    <h2>vish</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
-	  	  </li>	  	  
+	  	  <li data-id="search_video" data-text="Close" class="custom tut_search">
+<h2>Search videos in Vish repository</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
+            </p>
+	  	  </li>	  	  	  
 	  	</ol>
 	  	  	
 	  	<ol id="search_youtube_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_youtube_fancy" data-text="Next" class="custom">
-	  	    <h2>upload</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="search_youtube_fancy" data-text="Close" class="custom tut_search">
+<h2>Search videos in Youtube</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_vimeo_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_vimeo_fancy" data-text="Next" class="custom">
-	  	    <h2>flickr</h2>
-	  	    <p>You can contro TML will work inside of Joyride.</p>
+	  	  <li data-id="search_vimeo_fancy" data-text="Close" class="custom tut_search">
+<h2>Search videos in Vimeo</h2>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+            Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
