@@ -246,9 +246,6 @@ VISH.Editor = (function(V,$,undefined){
 	
 	var _onInitialTagsReceived = function(data){
 		 var tagList = $(".tagBoxIntro .tagList");
-     
-		 console.log("_onInitialTagsReceived: " + data)
-		 console.log("taglist: " + $(tagList)[0])
 		 
      //Insert the two first tags.
      if ($(tagList).children().length == 0){
@@ -259,7 +256,6 @@ VISH.Editor = (function(V,$,undefined){
           $(tagList).append("<li>" + tag + "</li>")
         });
         
-				console.log("tagit called!")
         $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , tagsChanged:function (tag, action) {
           //tag==tagName
           //action==["moved","added","popped" (remove)]
