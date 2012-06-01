@@ -26,6 +26,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 		$("#" + uploadDivId + " input[name='document[file]']").change(function () {
       $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
 			_resetUploadFields();
+			$(tagList).parent().show();
+			$("#" + uploadDivId + ' form' + ' .button').show();
+			$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     });
       
     $("#" + uploadDivId + " #upload_document_submit").click(function(event) {
@@ -39,6 +42,9 @@ VISH.Editor.Image = (function(V,$,undefined){
           $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
           $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
 					$("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					var tagList = $("#" + uploadDivId + " .tagList")
+          $(tagList).parent().hide();
+					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
         }
       }
     });
@@ -81,8 +87,15 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var _onLoadUploadTab = function(){
 		contentToAdd = null;
-    _resetUploadFields();
+		
+		//Hide and reset elements
+		var tagList = $("#" + uploadDivId + " .tagList")
+    $(tagList).parent().hide();
+		$("#" + uploadDivId + ' form' + ' .button').hide();
+		$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     $("#" + uploadDivId + " input[name='document[file]']").val("");	
+		_resetUploadFields();
+		
     VISH.Editor.API.requestTags(_onTagsReceived)
 	}
 	
