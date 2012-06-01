@@ -867,6 +867,8 @@ table.metadata td div.height_wrapper_description{
 
 div.object_wrapper{
 	border: 10px #9E1F63 solid;
+	width: 100%;
+	height: 100%;
 }
 
 .objectPreview {
@@ -1162,6 +1164,16 @@ textarea {
   border-top-color:  #4866FA;
 }
 
+<<<<<<< HEAD
+=======
+.tut_with_arrow_up span.joyride-nub {
+  border-bottom-color: #4866FA;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
 .tut_without_arrow span.joyride-nub{
   display: none;
 }
@@ -1172,7 +1184,11 @@ textarea {
 }
 
 .tut_savedetails{
+<<<<<<< HEAD
 	top: 410px;
+=======
+	top: 411px;
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
 	left: 394px;
 }
 
@@ -1189,6 +1205,7 @@ textarea {
 .tut_menubar{
   top: 510px;
   left: 255px ;
+<<<<<<< HEAD
 }
 
 .tut_menubar span.joyride-nub{
@@ -1303,3 +1320,108 @@ textarea {
 	left: 340px !important;
 }
 	
+=======
+}
+
+.tut_menubar span.joyride-nub{
+  bottom: -28px;
+  left: 190px;
+}
+
+.tut_saveexcursion{
+	top: 542px;
+	left: 505px;
+}
+
+.tut_saveexcursion span.joyride-nub{
+  bottom: -28px;
+  left: 341px;
+}
+
+.tut_addslide{
+	top: 470px;
+	left: 160px;
+}
+
+.tut_addslide span.joyride-nub{
+  bottom: -28px;
+}
+
+.tut_templatesel {
+	top: 250px;
+	left:255px;
+}
+
+.tut_template{
+	top: 46px;
+	left: 55px;
+	width: 800px;
+}
+
+#textimagetut {
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
+}
+
+#imageimagetut {
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
+}
+#flashimagetut {
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
+}
+#videoimagetut {
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
+}
+
+#deleteimagetut {
+	margin-top: -42px;
+	padding-left: 200px;
+	position:absolute;
+}
+
+#delimagetut {
+	margin-top: -40px;
+	padding-left: 200px;
+	position:absolute;
+}
+
+#textedimagetut {
+	margin-left: 50px;
+	margin-top: 5px;
+}
+
+#contentusetut {
+	top:98px;
+	left:360px;
+	position:absolute;
+}
+
+.tut_fancy_index {
+	top: 85px;
+	left: 280px;
+	width: 550px;
+}
+
+.tut_preview {
+	top: 368px;
+	left: 410px;
+}
+
+.tut_search {
+	left:400px;
+	top:192px;
+}
+
+.tut_search span.joyride-nub {
+	left: 340px ;
+	top:-29px;
+}
+	
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a

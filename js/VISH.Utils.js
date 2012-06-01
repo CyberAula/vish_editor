@@ -114,11 +114,27 @@ VISH.Utils = (function(V,undefined){
     }
 
 
+    var convertToTagsArray = function(tags){
+	    var tagsArray = [];
+	    
+	    if((!tags)||(tags.length==0)){
+	      return tagsArray;
+	    }
+	    
+	    $.each(tags, function(index, tag) {
+	      tagsArray.push(tag.value)
+	    });
+	    
+	    return tagsArray;
+    }
+
+
     return {
 			init : init,
 	    getOuterHTML : getOuterHTML,
 			generateTable : generateTable,
-			checkMiniumRequirements : checkMiniumRequirements     
+			checkMiniumRequirements : checkMiniumRequirements,
+			convertToTagsArray : convertToTagsArray     
     };
 
 }) (VISH);

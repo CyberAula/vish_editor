@@ -1,51 +1,55 @@
 VISH.Editor.Object = (function(V,$,undefined){
 		
-	var contentToAdd = null;	
-	var uploadDiv = "tab_flash_upload_content";
+	var contentToAdd = null;
+  var uploadDivId = "tab_flash_upload_content";
+  var urlDivId = "tab_flash_from_url_content";
+  var urlInputId = "flash_embed_code";
 		
 	var init = function(){
+
 		VISH.Editor.Object.Repository.init();
 		
 	  var urlInput = $("#tab_flash_from_url_content").find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
-		var uploadInput = $("#tab_flash_upload_content").find("input");
-	  $(uploadInput).watermark('Select SWF file to upload');
 		
-		$("#tab_flash_from_url_content .previewButton").click(function(event) {
-      if(VISH.Police.validateObject($(urlInput).val())[0]){
-        contentToAdd = $(urlInput).val();
-        drawPreview("tab_flash_from_url_content", contentToAdd)
-      } else {
-        contentToAdd = null;
+		//Load from URL
+    $("#" + urlDivId + " .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
+				contentToAdd = $("#" + urlInputId).val()
+        drawPreview("#" + urlDivId, contentToAdd)    
       }
     });
 		
 		
 		//Upload content
     var options = VISH.Editor.getOptions();
-    var bar = $('.upload_progress_bar');
-    var percent = $('.upload_progress_bar_percent');
-		
-	  $("#" + uploadDiv + " input[name='document[file]']").change(function () {
-      $("input[name='document[title]']").val($("input:file").val());
+    var tagList = $("#" + uploadDivId + " .tagList")
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
+    
+    $("#" + uploadDivId + " input[name='document[file]']").change(function () {
+      $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
+      _resetUploadFields();
     });
-      
-    $("#" + uploadDiv + " #upload_document_submit").click(function(event) {
-      if(!VISH.Police.validateFileUpload($("#" + uploadDiv + " input[name='document[file]']").val())[0]){
+		
+		
+		$("#" + uploadDivId + " #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
         event.preventDefault();
       } else {
         if (options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
-          $("#" + uploadDiv + " input[name='document[description]']").val(description);
-          $("#" + uploadDiv + " input[name='document[owner_id]']").val(options["ownerId"]);
-          $("#" + uploadDiv + " input[name='authenticity_token']").val(options["token"]);
-          $("#" + uploadDiv + " .documentsForm").attr("action", options["documentsPath"]);
-          //$("#" + uploadDiv + " input[name='tags']").val(_convertToTagsArray($(tagList).tagit("tags")));
+          $("#" + uploadDivId + " input[name='document[description]']").val(description);
+          $("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
+          $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
+          $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
+          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
         }
       }
     });
-  
-    $("#" + uploadDiv + ' form').ajaxForm({
+    		
+        
+    $("#" + uploadDivId + ' form').ajaxForm({
       beforeSend: function() {
           var percentVal = '0%';
           bar.width(percentVal);
@@ -62,22 +66,8 @@ VISH.Editor.Object = (function(V,$,undefined){
           bar.width(percentVal)
           percent.html(percentVal);
       }
-    });
+    }); 
 	}
-	
-	 var processResponse = function(response){
-    try  {
-      var jsonResponse = JSON.parse(response)
-      if(jsonResponse.src){
-        if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-          drawPreview(uploadDiv,jsonResponse.src)
-          contentToAdd = jsonResponse.src
-        }
-      }
-    } catch(e) {
-      //No JSON response
-    }
-  }
 	
 	var onLoadTab = function(tab){
     if(tab=="upload"){
@@ -87,24 +77,67 @@ VISH.Editor.Object = (function(V,$,undefined){
       _onLoadURLTab();
     }
 	}	
-
-	var _onLoadURLTab = function() {
-		$("#tab_flash_from_url_content").find("input").val("");
-		resetPreview("tab_flash_from_url_content");
-		contentToAdd = null;
-	}
 	
-	var _onLoadUploadTab = function() {
-		var bar = $('.upload_progress_bar');
-    var percent = $('.upload_progress_bar_percent');
+	 var _onLoadURLTab = function(){
+    contentToAdd = null;
+    resetPreview(urlDivId);
+    $("#" + urlInputId).val("");
+  }
+	
+	var _onLoadUploadTab = function(){
+    contentToAdd = null;
+    _resetUploadFields();
+    $("#" + uploadDivId + " input[name='document[file]']").val(""); 
+    VISH.Editor.API.requestTags(_onTagsReceived)
+  }
+	
+	var _resetUploadFields = function(){
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     
-    //Reset fields
     bar.width('0%');
     percent.html('0%');
-    resetPreview(uploadDiv)
-    $("input[name='document[file]']").val("");
-		contentToAdd = null;
+    resetPreview(uploadDivId)
+    
+    var tagList = $("#" + uploadDivId + " .tagList")
+    $(tagList).tagit("reset")
   }
+   
+  var _onTagsReceived = function(data){
+     var tagList = $("#" + uploadDivId + " .tagList");
+     
+     //Insert the three first tags.
+     if ($(tagList).children().length == 0){
+        $.each(data, function(index, tag) {
+          if(index==3){
+            return false; //break the bucle
+          }
+          $(tagList).append("<li>" + tag + "</li>")
+        });
+        
+        $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
+          //tag==tagName
+          //action==["moved","added","popped" (remove)]
+          } 
+        });
+     }
+  }
+	
+	
+	var processResponse = function(response){
+    try  {
+      var jsonResponse = JSON.parse(response)
+      if(jsonResponse.src){
+        if (VISH.Police.validateObject(jsonResponse.src)[0]) {
+          drawPreview(uploadDivId,jsonResponse.src)
+          contentToAdd = jsonResponse.src
+        }
+      }
+    } catch(e) {
+      //No JSON response
+    }
+  }
+	
 	
 	//Preview generation for load and upload tabs
 	var previewBackground;

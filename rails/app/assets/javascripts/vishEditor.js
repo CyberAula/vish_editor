@@ -12916,7 +12916,17 @@ VISH.Utils = function(V, undefined) {
     }
     return rv
   }
-  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements}
+  var convertToTagsArray = function(tags) {
+    var tagsArray = [];
+    if(!tags || tags.length == 0) {
+      return tagsArray
+    }
+    $.each(tags, function(index, tag) {
+      tagsArray.push(tag.value)
+    });
+    return tagsArray
+  };
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
@@ -13046,13 +13056,6 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Tour.startTourWithId("menubar_help", "top")
     });
     $(document).on("click", "#help_template_image", function() {
-      var zone;
-      if($(slideEls[curSlide]) && $(slideEls[curSlide]).find("[areaid=header]")) {
-        zone = $(slideEls[curSlide]).find("[areaid=header]").attr("id")
-      }else {
-        zone = "zone1"
-      }
-      $("#template_help > li").attr("data-id", zone);
       V.Editor.Tour.startTourWithId("template_help", "bottom")
     });
     $(document).on("click", "#help_template_selection", function() {
@@ -13380,39 +13383,50 @@ VISH.Editor.Video = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Image = function(V, $, undefined) {
   var contentToAdd = null;
-  var uploadDiv = "tab_pic_upload_content";
+  var uploadDivId = "tab_pic_upload_content";
+  var urlDivId = "tab_pic_from_url_content";
+  var urlInputId = "picture_url";
   var init = function() {
     VISH.Editor.Image.Flikr.init();
     VISH.Editor.Image.Repository.init();
-    $("#tab_pic_from_url_content .previewButton").click(function(event) {
-      if(VISH.Police.validateObject($("#picture_url").val())[0]) {
-        VISH.Editor.Object.drawPreview("tab_pic_from_url_content", $("#picture_url").val());
-        contentToAdd = $("#picture_url").val()
+    $("#" + urlDivId + " .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
+        VISH.Editor.Object.drawPreview("#" + urlDivId, $("#" + urlInputId).val());
+        contentToAdd = $("#" + urlInputId).val()
       }
     });
     var options = VISH.Editor.getOptions();
+<<<<<<< HEAD
     var tagList = $("#" + uploadDiv + " .tagList");
     var tagit_input = $(tagList).find(".tagit-input");
     var bar = $(".upload_progress_bar");
     var percent = $(".upload_progress_bar_percent");
     $("#" + uploadDiv + " input[name='document[file]']").change(function() {
       $("input[name='document[title]']").val($("input:file").val())
+=======
+    var tagList = $("#" + uploadDivId + " .tagList");
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
+    $("#" + uploadDivId + " input[name='document[file]']").change(function() {
+      $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
+      _resetUploadFields()
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
     });
-    $("#" + uploadDiv + " #upload_document_submit").click(function(event) {
-      if(!VISH.Police.validateFileUpload($("#" + uploadDiv + " input[name='document[file]']").val())[0]) {
+    $("#" + uploadDivId + " #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]) {
         event.preventDefault()
       }else {
         if(options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor";
-          $("#" + uploadDiv + " input[name='document[description]']").val(description);
-          $("#" + uploadDiv + " input[name='document[owner_id]']").val(options["ownerId"]);
-          $("#" + uploadDiv + " input[name='authenticity_token']").val(options["token"]);
-          $("#" + uploadDiv + " .documentsForm").attr("action", options["documentsPath"]);
-          $("#" + uploadDiv + " input[name='tags']").val(_convertToTagsArray($(tagList).tagit("tags")))
+          $("#" + uploadDivId + " input[name='document[description]']").val(description);
+          $("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
+          $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
+          $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
+          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")))
         }
       }
     });
-    $("#" + uploadDiv + " form").ajaxForm({beforeSend:function() {
+    $("#" + uploadDivId + " form").ajaxForm({beforeSend:function() {
       var percentVal = "0%";
       bar.width(percentVal);
       percent.html(percentVal)
@@ -13427,16 +13441,6 @@ VISH.Editor.Image = function(V, $, undefined) {
       percent.html(percentVal)
     }})
   };
-  var _convertToTagsArray = function(tags) {
-    var tagsArray = [];
-    if(!tags || tags.length == 0) {
-      return tagsArray
-    }
-    $.each(tags, function(index, tag) {
-      tagsArray.push(tag.value)
-    });
-    return tagsArray
-  };
   var onLoadTab = function(tab) {
     if(tab == "upload") {
       _onLoadUploadTab()
@@ -13446,24 +13450,27 @@ VISH.Editor.Image = function(V, $, undefined) {
     }
   };
   var _onLoadURLTab = function() {
-    VISH.Editor.Object.resetPreview("tab_pic_from_url_content");
-    $("#picture_url").val("");
-    contentToAdd = null
+    contentToAdd = null;
+    VISH.Editor.Object.resetPreview(urlDivId);
+    $("#" + urlInputId).val("")
   };
   var _onLoadUploadTab = function() {
-    var bar = $(".upload_progress_bar");
-    var percent = $(".upload_progress_bar_percent");
-    bar.width("0%");
-    percent.html("0%");
-    VISH.Editor.Object.resetPreview(uploadDiv);
-    $("input[name='document[file]']").val("");
     contentToAdd = null;
-    var tagList = $("#" + uploadDiv + " .tagList");
-    $(tagList).tagit("reset");
+    _resetUploadFields();
+    $("#" + uploadDivId + " input[name='document[file]']").val("");
     VISH.Editor.API.requestTags(_onTagsReceived)
   };
+  var _resetUploadFields = function() {
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
+    bar.width("0%");
+    percent.html("0%");
+    VISH.Editor.Object.resetPreview(uploadDivId);
+    var tagList = $("#" + uploadDivId + " .tagList");
+    $(tagList).tagit("reset")
+  };
   var _onTagsReceived = function(data) {
-    var tagList = $("#" + uploadDiv + " .tagList");
+    var tagList = $("#" + uploadDivId + " .tagList");
     if($(tagList).children().length == 0) {
       $.each(data, function(index, tag) {
         if(index == 3) {
@@ -13480,7 +13487,11 @@ VISH.Editor.Image = function(V, $, undefined) {
       var jsonResponse = JSON.parse(response);
       if(jsonResponse.src) {
         if(VISH.Police.validateObject(jsonResponse.src)[0]) {
+<<<<<<< HEAD
           VISH.Editor.Object.drawPreview(uploadDiv, jsonResponse.src);
+=======
+          VISH.Editor.Object.drawPreview(uploadDivId, jsonResponse.src);
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
           contentToAdd = jsonResponse.src
         }
       }
@@ -13522,41 +13533,42 @@ VISH.Editor.Image = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Object = function(V, $, undefined) {
   var contentToAdd = null;
-  var uploadDiv = "tab_flash_upload_content";
+  var uploadDivId = "tab_flash_upload_content";
+  var urlDivId = "tab_flash_from_url_content";
+  var urlInputId = "flash_embed_code";
   var init = function() {
     VISH.Editor.Object.Repository.init();
     var urlInput = $("#tab_flash_from_url_content").find("input");
     $(urlInput).watermark("Paste SWF file URL");
-    var uploadInput = $("#tab_flash_upload_content").find("input");
-    $(uploadInput).watermark("Select SWF file to upload");
-    $("#tab_flash_from_url_content .previewButton").click(function(event) {
-      if(VISH.Police.validateObject($(urlInput).val())[0]) {
-        contentToAdd = $(urlInput).val();
-        drawPreview("tab_flash_from_url_content", contentToAdd)
-      }else {
-        contentToAdd = null
+    $("#" + urlDivId + " .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
+        contentToAdd = $("#" + urlInputId).val();
+        drawPreview("#" + urlDivId, contentToAdd)
       }
     });
     var options = VISH.Editor.getOptions();
-    var bar = $(".upload_progress_bar");
-    var percent = $(".upload_progress_bar_percent");
-    $("#" + uploadDiv + " input[name='document[file]']").change(function() {
-      $("input[name='document[title]']").val($("input:file").val())
+    var tagList = $("#" + uploadDivId + " .tagList");
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
+    $("#" + uploadDivId + " input[name='document[file]']").change(function() {
+      $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
+      _resetUploadFields()
     });
-    $("#" + uploadDiv + " #upload_document_submit").click(function(event) {
-      if(!VISH.Police.validateFileUpload($("#" + uploadDiv + " input[name='document[file]']").val())[0]) {
+    $("#" + uploadDivId + " #upload_document_submit").click(function(event) {
+      if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]) {
         event.preventDefault()
       }else {
         if(options) {
           var description = "Uploaded by " + options["ownerName"] + " via Vish Editor";
-          $("#" + uploadDiv + " input[name='document[description]']").val(description);
-          $("#" + uploadDiv + " input[name='document[owner_id]']").val(options["ownerId"]);
-          $("#" + uploadDiv + " input[name='authenticity_token']").val(options["token"]);
-          $("#" + uploadDiv + " .documentsForm").attr("action", options["documentsPath"])
+          $("#" + uploadDivId + " input[name='document[description]']").val(description);
+          $("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
+          $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
+          $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
+          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")))
         }
       }
     });
-    $("#" + uploadDiv + " form").ajaxForm({beforeSend:function() {
+    $("#" + uploadDivId + " form").ajaxForm({beforeSend:function() {
       var percentVal = "0%";
       bar.width(percentVal);
       percent.html(percentVal)
@@ -13571,18 +13583,6 @@ VISH.Editor.Object = function(V, $, undefined) {
       percent.html(percentVal)
     }})
   };
-  var processResponse = function(response) {
-    try {
-      var jsonResponse = JSON.parse(response);
-      if(jsonResponse.src) {
-        if(VISH.Police.validateObject(jsonResponse.src)[0]) {
-          drawPreview(uploadDiv, jsonResponse.src);
-          contentToAdd = jsonResponse.src
-        }
-      }
-    }catch(e) {
-    }
-  };
   var onLoadTab = function(tab) {
     if(tab == "upload") {
       _onLoadUploadTab()
@@ -13592,18 +13592,49 @@ VISH.Editor.Object = function(V, $, undefined) {
     }
   };
   var _onLoadURLTab = function() {
-    $("#tab_flash_from_url_content").find("input").val("");
-    resetPreview("tab_flash_from_url_content");
-    contentToAdd = null
+    contentToAdd = null;
+    resetPreview(urlDivId);
+    $("#" + urlInputId).val("")
   };
   var _onLoadUploadTab = function() {
-    var bar = $(".upload_progress_bar");
-    var percent = $(".upload_progress_bar_percent");
+    contentToAdd = null;
+    _resetUploadFields();
+    $("#" + uploadDivId + " input[name='document[file]']").val("");
+    VISH.Editor.API.requestTags(_onTagsReceived)
+  };
+  var _resetUploadFields = function() {
+    var bar = $("#" + uploadDivId + " .upload_progress_bar");
+    var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     bar.width("0%");
     percent.html("0%");
-    resetPreview(uploadDiv);
-    $("input[name='document[file]']").val("");
-    contentToAdd = null
+    resetPreview(uploadDivId);
+    var tagList = $("#" + uploadDivId + " .tagList");
+    $(tagList).tagit("reset")
+  };
+  var _onTagsReceived = function(data) {
+    var tagList = $("#" + uploadDivId + " .tagList");
+    if($(tagList).children().length == 0) {
+      $.each(data, function(index, tag) {
+        if(index == 3) {
+          return false
+        }
+        $(tagList).append("<li>" + tag + "</li>")
+      });
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, tagsChanged:function(tag, action) {
+      }})
+    }
+  };
+  var processResponse = function(response) {
+    try {
+      var jsonResponse = JSON.parse(response);
+      if(jsonResponse.src) {
+        if(VISH.Police.validateObject(jsonResponse.src)[0]) {
+          drawPreview(uploadDivId, jsonResponse.src);
+          contentToAdd = jsonResponse.src
+        }
+      }
+    }catch(e) {
+    }
   };
   var previewBackground;
   var drawPreview = function(divId, src) {
@@ -14124,9 +14155,20 @@ VISH.Editor.API = function(V, $, undefined) {
     }
     $.ajax({type:"GET", url:"/tags.json?mode=popular&limit=100", dataType:"html", success:function(response) {
       if(typeof successCallback == "function") {
+<<<<<<< HEAD
         tags = JSON.parse(response);
         console.log(tags);
         successCallback(tags)
+=======
+        var tagsJSON = JSON.parse(response);
+        if(tagsJSON.length > 0) {
+          tags = [];
+          $.each(tagsJSON, function(index, tagJSON) {
+            tags.push(tagJSON.value)
+          });
+          successCallback(tags)
+        }
+>>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
       }
     }, error:function(xhr, ajaxOptions, thrownError) {
       if(typeof failCallback == "function") {

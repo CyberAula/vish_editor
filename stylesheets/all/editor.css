@@ -867,6 +867,8 @@ table.metadata td div.height_wrapper_description{
 
 div.object_wrapper{
 	border: 10px #9E1F63 solid;
+	width: 100%;
+	height: 100%;
 }
 
 .objectPreview {
@@ -1159,7 +1161,14 @@ textarea {
   border-bottom-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
-  border-top-color:  #4866FA;
+  border-top-color:  #0066ff;
+}
+
+.tut_with_arrow_up span.joyride-nub {
+  border-bottom-color: #0066ff;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
 }
 
 .tut_without_arrow span.joyride-nub{
@@ -1172,7 +1181,7 @@ textarea {
 }
 
 .tut_savedetails{
-	top: 410px;
+	top: 411px;
 	left: 394px;
 }
 
@@ -1197,109 +1206,98 @@ textarea {
 }
 
 .tut_saveexcursion{
-	top: 555px;
+	top: 542px;
 	left: 505px;
 }
 
-.tut_saveexcursion span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  #4866FA !important;
-  border-top-color: #4866FA !important;
+.tut_saveexcursion span.joyride-nub{
   bottom: -28px;
-  bottom: none;
-  left: 341px !important;
+  left: 341px;
 }
 
 .tut_addslide{
-	top: 480px;
+	top: 470px;
 	left: 160px;
 }
 
-.tut_addslide span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  #4866FA !important;
-  border-top-color: #4866FA !important;
+.tut_addslide span.joyride-nub{
   bottom: -28px;
-  bottom: none;
 }
 
-.tut_templatesel{
-	top: 520px !important;
-}
-
-.tut_templatesel span{
-  left: 180px !Important;
+.tut_templatesel {
+	top: 250px;
+	left:255px;
 }
 
 .tut_template{
-	top: 58px !important;
-	left: 53px !important;
-	width: 800px !important;
-}
-
-.tut_template span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  transparent !important;
+	top: 46px;
+	left: 55px;
+	width: 800px;
 }
 
 #textimagetut {
-	padding-left: 82px;
-	padding-top:3px;
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
 }
 
 #imageimagetut {
-	padding-left: 62px;
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
 }
 #flashimagetut {
-	padding-left: 20px;
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
 }
 #videoimagetut {
-	padding-left: 65px;
+	padding-left: 200px;
+	position:absolute;
+	margin-top: -50px;
 }
 
 #deleteimagetut {
-	padding-left: 19px;
+	margin-top: -42px;
+	padding-left: 200px;
+	position:absolute;
 }
 
 #delimagetut {
-	padding-left: 19px;
+	margin-top: -40px;
+	padding-left: 200px;
+	position:absolute;
+}
+
+#textedimagetut {
+	margin-left: 50px;
+	margin-top: 5px;
+}
+
+#contentusetut {
+	top:98px;
+	left:360px;
+	position:absolute;
 }
 
 .tut_fancy_index {
-	top: 200px !important;
-	left: 417px !important;
-}
-
-.tut_fancy_index span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  transparent !important;
+	top: 85px;
+	left: 280px;
+	width: 550px;
 }
 
 .tut_preview {
-	top: 334px !important;
-	left: 410px !important;
-}
-
-.tut_preview span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  transparent !important;
+	top: 368px;
+	left: 410px;
 }
 
 .tut_search {
-	left:400px !important;
+	left:400px;
+	top:192px;
 }
 
-.tut_search span {
-	left: 340px !important;
+.tut_search span.joyride-nub {
+	left: 340px ;
+	top:-29px;
 }
 	
