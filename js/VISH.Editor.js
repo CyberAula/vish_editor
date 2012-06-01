@@ -706,6 +706,7 @@ VISH.Editor = (function(V,$,undefined){
     	url     : initOptions["postPath"],
     	data    : params,
     	success : function(data) {
+    		/* If we present the received data
     		$('article').remove();
     		$('#menubar').remove();
     		$('.theslider').remove();
@@ -713,7 +714,11 @@ VISH.Editor = (function(V,$,undefined){
         
         	$('#excursion_iframe', window.parent.document).height("680"); //to resize the iframe
         	
-        	V.SlideManager.init(data); 
+        	V.SlideManager.init(data);
+        	*/
+        	/*if we redirect the parent frame*/
+        	window.top.location.href = data;
+        	 
     	}    	
     });
     	          

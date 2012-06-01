@@ -12511,7 +12511,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
   initialize()
 }
 ;(function($) {
-  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, tagsChanged:function(tagValue, action, element) {
+  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Write more tags", watermarkDenyMessage:"Tags limit reached", tagsChanged:function(tagValue, action, element) {
   }}, _splitAt:/\ |,/g, _existingAtIndex:0, _pasteMetaKeyPressed:false, _keys:{backspace:[8], enter:[13], space:[32], comma:[44, 188], tab:[9]}, _sortable:{sorting:-1}, _create:function() {
     var self = this;
     this.tagsArray = [];
@@ -12536,6 +12536,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
     this.input = this.element.find(".tagit-input");
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
+    }
     $(this.element).click(function(e) {
       if($(e.target).hasClass("tagit-close")) {
         var parent = $(e.target).parent();
@@ -12612,7 +12615,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this.input.blur(function(e) {
       self.currentLabel = $(this).val();
       self.currentValue = $(this).attr("tagValue");
-      if(self.options.allowNewTags) {
+      if(self.options.allowNewTags && self.currentLabel) {
         self.timer = setTimeout(function() {
           self._addTag(self.currentLabel, self.currentValue);
           self.currentValue = "";
@@ -12620,7 +12623,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
         }, 400)
       }
       $(this).val("").removeAttr("tagValue");
-      return false
+      return true
     });
     if(!String.prototype.trim) {
       String.prototype.trim = function() {
@@ -12662,6 +12665,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }else {
       this.tagsArray.splice(tag.index, 1)
     }
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
+    }
     for(var ind in this.tagsArray) {
       this.tagsArray[ind].index = ind
     }
@@ -12673,6 +12679,15 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     return
   }, _addTag:function(label, value) {
+    if(this.tagsArray.length > this.options.maxTags - 1) {
+      return
+    }
+    if(this.tagsArray.length == this.options.maxTags - 1) {
+      if(typeof $.watermark == "object") {
+        this.input.watermark(this.options.watermarkDenyMessage)
+      }
+      $(this.input).blur()
+    }
     this.input.autocomplete("close").val("");
     if(this._splitAt && label.search(this._splitAt) > 0) {
       var result = label.split(this._splitAt);
@@ -12812,6 +12827,9 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this._initialTags();
     if(this.options.tagsChanged) {
       this.options.tagsChanged(null, "reset", null)
+    }
+    if(typeof $.watermark == "object") {
+      this.input.watermark(this.options.watermarkAllowMessage)
     }
   }, fill:function(tags) {
     if(tags !== undefined) {
@@ -13374,6 +13392,7 @@ VISH.Editor.Image = function(V, $, undefined) {
     });
     var options = VISH.Editor.getOptions();
     var tagList = $("#" + uploadDiv + " .tagList");
+    var tagit_input = $(tagList).find(".tagit-input");
     var bar = $(".upload_progress_bar");
     var percent = $(".upload_progress_bar_percent");
     $("#" + uploadDiv + " input[name='document[file]']").change(function() {
@@ -14103,9 +14122,10 @@ VISH.Editor.API = function(V, $, undefined) {
       }
       return
     }
-    $.ajax({type:"GET", url:"/tags.json?tag=", dataType:"html", success:function(response) {
+    $.ajax({type:"GET", url:"/tags.json?mode=popular&limit=100", dataType:"html", success:function(response) {
       if(typeof successCallback == "function") {
         tags = JSON.parse(response);
+        console.log(tags);
         successCallback(tags)
       }
     }, error:function(xhr, ajaxOptions, thrownError) {
