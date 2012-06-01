@@ -55,6 +55,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		// fancybox to create a new slide		
 		$("a#addSlideFancybox").fancybox({
+			'scrolling': 'no',
 			'width': 800,
     		'height': 600,
     		'padding': 0
@@ -94,6 +95,7 @@ VISH.Editor = (function(V,$,undefined){
 			// Intial box to input the details related to the excursion
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
+				'scrolling': 'no',
 				'width': 800,
 				'height': 600,
 				'padding': 0,
@@ -334,6 +336,7 @@ VISH.Editor = (function(V,$,undefined){
 		// Intial box to input the details related to the excursion
 		$("a#edit_excursion_details").fancybox({
 			'autoDimensions' : false,
+			'scrolling': 'no',
 			'width': 800,
 			'height': 600,
 			'padding': 0
@@ -407,7 +410,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    	'height': 600,
+			'scrolling': 'no',
+    	    'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
@@ -419,7 +423,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addflash").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    	'height': 600,
+    	    'height': 600,
+    		'scrolling': 'no',
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -430,7 +435,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addvideo").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    	'height': 600,
+			'scrolling': 'no',
+    		'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -451,6 +457,7 @@ VISH.Editor = (function(V,$,undefined){
 			$("#prompt_form").html(),
 			{
 	      'autoDimensions'	: false,
+				'scrolling': 'no',
 				'width'         	: 350,
 				'height'        	: 150,
 				'showCloseButton'	: false,
@@ -480,6 +487,7 @@ VISH.Editor = (function(V,$,undefined){
 		  {
 	      'autoDimensions'	: false,
 				'width'         	: 350,
+				'scrolling': 'no',
 				'height'        	: 150,
 				'showCloseButton'	: false,
 				'padding' 			: 0,
@@ -566,6 +574,7 @@ VISH.Editor = (function(V,$,undefined){
 			  $("#message1_form").html(),
 			  {
 		      'autoDimensions'	: false,
+		      'scrolling': 'no',
 					'width'         	: 350,
 					'height'        	: 200,
 					'showCloseButton'	: false,
@@ -578,6 +587,7 @@ VISH.Editor = (function(V,$,undefined){
 			  {
 		      'autoDimensions'	: false,
 					'width'         	: 350,
+					'scrolling': 'no',
 					'height'        	: 150,
 					'showCloseButton'	: false,
 					'padding' 			: 0,
