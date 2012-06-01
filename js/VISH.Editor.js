@@ -1,4 +1,3 @@
-
 VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
@@ -248,16 +247,7 @@ VISH.Editor = (function(V,$,undefined){
 	});
 	
 	//template
-	$(document).on('click','#help_template_image', function(){
-			//first we need to set up the li data-id attribute to point to the header id
-			var zone;
-			if($(slideEls[curSlide]) && $(slideEls[curSlide]).find("[areaid=header]")){
-				zone = $(slideEls[curSlide]).find("[areaid=header]").attr("id");
-			}
-			else{
-				zone = "zone1";
-			}
-			$("#template_help > li").attr("data-id",zone);
+	$(document).on('click','#help_template_image', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
 	});
 	
