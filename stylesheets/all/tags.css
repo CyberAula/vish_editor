@@ -22,11 +22,13 @@
     border-radius: 5px;
     background: #fff;
     max-height: 10%;
-    overflow: hidden;
 		position: absolute;
 		margin-top: 90px;
 		width: 94%;
+		
 }
+
+
 
 .tagBox:hover {
     background: #fff;
@@ -109,6 +111,10 @@ ul.tagit {
     background: #fff;
     color: #555;
 		border: 1px solid #E5E5E5;
+}
+
+ul.tagit.tagListIntro{
+	height: 60px;
 }
 
 ul.tagit li {

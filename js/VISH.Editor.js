@@ -98,7 +98,7 @@ VISH.Editor = (function(V,$,undefined){
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
-				'height': 650,
+				'height': 660,
 				'padding': 0,
 				'hideOnOverlayClick': false,
 	      'hideOnContentClick': false,
