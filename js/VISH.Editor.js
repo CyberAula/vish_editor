@@ -161,6 +161,9 @@ VISH.Editor = (function(V,$,undefined){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
+	  // first remove the walkthrough if open
+  	  $('.joyride-close-tip').click();
+  	  
 	  //deselect all of them
 	  $(".fancy_tab").removeClass("fancy_selected");
 	  //select the correct one
