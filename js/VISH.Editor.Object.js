@@ -129,7 +129,7 @@ VISH.Editor.Object = (function(V,$,undefined){
       var jsonResponse = JSON.parse(response)
       if(jsonResponse.src){
         if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-          drawPreview(uploadDiv,jsonResponse.src)
+          drawPreview(uploadDivId,jsonResponse.src)
           contentToAdd = jsonResponse.src
         }
       }
