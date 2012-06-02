@@ -571,11 +571,11 @@ Click on "Next" to continue.
 	  	    <p>In this zone you will manage all the slides in the grey spaces at the bottom. Every next slide available will be appearing at the grey zones. Click on "Next" to continue.
  </p>
  </li>
-           <li data-id="save_excursion_details"  class="tut_saveexcursion" data-options="tipLocation:none;inline:false" data-text="Next">
+           <li data-id="save_excursion_details"  class="tut_saveexcursion tut_with_arrow" data-options="tipLocation:none;" data-text="Next">
 	  	    <h2>Save Button</h2>
 	        <p>This button will able you to save your excursion.Click on "Next" to continue.</p>
 	  	  </li>
-          <li data-id="addslidebutton" class="tut_addslide" data-text="Close">
+          <li data-id="addslidebutton" class="tut_addslide tut_with_arrow" data-text="Close">
 	  	    <h2>Add new slide button</h2>
 	        <p>This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as a icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walkthrough and start adding content to your excursion.</p>
 	  	  </li>
@@ -583,44 +583,39 @@ Click on "Next" to continue.
 	  	
 	  	<!--help for template-->
 	  	<ol id="template_help" class="joyRideTipContent">
-	  	  <li data-id="zone1" data-text="Close" class="custom tut_template">
+	  	  <li data-id="zone1" data-text="Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>Adding content to a slide</h2>
 	  	    <p>To fill the slide you choosen with content, you can click the grey spaces in the template.
-            If you click on one of them,</p>
-            <p>the content icons will appear: </p>
+            If you click on one of them,the content icons will appear: 
             <ul>
-            <li><h1>Text<img id="textimagetut" src="images/text_small.png"></h1> 
-            </li>
-            Images <img id="imageimagetut" src="images/image_small.png"><br>
-            Flash Content <img id="flashimagetut" src="images/flash_small.png"><br>
-            Videos <img id="videoimagetut" src="images/video_small.png"><br>
-            <br>
+            <li><h1>Text</h1><img id="textimagetut" src="images/text_small.png"></li>
+            <li><h1>Images</h1> <img id="imageimagetut" src="images/image_small.png"></li>
+            <li><h1>Flash Content</h1> <img id="flashimagetut" src="images/flash_small.png"></li>
+            <li><h1>Videos</h1> <img id="videoimagetut" src="images/video_small.png"></li>
+            </ul>
             If you click one of these icons (depending on which content do you choose to fill the grey space) another
-            window will<br>
-            pop-up to help you, for an exception of the text icon, which will make appear a text tools bar at 
+            window will pop-up to help you, for an exception of the text icon, which will make appear a text tools bar at 
             the top of the application that will help you defining the style for your text.
-            <br>
             <img id="textedimagetut" src="images/textedimg.png"><br>
-            <br>
             Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, 
             and in case you want to delete the content you can use the icon at the right bottom corner on your space:
-            <br>
-            Delete Content<img id="deleteimagetut" src="images/del_content_small.png"><br> 
-            <br>
+            <ul>
+            <li><h1>Delete Content</h1><img id="deleteimagetut" src="images/del_content_small.png"></li>
+            </ul>
             If you want to delete a slide you can use the close icon to do the task at the right upper corner:
-            <br>
-            Close or Delete<img id="delimagetut" src="images/delete.png"><br>
-            <br>
+            <ul>
+            <li><h1>Close or Delete</h1><img id="delimagetut" src="images/delete.png"></li>
+            </ul>
             If you need any help with any of the content you can always use the help icons in their respective windows.
-            Click on "Close" to finish this walkthrough.            
+            Click on "Close" to finish this walkthrough.</p>          
 	  	  </li>	  	  
 	  	</ol>
     
     	<!--help for template selection fancybox-->
 	  	<ol id="help_template_selection_help" class="joyRideTipContent">
-	  	  <li data-id="thumbcontent" data-text="Close" class="custom tut_templatesel">
+	  	  <li data-id="thumbcontent" data-text="Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>Selecting a Slide</h2>
-	  	    <p>This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.<br>
+	  	    <p>This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.
 Click on "Close" to finish this walkthrough.
             </p>
 	  	  </li>	 	  
@@ -628,23 +623,23 @@ Click on "Close" to finish this walkthrough.
     
     	<!--help for fancybox of images-->
 		<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
-	  	    <li data-id="thumbcontent" data-text="Next" class="custom tut_fancy_index">
+	  	    <li data-id="thumbcontent" data-text="Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>Adding Images</h2>
-	  	    <p>This window will help you in order to add images to the slide. As you can see in the top zone of this window there are few choices: <br>
+	  	    <p>This window will help you in order to add images to the slide. As you can see in the top zone of this window there are few choices:</p>
             <ul>
-            <li><h1>Url</h1>    (add image by pasting a url)</li>
-            <li><h1>Upload</h1> (add image by upload it from your computer)</li>
-            <li><h1>Vish</h1>   (add an image by choosing one from the ViSH repository)</li>
-            <li><h1>Flickr</h1> (add an image by choosing one from Flickr)</li>
+            <li>Url  (add image by pasting a url)</li>
+            <li>Upload   add image by upload it from your computer)</li>
+            <li>Vish   (add an image by choosing one from the ViSH repository)</li>
+            <li>Flickr  (add an image by choosing one from Flickr)</li>
             </ul>
-            Now, you are on the url section, Click on "Next" to continue.
+            <p>Now, you are on the url section, Click on "Next" to continue.
             </p>
 	  	  </li>	 
-          <li data-id="picture_url" data-text="Next" class="custom">
+          <li data-id="picture_url" data-text="Next" "tipLocation:bottom;">
 	  	    <h2>Adding images by url</h2>
-	  	    <p>This box is used for pasting or writing on it, a url that contains an image, by example:<br>
-            <h1>"http://www.####.com/example.jpg"</h1><br>
-            This supports almost every image format files (jpg,tiff,png,gif...)<br>
+	  	    <p>This box is used for pasting or writing on it, a url that contains an image, by example:
+            <h1>"http://www.####.com/example.jpg"</h1>
+            <p>This supports almost every image format files (jpg,tiff,png,gif...)
             Click on "Next" to continue.
             </p>
 	  	  </li>	  	

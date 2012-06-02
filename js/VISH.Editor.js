@@ -1,4 +1,3 @@
-
 VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
