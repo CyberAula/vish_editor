@@ -1162,6 +1162,13 @@ textarea {
   border-top-color:  #4866FA;
 }
 
+.tut_with_arrow_up span.joyride-nub {
+  border-bottom-color: #4866FA;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
 .tut_without_arrow span.joyride-nub{
   display: none;
 }
@@ -1221,7 +1228,7 @@ textarea {
 }
 
 .tut_template{
-	top: 54px;
+	top: 46px;
 	left: 55px;
 	width: 800px;
 }
@@ -1265,36 +1272,30 @@ textarea {
 	margin-top: 5px;
 }
 
+#contentusetut {
+	top:98px;
+	left:360px;
+	position:absolute;
+}
+
 .tut_fancy_index {
-	top: 310px;
-	left: 253px;
+	top: 85px;
+	left: 280px;
 	width: 550px;
 }
 
-.tut_fancy_index span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  transparent !important;
-}
-
 .tut_preview {
-	top: 334px !important;
-	left: 410px !important;
-}
-
-.tut_preview span{
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color:  transparent !important;
+	top: 368px;
+	left: 410px;
 }
 
 .tut_search {
-	left:400px !important;
+	left:400px;
+	top:192px;
 }
 
-.tut_search span {
-	left: 340px !important;
+.tut_search span.joyride-nub {
+	left: 340px ;
+	top:-29px;
 }
 	

@@ -286,7 +286,7 @@
 				</div>
 				<div id='tab_pic_from_url_content' class="fancy_tab_content">
             			<div class="box1 box1fancy1">
-					    			<p class="textfancy">add image url</p><br>
+					    			<p class="textfancy">add image url</p></br>
 	                  <img class="image_add_url" src="/images/url_img.png"/>
 					    			<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
 					    			<button type="button" class="button buttonfancy previewButton">Preview</button>
@@ -299,7 +299,7 @@
 				</div>      
 				<div id='tab_pic_upload_content' class="fancy_tab_content">
               <div class="box1 box1fancy3">
-				  			<p class="textfancy">Select picture to upload</p><br>
+				  			<p class="textfancy">Select picture to upload</p></br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
 								
 							    <form id="upload_picture_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
@@ -318,7 +318,7 @@
 							    </div>
 									
 									<div class="tagBox">
-				            <ul class="tagList"></ul>
+				            <ul id="tagid" class="tagList"></ul>
                   </div>
 									
 							</div>
@@ -364,13 +364,13 @@
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_upload')" id="tab_flash_upload" class="fancy_tab">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_repo')" id="tab_flash_repo" class="fancy_tab">vish</a></li>
 				  </ul>
-				  <img class='help_in_fancybox' id='tab_flash_from_url_help' src='/images/helptutorial.png'/>
-				  <img class='help_in_fancybox' id='tab_flash_upload_help' src='/images/helptutorial.png'/>
-				  <img class='help_in_fancybox' id='tab_flash_repo_help' src='/images/helptutorial.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_from_url_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_upload_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_flash_repo_help' src='/images/helptutorial_circle_blank.png'/>
 				</div>
 				<div id='tab_flash_from_url_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">
-            <p class="textfancy">embed flash</p><br>
+            <p class="textfancy">embed flash</p></br>
             <img class="image_add_url" src="/images/url_img.png"/>
 				  	<input id="flash_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
 					  <button type="button" class="button buttonfancy previewButton">Preview</button>
@@ -384,7 +384,7 @@
 				
 				<div id='tab_flash_upload_content' class="fancy_tab_content">
               <div class="box1 box1fancy1">
-                <p class="textfancy">Select SWF file to upload</p><br>
+                <p class="textfancy">Select SWF file to upload</p></br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
                 
                   <form id="upload_flash_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
@@ -440,14 +440,14 @@
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/images/youtube.png'/></a></li>
 				      <li><a href="#" onclick="VISH.Editor.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/images/vimeo.png'/></a></li>
 				    </ul>
-				    <img class='help_in_fancybox' id='tab_video_from_url_help' src='/images/helptutorial.png'/>
-				    <img class='help_in_fancybox' id='tab_video_repo_help' src='/images/helptutorial.png'/>
-				    <img class='help_in_fancybox' id='tab_video_youtube_help' src='/images/helptutorial.png'/>
-				    <img class='help_in_fancybox' id='tab_video_vimeo_help' src='/images/helptutorial.png'/>
+				    <img class='help_in_fancybox' id='tab_video_from_url_help' src='/images/helptutorial_circle_blank.png'/>
+				    <img class='help_in_fancybox' id='tab_video_repo_help' src='/images/helptutorial_circle_blank.png'/>
+				    <img class='help_in_fancybox' id='tab_video_youtube_help' src='/images/helptutorial_circle_blank.png'/>
+				    <img class='help_in_fancybox' id='tab_video_vimeo_help' src='/images/helptutorial_circle_blank.png'/>
 				</div>
 				<div id='tab_video_from_url_content' class="fancy_tab_content">
 	        	<div id="box1" class="box1 box1fancy1">
-	             <p class="textfancy">add video url</p><br>
+	             <p class="textfancy">add video url</p></br>
 	             <img id="image_add_url" class="image_add_url" src="/images/url_img.png"/>
 	    	       <input id="video_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="video_url">
 			        <button type="button" class="button buttonfancy previewButton">Preview</button>
@@ -587,6 +587,7 @@ Click on "Next" to continue.
 	  	    <h2>Adding content to a slide</h2>
 	  	    <p>To fill the slide you choosen with content, you can click the grey spaces in the template.
             If you click on one of them,the content icons will appear: 
+            <img id="contentusetut" src="images/contentuse.png">
             <ul>
             <li><h1>Text</h1><img id="textimagetut" src="images/text_small.png"></li>
             <li><h1>Images</h1> <img id="imageimagetut" src="images/image_small.png"></li>
@@ -595,9 +596,9 @@ Click on "Next" to continue.
             </ul>
             If you click one of these icons (depending on which content do you choose to fill the grey space) another
             window will pop-up to help you, for an exception of the text icon, which will make appear a text tools bar at 
-            the top of the application that will help you defining the style for your text.
-            <img id="textedimagetut" src="images/textedimg.png"><br>
-            Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, 
+            the top of the application that will help you defining the style for your text.</p>
+            <p><img id="textedimagetut" src="images/textedimg.png"></p>
+            <p>Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, 
             and in case you want to delete the content you can use the icon at the right bottom corner on your space:
             <ul>
             <li><h1>Delete Content</h1><img id="deleteimagetut" src="images/del_content_small.png"></li>
@@ -627,15 +628,15 @@ Click on "Close" to finish this walkthrough.
 	  	    <h2>Adding Images</h2>
 	  	    <p>This window will help you in order to add images to the slide. As you can see in the top zone of this window there are few choices:</p>
             <ul>
-            <li>Url  (add image by pasting a url)</li>
-            <li>Upload   add image by upload it from your computer)</li>
-            <li>Vish   (add an image by choosing one from the ViSH repository)</li>
-            <li>Flickr  (add an image by choosing one from Flickr)</li>
+            	<li data-options="tipLocation:top;"><h1>Url</h1>  (add image by pasting a url)</li>
+            	<li><h1>Upload</h1>   add image by upload it from your computer)</li>
+            	<li><h1>Vish</h1>   (add an image by choosing one from the ViSH repository)</li>
+            	<li><h1>Flickr</h1>  (add an image by choosing one from Flickr)</li>
             </ul>
             <p>Now, you are on the url section, Click on "Next" to continue.
             </p>
 	  	  </li>	 
-          <li data-id="picture_url" data-text="Next" "tipLocation:bottom;">
+          <li data-id="picture_url" data-text="Next">
 	  	    <h2>Adding images by url</h2>
 	  	    <p>This box is used for pasting or writing on it, a url that contains an image, by example:
             <h1>"http://www.####.com/example.jpg"</h1>
@@ -643,48 +644,54 @@ Click on "Close" to finish this walkthrough.
             Click on "Next" to continue.
             </p>
 	  	  </li>	  	
-          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the image before you add it </h2>
-	  	    <p>This zone will show you (once you added a link and clicked on "preview") the image you are going to add.<br>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the image you are going to add.
                Once you are ready to add the image, you just have to click and the button in the right of this zone called
-               "add content"(this button will appear when the image is on preview).<br>
+               "add content"(this button will appear when the image is on preview).
                Click on "Close" to finish this Walkthrough.
             </p>
 	  	  </li>
 	  	</ol>
 	  		  	
 	  	<ol id="upload_picture_form_help" class="joyRideTipContent">
-	  	  <li data-id="upload_file_input" data-text="Next" class="custom">
+	  	  <li data-id="upload_file_input" data-text="Next" class="custom" "tipLocation:bottom">
 	  	    <h2>Adding images by upload</h2>
-	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose an image from your device.Once you do that, you can click the "upload" button in order to preview the image in zone below.<br>
-            This supports almost every image format files (jpg,tiff,png,gif...)<br>
-            Click on "Next" to continue<br>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose an image from your device.Once you do that, you can click the "upload" button in order to preview the image in zone below.
+            This supports almost every image format files (jpg,tiff,png,gif...)
+            Click on "Next" to continue
             </p>
-	  	  </li>	  	
-          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+	  	  </li>
+          <li data-id="tagid" data-text="Next" class="custom" "tipLocation:top">
+	  	    <h2>Add Tags for your image</h2>
+	  	    <p>By adding tags, you are specifying topics for the file your are uploading to the repository, this will help you and other users to classify every file into the repository in order to find it on the ViSH Platform.
+            Click on "Next" to continue.
+            </p>
+	  	  </li>	  		  	
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the image before you add it</h2>
-	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the image you are going to add.<br>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the image you are going to add.
                Once you are ready to add the image, you just have to click and the button in the right of this zone called
-               "add content"(this button will appear when the image is on preview).<br>
+               "add content"(this button will appear when the image is on preview).
                Click on "Close" to finish this Walkthrough.
             </p>
 	  	  </li>
 	  	</ol>
 	  	
 	  	<ol id="search_picture_help" class="joyRideTipContent">
-	  	  <li data-id="search_picture" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_picture" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 	  	    <h2>Search images in Vish repository</h2>
-	  	    <p>This box will allow you to search for images in the vish repository.<br>
-            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+	  	    <p>This box will allow you to search for images in the vish repository.
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.
             Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_flickr_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_flickr_fancy" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_flickr_fancy" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 	  	    <h2>Search images in Flickr</h2>
-	  	    <p>This box will allow you to search for images in Flickr.<br>
-            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.<br>
+	  	    <p>This box will allow you to search for images in Flickr.
+            Just write inside a word and a gallery will appear to show you the results, If you want to add an image from the results you just have to click on it.
             Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
@@ -692,30 +699,30 @@ Click on "Close" to finish this walkthrough.
 	  	
 	  	<!--help for fancybox of flash-->
 		<ol id="flash_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
           	<h2>Adding flash content</h2>
-	  	    <p>This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices: <br>
+	  	    <p>This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices: 
             <ul>
-            <li><h1>Embed</h1>    (add flash content by pasting a url)</li>
+            <li data-options="tipLocation:bottom"><h1>Embed</h1>    (add flash content by pasting a url)</li>
             <li><h1>Upload</h1> (add flash content by upload it from your computer)</li>
             <li><h1>Vish</h1>   (add flash content by choosing one from the ViSH repository)</li>
             </ul>
             Now, you are on the url section, Click on "Next" to continue.
             </p>
 	  	  </li>
-          <li data-id="flash_embed_code" data-text="Next" class="custom">
+          <li data-id="flash_embed_code" data-text="Next">
 	  	    <h2>Adding Flash content by url</h2>
-	  	    <p>This box is used for pasting or writing on it, a url that contains a flash content, by example:<br>
-            <h1>"http://www.####.com/example.swf"</h1><br>
-            This supports Flash content like swf files)<br>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a flash content, by example:
+            <h1>"http://www.####.com/example.swf"</h1>
+            This supports Flash content (like swf files)
             Click on "Next" to continue.
             </p>
 	  	  </li>	  	
-          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the content before you add it </h2>
-	  	    <p>This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.<br>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.
                Once you are ready to add the content, you just have to click and the button in the right of this zone called
-               "add content"(this button will appear when the content is on preview).<br>
+               "add content"(this button will appear when the content is on preview).
                Click on "Close" to finish this Walkthrough.
             </p>
 	  	  </li>	  
@@ -724,26 +731,26 @@ Click on "Close" to finish this walkthrough.
 	  	<ol id="upload_flash_form_help" class="joyRideTipContent">
 	  	  <li data-id="upload_flash_form" data-text="Next" class="custom">
 	  	    <h2>Adding flash content by upload</h2>
-	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device.Once you do that, you can click the "upload" button in order to preview the content in zone below.<br>
-            This supports almost every swf file.<br>
-            Click on "Next" to continue<br>
+	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device.Once you do that, you can click the "upload" button in order to preview the content in zone below.
+            This supports almost every swf file.
+            Click on "Next" to continue
             </p>
 	  	  </li>	  	
-          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the content before you add it</h2>
-	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the content you are going to add.<br>
+	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the content you are going to add.
                Once you are ready to add it to the slide, you just have to click and the button in the right of this zone called
-               "add content"(this button will appear when the content is on preview).<br>
+               "add content"(this button will appear when the content is on preview).
                Click on "Close" to finish this Walkthrough.
             </p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_flash_help" class="joyRideTipContent">
-	  	  <li data-id="search_flash" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_flash" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 	  	    <h2>Search flash content </h2>
-	  	    <p>This box will allow you to search for flash content in the ViSH repository.<br>
-            Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button"<br>
+	  	    <p>This box will allow you to search for flash content in the ViSH repository.
+            Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button"
             Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
@@ -751,11 +758,11 @@ Click on "Close" to finish this walkthrough.
 	  	
 	  	<!--help for fancybox of videos-->
 		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index">
+	  	  <li data-id="video_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>Adding Video</h2>
-	  	    <p>This window will help you in order to add videos to the slide. As you can see in the top zone of this window there are few choices: <br>
+	  	    <p>This window will help you in order to add videos to the slide. As you can see in the top zone of this window there are few choices: 
             <ul>
-            <li><h1>Url</h1>   (add video by pasting a url)</li>
+            <li data-options="tipLocation:bottom"><h1>Url</h1>   (add video by pasting a url)</li>
             <li><h1>Vish</h1>  (add video from the ViSH repository)</li>
             <li><h1>Youtube</h1>(add video by choosing one from Youtube)</li>
             <li><h1>Vimeo</h1>  (add video by choosing one from Vimeo)</li>
@@ -765,43 +772,43 @@ Click on "Close" to finish this walkthrough.
 	  	  </li>	 
           <li data-id="video_url" data-text="Next" class="custom">
 	  	    <h2>Adding video by url</h2>
-	  	    <p>This box is used for pasting or writing on it, a url that contains a video, by example:<br>
-            <h1>"http://www.####.com/example.avi"</h1><br>
-            This supports almost every image format files (avi,mpg,flv...)<br>
+	  	    <p>This box is used for pasting or writing on it, a url that contains a video, by example:
+            <h1>"http://www.####.com/example.avi"</h1>
+            This supports almost every image format files (avi,mpg,flv...)
             Click on "Next" to continue.
             </p>
 	  	  </li>	  	
-          <li data-id="picture_preview" data-text="Close" class="custom tut_preview">
+          <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the video before you add it </h2>
-	  	    <p>This zone will show you (once you added a link and clicked on "preview") the video you are going to add.<br>
+	  	    <p>This zone will show you (once you added a link and clicked on "preview") the video you are going to add.
                Once you are ready to add the ideo, you just have to click and the button in the right of this zone called
-               "add content"(this button will appear when the video is on preview).<br>
+               "add content"(this button will appear when the video is on preview).
                Click on "Close" to finish this Walkthrough.
             </p>
 	  	  </li> 	  
 	  	</ol>
 	  	
 	  	<ol id="search_video_help" class="joyRideTipContent">
-	  	  <li data-id="search_video" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_video" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 <h2>Search videos in Vish repository</h2>
-	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"
             Click on "Close" to finish this walkthrough.</p>
             </p>
 	  	  </li>	  	  	  
 	  	</ol>
 	  	  	
 	  	<ol id="search_youtube_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_youtube_fancy" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_youtube_fancy" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 <h2>Search videos in Youtube</h2>
-	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"
             Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
 	  	
 	  	<ol id="search_vimeo_fancy_help" class="joyRideTipContent">
-	  	  <li data-id="search_vimeo_fancy" data-text="Close" class="custom tut_search">
+	  	  <li data-id="search_vimeo_fancy" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 <h2>Search videos in Vimeo</h2>
-	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"<br>
+	  	    <p>Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by click the "add button"
             Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	  	  
 	  	</ol>
