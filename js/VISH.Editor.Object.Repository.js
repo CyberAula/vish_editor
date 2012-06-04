@@ -98,7 +98,13 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
 	 var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId,1,_onClickCarrouselElement,5,5,"title");
+		
+		var options = new Array();
+    options['rows'] = 1;
+    options['callback'] = _onClickCarrouselElement;
+    options['rowItems'] = 5;
+    options['styleClass'] = "title";
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
   var _onAPIError = function(){

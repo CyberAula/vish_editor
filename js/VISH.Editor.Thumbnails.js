@@ -36,6 +36,40 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
      	//finally add the + button in "position"
      	_addPlusButton(position);
    };
+	 
+	 
+	 var redrawThumbnailsWithCarrousel = function(){
+      //first we remove all the thumbnails and the click events to add them again
+      var i = 1;
+      for(i = 1; i < 8; i++){
+        $("#slide_thumb_"+ i).off("click");
+        $("#slide_thumb_"+ i).css("cursor", "auto");
+        $("#slide_thumb_"+ i + " .slide_number").html("");
+        $("#slide_thumb_"+ i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
+        $("#slide_thumb_"+ i + " img").unbind('mouseenter').unbind('mouseleave');
+      }
+      
+      //unselect all thumbnails
+      $(".barbutton").css("background-color", "transparent");
+      
+      //if we have more than 1 slide, we will highlight the next one to current slide
+      if(slideEls.length > 0){
+        var slide_to_highlight = curSlide + 1;
+        $("#slide_thumb_"+ slide_to_highlight).css("background-color", "#ACACAC");
+      }
+      
+      //now we add them again
+      var template = 0; //template to add as thumbnail
+      var position = 1;  //position to add the thumbnail
+      $('article').each(function(index,s){
+          template = $(s).attr('template');
+          addThumbnail(template, position);
+          position += 1;
+      });
+      
+      //finally add the + button in "position"
+      _addPlusButton(position);
+   };
 	
 	/**
 	 * function to add the "addslide" button as thumbnail
@@ -83,7 +117,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	return {
 		addThumbnail	  : addThumbnail,
 		redrawThumbnails  : redrawThumbnails,
-		selectThumbnail	  : selectThumbnail
+		selectThumbnail	  : selectThumbnail,
+		redrawThumbnailsWithCarrousel : redrawThumbnailsWithCarrousel
 	};
 
 }) (VISH, jQuery);

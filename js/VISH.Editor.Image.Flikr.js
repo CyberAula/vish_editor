@@ -64,7 +64,11 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 	var _onImagesLoaded = function(){
 		$("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel (carrouselDivId, 2, VISH.Editor.Image.Flikr.addImage,4,4);
+		var options = new Array();
+    options['rows'] = 2;
+    options['callback'] = VISH.Editor.Image.Flikr.addImage;
+    options['rowItems'] = 4;
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
 	return {

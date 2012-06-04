@@ -16,7 +16,7 @@ VISH.Editor.Object = (function(V,$,undefined){
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = $("#" + urlInputId).val()
-        drawPreview("#" + urlDivId, contentToAdd)    
+        drawPreview(urlDivId, contentToAdd)    
       }
     });
 		
@@ -30,6 +30,9 @@ VISH.Editor.Object = (function(V,$,undefined){
     $("#" + uploadDivId + " input[name='document[file]']").change(function () {
       $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
       _resetUploadFields();
+      $(tagList).parent().show();
+      $("#" + uploadDivId + ' form' + ' .button').show();
+      $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     });
 		
 		
@@ -44,6 +47,9 @@ VISH.Editor.Object = (function(V,$,undefined){
           $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
           $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
           $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					var tagList = $("#" + uploadDivId + " .tagList")
+          $(tagList).parent().hide();
+          $("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
         }
       }
     });
@@ -86,8 +92,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	var _onLoadUploadTab = function(){
     contentToAdd = null;
-    _resetUploadFields();
+		
+    //Hide and reset elements
+    var tagList = $("#" + uploadDivId + " .tagList")
+    $(tagList).parent().hide();
+    $("#" + uploadDivId + ' form' + ' .button').hide();
+    $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     $("#" + uploadDivId + " input[name='document[file]']").val(""); 
+    _resetUploadFields();
+		
     VISH.Editor.API.requestTags(_onTagsReceived)
   }
 	

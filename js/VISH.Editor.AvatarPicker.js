@@ -68,7 +68,14 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	
 	var _onImagesLoaded = function(){
     $("#thumbnails_in_excursion_details").show(); 
-    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", 1, VISH.Editor.AvatarPicker.selectAvatar,5,5,"thumbnails");
+		
+		var options = new Array();
+    options['rows'] = 1;
+    options['callback'] = VISH.Editor.AvatarPicker.selectAvatar;
+    options['rowItems'] = 5;
+		options['styleClass'] = "thumbnails";
+    VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", options);
+		
     $(".buttonintro").addClass("buttonintro_extramargin");
     VISH.Editor.AvatarPicker.selectRandom(5);  //randomly select one between first page
 	}

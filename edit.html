@@ -61,38 +61,43 @@
 	        </a>
             <div class='barbutton with_pointer' id=''>
             </div>
-		    <div class='barbutton' id="slide_thumb_1">				
-					<img id="addslidebutton" class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-			</div>
-		    <div class='barbutton' id="slide_thumb_2" >
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_3">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_4">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_5">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_6">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_7">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
-		    <div class='barbutton' id="slide_thumb_8">
-				    <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
-				    <span class="slide_number"></span>
-		    </div>
+		    <div id="slides_carrousel"></div>
+				
+				<!-- DEPRECATED -->
+				<div class='barbutton' id="slide_thumb_1">        
+            <img id="addslidebutton" class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_2" >
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_3">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_4">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_5">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_6">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_7">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+        <div class='barbutton' id="slide_thumb_8">
+            <img class="image_barbutton" src="/images/templatesthumbs/default.png"/>
+            <span class="slide_number"></span>
+        </div>
+				
+				
 		    <div class='barbutton with_pointer' id=''>
 		    </div>		    
             <a id="save" href="#thumbcontent">
@@ -111,27 +116,27 @@
     <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
     <div style='display:none'>    
       <form id='excursiondetails'>         
-          <div id="excursion_details_fields">
-            <label for="excursion_title">
-              <div id="tutorialstart" class="textintro1 textintromargin1">Title</div>
-            </label>
-            <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/images/tutorialimage_blank.png"/>
-        <label for="excursion_description">
-          <div class="textintro1 textintromargin2">Description</div>
-        </label>
-        <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
-        
-        <div id="thumbnails_in_excursion_details">
-          <label for="excursion_avatar">
-            <div class="textintro1 textintromargin3">Thumbnail</div>
+        <div id="excursion_details_fields">
+          <label for="excursion_title">
+            <div id="tutorialstart" class="textintro1 textintromargin1">Title</div>
           </label>
-          <div id="avatars_carrousel">
-          							
+          <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/images/tutorialimage_blank.png"/>
+          <label for="excursion_description">
+            <div class="textintro1 textintromargin2">Description</div>
+          </label>
+          <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+          <div class="tagBoxIntro">
+            <ul class="tagList tagListIntro"></ul>
           </div>
-          <input type="hidden" id="excursion_avatar" value="">
-        </div>
+	        <div id="thumbnails_in_excursion_details">
+	          <label for="excursion_avatar">
+	            <div class="textintro1 textintromargin3">Thumbnail</div>
+	          </label>
+	          <div id="avatars_carrousel"></div>
+	          <input type="hidden" id="excursion_avatar" value="">
+	        </div>
         
-        <input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
+          <input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
           <p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
         </div>
       </form>
@@ -302,7 +307,7 @@
 				  			<p class="textfancy">Select picture to upload</p></br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
 								
-							    <form id="upload_picture_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+							    <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
 							        <input id="upload_file_input" type="file" name="document[file]" class="upload_file_input">
 							        <input type="hidden" name="document[title]">
 							        <input type="hidden" name="document[description]">
@@ -318,7 +323,7 @@
 							    </div>
 									
 									<div class="tagBox">
-				            <ul id="tagid" class="tagList"></ul>
+				            <ul class="tagList"></ul>
                   </div>
 									
 							</div>
@@ -387,7 +392,7 @@
                 <p class="textfancy">Select SWF file to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
                 
-                  <form id="upload_flash_form" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                  <form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
                       <input type="file" name="document[file]" class="upload_file_input">
                       <input type="hidden" name="document[title]">
                       <input type="hidden" name="document[description]">

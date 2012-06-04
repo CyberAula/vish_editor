@@ -246,3 +246,8 @@ a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
 .carrousel_element_selected {
 	color: #0F9;
 }
+
+.pagination_single_row_thumbnails{
+	margin-top: 12px;
+	margin-bottom: 10px;
+}
