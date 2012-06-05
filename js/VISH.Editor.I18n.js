@@ -20,6 +20,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		_filterAndSubText('p');		
   		_filterAndSubText('button');
   		_filterAndSubText('h2');
+		_filterAndSubText('h1');
   		
   		//now the elements with attribute i18n-key (long phrases)
   		_elementsWithKey();
