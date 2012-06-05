@@ -21,6 +21,11 @@ VISH.Editor.I18n = (function(V,$,undefined){
   		_filterAndSubText('button');
   		_filterAndSubText('h2');
   		
+  		//substitute data-text attribute of the walkthrough
+  		$("[data-text]").each(function(index, elem){
+				$(elem).attr("data-text", _getTrans($(elem).attr("data-text")));
+		});	
+  	
   		//now the elements with attribute i18n-key (long phrases)
   		_elementsWithKey();
   		
@@ -58,6 +63,8 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			}, function() {
 			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
 			});
+			//replace contentusetut image
+			$("#contentusetut").attr("src", "images/contentuse_"+language+".png");
   		}
 				
 		var duration = new Date().getTime() - initTime;
