@@ -126,7 +126,7 @@
           </label>
           <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
           <div class="tagBoxIntro">
-            <ul class="tagList tagListIntro"></ul>
+            <ul id="tagindex" class="tagList tagListIntro"></ul>
           </div>
 	        <div id="thumbnails_in_excursion_details">
 	          <label for="excursion_avatar">
@@ -550,7 +550,12 @@
 	        <p>Here you can explain in a little more detail what the excursion is about.
 Click on "Next" to continue.</p>
 	  	  </li>
-          <li data-id="avatars_carrousel" data-text="Next">
+          <li data-id="tagindex" data-text="Next">
+	  	    <h2>Add "tags" to your excursion</h2>
+	        <p>In this zone you can add topics words that will represent your excursion when users search in the ViSH platform.
+            Click on "Next" to continue.</p>
+	  	  </li>
+          <li data-id="avatars_carrousel" data-text="Next" data-options="tipLocation:top">
 	  	    <h2>Choose an image that will represent your excursion</h2>
 	        <p>In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
 	  	  </li>
@@ -665,19 +670,13 @@ Click on "Close" to finish this walkthrough.
 	  	</ol>
 	  		  	
 	  	<ol id="upload_picture_form_help" class="joyRideTipContent">
-	  	  <li data-id="upload_file_input" data-text="Next" class="custom" "tipLocation:bottom">
+	  	  <li data-id="upload_file_input" data-text="Next" class="custom" data-options="tipLocation:bottom">
 	  	    <h2>Adding images by upload</h2>
 	  	    <p>By clicking on the "Browse" button you will access to a browser windows that will allow you to choose an image from your device.Once you do that, you can click the "upload" button in order to preview the image in zone below.
             This supports almost every image format files (jpg,tiff,png,gif...)
             Click on "Next" to continue
             </p>
-	  	  </li>
-          <li data-id="tagid" data-text="Next" class="custom" "tipLocation:top">
-	  	    <h2>Add Tags for your image</h2>
-	  	    <p>By adding tags, you are specifying topics for the file your are uploading to the repository, this will help you and other users to classify every file into the repository in order to find it on the ViSH Platform.
-            Click on "Next" to continue.
-            </p>
-	  	  </li>	  		  	
+	  	  </li>  		  	
           <li data-id="picture_preview" data-text="Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2>See the image before you add it</h2>
 	  	    <p>This zone will show you (once you uploaded a file and clicked on "upload") the image you are going to add.
