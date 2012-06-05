@@ -78,7 +78,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      if(objectInfo.wrapper=="IFRAME"){
 	        imageSource = VISH.ImagesPath + "carrousel/iframe.png"
 	      } else {
-	    	  imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
+	    	  imageSource = VISH.ImagesPath + "carrousel/object.png"
 	      }
 	      break;
 	    default:

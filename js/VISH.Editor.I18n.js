@@ -20,6 +20,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		_filterAndSubText('p');		
   		_filterAndSubText('button');
   		_filterAndSubText('h2');
+		_filterAndSubText('h1');
   		
   		//substitute data-text attribute of the walkthrough
   		$("[data-text]").each(function(index, elem){
