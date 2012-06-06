@@ -75,6 +75,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		options['rows'] = 2;
 		options['callback'] = _onClickCarrouselElement;
 		options['rowItems'] = 4;
+		options['scrollItems'] = 4;
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	

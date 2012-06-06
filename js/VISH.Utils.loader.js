@@ -67,7 +67,7 @@ VISH.Utils.loader = (function(V,undefined){
       $.each(imagesArray, function(i, image) {
         $(image).load(function(response) {
 					if(titleArray){
-						$("#" + carrouselDivId).append("<div><p class='repositoryTitle'>"+titleArray[i]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+						$("#" + carrouselDivId).append("<div><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 					} else {
 						$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
 					}
@@ -85,13 +85,48 @@ VISH.Utils.loader = (function(V,undefined){
       });
 		}
 		
+		
+    var loadImagesOnCarrouselOrder = function(imagesArray,callback,carrouselDivId,titleArray){
+			var validImagesArray = imagesArray;
+      var imagesLength = imagesArray.length;
+      var imagesLoaded = 0;
+      
+      $.each(imagesArray, function(i, image) {
+        $(image).load(function(response) {
+          imagesLoaded = imagesLoaded + 1;
+          if(imagesLoaded == imagesLength){
+						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
+            callback();
+          }
+        })
+        $(image).error(function(response) {
+          imagesLoaded = imagesLoaded + 1;
+					validImagesArray.splice(validImagesArray.indexOf(image),1)
+          if(imagesLoaded == imagesLength){
+						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
+            callback();
+          }
+        })
+      });
+    }
+		
+	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
+	 	 $.each(imagesArray, function(i, image) {
+	     if(titleArray){
+	       $("#" + carrouselDivId).append("<div><p>"+titleArray[i]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+	     } else {
+	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
+	     }
+     });
+	 }
 
     return {
             getImage        : getImage,
             getVideo        : getVideo,
             loadImage       : loadImage,
             loadVideo       : loadVideo,
-						loadImagesOnCarrousel : loadImagesOnCarrousel
+						loadImagesOnCarrousel : loadImagesOnCarrousel,
+						loadImagesOnCarrouselOrder : loadImagesOnCarrouselOrder
     };
 
 }) (VISH);

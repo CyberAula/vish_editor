@@ -12,9 +12,11 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		//Default values
 		var rows = 1;
 		var rowItems = 5;
-		var scrollItems = 5;
+		var scrollItems = null;
 		var styleClass = "";
+		var titleClass = "";
 		var callback = null;
+		var width = 750;
 		
 		//Read options
 		if(options){
@@ -30,8 +32,14 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			if(options['styleClass']){
         styleClass = options['styleClass']
       }
+			if(options['titleClass']){
+        titleClass = options['titleClass']
+      }
 			if(options['callback']){
         callback = options['callback'];
+      }
+			if(options['width']){
+        width = options['width'];
       }
 		}
 
@@ -107,10 +115,10 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if (multipleRow) {
-		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass);
+		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass,width);
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
-		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems);
+		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width);
 		}	
 			
 		_forceShowPagination(containerId)
@@ -118,7 +126,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 	
-  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass){
+  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass,width){
 		
     var synchronizeIds = [];
 		
@@ -144,21 +152,21 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	    $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
 		  if(i==0){
 			  var newContainerId = mainDiv.id + "_row" + i;
-		    _setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems);
+		    _setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width);
 		  } else {
-			  _setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems);
+			  _setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width);
 		  }
 	  }
 		$(".caroufredsel_wrapper").css("margin-bottom","30px")
   }
 
 
-  var _setRowCarrousel = function (id,rowItems,scrollItems){
+  var _setRowCarrousel = function (id,rowItems,scrollItems,width){
     $("#" + id).carouFredSel({
       auto    : false,
       circular: false,
       infinite: false,
-      width   : 750,
+      width   : width,
 	    scroll : {
         //items         : "page",
         items           : scrollItems,
@@ -176,12 +184,12 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 
-  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems){
+  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width){
 		$("#" + id).carouFredSel({
 		  circular: false,
 		  infinite: false,
 		  auto    : false,
-		  width   : 750,
+		  width   : width,
 		  scroll : {
 		    //items         : "page",
 		    items           : scrollItems,

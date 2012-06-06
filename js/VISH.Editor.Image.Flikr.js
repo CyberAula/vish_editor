@@ -68,6 +68,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
     options['rows'] = 2;
     options['callback'] = VISH.Editor.Image.Flikr.addImage;
     options['rowItems'] = 4;
+		options['scrollItems'] = 4;
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	

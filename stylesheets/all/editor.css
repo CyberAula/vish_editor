@@ -41,8 +41,8 @@ img {
 	margin-top: 30px;
 	border: 1px solid #D7D7D7;
 	border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
 }
 
 .box1fancy1 {
@@ -920,7 +920,7 @@ div.object_wrapper{
 
 .textintromargin3 {
 	margin-left: 68px;
-	margin-top: 180px;
+	margin-top: 190px;
 }
 
 .buttonintro {
@@ -1094,8 +1094,8 @@ textarea {
 	text-align: center;
 	padding: 30px 20px 20px 20px;
 	border-radius: 20px;
-	moz-border-radius: 20px;
-	webkit-border-radius: 20px;	
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;	
 }
 
 #recomended_browsers{
@@ -1312,3 +1312,14 @@ textarea {
 	top:-29px;
 }
 	
+	
+/** Slides bar **/
+
+.add_slide_button:hover{
+	cursor: pointer;
+}
+
+
+/* Remove outline */
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
