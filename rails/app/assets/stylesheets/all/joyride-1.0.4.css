@@ -75,15 +75,11 @@ width: 100%;
   font-weight: bold;
 }
 .joyride-tip-guide h1 { font-size: 16px;
-						color: #03C;
+						color: #0066ff;
 						font-style:italic;
-<<<<<<< HEAD
-						margin: 5px; }
-=======
 						margin: 15px; }
->>>>>>> 04d9e3e9f92125105274f1dec25a36458b40e71a
-.joyride-tip-guide h2 { font-size: 17px; 
-						color: #4866FA;
+.joyride-tip-guide h2 { font-size: 18px; 
+						color: #0066ff;
 						padding-bottom: 5px;  }
 .joyride-tip-guide h3 { font-size: 22px; }
 .joyride-tip-guide h4 { font-size: 18px; }
@@ -93,13 +89,10 @@ width: 100%;
   font-size: 14px;
   line-height: 18px;
 }
-.joyride-tip-guide a {
-  color: rgb(255,255,255);
+.joyride-tip-guide a {;
   text-decoration: none;
-  border-bottom: dotted 1px rgba(255,255,255,0.6);
 }
 .joyride-tip-guide a:hover {
-  color: rgba(255,255,255,0.8);
   border-bottom: none;
 }
 
@@ -111,38 +104,22 @@ width: 100%;
   width: auto;
   padding: 6px 18px 4px;
   font-size: 13px;
-  text-decoration: none;
-  color: rgb(255,255,255);
   float: right;
   margin: 0 6px 8px 0px;
-  border: solid 1px rgb #FF005D;
-  background: rgb(0,99,255);
-  background: -moz-linear-gradient(top, rgb(0,99,255) 0%, rgb(0,85,214) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(0,99,255)), color-stop(100%,rgb(0,85,214)));
-  background: -webkit-linear-gradient(top, rgb(0,99,255) 0%,rgb(0,85,214) 100%);
-  background: -o-linear-gradient(top, rgb(0,99,255) 0%,rgb(0,85,214) 100%);
-  background: -ms-linear-gradient(top, rgb(0,99,255) 0%,rgb(0,85,214) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0063ff', endColorstr='#0055d6',GradientType=0 );
-  background: linear-gradient(top, rgb(0,99,255) 0%,rgb(0,85,214) 100%);
-  text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
-  -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-          border-radius: 2px;
-  -webkit-box-shadow: 0px 1px 0px rgba(255,255,255,0.3) inset;
-     -moz-box-shadow: 0px 1px 0px rgba(255,255,255,0.3) inset;
-          box-shadow: 0px 1px 0px rgba(255,255,255,0.3) inset;
+    display: inline;
+	text-decoration:none;
+    background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 .joyride-next-tip:hover {
-  color: rgb(255,255,255) !important;
-  border: solid 1px rgb(0,60,180) !important;
-  background: rgb(43,128,255);
-  background: -moz-linear-gradient(top, rgb(43,128,255) 0%, rgb(29,102,211) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(43,128,255)), color-stop(100%,rgb(29,102,211)));
-  background: -webkit-linear-gradient(top, rgb(43,128,255) 0%,rgb(29,102,211) 100%);
-  background: -o-linear-gradient(top, rgb(43,128,255) 0%,rgb(29,102,211) 100%);
-  background: -ms-linear-gradient(top, rgb(43,128,255) 0%,rgb(29,102,211) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b80ff', endColorstr='#1d66d3',GradientType=0 );
-  background: linear-gradient(top, rgb(43,128,255) 0%,rgb(29,102,211) 100%);
+	opacity: 1;
+	text-shadow: 1px 1px #666;
 }
 
 .joyride-timer-indicator-wrap {
