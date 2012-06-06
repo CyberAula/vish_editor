@@ -17,6 +17,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		var titleClass = "";
 		var callback = null;
 		var width = 750;
+		var startAtLastElement = false;
 		
 		//Read options
 		if(options){
@@ -40,6 +41,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
       }
 			if(options['width']){
         width = options['width'];
+      }
+			if(options['startAtLastElement']){
+        startAtLastElement = options['startAtLastElement'];
       }
 		}
 
@@ -118,7 +122,15 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass,width);
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
-		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width);
+			
+			//Get start index
+			if(startAtLastElement){
+        var start = ($(mainDiv).children().length-rowItems+1);
+		  } else {
+		    var start = 0;
+		  }
+			
+		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start);
 		}	
 			
 		_forceShowPagination(containerId)
@@ -184,7 +196,12 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 
-  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width){
+  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start){
+		
+		if(!start){
+			start = 0;
+		}
+		
 		$("#" + id).carouFredSel({
 		  circular: false,
 		  infinite: false,
@@ -201,7 +218,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		    visible    : {
 			    min : rowItems,
 			    max : rowItems
-			  }
+			  },
+				start   : start
 		  },
 		  prev    : {
 		    button  : "#carrousel_prev" + widgetsId,
