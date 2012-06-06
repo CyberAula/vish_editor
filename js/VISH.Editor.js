@@ -744,7 +744,7 @@ VISH.Editor = (function(V,$,undefined){
         	V.SlideManager.init(data);
         	*/
         	/*if we redirect the parent frame*/
-        	window.top.location.href = data;
+        	window.top.location.href = data.url;
         	 
     	}    	
     });
