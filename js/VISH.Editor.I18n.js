@@ -13,12 +13,23 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		if (typeof(i18n[language])==='undefined'){
 			return;
 		}
-		//cover all divs and translate their content		
+		//cover all elements and translate their content		
 		_filterAndSubText('div');
 		_filterAndSubText('a');
-		_filterAndSubText('p');
 		_filterAndSubText('span');
+		_filterAndSubText('p');		
   		_filterAndSubText('button');
+  		_filterAndSubText('h2');
+		_filterAndSubText('h1');
+  		
+  		//substitute data-text attribute of the walkthrough
+  		$("[data-text]").each(function(index, elem){
+				$(elem).attr("data-text", _getTrans($(elem).attr("data-text")));
+		});	
+  	
+  		//now the elements with attribute i18n-key (long phrases)
+  		_elementsWithKey();
+  		
   		
   		//now the div titles (used as tooltips for help)
   		$('div[title]').each(function(index, elem){
@@ -53,6 +64,8 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			}, function() {
 			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
 			});
+			//replace contentusetut image
+			$("#contentusetut").attr("src", "images/contentuse_"+language+".png");
   		}
 				
 		var duration = new Date().getTime() - initTime;
@@ -65,14 +78,22 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	 */
 	var _filterAndSubText = function(elemType){
 		$(elemType).filter(function(index){
-			return $(this).children().length < 1 && $(this).text().trim() !== "";
+			return $(this).children().length < 1 && ($(this).attr("i18n-key") === undefined) && $(this).text().trim() !== "";
 			})
 			.each(function(index, elem){
 				$(elem).text(_getTrans($(elem).text()));
 		});
 	};
 	
-		
+	/**
+	 * function to cover all elements with i18n-key to translate them
+	 */
+	var _elementsWithKey = function(){
+		$("[i18n-key]").each(function(index, elem){
+				$(elem).text(_getTrans($(elem).attr("i18n-key")));
+		});
+	};
+	
 	/**
 	 * function to translate a text
 	 */

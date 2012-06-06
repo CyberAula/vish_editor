@@ -83,7 +83,11 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
   var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, 1, VISH.Editor.Video.Youtube.onClickCarrouselElement,5,5);
+		var options = new Array();
+    options['rows'] = 1;
+    options['callback'] = VISH.Editor.Video.Youtube.onClickCarrouselElement;
+    options['rowItems'] = 5;
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
 	

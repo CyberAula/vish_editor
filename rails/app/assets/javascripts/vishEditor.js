@@ -7944,12 +7944,21 @@ jQuery.effects || function(a, b) {
     if(currentOpts.titleShow === false) {
       title.hide();
       return
+<<<<<<< HEAD
     }
     titleStr = $.isFunction(currentOpts.titleFormat) ? currentOpts.titleFormat(titleStr, currentArray, currentIndex, currentOpts) : _format_title(titleStr);
     if(!titleStr || titleStr === "") {
       title.hide();
       return
     }
+=======
+    }
+    titleStr = $.isFunction(currentOpts.titleFormat) ? currentOpts.titleFormat(titleStr, currentArray, currentIndex, currentOpts) : _format_title(titleStr);
+    if(!titleStr || titleStr === "") {
+      title.hide();
+      return
+    }
+>>>>>>> 78981790ad4e7ee6e3dec253ad543690e04cf9d7
     title.addClass("fancybox-title-" + currentOpts.titlePosition).html(titleStr).appendTo("body").show();
     switch(currentOpts.titlePosition) {
       case "inside":
@@ -8101,6 +8110,7 @@ jQuery.effects || function(a, b) {
     }else {
       view = _get_viewport();
       from = {width:currentOpts.padding * 2, height:currentOpts.padding * 2, top:parseInt(view[3] + view[1] * 0.5, 10), left:parseInt(view[2] + view[0] * 0.5, 10)}
+<<<<<<< HEAD
     }
     return from
   }, _animate_loading = function() {
@@ -8108,6 +8118,15 @@ jQuery.effects || function(a, b) {
       clearInterval(loadingTimer);
       return
     }
+=======
+    }
+    return from
+  }, _animate_loading = function() {
+    if(!loading.is(":visible")) {
+      clearInterval(loadingTimer);
+      return
+    }
+>>>>>>> 78981790ad4e7ee6e3dec253ad543690e04cf9d7
     $("div", loading).css("top", loadingFrame * -40 + "px");
     loadingFrame = (loadingFrame + 1) % 12
   };
@@ -8119,6 +8138,7 @@ jQuery.effects || function(a, b) {
       e.preventDefault();
       if(busy) {
         return
+<<<<<<< HEAD
       }
       busy = true;
       $(this).blur();
@@ -8131,6 +8151,20 @@ jQuery.effects || function(a, b) {
         selectedArray = $("a[rel=" + rel + "], area[rel=" + rel + "]");
         selectedIndex = selectedArray.index(this)
       }
+=======
+      }
+      busy = true;
+      $(this).blur();
+      selectedArray = [];
+      selectedIndex = 0;
+      var rel = $(this).attr("rel") || "";
+      if(!rel || rel == "" || rel === "nofollow") {
+        selectedArray.push(this)
+      }else {
+        selectedArray = $("a[rel=" + rel + "], area[rel=" + rel + "]");
+        selectedIndex = selectedArray.index(this)
+      }
+>>>>>>> 78981790ad4e7ee6e3dec253ad543690e04cf9d7
       _start();
       return
     });
@@ -8161,10 +8195,17 @@ jQuery.effects || function(a, b) {
         obj = $({}).data("fancybox", $.extend({content:obj}, opts))
       }
       selectedArray.push(obj)
+<<<<<<< HEAD
     }
     if(selectedIndex > selectedArray.length || selectedIndex < 0) {
       selectedIndex = 0
     }
+=======
+    }
+    if(selectedIndex > selectedArray.length || selectedIndex < 0) {
+      selectedIndex = 0
+    }
+>>>>>>> 78981790ad4e7ee6e3dec253ad543690e04cf9d7
     _start()
   };
   $.fancybox.showActivity = function() {
@@ -13075,7 +13116,12 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
     V.Editor.Quiz.init();
+<<<<<<< HEAD
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":600, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
+=======
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
+    VISH.Editor.API.requestTags(_onInitialTagsReceived);
+>>>>>>> 78981790ad4e7ee6e3dec253ad543690e04cf9d7
     if(excursion === undefined) {
       $("#edit_excursion_details").trigger("click")
     }
@@ -13144,6 +13190,22 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _closeFancybox = function() {
     $.fancybox.close()
+  };
+  var _onInitialTagsReceived = function(data) {
+    var tagList = $(".tagBoxIntro .tagList");
+    console.log("_onInitialTagsReceived: " + data);
+    console.log("taglist: " + $(tagList)[0]);
+    if($(tagList).children().length == 0) {
+      $.each(data, function(index, tag) {
+        if(index == 2) {
+          return false
+        }
+        $(tagList).append("<li>" + tag + "</li>")
+      });
+      console.log("tagit called!");
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6, tagsChanged:function(tag, action) {
+      }})
+    }
   };
   var _addTutorialEvents = function() {
     $(document).on("click", "#start_tutorial", function() {
@@ -13483,7 +13545,7 @@ VISH.Editor.Image = function(V, $, undefined) {
     VISH.Editor.Image.Repository.init();
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
-        VISH.Editor.Object.drawPreview("#" + urlDivId, $("#" + urlInputId).val());
+        VISH.Editor.Object.drawPreview(urlDivId, $("#" + urlInputId).val());
         contentToAdd = $("#" + urlInputId).val()
       }
     });
@@ -13493,7 +13555,10 @@ VISH.Editor.Image = function(V, $, undefined) {
     var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     $("#" + uploadDivId + " input[name='document[file]']").change(function() {
       $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
-      _resetUploadFields()
+      _resetUploadFields();
+      $(tagList).parent().show();
+      $("#" + uploadDivId + " form" + " .button").show();
+      $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide()
     });
     $("#" + uploadDivId + " #upload_document_submit").click(function(event) {
       if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]) {
@@ -13505,7 +13570,10 @@ VISH.Editor.Image = function(V, $, undefined) {
           $("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
           $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
           $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
-          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")))
+          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
+          var tagList = $("#" + uploadDivId + " .tagList");
+          $(tagList).parent().hide();
+          $("#" + uploadDivId + " .upload_progress_bar_wrapper").show()
         }
       }
     });
@@ -13539,8 +13607,12 @@ VISH.Editor.Image = function(V, $, undefined) {
   };
   var _onLoadUploadTab = function() {
     contentToAdd = null;
-    _resetUploadFields();
+    var tagList = $("#" + uploadDivId + " .tagList");
+    $(tagList).parent().hide();
+    $("#" + uploadDivId + " form" + " .button").hide();
+    $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     $("#" + uploadDivId + " input[name='document[file]']").val("");
+    _resetUploadFields();
     VISH.Editor.API.requestTags(_onTagsReceived)
   };
   var _resetUploadFields = function() {
@@ -13622,7 +13694,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
         contentToAdd = $("#" + urlInputId).val();
-        drawPreview("#" + urlDivId, contentToAdd)
+        drawPreview(urlDivId, contentToAdd)
       }
     });
     var options = VISH.Editor.getOptions();
@@ -13631,7 +13703,10 @@ VISH.Editor.Object = function(V, $, undefined) {
     var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     $("#" + uploadDivId + " input[name='document[file]']").change(function() {
       $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
-      _resetUploadFields()
+      _resetUploadFields();
+      $(tagList).parent().show();
+      $("#" + uploadDivId + " form" + " .button").show();
+      $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide()
     });
     $("#" + uploadDivId + " #upload_document_submit").click(function(event) {
       if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]) {
@@ -13643,7 +13718,10 @@ VISH.Editor.Object = function(V, $, undefined) {
           $("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
           $("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
           $("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
-          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")))
+          $("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
+          var tagList = $("#" + uploadDivId + " .tagList");
+          $(tagList).parent().hide();
+          $("#" + uploadDivId + " .upload_progress_bar_wrapper").show()
         }
       }
     });
@@ -13677,8 +13755,12 @@ VISH.Editor.Object = function(V, $, undefined) {
   };
   var _onLoadUploadTab = function() {
     contentToAdd = null;
-    _resetUploadFields();
+    var tagList = $("#" + uploadDivId + " .tagList");
+    $(tagList).parent().hide();
+    $("#" + uploadDivId + " form" + " .button").hide();
+    $("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
     $("#" + uploadDivId + " input[name='document[file]']").val("");
+    _resetUploadFields();
     VISH.Editor.API.requestTags(_onTagsReceived)
   };
   var _resetUploadFields = function() {

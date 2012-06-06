@@ -12,6 +12,24 @@
 		overflow-x: hidden;
 }
 
+.tagBoxIntro{
+	  padding: 0px;
+    color: #7a8fa9;
+    font-size: 14px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #fff;
+    max-height: 10%;
+		position: absolute;
+		margin-top: 90px;
+		width: 94%;
+		
+}
+
+
+
 .tagBox:hover {
     background: #fff;
     color: #4f6f95;
@@ -93,6 +111,10 @@ ul.tagit {
     background: #fff;
     color: #555;
 		border: 1px solid #E5E5E5;
+}
+
+ul.tagit.tagListIntro{
+	height: 60px;
 }
 
 ul.tagit li {

@@ -1,3 +1,15 @@
+#tagindex {
+    padding: 9px;
+    font-size: 14px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+	height: 30px;
+	width: 647px;
+}
+
+
 .tagBox {
     padding: 0px;
     color: #7a8fa9;
@@ -11,6 +23,22 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 }
+
+.tagBoxIntro{
+	  padding: 0px;
+    color: #7a8fa9;
+    font-size: 14px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #fff;
+    max-height: 10%;
+		position: absolute;
+		margin-top: 90px;
+		width: 94%;	
+}
+
 
 .tagBox:hover {
     background: #fff;
@@ -95,6 +123,10 @@ ul.tagit {
 		border: 1px solid #E5E5E5;
 }
 
+ul.tagit.tagListIntro{
+	height: 60px;
+}
+
 ul.tagit li {
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -112,18 +144,21 @@ ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
 }
 
 ul.tagit li.tagit-choice {
-    background-color: #DEE7F8;
-    border: 1px solid #CAD8F3;
+    background-color: #0066ff;
+	opacity: 0.5;
+	color: #fff;
     padding: 2px 13px 3px 4px;
 }
 
 ul.tagit li.tagit-choice.selected {
-    background-color: #f5b0b0;
+    background-color: #0066ff;
+	opacity: 1;
     border-color: #f76464;
 }
 
 ul.tagit li.tagit-choice:hover {
-    background-color: #bbcef1;
+    background-color: #0066ff;
+	opacity: 0.7;
     border-color: #6d95e0;
 }
 

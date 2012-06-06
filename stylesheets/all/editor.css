@@ -920,7 +920,7 @@ div.object_wrapper{
 
 .textintromargin3 {
 	margin-left: 68px;
-	margin-top: 107px;
+	margin-top: 180px;
 }
 
 .buttonintro {
@@ -1092,7 +1092,10 @@ textarea {
 
 #requirements_form{
 	text-align: center;
-	padding: 5px;
+	padding: 30px 20px 20px 20px;
+	border-radius: 20px;
+	moz-border-radius: 20px;
+	webkit-border-radius: 20px;	
 }
 
 #recomended_browsers{
@@ -1100,15 +1103,20 @@ textarea {
 }
 
 .buttons_requirements_wrapper{
-	margin-top: 30px;
+	margin-top: 40px;
 	text-align: center;
 }
 
 .buttons_requirements{
   	padding: 10px 15px;
+	background-color: #ccc;
 }
 
-.browser_img{
+.buttons_requirements:hover{
+  	background-color: #ff005d;
+}
+
+.browser_img{ 
 	max-height: 70px;
   	max-width: 70px;
 	display: block;
@@ -1117,9 +1125,11 @@ textarea {
 
 .browserTitle{
 	font-family:Helvetica;
-  font-size: 15px;
+  	font-size: 15px;
 	display: block;
 	padding: 5px;
+	color: #9B999D;
+	
 }
 
 .recomended_browser{
@@ -1134,6 +1144,7 @@ textarea {
 }
 
 .requirementsText{
+	padding-top: 50px;
 }
 
 #menubar_helpsection {
@@ -1176,7 +1187,7 @@ textarea {
 }
 
 .tut_welcome{
-	top: 190px;
+	top: 163px;
 	left: 450px;
 }
 

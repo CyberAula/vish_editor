@@ -1,7 +1,42 @@
 VISH.Editor.Carrousel = (function(V,$,undefined){
 	
-  var createCarrousel = function(containerId,rows,callback,rowItems,scrollItems,styleClass){
+	//Available Options: rows,callback,rowItems,scrollItems,styleClass
+	
+  var createCarrousel = function(containerId,options){
 		
+		//Necessary params
+		if(!containerId){
+			return;
+		}
+		
+		//Default values
+		var rows = 1;
+		var rowItems = 5;
+		var scrollItems = 5;
+		var styleClass = "";
+		var callback = null;
+		
+		//Read options
+		if(options){
+			if(options['rows']){
+        rows = options['rows'];
+      }
+      if(options['rowItems']){
+        rowItems = options['rowItems']
+      }
+			if(options['scrollItems']){
+				scrollItems = options['scrollItems']
+			}
+			if(options['styleClass']){
+        styleClass = options['styleClass']
+      }
+			if(options['callback']){
+        callback = options['callback'];
+      }
+		}
+
+
+		//Define intern variables
 		var multipleRow = (rows>1);
 		
 		var carrouselClass = "";
