@@ -33,8 +33,8 @@
             highlightOnExistColor:'#0F0',
             //empty search on focus
             emptySearch:true,
-						watermarkAllowMessage: "Write more tags",
-						watermarkDenyMessage: "Tags limit reached",
+						watermarkAllowMessage: "Add tags",
+						watermarkDenyMessage: "limt reached",
             //callback function for when tags are changed
                 //tagValue: value of tag that was changed
                 //action e.g. removed, added, sorted
