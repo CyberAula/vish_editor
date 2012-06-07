@@ -148,6 +148,6 @@ var i18n =
 			"Write a description (optional)"  : "Escribe una descripción (opcional)",
 			"http://www.####.com/example.jpg"  :  "http://www.####.com/ejemplo.jpg", 
 			"http://www.####.com/example.swf"  :  "http://www.####.com/ejemplo.swf",
-			"http://www.####.com/example.avi"  :  "http://www.####.com/ejemplo.avi",
+			"http://www.####.com/example.avi"  :  "http://www.####.com/ejemplo.avi"
 		}
 	};

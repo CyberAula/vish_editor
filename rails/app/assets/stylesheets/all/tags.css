@@ -1,4 +1,4 @@
-.tagBox {
+.tagBoxUpload {
     padding: 0px;
     color: #7a8fa9;
     font-size: 14px;
@@ -7,9 +7,15 @@
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background: #fff;
-		max-height: 45%;
+		max-height: 50%;
 		overflow-y: auto;
 		overflow-x: hidden;
+		margin-left: 70px;
+		width: 85%;
+}
+
+div.tagBoxUpload .tagit{
+  height: 57px;
 }
 
 .tagBoxIntro{
@@ -21,28 +27,17 @@
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background: #fff;
-    max-height: 10%;
+    max-height: 45%;
 		position: absolute;
-		margin-top: 90px;
-		width: 94%;
-		
+		margin-top: 85px;
+		margin-left: 70px;
+		width: 84%;	
 }
 
-
-
-.tagBox:hover {
-    background: #fff;
-    color: #4f6f95;
+div.tagBoxIntro .tagit{
+	height: 57px;
 }
 
-.tagBox a {
-    text-decoration: none;
-    color: #4c91df;
-}
-
-.tagBox a:hover {
-    color: #9fc4ed;
-}
 
 select.tagit-hiddenSelect{
     display: inline-block !important;
@@ -100,22 +95,16 @@ ul.tagit {
     cursor: text;
     overflow: auto;
     font-size: 14px;
-    width: 88%;
-		height: 30%;
-    padding: 3px;
-		padding-top: 5px;
-    margin-top: 10px;
-    margin-right: 0px;
-    margin-bottom: 10px;
-		margin-left: 70px;
+    padding: 9px;
     background: #fff;
     color: #555;
 		border: 1px solid #E5E5E5;
+		-moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
 }
 
-ul.tagit.tagListIntro{
-	height: 60px;
-}
 
 ul.tagit li {
     -moz-border-radius: 5px;
@@ -134,18 +123,24 @@ ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
 }
 
 ul.tagit li.tagit-choice {
-    background-color: #DEE7F8;
-    border: 1px solid #CAD8F3;
+    background-color: #0066ff;
+	  opacity: 0.5;
+	  color: #fff;
     padding: 2px 13px 3px 4px;
+		font-size: 15px;
+		font-family: Helvetica;
+		margin-bottom: 5px;
 }
 
 ul.tagit li.tagit-choice.selected {
-    background-color: #f5b0b0;
+    background-color: #0066ff;
+	opacity: 1;
     border-color: #f76464;
 }
 
 ul.tagit li.tagit-choice:hover {
-    background-color: #bbcef1;
+    background-color: #0066ff;
+	  opacity: 0.7;
     border-color: #6d95e0;
 }
 

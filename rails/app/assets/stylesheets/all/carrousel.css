@@ -156,6 +156,18 @@ div.carrousel_wrapper_multiple_row{
 
 /* CSS for Title Carrousel */
 
+p.carrousel_element_single_row_title{
+  margin: 0px;
+  margin-top: 15px;
+  max-width: 100px;
+  max-height: 20px;
+  overflow: hidden;
+  margin-left: -15px;
+  text-align: center;
+  font-size: 15px;
+  font-family: Helvetica;
+}
+
 .image_carousel_single_row_title {
     padding: 80px 0 0px 0px;
 }
@@ -170,12 +182,7 @@ div.carrousel_element_single_row_title{
 }
 
 img.carrousel_element_single_row_title{
-  width: 100px;
-  height: 90px;
-  max-width: 150px;
-  max-height: 150px;
-  margin-left: -17px;
-  margin-top: 8px;
+  margin-left: -10px;
 }
 
 a.prev_single_row_title, a.next_single_row_title{
@@ -198,6 +205,7 @@ a.prev_single_row_title, a.next_single_row_title{
   font-size: 15px;
 	font-family: Helvetica;
 }
+
 
 
 /* CSS for Thumbnails Carrousel */
@@ -250,4 +258,52 @@ a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
 .pagination_single_row_thumbnails{
 	margin-top: 12px;
 	margin-bottom: 10px;
+}
+
+
+
+/* CSS for Slides Carrousel */
+
+.image_carousel_single_row_slides {
+    padding: 10px 0 0px 112px;
+    margin-left: 25px;
+}
+
+div.carrousel_element_single_row_slides{
+  width: 60px;
+  height: 60px;
+  max-width: 150px;
+  max-height: 150px;
+  float: left;
+  margin-left: 16px;
+}
+
+img.carrousel_element_single_row_slides{
+  width: 62px;
+  height: 52px;
+  max-width: 150px;
+  max-height: 150px;
+  margin-left: -140px;
+  margin-top: 0px;
+  border: none;
+  opacity: 0.4;
+	background: none;
+}
+
+img.carrousel_element_single_row_slides:hover{
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+a.prev_single_row_slides, a.next_single_row_slides{
+  top: 15px;
+	display: block;
+}
+
+a.prev_single_row_slides{
+  left: 80px;
+}
+
+a.next_single_row_slides{
+  right: 80px;
 }
