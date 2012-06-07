@@ -180,9 +180,8 @@ img {
 	z-index: 1000;
 }
 
-.value_openquestion {
-	
-	background: none no-repeat scroll 5px 50% transparent;
+.value_openquestion {	
+	  background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
     font-family: Helvetica;
@@ -191,11 +190,11 @@ img {
     padding: 5px 7px;
     position: absolute;
     z-index: 1000;
-    }
+}
 
 
 .title_openquestion {
-	background: none no-repeat scroll 5px 50% transparent;
+	  background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
     font-family: Helvetica;
@@ -204,9 +203,9 @@ img {
     padding: 5px 7px;
     position: absolute;
     z-index: 1000;
-    }
+}
+		
 .header_openquestion {
-	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
     color: #FF005D;
@@ -216,11 +215,9 @@ img {
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;
-	
 }
 
 .header_multiplechoice_question {
-	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
     color: #FF005D;
@@ -230,10 +227,9 @@ img {
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;	
-	
 }
+
 .value_multiplechoice_question {
-	
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -243,10 +239,9 @@ img {
     padding: 5px 7px;
     position: relative;
     z-index: 1000;
-    }
+}
 
 .multiplechoice_text {
-	
 		background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -256,13 +251,15 @@ img {
     padding: 5px 7px;
     position: relative;
     z-index: 1000;
-	
-	
 }
 
 	
 #config_div {
 	background: url(/images/config.png);
+	position: absolute;
+  left: 1%;
+  top: 8%;
+	z-index: 2000;
 }
 
 #config_div:hover {
@@ -287,6 +284,9 @@ img {
 
 #save_div{
 	background: url(/images/save.png);
+	position: absolute;
+  left: 90%;
+  top: 8%;
 }
 #save_div:hover{
 	background: url(/images/hover/save_hover.png);
