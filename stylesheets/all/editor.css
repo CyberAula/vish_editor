@@ -920,18 +920,18 @@ div.object_wrapper{
 
 .textintromargin3 {
 	margin-left: 68px;
-	margin-top: 190px;
+	margin-top: 195px;
 }
 
 .buttonintro {
-	margin-top:125px;
-	margin-left:640px;
+	margin-top: 368px;
+	margin-left: 640px;
 	width:75px;
 	text-align: center;
 }
 
 .buttonintro_extramargin {
-  margin-top:0px;
+  margin-top: -5px;
 }
 
 .imgintro{

@@ -1,4 +1,4 @@
-.tagBox {
+.tagBoxUpload {
     padding: 0px;
     color: #7a8fa9;
     font-size: 14px;
@@ -7,9 +7,15 @@
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background: #fff;
-		max-height: 45%;
+		max-height: 50%;
 		overflow-y: auto;
 		overflow-x: hidden;
+		margin-left: 70px;
+		width: 85%;
+}
+
+div.tagBoxUpload .tagit{
+  height: 57px;
 }
 
 .tagBoxIntro{
@@ -23,24 +29,15 @@
     background: #fff;
     max-height: 45%;
 		position: absolute;
-		margin-top: 90px;
-		width: 94%;	
+		margin-top: 85px;
+		margin-left: 70px;
+		width: 84%;	
 }
 
-
-.tagBox:hover {
-    background: #fff;
-    color: #4f6f95;
+div.tagBoxIntro .tagit{
+	height: 57px;
 }
 
-.tagBox a {
-    text-decoration: none;
-    color: #4c91df;
-}
-
-.tagBox a:hover {
-    color: #9fc4ed;
-}
 
 select.tagit-hiddenSelect{
     display: inline-block !important;
@@ -98,13 +95,7 @@ ul.tagit {
     cursor: text;
     overflow: auto;
     font-size: 14px;
-    width: 86%;
-		height: 45px;
     padding: 9px;
-    margin-top: 10px;
-    margin-right: 0px;
-    margin-bottom: 10px;
-		margin-left: 70px;
     background: #fff;
     color: #555;
 		border: 1px solid #E5E5E5;
@@ -133,9 +124,12 @@ ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
 
 ul.tagit li.tagit-choice {
     background-color: #0066ff;
-	opacity: 0.5;
-	color: #fff;
+	  opacity: 0.5;
+	  color: #fff;
     padding: 2px 13px 3px 4px;
+		font-size: 15px;
+		font-family: Helvetica;
+		margin-bottom: 5px;
 }
 
 ul.tagit li.tagit-choice.selected {
@@ -146,7 +140,7 @@ ul.tagit li.tagit-choice.selected {
 
 ul.tagit li.tagit-choice:hover {
     background-color: #0066ff;
-	opacity: 0.7;
+	  opacity: 0.7;
     border-color: #6d95e0;
 }
 
