@@ -89,6 +89,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Image.init();
 			V.Editor.Video.init();
 			V.Editor.Object.init();
+			V.Editor.Thumbnails.init();
 			V.Editor.AvatarPicker.init();
 			V.Editor.I18n.init(options["lang"]);
 			V.Editor.Quiz.init();
@@ -115,6 +116,7 @@ VISH.Editor = (function(V,$,undefined){
 	//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
+			
 	};
 	
 	
@@ -396,7 +398,6 @@ VISH.Editor = (function(V,$,undefined){
 		//VISH.Debugging.log("slide es: " + slide );
 				
 		V.SlidesUtilities.addSlide(slide);	//undefined 
-		//V.Editor.Thumbnails.addThumbnail("t" + $(this).attr('template'), slideEls.length + 1); //it is slideEls.length +1 because we have recently added a slide and it is not in this array
 		
 		$.fancybox.close();
 		

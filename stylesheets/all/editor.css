@@ -41,8 +41,8 @@ img {
 	margin-top: 30px;
 	border: 1px solid #D7D7D7;
 	border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
 }
 
 .box1fancy1 {
@@ -180,9 +180,8 @@ img {
 	z-index: 1000;
 }
 
-.value_openquestion {
-	
-	background: none no-repeat scroll 5px 50% transparent;
+.value_openquestion {	
+	  background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
     font-family: Helvetica;
@@ -191,11 +190,11 @@ img {
     padding: 5px 7px;
     position: absolute;
     z-index: 1000;
-    }
+}
 
 
 .title_openquestion {
-	background: none no-repeat scroll 5px 50% transparent;
+	  background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
     font-family: Helvetica;
@@ -204,9 +203,9 @@ img {
     padding: 5px 7px;
     position: absolute;
     z-index: 1000;
-    }
+}
+		
 .header_openquestion {
-	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
     color: #FF005D;
@@ -216,11 +215,9 @@ img {
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;
-	
 }
 
 .header_multiplechoice_question {
-	
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
     color: #FF005D;
@@ -230,10 +227,9 @@ img {
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;	
-	
 }
+
 .value_multiplechoice_question {
-	
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -243,10 +239,9 @@ img {
     padding: 5px 7px;
     position: relative;
     z-index: 1000;
-    }
+}
 
 .multiplechoice_text {
-	
 		background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -256,13 +251,15 @@ img {
     padding: 5px 7px;
     position: relative;
     z-index: 1000;
-	
-	
 }
 
 	
 #config_div {
 	background: url(/images/config.png);
+	position: absolute;
+  left: 1%;
+  top: 8%;
+	z-index: 2000;
 }
 
 #config_div:hover {
@@ -287,6 +284,9 @@ img {
 
 #save_div{
 	background: url(/images/save.png);
+	position: absolute;
+  left: 90%;
+  top: 8%;
 }
 #save_div:hover{
 	background: url(/images/hover/save_hover.png);
@@ -920,18 +920,18 @@ div.object_wrapper{
 
 .textintromargin3 {
 	margin-left: 68px;
-	margin-top: 180px;
+	margin-top: 195px;
 }
 
 .buttonintro {
-	margin-top:125px;
-	margin-left:640px;
+	margin-top: 368px;
+	margin-left: 640px;
 	width:75px;
 	text-align: center;
 }
 
 .buttonintro_extramargin {
-  margin-top:0px;
+  margin-top: -5px;
 }
 
 .imgintro{
@@ -1094,8 +1094,8 @@ textarea {
 	text-align: center;
 	padding: 30px 20px 20px 20px;
 	border-radius: 20px;
-	moz-border-radius: 20px;
-	webkit-border-radius: 20px;	
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;	
 }
 
 #recomended_browsers{
@@ -1312,3 +1312,14 @@ textarea {
 	top:-29px;
 }
 	
+	
+/** Slides bar **/
+
+.add_slide_button:hover{
+	cursor: pointer;
+}
+
+
+/* Remove outline */
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}

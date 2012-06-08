@@ -12961,13 +12961,14 @@ var i18n = {"es":{"i.walk1":"Puedes utilizar el icono tutorial", "i.walk2":'dura
 "i.walk41":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir imagenes. Como puedes ver el la zona superior tienes las siguientes opciones:", "i.walk42":"(a\u00f1adir video desde un enlace)", "i.walk43":"(a\u00f1adir video desde el repositorio)", "i.walk44":"(a\u00f1adir video desde youtube)", "i.walk45":"(a\u00f1adir video desde vimeo)", "i.walk46":'Ahora estas en la secci\u00f3n Url.Haz click en "Continuar".', "i.walk47":"Este espacio esta reservardo para escribir o pegar un enlace que contenga una imagen, por ejemplo:", 
 "i.walk48":'Los formatos de video soportados por la aplicaci\u00f3n son muy variados (avi, flv, mpg...).Una vez hayas rellenado el espacio, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', "i.walk49":'En este espacio puedes buscar videos dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
 "i.walk50":'En este espacio puedes buscar videos dentro de youtube. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', "i.walk51":'En este espacio puedes buscar videos dentro de vimeo. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
-"0%":"0%", "accept":"aceptar", "Add":"A\u00f1adir", "add image url":"a\u00f1adir URL de imagen", "Add Content":"A\u00f1adir Contenido", "Add new slide button":"Bot\u00f3n para a\u00f1adir nueva slide", "Add Tags for your image":"A\u00f1ade etiquetas a tu imagen", "add video url":"a\u00f1adir URL de video", "Add tags to your excursion":"A\u00f1ade tags a tu excursi\u00f3n", "Adding content to a slide":"A\u00f1adiendo contenido a una slide", "Adding flash content":"A\u00f1adiendo contenido flash", 
-"Adding flash content by upload":"Subiendo contenido flash", "Adding Flash content by url":"A\u00f1adiendo contenido flash por url", "Adding Images":"A\u00f1adiendo im\u00e1genes", "Adding images by upload":"Subiendo im\u00e1genes", "Adding images by url":"A\u00f1adiendo im\u00e1genes por url", "Adding Video":"A\u00f1adiendo video", "Adding video by url":"A\u00f1adiendo video por url", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Close or Delete":"Borrar o Cerrar", "Continue":"Continuar", 
-"Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "Choose an image that will represent your excursion":"Elige una imagen que representar\u00e1 tu excursi\u00f3n", "Configuration Button":"Bot\u00f3n de configuraci\u00f3n", "delete":"borrar", "Delete Content":"Borrar contenido", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", "Edit details":"Editar detalles", "embed":"embed", "embed flash":"embed flash", 
-"Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Flash Content":"Contenido Flash", "Google Chrome":"Google Chrome", "Image":"Imagen", "Images":"Imagen", "Internet Explorer 9":"Internet Explorer 9", "Let\u00b4s write a title (Obligatory)":"Escribamos un t\u00edtulo (obligatorio)", "Mozilla Firefox":"Mozilla Firefox", "no":"no", "OK":"OK", "Opera":"Opera", "Paste SWF file URL":"Pega la URL del fichero SWF", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "Preview":"Vista previa", 
-"save":"guardar", "Save Button":"Bot\u00f3n de salvar", "Save slides":"Salvar las diapositivas", "Save your excursion details":"Salva los detalles de tu excursi\u00f3n", "Search content":"Buscar contenido", "Search flash content":"Buscar contenido flash", "Search images in Flickr":"Buscar im\u00e1genes en Flickr", "Search videos in Vimeo":"Buscar videos en Vimeo", "Search images in Vish repository":"Buscar im\u00e1genes en el repositorio ViSH", "Search videos in Vish repository":"Buscar videos en el repositorio del ViSH", 
-"Search videos in Youtube":"Buscar videos en Youtube", "See the content before you add it":"Puedes ver el contenido antes de a\u00f1adirlo", "See the image before you add it":"Puedes ver las im\u00e1genes antes de a\u00f1adirlas", "See the video before you add it":"Puedes ver el video antes de a\u00f1adirlo", "Select picture to upload":"Seleccionar imagen para subir", "Select SWF file to upload":"Seleccionar archivo swf para subir", "Select video to upload":"Seleccionar video para subir", "Selecting a Slide":"Seleccionando una slide", 
-"Text":"Texto", "Title":"Titulo", "This is ViSH editor!":"Esto es el ViSH Editor!", "This is the tools menu":"Esto es el men\u00fa de herramientas", "Thumbnail":"Miniatura", "Upload":"Subir", "upload":"subir", "upload flash":"subir flash", "url":"url", "Video":"Video", "vish":"vish", "Welcome to ViSH editor!":"Bienvenido al ViSH editor!", "Write a description (optional)":"Escribe una descripci\u00f3n (opcional)"}};
+"Your browser does not meet the minimum requirements to init Vish Editor, please update your browser.":"El navegador que etas utilizando no incluye los requerimientos minimos para utilizar esta aplicaci\u00f3n.Por favor, actualiza tu navegador", "0%":"0%", "accept":"aceptar", "Add":"A\u00f1adir", "add image url":"a\u00f1adir URL de imagen", "Add Content":"A\u00f1adir Contenido", "Add new slide button":"Bot\u00f3n para a\u00f1adir nueva slide", "Add Tags for your image":"A\u00f1ade etiquetas a tu imagen", 
+"add video url":"a\u00f1adir URL de video", "Add tags to your excursion":"A\u00f1ade tags a tu excursi\u00f3n", "Adding content to a slide":"A\u00f1adiendo contenido a una slide", "Adding flash content":"A\u00f1adiendo contenido flash", "Adding flash content by upload":"Subiendo contenido flash", "Adding Flash content by url":"A\u00f1adiendo contenido flash por url", "Adding Images":"A\u00f1adiendo im\u00e1genes", "Adding images by upload":"Subiendo im\u00e1genes", "Adding images by url":"A\u00f1adiendo im\u00e1genes por url", 
+"Adding Video":"A\u00f1adiendo video", "Adding video by url":"A\u00f1adiendo video por url", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Close or Delete":"Borrar o Cerrar", "Close":"Cerrar", "close":"Cerrar", "Continue":"Continuar", "Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "Choose an image that will represent your excursion":"Elige una imagen que representar\u00e1 tu excursi\u00f3n", "Configuration Button":"Bot\u00f3n de configuraci\u00f3n", 
+"delete":"borrar", "Delete Content":"Borrar contenido", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", "Edit details":"Editar detalles", "embed":"embed", "Embed":"Embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Flickr":"Flickr", "Flash Content":"Contenido Flash", "Google Chrome":"Google Chrome", "Image":"Imagen", "Images":"Imagen", "Internet Explorer 9":"Internet Explorer 9", 
+"Let\u00b4s write a title (Obligatory)":"Escribamos un t\u00edtulo (obligatorio)", "Mozilla Firefox":"Mozilla Firefox", "no":"no", "next":"Siguiente", "Next":"Siguiente", "OK":"OK", "Opera":"Opera", "Paste SWF file URL":"Pega la URL del fichero SWF", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "Preview":"Vista previa", "save":"guardar", "Save Button":"Bot\u00f3n de salvar", "Save slides":"Salvar las diapositivas", "Save your excursion details":"Salva los detalles de tu excursi\u00f3n", 
+"Search content":"Buscar contenido", "Search flash content":"Buscar contenido flash", "Search images in Flickr":"Buscar im\u00e1genes en Flickr", "Search videos in Vimeo":"Buscar videos en Vimeo", "Search images in Vish repository":"Buscar im\u00e1genes en el repositorio ViSH", "Search videos in Vish repository":"Buscar videos en el repositorio del ViSH", "Search videos in Youtube":"Buscar videos en Youtube", "See the content before you add it":"Puedes ver el contenido antes de a\u00f1adirlo", "See the image before you add it":"Puedes ver las im\u00e1genes antes de a\u00f1adirlas", 
+"See the video before you add it":"Puedes ver el video antes de a\u00f1adirlo", "Select picture to upload":"Seleccionar imagen para subir", "Select SWF file to upload":"Seleccionar archivo swf para subir", "Select video to upload":"Seleccionar video para subir", "Selecting a Slide":"Seleccionando una slide", "Text":"Texto", "Title":"Titulo", "This is ViSH editor!":"Esto es el ViSH Editor!", "This is the tools menu":"Esto es el men\u00fa de herramientas", "Thumbnail":"Miniatura", "Upload":"Subir", 
+"upload":"subir", "upload flash":"subir flash", "url":"Enlace", "Url":"Enlace", "Video":"Video", "Videos":"Videos", "vish":"vish", "Vish":"vish", "vimeo":"Vimeo", "Vimeo":"Vimeo", "Youtube":"Youtube", "youtube":"Youtube", "Welcome to ViSH editor!":"Bienvenido al ViSH editor!", "Write a description (optional)":"Escribe una descripci\u00f3n (opcional)", "http://www.####.com/example.jpg":"http://www.####.com/ejemplo.jpg", "http://www.####.com/example.swf":"http://www.####.com/ejemplo.swf", "http://www.####.com/example.avi":"http://www.####.com/ejemplo.avi"}};
 var VISH = VISH || {};
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
@@ -13092,6 +13093,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.Image.init();
     V.Editor.Video.init();
     V.Editor.Object.init();
+    V.Editor.Thumbnails.init();
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
     V.Editor.Quiz.init();
@@ -14360,9 +14362,12 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     }
     var rows = 1;
     var rowItems = 5;
-    var scrollItems = 5;
+    var scrollItems = null;
     var styleClass = "";
+    var titleClass = "";
     var callback = null;
+    var width = 750;
+    var startAtLastElement = false;
     if(options) {
       if(options["rows"]) {
         rows = options["rows"]
@@ -14376,8 +14381,17 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       if(options["styleClass"]) {
         styleClass = options["styleClass"]
       }
+      if(options["titleClass"]) {
+        titleClass = options["titleClass"]
+      }
       if(options["callback"]) {
         callback = options["callback"]
+      }
+      if(options["width"]) {
+        width = options["width"]
+      }
+      if(options["startAtLastElement"]) {
+        startAtLastElement = options["startAtLastElement"]
       }
     }
     var multipleRow = rows > 1;
@@ -14431,15 +14445,20 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       })
     }
     if(multipleRow) {
-      _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass)
+      _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width)
     }else {
       $(wrapperDiv).prepend(mainDiv);
-      _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems)
+      if(startAtLastElement) {
+        var start = $(mainDiv).children().length - rowItems + 1
+      }else {
+        var start = 0
+      }
+      _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems, width, start)
     }
     _forceShowPagination(containerId);
     return"Done"
   };
-  var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass) {
+  var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width) {
     var synchronizeIds = [];
     var i;
     for(i = 0;i < rows;i++) {
@@ -14457,18 +14476,21 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i]);
       if(i == 0) {
         var newContainerId = mainDiv.id + "_row" + i;
-        _setMainCarrousel(newContainerId, containerId, rows, synchronizeIds, rowItems, scrollItems)
+        _setMainCarrousel(newContainerId, containerId, rows, synchronizeIds, rowItems, scrollItems, width)
       }else {
-        _setRowCarrousel(mainDiv.id + "_row" + i, rowItems, scrollItems)
+        _setRowCarrousel(mainDiv.id + "_row" + i, rowItems, scrollItems, width)
       }
     }
     $(".caroufredsel_wrapper").css("margin-bottom", "30px")
   };
-  var _setRowCarrousel = function(id, rowItems, scrollItems) {
-    $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:750, scroll:{items:scrollItems, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}}})
+  var _setRowCarrousel = function(id, rowItems, scrollItems, width) {
+    $("#" + id).carouFredSel({auto:false, circular:false, infinite:false, width:width, scroll:{items:scrollItems, fx:"scroll", duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}}})
   };
-  var _setMainCarrousel = function(id, widgetsId, rows, synchronizeIds, rowItems, scrollItems) {
-    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:750, scroll:{items:scrollItems, duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}}, prev:{button:"#carrousel_prev" + widgetsId, key:"left"}, next:{button:"#carrousel_next" + widgetsId, key:"right"}, pagination:"#carrousel_pag" + widgetsId});
+  var _setMainCarrousel = function(id, widgetsId, rows, synchronizeIds, rowItems, scrollItems, width, start) {
+    if(!start) {
+      start = 0
+    }
+    $("#" + id).carouFredSel({circular:false, infinite:false, auto:false, width:width, scroll:{items:scrollItems, duration:1E3, pauseDuration:2E3}, items:{visible:{min:rowItems, max:rowItems}, start:start}, prev:{button:"#carrousel_prev" + widgetsId, key:"left"}, next:{button:"#carrousel_next" + widgetsId, key:"right"}, pagination:"#carrousel_pag" + widgetsId});
     if(synchronizeIds) {
       $(synchronizeIds).each(function(index, value) {
         $("#" + id).trigger("configuration", ["synchronise", "#" + value])
@@ -14627,6 +14649,7 @@ VISH.Editor.Image.Flikr = function(V, $, undefined) {
     options["rows"] = 2;
     options["callback"] = VISH.Editor.Image.Flikr.addImage;
     options["rowItems"] = 4;
+    options["scrollItems"] = 4;
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
   return{init:init, onLoadTab:onLoadTab, listImages:listImages, addImage:addImage}
@@ -14682,6 +14705,7 @@ VISH.Editor.Image.Repository = function(V, $, undefined) {
     options["rows"] = 2;
     options["callback"] = _onClickCarrouselElement;
     options["rowItems"] = 4;
+    options["scrollItems"] = 4;
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
   var _onAPIError = function() {
@@ -14892,7 +14916,6 @@ VISH.Editor.Renderer = function(V, $, undefined) {
     var template = slide.template.substring(1);
     var scaffold = V.Dummies.getDummy(template, slide.id);
     V.SlidesUtilities.addSlide(scaffold);
-    V.Editor.Thumbnails.addThumbnail("t" + template, position + 1);
     V.SlidesUtilities.redrawSlides();
     V.SlidesUtilities.lastSlide();
     for(el in slide.elements) {
@@ -14952,77 +14975,83 @@ VISH.Editor.Text = function(V, $, undefined) {
   return{init:init, launchTextEditor:launchTextEditor}
 }(VISH, jQuery);
 VISH.Editor.Thumbnails = function(V, $, undefined) {
+  var carrouselDivId = "slides_carrousel";
+  var init = function() {
+  };
   var redrawThumbnails = function() {
-    var i = 1;
-    for(i = 1;i < 8;i++) {
-      $("#slide_thumb_" + i).off("click");
-      $("#slide_thumb_" + i).css("cursor", "auto");
-      $("#slide_thumb_" + i + " .slide_number").html("");
-      $("#slide_thumb_" + i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
-      $("#slide_thumb_" + i + " img").unbind("mouseenter").unbind("mouseleave")
-    }
-    $(".barbutton").css("background-color", "transparent");
-    if(slideEls.length > 0) {
-      var slide_to_highlight = curSlide + 1;
-      $("#slide_thumb_" + slide_to_highlight).css("background-color", "#ACACAC")
-    }
-    var template = 0;
-    var position = 1;
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    var carrouselImages = [];
+    var carrouselElements = 0;
     $("article").each(function(index, s) {
-      template = $(s).attr("template");
-      addThumbnail(template, position);
-      position += 1
+      var template = $(s).attr("template");
+      carrouselElements += 1;
+      carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"))
     });
-    _addPlusButton(position)
-  };
-  var redrawThumbnailsWithCarrousel = function() {
-    var i = 1;
-    for(i = 1;i < 8;i++) {
-      $("#slide_thumb_" + i).off("click");
-      $("#slide_thumb_" + i).css("cursor", "auto");
-      $("#slide_thumb_" + i + " .slide_number").html("");
-      $("#slide_thumb_" + i + " img").attr("src", VISH.ImagesPath + "templatesthumbs/default.png");
-      $("#slide_thumb_" + i + " img").unbind("mouseenter").unbind("mouseleave")
+    carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
+    carrouselElements += 1;
+    if(carrouselElements < 8) {
+      var i;
+      for(i = 0 + carrouselElements;i < 8;i++) {
+        carrouselImages.push($("<img class='image_barbutton' action='default' src='" + VISH.ImagesPath + "templatesthumbs/default.png' />"));
+        carrouselElements += 1
+      }
     }
-    $(".barbutton").css("background-color", "transparent");
-    if(slideEls.length > 0) {
-      var slide_to_highlight = curSlide + 1;
-      $("#slide_thumb_" + slide_to_highlight).css("background-color", "#ACACAC")
-    }
-    var template = 0;
-    var position = 1;
-    $("article").each(function(index, s) {
-      template = $(s).attr("template");
-      addThumbnail(template, position);
-      position += 1
-    });
-    _addPlusButton(position)
+    VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages, _onImagesLoaded, carrouselDivId)
   };
-  var _addPlusButton = function(position) {
-    $("#slide_thumb_" + position).css("cursor", "pointer");
-    $("#slide_thumb_" + position + " img").attr("src", VISH.ImagesPath + "templatesthumbs/add_slide.png");
-    $("#slide_thumb_" + position).click(function() {
-      $("#addSlideFancybox").trigger("click")
-    });
-    $("#slide_thumb_" + position + " img").hover(function() {
+  var _onImagesLoaded = function() {
+    $(".add_slide_button").hover(function() {
       $(this).attr("src", VISH.ImagesPath + "hover/add_slide.png")
     }, function() {
       $(this).attr("src", VISH.ImagesPath + "templatesthumbs/add_slide.png")
-    })
+    });
+    $(".barbutton").css("background-color", "transparent");
+    var options = new Array;
+    options["rows"] = 1;
+    options["callback"] = _onClickCarrouselElement;
+    options["rowItems"] = 8;
+    options["scrollItems"] = 1;
+    options["styleClass"] = "slides";
+    options["width"] = 900;
+    options["startAtLastElement"] = true;
+    $("#" + carrouselDivId).show();
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
+  };
+  var _onClickCarrouselElement = function(event) {
+    switch($(event.target).attr("action")) {
+      case "plus":
+        $("#addSlideFancybox").trigger("click");
+        break;
+      case "goToSlide":
+        VISH.SlidesUtilities.goToSlide($(event.target).attr("slideNumber"));
+        break;
+      default:
+        break
+    }
   };
   var selectThumbnail = function(no) {
     $(".barbutton").css("background-color", "transparent");
-    $("#slide_thumb_" + no).css("background-color", "#ACACAC")
+    $(".image_barbutton[slideNumber=" + no + "]").css("background-color", "#ACACAC")
   };
-  var addThumbnail = function(template_number, position) {
-    $("#slide_thumb_" + position).click(function() {
-      V.SlidesUtilities.goToSlide(position)
-    });
-    $("#slide_thumb_" + position).css("cursor", "pointer");
-    $("#slide_thumb_" + position + " .slide_number").html(position);
-    $("#slide_thumb_" + position + " img").attr("src", VISH.ImagesPath + "templatesthumbs/" + template_number + ".png")
+  var goToThumbnail = function(no) {
+    $("#" + carrouselDivId).trigger("slideTo", no)
   };
-  return{addThumbnail:addThumbnail, redrawThumbnails:redrawThumbnails, selectThumbnail:selectThumbnail, redrawThumbnailsWithCarrousel:redrawThumbnailsWithCarrousel}
+  var advanceCarrousel = function(no) {
+    $("#" + carrouselDivId).trigger("next", no)
+  };
+  var backCarrousel = function(no) {
+    $("#" + carrouselDivId).trigger("prev", no)
+  };
+  var addDefaultThumbnail = function() {
+    var plus_element = $(".add_slide_button").parent();
+    $("#slides_carrousel").trigger("removeItem", plus_element);
+    var new_plus_element = $('<div class="carrousel_element_single_row_slides"><img class="image_barbutton add_slide_button carrousel_element_single_row_slides" action="plus" src="/images/templatesthumbs/add_slide.png" /></div>');
+    var element = $('<div class="carrousel_element_single_row_slides"><img class="image_barbutton carrousel_element_single_row_slides" src="/images/templatesthumbs/default.png" action="default"></div>');
+    var index = $("div.carrousel_element_single_row_slides").length - 1;
+    $("#" + carrouselDivId).trigger("insertItem", [element, index]);
+    $("#" + carrouselDivId).trigger("insertItem", [new_plus_element, index])
+  };
+  return{init:init, redrawThumbnails:redrawThumbnails, selectThumbnail:selectThumbnail, goToThumbnail:goToThumbnail, advanceCarrousel:advanceCarrousel, backCarrousel:backCarrousel}
 }(VISH, jQuery);
 VISH.Editor.Tour = function(V, $, undefined) {
   var startTourWithId = function(helpid, tipLocation) {
@@ -15162,9 +15191,11 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
       return
     }
     $.each(data.videos, function(index, video) {
-      var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "'/>");
-      carrouselImages.push(myImg);
-      currentVideos[video.id] = video
+      if(video) {
+        var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "'/>");
+        carrouselImages.push(myImg);
+        currentVideos[video.id] = video
+      }
     });
     VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId)
   };
@@ -15945,7 +15976,7 @@ VISH.Utils.loader = function(V, undefined) {
     $.each(imagesArray, function(i, image) {
       $(image).load(function(response) {
         if(titleArray) {
-          $("#" + carrouselDivId).append("<div><p class='repositoryTitle'>" + titleArray[i] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
+          $("#" + carrouselDivId).append("<div><p>" + titleArray[imagesArray.indexOf(image)] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
         }else {
           $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(image) + "</div>")
         }
@@ -15962,7 +15993,38 @@ VISH.Utils.loader = function(V, undefined) {
       })
     })
   };
-  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, loadImagesOnCarrousel:loadImagesOnCarrousel}
+  var loadImagesOnCarrouselOrder = function(imagesArray, callback, carrouselDivId, titleArray) {
+    var validImagesArray = imagesArray;
+    var imagesLength = imagesArray.length;
+    var imagesLoaded = 0;
+    $.each(imagesArray, function(i, image) {
+      $(image).load(function(response) {
+        imagesLoaded = imagesLoaded + 1;
+        if(imagesLoaded == imagesLength) {
+          _insertElementsWithOrder(validImagesArray, carrouselDivId, titleArray);
+          callback()
+        }
+      });
+      $(image).error(function(response) {
+        imagesLoaded = imagesLoaded + 1;
+        validImagesArray.splice(validImagesArray.indexOf(image), 1);
+        if(imagesLoaded == imagesLength) {
+          _insertElementsWithOrder(validImagesArray, carrouselDivId, titleArray);
+          callback()
+        }
+      })
+    })
+  };
+  var _insertElementsWithOrder = function(imagesArray, carrouselDivId, titleArray) {
+    $.each(imagesArray, function(i, image) {
+      if(titleArray) {
+        $("#" + carrouselDivId).append("<div><p>" + titleArray[i] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
+      }else {
+        $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(image) + "</div>")
+      }
+    })
+  };
+  return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, loadImagesOnCarrousel:loadImagesOnCarrousel, loadImagesOnCarrouselOrder:loadImagesOnCarrouselOrder}
 }(VISH);
 VISH.Utils.text = function(V, undefined) {
   var getLines = function(ctx, phrase, maxPxLength, textStyle) {

@@ -448,7 +448,14 @@ article.smaller q::after {
 .page-switcher:focus,
 .page-switcher.drag-target {
   /*background-color: rgba(0,0,0, 0.06);  /* COLOR_NTP_TEXT */
+	outline: none;
 }
+
+
+/* remove outline */
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
 
 #page-switcher-end{
 	right: 0px;
