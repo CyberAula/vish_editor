@@ -53,16 +53,21 @@
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
-    	<div id="menubar_helpsection"><img src="images/menubar_helpsection.png"/></div>
+    <div id="menubar_helpsection"><img src="images/menubar_helpsection.png"/></div>
 		<div id="joyride_help_button"><img id="help_right" src="/images/helptutorial_circle.png"/></div>
 		<div id='menubar'>
-		    <a id="edit_excursion_details" href="#excursiondetails">
-				  <div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
-	      </a>
-		    <div id="slides_carrousel"></div>   
-        <a id="save" href="#thumbcontent">
-			    <div id="save_div" class='barbuttonaddsave' title="Save slides"></div>
-        </a>
+			  <div id="menubar_background"><img src="/images/menubar.png"/></div>
+				<div id="menubarButtons">
+					<a id="edit_excursion_details" href="#excursiondetails">
+	          <div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
+	        </a>
+					<a id="save" href="#thumbcontent">
+            <div id="save_div" class='barbuttonaddsave' title="Save slides"></div>
+          </a>
+				</div>	
+				<div id="menubarCarrousel">
+           <div id="slides_carrousel"></div>   
+        </div>
 		</div>
     </section>
 

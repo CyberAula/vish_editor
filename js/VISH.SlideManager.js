@@ -8,13 +8,16 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
+		//_setupSize();
 		addEventListeners(); //for the arrow keys
 		
 		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
 		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		
 		var elem = document.getElementById("page-fullscreen");  
-		if (elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {  
+		var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
+		
+		if (canFullScreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
 		}
 		else{
@@ -24,7 +27,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		VISH.SlidesUtilities.updateSlideCounter();
 	};
 
-		
+	
 	/**
 	 * function to enter and exit fullscreen
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
@@ -43,12 +46,19 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
 		    if (myDoc.documentElement.requestFullScreen) {
-		    	myDoc.getElementById('excursion_iframe').requestFullScreen();
+		    	myElem.requestFullScreen();
 		    } else if (myDoc.documentElement.mozRequestFullScreen) {
-		    	myDoc.getElementById('excursion_iframe').mozRequestFullScreen();
+		    	myElem.mozRequestFullScreen();
 		    } else if (myDoc.documentElement.webkitRequestFullScreen) {
-		    	myDoc.getElementById('excursion_iframe').webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
+		    	myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
 		    }
+		    //change icon
+		    $("#page-fullscreen").css("background-position", "-40px 0px");
+		    $("#page-fullscreen").hover(function(){
+			    $("#page-fullscreen").css("background-position", "-40px -40px");
+			}, function() {
+			    $("#page-fullscreen").css("background-position", "-40px 0px");
+			});
 		  } else {
 		    if (myDoc.cancelFullScreen) {
 		    	myDoc.cancelFullScreen();
@@ -57,10 +67,40 @@ VISH.SlideManager = (function(V,$,undefined){
 		    } else if (myDoc.webkitCancelFullScreen) {
 		    	myDoc.webkitCancelFullScreen();
 		    }
+		    //change icon
+		    $("#page-fullscreen").css("background-position", "0px 0px");
+		    $("#page-fullscreen").hover(function(){
+			    $("#page-fullscreen").css("background-position", "0px -40px");
+			}, function() {
+			    $("#page-fullscreen").css("background-position", "0px 0px");
+			});
 		  }
 		
 	};
 	
+	/**
+	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
+	 */
+	var _setupSize = function(){
+		var height = $(window).height();
+		var width = $(window).width();
+		var finalW = 800;
+		var finalH = 600;
+		
+		var aspectRatio = width/height;
+		var slidesRatio = 4/3;
+		if(aspectRatio > slidesRatio){
+			finalH = height - 80;
+			finalW = finalH*slidesRatio;	
+		}
+		else{
+			finalW = width - 110;
+			finalH = finalW/slidesRatio;	
+		}
+		$(".slides > article").css("height", finalH);
+		$(".slides > article").css("width", finalW);
+		
+	};
 	
 	/**
 	 * function to add enter and leave events

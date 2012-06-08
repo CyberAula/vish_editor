@@ -63,6 +63,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options['styleClass'] = "slides";
 		options['width'] = 900;
 		options['startAtLastElement'] = true;
+		options['pagination'] = false;
 		$("#" + carrouselDivId).show();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }

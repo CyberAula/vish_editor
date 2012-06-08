@@ -364,7 +364,7 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'scrolling': 'no',
 			'width': 800,
-			'height': 600,
+			'height': 660,
 			'padding': 0
 		})
 	};
