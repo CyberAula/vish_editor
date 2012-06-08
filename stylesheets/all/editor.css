@@ -1333,7 +1333,7 @@ textarea {
    z-index: 1;
 }
 
-#menubar_backgrund{
+#menubar_background{
 	z-index: 500;
 	position: absolute;
 	pointer-events: none;
