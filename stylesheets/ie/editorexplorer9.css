@@ -8,3 +8,7 @@
 	background-image:url(/images/background_ie.png);
 	background-repeat: no-repeat !important;	
 }
+
+#menubar_backgrund{
+	z-index: 0;
+}
