@@ -7,13 +7,13 @@ img {
 }
 
 #menubar {
-	background: url(/images/menubar.png) no-repeat;
 	width: 100%;
 	height: 70px;
 	position: fixed;
 	bottom:0px;
 	left: 0px;	
 	margin-top: 50px;
+	z-index: 900;
 }
 
 #excursiondetails {
@@ -1323,3 +1323,18 @@ textarea {
 /* Remove outline */
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
+
+
+#menubarButtons{
+	
+}
+
+#menubarCarrousel{
+   position: absolute;
+   top: 0;
+   z-index: 1;
+}
+
+#menubar_backgrund{
+	z-index: 10000;
+}
