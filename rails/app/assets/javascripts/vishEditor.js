@@ -13241,7 +13241,7 @@ VISH.Editor = function(V, $, undefined) {
     $(".object_wrapper").hide()
   };
   var _onEditExcursionDetailsButtonClicked = function(event) {
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":600, "padding":0})
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0})
   };
   var _onSaveExcursionDetailsButtonClicked = function(event) {
     if($("#excursion_title").val().length < 1) {
@@ -14368,6 +14368,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     var callback = null;
     var width = 750;
     var startAtLastElement = false;
+    var pagination = true;
     if(options) {
       if(options["rows"]) {
         rows = options["rows"]
@@ -14392,6 +14393,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       if(options["startAtLastElement"]) {
         startAtLastElement = options["startAtLastElement"]
+      }
+      if(typeof options["pagination"] == "boolean") {
+        pagination = options["pagination"]
       }
     }
     var multipleRow = rows > 1;
@@ -14428,13 +14432,15 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     button_next.setAttribute("id", "carrousel_next" + containerId);
     $(button_prev).html("<span>prev</span>");
     $(button_next).html("<span>next</span>");
-    var paginationDiv = document.createElement("div");
-    paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
-    paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
     $(wrapperDiv).append(clearFix);
     $(wrapperDiv).append(button_prev);
     $(wrapperDiv).append(button_next);
-    $(wrapperDiv).append(paginationDiv);
+    if(pagination) {
+      var paginationDiv = document.createElement("div");
+      paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
+      paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
+      $(wrapperDiv).append(paginationDiv)
+    }
     $(mainDiv).children().addClass("carrousel_element_" + rowClass);
     $(mainDiv).children().each(function(index, value) {
       $(value).children().addClass("carrousel_element_" + rowClass)
@@ -14455,7 +14461,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems, width, start)
     }
-    _forceShowPagination(containerId);
+    if(pagination) {
+      _forceShowPagination(containerId)
+    }
     return"Done"
   };
   var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width) {
@@ -15014,6 +15022,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     options["styleClass"] = "slides";
     options["width"] = 900;
     options["startAtLastElement"] = true;
+    options["pagination"] = false;
     $("#" + carrouselDivId).show();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
@@ -15660,7 +15669,8 @@ VISH.SlideManager = function(V, $, undefined) {
     $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
     $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
     var elem = document.getElementById("page-fullscreen");
-    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+    var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
+    if(canFullScreen) {
       $(document).on("click", "#page-fullscreen", toggleFullScreen)
     }else {
       $("#page-fullscreen").hide()
@@ -15678,16 +15688,22 @@ VISH.SlideManager = function(V, $, undefined) {
     myElem = myDoc.getElementById("excursion_iframe");
     if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
       if(myDoc.documentElement.requestFullScreen) {
-        myDoc.getElementById("excursion_iframe").requestFullScreen()
+        myElem.requestFullScreen()
       }else {
         if(myDoc.documentElement.mozRequestFullScreen) {
-          myDoc.getElementById("excursion_iframe").mozRequestFullScreen()
+          myElem.mozRequestFullScreen()
         }else {
           if(myDoc.documentElement.webkitRequestFullScreen) {
-            myDoc.getElementById("excursion_iframe").webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+            myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "-40px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "-40px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "-40px 0px")
+      })
     }else {
       if(myDoc.cancelFullScreen) {
         myDoc.cancelFullScreen()
@@ -15700,7 +15716,30 @@ VISH.SlideManager = function(V, $, undefined) {
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "0px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "0px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "0px 0px")
+      })
     }
+  };
+  var _setupSize = function() {
+    var height = $(window).height();
+    var width = $(window).width();
+    var finalW = 800;
+    var finalH = 600;
+    var aspectRatio = width / height;
+    var slidesRatio = 4 / 3;
+    if(aspectRatio > slidesRatio) {
+      finalH = height - 80;
+      finalW = finalH * slidesRatio
+    }else {
+      finalW = width - 110;
+      finalH = finalW / slidesRatio
+    }
+    $(".slides > article").css("height", finalH);
+    $(".slides > article").css("width", finalW)
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);

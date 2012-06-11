@@ -7,7 +7,6 @@ img {
 }
 
 #menubar {
-	background: url(/assets/menubar.png) no-repeat;
 	width: 100%;
 	height: 70px;
 	position: fixed;
@@ -259,7 +258,7 @@ img {
 	position: absolute;
   left: 1%;
   top: 8%;
-	z-index: 2000;
+	z-index: 600;
 }
 
 #config_div:hover {
@@ -287,6 +286,7 @@ img {
 	position: absolute;
   left: 90%;
   top: 8%;
+	z-index: 600;
 }
 #save_div:hover{
 	background: url(/assets/hover/save_hover.png);
@@ -1050,7 +1050,6 @@ textarea {
 	position: absolute;
 	right: -2px;
 	top: 642px;
-	z-index: 1000;
 }
 
 #help_right:hover {
@@ -1151,7 +1150,6 @@ textarea {
 	position: absolute;
 	right: -2px;
 	top: 632px;
-	z-index: 100;
 }
 
 #help_template_selection {
@@ -1323,3 +1321,20 @@ textarea {
 /* Remove outline */
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
+
+
+#menubarButtons{
+	z-index: 600;
+}
+
+#menubarCarrousel{
+   position: absolute;
+   top: 0;
+   z-index: 1;
+}
+
+#menubar_background{
+	z-index: 500;
+	position: absolute;
+	pointer-events: none;
+}
