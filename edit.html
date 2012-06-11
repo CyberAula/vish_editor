@@ -156,6 +156,9 @@
 	      <a class="addvideo" href="#video_fancybox">
 	        <div class='menuicon videothumb' title="Video"></div>
 	      </a>
+				<a class="addLive" href="#live_fancybox">
+          <div class='menuicon videothumb' title="Live"></div>
+        </a>
 	    </div>
 	    
 	    <div id='menuselect_for_header' class="menuselect_hide">
@@ -326,7 +329,7 @@
 	  </div>
   
   
-  	  <!-- FLASH -->
+  	<!-- FLASH -->
 	  <div style='display:none'>
 	    <div id="flash_fancybox" class="outer_box">
 				<div class="fancy_tabs" id="flash_fancy_tabs_id">	   
@@ -499,6 +502,43 @@
           </div>
 	    </div>
 	    
+			  
+    <!-- LIVE -->
+    <div style='display:none'>
+      <div id="live_fancybox" class="outer_box">
+        <div class="fancy_tabs" id="live_fancy_tabs_id">    
+          <ul>
+            <li><a href="#" onclick="VISH.Editor.loadTab('tab_live_webcam')" id="tab_live_webcam" class="fancy_tab">Webcams</a></li>
+            <li><a href="#" onclick="VISH.Editor.loadTab('tab_live_micro')" id="tab_live_micro" class="fancy_tab">Microscopes</a></li>
+          </ul>
+          <img class='help_in_fancybox' id='tab_live_from_url_help' src='/images/helptutorial_circle_blank.png'/>
+          <img class='help_in_fancybox' id='tab_live_upload_help' src='/images/helptutorial_circle_blank.png'/>
+          <img class='help_in_fancybox' id='tab_live_repo_help' src='/images/helptutorial_circle_blank.png'/>
+        </div>
+        
+        <div id='tab_live_webcam_content' class="fancy_tab_content"> 
+          <div class="box1 box1fancy2">
+            <img src="images/repositoryimg.png" class="imagelogotab">         
+            <div class="search_container">
+              <input id="search_webcam" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+            </div>
+            
+            <div id="tab_live_webcam_content_carrousel"></div>
+            <div id="tab_live_webcam_content_preview" class="content_preview">
+              <div id="tab_live_webcam_content_preview_live" class="content_preview_data"></div>
+              <div id="tab_live_webcam_content_preview_metadata" class="content_preview_metadata"></div>
+              <div id="tab_live_webcam_content_preview_foot" class="content_preview_foot">
+                <button type="button" class="okButton" onclick="VISH.Editor.Object.Live.addSelectedObject()">Add</button>
+              </div>
+            </div>        
+          </div>
+        </div>
+				<div id='tab_live_micro_content' class="fancy_tab_content">
+        </div>  
+      </div>
+    </div>
+			
+			
 	   <!-- WALKTHROUGH HELP SECTION -->
 	    <!-- help for initial screen -->
 	    <ol id="initial_screen_help" class="joyRideTipContent">
@@ -806,8 +846,8 @@ Click on "Close" to finish this walkthrough.
 	<script type="text/javascript" src="js/VISH.Editor.Carrousel.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Video.Repository.js"></script>
-    <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
-    <script type="text/javascript" src="js/VISH.Editor.Video.Vimeo.js"></script>
+  <script type="text/javascript" src="js/VISH.Editor.Video.Youtube.js"></script>
+  <script type="text/javascript" src="js/VISH.Editor.Video.Vimeo.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Video.HTML5.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Image.Repository.js"></script>
@@ -815,6 +855,7 @@ Click on "Close" to finish this walkthrough.
   <script type="text/javascript" src="js/VISH.Editor.Object.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Object.Flash.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Object.Repository.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Object.Live.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Thumbnails.js"></script>
@@ -844,7 +885,7 @@ Click on "Close" to finish this walkthrough.
 		//uncomment VISH.Editor.init to show the editor
 		function start(){
 			var options = {};
-			var lang = getURLParameter("lang");
+			var lang = VISH.Utils.getURLParameter("lang");
 			if(lang!="null"){
 				options["lang"] = lang;
 			}
@@ -852,10 +893,6 @@ Click on "Close" to finish this walkthrough.
 			
 		  //VISH.Editor.init({}, VISH.Samples.samples);  //to edit the excursion
 		  VISH.Editor.init(options);
-		}
-		
-		function getURLParameter(name) {
-    		return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);  
 		}
 	</script>
 		
