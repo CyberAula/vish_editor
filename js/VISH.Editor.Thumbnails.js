@@ -23,7 +23,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     });
 		
 		//Add plus button
-		carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
+		carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
 		carrouselElements += 1;
 		
 		if(carrouselElements<8){
