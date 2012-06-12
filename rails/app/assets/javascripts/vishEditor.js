@@ -12607,7 +12607,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
   initialize()
 }
 ;(function($) {
-  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limt reached", tagsChanged:function(tagValue, action, element) {
+  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"Tags limit reached", tagsChanged:function(tagValue, action, element) {
   }}, _splitAt:/\ |,/g, _existingAtIndex:0, _pasteMetaKeyPressed:false, _keys:{backspace:[8], enter:[13], space:[32], comma:[44, 188], tab:[9]}, _sortable:{sorting:-1}, _create:function() {
     var self = this;
     this.tagsArray = [];
@@ -12632,7 +12632,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
     this.input = this.element.find(".tagit-input");
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
     $(this.element).click(function(e) {
@@ -12654,15 +12654,12 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this.options.select = function(event, ui) {
       self.input.data("autoCompleteTag", true);
       clearTimeout(self.timer);
-      if(self.tagsArray.length >= self.options.maxTags) {
-        self.input.val("");
-        return false
-      }
       if(ui.item.label === undefined) {
         self._addTag(ui.item.value)
       }else {
         self._addTag(ui.item.label, ui.item.value)
       }
+      event.stopPropagation();
       return false
     };
     this.options.focus = function(event, ui) {
@@ -12683,12 +12680,8 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
       if(self._isInitKey(e.which) && !(self._isTabKey(e.which) && this.value == "" && !self.input.data("autoCompleteTag"))) {
         e.preventDefault();
         self.input.data("autoCompleteTag", false);
-        if(!self.options.allowNewTags || self.options.maxTags !== undefined && self.tagsArray.length >= self.options.maxTags) {
-          self.input.val("")
-        }else {
-          if(self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
-            self._addTag($(this).val())
-          }
+        if(self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
+          self._addTag($(this).val())
         }
       }
       if(self.options.maxLength !== undefined && self.input.val().length == self.options.maxLength) {
@@ -12761,7 +12754,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }else {
       this.tagsArray.splice(tag.index, 1)
     }
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
     for(var ind in this.tagsArray) {
@@ -12776,13 +12769,8 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     return
   }, _addTag:function(label, value) {
     if(this.tagsArray.length > this.options.maxTags - 1) {
-      return
-    }
-    if(this.tagsArray.length == this.options.maxTags - 1) {
-      if(typeof $.watermark == "object") {
-        this.input.watermark(this.options.watermarkDenyMessage)
-      }
-      $(this.input).blur()
+      $(this.input).blur();
+      return false
     }
     this.input.autocomplete("close").val("");
     if(this._splitAt && label.search(this._splitAt) > 0) {
@@ -12800,6 +12788,12 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     if(tagExists !== false) {
       this._highlightExisting(tagExists);
       return false
+    }
+    if(this.tagsArray.length == this.options.maxTags - 1) {
+      if(typeof $().watermark == "function") {
+        this.input.watermark(this.options.watermarkDenyMessage)
+      }
+      $(this.input).blur()
     }
     var tag = this.tag(label, value);
     tag.element = $('<li class="tagit-choice"' + (value !== undefined ? ' tagValue="' + value + '"' : "") + ">" + (this.options.sortable == "handle" ? '<a class="ui-icon ui-icon-grip-dotted-vertical" style="float:left"></a>' : "") + label + '<a class="tagit-close">x</a></li>');
@@ -12924,7 +12918,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     if(this.options.tagsChanged) {
       this.options.tagsChanged(null, "reset", null)
     }
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
   }, fill:function(tags) {
@@ -13043,7 +13037,10 @@ VISH.Utils = function(V, undefined) {
     });
     return tagsArray
   };
-  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray}
+  var getURLParameter = function(name) {
+    return decodeURIComponent((location.search.match(RegExp("[?|&]" + name + "=(.+?)(&|$)")) || [, null])[1])
+  };
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray, getURLParameter:getURLParameter}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
@@ -13161,6 +13158,12 @@ VISH.Editor = function(V, $, undefined) {
       case "tab_flash_repo":
         VISH.Editor.Object.Repository.onLoadTab();
         break;
+      case "tab_live_webcam":
+        VISH.Editor.Object.Live.onLoadTab("webcam");
+        break;
+      case "tab_live_micro":
+        VISH.Editor.Object.Live.onLoadTab("micro");
+        break;
       default:
         break
     }
@@ -13177,8 +13180,7 @@ VISH.Editor = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var _addTutorialEvents = function() {
@@ -13241,7 +13243,7 @@ VISH.Editor = function(V, $, undefined) {
     $(".object_wrapper").hide()
   };
   var _onEditExcursionDetailsButtonClicked = function(event) {
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":600, "padding":0})
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0})
   };
   var _onSaveExcursionDetailsButtonClicked = function(event) {
     if($("#excursion_title").val().length < 1) {
@@ -13289,6 +13291,11 @@ VISH.Editor = function(V, $, undefined) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_video_from_url")
+    }});
+    $("a.addLive").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_live_webcam")
     }})
   };
   var _onDeleteItemClicked = function() {
@@ -13602,8 +13609,7 @@ VISH.Editor.Image = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var processResponse = function(response) {
@@ -13658,6 +13664,7 @@ VISH.Editor.Object = function(V, $, undefined) {
   var urlInputId = "flash_embed_code";
   var init = function() {
     VISH.Editor.Object.Repository.init();
+    VISH.Editor.Object.Live.init();
     var urlInput = $("#tab_flash_from_url_content").find("input");
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
@@ -13750,8 +13757,7 @@ VISH.Editor.Object = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var processResponse = function(response) {
@@ -14029,7 +14035,7 @@ VISH.Editor.Object = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
-  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 246.23999999999998px; height: 174.88065306122448px; left: 33px; top: 92px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", 
+  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", 
   "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", 
   "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
@@ -14080,8 +14086,16 @@ VISH.Samples.API = function(V, undefined) {
   var flashListLittle = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
   "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
   var flashListDummy = {"flashes":[]};
+  var liveList = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, 
+  {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}, {"id":"1537", "title":"Image", "description":"Image Embed", "author":"Globedia", "content":'<embed width="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'}, {"id":"1538", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1539", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1540", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1541", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1542", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1543", "title":"Youtube video", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
+  var liveListLittle = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
+  "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
+  var liveListDummy = {"lives":[]};
   var tagsList = {"tags":["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"]};
-  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, tagsList:tagsList}
+  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, liveList:liveList, liveListLittle:liveListLittle, liveListDummy:liveListDummy, tagsList:tagsList}
 }(VISH);
 VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
@@ -14215,7 +14229,7 @@ VISH.Editor.API = function(V, $, undefined) {
     }
     _requestByType("swfs", text, successCallback, failCallback)
   };
-  var requestRecomendedFlash = function(successCallback, failCallback) {
+  var requestRecomendedFlashes = function(successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function") {
         var result = VISH.Samples.API.flashList;
@@ -14252,6 +14266,35 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }
+  };
+  var requestLives = function(text, successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+        switch(text) {
+          case "dummy":
+            result["lives"] = VISH.Samples.API.liveListDummy["lives"];
+            break;
+          case "little":
+            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle["lives"]);
+            break;
+          default:
+            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"])
+        }
+        successCallback(result)
+      }
+      return
+    }
+    _requestByType("live", text, successCallback, failCallback)
+  };
+  var requestRecomendedLives = function(successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.liveList;
+        result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"]);
+        successCallback(result)
+      }
     }
   };
   var _requestByType = function(type, query, successCallback, failCallback) {
@@ -14296,7 +14339,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
     }})
   };
-  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlash:requestRecomendedFlash, requestTags:requestTags}
+  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlashes:requestRecomendedFlashes, requestLives:requestLives, requestRecomendedLives:requestRecomendedLives, requestTags:requestTags}
 }(VISH, jQuery);
 VISH.Editor.AvatarPicker = function(V, $, undefined) {
   var avatars = null;
@@ -14359,6 +14402,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     var callback = null;
     var width = 750;
     var startAtLastElement = false;
+    var pagination = true;
     if(options) {
       if(options["rows"]) {
         rows = options["rows"]
@@ -14383,6 +14427,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       if(options["startAtLastElement"]) {
         startAtLastElement = options["startAtLastElement"]
+      }
+      if(typeof options["pagination"] == "boolean") {
+        pagination = options["pagination"]
       }
     }
     var multipleRow = rows > 1;
@@ -14419,13 +14466,15 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     button_next.setAttribute("id", "carrousel_next" + containerId);
     $(button_prev).html("<span>prev</span>");
     $(button_next).html("<span>next</span>");
-    var paginationDiv = document.createElement("div");
-    paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
-    paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
     $(wrapperDiv).append(clearFix);
     $(wrapperDiv).append(button_prev);
     $(wrapperDiv).append(button_next);
-    $(wrapperDiv).append(paginationDiv);
+    if(pagination) {
+      var paginationDiv = document.createElement("div");
+      paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
+      paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
+      $(wrapperDiv).append(paginationDiv)
+    }
     $(mainDiv).children().addClass("carrousel_element_" + rowClass);
     $(mainDiv).children().each(function(index, value) {
       $(value).children().addClass("carrousel_element_" + rowClass)
@@ -14446,7 +14495,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems, width, start)
     }
-    _forceShowPagination(containerId);
+    if(pagination) {
+      _forceShowPagination(containerId)
+    }
     return"Done"
   };
   var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width) {
@@ -14739,6 +14790,125 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
   };
   return{drawFlashObjectWithSource:drawFlashObjectWithSource}
 }(VISH, jQuery);
+VISH.Editor.Object.Live = function(V, $, undefined) {
+  var carrouselDivId = "tab_live_webcam_content_carrousel";
+  var previewDivId = "tab_live_webcam_content_preview";
+  var footId = "tab_live_webcam_content_preview_foot";
+  var currentObject = new Array;
+  var selectedObject = null;
+  var init = function() {
+    var myInput = $("#tab_live_webcam_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        _requestData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
+  var onLoadTab = function(tab) {
+    if(tab != "webcam") {
+      return
+    }
+    var previousSearch = $("#tab_live_webcam_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _cleanObjectPreview();
+      _requestInicialData()
+    }
+    $("#" + footId).find(".okButton").hide()
+  };
+  var _requestInicialData = function() {
+    VISH.Editor.API.requestRecomendedLives(_onDataReceived, _onAPIError)
+  };
+  var _requestData = function(text) {
+    VISH.Editor.API.requestLives(text, _onDataReceived, _onAPIError)
+  };
+  var _onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanObjectPreview();
+    currentObject = new Array;
+    var carrouselImages = [];
+    var carrouselImagesTitles = [];
+    var content = "";
+    if(!data.lives || data.lives.length == 0) {
+      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+      $("#" + carrouselDivId).show();
+      return
+    }
+    $.each(data.lives, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content);
+      var imageSource = null;
+      switch(objectInfo.type) {
+        case "swf":
+          imageSource = VISH.ImagesPath + "carrousel/swf.png";
+          break;
+        case "youtube":
+          imageSource = VISH.ImagesPath + "carrousel/youtube.png";
+          break;
+        case "web":
+          if(objectInfo.wrapper == "IFRAME") {
+            imageSource = VISH.ImagesPath + "carrousel/iframe.png"
+          }else {
+            imageSource = VISH.ImagesPath + "carrousel/object.png"
+          }
+          break;
+        default:
+          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
+          break
+      }
+      var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
+      carrouselImages.push(myImg);
+      carrouselImagesTitles.push(object.title);
+      currentObject[object.id] = object
+    });
+    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId, carrouselImagesTitles)
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    var options = new Array;
+    options["rows"] = 1;
+    options["callback"] = _onClickCarrouselElement;
+    options["rowItems"] = 5;
+    options["styleClass"] = "title";
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
+  };
+  var _onAPIError = function() {
+    VISH.Debugging.log("Error")
+  };
+  var _onClickCarrouselElement = function(event) {
+    var objectId = $(event.target).attr("objectid");
+    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content);
+    _renderObjectPreview(renderedObject, currentObject[objectId]);
+    selectedObject = currentObject[objectId]
+  };
+  var _renderObjectPreview = function(renderedObject, object) {
+    var objectArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_live");
+    var metadataArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    if(renderedObject && object) {
+      $(objectArea).append(renderedObject);
+      var table = VISH.Utils.generateTable(object.author, object.title, object.description);
+      $(metadataArea).html(table);
+      $("#" + footId).find(".okButton").show()
+    }
+  };
+  var _cleanObjectPreview = function() {
+    var objectArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_live");
+    var metadataArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    $("#" + footId).find(".okButton").hide()
+  };
+  var addSelectedObject = function() {
+    if(selectedObject != null) {
+      VISH.Editor.Object.drawObject($(selectedObject.content));
+      $.fancybox.close()
+    }
+  };
+  return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
+}(VISH, jQuery);
 VISH.Editor.Object.Repository = function(V, $, undefined) {
   var carrouselDivId = "tab_flash_repo_content_carrousel";
   var previewDivId = "tab_flash_repo_content_preview";
@@ -14764,7 +14934,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     $("#" + footId).find(".okButton").hide()
   };
   var _requestInicialData = function() {
-    VISH.Editor.API.requestRecomendedFlash(_onDataReceived, _onAPIError)
+    VISH.Editor.API.requestRecomendedFlashes(_onDataReceived, _onAPIError)
   };
   var _requestData = function(text) {
     VISH.Editor.API.requestFlashes(text, _onDataReceived, _onAPIError)
@@ -14800,7 +14970,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
           }
           break;
         default:
-          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
+          imageSource = VISH.ImagesPath + "carrousel/object.png";
           break
       }
       var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
@@ -15005,6 +15175,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     options["styleClass"] = "slides";
     options["width"] = 900;
     options["startAtLastElement"] = true;
+    options["pagination"] = false;
     $("#" + carrouselDivId).show();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
@@ -15465,7 +15636,7 @@ VISH.Excursion = function(V, undefined) {
 VISH.ObjectPlayer = function() {
   var loadObject = function(element) {
     $.each(element.children(".objectelement"), function(index, value) {
-      $(value).html($(value).attr("objectWrapper"))
+      $(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper") + "</div>")
     })
   };
   var unloadObject = function() {
@@ -15604,8 +15775,8 @@ VISH.Renderer = function(V, $, undefined) {
     return rendered
   };
   var _renderObject = function(element, template) {
-    var style = element["style"] ? "style='" + element["style"] + "'" : "";
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' " + style + "objectWrapper='" + element["body"] + "'>" + "" + "</div>"
+    var style = element["style"] ? element["style"] : "";
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' objectStyle='" + style + "' objectWrapper='" + element["body"] + "'>" + "" + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
@@ -15651,7 +15822,8 @@ VISH.SlideManager = function(V, $, undefined) {
     $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
     $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
     var elem = document.getElementById("page-fullscreen");
-    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+    var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
+    if(canFullScreen) {
       $(document).on("click", "#page-fullscreen", toggleFullScreen)
     }else {
       $("#page-fullscreen").hide()
@@ -15669,16 +15841,22 @@ VISH.SlideManager = function(V, $, undefined) {
     myElem = myDoc.getElementById("excursion_iframe");
     if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
       if(myDoc.documentElement.requestFullScreen) {
-        myDoc.getElementById("excursion_iframe").requestFullScreen()
+        myElem.requestFullScreen()
       }else {
         if(myDoc.documentElement.mozRequestFullScreen) {
-          myDoc.getElementById("excursion_iframe").mozRequestFullScreen()
+          myElem.mozRequestFullScreen()
         }else {
           if(myDoc.documentElement.webkitRequestFullScreen) {
-            myDoc.getElementById("excursion_iframe").webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+            myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "-40px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "-40px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "-40px 0px")
+      })
     }else {
       if(myDoc.cancelFullScreen) {
         myDoc.cancelFullScreen()
@@ -15691,7 +15869,30 @@ VISH.SlideManager = function(V, $, undefined) {
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "0px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "0px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "0px 0px")
+      })
     }
+  };
+  var _setupSize = function() {
+    var height = $(window).height();
+    var width = $(window).width();
+    var finalW = 800;
+    var finalH = 600;
+    var aspectRatio = width / height;
+    var slidesRatio = 4 / 3;
+    if(aspectRatio > slidesRatio) {
+      finalH = height - 80;
+      finalW = finalH * slidesRatio
+    }else {
+      finalW = width - 110;
+      finalH = finalW / slidesRatio
+    }
+    $(".slides > article").css("height", finalH);
+    $(".slides > article").css("width", finalW)
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);

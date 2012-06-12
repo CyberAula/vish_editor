@@ -163,19 +163,19 @@ body {
 }
 .slides > article.far-past {
   display: block;
-  transform: translate(-2040px);
-  -o-transform: translate(-2040px);
-  -ms-transform: translate(-2040px);  /* Added to fix explorer view*/
-  -moz-transform: translate(-2040px);
-  -webkit-transform: translate3d(-2040px, 0, 0);
+  transform: translate(-230%);
+  -o-transform: translate(-230%);
+  -ms-transform: translate(-230%);  /* Added to fix explorer view*/
+  -moz-transform: translate(-230%);
+  -webkit-transform: translate3d(-230%, 0, 0);
 }
 .slides > article.past {
   display: block;
-  transform: translate(-1020px);
-  -o-transform: translate(-1020px);
-  -ms-transform: translate(-1020px);  /* Added to fix explorer view*/
-  -moz-transform: translate(-1020px);
-  -webkit-transform: translate3d(-1020px, 0, 0);
+  transform: translate(-115%);
+  -o-transform: translate(-115%);
+  -ms-transform: translate(-115%);  /* Added to fix explorer view*/
+  -moz-transform: translate(-115%);
+  -webkit-transform: translate3d(-115%, 0, 0);
 }
 .slides > article.current {
   display: block;
@@ -187,19 +187,19 @@ body {
 }
 .slides > article.next {
   display: block;
-  transform: translate(1020px);
-  -o-transform: translate(1020px);
-  -ms-transform: translate(1020px);  /* Added to fix explorer view*/
-  -moz-transform: translate(1020px);
-  -webkit-transform: translate3d(1020px, 0, 0);
+  transform: translate(115%);
+  -o-transform: translate(115%);
+  -ms-transform: translate(115%);  /* Added to fix explorer view*/
+  -moz-transform: translate(115%);
+  -webkit-transform: translate3d(115%, 0, 0);
 }
 .slides > article.far-next {
   display: block;
-  transform: translate(2040px);
-  -o-transform: translate(2040px);
-  -ms-transform: translate(2040px);  /* Added to fix explorer view*/
-  -moz-transform: translate(2040px);
-  -webkit-transform: translate3d(2040px, 0, 0);
+  transform: translate(230%);
+  -o-transform: translate(230%);
+  -ms-transform: translate(230%);  /* Added to fix explorer view*/
+  -moz-transform: translate(230%);
+  -webkit-transform: translate3d(230%, 0, 0);
 }
 
 .slides.layout-widescreen > article.far-past,
@@ -474,22 +474,22 @@ article.smaller q::after {
 }
 
 #page-fullscreen{
-    background-image: url(/assets/fullscreen.png);
+    background-image: url(/assets/fullscreen_all.png);
 	background-repeat:no-repeat;
-	background-position:center;
+	background-position:0px 0px;
     bottom: 0;
     right: 6%;
     opacity: 1.0;
     position: fixed;
     text-align: center;
-    width: 50px;
+    width: 40px;
 	height: 40px;
 	border: none;
 	color: none;
 }
 
 #page-fullscreen:hover{
-    background-image: url(/assets/hover/fullscreen_hover.png);
+    background-position:0px -40px;
 }
 
 #slide-counter {
