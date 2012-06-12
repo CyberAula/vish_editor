@@ -82,7 +82,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      }
 	      break;
 	    default:
-	      imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
+	      imageSource = VISH.ImagesPath + "carrousel/object.png"
 	      break;
       }
 			
