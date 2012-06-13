@@ -15236,11 +15236,13 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     $("#" + carrouselDivId).hide();
     var carrouselImages = [];
+    var carrouselImagesTitles = [];
     var carrouselElements = 0;
     $("article").each(function(index, s) {
       var template = $(s).attr("template");
       carrouselElements += 1;
-      carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"))
+      carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"));
+      carrouselImagesTitles.push(carrouselElements)
     });
     carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
     carrouselElements += 1;
@@ -15251,7 +15253,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
         carrouselElements += 1
       }
     }
-    VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages, _onImagesLoaded, carrouselDivId)
+    VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages, _onImagesLoaded, carrouselDivId, carrouselImagesTitles)
   };
   var _onImagesLoaded = function() {
     $(".add_slide_button").hover(function() {
@@ -16287,7 +16289,7 @@ VISH.Utils.loader = function(V, undefined) {
     var imagesLoaded = 0;
     $.each(imagesArray, function(i, image) {
       $(image).load(function(response) {
-        if(titleArray) {
+        if(titleArray && titleArray[imagesArray.indexOf(image)]) {
           $("#" + carrouselDivId).append("<div><p>" + titleArray[imagesArray.indexOf(image)] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
         }else {
           $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(image) + "</div>")
@@ -16329,8 +16331,8 @@ VISH.Utils.loader = function(V, undefined) {
   };
   var _insertElementsWithOrder = function(imagesArray, carrouselDivId, titleArray) {
     $.each(imagesArray, function(i, image) {
-      if(titleArray) {
-        $("#" + carrouselDivId).append("<div><p>" + titleArray[i] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
+      if(titleArray && titleArray[imagesArray.indexOf(image)]) {
+        $("#" + carrouselDivId).append("<div><p>" + titleArray[imagesArray.indexOf(image)] + "</p>" + VISH.Utils.getOuterHTML(image) + "</div>")
       }else {
         $("#" + carrouselDivId).append("<div>" + VISH.Utils.getOuterHTML(image) + "</div>")
       }
