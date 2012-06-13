@@ -9,6 +9,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		VISH.Editor.Object.Repository.init();
 		VISH.Editor.Object.Live.init();
+		VISH.Editor.Object.Web.init();
 		
 	  var urlInput = $("#tab_flash_from_url_content").find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
@@ -323,8 +324,14 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var maxWidth = current_area.width();
 		var maxHeight = current_area.height();
 		
+		console.log("maxWidth " + maxWidth)
+		console.log("maxHeight " + maxHeight)
+		
 		var width = $("#"+objectID).width();
 		var height = $("#"+objectID).height();
+		
+		console.log("objectWidth " + width)
+    console.log("objectHeight " + height)
 		
 		if(width > maxWidth){
 			$("#"+objectID).width(maxWidth);
@@ -373,8 +380,12 @@ VISH.Editor.Object = (function(V,$,undefined){
             break;
             
           case "HTML5":
-            return VISH.Editor.Video.HTML5.renderVideoFromSources([object])
+            return VISH.Editor.Video.HTML5.renderVideoFromSources([object]);
             break;
+						
+				 case "web":
+						return VISH.Editor.Object.Web.generatePreviewWrapperForWeb(object);
+						break;
             
           default:
             VISH.Debugging.log("Unrecognized object source type")
@@ -422,6 +433,27 @@ VISH.Editor.Object = (function(V,$,undefined){
    */
 	var drawObject = function(object, area, style){
 			
+		var objectInfo = getObjectInfo(object);
+    
+    if(objectInfo.wrapper){
+      console.log("Object wrapper: " + objectInfo.wrapper)
+    } else {
+      console.log("Object wrapper null.")
+    }
+    
+    if(objectInfo.type){
+      console.log("Object type: " + objectInfo.wrapper)
+    } else {
+      console.log("Object type null.")
+    }
+    
+    if(objectInfo.source){
+      console.log("Object source: " + objectInfo.source)
+    } else {
+      console.log("Object source null.")
+    }	
+			
+			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
 		}
@@ -439,14 +471,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		var objectInfo = getObjectInfo(object);
 		
-		
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
 				switch (objectInfo.type) {
-					
-					
-					
+
 					case "image":
 					  V.Editor.Image.drawImage(object)
 					  break;
@@ -463,8 +492,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 					  V.Editor.Video.HTML5.drawVideoWithUrl(object)
 					  break;
 						
+					case "web":
+					  V.Editor.Object.drawObject(VISH.Editor.Object.Web.generateWrapperForWeb(object));
+					  break;
+						
 					default:
-						VISH.Debugging.log("Unrecognized object source type: " + objectInfo.type)
+						V.Debugging.log("Unrecognized object source type: " + objectInfo.type)
 						break;
 				}
 				break;
@@ -561,7 +594,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,
 		drawPreviewObject    : drawPreviewObject,
-		_getTypeFromSource  : _getTypeFromSource 
+		_getTypeFromSource  : _getTypeFromSource,
+		_getSourceFromObject : _getSourceFromObject
 	};
 
 }) (VISH, jQuery);
