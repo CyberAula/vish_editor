@@ -296,6 +296,29 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	
+	/**
+   * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
+   */
+	var requestThumbnails = function(successCallback, failCallback){
+      $.ajax({
+	      async: false,
+	      type: 'GET',
+	      url: '/excursion_thumbnails.json',
+	      dataType: 'json',
+	      success: function(data) {
+            if(typeof successCallback == "function"){
+              successCallback(data);
+            }
+	      },
+	      error: function(xhr, ajaxOptions, thrownError){
+	          if(typeof failCallback == "function"){
+              failCallback(xhr, ajaxOptions, thrownError);
+            }
+	      }
+      });
+  }
+	
+	
 	return {
 		init					            : init,
 		requestVideos             : requestVideos,
@@ -306,7 +329,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedFlashes  : requestRecomendedFlashes,
 		requestLives              : requestLives,
 		requestRecomendedLives    : requestRecomendedLives,
-		requestTags               : requestTags
+		requestTags               : requestTags,
+		requestThumbnails         : requestThumbnails
 	};
 
 }) (VISH, jQuery);

@@ -324,14 +324,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var maxWidth = current_area.width();
 		var maxHeight = current_area.height();
 		
-		console.log("maxWidth " + maxWidth)
-		console.log("maxHeight " + maxHeight)
-		
 		var width = $("#"+objectID).width();
 		var height = $("#"+objectID).height();
-		
-		console.log("objectWidth " + width)
-    console.log("objectHeight " + height)
 		
 		if(width > maxWidth){
 			$("#"+objectID).width(maxWidth);
@@ -431,28 +425,7 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param area: optional param indicating the area to add the object, used for editing excursions
    * param style: optional param with the style, used in editing excursion
    */
-	var drawObject = function(object, area, style){
-			
-		var objectInfo = getObjectInfo(object);
-    
-    if(objectInfo.wrapper){
-      console.log("Object wrapper: " + objectInfo.wrapper)
-    } else {
-      console.log("Object wrapper null.")
-    }
-    
-    if(objectInfo.type){
-      console.log("Object type: " + objectInfo.wrapper)
-    } else {
-      console.log("Object type null.")
-    }
-    
-    if(objectInfo.source){
-      console.log("Object source: " + objectInfo.source)
-    } else {
-      console.log("Object source null.")
-    }	
-			
+	var drawObject = function(object, area, style){	
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;

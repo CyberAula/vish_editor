@@ -25,8 +25,6 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var init = function(options, excursion){
 		
-		console.log("init vish editor")
-		
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
