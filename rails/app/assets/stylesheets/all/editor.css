@@ -7,7 +7,6 @@ img {
 }
 
 #menubar {
-	background: url(/assets/menubar.png) no-repeat;
 	width: 100%;
 	height: 70px;
 	position: fixed;
@@ -113,17 +112,17 @@ img {
 	position:absolute;
 	margin-top: 86%;
 	margin-left: 145%;	
-    display: inline;
+  display: inline;
 	text-decoration:none;
-    background: #CCC repeat-x bottom !important;
+  background: #CCC repeat-x bottom !important;
 	width: 150px !important;
 	opacity: 0.6;
 	color:#f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }	
 	
 .buttonaddfancy:hover {
@@ -259,7 +258,7 @@ img {
 	position: absolute;
   left: 1%;
   top: 8%;
-	z-index: 2000;
+	z-index: 600;
 }
 
 #config_div:hover {
@@ -287,6 +286,7 @@ img {
 	position: absolute;
   left: 90%;
   top: 8%;
+	z-index: 600;
 }
 #save_div:hover{
 	background: url(/assets/hover/save_hover.png);
@@ -338,6 +338,14 @@ img {
 
 .videothumb:hover {
 	background: url(/assets/hover/video_hover.png);
+}
+
+.livethumb {
+	background: url(/assets/live.png);
+}
+
+.livethumb:hover {
+	background: url(/assets/hover/live_hover.png);
 }
 
 .barbutton {
@@ -1050,7 +1058,6 @@ textarea {
 	position: absolute;
 	right: -2px;
 	top: 642px;
-	z-index: 1000;
 }
 
 #help_right:hover {
@@ -1151,7 +1158,6 @@ textarea {
 	position: absolute;
 	right: -2px;
 	top: 632px;
-	z-index: 100;
 }
 
 #help_template_selection {
@@ -1192,7 +1198,7 @@ textarea {
 }
 
 .tut_savedetails{
-	top: 411px;
+	top: 452px;
 	left: 394px;
 }
 
@@ -1323,3 +1329,20 @@ textarea {
 /* Remove outline */
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
+
+
+#menubarButtons{
+	z-index: 600;
+}
+
+#menubarCarrousel{
+   position: absolute;
+   top: 0;
+   z-index: 1;
+}
+
+#menubar_background{
+	z-index: 500;
+	position: absolute;
+	pointer-events: none;
+}

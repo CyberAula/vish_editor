@@ -12607,7 +12607,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
   initialize()
 }
 ;(function($) {
-  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limt reached", tagsChanged:function(tagValue, action, element) {
+  $.widget("ui.tagit", {options:{tagSource:[], triggerKeys:["enter", "space", "comma", "tab"], initialTags:[], minLength:1, select:false, allowNewTags:true, caseSensitive:false, sortable:false, highlightOnExistColor:"#0F0", emptySearch:true, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"Tags limit reached", tagsChanged:function(tagValue, action, element) {
   }}, _splitAt:/\ |,/g, _existingAtIndex:0, _pasteMetaKeyPressed:false, _keys:{backspace:[8], enter:[13], space:[32], comma:[44, 188], tab:[9]}, _sortable:{sorting:-1}, _create:function() {
     var self = this;
     this.tagsArray = [];
@@ -12632,7 +12632,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }
     this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
     this.input = this.element.find(".tagit-input");
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
     $(this.element).click(function(e) {
@@ -12654,15 +12654,12 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     this.options.select = function(event, ui) {
       self.input.data("autoCompleteTag", true);
       clearTimeout(self.timer);
-      if(self.tagsArray.length >= self.options.maxTags) {
-        self.input.val("");
-        return false
-      }
       if(ui.item.label === undefined) {
         self._addTag(ui.item.value)
       }else {
         self._addTag(ui.item.label, ui.item.value)
       }
+      event.stopPropagation();
       return false
     };
     this.options.focus = function(event, ui) {
@@ -12683,12 +12680,8 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
       if(self._isInitKey(e.which) && !(self._isTabKey(e.which) && this.value == "" && !self.input.data("autoCompleteTag"))) {
         e.preventDefault();
         self.input.data("autoCompleteTag", false);
-        if(!self.options.allowNewTags || self.options.maxTags !== undefined && self.tagsArray.length >= self.options.maxTags) {
-          self.input.val("")
-        }else {
-          if(self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
-            self._addTag($(this).val())
-          }
+        if(self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
+          self._addTag($(this).val())
         }
       }
       if(self.options.maxLength !== undefined && self.input.val().length == self.options.maxLength) {
@@ -12761,7 +12754,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     }else {
       this.tagsArray.splice(tag.index, 1)
     }
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
     for(var ind in this.tagsArray) {
@@ -12776,13 +12769,8 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     return
   }, _addTag:function(label, value) {
     if(this.tagsArray.length > this.options.maxTags - 1) {
-      return
-    }
-    if(this.tagsArray.length == this.options.maxTags - 1) {
-      if(typeof $.watermark == "object") {
-        this.input.watermark(this.options.watermarkDenyMessage)
-      }
-      $(this.input).blur()
+      $(this.input).blur();
+      return false
     }
     this.input.autocomplete("close").val("");
     if(this._splitAt && label.search(this._splitAt) > 0) {
@@ -12800,6 +12788,12 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     if(tagExists !== false) {
       this._highlightExisting(tagExists);
       return false
+    }
+    if(this.tagsArray.length == this.options.maxTags - 1) {
+      if(typeof $().watermark == "function") {
+        this.input.watermark(this.options.watermarkDenyMessage)
+      }
+      $(this.input).blur()
     }
     var tag = this.tag(label, value);
     tag.element = $('<li class="tagit-choice"' + (value !== undefined ? ' tagValue="' + value + '"' : "") + ">" + (this.options.sortable == "handle" ? '<a class="ui-icon ui-icon-grip-dotted-vertical" style="float:left"></a>' : "") + label + '<a class="tagit-close">x</a></li>');
@@ -12924,7 +12918,7 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     if(this.options.tagsChanged) {
       this.options.tagsChanged(null, "reset", null)
     }
-    if(typeof $.watermark == "object") {
+    if(typeof $().watermark == "function") {
       this.input.watermark(this.options.watermarkAllowMessage)
     }
   }, fill:function(tags) {
@@ -12961,14 +12955,16 @@ var i18n = {"es":{"i.walk1":"Puedes utilizar el icono tutorial", "i.walk2":'dura
 "i.walk41":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir imagenes. Como puedes ver el la zona superior tienes las siguientes opciones:", "i.walk42":"(a\u00f1adir video desde un enlace)", "i.walk43":"(a\u00f1adir video desde el repositorio)", "i.walk44":"(a\u00f1adir video desde youtube)", "i.walk45":"(a\u00f1adir video desde vimeo)", "i.walk46":'Ahora estas en la secci\u00f3n Url.Haz click en "Continuar".', "i.walk47":"Este espacio esta reservardo para escribir o pegar un enlace que contenga una imagen, por ejemplo:", 
 "i.walk48":'Los formatos de video soportados por la aplicaci\u00f3n son muy variados (avi, flv, mpg...).Una vez hayas rellenado el espacio, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', "i.walk49":'En este espacio puedes buscar videos dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
 "i.walk50":'En este espacio puedes buscar videos dentro de youtube. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', "i.walk51":'En este espacio puedes buscar videos dentro de vimeo. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk52":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir contenido en directo. Como puedes ver el la zona superior tienes de momento la siguiente opci\u00f3n:", "i.walk53":"(a\u00f1adir video desde una camara en directo)", "i.walk54":'Ahora estas en la secci\u00f3n Webcam.Haz click en "Continuar"', "i.walk55":'En este espacio puedes buscar contenido en directo dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda, desde la cual solo debes pulsar encima del contenido para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adirlo. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
 "Your browser does not meet the minimum requirements to init Vish Editor, please update your browser.":"El navegador que etas utilizando no incluye los requerimientos minimos para utilizar esta aplicaci\u00f3n.Por favor, actualiza tu navegador", "0%":"0%", "accept":"aceptar", "Add":"A\u00f1adir", "add image url":"a\u00f1adir URL de imagen", "Add Content":"A\u00f1adir Contenido", "Add new slide button":"Bot\u00f3n para a\u00f1adir nueva slide", "Add Tags for your image":"A\u00f1ade etiquetas a tu imagen", 
 "add video url":"a\u00f1adir URL de video", "Add tags to your excursion":"A\u00f1ade tags a tu excursi\u00f3n", "Adding content to a slide":"A\u00f1adiendo contenido a una slide", "Adding flash content":"A\u00f1adiendo contenido flash", "Adding flash content by upload":"Subiendo contenido flash", "Adding Flash content by url":"A\u00f1adiendo contenido flash por url", "Adding Images":"A\u00f1adiendo im\u00e1genes", "Adding images by upload":"Subiendo im\u00e1genes", "Adding images by url":"A\u00f1adiendo im\u00e1genes por url", 
-"Adding Video":"A\u00f1adiendo video", "Adding video by url":"A\u00f1adiendo video por url", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Close or Delete":"Borrar o Cerrar", "Close":"Cerrar", "close":"Cerrar", "Continue":"Continuar", "Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "Choose an image that will represent your excursion":"Elige una imagen que representar\u00e1 tu excursi\u00f3n", "Configuration Button":"Bot\u00f3n de configuraci\u00f3n", 
-"delete":"borrar", "Delete Content":"Borrar contenido", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", "Edit details":"Editar detalles", "embed":"embed", "Embed":"Embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Flickr":"Flickr", "Flash Content":"Contenido Flash", "Google Chrome":"Google Chrome", "Image":"Imagen", "Images":"Imagen", "Internet Explorer 9":"Internet Explorer 9", 
-"Let\u00b4s write a title (Obligatory)":"Escribamos un t\u00edtulo (obligatorio)", "Mozilla Firefox":"Mozilla Firefox", "no":"no", "next":"Siguiente", "Next":"Siguiente", "OK":"OK", "Opera":"Opera", "Paste SWF file URL":"Pega la URL del fichero SWF", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "Preview":"Vista previa", "save":"guardar", "Save Button":"Bot\u00f3n de salvar", "Save slides":"Salvar las diapositivas", "Save your excursion details":"Salva los detalles de tu excursi\u00f3n", 
-"Search content":"Buscar contenido", "Search flash content":"Buscar contenido flash", "Search images in Flickr":"Buscar im\u00e1genes en Flickr", "Search videos in Vimeo":"Buscar videos en Vimeo", "Search images in Vish repository":"Buscar im\u00e1genes en el repositorio ViSH", "Search videos in Vish repository":"Buscar videos en el repositorio del ViSH", "Search videos in Youtube":"Buscar videos en Youtube", "See the content before you add it":"Puedes ver el contenido antes de a\u00f1adirlo", "See the image before you add it":"Puedes ver las im\u00e1genes antes de a\u00f1adirlas", 
-"See the video before you add it":"Puedes ver el video antes de a\u00f1adirlo", "Select picture to upload":"Seleccionar imagen para subir", "Select SWF file to upload":"Seleccionar archivo swf para subir", "Select video to upload":"Seleccionar video para subir", "Selecting a Slide":"Seleccionando una slide", "Text":"Texto", "Title":"Titulo", "This is ViSH editor!":"Esto es el ViSH Editor!", "This is the tools menu":"Esto es el men\u00fa de herramientas", "Thumbnail":"Miniatura", "Upload":"Subir", 
-"upload":"subir", "upload flash":"subir flash", "url":"Enlace", "Url":"Enlace", "Video":"Video", "Videos":"Videos", "vish":"vish", "Vish":"vish", "vimeo":"Vimeo", "Vimeo":"Vimeo", "Youtube":"Youtube", "youtube":"Youtube", "Welcome to ViSH editor!":"Bienvenido al ViSH editor!", "Write a description (optional)":"Escribe una descripci\u00f3n (opcional)", "http://www.####.com/example.jpg":"http://www.####.com/ejemplo.jpg", "http://www.####.com/example.swf":"http://www.####.com/ejemplo.swf", "http://www.####.com/example.avi":"http://www.####.com/ejemplo.avi"}};
+"Adding Video":"A\u00f1adiendo video", "Adding Live Content":"A\u00f1adiendo Contenido en Directo", "Adding video by url":"A\u00f1adiendo video por url", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Close or Delete":"Borrar o Cerrar", "Close":"Cerrar", "close":"Cerrar", "Continue":"Continuar", "Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "Choose an image that will represent your excursion":"Elige una imagen que representar\u00e1 tu excursi\u00f3n", 
+"Configuration Button":"Bot\u00f3n de configuraci\u00f3n", "delete":"borrar", "Delete Content":"Borrar contenido", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", "Edit details":"Editar detalles", "embed":"embed", "Embed":"Embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Flickr":"Flickr", "Flash Content":"Contenido Flash", "Google Chrome":"Google Chrome", "Image":"Imagen", 
+"Images":"Imagen", "Internet Explorer 9":"Internet Explorer 9", "Let\u00b4s write a title (Obligatory)":"Escribamos un t\u00edtulo (obligatorio)", "Mozilla Firefox":"Mozilla Firefox", "no":"no", "next":"Siguiente", "Next":"Siguiente", "OK":"OK", "Opera":"Opera", "Paste SWF file URL":"Pega la URL del fichero SWF", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "Preview":"Vista previa", "save":"guardar", "Save Button":"Bot\u00f3n de salvar", "Save slides":"Salvar las diapositivas", 
+"Save your excursion details":"Salva los detalles de tu excursi\u00f3n", "Search content":"Buscar contenido", "Search flash content":"Buscar contenido flash", "Search images in Flickr":"Buscar im\u00e1genes en Flickr", "Search videos in Vimeo":"Buscar videos en Vimeo", "Search images in Vish repository":"Buscar im\u00e1genes en el repositorio ViSH", "Search videos in Vish repository":"Buscar videos en el repositorio del ViSH", "Search videos in Youtube":"Buscar videos en Youtube", "Search Live Content":"Buscar contenido en directo", 
+"See the content before you add it":"Puedes ver el contenido antes de a\u00f1adirlo", "See the image before you add it":"Puedes ver las im\u00e1genes antes de a\u00f1adirlas", "See the video before you add it":"Puedes ver el video antes de a\u00f1adirlo", "Select picture to upload":"Seleccionar imagen para subir", "Select SWF file to upload":"Seleccionar archivo swf para subir", "Select video to upload":"Seleccionar video para subir", "Selecting a Slide":"Seleccionando una slide", "Text":"Texto", 
+"Title":"Titulo", "This is ViSH editor!":"Esto es el ViSH Editor!", "This is the tools menu":"Esto es el men\u00fa de herramientas", "Thumbnail":"Miniatura", "Upload":"Subir", "upload":"subir", "upload flash":"subir flash", "url":"Enlace", "Url":"Enlace", "Video":"Video", "Videos":"Videos", "vish":"vish", "Vish":"vish", "vimeo":"Vimeo", "Vimeo":"Vimeo", "Youtube":"Youtube", "youtube":"Youtube", "Welcome to ViSH editor!":"Bienvenido al ViSH editor!", "Webcam":"Webcam", "webcam":"webcam", "Write a description (optional)":"Escribe una descripci\u00f3n (opcional)", 
+"http://www.####.com/example.jpg":"http://www.####.com/ejemplo.jpg", "http://www.####.com/example.swf":"http://www.####.com/ejemplo.swf", "http://www.####.com/example.avi":"http://www.####.com/ejemplo.avi"}};
 var VISH = VISH || {};
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
@@ -13043,7 +13039,10 @@ VISH.Utils = function(V, undefined) {
     });
     return tagsArray
   };
-  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray}
+  var getURLParameter = function(name) {
+    return decodeURIComponent((location.search.match(RegExp("[?|&]" + name + "=(.+?)(&|$)")) || [, null])[1])
+  };
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray, getURLParameter:getURLParameter}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
@@ -13161,6 +13160,12 @@ VISH.Editor = function(V, $, undefined) {
       case "tab_flash_repo":
         VISH.Editor.Object.Repository.onLoadTab();
         break;
+      case "tab_live_webcam":
+        VISH.Editor.Object.Live.onLoadTab("webcam");
+        break;
+      case "tab_live_micro":
+        VISH.Editor.Object.Live.onLoadTab("micro");
+        break;
       default:
         break
     }
@@ -13177,13 +13182,12 @@ VISH.Editor = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var _addTutorialEvents = function() {
     $(document).on("click", "#start_tutorial", function() {
-      V.Editor.Tour.startTourWithId("initial_screen_help", "bottom")
+      V.Editor.Tour.startTourWithId("initial_screen_help", "top")
     });
     $(document).on("click", "#help_right", function() {
       V.Editor.Tour.startTourWithId("menubar_help", "top")
@@ -13226,6 +13230,9 @@ VISH.Editor = function(V, $, undefined) {
     });
     $(document).on("click", "#tab_video_vimeo_help", function() {
       V.Editor.Tour.startTourWithId("search_vimeo_fancy_help", "bottom")
+    });
+    $(document).on("click", "#tab_live_webcam_help", function() {
+      V.Editor.Tour.startTourWithId("tab_live_webcam_id", "bottom")
     })
   };
   var _addEditorEnterLeaveEvents = function() {
@@ -13241,7 +13248,7 @@ VISH.Editor = function(V, $, undefined) {
     $(".object_wrapper").hide()
   };
   var _onEditExcursionDetailsButtonClicked = function(event) {
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":600, "padding":0})
+    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0})
   };
   var _onSaveExcursionDetailsButtonClicked = function(event) {
     if($("#excursion_title").val().length < 1) {
@@ -13289,6 +13296,11 @@ VISH.Editor = function(V, $, undefined) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_video_from_url")
+    }});
+    $("a.addLive").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_live_webcam")
     }})
   };
   var _onDeleteItemClicked = function() {
@@ -13602,8 +13614,7 @@ VISH.Editor.Image = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var processResponse = function(response) {
@@ -13658,6 +13669,7 @@ VISH.Editor.Object = function(V, $, undefined) {
   var urlInputId = "flash_embed_code";
   var init = function() {
     VISH.Editor.Object.Repository.init();
+    VISH.Editor.Object.Live.init();
     var urlInput = $("#tab_flash_from_url_content").find("input");
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
@@ -13750,8 +13762,7 @@ VISH.Editor.Object = function(V, $, undefined) {
         }
         $(tagList).append("<li>" + tag + "</li>")
       });
-      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, tagsChanged:function(tag, action) {
-      }})
+      $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8, watermarkAllowMessage:"Add tags", watermarkDenyMessage:"limit reached"})
     }
   };
   var processResponse = function(response) {
@@ -14029,7 +14040,7 @@ VISH.Editor.Object = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
-  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 246.23999999999998px; height: 174.88065306122448px; left: 33px; top: 92px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", 
+  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", 
   "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", 
   "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
@@ -14080,8 +14091,16 @@ VISH.Samples.API = function(V, undefined) {
   var flashListLittle = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
   "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
   var flashListDummy = {"flashes":[]};
+  var liveList = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, 
+  {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}, {"id":"1537", "title":"Image", "description":"Image Embed", "author":"Globedia", "content":'<embed width="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'}, {"id":"1538", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1539", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1540", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1541", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1542", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1543", "title":"Youtube video", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
+  var liveListLittle = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
+  "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
+  var liveListDummy = {"lives":[]};
   var tagsList = {"tags":["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"]};
-  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, tagsList:tagsList}
+  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, liveList:liveList, liveListLittle:liveListLittle, liveListDummy:liveListDummy, tagsList:tagsList}
 }(VISH);
 VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
@@ -14215,7 +14234,7 @@ VISH.Editor.API = function(V, $, undefined) {
     }
     _requestByType("swfs", text, successCallback, failCallback)
   };
-  var requestRecomendedFlash = function(successCallback, failCallback) {
+  var requestRecomendedFlashes = function(successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function") {
         var result = VISH.Samples.API.flashList;
@@ -14252,6 +14271,35 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }
+  };
+  var requestLives = function(text, successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+        switch(text) {
+          case "dummy":
+            result["lives"] = VISH.Samples.API.liveListDummy["lives"];
+            break;
+          case "little":
+            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle["lives"]);
+            break;
+          default:
+            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"])
+        }
+        successCallback(result)
+      }
+      return
+    }
+    _requestByType("live", text, successCallback, failCallback)
+  };
+  var requestRecomendedLives = function(successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        var result = VISH.Samples.API.liveList;
+        result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"]);
+        successCallback(result)
+      }
     }
   };
   var _requestByType = function(type, query, successCallback, failCallback) {
@@ -14296,7 +14344,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
     }})
   };
-  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlash:requestRecomendedFlash, requestTags:requestTags}
+  return{init:init, requestVideos:requestVideos, requestRecomendedVideos:requestRecomendedVideos, requestImages:requestImages, requestRecomendedImages:requestRecomendedImages, requestFlashes:requestFlashes, requestRecomendedFlashes:requestRecomendedFlashes, requestLives:requestLives, requestRecomendedLives:requestRecomendedLives, requestTags:requestTags}
 }(VISH, jQuery);
 VISH.Editor.AvatarPicker = function(V, $, undefined) {
   var avatars = null;
@@ -14359,6 +14407,7 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     var callback = null;
     var width = 750;
     var startAtLastElement = false;
+    var pagination = true;
     if(options) {
       if(options["rows"]) {
         rows = options["rows"]
@@ -14383,6 +14432,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       if(options["startAtLastElement"]) {
         startAtLastElement = options["startAtLastElement"]
+      }
+      if(typeof options["pagination"] == "boolean") {
+        pagination = options["pagination"]
       }
     }
     var multipleRow = rows > 1;
@@ -14419,13 +14471,15 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
     button_next.setAttribute("id", "carrousel_next" + containerId);
     $(button_prev).html("<span>prev</span>");
     $(button_next).html("<span>next</span>");
-    var paginationDiv = document.createElement("div");
-    paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
-    paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
     $(wrapperDiv).append(clearFix);
     $(wrapperDiv).append(button_prev);
     $(wrapperDiv).append(button_next);
-    $(wrapperDiv).append(paginationDiv);
+    if(pagination) {
+      var paginationDiv = document.createElement("div");
+      paginationDiv.setAttribute("class", "pagination pagination_" + rowClass);
+      paginationDiv.setAttribute("id", "carrousel_pag" + containerId);
+      $(wrapperDiv).append(paginationDiv)
+    }
     $(mainDiv).children().addClass("carrousel_element_" + rowClass);
     $(mainDiv).children().each(function(index, value) {
       $(value).children().addClass("carrousel_element_" + rowClass)
@@ -14446,7 +14500,9 @@ VISH.Editor.Carrousel = function(V, $, undefined) {
       }
       _setMainCarrousel(containerId, containerId, rows, [], rowItems, scrollItems, width, start)
     }
-    _forceShowPagination(containerId);
+    if(pagination) {
+      _forceShowPagination(containerId)
+    }
     return"Done"
   };
   var _applyMultipleRows = function(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width) {
@@ -14739,6 +14795,125 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
   };
   return{drawFlashObjectWithSource:drawFlashObjectWithSource}
 }(VISH, jQuery);
+VISH.Editor.Object.Live = function(V, $, undefined) {
+  var carrouselDivId = "tab_live_webcam_content_carrousel";
+  var previewDivId = "tab_live_webcam_content_preview";
+  var footId = "tab_live_webcam_content_preview_foot";
+  var currentObject = new Array;
+  var selectedObject = null;
+  var init = function() {
+    var myInput = $("#tab_live_webcam_content").find("input[type='search']");
+    $(myInput).watermark("Search content");
+    $(myInput).keydown(function(event) {
+      if(event.keyCode == 13) {
+        _requestData($(myInput).val());
+        $(myInput).blur()
+      }
+    })
+  };
+  var onLoadTab = function(tab) {
+    if(tab != "webcam") {
+      return
+    }
+    var previousSearch = $("#tab_live_webcam_content").find("input[type='search']").val() != "";
+    if(!previousSearch) {
+      _cleanObjectPreview();
+      _requestInicialData()
+    }
+    $("#" + footId).find(".okButton").hide()
+  };
+  var _requestInicialData = function() {
+    VISH.Editor.API.requestRecomendedLives(_onDataReceived, _onAPIError)
+  };
+  var _requestData = function(text) {
+    VISH.Editor.API.requestLives(text, _onDataReceived, _onAPIError)
+  };
+  var _onDataReceived = function(data) {
+    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanObjectPreview();
+    currentObject = new Array;
+    var carrouselImages = [];
+    var carrouselImagesTitles = [];
+    var content = "";
+    if(!data.lives || data.lives.length == 0) {
+      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+      $("#" + carrouselDivId).show();
+      return
+    }
+    $.each(data.lives, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content);
+      var imageSource = null;
+      switch(objectInfo.type) {
+        case "swf":
+          imageSource = VISH.ImagesPath + "carrousel/swf.png";
+          break;
+        case "youtube":
+          imageSource = VISH.ImagesPath + "carrousel/youtube.png";
+          break;
+        case "web":
+          if(objectInfo.wrapper == "IFRAME") {
+            imageSource = VISH.ImagesPath + "carrousel/iframe.png"
+          }else {
+            imageSource = VISH.ImagesPath + "carrousel/object.png"
+          }
+          break;
+        default:
+          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
+          break
+      }
+      var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
+      carrouselImages.push(myImg);
+      carrouselImagesTitles.push(object.title);
+      currentObject[object.id] = object
+    });
+    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages, _onImagesLoaded, carrouselDivId, carrouselImagesTitles)
+  };
+  var _onImagesLoaded = function() {
+    $("#" + carrouselDivId).show();
+    var options = new Array;
+    options["rows"] = 1;
+    options["callback"] = _onClickCarrouselElement;
+    options["rowItems"] = 5;
+    options["styleClass"] = "title";
+    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
+  };
+  var _onAPIError = function() {
+    VISH.Debugging.log("Error")
+  };
+  var _onClickCarrouselElement = function(event) {
+    var objectId = $(event.target).attr("objectid");
+    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content);
+    _renderObjectPreview(renderedObject, currentObject[objectId]);
+    selectedObject = currentObject[objectId]
+  };
+  var _renderObjectPreview = function(renderedObject, object) {
+    var objectArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_live");
+    var metadataArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    if(renderedObject && object) {
+      $(objectArea).append(renderedObject);
+      var table = VISH.Utils.generateTable(object.author, object.title, object.description);
+      $(metadataArea).html(table);
+      $("#" + footId).find(".okButton").show()
+    }
+  };
+  var _cleanObjectPreview = function() {
+    var objectArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_live");
+    var metadataArea = $("#" + previewDivId).find("#tab_live_webcam_content_preview_metadata");
+    $(objectArea).html("");
+    $(metadataArea).html("");
+    $("#" + footId).find(".okButton").hide()
+  };
+  var addSelectedObject = function() {
+    if(selectedObject != null) {
+      VISH.Editor.Object.drawObject($(selectedObject.content));
+      $.fancybox.close()
+    }
+  };
+  return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
+}(VISH, jQuery);
 VISH.Editor.Object.Repository = function(V, $, undefined) {
   var carrouselDivId = "tab_flash_repo_content_carrousel";
   var previewDivId = "tab_flash_repo_content_preview";
@@ -14764,7 +14939,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     $("#" + footId).find(".okButton").hide()
   };
   var _requestInicialData = function() {
-    VISH.Editor.API.requestRecomendedFlash(_onDataReceived, _onAPIError)
+    VISH.Editor.API.requestRecomendedFlashes(_onDataReceived, _onAPIError)
   };
   var _requestData = function(text) {
     VISH.Editor.API.requestFlashes(text, _onDataReceived, _onAPIError)
@@ -14800,7 +14975,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
           }
           break;
         default:
-          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
+          imageSource = VISH.ImagesPath + "carrousel/object.png";
           break
       }
       var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
@@ -14979,7 +15154,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
       carrouselElements += 1;
       carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"))
     });
-    carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
+    carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
     carrouselElements += 1;
     if(carrouselElements < 8) {
       var i;
@@ -15005,6 +15180,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     options["styleClass"] = "slides";
     options["width"] = 900;
     options["startAtLastElement"] = true;
+    options["pagination"] = false;
     $("#" + carrouselDivId).show();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
@@ -15465,7 +15641,7 @@ VISH.Excursion = function(V, undefined) {
 VISH.ObjectPlayer = function() {
   var loadObject = function(element) {
     $.each(element.children(".objectelement"), function(index, value) {
-      $(value).html($(value).attr("objectWrapper"))
+      $(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper") + "</div>")
     })
   };
   var unloadObject = function() {
@@ -15604,8 +15780,8 @@ VISH.Renderer = function(V, $, undefined) {
     return rendered
   };
   var _renderObject = function(element, template) {
-    var style = element["style"] ? "style='" + element["style"] + "'" : "";
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' " + style + "objectWrapper='" + element["body"] + "'>" + "" + "</div>"
+    var style = element["style"] ? element["style"] : "";
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' objectStyle='" + style + "' objectWrapper='" + element["body"] + "'>" + "" + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
@@ -15651,7 +15827,8 @@ VISH.SlideManager = function(V, $, undefined) {
     $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
     $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
     var elem = document.getElementById("page-fullscreen");
-    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+    var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
+    if(canFullScreen) {
       $(document).on("click", "#page-fullscreen", toggleFullScreen)
     }else {
       $("#page-fullscreen").hide()
@@ -15669,16 +15846,22 @@ VISH.SlideManager = function(V, $, undefined) {
     myElem = myDoc.getElementById("excursion_iframe");
     if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
       if(myDoc.documentElement.requestFullScreen) {
-        myDoc.getElementById("excursion_iframe").requestFullScreen()
+        myElem.requestFullScreen()
       }else {
         if(myDoc.documentElement.mozRequestFullScreen) {
-          myDoc.getElementById("excursion_iframe").mozRequestFullScreen()
+          myElem.mozRequestFullScreen()
         }else {
           if(myDoc.documentElement.webkitRequestFullScreen) {
-            myDoc.getElementById("excursion_iframe").webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+            myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "-40px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "-40px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "-40px 0px")
+      })
     }else {
       if(myDoc.cancelFullScreen) {
         myDoc.cancelFullScreen()
@@ -15691,7 +15874,30 @@ VISH.SlideManager = function(V, $, undefined) {
           }
         }
       }
+      $("#page-fullscreen").css("background-position", "0px 0px");
+      $("#page-fullscreen").hover(function() {
+        $("#page-fullscreen").css("background-position", "0px -40px")
+      }, function() {
+        $("#page-fullscreen").css("background-position", "0px 0px")
+      })
     }
+  };
+  var _setupSize = function() {
+    var height = $(window).height();
+    var width = $(window).width();
+    var finalW = 800;
+    var finalH = 600;
+    var aspectRatio = width / height;
+    var slidesRatio = 4 / 3;
+    if(aspectRatio > slidesRatio) {
+      finalH = height - 80;
+      finalW = finalH * slidesRatio
+    }else {
+      finalW = width - 110;
+      finalH = finalW / slidesRatio
+    }
+    $(".slides > article").css("height", finalH);
+    $(".slides > article").css("width", finalW)
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);

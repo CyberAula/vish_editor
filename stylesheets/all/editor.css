@@ -112,17 +112,17 @@ img {
 	position:absolute;
 	margin-top: 86%;
 	margin-left: 145%;	
-    display: inline;
+  display: inline;
 	text-decoration:none;
-    background: #CCC repeat-x bottom !important;
+  background: #CCC repeat-x bottom !important;
 	width: 150px !important;
 	opacity: 0.6;
 	color:#f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }	
 	
 .buttonaddfancy:hover {
@@ -338,6 +338,14 @@ img {
 
 .videothumb:hover {
 	background: url(/images/hover/video_hover.png);
+}
+
+.livethumb {
+	background: url(/images/live.png);
+}
+
+.livethumb:hover {
+	background: url(/images/hover/live_hover.png);
 }
 
 .barbutton {
@@ -1190,7 +1198,7 @@ textarea {
 }
 
 .tut_savedetails{
-	top: 411px;
+	top: 452px;
 	left: 394px;
 }
 
