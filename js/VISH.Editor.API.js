@@ -86,7 +86,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	/**
 	 * function to call to VISH and request recommended flash objects
 	 */
-	var requestRecomendedFlash = function(successCallback, failCallback){
+	var requestRecomendedFlashes = function(successCallback, failCallback){
 		if (VISH.Debugging.isDevelopping()) {
 			if(typeof successCallback == "function"){
 				var result = VISH.Samples.API.flashList;
@@ -140,6 +140,52 @@ VISH.Editor.API = (function(V,$,undefined){
     }
   };
     
+		
+		  
+  /**
+   * function to call to VISH and request live objects in json format
+   * The request is:
+   * GET /search.json?type=live&q=text
+   */
+  var requestLives = function(text, successCallback, failCallback){
+    
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+
+        switch(text){
+          case "dummy":
+            result['lives'] = VISH.Samples.API.liveListDummy['lives'];
+            break;
+          case "little":
+            result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle['lives']);
+            break;
+          default:
+            result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList['lives']);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("live", text, successCallback, failCallback);  
+  };
+  
+  
+  /**
+   * function to call to VISH and request recommended lives objects
+   */
+  var requestRecomendedLives = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = VISH.Samples.API.liveList;
+        result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList['lives']);
+        successCallback(result);
+      }
+    }
+   };
+		
     /**
      * generic function to call VISH and request by query and type
      * The request is:
@@ -212,14 +258,16 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					          : init,
-		requestVideos           : requestVideos,
-		requestRecomendedVideos : requestRecomendedVideos,
-		requestImages           : requestImages,
-		requestRecomendedImages : requestRecomendedImages,
-		requestFlashes			    : requestFlashes,
-		requestRecomendedFlash  : requestRecomendedFlash,
-		requestTags             : requestTags
+		init					            : init,
+		requestVideos             : requestVideos,
+		requestRecomendedVideos   : requestRecomendedVideos,
+		requestImages             : requestImages,
+		requestRecomendedImages   : requestRecomendedImages,
+		requestFlashes			      : requestFlashes,
+		requestRecomendedFlashes  : requestRecomendedFlashes,
+		requestLives              : requestLives,
+		requestRecomendedLives    : requestRecomendedLives,
+		requestTags               : requestTags
 	};
 
 }) (VISH, jQuery);

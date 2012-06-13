@@ -169,7 +169,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var loadTab = function (tab_id){
 	  // first remove the walkthrough if open
-  	  $('.joyride-close-tip').click();
+  	$('.joyride-close-tip').click();
   	  
 	  //deselect all of them
 	  $(".fancy_tab").removeClass("fancy_selected");
@@ -187,7 +187,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("#"+ tab_id + "_help").show();
 		
         //Submodule callbacks	
-		switch(tab_id) {
+		switch (tab_id) {
 			//Image
 			case "tab_pic_from_url":
 				V.Editor.Image.onLoadTab("url");
@@ -201,7 +201,7 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_pic_flikr":
 				V.Editor.Image.Flikr.onLoadTab();
 				break;
-
+				
 			//Video
 			case "tab_video_from_url":
 				VISH.Editor.Video.onLoadTab();
@@ -216,7 +216,7 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Video.Vimeo.onLoadTab();
 				break;
 				
-
+				
 			//Flash
 			case "tab_flash_from_url":
 				VISH.Editor.Object.onLoadTab("url");
@@ -227,10 +227,21 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_repo":
 				VISH.Editor.Object.Repository.onLoadTab();
 				break;
+				
+				
+			//Live
+			case "tab_live_webcam":
+				VISH.Editor.Object.Live.onLoadTab("webcam");
+				break;
+			case "tab_live_micro":
+				VISH.Editor.Object.Live.onLoadTab("micro");
+				break;
+				
+				
+			//Default
 			default:
 				break;
-		}
-
+	  }
 	};
 
   /**
@@ -257,12 +268,9 @@ VISH.Editor = (function(V,$,undefined){
           }
           $(tagList).append("<li>" + tag + "</li>")
         });
-        
-        $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , tagsChanged:function (tag, action) {
-          //tag==tagName
-          //action==["moved","added","popped" (remove)]
-          } 
-        });
+				
+				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
+				watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
      }
 	}
 	
@@ -436,7 +444,7 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'width': 800,
 			'scrolling': 'no',
-    	    'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
@@ -448,8 +456,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addflash").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    	    'height': 600,
-    		'scrolling': 'no',
+    	'height': 600,
+    	'scrolling': 'no',
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -461,7 +469,7 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'width': 800,
 			'scrolling': 'no',
-    		'height': 600,
+    	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -469,6 +477,18 @@ VISH.Editor = (function(V,$,undefined){
 				loadTab('tab_video_from_url');
 			}
 		});
+		$("a.addLive").fancybox({
+      'autoDimensions' : false,
+      'width': 800,
+      'scrolling': 'no',
+      'height': 600,
+      'padding' : 0,
+      "onStart"  : function(data) {
+        var clickedZoneId = $(data).attr("zone");
+        params['current_el'] = $("#" + clickedZoneId);
+        loadTab('tab_live_webcam');
+      }
+    });
 	};
 
 

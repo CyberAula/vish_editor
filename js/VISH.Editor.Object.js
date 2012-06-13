@@ -8,6 +8,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var init = function(){
 
 		VISH.Editor.Object.Repository.init();
+		VISH.Editor.Object.Live.init();
 		
 	  var urlInput = $("#tab_flash_from_url_content").find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
@@ -128,11 +129,8 @@ VISH.Editor.Object = (function(V,$,undefined){
           $(tagList).append("<li>" + tag + "</li>")
         });
         
-        $(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
-          //tag==tagName
-          //action==["moved","added","popped" (remove)]
-          } 
-        });
+				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+        watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
      }
   }
 	

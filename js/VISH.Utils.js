@@ -127,6 +127,10 @@ VISH.Utils = (function(V,undefined){
 	    
 	    return tagsArray;
     }
+		
+		var getURLParameter = function(name){
+			return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);
+		}
 
 
     return {
@@ -134,7 +138,8 @@ VISH.Utils = (function(V,undefined){
 	    getOuterHTML : getOuterHTML,
 			generateTable : generateTable,
 			checkMiniumRequirements : checkMiniumRequirements,
-			convertToTagsArray : convertToTagsArray     
+			convertToTagsArray : convertToTagsArray,
+			getURLParameter : getURLParameter
     };
 
 }) (VISH);
