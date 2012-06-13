@@ -251,27 +251,28 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	/**
 	 * Patterns
-	 */
-	var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
-	var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
-	var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
-	var html5VideoFormats = ["mp4","webm","ogg"]        
-	var imageFormats = ["jpg","jpeg","png","gif","bmp"]                                                         		
+	 */                                                         		
 	
 	var _getTypeFromSource = function(source){
+		
+		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+    var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+    var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
+    var html5VideoFormats = ["mp4","webm","ogg"]        
+    var imageFormats = ["jpg","jpeg","png","gif","bmp"]
 		
 		if(typeof source != "string"){
 			return null
 		}
 		
-		//Purge options
-		source = source.split('?')[0]
-		
-		var extension = (source.split('.').pop()).toLowerCase();
-		
 		if(source.match(youtube_video_pattern)!=null){
 			return "youtube";
 		}
+			
+		//Purge options
+    source = source.split('?')[0]
+    
+    var extension = (source.split('.').pop()).toLowerCase();
 		
 		if(imageFormats.indexOf(extension)!="-1"){
       return "image";
@@ -368,7 +369,7 @@ VISH.Editor.Object = (function(V,$,undefined){
             break;
             
           case "youtube":
-            return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
+            return VISH.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
             break;
             
           case "HTML5":
@@ -438,10 +439,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		var objectInfo = getObjectInfo(object);
 		
+		
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
 				switch (objectInfo.type) {
+					
+					
 					
 					case "image":
 					  V.Editor.Image.drawImage(object)
@@ -556,7 +560,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 		drawPreview          : drawPreview,
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,
-		drawPreviewObject    : drawPreviewObject
+		drawPreviewObject    : drawPreviewObject,
+		_getTypeFromSource  : _getTypeFromSource 
 	};
 
 }) (VISH, jQuery);

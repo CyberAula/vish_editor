@@ -13847,20 +13847,20 @@ VISH.Editor.Object = function(V, $, undefined) {
         break
     }
   };
-  var http_urls_pattern = /(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
-  var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
-  var youtube_video_pattern = /(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g;
-  var html5VideoFormats = ["mp4", "webm", "ogg"];
-  var imageFormats = ["jpg", "jpeg", "png", "gif", "bmp"];
   var _getTypeFromSource = function(source) {
+    var http_urls_pattern = /(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
+    var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
+    var youtube_video_pattern = /(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g;
+    var html5VideoFormats = ["mp4", "webm", "ogg"];
+    var imageFormats = ["jpg", "jpeg", "png", "gif", "bmp"];
     if(typeof source != "string") {
       return null
     }
-    source = source.split("?")[0];
-    var extension = source.split(".").pop().toLowerCase();
     if(source.match(youtube_video_pattern) != null) {
       return"youtube"
     }
+    source = source.split("?")[0];
+    var extension = source.split(".").pop().toLowerCase();
     if(imageFormats.indexOf(extension) != "-1") {
       return"image"
     }
@@ -13919,7 +13919,7 @@ VISH.Editor.Object = function(V, $, undefined) {
             return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
             break;
           case "youtube":
-            return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
+            return VISH.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
             break;
           case "HTML5":
             return VISH.Editor.Video.HTML5.renderVideoFromSources([object]);
@@ -14036,7 +14036,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + idToDrag).draggable({cursor:"move"});
     _adjustWrapperOfObject(idToResize, current_area)
   };
-  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject}
+  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<font size="4">titulo</font>'}, {"id":"zone2", "type":"image", "areaid":"left", "body":"http://www.peligrodeextincion.info/files/tigre-blanco.jpg", "style":"position: relative; width: 487.5px; left: -124px; top: 22px; "}, 
@@ -14091,14 +14091,13 @@ VISH.Samples.API = function(V, undefined) {
   var flashListLittle = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
   "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
   var flashListDummy = {"flashes":[]};
-  var liveList = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, 
-  {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}, {"id":"1537", "title":"Image", "description":"Image Embed", "author":"Globedia", "content":'<embed width="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'}, {"id":"1538", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1539", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1540", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1541", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1542", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1543", "title":"Youtube video", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
-  var liveListLittle = {"lives":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
-  "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
-  var liveListDummy = {"lives":[]};
+  var liveList = [{"id":"1534", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1535", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1536", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
+  {"id":"1537", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1538", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1539", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
+  {"id":"1540", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1541", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1542", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
+  {"id":"1543", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1544", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1545", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
+  {"id":"1546", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1547", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1548", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}];
+  var liveListLittle = [{"id":"1534", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1535", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1548", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}];
+  var liveListDummy = [];
   var tagsList = {"tags":["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"]};
   return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, liveList:liveList, liveListLittle:liveListLittle, liveListDummy:liveListDummy, tagsList:tagsList}
 }(VISH);
@@ -14210,9 +14209,8 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
-    }else {
-      _requestByType("video", "", successCallback, failCallback)
     }
+    _requestByType("video", "", successCallback, failCallback)
   };
   var requestFlashes = function(text, successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -14241,7 +14239,9 @@ VISH.Editor.API = function(V, $, undefined) {
         result["flashes"] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList["flashes"]);
         successCallback(result)
       }
+      return
     }
+    _requestByType("swfs", "", successCallback, failCallback)
   };
   var requestImages = function(text, successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -14272,6 +14272,7 @@ VISH.Editor.API = function(V, $, undefined) {
       }
       return
     }
+    _requestByType("picture", "", successCallback, failCallback)
   };
   var requestLives = function(text, successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -14279,13 +14280,13 @@ VISH.Editor.API = function(V, $, undefined) {
         var result = jQuery.extend({}, VISH.Samples.API.liveList);
         switch(text) {
           case "dummy":
-            result["lives"] = VISH.Samples.API.liveListDummy["lives"];
+            result = VISH.Samples.API.liveListDummy;
             break;
           case "little":
-            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle["lives"]);
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
             break;
           default:
-            result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"])
+            result = VISH.Samples.API.liveList
         }
         successCallback(result)
       }
@@ -14297,13 +14298,30 @@ VISH.Editor.API = function(V, $, undefined) {
     if(VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function") {
         var result = VISH.Samples.API.liveList;
-        result["lives"] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList["lives"]);
         successCallback(result)
       }
+      return
     }
+    _requestByType("live", "", successCallback, failCallback)
   };
   var _requestByType = function(type, query, successCallback, failCallback) {
+    if(type == "live") {
+      _requestLiveType(query, successCallback, failCallback);
+      return
+    }
     $.ajax({type:"GET", url:"/search.json?type=" + type + "&q=" + query, dataType:"html", success:function(response) {
+      if(typeof successCallback == "function") {
+        var resp = JSON.parse(response);
+        successCallback(resp)
+      }
+    }, error:function(xhr, ajaxOptions, thrownError) {
+      if(typeof failCallback == "function") {
+        failCallback()
+      }
+    }})
+  };
+  var _requestLiveType = function(query, successCallback, failCallback) {
+    $.ajax({type:"GET", url:"/resources/search.json?live=1&q=" + query, dataType:"html", success:function(response) {
       if(typeof successCallback == "function") {
         var resp = JSON.parse(response);
         successCallback(resp)
@@ -14836,13 +14854,13 @@ VISH.Editor.Object.Live = function(V, $, undefined) {
     var carrouselImages = [];
     var carrouselImagesTitles = [];
     var content = "";
-    if(!data.lives || data.lives.length == 0) {
+    if(!data || data.length == 0) {
       $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
       $("#" + carrouselDivId).show();
       return
     }
-    $.each(data.lives, function(index, object) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content);
+    $.each(data, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.fulltext);
       var imageSource = null;
       switch(objectInfo.type) {
         case "swf":
@@ -14859,7 +14877,7 @@ VISH.Editor.Object.Live = function(V, $, undefined) {
           }
           break;
         default:
-          imageSource = VISH.ImagesPath + "carrousel/object.jpeg";
+          imageSource = VISH.ImagesPath + "carrousel/object.png";
           break
       }
       var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>");
@@ -14883,7 +14901,7 @@ VISH.Editor.Object.Live = function(V, $, undefined) {
   };
   var _onClickCarrouselElement = function(event) {
     var objectId = $(event.target).attr("objectid");
-    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content);
+    var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext);
     _renderObjectPreview(renderedObject, currentObject[objectId]);
     selectedObject = currentObject[objectId]
   };
@@ -14908,7 +14926,7 @@ VISH.Editor.Object.Live = function(V, $, undefined) {
   };
   var addSelectedObject = function() {
     if(selectedObject != null) {
-      VISH.Editor.Object.drawObject($(selectedObject.content));
+      VISH.Editor.Object.drawObject(selectedObject.fulltext);
       $.fancybox.close()
     }
   };
@@ -15539,13 +15557,13 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     options["rowItems"] = 5;
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options)
   };
-  var youtube_video_pattern_1 = /https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g;
-  var youtube_video_pattern_2 = /(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g;
   var _getYoutubeIdFromURL = function(url) {
+    var youtube_video_pattern_1 = /https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g;
+    var youtube_video_pattern_2 = /(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g;
     var id = null;
     if(url.match(youtube_video_pattern_1) != null) {
       var result = youtube_video_pattern_1.exec(url);
-      if(result[1]) {
+      if(result && result[1]) {
         id = result[1]
       }
       return id
@@ -15553,7 +15571,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     if(url.match(youtube_video_pattern_2) != null) {
       var result = url.split("&")[0];
       var result = youtube_video_pattern_2.exec(url);
-      if(result[3]) {
+      if(result && result[3]) {
         id = result[3]
       }
       return id
@@ -15568,9 +15586,8 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   };
   var onClickCarrouselElement = function(event) {
     var videoId = $(event.target).attr("videoID");
-    var video_embedded = "http://www.youtube.com/embed/" + videoId;
-    var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
-    _renderVideoPreview(renderedIframe, currentVideos[videoId]);
+    var renderedPreviewVideo = _generatePreviewWrapper(videoId);
+    _renderVideoPreview(renderedPreviewVideo, currentVideos[videoId]);
     selectedVideo = currentVideos[videoId]
   };
   var _renderVideoPreview = function(renderedIframe, video) {
@@ -15609,7 +15626,20 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
       return"Youtube Video ID can't be founded."
     }
   };
-  return{init:init, onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement, requestYoutubeData:requestYoutubeData, addSelectedVideo:addSelectedVideo, generateWrapperForYoutubeVideoUrl:generateWrapperForYoutubeVideoUrl}
+  var _generatePreviewWrapper = function(videoId) {
+    var video_embedded = "http://www.youtube.com/embed/" + videoId;
+    var wrapper = '<iframe class="objectPreview" type="text/html" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
+    return wrapper
+  };
+  var generatePreviewWrapperForYoutubeVideoUrl = function(url) {
+    var videoId = _getYoutubeIdFromURL(url);
+    if(videoId != null) {
+      return _generatePreviewWrapper(videoId)
+    }else {
+      return"<p class='objectPreview'>Youtube Video ID can't be founded.</p>"
+    }
+  };
+  return{init:init, onLoadTab:onLoadTab, onClickCarrouselElement:onClickCarrouselElement, requestYoutubeData:requestYoutubeData, addSelectedVideo:addSelectedVideo, generateWrapperForYoutubeVideoUrl:generateWrapperForYoutubeVideoUrl, generatePreviewWrapperForYoutubeVideoUrl:generatePreviewWrapperForYoutubeVideoUrl}
 }(VISH, jQuery);
 VISH.Excursion = function(V, undefined) {
   var mySlides = null;
