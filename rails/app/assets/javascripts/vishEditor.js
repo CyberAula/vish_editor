@@ -13158,6 +13158,9 @@ VISH.Editor = function(V, $, undefined) {
       case "tab_flash_from_url":
         VISH.Editor.Object.onLoadTab("url");
         break;
+      case "tab_flash_from_web":
+        VISH.Editor.Object.Web.onLoadTab();
+        break;
       case "tab_flash_upload":
         VISH.Editor.Object.onLoadTab("upload");
         break;
@@ -13683,7 +13686,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     VISH.Editor.Object.Repository.init();
     VISH.Editor.Object.Live.init();
     VISH.Editor.Object.Web.init();
-    var urlInput = $("#tab_flash_from_url_content").find("input");
+    var urlInput = $(urlDivId).find("input");
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
@@ -15079,11 +15082,26 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
 }(VISH, jQuery);
 VISH.Editor.Object.Web = function(V, $, undefined) {
+  var contentToAdd = null;
+  var urlDivId = "tab_flash_from_web_content";
+  var urlInputId = "flash_embedWeb_code";
   var init = function() {
+    var urlInput = $(urlDivId).find("input");
+    $(urlInput).watermark("Paste website URL");
+    $("#" + urlDivId + " .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
+        contentToAdd = $("#" + urlInputId).val();
+        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
+      }
+    })
   };
   var onLoadTab = function(tab) {
+    contentToAdd = null;
+    VISH.Editor.Object.resetPreview(urlDivId);
+    $("#" + urlInputId).val("")
   };
   var drawPreviewElement = function() {
+    VISH.Editor.Object.drawPreviewObject(contentToAdd)
   };
   var generateWrapperForWeb = function(url) {
     return"<iframe src='" + url + "'></embed>"

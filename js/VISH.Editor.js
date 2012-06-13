@@ -221,6 +221,9 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_from_url":
 				VISH.Editor.Object.onLoadTab("url");
 				break;
+			case "tab_flash_from_web":
+        VISH.Editor.Object.Web.onLoadTab();
+        break;
 			case "tab_flash_upload":
 				VISH.Editor.Object.onLoadTab("upload");
 				break;

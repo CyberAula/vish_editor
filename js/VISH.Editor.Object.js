@@ -11,7 +11,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		VISH.Editor.Object.Live.init();
 		VISH.Editor.Object.Web.init();
 		
-	  var urlInput = $("#tab_flash_from_url_content").find("input");
+	  var urlInput = $(urlDivId ).find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
 		
 		//Load from URL
