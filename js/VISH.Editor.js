@@ -661,15 +661,14 @@ VISH.Editor = (function(V,$,undefined){
           element.areaid = $(div).attr('areaid');
                    
           if(element.type=="text"){
-            //TODO make this text json safe
-            element.body   = $(div).find(".wysiwygInstance").html();
+            element.body   = V.Editor.Text.changeFontSizeToRelative($(div).find(".wysiwygInstance"));
           } else if(element.type=="image"){
             element.body   = $(div).find('img').attr('src');
-            element.style  = $(div).find('img').attr('style');
+            element.style  = _getStylesInPercentages($(div), $(div).find('img'));
           } else if(element.type=="video"){
 		          var video = $(div).find("video");
 							element.poster = $(video).attr("poster");
-							element.style  = $(video).attr('style');
+							element.style  = _getStylesInPercentages($(div), $(video));
 							//Sources
 							var sources= '';				
 							$(video).find('source').each(function(index, source) {
@@ -684,7 +683,7 @@ VISH.Editor = (function(V,$,undefined){
 		      } else if(element.type=="object"){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
-		    	    element.style  = $(object).parent().attr('style');
+		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
 		      } else if (element.type=="openquestion") {	   
 		      	element.title   = $(div).find(".title_openquestion").val();
 		        element.question   = $(div).find(".value_openquestion").val();
@@ -728,6 +727,16 @@ VISH.Editor = (function(V,$,undefined){
       */
     
   };
+	
+	/**
+	 * function to get the styles in percentages
+	 */
+	var _getStylesInPercentages = function(parent, element){
+		var WidthPercent = element.width()*100/parent.width(); 
+        var TopPercent = element.position().top*100/parent.height();
+        var LeftPercent = element.position().left*100/parent.width();
+        return "position: relative; width:" + WidthPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
+	};
 	
 	/**
 	 * Function to move the slides left one item

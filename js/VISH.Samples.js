@@ -15,15 +15,14 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone1",
 					"type": "text",
 					"areaid": "header",
-					"body": "<font size=\"4\">titulo</font>"
+					"body": "<div><font size=\"6\">hola</font></div>"
 					},
 				{
 					"id": "zone2",
-					"type": "image",
+					"type": "text",
 					"areaid": "left",
-					"body": "http://www.peligrodeextincion.info/files/tigre-blanco.jpg",
-					"style": "position: relative; width: 487.5px; left: -124px; top: 22px; "
-				},
+					"body": "Insert text here<div><br></div><div><font size=\"6\">hola</font></div><div><font size=\"6\"><br></font></div><div><font size=\"1\">lolca</font></div>"
+					},
 				{
 					"id": "zone3",
 					"type": "object",

@@ -12,6 +12,13 @@
 
 /* Framework */
 
+html{
+  height: 100%;
+  min-height: 600px;
+  width: 100%;
+  min-width: 800px;
+  overflow: hidden;
+}
 
 body {
   margin: 0;
@@ -20,7 +27,7 @@ body {
   display: block !important;
 
   height: 100%;
-  min-height: 600px;
+  width: 100%;
   
   overflow-x: hidden;
   overflow-y: auto;
@@ -48,18 +55,18 @@ body {
 }
 
 .slides > article {
+  /*Next six parameters will be changed by javascript depending on the window size*/
   left: 50%;
+  top: 50%;
   margin-left: -400px;
   margin-top: -325px;
-  overflow: hidden;
-  padding: 40px 60px;
-  position: absolute;
-  top: 50%;
-  display: block;
-  
   width: 800px;
   height: 600px;
-
+  
+  overflow: hidden;
+  padding: 40px 60px;
+  position: absolute;  
+  display: block;
   box-sizing: border-box;
   -o-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -255,10 +262,9 @@ body {
 
   color: rgb(102, 102, 102);
   text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-
+  /*Next three parameters will be changed by javascript depending on the window size*/
   font-size: 30px;
   line-height: 36px;
-
   letter-spacing: -1px;
 }
 
@@ -513,3 +519,30 @@ article.smaller q::after {
     text-align: center;
     width: 430px;
 }
+
+
+/*fonts used to replace the ones introduced by the wysiwyg*/
+.vish-font1{
+	font-size: 0.3em;
+}
+
+.vish-font2{
+	font-size: 0.4em;
+}
+
+.vish-font3{
+	font-size: 0.5em;
+}
+
+.vish-font4{
+	font-size: 0.6em;
+}
+
+.vish-font5{
+	font-size: 0.8em;
+}
+
+.vish-font6{
+	font-size: 1em;
+}
+
