@@ -92,7 +92,7 @@
           </label>
           <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
           <div class="tagBoxIntro">
-            <ul class="tagList"></ul>
+            <ul id="tagindex" class="tagList"></ul>
           </div>
 	        <div id="thumbnails_in_excursion_details">
 	          <label for="excursion_avatar">
@@ -552,15 +552,15 @@
 	  	    <h2>Let´s write a title (Obligatory)</h2>
 	  	    <p i18n-key="i.walk3">This black space will allow you to write a title to name your excursions. The title in the excursion it is obligatory cause with this feature other user can find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
 	  	  </li>
-	  	  <li data-id="excursion_description" data-text="Next">
+	  	  <li data-id="excursion_description" data-options="tipLocation:bottom;" data-text="Next">
 	  	    <h2>Write a description (optional)</h2>
 	        <p i18n-key="i.walk4">Here you can explain in a little more detail what the excursion is about. Click on "Next" to continue.</p>
 	  	  </li>
-        <li data-id="tagindex" data-text="Next">
+        <li data-id="tagindex" data-text="Next" data-options="tipLocation:top;">
 	  	    <h2>Add tags to your excursion</h2>
 	        <p i18n-key="i.walk5">In this zone you can add topics words that will represent your excursion when users search in the ViSH platform. Click on "Next" to continue.</p>
 	  	  </li>
-        <li data-id="avatars_carrousel" data-text="Next" data-options="tipLocation:top">
+        <li data-id="avatars_carrousel" data-text="Next" data-options="tipLocation:top;" class="Next">
 	  	    <h2>Choose an image that will represent your excursion</h2>
 	        <p i18n-key="i.walk6">In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
 	  	  </li>
