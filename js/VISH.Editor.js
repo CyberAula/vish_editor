@@ -334,6 +334,11 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
 	});
 	
+	// live fancybox, one help button in each tab
+	$(document).on('click','#tab_live_webcam_help', function(){
+			V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+	});	
+	
   };
   
   /**

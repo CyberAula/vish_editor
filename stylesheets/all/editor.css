@@ -340,6 +340,14 @@ img {
 	background: url(/images/hover/video_hover.png);
 }
 
+.livethumb {
+	background: url(/images/live.png);
+}
+
+.livethumb:hover {
+	background: url(/images/hover/live_hover.png);
+}
+
 .barbutton {
 	position: relative;
 	top: 6px;
