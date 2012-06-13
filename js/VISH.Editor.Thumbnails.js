@@ -14,12 +14,14 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
     //Generate carrousel images
     var carrouselImages = [];
+		var carrouselImagesTitles = [];
 		
 		var carrouselElements = 0;
 		$('article').each(function(index,s){
           var template = $(s).attr('template');
 					carrouselElements += 1;
 					carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
+					carrouselImagesTitles.push(carrouselElements)
     });
 		
 		//Add plus button
@@ -35,7 +37,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	    }
 		}
 		
-		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId); 
+		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles); 
 		
    };
 	 
