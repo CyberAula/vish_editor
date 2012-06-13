@@ -561,9 +561,13 @@ function handleBodyKeyDown(event) {
   }
 };
 
+var addedEventListeners = false;
 function addEventListeners() {
-  //document.addEventListener('keydown', handleBodyKeyDown, false);
-  $(document).bind('keydown', handleBodyKeyDown);  
+	if(!addedEventListeners){
+		//document.addEventListener('keydown', handleBodyKeyDown, false);
+		$(document).bind('keydown', handleBodyKeyDown);  
+    addedEventListeners = true;
+	} 
 };
 
 /* Initialization */

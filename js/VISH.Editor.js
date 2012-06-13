@@ -25,6 +25,8 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var init = function(options, excursion){
 		
+		console.log("init vish editor")
+		
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
@@ -732,6 +734,8 @@ VISH.Editor = (function(V,$,undefined){
     
     $('article').remove();
     $('#menubar').remove();
+		$('#menubar_helpsection').remove();
+		$('#joyride_help_button').remove();
     $('.theslider').remove();
     $(".nicEdit-panelContain").remove();
     V.SlideManager.init(excursion);
