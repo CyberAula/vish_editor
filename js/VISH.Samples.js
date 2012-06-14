@@ -15,21 +15,20 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone1",
 					"type": "text",
 					"areaid": "header",
-					"body": "<font size=\"4\">titulo</font>"
+					"body": "<div><font size=\"6\">hola</font></div>"
 					},
 				{
 					"id": "zone2",
-					"type": "image",
+					"type": "text",
 					"areaid": "left",
-					"body": "http://www.peligrodeextincion.info/files/tigre-blanco.jpg",
-					"style": "position: relative; width: 487.5px; left: -124px; top: 22px; "
-				},
+					"body": "<span class=\"vish-font1\">Insert text here</span><div><span class=\"vish-font2\">gsdfgfgsfg</span></div><div><span class=\"vish-font3\">fadfadfadf</span></div><div><span class=\"vish-font4\">adfadfasdf</span></div><div><span class=\"vish-font5\">adfadfadf</span></div><div><span class=\"vish-font6\">adfadfasdfaf</span></div>"
+					},
 				{
 					"id": "zone3",
 					"type": "object",
 					"areaid": "right",
 					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
-					"style": "position: relative; width: 246.23999999999998px; height: 174.88065306122448px; left: 33px; top: 92px; "
+					"style": "position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "
 				}
 			]
 		},

@@ -44,11 +44,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	            result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']);
 	            successCallback(result);
 	      }
-          return;
-        }
-        else{
-        	_requestByType("video", "", successCallback, failCallback);
-        }
+        return;
+    }
+		
+    _requestByType("video", "", successCallback, failCallback);
   };
 	
 	
@@ -86,13 +85,14 @@ VISH.Editor.API = (function(V,$,undefined){
 	/**
 	 * function to call to VISH and request recommended flash objects
 	 */
-	var requestRecomendedFlash = function(successCallback, failCallback){
+	var requestRecomendedFlashes = function(successCallback, failCallback){
 		if (VISH.Debugging.isDevelopping()) {
 			if(typeof successCallback == "function"){
 				var result = VISH.Samples.API.flashList;
 				result['flashes'] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList['flashes']);
         successCallback(result);
       }
+			return;
 	  }
 	  else{
         	_requestByType("swfs", "", successCallback, failCallback);
@@ -146,12 +146,69 @@ VISH.Editor.API = (function(V,$,undefined){
         }
   };
     
+		
+		  
+  /**
+   * function to call to VISH and request live objects in json format
+   * The request is:
+   * GET /search.json?live=1&q=
+   */
+  var requestLives = function(text, successCallback, failCallback){
+    
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+
+        switch(text){
+          case "dummy":
+            result = VISH.Samples.API.liveListDummy;
+            break;
+          case "little":
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
+            break;
+          default:
+            //result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+						result = VISH.Samples.API.liveList;
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("live", text, successCallback, failCallback);  
+  };
+  
+  
+  /**
+   * function to call to VISH and request recommended lives objects
+   */
+  var requestRecomendedLives = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = VISH.Samples.API.liveList;
+//        result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+        successCallback(result);
+      }
+			return;
+    }
+		
+		_requestByType("live", "", successCallback, failCallback);
+   };
+		
+		
     /**
      * generic function to call VISH and request by query and type
      * The request is:
 	 * GET /search.json?type=type&q=query
      */    
   var _requestByType = function(type, query, successCallback, failCallback){
+		
+		if(type=="live"){
+			_requestLiveType(query, successCallback, failCallback);
+			return;
+		}
+		
   	$.ajax({
               type: "GET",
               url: "/search.json?type="+ type +"&q="+ query,
@@ -169,6 +226,31 @@ VISH.Editor.API = (function(V,$,undefined){
                   }
               }
      });	
+  };
+	
+	
+	  /**
+     * Specific function to call VISH and request lives
+     * The request is:
+     * GET /resources/search.json?live=1&q=
+     */    
+  var _requestLiveType = function(query, successCallback, failCallback){
+    $.ajax({
+              type: "GET",
+              url: "/resources/search.json?live=1&q="+ query,
+              dataType:"html",
+              success:function(response){
+                  if(typeof successCallback == "function"){
+                    var resp = JSON.parse(response);
+                    successCallback(resp);
+                  }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == "function"){
+                    failCallback();
+                  }
+              }
+     });  
   };
 	
 	
@@ -217,15 +299,41 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	
+	/**
+   * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
+   */
+	var requestThumbnails = function(successCallback, failCallback){
+      $.ajax({
+	      async: false,
+	      type: 'GET',
+	      url: '/excursion_thumbnails.json',
+	      dataType: 'json',
+	      success: function(data) {
+            if(typeof successCallback == "function"){
+              successCallback(data);
+            }
+	      },
+	      error: function(xhr, ajaxOptions, thrownError){
+	          if(typeof failCallback == "function"){
+              failCallback(xhr, ajaxOptions, thrownError);
+            }
+	      }
+      });
+  }
+	
+	
 	return {
-		init					          : init,
-		requestVideos           : requestVideos,
-		requestRecomendedVideos : requestRecomendedVideos,
-		requestImages           : requestImages,
-		requestRecomendedImages : requestRecomendedImages,
-		requestFlashes			    : requestFlashes,
-		requestRecomendedFlash  : requestRecomendedFlash,
-		requestTags             : requestTags
+		init					            : init,
+		requestVideos             : requestVideos,
+		requestRecomendedVideos   : requestRecomendedVideos,
+		requestImages             : requestImages,
+		requestRecomendedImages   : requestRecomendedImages,
+		requestFlashes			      : requestFlashes,
+		requestRecomendedFlashes  : requestRecomendedFlashes,
+		requestLives              : requestLives,
+		requestRecomendedLives    : requestRecomendedLives,
+		requestTags               : requestTags,
+		requestThumbnails         : requestThumbnails
 	};
 
 }) (VISH, jQuery);

@@ -123,11 +123,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 	        $(tagList).append("<li>" + tag + "</li>")
         });
 				
-				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , tagsChanged:function (tag, action) {
-          //tag==tagName
-          //action==["moved","added","popped" (remove)]
-          } 
-        });
+				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+        watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
 		 }
   }
 	

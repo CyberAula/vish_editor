@@ -445,7 +445,143 @@ VISH.Samples.API = (function(V,undefined){
 	 var flashListDummy = {
     'flashes'       : []
 	 };
-	 
+	   
+			 
+   var liveList = [
+    {
+      'id'     : '1534',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+      {
+      'id'     : '1535',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1536',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1537',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1538',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1539',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1540',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1541',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1542',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1543',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1544',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1545',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1546',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1547',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+		  {
+      'id'     : '1548',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    }
+    ];
+    
+    
+    var liveListLittle = [
+    {
+      'id'     : '1534',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+    {
+      'id'     : '1535',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    },
+    {
+      'id'     : '1548',
+      'title'         :  'Do\u00f1ana Test',
+      'description'   :  'Parque Nacional de Do\u00f1ana (Spain) ',
+      'author'        :  'Demo',
+      'fulltext'       :  'http://www.youtube.com/watch?v=5TVrUFxzOk8'
+    }
+    ];
+    
+    
+   var liveListDummy = [];
 	 
 	 var tagsList = {
    	'tags': ["ActionScript","AppleScript","Asp","BASIC","C","C++","Clojure","COBOL","ColdFusion","Erlang",
@@ -454,16 +590,19 @@ VISH.Samples.API = (function(V,undefined){
                 
 		
 	return {
-		imageList  : imageList,
+		imageList       : imageList,
 		imageListLittle : imageListLittle,
-		imageListDummy : imageListDummy,
-		videoList  : videoList,
-		videoListLittle  : videoListLittle,
+		imageListDummy  : imageListDummy,
+		videoList       : videoList,
+		videoListLittle : videoListLittle,
 		videoListDummy  : videoListDummy,
-		flashList  : flashList,
-		flashListLittle  : flashListLittle,
+		flashList       : flashList,
+		flashListLittle : flashListLittle,
 		flashListDummy  : flashListDummy,
-		tagsList : tagsList
+		liveList        : liveList,
+    liveListLittle  : liveListLittle,
+    liveListDummy   : liveListDummy,
+		tagsList        : tagsList
 	};
 
 })(VISH);

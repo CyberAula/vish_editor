@@ -100,8 +100,15 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an object inside an article (a slide)
 	 */
 	var _renderObject = function(element, template){
-		var style = (element['style'])?"style='" + element['style'] + "'":"";
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object"+"' " + style + "objectWrapper='" + element['body'] + "'>" + "" + "</div>";
+		var style = (element['style'])? element['style'] : "";
+		var body = element['body'];
+		
+		if(element['special']){
+			var special = "special";
+			body = VISH.Utils.getOuterHTML($(element['body']).addClass("special"));
+		}
+		
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object "+  special +"' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
 	

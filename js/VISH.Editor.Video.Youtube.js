@@ -91,15 +91,14 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
   }
 	
 	
-  var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g
-	var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g
-
   var _getYoutubeIdFromURL = function(url){	
+	  var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g
+    var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g
 		var id = null;
 		
 		if(url.match(youtube_video_pattern_1)!=null){
 			var result = youtube_video_pattern_1.exec(url)
-      if(result[1]){
+      if((result)&&(result[1])){
 				id = result[1];
 			}
 			return id;
@@ -108,7 +107,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		if(url.match(youtube_video_pattern_2)!=null){
 			var result = url.split("&")[0];
       var result = youtube_video_pattern_2.exec(url)
-      if(result[3]){
+      if((result)&&(result[3])){
         id = result[3];
       }
 			return id;
@@ -131,10 +130,9 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
    */
   var onClickCarrouselElement = function(event) {
     var videoId = $(event.target).attr("videoID");
-    var video_embedded = "http://www.youtube.com/embed/"+ videoId;
-	  var renderedIframe = '<iframe class="preview_video" type="text/html" style="width:350px; height:195px; " src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
-	  _renderVideoPreview(renderedIframe, currentVideos[videoId]);
-	  selectedVideo = currentVideos[videoId];	
+		var renderedPreviewVideo = _generatePreviewWrapper(videoId);
+	  _renderVideoPreview(renderedPreviewVideo, currentVideos[videoId]);
+	  selectedVideo = currentVideos[videoId];
   };
 
   
@@ -179,6 +177,21 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	 	 return "Youtube Video ID can't be founded."
 	 }
  }
+ 
+  var _generatePreviewWrapper = function (videoId) {
+   var video_embedded = "http://www.youtube.com/embed/"+videoId;
+   var wrapper = '<iframe class="objectPreview" type="text/html" src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
+   return wrapper;
+ }
+ 
+ var generatePreviewWrapperForYoutubeVideoUrl = function (url){
+   var videoId = _getYoutubeIdFromURL(url);
+   if(videoId!=null){
+     return _generatePreviewWrapper(videoId);
+   } else {
+     return "<p class='objectPreview'>Youtube Video ID can't be founded.</p>"
+   }
+ }
 
   return {
 		init		  			                  : init,
@@ -186,7 +199,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		onClickCarrouselElement           : onClickCarrouselElement, 
 		requestYoutubeData                : requestYoutubeData,
 		addSelectedVideo		              : addSelectedVideo,
-		generateWrapperForYoutubeVideoUrl : generateWrapperForYoutubeVideoUrl
+		generateWrapperForYoutubeVideoUrl : generateWrapperForYoutubeVideoUrl,
+		generatePreviewWrapperForYoutubeVideoUrl : generatePreviewWrapperForYoutubeVideoUrl
   };
 
 }) (VISH, jQuery);
