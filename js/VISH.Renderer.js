@@ -101,7 +101,14 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderObject = function(element, template){
 		var style = (element['style'])? element['style'] : "";
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object"+"' objectStyle='" + style + "' objectWrapper='" + element['body'] + "'>" + "" + "</div>";
+		var body = element['body'];
+		
+		if(element['special']){
+			var special = "special";
+			body = VISH.Utils.getOuterHTML($(element['body']).addClass("special"));
+		}
+		
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object "+  special +"' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
 	

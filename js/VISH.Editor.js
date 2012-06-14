@@ -712,6 +712,9 @@ VISH.Editor = (function(V,$,undefined){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
+							if($(object).hasClass("specialIframe")){
+								element.special = true
+							}
 		      } else if (element.type=="openquestion") {	   
 		      	element.title   = $(div).find(".title_openquestion").val();
 		        element.question   = $(div).find(".value_openquestion").val();
