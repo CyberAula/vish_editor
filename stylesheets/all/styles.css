@@ -553,3 +553,71 @@ article.smaller q::after {
 	line-height: 1.05em;
 }
 
+.vish-font7{
+	font-size: 1.5em;
+	line-height: 1.55em;
+}
+
+.vish-parent-font1{
+	line-height: 0.45em;
+}
+
+.vish-parent-font2{
+	line-height: 0.55em;
+}
+
+.vish-parent-font3{
+	line-height: 0.65em;
+}
+
+.vish-parent-font4{
+	line-height: 0.75em;
+}
+
+.vish-parent-font5{
+	line-height: 0.95em;
+}
+
+.vish-parent-font6{
+	line-height: 1.15em;
+}
+
+.vish-parent-font7{
+	line-height: 1.65em;
+}
+
+.vish-fontarial{
+	font-family: "arial";	
+}
+
+.vish-fontcomic{
+	font-family: "comic sans ms";	
+}
+
+.vish-fontcourier{
+	font-family: "Courier New";	
+}
+
+.vish-fontgeorgia{
+	font-family: "georgia";	
+}
+
+.vish-fonthelvetica{
+	font-family: "helvetica";	
+}
+
+.vish-fontimpact{
+	font-family: "impact";	
+}
+
+.vish-fonttimes{
+	font-family: "times new roman";	
+}
+
+.vish-fonttrebuchet{
+	font-family: "trebuchet ms";	
+}
+
+.vish-fontverdana{
+	font-family: "verdana";	
+}

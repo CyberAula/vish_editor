@@ -6,10 +6,8 @@
 */
 
 .t1_header{
-	    float: left;
-    font-size: 17px;
+	float: left;
     height: 12%;
-    line-height: 20px;
     margin-left: 6.9em;
     margin-right: 2%;
     margin-top: 11px;
@@ -19,9 +17,7 @@
 }
 
 .t1_left{
-	    font-size: 24px;
     height: 63%;
-    line-height: 15px;
     margin-left: 4.9em;
     margin-top: 1em;
     overflow: hidden;
@@ -33,9 +29,7 @@
 
 .t1_subheader{
     float: left;
-    font-size: 17px;
     height: 6%;
-    line-height: 20px;
     margin-left: 6.9em;
     margin-top: 12px;
     overflow: hidden;
@@ -136,8 +130,6 @@
 
 .t2_left{
 	margin-top: -.2em;
-	font-size: 24px;
-	line-height: 15px;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
@@ -184,8 +176,6 @@
 	padding-top: 15px;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 98.5%;
 	overflow: hidden;
@@ -200,8 +190,6 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;
 }
 
@@ -245,8 +233,6 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -261,8 +247,6 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
-	font-size: 1.000em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -272,8 +256,6 @@
 	width: 64%;
 	height: 75%;
 	float: right;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 .t7_subheader {
@@ -282,8 +264,6 @@
 	width: 64%;
 	height: 12%;
 	float: right;
-	font-size: 13px;
-	line-height: 1.875em;
 	overflow:hidden;	
 }
 
@@ -322,8 +302,6 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -338,8 +316,6 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -349,8 +325,6 @@
 	width: 100%;
 	height: 25%;
 	float: left;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -389,8 +363,6 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -404,8 +376,6 @@
 	height: 90%;
 	float: left;
 	border: 2px double transparent;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -417,8 +387,6 @@
 	float: right;
 	border: 2px double transparent;
 	margin-left: 20px;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 .t6_right{
@@ -428,8 +396,6 @@
 	height: 90%;
 	float: right;
 	border: 2px double transparent;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;		
 }
 
@@ -468,8 +434,6 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -484,8 +448,6 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -495,8 +457,6 @@
 	width: 64%;
 	height: 90%;
 	float: right;
-	font-size: 0.875em;
-	line-height: 1.000em;
 	overflow:hidden;	
 }
 .t8_right{
@@ -505,8 +465,6 @@
 	width: 33%;
 	height: 47%;
 	float: left;
-	font-size: 0.875em;
-	line-height: 1.000em;
 	overflow:hidden;	
 }
 
@@ -540,8 +498,6 @@
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
-	font-size: 1.500em;
-	line-height: 1.875em;
 	height: 30px;
 	width: 100%;
 	overflow:hidden;	
@@ -556,8 +512,6 @@
 	float: left;
 	border: 2px double transparent;
 	margin-right: 2%;
-	font-size: 1.063em;
-	line-height: 1.250em;
 	overflow:hidden;	
 }
 
@@ -568,8 +522,6 @@
 	height: 90%;
 	float: right;
 	border: 2px double transparent;
-	font-size: 0.875em;
-	line-height: 1.000em;
 	overflow:hidden;	
 }
 .t9_right{
@@ -578,8 +530,6 @@
 	width: 59%;
 	height: 47%;
 	float: left;
-	font-size: 0.875em;
-	line-height: 1.000em;
 	overflow:hidden;
 }
 
