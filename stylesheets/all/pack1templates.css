@@ -1,43 +1,46 @@
 /*
-	TEMPLATE 1: "Espiritu minimalista"
-	by Víctor Sánchez
+	TEMPLATE 1: "t1"
+	by Néstor Toribio
 
-	Tres bloques: título + texto + imágen;
+	Cuatro Bloques: título + texto + imágen + texto;
 */
 
 .t1_header{
-	padding-top: 10px;
- 	padding-bottom: .7em;
-	margin-top: -.2em ;
-	font-size: 24px;
-	height: 30px;
-	width: 100%;
-	overflow:hidden;	
-	position: relative;
+    font-size: 24px;
+    height: 63%;
+    line-height: 15px;
+    margin-left: 4.9em;
+    margin-top: 1em;
+    overflow: hidden;
+    padding-bottom: 0.3em;
+    padding-top: 0.2em;
+    position: relative;
+    width: 68%;
 }
 
 .t1_left{
-	margin-top:15px;
-	position:relative;
-	width: 48%;
-	height: 85%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 17px;
-	line-height: 20px;
-	overflow:hidden;
+    float: left;
+    font-size: 17px;
+    height: 12%;
+    line-height: 20px;
+    margin-left: 6.9em;
+    margin-right: 2%;
+    margin-top: 11px;
+    overflow: hidden;
+    position: relative;
+    width: 68%;
 }
 
 .t1_right{
-	margin-top: 15px;
-	position:relative;
-	width: 48%;
-	height: 85%;
-	float: right;
-	font-size: 17px;
-	line-height: 20px;
-	overflow:hidden;
+    float: left;
+    font-size: 17px;
+    height: 6%;
+    line-height: 20px;
+    margin-left: 6.9em;
+    margin-top: 12px;
+    overflow: hidden;
+    position: relative;
+    width: 68%;
 }
 
 .t1_text{
@@ -62,6 +65,70 @@
 	width: 100%;
 	height: 100%;
 }
+/*
+	TEMPLATE 1: "Espiritu minimalista"
+	by Víctor Sánchez
+
+	Tres bloques: título + texto + imágen;
+*/
+
+.t5_header{
+	padding-top: 10px;
+ 	padding-bottom: .7em;
+	margin-top: -.2em ;
+	font-size: 24px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t5_left{
+	margin-top:15px;
+	position:relative;
+	width: 48%;
+	height: 85%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 17px;
+	line-height: 20px;
+	overflow:hidden;
+}
+
+.t5_right{
+	margin-top: 15px;
+	position:relative;
+	width: 48%;
+	height: 85%;
+	float: right;
+	font-size: 17px;
+	line-height: 20px;
+	overflow:hidden;
+}
+
+.t5_text{
+	text-align: justify;
+	color: black;
+}
+
+.t5_image{
+	width: 300px;
+}
+
+.t5_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t5_object{
+	
+}
+
+.t5_swf{
+	width: 100%;
+	height: 100%;
+}
 
 /*
 	TEMPLATE 2: "Espiritu minimalista"
@@ -70,29 +137,14 @@
 	Dos elementos título + imágen fullscreen
 */
 
-.t2_header{
-	padding-top: 15px;
- 	padding-bottom: .3em;
+.t2_left{
 	margin-top: -.2em;
 	font-size: 24px;
 	line-height: 15px;
-	height: 30px;
-	width: 98.5%;
+	height: 100%;
+	width: 100%;
 	overflow: hidden;
 	position: relative;
-}
-
-.t2_left{
-	margin-top:15px;
-	position:relative;
-	width: 98%;
-	height: 85%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 17px;
-	line-height: 20px;
-	overflow:hidden;
 }
 
 .t2_image{
@@ -124,13 +176,73 @@
 }
 
 /*
+	TEMPLATE 2: "Espiritu minimalista"
+	by Víctor Sánchez
+
+	Dos elementos título + imágen fullscreen
+*/
+
+.t3_header{
+	padding-top: 15px;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	line-height: 15px;
+	height: 30px;
+	width: 98.5%;
+	overflow: hidden;
+	position: relative;
+}
+
+.t3_left{
+	margin-top:15px;
+	position:relative;
+	width: 98%;
+	height: 85%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 17px;
+	line-height: 20px;
+	overflow:hidden;
+}
+
+.t3_image{
+	width: 600px;
+}
+
+.t3_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t3_object{
+		
+}
+
+.t3_applet{
+	width: 100%;
+	height: 100%;
+}
+
+.t3_swf{
+	width: 100%;
+	height: 100%;
+}
+
+.template_flashcard{
+	width: 100%;
+	height: 100%;
+}
+
+/*
 	TEMPLATE 3: "3 blocks"
 	by Néstor Toribio
 
 	Cuatro Bloques: título + texto + imágen + texto;
 */
 
-.t3_header{
+.t7_header{
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
@@ -142,7 +254,7 @@
 	position: relative;
 }
 
-.t3_left{
+.t7_left{
 	margin-top:11px;
 	position:relative;
 	width: 33%;
@@ -155,7 +267,7 @@
 	overflow:hidden;	
 }
 
-.t3_center{
+.t7_center{
 	margin-top: 11px;
 	position:relative;
 	width: 64%;
@@ -165,7 +277,7 @@
 	line-height: 20px;
 	overflow:hidden;	
 }
-.t3_right{
+.t7_right{
 	margin-top: 12px;
 	position:relative;
 	width: 64%;
@@ -176,25 +288,25 @@
 	overflow:hidden;	
 }
 
-.t3_text{
+.t7_text{
 	text-align: justify;
 	color: black;
 }
 
-.t3_image{
+.t7_image{
 	width: 300px;
 }
 
-.t3_video{
+.t7_video{
 	max-width: 100%;
 	max-height: 100%;
 }
 
-.t3_object{
+.t7_object{
 	
 }
 
-.t3_swf{
+.t7_swf{
 	width: 100%;
 	height: 100%;
 }
@@ -272,7 +384,7 @@
 	Cuatro Bloques: título + texto + imágen + texto;
 */
 
-.t5_header{
+.t6_header{
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
@@ -284,7 +396,7 @@
 	position: relative;
 }
 
-.t5_left{
+.t6_left{
 	margin-top:11px;
 	position:relative;
 	width: 30%;
@@ -296,7 +408,7 @@
 	overflow:hidden;	
 }
 
-.t5_center{
+.t6_center{
 	margin-top:11px;
 	position:relative;
 	width: 33%;
@@ -308,7 +420,7 @@
 	line-height: 20px;
 	overflow:hidden;	
 }
-.t5_right{
+.t6_right{
 	margin-top:11px;
 	position:relative;
 	width: 31%;
@@ -318,82 +430,6 @@
 	font-size: 17px;
 	line-height: 20px;
 	overflow:hidden;		
-}
-
-.t5_text{
-	text-align: justify;
-	color: black;
-}
-
-.t5_image{
-	width: 300px;
-}
-
-.t5_video{
-	max-width: 100%;
-	max-height: 100%;
-}
-
-.t5_object{
-	
-}
-
-.t5_swf{
-	width: 100%;
-	height: 100%;
-}
-
-/*
-	TEMPLATE 6: "t6"
-	by Néstor Toribio
-
-	Cuatro Bloques: título + texto + imágen + texto;
-*/
-
-.t6_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	font-size: 24px;
-	line-height: 15px;
-	height: 30px;
-	width: 99%;
-	overflow:hidden;	
-	position: relative;
-}
-
-.t6_left{
-	margin-top:11px;
-	position:relative;
-	width: 64%;
-	height: 90%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	font-size: 17px;
-	line-height: 20px;
-	overflow:hidden;	
-}
-
-.t6_center{
-	margin-top: 11px;
-	position:relative;
-	width: 33%;
-	height: 38%;
-	float: left;
-	font-size: 14px;
-	line-height: 16px;
-	overflow:hidden;	
-}
-.t6_right{
-	margin-top: 12px;
-	position:relative;
-	width: 33%;
-	height: 50%;
-	float: left;
-	font-size: 14px;
-	line-height: 16px;
-	overflow:hidden;	
 }
 
 .t6_text{
@@ -426,7 +462,7 @@
 	Cuatro Bloques: título + texto + imágen + texto;
 */
 
-.t7_header{
+.t8_header{
 	padding-top: .2em;
  	padding-bottom: .3em;
 	margin-top: -.2em;
@@ -438,72 +474,138 @@
 	position: relative;
 }
 
-.t7_center{
+.t8_left{
 	margin-top:11px;
 	position:relative;
-	width: 65%;
-	height: 89%;
-	float: right;
-	margin-left: 2%;
+	width: 33%;
+	height: 41%;
+	float: left;
 	border: 2px double transparent;
-	font-size: 17px;
+	margin-right: 2%;
+	font-size: 16px;
 	line-height: 20px;
 	overflow:hidden;	
 }
 
-.t7_left{
-	margin-top:11px;
+.t8_center{
+	margin-top: 11px;
 	position:relative;
-	width: 32%;
-	height: 37%;
+	width: 64%;
+	height: 90%;
+	float: right;
+	font-size: 17px;
+	line-height: 20px;
+	overflow:hidden;	
+}
+.t8_right{
+	margin-top: 12px;
+	position:relative;
+	width: 33%;
+	height: 47%;
 	float: left;
-	border: 2px double transparent;
-	font-size: 14px;
-	line-height: 16px;
+	font-size: 13px;
+	line-height: 15px;
 	overflow:hidden;	
 }
 
-.t7_right{
-	margin-top: 12px;
-	position:relative;
-	width: 32%;
-	height: 50%;
-	float: left;
-	font-size: 14px;
-	line-height: 16px;
-	overflow:hidden;
-		
-}
-
-.t7_text{
+.t8_text{
 	text-align: justify;
 	color: black;
 }
 
-.t7_image{
+.t8_image{
 	width: 300px;
 }
 
-.t7_video{
+.t8_video{
 	max-width: 100%;
 	max-height: 100%;
 }
 
-.t7_object{
+.t8_object{
 	
 }
 
-.t7_swf{
+.t8_swf{
 	width: 100%;
 	height: 100%;
 }
 
+/*template 9*/
+
+.t9_header{
+	padding-top: .2em;
+ 	padding-bottom: .3em;
+	margin-top: -.2em;
+	font-size: 24px;
+	line-height: 15px;
+	height: 30px;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t9_left{
+	margin-top:11px;
+	position:relative;
+	width: 59%;
+	height: 41%;
+	float: left;
+	border: 2px double transparent;
+	margin-right: 2%;
+	font-size: 16px;
+	line-height: 20px;
+	overflow:hidden;	
+}
+
+.t9_center{
+	margin-top: 11px;
+	position:relative;
+	width: 38%;
+	height: 90%;
+	float: right;
+	font-size: 17px;
+	line-height: 20px;
+	overflow:hidden;	
+}
+.t9_right{
+	margin-top: 12px;
+	position:relative;
+	width: 59%;
+	height: 47%;
+	float: left;
+	font-size: 13px;
+	line-height: 15px;
+	overflow:hidden;	
+}
+
+.t9_text{
+	text-align: justify;
+	color: black;
+}
+
+.t9_image{
+	width: 300px;
+}
+
+.t9_video{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.t9_object{
+	
+}
+
+.t9_swf{
+	width: 100%;
+	height: 100%;
+}
 /*
 	OPEN QUESTION SLIDE
 	by Enrique Barra
 
 	css for quiz slide containing only question, name and answer
-*/
 
 .question_title{
 	padding-top: .2em;
@@ -546,12 +648,11 @@
 	margin-left: 300px;
 }
 
-/*
 	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
 
 	css for quiz slide containing only question, and multiple choice answers
-*/
+
 .mc_answer{
 	text-align: justify;
 	color: black;
@@ -562,3 +663,5 @@
 .mc_answer input{
 	margin: 3px 10px 0px 5px;
 }
+
+*/
