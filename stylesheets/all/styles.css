@@ -262,10 +262,11 @@ body {
 
   color: rgb(102, 102, 102);
   text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-  /*Next three parameters will be changed by javascript depending on the window size*/
+  /*Next three parameters will be changed by javascript depending on the window size, only in the viewer, in the editor the font size is relative
   font-size: 30px;
   line-height: 36px;
   letter-spacing: -1px;
+  */
 }
 
 .blue {
@@ -524,25 +525,31 @@ article.smaller q::after {
 /*fonts used to replace the ones introduced by the wysiwyg*/
 .vish-font1{
 	font-size: 0.3em;
+	line-height: 0.35em;
 }
 
 .vish-font2{
 	font-size: 0.4em;
+	line-height: 0.45em;
 }
 
 .vish-font3{
 	font-size: 0.5em;
+	line-height: 0.55em;
 }
 
 .vish-font4{
 	font-size: 0.6em;
+	line-height: 0.65em;
 }
 
 .vish-font5{
 	font-size: 0.8em;
+	line-height: 0.85em;
 }
 
 .vish-font6{
 	font-size: 1em;
+	line-height: 1.05em;
 }
 
