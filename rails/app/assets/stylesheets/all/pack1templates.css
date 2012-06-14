@@ -6,8 +6,8 @@
 */
 
 .t1_header{
-	float: left;
-    height: 69%;
+    float: left;
+    height: 13%;
     margin-left: 6.9em;
     margin-right: 2%;
     margin-top: 11px;
@@ -17,8 +17,8 @@
 }
 
 .t1_left{
-    height: 63%;
-    margin-left: 4.9em;
+    height: 70%;
+    margin-left: 6.9em;
     margin-top: 1em;
     overflow: hidden;
     padding-bottom: 0.3em;
