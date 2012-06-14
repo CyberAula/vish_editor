@@ -44,11 +44,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	            result['videos'] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList['videos']);
 	            successCallback(result);
 	      }
-          return;
-        }
-        else{
-        	_requestByType("video", "", successCallback, failCallback);
-        }
+        return;
+    }
+		
+    _requestByType("video", "", successCallback, failCallback);
   };
 	
 	
@@ -93,7 +92,9 @@ VISH.Editor.API = (function(V,$,undefined){
 				result['flashes'] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList['flashes']);
         successCallback(result);
       }
+			return;
 	  }
+		_requestByType("swfs", "", successCallback, failCallback);  
    };
     
 		
@@ -138,6 +139,8 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }
+		
+		_requestByType("picture", "", successCallback, failCallback);
   };
     
 		
@@ -145,7 +148,7 @@ VISH.Editor.API = (function(V,$,undefined){
   /**
    * function to call to VISH and request live objects in json format
    * The request is:
-   * GET /search.json?type=live&q=text
+   * GET /search.json?live=1&q=
    */
   var requestLives = function(text, successCallback, failCallback){
     
@@ -155,13 +158,14 @@ VISH.Editor.API = (function(V,$,undefined){
 
         switch(text){
           case "dummy":
-            result['lives'] = VISH.Samples.API.liveListDummy['lives'];
+            result = VISH.Samples.API.liveListDummy;
             break;
           case "little":
-            result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle['lives']);
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
             break;
           default:
-            result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList['lives']);
+            //result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+						result = VISH.Samples.API.liveList;
         }
             
         successCallback(result);
@@ -180,11 +184,15 @@ VISH.Editor.API = (function(V,$,undefined){
     if (VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function"){
         var result = VISH.Samples.API.liveList;
-        result['lives'] = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList['lives']);
+//        result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
         successCallback(result);
       }
+			return;
     }
+		
+		_requestByType("live", "", successCallback, failCallback);
    };
+		
 		
     /**
      * generic function to call VISH and request by query and type
@@ -192,6 +200,12 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET /search.json?type=type&q=query
      */    
   var _requestByType = function(type, query, successCallback, failCallback){
+		
+		if(type=="live"){
+			_requestLiveType(query, successCallback, failCallback);
+			return;
+		}
+		
   	$.ajax({
               type: "GET",
               url: "/search.json?type="+ type +"&q="+ query,
@@ -209,6 +223,31 @@ VISH.Editor.API = (function(V,$,undefined){
                   }
               }
      });	
+  };
+	
+	
+	  /**
+     * Specific function to call VISH and request lives
+     * The request is:
+     * GET /resources/search.json?live=1&q=
+     */    
+  var _requestLiveType = function(query, successCallback, failCallback){
+    $.ajax({
+              type: "GET",
+              url: "/resources/search.json?live=1&q="+ query,
+              dataType:"html",
+              success:function(response){
+                  if(typeof successCallback == "function"){
+                    var resp = JSON.parse(response);
+                    successCallback(resp);
+                  }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == "function"){
+                    failCallback();
+                  }
+              }
+     });  
   };
 	
 	
@@ -257,6 +296,29 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	
+	/**
+   * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
+   */
+	var requestThumbnails = function(successCallback, failCallback){
+      $.ajax({
+	      async: false,
+	      type: 'GET',
+	      url: '/excursion_thumbnails.json',
+	      dataType: 'json',
+	      success: function(data) {
+            if(typeof successCallback == "function"){
+              successCallback(data);
+            }
+	      },
+	      error: function(xhr, ajaxOptions, thrownError){
+	          if(typeof failCallback == "function"){
+              failCallback(xhr, ajaxOptions, thrownError);
+            }
+	      }
+      });
+  }
+	
+	
 	return {
 		init					            : init,
 		requestVideos             : requestVideos,
@@ -267,7 +329,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedFlashes  : requestRecomendedFlashes,
 		requestLives              : requestLives,
 		requestRecomendedLives    : requestRecomendedLives,
-		requestTags               : requestTags
+		requestTags               : requestTags,
+		requestThumbnails         : requestThumbnails
 	};
 
 }) (VISH, jQuery);

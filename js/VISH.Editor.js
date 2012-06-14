@@ -221,6 +221,9 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_from_url":
 				VISH.Editor.Object.onLoadTab("url");
 				break;
+			case "tab_flash_from_web":
+        VISH.Editor.Object.Web.onLoadTab();
+        break;
 			case "tab_flash_upload":
 				VISH.Editor.Object.onLoadTab("upload");
 				break;
@@ -432,7 +435,7 @@ VISH.Editor = (function(V,$,undefined){
 		//so we need to remove its id		
 		var content = null;
 		
-		if($(this).attr("areaid")==="header"){
+		if($(this).attr("areaid")==="header" || $(this).attr("areaid")==="subheader"){
 			content = $("#menuselect_for_header").clone().attr('id','');
 		}	else {
 			content = $("#menuselect").clone().attr('id','');
@@ -732,6 +735,8 @@ VISH.Editor = (function(V,$,undefined){
     
     $('article').remove();
     $('#menubar').remove();
+		$('#menubar_helpsection').remove();
+		$('#joyride_help_button').remove();
     $('.theslider').remove();
     $(".nicEdit-panelContain").remove();
     V.SlideManager.init(excursion);

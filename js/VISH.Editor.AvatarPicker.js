@@ -7,7 +7,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
    var init = function(){
 	 	  $("#thumbnails_in_excursion_details").hide();
    	  if(avatars==null){
-   	  	_getAvatars();
+   	  	VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
    	  }
    }; 	
    
@@ -30,40 +30,30 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   	$('#excursion_avatar').val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").attr("src"));
   };
     
-  /**
-	 * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
-	 */
-	var _getAvatars = function(){
-		$.ajax({
-		  async: false,
-		  type: 'GET',
-		  url: '/excursion_thumbnails.json',
-		  dataType: 'json',
-		  success: function(data) {
-		    avatars = data;
 	
-				//Clean previous carrousel
+	var _onThumbnailsReceived = function(data){
+		    avatars = data;
+  
+        //Clean previous carrousel
         VISH.Editor.Carrousel.cleanCarrousel("avatars_carrousel");
-				
-				//Build new carrousel
+        
+        //Build new carrousel
         var content = "";
-				var carrouselImages = [];
+        var carrouselImages = [];
         $.each(avatars.pictures, function(i, item) {
-					var myImg = $("<img src="+item.src+" />")
-					carrouselImages.push(myImg)
+          var myImg = $("<img src="+item.src+" />")
+          carrouselImages.push(myImg)
         });
-				
-				VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,"avatars_carrousel");
-				
-		  },
-		  error: function(xhr, ajaxOptions, thrownError){
-            VISH.Debugging.log("status returned by server:" + xhr.status);
-            VISH.Debugging.log("Error in client: " + thrownError);  
-			VISH.Debugging.log("ERROR!" + thrownError)
-			//$("#thumbnails_in_excursion_details").remove();
-		  }
-		});
-	};
+        
+        VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,"avatars_carrousel");
+	}
+	
+	var _onThumbnailsError = function(xhr, ajaxOptions, thrownError){
+		VISH.Debugging.log("_onThumbnailsError")
+		VISH.Debugging.log("status returned by server:" + xhr.status);
+    VISH.Debugging.log("Error in client: " + thrownError);  
+    VISH.Debugging.log("ERROR!" + thrownError)
+	}
 	
 	
 	var _onImagesLoaded = function(){
