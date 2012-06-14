@@ -31,7 +31,7 @@ VISH.Editor.Text = (function(V,$,undefined){
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'><div>"+initial_text+"</div></div>");
+    current_area.html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'><div><font size='3'>"+initial_text+"</font></div></div>");
     myNicEditor.addInstance(wysiwygId);
 
 	// add a button to delete the current text area   
@@ -49,7 +49,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			var sel = {'arial' : 'arial','comic sans ms' : 'comic','courier new' : 'courier','georgia' : 'georgia', 'helvetica' : 'helvetica', 'impact' : 'impact', 'times new roman' : 'times', 'trebuchet ms' : 'trebuchet', 'verdana' : 'verdana'};
 			var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")]:"arial";
 			
-			$(elem).parent().addClass("vish-parent-font" + size);
+			$(elem).closest("div").addClass("vish-parent-font" + size);
 			$(elem).replaceWith("<span class='vish-font" + size + " vish-font"+face+"'>" + $(elem).html() + "</span>");
 		});
 		
