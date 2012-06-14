@@ -1,6 +1,7 @@
 VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
+	var myDoc; //to store document or parent.document depending if on iframe or not
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
@@ -8,11 +9,23 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
-		//_setupSize();
+		_setupSize();
 		addEventListeners(); //for the arrow keys
 		
 		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
 		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+		
+		var isInIFrame = (window.location != window.parent.location) ? true : false;
+		var myElem = null;
+		
+		if(isInIFrame){
+			myDoc = parent.document;
+		} else {
+			myDoc = document;
+		}
+		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+             _setupSize();         
+        });
 		
 		var elem = document.getElementById("page-fullscreen");  
 		var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
@@ -33,15 +46,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
 	 */
 	var toggleFullScreen = function () {
-		  
-		var isInIFrame = (window.location != window.parent.location) ? true : false;
-		var myDoc, myElem = null;
 		
-		if(isInIFrame){
-			myDoc = parent.document;
-		} else {
-			myDoc = document;
-		}
 		myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
@@ -82,7 +87,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 */
 	var _setupSize = function(){
-		var height = $(window).height();
+		var article = $(".slides").find("article").first();
+		var initialH = article.height();
+		var height = $(window).height()-40; //the height to use is the window height - 40px that is the menubar height
 		var width = $(window).width();
 		var finalW = 800;
 		var finalH = 600;
@@ -90,16 +97,27 @@ VISH.SlideManager = (function(V,$,undefined){
 		var aspectRatio = width/height;
 		var slidesRatio = 4/3;
 		if(aspectRatio > slidesRatio){
-			finalH = height - 80;
+			finalH = height - 40;  //leave 40px free, 20 in the top and 20 in the bottom ideally
 			finalW = finalH*slidesRatio;	
 		}
 		else{
-			finalW = width - 110;
+			finalW = width - 110; //leave 110px free, at least, 55 left and 55 right ideally
 			finalH = finalW/slidesRatio;	
 		}
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
+		//margin-top and margin-left half of the height and width
+		var marginTop = finalH/2 + 20;
+		var marginLeft = finalW/2;
+		$(".slides > article").css("margin-top", "-" + marginTop + "px");
+		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
 		
+		//finally font-size, line-height and letter-spacing of articles
+		//after this change the font sizes of the zones will be relative as they are in ems
+		var increase = finalH/initialH;
+		$(".slides > article").css("font-size", 30*increase + "px");
+		$(".slides > article").css("line-height", 36*increase + "px");
+		$(".slides > article").css("letter-spacing", -1*increase + "px");
 	};
 	
 	/**

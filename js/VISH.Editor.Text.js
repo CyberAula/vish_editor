@@ -39,12 +39,24 @@ VISH.Editor.Text = (function(V,$,undefined){
     
   };
 	
-	
+	/**
+	 * function to change
+	 */
+	var changeFontSizeToRelative = function(zone){
+		//replace all font tags by span tags with a proper class
+		$(zone).find("font").replaceWith(function() {
+			var size = $(this).attr("size");
+			return "<span class='vish-font" + size + "'>" + $(this).html() + "</span>";
+		});
+		
+		return $(zone).html();
+	};
 	
 	
 	return {
-		init              : init,
-		launchTextEditor  : launchTextEditor
+		init              			: init,
+		launchTextEditor  			: launchTextEditor,
+		changeFontSizeToRelative  	: changeFontSizeToRelative
 	};
 
 }) (VISH, jQuery);
