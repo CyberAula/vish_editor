@@ -432,7 +432,7 @@ VISH.Editor = (function(V,$,undefined){
 		//so we need to remove its id		
 		var content = null;
 		
-		if($(this).attr("areaid")==="header"){
+		if($(this).attr("areaid")==="header" || $(this).attr("areaid")==="subheader"){
 			content = $("#menuselect_for_header").clone().attr('id','');
 		}	else {
 			content = $("#menuselect").clone().attr('id','');
