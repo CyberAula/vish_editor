@@ -537,7 +537,7 @@
 
 div.special {
     width    : 600px;
-    height   : 600px;
+    height   : 485px;
     overflow : hidden;
     position : relative;
 		margin-top: 60px;
@@ -546,10 +546,10 @@ div.special {
 
 iframe.special{
     position : absolute;
-    top      : -215px;
-    left     : -150px;
-    width    : 1280px;
-    height   : 1200px;
+    top      : -150px;
+    left     : -190px;
+    width    : 1280px !important;
+    height   : 1200px !important;
 		overflow: hidden;
 }
 
