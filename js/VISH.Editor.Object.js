@@ -427,6 +427,8 @@ VISH.Editor.Object = (function(V,$,undefined){
    */
 	var drawObject = function(object, area, style){	
 			
+		console.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
 		}
@@ -439,7 +441,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  	current_area = VISH.Editor.getCurrentArea();
 	 	}
 		if(style){
-	  		object_style = style;	  		
+	  		object_style = style;
 	 	}
 		
 		var objectInfo = getObjectInfo(object);
@@ -510,7 +512,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			wrapperDiv.setAttribute('style', style);
 		}
 		$(wrapperDiv).addClass('object_wrapper');
-		//$(wrapperDiv).addClass(template + "_object");
 
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
@@ -527,7 +528,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//RESIZE
 		var width, value;
 		if(style){
-		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
 		   value = 10*width/$(current_area).width();
 		}	else {			
 			value = 10; //we set it to the maximum value

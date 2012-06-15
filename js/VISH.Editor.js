@@ -733,11 +733,10 @@ VISH.Editor = (function(V,$,undefined){
 							element.sources = sources;
 		      } else if(element.type=="object"){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
+							$(object).removeAttr("style");
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
-							if($(object).hasClass("specialIframe")){
-								element.special = true
-							}
+							element.aspectRatio  = _getAspectRatio($(object));
 		      } else if (element.type=="openquestion") {	   
 		      	element.title   = $(div).find(".title_openquestion").val();
 		        element.question   = $(div).find(".value_openquestion").val();
@@ -801,11 +800,16 @@ VISH.Editor = (function(V,$,undefined){
 	 * function to get the styles in percentages
 	 */
 	var _getStylesInPercentages = function(parent, element){
-		var WidthPercent = element.width()*100/parent.width(); 
-        var TopPercent = element.position().top*100/parent.height();
-        var LeftPercent = element.position().left*100/parent.width();
-        return "position: relative; width:" + WidthPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
+		var WidthPercent = element.width()*100/parent.width();
+		var HeightPercent = element.height()*100/parent.width();
+    var TopPercent = element.position().top*100/parent.height();
+    var LeftPercent = element.position().left*100/parent.width();
+    return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
+	
+	var _getAspectRatio = function(element){
+		return element.width()/element.height();
+	}
 	
 	/**
 	 * Function to move the slides left one item
