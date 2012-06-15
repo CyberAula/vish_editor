@@ -9,7 +9,7 @@ VISH.Samples = (function(V,undefined){
                 'slides'        : [
 		{
 			"id": "article1",
-			"template": "t1",
+			"template": "t5",
 			"elements":[
 				{
 					"id": "zone1",
@@ -34,7 +34,7 @@ VISH.Samples = (function(V,undefined){
 		},
 		{
 			"id": "article2",
-			"template": "t1",
+			"template": "t5",
 			"elements":[
 				{
 					"id": "zone4",
