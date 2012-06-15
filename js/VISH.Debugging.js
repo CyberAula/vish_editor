@@ -3,6 +3,17 @@
  */
 VISH.Debugging = (function(V,$,undefined){
 	
+	
+	//CONFIGURATION VARIABLES
+	
+	//Possible actions: "view" or "edit".
+	var actionSave = "edit"; 
+	
+	//Possible action: "nothing" or "loadSamples".
+	var actionInit = "nothing";
+	var excursionSamples = VISH.Samples.samples;
+	
+	
 	var developping = false;
 	
 	var init = function(bol){
@@ -36,13 +47,28 @@ VISH.Debugging = (function(V,$,undefined){
 		return developping;
 	}
 	
+	var getActionSave = function(){
+		return actionSave;
+	}
+	
+	var getActionInit = function(){
+    return actionInit;
+  }
+	
+	var getExcursionSamples = function(){
+		return excursionSamples;
+	}
+	
 	return {
 		init                    : init,
 		log                     : log,
 		shuffleJson             : shuffleJson,
 		enableDevelopingMode    : enableDevelopingMode,
 		disableDevelopingMode   : disableDevelopingMode,
-		isDevelopping           : isDevelopping
+		isDevelopping           : isDevelopping,
+		getActionSave           : getActionSave,
+		getActionInit           : getActionInit,
+		getExcursionSamples     : getExcursionSamples
 	};
 
 }) (VISH, jQuery);

@@ -35,14 +35,23 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(options){
 			initOptions = options;
-			if(options['developping']==true){
+			if((options['developping']==true)&&(VISH.Debugging)){
 				VISH.Debugging.init(true);
 			}
 		}	else {
 			initOptions = {};
 		}
 		
-		//if we have to edit
+		
+		if ((VISH.Debugging)&&(VISH.Debugging.isDevelopping())) {
+      //Vish: OnInit Debug actions
+      if (VISH.Debugging.getActionInit() == "loadSamples") {
+        excursion = VISH.Debugging.getExcursionSamples();
+      }
+    }
+		
+		
+		//If we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
 			excursionDetails.title = excursion.title;
@@ -739,28 +748,41 @@ VISH.Editor = (function(V,$,undefined){
     var jsonexcursion = JSON.stringify(excursion);
     VISH.Debugging.log(jsonexcursion);
     
-    $('article').remove();
-    $('#menubar').remove();
-		$('#menubar_helpsection').remove();
-		$('#joyride_help_button').remove();
-    $('.theslider').remove();
-    $(".nicEdit-panelContain").remove();
-    V.SlideManager.init(excursion);
-    
-    
-    /*
-    //POST to http://server/excursions/
-    var params = {
-      "excursion[json]": jsonexcursion,
-      "authenticity_token" : initOptions["token"]
-    }
-    
-    $.post(initOptions["postPath"], params, function(data) {
-          document.open();
-      document.write(data);
-      document.close();
-      });
-      */
+			
+		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
+			//Vish: OnSave Debug actions
+			
+			if(VISH.Debugging.getActionSave()=="view"){
+				$('article').remove();
+	      $('#menubar').remove();
+	      $('#menubar_helpsection').remove();
+	      $('#joyride_help_button').remove();
+	      $('.theslider').remove();
+	      $(".nicEdit-panelContain").remove();
+	      V.SlideManager.init(excursion);
+			}	else if (VISH.Debugging.getActionSave()=="edit") {
+				$('article').remove();
+        var options = {};
+        options["developping"] = true;
+        V.Editor.init(options, excursion);  //to edit the excursion
+			}
+			
+		} else {
+			//Vish: OnSave Production actions
+			
+	    //POST to http://server/excursions/
+	    var params = {
+	      "excursion[json]": jsonexcursion,
+	      "authenticity_token" : initOptions["token"]
+	    }
+	    
+	    $.post(initOptions["postPath"], params, function(data) {
+	      document.open();
+	      document.write(data);
+	      document.close();
+	    });
+			
+		}	
     
   };
 	
