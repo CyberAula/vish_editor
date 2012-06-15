@@ -131,6 +131,18 @@ VISH.Utils = (function(V,undefined){
 		var getURLParameter = function(name){
 			return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);
 		}
+		
+		//Help function to autocomplete user inputs.
+		//Add HTTP if is not present.
+		var autocompleteUrls = function(input){
+      var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+			
+			if(input.match(www_urls_pattern)!=null){
+        return "http://" + input;
+      } else {
+				return input;
+			}
+		}
 
 
     return {
@@ -139,7 +151,8 @@ VISH.Utils = (function(V,undefined){
 			generateTable : generateTable,
 			checkMiniumRequirements : checkMiniumRequirements,
 			convertToTagsArray : convertToTagsArray,
-			getURLParameter : getURLParameter
+			getURLParameter : getURLParameter,
+			autocompleteUrls : autocompleteUrls
     };
 
 }) (VISH);

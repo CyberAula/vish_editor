@@ -11,7 +11,7 @@ VISH.Editor.Video = (function(V,$,undefined){
     
     $("#tab_video_from_url_content .previewButton").click(function(event) {
       if(VISH.Police.validateObject($(urlInput).val())[0]){
-        contentToAdd = $(urlInput).val();
+				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
       } else {
         contentToAdd = null;

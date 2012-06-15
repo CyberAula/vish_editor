@@ -17,7 +17,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//Load from URL
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = $("#" + urlInputId).val()
+				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         drawPreview(urlDivId, contentToAdd)    
       }
     });
@@ -259,7 +259,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
     var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
     var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
-    var html5VideoFormats = ["mp4","webm","ogg"]        
+    var html5VideoFormats = ["mp4","webm","ogg"]  
     var imageFormats = ["jpg","jpeg","png","gif","bmp"]
 		
 		if(typeof source != "string"){
