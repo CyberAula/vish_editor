@@ -5,12 +5,13 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
     * function to create the carrousel with the avatars in the div with id "avatars_carrousel"
     */
    var init = function(){
-	 	  $("#thumbnails_in_excursion_details").hide();
-   	  if(avatars==null){
-   	  	VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
-   	  }
-   }; 	
-   
+	 	  
+   };	
+	 
+	 var onLoadExcursionDetails = function(){
+	 	 $("#thumbnails_in_excursion_details").hide();
+	 	 VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
+	 }  
     
   /**
    * Callback function to select an avatar
@@ -31,9 +32,9 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   };
     
 	
-	var _onThumbnailsReceived = function(data){
+	var _onThumbnailsReceived = function(data){	
 		    avatars = data;
-  
+				
         //Clean previous carrousel
         VISH.Editor.Carrousel.cleanCarrousel("avatars_carrousel");
         
@@ -64,6 +65,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
     options['callback'] = VISH.Editor.AvatarPicker.selectAvatar;
     options['rowItems'] = 5;
 		options['styleClass'] = "thumbnails";
+		
     VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", options);
 		
     $(".buttonintro").addClass("buttonintro_extramargin");
@@ -74,7 +76,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	return {
 		init	       : init,
 		selectAvatar   : selectAvatar,
-		selectRandom   : selectRandom
+		selectRandom   : selectRandom,
+		onLoadExcursionDetails : onLoadExcursionDetails
 		
 	};
 

@@ -15,6 +15,10 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	
+	//Prevent to load events multiple times.
+	var eventsLoaded = false;
+	
+	
 	/**
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
@@ -68,65 +72,72 @@ VISH.Editor = (function(V,$,undefined){
 			'width': 800,
     		'height': 600,
     		'padding': 0
-    	});
-    	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-    	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
-		  $(document).on('click','.templatethumb', _onTemplateThumbClicked);
-		  $(document).on('click','#save', _onSaveButtonClicked);
-		  $(document).on('click','.editable', _onEditableClicked);
-		  $(document).on('click','.selectable', _onSelectableClicked);
-		  $(document).on('click','.delete_content', _onDeleteItemClicked);
-		  $(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		  //arrows in button panel
-		  $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-		  $(document).on('click','#arrow_right_div', _onArrowRightClicked);
+    });
 		
-		  //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		  _addEditorEnterLeaveEvents();
-		
-		  V.SlidesUtilities.redrawSlides();
-		  V.Editor.Thumbnails.redrawThumbnails();
-		
-		  addEventListeners(); //comes from slides.js to be called only once
-		
-			if(excursion){
-				//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-				$('.object_wrapper').hide()
-			}
-		
-			//Init submodules
-			V.Editor.Text.init();
-			V.Editor.Image.init();
-			V.Editor.Video.init();
-			V.Editor.Object.init();
-			V.Editor.Thumbnails.init();
-			V.Editor.AvatarPicker.init();
-			V.Editor.I18n.init(options["lang"]);
-			V.Editor.Quiz.init();
+		if(!eventsLoaded){
+			eventsLoaded = true;
 			
-			// Intial box to input the details related to the excursion
-			$("a#edit_excursion_details").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 660,
-				'padding': 0,
-				'hideOnOverlayClick': false,
-	      'hideOnContentClick': false,
-				'showCloseButton': false
-			});
-			//Request initial tags for excursion details form
-			VISH.Editor.API.requestTags(_onInitialTagsReceived)
-			
-			// The box is launched when the page is loaded
-			if(excursion === undefined){
-				$("#edit_excursion_details").trigger('click');
-			}
-			//Remove overflow from fancybox
-	//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
+      $(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
+      $(document).on('click','.templatethumb', _onTemplateThumbClicked);
+      $(document).on('click','#save', _onSaveButtonClicked);
+      $(document).on('click','.editable', _onEditableClicked);
+      $(document).on('click','.selectable', _onSelectableClicked);
+      $(document).on('click','.delete_content', _onDeleteItemClicked);
+      $(document).on('click','.delete_slide', _onDeleteSlideClicked);
+      //arrows in button panel
+      $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+      $(document).on('click','#arrow_right_div', _onArrowRightClicked);
+    
+      //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+      _addEditorEnterLeaveEvents();
+    
+      V.SlidesUtilities.redrawSlides();
+      V.Editor.Thumbnails.redrawThumbnails();
+    
+      addEventListeners(); //comes from slides.js to be called only once
+      
 			//if click on begginers tutorial->launch it
-			_addTutorialEvents();
+      _addTutorialEvents();
+		}
+
+		
+		if(excursion){
+			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide()
+		}
+		
+		//Init submodules
+		V.Editor.Text.init();
+		V.Editor.Image.init();
+		V.Editor.Video.init();
+		V.Editor.Object.init();
+		V.Editor.Thumbnails.init();
+		V.Editor.AvatarPicker.init();
+		V.Editor.I18n.init(options["lang"]);
+		V.Editor.Quiz.init();
 			
+		// Intial box to input the details related to the excursion
+		$("a#edit_excursion_details").fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': 800,
+			'height': 660,
+			'padding': 0,
+			'hideOnOverlayClick': false,
+      'hideOnContentClick': false,
+			'showCloseButton': false
+		});
+		
+		//Request initial tags for excursion details form
+		VISH.Editor.API.requestTags(_onInitialTagsReceived)
+		
+		// The box is launched when the page is loaded
+		if(excursion === undefined){
+			VISH.Editor.AvatarPicker.onLoadExcursionDetails();
+			$("#edit_excursion_details").trigger('click');
+		}
+		
 	};
 	
 	
