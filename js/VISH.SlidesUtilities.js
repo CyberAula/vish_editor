@@ -8,7 +8,7 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 		
 		$(document).trigger('OURDOMContentLoaded');
 		
-		V.Editor.Thumbnails.redrawThumbnails();
+		//V.Editor.Thumbnails.redrawThumbnails();
   };
     
 /*

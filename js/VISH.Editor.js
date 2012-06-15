@@ -76,6 +76,7 @@ VISH.Editor = (function(V,$,undefined){
 		  _addEditorEnterLeaveEvents();
 		
 		  V.SlidesUtilities.redrawSlides();
+		  V.Editor.Thumbnails.redrawThumbnails();
 		
 		  addEventListeners(); //comes from slides.js to be called only once
 		
@@ -417,9 +418,10 @@ VISH.Editor = (function(V,$,undefined){
 		
 		$.fancybox.close();
 		
-		V.SlidesUtilities.redrawSlides();
-		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
+		V.SlidesUtilities.redrawSlides();		
+		V.Editor.Thumbnails.redrawThumbnails();
 		
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);		
 	};
 
 	/**
@@ -554,7 +556,8 @@ VISH.Editor = (function(V,$,undefined){
 						if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
 							curSlide -=1;
 						}					
-						V.SlidesUtilities.redrawSlides();			
+						V.SlidesUtilities.redrawSlides();						
+		  				V.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 		  }
@@ -689,7 +692,7 @@ VISH.Editor = (function(V,$,undefined){
           element.areaid = $(div).attr('areaid');
                    
           if(element.type=="text"){
-            element.body   = V.Editor.Text.changeFontSizeToRelative($(div).find(".wysiwygInstance"));
+            element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
           } else if(element.type=="image"){
             element.body   = $(div).find('img').attr('src');
             element.style  = _getStylesInPercentages($(div), $(div).find('img'));

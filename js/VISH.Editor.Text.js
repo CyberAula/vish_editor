@@ -18,7 +18,7 @@ VISH.Editor.Text = (function(V,$,undefined){
   	}
   	else{
   		current_area = $(this).parents(".selectable");
-  		initial_text = "Insert text here";
+  		initial_text = "<div><font size='3'>Insert text here</font></div>";
   	}
 	
 	// only one instance of the NicEditor is created
@@ -31,7 +31,7 @@ VISH.Editor.Text = (function(V,$,undefined){
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'><div><font size='3'>"+initial_text+"</font></div></div>");
+    current_area.html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'>"+initial_text+"</div>");
     myNicEditor.addInstance(wysiwygId);
 
 	// add a button to delete the current text area   
@@ -40,27 +40,35 @@ VISH.Editor.Text = (function(V,$,undefined){
   };
 	
 	/**
-	 * function to change
+	 * function to change from font tag attributes to span
 	 */
-	var changeFontSizeToRelative = function(zone){
+	var changeFontPropertiesToSpan = function(zone){
 		//replace all font tags by span tags with a proper class
 		$(zone).find("font").each(function(index,elem){
 			var size = $(elem).attr("size");
 			var sel = {'arial' : 'arial','comic sans ms' : 'comic','courier new' : 'courier','georgia' : 'georgia', 'helvetica' : 'helvetica', 'impact' : 'impact', 'times new roman' : 'times', 'trebuchet ms' : 'trebuchet', 'verdana' : 'verdana'};
 			var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")]:"arial";
-			
+			//now the color and the background color that is stored in the style			
+			var style = "";
+			if($(elem).attr("color") !== undefined){
+				style += "color:" + $(elem).attr("color") + ";";
+			}
+			if($(elem).attr("style") !== undefined){
+				style += $(elem).attr("style") + ";";
+			}
+						
 			$(elem).closest("div").addClass("vish-parent-font" + size);
-			$(elem).replaceWith("<span class='vish-font" + size + " vish-font"+face+"'>" + $(elem).html() + "</span>");
+			$(elem).replaceWith("<span class='vish-font" + size + " vish-font"+face+"' style='"+style+"'>" + $(elem).html() + "</span>");
 		});
 		
 		return $(zone).html();
 	};
 	
-	
+		
 	return {
 		init              			: init,
 		launchTextEditor  			: launchTextEditor,
-		changeFontSizeToRelative  	: changeFontSizeToRelative
+		changeFontPropertiesToSpan  : changeFontPropertiesToSpan
 	};
 
 }) (VISH, jQuery);

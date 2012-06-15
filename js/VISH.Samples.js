@@ -1,5 +1,6 @@
 VISH.Samples = (function(V,undefined){
 	
+	 
 	var samples = {
 				'id'            :  '1',
                 'title'         :  'Nanoyou',
@@ -21,7 +22,7 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone2",
 					"type": "text",
 					"areaid": "left",
-					"body": "<span class=\"vish-font1\">Insert text here</span><div><span class=\"vish-font2\">gsdfgfgsfg</span></div><div><span class=\"vish-font3\">fadfadfadf</span></div><div><span class=\"vish-font4\">adfadfasdf</span></div><div><span class=\"vish-font5\">adfadfadf</span></div><div><span class=\"vish-font6\">adfadfasdfaf</span></div>"
+					"body": "<div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"background-color: rgb(255, 0, 102);;\">Insert text here</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"color:#33ff00;\">adfadf</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontimpact\" style=\"color:#33ff00;\">afdfadf</span></div>"
 					},
 				{
 					"id": "zone3",
@@ -46,7 +47,7 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone5",
 					"type": "object",
 					"areaid": "left",
-					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">",
+					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1ppp.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">",
 					"style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "
 				},
 				{
@@ -59,13 +60,7 @@ VISH.Samples = (function(V,undefined){
 		{
 			'id'       :'vish10',
 			'template' :'t2',
-			'elements':[
-				{
-                    'id'     : '331',
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'Sublime HTML5 video!'
-				},       
+			'elements':[				      
 				{
                     'id'     : '332',
 					'type'   : 'video',
