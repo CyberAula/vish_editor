@@ -307,3 +307,16 @@ a.prev_single_row_slides{
 a.next_single_row_slides{
   right: 80px;
 }
+
+p.carrousel_element_single_row_slides{
+	position: fixed;
+  margin: 0px;
+  margin-top: 16px;
+	margin-left: -141px;
+  width: 62px;
+  max-height: 20px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 15px;
+  font-family: Helvetica;
+}

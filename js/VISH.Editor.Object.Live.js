@@ -49,7 +49,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
    * Fill tab_live_webcam_content_carrousel div with server data.
    */
   var _onDataReceived = function(data){
-	  
+		
     //Clean previous content
     VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
@@ -62,15 +62,15 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	
     var content = "";
     
-		if((!data.lives)||(data.lives.length==0)){
+		if((!data)||(data.length==0)){
       $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
       $("#" + carrouselDivId).show();
 			return;
     } 
 		
-    $.each(data.lives, function(index, object) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content)
-      var imageSource = null;        
+    $.each(data, function(index, object) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(object.fulltext)
+      var imageSource = null;
       
       switch (objectInfo.type){
         case "swf":
@@ -87,7 +87,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	      }
 	      break;
 	    default:
-	      imageSource = VISH.ImagesPath + "carrousel/object.jpeg"
+	      imageSource = VISH.ImagesPath + "carrousel/object.png"
 	      break;
       }
 			
@@ -119,7 +119,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
-		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content)
+		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext)
 		_renderObjectPreview(renderedObject,currentObject[objectId]);
 		selectedObject = currentObject[objectId];	
   }
@@ -149,7 +149,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   
   var addSelectedObject = function(){
     if(selectedObject!=null){
-      VISH.Editor.Object.drawObject($(selectedObject.content));
+      VISH.Editor.Object.drawObject(selectedObject.fulltext);
       $.fancybox.close();
     }
   }

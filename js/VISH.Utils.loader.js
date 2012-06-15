@@ -66,7 +66,7 @@ VISH.Utils.loader = (function(V,undefined){
 			
       $.each(imagesArray, function(i, image) {
         $(image).load(function(response) {
-					if(titleArray){
+					 if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
 						$("#" + carrouselDivId).append("<div><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 					} else {
 						$("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
@@ -112,8 +112,8 @@ VISH.Utils.loader = (function(V,undefined){
 		
 	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
 	 	 $.each(imagesArray, function(i, image) {
-	     if(titleArray){
-	       $("#" + carrouselDivId).append("<div><p>"+titleArray[i]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+	     if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
+				 	$("#" + carrouselDivId).append("<div><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 	     } else {
 	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
 	     }

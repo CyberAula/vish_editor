@@ -613,11 +613,6 @@ img {
 	overflow: hidden;
 }
 
-.preview_video{
-	max-width: 300px;
-	height: 195px;
-}
-
 .content_preview_foot{
 	outline: none;
 	text-align: center;

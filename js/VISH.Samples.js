@@ -21,7 +21,7 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone2",
 					"type": "text",
 					"areaid": "left",
-					"body": "Insert text here<div><br></div><div><font size=\"6\">hola</font></div><div><font size=\"6\"><br></font></div><div><font size=\"1\">lolca</font></div>"
+					"body": "<span class=\"vish-font1\">Insert text here</span><div><span class=\"vish-font2\">gsdfgfgsfg</span></div><div><span class=\"vish-font3\">fadfadfadf</span></div><div><span class=\"vish-font4\">adfadfasdf</span></div><div><span class=\"vish-font5\">adfadfadf</span></div><div><span class=\"vish-font6\">adfadfasdfaf</span></div>"
 					},
 				{
 					"id": "zone3",

@@ -221,6 +221,9 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_flash_from_url":
 				VISH.Editor.Object.onLoadTab("url");
 				break;
+			case "tab_flash_from_web":
+        VISH.Editor.Object.Web.onLoadTab();
+        break;
 			case "tab_flash_upload":
 				VISH.Editor.Object.onLoadTab("upload");
 				break;
@@ -732,6 +735,8 @@ VISH.Editor = (function(V,$,undefined){
     
     $('article').remove();
     $('#menubar').remove();
+		$('#menubar_helpsection').remove();
+		$('#joyride_help_button').remove();
     $('.theslider').remove();
     $(".nicEdit-panelContain").remove();
     V.SlideManager.init(excursion);
