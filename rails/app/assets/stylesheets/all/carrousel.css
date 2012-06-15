@@ -232,6 +232,7 @@ img.carrousel_element_single_row_thumbnails{
   margin-left: -27px;
   margin-top: -2px;
   border: none;
+  opacity: 0.6;
 }
 
 img.carrousel_element_single_row_thumbnails:hover{

@@ -13088,6 +13088,7 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
     _addEditorEnterLeaveEvents();
     V.SlidesUtilities.redrawSlides();
+    V.Editor.Thumbnails.redrawThumbnails();
     addEventListeners();
     if(excursion) {
       $(".object_wrapper").hide()
@@ -13274,6 +13275,7 @@ VISH.Editor = function(V, $, undefined) {
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
+    V.Editor.Thumbnails.redrawThumbnails();
     setTimeout("VISH.SlidesUtilities.lastSlide()", 300)
   };
   var _onEditableClicked = function(event) {
@@ -13334,7 +13336,8 @@ VISH.Editor = function(V, $, undefined) {
         if(curSlide == slideEls.length - 1 && curSlide != 0) {
           curSlide -= 1
         }
-        V.SlidesUtilities.redrawSlides()
+        V.SlidesUtilities.redrawSlides();
+        V.Editor.Thumbnails.redrawThumbnails()
       }
     }})
   };
@@ -13412,7 +13415,7 @@ VISH.Editor = function(V, $, undefined) {
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
           if(element.type == "text") {
-            element.body = V.Editor.Text.changeFontSizeToRelative($(div).find(".wysiwygInstance"))
+            element.body = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"))
           }else {
             if(element.type == "image") {
               element.body = $(div).find("img").attr("src");
@@ -14066,10 +14069,10 @@ VISH.Editor.Object = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<span class="vish-font1">Insert text here</span><div><span class="vish-font2">gsdfgfgsfg</span></div><div><span class="vish-font3">fadfadfadf</span></div><div><span class="vish-font4">adfadfasdf</span></div><div><span class="vish-font5">adfadfadf</span></div><div><span class="vish-font6">adfadfasdfaf</span></div>'}, 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="background-color: rgb(255, 0, 102);;">Insert text here</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="color:#33ff00;">adfadf</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontimpact" style="color:#33ff00;">afdfadf</span></div>'}, 
   {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", 
-  "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", 
-  "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
+  "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1ppp.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"332", "type":"video", "areaid":"left", 
+  "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -15212,7 +15215,7 @@ VISH.Editor.Text = function(V, $, undefined) {
       current_area = area
     }else {
       current_area = $(this).parents(".selectable");
-      initial_text = "Insert text here"
+      initial_text = "<div><font size='3'>Insert text here</font></div>"
     }
     if(myNicEditor == null) {
       myNicEditor = new nicEditor;
@@ -15222,21 +15225,28 @@ VISH.Editor.Text = function(V, $, undefined) {
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'><div><font size='3'>" + initial_text + "</font></div></div>");
+    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>" + initial_text + "</div>");
     myNicEditor.addInstance(wysiwygId);
     V.Editor.addDeleteButton(current_area)
   };
-  var changeFontSizeToRelative = function(zone) {
+  var changeFontPropertiesToSpan = function(zone) {
     $(zone).find("font").each(function(index, elem) {
       var size = $(elem).attr("size");
       var sel = {"arial":"arial", "comic sans ms":"comic", "courier new":"courier", "georgia":"georgia", "helvetica":"helvetica", "impact":"impact", "times new roman":"times", "trebuchet ms":"trebuchet", "verdana":"verdana"};
       var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")] : "arial";
+      var style = "";
+      if($(elem).attr("color") !== undefined) {
+        style += "color:" + $(elem).attr("color") + ";"
+      }
+      if($(elem).attr("style") !== undefined) {
+        style += $(elem).attr("style") + ";"
+      }
       $(elem).closest("div").addClass("vish-parent-font" + size);
-      $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "'>" + $(elem).html() + "</span>")
+      $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "' style='" + style + "'>" + $(elem).html() + "</span>")
     });
     return $(zone).html()
   };
-  return{init:init, launchTextEditor:launchTextEditor, changeFontSizeToRelative:changeFontSizeToRelative}
+  return{init:init, launchTextEditor:launchTextEditor, changeFontPropertiesToSpan:changeFontPropertiesToSpan}
 }(VISH, jQuery);
 VISH.Editor.Thumbnails = function(V, $, undefined) {
   var carrouselDivId = "slides_carrousel";
@@ -16100,8 +16110,7 @@ VISH.SlideManager = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
-    $(document).trigger("OURDOMContentLoaded");
-    V.Editor.Thumbnails.redrawThumbnails()
+    $(document).trigger("OURDOMContentLoaded")
   };
   var dimentionToDraw = function(w_zone, h_zone, w_content, h_content) {
     var element_type;
