@@ -135,9 +135,9 @@ VISH.Utils = (function(V,undefined){
 		//Help function to autocomplete user inputs.
 		//Add HTTP if is not present.
 		var autocompleteUrls = function(input){
-      var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
+			var http_urls_pattern=/(^http(s)?:\/\/)/g
 			
-			if(input.match(www_urls_pattern)!=null){
+			if(input.match(http_urls_pattern)==null){
         return "http://" + input;
       } else {
 				return input;

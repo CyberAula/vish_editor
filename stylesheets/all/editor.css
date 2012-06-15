@@ -75,11 +75,11 @@ img {
 
 .previewimgbox {
 	position:absolute;
-	background: url(/images/imgprev.png);
-	margin-left: 65px;
-	margin-top: 25px;
-	width: 250px;
-	height: 250px;
+	background: url(/images/imgprev.png) no-repeat;
+  margin-left: 30px;
+	margin-top: 15px;
+  width: 370px;
+  height: 275px;
 	border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -110,7 +110,7 @@ img {
 
 .buttonaddfancy {
 	position:absolute;
-	margin-top: 86%;
+	margin-top: 67%;
 	margin-left: 145%;	
   display: inline;
 	text-decoration:none;
@@ -873,9 +873,11 @@ div.object_wrapper{
 	height: 100%;
 }
 
-.objectPreview {
+.objectPreview , .preview_video { 
 	max-width: 90%;
 	max-height: 90%;
+	min-width: 80%;
+  min-height: 80%;
 }
 
 
@@ -1016,7 +1018,7 @@ textarea {
 }
 
 .buttonaddfancy_extraMargin {
-	margin-left: 195%;
+	margin-left: 140%;
 }
 
 .documentblank_extraMargin {
