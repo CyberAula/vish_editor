@@ -6,17 +6,9 @@
 */
 
 .t1_header{
-<<<<<<< HEAD
-    float: left;
-    font-size: 17px;
-    height: 12%;
-    line-height: 20px;
-    margin-left: 6.8em;
-=======
 	float: left;
     height: 12%;
     margin-left: 6.9em;
->>>>>>> aebaeca045a89c94e2a72e39e154348dedfe6965
     margin-right: 2%;
     margin-top: 11px;
     overflow: hidden;
@@ -25,17 +17,9 @@
 }
 
 .t1_left{
-<<<<<<< HEAD
-	font-size: 24px;
-    height: 70%;
-    line-height: 15px;
-    margin-left: 4.8em;
-    margin-top: 0.6em;
-=======
     height: 63%;
     margin-left: 4.9em;
     margin-top: 1em;
->>>>>>> aebaeca045a89c94e2a72e39e154348dedfe6965
     overflow: hidden;
     padding-bottom: 0.3em;
     padding-top: 0.2em;
@@ -46,12 +30,7 @@
 .t1_subheader{
     float: left;
     height: 6%;
-<<<<<<< HEAD
-    line-height: 20px;
-    margin-left: 6.8em;
-=======
     margin-left: 6.9em;
->>>>>>> aebaeca045a89c94e2a72e39e154348dedfe6965
     margin-top: 12px;
     overflow: hidden;
     position: relative;
