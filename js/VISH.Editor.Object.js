@@ -510,7 +510,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			wrapperDiv.setAttribute('style', style);
 		}
 		$(wrapperDiv).addClass('object_wrapper');
-		$(wrapperDiv).addClass(template + "_object");
+		//$(wrapperDiv).addClass(template + "_object");
 
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);

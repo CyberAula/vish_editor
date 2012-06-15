@@ -6,23 +6,20 @@
 */
 
 .t1_header{
-	float: left;
-    height: 69%;
-    margin-left: 6.9em;
-    margin-right: 2%;
-    margin-top: 11px;
+    float: left;
+    height: 13%;
+    margin-left: 16%;
+    margin-top: 2%;
     overflow: hidden;
     position: relative;
     width: 68%;
 }
 
 .t1_left{
-    height: 63%;
-    margin-left: 4.9em;
-    margin-top: 1em;
+    height: 73%;
+    margin-left: 16%;
+    margin-top: 1%;
     overflow: hidden;
-    padding-bottom: 0.3em;
-    padding-top: 0.2em;
     position: relative;
     width: 68%;
 }
@@ -30,97 +27,27 @@
 .t1_subheader{
     float: left;
     height: 6%;
-    margin-left: 6.9em;
-    margin-top: 12px;
+    margin-left: 16%;
+    margin-top: 2%;
     overflow: hidden;
     position: relative;
     width: 68%;
 }
 
-.t1_text{
-	text-align: justify;
-	color: black;
-}
-
 .t1_image{
-	width: 300px;
+	border: none;
 }
 
 .t1_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t1_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t1_swf{
-	width: 100%;
-	height: 100%;
-}
-/*
-	TEMPLATE 1: "Espiritu minimalista"
-	by Víctor Sánchez
-
-	Tres bloques: título + texto + imágen;
-*/
-
-.t5_header{
-	padding-top: 10px;
- 	padding-bottom: .7em;
-	margin-top: -.2em ;
-	height: 30px;
-	width: 100%;
-	overflow:hidden;	
-	position: relative;
-}
-
-.t5_left{
-	margin-top:15px;
-	position:relative;
-	width: 48%;
-	height: 85%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	overflow:hidden;
-}
-
-.t5_right{
-	margin-top: 15px;
-	position:relative;
-	width: 48%;
-	height: 85%;
-	float: right;
-	overflow:hidden;
-}
-
-.t5_text{
-	text-align: justify;
-	color: black;
-}
-
-.t5_image{
-	width: 300px;
-}
-
-.t5_video{
-	max-width: 100%;
-	max-height: 100%;
-}
-
-.t5_object{
-	width: 100%;
-  height: 100%;
 	border: none;
-}
-
-.t5_swf{
-	width: 100%;
-	height: 100%;
 }
 
 /*
@@ -130,8 +57,8 @@
 	Dos elementos título + imágen fullscreen
 */
 
+
 .t2_left{
-	margin-top: -.2em;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
@@ -139,28 +66,23 @@
 }
 
 .t2_image{
-	width: 600px;
+	border: none;
 }
 
 .t2_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t2_object{
-	width: 100%;
-	height: 100%;
 	border: none;
 }
 
 .t2_applet{
-	width: 100%;
-	height: 100%;
+	border: none;
 }
 
 .t2_swf{
-	width: 100%;
-	height: 100%;
+	border: none;
 }
 
 .template_flashcard{
@@ -176,122 +98,42 @@
 */
 
 .t3_header{
-	padding-top: 15px;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
-	width: 98.5%;
+	height: 9%;
+	width: 100%;
 	overflow: hidden;
 	position: relative;
 }
 
 .t3_left{
-	margin-top:15px;
 	position:relative;
-	width: 98%;
-	height: 85%;
+	margin-top: 2%;
+	width: 100%;
+	height: 86%;
 	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
 	overflow:hidden;
 }
 
 .t3_image{
-	width: 600px;
+	border: none;
 }
 
 .t3_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t3_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t3_applet{
-	width: 100%;
-	height: 100%;
-}
-
-.t3_swf{
-	width: 100%;
-	height: 100%;
-}
-
-.template_flashcard{
-	width: 100%;
-	height: 100%;
-}
-
-/*
-	TEMPLATE 3: "3 blocks"
-	by Néstor Toribio
-
-	Cuatro Bloques: título + texto + imágen + texto;
-*/
-
-.t7_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
-	width: 100%;
-	overflow:hidden;	
-	position: relative;
-}
-
-.t7_left{
-	margin-top:11px;
-	position:relative;
-	width: 33%;
-	height: 89%;
-	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
-	overflow:hidden;	
-}
-
-.t7_center{
-	margin-top: 11px;
-	position:relative;
-	width: 64%;
-	height: 75%;
-	float: right;
-	overflow:hidden;	
-}
-.t7_subheader {
-	margin-top: 12px;
-	position:relative;
-	width: 64%;
-	height: 12%;
-	float: right;
-	overflow:hidden;	
-}
-
-.t7_text{
-	text-align: justify;
-	color: black;
-}
-
-.t7_image{
-	width: 300px;
-}
-
-.t7_video{
-	max-width: 100%;
-	max-height: 100%;
-}
-
-.t7_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
-.t7_swf{
+.t3_swf{
+	border: none;
+}
+
+.template_flashcard{
 	width: 100%;
 	height: 100%;
 }
@@ -304,58 +146,93 @@
 */
 
 .t4_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
+	height: 9%;
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
 }
 
 .t4_left{
-	margin-top:11px;
+	margin-top:2%;
 	position:relative;
 	width: 100%;
 	height: 65%;
 	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
 	overflow:hidden;	
 }
 
 .t4_right{
-	margin-top: 12px;
+	margin-top: 2%;
 	position:relative;
 	width: 100%;
-	height: 25%;
+	height: 24%;
 	float: left;
 	overflow:hidden;	
 }
 
-.t4_text{
-	text-align: justify;
-	color: black;
-}
-
 .t4_image{
-	width: 300px;
+	border: none;
 }
 
 .t4_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t4_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t4_swf{
+	border: none;
+}
+
+
+/*
+	TEMPLATE 1: "Espiritu minimalista"
+	by Víctor Sánchez
+
+	Tres bloques: título + texto + imágen;
+*/
+
+.t5_header{
+	height: 9%;
 	width: 100%;
-	height: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t5_left{
+	margin-top: 2%;
+	position:relative;
+	width: 48%;
+	height: 87%;
+	float: left;
+	overflow:hidden;
+}
+
+.t5_right{
+	margin-top: 2%;
+	position:relative;
+	width: 48%;
+	height: 87%;
+	float: right;
+	overflow:hidden;
+}
+
+.t5_image{
+	border: none;
+}
+
+.t5_video{
+	border: none;
+}
+
+.t5_object{
+	border: none;
+}
+
+.t5_swf{
+	border: none;
 }
 
 /*
@@ -366,68 +243,110 @@
 */
 
 .t6_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
+	height: 9%;
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
 }
 
 .t6_left{
-	margin-top:11px;
-	position:relative;
-	width: 30%;
-	height: 90%;
-	float: left;
-	border: 2px double transparent;
-	overflow:hidden;	
+    float: left;
+    height: 90%;
+    margin-top: 2%;
+    overflow: hidden;
+    position: relative;
+    width: 31%;
 }
 
 .t6_center{
-	margin-top:11px;
-	position:relative;
-	width: 33%;
-	height: 90%;
-	float: right;
-	border: 2px double transparent;
-	margin-left: 20px;
-	overflow:hidden;	
+    float: right;
+    height: 90%;
+    margin-top: 2%;
+    overflow: hidden;
+    position: relative;
+    width: 31%;	
 }
 .t6_right{
-	margin-top:11px;
-	position:relative;
-	width: 31%;
-	height: 90%;
-	float: right;
-	border: 2px double transparent;
-	overflow:hidden;		
-}
-
-.t6_text{
-	text-align: justify;
-	color: black;
+    float: left;
+    height: 90%;
+    margin-left: 2%;
+    margin-top: 2%;
+    overflow: hidden;
+    position: relative;
+    width: 34%;
 }
 
 .t6_image{
-	width: 300px;
+	border: none;
 }
 
 .t6_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t6_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t6_swf{
+	border: none;
+}
+
+
+/*
+	TEMPLATE 3: "3 blocks"
+	by Néstor Toribio
+
+	Cuatro Bloques: título + texto + imágen + texto;
+*/
+
+.t7_header{
+	height: 9%;
 	width: 100%;
-	height: 100%;
+	overflow:hidden;	
+	position: relative;
+}
+
+.t7_left{
+	margin-top:2%;
+	position:relative;
+	width: 33%;
+	height: 89%;
+	float: left;
+	overflow:hidden;	
+}
+
+.t7_center{
+	margin-top: 2%;
+	position:relative;
+	width: 63%;
+	height: 74%;
+	float: right;
+	overflow:hidden;	
+}
+.t7_subheader {
+	margin-top: 2%;
+	position:relative;
+	width: 63%;
+	height: 12%;
+	float: right;
+	overflow:hidden;	
+}
+
+.t7_image{
+	border: none;
+}
+
+.t7_video{
+	border: none;
+}
+
+.t7_object{
+	border: none;
+}
+
+.t7_swf{
+	border: none;
 }
 
 /*
@@ -438,132 +357,103 @@
 */
 
 .t8_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
+	height: 9%;
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
 }
 
 .t8_left{
-	margin-top:11px;
+	margin-top: 2%;
 	position:relative;
 	width: 33%;
 	height: 41%;
 	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
 	overflow:hidden;	
 }
 
 .t8_center{
-	margin-top: 11px;
+	margin-top: 2%;
 	position:relative;
 	width: 64%;
-	height: 90%;
+	height: 89%;
 	float: right;
 	overflow:hidden;	
 }
 .t8_right{
-	margin-top: 12px;
+	margin-top: 2%;
 	position:relative;
 	width: 33%;
-	height: 47%;
+	height: 45%;
 	float: left;
 	overflow:hidden;	
 }
 
-.t8_text{
-	text-align: justify;
-	color: black;
-}
-
 .t8_image{
-	width: 300px;
+	border: none;
 }
 
 .t8_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t8_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t8_swf{
-	width: 100%;
-	height: 100%;
+	border: none;
 }
 
 /*template 9*/
 
 .t9_header{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	height: 30px;
+	height: 9%;
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
 }
 
 .t9_left{
-	margin-top:11px;
+	margin-top: 2%;
 	position:relative;
-	width: 59%;
+	width: 62%;
 	height: 41%;
 	float: left;
-	border: 2px double transparent;
-	margin-right: 2%;
 	overflow:hidden;	
 }
 
 .t9_center{
-	margin-top: 11px;
+	margin-top: 2%;
 	position:relative;
-	width: 38%;
-	height: 90%;
+	width: 35%;
+	height: 89%;
 	float: right;
-	border: 2px double transparent;
 	overflow:hidden;	
 }
 .t9_right{
-	margin-top: 12px;
+	margin-top: 2%;
 	position:relative;
-	width: 59%;
-	height: 47%;
+	width: 62%;
+	height: 45%;
 	float: left;
-	overflow:hidden;
-}
-
-.t9_text{
-	text-align: justify;
-	color: black;
+	overflow:hidden;	
 }
 
 .t9_image{
-	width: 300px;
+	border: none;
 }
 
 .t9_video{
-	max-width: 100%;
-	max-height: 100%;
+	border: none;
 }
 
 .t9_object{
-	width: 100%;
-  height: 100%;
 	border: none;
 }
 
 .t9_swf{
-	width: 100%;
-	height: 100%;
+	border: none;
 }
 
 
@@ -574,7 +464,7 @@
 
 div.special {
     width    : 600px;
-    height   : 600px;
+    height   : 485px;
     overflow : hidden;
     position : relative;
 		margin-top: 60px;
@@ -583,10 +473,10 @@ div.special {
 
 iframe.special{
     position : absolute;
-    top      : -215px;
-    left     : -150px;
-    width    : 1280px;
-    height   : 1200px;
+    top      : -150px;
+    left     : -190px;
+    width    : 1280px !important;
+    height   : 1200px !important;
 		overflow: hidden;
 }
 
