@@ -155,6 +155,7 @@ VISH.Editor.Image = (function(V,$,undefined){
    * param style: optional param with the style, used in editing excursion
    */
   var drawImage = function(image_url, area, style){    
+
 	  var current_area;
 	  var image_width = 325;  //initial image width
 	  var image_style = "";
@@ -167,7 +168,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
   	if(style){
   		image_style = style;
-  		image_width = V.SlidesUtilities.getWidthFromStyle(style);
+  		image_width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
   	}
   	var template = VISH.Editor.getTemplate(); 
     var nextImageId = VISH.Editor.getId();
