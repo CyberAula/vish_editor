@@ -108,7 +108,7 @@ VISH.Renderer = (function(V,$,undefined){
 			body = VISH.Utils.getOuterHTML($(element['body']).addClass("special"));
 		}
 		
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+" "+template+"_object "+  special +"' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+ " " + special +"' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
 	

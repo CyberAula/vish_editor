@@ -11456,7 +11456,7 @@ Function.prototype.closureListener = function() {
 var nicEditorConfig = bkClass.extend({buttons:{"bold":{name:__("Click to Bold"), command:"Bold", tags:["B", "STRONG"], css:{"font-weight":"bold"}, key:"b"}, "italic":{name:__("Click to Italic"), command:"Italic", tags:["EM", "I"], css:{"font-style":"italic"}, key:"i"}, "underline":{name:__("Click to Underline"), command:"Underline", tags:["U"], css:{"text-decoration":"underline"}, key:"u"}, "left":{name:__("Left Align"), command:"justifyleft", noActive:true}, "center":{name:__("Center Align"), command:"justifycenter", 
 noActive:true}, "right":{name:__("Right Align"), command:"justifyright", noActive:true}, "justify":{name:__("Justify Align"), command:"justifyfull", noActive:true}, "ol":{name:__("Insert Ordered List"), command:"insertorderedlist", tags:["OL"]}, "ul":{name:__("Insert Unordered List"), command:"insertunorderedlist", tags:["UL"]}, "subscript":{name:__("Click to Subscript"), command:"subscript", tags:["SUB"]}, "superscript":{name:__("Click to Superscript"), command:"superscript", tags:["SUP"]}, "strikethrough":{name:__("Click to Strike Through"), 
 command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:"/assets/nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", "justify", 
-"ol", "ul", "fontSize", "fontFamily", "fontFormat", "indent", "outdent", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
+"ol", "ul", "fontSize", "fontFamily", "indent", "outdent", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
 var nicEditors = {nicPlugins:[], editors:[], registerPlugin:function(plugin, options) {
   this.nicPlugins.push({p:plugin, o:options})
 }, allTextAreas:function(nicOptions) {
@@ -12081,7 +12081,7 @@ var nicEditorSelect = bkClass.extend({construct:function(e, buttonName, options,
   this.ne.nicCommand(this.options.command, elm);
   this.close()
 }});
-var nicEditorFontSizeSelect = nicEditorSelect.extend({sel:{1:"1&nbsp;(8pt)", 2:"2&nbsp;(10pt)", 3:"3&nbsp;(12pt)", 4:"4&nbsp;(14pt)", 5:"5&nbsp;(18pt)", 6:"6&nbsp;(24pt)"}, init:function() {
+var nicEditorFontSizeSelect = nicEditorSelect.extend({sel:{1:"1&nbsp;(8pt)", 2:"2&nbsp;(10pt)", 3:"3&nbsp;(12pt)", 4:"4&nbsp;(14pt)", 5:"5&nbsp;(18pt)", 6:"6&nbsp;(24pt)", 7:"7&nbsp;(48pt)"}, init:function() {
   this.setDisplay("Font&nbsp;Size...");
   for(itm in this.sel) {
     this.add(itm, '<font size="' + itm + '">' + this.sel[itm] + "</font>")
@@ -13436,7 +13436,10 @@ VISH.Editor = function(V, $, undefined) {
                 if(element.type == "object") {
                   var object = $(div).find(".object_wrapper").children()[0];
                   element.body = VISH.Utils.getOuterHTML(object);
-                  element.style = _getStylesInPercentages($(div), $(object).parent())
+                  element.style = _getStylesInPercentages($(div), $(object).parent());
+                  if($(object).hasClass("specialIframe")) {
+                    element.special = true
+                  }
                 }else {
                   if(element.type == "openquestion") {
                     element.title = $(div).find(".title_openquestion").val();
@@ -14034,7 +14037,6 @@ VISH.Editor.Object = function(V, $, undefined) {
       wrapperDiv.setAttribute("style", style)
     }
     $(wrapperDiv).addClass("object_wrapper");
-    $(wrapperDiv).addClass(template + "_object");
     var wrapperTag = $(wrapper);
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
@@ -14061,8 +14063,8 @@ VISH.Editor.Object = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'Insert text here<div><br></div><div><font size="6">hola</font></div><div><font size="6"><br></font></div><div><font size="1">lolca</font></div>'}, 
-  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t1", "elements":[{"id":"zone4", "type":"text", 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<span class="vish-font1">Insert text here</span><div><span class="vish-font2">gsdfgfgsfg</span></div><div><span class="vish-font3">fadfadfadf</span></div><div><span class="vish-font4">adfadfasdf</span></div><div><span class="vish-font5">adfadfadf</span></div><div><span class="vish-font6">adfadfasdfaf</span></div>'}, 
+  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", 
   "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", 
   "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
@@ -15215,14 +15217,17 @@ VISH.Editor.Text = function(V, $, undefined) {
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>" + initial_text + "</div>");
+    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'><div><font size='3'>" + initial_text + "</font></div></div>");
     myNicEditor.addInstance(wysiwygId);
     V.Editor.addDeleteButton(current_area)
   };
   var changeFontSizeToRelative = function(zone) {
-    $(zone).find("font").replaceWith(function() {
-      var size = $(this).attr("size");
-      return"<span class='vish-font" + size + "'>" + $(this).html() + "</span>"
+    $(zone).find("font").each(function(index, elem) {
+      var size = $(elem).attr("size");
+      var sel = {"arial":"arial", "comic sans ms":"comic", "courier new":"courier", "georgia":"georgia", "helvetica":"helvetica", "impact":"impact", "times new roman":"times", "trebuchet ms":"trebuchet", "verdana":"verdana"};
+      var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")] : "arial";
+      $(elem).closest("div").addClass("vish-parent-font" + size);
+      $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "'>" + $(elem).html() + "</span>")
     });
     return $(zone).html()
   };
@@ -15883,7 +15888,12 @@ VISH.Renderer = function(V, $, undefined) {
   };
   var _renderObject = function(element, template) {
     var style = element["style"] ? element["style"] : "";
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + template + "_object" + "' objectStyle='" + style + "' objectWrapper='" + element["body"] + "'>" + "" + "</div>"
+    var body = element["body"];
+    if(element["special"]) {
+      var special = "special";
+      body = VISH.Utils.getOuterHTML($(element["body"]).addClass("special"))
+    }
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + special + "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
