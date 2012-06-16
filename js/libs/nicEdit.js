@@ -1210,9 +1210,8 @@ var nicColorOptions = {
 var nicEditorColorButton=nicEditorAdvancedButton.extend({
 	addPane:function(){
 		//Modified by KIKE to add our own colors XXX
-		var D={0:"#FF005D",1:"#0066FF",2:"#ADADAD",3:"#000000",4:"#FFFFFF",5:"#BBCCDD"};
+		var D={0:"transparent",1:"#ffffff",2:"#201815",3:"#BF0310",4:"#008F44",5:"#009ADA",6:"#001C7D",7:"#BA007C",8:"#A01127",9:"#C54832",10:"#CB6120",11:"#DB9600",12:"#E5B449",13:"#F7EC45",14:"#DDDC1C",15:"#A2BD31",16:"#70A73A",17:"#4F8E3A",18:"#326534",19:"#6EAA6E",20:"#5EA099",21:"#75AADB",22:"#4A72B1",23:"#002D81",24:"#001A5A",25:"#57157D",26:"#7B047D",27:"#840E5A",28:"#B10052",29:"#BF3276",30:"#C4BA9E",31:"#9B897A",32:"#716858",33:"#584E40",34:"#BC9D6C",35:"#A27F51",36:"#82613C",37:"#6D5128",38:"#5A3F09",39:"#3B2B16",40:"#434142",41:"#5B5B5E",42:"#717175",43:"#86858A",44:"#9A999D",45:"#ADADB2",46:"#C2C3C8",47:"#D7D8DC",48:"#ECEDEF"};
 		var H=new bkElement("DIV").setStyle({width:"270px"});
-
 		for(var A in D) {			
 					var I = D[A];
 					var C = new bkElement("DIV").setStyle({
