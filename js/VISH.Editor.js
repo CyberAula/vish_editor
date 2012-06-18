@@ -769,6 +769,7 @@ VISH.Editor = (function(V,$,undefined){
 	      $('#joyride_help_button').remove();
 	      $('.theslider').remove();
 	      $(".nicEdit-panelContain").remove();
+	      $("#menubar-viewer").show();
 	      V.SlideManager.init(excursion);
 			}	else if (VISH.Debugging.getActionSave()=="edit") {
 				$('article').remove();
