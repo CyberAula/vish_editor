@@ -801,7 +801,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _getStylesInPercentages = function(parent, element){
 		var WidthPercent = element.width()*100/parent.width();
-		var HeightPercent = element.height()*100/parent.width();
+		var HeightPercent = element.height()*100/parent.height();
     var TopPercent = element.position().top*100/parent.height();
     var LeftPercent = element.position().left*100/parent.width();
     return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
