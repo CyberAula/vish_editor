@@ -1,17 +1,20 @@
 VISH.Editor.Video = (function(V,$,undefined){
 		
+	var urlDivId = "tab_video_from_url_content";	
+	var urlInputId = "video_url";
+		
 	var init = function(){
 		VISH.Editor.Video.HTML5.init();
 		VISH.Editor.Video.Repository.init();
 		VISH.Editor.Video.Youtube.init();
 		VISH.Editor.Video.Vimeo.init();
 
-    var urlInput = $("#tab_video_from_url_content").find("input");
+    var urlInput = $("#" + urlInputId);
     $(urlInput).watermark('Paste video URL');
     
     $("#tab_video_from_url_content .previewButton").click(function(event) {
       if(VISH.Police.validateObject($(urlInput).val())[0]){
-        contentToAdd = $(urlInput).val();
+				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
       } else {
         contentToAdd = null;

@@ -17,7 +17,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//Load from URL
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = $("#" + urlInputId).val()
+				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         drawPreview(urlDivId, contentToAdd)    
       }
     });
@@ -259,7 +259,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
     var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
     var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9]+))|((www.youtube.com\/((watch\?v=)|(embed\/)))([aA-z0-9Z&=.])+))/g 
-    var html5VideoFormats = ["mp4","webm","ogg"]        
+    var html5VideoFormats = ["mp4","webm","ogg"]  
     var imageFormats = ["jpg","jpeg","png","gif","bmp"]
 		
 		if(typeof source != "string"){
@@ -427,6 +427,8 @@ VISH.Editor.Object = (function(V,$,undefined){
    */
 	var drawObject = function(object, area, style){	
 			
+		console.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
 		}
@@ -439,7 +441,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	  	current_area = VISH.Editor.getCurrentArea();
 	 	}
 		if(style){
-	  		object_style = style;	  		
+	  		object_style = style;
 	 	}
 		
 		var objectInfo = getObjectInfo(object);
@@ -510,7 +512,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			wrapperDiv.setAttribute('style', style);
 		}
 		$(wrapperDiv).addClass('object_wrapper');
-		//$(wrapperDiv).addClass(template + "_object");
 
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
@@ -527,7 +528,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//RESIZE
 		var width, value;
 		if(style){
-		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
 		   value = 10*width/$(current_area).width();
 		}	else {			
 			value = 10; //we set it to the maximum value

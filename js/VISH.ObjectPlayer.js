@@ -6,7 +6,7 @@ VISH.ObjectPlayer = (function(){
 	 */
 	var loadObject = function(element){
 		$.each(element.children('.objectelement'),function(index,value){
-			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper")+ "</div>");
+			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper") + "</div>");
 		});
 	};
 

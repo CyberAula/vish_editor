@@ -87,8 +87,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 */
 	var _setupSize = function(){
-		var article = $(".slides").find("article").first();
-		var initialH = article.height();
 		var height = $(window).height()-40; //the height to use is the window height - 40px that is the menubar height
 		var width = $(window).width();
 		var finalW = 800;
@@ -114,10 +112,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
-		var increase = finalH/initialH;
-		$(".slides > article").css("font-size", 30*increase + "px");
-		$(".slides > article").css("line-height", 36*increase + "px");
-		$(".slides > article").css("letter-spacing", -1*increase + "px");
+		var increase = finalH/600;
+		$(".slides > article").css("font-size", 16*increase + "px");
+		$(".slides > article").css("line-height", 16*increase + "px");
+		/*$(".slides > article").css("letter-spacing", 1*increase + "px");*/
 	};
 	
 	/**

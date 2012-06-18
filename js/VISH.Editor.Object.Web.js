@@ -11,7 +11,7 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 		//Load from URL
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-        contentToAdd = $("#" + urlInputId).val()
+				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)    
       }
     });

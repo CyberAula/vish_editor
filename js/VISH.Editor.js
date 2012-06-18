@@ -15,6 +15,10 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	
+	//Prevent to load events multiple times.
+	var eventsLoaded = false;
+	
+	
 	/**
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
@@ -35,14 +39,23 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(options){
 			initOptions = options;
-			if(options['developping']==true){
+			if((options['developping']==true)&&(VISH.Debugging)){
 				VISH.Debugging.init(true);
 			}
 		}	else {
 			initOptions = {};
 		}
 		
-		//if we have to edit
+		
+		if ((VISH.Debugging)&&(VISH.Debugging.isDevelopping())) {
+      //Vish: OnInit Debug actions
+      if (VISH.Debugging.getActionInit() == "loadSamples") {
+        excursion = VISH.Debugging.getExcursionSamples();
+      }
+    }
+		
+		
+		//If we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
 			excursionDetails.title = excursion.title;
@@ -59,64 +72,72 @@ VISH.Editor = (function(V,$,undefined){
 			'width': 800,
     		'height': 600,
     		'padding': 0
-    	});
-    	$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-    	$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);		
-		  $(document).on('click','.templatethumb', _onTemplateThumbClicked);
-		  $(document).on('click','#save', _onSaveButtonClicked);
-		  $(document).on('click','.editable', _onEditableClicked);
-		  $(document).on('click','.selectable', _onSelectableClicked);
-		  $(document).on('click','.delete_content', _onDeleteItemClicked);
-		  $(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		  //arrows in button panel
-		  $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-		  $(document).on('click','#arrow_right_div', _onArrowRightClicked);
+    });
 		
-		  //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-		  _addEditorEnterLeaveEvents();
-		
-		  V.SlidesUtilities.redrawSlides();
-		
-		  addEventListeners(); //comes from slides.js to be called only once
-		
-			if(excursion){
-				//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-				$('.object_wrapper').hide()
-			}
-		
-			//Init submodules
-			V.Editor.Text.init();
-			V.Editor.Image.init();
-			V.Editor.Video.init();
-			V.Editor.Object.init();
-			V.Editor.Thumbnails.init();
-			V.Editor.AvatarPicker.init();
-			V.Editor.I18n.init(options["lang"]);
-			V.Editor.Quiz.init();
+		if(!eventsLoaded){
+			eventsLoaded = true;
 			
-			// Intial box to input the details related to the excursion
-			$("a#edit_excursion_details").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 660,
-				'padding': 0,
-				'hideOnOverlayClick': false,
-	      'hideOnContentClick': false,
-				'showCloseButton': false
-			});
-			//Request initial tags for excursion details form
-			VISH.Editor.API.requestTags(_onInitialTagsReceived)
-			
-			// The box is launched when the page is loaded
-			if(excursion === undefined){
-				$("#edit_excursion_details").trigger('click');
-			}
-			//Remove overflow from fancybox
-	//		$($("#fancybox-content").children()[0]).css('overflow','hidden')
+			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
+      $(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
+      $(document).on('click','.templatethumb', _onTemplateThumbClicked);
+      $(document).on('click','#save', _onSaveButtonClicked);
+      $(document).on('click','.editable', _onEditableClicked);
+      $(document).on('click','.selectable', _onSelectableClicked);
+      $(document).on('click','.delete_content', _onDeleteItemClicked);
+      $(document).on('click','.delete_slide', _onDeleteSlideClicked);
+      //arrows in button panel
+      $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+      $(document).on('click','#arrow_right_div', _onArrowRightClicked);
+    
+      //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+      _addEditorEnterLeaveEvents();
+    
+      V.SlidesUtilities.redrawSlides();
+      V.Editor.Thumbnails.redrawThumbnails();
+    
+      addEventListeners(); //comes from slides.js to be called only once
+      
 			//if click on begginers tutorial->launch it
-			_addTutorialEvents();
+      _addTutorialEvents();
+		}
+
+		
+		if(excursion){
+			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide()
+		}
+		
+		//Init submodules
+		V.Editor.Text.init();
+		V.Editor.Image.init();
+		V.Editor.Video.init();
+		V.Editor.Object.init();
+		V.Editor.Thumbnails.init();
+		V.Editor.AvatarPicker.init();
+		V.Editor.I18n.init(options["lang"]);
+		V.Editor.Quiz.init();
 			
+		// Intial box to input the details related to the excursion
+		$("a#edit_excursion_details").fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': 800,
+			'height': 660,
+			'padding': 0,
+			'hideOnOverlayClick': false,
+      'hideOnContentClick': false,
+			'showCloseButton': false
+		});
+		
+		//Request initial tags for excursion details form
+		VISH.Editor.API.requestTags(_onInitialTagsReceived)
+		
+		// The box is launched when the page is loaded
+		if(excursion === undefined){
+			VISH.Editor.AvatarPicker.onLoadExcursionDetails();
+			$("#edit_excursion_details").trigger('click');
+		}
+		
 	};
 	
 	
@@ -417,9 +438,10 @@ VISH.Editor = (function(V,$,undefined){
 		
 		$.fancybox.close();
 		
-		V.SlidesUtilities.redrawSlides();
-		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
+		V.SlidesUtilities.redrawSlides();		
+		V.Editor.Thumbnails.redrawThumbnails();
 		
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);		
 	};
 
 	/**
@@ -554,7 +576,8 @@ VISH.Editor = (function(V,$,undefined){
 						if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
 							curSlide -=1;
 						}					
-						V.SlidesUtilities.redrawSlides();			
+						V.SlidesUtilities.redrawSlides();						
+		  				V.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 		  }
@@ -689,7 +712,7 @@ VISH.Editor = (function(V,$,undefined){
           element.areaid = $(div).attr('areaid');
                    
           if(element.type=="text"){
-            element.body   = V.Editor.Text.changeFontSizeToRelative($(div).find(".wysiwygInstance"));
+            element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
           } else if(element.type=="image"){
             element.body   = $(div).find('img').attr('src');
             element.style  = _getStylesInPercentages($(div), $(div).find('img'));
@@ -710,11 +733,10 @@ VISH.Editor = (function(V,$,undefined){
 							element.sources = sources;
 		      } else if(element.type=="object"){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
+							$(object).removeAttr("style");
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
-							if($(object).hasClass("specialIframe")){
-								element.special = true
-							}
+							element.aspectRatio  = _getAspectRatio($(object));
 		      } else if (element.type=="openquestion") {	   
 		      	element.title   = $(div).find(".title_openquestion").val();
 		        element.question   = $(div).find(".value_openquestion").val();
@@ -736,63 +758,67 @@ VISH.Editor = (function(V,$,undefined){
     var jsonexcursion = JSON.stringify(excursion);
     VISH.Debugging.log(jsonexcursion);
     
-    /*
-    $('article').remove();
-    $('#menubar').remove();
-		$('#menubar_helpsection').remove();
-		$('#joyride_help_button').remove();
-    $('.theslider').remove();
-    $(".nicEdit-panelContain").remove();  
-    V.SlideManager.init(excursion);
-    */
-    
-    
-    //POST to http://server/excursions/
-    var params = {
-      "excursion[json]": jsonexcursion,
-      "authenticity_token" : initOptions["token"]
-    }
-    
-    var send_type;
-    if(excursion_to_edit){
-     	send_type = 'PUT'; //if we are editing
-    }
-    else{
-    	send_type = 'POST'; //if it is a new
-    }    
-    
-    $.ajax({
-    	type    : send_type,
-    	url     : initOptions["postPath"],
-    	data    : params,
-    	success : function(data) {
-    		/* If we present the received data
-    		$('article').remove();
-    		$('#menubar').remove();
-    		$('.theslider').remove();
-    		$(".nicEdit-panelContain").remove();  
-        
-        	$('#excursion_iframe', window.parent.document).height("680"); //to resize the iframe
-        	
-        	V.SlideManager.init(data);
-        	*/
-        	/*if we redirect the parent frame*/
-        	window.top.location.href = data.url;
-        	 
-    	}    	
-    });
-    	          
+				
+		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
+			//Vish: OnSave Debug actions
+			
+			if(VISH.Debugging.getActionSave()=="view"){
+				$('article').remove();
+	      $('#menubar').remove();
+	      $('#menubar_helpsection').remove();
+	      $('#joyride_help_button').remove();
+	      $('.theslider').remove();
+	      $(".nicEdit-panelContain").remove();
+	      V.SlideManager.init(excursion);
+			}	else if (VISH.Debugging.getActionSave()=="edit") {
+				$('article').remove();
+        var options = {};
+        options["developping"] = true;
+        V.Editor.init(options, excursion);  //to edit the excursion
+			}
+			
+		} else {
+			//Vish: OnSave Production actions
+			
+			var send_type;
+      if(excursion_to_edit){
+        send_type = 'PUT'; //if we are editing
+      } else {
+        send_type = 'POST'; //if it is a new
+      } 
+			
+	    //POST to http://server/excursions/
+	    var params = {
+	      "excursion[json]": jsonexcursion,
+	      "authenticity_token" : initOptions["token"]
+	    }
+	    
+	    $.ajax({
+	      type    : send_type,
+	      url     : initOptions["postPath"],
+	      data    : params,
+	      success : function(data) {
+	          /*if we redirect the parent frame*/
+	          window.top.location.href = data.url;
+	      }     
+      });	
+	  }	 	          
   };
 	
 	/**
 	 * function to get the styles in percentages
 	 */
 	var _getStylesInPercentages = function(parent, element){
-		var WidthPercent = element.width()*100/parent.width(); 
-        var TopPercent = element.position().top*100/parent.height();
-        var LeftPercent = element.position().left*100/parent.width();
-        return "position: relative; width:" + WidthPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
+		var WidthPercent = element.width()*100/parent.width();
+		var HeightPercent = element.height()*100/parent.height();
+    var TopPercent = element.position().top*100/parent.height();
+    var LeftPercent = element.position().left*100/parent.width();
+    return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
+	
+	var _getAspectRatio = function(element){
+		return element.width()/element.height();
+	}
 	
 	/**
 	 * Function to move the slides left one item

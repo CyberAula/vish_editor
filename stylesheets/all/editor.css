@@ -75,11 +75,11 @@ img {
 
 .previewimgbox {
 	position:absolute;
-	background: url(/images/imgprev.png);
-	margin-left: 65px;
-	margin-top: 25px;
-	width: 250px;
-	height: 250px;
+	background: url(/images/imgprev.png) no-repeat;
+  margin-left: 30px;
+	margin-top: 15px;
+  width: 370px;
+  height: 275px;
 	border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -110,7 +110,7 @@ img {
 
 .buttonaddfancy {
 	position:absolute;
-	margin-top: 86%;
+	margin-top: 67%;
 	margin-left: 145%;	
   display: inline;
 	text-decoration:none;
@@ -379,7 +379,6 @@ img {
 	border: 1px solid transparent;
 	width: 100px;
 	height: 75px;
-	background-color: rgb(240,240,240);
 	margin: 16px 11px 6px 16px;
 	float: left;
 	color: black;
@@ -395,13 +394,13 @@ img {
 }
 
 .templatethumb:hover{
-	border: 1px solid rgb(255, 2, 94);
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	border: 1px solid rgba(255, 2, 94, 0.2);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.065), 0 0 8px rgba(255, 100, 100, 0.2);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.065), 0 0 8px rgba(255, 100, 100, 0.2);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.065), 0 0 8px rgba(255, 100, 100, 0.2);
+	border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
 	outline: 0;
 	outline: thin dotted \9;	
 }
@@ -874,9 +873,11 @@ div.object_wrapper{
 	height: 100%;
 }
 
-.objectPreview {
+.objectPreview , .preview_video { 
 	max-width: 90%;
 	max-height: 90%;
+	min-width: 80%;
+  min-height: 80%;
 }
 
 
@@ -1017,7 +1018,7 @@ textarea {
 }
 
 .buttonaddfancy_extraMargin {
-	margin-left: 195%;
+	margin-left: 140%;
 }
 
 .documentblank_extraMargin {

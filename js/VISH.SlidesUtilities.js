@@ -8,7 +8,7 @@ VISH.SlidesUtilities = (function(V,$,undefined){
 		
 		$(document).trigger('OURDOMContentLoaded');
 		
-		V.Editor.Thumbnails.redrawThumbnails();
+		//V.Editor.Thumbnails.redrawThumbnails();
   };
     
 /*
@@ -104,20 +104,42 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
   	goToSlide(curSlide+2);
   };
 	
+	
 	/**
-	 * function to get width in pixels from a style attribute
-	 */
-	var getWidthFromStyle = function(style){
-		var width;
-		$.each(style.split(";"), function(index, property){  //split style string by ";"
-  			//look for property starting by width
-  			if(property.indexOf("width") !== -1){
-  				width = parseFloat(property.substring(property.indexOf("width")+7, property.indexOf("px"))); 
-  				//TODO what happens is not a float, check that it does not die
-  			}  			
-  		});
-  		return width;
-	};
+   * Function to get width in pixels from a style attribute.
+   * If widht attribute is given by percent, area (parent container) attribute is needed.
+   */
+  var getWidthFromStyle = function(style,area){
+    var width=null;
+		var width_percent_pattern = /width:\s?([0-9]+\.?[0-9]+)%/g
+		var width_px_pattern = /width:\s?([0-9]+\.?[0-9]+)px/g
+		
+    $.each(style.split(";"), function(index, property){
+        //Look for property starting by width
+        if(property.indexOf("width") !== -1){
+					
+					if(property.match(width_px_pattern)){
+						//Width defined in px.
+						var result = width_px_pattern.exec(property);
+						if(result[1]){
+              width = result[1];
+							return width;
+            }
+					} else if(property.match(width_percent_pattern)){
+						//Width defined in %.
+						var result = width_percent_pattern.exec(property);
+						if(result[1]){
+							var percent = result[1];
+							if(area){
+								width = $(area).width()*percent/100;
+								return width;
+							}
+						}
+					}
+        } 
+    });
+    return width;
+  };
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed

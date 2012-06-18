@@ -106,7 +106,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 
   var renderVideoFromSources = function(sources){
     var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
-    var rendered = "<video class='preview_video objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
+    var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
        rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";
     });   
