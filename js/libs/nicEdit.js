@@ -1227,7 +1227,7 @@ var nicEditorColorButton=nicEditorAdvancedButton.extend({
 						overflow : "hidden",
 						width : "11px",
 						height : "11px"
-					}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).appendTo(G);
+					}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to "+I}).appendTo(G);
 					if(!window.opera) {
 						C.onmousedown = B.onmousedown = bkLib.cancelEvent
 					}				
