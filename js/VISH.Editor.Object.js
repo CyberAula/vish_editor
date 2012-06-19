@@ -10,6 +10,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		VISH.Editor.Object.Repository.init();
 		VISH.Editor.Object.Live.init();
 		VISH.Editor.Object.Web.init();
+		VISH.Editor.Object.PDF.init();
 		
 	  var urlInput = $(urlDivId ).find("input");
 	  $(urlInput).watermark('Paste SWF file URL');

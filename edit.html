@@ -948,8 +948,8 @@
 	<script type="text/javascript" src="js/VISH.Editor.AvatarPicker.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Quiz.js"></script>
-	<script type="text/javascript" src="js/lang/translations.es.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Tour.js"></script>
+	<script type="text/javascript" src="js/VISH.Configuration.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.js"></script>
 	<script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
@@ -960,6 +960,8 @@
 	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.loader.js"></script>
 	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.player.js"></script>
 	<script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
+	
+	<script type="text/javascript" src="js/lang/translations.es.js"></script>
 	
 	<script type="text/javascript" src="js/libs/slides.js"></script>
 	
@@ -976,6 +978,7 @@
 				options["lang"] = lang;
 			}
 			options["developping"] = true;
+			options["configuration"] = configuration;
 			
 		  VISH.Editor.init(options);
 		}

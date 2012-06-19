@@ -33,7 +33,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
 		}
-		
+
 		//first set VISH.Editing to true
 		VISH.Editing = true;
 		
@@ -41,20 +41,19 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = options;
 			if((options['developping']==true)&&(VISH.Debugging)){
 				VISH.Debugging.init(true);
+	      if (VISH.Debugging.getActionInit() == "loadSamples") {
+	        excursion = VISH.Debugging.getExcursionSamples();
+	      }
 			}
+			if((options["configuration"])&&(VISH.Configuration)){
+        VISH.Configuration.init(options["configuration"]);
+				VISH.Configuration.applyConfiguration();
+      }
 		}	else {
 			initOptions = {};
 		}
 		
-		
-		if ((VISH.Debugging)&&(VISH.Debugging.isDevelopping())) {
-      //Vish: OnInit Debug actions
-      if (VISH.Debugging.getActionInit() == "loadSamples") {
-        excursion = VISH.Debugging.getExcursionSamples();
-      }
-    }
-		
-		
+
 		//If we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
@@ -117,25 +116,32 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
 			
-		// Intial box to input the details related to the excursion
-		$("a#edit_excursion_details").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 800,
-			'height': 660,
-			'padding': 0,
-			'hideOnOverlayClick': false,
-      'hideOnContentClick': false,
-			'showCloseButton': false
-		});
-		
-		//Request initial tags for excursion details form
-		VISH.Editor.API.requestTags(_onInitialTagsReceived)
-		
-		// The box is launched when the page is loaded
-		if(excursion === undefined){
-			VISH.Editor.AvatarPicker.onLoadExcursionDetails();
-			$("#edit_excursion_details").trigger('click');
+			
+		if (VISH.Configuration.getConfiguration()["presentationSettings"]){
+			// Intial box to input the details related to the excursion
+	    $("a#edit_excursion_details").fancybox({
+	      'autoDimensions' : false,
+	      'scrolling': 'no',
+	      'width': 800,
+	      'height': 660,
+	      'padding': 0,
+	      'hideOnOverlayClick': false,
+	      'hideOnContentClick': false,
+	      'showCloseButton': false
+	    });
+			
+			if(VISH.Configuration.getConfiguration()["presentationTags"]){
+				//Request initial tags for excursion details form
+	      VISH.Editor.API.requestTags(_onInitialTagsReceived);
+				if(excursion === undefined){
+          VISH.Editor.AvatarPicker.onLoadExcursionDetails();
+        }
+			}
+			
+		  // The box is launched when the page is loaded
+      if(excursion === undefined){
+        $("#edit_excursion_details").trigger('click');
+      }
 		}
 		
 	};
@@ -432,7 +438,7 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		VISH.Debugging.log("slide es: " + slide );
+		//VISH.Debugging.log("slide es: " + slide );
 				
 		V.SlidesUtilities.addSlide(slide);
 		
@@ -786,28 +792,33 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			//Vish: OnSave Production actions
 			
-			var send_type;
-      if(excursion_to_edit){
-        send_type = 'PUT'; //if we are editing
-      } else {
-        send_type = 'POST'; //if it is a new
-      } 
-			
-	    //POST to http://server/excursions/
-	    var params = {
-	      "excursion[json]": jsonexcursion,
-	      "authenticity_token" : initOptions["token"]
-	    }
-	    
-	    $.ajax({
-	      type    : send_type,
-	      url     : initOptions["postPath"],
-	      data    : params,
-	      success : function(data) {
-	          /*if we redirect the parent frame*/
-	          window.top.location.href = data.url;
-	      }     
-      });	
+			if(VISH.Configuration.getConfiguration()["VishIntegration"]){
+				var send_type;
+	      if(excursion_to_edit){
+	        send_type = 'PUT'; //if we are editing
+	      } else {
+	        send_type = 'POST'; //if it is a new
+	      } 
+	      
+	      //POST to http://server/excursions/
+	      var params = {
+	        "excursion[json]": jsonexcursion,
+	        "authenticity_token" : initOptions["token"]
+	      }
+	      
+	      $.ajax({
+	        type    : send_type,
+	        url     : initOptions["postPath"],
+	        data    : params,
+	        success : function(data) {
+	            /*if we redirect the parent frame*/
+	            window.top.location.href = data.url;
+	        }     
+	      }); 
+			} else {
+				//Save to file its not possible... upload to another server? [...]
+				
+			}
 	  }	 	          
   };
 	
