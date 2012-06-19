@@ -20,7 +20,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		$('article').each(function(index,s){
           var template = $(s).attr('template');
 					carrouselElements += 1;
-					carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
+					carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
 					carrouselImagesTitles.push(carrouselElements)
     });
 		
@@ -32,7 +32,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			//Fill with default
 			var i;
 	    for(i=0+carrouselElements;i<8;i++){
-	      carrouselImages.push($("<img class='image_barbutton' action='default' src='" + VISH.ImagesPath + "templatesthumbs/default.png' />"));
+	      carrouselImages.push($("<img class='image_barbutton empty_slide_button' action='default' src='" + VISH.ImagesPath + "templatesthumbs/default.png' />"));
 				carrouselElements += 1;
 	    }
 		}
@@ -42,8 +42,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
    };
 	 
 	 
-	 var _onImagesLoaded = function(){
-	 	
+	 var _onImagesLoaded = function(){	
 		//Add button events
 		$(".add_slide_button").hover(
       function () {
@@ -72,7 +71,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	
 	
 	var _onClickCarrouselElement = function(event){
-		
 		switch($(event.target).attr("action")){
 			case "plus":
 				$("#addSlideFancybox").trigger('click');
@@ -90,8 +88,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
    * function to select the thumbnail
    */
   var selectThumbnail = function(no){
-  		$(".barbutton").css("background-color", "transparent");
-			$(".image_barbutton[slideNumber=" + no + "]").css("background-color", "transparent");
+		$(".image_barbutton").removeClass("selectedThumbnail");
+		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedThumbnail");
   };
 	
 	var goToThumbnail = function(no){

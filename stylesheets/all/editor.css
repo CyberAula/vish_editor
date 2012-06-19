@@ -1362,3 +1362,26 @@ textarea {
 	position: absolute;
 	pointer-events: none;
 }
+
+
+div.iframe_wrapper{
+	border: 10px #9E1F63 solid;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  position : relative;
+}
+
+iframe.iframe_content{
+	border: none;
+	position : absolute;
+	width    : 1200px;
+  height   : 12000px;
+	overflow: hidden;
+	/**
+	width: 100%;
+  height: 100%;
+  top      : -100px;
+  left     : -100px;
+  **/
+}

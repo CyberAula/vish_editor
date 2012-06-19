@@ -577,7 +577,7 @@ VISH.Editor = (function(V,$,undefined){
 							curSlide -=1;
 						}					
 						V.SlidesUtilities.redrawSlides();						
-		  				V.Editor.Thumbnails.redrawThumbnails();			
+		  			V.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 		  }
