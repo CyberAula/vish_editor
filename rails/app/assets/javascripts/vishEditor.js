@@ -12124,19 +12124,16 @@ var nicLinkButton = nicEditorAdvancedButton.extend({addPane:function() {
 nicEditors.registerPlugin(nicPlugin, nicLinkOptions);
 var nicColorOptions = {buttons:{"forecolor":{name:__("Change Text Color"), type:"nicEditorColorButton", noClose:true}, "bgcolor":{name:__("Change Background Color"), type:"nicEditorBgColorButton", noClose:true}}};
 var nicEditorColorButton = nicEditorAdvancedButton.extend({addPane:function() {
-  var D = {"0":"00", 1:"33", 2:"66", 3:"99", 4:"CC", 5:"FF"};
+  var D = {"0":"transparent", 1:"#ffffff", 2:"#201815", 3:"#BF0310", 4:"#008F44", 5:"#009ADA", 6:"#001C7D", 7:"#BA007C", 8:"#A01127", 9:"#C54832", 10:"#CB6120", 11:"#DB9600", 12:"#E5B449", 13:"#F7EC45", 14:"#DDDC1C", 15:"#A2BD31", 16:"#70A73A", 17:"#4F8E3A", 18:"#326534", 19:"#6EAA6E", 20:"#5EA099", 21:"#75AADB", 22:"#4A72B1", 23:"#002D81", 24:"#001A5A", 25:"#57157D", 26:"#7B047D", 27:"#840E5A", 28:"#B10052", 29:"#BF3276", 30:"#C4BA9E", 31:"#9B897A", 32:"#716858", 33:"#584E40", 34:"#BC9D6C", 35:"#A27F51", 
+  36:"#82613C", 37:"#6D5128", 38:"#5A3F09", 39:"#3B2B16", 40:"#434142", 41:"#5B5B5E", 42:"#717175", 43:"#86858A", 44:"#9A999D", 45:"#ADADB2", 46:"#C2C3C8", 47:"#D7D8DC", 48:"#ECEDEF"};
   var H = (new bkElement("DIV")).setStyle({width:"270px"});
   for(var A in D) {
-    for(var F in D) {
-      for(var E in D) {
-        var I = "#" + D[A] + D[E] + D[F];
-        var C = (new bkElement("DIV")).setStyle({cursor:"pointer", height:"15px", "float":"left"}).appendTo(H);
-        var G = (new bkElement("DIV")).setStyle({border:"2px solid " + I}).appendTo(C);
-        var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).appendTo(G);
-        if(!window.opera) {
-          C.onmousedown = B.onmousedown = bkLib.cancelEvent
-        }
-      }
+    var I = D[A];
+    var C = (new bkElement("DIV")).setStyle({cursor:"pointer", height:"15px", "float":"left"}).appendTo(H);
+    var G = (new bkElement("DIV")).setStyle({border:"2px solid " + I}).appendTo(C);
+    var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).appendTo(G);
+    if(!window.opera) {
+      C.onmousedown = B.onmousedown = bkLib.cancelEvent
     }
   }
   this.pane.append(H.noSelect())
@@ -13046,7 +13043,15 @@ VISH.Utils = function(V, undefined) {
   var getURLParameter = function(name) {
     return decodeURIComponent((location.search.match(RegExp("[?|&]" + name + "=(.+?)(&|$)")) || [, null])[1])
   };
-  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray, getURLParameter:getURLParameter}
+  var autocompleteUrls = function(input) {
+    var http_urls_pattern = /(^http(s)?:\/\/)/g;
+    if(input.match(http_urls_pattern) == null) {
+      return"http://" + input
+    }else {
+      return input
+    }
+  };
+  return{init:init, getOuterHTML:getOuterHTML, generateTable:generateTable, checkMiniumRequirements:checkMiniumRequirements, convertToTagsArray:convertToTagsArray, getURLParameter:getURLParameter, autocompleteUrls:autocompleteUrls}
 }(VISH);
 VISH.Editor = function(V, $, undefined) {
   var initOptions;
@@ -13054,6 +13059,7 @@ VISH.Editor = function(V, $, undefined) {
   var excursionDetails = {};
   var excursion_to_edit = null;
   var params = {current_el:null};
+  var eventsLoaded = false;
   var init = function(options, excursion) {
     if(!VISH.Utils.checkMiniumRequirements()) {
       return
@@ -13061,11 +13067,16 @@ VISH.Editor = function(V, $, undefined) {
     VISH.Editing = true;
     if(options) {
       initOptions = options;
-      if(options["developping"] == true) {
+      if(options["developping"] == true && VISH.Debugging) {
         VISH.Debugging.init(true)
       }
     }else {
       initOptions = {}
+    }
+    if(VISH.Debugging && VISH.Debugging.isDevelopping()) {
+      if(VISH.Debugging.getActionInit() == "loadSamples") {
+        excursion = VISH.Debugging.getExcursionSamples()
+      }
     }
     if(excursion) {
       excursion_to_edit = excursion;
@@ -13076,19 +13087,24 @@ VISH.Editor = function(V, $, undefined) {
       _removeSelectableProperties()
     }
     $("a#addSlideFancybox").fancybox({"scrolling":"no", "width":800, "height":600, "padding":0});
-    $(document).on("click", "#edit_excursion_details", _onEditExcursionDetailsButtonClicked);
-    $(document).on("click", "#save_excursion_details", _onSaveExcursionDetailsButtonClicked);
-    $(document).on("click", ".templatethumb", _onTemplateThumbClicked);
-    $(document).on("click", "#save", _onSaveButtonClicked);
-    $(document).on("click", ".editable", _onEditableClicked);
-    $(document).on("click", ".selectable", _onSelectableClicked);
-    $(document).on("click", ".delete_content", _onDeleteItemClicked);
-    $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
-    $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
-    $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
-    _addEditorEnterLeaveEvents();
-    V.SlidesUtilities.redrawSlides();
-    addEventListeners();
+    if(!eventsLoaded) {
+      eventsLoaded = true;
+      $(document).on("click", "#edit_excursion_details", _onEditExcursionDetailsButtonClicked);
+      $(document).on("click", "#save_excursion_details", _onSaveExcursionDetailsButtonClicked);
+      $(document).on("click", ".templatethumb", _onTemplateThumbClicked);
+      $(document).on("click", "#save", _onSaveButtonClicked);
+      $(document).on("click", ".editable", _onEditableClicked);
+      $(document).on("click", ".selectable", _onSelectableClicked);
+      $(document).on("click", ".delete_content", _onDeleteItemClicked);
+      $(document).on("click", ".delete_slide", _onDeleteSlideClicked);
+      $(document).on("click", "#arrow_left_div", _onArrowLeftClicked);
+      $(document).on("click", "#arrow_right_div", _onArrowRightClicked);
+      _addEditorEnterLeaveEvents();
+      V.SlidesUtilities.redrawSlides();
+      V.Editor.Thumbnails.redrawThumbnails();
+      addEventListeners();
+      _addTutorialEvents()
+    }
     if(excursion) {
       $(".object_wrapper").hide()
     }
@@ -13103,9 +13119,9 @@ VISH.Editor = function(V, $, undefined) {
     $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
     VISH.Editor.API.requestTags(_onInitialTagsReceived);
     if(excursion === undefined) {
+      VISH.Editor.AvatarPicker.onLoadExcursionDetails();
       $("#edit_excursion_details").trigger("click")
     }
-    _addTutorialEvents()
   };
   var getId = function() {
     domId = domId + 1;
@@ -13274,6 +13290,7 @@ VISH.Editor = function(V, $, undefined) {
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
     V.SlidesUtilities.redrawSlides();
+    V.Editor.Thumbnails.redrawThumbnails();
     setTimeout("VISH.SlidesUtilities.lastSlide()", 300)
   };
   var _onEditableClicked = function(event) {
@@ -13334,7 +13351,8 @@ VISH.Editor = function(V, $, undefined) {
         if(curSlide == slideEls.length - 1 && curSlide != 0) {
           curSlide -= 1
         }
-        V.SlidesUtilities.redrawSlides()
+        V.SlidesUtilities.redrawSlides();
+        V.Editor.Thumbnails.redrawThumbnails()
       }
     }})
   };
@@ -13412,7 +13430,7 @@ VISH.Editor = function(V, $, undefined) {
           element.type = $(div).attr("type");
           element.areaid = $(div).attr("areaid");
           if(element.type == "text") {
-            element.body = V.Editor.Text.changeFontSizeToRelative($(div).find(".wysiwygInstance"))
+            element.body = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"))
           }else {
             if(element.type == "image") {
               element.body = $(div).find("img").attr("src");
@@ -13435,11 +13453,10 @@ VISH.Editor = function(V, $, undefined) {
               }else {
                 if(element.type == "object") {
                   var object = $(div).find(".object_wrapper").children()[0];
+                  $(object).removeAttr("style");
                   element.body = VISH.Utils.getOuterHTML(object);
                   element.style = _getStylesInPercentages($(div), $(object).parent());
-                  if($(object).hasClass("specialIframe")) {
-                    element.special = true
-                  }
+                  element.aspectRatio = _getAspectRatio($(object))
                 }else {
                   if(element.type == "openquestion") {
                     element.title = $(div).find(".title_openquestion").val();
@@ -13467,19 +13484,45 @@ VISH.Editor = function(V, $, undefined) {
     });
     var jsonexcursion = JSON.stringify(excursion);
     VISH.Debugging.log(jsonexcursion);
-    $("article").remove();
-    $("#menubar").remove();
-    $("#menubar_helpsection").remove();
-    $("#joyride_help_button").remove();
-    $(".theslider").remove();
-    $(".nicEdit-panelContain").remove();
-    V.SlideManager.init(excursion)
+    if(VISH.Debugging && VISH.Debugging.isDevelopping()) {
+      if(VISH.Debugging.getActionSave() == "view") {
+        $("article").remove();
+        $("#menubar").remove();
+        $("#menubar_helpsection").remove();
+        $("#joyride_help_button").remove();
+        $(".theslider").remove();
+        $(".nicEdit-panelContain").remove();
+        V.SlideManager.init(excursion)
+      }else {
+        if(VISH.Debugging.getActionSave() == "edit") {
+          $("article").remove();
+          var options = {};
+          options["developping"] = true;
+          V.Editor.init(options, excursion)
+        }
+      }
+    }else {
+      var send_type;
+      if(excursion_to_edit) {
+        send_type = "PUT"
+      }else {
+        send_type = "POST"
+      }
+      var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
+      $.ajax({type:send_type, url:initOptions["postPath"], data:params, success:function(data) {
+        window.top.location.href = data.url
+      }})
+    }
   };
   var _getStylesInPercentages = function(parent, element) {
     var WidthPercent = element.width() * 100 / parent.width();
+    var HeightPercent = element.height() * 100 / parent.height();
     var TopPercent = element.position().top * 100 / parent.height();
     var LeftPercent = element.position().left * 100 / parent.width();
-    return"position: relative; width:" + WidthPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;"
+    return"position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;"
+  };
+  var _getAspectRatio = function(element) {
+    return element.width() / element.height()
   };
   var _onArrowLeftClicked = function() {
     V.SlidesUtilities.goToSlide(curSlide)
@@ -13509,16 +13552,18 @@ VISH.Editor = function(V, $, undefined) {
   return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams, getOptions:getOptions}
 }(VISH, jQuery);
 VISH.Editor.Video = function(V, $, undefined) {
+  var urlDivId = "tab_video_from_url_content";
+  var urlInputId = "video_url";
   var init = function() {
     VISH.Editor.Video.HTML5.init();
     VISH.Editor.Video.Repository.init();
     VISH.Editor.Video.Youtube.init();
     VISH.Editor.Video.Vimeo.init();
-    var urlInput = $("#tab_video_from_url_content").find("input");
+    var urlInput = $("#" + urlInputId);
     $(urlInput).watermark("Paste video URL");
     $("#tab_video_from_url_content .previewButton").click(function(event) {
       if(VISH.Police.validateObject($(urlInput).val())[0]) {
-        contentToAdd = $(urlInput).val();
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
       }else {
         contentToAdd = null
@@ -13544,8 +13589,8 @@ VISH.Editor.Image = function(V, $, undefined) {
     VISH.Editor.Image.Repository.init();
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
-        VISH.Editor.Object.drawPreview(urlDivId, $("#" + urlInputId).val());
-        contentToAdd = $("#" + urlInputId).val()
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
+        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
       }
     });
     var options = VISH.Editor.getOptions();
@@ -13661,7 +13706,7 @@ VISH.Editor.Image = function(V, $, undefined) {
     }
     if(style) {
       image_style = style;
-      image_width = V.SlidesUtilities.getWidthFromStyle(style)
+      image_width = V.SlidesUtilities.getWidthFromStyle(style, current_area)
     }
     var template = VISH.Editor.getTemplate();
     var nextImageId = VISH.Editor.getId();
@@ -13693,7 +13738,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
-        contentToAdd = $("#" + urlInputId).val();
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         drawPreview(urlDivId, contentToAdd)
       }
     });
@@ -13974,6 +14019,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     return wrapperPreview
   };
   var drawObject = function(object, area, style) {
+    console.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style);
     if(!VISH.Police.validateObject(object)[0]) {
       return
     }
@@ -14047,7 +14093,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(wrapperDiv).append(wrapperTag);
     var width, value;
     if(style) {
-      width = V.SlidesUtilities.getWidthFromStyle(style);
+      width = V.SlidesUtilities.getWidthFromStyle(style, current_area);
       value = 10 * width / $(current_area).width()
     }else {
       value = 10
@@ -14063,10 +14109,10 @@ VISH.Editor.Object = function(V, $, undefined) {
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<span class="vish-font1">Insert text here</span><div><span class="vish-font2">gsdfgfgsfg</span></div><div><span class="vish-font3">fadfadfadf</span></div><div><span class="vish-font4">adfadfasdf</span></div><div><span class="vish-font5">adfadfadf</span></div><div><span class="vish-font6">adfadfasdfaf</span></div>'}, 
+  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="background-color: rgb(255, 0, 102);;">Insert text here</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="color:#33ff00;">adfadf</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontimpact" style="color:#33ff00;">afdfadf</span></div>'}, 
   {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", 
-  "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"331", "type":"text", "areaid":"header", 
-  "body":"Sublime HTML5 video!"}, {"id":"332", "type":"video", "areaid":"left", "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
+  "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1ppp.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"332", "type":"video", "areaid":"left", 
+  "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -14138,6 +14184,9 @@ VISH.AppletPlayer = function() {
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
+  var actionSave = "view";
+  var actionInit = "nothing";
+  var excursionSamples = VISH.Samples.samples;
   var developping = false;
   var init = function(bol) {
     developping = bol
@@ -14164,7 +14213,16 @@ VISH.Debugging = function(V, $, undefined) {
   var isDevelopping = function() {
     return developping
   };
-  return{init:init, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping}
+  var getActionSave = function() {
+    return actionSave
+  };
+  var getActionInit = function() {
+    return actionInit
+  };
+  var getExcursionSamples = function() {
+    return excursionSamples
+  };
+  return{init:init, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping, getActionSave:getActionSave, getActionInit:getActionInit, getExcursionSamples:getExcursionSamples}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
@@ -14264,8 +14322,9 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }else {
+      _requestByType("swfs", "", successCallback, failCallback)
     }
-    _requestByType("swfs", "", successCallback, failCallback)
   };
   var requestImages = function(text, successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -14295,8 +14354,9 @@ VISH.Editor.API = function(V, $, undefined) {
         successCallback(result)
       }
       return
+    }else {
+      _requestByType("picture", "", successCallback, failCallback)
     }
-    _requestByType("picture", "", successCallback, failCallback)
   };
   var requestLives = function(text, successCallback, failCallback) {
     if(VISH.Debugging.isDevelopping()) {
@@ -14402,10 +14462,10 @@ VISH.Editor.API = function(V, $, undefined) {
 VISH.Editor.AvatarPicker = function(V, $, undefined) {
   var avatars = null;
   var init = function() {
+  };
+  var onLoadExcursionDetails = function() {
     $("#thumbnails_in_excursion_details").hide();
-    if(avatars == null) {
-      VISH.Editor.API.requestThumbnails(_onThumbnailsReceived, _onThumbnailsError)
-    }
+    VISH.Editor.API.requestThumbnails(_onThumbnailsReceived, _onThumbnailsError)
   };
   var selectAvatar = function(event) {
     $(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
@@ -14445,7 +14505,7 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
     $(".buttonintro").addClass("buttonintro_extramargin");
     VISH.Editor.AvatarPicker.selectRandom(5)
   };
-  return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom}
+  return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom, onLoadExcursionDetails:onLoadExcursionDetails}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, options) {
@@ -15092,7 +15152,7 @@ VISH.Editor.Object.Web = function(V, $, undefined) {
     $(urlInput).watermark("Paste website URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
-        contentToAdd = $("#" + urlInputId).val();
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
       }
     })
@@ -15207,7 +15267,7 @@ VISH.Editor.Text = function(V, $, undefined) {
       current_area = area
     }else {
       current_area = $(this).parents(".selectable");
-      initial_text = "Insert text here"
+      initial_text = "<div><font size='3'>Insert text here</font></div>"
     }
     if(myNicEditor == null) {
       myNicEditor = new nicEditor;
@@ -15217,21 +15277,28 @@ VISH.Editor.Text = function(V, $, undefined) {
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
-    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'><div><font size='3'>" + initial_text + "</font></div></div>");
+    current_area.html("<div class='wysiwygInstance' id=" + wysiwygId + " style='width:" + wysiwygWidth + "px; height:" + wysiwygHeight + "px;'>" + initial_text + "</div>");
     myNicEditor.addInstance(wysiwygId);
     V.Editor.addDeleteButton(current_area)
   };
-  var changeFontSizeToRelative = function(zone) {
+  var changeFontPropertiesToSpan = function(zone) {
     $(zone).find("font").each(function(index, elem) {
       var size = $(elem).attr("size");
       var sel = {"arial":"arial", "comic sans ms":"comic", "courier new":"courier", "georgia":"georgia", "helvetica":"helvetica", "impact":"impact", "times new roman":"times", "trebuchet ms":"trebuchet", "verdana":"verdana"};
-      var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")] : "arial";
+      var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")] : "Helvetica";
+      var style = "";
+      if($(elem).attr("color") !== undefined) {
+        style += "color:" + $(elem).attr("color") + ";"
+      }
+      if($(elem).attr("style") !== undefined) {
+        style += $(elem).attr("style") + ";"
+      }
       $(elem).closest("div").addClass("vish-parent-font" + size);
-      $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "'>" + $(elem).html() + "</span>")
+      $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "' style='" + style + "'>" + $(elem).html() + "</span>")
     });
     return $(zone).html()
   };
-  return{init:init, launchTextEditor:launchTextEditor, changeFontSizeToRelative:changeFontSizeToRelative}
+  return{init:init, launchTextEditor:launchTextEditor, changeFontPropertiesToSpan:changeFontPropertiesToSpan}
 }(VISH, jQuery);
 VISH.Editor.Thumbnails = function(V, $, undefined) {
   var carrouselDivId = "slides_carrousel";
@@ -15403,7 +15470,7 @@ VISH.Editor.Video.HTML5 = function(V, $, undefined) {
   };
   var renderVideoFromSources = function(sources) {
     var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
-    var rendered = "<video class='preview_video objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
+    var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
     $.each(sources, function(index, source) {
       rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">"
     });
@@ -15889,11 +15956,7 @@ VISH.Renderer = function(V, $, undefined) {
   var _renderObject = function(element, template) {
     var style = element["style"] ? element["style"] : "";
     var body = element["body"];
-    if(element["special"]) {
-      var special = "special";
-      body = VISH.Utils.getOuterHTML($(element["body"]).addClass("special"))
-    }
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + " " + special + "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>"
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>"
   };
   var _renderIframe = function(element, template) {
     var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
@@ -16000,8 +16063,6 @@ VISH.SlideManager = function(V, $, undefined) {
     }
   };
   var _setupSize = function() {
-    var article = $(".slides").find("article").first();
-    var initialH = article.height();
     var height = $(window).height() - 40;
     var width = $(window).width();
     var finalW = 800;
@@ -16021,10 +16082,9 @@ VISH.SlideManager = function(V, $, undefined) {
     var marginLeft = finalW / 2;
     $(".slides > article").css("margin-top", "-" + marginTop + "px");
     $(".slides > article").css("margin-left", "-" + marginLeft + "px");
-    var increase = finalH / initialH;
-    $(".slides > article").css("font-size", 30 * increase + "px");
-    $(".slides > article").css("line-height", 36 * increase + "px");
-    $(".slides > article").css("letter-spacing", -1 * increase + "px")
+    var increase = finalH / 600;
+    $(".slides > article").css("font-size", 16 * increase + "px");
+    $(".slides > article").css("line-height", 16 * increase + "px")
   };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);
@@ -16095,8 +16155,7 @@ VISH.SlideManager = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
-    $(document).trigger("OURDOMContentLoaded");
-    V.Editor.Thumbnails.redrawThumbnails()
+    $(document).trigger("OURDOMContentLoaded")
   };
   var dimentionToDraw = function(w_zone, h_zone, w_content, h_content) {
     var element_type;
@@ -16149,11 +16208,30 @@ VISH.SlidesUtilities = function(V, $, undefined) {
   var forwardOneSlide = function() {
     goToSlide(curSlide + 2)
   };
-  var getWidthFromStyle = function(style) {
-    var width;
+  var getWidthFromStyle = function(style, area) {
+    var width = null;
+    var width_percent_pattern = /width:\s?([0-9]+\.?[0-9]+)%/g;
+    var width_px_pattern = /width:\s?([0-9]+\.?[0-9]+)px/g;
     $.each(style.split(";"), function(index, property) {
       if(property.indexOf("width") !== -1) {
-        width = parseFloat(property.substring(property.indexOf("width") + 7, property.indexOf("px")))
+        if(property.match(width_px_pattern)) {
+          var result = width_px_pattern.exec(property);
+          if(result[1]) {
+            width = result[1];
+            return width
+          }
+        }else {
+          if(property.match(width_percent_pattern)) {
+            var result = width_percent_pattern.exec(property);
+            if(result[1]) {
+              var percent = result[1];
+              if(area) {
+                width = $(area).width() * percent / 100;
+                return width
+              }
+            }
+          }
+        }
       }
     });
     return width

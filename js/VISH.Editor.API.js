@@ -94,7 +94,9 @@ VISH.Editor.API = (function(V,$,undefined){
       }
 			return;
 	  }
-		_requestByType("swfs", "", successCallback, failCallback);  
+	  else{
+        	_requestByType("swfs", "", successCallback, failCallback);
+        }
    };
     
 		
@@ -139,8 +141,9 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }
-		
-		_requestByType("picture", "", successCallback, failCallback);
+    else{
+        	_requestByType("picture", "", successCallback, failCallback);
+        }
   };
     
 		

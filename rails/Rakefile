@@ -18,13 +18,13 @@ COMPILER_DOWNLOAD_URI = 'http://closure-compiler.googlecode.com/files/compiler-l
 namespace :vish_editor do
   
   task :release do
-    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["vish_editor:compile"].invoke
     system "git commit -am \"Preparing the gem.\""
     Rake::Task["release"].invoke
   end
 
   task :build do
-    Rake::Task["vish_editor:prepare"].invoke
+    Rake::Task["vish_editor:compile"].invoke
     Rake::Task["build"].invoke
   end
   

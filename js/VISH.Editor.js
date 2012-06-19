@@ -758,7 +758,7 @@ VISH.Editor = (function(V,$,undefined){
     var jsonexcursion = JSON.stringify(excursion);
     VISH.Debugging.log(jsonexcursion);
     
-			
+				
 		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
 			//Vish: OnSave Debug actions
 			
@@ -769,6 +769,7 @@ VISH.Editor = (function(V,$,undefined){
 	      $('#joyride_help_button').remove();
 	      $('.theslider').remove();
 	      $(".nicEdit-panelContain").remove();
+	      $("#menubar-viewer").show();
 	      V.SlideManager.init(excursion);
 			}	else if (VISH.Debugging.getActionSave()=="edit") {
 				$('article').remove();
@@ -780,20 +781,29 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			//Vish: OnSave Production actions
 			
+			var send_type;
+      if(excursion_to_edit){
+        send_type = 'PUT'; //if we are editing
+      } else {
+        send_type = 'POST'; //if it is a new
+      } 
+			
 	    //POST to http://server/excursions/
 	    var params = {
 	      "excursion[json]": jsonexcursion,
 	      "authenticity_token" : initOptions["token"]
 	    }
 	    
-	    $.post(initOptions["postPath"], params, function(data) {
-	      document.open();
-	      document.write(data);
-	      document.close();
-	    });
-			
-		}	
-    
+	    $.ajax({
+	      type    : send_type,
+	      url     : initOptions["postPath"],
+	      data    : params,
+	      success : function(data) {
+	          /*if we redirect the parent frame*/
+	          window.top.location.href = data.url;
+	      }     
+      });	
+	  }	 	          
   };
 	
 	/**
