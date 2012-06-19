@@ -16,9 +16,9 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   /**
    * Callback function to select an avatar
    */
-  var selectAvatar = function(event){
-  	$(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
-  	$(event.target).addClass("carrousel_element_selected");
+  var _selectAvatar = function(event){
+  	$(".carrousel_element_single_row_thumbnails").removeClass("selectedThumbnail");
+  	$(event.target).addClass("selectedThumbnail");
   	$('#excursion_avatar').val($(event.target).attr("src"));
   };
   
@@ -62,7 +62,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		
 		var options = new Array();
     options['rows'] = 1;
-    options['callback'] = VISH.Editor.AvatarPicker.selectAvatar;
+    options['callback'] = _selectAvatar;
     options['rowItems'] = 5;
 		options['styleClass'] = "thumbnails";
 		

@@ -88,8 +88,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
    * function to select the thumbnail
    */
   var selectThumbnail = function(no){
-		$(".image_barbutton").removeClass("selectedThumbnail");
-		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedThumbnail");
+		$(".image_barbutton").removeClass("selectedSlideThumbnail");
+		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
   };
 	
 	var goToThumbnail = function(no){
