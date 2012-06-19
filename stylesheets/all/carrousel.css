@@ -301,14 +301,9 @@ img.carrousel_element_single_row_slides:hover{
 }
 
 img.carrousel_element_single_row_slides:active{
-  	cursor: pointer;
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.1);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.1);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.1);
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	outline: 0;	
 	opacity: 1.0;
 }
 
@@ -326,6 +321,7 @@ a.next_single_row_slides{
 }
 
 p.carrousel_element_single_row_slides{
+	cursor: pointer;
 	background-color: #fff;
     border-radius: 10px 0 5px 0;
     font-family: Helvetica;
@@ -333,7 +329,7 @@ p.carrousel_element_single_row_slides{
     margin: 31px 0 0 -101px;
     max-height: 20px;
     overflow: hidden;
-    position: fixed;
+    position: absolute;
     text-align: center;
     width: 21px;
 	opacity: 0.9;
