@@ -258,7 +258,7 @@ body {
 /* Styles for slides */
 
 .slides > article {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: helvetica, Arial, sans-serif;
 
   color: rgb(102, 102, 102);
   text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
@@ -524,66 +524,38 @@ article.smaller q::after {
 
 /*fonts used to replace the ones introduced by the wysiwyg*/
 .vish-font1{
-	font-size: 0.3em;
-	line-height: 0.35em;
+	font-size: 0.625em;
+	line-height: 0.781em;
 }
 
 .vish-font2{
-	font-size: 0.4em;
-	line-height: 0.45em;
+	font-size: 0.813em;
+	line-height: 1.555em;
 }
 
 .vish-font3{
-	font-size: 0.5em;
-	line-height: 0.55em;
+	font-size: 1.000em;
+	line-height: 1.260em;
 }
 
 .vish-font4{
-	font-size: 0.6em;
-	line-height: 0.65em;
+	font-size: 1.125em;
+	line-height: 1.255em;
 }
 
 .vish-font5{
-	font-size: 0.8em;
-	line-height: 0.85em;
+	font-size: 1.500em;
+	line-height: 1.220em;
 }
 
 .vish-font6{
-	font-size: 1em;
-	line-height: 1.05em;
+	font-size: 2em;
+	line-height: 1.240em;
 }
 
 .vish-font7{
-	font-size: 1.5em;
-	line-height: 1.55em;
-}
-
-.vish-parent-font1{
-	line-height: 0.45em;
-}
-
-.vish-parent-font2{
-	line-height: 0.55em;
-}
-
-.vish-parent-font3{
-	line-height: 0.65em;
-}
-
-.vish-parent-font4{
-	line-height: 0.75em;
-}
-
-.vish-parent-font5{
-	line-height: 0.95em;
-}
-
-.vish-parent-font6{
-	line-height: 1.15em;
-}
-
-.vish-parent-font7{
-	line-height: 1.65em;
+	font-size: 3.000em;
+	line-height: 1.263em;
 }
 
 .vish-fontarial{

@@ -47,7 +47,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		$(zone).find("font").each(function(index,elem){
 			var size = $(elem).attr("size");
 			var sel = {'arial' : 'arial','comic sans ms' : 'comic','courier new' : 'courier','georgia' : 'georgia', 'helvetica' : 'helvetica', 'impact' : 'impact', 'times new roman' : 'times', 'trebuchet ms' : 'trebuchet', 'verdana' : 'verdana'};
-			var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")]:"arial";
+			var face = sel[$(elem).attr("face")] ? sel[$(elem).attr("face")]:"Helvetica";
 			//now the color and the background color that is stored in the style			
 			var style = "";
 			if($(elem).attr("color") !== undefined){

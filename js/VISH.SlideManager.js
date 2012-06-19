@@ -113,9 +113,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
 		var increase = finalH/600;
-		$(".slides > article").css("font-size", 30*increase + "px");
-		$(".slides > article").css("line-height", 36*increase + "px");
-		$(".slides > article").css("letter-spacing", -1*increase + "px");
+		$(".slides > article").css("font-size", 16*increase + "px");
+		$(".slides > article").css("line-height", 16*increase + "px");
+		/*$(".slides > article").css("letter-spacing", 1*increase + "px");*/
 	};
 	
 	/**
