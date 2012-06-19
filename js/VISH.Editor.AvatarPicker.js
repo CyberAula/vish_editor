@@ -27,7 +27,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
    */
   var selectRandom = function(max){
   	var randomnumber=Math.ceil(Math.random()*max);
-  	$("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").addClass("carrousel_element_selected");
+  	$("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").addClass("selectedThumbnail");
   	$('#excursion_avatar').val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").attr("src"));
   };
     
