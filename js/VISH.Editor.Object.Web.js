@@ -31,11 +31,11 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
   }
 	
 	var generateWrapperForWeb = function(url){
-		return "<iframe src='" + url + "'></embed>"
+		return "<iframe src='" + url + "'></iframe>"
 	}
 	
 	var generatePreviewWrapperForWeb = function(url){
-		return "<iframe class='objectPreview' src='" + url + "'></embed>"
+		return "<iframe class='objectPreview' src='" + url + "'></iframe>"
 	}
 			
 	return {

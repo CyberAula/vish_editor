@@ -283,6 +283,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 			return "swf";
 		}
 		
+		if(extension=="pdf"){
+      return "pdf";
+    }
+		
 		if(html5VideoFormats.indexOf(extension)!="-1"){
 			return "HTML5";
 		}
@@ -368,7 +372,11 @@ VISH.Editor.Object = (function(V,$,undefined){
           case "swf":
             return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
             break;
-            
+          
+				 case "pdf":
+            return VISH.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
+            break;
+					  
           case "youtube":
             return VISH.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
             break;
@@ -427,7 +435,7 @@ VISH.Editor.Object = (function(V,$,undefined){
    */
 	var drawObject = function(object, area, style){	
 			
-		console.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
@@ -459,16 +467,20 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
 						
+					case "pdf":
+            V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
+            break;
+						
 					case "youtube":
-						VISH.Editor.Object.drawObject(VISH.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
+						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
 						break;
 						
 					case "HTML5":
-					  V.Editor.Video.HTML5.drawVideoWithUrl(object)
+					  V.Editor.Video.HTML5.drawVideoWithUrl(object);
 					  break;
 						
 					case "web":
-					  V.Editor.Object.drawObject(VISH.Editor.Object.Web.generateWrapperForWeb(object));
+					  V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 					  break;
 						
 					default:
