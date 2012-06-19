@@ -75,7 +75,6 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   
 	return {
 		init	       : init,
-		selectAvatar   : selectAvatar,
 		selectRandom   : selectRandom,
 		onLoadExcursionDetails : onLoadExcursionDetails
 		
