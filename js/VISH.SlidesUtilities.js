@@ -65,15 +65,13 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
   	
     if((no > slideEls.length) || (no <= 0)){
   	  return;
-    }
-    else if (no > curSlide+1){
+    } else if (no > curSlide+1){
   	  while (curSlide+1 < no) {
-    	nextSlide();
+    	 nextSlide();
   	  }
-    }
-    else if (no < curSlide+1){
+    } else if (no < curSlide+1){
   	  while (curSlide+1 > no) {
-    	prevSlide();
+    	 prevSlide();
   	  }
     }
     

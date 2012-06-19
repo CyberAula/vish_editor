@@ -432,9 +432,9 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
-		//VISH.Debugging.log("slide es: " + slide );
+		VISH.Debugging.log("slide es: " + slide );
 				
-		V.SlidesUtilities.addSlide(slide);	//undefined 
+		V.SlidesUtilities.addSlide(slide);
 		
 		$.fancybox.close();
 		
@@ -706,11 +706,12 @@ VISH.Editor = (function(V,$,undefined){
       var element = {};
       $(s).find('div').each(function(i,div){
         //to remove all the divs of the sliders, only consider the final boxes
-        if($(div).attr("areaid") !== undefined){
+        if($(div).attr("areaid") !== undefined){   
+					
           element.id     = $(div).attr('id');
           element.type   = $(div).attr('type');
-          element.areaid = $(div).attr('areaid');
-                   
+          element.areaid = $(div).attr('areaid');	 				 
+									 
           if(element.type=="text"){
             element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
           } else if(element.type=="image"){
@@ -747,7 +748,11 @@ VISH.Editor = (function(V,$,undefined){
 		        $('.multiplechoice_text').each(function(i, input_text){
 				      element.options[i] = input_text.value;
 	          }); 		
-		      }
+		      } else if(typeof element.type == "undefined"){
+						//Empty element
+						element.type = "text";
+						element.body = "";
+					}
           slide.elements.push(element);
           element = {};
         }
@@ -770,12 +775,12 @@ VISH.Editor = (function(V,$,undefined){
 	      $('.theslider').remove();
 	      $(".nicEdit-panelContain").remove();
 	      $("#menubar-viewer").show();
-	      V.SlideManager.init(excursion);
+	      VISH.SlideManager.init(excursion);
 			}	else if (VISH.Debugging.getActionSave()=="edit") {
 				$('article').remove();
         var options = {};
         options["developping"] = true;
-        V.Editor.init(options, excursion);  //to edit the excursion
+        VISH.Editor.init(options, excursion);  //to edit the excursion
 			}
 			
 		} else {

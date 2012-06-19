@@ -7,6 +7,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
 	var init = function(excursion){
+		//first set VISH.Editing to false
+		VISH.Editing = false;
+		
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		_setupSize();
