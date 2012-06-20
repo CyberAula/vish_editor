@@ -91,7 +91,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
    */
   var selectThumbnail = function(no){
   		$(".barbutton").css("background-color", "transparent");
-			$(".image_barbutton[slideNumber=" + no + "]").css("background-color", "#ACACAC");
+			$(".image_barbutton[slideNumber=" + no + "]").css("background-color", "transparent");
   };
 	
 	var goToThumbnail = function(no){
