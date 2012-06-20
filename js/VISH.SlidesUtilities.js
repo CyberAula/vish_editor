@@ -83,8 +83,7 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
   		$(".theslider").hide();
   		//finally add a background color to thumbnail of the selected slide
     	V.Editor.Thumbnails.selectThumbnail(no);    	
-  	}
-  	else{
+  	}	else {
   		//update slide counter
   		updateSlideCounter();
   	}
