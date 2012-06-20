@@ -159,22 +159,21 @@ ul.tagit li.tagit-choice input {
 }
 
 ul.tagit li.tagit-choice a.tagit-close {
-    color: #777777;
+    color: #fff;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
     outline: medium none;
-    padding: 2px 0 2px 3px;
+    padding: -2px 0 2px 3px;
     text-decoration: none;
     position: absolute;
     display: block;
     top: 0;
     right: 3px;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 ul.tagit li.tagit-choice a.tagit-close:hover {
-    color: #535353;
+    color: #ff05dd;
 }
 
 ul.tagit input[type="text"] {
