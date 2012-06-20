@@ -1394,6 +1394,17 @@ iframe.iframe_content{
 }
 
 .selectedThumbnail {
-	opacity: 1.0;
+	border: 2px solid #005FDD !important;
+    border-radius: 15px !important;
+ 	 -moz-border-radius: 15px !important;
+ 	 -webkit-border-radius: 15px !important;
+    opacity: 1 !important;
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
+}
+
+.selectedSlideThumbnail {
+	opacity: 1.0 !important;
 	border: 1px solid #005fdd;
 }
