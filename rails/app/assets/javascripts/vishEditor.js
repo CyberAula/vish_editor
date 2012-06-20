@@ -11456,7 +11456,7 @@ Function.prototype.closureListener = function() {
 var nicEditorConfig = bkClass.extend({buttons:{"bold":{name:__("Click to Bold"), command:"Bold", tags:["B", "STRONG"], css:{"font-weight":"bold"}, key:"b"}, "italic":{name:__("Click to Italic"), command:"Italic", tags:["EM", "I"], css:{"font-style":"italic"}, key:"i"}, "underline":{name:__("Click to Underline"), command:"Underline", tags:["U"], css:{"text-decoration":"underline"}, key:"u"}, "left":{name:__("Left Align"), command:"justifyleft", noActive:true}, "center":{name:__("Center Align"), command:"justifycenter", 
 noActive:true}, "right":{name:__("Right Align"), command:"justifyright", noActive:true}, "justify":{name:__("Justify Align"), command:"justifyfull", noActive:true}, "ol":{name:__("Insert Ordered List"), command:"insertorderedlist", tags:["OL"]}, "ul":{name:__("Insert Unordered List"), command:"insertunorderedlist", tags:["UL"]}, "subscript":{name:__("Click to Subscript"), command:"subscript", tags:["SUB"]}, "superscript":{name:__("Click to Superscript"), command:"superscript", tags:["SUP"]}, "strikethrough":{name:__("Click to Strike Through"), 
 command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:"/assets/nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", "justify", 
-"ol", "ul", "fontSize", "fontFamily", "indent", "outdent", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
+"ol", "ul", "fontSize", "fontFamily", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
 var nicEditors = {nicPlugins:[], editors:[], registerPlugin:function(plugin, options) {
   this.nicPlugins.push({p:plugin, o:options})
 }, allTextAreas:function(nicOptions) {
@@ -12131,7 +12131,11 @@ var nicEditorColorButton = nicEditorAdvancedButton.extend({addPane:function() {
     var I = D[A];
     var C = (new bkElement("DIV")).setStyle({cursor:"pointer", height:"15px", "float":"left"}).appendTo(H);
     var G = (new bkElement("DIV")).setStyle({border:"2px solid " + I}).appendTo(C);
-    var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to " + I}).appendTo(G);
+    if(I === "transparent") {
+      var B = (new bkElement("DIV")).setStyle({backgroundImage:"url('" + VISH.ImagesPath + "transparent_wysiwyg.png')", overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to " + I}).appendTo(G)
+    }else {
+      var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to " + I}).appendTo(G)
+    }
     if(!window.opera) {
       C.onmousedown = B.onmousedown = bkLib.cancelEvent
     }
@@ -15465,6 +15469,10 @@ VISH.Editor.Text = function(V, $, undefined) {
       }
       $(elem).closest("div").addClass("vish-parent-font" + size);
       $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "' style='" + style + "'>" + $(elem).html() + "</span>")
+    });
+    $(zone).find("span[style*='font-size']").each(function(index, elem) {
+      var style = $(elem).attr("style");
+      $(elem).attr("style", style + ";line-height: 110%;")
     });
     return $(zone).html()
   };
