@@ -12,15 +12,10 @@ VISH.SnapshotPlayer = (function(){
 			$(content).addClass(content_class);
 			var scrollTop = $(value).attr("scrollTop");
 			var scrollLeft = $(value).attr("scrollLeft");
-			//$(value).hide();
 			$(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML($(content)) + "</div>");
-			
-			console.log("scrollTop:" + scrollTop)
-			console.log("scrollLeft:" + scrollLeft)
 			
 			$(value).find("." + wrapper_class).scrollTop(scrollTop);
 			$(value).find("." + wrapper_class).scrollLeft(scrollLeft);
-			//$(value).show();
 		});
 	};
 
@@ -29,7 +24,7 @@ VISH.SnapshotPlayer = (function(){
 	 */
 	var unloadSnapshot= function(){
 		var element = $('.past, .next')
-		$.each(element.children('.objectelement'),function(index,value){
+		$.each(element.children('.snapshotelement'),function(index,value){
 			$(value).html("");
 		});
 	}
