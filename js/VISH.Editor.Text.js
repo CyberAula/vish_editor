@@ -61,6 +61,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 			$(elem).replaceWith("<span class='vish-font" + size + " vish-font"+face+"' style='"+style+"'>" + $(elem).html() + "</span>");
 		});
 		
+		//in webkit when copy and paste from the same editable area change <font size=7> to <span style="font-size: -webkit-xxx-large;" > and loses line-height
+		$(zone).find("span[style*='font-size']").each(function(index,elem){
+			var style = $(elem).attr("style");
+			$(elem).attr("style", style + ";line-height: 110%;");
+			
+		});
+		
 		return $(zone).html();
 	};
 	

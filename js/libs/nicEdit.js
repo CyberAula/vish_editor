@@ -269,7 +269,7 @@ var nicEditorConfig = bkClass.extend({
 		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
 	iconsPath : '/images/nicEditorIcons.gif',
-	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily',/*'fontFormat',*/'indent','outdent',/*'image',*/'upload','link','unlink','forecolor','bgcolor'],
+	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily',/*'fontFormat','indent','outdent','image',*/'upload','link','unlink','forecolor','bgcolor'],
 	iconList : {"bgcolor":1,"forecolor":2,"bold":3,"center":4,"hr":5,"indent":6,"italic":7,"justify":8,"left":9,"ol":10,"outdent":11,"removeformat":12,"right":13,"save":24,"strikethrough":15,"subscript":16,"superscript":17,"ul":18,"underline":19,"image":20,"link":21,"unlink":22,"close":23,"arrow":25}
 	
 });
@@ -1222,12 +1222,22 @@ var nicEditorColorButton=nicEditorAdvancedButton.extend({
 					var G = new bkElement("DIV").setStyle({
 						border : "2px solid " + I
 					}).appendTo(C);
-					var B = new bkElement("DIV").setStyle({
-						backgroundColor : I,
-						overflow : "hidden",
-						width : "11px",
-						height : "11px"
-					}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to "+I}).appendTo(G);
+					if(I==="transparent"){
+						var B = new bkElement("DIV").setStyle({
+							backgroundImage : "url('" + VISH.ImagesPath + "transparent_wysiwyg.png')",
+							overflow : "hidden",
+							width : "11px",
+							height : "11px"
+						}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to "+I}).appendTo(G);
+					}
+					else{
+						var B = new bkElement("DIV").setStyle({
+							backgroundColor : I,
+							overflow : "hidden",
+							width : "11px",
+							height : "11px"
+						}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to "+I}).appendTo(G);
+					}
 					if(!window.opera) {
 						C.onmousedown = B.onmousedown = bkLib.cancelEvent
 					}				
