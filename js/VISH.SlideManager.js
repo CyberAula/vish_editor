@@ -58,11 +58,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		    	myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
 		    }
 		    //change icon
-		    $("#page-fullscreen").css("background-position", "-40px 0px");
+		    $("#page-fullscreen").css("background-position", "-45px 0px");
 		    $("#page-fullscreen").hover(function(){
-			    $("#page-fullscreen").css("background-position", "-40px -40px");
+			    $("#page-fullscreen").css("background-position", "-45px -40px");
 			}, function() {
-			    $("#page-fullscreen").css("background-position", "-40px 0px");
+			    $("#page-fullscreen").css("background-position", "-45px 0px");
 			});
 		  } else {
 		    if (myDoc.cancelFullScreen) {
