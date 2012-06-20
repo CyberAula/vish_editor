@@ -244,17 +244,17 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 				
 				
-			//Flash
-			case "tab_flash_from_url":
+			//Objects
+			case "tab_object_from_url":
 				VISH.Editor.Object.onLoadTab("url");
 				break;
-			case "tab_flash_from_web":
+			case "tab_object_from_web":
         VISH.Editor.Object.Web.onLoadTab();
         break;
-			case "tab_flash_upload":
+			case "tab_object_upload":
 				VISH.Editor.Object.onLoadTab("upload");
 				break;
-			case "tab_flash_repo":
+			case "tab_object_repo":
 				VISH.Editor.Object.Repository.onLoadTab();
 				break;
 				
@@ -339,15 +339,15 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 	});
 	
-	//flash fancybox, one help button in each tab
-	$(document).on('click','#tab_flash_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('flash_fancy_tabs_id_help', 'top');
+	//object fancybox, one help button in each tab
+	$(document).on('click','#tab_object_from_url_help', function(){
+			V.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 	});	
-	$(document).on('click','#tab_flash_upload_help', function(){
-			V.Editor.Tour.startTourWithId('upload_flash_form_help', 'top');
+	$(document).on('click','#tab_object_upload_help', function(){
+			V.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
 	});
-	$(document).on('click','#tab_flash_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_flash_help', 'bottom');
+	$(document).on('click','#tab_object_repo_help', function(){
+			V.Editor.Tour.startTourWithId('search_object_help', 'bottom');
 	});
 	
 	//video fancybox, one help button in each tab
@@ -489,7 +489,7 @@ VISH.Editor = (function(V,$,undefined){
 				loadTab('tab_pic_from_url');
 			}
 		});
-		$("a.addflash").fancybox({
+		$("a.addobject").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
     	'height': 600,
@@ -498,7 +498,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
-				loadTab('tab_flash_from_url');
+				loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -743,7 +743,6 @@ VISH.Editor = (function(V,$,undefined){
 							$(object).removeAttr("style");
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
-							element.aspectRatio  = _getAspectRatio($(object));
 		      } else if (element.type=="openquestion") {	   
 		      	element.title   = $(div).find(".title_openquestion").val();
 		        element.question   = $(div).find(".value_openquestion").val();
@@ -753,7 +752,15 @@ VISH.Editor = (function(V,$,undefined){
 		        var array_options = $(div).find(".multiplechoice_text");
 		        $('.multiplechoice_text').each(function(i, input_text){
 				      element.options[i] = input_text.value;
-	          }); 		
+	          }); 
+					} else if(element.type === "snapshot"){
+						  var snapshotWrapper = $(div).find(".snapshot_wrapper");
+						  var snapshotIframe = $(snapshotWrapper).children()[0];
+              $(snapshotIframe).removeAttr("style");
+              element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
+              element.style  = _getStylesInPercentages($(div), snapshotWrapper);
+							element.scrollTop = $(snapshotWrapper).scrollTop();
+							element.scrollLeft = $(snapshotWrapper).scrollLeft();
 		      } else if(typeof element.type == "undefined"){
 						//Empty element
 						element.type = "text";

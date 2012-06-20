@@ -170,6 +170,9 @@ VISH.SlideManager = (function(V,$,undefined){
 			else if($(e.target).hasClass('applet')){
 				V.AppletPlayer.loadApplet($(e.target));
 			}
+			else if($(e.target).hasClass('snapshot')){
+        V.SnapshotPlayer.loadSnapshot($(e.target));
+      }
 		},500);
 		if($(e.target).hasClass('flashcard')){
 			slideId = $(e.target).attr("id");

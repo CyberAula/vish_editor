@@ -1,13 +1,13 @@
 VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
-  var carrouselDivId = "tab_flash_repo_content_carrousel";
-  var previewDivId = "tab_flash_repo_content_preview";
-	var footId = "tab_flash_repo_content_preview_foot";
+  var carrouselDivId = "tab_object_repo_content_carrousel";
+  var previewDivId = "tab_object_repo_content_preview";
+	var footId = "tab_object_repo_content_preview_foot";
   var currentObject = new Array();
   var selectedObject = null;
   
   var init = function(){
-    var myInput = $("#tab_flash_repo_content").find("input[type='search']");
+    var myInput = $("#tab_object_repo_content").find("input[type='search']");
 	  $(myInput).watermark('Search content');
 	  $(myInput).keydown(function(event) {
 	    if(event.keyCode == 13) {
@@ -18,7 +18,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   }
 	
   var onLoadTab = function(){
-    var previousSearch = ($("#tab_flash_repo_content").find("input[type='search']").val()!="");
+    var previousSearch = ($("#tab_object_repo_content").find("input[type='search']").val()!="");
 		if(! previousSearch){
 		  _cleanObjectPreview();
 	    _requestInicialData();
@@ -41,7 +41,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   }
 	
   /*
-   * Fill tab_flash_repo_content_carrousel div with server data.
+   * Fill tab_object_repo_content_carrousel div with server data.
    */
   var _onDataReceived = function(data){
 	  
@@ -121,8 +121,8 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   
   var _renderObjectPreview = function(renderedObject,object){
-    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-	  var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+	  var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
 	  $(objectArea).html("");
 	  $(metadataArea).html("");
 	  if((renderedObject)&&(object)){
@@ -134,8 +134,8 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   }
 	
 	var _cleanObjectPreview = function(){
-		var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+		var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+    var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
     $(objectArea).html("");
     $(metadataArea).html("");
     $("#" + footId).find(".okButton").hide();

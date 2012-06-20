@@ -1,9 +1,9 @@
 VISH.Editor.Object = (function(V,$,undefined){
 		
 	var contentToAdd = null;
-  var uploadDivId = "tab_flash_upload_content";
-  var urlDivId = "tab_flash_from_url_content";
-  var urlInputId = "flash_embed_code";
+  var uploadDivId = "tab_object_upload_content";
+  var urlDivId = "tab_object_from_url_content";
+  var urlInputId = "object_embed_code";
 		
 	var init = function(){
 
@@ -11,6 +11,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		VISH.Editor.Object.Live.init();
 		VISH.Editor.Object.Web.init();
 		VISH.Editor.Object.PDF.init();
+		VISH.Editor.Object.Snapshot.init();
 		
 	  var urlInput = $(urlDivId ).find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
@@ -319,15 +320,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(parent).height(width*proportion);
 	}
 	
-	/*
-   * Resize object and its wrapper automatically
-   */
-  var resizeWebIframe = function(id,width){
-    var proportion = $("#" + id).height()/$("#" + id).width();
-    $("#" + id).width(width);
-    $("#" + id).height(width*proportion);
-  }
-	
 	
 	/*
 	 * Resize object and its wrapper automatically
@@ -579,67 +571,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 	};
 	
-	
-	/**
-   * param style: optional param with the style, used in editing excursion
-   */
-  var drawIframeObjectWithWrapper = function(wrapper, current_area, style){
-   
-	  VISH.Debugging.log("drawIframeObjectWithWrapper")
-	 
-    var template = V.Editor.getTemplate(current_area);
-    var nextWrapperId = V.Editor.getId();
-    var idToDrag = "draggable" + nextWrapperId;
-    var idToResize = "resizable" + nextWrapperId;
-    current_area.attr('type', 'iframe');
-    var wrapperDiv = document.createElement('div');
-    wrapperDiv.setAttribute('id', idToDrag);
-    if(style){
-      wrapperDiv.setAttribute('style', style);
-    }
-    $(wrapperDiv).addClass('iframe_wrapper');
-
-    var iframeTag = $(wrapper);
-    $(iframeTag).attr('id', idToResize);
-		$(iframeTag).attr('class', 'iframe_content');
-		$(iframeTag).attr('scrolling', 'no');
-    $(iframeTag).attr('wmode', "transparent");
-
-    $(current_area).html("");
-    $(current_area).append(wrapperDiv);
-
-    VISH.Editor.addDeleteButton($(current_area));
-      
-    $(wrapperDiv).append(iframeTag);
-    
-    //RESIZE
-    var width, value;
-    if(style){
-       width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
-       value = 10*width/$(current_area).width();
-    } else {      
-      value = 10; //we set it to the maximum value
-    }
-    var mystep = $(current_area).width()/10; //the step to multiply the value
-    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-
-    $("#imageSlider" + nextWrapperId).slider({
-      from : 1,
-      to : 10,
-      step : 0.2,
-      round : 1,
-      dimension : "x",
-      skin : "blue",
-      onstatechange : function(value) {
-        resizeWebIframe(idToDrag, mystep * value);
-      }
-    });
-
-//    $("#" + idToDrag).draggable({
-//      cursor : "move"
-//    });
-
-  };
 	
 	return {
 		init					       : init,

@@ -158,8 +158,8 @@
 	      <a class="addpicture" href="#picture_fancybox">
 	        <div class='menuicon picthumb' title="Image"></div>
 	      </a>
-	      <a class="addflash" href="#flash_fancybox">
-	        <div class='menuicon flashthumb' title="Content"></div>
+	      <a class="addobject" href="#object_fancybox">
+	        <div class='menuicon objectthumb' title="Object"></div>
 	      </a>
 	      <a class="addvideo" href="#video_fancybox">
 	        <div class='menuicon videothumb' title="Video"></div>
@@ -337,26 +337,28 @@
 	  </div>
   
   
-  	<!-- FLASH -->
+  	<!-- Objects -->
 	  <div style='display:none'>
-	    <div id="flash_fancybox" class="outer_box">
-				<div class="fancy_tabs" id="flash_fancy_tabs_id">	   
+	    <div id="object_fancybox" class="outer_box">
+				<div class="fancy_tabs" id="object_fancy_tabs_id">	   
 				  <ul>
-				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_from_url')" id="tab_flash_from_url" class="fancy_tab">embed</a></li>
-						<li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_from_web')" id="tab_flash_from_web" class="fancy_tab">web</a></li>
-				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_upload')" id="tab_flash_upload" class="fancy_tab">upload</a></li>
-				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_flash_repo')" id="tab_flash_repo" class="fancy_tab">vish</a></li>
+				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_object_from_url')" id="tab_object_from_url" class="fancy_tab">embed</a></li>
+						<li><a href="#" onclick="VISH.Editor.loadTab('tab_object_from_web')" id="tab_object_from_web" class="fancy_tab">web</a></li>
+				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_object_upload')" id="tab_object_upload" class="fancy_tab">upload</a></li>
+				    <li><a href="#" onclick="VISH.Editor.loadTab('tab_object_repo')" id="tab_object_repo" class="fancy_tab">vish</a></li>
+						<li><a href="#" onclick="VISH.Editor.loadTab('tab_object_snapshot')" id="tab_object_snapshot" class="fancy_tab">web snapshot</a></li>
 				  </ul>
-				  <img class='help_in_fancybox' id='tab_flash_from_url_help' src='/images/helptutorial_circle_blank.png'/>
-					<img class='help_in_fancybox' id='tab_flash_from_web_help' src='/images/helptutorial_circle_blank.png'/>
-				  <img class='help_in_fancybox' id='tab_flash_upload_help' src='/images/helptutorial_circle_blank.png'/>
-				  <img class='help_in_fancybox' id='tab_flash_repo_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_object_from_url_help' src='/images/helptutorial_circle_blank.png'/>
+					<img class='help_in_fancybox' id='tab_object_from_web_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_object_upload_help' src='/images/helptutorial_circle_blank.png'/>
+				  <img class='help_in_fancybox' id='tab_object_repo_help' src='/images/helptutorial_circle_blank.png'/>
+					<img class='help_in_fancybox' id='tab_object_snapshot_help' src='/images/helptutorial_circle_blank.png'/>
 				</div>
-				<div id='tab_flash_from_url_content' class="fancy_tab_content">
+				<div id='tab_object_from_url_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">
-            <p class="textfancy">embed flash</p></br>
+            <p class="textfancy">embed object</p></br>
             <img class="image_add_url" src="/images/url_img.png"/>
-				  	<input id="flash_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
+				  	<input id="object_embed_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
 					  <button type="button" class="button buttonfancy previewButton">Preview</button>
           </div>
                 <div class="box2">
@@ -366,11 +368,11 @@
                 			</div>
 				</div>
 				
-				<div id='tab_flash_from_web_content' class="fancy_tab_content">
+				<div id='tab_object_from_web_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">
             <p class="textfancy">embed websites</p></br>
             <img class="image_add_url" src="/images/url_img.png"/>
-            <input id="flash_embedWeb_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
+            <input id="object_embedWeb_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
             <button type="button" class="button buttonfancy previewButton">Preview</button>
           </div>
                 <div class="box2">
@@ -380,12 +382,12 @@
                       </div>
         </div>
 				
-				<div id='tab_flash_upload_content' class="fancy_tab_content">
+				<div id='tab_object_upload_content' class="fancy_tab_content">
               <div class="box1 box1fancy3">
                 <p class="textfancy">Select SWF file to upload</p><br>
                 <img class="image_add_url" src="/images/url_upl.png"/>
                 
-                  <form  id="flash_file_input"class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                  <form  id="object_file_input" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
                       <input type="file" name="document[file]" class="upload_file_input">
                       <input type="hidden" name="document[title]">
                       <input type="hidden" name="document[description]">
@@ -412,23 +414,38 @@
               </div>
         </div> 
 				
-				<div id='tab_flash_repo_content' class="fancy_tab_content">	
+				<div id='tab_object_repo_content' class="fancy_tab_content">	
           <div class="box1 box1fancy2">
 	          <img src="images/repositoryimg.png" class="imagelogotab">				  
 						<div class="search_container">
-						  <input id="search_flash" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						  <input id="search_object" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
 						
-						<div id="tab_flash_repo_content_carrousel"></div>
-						<div id="tab_flash_repo_content_preview" class="content_preview">
-							<div id="tab_flash_repo_content_preview_flash" class="content_preview_data"></div>
-							<div id="tab_flash_repo_content_preview_metadata" class="content_preview_metadata"></div>
-							<div id="tab_flash_repo_content_preview_foot" class="content_preview_foot">
+						<div id="tab_object_repo_content_carrousel"></div>
+						<div id="tab_object_repo_content_preview" class="content_preview">
+							<div id="tab_object_repo_content_preview_object" class="content_preview_data"></div>
+							<div id="tab_object_repo_content_preview_metadata" class="content_preview_metadata"></div>
+							<div id="tab_object_repo_content_preview_foot" class="content_preview_foot">
 								<button type="button" class="okButton" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
 							</div>
 						</div>				
 				  </div>
-        </div>	 
+        </div>	
+				
+				<div id='tab_object_snapshot_content' class="fancy_tab_content">
+          <div class="box1 box1fancy1">
+            <p class="textfancy">Web Snapshot</p></br>
+            <img class="image_add_url" src="/images/url_img.png"/>
+            <input id="object_snapshot_code" type="text" class="input_text_fancy formsizefancy1 marginsfancy1">
+            <button type="button" class="button buttonfancy previewButton">Preview</button>
+          </div>
+          <div class="box2">
+                  <div class="previewimgbox">
+                      <button type="button" class="button buttonaddfancy" onclick="VISH.Editor.Object.Snapshot.drawPreviewElement()">Add Content</button>
+                  </div>
+          </div>
+        </div>
+				 
 	    </div>
 	  </div>
   
@@ -639,7 +656,7 @@
 							</li>
               <li>
               	<h1>Flash Content</h1> 
-								<img id="flashimagetut" src="images/flash_small.png"/>
+								<img id="objectimagetut" src="images/flash_small.png"/>
 							</li>
               <li>
               	<h1>Videos</h1> 
@@ -750,9 +767,9 @@
 	  	</ol>
 	  	
 	  	
-	  	<!--help for fancybox of flash-->
-		  <ol id="flash_fancy_tabs_id_help" class="joyRideTipContent">
-	  	  <li data-id="flash_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
+	  	<!--help for fancybox of object-->
+		  <ol id="object_fancy_tabs_id_help" class="joyRideTipContent">
+	  	  <li data-id="object_fancy_tabs_id" data-text="Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
           	<h2>Adding flash content</h2>
 	  	      <p> 
 						  <span i18n-key="i.walk32">This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices:</span> 
@@ -773,7 +790,7 @@
             </ul>
             <span i18n-key="i.walk36">Now, you are on the url section, Click on "Next" to continue.</span>
 	  	  </li>
-        <li data-id="flash_embed_code" data-text="Next">
+        <li data-id="object_embed_code" data-text="Next">
 	  	    <h2>Adding Flash content by url</h2>
 	  	    <p> 
 					  <span i18n-key="i.walk37"> This box is used for pasting or writing on it, a url that contains a flash content, by example:</span>
@@ -791,8 +808,8 @@
 	  	  </li>	  
 	  	</ol>
 	  		  	
-	  	<ol id="upload_flash_form_help" class="joyRideTipContent">
-	  	  <li data-id="flash_file_input" data-text="Next" class="custom" data-options="tipLocation:bottom;">
+	  	<ol id="upload_object_form_help" class="joyRideTipContent">
+	  	  <li data-id="object_file_input" data-text="Next" class="custom" data-options="tipLocation:bottom;">
 	  	    <h2>Adding flash content by upload</h2>
 	  	    <p>
 	  	    	<span i18n-key="i.walk39">By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device.Once you do that, you can click the "upload" button in order to preview the content in zone below.This supports almost every swf file.Click on "Next" to continue </span>
@@ -808,8 +825,8 @@
 	  	  </li>	  	  
 	  	</ol>
 	  	
-	  	<ol id="search_flash_help" class="joyRideTipContent">
-	  	  <li data-id="search_flash" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
+	  	<ol id="search_object_help" class="joyRideTipContent">
+	  	  <li data-id="search_object" data-text="Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 	  	    <h2>Search flash content</h2>
 	  	    <p i18n-key="i.walk40">This box will allow you to search for flash content in the ViSH repository.
             Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button"
@@ -917,6 +934,7 @@
 	<script type="text/javascript" src="js/VISH.Renderer.js"></script>
 	<script type="text/javascript" src="js/VISH.Excursion.js"></script>
 	<script type="text/javascript" src="js/VISH.ObjectPlayer.js"></script>
+	<script type="text/javascript" src="js/VISH.SnapshotPlayer.js"></script>
 	<script type="text/javascript" src="js/VISH.AppletPlayer.js"></script>
 	<script type="text/javascript" src="js/VISH.VideoPlayer.js"></script>
 	<script type="text/javascript" src="js/VISH.SlideManager.js"></script>
@@ -942,6 +960,7 @@
 	<script type="text/javascript" src="js/VISH.Editor.Object.Live.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Object.Web.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Object.PDF.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Object.Snapshot.js"></script>
   <script type="text/javascript" src="js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Thumbnails.js"></script>

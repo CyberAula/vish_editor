@@ -54,6 +54,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
 			}	else if(slide.elements[el].type === "object"){				
 				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style);
+			} else if(slide.elements[el].type === "snapshot"){
+				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			}
 		}
 	

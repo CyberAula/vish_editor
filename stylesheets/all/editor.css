@@ -324,11 +324,11 @@ img {
 	background: url(/images/hover/image_small_hover.png);
 }
 
-.flashthumb {
+.objectthumb {
 	background: url(/images/flash.png);
 }
 
-.flashthumb:hover {
+.objectthumb:hover {
 	background: url(/images/hover/flash_hover.png);
 }
 
@@ -1371,7 +1371,7 @@ textarea {
 }
 
 
-div.iframe_wrapper{
+div.snapshot_wrapper{
 	border: 10px #9E1F63 solid;
   width: 100%;
   height: 100%;
@@ -1379,10 +1379,10 @@ div.iframe_wrapper{
   position : relative;
 }
 
-iframe.iframe_content{
+iframe.snapshot_content{
 	border: none;
 	position : absolute;
-	width    : 1200px;
+	width    : 1024px;
   height   : 12000px;
 	overflow: hidden;
 	/**

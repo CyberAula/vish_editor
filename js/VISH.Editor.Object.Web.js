@@ -1,8 +1,8 @@
 VISH.Editor.Object.Web = (function(V,$,undefined){
 		
 	var contentToAdd = null;	
-	var urlDivId = "tab_flash_from_web_content";
-  var urlInputId = "flash_embedWeb_code";
+	var urlDivId = "tab_object_from_web_content";
+  var urlInputId = "object_embedWeb_code";
 		
 	var init = function(){
 		var urlInput = $(urlDivId ).find("input");

@@ -31,6 +31,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
 			}
+			else if(slide.elements[el].type === "snapshot"){
+        content += _renderSnapshot(slide.elements[el],slide.template);
+        classes += "snapshot ";
+      }
 			else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
@@ -105,15 +109,17 @@ VISH.Renderer = (function(V,$,undefined){
 		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+ "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
-	
 	/**
-	 * Function to render an iframe inside an article (a slide)	 * 
-	 * when entering a slide with an iframe class we call V.SWFPlayer.loadIframe (see VISH.SlideManager._onslideenter) and it will add the src inside the div
-	 */
-	var _renderIframe = function(element, template){
-		var to_return = '<div id="'+element['id']+'" class="iframeelement '+template+'_'+element['areaid']+'" templateclass="'+template+'_iframe'+'" src="'+element['body']+'"></div>';
-		return to_return;
-	};
+   * Function to render an snapshot inside an article (a slide)
+   */
+  var _renderSnapshot = function(element, template){
+    var style = (element['style'])? element['style'] : "";
+    var body = element['body'];
+		var scrollTop = (element['scrollTop'])? element['scrollTop'] : 0;
+		var scrollLeft = (element['scrollLeft'])? element['scrollLeft'] : 0;
+    return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollLeft='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
+  };
+	
 
 	/**
 	 * Function to render an applet inside an article (a slide)
