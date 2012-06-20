@@ -12131,7 +12131,7 @@ var nicEditorColorButton = nicEditorAdvancedButton.extend({addPane:function() {
     var I = D[A];
     var C = (new bkElement("DIV")).setStyle({cursor:"pointer", height:"15px", "float":"left"}).appendTo(H);
     var G = (new bkElement("DIV")).setStyle({border:"2px solid " + I}).appendTo(C);
-    var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).appendTo(G);
+    var B = (new bkElement("DIV")).setStyle({backgroundColor:I, overflow:"hidden", width:"11px", height:"11px"}).addEvent("click", this.colorSelect.closure(this, I)).addEvent("mouseover", this.on.closure(this, G)).addEvent("mouseout", this.off.closure(this, G, I)).setAttributes({"title":"set color to " + I}).appendTo(G);
     if(!window.opera) {
       C.onmousedown = B.onmousedown = bkLib.cancelEvent
     }
@@ -12940,6 +12940,32 @@ if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
     return{label:label, value:value === undefined ? label : value, element:element, index:self.tagsArray.length}
   }})
 })(jQuery);
+var i18n_Vish = {"es":{"i.walk1":"Puedes utilizar el icono tutorial", "i.walk2":'durante las secciones de la aplicaci\u00f3n para servirte de ayuda a la hora de utilizar el "ViSH editor". De esta manera podras aprender a utilizar el programa desde sus funciones b\u00e1sicas hasta la publicaci\u00f3n final de tu excursi\u00f3n. Pulsa "Siguiente" para continuar.', "i.walk3":'Este espacio te permite a\u00f1adir el t\u00edtulo de tu excursi\u00f3n.El t\u00edtulo de la excursion es obligatorio ya que gracias a el, otros usuarios podran encontrala mas f\u00e1cilmente dentro del ViSH. Pulsa "Siguiente" para continuar.', 
+"i.walk4":'En este espacio puedes explicar en mas detalle los conceptos e ideas de tu excursi\u00f3n, as\u00ed como los datos que consideres interesantes para que los usuarios sepan el contenido de esta. Pulsa "Siguiente" para continuar.', "i.walk5":'A\u00f1ade palabras que vayan acorde con el tema de tu excursion para que esta aparezca a la hora de que los usuarios busquen temas dentro del ViSH. Pulsa "Siguiente" para continuar.', "i.walk6":'Escoje una de estas imagenes para representar tu excursion dentro del ViSH.Utiliza las flechas de los laterales o los circulos en la parte inferior de la galer\u00eda para ver todas las imagenes y escojer una. Pulsa "Siguiente" para continuar.', 
+"i.walk7":'Una vez que cierres el tutorial pulsando el bot\u00f3n "cerrar", haz click en el boton continuar situado debajo de este. De esta manera salvaras los detalles de tu excursi\u00f3n y podr\u00e1s comenzar a a\u00f1adir contenido a esta.', "i.walk8":'Recuerda que puedes utilizar el icono "tutorial" cada vez que necesites ayuda en la aplicaci\u00f3n. Esta zona, es el escritorio donde crear\u00e1s tus excursiones.Pulsa "Siguiente" para continuar.', "i.walk9":'En esta zona podr\u00e1s ver las opciones principales para crear y editar una excursi\u00f3n virtual dentro de ViSH.Pulsa "Siguiente" para continuar.', 
+"i.walk9":'Haciendo click en este bot\u00f3n, podr\u00e1s volver a ver la pantalla principal donde a\u00f1adiste la informaci\u00f3n a tu excursi\u00f3n.Pulsa "Siguiente" para continuar.', "i.walk10":'Haciendo click en este bot\u00f3n, podr\u00e1s volver a ver la pantalla principal donde a\u00f1adiste la informaci\u00f3n a tu excursi\u00f3n.Pulsa "Siguiente" para continuar.', "i.walk11":'Esta zona se utiliza para definir el paginado de tu excursi\u00f3n, atraves de esta secci\u00f3n podras crear, moverte y editar cualquiera de las paginas de tu excursi\u00f3n.Pulsa "Siguiente" para continuar.', 
+"i.walk12":'Atraves de este bot\u00f3n podr\u00e1s salvar y publicar tus excursiones en ViSH.Pulsa "Siguiente" para continuar.', "i.walk13":'Este icono te llevar\u00e1 a la ventana de selecci\u00f3n de plantillas para a\u00f1adir paginas a tu excursi\u00f3n. Cuando a\u00f1adas una nueva p\u00e1gina te aprecera a modo de icono en la l\u00ednea de tiempo para mostrarte su ubicaci\u00f3n dentro del paginado de la excursi\u00f3n.Pulsa "Cerrar" para continuar.', "i.walk14":'Esta zona te ofrece una variedad de plantillas para a\u00f1adir a tu excursi\u00f3n. Solo tienes que hacer click en la miniatura que mas se ajuste a la informaci\u00f3n que quieras transmitir.Pulsa "Cerrar" para continuar.', 
+"i.walk15":"Para rellenar la plantilla que has escojido, solo tienes que hacer click en los espacios grises de esta. Si haces click dentro, te aparecer\u00e1n los siguientes iconos:", "i.walk16":"Si haces click en uno de estos iconos (dependiend de que tipo de contenido quieras a\u00f1adir a esa zona), te aparecer\u00e1 otra ventana que te ayudar\u00e1 en esta tarea, a excepci\u00f3n del icono de texto, que mostrar\u00e1 una barra en zona superior con herramientas para tratar tu tipograf\u00eda y definir el estilo de tu texto.", 
+"i.walk17":"Una vez hayas rellenado una zona gris con contenido, podras editarla volviendo a hacer click en el espacio que contiene el contenido. En caso de que quieras borrar este contenido puedes hacer click en el icono inferior derecho de cada zona gris rellenacon contenido:", "i.walk18":"Si quisieras borrar una plantilla o cerrar ventanas en la aplicaci\u00f3n, deberas usar el icono superior derecho:", "i.walk19":'Si necesitas cualquier otra ayuda con el contenido, siempre puedes utilizar los iconos "tutorial".Pulsa "Cerrar" para continuar.', 
+"i.walk20":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir imagenes. Como puedes ver el la zona superior tienes las siguientes opciones:", "i.walk21":"(a\u00f1adir imagen desde un enlace)", "i.walk22":"(a\u00f1adir imagen subiendola al repositorio)", "i.walk23":"(a\u00f1adir imagen desde el repositorio)", "i.walk24":"(a\u00f1adir imagen desde flickr)", "i.walk25":'Ahora estas en la secci\u00f3n Url.Pulsa "Siguiente" para continuar.', "i.walk26":"Este espacio esta reservardo para escribir o pegar un enlace que contenga una imagen, por ejemplo:", 
+"i.walk27":'Los formatos de imagen soportados por la aplicaci\u00f3n son muy variados (jpg, tiff, png, etc...) Una vez hayas rellenado el espacio, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', "i.walk28":'Esta zona te mostrar\u00e1 el contenido que has subido antes de a\u00f1adirlo a la presentaci\u00f3n, de esta manera puedes comprobarlo. Una vez estes listo, haz click en el bot\u00f3n de a\u00f1adir contenido (Este bot\u00f3n aparecer\u00e1 cuando pulses el bot\u00f3n previsualizar). Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk29":'Pulsa en examinar para acceder a una nueva ventana y buscar un archivo en tu disco duro.Una vez lo hayas elegido, haz click en el bot\u00f3n "previsualizar.Haz click en "Continuar".', "i.walk30":'En este espacio puedes buscar imagenes dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de imagenes de las cuales solo debes pulsar encima de una de ellas para a\u00f1adirla a tu presentaci\u00f3n..Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk31":'En este espacio puedes buscar imagenes en la pagina Flickr. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de imagenes de las cuales solo debes pulsar encima de una de ellas para a\u00f1adirla a tu presentaci\u00f3n..Haz click en "cerrar" para terminar este tutorial.', "i.walk32":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir contenido en Flash. Como puedes ver el la zona superior tienes las siguientes opciones:", "i.walk33":"(a\u00f1adir contenido desde un enlace)", 
+"i.walk34":"(a\u00f1adir contenido subiendolo al repositorio)", "i.walk35":"(a\u00f1adir contenido desde el repositorio)", "i.walk36":'Ahora estas en la secci\u00f3n Url.Haz click en "Continuar".', "i.walk37":"Este espacio esta reservardo para escribir o pegar un enlace que contenga un contenido flash, por ejemplo:", "i.walk38":'Los formatos flash soportados por la aplicaci\u00f3n son .swf.Una vez hayas rellenado el espacio, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', "i.walk39":'Pulsa en examinar para acceder a una nueva ventana y buscar un archivo en tu disco duro.Una vez lo hayas elegido, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', 
+"i.walk40":'En este espacio puedes buscar contenido dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de imagenes de las cuales solo debes pulsar encima de una de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el contenido. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk41":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir imagenes. Como puedes ver el la zona superior tienes las siguientes opciones:", "i.walk42":"(a\u00f1adir video desde un enlace)", "i.walk43":"(a\u00f1adir video desde el repositorio)", "i.walk44":"(a\u00f1adir video desde youtube)", "i.walk45":"(a\u00f1adir video desde vimeo)", "i.walk46":'Ahora estas en la secci\u00f3n Url.Haz click en "Continuar".', "i.walk47":"Este espacio esta reservardo para escribir o pegar un enlace que contenga una imagen, por ejemplo:", 
+"i.walk48":'Los formatos de video soportados por la aplicaci\u00f3n son muy variados (avi, flv, mpg...).Una vez hayas rellenado el espacio, haz click en el bot\u00f3n "previsualizar".Haz click en "Continuar".', "i.walk49":'En este espacio puedes buscar videos dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk50":'En este espacio puedes buscar videos dentro de youtube. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', "i.walk51":'En este espacio puedes buscar videos dentro de vimeo. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda de videos de las cuales solo debes pulsar encima de uno de ellas para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adir el video. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
+"i.walk52":"Esta ventana te ayudar\u00e1 a la hora de a\u00f1adir contenido en directo. Como puedes ver el la zona superior tienes de momento la siguiente opci\u00f3n:", "i.walk53":"(a\u00f1adir video desde una camara en directo)", "i.walk54":'Ahora estas en la secci\u00f3n Webcam.Haz click en "Continuar"', "i.walk55":'En este espacio puedes buscar contenido en directo dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecer\u00e1 una galer\u00eda, desde la cual solo debes pulsar encima del contenido para acceder a una peque\u00f1a ventana con t\u00edtulo y descripci\u00f3n mas detallada del contenido que te ofrecera la posibilidad de a\u00f1adirlo. Solo debes pulsar ese bot\u00f3n para realizar esa tarea..Haz click en "cerrar" para terminar este tutorial.', 
+"Your browser does not meet the minimum requirements to init Vish Editor, please update your browser.":"El navegador que etas utilizando no incluye los requerimientos minimos para utilizar esta aplicaci\u00f3n.Por favor, actualiza tu navegador", "0%":"0%", "accept":"aceptar", "Add":"A\u00f1adir", "add image url":"a\u00f1adir URL de imagen", "Add Content":"A\u00f1adir Contenido", "Add new slide button":"Bot\u00f3n para a\u00f1adir nueva slide", "Add Tags for your image":"A\u00f1ade etiquetas a tu imagen", 
+"add video url":"a\u00f1adir URL de video", "Add tags to your excursion":"A\u00f1ade tags a tu excursi\u00f3n", "Adding content to a slide":"A\u00f1adiendo contenido a una slide", "Adding flash content":"A\u00f1adiendo contenido flash", "Adding flash content by upload":"Subiendo contenido flash", "Adding Flash content by url":"A\u00f1adiendo contenido flash por url", "Adding Images":"A\u00f1adiendo im\u00e1genes", "Adding images by upload":"Subiendo im\u00e1genes", "Adding images by url":"A\u00f1adiendo im\u00e1genes por url", 
+"Adding Video":"A\u00f1adiendo video", "Adding Live Content":"A\u00f1adiendo Contenido en Directo", "Adding video by url":"A\u00f1adiendo video por url", "are you sure?":"\u00bfest\u00e1 seguro?", "cancel":"cancelar", "Close or Delete":"Borrar o Cerrar", "Close":"Cerrar", "close":"Cerrar", "Continue":"Continuar", "Create at least one slide before saving.":"Debe crear al menos una slide antes de salvar", "Choose an image that will represent your excursion":"Elige una imagen que representar\u00e1 tu excursi\u00f3n", 
+"Configuration Button":"Bot\u00f3n de configuraci\u00f3n", "delete":"borrar", "Delete Content":"Borrar contenido", "Describe the excursion in a few words...":"Describa la excursi\u00f3n en unas palabras", "Description":"Descripcion", "Edit details":"Editar detalles", "embed":"embed", "Embed":"Embed", "embed flash":"embed flash", "Excursion title":"Titulo de la excursi\u00f3n", "Flash":"Flash", "Flickr":"Flickr", "Flash Content":"Contenido Flash", "Google Chrome":"Google Chrome", "Image":"Imagen", 
+"Images":"Imagen", "Internet Explorer 9":"Internet Explorer 9", "Let\u00b4s write a title (Obligatory)":"Escribamos un t\u00edtulo (obligatorio)", "Mozilla Firefox":"Mozilla Firefox", "no":"no", "next":"Siguiente", "Next":"Siguiente", "OK":"OK", "Opera":"Opera", "Paste SWF file URL":"Pega la URL del fichero SWF", "Please, enter a title":"Por favor, introduzca un t\u00edtulo", "Preview":"Vista previa", "save":"guardar", "Save Button":"Bot\u00f3n de salvar", "Save slides":"Salvar las diapositivas", 
+"Save your excursion details":"Salva los detalles de tu excursi\u00f3n", "Search content":"Buscar contenido", "Search flash content":"Buscar contenido flash", "Search images in Flickr":"Buscar im\u00e1genes en Flickr", "Search videos in Vimeo":"Buscar videos en Vimeo", "Search images in Vish repository":"Buscar im\u00e1genes en el repositorio ViSH", "Search videos in Vish repository":"Buscar videos en el repositorio del ViSH", "Search videos in Youtube":"Buscar videos en Youtube", "Search Live Content":"Buscar contenido en directo", 
+"See the content before you add it":"Puedes ver el contenido antes de a\u00f1adirlo", "See the image before you add it":"Puedes ver las im\u00e1genes antes de a\u00f1adirlas", "See the video before you add it":"Puedes ver el video antes de a\u00f1adirlo", "Select picture to upload":"Seleccionar imagen para subir", "Select SWF file to upload":"Seleccionar archivo swf para subir", "Select video to upload":"Seleccionar video para subir", "Selecting a Slide":"Seleccionando una slide", "Text":"Texto", 
+"Title":"Titulo", "This is ViSH editor!":"Esto es el ViSH Editor!", "This is the tools menu":"Esto es el men\u00fa de herramientas", "Thumbnail":"Miniatura", "Upload":"Subir", "upload":"subir", "upload flash":"subir flash", "url":"Enlace", "Url":"Enlace", "Video":"Video", "Videos":"Videos", "vish":"vish", "Vish":"vish", "vimeo":"Vimeo", "Vimeo":"Vimeo", "Youtube":"Youtube", "youtube":"Youtube", "Welcome to ViSH editor!":"Bienvenido al ViSH editor!", "Webcam":"Webcam", "webcam":"webcam", "Write a description (optional)":"Escribe una descripci\u00f3n (opcional)", 
+"http://www.####.com/example.jpg":"http://www.####.com/ejemplo.jpg", "http://www.####.com/example.swf":"http://www.####.com/ejemplo.swf", "http://www.####.com/example.avi":"http://www.####.com/ejemplo.avi"}};
 var i18n = {"es":{"i.walk1":"Puedes utilizar el icono tutorial", "i.walk2":'durante las secciones de la aplicaci\u00f3n para servirte de ayuda a la hora de utilizar el "ViSH editor". De esta manera podras aprender a utilizar el programa desde sus funciones b\u00e1sicas hasta la publicaci\u00f3n final de tu excursi\u00f3n. Pulsa "Siguiente" para continuar.', "i.walk3":'Este espacio te permite a\u00f1adir el t\u00edtulo de tu excursi\u00f3n.El t\u00edtulo de la excursion es obligatorio ya que gracias a el, otros usuarios podran encontrala mas f\u00e1cilmente dentro del ViSH. Pulsa "Siguiente" para continuar.', 
 "i.walk4":'En este espacio puedes explicar en mas detalle los conceptos e ideas de tu excursi\u00f3n, as\u00ed como los datos que consideres interesantes para que los usuarios sepan el contenido de esta. Pulsa "Siguiente" para continuar.', "i.walk5":'A\u00f1ade palabras que vayan acorde con el tema de tu excursion para que esta aparezca a la hora de que los usuarios busquen temas dentro del ViSH. Pulsa "Siguiente" para continuar.', "i.walk6":'Escoje una de estas imagenes para representar tu excursion dentro del ViSH.Utiliza las flechas de los laterales o los circulos en la parte inferior de la galer\u00eda para ver todas las imagenes y escojer una. Pulsa "Siguiente" para continuar.', 
 "i.walk7":'Una vez que cierres el tutorial pulsando el bot\u00f3n "cerrar", haz click en el boton continuar situado debajo de este. De esta manera salvaras los detalles de tu excursi\u00f3n y podr\u00e1s comenzar a a\u00f1adir contenido a esta.', "i.walk8":'Recuerda que puedes utilizar el icono "tutorial" cada vez que necesites ayuda en la aplicaci\u00f3n. Esta zona, es el escritorio donde crear\u00e1s tus excursiones.Pulsa "Siguiente" para continuar.', "i.walk9":'En esta zona podr\u00e1s ver las opciones principales para crear y editar una excursi\u00f3n virtual dentro de ViSH.Pulsa "Siguiente" para continuar.', 
@@ -13068,15 +13094,17 @@ VISH.Editor = function(V, $, undefined) {
     if(options) {
       initOptions = options;
       if(options["developping"] == true && VISH.Debugging) {
-        VISH.Debugging.init(true)
+        VISH.Debugging.init(true);
+        if(VISH.Debugging.getActionInit() == "loadSamples") {
+          excursion = VISH.Debugging.getExcursionSamples()
+        }
+      }
+      if(options["configuration"] && VISH.Configuration) {
+        VISH.Configuration.init(options["configuration"]);
+        VISH.Configuration.applyConfiguration()
       }
     }else {
       initOptions = {}
-    }
-    if(VISH.Debugging && VISH.Debugging.isDevelopping()) {
-      if(VISH.Debugging.getActionInit() == "loadSamples") {
-        excursion = VISH.Debugging.getExcursionSamples()
-      }
     }
     if(excursion) {
       excursion_to_edit = excursion;
@@ -13116,11 +13144,17 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
     V.Editor.Quiz.init();
-    $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
-    VISH.Editor.API.requestTags(_onInitialTagsReceived);
-    if(excursion === undefined) {
-      VISH.Editor.AvatarPicker.onLoadExcursionDetails();
-      $("#edit_excursion_details").trigger("click")
+    if(VISH.Configuration.getConfiguration()["presentationSettings"]) {
+      $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
+      if(VISH.Configuration.getConfiguration()["presentationTags"]) {
+        VISH.Editor.API.requestTags(_onInitialTagsReceived);
+        if(excursion === undefined) {
+          VISH.Editor.AvatarPicker.onLoadExcursionDetails()
+        }
+      }
+      if(excursion === undefined) {
+        $("#edit_excursion_details").trigger("click")
+      }
     }
   };
   var getId = function() {
@@ -13469,6 +13503,11 @@ VISH.Editor = function(V, $, undefined) {
                       $(".multiplechoice_text").each(function(i, input_text) {
                         element.options[i] = input_text.value
                       })
+                    }else {
+                      if(typeof element.type == "undefined") {
+                        element.type = "text";
+                        element.body = ""
+                      }
                     }
                   }
                 }
@@ -13492,26 +13531,30 @@ VISH.Editor = function(V, $, undefined) {
         $("#joyride_help_button").remove();
         $(".theslider").remove();
         $(".nicEdit-panelContain").remove();
-        V.SlideManager.init(excursion)
+        $("#menubar-viewer").show();
+        VISH.SlideManager.init(excursion)
       }else {
         if(VISH.Debugging.getActionSave() == "edit") {
           $("article").remove();
           var options = {};
           options["developping"] = true;
-          V.Editor.init(options, excursion)
+          VISH.Editor.init(options, excursion)
         }
       }
     }else {
-      var send_type;
-      if(excursion_to_edit) {
-        send_type = "PUT"
+      if(VISH.Configuration.getConfiguration()["VishIntegration"]) {
+        var send_type;
+        if(excursion_to_edit) {
+          send_type = "PUT"
+        }else {
+          send_type = "POST"
+        }
+        var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
+        $.ajax({type:send_type, url:initOptions["postPath"], data:params, success:function(data) {
+          window.top.location.href = data.url
+        }})
       }else {
-        send_type = "POST"
       }
-      var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
-      $.ajax({type:send_type, url:initOptions["postPath"], data:params, success:function(data) {
-        window.top.location.href = data.url
-      }})
     }
   };
   var _getStylesInPercentages = function(parent, element) {
@@ -13734,6 +13777,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     VISH.Editor.Object.Repository.init();
     VISH.Editor.Object.Live.init();
     VISH.Editor.Object.Web.init();
+    VISH.Editor.Object.PDF.init();
     var urlInput = $(urlDivId).find("input");
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
@@ -13931,6 +13975,9 @@ VISH.Editor.Object = function(V, $, undefined) {
     if(extension == "swf") {
       return"swf"
     }
+    if(extension == "pdf") {
+      return"pdf"
+    }
     if(html5VideoFormats.indexOf(extension) != "-1") {
       return"HTML5"
     }
@@ -13946,6 +13993,11 @@ VISH.Editor.Object = function(V, $, undefined) {
     var parent = $("#" + id).parent();
     $(parent).width(width);
     $(parent).height(width * proportion)
+  };
+  var resizeWebIframe = function(id, width) {
+    var proportion = $("#" + id).height() / $("#" + id).width();
+    $("#" + id).width(width);
+    $("#" + id).height(width * proportion)
   };
   var _adjustWrapperOfObject = function(objectID, current_area) {
     var proportion = $("#" + objectID).height() / $("#" + objectID).width();
@@ -13981,6 +14033,9 @@ VISH.Editor.Object = function(V, $, undefined) {
             break;
           case "swf":
             return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
+            break;
+          case "pdf":
+            return VISH.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
             break;
           case "youtube":
             return VISH.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
@@ -14019,7 +14074,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     return wrapperPreview
   };
   var drawObject = function(object, area, style) {
-    console.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style);
+    VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style);
     if(!VISH.Police.validateObject(object)[0]) {
       return
     }
@@ -14043,14 +14098,17 @@ VISH.Editor.Object = function(V, $, undefined) {
           case "swf":
             V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
             break;
+          case "pdf":
+            V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
+            break;
           case "youtube":
-            VISH.Editor.Object.drawObject(VISH.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
+            V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
             break;
           case "HTML5":
             V.Editor.Video.HTML5.drawVideoWithUrl(object);
             break;
           case "web":
-            V.Editor.Object.drawObject(VISH.Editor.Object.Web.generateWrapperForWeb(object));
+            V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
             break;
           default:
             V.Debugging.log("Unrecognized object source type: " + objectInfo.type);
@@ -14105,6 +14163,41 @@ VISH.Editor.Object = function(V, $, undefined) {
     }});
     $("#" + idToDrag).draggable({cursor:"move"});
     _adjustWrapperOfObject(idToResize, current_area)
+  };
+  var drawIframeObjectWithWrapper = function(wrapper, current_area, style) {
+    VISH.Debugging.log("drawIframeObjectWithWrapper");
+    var template = V.Editor.getTemplate(current_area);
+    var nextWrapperId = V.Editor.getId();
+    var idToDrag = "draggable" + nextWrapperId;
+    var idToResize = "resizable" + nextWrapperId;
+    current_area.attr("type", "iframe");
+    var wrapperDiv = document.createElement("div");
+    wrapperDiv.setAttribute("id", idToDrag);
+    if(style) {
+      wrapperDiv.setAttribute("style", style)
+    }
+    $(wrapperDiv).addClass("iframe_wrapper");
+    var iframeTag = $(wrapper);
+    $(iframeTag).attr("id", idToResize);
+    $(iframeTag).attr("class", "iframe_content");
+    $(iframeTag).attr("scrolling", "no");
+    $(iframeTag).attr("wmode", "transparent");
+    $(current_area).html("");
+    $(current_area).append(wrapperDiv);
+    VISH.Editor.addDeleteButton($(current_area));
+    $(wrapperDiv).append(iframeTag);
+    var width, value;
+    if(style) {
+      width = V.SlidesUtilities.getWidthFromStyle(style, current_area);
+      value = 10 * width / $(current_area).width()
+    }else {
+      value = 10
+    }
+    var mystep = $(current_area).width() / 10;
+    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='" + value + "' style='display: none; '></div>");
+    $("#imageSlider" + nextWrapperId).slider({from:1, to:10, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      resizeWebIframe(idToDrag, mystep * value)
+    }})
   };
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
@@ -14183,6 +14276,72 @@ VISH.AppletPlayer = function() {
   };
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
 }(VISH, jQuery);
+var configuration = {};
+configuration["presentationSettings"] = true;
+configuration["presentationTags"] = true;
+configuration["presentationThumbnails"] = true;
+configuration["Vish"] = true;
+configuration["VishLives"] = true;
+configuration["VishUpload"] = true;
+configuration["VishRepo"] = true;
+configuration["Flickr"] = true;
+configuration["Youtube"] = true;
+configuration["Vimeo"] = false;
+configuration["VishIntegration"] = true;
+$.getScript("/js/lang/translations.Vish.es.js", function() {
+  configuration["translation"] = i18n_Vish
+});
+VISH.Configuration = function(V, $, undefined) {
+  var configuration;
+  var init = function(myConfiguration) {
+    configuration = myConfiguration
+  };
+  var applyConfiguration = function() {
+    if(configuration["presentationSettings"]) {
+      if(!configuration["presentationTags"]) {
+        $(".tagBoxUpload").css("display", "none");
+        $(".tagBoxIntro").css("display", "none")
+      }
+      if(!configuration["presentationThumbnails"]) {
+        $("#thumbnails_in_excursion_details").css("display", "none")
+      }
+    }
+    if(!configuration["Vish"]) {
+      $("#tab_pic_upload").css("display", "none");
+      $("#tab_pic_repo").css("display", "none");
+      $("#tab_flash_upload").css("display", "none");
+      $("#tab_flash_repo").css("display", "none");
+      $("#tab_video_repo").css("display", "none");
+      $(".addLive").css("display", "none")
+    }else {
+      if(!configuration["VishLives"]) {
+        $(".addLive").css("display", "none")
+      }
+      if(!configuration["VishUpload"]) {
+        $("#tab_pic_upload").css("display", "none");
+        $("#tab_flash_upload").css("display", "none")
+      }
+      if(!configuration["VishRepo"]) {
+        $("#tab_pic_repo").css("display", "none");
+        $("#tab_flash_repo").css("display", "none");
+        $("#tab_video_repo").css("display", "none")
+      }
+    }
+    if(!configuration["Youtube"]) {
+      $("#tab_video_youtube").css("display", "none")
+    }
+    if(!configuration["Vimeo"]) {
+      $("#tab_video_vimeo").css("display", "none")
+    }
+    if(!configuration["Flickr"]) {
+      $("#tab_pic_flikr").css("display", "none")
+    }
+  };
+  var getConfiguration = function() {
+    return configuration
+  };
+  return{init:init, applyConfiguration:applyConfiguration, getConfiguration:getConfiguration}
+}(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
   var actionSave = "view";
   var actionInit = "nothing";
@@ -14228,9 +14387,9 @@ VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
   var nextArticleId = 1;
   var dummies = ["<article id='article_id_to_change' template='t1'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='left' class='t1_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='header' class='t1_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t1_subheader editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t3_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t3_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t2'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='left' class='t2_left editable grey_background selectable'></div></article>", "<article id='article_id_to_change' template='t3'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t3_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t3_left editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t4'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t4_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t4_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t4_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t5_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t5'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t5_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t5_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t5_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t7_subheader editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t8_right editable grey_background selectable'></div></article>", 
@@ -14467,14 +14626,14 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
     $("#thumbnails_in_excursion_details").hide();
     VISH.Editor.API.requestThumbnails(_onThumbnailsReceived, _onThumbnailsError)
   };
-  var selectAvatar = function(event) {
-    $(".carrousel_element_single_row_thumbnails").removeClass("carrousel_element_selected");
-    $(event.target).addClass("carrousel_element_selected");
+  var _selectAvatar = function(event) {
+    $(".carrousel_element_single_row_thumbnails").removeClass("selectedThumbnail");
+    $(event.target).addClass("selectedThumbnail");
     $("#excursion_avatar").val($(event.target).attr("src"))
   };
   var selectRandom = function(max) {
     var randomnumber = Math.ceil(Math.random() * max);
-    $("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").addClass("carrousel_element_selected");
+    $("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").addClass("selectedThumbnail");
     $("#excursion_avatar").val($("#avatars_carrousel .carrousel_element_single_row_thumbnails:nth-child(" + randomnumber + ") img").attr("src"))
   };
   var _onThumbnailsReceived = function(data) {
@@ -14498,14 +14657,14 @@ VISH.Editor.AvatarPicker = function(V, $, undefined) {
     $("#thumbnails_in_excursion_details").show();
     var options = new Array;
     options["rows"] = 1;
-    options["callback"] = VISH.Editor.AvatarPicker.selectAvatar;
+    options["callback"] = _selectAvatar;
     options["rowItems"] = 5;
     options["styleClass"] = "thumbnails";
     VISH.Editor.Carrousel.createCarrousel("avatars_carrousel", options);
     $(".buttonintro").addClass("buttonintro_extramargin");
     VISH.Editor.AvatarPicker.selectRandom(5)
   };
-  return{init:init, selectAvatar:selectAvatar, selectRandom:selectRandom, onLoadExcursionDetails:onLoadExcursionDetails}
+  return{init:init, selectRandom:selectRandom, onLoadExcursionDetails:onLoadExcursionDetails}
 }(VISH, jQuery);
 VISH.Editor.Carrousel = function(V, $, undefined) {
   var createCarrousel = function(containerId, options) {
@@ -15027,6 +15186,17 @@ VISH.Editor.Object.Live = function(V, $, undefined) {
   };
   return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
 }(VISH, jQuery);
+VISH.Editor.Object.PDF = function(V, $, undefined) {
+  var init = function() {
+  };
+  var generateWrapperForPdf = function(url) {
+    return"<iframe src='http://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>"
+  };
+  var generatePreviewWrapperForPdf = function(url) {
+    return"<iframe class='objectPreview' src='http://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>"
+  };
+  return{init:init, generatePreviewWrapperForPdf:generatePreviewWrapperForPdf, generateWrapperForPdf:generateWrapperForPdf}
+}(VISH, jQuery);
 VISH.Editor.Object.Repository = function(V, $, undefined) {
   var carrouselDivId = "tab_flash_repo_content_carrousel";
   var previewDivId = "tab_flash_repo_content_preview";
@@ -15166,10 +15336,10 @@ VISH.Editor.Object.Web = function(V, $, undefined) {
     VISH.Editor.Object.drawPreviewObject(contentToAdd)
   };
   var generateWrapperForWeb = function(url) {
-    return"<iframe src='" + url + "'></embed>"
+    return"<iframe src='" + url + "'></iframe>"
   };
   var generatePreviewWrapperForWeb = function(url) {
-    return"<iframe class='objectPreview' src='" + url + "'></embed>"
+    return"<iframe class='objectPreview' src='" + url + "'></iframe>"
   };
   return{init:init, onLoadTab:onLoadTab, drawPreviewElement:drawPreviewElement, generatePreviewWrapperForWeb:generatePreviewWrapperForWeb, generateWrapperForWeb:generateWrapperForWeb}
 }(VISH, jQuery);
@@ -15313,7 +15483,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     $("article").each(function(index, s) {
       var template = $(s).attr("template");
       carrouselElements += 1;
-      carrouselImages.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"));
+      carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/" + template + ".png' />"));
       carrouselImagesTitles.push(carrouselElements)
     });
     carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
@@ -15321,7 +15491,7 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     if(carrouselElements < 8) {
       var i;
       for(i = 0 + carrouselElements;i < 8;i++) {
-        carrouselImages.push($("<img class='image_barbutton' action='default' src='" + VISH.ImagesPath + "templatesthumbs/default.png' />"));
+        carrouselImages.push($("<img class='image_barbutton empty_slide_button' action='default' src='" + VISH.ImagesPath + "templatesthumbs/default.png' />"));
         carrouselElements += 1
       }
     }
@@ -15359,8 +15529,8 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     }
   };
   var selectThumbnail = function(no) {
-    $(".barbutton").css("background-color", "transparent");
-    $(".image_barbutton[slideNumber=" + no + "]").css("background-color", "#ACACAC")
+    $(".image_barbutton").removeClass("selectedSlideThumbnail");
+    $(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail")
   };
   var goToThumbnail = function(no) {
     $("#" + carrouselDivId).trigger("slideTo", no)
@@ -15997,6 +16167,7 @@ VISH.SlideManager = function(V, $, undefined) {
   var slideStatus = {};
   var myDoc;
   var init = function(excursion) {
+    VISH.Editing = false;
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
     _setupSize();
@@ -16036,11 +16207,11 @@ VISH.SlideManager = function(V, $, undefined) {
           }
         }
       }
-      $("#page-fullscreen").css("background-position", "-40px 0px");
+      $("#page-fullscreen").css("background-position", "-45px 0px");
       $("#page-fullscreen").hover(function() {
-        $("#page-fullscreen").css("background-position", "-40px -40px")
+        $("#page-fullscreen").css("background-position", "-45px -40px")
       }, function() {
-        $("#page-fullscreen").css("background-position", "-40px 0px")
+        $("#page-fullscreen").css("background-position", "-45px 0px")
       })
     }else {
       if(myDoc.cancelFullScreen) {

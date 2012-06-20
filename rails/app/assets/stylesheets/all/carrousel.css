@@ -18,7 +18,6 @@
 }
 
 .image_carousel img {
-    border: 1px solid #ccc;
     background-color: white;
     margin: 6px;
     display: block;
@@ -118,16 +117,23 @@ img.carrousel_element_single_row{
 }
 
 img.carrousel_element_selected{
-  border: 10px solid rgba(255, 2, 94, 0.9);
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6);
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
 	border-radius: 13px;
 	-webkit-border-radius: 13px;
 	-moz-border-radius: 13px;
-	outline: 0;
-	outline: thin dotted \9;
-	opacity: 1.0 !important;
+	opacity: 1.0;
+}
+
+img.carrousel_element_selected:active{
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
+	border-radius: 13px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	opacity: 1.0;
 }
 
 div.carrousel_element_multiple_row{
@@ -222,6 +228,7 @@ div.carrousel_element_single_row_thumbnails{
   max-height: 150px;
   float: left;
   margin-left: 35px;
+  border-radius: 20px;
 }
 
 img.carrousel_element_single_row_thumbnails{
@@ -236,8 +243,6 @@ img.carrousel_element_single_row_thumbnails{
 }
 
 img.carrousel_element_single_row_thumbnails:hover{
-  width: 100px;
-  height: 90px;
   max-width: 150px;
   max-height: 150px;
   margin-left: -27px;
@@ -245,6 +250,12 @@ img.carrousel_element_single_row_thumbnails:hover{
   border: none;
   opacity: 0.8;
   cursor: pointer;
+  -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
+  -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
+  box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
 }
 
 a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
@@ -285,23 +296,21 @@ img.carrousel_element_single_row_slides{
   max-height: 150px;
   margin-left: -140px;
   margin-top: 0px;
-  border: none;
   background: none;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
+  opacity: 0.6;
 }
 
 img.carrousel_element_single_row_slides:hover{
-  	cursor: pointer;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.055), 0 0 8px rgba(255, 100, 100, 0.2);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.055), 0 0 8px rgba(255, 100, 100, 0.2);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.055), 0 0 8px rgba(255, 100, 100, 0.2);
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	outline: 0;
-	outline: thin dotted \9;	
+}
+
+img.carrousel_element_single_row_slides:active{
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.1);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.1);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.1);
+	opacity: 1.0;
 }
 
 a.prev_single_row_slides, a.next_single_row_slides{
@@ -318,16 +327,17 @@ a.next_single_row_slides{
 }
 
 p.carrousel_element_single_row_slides{
-    background-color: #FFFFFF;
-    border: 1px solid #666;
+	cursor: pointer;
+	background-color: #fff;
     border-radius: 10px 0 5px 0;
     font-family: Helvetica;
     font-size: 15px;
     margin: 31px 0 0 -101px;
     max-height: 20px;
     overflow: hidden;
-    position: fixed;
+    position: absolute;
     text-align: center;
     width: 21px;
 	opacity: 0.9;
+	z-index: 10;
 }
