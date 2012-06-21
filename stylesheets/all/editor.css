@@ -371,7 +371,7 @@ img {
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	width: 100%;
+	width: 95%;
 	height: 90px;
 }
 
@@ -467,7 +467,7 @@ img {
 
 #thumbcontent{
 	width: 400px;
-	height: 300px;
+	height: 325px;
 }
 
 /*****fancybox tabs ****************/
