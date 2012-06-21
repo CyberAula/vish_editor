@@ -104,39 +104,100 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	
 	/**
    * Function to get width in pixels from a style attribute.
-   * If widht attribute is given by percent, area (parent container) attribute is needed.
+   * If width attribute is given by percent, area (parent container) attribute is needed.
    */
   var getWidthFromStyle = function(style,area){
+    return getPixelDimensionsFromStyle(style,area)[0];
+  };
+	
+	 /**
+   * Function to get width in pixels from a style attribute.
+   * If width attribute is given by percent, area (parent container) attribute is needed.
+   */
+  var getHeightFromStyle = function(style,area){
+    return getPixelDimensionsFromStyle(style,area)[1];
+  };
+	
+ /**
+  * Function to get width and height in pixels from a style attribute.
+  * If widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.
+  */
+  var getPixelDimensionsFromStyle = function(style,area){
+		var dimensions = [];
     var width=null;
-		var width_percent_pattern = /width:\s?([0-9]+\.?[0-9]+)%/g
-		var width_px_pattern = /width:\s?([0-9]+\.?[0-9]+)px/g
-		
+		var height=null;
+		var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
+		var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
+		var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
+    var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
+    
     $.each(style.split(";"), function(index, property){
         //Look for property starting by width
         if(property.indexOf("width") !== -1){
-					
-					if(property.match(width_px_pattern)){
-						//Width defined in px.
-						var result = width_px_pattern.exec(property);
-						if(result[1]){
+          
+          if(property.match(width_px_pattern)){
+            //Width defined in px.
+            var result = width_px_pattern.exec(property);
+            if(result[1]){
               width = result[1];
-							return width;
             }
-					} else if(property.match(width_percent_pattern)){
-						//Width defined in %.
-						var result = width_percent_pattern.exec(property);
-						if(result[1]){
-							var percent = result[1];
-							if(area){
-								width = $(area).width()*percent/100;
-								return width;
-							}
-						}
-					}
-        } 
+          } else if(property.match(width_percent_pattern)){
+            //Width defined in %.
+            var result = width_percent_pattern.exec(property);
+            if(result[1]){
+              var percent = result[1];
+              if(area){
+                width = $(area).width()*percent/100;
+              }
+            }
+          }
+        } else  if(property.indexOf("height") !== -1){
+					
+          if(property.match(height_px_pattern)){
+            //height defined in px.
+            var result = height_px_pattern.exec(property);
+            if(result[1]){
+              height = result[1];
+
+            }
+          } else if(property.match(height_percent_pattern)){
+            //Width defined in %.
+            var result = height_percent_pattern.exec(property);
+            if(result[1]){
+              var percent = result[1];
+              if(area){
+                height = $(area).height()*percent/100;
+              }
+            }
+          }
+        }
     });
-    return width;
+		
+		dimensions.push(width);
+    dimensions.push(height);
+    return dimensions;
   };
+	
+	
+	var setStyleInPixels = function(style,area){
+		
+		var fitlerStyle = "";
+		$.each(style.split(";"), function(index, property){
+       if ((property.indexOf("width") === -1)&&(property.indexOf("height")) === -1) {
+			   fitlerStyle = fitlerStyle + property + "; ";
+	     }
+    });
+		var dimensions = getPixelDimensionsFromStyle(style,area);
+		
+		if((dimensions)&&(dimensions[0])){
+			fitlerStyle = fitlerStyle + "width: " + dimensions[0] + "px; ";
+			if(dimensions[1]){
+				fitlerStyle = fitlerStyle + "height: " + dimensions[1] + "px; ";
+			}
+		}
+
+		return fitlerStyle;
+	}
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed
@@ -150,6 +211,9 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	
 	return {
 		getWidthFromStyle   : getWidthFromStyle,
+		getHeightFromStyle  : getHeightFromStyle,
+		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
+		setStyleInPixels  : setStyleInPixels,
 		goToSlide		    : goToSlide,
 		lastSlide		    : lastSlide,
 		addSlide		    : addSlide,

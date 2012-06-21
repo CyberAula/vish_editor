@@ -156,20 +156,24 @@ VISH.Editor.Image = (function(V,$,undefined){
    */
   var drawImage = function(image_url, area, style){    
 
+    //VISH.Debugging.log("drawImage with url " + image_url + " and area " + area + " and style " + style)
+
 	  var current_area;
-	  var image_width = 325;  //initial image width
-	  var image_style = "";
+		var reference_width = 325;
+    var image_width = reference_width; //default value
+    var image_height = null;
 	
 	  if(area){
   		current_area = area;
     }	else {
   		current_area = VISH.Editor.getCurrentArea();
     }
-	
+
   	if(style){
-  		image_style = style;
-  		image_width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
+			style = V.SlidesUtilities.setStyleInPixels(style,current_area);
+			image_width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
   	}
+		
   	var template = VISH.Editor.getTemplate(); 
     var nextImageId = VISH.Editor.getId();
     var idToDragAndResize = "draggable" + nextImageId;
@@ -179,14 +183,8 @@ VISH.Editor.Image = (function(V,$,undefined){
     V.Editor.addDeleteButton(current_area);
     
     //the value to set the slider depends on the width if passed in the style, we have saved that value in image_width    
-    var thevalue = image_width/325;
-    $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='"+thevalue+"' style='display: none; '></div>");      
-    
-    //double size if header to insert image
-    //I HAVE NOT DONE IT BECAUSE WE NEED TO CHANGE ALSO THE SLIDESMANAGER TO DISPLAY DOUBLE SIZE
-    //if(current_area.attr('areaid')==="header"){
-    //	current_area.css("height", "48px");
-    //}
+    var scaleFactor = image_width/reference_width;
+    $("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='"+scaleFactor+"' style='display: none; '></div>");
             
     $("#imageSlider"+nextImageId).slider({
       from: 1,
@@ -196,7 +194,20 @@ VISH.Editor.Image = (function(V,$,undefined){
       dimension: "x",
       skin: "blue",
       onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(325*value);
+				var originalHeight = $("#" + idToDragAndResize).height();
+				var originalWidth = $("#" + idToDragAndResize).width();
+				
+				//Change width
+				var newWidth = reference_width*value;
+				$("#" + idToDragAndResize).width(newWidth);
+				
+				if(originalHeight===$("#" + idToDragAndResize).height()){
+					//change height
+					var aspectRatio = originalHeight/originalWidth;
+					if(aspectRatio!=0){
+            $("#" + idToDragAndResize).height(newWidth*aspectRatio);
+         }
+				} 
       }
     });
     $("#" + idToDragAndResize).draggable({
