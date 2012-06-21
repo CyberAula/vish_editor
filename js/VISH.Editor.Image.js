@@ -156,11 +156,9 @@ VISH.Editor.Image = (function(V,$,undefined){
    */
   var drawImage = function(image_url, area, style){    
 
-    //VISH.Debugging.log("drawImage with url " + image_url + " and area " + area + " and style " + style)
-
 	  var current_area;
-		var reference_width = 325;
-    var image_width = reference_width; //default value
+		var reference_width = 100; //Minimum image width
+		var image_width = 300; //default image width
     var image_height = null;
 	
 	  if(area){
@@ -168,6 +166,7 @@ VISH.Editor.Image = (function(V,$,undefined){
     }	else {
   		current_area = VISH.Editor.getCurrentArea();
     }
+
 
   	if(style){
 			style = V.SlidesUtilities.setStyleInPixels(style,current_area);
@@ -188,8 +187,8 @@ VISH.Editor.Image = (function(V,$,undefined){
             
     $("#imageSlider"+nextImageId).slider({
       from: 1,
-      to: 8,
-      step: 0.5,
+      to: 15,
+      step: 0.25,
       round: 1,
       dimension: "x",
       skin: "blue",
