@@ -108,6 +108,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $(iframeTag).attr('class', 'snapshot_content');
     $(iframeTag).attr('scrolling', 'no');
     $(iframeTag).attr('wmode', "transparent");
+		$(iframeTag).css('pointer-events', "none");
 
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
@@ -147,20 +148,22 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
       }
     });
 
-
-		$('#' + idToDrag).bind('mousemove',function(event){
-//      if(!_isBorderClick(event,idToDrag)){
-//				event.stopPropagation();
-//			}
-        event.stopPropagation();
+		
+		$('#' + idToDrag).bind('mousedown',function(event){
+			 event.preventDefault();
     });
+		
 
     $("#" + idToDrag).draggable({
       cursor : "move",
-			cancel: idToResize
+			disabled: false,
+		  start: function(event, ui){
+		  	if (!_isBorderClick(event, idToDrag)) {
+		  		return false;
+		  	}
+	    }
     });
-
-  };	
+  };
 	
 	var _isBorderClick = function(event,idToDrag){
 		var accuracy = 6;
@@ -200,10 +203,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $("#" + id).width(width);
     $("#" + id).height(width*proportion);
   };
-	
-	
-//    $("#"+lastWrapperId).scrollTop();
-//    $("#"+lastWrapperId).scrollLeft();
+
 			
 	return {
 		init: init,
