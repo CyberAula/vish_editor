@@ -84,6 +84,7 @@ var i18n =
 			"Close"	: "Cerrar",
 			"close"	: "Cerrar",
 			"Continue"			: "Continuar",
+			"Content"           : "Contenido",
 			"Create at least one slide before saving."  : "Debe crear al menos una slide antes de salvar",
 			"Choose an image that will represent your excursion" : "Elige una imagen que representará tu excursión",
 			"Configuration Button" : "Botón de configuración",
