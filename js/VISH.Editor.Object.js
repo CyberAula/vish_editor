@@ -437,7 +437,7 @@ VISH.Editor.Object = (function(V,$,undefined){
    */
 	var drawObject = function(object, area, style){	
 			
-		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+		//VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;

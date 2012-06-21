@@ -41,7 +41,7 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = options;
 			if((options['developping']==true)&&(VISH.Debugging)){
 				VISH.Debugging.init(true);
-	      if (VISH.Debugging.getActionInit() == "loadSamples") {
+	      if ((VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
 	        excursion = VISH.Debugging.getExcursionSamples();
 	      }
 			}
