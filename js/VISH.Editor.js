@@ -79,6 +79,7 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
       $(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
       $(document).on('click','.templatethumb', _onTemplateThumbClicked);
+      
       $(document).on('click','#save', _onSaveButtonClicked);
       $(document).on('click','.editable', _onEditableClicked);
       $(document).on('click','.selectable', _onSelectableClicked);
@@ -888,6 +889,16 @@ VISH.Editor = (function(V,$,undefined){
     }
     return null;
   }
+  
+  /*
+   Load the initial fancybox
+   * */
+  
+  var loadFancyBox = function(fancy) {
+  	
+  	VISH.Debugging.log("entra en loadFancyBox y parámetro: " + fancy );
+  	
+  }
 
 
 	return {
@@ -898,7 +909,9 @@ VISH.Editor = (function(V,$,undefined){
 		getTemplate            		: getTemplate,
 		getCurrentArea        		: getCurrentArea,
 		getParams            			: getParams,
-		getOptions                : getOptions
+		getOptions                : getOptions, 
+		loadFancyBox			  : loadFancyBox
+		
 	};
 
 }) (VISH, jQuery);
