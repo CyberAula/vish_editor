@@ -683,6 +683,14 @@ iframe.t9_snapshot_content{
 	overflow:hidden;	
 }
 
+.t10_header{
+	height: 10%;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+	z-index: 10px;
+}
+
 
 .question_title{
 	padding-top: .2em;
@@ -739,6 +747,14 @@ iframe.t9_snapshot_content{
 	float: left;
 	overflow:hidden;	
 }
+
+
+.t11_header{
+	height: 10%;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+	z-index: 10px;
 
 
 .mc_answer{
