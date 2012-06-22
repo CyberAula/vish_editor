@@ -99,80 +99,46 @@ VISH.Samples = (function(V,undefined){
     }]
 }; 
 	 
-	var samples = {
-				'id'            :  '1',
-                'title'         :  'Nanoyou',
-                'description'   :  'This excursion is about nanotechnology',
-                'avatar'        :  '/assets/logos/original/excursion-01.png',
-                'author'        :  'Enrique Barra',
-                'slides'        : [
-		{
-			"id": "article1",
-			"template": "t5",
-			"elements":[
+
+
+		var samples = {
+		"id" : "",
+		"author" : "",
+		"slides" : [
 				{
-					"id": "zone1",
-					"type": "text",
-					"areaid": "header",
-					"body": "<div><font size=\"6\">hola</font></div>"
-					},
-				{
-					"id": "zone2",
-					"type": "text",
-					"areaid": "left",
-					"body": "<div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"background-color: rgb(255, 0, 102);;\">Insert text here</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"color:#33ff00;\">adfadf</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontimpact\" style=\"color:#33ff00;\">afdfadf</span></div>"
-					},
-				{
-					"id": "zone3",
-					"type": "object",
-					"areaid": "right",
-					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
-					"style": "position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "
-				}
-			]
-		},
-		{
-			"id": "article2",
-			"template": "t5",
-			"elements":[
-				{
-					"id": "zone4",
-					"type": "text",
-					"areaid": "header",
-					"body": "flash"
+					"id" : "article1",
+					"template" : "t2",
+					"elements" : [ {
+						"id" : "zone1",
+						"type" : "image",
+						"areaid" : "left",
+						"body" : "http://politicamenteconservador.blogia.com/upload/20060818041914-el-senor-de-los-anillos2.jpg",
+						"style" : "position: relative; width:44.31314623338257%; height:64.21663442940039%; top:16.548463684908427%; left:26.587887740029544%;"
+					} ]
 				},
 				{
-					"id": "zone5",
-					"type": "object",
-					"areaid": "left",
-					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1ppp.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">",
-					"style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "
+					"id" : "article2",
+					"template" : "t2",
+					"elements" : [ {
+						"id" : "zone2",
+						"type" : "image",
+						"areaid" : "left",
+						"body" : "http://4.bp.blogspot.com/-Fh_v8PYbVg0/TyGdKEiYmKI/AAAAAAAAAPI/MKdfZ224aEQ/s1600/el_senor_de_los_anillos_la_batalla_por_la_tierra_media_2_the_rise_of_the_witchking-181035.jpg",
+						"style" : "position: relative; width:44.31314623338257%; height:43.32688588007737%; top:28.153879545643434%; left:29.870346272185422%;"
+					} ]
 				},
 				{
-					"id":"zone6",
-					"areaid":"right"
-				}
-			]
-		}
-		,
-		{
-			'id'       :'vish10',
-			'template' :'t2',
-			'elements':[				      
-				{
-                    'id'     : '332',
-					'type'   : 'video',
-					'areaid' : 'left',
-					'controls' : true,
-					'autoplay' : false,
-					'loop' : false,
-					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
-					'style'  : "position: relative; left: 2px; top: 110px; width: 325px;",
-					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
-				}
-			]
-		}
-		]};
+					"id" : "article3",
+					"template" : "t2",
+					"elements" : [ {
+						"id" : "zone3",
+						"type" : "image",
+						"areaid" : "left",
+						"body" : "http://www.revistaintime.com/wp-content/uploads/2012/03/el-padrino-2.jpg",
+						"style" : "position: relative; width:44.31314623338257%; height:47.195357833655706%; top:23.21083172147002%; left:31.0192023633678%;"
+					} ]
+				} ]
+	};
 		
 	var full_samples = {
 				'id'            :  '1',

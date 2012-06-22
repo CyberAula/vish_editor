@@ -11,7 +11,7 @@ VISH.Debugging = (function(V,$,undefined){
 	
 	//Possible action: "nothing" or "loadSamples".
 	var actionInit = "nothing";
-	var excursionSamples = VISH.Samples.samples_aldo;
+	var excursionSamples = VISH.Samples.samples;
 	
 	
 	var developping = false;

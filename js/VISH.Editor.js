@@ -722,6 +722,8 @@ VISH.Editor = (function(V,$,undefined){
       slide.template = $(s).attr('template');
       slide.elements = [];
       var element = {};
+      //important show it (the browser does not know the height and width if it is hidden)
+      $(s).show();
       $(s).find('div').each(function(i,div){
         //to remove all the divs of the sliders, only consider the final boxes
         if($(div).attr("areaid") !== undefined){   
