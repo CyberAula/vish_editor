@@ -672,6 +672,17 @@ iframe.t9_snapshot_content{
 	by Enrique Barra
 
 	css for quiz slide containing only question, name and answer
+*/
+
+.t10_left{
+	margin-top: 2%;
+	position:relative;
+	width: 80%;
+	height: 70%;
+	float: left;
+	overflow:hidden;	
+}
+
 
 .question_title{
 	padding-top: .2em;
@@ -714,10 +725,21 @@ iframe.t9_snapshot_content{
 	margin-left: 300px;
 }
 
-	MULTIPLE CHOICE	QUESTION SLIDE
+/*	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
 
 	css for quiz slide containing only question, and multiple choice answers
+*/
+
+.t11_left{
+	margin-top: 2%;
+	position:relative;
+	width: 80%;
+	height: 70%;
+	float: left;
+	overflow:hidden;	
+}
+
 
 .mc_answer{
 	text-align: justify;
@@ -730,4 +752,3 @@ iframe.t9_snapshot_content{
 	margin: 3px 10px 0px 5px;
 }
 
-*/
