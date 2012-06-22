@@ -4,11 +4,8 @@ VISH.SlidesUtilities = (function(V,$,undefined){
    * function to dispatch the event that redraws the slides
    * also redraws the thumbnails
    */
-  var redrawSlides = function(){  	    
-		
+  var redrawSlides = function(){
 		$(document).trigger('OURDOMContentLoaded');
-		
-		//V.Editor.Thumbnails.redrawThumbnails();
   };
     
 /*
@@ -180,7 +177,6 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	
 	
 	var setStyleInPixels = function(style,area){
-		
 		var fitlerStyle = "";
 		$.each(style.split(";"), function(index, property){
        if ((property.indexOf("width") === -1)&&(property.indexOf("height")) === -1) {
@@ -195,7 +191,6 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 				fitlerStyle = fitlerStyle + "height: " + dimensions[1] + "px; ";
 			}
 		}
-
 		return fitlerStyle;
 	}
 	

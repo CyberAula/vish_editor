@@ -7,6 +7,7 @@ VISH.Editor = (function(V,$,undefined){
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
 	var excursion_to_edit = null;
+	var saved_excursion = null;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -685,7 +686,8 @@ VISH.Editor = (function(V,$,undefined){
 							//if user has answered "yes"
 							if($("#save_answer").val() ==="true"){
 								$("#save_answer").val("false");	
-								_saveExcursion();				
+								saveExcursion();	
+								_afterSaveExcursion();			
 							}	else {
 								return false;
 							}
@@ -699,7 +701,7 @@ VISH.Editor = (function(V,$,undefined){
   /**
    * function to save the excursion 
    */
-  var _saveExcursion = function(){
+  var saveExcursion = function(){
   	//first of all show all objects that have been hidden because they are in previous and next slides
   	//so they are not saved with style hidden
   	$('.object_wrapper').show();
@@ -781,70 +783,91 @@ VISH.Editor = (function(V,$,undefined){
       excursion.slides.push(slide);
       slide = {};
     });
+		saved_excursion = excursion;
     var jsonexcursion = JSON.stringify(excursion);
-    VISH.Debugging.log(jsonexcursion);
-    
-				
+    VISH.Debugging.log(jsonexcursion);   
+		return saved_excursion;     
+  };
+	
+	var _afterSaveExcursion = function(){
 		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-			//Vish: OnSave Debug actions
-			
-			if(VISH.Debugging.getActionSave()=="view"){
-				$('article').remove();
-	      $('#menubar').remove();
-	      $('#menubar_helpsection').remove();
-	      $('#joyride_help_button').remove();
-	      $('.theslider').remove();
-	      $(".nicEdit-panelContain").remove();
-	      $("#menubar-viewer").show();
-	      VISH.SlideManager.init(excursion);
-			}	else if (VISH.Debugging.getActionSave()=="edit") {
-				$('article').remove();
+      //Vish: OnSave Debug actions
+      
+      if(VISH.Debugging.getActionSave()=="view"){
+        $('article').remove();
+        $('#menubar').hide();
+        $('#menubar_helpsection').hide();
+        $('#joyride_help_button').hide();
+        $('.theslider').hide();
+        $(".nicEdit-panelContain").hide();
+        $("#menubar-viewer").show();
+        VISH.SlideManager.init(excursion);
+      } else if (VISH.Debugging.getActionSave()=="edit") {
+        $('article').remove();
         var options = {};
         options["developping"] = true;
+        options["configuration"] = configuration;
         VISH.Editor.init(options, excursion);  //to edit the excursion
-			}
-			
-		} else {
-			//Vish: OnSave Production actions
-			
-			if(VISH.Configuration.getConfiguration()["VishIntegration"]){
-				var send_type;
-	      if(excursion_to_edit){
-	        send_type = 'PUT'; //if we are editing
-	      } else {
-	        send_type = 'POST'; //if it is a new
-	      } 
-	      
-	      //POST to http://server/excursions/
-	      var params = {
-	        "excursion[json]": jsonexcursion,
-	        "authenticity_token" : initOptions["token"]
-	      }
-	      
-	      $.ajax({
-	        type    : send_type,
-	        url     : initOptions["postPath"],
-	        data    : params,
-	        success : function(data) {
-	            /*if we redirect the parent frame*/
-	            window.top.location.href = data.url;
-	        }     
-	      }); 
-			} else {
-				//Save to file its not possible... upload to another server? [...]
-				
-			}
-	  }	 	          
-  };
+      }
+      
+    } else {
+      //Vish: OnSave Production actions
+      
+      if(VISH.Configuration.getConfiguration()["VishIntegration"]){
+        var send_type;
+        if(excursion_to_edit){
+          send_type = 'PUT'; //if we are editing
+        } else {
+          send_type = 'POST'; //if it is a new
+        } 
+        
+        //POST to http://server/excursions/
+        var params = {
+          "excursion[json]": jsonexcursion,
+          "authenticity_token" : initOptions["token"]
+        }
+        
+        $.ajax({
+          type    : send_type,
+          url     : initOptions["postPath"],
+          data    : params,
+          success : function(data) {
+              /*if we redirect the parent frame*/
+              window.top.location.href = data.url;
+          }     
+        }); 
+      } else {
+				//Vish Standalone actions
+        //Save to file its not possible... upload to another server? [...]
+        
+      }
+    } 
+	}
 	
 	/**
 	 * function to get the styles in percentages
 	 */
 	var _getStylesInPercentages = function(parent, element){
+		
+//		console.log("_getStylesInPercentages con element " + $(element).attr("id") );
+//		console.log("_getStylesInPercentages con parent " + $(parent).attr("id") );
+		
+		//$(".slides > article").css("display","");
+		
 		var WidthPercent = element.width()*100/parent.width();
 		var HeightPercent = element.height()*100/parent.height();
     var TopPercent = element.position().top*100/parent.height();
     var LeftPercent = element.position().left*100/parent.width();
+		
+		//$(".slides > article").css("display","none");
+		
+//		console.log("element.width()"+element.width())
+//		console.log("parent.width()"+parent.width())
+//		console.log("parent.height()"+parent.height())
+//		console.log("element.height()"+element.height())
+//		console.log("position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;");
+		
+		
     return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
 	
@@ -897,19 +920,27 @@ VISH.Editor = (function(V,$,undefined){
     return null;
   }
   
+	var getSavedExcursion = function() {
+		if(saved_excursion){
+			return saved_excursion;
+		} else {
+			return null;
+		}
+	}
+	
+	
   /*
    Load the initial fancybox
    * */
   
   var loadFancyBox = function(fancy) {
-        var fancyBoxes = {1: "templates", 2: "quizes"}	
+    var fancyBoxes = {1: "templates", 2: "quizes"}	
   	VISH.Debugging.log("entra en loadFancyBox y parámetro: " + fancyBoxes[1] );
   	VISH.Debugging.log("usando el hash: " + fancy );
-$('#'+fancyBoxes[1]+'_content').hide();
-$('#'+fancyBoxes[2]+'_content').hide();
-$('#'+fancy+'_content').show();
-VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
-
+		$('#'+fancyBoxes[1]+'_content').hide();
+		$('#'+fancyBoxes[2]+'_content').hide();
+		$('#'+fancy+'_content').show();
+		VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
   }
 
 
@@ -922,8 +953,9 @@ VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
 		getCurrentArea        		: getCurrentArea,
 		getParams            			: getParams,
 		getOptions                : getOptions, 
-		loadFancyBox			  : loadFancyBox
-		
+		loadFancyBox			        : loadFancyBox,
+		getSavedExcursion         : getSavedExcursion,
+		saveExcursion             : saveExcursion
 	};
 
 }) (VISH, jQuery);
