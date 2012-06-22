@@ -163,7 +163,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
 	var _renderMcquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"</div>";
+		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"?</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
 		ret += "<input id='pupil_name' class='question_name_input'></input>";

@@ -907,16 +907,13 @@ VISH.Editor = (function(V,$,undefined){
   	/* TODO: can we get all the tabs with JQuery and use it for construct the fancyBoxes hash? */ 
   	
         var fancyBoxes = {1: "templates", 2: "quizes"}	
-		var i;
-		VISH.Debugging.log("fancyBoxes.length: "+ fancyBoxes.count);
+				
 		for( tab in fancyBoxes) {
 		
-		$('#'+fancyBoxes[tab]+'_content').hide();
-	
-} 
-	/* $('#'+fancyBoxes[1]+'_content').hide();
-	$('#'+fancyBoxes[2]+'_content').hide(); */
-	$('#'+fancy+'_content').show();
+			$('#'+fancyBoxes[tab]+'_content').hide();
+		} 
+		//just show the fancybox selected 
+		$('#'+fancy+'_content').show();
 
   }
 

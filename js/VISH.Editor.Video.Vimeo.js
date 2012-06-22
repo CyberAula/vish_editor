@@ -2,7 +2,7 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	
 	var carrouselDivId = "tab_video_vimeo_content_carrousel";
 	var previewDivId = "tab_video_vimeo_content_preview";
-	var queryMaxMaxNumberYoutubeVideo= 20; //maximum video query for youtube API's (999 max)
+	var queryMaxMaxNumberVimeoVideo= 20; //maximum video query for youtube API's (999 max)
 	var currentVideos = new Array(); //to videoID param
 	var selectedVideo = null;
 	
@@ -32,7 +32,9 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	 */	
 	var requestVimeoData = function(text){
 		VISH.Debugging.log("entra en requesVimeoData");
-		var url_vimeo = "http://gdata.youtube.com/feeds/api/videos?q="+text+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";	 
+		//var url_vimeo = "http://gdata.youtube.com/feeds/api/videos?q="+text+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";	 
+		//we have to create the URL using the Vimeo's API and the term to search is the parameter 'text'
+		VISH.Debugging.log("text vale :" + text);
 		jQuery.getJSON(url_youtube,function (data) {
 			_onDataReceived(data);
 		});

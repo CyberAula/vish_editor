@@ -714,6 +714,7 @@ iframe.t9_snapshot_content{
 
 .question_name_input{
 	width: 600px;
+	position:relative;
 }
 
 .question_answer{
