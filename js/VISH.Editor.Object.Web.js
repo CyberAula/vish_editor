@@ -31,7 +31,7 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
   }
 	
 	var generateWrapperForWeb = function(url){
-		return "<iframe src='" + url + "'></iframe>"
+		return "<iframe src='" + url + "?wmode=transparent'></iframe>"
 	}
 	
 	var generatePreviewWrapperForWeb = function(url){

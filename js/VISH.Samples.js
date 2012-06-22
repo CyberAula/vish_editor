@@ -57,7 +57,7 @@ VISH.Samples = (function(V,undefined){
             "id": "zone8",
             "type": "object",
             "areaid": "left",
-            "body": "<iframe style=\"width: 678px; height: 518px;\" wmode=\"transparent\" class=\"t2_object\" id=\"resizableunicID_3\" src=\"http://en.wikipedia.org/wiki/Chess\">&lt;/embed&gt;</iframe>",
+            "body": "<iframe style=\"width: 678px; height: 518px;\" wmode=\"opaque\" class=\"t2_object\" id=\"resizableunicID_3\" src=\"http://en.wikipedia.org/wiki/Chess\">&lt;/embed&gt;</iframe>",
             "style": "position: relative; width:100%; top:0.19305019305019305%; left:-1.6224188790560472%;"
         }]
     }, {
@@ -78,7 +78,7 @@ VISH.Samples = (function(V,undefined){
             "id": "zone11",
             "type": "object",
             "areaid": "center",
-            "body": "<iframe wmode=\"transparent\" class=\"t7_object\" id=\"resizableunicID_5\" src=\"http://www.youtube.com/embed/aGVv3br59P4?wmode=transparent\" style=\"width: 434px; height: 325px;\" frameborder=\"0\"></iframe>",
+            "body": "<iframe wmode=\"opaque\" class=\"t7_object\" id=\"resizableunicID_5\" src=\"http://www.youtube.com/embed/aGVv3br59P4?wmode=opaque\" style=\"width: 434px; height: 325px;\" frameborder=\"0\"></iframe>",
             "style": "position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"
         }, {
             "id": "zone12",
@@ -93,7 +93,7 @@ VISH.Samples = (function(V,undefined){
             "id": "zone13",
             "type": "object",
             "areaid": "left",
-            "body": "<iframe style=\"width: 542.4px; height: 415.306px;\" wmode=\"transparent\" class=\"t2_object\" id=\"resizableunicID_6\" src=\"http://www.xml3d.org/xml3d/demos/25_Chess/\">&lt;/embed&gt;</iframe>",
+            "body": "<iframe style=\"width: 542.4px; height: 415.306px;\" wmode=\"opaque\" class=\"t2_object\" id=\"resizableunicID_6\" src=\"http://www.xml3d.org/xml3d/demos/25_Chess/\">&lt;/embed&gt;</iframe>",
             "style": "position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"
         }]
     }]
@@ -126,7 +126,7 @@ VISH.Samples = (function(V,undefined){
 					"id": "zone3",
 					"type": "object",
 					"areaid": "right",
-					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
+					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=opaque\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
 					"style": "position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "
 				}
 			]

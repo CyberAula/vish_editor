@@ -107,7 +107,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $(iframeTag).attr('id', idToResize);
     $(iframeTag).attr('class', 'snapshot_content');
     $(iframeTag).attr('scrolling', 'no');
-    $(iframeTag).attr('wmode', "transparent");
+    $(iframeTag).attr('wmode', "opaque");
 		$(iframeTag).css('pointer-events', "none");
 
     $(current_area).html("");

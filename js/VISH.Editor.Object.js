@@ -372,7 +372,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					  break;
 					
           case "swf":
-            return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
+            return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>"
             break;
           
 				 case "pdf":
@@ -418,7 +418,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
     $(wrapperPreview).addClass('objectPreview')
-    $(wrapperPreview).attr('wmode','transparent')
+    $(wrapperPreview).attr('wmode','opaque')
     $(wrapperPreview).removeAttr('width')
     $(wrapperPreview).removeAttr('height')
     return wrapperPreview;
@@ -531,7 +531,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
 		$(wrapperTag).attr('class', template + "_object");
-		$(wrapperTag).attr('wmode', "transparent");
+		$(wrapperTag).attr('wmode', "opaque");
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
