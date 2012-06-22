@@ -51,6 +51,22 @@
 	border: none;
 }
 
+div.t1_snapshot_wrapper{
+	border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t1_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+}
+
 .t1_swf{
 	width: 100%;
 	height: 100%;
@@ -86,6 +102,22 @@
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+div.t2_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t2_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
 }
 
 .t2_applet{
@@ -143,6 +175,22 @@
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+div.t3_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t3_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
 }
 
 .t3_applet{
@@ -211,6 +259,22 @@
 	border: none;
 }
 
+div.t4_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t4_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+}
+
 .t4_swf{
 	width: 100%;
 	height: 100%;
@@ -265,6 +329,22 @@
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+div.t5_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t5_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
 }
 
 .t5_swf{
@@ -331,6 +411,22 @@
 	border: none;
 }
 
+div.t6_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t6_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+}
+
 .t6_swf{
 	width: 100%;
 	height: 100%;
@@ -393,6 +489,22 @@
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+div.t7_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t7_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
 }
 
 .t7_swf{
@@ -458,6 +570,22 @@
 	border: none;
 }
 
+div.t8_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t8_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+}
+
 .t8_swf{
 	width: 100%;
 	height: 100%;
@@ -516,34 +644,26 @@
 	border: none;
 }
 
+div.t9_snapshot_wrapper{
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.t9_snapshot_content{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+}
+
 .t9_swf{
 	width: 100%;
 	height: 100%;
 	border: none;
-}
-
-
-/*
- * Special iframe
- */
-
-
-div.special {
-    width    : 600px;
-    height   : 485px;
-    overflow : hidden;
-    position : relative;
-		margin-top: 60px;
-		margin-left: 60px;
-}
-
-iframe.special{
-    position : absolute;
-    top      : -150px;
-    left     : -190px;
-    width    : 1280px !important;
-    height   : 1200px !important;
-		overflow: hidden;
 }
 
 

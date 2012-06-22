@@ -17,10 +17,11 @@ configuration["Vimeo"] = true;
 
 configuration["VishIntegration"] = true;
 
+/*
 $.getScript("/js/lang/translations.Vish.es.js", function(){
   configuration["translation"] = i18n_Vish;
 });
-
+*/
 
 
 VISH.Configuration = (function(V,$,undefined){
