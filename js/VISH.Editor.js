@@ -596,32 +596,39 @@ VISH.Editor = (function(V,$,undefined){
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
   var _onSelectableClicked = function(){  
-  	_removeSelectableProperties();		
+  	_removeSelectableProperties();
+			
   	$(this).css("cursor", "auto");
   	//add menuselect and delete content button
   	$(this).find(".menuselect_hide").show();
   	$(this).find(".delete_content").show();
   		
   	//show sliders  	
-  	if($(this).attr("type")==="image" || $(this).attr("type")==="object" || $(this).attr("type")==="video"){
-  		var the_id;
-  		switch($(this).attr("type")){
-  			case "image":
-  				the_id = $(this).find("img").attr("id");
-  				break;
-  			case "object":
-  				the_id = $(this).find(".object_wrapper").attr("id");
-  				break;
-  			case "video":
-  				the_id = $(this).find("video").attr("id");
-  				break;
-  		}
+		var the_id;
+		switch($(this).attr("type")){
+			case "image":
+				the_id = $(this).find("img").attr("id");
+				break;
+			case "object":
+				the_id = $(this).find(".object_wrapper").attr("id");
+				break;
+		  case "snapshot":
+        the_id = $(this).find(".snapshot_wrapper").attr("id");
+        break;
+			case "video":
+				the_id = $(this).find("video").attr("id");
+				break;
+			default:
+			  the_id = null;
+			  break;
+		}
   		
-  		//the id is "draggableunicID_1" we want to remove "draggable"
-  		the_id = the_id.substring(9);
-  		$("#sliderId" + the_id).show();  		
-  	}
-  	
+		if(the_id){
+			//the id is "draggableunicID_1" we want to remove "draggable"
+      the_id = the_id.substring(9);
+      $("#sliderId" + the_id).show(); 
+		}
+ 		
   	//add css
   	$(this).css("border-color", "rgb(255, 2, 94)");
 		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
