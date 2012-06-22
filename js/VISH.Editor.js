@@ -895,9 +895,14 @@ VISH.Editor = (function(V,$,undefined){
    * */
   
   var loadFancyBox = function(fancy) {
-  	
-  	VISH.Debugging.log("entra en loadFancyBox y parámetro: " + fancy );
-  	
+        var fancyBoxes = {1: "templates", 2: "quizes"}	
+  	VISH.Debugging.log("entra en loadFancyBox y parámetro: " + fancyBoxes[1] );
+  	VISH.Debugging.log("usando el hash: " + fancy );
+$('#'+fancyBoxes[1]+'_content').hide();
+$('#'+fancyBoxes[2]+'_content').hide();
+$('#'+fancy+'_content').show();
+VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
+
   }
 
 
