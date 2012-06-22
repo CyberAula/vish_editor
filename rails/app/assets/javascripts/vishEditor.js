@@ -13099,7 +13099,7 @@ VISH.Editor = function(V, $, undefined) {
       initOptions = options;
       if(options["developping"] == true && VISH.Debugging) {
         VISH.Debugging.init(true);
-        if(VISH.Debugging.getActionInit() == "loadSamples") {
+        if(VISH.Debugging.getActionInit() == "loadSamples" && !excursion) {
           excursion = VISH.Debugging.getExcursionSamples()
         }
       }
@@ -13209,16 +13209,16 @@ VISH.Editor = function(V, $, undefined) {
       case "tab_video_vimeo":
         VISH.Editor.Video.Vimeo.onLoadTab();
         break;
-      case "tab_flash_from_url":
+      case "tab_object_from_url":
         VISH.Editor.Object.onLoadTab("url");
         break;
-      case "tab_flash_from_web":
+      case "tab_object_from_web":
         VISH.Editor.Object.Web.onLoadTab();
         break;
-      case "tab_flash_upload":
+      case "tab_object_upload":
         VISH.Editor.Object.onLoadTab("upload");
         break;
-      case "tab_flash_repo":
+      case "tab_object_repo":
         VISH.Editor.Object.Repository.onLoadTab();
         break;
       case "tab_live_webcam":
@@ -13271,14 +13271,14 @@ VISH.Editor = function(V, $, undefined) {
     $(document).on("click", "#tab_pic_flikr_help", function() {
       V.Editor.Tour.startTourWithId("search_flickr_fancy_help", "bottom")
     });
-    $(document).on("click", "#tab_flash_from_url_help", function() {
-      V.Editor.Tour.startTourWithId("flash_fancy_tabs_id_help", "top")
+    $(document).on("click", "#tab_object_from_url_help", function() {
+      V.Editor.Tour.startTourWithId("object_fancy_tabs_id_help", "top")
     });
-    $(document).on("click", "#tab_flash_upload_help", function() {
-      V.Editor.Tour.startTourWithId("upload_flash_form_help", "top")
+    $(document).on("click", "#tab_object_upload_help", function() {
+      V.Editor.Tour.startTourWithId("upload_object_form_help", "top")
     });
-    $(document).on("click", "#tab_flash_repo_help", function() {
-      V.Editor.Tour.startTourWithId("search_flash_help", "bottom")
+    $(document).on("click", "#tab_object_repo_help", function() {
+      V.Editor.Tour.startTourWithId("search_object_help", "bottom")
     });
     $(document).on("click", "#tab_video_from_url_help", function() {
       V.Editor.Tour.startTourWithId("video_fancy_tabs_id_help", "top")
@@ -13349,10 +13349,10 @@ VISH.Editor = function(V, $, undefined) {
       params["current_el"] = $("#" + clickedZoneId);
       loadTab("tab_pic_from_url")
     }});
-    $("a.addflash").fancybox({"autoDimensions":false, "width":800, "height":600, "scrolling":"no", "padding":0, "onStart":function(data) {
+    $("a.addobject").fancybox({"autoDimensions":false, "width":800, "height":600, "scrolling":"no", "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
       params["current_el"] = $("#" + clickedZoneId);
-      loadTab("tab_flash_from_url")
+      loadTab("tab_object_from_url")
     }});
     $("a.addvideo").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
@@ -13493,8 +13493,7 @@ VISH.Editor = function(V, $, undefined) {
                   var object = $(div).find(".object_wrapper").children()[0];
                   $(object).removeAttr("style");
                   element.body = VISH.Utils.getOuterHTML(object);
-                  element.style = _getStylesInPercentages($(div), $(object).parent());
-                  element.aspectRatio = _getAspectRatio($(object))
+                  element.style = _getStylesInPercentages($(div), $(object).parent())
                 }else {
                   if(element.type == "openquestion") {
                     element.title = $(div).find(".title_openquestion").val();
@@ -13508,9 +13507,19 @@ VISH.Editor = function(V, $, undefined) {
                         element.options[i] = input_text.value
                       })
                     }else {
-                      if(typeof element.type == "undefined") {
-                        element.type = "text";
-                        element.body = ""
+                      if(element.type === "snapshot") {
+                        var snapshotWrapper = $(div).find(".snapshot_wrapper");
+                        var snapshotIframe = $(snapshotWrapper).children()[0];
+                        $(snapshotIframe).removeAttr("style");
+                        element.body = VISH.Utils.getOuterHTML(snapshotIframe);
+                        element.style = _getStylesInPercentages($(div), snapshotWrapper);
+                        element.scrollTop = $(snapshotWrapper).scrollTop();
+                        element.scrollLeft = $(snapshotWrapper).scrollLeft()
+                      }else {
+                        if(typeof element.type == "undefined") {
+                          element.type = "text";
+                          element.body = ""
+                        }
                       }
                     }
                   }
@@ -13596,7 +13605,16 @@ VISH.Editor = function(V, $, undefined) {
     }
     return null
   };
-  return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams, getOptions:getOptions}
+  var loadFancyBox = function(fancy) {
+    var fancyBoxes = {1:"templates", 2:"quizes"};
+    VISH.Debugging.log("entra en loadFancyBox y par\u00e1metro: " + fancyBoxes[1]);
+    VISH.Debugging.log("usando el hash: " + fancy);
+    $("#" + fancyBoxes[1] + "_content").hide();
+    $("#" + fancyBoxes[2] + "_content").hide();
+    $("#" + fancy + "_content").show();
+    VISH.Debugging.log(" fancy content vale: " + $("#" + fancy + "content"))
+  };
+  return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams, getOptions:getOptions, loadFancyBox:loadFancyBox}
 }(VISH, jQuery);
 VISH.Editor.Video = function(V, $, undefined) {
   var urlDivId = "tab_video_from_url_content";
@@ -13744,15 +13762,16 @@ VISH.Editor.Image = function(V, $, undefined) {
   };
   var drawImage = function(image_url, area, style) {
     var current_area;
-    var image_width = 325;
-    var image_style = "";
+    var reference_width = 100;
+    var image_width = 300;
+    var image_height = null;
     if(area) {
       current_area = area
     }else {
       current_area = VISH.Editor.getCurrentArea()
     }
     if(style) {
-      image_style = style;
+      style = V.SlidesUtilities.setStyleInPixels(style, current_area);
       image_width = V.SlidesUtilities.getWidthFromStyle(style, current_area)
     }
     var template = VISH.Editor.getTemplate();
@@ -13761,10 +13780,19 @@ VISH.Editor.Image = function(V, $, undefined) {
     current_area.attr("type", "image");
     current_area.html("<img class='" + template + "_image' id='" + idToDragAndResize + "' title='Click to drag' src='" + image_url + "' style='" + style + "'/>");
     V.Editor.addDeleteButton(current_area);
-    var thevalue = image_width / 325;
-    $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='" + thevalue + "' style='display: none; '></div>");
-    $("#imageSlider" + nextImageId).slider({from:1, to:8, step:0.5, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      $("#" + idToDragAndResize).width(325 * value)
+    var scaleFactor = image_width / reference_width;
+    $("#menubar").before("<div id='sliderId" + nextImageId + "' class='theslider'><input id='imageSlider" + nextImageId + "' type='slider' name='size' value='" + scaleFactor + "' style='display: none; '></div>");
+    $("#imageSlider" + nextImageId).slider({from:1, to:15, step:0.25, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      var originalHeight = $("#" + idToDragAndResize).height();
+      var originalWidth = $("#" + idToDragAndResize).width();
+      var newWidth = reference_width * value;
+      $("#" + idToDragAndResize).width(newWidth);
+      if(originalHeight === $("#" + idToDragAndResize).height()) {
+        var aspectRatio = originalHeight / originalWidth;
+        if(aspectRatio != 0) {
+          $("#" + idToDragAndResize).height(newWidth * aspectRatio)
+        }
+      }
     }});
     $("#" + idToDragAndResize).draggable({cursor:"move", stop:function() {
       $(this).parent().click()
@@ -13774,14 +13802,15 @@ VISH.Editor.Image = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Object = function(V, $, undefined) {
   var contentToAdd = null;
-  var uploadDivId = "tab_flash_upload_content";
-  var urlDivId = "tab_flash_from_url_content";
-  var urlInputId = "flash_embed_code";
+  var uploadDivId = "tab_object_upload_content";
+  var urlDivId = "tab_object_from_url_content";
+  var urlInputId = "object_embed_code";
   var init = function() {
     VISH.Editor.Object.Repository.init();
     VISH.Editor.Object.Live.init();
     VISH.Editor.Object.Web.init();
     VISH.Editor.Object.PDF.init();
+    VISH.Editor.Object.Snapshot.init();
     var urlInput = $(urlDivId).find("input");
     $(urlInput).watermark("Paste SWF file URL");
     $("#" + urlDivId + " .previewButton").click(function(event) {
@@ -13998,11 +14027,6 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(parent).width(width);
     $(parent).height(width * proportion)
   };
-  var resizeWebIframe = function(id, width) {
-    var proportion = $("#" + id).height() / $("#" + id).width();
-    $("#" + id).width(width);
-    $("#" + id).height(width * proportion)
-  };
   var _adjustWrapperOfObject = function(objectID, current_area) {
     var proportion = $("#" + objectID).height() / $("#" + objectID).width();
     var maxWidth = current_area.width();
@@ -14078,7 +14102,6 @@ VISH.Editor.Object = function(V, $, undefined) {
     return wrapperPreview
   };
   var drawObject = function(object, area, style) {
-    VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style);
     if(!VISH.Police.validateObject(object)[0]) {
       return
     }
@@ -14168,44 +14191,17 @@ VISH.Editor.Object = function(V, $, undefined) {
     $("#" + idToDrag).draggable({cursor:"move"});
     _adjustWrapperOfObject(idToResize, current_area)
   };
-  var drawIframeObjectWithWrapper = function(wrapper, current_area, style) {
-    VISH.Debugging.log("drawIframeObjectWithWrapper");
-    var template = V.Editor.getTemplate(current_area);
-    var nextWrapperId = V.Editor.getId();
-    var idToDrag = "draggable" + nextWrapperId;
-    var idToResize = "resizable" + nextWrapperId;
-    current_area.attr("type", "iframe");
-    var wrapperDiv = document.createElement("div");
-    wrapperDiv.setAttribute("id", idToDrag);
-    if(style) {
-      wrapperDiv.setAttribute("style", style)
-    }
-    $(wrapperDiv).addClass("iframe_wrapper");
-    var iframeTag = $(wrapper);
-    $(iframeTag).attr("id", idToResize);
-    $(iframeTag).attr("class", "iframe_content");
-    $(iframeTag).attr("scrolling", "no");
-    $(iframeTag).attr("wmode", "transparent");
-    $(current_area).html("");
-    $(current_area).append(wrapperDiv);
-    VISH.Editor.addDeleteButton($(current_area));
-    $(wrapperDiv).append(iframeTag);
-    var width, value;
-    if(style) {
-      width = V.SlidesUtilities.getWidthFromStyle(style, current_area);
-      value = 10 * width / $(current_area).width()
-    }else {
-      value = 10
-    }
-    var mystep = $(current_area).width() / 10;
-    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='" + value + "' style='display: none; '></div>");
-    $("#imageSlider" + nextWrapperId).slider({from:1, to:10, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
-      resizeWebIframe(idToDrag, mystep * value)
-    }})
-  };
   return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
+  var samples_aldo = {"id":193, "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-81.png", "author":"Aldo", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"image", "areaid":"left", "body":"/pictures/62.jpg", "style":"position: relative; width:955.8823529411765%; top:0%; left:0%;"}, 
+  {"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3" style="text-align: center;"><span class="vish-font3 vish-fontarial"><font size="6"><span style="font-family: helvetica;"><span style="font-weight: bold;">Chess</span>: The Art of Learning</span></font><br></span></div>'}, {"id":"zone3", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3" style="text-align: right;"><span class="vish-font3 vish-fontarial"><font size="4"><span style="font-style: italic; font-family: helvetica;">by Aldo Gordillo&nbsp; </span></font><br></span></div>'}]}, 
+  {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font6" style="text-align: center;"><span class="vish-font6 vish-fontarial">Introduction</span></div>'}, {"id":"zone5", "type":"image", "areaid":"left", "body":"http://farm8.staticflickr.com/7099/7185785919_de19f61d2a_m.jpg", "style":"position: relative; width:677.0833333333334%; top:0%; left:0%;"}, {"id":"zone6", "areaid":"center"}, {"id":"zone7", "type":"text", "areaid":"right", 
+  "body":'<br><br><div class="vish-parent-font5" style="text-align: center;"><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Chess is an exercise of infinite possibilities for the mind.</span></span><br style="font-family: helvetica;"></div><span class="vish-font5 vish-fontarial"></span><ul><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Concentration</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Critical thinking</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Abstract reasoning</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Pattern recognition</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Creativity</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Strategic Planning</span></span></li></ul>'}]}, 
+  {"id":"article3", "template":"t2", "elements":[{"id":"zone8", "type":"object", "areaid":"left", "body":'<iframe style="width: 678px; height: 518px;" wmode="transparent" class="t2_object" id="resizableunicID_3" src="http://en.wikipedia.org/wiki/Chess">&lt;/embed&gt;</iframe>', "style":"position: relative; width:100%; top:0.19305019305019305%; left:-1.6224188790560472%;"}]}, {"id":"article4", "template":"t7", "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3" style="text-align: center;"><span class="vish-font3 vish-fontarial"><font size="5"><span style="font-family: helvetica;">Human Vs Machine</span></font><br></span></div>'}, 
+  {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="transparent" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=transparent" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
+  {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="transparent" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
+  "style":"position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"}]}]};
   var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="background-color: rgb(255, 0, 102);;">Insert text here</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="color:#33ff00;">adfadf</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontimpact" style="color:#33ff00;">afdfadf</span></div>'}, 
   {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", 
   "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1ppp.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"332", "type":"video", "areaid":"left", 
@@ -14222,7 +14218,7 @@ VISH.Samples = function(V, undefined) {
   {"id":"vish13", "template":"t2", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video with style param"}, {"id":"335", "type":"object", "areaid":"left", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>', "style":"position: relative; left: 163px; top: 110px; width: 325px; height: 215px;"}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", 
   "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
   {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
-  return{full_samples:full_samples, samples:samples}
+  return{full_samples:full_samples, samples:samples, samples_aldo:samples_aldo}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
   var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.dan-dare.org/dan%20simpsons/TheSimpsonsEveryoneEver800.jpg"}, {"id":55, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://3.bp.blogspot.com/--H0o8mc28bA/TxrsnMAFMDI/AAAAAAAAARs/eOCVIXKlm9I/s1600/sala-cine.jpg"}, {"id":56, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, 
@@ -14281,7 +14277,7 @@ VISH.AppletPlayer = function() {
   return{loadApplet:loadApplet, unloadApplet:unloadApplet}
 }(VISH, jQuery);
 var configuration = {};
-configuration["presentationSettings"] = true;
+configuration["presentationSettings"] = false;
 configuration["presentationTags"] = true;
 configuration["presentationThumbnails"] = true;
 configuration["Vish"] = true;
@@ -14290,11 +14286,8 @@ configuration["VishUpload"] = true;
 configuration["VishRepo"] = true;
 configuration["Flickr"] = true;
 configuration["Youtube"] = true;
-configuration["Vimeo"] = false;
+configuration["Vimeo"] = true;
 configuration["VishIntegration"] = true;
-$.getScript("/js/lang/translations.Vish.es.js", function() {
-  configuration["translation"] = i18n_Vish
-});
 VISH.Configuration = function(V, $, undefined) {
   var configuration;
   var init = function(myConfiguration) {
@@ -14313,8 +14306,8 @@ VISH.Configuration = function(V, $, undefined) {
     if(!configuration["Vish"]) {
       $("#tab_pic_upload").css("display", "none");
       $("#tab_pic_repo").css("display", "none");
-      $("#tab_flash_upload").css("display", "none");
-      $("#tab_flash_repo").css("display", "none");
+      $("#tab_object_upload").css("display", "none");
+      $("#tab_object_repo").css("display", "none");
       $("#tab_video_repo").css("display", "none");
       $(".addLive").css("display", "none")
     }else {
@@ -14323,11 +14316,11 @@ VISH.Configuration = function(V, $, undefined) {
       }
       if(!configuration["VishUpload"]) {
         $("#tab_pic_upload").css("display", "none");
-        $("#tab_flash_upload").css("display", "none")
+        $("#tab_object_upload").css("display", "none")
       }
       if(!configuration["VishRepo"]) {
         $("#tab_pic_repo").css("display", "none");
-        $("#tab_flash_repo").css("display", "none");
+        $("#tab_object_repo").css("display", "none");
         $("#tab_video_repo").css("display", "none")
       }
     }
@@ -14349,7 +14342,7 @@ VISH.Configuration = function(V, $, undefined) {
 VISH.Debugging = function(V, $, undefined) {
   var actionSave = "view";
   var actionInit = "nothing";
-  var excursionSamples = VISH.Samples.samples;
+  var excursionSamples = VISH.Samples.samples_aldo;
   var developping = false;
   var init = function(bol) {
     developping = bol
@@ -15202,13 +15195,13 @@ VISH.Editor.Object.PDF = function(V, $, undefined) {
   return{init:init, generatePreviewWrapperForPdf:generatePreviewWrapperForPdf, generateWrapperForPdf:generateWrapperForPdf}
 }(VISH, jQuery);
 VISH.Editor.Object.Repository = function(V, $, undefined) {
-  var carrouselDivId = "tab_flash_repo_content_carrousel";
-  var previewDivId = "tab_flash_repo_content_preview";
-  var footId = "tab_flash_repo_content_preview_foot";
+  var carrouselDivId = "tab_object_repo_content_carrousel";
+  var previewDivId = "tab_object_repo_content_preview";
+  var footId = "tab_object_repo_content_preview_foot";
   var currentObject = new Array;
   var selectedObject = null;
   var init = function() {
-    var myInput = $("#tab_flash_repo_content").find("input[type='search']");
+    var myInput = $("#tab_object_repo_content").find("input[type='search']");
     $(myInput).watermark("Search content");
     $(myInput).keydown(function(event) {
       if(event.keyCode == 13) {
@@ -15218,7 +15211,7 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     })
   };
   var onLoadTab = function() {
-    var previousSearch = $("#tab_flash_repo_content").find("input[type='search']").val() != "";
+    var previousSearch = $("#tab_object_repo_content").find("input[type='search']").val() != "";
     if(!previousSearch) {
       _cleanObjectPreview();
       _requestInicialData()
@@ -15291,8 +15284,8 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     selectedObject = currentObject[objectId]
   };
   var _renderObjectPreview = function(renderedObject, object) {
-    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+    var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
     $(objectArea).html("");
     $(metadataArea).html("");
     if(renderedObject && object) {
@@ -15303,8 +15296,8 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
     }
   };
   var _cleanObjectPreview = function() {
-    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+    var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
     $(objectArea).html("");
     $(metadataArea).html("");
     $("#" + footId).find(".okButton").hide()
@@ -15317,10 +15310,155 @@ VISH.Editor.Object.Repository = function(V, $, undefined) {
   };
   return{init:init, onLoadTab:onLoadTab, addSelectedObject:addSelectedObject}
 }(VISH, jQuery);
+VISH.Editor.Object.Snapshot = function(V, $, undefined) {
+  var contentToAdd = null;
+  var urlDivId = "tab_object_snapshot_content";
+  var urlInputId = "object_snapshot_code";
+  var init = function() {
+    var urlInput = $(urlDivId).find("input");
+    $(urlInput).watermark("Paste website URL");
+    $("#" + urlDivId + " .previewButton").click(function(event) {
+      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]) {
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
+        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
+      }
+    })
+  };
+  var onLoadTab = function(tab) {
+    contentToAdd = null;
+    VISH.Editor.Object.resetPreview(urlDivId);
+    $("#" + urlInputId).val("")
+  };
+  var drawPreviewElement = function() {
+    if(_validateSnapShot(contentToAdd)) {
+      drawSnapShot(_wrapperSnapShot(contentToAdd));
+      $.fancybox.close()
+    }
+  };
+  var _validateSnapShot = function(object) {
+    var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+    switch(objectInfo.wrapper) {
+      case null:
+        return _validateUrl(object);
+        break;
+      case "IFRAME":
+        return _validateUrl(objectInfo.source);
+        break;
+      default:
+        return false;
+        break
+    }
+  };
+  var _validateUrl = function(url) {
+    var http_urls_pattern = /(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g;
+    if(url.match(http_urls_pattern) != null) {
+      return true
+    }else {
+      return false
+    }
+  };
+  var _wrapperSnapShot = function(content) {
+    var objectInfo = VISH.Editor.Object.getObjectInfo(content);
+    if(objectInfo.wrapper === null) {
+      return"<iframe src='" + content + "'></iframe>"
+    }else {
+      return content
+    }
+  };
+  var drawSnapShot = function(wrapper, area, style, scrollTop, scrollLeft) {
+    var current_area;
+    var object_style = "";
+    if(area) {
+      current_area = area
+    }else {
+      current_area = VISH.Editor.getCurrentArea()
+    }
+    if(style) {
+      object_style = style
+    }
+    var template = V.Editor.getTemplate(current_area);
+    var nextWrapperId = V.Editor.getId();
+    var idToDrag = "draggable" + nextWrapperId;
+    var idToResize = "resizable" + nextWrapperId;
+    current_area.attr("type", "snapshot");
+    var wrapperDiv = document.createElement("div");
+    wrapperDiv.setAttribute("id", idToDrag);
+    if(style) {
+      wrapperDiv.setAttribute("style", style)
+    }
+    $(wrapperDiv).addClass("snapshot_wrapper");
+    var iframeTag = $(wrapper);
+    $(iframeTag).attr("id", idToResize);
+    $(iframeTag).attr("class", "snapshot_content");
+    $(iframeTag).attr("scrolling", "no");
+    $(iframeTag).attr("wmode", "transparent");
+    $(iframeTag).css("pointer-events", "none");
+    $(current_area).html("");
+    $(current_area).append(wrapperDiv);
+    VISH.Editor.addDeleteButton($(current_area));
+    $(wrapperDiv).append(iframeTag);
+    if(scrollTop) {
+      $("#" + idToDrag).scrollTop(scrollTop)
+    }
+    if(scrollLeft) {
+      $("#" + idToDrag).scrollLeft(scrollLeft)
+    }
+    var width, value;
+    if(style) {
+      width = V.SlidesUtilities.getWidthFromStyle(style, current_area);
+      value = 10 * width / $(current_area).width()
+    }else {
+      value = 10
+    }
+    var mystep = $(current_area).width() / 10;
+    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='" + value + "' style='display: none; '></div>");
+    $("#imageSlider" + nextWrapperId).slider({from:1, to:10, step:0.2, round:1, dimension:"x", skin:"blue", onstatechange:function(value) {
+      _resizeWebIframe(idToDrag, mystep * value)
+    }});
+    $("#" + idToDrag).bind("mousedown", function(event) {
+      event.preventDefault()
+    });
+    $("#" + idToDrag).draggable({cursor:"move", disabled:false, start:function(event, ui) {
+      if(!_isBorderClick(event, idToDrag)) {
+        return false
+      }
+    }})
+  };
+  var _isBorderClick = function(event, idToDrag) {
+    var accuracy = 6;
+    var scrollAccuracy = -10;
+    var width = $("#" + idToDrag).width();
+    var height = $("#" + idToDrag).height();
+    var offset = $("#" + idToDrag).offset();
+    var dif1 = event.pageX - offset.left;
+    if(dif1 < accuracy) {
+      return true
+    }
+    var dif2 = event.pageY - offset.top;
+    if(dif2 < accuracy) {
+      return true
+    }
+    var dif3 = offset.left + width - event.pageX;
+    if(dif3 < scrollAccuracy) {
+      return true
+    }
+    var dif4 = offset.top + height - event.pageY;
+    if(dif4 < scrollAccuracy) {
+      return true
+    }
+    return false
+  };
+  var _resizeWebIframe = function(id, width) {
+    var proportion = $("#" + id).height() / $("#" + id).width();
+    $("#" + id).width(width);
+    $("#" + id).height(width * proportion)
+  };
+  return{init:init, onLoadTab:onLoadTab, drawPreviewElement:drawPreviewElement, drawSnapShot:drawSnapShot}
+}(VISH, jQuery);
 VISH.Editor.Object.Web = function(V, $, undefined) {
   var contentToAdd = null;
-  var urlDivId = "tab_flash_from_web_content";
-  var urlInputId = "flash_embedWeb_code";
+  var urlDivId = "tab_object_from_web_content";
+  var urlInputId = "object_embedWeb_code";
   var init = function() {
     var urlInput = $(urlDivId).find("input");
     $(urlInput).watermark("Paste website URL");
@@ -15421,6 +15559,10 @@ VISH.Editor.Renderer = function(V, $, undefined) {
           }else {
             if(slide.elements[el].type === "object") {
               V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style)
+            }else {
+              if(slide.elements[el].type === "snapshot") {
+                V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].scrollTop, slide.elements[el].scrollLeft)
+              }
             }
           }
         }
@@ -16079,19 +16221,24 @@ VISH.Renderer = function(V, $, undefined) {
               content += _renderObject(slide.elements[el], slide.template);
               classes += "object "
             }else {
-              if(slide.elements[el].type === "applet") {
-                content += _renderApplet(slide.elements[el], slide.template);
-                classes += "applet "
+              if(slide.elements[el].type === "snapshot") {
+                content += _renderSnapshot(slide.elements[el], slide.template);
+                classes += "snapshot "
               }else {
-                if(slide.elements[el].type === "flashcard") {
-                  content = _renderFlashcard(slide.elements[el], slide.template);
-                  classes += "flashcard"
+                if(slide.elements[el].type === "applet") {
+                  content += _renderApplet(slide.elements[el], slide.template);
+                  classes += "applet "
                 }else {
-                  if(slide.elements[el].type === "openquestion") {
-                    content = _renderOpenquestion(slide.elements[el], slide.template)
+                  if(slide.elements[el].type === "flashcard") {
+                    content = _renderFlashcard(slide.elements[el], slide.template);
+                    classes += "flashcard"
                   }else {
-                    if(slide.elements[el].type === "mcquestion") {
-                      content = _renderMcquestion(slide.elements[el], slide.template)
+                    if(slide.elements[el].type === "openquestion") {
+                      content = _renderOpenquestion(slide.elements[el], slide.template)
+                    }else {
+                      if(slide.elements[el].type === "mcquestion") {
+                        content = _renderMcquestion(slide.elements[el], slide.template)
+                      }
                     }
                   }
                 }
@@ -16136,9 +16283,12 @@ VISH.Renderer = function(V, $, undefined) {
     var body = element["body"];
     return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>"
   };
-  var _renderIframe = function(element, template) {
-    var to_return = '<div id="' + element["id"] + '" class="iframeelement ' + template + "_" + element["areaid"] + '" templateclass="' + template + "_iframe" + '" src="' + element["body"] + '"></div>';
-    return to_return
+  var _renderSnapshot = function(element, template) {
+    var style = element["style"] ? element["style"] : "";
+    var body = element["body"];
+    var scrollTop = element["scrollTop"] ? element["scrollTop"] : 0;
+    var scrollLeft = element["scrollLeft"] ? element["scrollLeft"] : 0;
+    return"<div id='" + element["id"] + "' class='snapshotelement " + template + "_" + element["areaid"] + "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollLeft='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>"
   };
   var _renderApplet = function(element, template) {
     return"<div id='" + element["id"] + "' class='appletelement " + template + "_" + element["areaid"] + "' code='" + element["code"] + "' width='" + element["width"] + "' height='" + element["height"] + "' archive='" + element["archive"] + "' params='" + element["params"] + "' ></div>"
@@ -16287,6 +16437,10 @@ VISH.SlideManager = function(V, $, undefined) {
       }else {
         if($(e.target).hasClass("applet")) {
           V.AppletPlayer.loadApplet($(e.target))
+        }else {
+          if($(e.target).hasClass("snapshot")) {
+            V.SnapshotPlayer.loadSnapshot($(e.target))
+          }
         }
       }
     }, 500);
@@ -16388,16 +16542,25 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     goToSlide(curSlide + 2)
   };
   var getWidthFromStyle = function(style, area) {
+    return getPixelDimensionsFromStyle(style, area)[0]
+  };
+  var getHeightFromStyle = function(style, area) {
+    return getPixelDimensionsFromStyle(style, area)[1]
+  };
+  var getPixelDimensionsFromStyle = function(style, area) {
+    var dimensions = [];
     var width = null;
-    var width_percent_pattern = /width:\s?([0-9]+\.?[0-9]+)%/g;
-    var width_px_pattern = /width:\s?([0-9]+\.?[0-9]+)px/g;
+    var height = null;
+    var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g;
+    var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g;
+    var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g;
+    var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g;
     $.each(style.split(";"), function(index, property) {
       if(property.indexOf("width") !== -1) {
         if(property.match(width_px_pattern)) {
           var result = width_px_pattern.exec(property);
           if(result[1]) {
-            width = result[1];
-            return width
+            width = result[1]
           }
         }else {
           if(property.match(width_percent_pattern)) {
@@ -16405,22 +16568,80 @@ VISH.SlidesUtilities = function(V, $, undefined) {
             if(result[1]) {
               var percent = result[1];
               if(area) {
-                width = $(area).width() * percent / 100;
-                return width
+                width = $(area).width() * percent / 100
+              }
+            }
+          }
+        }
+      }else {
+        if(property.indexOf("height") !== -1) {
+          if(property.match(height_px_pattern)) {
+            var result = height_px_pattern.exec(property);
+            if(result[1]) {
+              height = result[1]
+            }
+          }else {
+            if(property.match(height_percent_pattern)) {
+              var result = height_percent_pattern.exec(property);
+              if(result[1]) {
+                var percent = result[1];
+                if(area) {
+                  height = $(area).height() * percent / 100
+                }
               }
             }
           }
         }
       }
     });
-    return width
+    dimensions.push(width);
+    dimensions.push(height);
+    return dimensions
+  };
+  var setStyleInPixels = function(style, area) {
+    var fitlerStyle = "";
+    $.each(style.split(";"), function(index, property) {
+      if(property.indexOf("width") === -1 && property.indexOf("height") === -1) {
+        fitlerStyle = fitlerStyle + property + "; "
+      }
+    });
+    var dimensions = getPixelDimensionsFromStyle(style, area);
+    if(dimensions && dimensions[0]) {
+      fitlerStyle = fitlerStyle + "width: " + dimensions[0] + "px; ";
+      if(dimensions[1]) {
+        fitlerStyle = fitlerStyle + "height: " + dimensions[1] + "px; "
+      }
+    }
+    return fitlerStyle
   };
   var updateSlideCounter = function() {
     var number_of_slides = slideEls.length;
     var slide_number = curSlide + 1;
     $("#slide-counter").html(slide_number + "/" + number_of_slides)
   };
-  return{getWidthFromStyle:getWidthFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
+  return{getWidthFromStyle:getWidthFromStyle, getHeightFromStyle:getHeightFromStyle, getPixelDimensionsFromStyle:getPixelDimensionsFromStyle, setStyleInPixels:setStyleInPixels, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
+}(VISH, jQuery);
+VISH.SnapshotPlayer = function() {
+  var loadSnapshot = function(element) {
+    $.each(element.children(".snapshotelement"), function(index, value) {
+      var wrapper_class = $(value).attr("template") + "_snapshot_wrapper";
+      var content_class = $(value).attr("template") + "_ snapshot_content";
+      var content = $(value).attr("objectWrapper");
+      $(content).addClass(content_class);
+      var scrollTop = $(value).attr("scrollTop");
+      var scrollLeft = $(value).attr("scrollLeft");
+      $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML($(content)) + "</div>");
+      $(value).find("." + wrapper_class).scrollTop(scrollTop);
+      $(value).find("." + wrapper_class).scrollLeft(scrollLeft)
+    })
+  };
+  var unloadSnapshot = function() {
+    var element = $(".past, .next");
+    $.each(element.children(".snapshotelement"), function(index, value) {
+      $(value).html("")
+    })
+  };
+  return{loadSnapshot:loadSnapshot, unloadSnapshot:unloadSnapshot}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
