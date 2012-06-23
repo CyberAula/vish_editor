@@ -776,9 +776,9 @@ VISH.Editor = (function(V,$,undefined){
 							element.scrollTop = $(snapshotWrapper).scrollTop();
 							element.scrollLeft = $(snapshotWrapper).scrollLeft();
 		      } else if(typeof element.type == "undefined"){
-						//Empty element
-						element.type = "text";
-						element.body = "";
+						//Empty element, we don't save as empty text because if we do that when we edit everything is text
+						//element.type = "empty";
+						VISH.Debugging.log("Empty element");
 					}
           slide.elements.push(element);
           element = {};

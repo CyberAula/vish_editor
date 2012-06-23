@@ -101,42 +101,90 @@ VISH.Samples = (function(V,undefined){
 	 
 
 
-		var samples = {
+
+
+
+
+				var samples = {
 		"id" : "",
 		"author" : "",
 		"slides" : [
 				{
-					"id" : "article1",
+					"id" : "articlearticle1",
 					"template" : "t2",
 					"elements" : [ {
 						"id" : "zone1",
-						"type" : "image",
+						"type" : "text",
 						"areaid" : "left",
-						"body" : "http://politicamenteconservador.blogia.com/upload/20060818041914-el-senor-de-los-anillos2.jpg",
-						"style" : "position: relative; width:44.31314623338257%; height:64.21663442940039%; top:16.548463684908427%; left:26.587887740029544%;"
+						"body" : "<div class=\"vish-parent-font1\"><span class=\"vish-font1 vish-fontHelvetica\" style=\"\">1111111</span></div><div class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">222222222222222222222222222</span></div><div>333333333333333333333333333333</div><div class=\"vish-parent-font4\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"\">444444444444444444444444444444444</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"\">55555555555555555555555555555555555</span></div><div class=\"vish-parent-font6\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"\">66666666666666666666666666666666</span></div><div class=\"vish-parent-font7\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"\">777777777777777777777777</span></div>"
 					} ]
 				},
 				{
-					"id" : "article2",
-					"template" : "t2",
-					"elements" : [ {
-						"id" : "zone2",
-						"type" : "image",
-						"areaid" : "left",
-						"body" : "http://4.bp.blogspot.com/-Fh_v8PYbVg0/TyGdKEiYmKI/AAAAAAAAAPI/MKdfZ224aEQ/s1600/el_senor_de_los_anillos_la_batalla_por_la_tierra_media_2_the_rise_of_the_witchking-181035.jpg",
-						"style" : "position: relative; width:44.31314623338257%; height:43.32688588007737%; top:28.153879545643434%; left:29.870346272185422%;"
-					} ]
+					"id" : "articlearticle2",
+					"template" : "t6",
+					"elements" : [
+							{
+								"id" : "zone2",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone3",
+								"areaid" : "left"
+							},
+							{
+								"id" : "zone4",
+								"areaid" : "center"
+							},
+							{
+								"id" : "zone5",
+								"type" : "text",
+								"areaid" : "right",
+								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
+							} ]
 				},
 				{
-					"id" : "article3",
-					"template" : "t2",
-					"elements" : [ {
-						"id" : "zone3",
-						"type" : "image",
-						"areaid" : "left",
-						"body" : "http://www.revistaintime.com/wp-content/uploads/2012/03/el-padrino-2.jpg",
-						"style" : "position: relative; width:44.31314623338257%; height:47.195357833655706%; top:23.21083172147002%; left:31.0192023633678%;"
-					} ]
+					"id" : "articlearticle3",
+					"template" : "t6",
+					"elements" : [
+							{
+								"id" : "zone6",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone7",
+								"areaid" : "left"
+							},
+							{
+								"id" : "zone8",
+								"areaid" : "center"
+							},
+							{
+								"id" : "zone9",
+								"type" : "text",
+								"areaid" : "right",
+								"body" : "<span class=\"vish-font5 vish-fontHelvetica\" style=\"\">Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text&nbsp;hereInsert text hereInsert text hereInsert text hereInsert text here</span><br>"
+							} ]
+				},
+				{
+					"id" : "articlearticle4",
+					"template" : "t8",
+					"elements" : [
+							{
+								"id" : "zone10",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone11",
+								"type" : "text",
+								"areaid" : "left",
+								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
+							}, {
+								"id" : "zone12",
+								"areaid" : "center"
+							}, {
+								"id" : "zone13",
+								"areaid" : "right"
+							} ]
 				} ]
 	};
 		

@@ -44,10 +44,13 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "flashcard";
 			}
 			else if(slide.elements[el].type === "openquestion"){
-				content = _renderOpenquestion(slide.elements[el],slide.template);
+				content += _renderOpenquestion(slide.elements[el],slide.template);
 			}
 			else if(slide.elements[el].type === "mcquestion"){
-				content = _renderMcquestion(slide.elements[el],slide.template);
+				content += _renderMcquestion(slide.elements[el],slide.template);
+			}
+			else{
+				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
 
@@ -59,6 +62,13 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderText = function(element, template){
 		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+	};
+	
+	/**
+	 * Function to render empty inside an article (a slide)
+	 */
+	var _renderEmpty = function(element, template){
+		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'></div>";
 	};
 
 	/**
