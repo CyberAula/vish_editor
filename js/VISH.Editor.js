@@ -688,8 +688,8 @@ VISH.Editor = (function(V,$,undefined){
 							//if user has answered "yes"
 							if($("#save_answer").val() ==="true"){
 								$("#save_answer").val("false");	
-								saveExcursion();	
-								_afterSaveExcursion();			
+								var excursion = saveExcursion();	
+								_afterSaveExcursion(excursion);			
 							}	else {
 								return false;
 							}
@@ -793,7 +793,7 @@ VISH.Editor = (function(V,$,undefined){
 		return saved_excursion;     
   };
 	
-	var _afterSaveExcursion = function(){
+	var _afterSaveExcursion = function(excursion){
 		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
       //Vish: OnSave Debug actions
       
