@@ -127,7 +127,7 @@ VISH.Renderer = (function(V,$,undefined){
     var body = element['body'];
 		var scrollTop = (element['scrollTop'])? element['scrollTop'] : 0;
 		var scrollLeft = (element['scrollLeft'])? element['scrollLeft'] : 0;
-    return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollLeft='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
+    return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
   };
 	
 

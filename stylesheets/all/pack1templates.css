@@ -51,21 +51,6 @@
 	border: none;
 }
 
-div.t1_snapshot_wrapper{
-	border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t1_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
-}
 
 .t1_swf{
 	width: 100%;
@@ -102,22 +87,6 @@ iframe.t1_snapshot_content{
 	width: 100%;
 	height: 100%;
 	border: none;
-}
-
-div.t2_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t2_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
 }
 
 .t2_applet{
@@ -177,21 +146,6 @@ iframe.t2_snapshot_content{
 	border: none;
 }
 
-div.t3_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t3_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
-}
 
 .t3_applet{
 	width: 100%;
@@ -259,22 +213,6 @@ iframe.t3_snapshot_content{
 	border: none;
 }
 
-div.t4_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t4_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
-}
-
 .t4_swf{
 	width: 100%;
 	height: 100%;
@@ -329,22 +267,6 @@ iframe.t4_snapshot_content{
 	width: 100%;
 	height: 100%;
 	border: none;
-}
-
-div.t5_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t5_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
 }
 
 .t5_swf{
@@ -411,22 +333,6 @@ iframe.t5_snapshot_content{
 	border: none;
 }
 
-div.t6_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t6_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
-}
-
 .t6_swf{
 	width: 100%;
 	height: 100%;
@@ -489,22 +395,6 @@ iframe.t6_snapshot_content{
 	width: 100%;
 	height: 100%;
 	border: none;
-}
-
-div.t7_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t7_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
 }
 
 .t7_swf{
@@ -570,22 +460,6 @@ iframe.t7_snapshot_content{
 	border: none;
 }
 
-div.t8_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t8_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
-}
-
 .t8_swf{
 	width: 100%;
 	height: 100%;
@@ -642,22 +516,6 @@ iframe.t8_snapshot_content{
 	width: 100%;
 	height: 100%;
 	border: none;
-}
-
-div.t9_snapshot_wrapper{
-  border: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position : relative;
-}
-
-iframe.t9_snapshot_content{
-  border: none;
-  position : absolute;
-  width    : 1024px;
-  height   : 12000px;
-  overflow: hidden;
 }
 
 .t9_swf{
@@ -767,5 +625,30 @@ iframe.t9_snapshot_content{
 
 .mc_answer input{
 	margin: 3px 10px 0px 5px;
+}
+
+
+/* Snapshots */
+
+div.snapshot_wrapper_viewer{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.snapshot_content_viewer{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+  /* zoom: 1.0; */
+  /* -moz-transform: scale(1.0); */
+  -moz-transform-origin: 0 0;
+  /* -o-transform: scale(1.0); */
+  -o-transform-origin: 0 0;
+  /* -webkit-transform: scale(1.0); */
+  -webkit-transform-origin: 0 0;
 }
 

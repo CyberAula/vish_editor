@@ -177,22 +177,31 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	
 	
 	var setStyleInPixels = function(style,area){
-		var fitlerStyle = "";
+		var filterStyle = "";
 		$.each(style.split(";"), function(index, property){
        if ((property.indexOf("width") === -1)&&(property.indexOf("height")) === -1) {
-			   fitlerStyle = fitlerStyle + property + "; ";
+			   filterStyle = filterStyle + property + "; ";
 	     }
     });
 		var dimensions = getPixelDimensionsFromStyle(style,area);
 		
 		if((dimensions)&&(dimensions[0])){
-			fitlerStyle = fitlerStyle + "width: " + dimensions[0] + "px; ";
+			filterStyle = filterStyle + "width: " + dimensions[0] + "px; ";
 			if(dimensions[1]){
-				fitlerStyle = fitlerStyle + "height: " + dimensions[1] + "px; ";
+				filterStyle = filterStyle + "height: " + dimensions[1] + "px; ";
 			}
 		}
-		return fitlerStyle;
+		return filterStyle;
 	}
+	
+	var getZoomInStyle = function(zoom){
+    var style = "";
+    style = style + "zoom: " + zoom + "; ";
+    styleyle = style + "-moz-transform: scale(" + zoom + "); ";
+    style = style + "-o-transform: scale(" + zoom + "); ";
+    style = style + "-webkit-transform: scale(" + zoom + "); ";
+    return style;
+   }
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed
@@ -209,6 +218,7 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 		getHeightFromStyle  : getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		setStyleInPixels  : setStyleInPixels,
+		getZoomInStyle    : getZoomInStyle,
 		goToSlide		    : goToSlide,
 		lastSlide		    : lastSlide,
 		addSlide		    : addSlide,

@@ -105,13 +105,13 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(aspectRatio > slidesRatio){
 			finalH = height - 40;  //leave 40px free, 20 in the top and 20 in the bottom ideally
 			finalW = finalH*slidesRatio;	
-		}
-		else{
+		}	else {
 			finalW = width - 110; //leave 110px free, at least, 55 left and 55 right ideally
 			finalH = finalW/slidesRatio;	
 		}
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
+		
 		//margin-top and margin-left half of the height and width
 		var marginTop = finalH/2 + 20;
 		var marginLeft = finalW/2;
@@ -124,6 +124,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		$(".slides > article").css("font-size", 16*increase + "px");
 		$(".slides > article").css("line-height", 16*increase + "px");
 		/*$(".slides > article").css("letter-spacing", 1*increase + "px");*/
+		
+		//Snapshot callbacks
+		VISH.SnapshotPlayer.aftersetupSize(increase);
 	};
 	
 	/**

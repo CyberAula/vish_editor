@@ -854,26 +854,10 @@ VISH.Editor = (function(V,$,undefined){
 	 * function to get the styles in percentages
 	 */
 	var _getStylesInPercentages = function(parent, element){
-		
-//		console.log("_getStylesInPercentages con element " + $(element).attr("id") );
-//		console.log("_getStylesInPercentages con parent " + $(parent).attr("id") );
-		
-		//$(".slides > article").css("display","");
-		
 		var WidthPercent = element.width()*100/parent.width();
 		var HeightPercent = element.height()*100/parent.height();
     var TopPercent = element.position().top*100/parent.height();
     var LeftPercent = element.position().left*100/parent.width();
-		
-		//$(".slides > article").css("display","none");
-		
-//		console.log("element.width()"+element.width())
-//		console.log("parent.width()"+parent.width())
-//		console.log("parent.height()"+parent.height())
-//		console.log("element.height()"+element.height())
-//		console.log("position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;");
-		
-		
     return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
 	

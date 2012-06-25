@@ -6,15 +6,19 @@ VISH.SnapshotPlayer = (function(){
      */
     var loadSnapshot = function(element){
         $.each(element.children('.snapshotelement'), function(index, value){
-            var wrapper_class = $(value).attr("template") + "_snapshot_wrapper";
-            var content_class = $(value).attr("template") + "_ snapshot_content";
+            var wrapper_class = "snapshot_wrapper" + "_viewer";
+            var content_class = "snapshot_content" + "_viewer";
             var content = $(value).attr("objectWrapper");
-            $(content).addClass(content_class);
+						var iframe = $(VISH.Utils.getOuterHTML($(content)));
+						$(iframe).removeClass();
+            $(iframe).addClass(content_class);
             var scrollTop = $(value).attr("scrollTop");
             var scrollLeft = $(value).attr("scrollLeft");
-            $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML($(content)) + "</div>");
-            
-            $(value).find("." + wrapper_class).scrollTop(scrollTop);
+            $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(iframe) + "</div>");
+						if($(value).attr("zoom")){
+							$(value).find("." + content_class).attr("style",VISH.SlidesUtilities.getZoomInStyle($(value).attr("zoom")));
+						}
+						$(value).find("." + wrapper_class).scrollTop(scrollTop);
             $(value).find("." + wrapper_class).scrollLeft(scrollLeft);
         });
     };
@@ -28,10 +32,38 @@ VISH.SnapshotPlayer = (function(){
             $(value).html("");
         });
     }
+		
+		
+		//Change zoom after setup size
+		var aftersetupSize = function(increase){
+
+			$.each($(".snapshot_content_viewer"), function(index, iframe) {
+					var area = $(iframe).parent().parent();
+					var iframe_wrapper = $(iframe).parent();
+					
+					$(area).attr("zoom",increase);
+          $(iframe).attr("style",VISH.SlidesUtilities.getZoomInStyle(increase));
+					
+					//Width differente between original size and new size.
+					var widthDelta = $(iframe_wrapper).width()*(1-(1/increase));
+					var scrollLeft = $(area).attr("scrollLeftOrigin");
+					var newScrollLeft = scrollLeft * increase + widthDelta;
+					
+					var scrollTop = $(area).attr("scrollTopOrigin");
+					var newScrollTop = scrollTop * increase;
+					
+					$(area).attr("scrollLeft",newScrollLeft);
+					$(area).attr("scrollTop",newScrollTop);
+          $(iframe_wrapper).scrollLeft(newScrollLeft);
+					$(iframe_wrapper).scrollTop(newScrollTop);
+      });
+
+		}
     
     return {
         loadSnapshot: loadSnapshot,
-        unloadSnapshot: unloadSnapshot
+        unloadSnapshot: unloadSnapshot,
+				aftersetupSize : aftersetupSize
     };
     
 })(VISH, jQuery);
