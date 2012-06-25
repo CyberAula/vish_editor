@@ -13544,8 +13544,7 @@ VISH.Editor = function(V, $, undefined) {
       slide = {}
     });
     saved_excursion = excursion;
-    var jsonexcursion = JSON.stringify(excursion);
-    VISH.Debugging.log(jsonexcursion);
+    VISH.Debugging.log(JSON.stringify(excursion));
     return saved_excursion
   };
   var _afterSaveExcursion = function(excursion) {
@@ -13576,6 +13575,8 @@ VISH.Editor = function(V, $, undefined) {
         }else {
           send_type = "POST"
         }
+        var jsonexcursion = JSON.stringify(excursion);
+        VISH.Debugging.log(jsonexcursion);
         var params = {"excursion[json]":jsonexcursion, "authenticity_token":initOptions["token"]};
         $.ajax({type:send_type, url:initOptions["postPath"], data:params, success:function(data) {
           window.top.location.href = data.url
@@ -14221,11 +14222,14 @@ VISH.Samples = function(V, undefined) {
   {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=opaque" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
   {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="opaque" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
   "style":"position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"}]}]};
-  var samples = {"id":"", "author":"", "slides":[{"id":"articlearticle1", "template":"t2", "elements":[{"id":"zone1", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font1"><span class="vish-font1 vish-fontHelvetica" style="">1111111</span></div><div class="vish-parent-font2"><span class="vish-font2 vish-fontHelvetica" style="">222222222222222222222222222</span></div><div>333333333333333333333333333333</div><div class="vish-parent-font4"><span class="vish-font4 vish-fontHelvetica" style="">444444444444444444444444444444444</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontHelvetica" style="">55555555555555555555555555555555555</span></div><div class="vish-parent-font6"><span class="vish-font6 vish-fontHelvetica" style="">66666666666666666666666666666666</span></div><div class="vish-parent-font7"><span class="vish-font7 vish-fontHelvetica" style="">777777777777777777777777</span></div>'}]}, 
-  {"id":"articlearticle2", "template":"t6", "elements":[{"id":"zone2", "areaid":"header"}, {"id":"zone3", "areaid":"left"}, {"id":"zone4", "areaid":"center"}, {"id":"zone5", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style="">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>'}]}, 
-  {"id":"articlearticle3", "template":"t6", "elements":[{"id":"zone6", "areaid":"header"}, {"id":"zone7", "areaid":"left"}, {"id":"zone8", "areaid":"center"}, {"id":"zone9", "type":"text", "areaid":"right", "body":'<span class="vish-font5 vish-fontHelvetica" style="">Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text&nbsp;hereInsert text hereInsert text hereInsert text hereInsert text here</span><br>'}]}, 
-  {"id":"articlearticle4", "template":"t8", "elements":[{"id":"zone10", "areaid":"header"}, {"id":"zone11", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style="">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>'}, 
-  {"id":"zone12", "areaid":"center"}, {"id":"zone13", "areaid":"right"}]}]};
+  var samples = {"id":"", "author":"", "slides":[{"id":"article2", "template":"t4", "elements":[{"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">Ecology</font><br></span></div>'}, 
+  {"id":"zone3", "type":"object", "areaid":"left", "body":'<iframe unselectable="on" wmode="opaque" class="t4_object" id="resizableunicID_1" src="http://www.youtube.com/embed/GwMDmtIlxgk?wmode=opaque" frameborder="0"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone4", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx is smaller than its northern relatives, and typically hunts smaller animals, usually no larger than hares. It also differs in habitat choice, with Iberian lynx inhabiting open scrub and Eurasian lynx inhabiting forests.It hunts mammals (including rodents and insectivores), birds, reptiles and amphibians at twilight. The European rabbit (Oryctolagus cuniculus) is its main prey (79.5-86.7%), with (5.9%) hares (Lepus granatensis) and rodents (3.2%) less common. A male requires one rabbit per day; a female bringing up cubs will eat three rabbits per day.</span></div>'}]}, 
+  {"id":"article3", "template":"t7", "elements":[{"id":"zone5", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">SosLynx</font><br></span></div>'}, 
+  {"id":"zone6", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font2"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx and its habitat are fully protected, and they are no longer legally hunted. Its critical status is mainly due to habitat loss, poisoning, road casualties, feral dogs and poaching. Its habitat loss is due mainly to infrastructure improvement, urban and resort development and tree monocultivation, which serves to break the lynx\'s distribution area. In addition, the lynx prey population of rabbits is also declining due to diseases such as myxomatosis and hemorrhagic pneumonia.There exist websites like SOS Lynx which is a conservation charity based in Portugal, working to prevent the extinction of the Iberian lynx. Its aim is to stop the decline of the Iberian lynx and other lynx species.</span></div>'}, 
+  {"id":"zone7", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_2" src="http://www.soslynx.org/?wmode=transparent"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone8", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font6" style="text-align: center;"><span class="vish-font6 vish-fontHelvetica" style="">http://www.soslynx.org/</span></div>'}]}, {"id":"article4", "template":"t6", 
+  "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="4"><span style="color: rgb(113, 113, 117);">Reproduction</span></font><br></span></div>'}, 
+  {"id":"zone10", "type":"image", "areaid":"left", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:380.95238095238096%; height:219.0889370932755%; top:-36.44251626898048%; left:-58.57142857142857%;"}, {"id":"zone11", "type":"image", "areaid":"center", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:357.14285714285717%; height:205.63991323210413%; top:-45.5531453362256%; left:-193.3333260672433%;"}, 
+  {"id":"zone12", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -15668,7 +15672,37 @@ VISH.Editor.Text = function(V, $, undefined) {
         style += "color:" + $(elem).attr("color") + ";"
       }
       if($(elem).attr("style") !== undefined) {
-        style += $(elem).attr("style") + ";"
+        var finalstyle = "";
+        var tmpstyle = $(elem).attr("style");
+        var tmpindex = tmpstyle.indexOf("font-size");
+        if(tmpindex !== -1) {
+          var tmpsemicolon = tmpstyle.indexOf(";", tmpindex);
+          finalstyle = tmpstyle.substring(0, tmpindex) + tmpstyle.substring(tmpsemicolon + 1);
+          var tmpfont = tmpstyle.substring(tmpindex + 10, tmpsemicolon);
+          switch(tmpfont.trim()) {
+            case "xx-large":
+              size = 6;
+              break;
+            case "x-large":
+              size = 5;
+              break;
+            case "large":
+              size = 4;
+              break;
+            case "medium":
+              size = 3;
+              break;
+            case "small":
+              size = 2;
+              break;
+            case "x-small":
+              size = 1;
+              break
+          }
+        }else {
+          finalstyle = tmpstyle
+        }
+        style += finalstyle + ";"
       }
       $(elem).closest("div").addClass("vish-parent-font" + size);
       $(elem).replaceWith("<span class='vish-font" + size + " vish-font" + face + "' style='" + style + "'>" + $(elem).html() + "</span>")
