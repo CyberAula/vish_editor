@@ -947,9 +947,14 @@ VISH.Editor = (function(V,$,undefined){
 		for( tab in fancyBoxes) {
 		
 			$('#'+fancyBoxes[tab]+'_content').hide();
+			
+			$('#tab_'+fancyBoxes[tab]).attr("class", "");
+			$('#tab_'+fancyBoxes[tab]).attr("class", "fancy_tab");
+			
 		} 
 		//just show the fancybox selected 
 		$('#'+fancy+'_content').show();
+		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
   }
 
 
