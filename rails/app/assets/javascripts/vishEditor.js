@@ -15680,6 +15680,9 @@ VISH.Editor.Text = function(V, $, undefined) {
           finalstyle = tmpstyle.substring(0, tmpindex) + tmpstyle.substring(tmpsemicolon + 1);
           var tmpfont = tmpstyle.substring(tmpindex + 10, tmpsemicolon);
           switch(tmpfont.trim()) {
+            case "xxx-large":
+              size = 7;
+              break;
             case "xx-large":
               size = 6;
               break;
