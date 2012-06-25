@@ -787,8 +787,9 @@ VISH.Editor = (function(V,$,undefined){
       excursion.slides.push(slide);
       slide = {};
     });
-		saved_excursion = excursion;
-    VISH.Debugging.log(JSON.stringify(excursion));   
+    
+		saved_excursion = excursion;  
+		VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
   };
 	
@@ -824,8 +825,9 @@ VISH.Editor = (function(V,$,undefined){
           send_type = 'POST'; //if it is a new
         } 
         
-        var jsonexcursion = JSON.stringify(excursion);
         //POST to http://server/excursions/
+        var jsonexcursion = JSON.stringify(excursion);
+    	VISH.Debugging.log(jsonexcursion);   
         var params = {
           "excursion[json]": jsonexcursion,
           "authenticity_token" : initOptions["token"]
