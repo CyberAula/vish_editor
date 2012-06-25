@@ -788,8 +788,7 @@ VISH.Editor = (function(V,$,undefined){
       slide = {};
     });
 		saved_excursion = excursion;
-    var jsonexcursion = JSON.stringify(excursion);
-    VISH.Debugging.log(jsonexcursion);   
+    VISH.Debugging.log(JSON.stringify(excursion));   
 		return saved_excursion;     
   };
 	
@@ -825,6 +824,7 @@ VISH.Editor = (function(V,$,undefined){
           send_type = 'POST'; //if it is a new
         } 
         
+        var jsonexcursion = JSON.stringify(excursion);
         //POST to http://server/excursions/
         var params = {
           "excursion[json]": jsonexcursion,

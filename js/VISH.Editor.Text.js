@@ -64,6 +64,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					var tmpfont = tmpstyle.substring(tmpindex+10,tmpsemicolon );  //+10 because we want to capture the end of font-size
 					switch(tmpfont.trim())
 					{
+					case "xxx-large":
+						size = 7;
+						break;
 					case "xx-large":
 						size = 6;
 						break;
