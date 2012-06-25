@@ -13088,6 +13088,7 @@ VISH.Editor = function(V, $, undefined) {
   var domId = 0;
   var excursionDetails = {};
   var excursion_to_edit = null;
+  var saved_excursion = null;
   var params = {current_el:null};
   var eventsLoaded = false;
   var init = function(options, excursion) {
@@ -13324,6 +13325,7 @@ VISH.Editor = function(V, $, undefined) {
     $.fancybox.close()
   };
   var _onTemplateThumbClicked = function(event) {
+    VISH.Debugging.log(" attrib template vale:  " + $(this).attr("template"));
     var slide = V.Dummies.getDummy($(this).attr("template"));
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
@@ -13399,19 +13401,25 @@ VISH.Editor = function(V, $, undefined) {
     $(this).css("cursor", "auto");
     $(this).find(".menuselect_hide").show();
     $(this).find(".delete_content").show();
-    if($(this).attr("type") === "image" || $(this).attr("type") === "object" || $(this).attr("type") === "video") {
-      var the_id;
-      switch($(this).attr("type")) {
-        case "image":
-          the_id = $(this).find("img").attr("id");
-          break;
-        case "object":
-          the_id = $(this).find(".object_wrapper").attr("id");
-          break;
-        case "video":
-          the_id = $(this).find("video").attr("id");
-          break
-      }
+    var the_id;
+    switch($(this).attr("type")) {
+      case "image":
+        the_id = $(this).find("img").attr("id");
+        break;
+      case "object":
+        the_id = $(this).find(".object_wrapper").attr("id");
+        break;
+      case "snapshot":
+        the_id = $(this).find(".snapshot_wrapper").attr("id");
+        break;
+      case "video":
+        the_id = $(this).find("video").attr("id");
+        break;
+      default:
+        the_id = null;
+        break
+    }
+    if(the_id) {
       the_id = the_id.substring(9);
       $("#sliderId" + the_id).show()
     }
@@ -13440,14 +13448,15 @@ VISH.Editor = function(V, $, undefined) {
       $.fancybox($("#save_form").html(), {"autoDimensions":false, "width":350, "scrolling":"no", "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
         if($("#save_answer").val() === "true") {
           $("#save_answer").val("false");
-          _saveExcursion()
+          var excursion = saveExcursion();
+          _afterSaveExcursion(excursion)
         }else {
           return false
         }
       }})
     }
   };
-  var _saveExcursion = function() {
+  var saveExcursion = function() {
     $(".object_wrapper").show();
     var excursion = {};
     excursion.id = "";
@@ -13462,6 +13471,7 @@ VISH.Editor = function(V, $, undefined) {
       slide.template = $(s).attr("template");
       slide.elements = [];
       var element = {};
+      $(s).show();
       $(s).find("div").each(function(i, div) {
         if($(div).attr("areaid") !== undefined) {
           element.id = $(div).attr("id");
@@ -13517,8 +13527,7 @@ VISH.Editor = function(V, $, undefined) {
                         element.scrollLeft = $(snapshotWrapper).scrollLeft()
                       }else {
                         if(typeof element.type == "undefined") {
-                          element.type = "text";
-                          element.body = ""
+                          VISH.Debugging.log("Empty element")
                         }
                       }
                     }
@@ -13534,16 +13543,20 @@ VISH.Editor = function(V, $, undefined) {
       excursion.slides.push(slide);
       slide = {}
     });
+    saved_excursion = excursion;
     var jsonexcursion = JSON.stringify(excursion);
     VISH.Debugging.log(jsonexcursion);
+    return saved_excursion
+  };
+  var _afterSaveExcursion = function(excursion) {
     if(VISH.Debugging && VISH.Debugging.isDevelopping()) {
       if(VISH.Debugging.getActionSave() == "view") {
         $("article").remove();
-        $("#menubar").remove();
-        $("#menubar_helpsection").remove();
-        $("#joyride_help_button").remove();
-        $(".theslider").remove();
-        $(".nicEdit-panelContain").remove();
+        $("#menubar").hide();
+        $("#menubar_helpsection").hide();
+        $("#joyride_help_button").hide();
+        $(".theslider").hide();
+        $(".nicEdit-panelContain").hide();
         $("#menubar-viewer").show();
         VISH.SlideManager.init(excursion)
       }else {
@@ -13551,6 +13564,7 @@ VISH.Editor = function(V, $, undefined) {
           $("article").remove();
           var options = {};
           options["developping"] = true;
+          options["configuration"] = configuration;
           VISH.Editor.init(options, excursion)
         }
       }
@@ -13605,16 +13619,21 @@ VISH.Editor = function(V, $, undefined) {
     }
     return null
   };
+  var getSavedExcursion = function() {
+    if(saved_excursion) {
+      return saved_excursion
+    }else {
+      return null
+    }
+  };
   var loadFancyBox = function(fancy) {
     var fancyBoxes = {1:"templates", 2:"quizes"};
-    VISH.Debugging.log("entra en loadFancyBox y par\u00e1metro: " + fancyBoxes[1]);
-    VISH.Debugging.log("usando el hash: " + fancy);
-    $("#" + fancyBoxes[1] + "_content").hide();
-    $("#" + fancyBoxes[2] + "_content").hide();
-    $("#" + fancy + "_content").show();
-    VISH.Debugging.log(" fancy content vale: " + $("#" + fancy + "content"))
+    for(tab in fancyBoxes) {
+      $("#" + fancyBoxes[tab] + "_content").hide()
+    }
+    $("#" + fancy + "_content").show()
   };
-  return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams, getOptions:getOptions, loadFancyBox:loadFancyBox}
+  return{init:init, addDeleteButton:addDeleteButton, loadTab:loadTab, getId:getId, getTemplate:getTemplate, getCurrentArea:getCurrentArea, getParams:getParams, getOptions:getOptions, loadFancyBox:loadFancyBox, getSavedExcursion:getSavedExcursion, saveExcursion:saveExcursion}
 }(VISH, jQuery);
 VISH.Editor.Video = function(V, $, undefined) {
   var urlDivId = "tab_video_from_url_content";
@@ -14060,7 +14079,7 @@ VISH.Editor.Object = function(V, $, undefined) {
             return"<img class='imagePreview' src='" + object + "'></img>";
             break;
           case "swf":
-            return"<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>";
+            return"<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>";
             break;
           case "pdf":
             return VISH.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
@@ -14096,7 +14115,7 @@ VISH.Editor.Object = function(V, $, undefined) {
   var _genericWrapperPreview = function(object) {
     var wrapperPreview = $(object);
     $(wrapperPreview).addClass("objectPreview");
-    $(wrapperPreview).attr("wmode", "transparent");
+    $(wrapperPreview).attr("wmode", "opaque");
     $(wrapperPreview).removeAttr("width");
     $(wrapperPreview).removeAttr("height");
     return wrapperPreview
@@ -14171,7 +14190,7 @@ VISH.Editor.Object = function(V, $, undefined) {
     var wrapperTag = $(wrapper);
     $(wrapperTag).attr("id", idToResize);
     $(wrapperTag).attr("class", template + "_object");
-    $(wrapperTag).attr("wmode", "transparent");
+    $(wrapperTag).attr("wmode", "opaque");
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
     VISH.Editor.addDeleteButton($(current_area));
@@ -14198,14 +14217,15 @@ VISH.Samples = function(V, undefined) {
   {"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3" style="text-align: center;"><span class="vish-font3 vish-fontarial"><font size="6"><span style="font-family: helvetica;"><span style="font-weight: bold;">Chess</span>: The Art of Learning</span></font><br></span></div>'}, {"id":"zone3", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3" style="text-align: right;"><span class="vish-font3 vish-fontarial"><font size="4"><span style="font-style: italic; font-family: helvetica;">by Aldo Gordillo&nbsp; </span></font><br></span></div>'}]}, 
   {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font6" style="text-align: center;"><span class="vish-font6 vish-fontarial">Introduction</span></div>'}, {"id":"zone5", "type":"image", "areaid":"left", "body":"http://farm8.staticflickr.com/7099/7185785919_de19f61d2a_m.jpg", "style":"position: relative; width:677.0833333333334%; top:0%; left:0%;"}, {"id":"zone6", "areaid":"center"}, {"id":"zone7", "type":"text", "areaid":"right", 
   "body":'<br><br><div class="vish-parent-font5" style="text-align: center;"><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Chess is an exercise of infinite possibilities for the mind.</span></span><br style="font-family: helvetica;"></div><span class="vish-font5 vish-fontarial"></span><ul><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Concentration</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Critical thinking</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Abstract reasoning</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Pattern recognition</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Creativity</span></span></li><li><span class="vish-font5 vish-fontarial"><span style="font-family: helvetica;">Strategic Planning</span></span></li></ul>'}]}, 
-  {"id":"article3", "template":"t2", "elements":[{"id":"zone8", "type":"object", "areaid":"left", "body":'<iframe style="width: 678px; height: 518px;" wmode="transparent" class="t2_object" id="resizableunicID_3" src="http://en.wikipedia.org/wiki/Chess">&lt;/embed&gt;</iframe>', "style":"position: relative; width:100%; top:0.19305019305019305%; left:-1.6224188790560472%;"}]}, {"id":"article4", "template":"t7", "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3" style="text-align: center;"><span class="vish-font3 vish-fontarial"><font size="5"><span style="font-family: helvetica;">Human Vs Machine</span></font><br></span></div>'}, 
-  {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="transparent" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=transparent" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
-  {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="transparent" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
+  {"id":"article3", "template":"t2", "elements":[{"id":"zone8", "type":"object", "areaid":"left", "body":'<iframe style="width: 678px; height: 518px;" wmode="opaque" class="t2_object" id="resizableunicID_3" src="http://en.wikipedia.org/wiki/Chess">&lt;/embed&gt;</iframe>', "style":"position: relative; width:100%; top:0.19305019305019305%; left:-1.6224188790560472%;"}]}, {"id":"article4", "template":"t7", "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3" style="text-align: center;"><span class="vish-font3 vish-fontarial"><font size="5"><span style="font-family: helvetica;">Human Vs Machine</span></font><br></span></div>'}, 
+  {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=opaque" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
+  {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="opaque" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
   "style":"position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"}]}]};
-  var samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-01.png", "author":"Enrique Barra", "slides":[{"id":"article1", "template":"t5", "elements":[{"id":"zone1", "type":"text", "areaid":"header", "body":'<div><font size="6">hola</font></div>'}, {"id":"zone2", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="background-color: rgb(255, 0, 102);;">Insert text here</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontarial" style="color:#33ff00;">adfadf</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontimpact" style="color:#33ff00;">afdfadf</span></div>'}, 
-  {"id":"zone3", "type":"object", "areaid":"right", "body":'<iframe src="http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=transparent" frameborder="0" style="width: 246.23999999999998px; height: 174.88065306122448px;" id="resizableunicID_3" class="t1_object" title="Click to drag" unselectable="on"></iframe>', "style":"position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "}]}, {"id":"article2", "template":"t5", "elements":[{"id":"zone4", "type":"text", 
-  "areaid":"header", "body":"flash"}, {"id":"zone5", "type":"object", "areaid":"left", "body":'<embed width="100%" height="100%" id="resizableunicID_4" src="/media/swf/virtualexperiment_1ppp.swf" type="application/x-shockwave-flash" class="t1_object" title="Click to drag">', "style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "}, {"id":"zone6", "areaid":"right"}]}, {"id":"vish10", "template":"t2", "elements":[{"id":"332", "type":"video", "areaid":"left", 
-  "controls":true, "autoplay":false, "loop":false, "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "style":"position: relative; left: 2px; top: 110px; width: 325px;", "sources":'[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'}]}]};
+  var samples = {"id":"", "author":"", "slides":[{"id":"articlearticle1", "template":"t2", "elements":[{"id":"zone1", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font1"><span class="vish-font1 vish-fontHelvetica" style="">1111111</span></div><div class="vish-parent-font2"><span class="vish-font2 vish-fontHelvetica" style="">222222222222222222222222222</span></div><div>333333333333333333333333333333</div><div class="vish-parent-font4"><span class="vish-font4 vish-fontHelvetica" style="">444444444444444444444444444444444</span></div><div class="vish-parent-font5"><span class="vish-font5 vish-fontHelvetica" style="">55555555555555555555555555555555555</span></div><div class="vish-parent-font6"><span class="vish-font6 vish-fontHelvetica" style="">66666666666666666666666666666666</span></div><div class="vish-parent-font7"><span class="vish-font7 vish-fontHelvetica" style="">777777777777777777777777</span></div>'}]}, 
+  {"id":"articlearticle2", "template":"t6", "elements":[{"id":"zone2", "areaid":"header"}, {"id":"zone3", "areaid":"left"}, {"id":"zone4", "areaid":"center"}, {"id":"zone5", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style="">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>'}]}, 
+  {"id":"articlearticle3", "template":"t6", "elements":[{"id":"zone6", "areaid":"header"}, {"id":"zone7", "areaid":"left"}, {"id":"zone8", "areaid":"center"}, {"id":"zone9", "type":"text", "areaid":"right", "body":'<span class="vish-font5 vish-fontHelvetica" style="">Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text&nbsp;hereInsert text hereInsert text hereInsert text hereInsert text here</span><br>'}]}, 
+  {"id":"articlearticle4", "template":"t8", "elements":[{"id":"zone10", "areaid":"header"}, {"id":"zone11", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style="">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>'}, 
+  {"id":"zone12", "areaid":"center"}, {"id":"zone13", "areaid":"right"}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -14246,13 +14266,13 @@ VISH.Samples.API = function(V, undefined) {
   "poster":"http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg", "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}, {"id":"1536", "title":"Otro paisaje bonito", "description":"Awesome HTML5 video example", "author":"Aldo Gordillo", "poster":"http://1.bp.blogspot.com/-DFj9INluj80/TfiNl7q3DbI/AAAAAAAAAws/hVJu13VbKEY/s1600/paisaje.jpg", 
   "sources":"[" + '{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},' + '{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }' + "]"}]};
   var videoListDummy = {"videos":[]};
-  var flashList = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, 
+  var flashList = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=opaque" frameborder="0" allowfullscreen></iframe>'}, 
   {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}, {"id":"1537", "title":"Image", "description":"Image Embed", "author":"Globedia", "content":'<embed width="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'}, {"id":"1538", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1539", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1540", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1541", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1542", "title":"Profe Demo", "description":"Flash Object Test 2", 
-  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1543", "title":"Youtube video", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
-  var flashListLittle = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="transparent"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", 
-  "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=transparent" frameborder="0" allowfullscreen></iframe>'}, {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1539", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1540", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1541", "title":"Profe Demo", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1542", "title":"Profe Demo", "description":"Flash Object Test 2", 
+  "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1543", "title":"Youtube video", "description":"Flash Object Test 2", "author":"FlashMan", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns" frameborder="0" allowfullscreen></iframe>'}]};
+  var flashListLittle = {"flashes":[{"id":"1534", "title":"Profe", "description":"Flash Object Test", "author":"FlashMan", "content":'<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'}, {"id":"1535", "title":"Youtube video about HTML5", "description":"HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.", "author":"W3C", "content":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=opaque" frameborder="0" allowfullscreen></iframe>'}, 
+  {"id":"1536", "title":"Global excursion", "description":"Iframe example", "author":"Vish", "content":'<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'}]};
   var flashListDummy = {"flashes":[]};
   var liveList = [{"id":"1534", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1535", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1536", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
   {"id":"1537", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1538", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, {"id":"1539", "title":"Do\u00f1ana Test", "description":"Parque Nacional de Do\u00f1ana (Spain) ", "author":"Demo", "fulltext":"http://www.youtube.com/watch?v=5TVrUFxzOk8"}, 
@@ -14342,7 +14362,7 @@ VISH.Configuration = function(V, $, undefined) {
 VISH.Debugging = function(V, $, undefined) {
   var actionSave = "view";
   var actionInit = "nothing";
-  var excursionSamples = VISH.Samples.samples_aldo;
+  var excursionSamples = VISH.Samples.samples;
   var developping = false;
   var init = function(bol) {
     developping = bol
@@ -14378,7 +14398,46 @@ VISH.Debugging = function(V, $, undefined) {
   var getExcursionSamples = function() {
     return excursionSamples
   };
-  return{init:init, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping, getActionSave:getActionSave, getActionInit:getActionInit, getExcursionSamples:getExcursionSamples}
+  var initVishViewer = function() {
+    var myexcursion = null;
+    if(VISH.Editing) {
+      myexcursion = VISH.Editor.saveExcursion()
+    }else {
+      log("You are already in Vish Viewer");
+      return
+    }
+    $("article").remove();
+    $("#menubar").hide();
+    $("#menubar_helpsection").hide();
+    $("#joyride_help_button").hide();
+    $(".theslider").hide();
+    $(".nicEdit-panelContain").hide();
+    $("#menubar-viewer").show();
+    VISH.Debugging.log("Init Vish Viewer with excursion: " + JSON.stringify(myexcursion));
+    VISH.SlideManager.init(myexcursion)
+  };
+  var initVishEditor = function() {
+    var myexcursion = null;
+    if(VISH.Editing) {
+      log("You are already in Vish Editor");
+      return
+    }else {
+      myexcursion = VISH.Editor.getSavedExcursion()
+    }
+    $("article").remove();
+    $("#menubar").show();
+    $("#menubar_helpsection").show();
+    $("#joyride_help_button").show();
+    $(".theslider").show();
+    $(".nicEdit-panelContain").show();
+    $("#menubar-viewer").hide();
+    var options = {};
+    options["developping"] = true;
+    options["configuration"] = configuration;
+    VISH.Debugging.log("Init Vish Editor with excursion: " + JSON.stringify(myexcursion));
+    VISH.Editor.init(options, myexcursion)
+  };
+  return{init:init, log:log, shuffleJson:shuffleJson, enableDevelopingMode:enableDevelopingMode, disableDevelopingMode:disableDevelopingMode, isDevelopping:isDevelopping, getActionSave:getActionSave, getActionInit:getActionInit, getExcursionSamples:getExcursionSamples, initVishViewer:initVishViewer, initVishEditor:initVishEditor}
 }(VISH, jQuery);
 VISH.Dummies = function(VISH, undefined) {
   var nextDivId = 1;
@@ -14390,7 +14449,9 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t6'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t6_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t6_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t6_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t6_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t7_subheader editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t8_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t9_right editable grey_background selectable'></div></article>"];
+  "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t9_right editable grey_background selectable'></div></article>", 
+  "<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t10_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>", 
+  "<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -15049,7 +15110,7 @@ VISH.Editor.Object.Flash = function(V, $, undefined) {
     embedTag.setAttribute("id", idToResize);
     embedTag.setAttribute("class", template + "_object");
     embedTag.setAttribute("src", src);
-    embedTag.setAttribute("wmode", "transparent");
+    embedTag.setAttribute("wmode", "opaque");
     $(embedDiv).append(embedTag);
     $(current_area).html("");
     $(current_area).append(embedDiv);
@@ -15391,7 +15452,7 @@ VISH.Editor.Object.Snapshot = function(V, $, undefined) {
     $(iframeTag).attr("id", idToResize);
     $(iframeTag).attr("class", "snapshot_content");
     $(iframeTag).attr("scrolling", "no");
-    $(iframeTag).attr("wmode", "transparent");
+    $(iframeTag).attr("wmode", "opaque");
     $(iframeTag).css("pointer-events", "none");
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
@@ -15478,7 +15539,7 @@ VISH.Editor.Object.Web = function(V, $, undefined) {
     VISH.Editor.Object.drawPreviewObject(contentToAdd)
   };
   var generateWrapperForWeb = function(url) {
-    return"<iframe src='" + url + "'></iframe>"
+    return"<iframe src='" + url + "?wmode=transparent'></iframe>"
   };
   var generatePreviewWrapperForWeb = function(url) {
     return"<iframe class='objectPreview' src='" + url + "'></iframe>"
@@ -15906,7 +15967,7 @@ VISH.Editor.Video.Repository = function(V, $, undefined) {
 VISH.Editor.Video.Vimeo = function(V, $, undefined) {
   var carrouselDivId = "tab_video_vimeo_content_carrousel";
   var previewDivId = "tab_video_vimeo_content_preview";
-  var queryMaxMaxNumberYoutubeVideo = 20;
+  var queryMaxMaxNumberVimeoVideo = 20;
   var currentVideos = new Array;
   var selectedVideo = null;
   var init = function() {
@@ -15927,7 +15988,7 @@ VISH.Editor.Video.Vimeo = function(V, $, undefined) {
   };
   var requestVimeoData = function(text) {
     VISH.Debugging.log("entra en requesVimeoData");
-    var url_vimeo = "http://gdata.youtube.com/feeds/api/videos?q=" + text + "&alt=json-in-script&callback=?&max-results=" + queryMaxMaxNumberYoutubeVideo + "&start-index=1";
+    VISH.Debugging.log("text vale :" + text);
     jQuery.getJSON(url_youtube, function(data) {
       _onDataReceived(data)
     })
@@ -16079,7 +16140,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
     var video_embedded = "http://www.youtube.com/embed/" + videoId;
     current_area = VISH.Editor.getCurrentArea();
     var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243);
-    var wrapper = "<iframe src='" + video_embedded + "?wmode=transparent' frameborder='0' style='width:" + width_height.width + "px; height:" + width_height.height + "px;'></iframe>";
+    var wrapper = "<iframe src='" + video_embedded + "?wmode=opaque' frameborder='0' style='width:" + width_height.width + "px; height:" + width_height.height + "px;'></iframe>";
     return wrapper
   };
   var generateWrapperForYoutubeVideoUrl = function(url) {
@@ -16092,7 +16153,7 @@ VISH.Editor.Video.Youtube = function(V, $, undefined) {
   };
   var _generatePreviewWrapper = function(videoId) {
     var video_embedded = "http://www.youtube.com/embed/" + videoId;
-    var wrapper = '<iframe class="objectPreview" type="text/html" src="' + video_embedded + '?wmode=transparent" frameborder="0"></iframe>';
+    var wrapper = '<iframe class="objectPreview" type="text/html" src="' + video_embedded + '?wmode=opaque" frameborder="0"></iframe>';
     return wrapper
   };
   var generatePreviewWrapperForYoutubeVideoUrl = function(url) {
@@ -16234,10 +16295,12 @@ VISH.Renderer = function(V, $, undefined) {
                     classes += "flashcard"
                   }else {
                     if(slide.elements[el].type === "openquestion") {
-                      content = _renderOpenquestion(slide.elements[el], slide.template)
+                      content += _renderOpenquestion(slide.elements[el], slide.template)
                     }else {
                       if(slide.elements[el].type === "mcquestion") {
-                        content = _renderMcquestion(slide.elements[el], slide.template)
+                        content += _renderMcquestion(slide.elements[el], slide.template)
+                      }else {
+                        content += _renderEmpty(slide.elements[el], slide.template)
                       }
                     }
                   }
@@ -16252,6 +16315,9 @@ VISH.Renderer = function(V, $, undefined) {
   };
   var _renderText = function(element, template) {
     return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + " " + template + "_text" + "'>" + element["body"] + "</div>"
+  };
+  var _renderEmpty = function(element, template) {
+    return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + " " + template + "_text" + "'></div>"
   };
   var _renderImage = function(element, template) {
     return"<div id='" + element["id"] + "' class='" + template + "_" + element["areaid"] + "'><img class='" + template + "_image' src='" + element["body"] + "' style='" + element["style"] + "' /></div>"
@@ -16308,7 +16374,7 @@ VISH.Renderer = function(V, $, undefined) {
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["question"] + "</div>";
+    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["question"] + "?</div>";
     ret += "<form action='" + element["posturl"] + "' method='post'>";
     ret += "<label class='question_name'>Name: </label>";
     ret += "<input id='pupil_name' class='question_name_input'></input>";
@@ -16324,14 +16390,18 @@ VISH.SlideManager = function(V, $, undefined) {
   var mySlides = null;
   var slideStatus = {};
   var myDoc;
+  var eventsLoaded = false;
   var init = function(excursion) {
     VISH.Editing = false;
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
     _setupSize();
-    addEventListeners();
-    $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
-    $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide);
+    if(!eventsLoaded) {
+      eventsLoaded = true;
+      addEventListeners();
+      $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
+      $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide)
+    }
     var isInIFrame = window.location != window.parent.location ? true : false;
     var myElem = null;
     if(isInIFrame) {
