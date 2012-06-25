@@ -104,7 +104,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 			$(elem).attr("style", style + ";line-height: 110%;");
 			
 		});
-		
+		//if everthing is italic or everything is bold or everything is underlined, firefox adds it to the parent
+		if($(zone).css("font-style")!=="normal"){
+			$(zone).children(':first-child').css("font-style", $(zone).css("font-style"));
+		}
+		if($(zone).css("font-weight")!==400){
+			$(zone).children(':first-child').css("font-weight", $(zone).css("font-weight"));
+		}
+		if($(zone).css("text-decoration")!=="none"){
+			$(zone).children(':first-child').css("text-decoration", $(zone).css("text-decoration"));
+		}
 		return $(zone).html();
 	};
 	
