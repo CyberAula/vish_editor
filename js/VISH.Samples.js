@@ -100,88 +100,84 @@ VISH.Samples = (function(V,undefined){
 }; 
 	 
 
-				var samples = {
+
+	var samples = {
 		"id" : "",
 		"author" : "",
-		"slides" : [
-				{
-					"id" : "articlearticle1",
-					"template" : "t2",
-					"elements" : [ {
-						"id" : "zone1",
-						"type" : "text",
-						"areaid" : "left",
-						"body" : "<div class=\"vish-parent-font1\"><span class=\"vish-font1 vish-fontHelvetica\" style=\"\">1111111</span></div><div class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">222222222222222222222222222</span></div><div>333333333333333333333333333333</div><div class=\"vish-parent-font4\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"\">444444444444444444444444444444444</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"\">55555555555555555555555555555555555</span></div><div class=\"vish-parent-font6\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"\">66666666666666666666666666666666</span></div><div class=\"vish-parent-font7\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"\">777777777777777777777777</span></div>"
-					} ]
-				},
-				{
-					"id" : "articlearticle2",
-					"template" : "t6",
-					"elements" : [
-							{
-								"id" : "zone2",
-								"areaid" : "header"
-							},
-							{
-								"id" : "zone3",
-								"areaid" : "left"
-							},
-							{
-								"id" : "zone4",
-								"areaid" : "center"
-							},
-							{
-								"id" : "zone5",
-								"type" : "text",
-								"areaid" : "right",
-								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
-							} ]
-				},
-				{
-					"id" : "articlearticle3",
-					"template" : "t6",
-					"elements" : [
-							{
-								"id" : "zone6",
-								"areaid" : "header"
-							},
-							{
-								"id" : "zone7",
-								"areaid" : "left"
-							},
-							{
-								"id" : "zone8",
-								"areaid" : "center"
-							},
-							{
-								"id" : "zone9",
-								"type" : "text",
-								"areaid" : "right",
-								"body" : "<span class=\"vish-font5 vish-fontHelvetica\" style=\"\">Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text&nbsp;hereInsert text hereInsert text hereInsert text hereInsert text here</span><br>"
-							} ]
-				},
-				{
-					"id" : "articlearticle4",
-					"template" : "t8",
-					"elements" : [
-							{
-								"id" : "zone10",
-								"areaid" : "header"
-							},
-							{
-								"id" : "zone11",
-								"type" : "text",
-								"areaid" : "left",
-								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
-							}, {
-								"id" : "zone12",
-								"areaid" : "center"
-							}, {
-								"id" : "zone13",
-								"areaid" : "right"
-							} ]
-				} ]
+		"slides" : [{
+			"id" : "article2",
+			"template" : "t4",
+			"elements" : [{
+				"id" : "zone2",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><font size=\"6\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span> <span style=\"color: rgb(32, 24, 21);\">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style=\"font-weight: bold; color: rgb(113, 113, 117);\" size=\"4\">Ecology</font><br></span></div>"
+			}, {
+				"id" : "zone3",
+				"type" : "object",
+				"areaid" : "left",
+				"body" : "<iframe unselectable=\"on\" wmode=\"opaque\" class=\"t4_object\" id=\"resizableunicID_1\" src=\"http://www.youtube.com/embed/GwMDmtIlxgk?wmode=opaque\" frameborder=\"0\"></iframe>",
+				"style" : "position: relative; width:100%; height:100%; top:0%; left:0%;"
+			}, {
+				"id" : "zone4",
+				"type" : "text",
+				"areaid" : "right",
+				"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center;\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">The Iberian lynx is smaller than its northern relatives, and typically hunts smaller animals, usually no larger than hares. It also differs in habitat choice, with Iberian lynx inhabiting open scrub and Eurasian lynx inhabiting forests.It hunts mammals (including rodents and insectivores), birds, reptiles and amphibians at twilight. The European rabbit (Oryctolagus cuniculus) is its main prey (79.5-86.7%), with (5.9%) hares (Lepus granatensis) and rodents (3.2%) less common. A male requires one rabbit per day; a female bringing up cubs will eat three rabbits per day.</span></div>"
+			}]
+		}, {
+			"id" : "article3",
+			"template" : "t7",
+			"elements" : [{
+				"id" : "zone5",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><font size=\"6\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span> <span style=\"color: rgb(32, 24, 21);\">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style=\"font-weight: bold; color: rgb(113, 113, 117);\" size=\"4\">SosLynx</font><br></span></div>"
+			}, {
+				"id" : "zone6",
+				"type" : "text",
+				"areaid" : "left",
+				"body" : "<div class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">The Iberian lynx and its habitat are fully protected, and they are no longer legally hunted. Its critical status is mainly due to habitat loss, poisoning, road casualties, feral dogs and poaching. Its habitat loss is due mainly to infrastructure improvement, urban and resort development and tree monocultivation, which serves to break the lynx's distribution area. In addition, the lynx prey population of rabbits is also declining due to diseases such as myxomatosis and hemorrhagic pneumonia.There exist websites like SOS Lynx which is a conservation charity based in Portugal, working to prevent the extinction of the Iberian lynx. Its aim is to stop the decline of the Iberian lynx and other lynx species.</span></div>"
+			}, {
+				"id" : "zone7",
+				"type" : "object",
+				"areaid" : "center",
+				"body" : "<iframe wmode=\"opaque\" class=\"t7_object\" id=\"resizableunicID_2\" src=\"http://www.soslynx.org/?wmode=transparent\"></iframe>",
+				"style" : "position: relative; width:100%; height:100%; top:0%; left:0%;"
+			}, {
+				"id" : "zone8",
+				"type" : "text",
+				"areaid" : "subheader",
+				"body" : "<div class=\"vish-parent-font6\" style=\"text-align: center;\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"\">http://www.soslynx.org/</span></div>"
+			}]
+		}, {
+			"id" : "article4",
+			"template" : "t6",
+			"elements" : [{
+				"id" : "zone9",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><font size=\"6\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span> <span style=\"color: rgb(32, 24, 21);\">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size=\"4\"><span style=\"color: rgb(113, 113, 117);\">Reproduction</span></font><br></span></div>"
+			}, {
+				"id" : "zone10",
+				"type" : "image",
+				"areaid" : "left",
+				"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
+				"style" : "position: relative; width:380.95238095238096%; height:219.0889370932755%; top:-36.44251626898048%; left:-58.57142857142857%;"
+			}, {
+				"id" : "zone11",
+				"type" : "image",
+				"areaid" : "center",
+				"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
+				"style" : "position: relative; width:357.14285714285717%; height:205.63991323210413%; top:-45.5531453362256%; left:-193.3333260672433%;"
+			}, {
+				"id" : "zone12",
+				"type" : "text",
+				"areaid" : "right",
+				"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center;\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
+			}]
+		}]
 	};
+
 		
 	var full_samples = {
 				'id'            :  '1',

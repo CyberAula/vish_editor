@@ -54,7 +54,41 @@ VISH.Editor.Text = (function(V,$,undefined){
 				style += "color:" + $(elem).attr("color") + ";";
 			}
 			if($(elem).attr("style") !== undefined){
-				style += $(elem).attr("style") + ";";
+				var finalstyle = "";
+				var tmpstyle = $(elem).attr("style");
+				//if style contains font-size we remove it and update size variable
+				var tmpindex = tmpstyle.indexOf("font-size"); 
+				if(tmpindex !== -1){
+					var tmpsemicolon = tmpstyle.indexOf(";", tmpindex);
+					finalstyle = tmpstyle.substring(0,tmpindex) + tmpstyle.substring(tmpsemicolon+1); //remove the font-size
+					var tmpfont = tmpstyle.substring(tmpindex+10,tmpsemicolon );  //+10 because we want to capture the end of font-size
+					switch(tmpfont.trim())
+					{
+					case "xx-large":
+						size = 6;
+						break;
+					case "x-large":
+						size = 5;
+						break;
+					case "large":
+						size = 4;
+						break;
+					case "medium":
+						size = 3;
+						break;
+					case "small":
+						size = 2;
+						break;
+					case "x-small":
+						size = 1;
+						break;
+					}
+				}
+				else{
+					finalstyle = tmpstyle;
+				}
+					
+			 	style += finalstyle + ";";
 			}
 						
 			$(elem).closest("div").addClass("vish-parent-font" + size);
