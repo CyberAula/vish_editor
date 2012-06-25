@@ -2,6 +2,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
+	 //Prevent to load events multiple times.
+  var eventsLoaded = false;
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
@@ -13,10 +15,13 @@ VISH.SlideManager = (function(V,$,undefined){
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		_setupSize();
-		addEventListeners(); //for the arrow keys
 		
-		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
-		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+		if(!eventsLoaded){
+			eventsLoaded = true;
+			addEventListeners(); //for the arrow keys
+      $(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
+      $(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+		}
 		
 		var isInIFrame = (window.location != window.parent.location) ? true : false;
 		var myElem = null;

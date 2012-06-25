@@ -45,7 +45,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 			var add_option = "<br>"+next_index+") <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='insert text option here' />";
 			
-			
 			$(".add_quiz_option").remove();
 			
 			$(".mcquestion").append(add_option);

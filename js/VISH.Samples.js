@@ -99,80 +99,89 @@ VISH.Samples = (function(V,undefined){
     }]
 }; 
 	 
-	var samples = {
-				'id'            :  '1',
-                'title'         :  'Nanoyou',
-                'description'   :  'This excursion is about nanotechnology',
-                'avatar'        :  '/assets/logos/original/excursion-01.png',
-                'author'        :  'Enrique Barra',
-                'slides'        : [
-		{
-			"id": "article1",
-			"template": "t5",
-			"elements":[
+
+				var samples = {
+		"id" : "",
+		"author" : "",
+		"slides" : [
 				{
-					"id": "zone1",
-					"type": "text",
-					"areaid": "header",
-					"body": "<div><font size=\"6\">hola</font></div>"
-					},
-				{
-					"id": "zone2",
-					"type": "text",
-					"areaid": "left",
-					"body": "<div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"background-color: rgb(255, 0, 102);;\">Insert text here</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontarial\" style=\"color:#33ff00;\">adfadf</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontimpact\" style=\"color:#33ff00;\">afdfadf</span></div>"
-					},
-				{
-					"id": "zone3",
-					"type": "object",
-					"areaid": "right",
-					"body": "<iframe src=\"http://www.youtube.com/embed/ZFVfB4Tnf-M?wmode=opaque\" frameborder=\"0\" style=\"width: 246.23999999999998px; height: 174.88065306122448px;\" id=\"resizableunicID_3\" class=\"t1_object\" title=\"Click to drag\" unselectable=\"on\"></iframe>",
-					"style": "position: relative; width: 206.23999999999998px; height: 148.88065306122448px; left: 102px; top: 271px; "
-				}
-			]
-		},
-		{
-			"id": "article2",
-			"template": "t5",
-			"elements":[
-				{
-					"id": "zone4",
-					"type": "text",
-					"areaid": "header",
-					"body": "flash"
+					"id" : "articlearticle1",
+					"template" : "t2",
+					"elements" : [ {
+						"id" : "zone1",
+						"type" : "text",
+						"areaid" : "left",
+						"body" : "<div class=\"vish-parent-font1\"><span class=\"vish-font1 vish-fontHelvetica\" style=\"\">1111111</span></div><div class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">222222222222222222222222222</span></div><div>333333333333333333333333333333</div><div class=\"vish-parent-font4\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"\">444444444444444444444444444444444</span></div><div class=\"vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"\">55555555555555555555555555555555555</span></div><div class=\"vish-parent-font6\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"\">66666666666666666666666666666666</span></div><div class=\"vish-parent-font7\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"\">777777777777777777777777</span></div>"
+					} ]
 				},
 				{
-					"id": "zone5",
-					"type": "object",
-					"areaid": "left",
-					"body": "<embed width=\"100%\" height=\"100%\" id=\"resizableunicID_4\" src=\"/media/swf/virtualexperiment_1ppp.swf\" type=\"application/x-shockwave-flash\" class=\"t1_object\" title=\"Click to drag\">",
-					"style":"position: relative; width: 298.08px; height: 218.79272727272726px; left: 7px; top: 36px; "
+					"id" : "articlearticle2",
+					"template" : "t6",
+					"elements" : [
+							{
+								"id" : "zone2",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone3",
+								"areaid" : "left"
+							},
+							{
+								"id" : "zone4",
+								"areaid" : "center"
+							},
+							{
+								"id" : "zone5",
+								"type" : "text",
+								"areaid" : "right",
+								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
+							} ]
 				},
 				{
-					"id":"zone6",
-					"areaid":"right"
-				}
-			]
-		}
-		,
-		{
-			'id'       :'vish10',
-			'template' :'t2',
-			'elements':[				      
+					"id" : "articlearticle3",
+					"template" : "t6",
+					"elements" : [
+							{
+								"id" : "zone6",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone7",
+								"areaid" : "left"
+							},
+							{
+								"id" : "zone8",
+								"areaid" : "center"
+							},
+							{
+								"id" : "zone9",
+								"type" : "text",
+								"areaid" : "right",
+								"body" : "<span class=\"vish-font5 vish-fontHelvetica\" style=\"\">Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text&nbsp;hereInsert text hereInsert text hereInsert text hereInsert text here</span><br>"
+							} ]
+				},
 				{
-                    'id'     : '332',
-					'type'   : 'video',
-					'areaid' : 'left',
-					'controls' : true,
-					'autoplay' : false,
-					'loop' : false,
-					'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
-					'style'  : "position: relative; left: 2px; top: 110px; width: 325px;",
-					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
-				}
-			]
-		}
-		]};
+					"id" : "articlearticle4",
+					"template" : "t8",
+					"elements" : [
+							{
+								"id" : "zone10",
+								"areaid" : "header"
+							},
+							{
+								"id" : "zone11",
+								"type" : "text",
+								"areaid" : "left",
+								"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\">Insert text here</span>Insert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text hereInsert text here</div>"
+							}, {
+								"id" : "zone12",
+								"areaid" : "center"
+							}, {
+								"id" : "zone13",
+								"areaid" : "right"
+							} ]
+				} ]
+	};
 		
 	var full_samples = {
 				'id'            :  '1',

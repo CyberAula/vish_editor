@@ -7,6 +7,7 @@ VISH.Editor = (function(V,$,undefined){
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
 	var excursion_to_edit = null;
+	var saved_excursion = null;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -437,6 +438,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
+		
+	VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
 		//VISH.Debugging.log("slide es: " + slide );
@@ -596,32 +599,39 @@ VISH.Editor = (function(V,$,undefined){
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
   var _onSelectableClicked = function(){  
-  	_removeSelectableProperties();		
+  	_removeSelectableProperties();
+			
   	$(this).css("cursor", "auto");
   	//add menuselect and delete content button
   	$(this).find(".menuselect_hide").show();
   	$(this).find(".delete_content").show();
   		
   	//show sliders  	
-  	if($(this).attr("type")==="image" || $(this).attr("type")==="object" || $(this).attr("type")==="video"){
-  		var the_id;
-  		switch($(this).attr("type")){
-  			case "image":
-  				the_id = $(this).find("img").attr("id");
-  				break;
-  			case "object":
-  				the_id = $(this).find(".object_wrapper").attr("id");
-  				break;
-  			case "video":
-  				the_id = $(this).find("video").attr("id");
-  				break;
-  		}
+		var the_id;
+		switch($(this).attr("type")){
+			case "image":
+				the_id = $(this).find("img").attr("id");
+				break;
+			case "object":
+				the_id = $(this).find(".object_wrapper").attr("id");
+				break;
+		  case "snapshot":
+        the_id = $(this).find(".snapshot_wrapper").attr("id");
+        break;
+			case "video":
+				the_id = $(this).find("video").attr("id");
+				break;
+			default:
+			  the_id = null;
+			  break;
+		}
   		
-  		//the id is "draggableunicID_1" we want to remove "draggable"
-  		the_id = the_id.substring(9);
-  		$("#sliderId" + the_id).show();  		
-  	}
-  	
+		if(the_id){
+			//the id is "draggableunicID_1" we want to remove "draggable"
+      the_id = the_id.substring(9);
+      $("#sliderId" + the_id).show(); 
+		}
+ 		
   	//add css
   	$(this).css("border-color", "rgb(255, 2, 94)");
 		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
@@ -678,7 +688,8 @@ VISH.Editor = (function(V,$,undefined){
 							//if user has answered "yes"
 							if($("#save_answer").val() ==="true"){
 								$("#save_answer").val("false");	
-								_saveExcursion();				
+								saveExcursion();	
+								_afterSaveExcursion();			
 							}	else {
 								return false;
 							}
@@ -692,7 +703,7 @@ VISH.Editor = (function(V,$,undefined){
   /**
    * function to save the excursion 
    */
-  var _saveExcursion = function(){
+  var saveExcursion = function(){
   	//first of all show all objects that have been hidden because they are in previous and next slides
   	//so they are not saved with style hidden
   	$('.object_wrapper').show();
@@ -711,6 +722,8 @@ VISH.Editor = (function(V,$,undefined){
       slide.template = $(s).attr('template');
       slide.elements = [];
       var element = {};
+      //important show it (the browser does not know the height and width if it is hidden)
+      $(s).show();
       $(s).find('div').each(function(i,div){
         //to remove all the divs of the sliders, only consider the final boxes
         if($(div).attr("areaid") !== undefined){   
@@ -763,9 +776,9 @@ VISH.Editor = (function(V,$,undefined){
 							element.scrollTop = $(snapshotWrapper).scrollTop();
 							element.scrollLeft = $(snapshotWrapper).scrollLeft();
 		      } else if(typeof element.type == "undefined"){
-						//Empty element
-						element.type = "text";
-						element.body = "";
+						//Empty element, we don't save as empty text because if we do that when we edit everything is text
+						//element.type = "empty";
+						VISH.Debugging.log("Empty element");
 					}
           slide.elements.push(element);
           element = {};
@@ -774,70 +787,91 @@ VISH.Editor = (function(V,$,undefined){
       excursion.slides.push(slide);
       slide = {};
     });
+		saved_excursion = excursion;
     var jsonexcursion = JSON.stringify(excursion);
-    VISH.Debugging.log(jsonexcursion);
-    
-				
+    VISH.Debugging.log(jsonexcursion);   
+		return saved_excursion;     
+  };
+	
+	var _afterSaveExcursion = function(){
 		if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-			//Vish: OnSave Debug actions
-			
-			if(VISH.Debugging.getActionSave()=="view"){
-				$('article').remove();
-	      $('#menubar').remove();
-	      $('#menubar_helpsection').remove();
-	      $('#joyride_help_button').remove();
-	      $('.theslider').remove();
-	      $(".nicEdit-panelContain").remove();
-	      $("#menubar-viewer").show();
-	      VISH.SlideManager.init(excursion);
-			}	else if (VISH.Debugging.getActionSave()=="edit") {
-				$('article').remove();
+      //Vish: OnSave Debug actions
+      
+      if(VISH.Debugging.getActionSave()=="view"){
+        $('article').remove();
+        $('#menubar').hide();
+        $('#menubar_helpsection').hide();
+        $('#joyride_help_button').hide();
+        $('.theslider').hide();
+        $(".nicEdit-panelContain").hide();
+        $("#menubar-viewer").show();
+        VISH.SlideManager.init(excursion);
+      } else if (VISH.Debugging.getActionSave()=="edit") {
+        $('article').remove();
         var options = {};
         options["developping"] = true;
+        options["configuration"] = configuration;
         VISH.Editor.init(options, excursion);  //to edit the excursion
-			}
-			
-		} else {
-			//Vish: OnSave Production actions
-			
-			if(VISH.Configuration.getConfiguration()["VishIntegration"]){
-				var send_type;
-	      if(excursion_to_edit){
-	        send_type = 'PUT'; //if we are editing
-	      } else {
-	        send_type = 'POST'; //if it is a new
-	      } 
-	      
-	      //POST to http://server/excursions/
-	      var params = {
-	        "excursion[json]": jsonexcursion,
-	        "authenticity_token" : initOptions["token"]
-	      }
-	      
-	      $.ajax({
-	        type    : send_type,
-	        url     : initOptions["postPath"],
-	        data    : params,
-	        success : function(data) {
-	            /*if we redirect the parent frame*/
-	            window.top.location.href = data.url;
-	        }     
-	      }); 
-			} else {
-				//Save to file its not possible... upload to another server? [...]
-				
-			}
-	  }	 	          
-  };
+      }
+      
+    } else {
+      //Vish: OnSave Production actions
+      
+      if(VISH.Configuration.getConfiguration()["VishIntegration"]){
+        var send_type;
+        if(excursion_to_edit){
+          send_type = 'PUT'; //if we are editing
+        } else {
+          send_type = 'POST'; //if it is a new
+        } 
+        
+        //POST to http://server/excursions/
+        var params = {
+          "excursion[json]": jsonexcursion,
+          "authenticity_token" : initOptions["token"]
+        }
+        
+        $.ajax({
+          type    : send_type,
+          url     : initOptions["postPath"],
+          data    : params,
+          success : function(data) {
+              /*if we redirect the parent frame*/
+              window.top.location.href = data.url;
+          }     
+        }); 
+      } else {
+				//Vish Standalone actions
+        //Save to file its not possible... upload to another server? [...]
+        
+      }
+    } 
+	}
 	
 	/**
 	 * function to get the styles in percentages
 	 */
 	var _getStylesInPercentages = function(parent, element){
+		
+//		console.log("_getStylesInPercentages con element " + $(element).attr("id") );
+//		console.log("_getStylesInPercentages con parent " + $(parent).attr("id") );
+		
+		//$(".slides > article").css("display","");
+		
 		var WidthPercent = element.width()*100/parent.width();
 		var HeightPercent = element.height()*100/parent.height();
     var TopPercent = element.position().top*100/parent.height();
     var LeftPercent = element.position().left*100/parent.width();
+		
+		//$(".slides > article").css("display","none");
+		
+//		console.log("element.width()"+element.width())
+//		console.log("parent.width()"+parent.width())
+//		console.log("parent.height()"+parent.height())
+//		console.log("element.height()"+element.height())
+//		console.log("position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;");
+		
+		
     return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
 	
@@ -890,19 +924,30 @@ VISH.Editor = (function(V,$,undefined){
     return null;
   }
   
+	var getSavedExcursion = function() {
+		if(saved_excursion){
+			return saved_excursion;
+		} else {
+			return null;
+		}
+	}
+	
+	
   /*
    Load the initial fancybox
    * */
   
   var loadFancyBox = function(fancy) {
+  	/* TODO: can we get all the tabs with JQuery and use it for construct the fancyBoxes hash? */ 
+  	
         var fancyBoxes = {1: "templates", 2: "quizes"}	
-  	VISH.Debugging.log("entra en loadFancyBox y parámetro: " + fancyBoxes[1] );
-  	VISH.Debugging.log("usando el hash: " + fancy );
-$('#'+fancyBoxes[1]+'_content').hide();
-$('#'+fancyBoxes[2]+'_content').hide();
-$('#'+fancy+'_content').show();
-VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
-
+				
+		for( tab in fancyBoxes) {
+		
+			$('#'+fancyBoxes[tab]+'_content').hide();
+		} 
+		//just show the fancybox selected 
+		$('#'+fancy+'_content').show();
   }
 
 
@@ -915,8 +960,9 @@ VISH.Debugging.log(" fancy content vale: " + $('#'+fancy+'content') );
 		getCurrentArea        		: getCurrentArea,
 		getParams            			: getParams,
 		getOptions                : getOptions, 
-		loadFancyBox			  : loadFancyBox
-		
+		loadFancyBox			        : loadFancyBox,
+		getSavedExcursion         : getSavedExcursion,
+		saveExcursion             : saveExcursion
 	};
 
 }) (VISH, jQuery);
