@@ -411,9 +411,12 @@ VISH.Editor = (function(V,$,undefined){
 		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(!firstCall)){
       VISH.Editor.API.requestTags(_onInitialTagsReceived);
       VISH.Editor.AvatarPicker.onLoadExcursionDetails();
-			firstCall = true;
-			
-			$("a#edit_excursion_details").fancybox({
+    }
+		
+		if(!firstCall){
+			 firstCall = true;
+      
+       $("a#edit_excursion_details").fancybox({
           'autoDimensions' : false,
           'scrolling': 'no',
           'width': 800,
@@ -423,7 +426,7 @@ VISH.Editor = (function(V,$,undefined){
           'hideOnContentClick': false,
           'showCloseButton': true
        }); 
-    }
+		}
 	};
   
 	/**
