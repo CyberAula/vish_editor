@@ -141,9 +141,8 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }
-    else{
-        	_requestByType("picture", "", successCallback, failCallback);
-        }
+		
+    _requestByType("picture", "", successCallback, failCallback);
   };
     
 		
@@ -167,8 +166,7 @@ VISH.Editor.API = (function(V,$,undefined){
             result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
             break;
           default:
-            //result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
-						result = VISH.Samples.API.liveList;
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
         }
             
         successCallback(result);
@@ -186,14 +184,61 @@ VISH.Editor.API = (function(V,$,undefined){
   var requestRecomendedLives = function(successCallback, failCallback){
     if (VISH.Debugging.isDevelopping()) {
       if(typeof successCallback == "function"){
-        var result = VISH.Samples.API.liveList;
-//        result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
         successCallback(result);
       }
 			return;
     }
 		
 		_requestByType("live", "", successCallback, failCallback);
+   };
+		
+		
+		      
+  /**
+   * function to call to VISH and request objects in json format
+   * The request is:
+   * GET /search.json?object=1&q=
+   */
+  var requestObjects = function(text, successCallback, failCallback){
+    
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = jQuery.extend({}, VISH.Samples.API.objectList);
+
+        switch(text){
+          case "dummy":
+            result = VISH.Samples.API.objectListDummy;
+            break;
+          case "little":
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectListLittle);
+            break;
+          default:
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("object", text, successCallback, failCallback);  
+  };
+  
+  
+  /**
+   * function to call to VISH and request recommended lives objects
+   */
+  var requestRecomendedObjects = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("object", "", successCallback, failCallback);
    };
 		
 		
@@ -204,8 +249,8 @@ VISH.Editor.API = (function(V,$,undefined){
      */    
   var _requestByType = function(type, query, successCallback, failCallback){
 		
-		if(type=="live"){
-			_requestLiveType(query, successCallback, failCallback);
+		if((type=="live")||(type=="object")){
+			_requestResourceType(type,query, successCallback, failCallback);
 			return;
 		}
 		
@@ -234,10 +279,10 @@ VISH.Editor.API = (function(V,$,undefined){
      * The request is:
      * GET /resources/search.json?live=1&q=
      */    
-  var _requestLiveType = function(query, successCallback, failCallback){
+  var _requestResourceType = function(type, query, successCallback, failCallback){
     $.ajax({
               type: "GET",
-              url: "/resources/search.json?live=1&q="+ query,
+              url: "/resources/search.json?" + type + "=1&q="+ query,
               dataType:"html",
               success:function(response){
                   if(typeof successCallback == "function"){
@@ -330,6 +375,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedImages   : requestRecomendedImages,
 		requestFlashes			      : requestFlashes,
 		requestRecomendedFlashes  : requestRecomendedFlashes,
+		requestObjects            : requestObjects,
+    requestRecomendedObjects  : requestRecomendedObjects,
 		requestLives              : requestLives,
 		requestRecomendedLives    : requestRecomendedLives,
 		requestTags               : requestTags,

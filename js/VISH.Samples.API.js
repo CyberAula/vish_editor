@@ -583,6 +583,79 @@ VISH.Samples.API = (function(V,undefined){
     
    var liveListDummy = [];
 	 
+
+	 var objectList = [
+    {
+      'id'     : '1534',
+      'title'         :  'Game Strauss',
+      'description'   :  'Fichero PDF',
+      'author'        :  'Conspirazzi',
+      'object'        :  'http://www.conspirazzi.com/e-books/game-strauss.pdf'
+    },
+		{
+      'id'     : '1536',
+      'title'         :  'Profe',
+      'description'   :  'Flash Object Test',
+      'author'        :  'FlashMan',
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+    },
+    {
+        'id'     : '1537',
+        'title'         :  'Youtube video about HTML5',
+        'description'   :  'HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.',
+        'author'        :  'W3C',
+        'object'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=opaque" frameborder="0" allowfullscreen></iframe>'
+    },
+    {
+        'id'     : '1538',
+        'title'         :  'Global excursion',
+        'description'   :  'Iframe example',
+        'author'        :  'Vish',
+        'object'       :  '<iframe width="100%" height="100%" src="http://www.globalexcursion-project.eu"></iframe>'
+    },
+    {
+        'id'     : '1539',
+        'title'         :  'Image',
+        'description'   :  'Image Embed',
+        'author'        :  'Globedia',
+        'object'       :  '<embed width="100%" src="http://globedia.com/imagenes/noticias/2011/2/10/encuentran-octava-maravilla-mundo-destruida-125-anos_2_585286.jpg"></embed>'
+    },
+    {
+        'id'     : '1540',
+        'title'         :  'Profe Demo',
+        'description'   :  'Flash Object Test 2',
+        'author'        :  'FlashMan',
+        'object'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+    }
+    ];
+	 
+	 var objectListLittle = [
+    {
+      'id'     : '1534',
+      'title'         :  'Game Strauss',
+      'description'   :  'Fichero PDF',
+      'author'        :  'Conspirazzi',
+      'object'       :  'http://www.conspirazzi.com/e-books/game-strauss.pdf'
+    },
+    {
+      'id'     : '1536',
+      'title'         :  'Profe',
+      'description'   :  'Flash Object Test',
+      'author'        :  'FlashMan',
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+    },
+    {
+        'id'     : '1537',
+        'title'         :  'Youtube video about HTML5',
+        'description'   :  'HTML5 (HyperText Markup Language, version 5) es la quinta revision importante del lenguaje basico de la World Wide Web, HTML.',
+        'author'        :  'W3C',
+        'object'       :  '<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=opaque" frameborder="0" allowfullscreen></iframe>'
+    }
+    ];
+    
+    
+   var objectListDummy = [];
+	 
 	 var tagsList = {
    	'tags': ["ActionScript","AppleScript","Asp","BASIC","C","C++","Clojure","COBOL","ColdFusion","Erlang",
 		"Fortran","Groovy","Haskell","Java","JavaScript","Lisp","Perl","PHP","Python","Ruby","Scala","Scheme"]
@@ -602,6 +675,9 @@ VISH.Samples.API = (function(V,undefined){
 		liveList        : liveList,
     liveListLittle  : liveListLittle,
     liveListDummy   : liveListDummy,
+		objectList      : objectList,
+    objectListLittle : objectListLittle,
+    objectListDummy  : objectListDummy,
 		tagsList        : tagsList
 	};
 

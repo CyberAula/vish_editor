@@ -1381,20 +1381,21 @@ iframe.snapshot_content{
 	width    : 1024px;
   height   : 12000px;
 	overflow: hidden;
-	/**
-	width: 100%;
-  height: 100%;
-  top      : -100px;
-  left     : -100px;
-  **/
+	zoom: 1.0;
+  -moz-transform: scale(1.0);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(1.0);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(1.0);
+  -webkit-transform-origin: 0 0;
 }
 
 .selectedThumbnail {
 	border: 2px solid #005FDD !important;
-    border-radius: 15px !important;
- 	 -moz-border-radius: 15px !important;
- 	 -webkit-border-radius: 15px !important;
-    opacity: 1 !important;
+  border-radius: 15px !important;
+ 	-moz-border-radius: 15px !important;
+ 	-webkit-border-radius: 15px !important;
+  opacity: 1 !important;
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);

@@ -253,6 +253,9 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_object_from_web":
         VISH.Editor.Object.Web.onLoadTab();
         break;
+			case "tab_object_snapshot":
+			  VISH.Editor.Object.Snapshot.onLoadTab();
+				break;
 			case "tab_object_upload":
 				VISH.Editor.Object.onLoadTab("upload");
 				break;
