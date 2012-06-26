@@ -31,17 +31,17 @@ VISH.SlideManager = (function(V,$,undefined){
 		} else {
 			myDoc = document;
 		}
+		
 		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-             _setupSize();         
-        });
+      _setupSize();       
+    });
 		
 		var elem = document.getElementById("page-fullscreen");  
 		var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
 		
 		if (canFullScreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
-		}
-		else{
+		}	else {
 		  $("#page-fullscreen").hide();
 		}
 		
@@ -54,7 +54,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
 	 */
 	var toggleFullScreen = function () {
-		
+
 		myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
@@ -72,7 +72,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			}, function() {
 			    $("#page-fullscreen").css("background-position", "-45px 0px");
 			});
-		  } else {
+		} else {
 		    if (myDoc.cancelFullScreen) {
 		    	myDoc.cancelFullScreen();
 		    } else if (myDoc.mozCancelFullScreen) {
@@ -84,11 +84,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		    $("#page-fullscreen").css("background-position", "0px 0px");
 		    $("#page-fullscreen").hover(function(){
 			    $("#page-fullscreen").css("background-position", "0px -40px");
-			}, function() {
+			  }, function() {
 			    $("#page-fullscreen").css("background-position", "0px 0px");
-			});
+			  });
 		  }
-		
 	};
 	
 	/**
@@ -127,6 +126,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		//Snapshot callbacks
 		VISH.SnapshotPlayer.aftersetupSize(increase);
+		
+		//Object callbacks
+		VISH.ObjectPlayer.aftersetupSize(increase);
 	};
 	
 	/**
@@ -249,7 +251,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		init          			: init,
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
-		addEnterLeaveEvents  	:  addEnterLeaveEvents
+		addEnterLeaveEvents  	:  addEnterLeaveEvents,
+		toggleFullScreen : toggleFullScreen
 	};
 
 }) (VISH,jQuery);

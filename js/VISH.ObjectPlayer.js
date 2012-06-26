@@ -19,10 +19,18 @@ VISH.ObjectPlayer = (function(){
 			$(value).html("");
 		});
 	}
+	
+	
+	var aftersetupSize = function(){
+		if($(".current").hasClass("object")){
+			loadObject($(".current"));
+		}
+	}
 
 	return {
 		loadObject:loadObject,
-		unloadObject:unloadObject
+		unloadObject:unloadObject,
+		aftersetupSize : aftersetupSize
 	};
 
 })(VISH,jQuery);

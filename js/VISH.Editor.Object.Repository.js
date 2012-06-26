@@ -30,14 +30,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
-    VISH.Editor.API.requestRecomendedFlashes(_onDataReceived, _onAPIError);
+    VISH.Editor.API.requestRecomendedObjects(_onDataReceived, _onAPIError);
   }
 	
   /*
    * Request data to the server.
    */
   var _requestData = function(text){
-    VISH.Editor.API.requestFlashes(text, _onDataReceived, _onAPIError);
+    VISH.Editor.API.requestObjects(text, _onDataReceived, _onAPIError);
   }
 	
   /*
@@ -57,14 +57,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
     var content = "";
     
-		if((!data.flashes)||(data.flashes.length==0)){
+		if((!data)||(data.length==0)){
       $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
       $("#" + carrouselDivId).show();
 			return;
     } 
 		
-    $.each(data.flashes, function(index, object) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content)
+    $.each(data, function(index, objectItem) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(objectItem.object)
       var imageSource = null;        
       
       switch (objectInfo.type){
@@ -86,10 +86,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      break;
       }
 			
-      var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>")
+      var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "'>")
 			carrouselImages.push(myImg)
-			carrouselImagesTitles.push(object.title)
-      currentObject[object.id]=object;
+			carrouselImagesTitles.push(objectItem.title)
+      currentObject[objectItem.id]=objectItem;
     });
 
     VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
@@ -114,7 +114,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
-		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content)
+		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].object);
 		_renderObjectPreview(renderedObject,currentObject[objectId]);
 		selectedObject = currentObject[objectId];	
   }
@@ -144,7 +144,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var addSelectedObject = function(){
     if(selectedObject!=null){
-      VISH.Editor.Object.drawObject($(selectedObject.content));
+      VISH.Editor.Object.drawObject(selectedObject.object);
       $.fancybox.close();
     }
   }
