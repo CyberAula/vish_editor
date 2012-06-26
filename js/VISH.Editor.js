@@ -117,33 +117,31 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.AvatarPicker.init();
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
-			
-			
-		if (VISH.Configuration.getConfiguration()["presentationSettings"]){
-			// Intial box to input the details related to the excursion
-	    $("a#edit_excursion_details").fancybox({
-	      'autoDimensions' : false,
-	      'scrolling': 'no',
-	      'width': 800,
-	      'height': 660,
-	      'padding': 0,
-	      'hideOnOverlayClick': false,
-	      'hideOnContentClick': false,
-	      'showCloseButton': false
-	    });
-			
-			if(VISH.Configuration.getConfiguration()["presentationTags"]){
-				//Request initial tags for excursion details form
-	      VISH.Editor.API.requestTags(_onInitialTagsReceived);
-				if(excursion === undefined){
-          VISH.Editor.AvatarPicker.onLoadExcursionDetails();
-        }
-			}
-			
-		  // The box is launched when the page is loaded
-      if(excursion === undefined){
+
+	
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(excursion === undefined)){
+				$("a#edit_excursion_details").fancybox({
+	        'autoDimensions' : false,
+	        'scrolling': 'no',
+	        'width': 800,
+	        'height': 660,
+	        'padding': 0,
+	        'hideOnOverlayClick': false,
+	        'hideOnContentClick': false,
+	        'showCloseButton': false
+	      }); 
         $("#edit_excursion_details").trigger('click');
-      }
+		} else {
+				$("a#edit_excursion_details").fancybox({
+	        'autoDimensions' : false,
+	        'scrolling': 'no',
+	        'width': 800,
+	        'height': 660,
+	        'padding': 0,
+	        'hideOnOverlayClick': false,
+	        'hideOnContentClick': false,
+	        'showCloseButton': true
+	      }); 
 		}
 		
 	};
@@ -406,15 +404,26 @@ VISH.Editor = (function(V,$,undefined){
 	 * function callen when the user clicks on the edit
 	 * excursion details button
 	 */
+	
+	var firstCall = false;
+	
 	var _onEditExcursionDetailsButtonClicked = function(event){
-		// Intial box to input the details related to the excursion
-		$("a#edit_excursion_details").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 800,
-			'height': 660,
-			'padding': 0
-		})
+		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(!firstCall)){
+      VISH.Editor.API.requestTags(_onInitialTagsReceived);
+      VISH.Editor.AvatarPicker.onLoadExcursionDetails();
+			firstCall = true;
+			
+			$("a#edit_excursion_details").fancybox({
+          'autoDimensions' : false,
+          'scrolling': 'no',
+          'width': 800,
+          'height': 660,
+          'padding': 0,
+          'hideOnOverlayClick': false,
+          'hideOnContentClick': false,
+          'showCloseButton': true
+       }); 
+    }
 	};
   
 	/**
