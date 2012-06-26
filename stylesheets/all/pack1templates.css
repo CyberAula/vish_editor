@@ -565,6 +565,7 @@
 	font-size: 2em;
 	font-weight: bold;
 	text-align:center; 
+	text-decoration: underline; 
 }
 
 .question{
@@ -591,18 +592,14 @@
 }
 
 .question_name_input{
-	background: none no-repeat scroll 5px 50% transparent;
-    border: 0.5% solid #9B999D;
-    border-radius: 1% 1% 1% 1%;
-    font-family: Helvetica;
-    outline: 0 none;
 	
-	font-size: 1.1em;
+	font-size: 1.2em;
 	width: 95%;
 	position:relative;
 }
 
 .question_answer{
+		
 	text-align: justify;
 	padding-top: 3%;
 	padding-bottom: 1%;
@@ -613,15 +610,16 @@
 }
 
 .question_answer_input{
+	
 	width: 95%;
 	height: 40%;
 	color: black;
-	font-size: 1em;
+	font-size: 1.2em;
 	display: block;
 }
 
 .question_button{
-	padding-top: 2%;
+	padding-top: 1%;
 	padding-bottom: 1%;
 	margin-left: 45%;
 	color: black;
@@ -657,13 +655,18 @@
 .mc_answer{
 	text-align: justify;
 	color: black;
-	font-size: 18px;
+	font-size: 1.2em;
 	display: block;
 }
 
 .mc_answer input{
-	margin: 3px 10px 0px 5px;
+	margin: 1% 2% 0% 1%;
 }
+
+
+
+
+
 
 
 /* Snapshots */
