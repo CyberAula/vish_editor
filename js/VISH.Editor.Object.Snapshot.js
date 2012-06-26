@@ -108,7 +108,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $(iframeTag).attr('class', 'snapshot_content');
     $(iframeTag).attr('scrolling', 'no');
     $(iframeTag).attr('wmode', "opaque");
-		$(iframeTag).css('pointer-events', "none");
+	$(iframeTag).css('pointer-events', "none");
 
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
