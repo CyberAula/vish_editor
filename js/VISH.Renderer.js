@@ -158,9 +158,9 @@ VISH.Renderer = (function(V,$,undefined){
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
 		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<input id='pupil_name' class='question_name_input'></input>";
+		ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
 		ret += "<label class='question_answer'>Answer: </label>";
-		ret += "<textarea class='question_answer_input'></textarea>";
+		ret += "<textarea class='question_answer_input' placeholder='Write your answer here'></textarea>";
 		
 		
 		ret += "<button type='button' class='question_button'>Send</button>";
@@ -176,7 +176,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"?</div>";
 		ret += "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name: </label>";
-		ret += "<input id='pupil_name' class='question_name_input'></input>";
+		ret += "<input id='pupil_name' class='question_name_input' placeholder='Write your name here'></input>";
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
