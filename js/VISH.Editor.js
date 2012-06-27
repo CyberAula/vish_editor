@@ -119,7 +119,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Quiz.init();
 
 	
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(excursion_to_edit === undefined)){
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
 				$("a#edit_excursion_details").fancybox({
 	        'autoDimensions' : false,
 	        'scrolling': 'no',
