@@ -13153,7 +13153,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
     V.Editor.Quiz.init();
-    if(VISH.Configuration.getConfiguration()["presentationSettings"] && excursion_to_edit === undefined) {
+    if(VISH.Configuration.getConfiguration()["presentationSettings"] && !excursion_to_edit) {
       $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
       $("#edit_excursion_details").trigger("click")
     }else {
@@ -14399,7 +14399,7 @@ VISH.Configuration = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
   var actionSave = "nothing";
-  var actionInit = "loadSamples";
+  var actionInit = "nothing";
   var excursionSamples = VISH.Samples.samples;
   var developping = false;
   var init = function(bol) {
