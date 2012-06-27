@@ -551,46 +551,82 @@
 
 
 .question_title{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	margin-left: -60px;
-	padding-left: 60px;
-	margin-right: -60px;
-	padding-right: 60px;
-	font-size: 1.500em;
-	min-height: 24px;
-	width: 99%;
+	padding-top: 2%;
+ 	padding-bottom: 2%;
+	margin-top: -2%;
+	margin-left: 2%;
+	margin-left: -1%;
+	padding-left: 1%;
+	margin-right: -1%;
+	padding-right: 1%;
+	/*
+	min-height: 24px; */
+	width: 98%;
+	font-size: 2em;
+	font-weight: bold;
+	text-align:center; 
+	text-decoration: underline; 
+}
+
+.question{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	text-align: justify;
+	
+	color: black;
+	
+	font-size: 1.5em;
+	line-height:110%;
+	width: 95%;
+	display: block;
+	
 }
 
 .question_name{
+	padding-top: 3%;
+	padding-bottom: 1%;
 	text-align: justify;
 	color: black;
-	font-size: 18px;
+	font-size: 1.3em;
 	display: block;
 }
 
 .question_name_input{
-	width: 600px;
+	
+	font-size: 1.2em;
+	width: 95%;
 	position:relative;
 }
 
 .question_answer{
+		
 	text-align: justify;
+	padding-top: 3%;
+	padding-bottom: 1%;
+	width: 95%;
 	color: black;
-	font-size: 18px;
+	font-size: 1.3em;
 	display: block;
 }
 
 .question_answer_input{
-	width: 600px;
-	height: 300px;
+	
+	width: 95%;
+	height: 40%;
+	color: black;
+	font-size: 1.2em;
 	display: block;
 }
 
 .question_button{
-	margin-left: 300px;
-}
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 45%;
+	color: black;
+	font-size: 1.2em; 
+	/*margin-left:auto;
+	margin-right:auto; */
+	}
 
 /*	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
@@ -619,13 +655,18 @@
 .mc_answer{
 	text-align: justify;
 	color: black;
-	font-size: 18px;
+	font-size: 1.2em;
 	display: block;
 }
 
 .mc_answer input{
-	margin: 3px 10px 0px 5px;
+	margin: 1% 2% 0% 1%;
 }
+
+
+
+
+
 
 
 /* Snapshots */

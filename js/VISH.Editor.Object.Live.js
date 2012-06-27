@@ -119,9 +119,11 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
-		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext)
-		_renderObjectPreview(renderedObject,currentObject[objectId]);
-		selectedObject = currentObject[objectId];	
+		if (typeof objectId != "undefined") {
+			var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext)
+      _renderObjectPreview(renderedObject,currentObject[objectId]);
+      selectedObject = currentObject[objectId];
+	  }
   }
   
   

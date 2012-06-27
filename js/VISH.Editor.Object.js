@@ -32,7 +32,8 @@ VISH.Editor.Object = (function(V,$,undefined){
     var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     
     $("#" + uploadDivId + " input[name='document[file]']").change(function () {
-      $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
+			var filterFilePath = VISH.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
+      $("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
       _resetUploadFields();
       $(tagList).parent().show();
       $("#" + uploadDivId + ' form' + ' .button').show();

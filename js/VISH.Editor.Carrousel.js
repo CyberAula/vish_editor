@@ -276,8 +276,6 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	    $(carrouselWrapper).removeClass()
 		  $(carrouselWrapper).html("")
 		  $(carrouselWrapper).attr("id",containerId)
-	  } else {
-//				VISH.Debugging.log("Vish.Editor.Carrousel.cleanCarrousel: Single carrousel not created or incorrect id")
 	  }
   }
 	
@@ -288,10 +286,27 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 	}
 
+  var goToElement = function(carrouselDivId,element){
+		if($(element).is("IMG")){
+			element = $(element).parent();
+		}
+    $("#" + carrouselDivId).trigger("slideTo", element);
+  }
+  
+  var advanceCarrousel = function(carrouselDivId,no){
+    $("#" + carrouselDivId).trigger("next", no);
+  }
+  
+  var backCarrousel = function(carrouselDivId,no){
+    $("#" + carrouselDivId).trigger("prev", no);
+  }
 
   return {
 		createCarrousel	  : createCarrousel,
-		cleanCarrousel    : cleanCarrousel
+		cleanCarrousel    : cleanCarrousel,
+		goToElement       : goToElement,
+		advanceCarrousel  : advanceCarrousel,
+		backCarrousel     : backCarrousel
   };
 
 }) (VISH, jQuery);
