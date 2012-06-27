@@ -15,8 +15,8 @@ VISH.Dummies = (function(VISH,undefined){
 		"<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t7_subheader editable grey_background selectable'></div></article>",
 		"<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t8_right editable grey_background selectable'></div></article>",
 		"<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t9_right editable grey_background selectable'></div></article>",
-		"<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t10_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion' placeholder='insert title's question here'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>",
-		"<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>"	
+		"<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t10_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion' placeholder='insert title's question here'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>",
+		"<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>"	
 		]; 
 
 	/**
@@ -53,17 +53,6 @@ VISH.Dummies = (function(VISH,undefined){
 		}
 		return newString;
 	};
-	
-	
-/*
- Function to add a radio button for multiple choice quiz
- */
-/*
-var _onaddRadioChoiceClicked = function() {
-	var radio_elements = $(".multiplechoice_radio");
-	//VISH.Debugging.log("entra en _onaddRadioChoiceClicked");	
-}; 
-*/
 	
 	
 	return {
