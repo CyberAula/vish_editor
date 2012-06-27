@@ -16,7 +16,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
       }
     });
 		
-	};	
+	};
 
   
   var onLoadTab = function(tab){

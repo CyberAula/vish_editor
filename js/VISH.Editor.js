@@ -119,7 +119,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Quiz.init();
 
 	
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(excursion === undefined)){
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
 				$("a#edit_excursion_details").fancybox({
 	        'autoDimensions' : false,
 	        'scrolling': 'no',
@@ -293,14 +293,25 @@ VISH.Editor = (function(V,$,undefined){
 	var _onInitialTagsReceived = function(data){
 		 var tagList = $(".tagBoxIntro .tagList");
 		 
-     //Insert the two first tags.
      if ($(tagList).children().length == 0){
-        $.each(data, function(index, tag) {
-          if(index==2){
-            return false; //break the bucle
-          }
-          $(tagList).append("<li>" + tag + "</li>")
-        });
+
+				if(!excursion_to_edit){
+          //Insert the two first tags.
+	        $.each(data, function(index, tag) {
+	          if(index==2){
+	            return false; //break the bucle
+	          }
+	          $(tagList).append("<li>" + tag + "</li>")
+	        });
+        } else {
+					
+					if(excursion_to_edit.tags){
+						//Insert excursion_to_edit tags
+	          $.each(excursion_to_edit.tags, function(index, tag) {
+	            $(tagList).append("<li>" + tag + "</li>")
+	          });
+					}
+				}
 				
 				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
 				watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
@@ -405,16 +416,22 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion details button
 	 */
 	
-	var firstCall = false;
+  var firstCall = true;
 	
 	var _onEditExcursionDetailsButtonClicked = function(event){
-		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(!firstCall)){
+		
+		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstCall)){
       VISH.Editor.API.requestTags(_onInitialTagsReceived);
-      VISH.Editor.AvatarPicker.onLoadExcursionDetails();
+			
+			if((excursionDetails)&&(excursionDetails.avatar)){
+				VISH.Editor.AvatarPicker.onLoadExcursionDetails(excursionDetails.avatar);
+			} else {
+				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
+			}
     }
 		
-		if(!firstCall){
-			 firstCall = true;
+		if(firstCall){
+			 firstCall = false;
       
        $("a#edit_excursion_details").fancybox({
           'autoDimensions' : false,
@@ -444,6 +461,7 @@ VISH.Editor = (function(V,$,undefined){
 		excursionDetails.title = $('#excursion_title').val();
 		excursionDetails.description = $('#excursion_description').val();
 		excursionDetails.avatar = $('#excursion_avatar').val();
+		excursionDetails.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 		$('#excursion_details_error').hide();
 		$.fancybox.close();
 	};
@@ -729,6 +747,7 @@ VISH.Editor = (function(V,$,undefined){
     excursion.title = excursionDetails.title;
     excursion.description = excursionDetails.description;
     excursion.avatar = excursionDetails.avatar;
+		excursion.tags = excursionDetails.tags;
     excursion.author = '';
     excursion.slides = [];
     var slide = {};

@@ -136,8 +136,9 @@ VISH.Utils = (function(V,undefined){
 		//Add HTTP if is not present.
 		var autocompleteUrls = function(input){
 			var http_urls_pattern=/(^http(s)?:\/\/)/g
+			var objectInfo = VISH.Editor.Object.getObjectInfo();
 			
-			if(input.match(http_urls_pattern)==null){
+			if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
         return "http://" + input;
       } else {
 				return input;
@@ -145,14 +146,20 @@ VISH.Utils = (function(V,undefined){
 		}
 
 
-    return {
+   var filterFilePath = function(path){
+	 	 return path.replace("C:\\fakepath\\","");
+	 }
+
+
+   return {
 			init : init,
 	    getOuterHTML : getOuterHTML,
 			generateTable : generateTable,
 			checkMiniumRequirements : checkMiniumRequirements,
 			convertToTagsArray : convertToTagsArray,
 			getURLParameter : getURLParameter,
-			autocompleteUrls : autocompleteUrls
-    };
+			autocompleteUrls : autocompleteUrls,
+			filterFilePath : filterFilePath
+   };
 
 }) (VISH);

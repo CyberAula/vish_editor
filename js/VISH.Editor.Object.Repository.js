@@ -114,9 +114,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
-		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].object);
-		_renderObjectPreview(renderedObject,currentObject[objectId]);
-		selectedObject = currentObject[objectId];	
+		if(typeof objectId != "undefined"){
+			var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].object);
+      _renderObjectPreview(renderedObject,currentObject[objectId]);
+      selectedObject = currentObject[objectId]; 
+		}
   }
   
   

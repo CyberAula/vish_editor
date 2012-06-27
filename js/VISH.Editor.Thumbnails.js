@@ -91,38 +91,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		$(".image_barbutton").removeClass("selectedSlideThumbnail");
 		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
   };
-	
-	var goToThumbnail = function(no){
-    $("#" + carrouselDivId).trigger("slideTo", no);
-	}
-	
-	var advanceCarrousel = function(no){
-		$("#" + carrouselDivId).trigger("next", no);
-	}
-	
-	var backCarrousel = function(no){
-    $("#" + carrouselDivId).trigger("prev", no);
-  }
-	
-	var addDefaultThumbnail = function(){
-		//Not testing yet
-		var plus_element = $(".add_slide_button").parent();
-    $("#slides_carrousel").trigger("removeItem", plus_element);
-		var new_plus_element = $('<div class="carrousel_element_single_row_slides"><img class="image_barbutton add_slide_button carrousel_element_single_row_slides" action="plus" src="/images/templatesthumbs/add_slide.png" /></div>')
-		var element = $('<div class="carrousel_element_single_row_slides"><img class="image_barbutton carrousel_element_single_row_slides" src="/images/templatesthumbs/default.png" action="default"></div>')
-    var index = $("div.carrousel_element_single_row_slides").length-1;
-		$("#" + carrouselDivId).trigger("insertItem", [element,index]);
-    $("#" + carrouselDivId).trigger("insertItem", [new_plus_element,index]);
-	}
     	
   
 	return {
-		init            : init,
+		init              : init,
 		redrawThumbnails  : redrawThumbnails,
-		selectThumbnail	  : selectThumbnail,
-		goToThumbnail : goToThumbnail,
-		advanceCarrousel : advanceCarrousel,
-		backCarrousel : backCarrousel
+		selectThumbnail	  : selectThumbnail
 	};
 
 }) (VISH, jQuery);
