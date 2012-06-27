@@ -4,32 +4,29 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var MultipleChoiceOptionClass = "multiplechoice_text";
 	var searchOptionText= "mchoice_radio_option_";
 	var num_options = 5; // maximum options can be added
+	var num_inputs=0;
 	
 	var init = function(){
-		//$(document).on('click','.add_quiz_option', addMultipleChoiceOption);
+		
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-			
+		num_inputs = 1;	
 	};	
 	/*
 	 Function that add an input text option for the Multiple Choice Quiz  
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		
 		//the input in text type  
 		var text  = $('<div>').append($('.' +MultipleChoiceOptionClass).clone()).html();
 		
 		
-		var total = 0;
-		
-		// get the number of radio inputs 
-	$('.'+MultipleChoiceOptionClass).each(function(i){
- total = i;
-}); 		
-		
-		var next_num = parseInt(total)+1;
+var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
+		//var next_num = parseInt(total)+1;
+		//var next_num = num_inputs;
+		var next_num = inputs_search.size();
 		var next_index = "a".charCodeAt(0) + next_num; 
 			next_index = String.fromCharCode(next_index);
+
 		if (next_num < num_options) {
 
 		    //the next radio input   
@@ -38,8 +35,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 			//remove button + 
 			$(".add_quiz_option").remove();
-			//add radio + button 			
-			$(".mcquestion").append(add_option);	
+			//add radio + button 	
+			$(".current").find(".mcquestion").append(add_option);		
+			s	
+
 			
 		} else if (next_num = num_options) {
 			
@@ -48,6 +47,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$(".add_quiz_option").remove();
 			
 			$(".mcquestion").append(add_option);
+
 		}
 		
 	};

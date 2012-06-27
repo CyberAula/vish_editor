@@ -11,7 +11,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(excursion){
 		//first set VISH.Editing to false
 		VISH.Editing = false;
-		
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		_setupSize();

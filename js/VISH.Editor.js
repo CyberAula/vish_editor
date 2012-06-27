@@ -773,16 +773,15 @@ VISH.Editor = (function(V,$,undefined){
 		    	    element.body   = VISH.Utils.getOuterHTML(object);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
 		      } else if (element.type=="openquestion") {	   
-		      	element.title   = $(div).find(".title_openquestion").val();
-		        element.question   = $(div).find(".value_openquestion").val();
+		      		element.title   = $(div).find(".title_openquestion").val();
+		        	element.question   = $(div).find(".value_openquestion").val();
 		      } else if (element.type=="mcquestion") {     		      	
-		      	element.question   = $(div).find(".value_multiplechoice_question").val();
-		        element.options = [];  	
-		        var array_options = $(div).find(".multiplechoice_text");
-		        $('.multiplechoice_text').each(function(i, input_text){
-				      element.options[i] = input_text.value;
-	          }); 
-					} else if(element.type === "snapshot"){
+		      		element.question   = $(div).find(".value_multiplechoice_question").val();
+		        	element.options = [];  	
+		        	$(div).find('.multiplechoice_text').each(function(i, input_text){
+				    element.options[i] = input_text.value;
+	          		}); 
+			  } else if(element.type === "snapshot"){
 						  var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						  var snapshotIframe = $(snapshotWrapper).children()[0];
               $(snapshotIframe).removeAttr("style");

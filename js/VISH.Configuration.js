@@ -13,7 +13,7 @@ configuration["VishRepo"] = true;
 
 configuration["Flickr"] = true;
 configuration["Youtube"] = true;
-configuration["Vimeo"] = true;
+configuration["Vimeo"] = false;
 
 configuration["VishIntegration"] = true;
 

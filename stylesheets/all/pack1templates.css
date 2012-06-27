@@ -559,14 +559,11 @@
 	padding-left: 1%;
 	margin-right: -1%;
 	padding-right: 1%;
-	/*
-	min-height: 24px; */
 	width: 98%;
 	font-size: 2em;
 	font-weight: bold;
 	text-align:center; 
-	text-decoration: underline; 
-}
+	}
 
 .question{
 	padding-top: 1%;
@@ -624,14 +621,13 @@
 	margin-left: 45%;
 	color: black;
 	font-size: 1.2em; 
-	/*margin-left:auto;
-	margin-right:auto; */
+	
 	}
 
 /*	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
 
-	css for quiz slide containing only question, and multiple choice answers
+	css for quiz slide containing only one question, and multiple choice answer
 */
 
 .t11_left{
@@ -649,7 +645,7 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
+	z-index: 2%;
 
 }
 .mc_answer{
@@ -662,11 +658,6 @@
 .mc_answer input{
 	margin: 1% 2% 0% 1%;
 }
-
-
-
-
-
 
 
 /* Snapshots */

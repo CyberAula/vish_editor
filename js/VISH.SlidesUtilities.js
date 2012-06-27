@@ -14,6 +14,8 @@ VISH.SlidesUtilities = (function(V,$,undefined){
  */
 var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	var element_type;
+	
+	
 	var dimentions_for_drawing = {width:  350, height: 195};
 	
 	var aspect_ratio_zone = w_zone/h_zone;
