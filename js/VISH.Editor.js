@@ -954,7 +954,7 @@ VISH.Editor = (function(V,$,undefined){
 	
   /*
    Load the initial fancybox
-   * */
+   */
   
   var loadFancyBox = function(fancy) {
   	/* TODO: can we get all the tabs with JQuery and use it for construct the fancyBoxes hash? */ 

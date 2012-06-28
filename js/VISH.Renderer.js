@@ -153,12 +153,13 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an open question form inside an article (a slide)
 	 */
 	var _renderOpenquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
+		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
 		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
-		ret += "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+		var ret = "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name:  </label>";
 		ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
+		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+		
 		ret += "<label class='question_answer'>Answer: </label>";
 		ret += "<textarea class='question_answer_input' placeholder='Write your answer here'></textarea>";
 		
@@ -173,15 +174,18 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
 	var _renderMcquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"?</div>";
-		ret += "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name: </label>";
-		ret += "<input id='pupil_name' class='question_name_input' placeholder='Write your name here'></input>";
-		
+		var 
+		ret = "<form action='"+element['posturl']+"' method='post'>";
+		ret += "<label class='question_name'>Name:  </label>";
+		ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
+		ret += "<div id='"+element['id']+"' class='question'>"+element['question']+"?</div>";
 		
 		for(var i = 0; i<element['options'].length; i++){
 			ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
 		}
+		
+		
+		//if(available question ... button ) else ... no button 
 		
 		ret += "<button type='button' class='question_button'>Send</button>";
 		return ret;
