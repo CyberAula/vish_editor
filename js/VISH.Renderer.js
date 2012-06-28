@@ -153,18 +153,17 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an open question form inside an article (a slide)
 	 */
 	var _renderOpenquestion = function(element, template){
-		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
-		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
+		
 		var ret = "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
-		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+			ret += "<label class='question_name'>Name:  </label>";
+			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input'placeholder='Write your name here'></textarea>";
+			ret += "<label class='question'> Question: "+element['question']+"  </label>";				
 		
-		ret += "<label class='question_answer'>Answer: </label>";
-		ret += "<textarea class='question_answer_input' placeholder='Write your answer here'></textarea>";
+			ret += "<label class='label_question'>Answer: </label>";
+			ret += "<textarea id='question_answer' rows='1' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
 		
 		
-		ret += "<button type='button' class='question_button'>Send</button>";
+			ret += "<button type='button' class='question_button'>Send</button>";
 		
 		
 		return ret;		
