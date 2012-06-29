@@ -176,7 +176,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var 
 		ret = "<form action='"+element['posturl']+"' method='post'>";
 		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
+		ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
 		ret += "<div id='"+element['id']+"' class='question'>"+element['question']+"?</div>";
 		
 		for(var i = 0; i<element['options'].length; i++){
