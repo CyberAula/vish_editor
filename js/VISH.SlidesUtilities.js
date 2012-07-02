@@ -198,8 +198,8 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	
 	var getZoomInStyle = function(zoom){
     var style = "";
-    styleyle = style + "-ms-transform: scale(" + zoom + "); ";
-    styleyle = style + "-moz-transform: scale(" + zoom + "); ";
+    style = style + "-ms-transform: scale(" + zoom + "); ";
+    style = style + "-moz-transform: scale(" + zoom + "); ";
     style = style + "-o-transform: scale(" + zoom + "); ";
     style = style + "-webkit-transform: scale(" + zoom + "); ";
     return style;
