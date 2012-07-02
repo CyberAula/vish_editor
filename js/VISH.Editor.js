@@ -84,6 +84,12 @@ VISH.Editor = (function(V,$,undefined){
       $(document).on('click','#save', _onSaveButtonClicked);
       $(document).on('click','.editable', _onEditableClicked);
       $(document).on('click','.selectable', _onSelectableClicked);
+			
+//			var notSelectable = $(document).find('div').not('.selectable');
+//			$(notSelectable).on('click', function(event) {
+//        console.log("Not selectable clicked!");
+//      });
+			
       $(document).on('click','.delete_content', _onDeleteItemClicked);
       $(document).on('click','.delete_slide', _onDeleteSlideClicked);
       //arrows in button panel
@@ -117,6 +123,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.AvatarPicker.init();
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
+		V.Editor.Toolbar.init();
 
 	
 		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
@@ -631,55 +638,26 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on template zone with class selectable
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
-  var _onSelectableClicked = function(){  
-  	_removeSelectableProperties();
-			
-  	$(this).css("cursor", "auto");
-  	//add menuselect and delete content button
-  	$(this).find(".menuselect_hide").show();
-  	$(this).find(".delete_content").show();
-  		
-  	//show sliders  	
-		var the_id;
-		switch($(this).attr("type")){
-			case "image":
-				the_id = $(this).find("img").attr("id");
-				break;
-			case "object":
-				the_id = $(this).find(".object_wrapper").attr("id");
-				break;
-		  case "snapshot":
-        the_id = $(this).find(".snapshot_wrapper").attr("id");
-        break;
-			case "video":
-				the_id = $(this).find("video").attr("id");
-				break;
-			default:
-			  the_id = null;
-			  break;
-		}
-  		
-		if(the_id){
-			//the id is "draggableunicID_1" we want to remove "draggable"
-      the_id = the_id.substring(9);
-      $("#sliderId" + the_id).show(); 
-		}
- 		
-  	//add css
-  	$(this).css("border-color", "rgb(255, 2, 94)");
-		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("outline", "0");
-		$(this).css("outline", "thin dotted \9");
+  var _onSelectableClicked = function(){
+		_removeSelectableProperties($(this));
+		_addSelectableProperties($(this));
+		VISH.Editor.Tools.loadZoneTools($(this));
   };
   
-  var _removeSelectableProperties = function(){  	
-  	$(".theslider").hide();
-  	$(".menuselect_hide").hide();
-  	$(".delete_content").hide();
-  	
-  	//remove css
+	
+	 var _addSelectableProperties = function(zone){
+    //add selectable css
+    $(zone).css("cursor", "auto");
+    $(zone).css("border-color", "rgb(255, 2, 94)");
+    $(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("outline", "0");
+    $(zone).css("outline", "thin dotted \9");
+  };
+	
+  var _removeSelectableProperties = function(zone){
+  	//Remove selectable css
 	  $(".selectable").css("border-color", "none");
 		$(".selectable").css("-webkit-box-shadow", "none");
 		$(".selectable").css("-moz-box-shadow", "none");

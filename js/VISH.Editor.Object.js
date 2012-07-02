@@ -501,7 +501,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			case "IFRAME":
-				//drawIframeObjectWithWrapper(object, current_area, object_style);
 				drawObjectWithWrapper(object, current_area, object_style);
 				break;
 				
@@ -570,6 +569,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		_adjustWrapperOfObject(idToResize, current_area);
 
+
+    //Add toolbar
+		VISH.Editor.Tools.loadToolbarForObject(wrapper);
+  
 	};
 	
 	

@@ -77,7 +77,9 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
     if(VISH.Editing){
   		//first deselect zone if anyone was selected
   		$(".selectable").css("border-style", "none");
-  		$(".theslider").hide();
+			
+			VISH.Editor.Tools.cleanZoneTools();
+  		
   		//finally add a background color to thumbnail of the selected slide
     	V.Editor.Thumbnails.selectThumbnail(no);    	
   	}	else {

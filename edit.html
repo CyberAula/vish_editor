@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/all/nicEditor.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/carrousel.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/all/tags.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/all/toolbar.css">
 
 	<!--[if gte IE 8]>      
 	  <link type="text/css" rel="stylesheet" href="stylesheets/ie/pack1explorer9.css">
@@ -74,11 +75,22 @@
 		
 		<div id="menubar-viewer" style="display:none">
 			<button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
-		    <div id="viewbar" class="viewbar">
-			<button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
-		    <div id="slide-counter"></div>
-		  	<button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
+	    <div id="viewbar" class="viewbar">
+		    <button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
+	      <div id="slide-counter"></div>
+	  	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
+			</div>
 		</div>
+		
+		
+		<!-- Generic toolbars -->
+		<div class="toolbar_wrapper" style="display:none">
+			<div class="toolbar_panel">
+				<img class="toolbar_icon toolbar_web toolbar_snapshot" src="/images/toolbar/zoomMore.png"></img>
+				<img class="toolbar_icon toolbar_web toolbar_snapshot" src="/images/toolbar/zoomLess.png"></img>
+			</div>
+		</div>
+		
     </section>
 
     <!-- Hidden link to open fancybox when adding a slide -->
@@ -996,6 +1008,7 @@
 	<script type="text/javascript" src="js/VISH.Editor.I18n.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Quiz.js"></script>
 	<script type="text/javascript" src="js/VISH.Editor.Tour.js"></script>
+	<script type="text/javascript" src="js/VISH.Editor.Tools.js"></script>
 	<script type="text/javascript" src="js/VISH.Configuration.js"></script>
 	
 	<script type="text/javascript" src="js/VISH.Utils.js"></script>
