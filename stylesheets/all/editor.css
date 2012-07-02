@@ -260,6 +260,13 @@ img {
     z-index: 1000;
 }
 
+.li_mch_option {
+	
+	list-style:none;
+	
+	
+}
+
 	
 #config_div {
 	background: url(/images/config.png);
