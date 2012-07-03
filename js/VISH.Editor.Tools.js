@@ -1,6 +1,15 @@
 VISH.Editor.Tools = (function(V,$,undefined){
 	
-	var init = function(){ } 
+	var init = function(){
+	   //Add listeners to toolbar buttons
+	   $.each($("img.toolbar_icon"), function(index, toolbarButton) {
+				$(toolbarButton).on("click", function(event){
+					if(typeof VISH.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
+						VISH.Editor.Tools[$(toolbarButton).attr("action")]();
+					}
+        });
+     });
+	} 
 	 
 	var loadZoneTools = function(zone){
 		
@@ -94,13 +103,53 @@ VISH.Editor.Tools = (function(V,$,undefined){
       $("#sliderId" + id).show(); 
     }
 	}
+	
+	
+	
+	var zoomMore = function(){
+    _changeZoom("+");
+	}
+	
+	 var zoomLess = function(){
+    _changeZoom("-");
+  }
+	
+	var _changeZoom = function(action){
+    var area = VISH.Editor.getCurrentArea();
+    var type = $(area).attr("type");    
+    switch(type){
+      case "object":
+        var object = area.children()[0].children[0];
+        var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+        if(objectInfo.type==="web"){
+          var iframe = $(area).find("iframe");
+          var zoom = VISH.SlidesUtilities.getZoomFromStyle($(iframe).attr("style"));
+					if(action=="+"){
+						zoom = zoom + 0.1;
+					} else {
+						zoom = zoom - 0.1;
+					}
+          $(iframe).attr("style",VISH.SlidesUtilities.addZoomToStyle($(iframe).attr("style"),zoom));
+					
+					//Resize object to fix in its wrapper
+					VISH.Editor.Object.autofixWrapperedObject($(iframe));
+        }
+        break;
+      case "snapshot":
+        break;
+      default:
+        break;
+    }
+	}
 	 
   
 	return {
 		init              : init,
 		loadZoneTools  : loadZoneTools,
 		cleanZoneTools : cleanZoneTools,
-		loadToolbarForObject : loadToolbarForObject
+		loadToolbarForObject : loadToolbarForObject,
+		zoomMore : zoomMore,
+		zoomLess : zoomLess
 	};
 
 }) (VISH, jQuery);

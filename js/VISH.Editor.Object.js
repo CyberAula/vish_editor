@@ -358,6 +358,16 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	
+	
+	/*
+   * Resize object to fix in its wrapper
+   */
+  var autofixWrapperedObject = function(object){
+    var wrapper = $(object).parent();
+		$(object).height($(wrapper).height());
+		$(object).width($(wrapper).width());
+  }
+	
 	///////////////////////////////////////
   /// OBJECT DRAW: PREVIEWS
   ///////////////////////////////////////
@@ -585,6 +595,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		renderObjectPreview  : renderObjectPreview,
 		getObjectInfo			   : getObjectInfo,
 		resizeObject 			   : resizeObject,
+		autofixWrapperedObject : autofixWrapperedObject,
 		drawPreview          : drawPreview,
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,

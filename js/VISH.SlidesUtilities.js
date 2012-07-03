@@ -206,6 +206,86 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
     style = style + "-webkit-transform: scale(" + zoom + "); ";
     return style;
    }
+	 
+	 var addZoomToStyle = function(style,zoom){
+		var filterStyle = "";
+    $.each(style.split(";"), function(index, property){
+       if ((property.indexOf("-ms-transform") === -1)&&(property.indexOf("-moz-transform") === -1)
+			 &&(property.indexOf("-o-transform") === -1)&&(property.indexOf("-webkit-transform") === -1)
+			 &&(property.indexOf("-moz-transform-origin") === -1)&&(property.indexOf("-webkit-transform-origin") === -1)
+			 &&(property.indexOf("-o-transform-origin") === -1)&&(property.indexOf("-ms-transform-origin") === -1)) {
+         filterStyle = filterStyle + property + "; ";
+       }
+    });
+		
+		
+//  -moz-transform: scale(1.0);
+//  -moz-transform-origin: 0 0;
+//  -o-transform: scale(1.0);
+//  -o-transform-origin: 0 0;
+//  -webkit-transform: scale(1.0);
+//  -webkit-transform-origin: 0 0;
+//  -ms-transform: scale(1.0);
+//  -ms-transform-origin: 0 0;
+		
+    filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
+		filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
+    filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
+		filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
+    filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
+		filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
+    filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
+		filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
+    return filterStyle;
+   }
+	 
+	 
+	var getZoomFromStyle = function(style,zoom){
+    
+		var zoom = 1; //Initial or default zoom
+		
+		//Patterns
+		var moz_zoom_pattern = /-moz-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var webkit_zoom_pattern = /-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var opera_zoom_pattern = /-o-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var ie_zoom_pattern = /-ms-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+
+		
+    $.each(style.split(";"), function(index, property){
+			 
+	     if (property.match(moz_zoom_pattern) != null) {
+			 	//Mozilla Firefox
+		   	var result = moz_zoom_pattern.exec(property);
+		   	if (result[1]) {
+		   		zoom = parseFloat(result[1]);
+		   		return false;
+		   	}
+		   } else if (property.match(webkit_zoom_pattern)!=null) {
+			 	  //Google Chrome
+          var result = webkit_zoom_pattern.exec(property);
+          if(result[1]){
+            zoom = parseFloat(result[1]);
+            return false;
+          }
+	     } else if (property.match(opera_zoom_pattern)!=null) {
+			 	  //Opera
+          var result = opera_zoom_pattern.exec(property);
+          if(result[1]){
+            zoom = parseFloat(result[1]);
+            return false;
+          }
+			 } else if (property.match(ie_zoom_pattern)!=null) {
+			 	  //Iexplorer
+          var result = ie_zoom_pattern.exec(property);
+          if(result[1]){
+            zoom = parseFloat(result[1]);
+            return false;
+          }
+       }
+    });
+		
+    return zoom;
+   }
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed
@@ -223,6 +303,8 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		setStyleInPixels  : setStyleInPixels,
 		getZoomInStyle    : getZoomInStyle,
+		addZoomToStyle  : addZoomToStyle,
+		getZoomFromStyle : getZoomFromStyle,
 		goToSlide		    : goToSlide,
 		lastSlide		    : lastSlide,
 		addSlide		    : addSlide,
