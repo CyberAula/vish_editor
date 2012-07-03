@@ -263,10 +263,39 @@ img {
 .li_mch_option {
 	
 	list-style:none;
-	
-	
 }
 
+.header_truefalse_question {
+	background: none repeat scroll 0 0 #F9F9F9;
+    border-radius: 4px 4px 0 0;
+    color: #FF005D;
+    display: block;
+    font-family: Helvetica;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    text-decoration: none;	
+}
+
+.truefalse_quiz_table {
+	width: 600px;
+	border-collapse: collapse;
+}
+
+.truefalse_quiz_table td th {
+	border:none;
+}
+
+.truefalse_quiz_table th {
+	background-color: #000;
+	color:#fff;
+	border-left:5%;
+}
+
+.truefalse_quiz_table td {
+	background-color: #FFF;
+	color:#000;
+}
 	
 #config_div {
 	background: url(/images/config.png);
