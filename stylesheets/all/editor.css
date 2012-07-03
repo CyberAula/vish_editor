@@ -277,7 +277,25 @@ img {
     text-decoration: none;	
 }
 
+.truefalse_quiz_table {
+	width: 600px;
+	border-collapse: collapse;
+}
 
+.truefalse_quiz_table td th {
+	border:none;
+}
+
+.truefalse_quiz_table th {
+	background-color: #000;
+	color:#fff;
+	border-left:5%;
+}
+
+.truefalse_quiz_table td {
+	background-color: #FFF;
+	color:#000;
+}
 	
 #config_div {
 	background: url(/images/config.png);
