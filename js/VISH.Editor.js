@@ -479,7 +479,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		
-	VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
+	//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 		
 		//VISH.Debugging.log("slide es: " + slide );
