@@ -68,10 +68,17 @@ VISH.Editor = (function(V,$,undefined){
 		
 		// fancybox to create a new slide		
 		$("a#addSlideFancybox").fancybox({
+			'autoDimensions' : false,
 			'scrolling': 'no',
-			'width': 800,
-    		'height': 600,
-    		'padding': 0
+			'width': 385,
+    		'height': 340,
+    		'padding': 0,
+			"onStart"  : function(data) {
+				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				var clickedZoneId = $(data).attr("zone");
+				params['current_el'] = $("#" + clickedZoneId);
+				loadTab('tab_templates');
+			}
     });
 		
 		if(!eventsLoaded){
@@ -474,7 +481,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 	VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
-		
+	
 		//VISH.Debugging.log("slide es: " + slide );
 				
 		V.SlidesUtilities.addSlide(slide);
@@ -484,7 +491,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		
-		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);		
+		
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
+				
 	};
 
 	/**
@@ -512,6 +521,7 @@ VISH.Editor = (function(V,$,undefined){
 		});
 		
 		$(this).html(content);
+		
 		
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,

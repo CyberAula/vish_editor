@@ -374,8 +374,7 @@ img {
 }
 
 #thumbcontent{
-	border: 1px solid #CCC ;
-	margin: 10px;
+	margin: 0px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -474,8 +473,8 @@ img {
 }
 
 #thumbcontent{
-	width: 400px;
-	height: 325px;
+	width: 385px;
+	height: 340px;
 }
 
 /*****fancybox tabs ****************/
@@ -1186,8 +1185,8 @@ textarea {
 #help_template_selection {
 	background-image:url(../../images/helptutorial_circle_tp.png);
 	position: absolute;
-	margin-top: -13px;
-	right: 20px;
+	margin-top: -44px;
+	right: 22px;
 }
 
 #help_template_selection:hover {
