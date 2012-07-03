@@ -354,8 +354,10 @@ function handleTouchEnd(event) {
 };
 
 function cancelTouch() {
-  document.body.removeEventListener('touchmove', handleTouchMove, true);
-  document.body.removeEventListener('touchend', handleTouchEnd, true);  
+  //document.body.removeEventListener('touchmove', handleTouchMove, true);
+  //document.body.removeEventListener('touchend', handleTouchEnd, true);  
+  $(document).unbind('touchmove', handleTouchMove);  
+  $(document).unbind('touchend', handleTouchEnd);  
 };
 
 /* Preloading frames */
