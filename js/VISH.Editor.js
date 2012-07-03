@@ -123,7 +123,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.AvatarPicker.init();
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
-		V.Editor.Toolbar.init();
+		V.Editor.Tools.init();
 
 	
 		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){

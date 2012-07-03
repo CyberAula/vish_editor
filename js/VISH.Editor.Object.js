@@ -310,15 +310,17 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
 	 * Resize object and its wrapper automatically
 	 */
-	var resizeObject = function(id,width){
-		var proportion = $("#" + id).height()/$("#" + id).width();
-			
-		$("#" + id).width(width);
-		$("#" + id).height(width*proportion);
+	var resizeObject = function(id,newWidth){
+		var aspectRatio = $("#" + id).width()/$("#" + id).height();
+		var newHeight = Math.round(newWidth/aspectRatio);
+		var newWidth = Math.round(newWidth);
 		
 		var parent = $("#" + id).parent();
-		$(parent).width(width);
-		$(parent).height(width*proportion);
+    $(parent).width(newWidth);
+    $(parent).height(newHeight);
+			
+		$("#" + id).width(newWidth);
+		$("#" + id).height(newHeight);
 	}
 	
 	
