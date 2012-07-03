@@ -208,6 +208,11 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    }
 	 
 	 var addZoomToStyle = function(style,zoom){
+	 	
+		if(!style){
+			return null;
+		}
+		
 		var filterStyle = "";
     $.each(style.split(";"), function(index, property){
        if ((property.indexOf("-ms-transform") === -1)&&(property.indexOf("-moz-transform") === -1)
@@ -218,7 +223,6 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
        }
     });
 		
-		
 //  -moz-transform: scale(1.0);
 //  -moz-transform-origin: 0 0;
 //  -o-transform: scale(1.0);
@@ -228,21 +232,28 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 //  -ms-transform: scale(1.0);
 //  -ms-transform-origin: 0 0;
 		
-    filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
-		filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
-    filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
-		filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
-    filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
-		filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
-    filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
-		filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
+		if(zoom){
+			filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
+	    filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
+	    filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
+	    filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
+	    filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
+	    filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
+	    filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
+	    filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
+		}
+
     return filterStyle;
    }
 	 
 	 
-	var getZoomFromStyle = function(style,zoom){
+	var getZoomFromStyle = function(style){
     
 		var zoom = 1; //Initial or default zoom
+		
+		if(!style){
+			return zoom;
+		}
 		
 		//Patterns
 		var moz_zoom_pattern = /-moz-transform: ?scale\(([0-9]+.[0-9]+)\)/g

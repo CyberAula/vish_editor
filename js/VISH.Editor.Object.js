@@ -311,13 +311,25 @@ VISH.Editor.Object = (function(V,$,undefined){
 	 * Resize object and its wrapper automatically
 	 */
 	var resizeObject = function(id,newWidth){
-		var aspectRatio = $("#" + id).width()/$("#" + id).height();
-		var newHeight = Math.round(newWidth/aspectRatio);
-		var newWidth = Math.round(newWidth);
 		
 		var parent = $("#" + id).parent();
-    $(parent).width(newWidth);
-    $(parent).height(newHeight);
+		var aspectRatio = $("#" + id).width()/$("#" + id).height();
+		
+		var newWrapperHeight = Math.round(newWidth/aspectRatio);
+		var newWrapperWidth = Math.round(newWidth);
+    $(parent).width(newWrapperWidth);
+    $(parent).height(newWrapperHeight);
+		
+		var zoom = VISH.SlidesUtilities.getZoomFromStyle( $("#" + id).attr("style"));
+    
+    if(zoom!=1){
+      newWidth = newWidth/zoom;
+			var newHeight = Math.round(newWidth/aspectRatio);
+			newWidth = Math.round(newWidth);
+    } else {
+			var newHeight = newWrapperHeight;
+			var newWidth = newWrapperWidth;
+		}
 			
 		$("#" + id).width(newWidth);
 		$("#" + id).height(newHeight);
@@ -362,10 +374,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
    * Resize object to fix in its wrapper
    */
-  var autofixWrapperedObject = function(object){
+  var autofixWrapperedObjectAfterZoom = function(object,zoom){
     var wrapper = $(object).parent();
-		$(object).height($(wrapper).height());
-		$(object).width($(wrapper).width());
+		$(object).height($(wrapper).height()/zoom);
+		$(object).width($(wrapper).width()/zoom);
   }
 	
 	///////////////////////////////////////
@@ -595,7 +607,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		renderObjectPreview  : renderObjectPreview,
 		getObjectInfo			   : getObjectInfo,
 		resizeObject 			   : resizeObject,
-		autofixWrapperedObject : autofixWrapperedObject,
+		autofixWrapperedObjectAfterZoom : autofixWrapperedObjectAfterZoom,
 		drawPreview          : drawPreview,
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,
