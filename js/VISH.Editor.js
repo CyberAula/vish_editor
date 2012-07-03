@@ -495,13 +495,13 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	/**
-	 * function called when user clicks on an editable element
+	 * Function called when user clicks on an editable element
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
 	var _onEditableClicked = function(event){
 		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
-		params['current_el'] = $(this);
+		setCurrentArea($(this));
 				
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
@@ -515,7 +515,7 @@ VISH.Editor = (function(V,$,undefined){
 				
 		//add zone attr to the a elements to remember where to add the content
 		content.find("a").each(function(index, domElem) {
-			$(domElem).attr("zone", params['current_el'].attr("id"));
+			$(domElem).attr("zone", getCurrentArea().attr("id"));
 		});
 		
 		$(this).html(content);
@@ -527,9 +527,9 @@ VISH.Editor = (function(V,$,undefined){
     	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
-				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_pic_from_url');
 			}
 		});
@@ -541,7 +541,7 @@ VISH.Editor = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_object_from_url');
 			}
 		});
@@ -553,7 +553,7 @@ VISH.Editor = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_video_from_url');
 			}
 		});
@@ -565,7 +565,7 @@ VISH.Editor = (function(V,$,undefined){
       'padding' : 0,
       "onStart"  : function(data) {
         var clickedZoneId = $(data).attr("zone");
-        params['current_el'] = $("#" + clickedZoneId);
+        setCurrentArea($("#" + clickedZoneId));
         loadTab('tab_live_webcam');
       }
     });
@@ -576,8 +576,8 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on the delete icon of the zone
    */
   var _onDeleteItemClicked = function(){
-  	params['current_el'] = $(this).parent();
-  	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
+		setCurrentArea($(this).parent());
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
   	$.fancybox(
 			$("#prompt_form").html(),
 			{
@@ -591,10 +591,10 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
 						$("#prompt_answer").val("false");
-						params['current_el'].html("");					
+						getCurrentArea().html("");					
 						$(".theslider").hide();	
-						params['current_el'].removeAttr("type");
-						params['current_el'].addClass("editable");
+						getCurrentArea().removeAttr("type");
+						getCurrentArea().addClass("editable");
 					}
 				}
 			}
@@ -639,6 +639,7 @@ VISH.Editor = (function(V,$,undefined){
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
   var _onSelectableClicked = function(){
+		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
 		VISH.Editor.Tools.loadZoneTools($(this));
@@ -908,8 +909,8 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}	else if(params['current_el']){
-			return params['current_el'].parent().attr('template');
+		}	else if(getCurrentArea()){
+			return getCurrentArea().parent().attr('template');
 		}
 		return null;
 	}
@@ -920,6 +921,10 @@ VISH.Editor = (function(V,$,undefined){
     }
     return null;
   }
+	
+	var setCurrentArea = function(area){
+		params['current_el'] = area;
+	}
   
 	var getSavedExcursion = function() {
 		if(saved_excursion){
