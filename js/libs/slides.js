@@ -296,13 +296,30 @@ function triggerLeaveEvent(no) {
 
 /* Touch events */
 
+/*method by KIKE to get the touches of an event
+ * jquery does not pass the touches property in the event, and we get them from the event.originalEvent
+ */
+function getTouches(event){
+	if(event.touches){
+		return event.touches;
+	}
+	else if(event.originalEvent.touches){
+		return event.originalEvent.touches;
+	}
+	else{
+		return null;
+	}
+};
+
+
 function handleTouchStart(event) {
-  if (event.touches.length == 1) {
+  var touches = getTouches(event);
+  if (touches.length === 1) {
     touchDX = 0;
     touchDY = 0;
 
-    touchStartX = event.touches[0].pageX;
-    touchStartY = event.touches[0].pageY;
+    touchStartX = touches[0].pageX;
+    touchStartY = touches[0].pageY;
 
     //document.body.addEventListener('touchmove', handleTouchMove, true);
     //document.body.addEventListener('touchend', handleTouchEnd, true);
@@ -312,11 +329,12 @@ function handleTouchStart(event) {
 };
 
 function handleTouchMove(event) {
-  if (event.touches.length > 1) {
+  var touches = getTouches(event);
+  if (touches.length > 1) {
     cancelTouch();
   } else {
-    touchDX = event.touches[0].pageX - touchStartX;
-    touchDY = event.touches[0].pageY - touchStartY;
+    touchDX = touches[0].pageX - touchStartX;
+    touchDY = touches[0].pageY - touchStartY;
   }
 };
 
