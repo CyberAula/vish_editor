@@ -6,7 +6,10 @@ VISH.ObjectPlayer = (function(){
 	 */
 	var loadObject = function(element){
 		$.each(element.children('.objectelement'),function(index,value){
-			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper") + "</div>");
+			var object = $($(value).attr("objectWrapper"));
+			$(object).attr("style",$(value).attr("zoomInStyle"));
+			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(object) + "</div>");
+			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
 		});
 	};
 
@@ -26,11 +29,19 @@ VISH.ObjectPlayer = (function(){
 			loadObject($(".current"));
 		}
 	}
+	
+	var adjustDimensionsAfterZoom = function(objectWithZoom){
+		var parent = $(objectWithZoom).parent();
+		var zoom = VISH.SlidesUtilities.getZoomFromStyle($(objectWithZoom).attr("style"));
+		$(objectWithZoom).height($(parent).height()/zoom)
+		$(objectWithZoom).width($(parent).width()/zoom)
+	}
 
 	return {
 		loadObject:loadObject,
 		unloadObject:unloadObject,
-		aftersetupSize : aftersetupSize
+		aftersetupSize : aftersetupSize,
+		adjustDimensionsAfterZoom : adjustDimensionsAfterZoom
 	};
 
 })(VISH,jQuery);

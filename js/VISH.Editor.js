@@ -767,9 +767,14 @@ VISH.Editor = (function(V,$,undefined){
 							element.sources = sources;
 		      } else if(element.type=="object"){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
-							$(object).removeAttr("style");
-		    	    element.body   = VISH.Utils.getOuterHTML(object);
+							var myObject = $(object).clone();
+							$(myObject).removeAttr("style");
+		    	    element.body   = VISH.Utils.getOuterHTML(myObject);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
+							var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
+							if(zoom!=1){
+								element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom);
+							}
 		      } else if (element.type=="openquestion") {	   
 		      		element.title   = $(div).find(".title_openquestion").val();
 		        	element.question   = $(div).find(".value_openquestion").val();

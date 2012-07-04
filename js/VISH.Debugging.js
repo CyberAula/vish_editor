@@ -7,7 +7,7 @@ VISH.Debugging = (function(V,$,undefined){
 	//CONFIGURATION VARIABLES
 	
 	//Possible actions: "view", "edit" or "nothing".
-	var actionSave = "view";
+	var actionSave = "nothing";
 	
 	//Possible action: "nothing" or "loadSamples".
 	var actionInit = "nothing";

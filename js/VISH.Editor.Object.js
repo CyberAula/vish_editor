@@ -311,7 +311,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 	 * Resize object and its wrapper automatically
 	 */
 	var resizeObject = function(id,newWidth){
-		
 		var parent = $("#" + id).parent();
 		var aspectRatio = $("#" + id).width()/$("#" + id).height();
 		
@@ -460,9 +459,9 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param area: optional param indicating the area to add the object, used for editing excursions
    * param style: optional param with the style, used in editing excursion
    */
-	var drawObject = function(object, area, style){	
+	var drawObject = function(object, area, style, zoomInStyle){	
 			
-//		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style + " y zoomInStyle " + zoomInStyle);		
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
@@ -525,7 +524,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			case "IFRAME":
-				drawObjectWithWrapper(object, current_area, object_style);
+				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 				
 			default:
@@ -538,7 +537,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/**
 	 * param style: optional param with the style, used in editing excursion
 	 */
-	var drawObjectWithWrapper = function(wrapper, current_area, style){
+	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
 	 
 		var template = V.Editor.getTemplate(current_area);
 		var nextWrapperId = V.Editor.getId();
@@ -597,6 +596,11 @@ VISH.Editor.Object = (function(V,$,undefined){
     //Add toolbar
 		VISH.Editor.Tools.loadToolbarForObject(wrapper);
   
+	  if(zoomInStyle){
+      $(wrapperTag).attr('style', zoomInStyle);
+			VISH.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
+    }
+	
 	};
 	
 	

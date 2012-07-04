@@ -116,7 +116,8 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderObject = function(element, template){
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+ "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
+		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
 	/**
