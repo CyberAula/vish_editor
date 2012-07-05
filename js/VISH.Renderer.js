@@ -186,11 +186,12 @@ VISH.Renderer = (function(V,$,undefined){
 		var next_index = "a".charCodeAt(0) + (next_num); 
 		next_index = String.fromCharCode(next_index);
 			VISH.Debugging.log("next_index vale:"+next_index);
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='0'>"+
+			+element['options'][i]+"</label>";
+			ret += "<div class='mc_meter'><span style:''></span></div>";
+		
 		}
 		
-		
-		//if(available question ... button ) else ... no button 
 		
 		ret += "<button type='button' class='question_button'>Send</button>";
 		return ret;
