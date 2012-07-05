@@ -533,11 +533,12 @@
 */
 
 .t10_left{
+	text-align:center;
 	margin-top: 2%;
 	position:relative;
-	width: 80%;
-	height: 70%;
-	float: left;
+	width: 100%;
+	height: 90%;
+	float:left;
 	overflow:hidden;	
 }
 
@@ -549,124 +550,115 @@
 	z-index: 10px;
 }
 
-
-.question_title{
-	padding-top: 2%;
- 	padding-bottom: 2%;
-	margin-top: -2%;
-	margin-left: 2%;
-	margin-left: -1%;
-	padding-left: 1%;
-	margin-right: -1%;
-	padding-right: 1%;
-	/*
-	min-height: 24px; */
-	width: 98%;
-	font-size: 2em;
-	font-weight: bold;
-	text-align:center; 
-	text-decoration: underline; 
-}
-
-.question{
-	padding-top: 1%;
-	padding-bottom: 1%;
-	text-align: justify;
-	
-	color: black;
-	
-	font-size: 1.5em;
-	line-height:110%;
-	width: 95%;
+.question {
+	background: none repeat scroll 0 0 #F9F9F9;
+	border-radius: 0.4em 0.4em 0em 0em;
+	color: #FF005D;
 	display: block;
+	font-family: Helvetica;
+	font-size: 1.3em;
+	font-weight: bold;
+	padding: 0.5em 1.5em;
+	text-decoration: none;
+	text-align: left;	
+	line-height: 120%;
 	
-}
+		
+	}
+	
+	
 
 .question_name{
 	padding-top: 3%;
 	padding-bottom: 1%;
-	text-align: justify;
+	padding-left: 8%;
+	padding-right: 5%;
+	display: block;
+	text-align: left;
 	color: black;
 	font-size: 1.3em;
-	display: block;
+	
 }
 
 .question_name_input{
+	background: none no-repeat scroll 5px 50% transparent;
+    border: 0.1em solid #9B999D;
+    border-radius: .5em .5em .5em .5em;
+    font-family: Helvetica;
+    outline: 0 none;
+    padding: .25em .25em;
+     z-index: 1000;
 	
 	font-size: 1.2em;
-	width: 95%;
+	
 	position:relative;
 }
 
-.question_answer{
-		
-	text-align: justify;
+.label_question{
 	padding-top: 3%;
 	padding-bottom: 1%;
-	width: 95%;
+	padding-left: 8%;
+	padding-right: 5%;
+	display: block;
+	text-align: left;
 	color: black;
 	font-size: 1.3em;
-	display: block;
+	
 }
 
-.question_answer_input{
+
+.question_answer{
 	
-	width: 95%;
-	height: 40%;
+	background: none no-repeat scroll 1% 50% transparent;
+    border: 0.1em solid #9B999D;
+    border-radius: .5em .5em .5em .5em;
+    font-family: Helvetica;
+    outline: 0 none;
+    padding: .25em .25em;
+    z-index: 1000;
 	color: black;
 	font-size: 1.2em;
-	display: block;
-}
+	}
 
 .question_button{
 	padding-top: 1%;
 	padding-bottom: 1%;
-	margin-left: 45%;
 	color: black;
 	font-size: 1.2em; 
-	/*margin-left:auto;
-	margin-right:auto; */
+	text-align:center;
+	display:block;
+	float: right;
+	margin-right: 10%;
+	
 	}
 
 /*	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
 
-	css for quiz slide containing only question, and multiple choice answers
+	css for quiz slide containing only one question, and multiple choice answer
 */
 
 .t11_left{
 	margin-top: 2%;
 	position:relative;
-	width: 80%;
-	height: 70%;
+	width: 100%;
+	height: 90%;
 	float: left;
 	overflow:hidden;	
 }
 
 
-.t11_header{
-	height: 10%;
-	width: 100%;
-	overflow:hidden;	
-	position: relative;
-	z-index: 10px;
-
-}
 .mc_answer{
 	text-align: justify;
 	color: black;
 	font-size: 1.2em;
 	display: block;
+	margin-left: 2%;
 }
 
 .mc_answer input{
 	margin: 1% 2% 0% 1%;
 }
-
-
-
-
-
 
 
 /* Snapshots */
