@@ -43,6 +43,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}	else {
 		  $("#page-fullscreen").hide();
 		}
+		 
 		
 		VISH.SlidesUtilities.updateSlideCounter();
 	};
