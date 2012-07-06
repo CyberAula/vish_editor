@@ -2,13 +2,15 @@ VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
-	 //Prevent to load events multiple times.
-  var eventsLoaded = false;
+	//Prevent to load events multiple times.
+  	var eventsLoaded = false;
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
 	var init = function(excursion){
+		V.Status.init();
+		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 		mySlides = excursion.slides;
@@ -18,33 +20,38 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(!eventsLoaded){
 			eventsLoaded = true;
 			addEventListeners(); //for the arrow keys
-      $(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
-      $(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+      		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
+      		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
-		
-		var isInIFrame = (window.location != window.parent.location) ? true : false;
-		var myElem = null;
-		
-		if(isInIFrame){
+				
+		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {
 			myDoc = document;
 		}
+				
+		$(window).on('orientationchange',function(){
+      		_setupSize();       
+    	});
 		
-		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-      _setupSize();       
-    });
-		
-		var elem = document.getElementById("page-fullscreen");  
-		var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
-		
-		if (canFullScreen) {  
+		if (V.Status.features.fullscreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
+		  $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+      		_setupSize();       
+    	  });
 		}	else {
 		  $("#page-fullscreen").hide();
 		}
 		
 		VISH.SlidesUtilities.updateSlideCounter();
+		//hide page counter (the slides are passed touching)
+		
+		//TODO XXX finally hide address bar if mobile browser		
+		if (V.Status.ua.mobile) {		    
+		    addEventListener("load", function() {
+            	window.scrollTo(0, 1);
+    		}, false);
+		}
 	};
 
 	
@@ -54,7 +61,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
+		var myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
 		    if (myDoc.documentElement.requestFullScreen) {
@@ -97,7 +104,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		var width = $(window).width();
 		var finalW = 800;
 		var finalH = 600;
-		
+		VISH.Debugging.log("height " + height);
+		VISH.Debugging.log("width " + width);
 		var aspectRatio = width/height;
 		var slidesRatio = 4/3;
 		if(aspectRatio > slidesRatio){
@@ -107,6 +115,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			finalW = width - 110; //leave 110px free, at least, 55 left and 55 right ideally
 			finalH = finalW/slidesRatio;	
 		}
+		VISH.Debugging.log("finalH " + finalH);
+		VISH.Debugging.log("finalW " + finalW);
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
 		
@@ -115,6 +125,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		var marginLeft = finalW/2;
 		$(".slides > article").css("margin-top", "-" + marginTop + "px");
 		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
+		
+		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
+		//$(".viewbar").css("left", width/2 + "px");
+		//VISH.Debugging.log("viewbar a " + width/2 + "px");
+		
 		
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems

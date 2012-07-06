@@ -110,50 +110,42 @@ VISH.Samples = (function(V,undefined){
     "tags":["Chess","Art"],
     "author": "Aldo",
 		"slides" : [{
-			"id" : "article2",
-			"template" : "t4",
-			"elements" : [{
-				"id" : "zone2",
-				"type" : "text",
-				"areaid" : "header",
-				"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><font size=\"6\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span> <span style=\"color: rgb(32, 24, 21);\">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style=\"font-weight: bold; color: rgb(113, 113, 117);\" size=\"4\">Ecology</font><br></span></div>"
-			}, {
-				"id" : "zone3",
-				"type" : "object",
-				"areaid" : "left",
-				"body" : "<iframe unselectable=\"on\" wmode=\"opaque\" class=\"t4_object\" id=\"resizableunicID_1\" src=\"http://www.youtube.com/embed/GwMDmtIlxgk?wmode=opaque\" frameborder=\"0\"></iframe>",
-				"style" : "position: relative; width:100%; height:100%; top:0%; left:0%;"
-			}, {
-				"id" : "zone4",
-				"type" : "text",
-				"areaid" : "right",
-				"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center;\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">The Iberian lynx is smaller than its northern relatives, and typically hunts smaller animals, usually no larger than hares. It also differs in habitat choice, with Iberian lynx inhabiting open scrub and Eurasian lynx inhabiting forests.It hunts mammals (including rodents and insectivores), birds, reptiles and amphibians at twilight. The European rabbit (Oryctolagus cuniculus) is its main prey (79.5-86.7%), with (5.9%) hares (Lepus granatensis) and rodents (3.2%) less common. A male requires one rabbit per day; a female bringing up cubs will eat three rabbits per day.</span></div>"
-			}]
-		}, {
-			"id" : "article3",
-			"template" : "t7",
-			"elements" : [{
-				"id" : "zone5",
-				"type" : "text",
-				"areaid" : "header",
-				"body" : "<div class=\"vish-parent-font3\"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><font size=\"6\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span> <span style=\"color: rgb(32, 24, 21);\">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style=\"font-weight: bold; color: rgb(113, 113, 117);\" size=\"4\">SosLynx</font><br></span></div>"
-			}, {
-				"id" : "zone6",
-				"type" : "text",
-				"areaid" : "left",
-				"body" : "<div class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">The Iberian lynx and its habitat are fully protected, and they are no longer legally hunted. Its critical status is mainly due to habitat loss, poisoning, road casualties, feral dogs and poaching. Its habitat loss is due mainly to infrastructure improvement, urban and resort development and tree monocultivation, which serves to break the lynx's distribution area. In addition, the lynx prey population of rabbits is also declining due to diseases such as myxomatosis and hemorrhagic pneumonia.There exist websites like SOS Lynx which is a conservation charity based in Portugal, working to prevent the extinction of the Iberian lynx. Its aim is to stop the decline of the Iberian lynx and other lynx species.</span></div>"
-			}, {
-				"id" : "zone7",
-				"type" : "object",
-				"areaid" : "center",
-				"body" : "<iframe wmode=\"opaque\" class=\"t7_object\" id=\"resizableunicID_2\" src=\"http://www.soslynx.org/?wmode=transparent\"></iframe>",
-				"style" : "position: relative; width:100%; height:100%; top:0%; left:0%;"
-			}, {
-				"id" : "zone8",
-				"type" : "text",
-				"areaid" : "subheader",
-				"body" : "<div class=\"vish-parent-font6\" style=\"text-align: center;\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"\">http://www.soslynx.org/</span></div>"
-			}]
+        "id": "article1",
+        "template": "t1",
+        "elements": [{
+            "id": "zone1",
+            "type": "image",
+            "areaid": "left",
+            "body": "http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg",
+            "style": "position: relative; width:95.8823529411765%; top:0%; left:0%;"
+        }, {
+            "id": "zone2",
+            "type": "text",
+            "areaid": "header",
+            "body": "<div class=\"vish-parent-font3\" style=\"text-align: center;\"><span class=\"vish-font3 vish-fontarial\"><font size=\"6\"><span style=\"font-family: helvetica;\"><span style=\"font-weight: bold;\">Chess</span>: The Art of Learning</span></font><br></span></div>"
+        }, {
+            "id": "zone3",
+            "type": "text",
+            "areaid": "subheader",
+            "body": "<div class=\"vish-parent-font3\" style=\"text-align: right;\"><span class=\"vish-font3 vish-fontarial\"><font size=\"4\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></font><br></span></div>"
+        }]
+    }, {
+			'id'       :'vish4',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '323',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Puesta de sol...'
+				},
+				{
+                    'id'     : '324',
+					'type'   : 'image',
+					'areaid' : 'left',
+					'body'   : 'http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg'		
+				}
+			]
 		}, {
 			"id" : "article4",
 			"template" : "t6",

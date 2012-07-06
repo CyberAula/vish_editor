@@ -14,7 +14,7 @@ var PERMANENT_URL_PREFIX = '';
 
 var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 
-var PM_TOUCH_SENSITIVITY = 15;
+var PM_TOUCH_SENSITIVITY = 300; //initially this was 15
 
 var curSlide;
 
@@ -603,15 +603,17 @@ function addFontStyle() {
 };
 
 function addGeneralStyle() {
+  /*
   var el = document.createElement('link');
   el.rel = 'stylesheet';
   el.type = 'text/css';
   el.href = PERMANENT_URL_PREFIX + VISH.StylesheetsPath + 'styles.css';
   document.body.appendChild(el);
-  
+  */
+ 
   var el = document.createElement('meta');
   el.name = 'viewport';
-  el.content = 'width=1100,height=750';
+  el.content = 'width=900,height=750';
   document.querySelector('head').appendChild(el);
   
   var el = document.createElement('meta');
@@ -630,6 +632,26 @@ function makeBuildLists() {
     }
   }
 };
+
+/*
+ * added by KIKE to hide the address bar after loading
+ */
+function hideAddressBar()
+{
+	VISH.Debugging.log("document.height " + document.height);
+	VISH.Debugging.log("window.outerHeight " + window.outerHeight);
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px';
+          VISH.Debugging.log("height " + document.body.style.height);
+      }
+
+      setTimeout( function(){ 
+      	VISH.Debugging.log("scroll");
+      	window.scrollTo(0, 1); 
+      	}, 50 );
+  
+}
 
 function handleDomLoaded() {
   slideEls = document.querySelectorAll('section.slides > article');
@@ -666,9 +688,13 @@ function initialize() {
   	//	document.attachEvent('OURDOMContentLoaded', handleDomLoaded);
 	//}
 	$(document).bind('OURDOMContentLoaded', handleDomLoaded);
-    
+	/*added by KIKE to hide address bar*/
+	window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+	window.addEventListener("orientationchange", hideAddressBar );
   }
 }
+
+
 
 // If ?debug exists then load the script relative instead of absolute
 if (!window['_DEBUG'] && document.location.href.indexOf('?debug') !== -1) {
