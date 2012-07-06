@@ -740,6 +740,7 @@ input.rounded:focus {
     padding-bottom: 5px;  
     outline: none;
     border: none;
+	margin-top: -20px;
 }
 
 .okButton:hover {
