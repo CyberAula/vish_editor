@@ -42,6 +42,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}	else {
 		  $("#page-fullscreen").hide();
 		}
+		 
 		
 		VISH.SlidesUtilities.updateSlideCounter();
 		//hide page counter (the slides are passed touching)

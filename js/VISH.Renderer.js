@@ -45,9 +45,11 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			else if(slide.elements[el].type === "openquestion"){
 				content += _renderOpenquestion(slide.elements[el],slide.template);
+				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
 				content += _renderMcquestion(slide.elements[el],slide.template);
+				classes +="mcquestion";
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -157,7 +159,7 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
 			ret += "<label class='question_name'>Name:  </label>";
-			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input'placeholder='Write your name here'></textarea>";
+			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
 			ret += "<label class='question'> Question: "+element['question']+"  </label>";				
 		
 			ret += "<label class='label_question'>Answer: </label>";
@@ -177,22 +179,24 @@ VISH.Renderer = (function(V,$,undefined){
 		var next_num=0;
 		
 		var	ret = "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+		//ret += "<label class='question_name'>Name:  </label>";
+		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
 		ret += "<div id='"+element['id']+"' class='question'>"+element['question']+"?</div>";
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
 		var next_index = "a".charCodeAt(0) + (next_num); 
 		next_index = String.fromCharCode(next_index);
-			VISH.Debugging.log("next_index vale:"+next_index);
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
+			
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio_"+(i+1).toString()+"' value='0'>"+element['options'][i]+"</label>";
+			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		
 		}
 		
 		
-		//if(available question ... button ) else ... no button 
-		
 		ret += "<button type='button' class='question_button'>Send</button>";
+		ret += "</form>";
+		
 		return ret;
 	};
 
