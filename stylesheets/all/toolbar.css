@@ -21,5 +21,7 @@
 }
 
 .toolbar_icon{
-	height: 95%;
+	height: 91%;
+    margin-top: 1px;
+    padding-right: 6px;
 }
