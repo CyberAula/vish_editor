@@ -9,7 +9,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
 	var init = function(excursion){
-		V.Status.init();
+		//V.Status.init();
 		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
@@ -23,7 +23,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
-				
+		/*		
 		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {
@@ -52,7 +52,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		    addEventListener("load", function() {
             	window.scrollTo(0, 1);
     		}, false);
-		}
+		} */
 	};
 
 	

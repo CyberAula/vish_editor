@@ -637,6 +637,13 @@
 
 	css for quiz slide containing only one question, and multiple choice answer
 */
+.t11_header {
+	
+display: block;	
+	
+}
+
+
 
 .t11_left{
 	margin-top: 2%;

@@ -160,7 +160,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
 			ret += "<label class='question_name'>Name:  </label>";
 			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-			ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+			ret += "<label class='openquestion'> Question: "+element['question']+"  </label>";				
 		
 			ret += "<label class='label_question'>Answer: </label>";
 			ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
@@ -178,10 +178,14 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderMcquestion = function(element, template){
 		var next_num=0;
 		
-		var	ret = "<form action='"+element['posturl']+"' method='post'>";
+		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		ret+= "<h2 class='question'>"+ element['question']+"?</h2>";
+		//add the statistics button here 
+		
+		ret += "<form action='"+element['posturl']+"' method='post'>";
 		//ret += "<label class='question_name'>Name:  </label>";
 		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-		ret += "<div id='"+element['id']+"' class='question'>"+element['question']+"?</div>";
+		
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
@@ -196,7 +200,7 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		ret += "<button type='button' class='question_button'>Send</button>";
 		ret += "</form>";
-		
+		ret += "</div>";
 		return ret;
 	};
 
