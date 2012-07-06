@@ -310,15 +310,28 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
 	 * Resize object and its wrapper automatically
 	 */
-	var resizeObject = function(id,width){
-		var proportion = $("#" + id).height()/$("#" + id).width();
-			
-		$("#" + id).width(width);
-		$("#" + id).height(width*proportion);
-		
+	var resizeObject = function(id,newWidth){
 		var parent = $("#" + id).parent();
-		$(parent).width(width);
-		$(parent).height(width*proportion);
+		var aspectRatio = $("#" + id).width()/$("#" + id).height();
+		
+		var newWrapperHeight = Math.round(newWidth/aspectRatio);
+		var newWrapperWidth = Math.round(newWidth);
+    $(parent).width(newWrapperWidth);
+    $(parent).height(newWrapperHeight);
+		
+		var zoom = VISH.SlidesUtilities.getZoomFromStyle( $("#" + id).attr("style"));
+    
+    if(zoom!=1){
+      newWidth = newWidth/zoom;
+			var newHeight = Math.round(newWidth/aspectRatio);
+			newWidth = Math.round(newWidth);
+    } else {
+			var newHeight = newWrapperHeight;
+			var newWidth = newWrapperWidth;
+		}
+			
+		$("#" + id).width(newWidth);
+		$("#" + id).height(newHeight);
 	}
 	
 	
@@ -355,6 +368,16 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
+	
+	
+	/*
+   * Resize object to fix in its wrapper
+   */
+  var autofixWrapperedObjectAfterZoom = function(object,zoom){
+    var wrapper = $(object).parent();
+		$(object).height($(wrapper).height()/zoom);
+		$(object).width($(wrapper).width()/zoom);
+  }
 	
 	///////////////////////////////////////
   /// OBJECT DRAW: PREVIEWS
@@ -436,9 +459,9 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param area: optional param indicating the area to add the object, used for editing excursions
    * param style: optional param with the style, used in editing excursion
    */
-	var drawObject = function(object, area, style){	
+	var drawObject = function(object, area, style, zoomInStyle){	
 			
-//		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style + " y zoomInStyle " + zoomInStyle);		
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
@@ -501,8 +524,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			case "IFRAME":
-				//drawIframeObjectWithWrapper(object, current_area, object_style);
-				drawObjectWithWrapper(object, current_area, object_style);
+				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 				
 			default:
@@ -515,7 +537,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/**
 	 * param style: optional param with the style, used in editing excursion
 	 */
-	var drawObjectWithWrapper = function(wrapper, current_area, style){
+	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
 	 
 		var template = V.Editor.getTemplate(current_area);
 		var nextWrapperId = V.Editor.getId();
@@ -570,6 +592,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		_adjustWrapperOfObject(idToResize, current_area);
 
+
+    //Add toolbar
+		VISH.Editor.Tools.loadToolbarForObject(wrapper);
+  
+	  if(zoomInStyle){
+      $(wrapperTag).attr('style', zoomInStyle);
+			VISH.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
+    }
+	
 	};
 	
 	
@@ -580,6 +611,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		renderObjectPreview  : renderObjectPreview,
 		getObjectInfo			   : getObjectInfo,
 		resizeObject 			   : resizeObject,
+		autofixWrapperedObjectAfterZoom : autofixWrapperedObjectAfterZoom,
 		drawPreview          : drawPreview,
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,

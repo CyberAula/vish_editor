@@ -91,6 +91,12 @@ VISH.Editor = (function(V,$,undefined){
       $(document).on('click','#save', _onSaveButtonClicked);
       $(document).on('click','.editable', _onEditableClicked);
       $(document).on('click','.selectable', _onSelectableClicked);
+			
+//			var notSelectable = $(document).find('div').not('.selectable');
+//			$(notSelectable).on('click', function(event) {
+//        console.log("Not selectable clicked!");
+//      });
+			
       $(document).on('click','.delete_content', _onDeleteItemClicked);
       $(document).on('click','.delete_slide', _onDeleteSlideClicked);
       //arrows in button panel
@@ -124,6 +130,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.AvatarPicker.init();
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
+		V.Editor.Tools.init();
 
 	
 		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
@@ -479,7 +486,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		
-	VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
+	//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 	
 		//VISH.Debugging.log("slide es: " + slide );
@@ -497,13 +504,13 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	/**
-	 * function called when user clicks on an editable element
+	 * Function called when user clicks on an editable element
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
 	var _onEditableClicked = function(event){
 		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
-		params['current_el'] = $(this);
+		setCurrentArea($(this));
 				
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
@@ -517,7 +524,7 @@ VISH.Editor = (function(V,$,undefined){
 				
 		//add zone attr to the a elements to remember where to add the content
 		content.find("a").each(function(index, domElem) {
-			$(domElem).attr("zone", params['current_el'].attr("id"));
+			$(domElem).attr("zone", getCurrentArea().attr("id"));
 		});
 		
 		$(this).html(content);
@@ -530,9 +537,9 @@ VISH.Editor = (function(V,$,undefined){
     	'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
-				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_pic_from_url');
 			}
 		});
@@ -544,7 +551,7 @@ VISH.Editor = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_object_from_url');
 			}
 		});
@@ -556,7 +563,7 @@ VISH.Editor = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				loadTab('tab_video_from_url');
 			}
 		});
@@ -568,7 +575,7 @@ VISH.Editor = (function(V,$,undefined){
       'padding' : 0,
       "onStart"  : function(data) {
         var clickedZoneId = $(data).attr("zone");
-        params['current_el'] = $("#" + clickedZoneId);
+        setCurrentArea($("#" + clickedZoneId));
         loadTab('tab_live_webcam');
       }
     });
@@ -579,8 +586,8 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on the delete icon of the zone
    */
   var _onDeleteItemClicked = function(){
-  	params['current_el'] = $(this).parent();
-  	$("#image_template_prompt").attr("src", VISH.ImagesPath + params['current_el'].attr("type") + ".png");
+		setCurrentArea($(this).parent());
+  	$("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
   	$.fancybox(
 			$("#prompt_form").html(),
 			{
@@ -594,10 +601,10 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
 						$("#prompt_answer").val("false");
-						params['current_el'].html("");					
+						getCurrentArea().html("");					
 						$(".theslider").hide();	
-						params['current_el'].removeAttr("type");
-						params['current_el'].addClass("editable");
+						getCurrentArea().removeAttr("type");
+						getCurrentArea().addClass("editable");
 					}
 				}
 			}
@@ -641,55 +648,27 @@ VISH.Editor = (function(V,$,undefined){
    * function called when user clicks on template zone with class selectable
    * we change the border to indicate this zone has been selected and show the slider if the type is an image
    */
-  var _onSelectableClicked = function(){  
-  	_removeSelectableProperties();
-			
-  	$(this).css("cursor", "auto");
-  	//add menuselect and delete content button
-  	$(this).find(".menuselect_hide").show();
-  	$(this).find(".delete_content").show();
-  		
-  	//show sliders  	
-		var the_id;
-		switch($(this).attr("type")){
-			case "image":
-				the_id = $(this).find("img").attr("id");
-				break;
-			case "object":
-				the_id = $(this).find(".object_wrapper").attr("id");
-				break;
-		  case "snapshot":
-        the_id = $(this).find(".snapshot_wrapper").attr("id");
-        break;
-			case "video":
-				the_id = $(this).find("video").attr("id");
-				break;
-			default:
-			  the_id = null;
-			  break;
-		}
-  		
-		if(the_id){
-			//the id is "draggableunicID_1" we want to remove "draggable"
-      the_id = the_id.substring(9);
-      $("#sliderId" + the_id).show(); 
-		}
- 		
-  	//add css
-  	$(this).css("border-color", "rgb(255, 2, 94)");
-		$(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(this).css("outline", "0");
-		$(this).css("outline", "thin dotted \9");
+  var _onSelectableClicked = function(){
+		setCurrentArea($(this));	
+		_removeSelectableProperties($(this));
+		_addSelectableProperties($(this));
+		VISH.Editor.Tools.loadZoneTools($(this));
   };
   
-  var _removeSelectableProperties = function(){  	
-  	$(".theslider").hide();
-  	$(".menuselect_hide").hide();
-  	$(".delete_content").hide();
-  	
-  	//remove css
+	
+	 var _addSelectableProperties = function(zone){
+    //add selectable css
+    $(zone).css("cursor", "auto");
+    $(zone).css("border-color", "rgb(255, 2, 94)");
+    $(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("outline", "0");
+    $(zone).css("outline", "thin dotted \9");
+  };
+	
+  var _removeSelectableProperties = function(zone){
+  	//Remove selectable css
 	  $(".selectable").css("border-color", "none");
 		$(".selectable").css("-webkit-box-shadow", "none");
 		$(".selectable").css("-moz-box-shadow", "none");
@@ -798,9 +777,14 @@ VISH.Editor = (function(V,$,undefined){
 							element.sources = sources;
 		      } else if(element.type=="object"){
 		    	    var object = $(div).find(".object_wrapper").children()[0];
-							$(object).removeAttr("style");
-		    	    element.body   = VISH.Utils.getOuterHTML(object);
+							var myObject = $(object).clone();
+							$(myObject).removeAttr("style");
+		    	    element.body   = VISH.Utils.getOuterHTML(myObject);
 		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
+							var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
+							if(zoom!=1){
+								element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom);
+							}
 		      } else if (element.type=="openquestion") {	   
 		      		element.title   = $(div).find(".title_openquestion").val();
 		        	element.question   = $(div).find(".value_openquestion").val();
@@ -940,8 +924,8 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}	else if(params['current_el']){
-			return params['current_el'].parent().attr('template');
+		}	else if(getCurrentArea()){
+			return getCurrentArea().parent().attr('template');
 		}
 		return null;
 	}
@@ -952,6 +936,10 @@ VISH.Editor = (function(V,$,undefined){
     }
     return null;
   }
+	
+	var setCurrentArea = function(area){
+		params['current_el'] = area;
+	}
   
 	var getSavedExcursion = function() {
 		if(saved_excursion){

@@ -260,6 +260,42 @@ img {
     z-index: 1000;
 }
 
+.li_mch_option {
+	
+	list-style:none;
+}
+
+.header_truefalse_question {
+	background: none repeat scroll 0 0 #F9F9F9;
+    border-radius: 4px 4px 0 0;
+    color: #FF005D;
+    display: block;
+    font-family: Helvetica;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    text-decoration: none;	
+}
+
+.truefalse_quiz_table {
+	width: 600px;
+	border-collapse: collapse;
+}
+
+.truefalse_quiz_table td th {
+	border:none;
+}
+
+.truefalse_quiz_table th {
+	background-color: #000;
+	color:#fff;
+	border-left:5%;
+}
+
+.truefalse_quiz_table td {
+	background-color: #FFF;
+	color:#000;
+}
 	
 #config_div {
 	background: url(/images/config.png);
@@ -887,6 +923,7 @@ div.object_wrapper{
 	border: 10px #9E1F63 solid;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 .objectPreview , .preview_video { 
@@ -1392,13 +1429,14 @@ iframe.snapshot_content{
 	width    : 1024px;
   height   : 12000px;
 	overflow: hidden;
-	zoom: 1.0;
   -moz-transform: scale(1.0);
   -moz-transform-origin: 0 0;
   -o-transform: scale(1.0);
   -o-transform-origin: 0 0;
   -webkit-transform: scale(1.0);
   -webkit-transform-origin: 0 0;
+	-ms-transform: scale(1.0);
+	-ms-transform-origin: 0 0;
 }
 
 .selectedThumbnail {
