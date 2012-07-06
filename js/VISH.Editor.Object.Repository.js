@@ -1,13 +1,13 @@
 VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
-  var carrouselDivId = "tab_flash_repo_content_carrousel";
-  var previewDivId = "tab_flash_repo_content_preview";
-	var footId = "tab_flash_repo_content_preview_foot";
+  var carrouselDivId = "tab_object_repo_content_carrousel";
+  var previewDivId = "tab_object_repo_content_preview";
+	var footId = "tab_object_repo_content_preview_foot";
   var currentObject = new Array();
   var selectedObject = null;
   
   var init = function(){
-    var myInput = $("#tab_flash_repo_content").find("input[type='search']");
+    var myInput = $("#tab_object_repo_content").find("input[type='search']");
 	  $(myInput).watermark('Search content');
 	  $(myInput).keydown(function(event) {
 	    if(event.keyCode == 13) {
@@ -18,7 +18,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   }
 	
   var onLoadTab = function(){
-    var previousSearch = ($("#tab_flash_repo_content").find("input[type='search']").val()!="");
+    var previousSearch = ($("#tab_object_repo_content").find("input[type='search']").val()!="");
 		if(! previousSearch){
 		  _cleanObjectPreview();
 	    _requestInicialData();
@@ -30,18 +30,18 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
-    VISH.Editor.API.requestRecomendedFlashes(_onDataReceived, _onAPIError);
+    VISH.Editor.API.requestRecomendedObjects(_onDataReceived, _onAPIError);
   }
 	
   /*
    * Request data to the server.
    */
   var _requestData = function(text){
-    VISH.Editor.API.requestFlashes(text, _onDataReceived, _onAPIError);
+    VISH.Editor.API.requestObjects(text, _onDataReceived, _onAPIError);
   }
 	
   /*
-   * Fill tab_flash_repo_content_carrousel div with server data.
+   * Fill tab_object_repo_content_carrousel div with server data.
    */
   var _onDataReceived = function(data){
 	  
@@ -57,14 +57,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
     var content = "";
     
-		if((!data.flashes)||(data.flashes.length==0)){
+		if((!data)||(data.length==0)){
       $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
       $("#" + carrouselDivId).show();
 			return;
     } 
 		
-    $.each(data.flashes, function(index, object) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(object.content)
+    $.each(data, function(index, objectItem) {
+      var objectInfo = VISH.Editor.Object.getObjectInfo(objectItem.object)
       var imageSource = null;        
       
       switch (objectInfo.type){
@@ -86,10 +86,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      break;
       }
 			
-      var myImg = $("<img src='" + imageSource + "' objectId='" + object.id + "'>")
+      var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "'>")
 			carrouselImages.push(myImg)
-			carrouselImagesTitles.push(object.title)
-      currentObject[object.id]=object;
+			carrouselImagesTitles.push(objectItem.title)
+      currentObject[objectItem.id]=objectItem;
     });
 
     VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
@@ -114,15 +114,17 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
-		var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].content)
-		_renderObjectPreview(renderedObject,currentObject[objectId]);
-		selectedObject = currentObject[objectId];	
+		if(typeof objectId != "undefined"){
+			var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].object);
+      _renderObjectPreview(renderedObject,currentObject[objectId]);
+      selectedObject = currentObject[objectId]; 
+		}
   }
   
   
   var _renderObjectPreview = function(renderedObject,object){
-    var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-	  var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+    var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+	  var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
 	  $(objectArea).html("");
 	  $(metadataArea).html("");
 	  if((renderedObject)&&(object)){
@@ -134,8 +136,8 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   }
 	
 	var _cleanObjectPreview = function(){
-		var objectArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_flash");
-    var metadataArea = $("#" + previewDivId).find("#tab_flash_repo_content_preview_metadata");
+		var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
+    var metadataArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_metadata");
     $(objectArea).html("");
     $(metadataArea).html("");
     $("#" + footId).find(".okButton").hide();
@@ -144,7 +146,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
   
   var addSelectedObject = function(){
     if(selectedObject!=null){
-      VISH.Editor.Object.drawObject($(selectedObject.content));
+      VISH.Editor.Object.drawObject(selectedObject.object);
       $.fancybox.close();
     }
   }

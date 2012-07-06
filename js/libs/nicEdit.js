@@ -485,11 +485,12 @@ var nicEditorInstance = bkClass.extend({
 		return (window.getSelection) ? window.getSelection() : document.selection
 	},
 	getRng : function() {
+		//Vish Fix
 		var A = this.getSel();
-		if(!A) {
-			return null
-		}
-		return (A.rangeCount > 0) ? A.getRangeAt(0) : A.createRange()
+    if((!A)||(!A.rangeCount)||(!A.getRangeAt)||(!A.createRange)) {
+      return null
+    }
+    return (A.rangeCount > 0) ? A.getRangeAt(0) : A.createRange()
 	},
 	selRng : function(A, B) {
 		if(window.getSelection) {
@@ -501,6 +502,12 @@ var nicEditorInstance = bkClass.extend({
 	},
 	selElm : function() {
 		var C = this.getRng();
+		
+		//Vish Fix
+		if(!C){
+			return null;
+		}
+		
 		if(C.startContainer) {
 			var D = C.startContainer;
 			if(C.cloneContents().childNodes.length == 1) {
@@ -755,6 +762,12 @@ var nicEditorButton = bkClass.extend({
 	},
 	
 	checkNodes : function(e) {
+		
+		//Vish Fix
+		if(!e){
+			return;
+		}
+		
 		var elm = e;	
 		do {
 			if(this.options.tags && bkLib.inArray(this.options.tags,elm.nodeName)) {

@@ -51,6 +51,7 @@
 	border: none;
 }
 
+
 .t1_swf{
 	width: 100%;
 	height: 100%;
@@ -144,6 +145,7 @@
 	height: 100%;
 	border: none;
 }
+
 
 .t3_applet{
 	width: 100%;
@@ -524,90 +526,169 @@
 
 
 /*
- * Special iframe
- */
-
-
-div.special {
-    width    : 600px;
-    height   : 485px;
-    overflow : hidden;
-    position : relative;
-		margin-top: 60px;
-		margin-left: 60px;
-}
-
-iframe.special{
-    position : absolute;
-    top      : -150px;
-    left     : -190px;
-    width    : 1280px !important;
-    height   : 1200px !important;
-		overflow: hidden;
-}
-
-
-/*
 	OPEN QUESTION SLIDE
 	by Enrique Barra
 
 	css for quiz slide containing only question, name and answer
+*/
+
+.t10_left{
+	margin-top: 2%;
+	position:relative;
+	width: 80%;
+	height: 70%;
+	float: left;
+	overflow:hidden;	
+}
+
+.t10_header{
+	height: 10%;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+	z-index: 10px;
+}
+
 
 .question_title{
-	padding-top: .2em;
- 	padding-bottom: .3em;
-	margin-top: -.2em;
-	margin-left: -60px;
-	padding-left: 60px;
-	margin-right: -60px;
-	padding-right: 60px;
-	font-size: 1.500em;
-	min-height: 24px;
-	width: 99%;
+	padding-top: 2%;
+ 	padding-bottom: 2%;
+	margin-top: -2%;
+	margin-left: 2%;
+	margin-left: -1%;
+	padding-left: 1%;
+	margin-right: -1%;
+	padding-right: 1%;
+	/*
+	min-height: 24px; */
+	width: 98%;
+	font-size: 2em;
+	font-weight: bold;
+	text-align:center; 
+	text-decoration: underline; 
+}
+
+.question{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	text-align: justify;
+	
+	color: black;
+	
+	font-size: 1.5em;
+	line-height:110%;
+	width: 95%;
+	display: block;
+	
 }
 
 .question_name{
+	padding-top: 3%;
+	padding-bottom: 1%;
 	text-align: justify;
 	color: black;
-	font-size: 18px;
+	font-size: 1.3em;
 	display: block;
 }
 
 .question_name_input{
-	width: 600px;
+	
+	font-size: 1.2em;
+	width: 95%;
+	position:relative;
 }
 
 .question_answer{
+		
 	text-align: justify;
+	padding-top: 3%;
+	padding-bottom: 1%;
+	width: 95%;
 	color: black;
-	font-size: 18px;
+	font-size: 1.3em;
 	display: block;
 }
 
 .question_answer_input{
-	width: 600px;
-	height: 300px;
+	
+	width: 95%;
+	height: 40%;
+	color: black;
+	font-size: 1.2em;
 	display: block;
 }
 
 .question_button{
-	margin-left: 300px;
-}
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 45%;
+	color: black;
+	font-size: 1.2em; 
+	/*margin-left:auto;
+	margin-right:auto; */
+	}
 
-	MULTIPLE CHOICE	QUESTION SLIDE
+/*	MULTIPLE CHOICE	QUESTION SLIDE
 	by Enrique Barra
 
 	css for quiz slide containing only question, and multiple choice answers
+*/
 
+.t11_left{
+	margin-top: 2%;
+	position:relative;
+	width: 80%;
+	height: 70%;
+	float: left;
+	overflow:hidden;	
+}
+
+
+.t11_header{
+	height: 10%;
+	width: 100%;
+	overflow:hidden;	
+	position: relative;
+	z-index: 10px;
+
+}
 .mc_answer{
 	text-align: justify;
 	color: black;
-	font-size: 18px;
+	font-size: 1.2em;
 	display: block;
 }
 
 .mc_answer input{
-	margin: 3px 10px 0px 5px;
+	margin: 1% 2% 0% 1%;
 }
 
-*/
+
+
+
+
+
+
+/* Snapshots */
+
+div.snapshot_wrapper_viewer{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position : relative;
+}
+
+iframe.snapshot_content_viewer{
+  border: none;
+  position : absolute;
+  width    : 1024px;
+  height   : 12000px;
+  overflow: hidden;
+  
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  
+}
+

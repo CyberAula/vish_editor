@@ -2,7 +2,7 @@
  * Configure Standalone Vish Editor
  */
 var configuration = {};
-configuration["presentationSettings"] = true;
+configuration["presentationSettings"] = false;
 configuration["presentationTags"] = true;
 configuration["presentationThumbnails"] = true;
 
@@ -17,10 +17,11 @@ configuration["Vimeo"] = false;
 
 configuration["VishIntegration"] = true;
 
+/*
 $.getScript("/js/lang/translations.Vish.es.js", function(){
   configuration["translation"] = i18n_Vish;
 });
-
+*/
 
 
 VISH.Configuration = (function(V,$,undefined){
@@ -46,8 +47,8 @@ VISH.Configuration = (function(V,$,undefined){
    if(!configuration["Vish"]){
       $("#tab_pic_upload").css("display","none");
 			$("#tab_pic_repo").css("display","none");
-			$("#tab_flash_upload").css("display","none");
-      $("#tab_flash_repo").css("display","none");
+			$("#tab_object_upload").css("display","none");
+      $("#tab_object_repo").css("display","none");
 			$("#tab_video_repo").css("display","none");
 			$(".addLive").css("display","none");
     } else {
@@ -57,11 +58,11 @@ VISH.Configuration = (function(V,$,undefined){
 			}
 			if(!configuration["VishUpload"]){
 				$("#tab_pic_upload").css("display","none");
-        $("#tab_flash_upload").css("display","none");
+        $("#tab_object_upload").css("display","none");
       }
 			if(!configuration["VishRepo"]){
         $("#tab_pic_repo").css("display","none");
-        $("#tab_flash_repo").css("display","none");
+        $("#tab_object_repo").css("display","none");
 				$("#tab_video_repo").css("display","none");
       }
 		}

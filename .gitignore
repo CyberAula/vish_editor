@@ -4,3 +4,4 @@
 rails/compiler/
 .settings
 .rvmrc
+.externalToolBuilders/

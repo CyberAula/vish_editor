@@ -31,6 +31,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
 			}
+			else if(slide.elements[el].type === "snapshot"){
+        content += _renderSnapshot(slide.elements[el],slide.template);
+        classes += "snapshot ";
+      }
 			else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
@@ -40,10 +44,15 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "flashcard";
 			}
 			else if(slide.elements[el].type === "openquestion"){
-				content = _renderOpenquestion(slide.elements[el],slide.template);
+				content += _renderOpenquestion(slide.elements[el],slide.template);
+				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
-				content = _renderMcquestion(slide.elements[el],slide.template);
+				content += _renderMcquestion(slide.elements[el],slide.template);
+				classes +="mcquestion";
+			}
+			else{
+				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
 
@@ -55,6 +64,13 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderText = function(element, template){
 		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+	};
+	
+	/**
+	 * Function to render empty inside an article (a slide)
+	 */
+	var _renderEmpty = function(element, template){
+		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'></div>";
 	};
 
 	/**
@@ -102,18 +118,21 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderObject = function(element, template){
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+element['areaid']+ "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>";
+		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
+		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
-	
 	
 	/**
-	 * Function to render an iframe inside an article (a slide)	 * 
-	 * when entering a slide with an iframe class we call V.SWFPlayer.loadIframe (see VISH.SlideManager._onslideenter) and it will add the src inside the div
-	 */
-	var _renderIframe = function(element, template){
-		var to_return = '<div id="'+element['id']+'" class="iframeelement '+template+'_'+element['areaid']+'" templateclass="'+template+'_iframe'+'" src="'+element['body']+'"></div>';
-		return to_return;
-	};
+   * Function to render an snapshot inside an article (a slide)
+   */
+  var _renderSnapshot = function(element, template){
+    var style = (element['style'])? element['style'] : "";
+    var body = element['body'];
+		var scrollTop = (element['scrollTop'])? element['scrollTop'] : 0;
+		var scrollLeft = (element['scrollLeft'])? element['scrollLeft'] : 0;
+    return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
+  };
+	
 
 	/**
 	 * Function to render an applet inside an article (a slide)
@@ -137,17 +156,17 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an open question form inside an article (a slide)
 	 */
 	var _renderOpenquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['title']+"</div>";
-		//var ret = "<div id='"+element['id']+"' class='question_title'>"+element['body']+"</div>";
-		ret += "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question'> Question: "+element['question']+"  </label>";				
-		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<input id='pupil_name' class='question_name_input'></input>";
-		ret += "<label class='question_answer'>Answer: </label>";
-		ret += "<textarea class='question_answer_input'></textarea>";
+		
+		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
+			ret += "<label class='question_name'>Name:  </label>";
+			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+			ret += "<label class='openquestion'> Question: "+element['question']+"  </label>";				
+		
+			ret += "<label class='label_question'>Answer: </label>";
+			ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
 		
 		
-		ret += "<button type='button' class='question_button'>Send</button>";
+			ret += "<button type='button' class='question_button'>Send</button>";
 		
 		
 		return ret;		
@@ -157,17 +176,36 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
 	var _renderMcquestion = function(element, template){
-		var ret = "<div id='"+element['id']+"' class='question_title'>"+element['question']+"</div>";
-		ret += "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name: </label>";
-		ret += "<input id='pupil_name' class='question_name_input'></input>";
+		var next_num=0;
+		
+		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		
+		ret += "<div class='mcquestion_container'>";
+		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+		
+		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+		//ret += "<label class='question_name'>Name:  </label>";
+		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
-			ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
+			var next_num = i;
+		var next_index = "a".charCodeAt(0) + (next_num); 
+		next_index = String.fromCharCode(next_index);
+			
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		
 		}
 		
-		ret += "<button type='button' class='question_button'>Send</button>";
+		ret += "</div>";
+		ret += "<div class='mcquestion_right'>";
+		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+		ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+		
+		ret += "</div>";
+		ret += "</form>";
+		ret += "</div>";
 		return ret;
 	};
 

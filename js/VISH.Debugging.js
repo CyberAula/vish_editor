@@ -6,8 +6,8 @@ VISH.Debugging = (function(V,$,undefined){
 	
 	//CONFIGURATION VARIABLES
 	
-	//Possible actions: "view" or "edit".
-	var actionSave = "view"; 
+	//Possible actions: "view", "edit" or "nothing".
+	var actionSave = "view";
 	
 	//Possible action: "nothing" or "loadSamples".
 	var actionInit = "nothing";
@@ -59,6 +59,52 @@ VISH.Debugging = (function(V,$,undefined){
 		return excursionSamples;
 	}
 	
+	var initVishViewer = function(){
+		var myexcursion = null;
+		
+		if(VISH.Editing){
+			myexcursion = VISH.Editor.saveExcursion();
+		} else {
+			log("You are already in Vish Viewer");
+      return;
+		}
+		
+    $('article').remove();
+    $('#menubar').hide();
+    $('#menubar_helpsection').hide();
+    $('#joyride_help_button').hide();
+    $('.theslider').hide();
+    $(".nicEdit-panelContain").hide();
+    $("#menubar-viewer").show();
+		VISH.Debugging.log("Init Vish Viewer with excursion: " + JSON.stringify(myexcursion));
+		VISH.SlideManager.init(myexcursion);
+	}
+	
+	var initVishEditor = function(){
+		
+		var myexcursion = null;
+		
+		if(VISH.Editing){
+      log("You are already in Vish Editor");
+			return;
+    } else {
+			myexcursion = VISH.Editor.getSavedExcursion();
+    }
+		
+		$('article').remove();
+		$('#menubar').show();
+    $('#menubar_helpsection').show();
+    $('#joyride_help_button').show();
+    $('.theslider').show();
+    $(".nicEdit-panelContain").show();
+    $("#menubar-viewer").hide();
+    var options = {};
+    options["developping"] = true;
+		options["configuration"] = configuration;
+		VISH.Debugging.log("Init Vish Editor with excursion: " + JSON.stringify(myexcursion));
+    VISH.Editor.init(options, myexcursion);
+  }
+	
 	return {
 		init                    : init,
 		log                     : log,
@@ -68,7 +114,9 @@ VISH.Debugging = (function(V,$,undefined){
 		isDevelopping           : isDevelopping,
 		getActionSave           : getActionSave,
 		getActionInit           : getActionInit,
-		getExcursionSamples     : getExcursionSamples
+		getExcursionSamples     : getExcursionSamples,
+		initVishViewer          : initVishViewer,
+		initVishEditor          : initVishEditor
 	};
 
 }) (VISH, jQuery);

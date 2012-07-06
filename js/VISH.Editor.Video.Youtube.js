@@ -165,7 +165,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
    var video_embedded = "http://www.youtube.com/embed/"+videoId;
    current_area=  VISH.Editor.getCurrentArea();
    var width_height = VISH.SlidesUtilities.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
-   var wrapper = "<iframe src='"+video_embedded+"?wmode=transparent' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
+   var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
    return wrapper;
  }
  
@@ -180,7 +180,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
  
   var _generatePreviewWrapper = function (videoId) {
    var video_embedded = "http://www.youtube.com/embed/"+videoId;
-   var wrapper = '<iframe class="objectPreview" type="text/html" src="'+video_embedded+'?wmode=transparent" frameborder="0"></iframe>';
+   var wrapper = '<iframe class="objectPreview" type="text/html" src="'+video_embedded+'?wmode=opaque" frameborder="0"></iframe>';
    return wrapper;
  }
  

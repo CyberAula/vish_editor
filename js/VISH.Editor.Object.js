@@ -1,9 +1,9 @@
 VISH.Editor.Object = (function(V,$,undefined){
 		
 	var contentToAdd = null;
-  var uploadDivId = "tab_flash_upload_content";
-  var urlDivId = "tab_flash_from_url_content";
-  var urlInputId = "flash_embed_code";
+  var uploadDivId = "tab_object_upload_content";
+  var urlDivId = "tab_object_from_url_content";
+  var urlInputId = "object_embed_code";
 		
 	var init = function(){
 
@@ -11,6 +11,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		VISH.Editor.Object.Live.init();
 		VISH.Editor.Object.Web.init();
 		VISH.Editor.Object.PDF.init();
+		VISH.Editor.Object.Snapshot.init();
 		
 	  var urlInput = $(urlDivId ).find("input");
 	  $(urlInput).watermark('Paste SWF file URL');
@@ -31,7 +32,8 @@ VISH.Editor.Object = (function(V,$,undefined){
     var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     
     $("#" + uploadDivId + " input[name='document[file]']").change(function () {
-      $("#" + uploadDivId + " input[name='document[title]']").val($("#" + uploadDivId + " input:file").val());
+			var filterFilePath = VISH.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
+      $("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
       _resetUploadFields();
       $(tagList).parent().show();
       $("#" + uploadDivId + ' form' + ' .button').show();
@@ -308,25 +310,29 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/*
 	 * Resize object and its wrapper automatically
 	 */
-	var resizeObject = function(id,width){
-		var proportion = $("#" + id).height()/$("#" + id).width();
-			
-		$("#" + id).width(width);
-		$("#" + id).height(width*proportion);
-		
+	var resizeObject = function(id,newWidth){
 		var parent = $("#" + id).parent();
-		$(parent).width(width);
-		$(parent).height(width*proportion);
+		var aspectRatio = $("#" + id).width()/$("#" + id).height();
+		
+		var newWrapperHeight = Math.round(newWidth/aspectRatio);
+		var newWrapperWidth = Math.round(newWidth);
+    $(parent).width(newWrapperWidth);
+    $(parent).height(newWrapperHeight);
+		
+		var zoom = VISH.SlidesUtilities.getZoomFromStyle( $("#" + id).attr("style"));
+    
+    if(zoom!=1){
+      newWidth = newWidth/zoom;
+			var newHeight = Math.round(newWidth/aspectRatio);
+			newWidth = Math.round(newWidth);
+    } else {
+			var newHeight = newWrapperHeight;
+			var newWidth = newWrapperWidth;
+		}
+			
+		$("#" + id).width(newWidth);
+		$("#" + id).height(newHeight);
 	}
-	
-	/*
-   * Resize object and its wrapper automatically
-   */
-  var resizeWebIframe = function(id,width){
-    var proportion = $("#" + id).height()/$("#" + id).width();
-    $("#" + id).width(width);
-    $("#" + id).height(width*proportion);
-  }
 	
 	
 	/*
@@ -363,6 +369,16 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	
+	
+	/*
+   * Resize object to fix in its wrapper
+   */
+  var autofixWrapperedObjectAfterZoom = function(object,zoom){
+    var wrapper = $(object).parent();
+		$(object).height($(wrapper).height()/zoom);
+		$(object).width($(wrapper).width()/zoom);
+  }
+	
 	///////////////////////////////////////
   /// OBJECT DRAW: PREVIEWS
   ///////////////////////////////////////
@@ -380,7 +396,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					  break;
 					
           case "swf":
-            return "<embed class='objectPreview' src='" + object + "' wmode='transparent' ></embed>"
+            return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>"
             break;
           
 				 case "pdf":
@@ -426,7 +442,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
     $(wrapperPreview).addClass('objectPreview')
-    $(wrapperPreview).attr('wmode','transparent')
+    $(wrapperPreview).attr('wmode','opaque')
     $(wrapperPreview).removeAttr('width')
     $(wrapperPreview).removeAttr('height')
     return wrapperPreview;
@@ -443,9 +459,9 @@ VISH.Editor.Object = (function(V,$,undefined){
    * param area: optional param indicating the area to add the object, used for editing excursions
    * param style: optional param with the style, used in editing excursion
    */
-	var drawObject = function(object, area, style){	
+	var drawObject = function(object, area, style, zoomInStyle){	
 			
-		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style)		
+		VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style + " y zoomInStyle " + zoomInStyle);		
 			
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
@@ -508,8 +524,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			case "IFRAME":
-				//drawIframeObjectWithWrapper(object, current_area, object_style);
-				drawObjectWithWrapper(object, current_area, object_style);
+				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 				
 			default:
@@ -522,7 +537,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/**
 	 * param style: optional param with the style, used in editing excursion
 	 */
-	var drawObjectWithWrapper = function(wrapper, current_area, style){
+	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
 	 
 		var template = V.Editor.getTemplate(current_area);
 		var nextWrapperId = V.Editor.getId();
@@ -539,7 +554,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
 		$(wrapperTag).attr('class', template + "_object");
-		$(wrapperTag).attr('wmode', "transparent");
+		$(wrapperTag).attr('wmode', "opaque");
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
@@ -577,69 +592,17 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		_adjustWrapperOfObject(idToResize, current_area);
 
+
+    //Add toolbar
+		VISH.Editor.Tools.loadToolbarForObject(wrapper);
+  
+	  if(zoomInStyle){
+      $(wrapperTag).attr('style', zoomInStyle);
+			VISH.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
+    }
+	
 	};
 	
-	
-	/**
-   * param style: optional param with the style, used in editing excursion
-   */
-  var drawIframeObjectWithWrapper = function(wrapper, current_area, style){
-   
-	  VISH.Debugging.log("drawIframeObjectWithWrapper")
-	 
-    var template = V.Editor.getTemplate(current_area);
-    var nextWrapperId = V.Editor.getId();
-    var idToDrag = "draggable" + nextWrapperId;
-    var idToResize = "resizable" + nextWrapperId;
-    current_area.attr('type', 'iframe');
-    var wrapperDiv = document.createElement('div');
-    wrapperDiv.setAttribute('id', idToDrag);
-    if(style){
-      wrapperDiv.setAttribute('style', style);
-    }
-    $(wrapperDiv).addClass('iframe_wrapper');
-
-    var iframeTag = $(wrapper);
-    $(iframeTag).attr('id', idToResize);
-		$(iframeTag).attr('class', 'iframe_content');
-		$(iframeTag).attr('scrolling', 'no');
-    $(iframeTag).attr('wmode', "transparent");
-
-    $(current_area).html("");
-    $(current_area).append(wrapperDiv);
-
-    VISH.Editor.addDeleteButton($(current_area));
-      
-    $(wrapperDiv).append(iframeTag);
-    
-    //RESIZE
-    var width, value;
-    if(style){
-       width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
-       value = 10*width/$(current_area).width();
-    } else {      
-      value = 10; //we set it to the maximum value
-    }
-    var mystep = $(current_area).width()/10; //the step to multiply the value
-    $("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-
-    $("#imageSlider" + nextWrapperId).slider({
-      from : 1,
-      to : 10,
-      step : 0.2,
-      round : 1,
-      dimension : "x",
-      skin : "blue",
-      onstatechange : function(value) {
-        resizeWebIframe(idToDrag, mystep * value);
-      }
-    });
-
-//    $("#" + idToDrag).draggable({
-//      cursor : "move"
-//    });
-
-  };
 	
 	return {
 		init					       : init,
@@ -648,6 +611,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		renderObjectPreview  : renderObjectPreview,
 		getObjectInfo			   : getObjectInfo,
 		resizeObject 			   : resizeObject,
+		autofixWrapperedObjectAfterZoom : autofixWrapperedObjectAfterZoom,
 		drawPreview          : drawPreview,
 		resetPreview         : resetPreview,
 		drawPreviewElement   : drawPreviewElement,

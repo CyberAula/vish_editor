@@ -6,6 +6,7 @@ VISH.Excursion = (function(V,undefined){
 	 * Initialize renderer and call it to render each slide
 	 */
 	var init = function(slides){
+		
 		mySlides = slides;		
 		V.Renderer.init();
 

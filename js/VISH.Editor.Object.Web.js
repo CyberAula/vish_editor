@@ -1,8 +1,8 @@
 VISH.Editor.Object.Web = (function(V,$,undefined){
 		
 	var contentToAdd = null;	
-	var urlDivId = "tab_flash_from_web_content";
-  var urlInputId = "flash_embedWeb_code";
+	var urlDivId = "tab_object_from_web_content";
+  var urlInputId = "object_embedWeb_code";
 		
 	var init = function(){
 		var urlInput = $(urlDivId ).find("input");
@@ -12,7 +12,7 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
-        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)    
+        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd);  
       }
     });
 		
@@ -31,7 +31,7 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
   }
 	
 	var generateWrapperForWeb = function(url){
-		return "<iframe src='" + url + "'></iframe>"
+		return "<iframe src='" + url + "?wmode=transparent'></iframe>"
 	}
 	
 	var generatePreviewWrapperForWeb = function(url){
