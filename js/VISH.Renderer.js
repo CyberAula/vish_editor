@@ -179,10 +179,11 @@ VISH.Renderer = (function(V,$,undefined){
 		var next_num=0;
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-		ret+= "<h2 class='question'>"+ element['question']+"?</h2>";
-		//add the statistics button here 
 		
-		ret += "<form action='"+element['posturl']+"' method='post'>";
+		ret += "<div class='mcquestion_container'>";
+		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+		
+		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		//ret += "<label class='question_name'>Name:  </label>";
 		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
 		
@@ -192,13 +193,17 @@ VISH.Renderer = (function(V,$,undefined){
 		var next_index = "a".charCodeAt(0) + (next_num); 
 		next_index = String.fromCharCode(next_index);
 			
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio_"+(i+1).toString()+"' value='0'>"+element['options'][i]+"</label>";
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
 		
 		}
 		
+		ret += "</div>";
+		ret += "<div class='mcquestion_right'>";
+		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+		ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
 		
-		ret += "<button type='button' class='question_button'>Send</button>";
+		ret += "</div>";
 		ret += "</form>";
 		ret += "</div>";
 		return ret;
