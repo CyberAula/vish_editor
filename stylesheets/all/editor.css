@@ -513,9 +513,9 @@ img {
 }
 .fancy_tabs{
 	border-bottom: 1px solid #ff005d;
-	border-radius: 5px 5px 0px 0px;
-	moz-border-radius: 5px 5px 0px 0px;
-	webkit-border-radius: 5px 5px 0px 0px;
+	border-radius: 8px 8px 0px 0px;
+	moz-border-radius: 8px 8px 0px 0px;
+	webkit-border-radius: 8px 8px 0px 0px;
 }
 
 .fancy_tabs ul{
@@ -528,9 +528,9 @@ img {
 	line-height: 1.5;
 	font-weight: bold;
 	padding: 0px;
-	border-radius: 5px 5px 0px 0px;
-	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;	
+	border-radius: 8px 8px 0px 0px;
+	-moz-border-radius: 8px 8px 0px 0px;
+	-webkit-border-radius: 8px 8px 0px 0px;	
 }
 
 .fancy_tabs li{
@@ -547,9 +547,9 @@ img {
 	font-size: 16px;
 	font-family: Helvetica;
 	font-weight: bold;
-	border-radius: 5px 5px 0px 0px;
-	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
+	border-radius: 8px 8px 0px 0px;	
+	-moz-border-radius: 8px 8px 0px 0px;	
+	-webkit-border-radius: 8px 8px 0px 0px;	
 	
 }
 
