@@ -513,11 +513,13 @@ img {
 }
 .fancy_tabs{
 	border-bottom: 1px solid #ff005d;
-	background: #f9f9f9;
+	border-radius: 5px 5px 0px 0px;
+	moz-border-radius: 5px 5px 0px 0px;
+	webkit-border-radius: 5px 5px 0px 0px;
 }
 
 .fancy_tabs ul{
-	width: 800px;
+	width: auto;
 	list-style-type: none;
 	background-color: #ffffff;
 	color: #ff005d;
@@ -526,9 +528,9 @@ img {
 	line-height: 1.5;
 	font-weight: bold;
 	padding: 0px;
-	border-radius: 4px 4px 0px 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-	-webkit-border-radius: 4px 4px 0px 0px;	
+	border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;	
 }
 
 .fancy_tabs li{
@@ -545,9 +547,9 @@ img {
 	font-size: 16px;
 	font-family: Helvetica;
 	font-weight: bold;
-	border-radius: 4px 4px 0px 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-	-webkit-border-radius: 4px 4px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
 	
 }
 
@@ -1112,7 +1114,7 @@ textarea {
 	background-image:url(../../images/helptutorial_circle.png);
 	position: absolute;
 	top: 2px;
-	right: 27px;
+	right: 24px;
 	position: absolute;
 	right: 27px;
 	top: 2px;
@@ -1216,8 +1218,8 @@ textarea {
 #help_template_selection {
 	background-image:url(../../images/helptutorial_circle_tp.png);
 	position: absolute;
-	margin-top: -44px;
-	right: 22px;
+	margin-top: -43px;
+	right: 21px;
 }
 
 #help_template_selection:hover {
@@ -1316,7 +1318,7 @@ textarea {
 	position:absolute;
 	margin-top: -50px;
 }
-#flashimagetut {
+#objectimagetut {
 	padding-left: 200px;
 	position:absolute;
 	margin-top: -50px;
