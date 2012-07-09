@@ -186,6 +186,25 @@ VISH.SlideManager = (function(V,$,undefined){
 	var updateStatus = function(slideid, newStatus){
 		slideStatus[slideid] = newStatus;	
 	};
+	/*
+	 * to get the user js object
+	 */
+	
+	var getUser = function(){
+		
+		return user;
+	};
+	
+		/*
+	 * to get the user's status js object
+	 */
+	
+	var getUserStatus = function(){
+		
+		return status;
+	};
+
+
 
 	/**
 	 * Private function that is called when we enter a slide
@@ -277,7 +296,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
-		toggleFullScreen : toggleFullScreen
+		toggleFullScreen : toggleFullScreen, 
+		getUser					: getUser, 
+		getUserStatus			: getUserStatus
 	};
 
 }) (VISH,jQuery);

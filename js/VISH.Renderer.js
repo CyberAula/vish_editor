@@ -52,6 +52,9 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
+				
+				user = VISH.SlideManager.getUser();
+				 VISH.Debugging.log("user role: " + user.role); 
 				content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
 			}
