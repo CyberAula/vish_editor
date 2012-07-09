@@ -9,7 +9,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
 	var init = function(excursion){
-		V.Status.init();
+		//V.Hugo Commented this line because it caused crash
+		//V.Status.init();
 		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
@@ -23,7 +24,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
-				
+		/*//V.Hugo Commented these lines because it caused crash too		
 		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {
@@ -52,7 +53,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		    addEventListener("load", function() {
             	window.scrollTo(0, 1);
     		}, false);
-		}
+		}  end of V.Hugo commented lines  */ 
 	};
 
 	
