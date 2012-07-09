@@ -160,7 +160,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
 			ret += "<label class='question_name'>Name:  </label>";
 			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-			ret += "<label class='openquestion'> Question: "+element['question']+"  </label>";				
+			ret += "<h2 class='question'> Question: "+element['question']+"? </h2>";				
 		
 			ret += "<label class='label_question'>Answer: </label>";
 			ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
