@@ -457,11 +457,82 @@ VISH.Samples = (function(V,undefined){
 			]
 		}
 		]};
+		
+		
+		
+		var samples_vhugo = {
+			
+			"id":5555
+			,"author":"Víctor Hugo"
+			,"slides": [
+			
+			  { 
+			  	"id":"article1",
+			  "template":"t11"
+			  ,"elements":[
+			  		{
+			  			"id":"zone1"
+			  		,"areaid":"header"
+			  		},
+			  		{
+			  			"id":"zone2",
+			  			"type":"mcquestion",
+			  			"areaid":"left",
+			  			"question":"Which is the capital of Brazil",
+			  			"options":[
+			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
+			  			
+			  		}
+		         ]
+		      }, 
+		    { 
+			  	"id":"article2",
+			  "template":"t11"
+			  ,"elements":[
+			  		{
+			  			"id":"zone1"
+			  		,"areaid":"header"
+			  		},
+			  		{
+			  			"id":"zone2",
+			  			"type":"mcquestion",
+			  			"areaid":"left",
+			  			"question":"Which is the capital of Peru",
+			  			"options":[
+			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
+			  			
+			  		}
+		         ]
+		      }, 
+		    { 
+			  	"id":"article3",
+			  "template":"t11"
+			  ,"elements":[
+			  		{
+			  			"id":"zone1"
+			  		,"areaid":"header"
+			  		},
+			  		{
+			  			"id":"zone2",
+			  			"type":"mcquestion",
+			  			"areaid":"left",
+			  			"question":"Which is the capital of Colombia",
+			  			"options":[
+			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
+			  			
+			  		}
+		         ]
+		      }
+		      
+		    ]
+		       
+    };
 
 	return {
 		full_samples  : full_samples,
 		samples   	  : samples,
-		samples_aldo  : samples_aldo
+		samples_aldo  : samples_aldo, 
+		samples_vhugo : samples_vhugo
 	};
 
 })(VISH);
