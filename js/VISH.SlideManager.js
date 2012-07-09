@@ -9,14 +9,14 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 */
 	var init = function(excursion){
-		//V.Hugo Commented this line because it caused crash
-		//V.Status.init();
+		
+		V.Status.init();
 		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
-		_setupSize();
+		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;
@@ -24,7 +24,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
-		/*//V.Hugo Commented these lines because it caused crash too		
+				
 		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {
@@ -32,28 +32,26 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 				
 		$(window).on('orientationchange',function(){
-      		_setupSize();       
+      		V.ViewerAdapter.setupSize();      
     	});
 		
 		if (V.Status.features.fullscreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
 		  $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-      		_setupSize();       
+      		V.ViewerAdapter.setupSize();   
     	  });
 		}	else {
 		  $("#page-fullscreen").hide();
 		}
-		 
 		
-		VISH.SlidesUtilities.updateSlideCounter();
-		//hide page counter (the slides are passed touching)
-		
-		//TODO XXX finally hide address bar if mobile browser		
-		if (V.Status.ua.mobile) {		    
-		    addEventListener("load", function() {
-            	window.scrollTo(0, 1);
-    		}, false);
-		}  end of V.Hugo commented lines  */ 
+	
+		if (V.Status.ua.mobile) {
+    		//hide page counter (the slides are passed touching)
+    		$("#viewbar").hide();
+		}
+		else{
+			VISH.SlidesUtilities.updateSlideCounter();
+		}
 	};
 
 	
@@ -98,54 +96,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		  }
 	};
 	
-	/**
-	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
-	 */
-	var _setupSize = function(){
-		var height = $(window).height()-40; //the height to use is the window height - 40px that is the menubar height
-		var width = $(window).width();
-		var finalW = 800;
-		var finalH = 600;
-		VISH.Debugging.log("height " + height);
-		VISH.Debugging.log("width " + width);
-		var aspectRatio = width/height;
-		var slidesRatio = 4/3;
-		if(aspectRatio > slidesRatio){
-			finalH = height - 40;  //leave 40px free, 20 in the top and 20 in the bottom ideally
-			finalW = finalH*slidesRatio;	
-		}	else {
-			finalW = width - 110; //leave 110px free, at least, 55 left and 55 right ideally
-			finalH = finalW/slidesRatio;	
-		}
-		VISH.Debugging.log("finalH " + finalH);
-		VISH.Debugging.log("finalW " + finalW);
-		$(".slides > article").css("height", finalH);
-		$(".slides > article").css("width", finalW);
-		
-		//margin-top and margin-left half of the height and width
-		var marginTop = finalH/2 + 20;
-		var marginLeft = finalW/2;
-		$(".slides > article").css("margin-top", "-" + marginTop + "px");
-		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
-		
-		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
-		//$(".viewbar").css("left", width/2 + "px");
-		//VISH.Debugging.log("viewbar a " + width/2 + "px");
-		
-		
-		//finally font-size, line-height and letter-spacing of articles
-		//after this change the font sizes of the zones will be relative as they are in ems
-		var increase = finalH/600;
-		$(".slides > article").css("font-size", 16*increase + "px");
-		$(".slides > article").css("line-height", 16*increase + "px");
-		/*$(".slides > article").css("letter-spacing", 1*increase + "px");*/
-		
-		//Snapshot callbacks
-		VISH.SnapshotPlayer.aftersetupSize(increase);
-		
-		//Object callbacks
-		VISH.ObjectPlayer.aftersetupSize(increase);
-	};
+	
 	
 	/**
 	 * function to add enter and leave events
