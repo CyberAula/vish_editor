@@ -4,6 +4,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	var myDoc; //to store document or parent.document depending if on iframe or not
 	//Prevent to load events multiple times.
   	var eventsLoaded = false;
+	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
+	var status = {}; //{token: "token", quiz_active:"4" } quiz_active : number, false
+	
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
@@ -16,9 +19,61 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+	
+		if(options['username']) {
+			
+			user.username = options['username'];
+			user.role  = "logged";
+			if(options['token']){
+				status.token = options['token'];
+			
+				if(options['quiz_active']) {
+					status.quiz_active = options['quiz_active'];
+				} 
+				//when logged + token but no quiz_active
+				else { 
+				//must be false
+				status.quiz_active = options['quiz_active']; 
+				}			
+			
+			}
+			//no token ( when? ) but logged 
+			else {
+			
+				status.token = "";
+				//logged, no token but quiz_active .... ?
+				if(options['quiz_active']) {
+					 	
+					status.quiz_active = options['quiz_active'];
 				
+				}
+			}
+			
+		}  //no username 
+		else {
+		
+			user.username=""; //so no token
+			status.token=""; 
+			
+			//no username but quiz active --> (student) 
+			if(options['quiz_active']) {
+		 		user.role= "student" //logged and no token but quiz active " + options['quiz_active'];
+				status.quiz_active = options['quiz_active'];
+			}
+		//no username no quiz active --> (none)
+			else {
+		 		user.role= "none";
+		 		status.quiz_active = options['quiz_active'];
+		 	} 
+		
+		 }	
+		 
+		 VISH.Debugging.log("username: " + user.username);
+		 VISH.Debugging.log("role: " + user.role);
+		 
+		 
 		mySlides = excursion.slides;
-		V.Excursion.init(options, mySlides);
+		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){

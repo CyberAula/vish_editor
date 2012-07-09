@@ -9,13 +9,9 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer
 	 * Only gets the section element from the html page
 	 */
-	var init        = function(options){
+	var init        = function(){
 		SLIDE_CONTAINER = $('.slides');
-		if(options){
-			username = options['username'];
-			token = options['token'];
-			quiz_active = options['quiz_active'];
-		}
+		
 	}
 
 	/**
@@ -25,7 +21,6 @@ VISH.Renderer = (function(V,$,undefined){
 	var renderSlide = function(slide){
 		var content = "";
 		var classes = "";
-		var hasMcQuiz = false; //var that indicates if a multiple choice quiz has been rendered, to call the init
 		for(el in slide.elements){
 			if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
@@ -59,7 +54,6 @@ VISH.Renderer = (function(V,$,undefined){
 			else if(slide.elements[el].type === "mcquestion"){
 				content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
-				hasMcQuiz = true;
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -67,9 +61,7 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 
 		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
-		if(hasMcQuiz){
-			V.Quiz.init(username, token, quiz_active);
-		}
+		
 	};
 
 	/**
