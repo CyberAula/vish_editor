@@ -1,13 +1,21 @@
 VISH.Renderer = (function(V,$,undefined){
 	
 	var SLIDE_CONTAINER = null;
+	var username = "";
+	var token = "";
+	var quiz_active = "";
 
 	/**
 	 * Function to initialize the renderer
 	 * Only gets the section element from the html page
 	 */
-	var init        = function(){
+	var init        = function(options){
 		SLIDE_CONTAINER = $('.slides');
+		if(options){
+			username = options['username'];
+			token = options['token'];
+			quiz_active = options['quiz_active'];
+		}
 	}
 
 	/**
@@ -17,6 +25,7 @@ VISH.Renderer = (function(V,$,undefined){
 	var renderSlide = function(slide){
 		var content = "";
 		var classes = "";
+		var hasMcQuiz = false; //var that indicates if a multiple choice quiz has been rendered, to call the init
 		for(el in slide.elements){
 			if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
@@ -50,6 +59,7 @@ VISH.Renderer = (function(V,$,undefined){
 			else if(slide.elements[el].type === "mcquestion"){
 				content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
+				hasMcQuiz = true;
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -57,6 +67,9 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 
 		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
+		if(hasMcQuiz){
+			V.Quiz.init(username, token, quiz_active);
+		}
 	};
 
 	/**

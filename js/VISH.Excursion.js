@@ -5,10 +5,10 @@ VISH.Excursion = (function(V,undefined){
 	 * Function to initialize the excursion
 	 * Initialize renderer and call it to render each slide
 	 */
-	var init = function(slides){
+	var init = function(options, slides){
 		
 		mySlides = slides;		
-		V.Renderer.init();
+		V.Renderer.init(options);
 
 		for(var i=0;i<slides.length;i++){
 			V.Renderer.renderSlide(slides[i]);			

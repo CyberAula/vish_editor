@@ -832,7 +832,7 @@ VISH.Editor = (function(V,$,undefined){
         $('.theslider').hide();
         $(".nicEdit-panelContain").hide();
         $("#menubar-viewer").show();
-        VISH.SlideManager.init(excursion);
+        VISH.SlideManager.init({}, excursion);
       } else if (VISH.Debugging.getActionSave()=="edit") {
         $('article').remove();
         var options = {};

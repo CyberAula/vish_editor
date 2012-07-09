@@ -7,15 +7,18 @@ VISH.SlideManager = (function(V,$,undefined){
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
+	 * options is a hash with params and options from the server, example of full options hash:
+	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
-	var init = function(excursion){
+	var init = function(options, excursion){
 		
 		V.Status.init();
 		
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+				
 		mySlides = excursion.slides;
-		V.Excursion.init(mySlides);
+		V.Excursion.init(options, mySlides);
 		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){

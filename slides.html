@@ -81,7 +81,7 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 <script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
 
 <script type="text/javascript" src="js/libs/slides.js"></script>
-<!--<script type="text/javascript" src="js/VISH.Utils.quiz.js"></script> -->
+<script type="text/javascript" src="js/VISH.Quiz.js"></script>
 
 <script>
 //first function called when page loads
@@ -90,7 +90,10 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 function start(){
   VISH.Debugging.init(true);
   
-  VISH.SlideManager.init(VISH.Samples.samples_vhugo);
+  //var options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+  var options = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+  
+  VISH.SlideManager.init(options, VISH.Samples.samples_vhugo);
 }
 </script>
 </body>
