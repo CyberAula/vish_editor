@@ -832,7 +832,10 @@ VISH.Editor = (function(V,$,undefined){
         $('.theslider').hide();
         $(".nicEdit-panelContain").hide();
         $("#menubar-viewer").show();
-        VISH.SlideManager.init({}, excursion);
+        
+        //here we must pass params 
+        //options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+        VISH.SlideManager.init({"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}, excursion);
       } else if (VISH.Debugging.getActionSave()=="edit") {
         $('article').remove();
         var options = {};

@@ -136,8 +136,7 @@ VISH.Quiz = (function(V,$,undefined){
  * 
  */
       var _renderMcquestionStudent = function(element, template){
-    	
-    	V.Debugging.log("enter to renderMcquestionLogged");
+    
     	 		var next_num=0;
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
@@ -180,7 +179,7 @@ VISH.Quiz = (function(V,$,undefined){
  */    
     
     var _renderMcquestionNone = function(element, template){
-    	V.Debugging.log("enter to renderMcquestionLogged");
+    	V.Debugging.log("enter to renderMcquestionNone");
     	
     }; 
     
