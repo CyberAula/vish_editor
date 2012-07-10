@@ -296,7 +296,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
-		toggleFullScreen : toggleFullScreen, 
+		toggleFullScreen		: toggleFullScreen, 
 		getUser					: getUser, 
 		getUserStatus			: getUserStatus
 	};

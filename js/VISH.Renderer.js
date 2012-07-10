@@ -52,8 +52,10 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
+				
+				//this will be call as many times as mcquestion have the excursion
+				//isn't better to get the role value in the VISH.Quiz? 
 				role = VISH.SlideManager.getUser().role;
-				VISH.Debugging.log(" redered: role is" +role);
 				content +=VISH.Quiz.init(role, slide.elements[el],slide.template);
 				//content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
