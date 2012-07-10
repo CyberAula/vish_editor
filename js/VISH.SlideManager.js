@@ -68,10 +68,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		 }	
 		 
-		 VISH.Debugging.log("username: " + user.username);
-		 VISH.Debugging.log("role: " + user.role);
-		 
-		 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize();

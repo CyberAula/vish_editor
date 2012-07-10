@@ -13,7 +13,7 @@ VISH.Quiz = (function(V,$,undefined){
    	
    			case "logged": 
       	//render the slide for a logged user
-      		obj = _rederMcquestionLogged (element, template); 
+      		obj = _renderMcquestionLogged (element, template); 
       		//add listener to stat Button
       		$(document).on('click', '.mcquestion_start_button', _onStartMcQuizButtonClicked);
       		
@@ -21,14 +21,14 @@ VISH.Quiz = (function(V,$,undefined){
    
    			case "student":
    		//render the slide for a student (he knows the shared URL) and no logged user 
-   			obj =  _rederMcquestionStudent (element, template); 
+   			obj =  _renderMcquestionStudent (element, template); 
    			//add listener to send button _onSendVoteMcQuizButtonClicked
-      		 		$(document).on('click', '.mcquestion_start_button', _onStartMcQuizButtonClicked);
+      		 		$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
    			break;
    
    			case "none":
    		//render the slide for a viewer (he doesn't know the shared) URL an not logged user
-   			obj =  _rederMcquestionNone (element, template);
+   			obj =  _renderMcquestionNone (element, template);
    			
    			
    			break;
@@ -96,7 +96,7 @@ VISH.Quiz = (function(V,$,undefined){
  */
 
 
-   var _rederMcquestionLogged = function(element, template){
+   var _renderMcquestionLogged = function(element, template){
    	
    		var next_num=0;
 		
@@ -135,7 +135,7 @@ VISH.Quiz = (function(V,$,undefined){
  * and a send button for clicking when decide to vote  
  * 
  */
-      var _rederMcquestionStudent = function(element, template){
+      var _renderMcquestionStudent = function(element, template){
     	
     	V.Debugging.log("enter to renderMcquestionLogged");
     	 		var next_num=0;
@@ -179,7 +179,7 @@ VISH.Quiz = (function(V,$,undefined){
  * 
  */    
     
-    var _rederMcquestionNone = function(element, template){
+    var _renderMcquestionNone = function(element, template){
     	V.Debugging.log("enter to renderMcquestionLogged");
     	
     }; 
