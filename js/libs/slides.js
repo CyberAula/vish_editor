@@ -640,6 +640,7 @@ function hideAddressBar()
 {
 	VISH.Debugging.log("document.height " + document.height);
 	VISH.Debugging.log("window.outerHeight " + window.outerHeight);
+      /*
       if(document.height < window.outerHeight)
       {
           document.body.style.height = (window.outerHeight + 50) + 'px';
@@ -650,7 +651,7 @@ function hideAddressBar()
       	VISH.Debugging.log("scroll");
       	window.scrollTo(0, 1); 
       	}, 50 );
-  
+  */
 }
 
 function handleDomLoaded() {
