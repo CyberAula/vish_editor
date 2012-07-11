@@ -103,12 +103,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		
 	
-		if (V.Status.ua.mobile) {
-    		//hide page counter (the slides are passed touching)
-    		$("#viewbar").hide();
-		}
-		else{
-			VISH.SlidesUtilities.updateSlideCounter();
+		if (!V.Status.ua.mobile) {
+    		//show page counter (only for desktop, in mobile the slides are passed touching)
+    		$("#viewbar").show();
+    		VISH.SlidesUtilities.updateSlideCounter();
 		}
 	};
 
