@@ -895,13 +895,12 @@ table.metadata td div.height_wrapper_description{
     }	
 	
 .button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
+	opacity: 0.8;
 }
 
 .buttonfancy {
 	position:absolute;
-	margin-left: 560px;
+	margin-left: 569px;
 	margin-top:75px;
 }
 	
