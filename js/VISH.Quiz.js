@@ -1,6 +1,6 @@
 VISH.Quiz = (function(V,$,undefined){
     var role;
-    
+    var slideToActivate;
     /**
     * called it will render depending of the kind of role
     * */
@@ -18,7 +18,7 @@ VISH.Quiz = (function(V,$,undefined){
       	//render the slide for a logged user
       		obj = _renderMcquestionLogged (element, template, slide); 
       		//add listener to stat Button
-      		_activateLoggedInteraction();
+      		//_activateLoggedInteraction();
       		
       		
    			break;
@@ -55,15 +55,14 @@ VISH.Quiz = (function(V,$,undefined){
     * it is necessary that objects be loaded
     * */
    var enableInteraction = function (slide){
-   	
-   	V.Debugging.log(" Enter enableInteraction value of the slide: "+ slide);
-   	
+   	slideToActivate = slide;
+   	   	
    	switch(role) {
    	 
    	
    			case "logged": 
       	   		//add listener to stat Button
-      		_activateLoggedInteraction(slide);
+      		_activateLoggedInteraction();
       		
       		
    			break;
@@ -140,7 +139,7 @@ VISH.Quiz = (function(V,$,undefined){
 
    var _renderMcquestionLogged = function(element, template, slide){
    	
-   	V.Debugging.log("element is: " + element);
+   //	V.Debugging.log("element is: " + element);
    	
    		var next_num=0;
 		
@@ -150,7 +149,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<div class='mcquestion_container'>";
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
 		
-		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+		ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
@@ -166,7 +165,8 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
 		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
+		ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
+		ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
 		
 		ret += "</div>";
 		ret += "</form>";
@@ -183,7 +183,7 @@ VISH.Quiz = (function(V,$,undefined){
       var _renderMcquestionStudent = function(element, template, slide){
     
     	 		var next_num=0;
-		V.Debugging.log("element is: " + element);
+		//V.Debugging.log("element is: " + element);
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
@@ -268,17 +268,19 @@ VISH.Quiz = (function(V,$,undefined){
      * 
      */
     
-    var _activateLoggedInteraction = function (slide) {
-    	V.Debugging.log(" enter on _activeLoggedInteraction function and slide value is: "+ slide);
-    	$(document).on('click', 'mcquestion_start_button_'+slide, _onStartMcQuizButtonClicked(slide));
+    var _activateLoggedInteraction = function () {
+    	
+    	var button = '#mcquestion_start_button_'+slideToActivate;
+    	
+       	$(document).on('click', button, _onStartMcQuizButtonClicked);
     	
     };
     
     var _activateStudentInteraction = function () {
-    	V.Debugging.log(" enter on _activeStudentInteraction function");
+    	
     	$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
     	
-    	$(".mc_meter").hide();
+    	$(".mc_meter").hUide();
     };
     
     
@@ -288,16 +290,20 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
     
-      var _onStartMcQuizButtonClicked = function (slide) {
-    	V.Debugging.log(" enter on _onStartMcQuizButtonClicked function and slide value is: "+ slide);
-    		
-    	//V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
-    	//make appear the voting URL 
+      var _onStartMcQuizButtonClicked = function () {
+      	
+      	
+      	//get values from the form
+    	
+    	 
     	//could be find using current class??  
     	var URL = "http://www.vishub.org/dasdas";
-    	//"+slide+"
-    //	$("#article"+slide).find(".header").append(URL);
-    	//$("#article"+slide).find(".header").show();
+    	var slideToPlay = $(".current").find("#slide_to_activate").val();
+    	
+    	//make appear the voting URL 
+    	$("#"+slideToPlay).find(".t11_header").append(URL);
+    	
+    	$("#"+slideToPlay).find(".t11_header").show();
     	
     };
 

@@ -16,7 +16,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(options, excursion){
 		
 		V.Status.init();
-	VISH.Debugging.log("(SlideManager)options [username]: " + options['username']);	
+	//VISH.Debugging.log("(SlideManager)options [username]: " + options['username']);	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 	
@@ -77,8 +77,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		 
 		 
-		 VISH.Debugging.log("(SlideManager)username: " + user.username);
-		 VISH.Debugging.log("(SlideManager)role: " + user.role);
+		// VISH.Debugging.log("(SlideManager)username: " + user.username);
+		// VISH.Debugging.log("(SlideManager)role: " + user.role);
 		 
 		 
 		mySlides = excursion.slides;

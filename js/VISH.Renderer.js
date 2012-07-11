@@ -56,7 +56,7 @@ VISH.Renderer = (function(V,$,undefined){
 				//this will be call as many times as mcquestion have the excursion
 				//isn't better to get the role value in the VISH.Quiz? 
 				//role = VISH.SlideManager.getUser().role;
-				VISH.Debugging.log(" Slide.id is" + slide.id);
+			
 				content +=VISH.Quiz.init(slide.elements[el],slide.template, slide.id);
 				//content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
