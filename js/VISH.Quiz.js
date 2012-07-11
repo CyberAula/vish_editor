@@ -1,13 +1,16 @@
 VISH.Quiz = (function(V,$,undefined){
+    var role;
     
     /**
     * called it will render depending of the kind of role
     * */
    //var init = function(role, element, template){
-   	var init = function(role, element, template){
+   	var init = function(element, template){
    
-   		role = V.SlideManager.getUser().role;
-   var obj;
+   		 role = V.SlideManager.getUser().role;
+   		
+   		var obj;
+   		
    		switch(role) {
    	 
    	
@@ -15,7 +18,8 @@ VISH.Quiz = (function(V,$,undefined){
       	//render the slide for a logged user
       		obj = _renderMcquestionLogged (element, template); 
       		//add listener to stat Button
-      		$(document).on('click', '.mcquestion_start_button', _onStartMcQuizButtonClicked);
+      		_activateLoggedInteraction();
+      		
       		
    			break;
    
@@ -23,7 +27,9 @@ VISH.Quiz = (function(V,$,undefined){
    		//render the slide for a student (he knows the shared URL) and no logged user 
    			obj =  _renderMcquestionStudent (element, template); 
    			//add listener to send button _onSendVoteMcQuizButtonClicked
+			
       		 		$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
+				  //   $(".mc_meter").hide();
    			break;
    
    			case "none":
@@ -35,7 +41,7 @@ VISH.Quiz = (function(V,$,undefined){
    
    			default: 
    			//obj could be an error message :  <p> Error</p>
-   			VISH.Debugging.log("Something went wrong while processing the Quiz");	
+   			VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: "+ role);	
    	
    		}
    
@@ -46,11 +52,49 @@ VISH.Quiz = (function(V,$,undefined){
   // $(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
    
    }
-   var showStatistic = function (event){
+   /**
+    * called after show the slides. Because we need to add listeners and some functions and 
+    * it is necessary that objects be loaded
+    * */
+   var enableInteraction = function (template){
    	
-   	V.Debugging.log(" Enter showStatistics value of the event: "+ event);
+   	V.Debugging.log(" Enter enableInteraction value of the template: "+ template);
    	
-   }
+   	switch(role) {
+   	 
+   	
+   			case "logged": 
+      	   		//add listener to stat Button
+      		_activateLoggedInteraction();
+      		
+      		
+   			break;
+   
+   			case "student":
+   			//add listener to send button _onSendVoteMcQuizButtonClicked
+			_activateStudentInteraction();
+      		 	
+				  
+   			break;
+   
+   			case "none":
+   		//render the slide for a viewer (he doesn't know the shared) URL an not logged user
+   			_activateNoneInteraction();
+   			
+   			break;
+   
+   			default: 
+   			//obj could be an error message :  <p> Error</p>
+   			VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: "+ role);	
+   	
+   		}
+   	
+   	
+   	
+   	
+   	
+   	
+   };
    
    /*
    var renderMcquestion = function(element, template){
@@ -159,7 +203,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
-		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+		//ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
 		ret += "<input type='submit' class='mcquestion_send_vote_button' value='Send'/>";
 		
 		ret += "</div>";
@@ -181,6 +225,38 @@ VISH.Quiz = (function(V,$,undefined){
     var _renderMcquestionNone = function(element, template){
     	V.Debugging.log("enter to renderMcquestionNone");
     	
+    	
+		var next_num=0;
+		
+		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		
+		ret += "<div class='mcquestion_container'>";
+		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+		
+		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+		
+		
+		for(var i = 0; i<element['options'].length; i++){
+			var next_num = i;
+			var next_index = "a".charCodeAt(0) + (next_num); 
+			next_index = String.fromCharCode(next_index);
+			
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			
+			//ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		
+		}
+		
+		ret += "</div>";
+		ret += "<div class='mcquestion_right'>";
+		//ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+	//	ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+		
+		ret += "</div>";
+		ret += "</form>";
+		ret += "</div>";
+		return ret;
+    	
     }; 
     
     /*
@@ -190,6 +266,28 @@ VISH.Quiz = (function(V,$,undefined){
      * params: 
      * 
      */
+    
+    var _activateLoggedInteraction = function () {
+    	
+    	$(document).on('click', '.mcquestion_start_button', _onStartMcQuizButtonClicked);
+    	
+    };
+    
+    var _activateStudentInteraction = function () {
+    	V.Debugging.log(" enter on _activeStudentInteraction function");
+    	$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
+    	$(".mc_meter").hide();
+    };
+    
+    
+    var _activateNoneInteraction = function () {
+    	
+    	V.Debugging.log(" enter on _activeNoneInteraction function");
+    };
+    
+    
+    
+    
     var _onSendVoteMcQuizButtonClicked = function () {
     	
     	V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
@@ -197,15 +295,17 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
       var _onStartMcQuizButtonClicked = function () {
-    	
+    		
     	V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
+    	
+    	
     	
     };
     
     
     return {
-    	init 			 : init,
-        showStatistic    : showStatistic
+    	init 			 	 : init,
+        enableInteraction    : enableInteraction
         
         
     };

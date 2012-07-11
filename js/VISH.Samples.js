@@ -459,7 +459,7 @@ VISH.Samples = (function(V,undefined){
 		
 		
 		
-		var samples_vhugo = {
+		var quizes_samples = {
 			
 			"id":5555
 			,"author":"Víctor Hugo"
@@ -521,7 +521,29 @@ VISH.Samples = (function(V,undefined){
 			  			
 			  		}
 		         ]
-		      }
+		    },
+		    
+		    { 
+			  	"id":"article4",
+			  "template":"t11"
+			  ,"elements":[
+			  		{
+			  			"id":"zone1"
+			  		,"areaid":"header"
+			  		},
+			  		{
+			  			"id":"zone2",
+			  			"type":"mcquestion",
+			  			"areaid":"left",
+			  			"question":"Which which which which ... ",
+			  			"options":[
+			  			"Un texto largo, muy largo que puede sobrepasar los límites permitidos","Santiago","Río De Janeiro","Brasilia","Otro texto largo, muy largo y más largo que sobrepase los límites permitidos ... y más"]
+			  			
+			  		}
+		         ]
+		      } 
+		    
+		    
 		      
 		    ]
 		       
@@ -531,7 +553,7 @@ VISH.Samples = (function(V,undefined){
 		full_samples  : full_samples,
 		samples   	  : samples,
 		samples_aldo  : samples_aldo, 
-		samples_vhugo : samples_vhugo
+		quizes_samples : quizes_samples
 	};
 
 })(VISH);
