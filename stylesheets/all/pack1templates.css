@@ -697,7 +697,7 @@ margin:0 auto;
 position:relative;	
 }
 
-.mcquestion_button{
+.mcquestion_start_button{
 	display:block;
 	position:relative;
 	color: blue;
@@ -710,7 +710,18 @@ position:relative;
 	
 	}
 
-
+.mcquestion_send_vote_button{
+	display:block;
+	position:relative;
+	color: blue;
+	font-size:1.2em;
+	text-align:center;
+	vertical-align:bottom;
+	margin-top:90%;
+	height:8%;
+	width: 70%;
+	
+	}
 
 .mc_answer{
 	text-align: justify;

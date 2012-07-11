@@ -53,9 +53,12 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			else if(slide.elements[el].type === "mcquestion"){
 				
-				user = VISH.SlideManager.getUser();
-				 VISH.Debugging.log("user role: " + user.role); 
-				content += _renderMcquestion(slide.elements[el],slide.template);
+				//this will be call as many times as mcquestion have the excursion
+				//isn't better to get the role value in the VISH.Quiz? 
+				role = VISH.SlideManager.getUser().role;
+				VISH.Debugging.log(" rendered: role is" +role);
+				content +=VISH.Quiz.init(role, slide.elements[el],slide.template);
+				//content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
 			}
 			else{
@@ -183,6 +186,7 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
+	
 	var _renderMcquestion = function(element, template){
 		var next_num=0;
 		

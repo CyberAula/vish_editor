@@ -16,10 +16,11 @@ VISH.SlideManager = (function(V,$,undefined){
 	var init = function(options, excursion){
 		
 		V.Status.init();
-		
+	VISH.Debugging.log("(SlideManager)options [username]: " + options['username']);	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 	
+	//fixing editor mode when save an excursion
 		if(options['username']) {
 			
 			user.username = options['username'];
@@ -62,14 +63,22 @@ VISH.SlideManager = (function(V,$,undefined){
 			}
 		//no username no quiz active --> (none)
 			else {
+				
+				
 		 		user.role= "none";
 		 		status.quiz_active = options['quiz_active'];
 		 	} 
 		
 		 }	
 		 
-		 VISH.Debugging.log("username: " + user.username);
-		 VISH.Debugging.log("role: " + user.role);
+		 
+		
+		//this case is when we are  in develop mode
+		
+		 
+		 
+		 VISH.Debugging.log("(SlideManager)username: " + user.username);
+		 VISH.Debugging.log("(SlideManager)role: " + user.role);
 		 
 		 
 		mySlides = excursion.slides;

@@ -523,38 +523,38 @@ article.smaller q::after {
 
 /*fonts used to replace the ones introduced by the wysiwyg*/
 .vish-font1{
-	font-size: 0.625em;
-	line-height: 0.781em;
+	font-size: 0.65em;
+	line-height: 0.9em;
 }
 
 .vish-font2{
 	font-size: 0.813em;
-	line-height: 1.555em;
+	line-height: 1.54em;
 }
 
 .vish-font3{
-	font-size: 1.000em;
-	line-height: 1.260em;
+	font-size: 1.01em;
+	line-height: 1.24em;
 }
 
 .vish-font4{
 	font-size: 1.125em;
-	line-height: 1.255em;
+	line-height: 1.235em;
 }
 
 .vish-font5{
 	font-size: 1.500em;
-	line-height: 1.220em;
+	line-height: 1.32em;
 }
 
 .vish-font6{
 	font-size: 2em;
-	line-height: 1.240em;
+	line-height: 1.18em;
 }
 
 .vish-font7{
 	font-size: 3.000em;
-	line-height: 1.263em;
+	line-height: 1.2em;
 }
 
 .vish-fontarial{
