@@ -39,7 +39,9 @@ VISH.Excursion = (function(V,undefined){
 					V.Debugging.log("mySlides.elements[num] vale: "+mySlides[i].elements[num] );
 					
 					//param number of slide? 
-					VISH.Quiz.enableInteraction(i);
+					
+					VISH.Debugging.log(" mySlides[i].id is : " + mySlides[i].id.toString());
+					VISH.Quiz.enableInteraction(mySlides[i].id.toString());
 					
 					
 				}

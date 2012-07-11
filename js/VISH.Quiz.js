@@ -4,8 +4,8 @@ VISH.Quiz = (function(V,$,undefined){
     /**
     * called it will render depending of the kind of role
     * */
-   //var init = function(role, element, template){
-   	var init = function(element, template){
+   //var init = function( element, template, numberOfSlide){
+   	var init = function(element, template, slide){
    
    		 role = V.SlideManager.getUser().role;
    		
@@ -16,7 +16,7 @@ VISH.Quiz = (function(V,$,undefined){
    	
    			case "logged": 
       	//render the slide for a logged user
-      		obj = _renderMcquestionLogged (element, template); 
+      		obj = _renderMcquestionLogged (element, template, slide); 
       		//add listener to stat Button
       		_activateLoggedInteraction();
       		
@@ -25,16 +25,14 @@ VISH.Quiz = (function(V,$,undefined){
    
    			case "student":
    		//render the slide for a student (he knows the shared URL) and no logged user 
-   			obj =  _renderMcquestionStudent (element, template); 
+   			obj =  _renderMcquestionStudent (element, template, slide); 
    			//add listener to send button _onSendVoteMcQuizButtonClicked
 			
-      		 		$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
-				  //   $(".mc_meter").hide();
    			break;
    
    			case "none":
    		//render the slide for a viewer (he doesn't know the shared) URL an not logged user
-   			obj =  _renderMcquestionNone (element, template);
+   			obj =  _renderMcquestionNone (element, template, slide);
    			
    			
    			break;
@@ -56,16 +54,16 @@ VISH.Quiz = (function(V,$,undefined){
     * called after show the slides. Because we need to add listeners and some functions and 
     * it is necessary that objects be loaded
     * */
-   var enableInteraction = function (template){
+   var enableInteraction = function (slide){
    	
-   	V.Debugging.log(" Enter enableInteraction value of the template: "+ template);
+   	V.Debugging.log(" Enter enableInteraction value of the slide: "+ slide);
    	
    	switch(role) {
    	 
    	
    			case "logged": 
       	   		//add listener to stat Button
-      		_activateLoggedInteraction();
+      		_activateLoggedInteraction(slide);
       		
       		
    			break;
@@ -140,9 +138,12 @@ VISH.Quiz = (function(V,$,undefined){
  */
 
 
-   var _renderMcquestionLogged = function(element, template){
+   var _renderMcquestionLogged = function(element, template, slide){
+   	
+   	V.Debugging.log("element is: " + element);
    	
    		var next_num=0;
+		
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
@@ -165,7 +166,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
 		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' class='mcquestion_start_button' value='Start Quiz'/>";
+		ret += "<input type='submit' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
 		
 		ret += "</div>";
 		ret += "</form>";
@@ -179,10 +180,10 @@ VISH.Quiz = (function(V,$,undefined){
  * and a send button for clicking when decide to vote  
  * 
  */
-      var _renderMcquestionStudent = function(element, template){
+      var _renderMcquestionStudent = function(element, template, slide){
     
     	 		var next_num=0;
-		
+		V.Debugging.log("element is: " + element);
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
@@ -204,7 +205,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
 		//ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' class='mcquestion_send_vote_button' value='Send'/>";
+		ret += "<input type='submit' id='mcquestion_send_vote_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
 		
 		ret += "</div>";
 		ret += "</form>";
@@ -222,7 +223,7 @@ VISH.Quiz = (function(V,$,undefined){
  * 
  */    
     
-    var _renderMcquestionNone = function(element, template){
+    var _renderMcquestionNone = function(element, template, slide){
     	V.Debugging.log("enter to renderMcquestionNone");
     	
     	
@@ -267,15 +268,16 @@ VISH.Quiz = (function(V,$,undefined){
      * 
      */
     
-    var _activateLoggedInteraction = function () {
-    	
-    	$(document).on('click', '.mcquestion_start_button', _onStartMcQuizButtonClicked);
+    var _activateLoggedInteraction = function (slide) {
+    	V.Debugging.log(" enter on _activeLoggedInteraction function and slide value is: "+ slide);
+    	$(document).on('click', 'mcquestion_start_button_'+slide, _onStartMcQuizButtonClicked(slide));
     	
     };
     
     var _activateStudentInteraction = function () {
     	V.Debugging.log(" enter on _activeStudentInteraction function");
     	$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
+    	
     	$(".mc_meter").hide();
     };
     
@@ -286,20 +288,22 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
     
-    
-    
-    var _onSendVoteMcQuizButtonClicked = function () {
-    	
-    	V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
+      var _onStartMcQuizButtonClicked = function (slide) {
+    	V.Debugging.log(" enter on _onStartMcQuizButtonClicked function and slide value is: "+ slide);
+    		
+    	//V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
+    	//make appear the voting URL 
+    	//could be find using current class??  
+    	var URL = "http://www.vishub.org/dasdas";
+    	//"+slide+"
+    //	$("#article"+slide).find(".header").append(URL);
+    	//$("#article"+slide).find(".header").show();
     	
     };
-    
-      var _onStartMcQuizButtonClicked = function () {
-    		
-    	V.Debugging.log(" button pressed and  _onStartMcQuizButtonClicked called");
+
+    var _onSendVoteMcQuizButtonClicked = function () {
     	
-    	
-    	
+    	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     };
     
     
