@@ -640,7 +640,7 @@
 */
 
 .multiplechoicequestion {
-	
+	padding: 2%;
 	width:100%;
 	height: 90%;
 	
@@ -648,13 +648,34 @@
 
 
 .t11_header {
+	margin-top:1.5%;
 	height: 10%;
 	width: 100%;	
 	display: block;	
 	color: blue;
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+}
+
+.t11_header > span {
+	
 }
 
 
+.shareQuizButton {
+	padding: 5%;
+	height: 5%;
+	width: 5%;
+	text-align: right;
+	
+}
+.shareQuizButton > img {
+	height: 70%;
+	width: 7%;
+	text-align: right;
+	
+}
 
 .t11_left{
 	margin-top: 2%;
@@ -692,9 +713,14 @@ width: 90%;
 }
 
 .mch_statistics_icon {
+
+width: 40%;
+height: 10%;
 display:block;
 margin:0 auto;
+margin-top:5%;
 position:relative;	
+
 }
 
 .mcquestion_start_button{

@@ -2,25 +2,23 @@ VISH.Quiz = (function(V,$,undefined){
     var role;
     var slideToActivate;
     /**
-    * called it will render depending of the kind of role
+    * called from VISH.Renderer.renderSlide when one of the slide's element type is a mcquestion 
+    
     * */
-   //var init = function( element, template, numberOfSlide){
-   	var init = function(element, template, slide){
    
+   	var init = function(element, template, slide){
+		//depending on the role we use a diferent rederer function      
    		 role = V.SlideManager.getUser().role;
-   		
+   		//the object to be returned
    		var obj;
    		
    		switch(role) {
    	 
-   	
    			case "logged": 
       	//render the slide for a logged user
       		obj = _renderMcquestionLogged (element, template, slide); 
       		//add listener to stat Button
-      		//_activateLoggedInteraction();
-      		
-      		
+     		
    			break;
    
    			case "student":
@@ -45,14 +43,13 @@ VISH.Quiz = (function(V,$,undefined){
    
    
    return obj;
+  
    
-   	   
-  // $(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-   
-   }
+   };
    /**
-    * called after show the slides. Because we need to add listeners and some functions and 
-    * it is necessary that objects be loaded
+    * called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
+    * add listeners and some functions and it is necessary that objects be loaded so that it's done later than 
+    * render
     * */
    var enableInteraction = function (slide){
    	slideToActivate = slide;
@@ -289,20 +286,24 @@ VISH.Quiz = (function(V,$,undefined){
     	V.Debugging.log(" enter on _activeNoneInteraction function");
     };
     
-    
+    /*
+     * Function activated when is pressed the start quiz button (teacher)
+     * 
+     */
       var _onStartMcQuizButtonClicked = function () {
       	
-      	
       	//get values from the form
+      	
+      	//construct url and share button 
     	
-    	 
-    	//could be find using current class??  
-    	var URL = "http://www.vishub.org/dasdas";
+    	var URL = "<span> http://www.vishub.org/dasdas </span>";
+    	
     	var slideToPlay = $(".current").find("#slide_to_activate").val();
-    	
+    		
+    	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
     	//make appear the voting URL 
     	$("#"+slideToPlay).find(".t11_header").append(URL);
-    	
+    	$("#"+slideToPlay).find(".t11_header").append(shareButton);
     	$("#"+slideToPlay).find(".t11_header").show();
     	
     };
