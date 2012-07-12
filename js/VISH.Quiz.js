@@ -288,7 +288,8 @@ VISH.Quiz = (function(V,$,undefined){
     
     /*
      * Function activated when is pressed the start quiz button (teacher)
-     * 
+     * params --- we get the quiz to activate/deactivate from an form's hidden input that has the 
+     * article value   
      */
       var _onStartMcQuizButtonClicked = function () {
       	
@@ -301,17 +302,53 @@ VISH.Quiz = (function(V,$,undefined){
     	var slideToPlay = $(".current").find("#slide_to_activate").val();
     		
     	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
-    	//make appear the voting URL 
+    	//make appear the voting URL and share icon 
     	$("#"+slideToPlay).find(".t11_header").append(URL);
     	$("#"+slideToPlay).find(".t11_header").append(shareButton);
+		
+		//show header 
     	$("#"+slideToPlay).find(".t11_header").show();
-    	
+    	//change the value button (Start Quiz --> StopQuiz) and the id?
+    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('value', 'Stop Quiz');
+    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('class', 'mcquestion_stop_button');
+    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('id', 'mcquestion_stop_button_'+slideToPlay);
+    	//add onclick event to the new stop button
+    	//$("#"+slideToPlay).find("form_"+slideToPlay > input ).attr('value', 'Stop Quiz');
+    	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
+    	//$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).css('font-weight', 'bold');
+    	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
     };
 
     var _onSendVoteMcQuizButtonClicked = function () {
     	
     	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     };
+    
+    var _onStopMcQuizButtonClicked = function () {
+    	
+    	V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
+    	
+    	var slideToStop = $(".current").find("#slide_to_stop").val();
+    	
+    		V.Debugging.log("slideToStop value is: " + slideToStop);
+    	
+    	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
+    	$("#"+slideToStop).find(".t11_header").css('display', 'none');
+    	//TODO thing if the button at the end of the voting must be removed or just only show start again
+    	
+    	//show start quiz again
+    	
+    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
+    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
+    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
+    	
+    	
+    	
+    	
+    	
+    };
+    
+    
     
     
     return {

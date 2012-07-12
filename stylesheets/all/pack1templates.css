@@ -729,12 +729,31 @@ position:relative;
 	color: blue;
 	font-size:1.2em;
 	text-align:center;
+	font-weight:bold;
 	vertical-align:bottom;
 	margin-top:90%;
 	height:8%;
 	width: 70%;
 	
 	}
+.mcquestion_stop_button {
+	
+	display:block;
+	position:relative;
+	color: red;
+	font-size:1.3em;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:bottom;
+	margin-top:90%;
+	height:8%;
+	width: 70%;
+	
+	
+}	
+	
+	
+	
 
 .mcquestion_send_vote_button{
 	display:block;
@@ -764,17 +783,17 @@ position:relative;
 
 .mc_meter { 
 			width: 60%;
-			height: 5%;  /* Can be anything */
+			height: 50%;  /* Can be anything */
 			position: relative;
 			margin: 1%; /* Just for demo spacing */
 			background: #999;
-			-moz-border-radius: 25px;
-			-webkit-border-radius: 25px;
-			border-radius: 25px;
-			padding: 10px;
-			-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-			-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
-			box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+			-moz-border-radius: 10%;
+			-webkit-border-radius: 10%;
+			border-radius: 10%;
+			padding: 0.5%;
+			-webkit-box-shadow: inset 0 -1% 1% rgba(255,255,255,0.3);
+			-moz-box-shadow   : inset 0 -1% 1% rgba(255,255,255,0.3);
+			box-shadow        : inset 0 -1% 1% rgba(255,255,255,0.3);
 		}
 
 .t12_left{
