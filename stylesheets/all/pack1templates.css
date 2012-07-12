@@ -707,19 +707,20 @@
 	
 }
 .mcquestion_form {
-text-align:center;	
-width: 90%;	
+	text-align:center;	
+	width: 90%;	
+	height: 70%;
 	
 }
 
 .mch_statistics_icon {
 
-width: 40%;
-height: 10%;
-display:block;
-margin:0 auto;
-margin-top:5%;
-position:relative;	
+	width: 40%;
+	height: 10%;
+	display:block;
+	margin:0 auto;
+	margin-top:5%;
+	position:relative;	
 
 }
 
@@ -732,8 +733,8 @@ position:relative;
 	font-weight:bold;
 	vertical-align:bottom;
 	margin-top:90%;
-	height:8%;
-	width: 70%;
+	height:9%;
+	width: 80%;
 	
 	}
 .mcquestion_stop_button {
@@ -746,15 +747,13 @@ position:relative;
 	text-align:center;
 	vertical-align:bottom;
 	margin-top:90%;
-	height:8%;
-	width: 70%;
+	height:9%;
+	width: 80%;
 	
 	
 }	
 	
 	
-	
-
 .mcquestion_send_vote_button{
 	display:block;
 	position:relative;
@@ -764,7 +763,7 @@ position:relative;
 	vertical-align:bottom;
 	margin-top:100%;
 	height:9%;
-	width: 70%;
+	width: 80%;
 	
 	}
 
@@ -782,19 +781,24 @@ position:relative;
 }
 
 .mc_meter { 
-			width: 60%;
-			height: 50%;  /* Can be anything */
-			position: relative;
-			margin: 1%; /* Just for demo spacing */
-			background: #999;
-			-moz-border-radius: 10%;
-			-webkit-border-radius: 10%;
-			border-radius: 10%;
-			padding: 0.5%;
-			-webkit-box-shadow: inset 0 -1% 1% rgba(255,255,255,0.3);
-			-moz-box-shadow   : inset 0 -1% 1% rgba(255,255,255,0.3);
-			box-shadow        : inset 0 -1% 1% rgba(255,255,255,0.3);
+		width:70%;
+		height:5%;
+		background-color:#CCCCCC;
+		position: relative;
+		display:block;
+		margin-left:2%;
+		margin-top:1.5%;
 		}
+		
+.mc_meter > span { 
+		width:100%;
+		height:100%;
+		background-color: red;
+		position: relative;
+		display:block;
+
+		}		
+		
 
 .t12_left{
 	margin-top: 2%;

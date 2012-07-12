@@ -295,7 +295,9 @@ VISH.Quiz = (function(V,$,undefined){
       	
       	//get values from the form
       	
-      	//construct url and share button 
+      	//construct url (making an POST to VISH.Server. Which params does it need? 
+      		
+      		// show (construct) share button 
     	
     	var URL = "<span> http://www.vishub.org/dasdas </span>";
     	
@@ -303,6 +305,11 @@ VISH.Quiz = (function(V,$,undefined){
     		
     	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
     	//make appear the voting URL and share icon 
+    	if($("#"+slideToPlay).find(".t11_header").children()) {
+    		
+    		$("#"+slideToPlay).find(".t11_header").children().remove();
+    	} 
+    	
     	$("#"+slideToPlay).find(".t11_header").append(URL);
     	$("#"+slideToPlay).find(".t11_header").append(shareButton);
 		
@@ -342,8 +349,8 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
     	
-    	
-    	
+    	$("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
+    	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _onStartMcQuizButtonClicked);
     	
     	
     };
