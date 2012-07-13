@@ -158,7 +158,7 @@ VISH.Quiz = (function(V,$,undefined){
 		next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+			ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption"+(i+1)+"'></span></div>";
 		
 		}
 		
@@ -197,8 +197,8 @@ VISH.Quiz = (function(V,$,undefined){
 			var next_index = "a".charCodeAt(0) + (next_num); 
 			next_index = String.fromCharCode(next_index);
 			
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption"+(i+1)+"'></span></div>";
 		
 		}
 		
@@ -335,6 +335,17 @@ VISH.Quiz = (function(V,$,undefined){
     	var slideToVote = $(".current").find("#slide_to_vote").val();
     	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     	V.Debugging.log(" slideToVote value: " +slideToVote);
+    	
+    	//TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
+    	
+    	//remove input radio 
+    	$(".current").find(".mc_radio").remove();
+    	$(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
+    	
+    	
+    	//TODO update values to span css('width','xx%')
+    	$(".current").find(".mc_meter").css('display', 'block');
+    	
     };
     
     var _onStopMcQuizButtonClicked = function () {
