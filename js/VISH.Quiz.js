@@ -1,6 +1,7 @@
 VISH.Quiz = (function(V,$,undefined){
     var role;
     var slideToActivate;
+    var slideToVote;
     /**
     * called from VISH.Renderer.renderSlide when one of the slide's element type is a mcquestion 
     
@@ -52,12 +53,13 @@ VISH.Quiz = (function(V,$,undefined){
     * render
     * */
    var enableInteraction = function (slide){
-   	slideToActivate = slide;
+   	
    	   	
    	switch(role) {
    	 
    	
    			case "logged": 
+   			slideToActivate = slide;
       	   		//add listener to stat Button
       		_activateLoggedInteraction();
       		
@@ -66,6 +68,7 @@ VISH.Quiz = (function(V,$,undefined){
    
    			case "student":
    			//add listener to send button _onSendVoteMcQuizButtonClicked
+   			slideToVote = slide;
 			_activateStudentInteraction();
       		 	
 				  
@@ -191,8 +194,8 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
-		var next_index = "a".charCodeAt(0) + (next_num); 
-		next_index = String.fromCharCode(next_index);
+			var next_index = "a".charCodeAt(0) + (next_num); 
+			next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
@@ -201,16 +204,13 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
-		//ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' id='mcquestion_send_vote_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
-		
+		ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
+		ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
 		ret += "</div>";
 		ret += "</form>";
 		ret += "</div>";
 		return ret;
-    	
-    	
-    	
+	
     };
 /*
  * Render an Multiple choice question slide for a user who is not logged in and has not URL. Only is watching 
@@ -275,13 +275,16 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _activateStudentInteraction = function () {
     	
-    	$(document).on('click', '.mcquestion_send_vote_button', _onSendVoteMcQuizButtonClicked);
+    	var button = '#mcquestion_send_vote_button_'+slideToVote;
+    	//mcquestion_send_vote_article4
+    	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
     	
-    	$(".mc_meter").hUide();
+    	$(".mc_meter").hide();
     };
     
     
     var _activateNoneInteraction = function () {
+    	
     	
     	V.Debugging.log(" enter on _activeNoneInteraction function");
     };
@@ -304,7 +307,8 @@ VISH.Quiz = (function(V,$,undefined){
     	var slideToPlay = $(".current").find("#slide_to_activate").val();
     		
     	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
-    	//make appear the voting URL and share icon 
+    	//make appear the voting URL and share icon
+    	//first remove children if there are   
     	if($("#"+slideToPlay).find(".t11_header").children()) {
     		
     		$("#"+slideToPlay).find(".t11_header").children().remove();
@@ -326,13 +330,15 @@ VISH.Quiz = (function(V,$,undefined){
     	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
     };
 
-    var _onSendVoteMcQuizButtonClicked = function () {
+    var _onSendVoteMcQuizButtonClicked = function (event) {
     	
+    	var slideToVote = $(".current").find("#slide_to_vote").val();
     	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
+    	V.Debugging.log(" slideToVote value: " +slideToVote);
     };
     
     var _onStopMcQuizButtonClicked = function () {
-    	
+
     	V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
     	
     	var slideToStop = $(".current").find("#slide_to_stop").val();
@@ -340,7 +346,8 @@ VISH.Quiz = (function(V,$,undefined){
     		V.Debugging.log("slideToStop value is: " + slideToStop);
     	
     	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
-    	$("#"+slideToStop).find(".t11_header").css('display', 'none');
+   		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
+    	$("#"+slideToStop).find(".t11_header").text("");
     	//TODO thing if the button at the end of the voting must be removed or just only show start again
     	
     	//show start quiz again
