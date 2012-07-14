@@ -785,7 +785,7 @@
 		height:5%;
 		background-color:#CCCCCC;
 		position: relative;
-		display:block;
+		display:none;
 		margin-left:2%;
 		margin-top:1.5%;
 	}
