@@ -179,11 +179,13 @@ img {
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
+    margin-left:3%;
     font-family: Helvetica;
     font-size: 16px;
     outline: 0 none;
     padding: 5px 7px;
     position: relative;
+    text-align:left;
     z-index: 1000;
 }
 
@@ -200,18 +202,7 @@ img {
 	
 }
 
-.title_openquestion {
-	  background: none no-repeat scroll 5px 50% transparent;
-    border: 1px solid #9B999D;
-    border-radius: 10px 10px 10px 10px;
-    font-family: Helvetica;
-    font-size: 16px;
-    outline: 0 none;
-    padding: 5px 7px;
-    position: relative;
-    z-index: 1000;
-}
-		
+	
 .header_openquestion {
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
@@ -222,6 +213,7 @@ img {
     font-weight: bold;
     padding: 0.5em 1.5em;
     text-decoration: none;
+    text-align:left;
 }
 
 .header_multiplechoice_question {
@@ -240,6 +232,7 @@ img {
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
+    margin-left:3%;
     font-family: Helvetica;
     font-size: 16px;
     outline: 0 none;
@@ -520,11 +513,13 @@ img {
 }
 .fancy_tabs{
 	border-bottom: 1px solid #ff005d;
-	background: #f9f9f9;
+	border-radius: 8px 8px 0px 0px;
+	moz-border-radius: 8px 8px 0px 0px;
+	webkit-border-radius: 8px 8px 0px 0px;
 }
 
 .fancy_tabs ul{
-	width: 800px;
+	width: auto;
 	list-style-type: none;
 	background-color: #ffffff;
 	color: #ff005d;
@@ -533,9 +528,9 @@ img {
 	line-height: 1.5;
 	font-weight: bold;
 	padding: 0px;
-	border-radius: 4px 4px 0px 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-	-webkit-border-radius: 4px 4px 0px 0px;	
+	border-radius: 8px 8px 0px 0px;
+	-moz-border-radius: 8px 8px 0px 0px;
+	-webkit-border-radius: 8px 8px 0px 0px;	
 }
 
 .fancy_tabs li{
@@ -552,9 +547,9 @@ img {
 	font-size: 16px;
 	font-family: Helvetica;
 	font-weight: bold;
-	border-radius: 4px 4px 0px 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-	-webkit-border-radius: 4px 4px 0px 0px;
+	border-radius: 8px 8px 0px 0px;	
+	-moz-border-radius: 8px 8px 0px 0px;	
+	-webkit-border-radius: 8px 8px 0px 0px;	
 	
 }
 
@@ -900,13 +895,12 @@ table.metadata td div.height_wrapper_description{
     }	
 	
 .button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
+	opacity: 0.8;
 }
 
 .buttonfancy {
 	position:absolute;
-	margin-left: 560px;
+	margin-left: 563px;
 	margin-top:75px;
 }
 	
@@ -1119,7 +1113,7 @@ textarea {
 	background-image:url(../../images/helptutorial_circle.png);
 	position: absolute;
 	top: 2px;
-	right: 27px;
+	right: 24px;
 	position: absolute;
 	right: 27px;
 	top: 2px;
@@ -1223,8 +1217,8 @@ textarea {
 #help_template_selection {
 	background-image:url(../../images/helptutorial_circle_tp.png);
 	position: absolute;
-	margin-top: -44px;
-	right: 22px;
+	margin-top: -43px;
+	right: 21px;
 }
 
 #help_template_selection:hover {
@@ -1323,7 +1317,7 @@ textarea {
 	position:absolute;
 	margin-top: -50px;
 }
-#flashimagetut {
+#objectimagetut {
 	padding-left: 200px;
 	position:absolute;
 	margin-top: -50px;

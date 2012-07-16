@@ -1,6 +1,9 @@
 VISH.Renderer = (function(V,$,undefined){
 	
 	var SLIDE_CONTAINER = null;
+	var username = "";
+	var token = "";
+	var quiz_active = "";
 
 	/**
 	 * Function to initialize the renderer
@@ -8,6 +11,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var init        = function(){
 		SLIDE_CONTAINER = $('.slides');
+		
 	}
 
 	/**
@@ -45,9 +49,17 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			else if(slide.elements[el].type === "openquestion"){
 				content += _renderOpenquestion(slide.elements[el],slide.template);
+				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
-				content += _renderMcquestion(slide.elements[el],slide.template);
+				
+				//this will be call as many times as mcquestion have the excursion
+				//isn't better to get the role value in the VISH.Quiz? 
+				//role = VISH.SlideManager.getUser().role;
+			
+				content +=VISH.Quiz.init(slide.elements[el],slide.template, slide.id);
+				//content += _renderMcquestion(slide.elements[el],slide.template);
+				classes +="mcquestion";
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -55,6 +67,7 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 
 		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
+		
 	};
 
 	/**
@@ -157,8 +170,8 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
 			ret += "<label class='question_name'>Name:  </label>";
-			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input'placeholder='Write your name here'></textarea>";
-			ret += "<label class='question'> Question: "+element['question']+"  </label>";				
+			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+			ret += "<h2 class='question'> Question: "+element['question']+"? </h2>";				
 		
 			ret += "<label class='label_question'>Answer: </label>";
 			ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
@@ -173,26 +186,38 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render a multiple choice question form inside an article (a slide)
 	 */
+	
 	var _renderMcquestion = function(element, template){
 		var next_num=0;
 		
-		var	ret = "<form action='"+element['posturl']+"' method='post'>";
-		ret += "<label class='question_name'>Name:  </label>";
-		ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-		ret += "<div id='"+element['id']+"' class='question'>"+element['question']+"?</div>";
+		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		
+		ret += "<div class='mcquestion_container'>";
+		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+		
+		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+		//ret += "<label class='question_name'>Name:  </label>";
+		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+		
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
 		var next_index = "a".charCodeAt(0) + (next_num); 
 		next_index = String.fromCharCode(next_index);
-			VISH.Debugging.log("next_index vale:"+next_index);
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='0'>"+element['options'][i]+"</label>";
+			
+			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		
 		}
 		
+		ret += "</div>";
+		ret += "<div class='mcquestion_right'>";
+		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+		ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
 		
-		//if(available question ... button ) else ... no button 
-		
-		ret += "<button type='button' class='question_button'>Send</button>";
+		ret += "</div>";
+		ret += "</form>";
+		ret += "</div>";
 		return ret;
 	};
 

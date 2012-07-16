@@ -34,6 +34,15 @@ VISH.Excursion = (function(V,undefined){
 						V.Mods.fc.loader.init(flashcard);
 					//});
 				}
+				
+				else if(mySlides[i].elements[num].type === "mcquestion") {
+ 
+					//VISH.Debugging.log(" mySlides[i].id is : " + mySlides[i].id.toString());
+				    //param number of slide?
+					VISH.Quiz.enableInteraction(mySlides[i].id.toString());
+					
+					
+				}
 			}
 		}
 		

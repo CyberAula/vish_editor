@@ -12194,7 +12194,7 @@ var nicEditorSaveButton = nicEditorButton.extend({init:function() {
 nicEditors.registerPlugin(nicPlugin, nicSaveOptions);
 var PERMANENT_URL_PREFIX = "";
 var SLIDE_CLASSES = ["far-past", "past", "current", "next", "far-next"];
-var PM_TOUCH_SENSITIVITY = 15;
+var PM_TOUCH_SENSITIVITY = 300;
 var curSlide;
 if(typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
   (function(view) {
@@ -12409,8 +12409,12 @@ function handleTouchStart(event) {
     touchDY = 0;
     touchStartX = touches[0].pageX;
     touchStartY = touches[0].pageY;
-    $(document).bind("touchmove", handleTouchMove);
-    $(document).bind("touchend", handleTouchEnd)
+    document.body.addEventListener("touchmove", handleTouchMove, true);
+    document.body.addEventListener("touchend", handleTouchEnd, true);
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+    if(zoom < 1.5) {
+      event.preventDefault()
+    }
   }
 }
 function handleTouchMove(event) {
@@ -12419,7 +12423,11 @@ function handleTouchMove(event) {
     cancelTouch()
   }else {
     touchDX = touches[0].pageX - touchStartX;
-    touchDY = touches[0].pageY - touchStartY
+    touchDY = touches[0].pageY - touchStartY;
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+    if(zoom < 1.5) {
+      event.preventDefault()
+    }
   }
 }
 function handleTouchEnd(event) {
@@ -12435,8 +12443,8 @@ function handleTouchEnd(event) {
   cancelTouch()
 }
 function cancelTouch() {
-  $(document).unbind("touchmove", handleTouchMove);
-  $(document).unbind("touchend", handleTouchEnd)
+  document.body.removeEventListener("touchmove", handleTouchMove, true);
+  document.body.removeEventListener("touchend", handleTouchEnd, true)
 }
 function setupInteraction() {
   $(document).bind("touchstart", handleTouchStart)
@@ -12573,14 +12581,9 @@ function addFontStyle() {
   document.body.appendChild(el)
 }
 function addGeneralStyle() {
-  var el = document.createElement("link");
-  el.rel = "stylesheet";
-  el.type = "text/css";
-  el.href = PERMANENT_URL_PREFIX + VISH.StylesheetsPath + "styles.css";
-  document.body.appendChild(el);
   var el = document.createElement("meta");
   el.name = "viewport";
-  el.content = "width=1100,height=750";
+  el.content = "width=900,height=750";
   document.querySelector("head").appendChild(el);
   var el = document.createElement("meta");
   el.name = "apple-mobile-web-app-capable";
@@ -12596,6 +12599,9 @@ function makeBuildLists() {
       }
     }
   }
+}
+function hideAddressBar() {
+  VISH.Debugging.log("TODO method hideAddressBar in slides.js")
 }
 function handleDomLoaded() {
   slideEls = document.querySelectorAll("section.slides > article");
@@ -12613,7 +12619,13 @@ function initialize() {
   if(window["_DCL"]) {
     handleDomLoaded()
   }else {
-    $(document).bind("OURDOMContentLoaded", handleDomLoaded)
+    $(document).bind("OURDOMContentLoaded", handleDomLoaded);
+    window.addEventListener("load", function() {
+      if(!window.pageYOffset) {
+        hideAddressBar()
+      }
+    });
+    window.addEventListener("orientationchange", hideAddressBar)
   }
 }
 if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
@@ -13585,7 +13597,7 @@ VISH.Editor = function(V, $, undefined) {
         $(".theslider").hide();
         $(".nicEdit-panelContain").hide();
         $("#menubar-viewer").show();
-        VISH.SlideManager.init(excursion)
+        VISH.SlideManager.init({"quiz_active":"false", "token":"453452453", "username":"ebarra", "postPath":"/quiz.json", "lang":"es"}, excursion)
       }else {
         if(VISH.Debugging.getActionSave() == "edit") {
           $("article").remove();
@@ -14280,14 +14292,11 @@ VISH.Samples = function(V, undefined) {
   {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=opaque" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
   {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="opaque" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
   "style":"position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"}]}]};
-  var samples = {"id":13293, "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-10.png", "tags":["Chess", "Art"], "author":"Aldo", "slides":[{"id":"article2", "template":"t4", "elements":[{"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">Ecology</font><br></span></div>'}, 
-  {"id":"zone3", "type":"object", "areaid":"left", "body":'<iframe unselectable="on" wmode="opaque" class="t4_object" id="resizableunicID_1" src="http://www.youtube.com/embed/GwMDmtIlxgk?wmode=opaque" frameborder="0"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone4", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx is smaller than its northern relatives, and typically hunts smaller animals, usually no larger than hares. It also differs in habitat choice, with Iberian lynx inhabiting open scrub and Eurasian lynx inhabiting forests.It hunts mammals (including rodents and insectivores), birds, reptiles and amphibians at twilight. The European rabbit (Oryctolagus cuniculus) is its main prey (79.5-86.7%), with (5.9%) hares (Lepus granatensis) and rodents (3.2%) less common. A male requires one rabbit per day; a female bringing up cubs will eat three rabbits per day.</span></div>'}]}, 
-  {"id":"article3", "template":"t7", "elements":[{"id":"zone5", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">SosLynx</font><br></span></div>'}, 
-  {"id":"zone6", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font2"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx and its habitat are fully protected, and they are no longer legally hunted. Its critical status is mainly due to habitat loss, poisoning, road casualties, feral dogs and poaching. Its habitat loss is due mainly to infrastructure improvement, urban and resort development and tree monocultivation, which serves to break the lynx\'s distribution area. In addition, the lynx prey population of rabbits is also declining due to diseases such as myxomatosis and hemorrhagic pneumonia.There exist websites like SOS Lynx which is a conservation charity based in Portugal, working to prevent the extinction of the Iberian lynx. Its aim is to stop the decline of the Iberian lynx and other lynx species.</span></div>'}, 
-  {"id":"zone7", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_2" src="http://www.soslynx.org/?wmode=transparent"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone8", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font6" style="text-align: center;"><span class="vish-font6 vish-fontHelvetica" style="">http://www.soslynx.org/</span></div>'}]}, {"id":"article4", "template":"t6", 
-  "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="4"><span style="color: rgb(113, 113, 117);">Reproduction</span></font><br></span></div>'}, 
-  {"id":"zone10", "type":"image", "areaid":"left", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:380.95238095238096%; height:219.0889370932755%; top:-36.44251626898048%; left:-58.57142857142857%;"}, {"id":"zone11", "type":"image", "areaid":"center", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:357.14285714285717%; height:205.63991323210413%; top:-45.5531453362256%; left:-193.3333260672433%;"}, 
-  {"id":"zone12", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>'}]}]};
+  var samples = {"id":"", "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-10.png", "author":"", "slides":[{"id":"articlearticle1", "template":"t1", "elements":[{"id":"zone1", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg", "style":"position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"}, 
+  {"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3 vish-parent-font6" style="text-align: center; font-weight: normal; "><span class="vish-font3 vish-fontarial"><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="font-family: helvetica;"><span style="font-weight: bold;">Chess</span>: The Art of Learning</span></span><br></span></div>'}, {"id":"zone3", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3 vish-parent-font4" style="text-align: right; font-weight: normal; "><span class="vish-font3 vish-fontarial"><span class="vish-font4 vish-fontHelvetica" style="undefined;"><span style="font-style: italic; font-family: helvetica;">by Aldo Gordillo&nbsp; </span></span><br></span></div>'}]}, 
+  {"id":"articlevish4", "template":"t3", "elements":[{"id":"zone4", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"zone5", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg", "style":"position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"}]}, {"id":"articlearticle4", "template":"t6", "elements":[{"id":"zone6", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3 vish-parent-font6 vish-parent-font4" style="font-weight: normal; "><span class="vish-font3 vish-fontHelvetica" style=""><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="color: rgb(219, 150, 0);">Iberian</span></span><span class="vish-font6 vish-fontHelvetica" style="undefined;"> </span><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="color: rgb(32, 24, 21);">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="vish-font4 vish-fontHelvetica" style="undefined;"><span style="color: rgb(113, 113, 117);">Reproduction</span></span><br></span></div>'}, 
+  {"id":"zone7", "type":"image", "areaid":"left", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"}, {"id":"zone8", "type":"image", "areaid":"center", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"}, 
+  {"id":"zone9", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center; font-weight: normal; "><span class="vish-font2 vish-fontHelvetica" style="">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -14300,7 +14309,10 @@ VISH.Samples = function(V, undefined) {
   {"id":"vish13", "template":"t2", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video with style param"}, {"id":"335", "type":"object", "areaid":"left", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>', "style":"position: relative; left: 163px; top: 110px; width: 325px; height: 215px;"}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", 
   "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
   {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
-  return{full_samples:full_samples, samples:samples, samples_aldo:samples_aldo}
+  var quizes_samples = {"id":5555, "author":"V\u00edctor Hugo", "slides":[{"id":"article1", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Brazil", "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article2", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Peru", 
+  "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article3", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Colombia", "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article4", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which which which which ... ", 
+  "options":["Un texto largo, muy largo que puede sobrepasar los l\u00edmites permitidos", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Otro texto largo, muy largo y m\u00e1s largo que sobrepase los l\u00edmites permitidos ... y m\u00e1s"]}]}]};
+  return{full_samples:full_samples, samples:samples, samples_aldo:samples_aldo, quizes_samples:quizes_samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
   var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.dan-dare.org/dan%20simpsons/TheSimpsonsEveryoneEver800.jpg"}, {"id":55, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://3.bp.blogspot.com/--H0o8mc28bA/TxrsnMAFMDI/AAAAAAAAARs/eOCVIXKlm9I/s1600/sala-cine.jpg"}, {"id":56, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, 
@@ -14518,8 +14530,8 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t7_subheader editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t8_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t9_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t10_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>", "<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><ul id='ul_mch_options'><li id='li_mch_option_1' class='li_mch_option'>a) <input id='radio_text_1' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li> </ul> </div></article>", 
-  "<article id='article_id_to_change' template='t12'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t12_header' type='title_truefalse_question'></div><div id='div_id_to_change' areaid='left' class='t12_left truefalsequestion' type='truefalsequestion'><h2 class='header_truefalse_question'>True/False Question:</h2><table id='truefalse_quiz_table' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr><tr id='tr_question_1'><td id='td_true_1'><input type='checkbox' id='1_true'/></td><td id='td_false_1'><input type='checkbox' id='1_false'/></td><td id='td_question_1'><textarea rows='1' cols='50' class='value_multiplechoice_question' placeholder='Write question here'></textarea></td></tr>              </table></div></article>"];
+  "<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Open Question:</h2><textarea rows='4' cols='50' class='value_openquestion' placeholder='write open question here'></textarea></div></article>", "<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='write question here'></textarea><ul id='ul_mch_options'><li id='li_mch_option_1' class='li_mch_option'>a) <input id='radio_text_1' class='multiplechoice_text' type='text' placeholder='write options here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li> </ul> </div></article>", 
+  "<article id='article_id_to_change' template='t12'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t12_left truefalsequestion' type='truefalsequestion'><h2 class='header_truefalse_question'>True/False Question:</h2><table id='truefalse_quiz_table' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr><tr id='tr_question_1'><td id='td_true_1'><input type='checkbox' id='1_true'/></td><td id='td_false_1'><input type='checkbox' id='1_false'/></td><td id='td_question_1'><textarea rows='1' cols='50' class='value_multiplechoice_question' placeholder='Write question here'></textarea></td></tr>              </table></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -16505,6 +16517,10 @@ VISH.Excursion = function(V, undefined) {
         if(mySlides[i].elements[num].type === "flashcard") {
           var flashcard = JSON.parse(mySlides[i].elements[num].jsoncontent);
           V.Mods.fc.loader.init(flashcard)
+        }else {
+          if(mySlides[i].elements[num].type === "mcquestion") {
+            VISH.Quiz.enableInteraction(mySlides[i].id.toString())
+          }
         }
       }
     }
@@ -16597,8 +16613,173 @@ VISH.Police = function(V, $, undefined) {
   };
   return{init:init, validateObject:validateObject, validateFileUpload:validateFileUpload}
 }(VISH, jQuery);
+VISH.Quiz = function(V, $, undefined) {
+  var role;
+  var slideToActivate;
+  var slideToVote;
+  var init = function(element, template, slide) {
+    role = V.SlideManager.getUser().role;
+    var obj;
+    switch(role) {
+      case "logged":
+        obj = _renderMcquestionLogged(element, template, slide);
+        break;
+      case "student":
+        obj = _renderMcquestionStudent(element, template, slide);
+        break;
+      case "none":
+        obj = _renderMcquestionNone(element, template, slide);
+        break;
+      default:
+        VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: " + role)
+    }
+    return obj
+  };
+  var enableInteraction = function(slide) {
+    switch(role) {
+      case "logged":
+        slideToActivate = slide;
+        _activateLoggedInteraction();
+        break;
+      case "student":
+        slideToVote = slide;
+        _activateStudentInteraction();
+        break;
+      case "none":
+        _activateNoneInteraction();
+        break;
+      default:
+        VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: " + role)
+    }
+  };
+  var _renderMcquestionLogged = function(element, template, slide) {
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form id='form_" + slide + "'class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") " + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption" + (i + 1) + "'></span></div>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<img id='mch_statistics_button_" + slide + "' class='mch_statistics_icon' src='" + VISH.ImagesPath + "quiz/eye.png'/>";
+    ret += "<input type='hidden' id='slide_to_activate' value='" + slide + "'/>";
+    ret += "<input type='button' id='mcquestion_start_button_" + slide + "' class='mcquestion_start_button' value='Start Quiz'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _renderMcquestionStudent = function(element, template, slide) {
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") <input class='mc_radio' type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption" + (i + 1) + "'></span></div>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<input type='hidden' id='slide_to_vote' value='" + slide + "'/>";
+    ret += "<input type='button' id='mcquestion_send_vote_button_" + slide + "' class='mcquestion_send_vote_button' value='Send'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _renderMcquestionNone = function(element, template, slide) {
+    V.Debugging.log("enter to renderMcquestionNone");
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") <input type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _activateLoggedInteraction = function() {
+    var startButton = "#mcquestion_start_button_" + slideToActivate;
+    var statisticsButton = "#mch_statistics_button_" + slideToActivate;
+    $(document).on("click", startButton, _onStartMcQuizButtonClicked);
+    $(document).on("click", statisticsButton, _onStatisticsMcQuizButtonClicked)
+  };
+  var _activateStudentInteraction = function() {
+    var button = "#mcquestion_send_vote_button_" + slideToVote;
+    $(document).on("click", button, _onSendVoteMcQuizButtonClicked);
+    $(".mc_meter").hide()
+  };
+  var _activateNoneInteraction = function() {
+    V.Debugging.log(" enter on _activeNoneInteraction function")
+  };
+  var _onStartMcQuizButtonClicked = function() {
+    var URL = "<span> http://www.vishub.org/dasdas </span>";
+    var slideToPlay = $(".current").find("#slide_to_activate").val();
+    var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src=" + VISH.ImagesPath + "quiz/share-glossy-blue.png /></a>";
+    if($("#" + slideToPlay).find(".t11_header").children()) {
+      $("#" + slideToPlay).find(".t11_header").children().remove()
+    }
+    $("#" + slideToPlay).find(".t11_header").append(URL);
+    $("#" + slideToPlay).find(".t11_header").append(shareButton);
+    $("#" + slideToPlay).find(".t11_header").show();
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("value", "Stop Quiz");
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("class", "mcquestion_stop_button");
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("id", "mcquestion_stop_button_" + slideToPlay);
+    $("#" + slideToPlay).find("#slide_to_activate").attr("id", "slide_to_stop");
+    $(document).on("click", "#mcquestion_stop_button_" + slideToPlay, _onStopMcQuizButtonClicked)
+  };
+  var _onSendVoteMcQuizButtonClicked = function(event) {
+    var slideToVote = $(".current").find("#slide_to_vote").val();
+    V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
+    V.Debugging.log(" slideToVote value: " + slideToVote);
+    $(".current").find(".mc_radio").remove();
+    $(".current").find("#mcquestion_send_vote_button_" + slideToVote).remove();
+    $(".current").find(".mc_meter").css("display", "block")
+  };
+  var _onStopMcQuizButtonClicked = function() {
+    V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
+    var slideToStop = $(".current").find("#slide_to_stop").val();
+    V.Debugging.log("slideToStop value is: " + slideToStop);
+    $("#" + slideToStop).find(".t11_header").text("");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("value", "Start Quiz");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("class", "mcquestion_start_button");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("id", "mcquestion_start_button_" + slideToStop);
+    $("#" + slideToStop).find("#slide_to_stop").attr("id", "slide_to_activate");
+    $(document).on("click", "#mcquestion_start_button_" + slideToStop, _onStartMcQuizButtonClicked)
+  };
+  var _onStatisticsMcQuizButtonClicked = function() {
+    if($(".current").find(".mc_meter").css("display") == "block") {
+      $(".current").find(".mc_meter").css("display", "none")
+    }else {
+      $(".current").find(".mc_meter").css("display", "block")
+    }
+  };
+  return{init:init, enableInteraction:enableInteraction}
+}(VISH, jQuery);
 VISH.Renderer = function(V, $, undefined) {
   var SLIDE_CONTAINER = null;
+  var username = "";
+  var token = "";
+  var quiz_active = "";
   var init = function() {
     SLIDE_CONTAINER = $(".slides")
   };
@@ -16632,10 +16813,12 @@ VISH.Renderer = function(V, $, undefined) {
                     classes += "flashcard"
                   }else {
                     if(slide.elements[el].type === "openquestion") {
-                      content += _renderOpenquestion(slide.elements[el], slide.template)
+                      content += _renderOpenquestion(slide.elements[el], slide.template);
+                      classes += "openquestion"
                     }else {
                       if(slide.elements[el].type === "mcquestion") {
-                        content += _renderMcquestion(slide.elements[el], slide.template)
+                        content += VISH.Quiz.init(slide.elements[el], slide.template, slide.id);
+                        classes += "mcquestion"
                       }else {
                         content += _renderEmpty(slide.elements[el], slide.template)
                       }
@@ -16703,8 +16886,8 @@ VISH.Renderer = function(V, $, undefined) {
   var _renderOpenquestion = function(element, template) {
     var ret = "<form action='" + element["posturl"] + "' method='post' style='text-align:center;'>";
     ret += "<label class='question_name'>Name:  </label>";
-    ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input'placeholder='Write your name here'></textarea>";
-    ret += "<label class='question'> Question: " + element["question"] + "  </label>";
+    ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+    ret += "<h2 class='question'> Question: " + element["question"] + "? </h2>";
     ret += "<label class='label_question'>Answer: </label>";
     ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
     ret += "<button type='button' class='question_button'>Send</button>";
@@ -16712,18 +16895,24 @@ VISH.Renderer = function(V, $, undefined) {
   };
   var _renderMcquestion = function(element, template) {
     var next_num = 0;
-    var ret = "<form action='" + element["posturl"] + "' method='post'>";
-    ret += "<label class='question_name'>Name:  </label>";
-    ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-    ret += "<div id='" + element["id"] + "' class='question'>" + element["question"] + "?</div>";
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
     for(var i = 0;i < element["options"].length;i++) {
       var next_num = i;
       var next_index = "a".charCodeAt(0) + next_num;
       next_index = String.fromCharCode(next_index);
-      VISH.Debugging.log("next_index vale:" + next_index);
-      ret += "<label class='mc_answer'>" + next_index + ") <input type='radio' name='mc_radio' value='0'>" + element["options"][i] + "</label>"
+      ret += "<label class='mc_answer'>" + next_index + ") <input type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;'></span></div>"
     }
-    ret += "<button type='button' class='question_button'>Send</button>";
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<img class='mch_statistics_icon' src='" + VISH.ImagesPath + "quiz/eye.png'/>";
+    ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
     return ret
   };
   return{init:init, renderVideo:renderVideo, renderSlide:renderSlide}
@@ -16733,38 +16922,70 @@ VISH.SlideManager = function(V, $, undefined) {
   var slideStatus = {};
   var myDoc;
   var eventsLoaded = false;
-  var init = function(excursion) {
+  var user = {};
+  var status = {};
+  var init = function(options, excursion) {
+    V.Status.init();
     VISH.Editing = false;
+    if(options["username"]) {
+      user.username = options["username"];
+      user.role = "logged";
+      if(options["token"]) {
+        status.token = options["token"];
+        if(options["quiz_active"]) {
+          status.quiz_active = options["quiz_active"]
+        }else {
+          status.quiz_active = options["quiz_active"]
+        }
+      }else {
+        status.token = "";
+        if(options["quiz_active"]) {
+          status.quiz_active = options["quiz_active"]
+        }
+      }
+    }else {
+      user.username = "";
+      status.token = "";
+      if(options["quiz_active"]) {
+        user.role = "student";
+        status.quiz_active = options["quiz_active"]
+      }else {
+        user.role = "none";
+        status.quiz_active = options["quiz_active"]
+      }
+    }
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
-    _setupSize();
+    V.ViewerAdapter.setupSize();
     if(!eventsLoaded) {
       eventsLoaded = true;
       addEventListeners();
       $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
       $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide)
     }
-    var isInIFrame = window.location != window.parent.location ? true : false;
-    var myElem = null;
-    if(isInIFrame) {
+    if(V.Status.getIsInIframe()) {
       myDoc = parent.document
     }else {
       myDoc = document
     }
-    $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
-      _setupSize()
+    $(window).on("orientationchange", function() {
+      V.ViewerAdapter.setupSize()
     });
-    var elem = document.getElementById("page-fullscreen");
-    var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
-    if(canFullScreen) {
-      $(document).on("click", "#page-fullscreen", toggleFullScreen)
+    if(V.Status.features.fullscreen) {
+      $(document).on("click", "#page-fullscreen", toggleFullScreen);
+      $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
+        V.ViewerAdapter.setupSize()
+      })
     }else {
       $("#page-fullscreen").hide()
     }
-    VISH.SlidesUtilities.updateSlideCounter()
+    if(!V.Status.ua.mobile) {
+      $("#viewbar").show();
+      VISH.SlidesUtilities.updateSlideCounter()
+    }
   };
   var toggleFullScreen = function() {
-    myElem = myDoc.getElementById("excursion_iframe");
+    var myElem = myDoc.getElementById("excursion_iframe");
     if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
       if(myDoc.documentElement.requestFullScreen) {
         myElem.requestFullScreen()
@@ -16803,32 +17024,6 @@ VISH.SlideManager = function(V, $, undefined) {
       })
     }
   };
-  var _setupSize = function() {
-    var height = $(window).height() - 40;
-    var width = $(window).width();
-    var finalW = 800;
-    var finalH = 600;
-    var aspectRatio = width / height;
-    var slidesRatio = 4 / 3;
-    if(aspectRatio > slidesRatio) {
-      finalH = height - 40;
-      finalW = finalH * slidesRatio
-    }else {
-      finalW = width - 110;
-      finalH = finalW / slidesRatio
-    }
-    $(".slides > article").css("height", finalH);
-    $(".slides > article").css("width", finalW);
-    var marginTop = finalH / 2 + 20;
-    var marginLeft = finalW / 2;
-    $(".slides > article").css("margin-top", "-" + marginTop + "px");
-    $(".slides > article").css("margin-left", "-" + marginLeft + "px");
-    var increase = finalH / 600;
-    $(".slides > article").css("font-size", 16 * increase + "px");
-    $(".slides > article").css("line-height", 16 * increase + "px");
-    VISH.SnapshotPlayer.aftersetupSize(increase);
-    VISH.ObjectPlayer.aftersetupSize(increase)
-  };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);
     $("article").live("slideleave", _onslideleave)
@@ -16841,6 +17036,12 @@ VISH.SlideManager = function(V, $, undefined) {
   };
   var updateStatus = function(slideid, newStatus) {
     slideStatus[slideid] = newStatus
+  };
+  var getUser = function() {
+    return user
+  };
+  var getUserStatus = function() {
+    return status
   };
   var _onslideenter = function(e) {
     _decideIfPageSwitcher();
@@ -16898,7 +17099,7 @@ VISH.SlideManager = function(V, $, undefined) {
       $("#page-switcher-end").show()
     }
   };
-  return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents, toggleFullScreen:toggleFullScreen}
+  return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents, toggleFullScreen:toggleFullScreen, getUser:getUser, getUserStatus:getUserStatus}
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
@@ -17156,6 +17357,56 @@ VISH.SnapshotPlayer = function() {
   };
   return{loadSnapshot:loadSnapshot, unloadSnapshot:unloadSnapshot, aftersetupSize:aftersetupSize}
 }(VISH, jQuery);
+VISH.Status = function(V, $, undefined) {
+  var ua = {};
+  var features = {};
+  var isInIframe;
+  var init = function() {
+    fillUserAgent();
+    fillFeatures()
+  };
+  var fillFeatures = function() {
+    setIsInIframe(window.location != window.parent.location ? true : false);
+    V.Debugging.log("We are in iframe: " + getIsInIframe());
+    var elem = document.getElementById("page-fullscreen");
+    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+      features.fullscreen = true
+    }
+    V.Debugging.log("Fullscreen supported: " + features.fullscreen);
+    features.touchScreen = !!("ontouchstart" in window);
+    V.Debugging.log("TouchScreen supported: " + features.touchScreen)
+  };
+  var fillUserAgent = function() {
+    ua.pixelRatio = window.devicePixelRatio || 1;
+    ua.viewport = {width:window.innerWidth, height:window.innerHeight};
+    ua.screen = {width:window.screen.availWidth * ua.pixelRatio, height:window.screen.availHeight * ua.pixelRatio};
+    ua.iPhone = /iPhone/i.test(navigator.userAgent);
+    ua.iPhone4 = ua.iPhone && ua.pixelRatio == 2;
+    ua.iPad = /iPad/i.test(navigator.userAgent);
+    ua.android = /android/i.test(navigator.userAgent);
+    ua.iOS = ua.iPhone || ua.iPad;
+    ua.mobile = ua.iOS || ua.android;
+    if(ua.android) {
+      V.Debugging.log("Android device")
+    }
+    V.Debugging.log("Screen width: " + ua.screen.width);
+    V.Debugging.log("Screen height: " + ua.screen.height);
+    V.Debugging.log("Viewport width: " + ua.viewport.width);
+    V.Debugging.log("Viewport height: " + ua.viewport.height)
+  };
+  var getIsInIframe = function() {
+    return isInIframe
+  };
+  var setIsInIframe = function(isIframe) {
+    isInIframe = isIframe
+  };
+  return{features:features, getIsInIframe:getIsInIframe, init:init, ua:ua}
+}(VISH, jQuery);
+VISH.Utils.API = function(V, $, undefined) {
+  var init = function() {
+  };
+  return{init:init}
+}(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
     var ratio, tmpHeight, tmpWidth, finalx, finaly, finalw, finalh;
@@ -17341,6 +17592,17 @@ VISH.Utils.loader = function(V, undefined) {
   };
   return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, loadImagesOnCarrousel:loadImagesOnCarrousel, loadImagesOnCarrouselOrder:loadImagesOnCarrouselOrder}
 }(VISH);
+VISH.Utils.quiz = function(V, undefined) {
+  var init = function() {
+    if($(".mcquestion")) {
+      $(".mcquestion").find(".mc_meter").css("display", "none")
+    }
+  };
+  var showStatistic = function(event) {
+    VISH.Debugging.log(" Enter showStatistics value of the event: " + event)
+  };
+  return{init:init, showStatistic:showStatistic}
+}(VISH);
 VISH.Utils.text = function(V, undefined) {
   var getLines = function(ctx, phrase, maxPxLength, textStyle) {
     var wa = phrase.split(" "), phraseArray = [], lastPhrase = "", l = maxPxLength, measure = 0, i = 0, w = 0;
@@ -17406,6 +17668,49 @@ VISH.VideoPlayer = function() {
     })
   };
   return{setVideoTagEvents:setVideoTagEvents, playVideos:playVideos, stopVideos:stopVideos}
+}(VISH, jQuery);
+VISH.ViewerAdapter = function(V, $, undefined) {
+  var setupSize = function() {
+    if(V.Status.ua.mobile) {
+      var reserved_px_for_menubar = 0;
+      var margin_height = 0;
+      var margin_width = 0
+    }else {
+      var reserved_px_for_menubar = 40;
+      var margin_height = 40;
+      var margin_width = 110
+    }
+    var height = $(window).height() - reserved_px_for_menubar;
+    var width = $(window).width();
+    var finalW = 800;
+    var finalH = 600;
+    VISH.Debugging.log("height " + height);
+    VISH.Debugging.log("width " + width);
+    var aspectRatio = width / height;
+    var slidesRatio = 4 / 3;
+    if(aspectRatio > slidesRatio) {
+      finalH = height - margin_height;
+      finalW = finalH * slidesRatio
+    }else {
+      finalW = width - margin_width;
+      finalH = finalW / slidesRatio
+    }
+    VISH.Debugging.log("finalH " + finalH);
+    VISH.Debugging.log("finalW " + finalW);
+    $(".slides > article").css("height", finalH);
+    $(".slides > article").css("width", finalW);
+    var marginTop = finalH / 2 + reserved_px_for_menubar / 2;
+    var marginLeft = finalW / 2;
+    $(".slides > article").css("margin-top", "-" + marginTop + "px");
+    $(".slides > article").css("margin-left", "-" + marginLeft + "px");
+    var increase = finalH / 600;
+    var font_size = V.Status.ua.mobile ? 15 : 16;
+    $(".slides > article").css("font-size", font_size * increase + "px");
+    $(".slides > article").css("line-height", font_size * increase + "px");
+    VISH.SnapshotPlayer.aftersetupSize(increase);
+    VISH.ObjectPlayer.aftersetupSize(increase)
+  };
+  return{setupSize:setupSize}
 }(VISH, jQuery);
 VISH.Mods.fc = {};
 VISH.Mods.fc.loader = function(V, undefined) {

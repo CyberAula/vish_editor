@@ -2,49 +2,115 @@ VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
-	 //Prevent to load events multiple times.
-  var eventsLoaded = false;
+	//Prevent to load events multiple times.
+  	var eventsLoaded = false;
+	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
+	var status = {}; //{token: "token", quiz_active:"4" } quiz_active : number, false
+	
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
+	 * options is a hash with params and options from the server, example of full options hash:
+	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
-	var init = function(excursion){
+	var init = function(options, excursion){
+		
+		V.Status.init();
+	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+	
+	//fixing editor mode when save an excursion
+		if(options['username']) {
+			
+			user.username = options['username'];
+			user.role  = "logged";
+			if(options['token']){
+				status.token = options['token'];
+			
+				if(options['quiz_active']) {
+					status.quiz_active = options['quiz_active'];
+				} 
+				//when logged + token but no quiz_active
+				else { 
+				//must be false
+				status.quiz_active = options['quiz_active']; 
+				}			
+			
+			}
+			//no token ( when? ) but logged 
+			else {
+			
+				status.token = "";
+				//logged, no token but quiz_active .... ?
+				if(options['quiz_active']) {
+					 	
+					status.quiz_active = options['quiz_active'];
+				
+				}
+			}
+			
+		}  //no username 
+		else {
+		
+			user.username=""; //so no token
+			status.token=""; 
+			
+			//no username but quiz active --> (student) 
+			if(options['quiz_active']) {
+		 		user.role= "student" //logged and no token but quiz active " + options['quiz_active'];
+				status.quiz_active = options['quiz_active'];
+			}
+		//no username no quiz active --> (none)
+			else {
+				
+				
+		 		user.role= "none";
+		 		status.quiz_active = options['quiz_active'];
+		 	} 
+		
+		 }	
+		
+		// VISH.Debugging.log("(SlideManager)username: " + user.username);
+		// VISH.Debugging.log("(SlideManager)role: " + user.role);
+		 
+		 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
-		_setupSize();
+		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;
 			addEventListeners(); //for the arrow keys
-      $(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
-      $(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+      		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
+      		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
-		
-		var isInIFrame = (window.location != window.parent.location) ? true : false;
-		var myElem = null;
-		
-		if(isInIFrame){
+				
+		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {
 			myDoc = document;
 		}
+				
+		$(window).on('orientationchange',function(){
+      		V.ViewerAdapter.setupSize();      
+    	});
 		
-		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-      _setupSize();       
-    });
-		
-		var elem = document.getElementById("page-fullscreen");  
-		var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
-		
-		if (canFullScreen) {  
+		if (V.Status.features.fullscreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
+		  $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+      		V.ViewerAdapter.setupSize();   
+    	  });
 		}	else {
 		  $("#page-fullscreen").hide();
 		}
 		
-		VISH.SlidesUtilities.updateSlideCounter();
+	
+		if (!V.Status.ua.mobile) {
+    		//show page counter (only for desktop, in mobile the slides are passed touching)
+    		$("#viewbar").show();
+    		VISH.SlidesUtilities.updateSlideCounter();
+		}
 	};
 
 	
@@ -54,7 +120,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
+		var myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
 		    if (myDoc.documentElement.requestFullScreen) {
@@ -89,46 +155,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		  }
 	};
 	
-	/**
-	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
-	 */
-	var _setupSize = function(){
-		var height = $(window).height()-40; //the height to use is the window height - 40px that is the menubar height
-		var width = $(window).width();
-		var finalW = 800;
-		var finalH = 600;
-		
-		var aspectRatio = width/height;
-		var slidesRatio = 4/3;
-		if(aspectRatio > slidesRatio){
-			finalH = height - 40;  //leave 40px free, 20 in the top and 20 in the bottom ideally
-			finalW = finalH*slidesRatio;	
-		}	else {
-			finalW = width - 110; //leave 110px free, at least, 55 left and 55 right ideally
-			finalH = finalW/slidesRatio;	
-		}
-		$(".slides > article").css("height", finalH);
-		$(".slides > article").css("width", finalW);
-		
-		//margin-top and margin-left half of the height and width
-		var marginTop = finalH/2 + 20;
-		var marginLeft = finalW/2;
-		$(".slides > article").css("margin-top", "-" + marginTop + "px");
-		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
-		
-		//finally font-size, line-height and letter-spacing of articles
-		//after this change the font sizes of the zones will be relative as they are in ems
-		var increase = finalH/600;
-		$(".slides > article").css("font-size", 16*increase + "px");
-		$(".slides > article").css("line-height", 16*increase + "px");
-		/*$(".slides > article").css("letter-spacing", 1*increase + "px");*/
-		
-		//Snapshot callbacks
-		VISH.SnapshotPlayer.aftersetupSize(increase);
-		
-		//Object callbacks
-		VISH.ObjectPlayer.aftersetupSize(increase);
-	};
+	
 	
 	/**
 	 * function to add enter and leave events
@@ -160,6 +187,25 @@ VISH.SlideManager = (function(V,$,undefined){
 	var updateStatus = function(slideid, newStatus){
 		slideStatus[slideid] = newStatus;	
 	};
+	/*
+	 * to get the user js object
+	 */
+	
+	var getUser = function(){
+		
+		return user;
+	};
+	
+		/*
+	 * to get the user's status js object
+	 */
+	
+	var getUserStatus = function(){
+		
+		return status;
+	};
+
+
 
 	/**
 	 * Private function that is called when we enter a slide
@@ -251,7 +297,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
-		toggleFullScreen : toggleFullScreen
+		toggleFullScreen : toggleFullScreen, 
+		getUser					: getUser, 
+		getUserStatus			: getUserStatus
 	};
 
 }) (VISH,jQuery);
