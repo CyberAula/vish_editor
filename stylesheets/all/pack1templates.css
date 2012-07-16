@@ -771,9 +771,12 @@
 	text-align: justify;
 	color: black;
 	font-size: 1.2em;
+	width:100%;
 	display: block;
 	margin-left: 3%;
 	line-height: 110%;
+	float:left;
+	position: relative;
 }
 
 .mc_answer input{
@@ -781,7 +784,7 @@
 }
 
 .mc_meter { 
-		width:70%;
+		width:72%;
 		height:5%;
 		background-color:#CCCCCC;
 		position: relative;
@@ -817,6 +820,7 @@
 		background-color: green;
 		position: relative;
 		display:block;
+		float:left;
 
 	}	
 
@@ -826,7 +830,7 @@
 		background-color: yellow;
 		position: relative;
 		display:block;
-
+		float:left;
 	}	
 
 .mc_meter #mcoption4 { 
@@ -835,6 +839,7 @@
 		background-color: orange;
 		position: relative;
 		display:block;
+		float:left;
 
 	}	
 		
@@ -844,6 +849,7 @@
 		background-color: blue;
 		position: relative;
 		display:block;
+		float:left;
 
 	}		
 		
@@ -853,12 +859,12 @@
 		background-color:#FF05DD;
 		position: relative;
 		display:block;
-
+		float:left;
 }
 
 .mcoption_label {
 	float:left;
-	position: relative;
+	position: relative; 
 	width:20%;
 	margin-left:2%;
 	margin-right:2%;

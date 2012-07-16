@@ -130,8 +130,9 @@ VISH.Quiz = (function(V,$,undefined){
 		next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption"+(i+1)+"'></span></div>";
-		
+			//ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
+			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
+			ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
 		}
 		
 		ret += "</div>";
@@ -363,13 +364,23 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _onStatisticsMcQuizButtonClicked = function () {
     	
+    	
+    	//if it is shown --> hide 
     	if(	$(".current").find(".mc_meter").css('display')=="block") {
     		
+    		
     		$(".current").find(".mc_meter").css('display', 'none');
+    		$(".current").find(".mcoption_label").css('display', 'none');
+    		
     		
     	} 
+    	//if it is hidden --> fill values, show statistics 
+    	//TODO call a function that do periodical get's to keep updated statistics values  
     	else {
-    		$(".current").find(".mc_meter").css('display', 'block');
+    		//data must be received from the VISH Server 
+    		var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+			_showResultsToTeacher(data);
+    		//$(".current").find(".mc_meter").css('display', 'block');
     	}
     	
     	
@@ -379,14 +390,14 @@ VISH.Quiz = (function(V,$,undefined){
      * Function called when the JSON object is received from the server 
      * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
      * actions to do: 
-     * 
+     * TODO it could be used for all kind of users ...
      */
     
     var _showResultsToParticipant = function (data) {
     	
     	  	
     	//if (data.quiz_session_id==userQuizSessionID) ??
-    	
+    	//TODO 
     	if(data.quiz_id == userStatus.quiz_active) {
     		
     		var votes;	
@@ -414,6 +425,50 @@ VISH.Quiz = (function(V,$,undefined){
     	
     $(".current").find(".mc_meter").css('display', 'block');	
     };
+    
+    
+      /*
+     * Function called when the JSON object is received from the server 
+     * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+     * actions to do:  */
+    
+    
+     var _showResultsToTeacher = function (data) {
+    	
+    	  	
+    	//if (data.quiz_session_id==userQuizSessionID) ??
+    	//TODO 
+    	if(role=="logged") {
+    		
+    		var votes;	
+    		var totalVotes =0;
+    	//calculate the vote's total sum 
+    		for (votes in data.results) {
+    			totalVotes 	+= parseInt(data.results[votes]);
+    		}
+    		for (votes in data.results) {
+	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() ;
+    		   var percentString = percent  + "%";
+    		    var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
+    		    //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
+    			// change the value for span css('width','xx%')
+    			$(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percentString);
+    			$(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
+    		}
+    		//show results 
+    		
+    	} 
+    	else {
+    		V.Debugging.log(" The User's role is not the correct");
+    		
+    	}
+    	
+    $(".current").find(".mc_meter").css('display', 'block');	
+    $(".current").find(".mcoption_label").css('display', 'block');
+    };
+    
+    
+    
     
     
     return {
