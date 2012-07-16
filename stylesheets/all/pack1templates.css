@@ -787,7 +787,9 @@
 		position: relative;
 		display:none;
 		margin-left:2%;
+		margin-right:2%;
 		margin-top:1.5%;
+		float:left;
 	}
 		
 .mc_meter > span { 
@@ -795,7 +797,7 @@
 		height:100%;
 		background-color: red;
 		position: relative;
-		display:block;
+		/* display:block; */
 
 	}		
 
@@ -804,7 +806,8 @@
 		height:100%;
 		background-color: red;
 		position: relative;
-		display:block;
+		display:block; 
+		float:left;
 
 	}		
 		
@@ -835,7 +838,7 @@
 
 	}	
 		
-		.mc_meter #mcoption5 { 
+.mc_meter #mcoption5 { 
 		width:0%;
 		height:100%;
 		background-color: blue;
@@ -844,14 +847,26 @@
 
 	}		
 		
-		.mc_meter #mcoption6 { 
+.mc_meter #mcoption6 { 
 		width:0%;
 		height:100%;
 		background-color:#FF05DD;
 		position: relative;
 		display:block;
 
-	}		
+}
+
+.mcoption_label {
+	float:left;
+	position: relative;
+	width:20%;
+	margin-left:2%;
+	margin-right:2%;
+	margin-top:1.5%;
+	display:block;
+	
+}
+		
 
 .t12_left{
 	margin-top: 2%;

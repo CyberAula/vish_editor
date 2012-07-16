@@ -170,7 +170,8 @@ VISH.Quiz = (function(V,$,undefined){
 			next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span  id='mcoption"+(i+1)+"'></span></div>";
+			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
+			ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
 		//style='width:33%;'
 		}
 		
@@ -309,8 +310,8 @@ VISH.Quiz = (function(V,$,undefined){
     var _onSendVoteMcQuizButtonClicked = function (event) {
     	
     	var slideToVote = $(".current").find("#slide_to_vote").val();
-    	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
-    	V.Debugging.log(" slideToVote value: " +slideToVote);
+    	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
+    	
     	
     	//TODO get the option value selected to attach
     	
@@ -339,11 +340,9 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _onStopMcQuizButtonClicked = function () {
 
-    	V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
+    	//V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
     	
     	var slideToStop = $(".current").find("#slide_to_stop").val();
-    	
-    		V.Debugging.log("slideToStop value is: " + slideToStop);
     	
     	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
    		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
@@ -385,35 +384,25 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _showResultsToParticipant = function (data) {
     	
-    	V.Debugging.log(" voted send and response received:  _showResultsToParticipant called");
-    	
+    	  	
     	//if (data.quiz_session_id==userQuizSessionID) ??
-    	V.Debugging.log(" data.quiz_id value: " + data.quiz_id);
-    	V.Debugging.log(" userStatus.quiz_active value is: " + userStatus.quiz_active);
+    	
     	if(data.quiz_id == userStatus.quiz_active) {
     		
-    	var votes;	
-    	var totalVotes =0;
+    		var votes;	
+    		var totalVotes =0;
     	//calculate the vote's total sum 
-    	for (votes in data.results) {
-    	totalVotes 	+= parseInt(data.results[votes]);
-    		
-    	}
-    	
-    	  V.Debugging.log("total votes Vale" + totalVotes);
     		for (votes in data.results) {
-    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() + "%";
-    		    V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
-    			
+    			totalVotes 	+= parseInt(data.results[votes]);
+    		}
+    		for (votes in data.results) {
+	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() ;
+    		   var percentString = percent  + "%";
+    		    var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
+    		    //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
     			// change the value for span css('width','xx%')
-    			 V.Debugging.log("pencent value is: " +percent);
-    			 
-    			  V.Debugging.log("searching the mcoption is: " +$(".current").find("#mcoption"+(votes+1)));
-    			$(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percent);
-    			
-    	
-    			
-    			
+    			$(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percentString);
+    			$(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
     		}
     		//show results 
     		
