@@ -11605,7 +11605,7 @@ var nicEditorInstance = bkClass.extend({isSelected:false, construct:function(G, 
   return window.getSelection ? window.getSelection() : document.selection
 }, getRng:function() {
   var A = this.getSel();
-  if(!A) {
+  if(!A || !A.rangeCount || !A.getRangeAt || !A.createRange) {
     return null
   }
   return A.rangeCount > 0 ? A.getRangeAt(0) : A.createRange()
@@ -11618,6 +11618,9 @@ var nicEditorInstance = bkClass.extend({isSelected:false, construct:function(G, 
   }
 }, selElm:function() {
   var C = this.getRng();
+  if(!C) {
+    return null
+  }
   if(C.startContainer) {
     var D = C.startContainer;
     if(C.cloneContents().childNodes.length == 1) {
@@ -11817,6 +11820,9 @@ var nicEditorButton = bkClass.extend({construct:function(e, buttonName, options,
   }
   this.border.setStyle(stateStyle).addClass("button-" + state)
 }, checkNodes:function(e) {
+  if(!e) {
+    return
+  }
   var elm = e;
   do {
     if(this.options.tags && bkLib.inArray(this.options.tags, elm.nodeName)) {
@@ -12188,7 +12194,7 @@ var nicEditorSaveButton = nicEditorButton.extend({init:function() {
 nicEditors.registerPlugin(nicPlugin, nicSaveOptions);
 var PERMANENT_URL_PREFIX = "";
 var SLIDE_CLASSES = ["far-past", "past", "current", "next", "far-next"];
-var PM_TOUCH_SENSITIVITY = 15;
+var PM_TOUCH_SENSITIVITY = 300;
 var curSlide;
 if(typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
   (function(view) {
@@ -12385,22 +12391,43 @@ function triggerLeaveEvent(no) {
   evt.slideNumber = no + 1;
   el.dispatchEvent(evt)
 }
+function getTouches(event) {
+  if(event.touches) {
+    return event.touches
+  }else {
+    if(event.originalEvent.touches) {
+      return event.originalEvent.touches
+    }else {
+      return null
+    }
+  }
+}
 function handleTouchStart(event) {
-  if(event.touches.length == 1) {
+  var touches = getTouches(event);
+  if(touches.length === 1) {
     touchDX = 0;
     touchDY = 0;
-    touchStartX = event.touches[0].pageX;
-    touchStartY = event.touches[0].pageY;
-    $(document).bind("touchmove", handleTouchMove);
-    $(document).bind("touchend", handleTouchEnd)
+    touchStartX = touches[0].pageX;
+    touchStartY = touches[0].pageY;
+    document.body.addEventListener("touchmove", handleTouchMove, true);
+    document.body.addEventListener("touchend", handleTouchEnd, true);
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+    if(zoom < 1.5) {
+      event.preventDefault()
+    }
   }
 }
 function handleTouchMove(event) {
-  if(event.touches.length > 1) {
+  var touches = getTouches(event);
+  if(touches.length > 1) {
     cancelTouch()
   }else {
-    touchDX = event.touches[0].pageX - touchStartX;
-    touchDY = event.touches[0].pageY - touchStartY
+    touchDX = touches[0].pageX - touchStartX;
+    touchDY = touches[0].pageY - touchStartY;
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+    if(zoom < 1.5) {
+      event.preventDefault()
+    }
   }
 }
 function handleTouchEnd(event) {
@@ -12554,14 +12581,9 @@ function addFontStyle() {
   document.body.appendChild(el)
 }
 function addGeneralStyle() {
-  var el = document.createElement("link");
-  el.rel = "stylesheet";
-  el.type = "text/css";
-  el.href = PERMANENT_URL_PREFIX + VISH.StylesheetsPath + "styles.css";
-  document.body.appendChild(el);
   var el = document.createElement("meta");
   el.name = "viewport";
-  el.content = "width=1100,height=750";
+  el.content = "width=900,height=750";
   document.querySelector("head").appendChild(el);
   var el = document.createElement("meta");
   el.name = "apple-mobile-web-app-capable";
@@ -12577,6 +12599,9 @@ function makeBuildLists() {
       }
     }
   }
+}
+function hideAddressBar() {
+  VISH.Debugging.log("TODO method hideAddressBar in slides.js")
 }
 function handleDomLoaded() {
   slideEls = document.querySelectorAll("section.slides > article");
@@ -12594,7 +12619,13 @@ function initialize() {
   if(window["_DCL"]) {
     handleDomLoaded()
   }else {
-    $(document).bind("OURDOMContentLoaded", handleDomLoaded)
+    $(document).bind("OURDOMContentLoaded", handleDomLoaded);
+    window.addEventListener("load", function() {
+      if(!window.pageYOffset) {
+        hideAddressBar()
+      }
+    });
+    window.addEventListener("orientationchange", hideAddressBar)
   }
 }
 if(!window["_DEBUG"] && document.location.href.indexOf("?debug") !== -1) {
@@ -13123,7 +13154,11 @@ VISH.Editor = function(V, $, undefined) {
       V.Editor.Renderer.init(excursion);
       _removeSelectableProperties()
     }
-    $("a#addSlideFancybox").fancybox({"scrolling":"no", "width":800, "height":600, "padding":0});
+    $("a#addSlideFancybox").fancybox({"autoDimensions":false, "scrolling":"no", "width":385, "height":340, "padding":0, "onStart":function(data) {
+      var clickedZoneId = $(data).attr("zone");
+      params["current_el"] = $("#" + clickedZoneId);
+      loadTab("tab_templates")
+    }});
     if(!eventsLoaded) {
       eventsLoaded = true;
       $(document).on("click", "#edit_excursion_details", _onEditExcursionDetailsButtonClicked);
@@ -13153,6 +13188,7 @@ VISH.Editor = function(V, $, undefined) {
     V.Editor.AvatarPicker.init();
     V.Editor.I18n.init(options["lang"]);
     V.Editor.Quiz.init();
+    V.Editor.Tools.init();
     if(VISH.Configuration.getConfiguration()["presentationSettings"] && !excursion_to_edit) {
       $("a#edit_excursion_details").fancybox({"autoDimensions":false, "scrolling":"no", "width":800, "height":660, "padding":0, "hideOnOverlayClick":false, "hideOnContentClick":false, "showCloseButton":false});
       $("#edit_excursion_details").trigger("click")
@@ -13347,7 +13383,6 @@ VISH.Editor = function(V, $, undefined) {
     $.fancybox.close()
   };
   var _onTemplateThumbClicked = function(event) {
-    VISH.Debugging.log(" attrib template vale:  " + $(this).attr("template"));
     var slide = V.Dummies.getDummy($(this).attr("template"));
     V.SlidesUtilities.addSlide(slide);
     $.fancybox.close();
@@ -13357,7 +13392,7 @@ VISH.Editor = function(V, $, undefined) {
   };
   var _onEditableClicked = function(event) {
     $(this).removeClass("editable");
-    params["current_el"] = $(this);
+    setCurrentArea($(this));
     var content = null;
     if($(this).attr("areaid") === "header" || $(this).attr("areaid") === "subheader") {
       content = $("#menuselect_for_header").clone().attr("id", "")
@@ -13365,40 +13400,40 @@ VISH.Editor = function(V, $, undefined) {
       content = $("#menuselect").clone().attr("id", "")
     }
     content.find("a").each(function(index, domElem) {
-      $(domElem).attr("zone", params["current_el"].attr("id"))
+      $(domElem).attr("zone", getCurrentArea().attr("id"))
     });
     $(this).html(content);
     $("a.addpicture").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
+      setCurrentArea($("#" + clickedZoneId));
       loadTab("tab_pic_from_url")
     }});
     $("a.addobject").fancybox({"autoDimensions":false, "width":800, "height":600, "scrolling":"no", "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
+      setCurrentArea($("#" + clickedZoneId));
       loadTab("tab_object_from_url")
     }});
     $("a.addvideo").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
+      setCurrentArea($("#" + clickedZoneId));
       loadTab("tab_video_from_url")
     }});
     $("a.addLive").fancybox({"autoDimensions":false, "width":800, "scrolling":"no", "height":600, "padding":0, "onStart":function(data) {
       var clickedZoneId = $(data).attr("zone");
-      params["current_el"] = $("#" + clickedZoneId);
+      setCurrentArea($("#" + clickedZoneId));
       loadTab("tab_live_webcam")
     }})
   };
   var _onDeleteItemClicked = function() {
-    params["current_el"] = $(this).parent();
-    $("#image_template_prompt").attr("src", VISH.ImagesPath + params["current_el"].attr("type") + ".png");
+    setCurrentArea($(this).parent());
+    $("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
     $.fancybox($("#prompt_form").html(), {"autoDimensions":false, "scrolling":"no", "width":350, "height":150, "showCloseButton":false, "padding":0, "onClosed":function() {
       if($("#prompt_answer").val() === "true") {
         $("#prompt_answer").val("false");
-        params["current_el"].html("");
+        getCurrentArea().html("");
         $(".theslider").hide();
-        params["current_el"].removeAttr("type");
-        params["current_el"].addClass("editable")
+        getCurrentArea().removeAttr("type");
+        getCurrentArea().addClass("editable")
       }
     }})
   };
@@ -13419,43 +13454,21 @@ VISH.Editor = function(V, $, undefined) {
     }})
   };
   var _onSelectableClicked = function() {
-    _removeSelectableProperties();
-    $(this).css("cursor", "auto");
-    $(this).find(".menuselect_hide").show();
-    $(this).find(".delete_content").show();
-    var the_id;
-    switch($(this).attr("type")) {
-      case "image":
-        the_id = $(this).find("img").attr("id");
-        break;
-      case "object":
-        the_id = $(this).find(".object_wrapper").attr("id");
-        break;
-      case "snapshot":
-        the_id = $(this).find(".snapshot_wrapper").attr("id");
-        break;
-      case "video":
-        the_id = $(this).find("video").attr("id");
-        break;
-      default:
-        the_id = null;
-        break
-    }
-    if(the_id) {
-      the_id = the_id.substring(9);
-      $("#sliderId" + the_id).show()
-    }
-    $(this).css("border-color", "rgb(255, 2, 94)");
-    $(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(this).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(this).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(this).css("outline", "0");
-    $(this).css("outline", "thin dotted 9")
+    setCurrentArea($(this));
+    _removeSelectableProperties($(this));
+    _addSelectableProperties($(this));
+    VISH.Editor.Tools.loadZoneTools($(this))
   };
-  var _removeSelectableProperties = function() {
-    $(".theslider").hide();
-    $(".menuselect_hide").hide();
-    $(".delete_content").hide();
+  var _addSelectableProperties = function(zone) {
+    $(zone).css("cursor", "auto");
+    $(zone).css("border-color", "rgb(255, 2, 94)");
+    $(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+    $(zone).css("outline", "0");
+    $(zone).css("outline", "thin dotted 9")
+  };
+  var _removeSelectableProperties = function(zone) {
     $(".selectable").css("border-color", "none");
     $(".selectable").css("-webkit-box-shadow", "none");
     $(".selectable").css("-moz-box-shadow", "none");
@@ -13524,9 +13537,14 @@ VISH.Editor = function(V, $, undefined) {
               }else {
                 if(element.type == "object") {
                   var object = $(div).find(".object_wrapper").children()[0];
-                  $(object).removeAttr("style");
-                  element.body = VISH.Utils.getOuterHTML(object);
-                  element.style = _getStylesInPercentages($(div), $(object).parent())
+                  var myObject = $(object).clone();
+                  $(myObject).removeAttr("style");
+                  element.body = VISH.Utils.getOuterHTML(myObject);
+                  element.style = _getStylesInPercentages($(div), $(object).parent());
+                  var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
+                  if(zoom != 1) {
+                    element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom)
+                  }
                 }else {
                   if(element.type == "openquestion") {
                     element.title = $(div).find(".title_openquestion").val();
@@ -13535,8 +13553,7 @@ VISH.Editor = function(V, $, undefined) {
                     if(element.type == "mcquestion") {
                       element.question = $(div).find(".value_multiplechoice_question").val();
                       element.options = [];
-                      var array_options = $(div).find(".multiplechoice_text");
-                      $(".multiplechoice_text").each(function(i, input_text) {
+                      $(div).find(".multiplechoice_text").each(function(i, input_text) {
                         element.options[i] = input_text.value
                       })
                     }else {
@@ -13580,7 +13597,7 @@ VISH.Editor = function(V, $, undefined) {
         $(".theslider").hide();
         $(".nicEdit-panelContain").hide();
         $("#menubar-viewer").show();
-        VISH.SlideManager.init(excursion)
+        VISH.SlideManager.init({"quiz_active":"false", "token":"453452453", "username":"ebarra", "postPath":"/quiz.json", "lang":"es"}, excursion)
       }else {
         if(VISH.Debugging.getActionSave() == "edit") {
           $("article").remove();
@@ -13631,8 +13648,8 @@ VISH.Editor = function(V, $, undefined) {
     if(area) {
       return area.parent().attr("template")
     }else {
-      if(params["current_el"]) {
-        return params["current_el"].parent().attr("template")
+      if(getCurrentArea()) {
+        return getCurrentArea().parent().attr("template")
       }
     }
     return null
@@ -13642,6 +13659,9 @@ VISH.Editor = function(V, $, undefined) {
       return params["current_el"]
     }
     return null
+  };
+  var setCurrentArea = function(area) {
+    params["current_el"] = area
   };
   var getSavedExcursion = function() {
     if(saved_excursion) {
@@ -14067,13 +14087,24 @@ VISH.Editor.Object = function(V, $, undefined) {
     }
     return extension
   };
-  var resizeObject = function(id, width) {
-    var proportion = $("#" + id).height() / $("#" + id).width();
-    $("#" + id).width(width);
-    $("#" + id).height(width * proportion);
+  var resizeObject = function(id, newWidth) {
     var parent = $("#" + id).parent();
-    $(parent).width(width);
-    $(parent).height(width * proportion)
+    var aspectRatio = $("#" + id).width() / $("#" + id).height();
+    var newWrapperHeight = Math.round(newWidth / aspectRatio);
+    var newWrapperWidth = Math.round(newWidth);
+    $(parent).width(newWrapperWidth);
+    $(parent).height(newWrapperHeight);
+    var zoom = VISH.SlidesUtilities.getZoomFromStyle($("#" + id).attr("style"));
+    if(zoom != 1) {
+      newWidth = newWidth / zoom;
+      var newHeight = Math.round(newWidth / aspectRatio);
+      newWidth = Math.round(newWidth)
+    }else {
+      var newHeight = newWrapperHeight;
+      var newWidth = newWrapperWidth
+    }
+    $("#" + id).width(newWidth);
+    $("#" + id).height(newHeight)
   };
   var _adjustWrapperOfObject = function(objectID, current_area) {
     var proportion = $("#" + objectID).height() / $("#" + objectID).width();
@@ -14098,6 +14129,11 @@ VISH.Editor.Object = function(V, $, undefined) {
       $(wrapper).height($("#" + objectID).height());
       $(wrapper).width($("#" + objectID).width())
     }
+  };
+  var autofixWrapperedObjectAfterZoom = function(object, zoom) {
+    var wrapper = $(object).parent();
+    $(object).height($(wrapper).height() / zoom);
+    $(object).width($(wrapper).width() / zoom)
   };
   var renderObjectPreview = function(object) {
     var objectInfo = getObjectInfo(object);
@@ -14149,7 +14185,8 @@ VISH.Editor.Object = function(V, $, undefined) {
     $(wrapperPreview).removeAttr("height");
     return wrapperPreview
   };
-  var drawObject = function(object, area, style) {
+  var drawObject = function(object, area, style, zoomInStyle) {
+    VISH.Debugging.log("Se llamo a Draw object con object " + object + ", area " + area + ", y style " + style + " y zoomInStyle " + zoomInStyle);
     if(!VISH.Police.validateObject(object)[0]) {
       return
     }
@@ -14197,14 +14234,14 @@ VISH.Editor.Object = function(V, $, undefined) {
         drawObjectWithWrapper(object, current_area, object_style);
         break;
       case "IFRAME":
-        drawObjectWithWrapper(object, current_area, object_style);
+        drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
         break;
       default:
         VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
         break
     }
   };
-  var drawObjectWithWrapper = function(wrapper, current_area, style) {
+  var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle) {
     var template = V.Editor.getTemplate(current_area);
     var nextWrapperId = V.Editor.getId();
     var idToDrag = "draggable" + nextWrapperId;
@@ -14237,9 +14274,14 @@ VISH.Editor.Object = function(V, $, undefined) {
       resizeObject(idToResize, mystep * value)
     }});
     $("#" + idToDrag).draggable({cursor:"move"});
-    _adjustWrapperOfObject(idToResize, current_area)
+    _adjustWrapperOfObject(idToResize, current_area);
+    VISH.Editor.Tools.loadToolbarForObject(wrapper);
+    if(zoomInStyle) {
+      $(wrapperTag).attr("style", zoomInStyle);
+      VISH.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag))
+    }
   };
-  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
+  return{init:init, onLoadTab:onLoadTab, drawObject:drawObject, renderObjectPreview:renderObjectPreview, getObjectInfo:getObjectInfo, resizeObject:resizeObject, autofixWrapperedObjectAfterZoom:autofixWrapperedObjectAfterZoom, drawPreview:drawPreview, resetPreview:resetPreview, drawPreviewElement:drawPreviewElement, drawPreviewObject:drawPreviewObject, _getTypeFromSource:_getTypeFromSource, _getSourceFromObject:_getSourceFromObject}
 }(VISH, jQuery);
 VISH.Samples = function(V, undefined) {
   var samples_aldo = {"id":193, "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-81.png", "tags":["Chess", "Art"], "author":"Aldo", "slides":[{"id":"article1", "template":"t1", "elements":[{"id":"zone1", "type":"image", "areaid":"left", "body":"/pictures/62.jpg", "style":"position: relative; width:955.8823529411765%; top:0%; left:0%;"}, 
@@ -14250,14 +14292,11 @@ VISH.Samples = function(V, undefined) {
   {"id":"zone10", "type":"image", "areaid":"left", "body":"/pictures/68.jpg?1339718350", "style":"position: relative; width:290.17857142857144%; top:-0.6507592190889371%; left:-113.83928571428571%;"}, {"id":"zone11", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_5" src="http://www.youtube.com/embed/aGVv3br59P4?wmode=opaque" style="width: 434px; height: 325px;" frameborder="0"></iframe>', "style":"position: relative; width:100%; top:4.370179948586118%; left:-2.5345622119815667%;"}, 
   {"id":"zone12", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontarial">Garry Kimovich Kasparov was the first world champion to lose a match to a computer.<br></span></div>'}]}, {"id":"article5", "template":"t2", "elements":[{"id":"zone13", "type":"object", "areaid":"left", "body":'<iframe style="width: 542.4px; height: 415.306px;" wmode="opaque" class="t2_object" id="resizableunicID_6" src="http://www.xml3d.org/xml3d/demos/25_Chess/">&lt;/embed&gt;</iframe>', 
   "style":"position: relative; width:79.9410029498525%; top:8.494208494208495%; left:10.47197640117994%;"}]}]};
-  var samples = {"id":13293, "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-10.png", "tags":["Chess", "Art"], "author":"Aldo", "slides":[{"id":"article2", "template":"t4", "elements":[{"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">Ecology</font><br></span></div>'}, 
-  {"id":"zone3", "type":"object", "areaid":"left", "body":'<iframe unselectable="on" wmode="opaque" class="t4_object" id="resizableunicID_1" src="http://www.youtube.com/embed/GwMDmtIlxgk?wmode=opaque" frameborder="0"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone4", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx is smaller than its northern relatives, and typically hunts smaller animals, usually no larger than hares. It also differs in habitat choice, with Iberian lynx inhabiting open scrub and Eurasian lynx inhabiting forests.It hunts mammals (including rodents and insectivores), birds, reptiles and amphibians at twilight. The European rabbit (Oryctolagus cuniculus) is its main prey (79.5-86.7%), with (5.9%) hares (Lepus granatensis) and rodents (3.2%) less common. A male requires one rabbit per day; a female bringing up cubs will eat three rabbits per day.</span></div>'}]}, 
-  {"id":"article3", "template":"t7", "elements":[{"id":"zone5", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-weight: bold; color: rgb(113, 113, 117);" size="4">SosLynx</font><br></span></div>'}, 
-  {"id":"zone6", "type":"text", "areaid":"left", "body":'<div class="vish-parent-font2"><span class="vish-font2 vish-fontHelvetica" style="">The Iberian lynx and its habitat are fully protected, and they are no longer legally hunted. Its critical status is mainly due to habitat loss, poisoning, road casualties, feral dogs and poaching. Its habitat loss is due mainly to infrastructure improvement, urban and resort development and tree monocultivation, which serves to break the lynx\'s distribution area. In addition, the lynx prey population of rabbits is also declining due to diseases such as myxomatosis and hemorrhagic pneumonia.There exist websites like SOS Lynx which is a conservation charity based in Portugal, working to prevent the extinction of the Iberian lynx. Its aim is to stop the decline of the Iberian lynx and other lynx species.</span></div>'}, 
-  {"id":"zone7", "type":"object", "areaid":"center", "body":'<iframe wmode="opaque" class="t7_object" id="resizableunicID_2" src="http://www.soslynx.org/?wmode=transparent"></iframe>', "style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}, {"id":"zone8", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font6" style="text-align: center;"><span class="vish-font6 vish-fontHelvetica" style="">http://www.soslynx.org/</span></div>'}]}, {"id":"article4", "template":"t6", 
-  "elements":[{"id":"zone9", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3"><span class="vish-font3 vish-fontHelvetica" style=""><font size="6"><span style="color: rgb(219, 150, 0);">Iberian</span> <span style="color: rgb(32, 24, 21);">Lynx</span></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="4"><span style="color: rgb(113, 113, 117);">Reproduction</span></font><br></span></div>'}, 
-  {"id":"zone10", "type":"image", "areaid":"left", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:380.95238095238096%; height:219.0889370932755%; top:-36.44251626898048%; left:-58.57142857142857%;"}, {"id":"zone11", "type":"image", "areaid":"center", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:357.14285714285717%; height:205.63991323210413%; top:-45.5531453362256%; left:-193.3333260672433%;"}, 
-  {"id":"zone12", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center;"><span class="vish-font2 vish-fontHelvetica" style="">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>'}]}]};
+  var samples = {"id":"", "title":"Chess: The Art of Learning", "description":"The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.", "avatar":"/assets/logos/original/excursion-10.png", "author":"", "slides":[{"id":"articlearticle1", "template":"t1", "elements":[{"id":"zone1", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg", "style":"position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"}, 
+  {"id":"zone2", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3 vish-parent-font6" style="text-align: center; font-weight: normal; "><span class="vish-font3 vish-fontarial"><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="font-family: helvetica;"><span style="font-weight: bold;">Chess</span>: The Art of Learning</span></span><br></span></div>'}, {"id":"zone3", "type":"text", "areaid":"subheader", "body":'<div class="vish-parent-font3 vish-parent-font4" style="text-align: right; font-weight: normal; "><span class="vish-font3 vish-fontarial"><span class="vish-font4 vish-fontHelvetica" style="undefined;"><span style="font-style: italic; font-family: helvetica;">by Aldo Gordillo&nbsp; </span></span><br></span></div>'}]}, 
+  {"id":"articlevish4", "template":"t3", "elements":[{"id":"zone4", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"zone5", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg", "style":"position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"}]}, {"id":"articlearticle4", "template":"t6", "elements":[{"id":"zone6", "type":"text", "areaid":"header", "body":'<div class="vish-parent-font3 vish-parent-font6 vish-parent-font4" style="font-weight: normal; "><span class="vish-font3 vish-fontHelvetica" style=""><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="color: rgb(219, 150, 0);">Iberian</span></span><span class="vish-font6 vish-fontHelvetica" style="undefined;"> </span><span class="vish-font6 vish-fontHelvetica" style="undefined;"><span style="color: rgb(32, 24, 21);">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="vish-font4 vish-fontHelvetica" style="undefined;"><span style="color: rgb(113, 113, 117);">Reproduction</span></span><br></span></div>'}, 
+  {"id":"zone7", "type":"image", "areaid":"left", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"}, {"id":"zone8", "type":"image", "areaid":"center", "body":"http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg", "style":"position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"}, 
+  {"id":"zone9", "type":"text", "areaid":"right", "body":'<div class="vish-parent-font2" style="text-align: center; font-weight: normal; "><span class="vish-font2 vish-fontHelvetica" style="">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>'}]}]};
   var full_samples = {"id":"1", "title":"Nanoyou", "description":"This excursion is about nanotechnology", "avatar":"/assets/logos/original/excursion-02.png", "author":"Enrique Barra", "slides":[{"id":"vish1", "author":"John Doe", "template":"t1", "elements":[{"id":"315", "type":"text", "areaid":"header", "body":"Ejemplo de flora"}, {"id":"316", "type":"text", "areaid":"left", "body":'<div><ol><li>lolo<br></li><li>perrito<br></li></ol><div><font size="6">gato</font></div></div>'}, {"id":"317", "type":"image", 
   "areaid":"right", "body":"http://www.asturtalla.com/arbol.jpg"}]}, {"id":"vish2", "template":"t2", "elements":[{"id":"318", "type":"text", "areaid":"header", "body":"Ejemplo de fauna..."}, {"id":"319", "type":"image", "areaid":"left", "body":"http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg"}]}, {"id":"vish3", "template":"t1", "elements":[{"id":"320", "type":"text", "areaid":"header", "body":"Sensores"}, {"id":"321", "type":"text", "areaid":"left", "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>"}, 
   {"id":"322", "type":"image", "areaid":"right", "body":"http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png"}]}, {"id":"vish4", "template":"t2", "elements":[{"id":"323", "type":"text", "areaid":"header", "body":"Puesta de sol..."}, {"id":"324", "type":"image", "areaid":"left", "body":"http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg"}]}, {"id":"vish5", "template":"t2", "elements":[{"id":"325", "type":"text", "areaid":"header", 
@@ -14270,7 +14309,10 @@ VISH.Samples = function(V, undefined) {
   {"id":"vish13", "template":"t2", "elements":[{"id":"393", "type":"text", "areaid":"header", "body":"Example of Youtube video with style param"}, {"id":"335", "type":"object", "areaid":"left", "body":'<iframe width="324" height="243" src="http://www.youtube.com/embed/_jvDzfTRP4E" frameborder="0" allowfullscreen></iframe>', "style":"position: relative; left: 163px; top: 110px; width: 325px; height: 215px;"}]}, {"id":"vish14", "template":"t1", "elements":[{"id":"7393", "type":"text", "areaid":"header", 
   "body":"Example of generic Object visualization"}, {"id":"7334", "type":"text", "areaid":"left", "body":"<p> HTML5 is a language for structuring and presenting content for the World Wide Web, and is a core technology of the Internet originally proposed by Opera Software. It is the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997) and as of March 2012 is still under development. Its core aims have been to improve the language with support for the latest multimedia while keeping it easily readable by humans and consistently understood by computers and devices (web browsers, parsers, etc.). HTML5 is intended to subsume not only HTML 4, but XHTML 1 and DOM Level 2 HTML as well.</p>"}, 
   {"id":"7335", "type":"object", "areaid":"right", "body":'<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'}]}]};
-  return{full_samples:full_samples, samples:samples, samples_aldo:samples_aldo}
+  var quizes_samples = {"id":5555, "author":"V\u00edctor Hugo", "slides":[{"id":"article1", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Brazil", "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article2", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Peru", 
+  "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article3", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which is the capital of Colombia", "options":["Lima", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Bogota"]}]}, {"id":"article4", "template":"t11", "elements":[{"id":"zone1", "areaid":"header"}, {"id":"zone2", "type":"mcquestion", "areaid":"left", "question":"Which which which which ... ", 
+  "options":["Un texto largo, muy largo que puede sobrepasar los l\u00edmites permitidos", "Santiago", "R\u00edo De Janeiro", "Brasilia", "Otro texto largo, muy largo y m\u00e1s largo que sobrepase los l\u00edmites permitidos ... y m\u00e1s"]}]}]};
+  return{full_samples:full_samples, samples:samples, samples_aldo:samples_aldo, quizes_samples:quizes_samples}
 }(VISH);
 VISH.Samples.API = function(V, undefined) {
   var imageList = {"pictures":[{"id":54, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.dan-dare.org/dan%20simpsons/TheSimpsonsEveryoneEver800.jpg"}, {"id":55, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://3.bp.blogspot.com/--H0o8mc28bA/TxrsnMAFMDI/AAAAAAAAARs/eOCVIXKlm9I/s1600/sala-cine.jpg"}, {"id":56, "title":"ClintEastwood.jpg", "description":null, "author":"Demo", "src":"http://www.deviantart.com/download/46036660/The_Simpsonzu_by_spacecoyote.jpg"}, 
@@ -14344,7 +14386,7 @@ configuration["VishUpload"] = true;
 configuration["VishRepo"] = true;
 configuration["Flickr"] = true;
 configuration["Youtube"] = true;
-configuration["Vimeo"] = true;
+configuration["Vimeo"] = false;
 configuration["VishIntegration"] = true;
 VISH.Configuration = function(V, $, undefined) {
   var configuration;
@@ -14398,7 +14440,7 @@ VISH.Configuration = function(V, $, undefined) {
   return{init:init, applyConfiguration:applyConfiguration, getConfiguration:getConfiguration}
 }(VISH, jQuery);
 VISH.Debugging = function(V, $, undefined) {
-  var actionSave = "nothing";
+  var actionSave = "view";
   var actionInit = "nothing";
   var excursionSamples = VISH.Samples.samples;
   var developping = false;
@@ -14488,8 +14530,8 @@ VISH.Dummies = function(VISH, undefined) {
   "<article id='article_id_to_change' template='t7'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t7_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t7_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t7_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='subheader' class='t7_subheader editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t8'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t8_right editable grey_background selectable'></div></article>", 
   "<article id='article_id_to_change' template='t9'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='" + VISH.ImagesPath + "helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' class='t9_right editable grey_background selectable'></div></article>", 
-  "<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t10_header' type='title_openquestion'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Write Question:</h2>Title:<br><textarea rows='1' cols='30' class='title_openquestion' placeholder='insert title's question here'></textarea><br>Question:<br><textarea rows='4' cols='50' class='value_openquestion' placeholder='insert text option here'></textarea></div></article>", 
-  "<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header' type='title_multiple_choice_question'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Write Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='insert question here'></textarea><br>a) <input id='radio_text_0' class='multiplechoice_text' type='text' placeholder='insert text option here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a></div></article>"];
+  "<article id='article_id_to_change' template='t10'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Open Question:</h2><textarea rows='4' cols='50' class='value_openquestion' placeholder='write open question here'></textarea></div></article>", "<article id='article_id_to_change' template='t11'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='write question here'></textarea><ul id='ul_mch_options'><li id='li_mch_option_1' class='li_mch_option'>a) <input id='radio_text_1' class='multiplechoice_text' type='text' placeholder='write options here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li> </ul> </div></article>", 
+  "<article id='article_id_to_change' template='t12'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t12_left truefalsequestion' type='truefalsequestion'><h2 class='header_truefalse_question'>True/False Question:</h2><table id='truefalse_quiz_table' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr><tr id='tr_question_1'><td id='td_true_1'><input type='checkbox' id='1_true'/></td><td id='td_false_1'><input type='checkbox' id='1_false'/></td><td id='td_question_1'><textarea rows='1' cols='50' class='value_multiplechoice_question' placeholder='Write question here'></textarea></td></tr>              </table></div></article>"];
   var getDummy = function(template, article_id) {
     var dum = dummies[parseInt(template, 10) - 1];
     return _replaceIds(dum, article_id)
@@ -15648,35 +15690,67 @@ VISH.Editor.Object.Web = function(V, $, undefined) {
 }(VISH, jQuery);
 VISH.Editor.Quiz = function(V, $, undefined) {
   var buttonAddOptionId = "a_add_quiz_option";
+  var buttonRemoveOptionId = "a_remove_quiz_option";
   var MultipleChoiceOptionClass = "multiplechoice_text";
   var searchOptionText = "mchoice_radio_option_";
-  var num_options = 5;
+  var num_options = 6;
   var init = function() {
     $(document).on("click", "#" + buttonAddOptionId, addMultipleChoiceOption)
   };
   var addMultipleChoiceOption = function(event) {
     var text = $("<div>").append($("." + MultipleChoiceOptionClass).clone()).html();
-    var total = 0;
-    $("." + MultipleChoiceOptionClass).each(function(i) {
-      total = i
-    });
-    var next_num = parseInt(total) + 1;
-    var next_index = "a".charCodeAt(0) + next_num;
+    var inputs_search = $(".current").find("." + MultipleChoiceOptionClass);
+    var next_num = inputs_search.size() + 1;
+    var next_index = "a".charCodeAt(0) + (next_num - 1);
     next_index = String.fromCharCode(next_index);
     if(next_num < num_options) {
-      var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
-      add_option += "<a src='' id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/> </a>";
       $(".add_quiz_option").remove();
-      $(".mcquestion").append(add_option)
+      var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption(" + (next_num - 1) + ")' id='" + buttonRemoveOptionId + "' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+      $(".current").find("#ul_mch_options").find("#li_mch_option_" + (next_num - 1)).append(delete_icon);
+      var add_option = "<li id='li_mch_option_" + next_num + "' class='li_mch_option'>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+      add_option += "<a id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
+      $(".current").find("#ul_mch_options").append(add_option)
     }else {
-      if(next_num = num_options) {
-        var add_option = "<br>" + next_index + ") <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+      if(next_num == num_options) {
         $(".add_quiz_option").remove();
-        $(".mcquestion").append(add_option)
+        var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption(" + (next_num - 1) + ")' id='" + buttonRemoveOptionId + "' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+        $(".current").find("#ul_mch_options").find("#li_mch_option_" + (next_num - 1).toString()).append(delete_icon);
+        var add_option = "<li id='li_mch_option_" + next_num + "' class='li_mch_option'>" + next_index + ")&nbsp;  <input id='radio_text_" + next_num + "' class='" + MultipleChoiceOptionClass + "' type='text' placeholder='insert text option here' />";
+        add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption(" + next_num + ")' id='" + buttonRemoveOptionId + "' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a></li>";
+        $(".current").find("#ul_mch_options").append(add_option)
       }
     }
   };
-  return{init:init, addMultipleChoiceOption:addMultipleChoiceOption}
+  var removeMultipleChoiceOption = function(id) {
+    var add_option_button = "<a id='" + buttonAddOptionId + "' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a>";
+    $("#li_mch_option_" + id.toString()).children().remove();
+    var num_inputs = $(".current").find(".li_mch_option").size();
+    var i;
+    var next_index;
+    if(id < num_options) {
+      for(i = id;i <= num_inputs;i++) {
+        next_index = "a".charCodeAt(0) + i;
+        next_index = String.fromCharCode(next_index);
+        $(".current").find("li#li_mch_option_" + (i + 1).toString() + "> input").attr("id", "radio_text_" + i.toString());
+        $(".current").find("li#li_mch_option_" + (i + 1).toString() + "> a").attr("href", "javascript:VISH.Editor.Quiz.removeMultipleChoiceOption(" + i.toString() + ")");
+        $("#li_mch_option_" + i.toString()).append($("#li_mch_option_" + (i + 1).toString()).children());
+        if(i == num_inputs) {
+          $(".current").find("#li_mch_option_" + (i - 1).toString() + " > a").remove();
+          $(".current").find("#li_mch_option_" + (i - 1).toString()).append(add_option_button)
+        }
+      }
+      $(".current").find("#li_mch_option_" + num_inputs.toString()).remove()
+    }else {
+      if(id == num_options) {
+        $(".current").find("#li_mch_option_" + id.toString()).remove();
+        $(".current").find("li#li_mch_option_" + (id - 1).toString() + " > #a_remove_quiz_option").remove();
+        $(".current").find("#li_mch_option_" + (id - 1).toString()).append(add_option_button)
+      }else {
+        VISH.Debugging.log("Error executing VISH.Editor.Quiz.removeMultipleChoiceOption function with parameter: " + id)
+      }
+    }
+  };
+  return{init:init, addMultipleChoiceOption:addMultipleChoiceOption, removeMultipleChoiceOption:removeMultipleChoiceOption}
 }(VISH, jQuery);
 VISH.Editor.Renderer = function(V, $, undefined) {
   var slides = null;
@@ -15719,7 +15793,7 @@ VISH.Editor.Renderer = function(V, $, undefined) {
             V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area)
           }else {
             if(slide.elements[el].type === "object") {
-              V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style)
+              V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].zoomInStyle)
             }else {
               if(slide.elements[el].type === "snapshot") {
                 V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].scrollTop, slide.elements[el].scrollLeft)
@@ -15910,6 +15984,119 @@ VISH.Editor.Thumbnails = function(V, $, undefined) {
     $(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail")
   };
   return{init:init, redrawThumbnails:redrawThumbnails, selectThumbnail:selectThumbnail}
+}(VISH, jQuery);
+VISH.Editor.Tools = function(V, $, undefined) {
+  var init = function() {
+    $.each($("img.toolbar_icon"), function(index, toolbarButton) {
+      $(toolbarButton).on("click", function(event) {
+        if(typeof VISH.Editor.Tools[$(toolbarButton).attr("action")] == "function") {
+          VISH.Editor.Tools[$(toolbarButton).attr("action")]()
+        }
+      })
+    })
+  };
+  var loadZoneTools = function(zone) {
+    cleanZoneTools();
+    var zoneType = $(zone).attr("type");
+    if(!zoneType) {
+      $(zone).find(".menuselect_hide").show();
+      return
+    }
+    $(zone).find(".delete_content").show();
+    switch(zoneType) {
+      case "text":
+        $(".nicEdit-panel").show();
+        break;
+      case "image":
+        _showSlider($(zone).find("img").attr("id"));
+        break;
+      case "video":
+        _showSlider($(zone).find("video").attr("id"));
+        break;
+      case "object":
+        _showSlider($(zone).find(".object_wrapper").attr("id"));
+        var object = $(zone).find(".object_wrapper").children()[0];
+        loadToolbarForObject(object);
+        break;
+      case "snapshot":
+        _showSlider($(zone).find(".snapshot_wrapper").attr("id"));
+        _loadToolbar("snapshot");
+        break;
+      default:
+        break
+    }
+  };
+  var cleanZoneTools = function() {
+    $(".menuselect_hide").hide();
+    $(".delete_content").hide();
+    $(".theslider").hide();
+    _cleanToolbars()
+  };
+  var _cleanToolbars = function() {
+    $(".nicEdit-panel").hide();
+    $(".toolbar_wrapper").hide()
+  };
+  var loadToolbarForObject = function(object) {
+    var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+    switch(objectInfo.type) {
+      case "web":
+        _loadToolbar(objectInfo.type);
+        break;
+      default:
+        _loadToolbar("object");
+        break
+    }
+  };
+  var _loadToolbar = function(type) {
+    if(type == "text") {
+      $(".toolbar_wrapper").hide();
+      $(".nicEdit-panel").show();
+      return
+    }
+    $(".nicEdit-panel").hide();
+    var toolbarClass = "toolbar_" + type;
+    $(".toolbar_wrapper").show();
+    $(".toolbar_wrapper").find("img").hide();
+    $(".toolbar_wrapper").find("img." + toolbarClass).show()
+  };
+  var _showSlider = function(id) {
+    if(id) {
+      id = id.substring(9);
+      $("#sliderId" + id).show()
+    }
+  };
+  var zoomMore = function() {
+    _changeZoom("+")
+  };
+  var zoomLess = function() {
+    _changeZoom("-")
+  };
+  var _changeZoom = function(action) {
+    var area = VISH.Editor.getCurrentArea();
+    var type = $(area).attr("type");
+    switch(type) {
+      case "object":
+        var object = area.children()[0].children[0];
+        var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+        if(objectInfo.type === "web") {
+          var iframe = $(area).find("iframe");
+          var zoom = VISH.SlidesUtilities.getZoomFromStyle($(iframe).attr("style"));
+          if(action == "+") {
+            zoom = zoom + 0.1
+          }else {
+            zoom = zoom - 0.1
+          }
+          $(iframe).attr("style", VISH.SlidesUtilities.addZoomToStyle($(iframe).attr("style"), zoom));
+          VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe, zoom)
+        }
+        break;
+      case "snapshot":
+        break;
+      default:
+        break
+    }
+  };
+  return{init:init, loadZoneTools:loadZoneTools, cleanZoneTools:cleanZoneTools, loadToolbarForObject:loadToolbarForObject, zoomMore:zoomMore, zoomLess:zoomLess}
 }(VISH, jQuery);
 VISH.Editor.Tour = function(V, $, undefined) {
   var startTourWithId = function(helpid, tipLocation) {
@@ -16330,6 +16517,10 @@ VISH.Excursion = function(V, undefined) {
         if(mySlides[i].elements[num].type === "flashcard") {
           var flashcard = JSON.parse(mySlides[i].elements[num].jsoncontent);
           V.Mods.fc.loader.init(flashcard)
+        }else {
+          if(mySlides[i].elements[num].type === "mcquestion") {
+            VISH.Quiz.enableInteraction(mySlides[i].id.toString())
+          }
         }
       }
     }
@@ -16344,7 +16535,10 @@ VISH.Excursion = function(V, undefined) {
 VISH.ObjectPlayer = function() {
   var loadObject = function(element) {
     $.each(element.children(".objectelement"), function(index, value) {
-      $(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + $(value).attr("objectWrapper") + "</div>")
+      var object = $($(value).attr("objectWrapper"));
+      $(object).attr("style", $(value).attr("zoomInStyle"));
+      $(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(object) + "</div>");
+      adjustDimensionsAfterZoom($($(value).children()[0]).children()[0])
     })
   };
   var unloadObject = function() {
@@ -16358,7 +16552,13 @@ VISH.ObjectPlayer = function() {
       loadObject($(".current"))
     }
   };
-  return{loadObject:loadObject, unloadObject:unloadObject, aftersetupSize:aftersetupSize}
+  var adjustDimensionsAfterZoom = function(objectWithZoom) {
+    var parent = $(objectWithZoom).parent();
+    var zoom = VISH.SlidesUtilities.getZoomFromStyle($(objectWithZoom).attr("style"));
+    $(objectWithZoom).height($(parent).height() / zoom);
+    $(objectWithZoom).width($(parent).width() / zoom)
+  };
+  return{loadObject:loadObject, unloadObject:unloadObject, aftersetupSize:aftersetupSize, adjustDimensionsAfterZoom:adjustDimensionsAfterZoom}
 }(VISH, jQuery);
 VISH.Police = function(V, $, undefined) {
   var init = function() {
@@ -16413,8 +16613,173 @@ VISH.Police = function(V, $, undefined) {
   };
   return{init:init, validateObject:validateObject, validateFileUpload:validateFileUpload}
 }(VISH, jQuery);
+VISH.Quiz = function(V, $, undefined) {
+  var role;
+  var slideToActivate;
+  var slideToVote;
+  var init = function(element, template, slide) {
+    role = V.SlideManager.getUser().role;
+    var obj;
+    switch(role) {
+      case "logged":
+        obj = _renderMcquestionLogged(element, template, slide);
+        break;
+      case "student":
+        obj = _renderMcquestionStudent(element, template, slide);
+        break;
+      case "none":
+        obj = _renderMcquestionNone(element, template, slide);
+        break;
+      default:
+        VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: " + role)
+    }
+    return obj
+  };
+  var enableInteraction = function(slide) {
+    switch(role) {
+      case "logged":
+        slideToActivate = slide;
+        _activateLoggedInteraction();
+        break;
+      case "student":
+        slideToVote = slide;
+        _activateStudentInteraction();
+        break;
+      case "none":
+        _activateNoneInteraction();
+        break;
+      default:
+        VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: " + role)
+    }
+  };
+  var _renderMcquestionLogged = function(element, template, slide) {
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form id='form_" + slide + "'class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") " + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption" + (i + 1) + "'></span></div>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<img id='mch_statistics_button_" + slide + "' class='mch_statistics_icon' src='" + VISH.ImagesPath + "quiz/eye.png'/>";
+    ret += "<input type='hidden' id='slide_to_activate' value='" + slide + "'/>";
+    ret += "<input type='button' id='mcquestion_start_button_" + slide + "' class='mcquestion_start_button' value='Start Quiz'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _renderMcquestionStudent = function(element, template, slide) {
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") <input class='mc_radio' type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption" + (i + 1) + "'></span></div>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<input type='hidden' id='slide_to_vote' value='" + slide + "'/>";
+    ret += "<input type='button' id='mcquestion_send_vote_button_" + slide + "' class='mcquestion_send_vote_button' value='Send'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _renderMcquestionNone = function(element, template, slide) {
+    V.Debugging.log("enter to renderMcquestionNone");
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
+    for(var i = 0;i < element["options"].length;i++) {
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") <input type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>"
+    }
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
+    return ret
+  };
+  var _activateLoggedInteraction = function() {
+    var startButton = "#mcquestion_start_button_" + slideToActivate;
+    var statisticsButton = "#mch_statistics_button_" + slideToActivate;
+    $(document).on("click", startButton, _onStartMcQuizButtonClicked);
+    $(document).on("click", statisticsButton, _onStatisticsMcQuizButtonClicked)
+  };
+  var _activateStudentInteraction = function() {
+    var button = "#mcquestion_send_vote_button_" + slideToVote;
+    $(document).on("click", button, _onSendVoteMcQuizButtonClicked);
+    $(".mc_meter").hide()
+  };
+  var _activateNoneInteraction = function() {
+    V.Debugging.log(" enter on _activeNoneInteraction function")
+  };
+  var _onStartMcQuizButtonClicked = function() {
+    var URL = "<span> http://www.vishub.org/dasdas </span>";
+    var slideToPlay = $(".current").find("#slide_to_activate").val();
+    var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src=" + VISH.ImagesPath + "quiz/share-glossy-blue.png /></a>";
+    if($("#" + slideToPlay).find(".t11_header").children()) {
+      $("#" + slideToPlay).find(".t11_header").children().remove()
+    }
+    $("#" + slideToPlay).find(".t11_header").append(URL);
+    $("#" + slideToPlay).find(".t11_header").append(shareButton);
+    $("#" + slideToPlay).find(".t11_header").show();
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("value", "Stop Quiz");
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("class", "mcquestion_stop_button");
+    $("#" + slideToPlay).find("#mcquestion_start_button_" + slideToPlay).attr("id", "mcquestion_stop_button_" + slideToPlay);
+    $("#" + slideToPlay).find("#slide_to_activate").attr("id", "slide_to_stop");
+    $(document).on("click", "#mcquestion_stop_button_" + slideToPlay, _onStopMcQuizButtonClicked)
+  };
+  var _onSendVoteMcQuizButtonClicked = function(event) {
+    var slideToVote = $(".current").find("#slide_to_vote").val();
+    V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
+    V.Debugging.log(" slideToVote value: " + slideToVote);
+    $(".current").find(".mc_radio").remove();
+    $(".current").find("#mcquestion_send_vote_button_" + slideToVote).remove();
+    $(".current").find(".mc_meter").css("display", "block")
+  };
+  var _onStopMcQuizButtonClicked = function() {
+    V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
+    var slideToStop = $(".current").find("#slide_to_stop").val();
+    V.Debugging.log("slideToStop value is: " + slideToStop);
+    $("#" + slideToStop).find(".t11_header").text("");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("value", "Start Quiz");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("class", "mcquestion_start_button");
+    $("#" + slideToStop).find("#mcquestion_stop_button_" + slideToStop).attr("id", "mcquestion_start_button_" + slideToStop);
+    $("#" + slideToStop).find("#slide_to_stop").attr("id", "slide_to_activate");
+    $(document).on("click", "#mcquestion_start_button_" + slideToStop, _onStartMcQuizButtonClicked)
+  };
+  var _onStatisticsMcQuizButtonClicked = function() {
+    if($(".current").find(".mc_meter").css("display") == "block") {
+      $(".current").find(".mc_meter").css("display", "none")
+    }else {
+      $(".current").find(".mc_meter").css("display", "block")
+    }
+  };
+  return{init:init, enableInteraction:enableInteraction}
+}(VISH, jQuery);
 VISH.Renderer = function(V, $, undefined) {
   var SLIDE_CONTAINER = null;
+  var username = "";
+  var token = "";
+  var quiz_active = "";
   var init = function() {
     SLIDE_CONTAINER = $(".slides")
   };
@@ -16448,10 +16813,12 @@ VISH.Renderer = function(V, $, undefined) {
                     classes += "flashcard"
                   }else {
                     if(slide.elements[el].type === "openquestion") {
-                      content += _renderOpenquestion(slide.elements[el], slide.template)
+                      content += _renderOpenquestion(slide.elements[el], slide.template);
+                      classes += "openquestion"
                     }else {
                       if(slide.elements[el].type === "mcquestion") {
-                        content += _renderMcquestion(slide.elements[el], slide.template)
+                        content += VISH.Quiz.init(slide.elements[el], slide.template, slide.id);
+                        classes += "mcquestion"
                       }else {
                         content += _renderEmpty(slide.elements[el], slide.template)
                       }
@@ -16500,7 +16867,8 @@ VISH.Renderer = function(V, $, undefined) {
   var _renderObject = function(element, template) {
     var style = element["style"] ? element["style"] : "";
     var body = element["body"];
-    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' objectStyle='" + style + "' objectWrapper='" + body + "'>" + "" + "</div>"
+    var zoomInStyle = element["zoomInStyle"] ? element["zoomInStyle"] : "";
+    return"<div id='" + element["id"] + "' class='objectelement " + template + "_" + element["areaid"] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>"
   };
   var _renderSnapshot = function(element, template) {
     var style = element["style"] ? element["style"] : "";
@@ -16516,25 +16884,35 @@ VISH.Renderer = function(V, $, undefined) {
     return"<div id='" + element["id"] + "' class='template_flashcard'><canvas id='" + element["canvasid"] + "'>Your browser does not support canvas</canvas></div>"
   };
   var _renderOpenquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["title"] + "</div>";
-    ret += "<form action='" + element["posturl"] + "' method='post'>";
-    ret += "<label class='question'> Question: " + element["question"] + "  </label>";
+    var ret = "<form action='" + element["posturl"] + "' method='post' style='text-align:center;'>";
     ret += "<label class='question_name'>Name:  </label>";
-    ret += "<input id='pupil_name' class='question_name_input'placeholder='Write your name here'></input>";
-    ret += "<label class='question_answer'>Answer: </label>";
-    ret += "<textarea class='question_answer_input' placeholder='Write your answer here'></textarea>";
+    ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+    ret += "<h2 class='question'> Question: " + element["question"] + "? </h2>";
+    ret += "<label class='label_question'>Answer: </label>";
+    ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
     ret += "<button type='button' class='question_button'>Send</button>";
     return ret
   };
   var _renderMcquestion = function(element, template) {
-    var ret = "<div id='" + element["id"] + "' class='question_title'>" + element["question"] + "?</div>";
-    ret += "<form action='" + element["posturl"] + "' method='post'>";
-    ret += "<label class='question_name'>Name: </label>";
-    ret += "<input id='pupil_name' class='question_name_input' placeholder='Write your name here'></input>";
+    var next_num = 0;
+    var ret = "<div id='" + element["id"] + "' class='multiplechoicequestion'>";
+    ret += "<div class='mcquestion_container'>";
+    ret += "<div class='mcquestion_left'><h2 class='question'>" + element["question"] + "?</h2>";
+    ret += "<form class='mcquestion_form' action='" + element["posturl"] + "' method='post'>";
     for(var i = 0;i < element["options"].length;i++) {
-      ret += "<label class='mc_answer'><input type='radio' name='mc_radio' value='0'>" + element["options"][i] + "</label>"
+      var next_num = i;
+      var next_index = "a".charCodeAt(0) + next_num;
+      next_index = String.fromCharCode(next_index);
+      ret += "<label class='mc_answer'>" + next_index + ") <input type='radio' name='mc_radio' value='" + next_index + "'>" + element["options"][i] + "</label>";
+      ret += "<div class='mc_meter'><span style='width:33%;'></span></div>"
     }
-    ret += "<button type='button' class='question_button'>Send</button>";
+    ret += "</div>";
+    ret += "<div class='mcquestion_right'>";
+    ret += "<img class='mch_statistics_icon' src='" + VISH.ImagesPath + "quiz/eye.png'/>";
+    ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+    ret += "</div>";
+    ret += "</form>";
+    ret += "</div>";
     return ret
   };
   return{init:init, renderVideo:renderVideo, renderSlide:renderSlide}
@@ -16544,38 +16922,70 @@ VISH.SlideManager = function(V, $, undefined) {
   var slideStatus = {};
   var myDoc;
   var eventsLoaded = false;
-  var init = function(excursion) {
+  var user = {};
+  var status = {};
+  var init = function(options, excursion) {
+    V.Status.init();
     VISH.Editing = false;
+    if(options["username"]) {
+      user.username = options["username"];
+      user.role = "logged";
+      if(options["token"]) {
+        status.token = options["token"];
+        if(options["quiz_active"]) {
+          status.quiz_active = options["quiz_active"]
+        }else {
+          status.quiz_active = options["quiz_active"]
+        }
+      }else {
+        status.token = "";
+        if(options["quiz_active"]) {
+          status.quiz_active = options["quiz_active"]
+        }
+      }
+    }else {
+      user.username = "";
+      status.token = "";
+      if(options["quiz_active"]) {
+        user.role = "student";
+        status.quiz_active = options["quiz_active"]
+      }else {
+        user.role = "none";
+        status.quiz_active = options["quiz_active"]
+      }
+    }
     mySlides = excursion.slides;
     V.Excursion.init(mySlides);
-    _setupSize();
+    V.ViewerAdapter.setupSize();
     if(!eventsLoaded) {
       eventsLoaded = true;
       addEventListeners();
       $(document).on("click", "#page-switcher-start", VISH.SlidesUtilities.backwardOneSlide);
       $(document).on("click", "#page-switcher-end", VISH.SlidesUtilities.forwardOneSlide)
     }
-    var isInIFrame = window.location != window.parent.location ? true : false;
-    var myElem = null;
-    if(isInIFrame) {
+    if(V.Status.getIsInIframe()) {
       myDoc = parent.document
     }else {
       myDoc = document
     }
-    $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
-      _setupSize()
+    $(window).on("orientationchange", function() {
+      V.ViewerAdapter.setupSize()
     });
-    var elem = document.getElementById("page-fullscreen");
-    var canFullScreen = elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen);
-    if(canFullScreen) {
-      $(document).on("click", "#page-fullscreen", toggleFullScreen)
+    if(V.Status.features.fullscreen) {
+      $(document).on("click", "#page-fullscreen", toggleFullScreen);
+      $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
+        V.ViewerAdapter.setupSize()
+      })
     }else {
       $("#page-fullscreen").hide()
     }
-    VISH.SlidesUtilities.updateSlideCounter()
+    if(!V.Status.ua.mobile) {
+      $("#viewbar").show();
+      VISH.SlidesUtilities.updateSlideCounter()
+    }
   };
   var toggleFullScreen = function() {
-    myElem = myDoc.getElementById("excursion_iframe");
+    var myElem = myDoc.getElementById("excursion_iframe");
     if(myDoc.fullScreenElement && myDoc.fullScreenElement !== null || !myDoc.mozFullScreen && !myDoc.webkitIsFullScreen) {
       if(myDoc.documentElement.requestFullScreen) {
         myElem.requestFullScreen()
@@ -16614,32 +17024,6 @@ VISH.SlideManager = function(V, $, undefined) {
       })
     }
   };
-  var _setupSize = function() {
-    var height = $(window).height() - 40;
-    var width = $(window).width();
-    var finalW = 800;
-    var finalH = 600;
-    var aspectRatio = width / height;
-    var slidesRatio = 4 / 3;
-    if(aspectRatio > slidesRatio) {
-      finalH = height - 40;
-      finalW = finalH * slidesRatio
-    }else {
-      finalW = width - 110;
-      finalH = finalW / slidesRatio
-    }
-    $(".slides > article").css("height", finalH);
-    $(".slides > article").css("width", finalW);
-    var marginTop = finalH / 2 + 20;
-    var marginLeft = finalW / 2;
-    $(".slides > article").css("margin-top", "-" + marginTop + "px");
-    $(".slides > article").css("margin-left", "-" + marginLeft + "px");
-    var increase = finalH / 600;
-    $(".slides > article").css("font-size", 16 * increase + "px");
-    $(".slides > article").css("line-height", 16 * increase + "px");
-    VISH.SnapshotPlayer.aftersetupSize(increase);
-    VISH.ObjectPlayer.aftersetupSize(increase)
-  };
   var addEnterLeaveEvents = function() {
     $("article").live("slideenter", _onslideenter);
     $("article").live("slideleave", _onslideleave)
@@ -16652,6 +17036,12 @@ VISH.SlideManager = function(V, $, undefined) {
   };
   var updateStatus = function(slideid, newStatus) {
     slideStatus[slideid] = newStatus
+  };
+  var getUser = function() {
+    return user
+  };
+  var getUserStatus = function() {
+    return status
   };
   var _onslideenter = function(e) {
     _decideIfPageSwitcher();
@@ -16709,7 +17099,7 @@ VISH.SlideManager = function(V, $, undefined) {
       $("#page-switcher-end").show()
     }
   };
-  return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents, toggleFullScreen:toggleFullScreen}
+  return{init:init, getStatus:getStatus, updateStatus:updateStatus, addEnterLeaveEvents:addEnterLeaveEvents, toggleFullScreen:toggleFullScreen, getUser:getUser, getUserStatus:getUserStatus}
 }(VISH, jQuery);
 VISH.SlidesUtilities = function(V, $, undefined) {
   var redrawSlides = function() {
@@ -16754,7 +17144,7 @@ VISH.SlidesUtilities = function(V, $, undefined) {
     }
     if(VISH.Editing) {
       $(".selectable").css("border-style", "none");
-      $(".theslider").hide();
+      VISH.Editor.Tools.cleanZoneTools();
       V.Editor.Thumbnails.selectThumbnail(no)
     }else {
       updateSlideCounter()
@@ -16841,18 +17231,88 @@ VISH.SlidesUtilities = function(V, $, undefined) {
   };
   var getZoomInStyle = function(zoom) {
     var style = "";
-    styleyle = style + "-ms-transform: scale(" + zoom + "); ";
-    styleyle = style + "-moz-transform: scale(" + zoom + "); ";
+    style = style + "-ms-transform: scale(" + zoom + "); ";
+    style = style + "-ms-transform-origin: 0 0; ";
+    style = style + "-moz-transform: scale(" + zoom + "); ";
+    style = style + "-moz-transform-origin: 0 0; ";
     style = style + "-o-transform: scale(" + zoom + "); ";
+    style = style + "-o-transform-origin: 0 0; ";
     style = style + "-webkit-transform: scale(" + zoom + "); ";
+    style = style + "-webkit-transform-origin: 0 0; ";
     return style
+  };
+  var addZoomToStyle = function(style, zoom) {
+    if(!style) {
+      return null
+    }
+    var filterStyle = "";
+    $.each(style.split(";"), function(index, property) {
+      if(property.indexOf("-ms-transform") === -1 && property.indexOf("-moz-transform") === -1 && property.indexOf("-o-transform") === -1 && property.indexOf("-webkit-transform") === -1 && property.indexOf("-moz-transform-origin") === -1 && property.indexOf("-webkit-transform-origin") === -1 && property.indexOf("-o-transform-origin") === -1 && property.indexOf("-ms-transform-origin") === -1) {
+        filterStyle = filterStyle + property + "; "
+      }
+    });
+    if(zoom) {
+      filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
+      filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
+      filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
+      filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
+      filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
+      filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
+      filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
+      filterStyle = filterStyle + "-webkit-transform-origin: 0 0; "
+    }
+    return filterStyle
+  };
+  var getZoomFromStyle = function(style) {
+    var zoom = 1;
+    if(!style) {
+      return zoom
+    }
+    var moz_zoom_pattern = /-moz-transform: ?scale\(([0-9]+.[0-9]+)\)/g;
+    var webkit_zoom_pattern = /-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)/g;
+    var opera_zoom_pattern = /-o-transform: ?scale\(([0-9]+.[0-9]+)\)/g;
+    var ie_zoom_pattern = /-ms-transform: ?scale\(([0-9]+.[0-9]+)\)/g;
+    $.each(style.split(";"), function(index, property) {
+      if(property.match(moz_zoom_pattern) != null) {
+        var result = moz_zoom_pattern.exec(property);
+        if(result[1]) {
+          zoom = parseFloat(result[1]);
+          return false
+        }
+      }else {
+        if(property.match(webkit_zoom_pattern) != null) {
+          var result = webkit_zoom_pattern.exec(property);
+          if(result[1]) {
+            zoom = parseFloat(result[1]);
+            return false
+          }
+        }else {
+          if(property.match(opera_zoom_pattern) != null) {
+            var result = opera_zoom_pattern.exec(property);
+            if(result[1]) {
+              zoom = parseFloat(result[1]);
+              return false
+            }
+          }else {
+            if(property.match(ie_zoom_pattern) != null) {
+              var result = ie_zoom_pattern.exec(property);
+              if(result[1]) {
+                zoom = parseFloat(result[1]);
+                return false
+              }
+            }
+          }
+        }
+      }
+    });
+    return zoom
   };
   var updateSlideCounter = function() {
     var number_of_slides = slideEls.length;
     var slide_number = curSlide + 1;
     $("#slide-counter").html(slide_number + "/" + number_of_slides)
   };
-  return{getWidthFromStyle:getWidthFromStyle, getHeightFromStyle:getHeightFromStyle, getPixelDimensionsFromStyle:getPixelDimensionsFromStyle, setStyleInPixels:setStyleInPixels, getZoomInStyle:getZoomInStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
+  return{getWidthFromStyle:getWidthFromStyle, getHeightFromStyle:getHeightFromStyle, getPixelDimensionsFromStyle:getPixelDimensionsFromStyle, setStyleInPixels:setStyleInPixels, getZoomInStyle:getZoomInStyle, addZoomToStyle:addZoomToStyle, getZoomFromStyle:getZoomFromStyle, goToSlide:goToSlide, lastSlide:lastSlide, addSlide:addSlide, redrawSlides:redrawSlides, forwardOneSlide:forwardOneSlide, backwardOneSlide:backwardOneSlide, dimentionToDraw:dimentionToDraw, updateSlideCounter:updateSlideCounter}
 }(VISH, jQuery);
 VISH.SnapshotPlayer = function() {
   var loadSnapshot = function(element) {
@@ -16885,9 +17345,8 @@ VISH.SnapshotPlayer = function() {
       var iframe_wrapper = $(iframe).parent();
       $(area).attr("zoom", increase);
       $(iframe).attr("style", VISH.SlidesUtilities.getZoomInStyle(increase));
-      var widthDelta = $(iframe_wrapper).width() * (1 - 1 / increase);
       var scrollLeft = $(area).attr("scrollLeftOrigin");
-      var newScrollLeft = scrollLeft * increase + widthDelta;
+      var newScrollLeft = scrollLeft * increase;
       var scrollTop = $(area).attr("scrollTopOrigin");
       var newScrollTop = scrollTop * increase;
       $(area).attr("scrollLeft", newScrollLeft);
@@ -16897,6 +17356,56 @@ VISH.SnapshotPlayer = function() {
     })
   };
   return{loadSnapshot:loadSnapshot, unloadSnapshot:unloadSnapshot, aftersetupSize:aftersetupSize}
+}(VISH, jQuery);
+VISH.Status = function(V, $, undefined) {
+  var ua = {};
+  var features = {};
+  var isInIframe;
+  var init = function() {
+    fillUserAgent();
+    fillFeatures()
+  };
+  var fillFeatures = function() {
+    setIsInIframe(window.location != window.parent.location ? true : false);
+    V.Debugging.log("We are in iframe: " + getIsInIframe());
+    var elem = document.getElementById("page-fullscreen");
+    if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)) {
+      features.fullscreen = true
+    }
+    V.Debugging.log("Fullscreen supported: " + features.fullscreen);
+    features.touchScreen = !!("ontouchstart" in window);
+    V.Debugging.log("TouchScreen supported: " + features.touchScreen)
+  };
+  var fillUserAgent = function() {
+    ua.pixelRatio = window.devicePixelRatio || 1;
+    ua.viewport = {width:window.innerWidth, height:window.innerHeight};
+    ua.screen = {width:window.screen.availWidth * ua.pixelRatio, height:window.screen.availHeight * ua.pixelRatio};
+    ua.iPhone = /iPhone/i.test(navigator.userAgent);
+    ua.iPhone4 = ua.iPhone && ua.pixelRatio == 2;
+    ua.iPad = /iPad/i.test(navigator.userAgent);
+    ua.android = /android/i.test(navigator.userAgent);
+    ua.iOS = ua.iPhone || ua.iPad;
+    ua.mobile = ua.iOS || ua.android;
+    if(ua.android) {
+      V.Debugging.log("Android device")
+    }
+    V.Debugging.log("Screen width: " + ua.screen.width);
+    V.Debugging.log("Screen height: " + ua.screen.height);
+    V.Debugging.log("Viewport width: " + ua.viewport.width);
+    V.Debugging.log("Viewport height: " + ua.viewport.height)
+  };
+  var getIsInIframe = function() {
+    return isInIframe
+  };
+  var setIsInIframe = function(isIframe) {
+    isInIframe = isIframe
+  };
+  return{features:features, getIsInIframe:getIsInIframe, init:init, ua:ua}
+}(VISH, jQuery);
+VISH.Utils.API = function(V, $, undefined) {
+  var init = function() {
+  };
+  return{init:init}
 }(VISH, jQuery);
 VISH.Utils.canvas = function(V, undefined) {
   var drawImageWithAspectRatio = function(ctx, content, dx, dy, dw, dh) {
@@ -17083,6 +17592,17 @@ VISH.Utils.loader = function(V, undefined) {
   };
   return{getImage:getImage, getVideo:getVideo, loadImage:loadImage, loadVideo:loadVideo, loadImagesOnCarrousel:loadImagesOnCarrousel, loadImagesOnCarrouselOrder:loadImagesOnCarrouselOrder}
 }(VISH);
+VISH.Utils.quiz = function(V, undefined) {
+  var init = function() {
+    if($(".mcquestion")) {
+      $(".mcquestion").find(".mc_meter").css("display", "none")
+    }
+  };
+  var showStatistic = function(event) {
+    VISH.Debugging.log(" Enter showStatistics value of the event: " + event)
+  };
+  return{init:init, showStatistic:showStatistic}
+}(VISH);
 VISH.Utils.text = function(V, undefined) {
   var getLines = function(ctx, phrase, maxPxLength, textStyle) {
     var wa = phrase.split(" "), phraseArray = [], lastPhrase = "", l = maxPxLength, measure = 0, i = 0, w = 0;
@@ -17148,6 +17668,49 @@ VISH.VideoPlayer = function() {
     })
   };
   return{setVideoTagEvents:setVideoTagEvents, playVideos:playVideos, stopVideos:stopVideos}
+}(VISH, jQuery);
+VISH.ViewerAdapter = function(V, $, undefined) {
+  var setupSize = function() {
+    if(V.Status.ua.mobile) {
+      var reserved_px_for_menubar = 0;
+      var margin_height = 0;
+      var margin_width = 0
+    }else {
+      var reserved_px_for_menubar = 40;
+      var margin_height = 40;
+      var margin_width = 110
+    }
+    var height = $(window).height() - reserved_px_for_menubar;
+    var width = $(window).width();
+    var finalW = 800;
+    var finalH = 600;
+    VISH.Debugging.log("height " + height);
+    VISH.Debugging.log("width " + width);
+    var aspectRatio = width / height;
+    var slidesRatio = 4 / 3;
+    if(aspectRatio > slidesRatio) {
+      finalH = height - margin_height;
+      finalW = finalH * slidesRatio
+    }else {
+      finalW = width - margin_width;
+      finalH = finalW / slidesRatio
+    }
+    VISH.Debugging.log("finalH " + finalH);
+    VISH.Debugging.log("finalW " + finalW);
+    $(".slides > article").css("height", finalH);
+    $(".slides > article").css("width", finalW);
+    var marginTop = finalH / 2 + reserved_px_for_menubar / 2;
+    var marginLeft = finalW / 2;
+    $(".slides > article").css("margin-top", "-" + marginTop + "px");
+    $(".slides > article").css("margin-left", "-" + marginLeft + "px");
+    var increase = finalH / 600;
+    var font_size = V.Status.ua.mobile ? 15 : 16;
+    $(".slides > article").css("font-size", font_size * increase + "px");
+    $(".slides > article").css("line-height", font_size * increase + "px");
+    VISH.SnapshotPlayer.aftersetupSize(increase);
+    VISH.ObjectPlayer.aftersetupSize(increase)
+  };
+  return{setupSize:setupSize}
 }(VISH, jQuery);
 VISH.Mods.fc = {};
 VISH.Mods.fc.loader = function(V, undefined) {
