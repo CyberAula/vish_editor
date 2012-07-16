@@ -2,6 +2,9 @@ VISH.Quiz = (function(V,$,undefined){
     var role;
     var slideToActivate;
     var slideToVote;
+    var user;
+    var userStatus; 
+   
     /**
     * called from VISH.Renderer.renderSlide when one of the slide's element type is a mcquestion 
     
@@ -9,7 +12,13 @@ VISH.Quiz = (function(V,$,undefined){
    
    	var init = function(element, template, slide){
 		//depending on the role we use a diferent rederer function      
-   		 role = V.SlideManager.getUser().role;
+   		user = V.SlideManager.getUser();
+   		userStatus = V.SlideManager.getUserStatus();
+   		role = user.role;
+   		//TODO where initialize this variable (here or )
+   		slideToVote = userStatus.quiz_active;
+   		
+   		 
    		//the object to be returned
    		var obj;
    		
@@ -67,7 +76,7 @@ VISH.Quiz = (function(V,$,undefined){
    			break;
    
    			case "student":
-   			//add listener to send button _onSendVoteMcQuizButtonClicked
+   			//is this variable correctly initialized here?
    			slideToVote = slide;
 			_activateStudentInteraction();
       		 	
@@ -161,8 +170,8 @@ VISH.Quiz = (function(V,$,undefined){
 			next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;' id='mcoption"+(i+1)+"'></span></div>";
-		
+			ret += "<div class='mc_meter'><span  id='mcoption"+(i+1)+"'></span></div>";
+		//style='width:33%;'
 		}
 		
 		ret += "</div>";
@@ -184,7 +193,7 @@ VISH.Quiz = (function(V,$,undefined){
  */    
     
     var _renderMcquestionNone = function(element, template, slide){
-    	V.Debugging.log("enter to renderMcquestionNone");
+    //	V.Debugging.log("enter to renderMcquestionNone");
     	
     	
 		var next_num=0;
@@ -242,7 +251,8 @@ VISH.Quiz = (function(V,$,undefined){
     var _activateStudentInteraction = function () {
     	
     	var button = '#mcquestion_send_vote_button_'+slideToVote;
-    	//mcquestion_send_vote_article4
+   
+    	//add listener to send button _onSendVoteMcQuizButtonClicked
     	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
     	
     	$(".mc_meter").hide();
@@ -302,15 +312,28 @@ VISH.Quiz = (function(V,$,undefined){
     	V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     	V.Debugging.log(" slideToVote value: " +slideToVote);
     	
-    	//TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
+    	//TODO get the option value selected to attach
+    	
+    	/*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
+    	and we receive from the server the quantities of votes for each option in a JSON object:
+    	{"quiz_session_id":"444", "quiz_id":"4", "option_a":"23", "option_b":"3", "option_c":"5", "option_d":"1", "option_e":"6"}
+    	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+    		*/
+    	var vote_url; //must include the session_quiz/id and the option to vote
+    	//jQuery.getJSON(vote_url,function (data) {
+    	//var for testing receive values for a pull	
+    	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+			_showResultsToParticipant(data);
+		//});
     	
     	//remove input radio 
     	$(".current").find(".mc_radio").remove();
     	$(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
     	
     	
-    	//TODO update values to span css('width','xx%')
-    	$(".current").find(".mc_meter").css('display', 'block');
+    	//TODO update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
+    	
+    	
     	
     };
     
@@ -351,6 +374,56 @@ VISH.Quiz = (function(V,$,undefined){
     	}
     	
     	
+    };
+    
+    /*
+     * Function called when the JSON object is received from the server 
+     * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+     * actions to do: 
+     * 
+     */
+    
+    var _showResultsToParticipant = function (data) {
+    	
+    	V.Debugging.log(" voted send and response received:  _showResultsToParticipant called");
+    	
+    	//if (data.quiz_session_id==userQuizSessionID) ??
+    	V.Debugging.log(" data.quiz_id value: " + data.quiz_id);
+    	V.Debugging.log(" userStatus.quiz_active value is: " + userStatus.quiz_active);
+    	if(data.quiz_id == userStatus.quiz_active) {
+    		
+    	var votes;	
+    	var totalVotes =0;
+    	//calculate the vote's total sum 
+    	for (votes in data.results) {
+    	totalVotes 	+= parseInt(data.results[votes]);
+    		
+    	}
+    	
+    	  V.Debugging.log("total votes Vale" + totalVotes);
+    		for (votes in data.results) {
+    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() + "%";
+    		    V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
+    			
+    			// change the value for span css('width','xx%')
+    			 V.Debugging.log("pencent value is: " +percent);
+    			 
+    			  V.Debugging.log("searching the mcoption is: " +$(".current").find("#mcoption"+(votes+1)));
+    			$(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percent);
+    			
+    	
+    			
+    			
+    		}
+    		//show results 
+    		
+    	} 
+    	else {
+    		V.Debugging.log(" The Quiz voted is not the active Quiz ... please reload the Quiz");
+    		
+    	}
+    	
+    $(".current").find(".mc_meter").css('display', 'block');	
     };
     
     

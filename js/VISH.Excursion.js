@@ -35,9 +35,12 @@ VISH.Excursion = (function(V,undefined){
 					//});
 				}
 				
+				/*
+				*it is added some functions later the elements be loaded 
+				*  */
 				else if(mySlides[i].elements[num].type === "mcquestion") {
  
-					//VISH.Debugging.log(" mySlides[i].id is : " + mySlides[i].id.toString());
+					
 				    //param number of slide?
 					VISH.Quiz.enableInteraction(mySlides[i].id.toString());
 					
