@@ -321,10 +321,15 @@ function handleTouchStart(event) {
     touchStartX = touches[0].pageX;
     touchStartY = touches[0].pageY;
 
-    //document.body.addEventListener('touchmove', handleTouchMove, true);
-    //document.body.addEventListener('touchend', handleTouchEnd, true);
-    $(document).bind('touchmove', handleTouchMove);  
-    $(document).bind('touchend', handleTouchEnd);  
+    document.body.addEventListener('touchmove', handleTouchMove, true);
+    document.body.addEventListener('touchend', handleTouchEnd, true);
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+    if(zoom < 1.5){    	 
+    	//this is because if not done, the browser can take control of the event and cancels it, 
+    	//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
+    	//and there will be no scroll below that zoom level
+    	event.preventDefault(); 
+    }
   }
 };
 
@@ -335,7 +340,12 @@ function handleTouchMove(event) {
   } else {
     touchDX = touches[0].pageX - touchStartX;
     touchDY = touches[0].pageY - touchStartY;
+    var zoom = document.documentElement.clientWidth / window.innerWidth;
+  	if(zoom < 1.5){
+    	event.preventDefault();  //this is because if not done, the browser can take control of the event and cancels it, because it thinks that the touch is a scroll action
+  	}
   }
+  
 };
 
 function handleTouchEnd(event) {
@@ -354,10 +364,8 @@ function handleTouchEnd(event) {
 };
 
 function cancelTouch() {
-  //document.body.removeEventListener('touchmove', handleTouchMove, true);
-  //document.body.removeEventListener('touchend', handleTouchEnd, true);  
-  $(document).unbind('touchmove', handleTouchMove);  
-  $(document).unbind('touchend', handleTouchEnd);  
+  document.body.removeEventListener('touchmove', handleTouchMove, true);
+  document.body.removeEventListener('touchend', handleTouchEnd, true); 
 };
 
 /* Preloading frames */
@@ -637,9 +645,9 @@ function makeBuildLists() {
  * added by KIKE to hide the address bar after loading
  */
 function hideAddressBar()
-{
-	VISH.Debugging.log("document.height " + document.height);
-	VISH.Debugging.log("window.outerHeight " + window.outerHeight);
+{	
+	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
+      /*
       if(document.height < window.outerHeight)
       {
           document.body.style.height = (window.outerHeight + 50) + 'px';
@@ -650,7 +658,7 @@ function hideAddressBar()
       	VISH.Debugging.log("scroll");
       	window.scrollTo(0, 1); 
       	}, 50 );
-  
+  */
 }
 
 function handleDomLoaded() {

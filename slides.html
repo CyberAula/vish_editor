@@ -16,7 +16,7 @@
        }
     </style>
 
-  	  <meta name="viewport" content="width=900,height=750">
+  	  <meta name="viewport" content="width=910, initial-scale=1.0 , user-scalable=yes" />
   	  <meta name="apple-mobile-web-app-capable" content="yes">
 
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -36,7 +36,7 @@
 	    
     </section>
     
-    <div id="viewbar" class="viewbar">
+    <div id="viewbar" class="viewbar" style="display:none">
 		<button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
 	    <div id="slide-counter"></div>
 	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
@@ -71,6 +71,7 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 <script type="text/javascript" src="js/VISH.SlidesUtilities.js"></script>
 <script type="text/javascript" src="js/VISH.Utils.js"></script>
 <script type="text/javascript" src="js/VISH.Status.js"></script>
+<script type="text/javascript" src="js/VISH.ViewerAdapter.js"></script>
 <script type="text/javascript" src="js/VISH.Utils.loader.js"></script>
 <script type="text/javascript" src="js/VISH.Utils.canvas.js"></script>
 <script type="text/javascript" src="js/VISH.Utils.text.js"></script>
@@ -80,7 +81,7 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 <script type="text/javascript" src="js/mods/fc/VISH.Mods.fc.template.js"></script>
 
 <script type="text/javascript" src="js/libs/slides.js"></script>
-<script type="text/javascript" src="js/VISH.Utils.quiz.js"></script>
+<script type="text/javascript" src="js/VISH.Quiz.js"></script>
 
 <script>
 //first function called when page loads
@@ -89,7 +90,10 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 function start(){
   VISH.Debugging.init(true);
   
-  VISH.SlideManager.init(VISH.Samples.samples);
+  //var options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+  var options = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+  
+  VISH.SlideManager.init(options, VISH.Samples.quizes_samples);
 }
 </script>
 </body>

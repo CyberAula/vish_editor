@@ -562,6 +562,7 @@
 	width:90%;	
 	float: left;
 	line-height: 120%;
+	text-align:left;
 	
 		
 	}
@@ -639,7 +640,7 @@
 */
 
 .multiplechoicequestion {
-	
+	padding: 2%;
 	width:100%;
 	height: 90%;
 	
@@ -647,13 +648,39 @@
 
 
 .t11_header {
+	
+	margin-top:1.5%;
 	height: 10%;
 	width: 100%;	
 	display: block;	
 	color: blue;
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+
+}
+
+.t11_header > span {
+	background-color:#CCCCCC;
+	-moz-border-radius:15px;
+	-webkit-border-radius: 15px;
+	padding: 1%;
 }
 
 
+.shareQuizButton {
+	padding: 5%;
+	height: 5%;
+	width: 5%;
+	text-align: right;
+	
+}
+.shareQuizButton > img {
+	height: 70%;
+	width: 7%;
+	text-align: right;
+	
+}
 
 .t11_left{
 	margin-top: 2%;
@@ -685,38 +712,78 @@
 	
 }
 .mcquestion_form {
-text-align:center;	
-width: 90%;	
+	text-align:center;	
+	width: 100%;	
+	height: 70%;
 	
 }
 
 .mch_statistics_icon {
-display:block;
-margin:0 auto;
-position:relative;	
+	
+	width: 40%;
+	height: 10%;
+	display:block;
+	margin:0 auto;
+	margin-top:5%;
+	position:relative;	
+
+
 }
 
-.mcquestion_button{
+.mcquestion_start_button{
+	display:block;
+	position:relative;
+	color: blue;
+	font-size:1.2em;
+	text-align:center;
+	font-weight:bold;
+	vertical-align:bottom;
+	margin-top:90%;
+	height:9%;
+	width: 80%;
+	
+	}
+.mcquestion_stop_button {
+	
+	display:block;
+	position:relative;
+	color: red;
+	font-size:1.3em;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:bottom;
+	margin-top:90%;
+	height:9%;
+	width: 80%;
+	
+	
+}	
+	
+	
+.mcquestion_send_vote_button{
 	display:block;
 	position:relative;
 	color: blue;
 	font-size:1.2em;
 	text-align:center;
 	vertical-align:bottom;
-	margin-top:90%;
-	height:8%;
-	width: 70%;
+	margin-top:100%;
+	height:9%;
+	width: 80%;
 	
 	}
-
-
 
 .mc_answer{
 	text-align: justify;
 	color: black;
 	font-size: 1.2em;
+	width:90%;
 	display: block;
 	margin-left: 3%;
+	margin-right: 3%;
+	line-height: 110%;
+	float:left;
+	position: relative;
 }
 
 .mc_answer input{
@@ -724,19 +791,95 @@ position:relative;
 }
 
 .mc_meter { 
-			width: 60%;
-			height: 5%;  /* Can be anything */
-			position: relative;
-			margin: 1%; /* Just for demo spacing */
-			background: #999;
-			-moz-border-radius: 25px;
-			-webkit-border-radius: 25px;
-			border-radius: 25px;
-			padding: 10px;
-			-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-			-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
-			box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
-		}
+		width:72%;
+		height:5%;
+		background-color:#CCCCCC;
+		position: relative;
+		display:none;
+		margin-left:2%;
+		margin-right:2%;
+		margin-top:1.5%;
+		float:left;
+	}
+		
+.mc_meter > span { 
+		width:0%;
+		height:100%;
+		background-color: red;
+		position: relative;
+		/* display:block; */
+
+	}		
+
+.mc_meter #mcoption1 { 
+		width:0%;
+		height:100%;
+		background-color: red;
+		position: relative;
+		display:block; 
+		float:left;
+
+	}		
+		
+.mc_meter #mcoption2 { 
+		width:0%;
+		height:100%;
+		background-color: green;
+		position: relative;
+		display:block;
+		float:left;
+
+	}	
+
+.mc_meter #mcoption3 { 
+		width:0%;
+		height:100%;
+		background-color: yellow;
+		position: relative;
+		display:block;
+		float:left;
+	}	
+
+.mc_meter #mcoption4 { 
+		width:0%;
+		height:100%;
+		background-color: orange;
+		position: relative;
+		display:block;
+		float:left;
+
+	}	
+		
+.mc_meter #mcoption5 { 
+		width:0%;
+		height:100%;
+		background-color: blue;
+		position: relative;
+		display:block;
+		float:left;
+
+	}		
+		
+.mc_meter #mcoption6 { 
+		width:0%;
+		height:100%;
+		background-color:#FF05DD;
+		position: relative;
+		display:block;
+		float:left;
+}
+
+.mcoption_label {
+	float:left;
+	position: relative; 
+	width:20%;
+	margin-left:2%;
+	margin-right:2%;
+	margin-top:1.5%;
+	display:block;
+	
+}
+		
 
 .t12_left{
 	margin-top: 2%;
