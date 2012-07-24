@@ -14,6 +14,8 @@ npm install
 
 Rename /configuration/configuration_example.js to /configuration/configuration.js , and fill all configuration values.
 
+mkdir data
+
 mongod --dbpath ./data/
 
 node app.js
