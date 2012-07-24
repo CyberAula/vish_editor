@@ -1,6 +1,7 @@
 VISH.Quiz = (function(V,$,undefined){
     var role;
     var slideToActivate;
+    var slideToStop;
     var slideToVote;
     var user;
     var userStatus; 
@@ -120,7 +121,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "<div class='mcquestion_container'>";
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-		
+		//ret += "<div class= 'mcoptions_container'>";
 		ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		
@@ -143,6 +144,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</div>";
 		ret += "</form>";
+		//ret += "</div>";
 		ret += "</div>";
 		return ret;
 	};
@@ -304,7 +306,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	var URL = "<span> http://www.vishub.org/dasdas </span>";
     	
-    	var slideToPlay = $(".current").find("#slide_to_activate").val();
+    	slideToPlay = $(".current").find("#slide_to_activate").val();
     		
     	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
     	//make appear the voting URL and share icon
@@ -334,7 +336,7 @@ VISH.Quiz = (function(V,$,undefined){
 
     var _onSendVoteMcQuizButtonClicked = function (event) {
     	
-    	var slideToVote = $(".current").find("#slide_to_vote").val();
+    	slideToVote = $(".current").find("#slide_to_vote").val();
     	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     	
     	
@@ -367,7 +369,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
     	//V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
     	
-    	var slideToStop = $(".current").find("#slide_to_stop").val();
+    	slideToStop = $(".current").find("#slide_to_stop").val();
     	
     	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
    		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
@@ -391,41 +393,65 @@ VISH.Quiz = (function(V,$,undefined){
     	var marginTopDefault2 = 24; 
 		var startButton = "mcquestion_start_button";
 		var stopButton = "mcquestion_stop_button";
+		
+		//find the number of slide 
+	//slideToActivate = $(".current").find("#slide_to_activate").val();
+	//slideToStop = $(".current").find("#slide_to_stop").val();
 	 
-	 
-	  	//if it is shown --> hide and move down the button  
+	  	//if it is shown --> hide and move the button up  
     	if(	$(".current").find(".mc_meter").css('display')=="block") {
-    			var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
+    		var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
     		
     		$(".current").find(".mc_meter").css('display', 'none');
     		$(".current").find(".mcoption_label").css('display', 'none');
-    		if ($(".current").find("."+startButton)) {
-    			$(".current").find("."+startButton).css("margin-top", marginTopPercentTxt);
-    		}
-    		else{  // if ($(".current").find(".mcquestion_stop_button")) 
-    			$(".current").find(".mcquestion_stop_button").css("margin-top", marginTopPercentTxt);
+    		
+    		//if ($(".current").find("#" + startButton + "_" + slideToActivate)) {
+    		if ($(".current").find("#slide_to_activate").val()) {
+    			slideToActivate = $(".current").find("#slide_to_activate").val();
+    			$("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+    		} //mcquestion_stop_button_article1
+    	//	else if ($(".current").find("#" + stopButton + "_" + slideToStop))  {  // if ($(".current").find(".mcquestion_stop_button"))
+    		else if ($(".current").find("#slide_to_stop").val()) { 
+    			slideToStop = $(".current").find("#slide_to_stop").val();
+    			V.Debugging.log("slide to stop value: " +slideToStop);
+    			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
     			V.Debugging.log("stopButton detected ");
     		}
     	} 
-    	//if it is hidden --> fill values, show statistics and move down the button 
+    	//if it is hidden --> fill values, show statistics and move the button down 
     	//TODO call a function that do periodical get's to keep updated statistics values  
     	else {
     		
     		var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
-    		if ($(".current").find("."+startButton)) {
-    				
-    			$(".current").find("."+startButton).css("margin-top", marginTopPercentTxt);
     		
-    		} else {  // if ($(".current").find("."+stopButton)) {
-    			$(".current").find("."+stopButton).css("margin-top", marginTopPercentTxt);
-    			V.Debugging.log("stopButton detected ");
-    		} 
     		//get values from the server , send the quiz_session_id
     		
     		//data must be received from the VISH Server 
     		var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			_showResultsToTeacher(data);
     		//$(".current").find(".mc_meter").css('display', 'block');
+    	
+    //	if ($(".current").find("#" + startButton + "_" + slideToActivate)) { //($(".current").find("."+startButton)) {
+    	if ($(".current").find("#slide_to_activate").val()) {	
+    			//try to read values from 
+    			slideToActivate = $(".current").find("#slide_to_activate").val();
+    			$("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+    				
+    			//$(".current").find("."+startButton).css("margin-top", marginTopPercentTxt);
+    		
+    		} else //if ($(".current").find("#" + stopButton + "_" + slideToStop)) {  // if ($(".current").find("."+stopButton)) {
+    			if ($(".current").find("#slide_to_stop").val()) { 
+    			V.Debugging.log("stopButton detected ");
+    			slideToStop = $(".current").find("#slide_to_stop").val();
+    			V.Debugging.log("slide to stop value: " +slideToStop);
+    			
+    			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+    			
+    			//$(".current").find("."+stopButton).css("margin-top", marginTopPercentTxt);
+    			
+    		} 
+    	
+    	
     	}
     	
     	

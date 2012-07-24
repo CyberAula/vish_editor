@@ -714,6 +714,15 @@
 	margin:0 auto;
 	
 }
+
+.mcoptions_container {
+	width: 80%;
+	height: 80%;
+	float:left;
+	
+}
+
+
 .mcquestion_form {
 	text-align:center;	
 	width: 100%;	
