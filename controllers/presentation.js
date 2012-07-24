@@ -22,6 +22,7 @@ exports.get = function(req,res){
 }
 
 exports.show = function(req,res){
+  console.log("Presentation show")
   var id = req.params.presentation;
   var presentation = Presentation.findById(id, function(err,presentation){
     if(err){
@@ -33,55 +34,41 @@ exports.show = function(req,res){
 }
 
 exports.new = function(req,res){
+  console.log("Presentation new")
   var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
   console.log(options);
   res.render('presentation/new', { locals: { options: options }});
 }
 
 exports.create = function(req,res){
-
   console.log("New presentation called")
+  var presentation = new Presentation();
+  var presentationJson = JSON.parse(req.body.presentation.json);
+  presentation.title = presentationJson.title;
+  presentation.description = presentationJson.description;
+  presentation.avatar = presentationJson.avatar;
+  // presentation.tags = presentationJson.tags;
+  presentation.author = req.user.name;
+  presentation.content = req.body.presentation.json;
 
-  if(req.user){
-    console.log("Auth success")
-    var presentation = new Presentation();
-    var presentationJson = JSON.parse(req.body.presentation.json);
-    presentation.title = presentationJson.title;
-    presentation.description = presentationJson.description;
-    presentation.avatar = presentationJson.avatar;
-    // presentation.tags = presentationJson.tags;
-    presentation.author = req.user.name;
-    presentation.content = req.body.presentation.json;
-
-    presentation.save( function(err){
-      if(err){
-         req.flash('warn',err.message);
-         res.render('home');
-      } else {
-        res.redirect('/presentation/' + presentation._id.toHexString());
-      }  
-    });
-  } else {
-    res.render('index')
-  }
+  presentation.save( function(err){
+    if(err){
+       req.flash('warn',err.message);
+       res.render('home');
+    } else {
+      res.redirect('/presentation/' + presentation._id.toHexString());
+    }  
+  });
 }
 
 exports.edit = function(req,res){
   console.log("Presentation edit");
-  if(req.user){
-      res.render('home');
-  } else {
-    res.render('index')
-  }
+  res.render('home');
 }
 
 exports.update = function(req,res){
   console.log("Presentation update");
-  if(req.user){
-      res.render('home');
-  } else {
-    res.render('index')
-  }
+  res.render('home');
 }
 
 

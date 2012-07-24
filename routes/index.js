@@ -1,26 +1,36 @@
-var everyauth = require('everyauth');
-var _ = require('underscore');
-var db = require("../db").connect();
+var initialized = false;
+exports.init = function(app) {
+	/**
+	 * Routing with authentication middleware
+	 */
 
-//Get models
-var User = db.model('User');
-var Presentation = db.model('Presentation');
+	 var controllers = require('../controllers');
 
-exports.index = function(req, res) {
-  if(req.user){
-  	loadHome(req,res);
-  } else {
-  	res.render('index')
-  }
-};
+	/**
+	* Middleware authentication
+	*/
+	function requiresLogin(req,res,next){
+	  if(req.user){
+	    return next();
+	  } else {
+	    return controllers.index(req,res);
+	  }
+	}
 
-exports.home = function(req, res) {
-  loadHome(req,res);
-};
+	app.get('/', controllers.index);
+	app.get('/home', requiresLogin, controllers.home);
 
+	//Routes for presentation resource
+	app.get('/presentation', requiresLogin, controllers.presentation.index);
+	app.get('/presentation/new', requiresLogin, controllers.presentation.new);
+	app.post('/presentation', requiresLogin, controllers.presentation.create);
+	app.get('/presentation/:id', controllers.presentation.show);
+	app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
+	app.put('/presentation/:id', requiresLogin,controllers.presentation.update);
+	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
 
-function loadHome(req,res){
-    //Get user presentations
-    //Coming soon...
-    res.render('home');
+	//Not founded url
+	app.all('*', controllers.error);
 }
+
+
