@@ -2,7 +2,7 @@
     "name": "VishEditorStandalone"
   , "description": "HTML5 Presentations"
   , "version": "0.0.1"
-  , "homepage" : "https://github.com/ging/vish_editor_standalone"
+  , "homepage" : "https://github.com/ging/vish_editor"
   , "author" : "Aldo Gordillo <agordillos@gmail.com>, Enrique Barra <barraorion@gmail.com>"
   , "contributors" :
    ["Nestor Toribio","Victor Hugo Bazan","Beatriz","Alvaro Sanchez Bravo"]

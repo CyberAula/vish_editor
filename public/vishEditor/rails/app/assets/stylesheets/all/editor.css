@@ -12,7 +12,7 @@ img {
 }
 
 #excursiondetails {
-	background: url(/vishEditor/assets/excursiondetails_bg.png) no-repeat top;
+	background: url(/assets/excursiondetails_bg.png) no-repeat top;
 }
 
 .barbuttonaddsave{
@@ -71,7 +71,7 @@ img {
 
 .previewimgbox {
 	position:absolute;
-	background: url(/vishEditor/assets/imgprev.png) no-repeat;
+	background: url(/assets/imgprev.png) no-repeat;
   margin-left: 30px;
 	margin-top: 15px;
   width: 370px;
@@ -291,7 +291,7 @@ img {
 }
 	
 #config_div {
-	background: url(/vishEditor/assets/config.png);
+	background: url(/assets/config.png);
 	position: absolute;
   left: 1%;
   top: 8%;
@@ -299,90 +299,90 @@ img {
 }
 
 #config_div:hover {
-	background: url(/vishEditor/assets/hover/config_hover.png);
+	background: url(/assets/hover/config_hover.png);
 }
 
 #arrow_left_div {
-	background: url(/vishEditor/assets/arrow_left.png);
+	background: url(/assets/arrow_left.png);
 }
 
 #arrow_left_div:hover {
-	background: url(/vishEditor/assets/hover/arrow_left_hover.png);
+	background: url(/assets/hover/arrow_left_hover.png);
 }
 
 #arrow_right_div {
-	background: url(/vishEditor/assets/arrow_right.png);
+	background: url(/assets/arrow_right.png);
 }
 
 #arrow_right_div:hover {
-	background: url(/vishEditor/assets/hover/arrow_right_hover.png);
+	background: url(/assets/hover/arrow_right_hover.png);
 }
 
 #save_div{
-	background: url(/vishEditor/assets/save.png);
+	background: url(/assets/save.png);
 	position: absolute;
   left: 90%;
   top: 8%;
 	z-index: 600;
 }
 #save_div:hover{
-	background: url(/vishEditor/assets/hover/save_hover.png);
+	background: url(/assets/hover/save_hover.png);
 }
 
 .textthumb {
-	background: url(/vishEditor/assets/text.png);
+	background: url(/assets/text.png);
 }
 
 .textthumb:hover {
-	background: url(/vishEditor/assets/hover/text_hover.png);
+	background: url(/assets/hover/text_hover.png);
 }
 
 .textthumb_small {
-	background: url(/vishEditor/assets/text_small.png);
+	background: url(/assets/text_small.png);
 }
 
 .textthumb_small:hover {
-	background: url(/vishEditor/assets/hover/text_small_hover.png);
+	background: url(/assets/hover/text_small_hover.png);
 }
 
 .picthumb {
-	background: url(/vishEditor/assets/image.png);
+	background: url(/assets/image.png);
 }
 
 .picthumb:hover {
-	background: url(/vishEditor/assets/hover/image_hover.png);
+	background: url(/assets/hover/image_hover.png);
 }
 
 .picthumb_small {
-	background: url(/vishEditor/assets/image_small.png);
+	background: url(/assets/image_small.png);
 }
 
 .picthumb_small:hover {
-	background: url(/vishEditor/assets/hover/image_small_hover.png);
+	background: url(/assets/hover/image_small_hover.png);
 }
 
 .objectthumb {
-	background: url(/vishEditor/assets/flash.png);
+	background: url(/assets/flash.png);
 }
 
 .objectthumb:hover {
-	background: url(/vishEditor/assets/hover/flash_hover.png);
+	background: url(/assets/hover/flash_hover.png);
 }
 
 .videothumb {
-	background: url(/vishEditor/assets/video.png);
+	background: url(/assets/video.png);
 }
 
 .videothumb:hover {
-	background: url(/vishEditor/assets/hover/video_hover.png);
+	background: url(/assets/hover/video_hover.png);
 }
 
 .livethumb {
-	background: url(/vishEditor/assets/live.png);
+	background: url(/assets/live.png);
 }
 
 .livethumb:hover {
-	background: url(/vishEditor/assets/hover/live_hover.png);
+	background: url(/assets/hover/live_hover.png);
 }
 
 .barbutton {
@@ -584,11 +584,11 @@ img {
 	width: 22px;
 	height: 22px;
 	cursor:pointer;
-	background: url(/vishEditor/assets/delete_slide.png);
+	background: url(/assets/delete_slide.png);
 }
 
 .delete_slide:hover{
-	background: url(/vishEditor/assets/hover/delete_hover.png);
+	background: url(/assets/hover/delete_hover.png);
 }
 
 .delete_content{
@@ -598,11 +598,11 @@ img {
 	width: 40px;
 	height: 40px;
 	cursor:pointer;
-	background: url(/vishEditor/assets/delete_content.png);
+	background: url(/assets/delete_content.png);
 }
 
 .delete_content:hover{
-	background: url(/vishEditor/assets/hover/delete_content_hover.png);
+	background: url(/assets/hover/delete_content_hover.png);
 }
 
 .addpicture{
@@ -611,19 +611,19 @@ img {
 }
 
 #picture_fancybox{
-	background: url(/vishEditor/assets/background_img_fancybox.png);
+	background: url(/assets/background_img_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
 
 #flash_fancybox{
-	background: url(/vishEditor/assets/background_flash_fancybox.png);
+	background: url(/assets/background_flash_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
 
 #video_fancybox{
-	background: url(/vishEditor/assets/background_video_fancybox.png);
+	background: url(/assets/background_video_fancybox.png);
 	background-repeat:no-repeat;
 	background-position: right bottom;
 }
@@ -698,11 +698,11 @@ input.url, input.upload{
 }
 
 input.url {
-	background: url('/vishEditor/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
+	background: url('/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
 }
 
 input.upload {
-  background: url('/vishEditor/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
+  background: url('/assets/url_icon.png') 5px 50% no-repeat #F2E6EA;
 }
 
 input.rounded {
@@ -723,7 +723,7 @@ input.rounded:focus {
 
 
 .okButton {
-    background: url('/vishEditor/assets/carrousel_sprite2.png') 0 -150px no-repeat transparent;
+    background: url('/assets/carrousel_sprite2.png') 0 -150px no-repeat transparent;
     cursor:pointer;
     width: 150px;
     height: 50px;
@@ -739,7 +739,7 @@ input.rounded:focus {
 }
 
 .okButton:hover {
-    background: url('/vishEditor/assets/carrousel_sprite2.png') 0 -200px no-repeat transparent;
+    background: url('/assets/carrousel_sprite2.png') 0 -200px no-repeat transparent;
 }
 
 .okButton::-moz-focus-inner {
@@ -799,11 +799,11 @@ table.metadata tr.odd{
 } 
 
 table.metadata td.header_left{
-	background: url(/vishEditor/assets/table_left.png) no-repeat scroll left -1px #FF005D;
+	background: url(/assets/table_left.png) no-repeat scroll left -1px #FF005D;
 } 
 
 table.metadata td.header_right{
-	background: url(/vishEditor/assets/table_right.png) no-repeat scroll right -1px #FF005D;
+	background: url(/assets/table_right.png) no-repeat scroll right -1px #FF005D;
 }
 
 table.metadata td div.height_wrapper_description{
@@ -1008,7 +1008,7 @@ textarea {
 }
 
 #start_tutorial {
-	background-image: url(/vishEditor/assets/tutorial_image.png);
+	background-image: url(/assets/tutorial_image.png);
 	background-position: 0px -120px;
 	position: absolute;
 	margin-left: 384px;
@@ -1099,19 +1099,19 @@ textarea {
 }
 
 #help_right{
-	background-image:url(/vishEditor/assets/helptutorial_circle_bg.png);
+	background-image:url(/assets/helptutorial_circle_bg.png);
 	position: absolute;
 	right: -2px;
 	top: 642px;
 }
 
 #help_right:hover {
-	background-image:url(/vishEditor/assets/hover/helptutorial_circle_hover_bg.png);
+	background-image:url(/assets/hover/helptutorial_circle_hover_bg.png);
 	cursor: pointer;
 }
 
 .help_in_template{
-	background-image:url(/vishEditor/assets/helptutorial_circle.png);
+	background-image:url(/assets/helptutorial_circle.png);
 	position: absolute;
 	top: 2px;
 	right: 24px;
@@ -1122,12 +1122,12 @@ textarea {
 }
 
 .help_in_template:hover{
-	background-image:url(/vishEditor/assets/hover/helptutorial_circle_hover.png);
+	background-image:url(/assets/hover/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
 
 .help_in_fancybox{
-	background-image:url(/vishEditor/assets/helptutorial_circle.png);
+	background-image:url(/assets/helptutorial_circle.png);
 	position: absolute;
 	margin-top: -1px;
 	margin-right: -5px;
@@ -1138,7 +1138,7 @@ textarea {
 }
 
 .help_in_fancybox:hover{
-	background-image:url(/vishEditor/assets/hover/helptutorial_circle_hover.png);
+	background-image:url(/assets/hover/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
 
@@ -1216,14 +1216,14 @@ textarea {
 }
 
 #help_template_selection {
-	background-image:url(/vishEditor/assets/helptutorial_circle_tp.png);
+	background-image:url(/assets/helptutorial_circle_tp.png);
 	position: absolute;
 	margin-top: -43px;
 	right: 21px;
 }
 
 #help_template_selection:hover {
-	background-image:url(/vishEditor/assets/hover/helptutorial_circle_hover_tp.png);
+	background-image:url(/assets/hover/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
 
