@@ -29,3 +29,5 @@ To enable sign in with twitter/facebook in development, include this line in you
 127.0.0.1	dev.visheditor.com
 
 Remember add the required values in your ~/configuration/configuration.js file. 
+
+
