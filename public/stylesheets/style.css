@@ -1,0 +1,72 @@
+.loginWrapper{
+  margin-top: 20px;
+}
+
+#container {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+}
+
+#content{
+  min-height: 350px;
+}
+
+#footer {
+  clear: both;
+  font-size: smaller;
+}
+
+
+/** Remove outlines **/
+
+* {
+    outline: none;
+}
+
+a, a:focus {
+   outline: none;
+}
+
+input::-moz-focus-inner { 
+  border: 0; 
+}
+
+.nav-tabs > li > a {
+  outline: none;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    border: none;
+}
+
+
+/** Form style **/
+
+.form_label{
+  display: block;
+}
+
+.form_fields_wrapper{
+  display: block;
+}
+
+.form_field_wrapper{
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form_buttons_wrapper{
+
+}
+
+
+.presentationJson{
+  width: 100%;
+  height: 500px;
+}

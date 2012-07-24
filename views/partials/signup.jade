@@ -1,0 +1,13 @@
+form(action="/register",method="post")
+  #sig_up_fields.form_fields_wrapper
+    .form_field_wrapper
+      label(for=everyauth.password.loginFormFieldName).form_label Login
+      input(type='text', name=everyauth.password.loginFormFieldName)
+    .form_field_wrapper
+      label.form_label Password
+      input(name=everyauth.password.passwordFormFieldName,type="password")
+    .form_field_wrapper
+      label.form_label Confirm Password
+      input(name="password2",type="password")
+  #sig_up_button.form_buttons_wrapper
+    input#sign_up_button(type="submit",value="Sign Up")

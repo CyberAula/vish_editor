@@ -1,0 +1,3 @@
+$(function() {
+	// VISHWS.CORE.init();
+});
