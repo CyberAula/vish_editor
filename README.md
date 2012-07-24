@@ -18,7 +18,7 @@ npm install
 
 Rename /configuration/configuration_example.js to /configuration/configuration.js , and fill all configuration values.
 
-Also rename /configuration/configuration_vishEditor_example.js to /configuration/configuration_vishEditor.js .
+Also rename public/vishEditor/configuration/configuration_example.js to public/vishEditor/configuration/configuration.js .
 
 mkdir data
 
