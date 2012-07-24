@@ -1,7 +1,5 @@
 var initialized = false;
 exports.init = function(app) {
-	console.log("App vale " + typeof app)
-	
 	/**
 	 * Routing with authentication middleware
 	 */
