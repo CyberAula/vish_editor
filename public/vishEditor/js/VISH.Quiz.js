@@ -5,6 +5,8 @@ VISH.Quiz = (function(V,$,undefined){
     var slideToVote;
     var user;
     var userStatus; 
+   	var startButton = "mcquestion_start_button";
+	var stopButton = "mcquestion_stop_button";
    
     /**
     * called from VISH.Renderer.renderSlide when one of the slide's element type is a mcquestion 
@@ -80,7 +82,7 @@ VISH.Quiz = (function(V,$,undefined){
    			case "student":
    			//is this variable correctly initialized here?
    			slideToVote = slide;
-			_activateStudentInteraction();
+   			_activateStudentInteraction();
 				  
    			break;
    
@@ -121,7 +123,6 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "<div class='mcquestion_container'>";
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-		//ret += "<div class= 'mcoptions_container'>";
 		ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		
@@ -144,7 +145,6 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</div>";
 		ret += "</form>";
-		//ret += "</div>";
 		ret += "</div>";
 		return ret;
 	};
@@ -272,19 +272,19 @@ VISH.Quiz = (function(V,$,undefined){
     	V.Debugging.log(" enter on _activeNoneInteraction function");
     };
     
-    
+  /*   Function that move the start button down when created 
+   * */  
     
   var _alignStartButton = function (options) {
   	var marginTopDefault = 18;
-  	V.Debugging.log("_alignStartButton was called and param options value is:" + options );
-  	
+    	
   	var startButton = "mcquestion_start_button_" + slideToActivate;
 
   	var marginTopPercentTxt = (marginTopDefault*parseInt(options).toString())+"%";
   	
   	//operations to move down the start button 
       	$("#"+startButton).css("margin-top", marginTopPercentTxt);
-  	V.Debugging.log("marginTopPercentTxt value is:" + marginTopPercentTxt );
+  	
   	
   };
   
@@ -297,8 +297,7 @@ VISH.Quiz = (function(V,$,undefined){
      */
       var _onStartMcQuizButtonClicked = function () {
      
-		
-      	//get values from the form
+	  	//get values from the form
       	
       	//construct url (making an POST to VISH.Server. Which params does it need? 
       		
@@ -391,8 +390,7 @@ VISH.Quiz = (function(V,$,undefined){
     var _onStatisticsMcQuizButtonClicked = function () {
     	var marginTopDefault = 18; 
     	var marginTopDefault2 = 24; 
-		var startButton = "mcquestion_start_button";
-		var stopButton = "mcquestion_stop_button";
+
 		
 		//find the number of slide 
 	//slideToActivate = $(".current").find("#slide_to_activate").val();
@@ -412,10 +410,11 @@ VISH.Quiz = (function(V,$,undefined){
     		} //mcquestion_stop_button_article1
     	//	else if ($(".current").find("#" + stopButton + "_" + slideToStop))  {  // if ($(".current").find(".mcquestion_stop_button"))
     		else if ($(".current").find("#slide_to_stop").val()) { 
+    		
     			slideToStop = $(".current").find("#slide_to_stop").val();
-    			V.Debugging.log("slide to stop value: " +slideToStop);
+    		
     			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
-    			V.Debugging.log("stopButton detected ");
+    		
     		}
     	} 
     	//if it is hidden --> fill values, show statistics and move the button down 
@@ -429,25 +428,24 @@ VISH.Quiz = (function(V,$,undefined){
     		//data must be received from the VISH Server 
     		var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			_showResultsToTeacher(data);
-    		//$(".current").find(".mc_meter").css('display', 'block');
+    
     	
-    //	if ($(".current").find("#" + startButton + "_" + slideToActivate)) { //($(".current").find("."+startButton)) {
+    
     	if ($(".current").find("#slide_to_activate").val()) {	
     			//try to read values from 
     			slideToActivate = $(".current").find("#slide_to_activate").val();
     			$("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
     				
-    			//$(".current").find("."+startButton).css("margin-top", marginTopPercentTxt);
+    			
     		
-    		} else //if ($(".current").find("#" + stopButton + "_" + slideToStop)) {  // if ($(".current").find("."+stopButton)) {
-    			if ($(".current").find("#slide_to_stop").val()) { 
-    			V.Debugging.log("stopButton detected ");
+    		} else	if ($(".current").find("#slide_to_stop").val()) { 
+    		
     			slideToStop = $(".current").find("#slide_to_stop").val();
-    			V.Debugging.log("slide to stop value: " +slideToStop);
+    		
     			
     			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
     			
-    			//$(".current").find("."+stopButton).css("margin-top", marginTopPercentTxt);
+    		
     			
     		} 
     	

@@ -738,7 +738,7 @@
 	margin:0 auto;
 	margin-top:5%;
 	position:relative;	
-
+	cursor:pointer;
 
 }
 
@@ -755,6 +755,7 @@
 	width: 100%;
 	-moz-border-radius:2em;
 	-webkit-border-radius: 2em;
+	cursor:pointer;
 	
 	
 	}
@@ -767,12 +768,12 @@
 	font-weight:bold;
 	text-align:center;
 	vertical-align:bottom;
-margin-top:20%; /* default 20%. It changes depending on the number of options*/
+	margin-top:20%; /* default 20%. It changes depending on the number of options*/
 	height:9%;
 	width: 100%;
 	-moz-border-radius:2em;
 	-webkit-border-radius: 2em;
-	
+	cursor:pointer;
 	
 	
 }	
