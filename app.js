@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 var express = require('express');
-require('express-resource');
 var fs = require('fs');
 var configuration = require('./configuration/configuration').getConfiguration();
 var configurationVishEditor = require('./public/vishEditor/configuration/configuration.js');
@@ -17,7 +16,6 @@ require("./models/all")
 
 //EveryAuth Settings
 require('./everyauth');
-
 
 //MemStore for cookies
 var MemStore = express.session.MemoryStore
@@ -81,20 +79,9 @@ app.dynamicHelpers({
 });
 
 
-
-/**
-* Authentication filter
-*/
-
-// app.all()
-
-/**
- * Routing
- */
-var routes = require('./routes');
-
-app.get('/', routes.index);
-app.get('/home', routes.home);
+//Load routes
+var routes =require('./routes/index');
+routes.init(app);
 
 
 /*
@@ -104,7 +91,3 @@ app.listen(3000, function(){
   configurationVishEditor.getOptions(app.settings.env);
   debug.initTrace(app.address().port, app.settings.env);
 });
-
-
-//Resources creation
-app.resource('presentation', require('./controllers/presentation'));
