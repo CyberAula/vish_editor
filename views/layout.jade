@@ -1,0 +1,27 @@
+!!! 5
+html
+  head
+    title Vish Editor Standalone
+    script(src="/javascripts/jquery-1.7.2.min.js")
+    script(src="/javascripts/bootstrap.js")
+    script(src="/javascripts/VISHWS.js")
+    script(src="/javascripts/VISHWS.CORE.js")
+    script(src="/javascripts/VISHWS.VALIDATION.js")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')  
+  body
+    #container
+      #header
+        h1 Welcome to Vish Editor Standalone Version
+        - var a = everyauth.user
+        - if (everyauth.user)
+         p Logged as #{everyauth.user.name}
+         p
+            a(href="/home") Home
+            &nbsp;
+            a(href="/logout") Logout
+        - else
+          p Please log in
+      #content!= body
+      #footer
+        a(href="https://github.com/ging/vish_editor_standalone") Vish Editor on GitHub

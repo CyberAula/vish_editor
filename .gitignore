@@ -1,7 +1,10 @@
-.DS_Store
-.komodoproject
-.project
-rails/compiler/
-.settings
-.rvmrc
-.externalToolBuilders/
+/node_modules
+/data
+/configuration/configuration.js
+
+public/vishEditor/.DS_Store
+public/vishEditor/.project
+public/vishEditor/rails/compiler/
+public/vishEditor/.settings
+public/vishEditor/.rvmrc
+public/vishEditor/.externalToolBuilders/
