@@ -5,7 +5,7 @@ var express = require('express');
 require('express-resource');
 var fs = require('fs');
 var configuration = require('./configuration/configuration').getConfiguration();
-var configurationVishEditor = require('./configuration/configuration_vishEditor');
+var configurationVishEditor = require('./public/vishEditor/configuration/configuration.js');
 var everyauth = require('everyauth');
 var debug = require('./debug');
 

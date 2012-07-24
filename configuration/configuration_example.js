@@ -1,10 +1,12 @@
 var configuration;
 
 module.exports.getConfiguration = function() {
+	return getConfiguration();
+}
+
+var getConfiguration = function(){
 	if(!configuration){
 		configuration = {};
-
-
 
 		configuration["secret_key"] = "session_secret_key";
 		configuration["db"] = "vishEditorStandalone"; //your database name
@@ -17,9 +19,6 @@ module.exports.getConfiguration = function() {
 		//Facebook: Register your app in https://developers.facebook.com
 		configuration["facebookConsumerKey"] = "";
 		configuration["facebookConsumerSecret"] = "";
-
-
-
 	}
 	return configuration;
 }

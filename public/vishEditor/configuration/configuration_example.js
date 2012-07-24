@@ -4,7 +4,13 @@
 
 var options;
 
-module.exports.getOptions = function(env) {
+if(typeof module != 'undefined'){
+	module.exports.getOptions = function(env) {
+		return getOptions();
+	}
+}
+
+var getOptions = function(){
 	if(!options){
 
 		options = {};
@@ -29,13 +35,17 @@ module.exports.getOptions = function(env) {
 
 		options["configuration"] = configuration;
 
-		if(env=="development"){
+		if(typeof env != 'undefined'){
+			if(env=="development"){
+				options["developping"] = true;
+			} else if(env=="production"){
+				options["developping"] = false;
+			}
+		} else {
 			options["developping"] = true;
-		} else if(env=="production"){
-			options["developping"] = false;
 		}
 
-		options["lang"] = null;
+		options["lang"] = "en";
 
 		console.log("Vish Editor Configured Options")
 		console.log(options)

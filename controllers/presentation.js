@@ -33,7 +33,8 @@ exports.show = function(req,res){
 }
 
 exports.new = function(req,res){
-  var options = JSON.stringify(require('../configuration/configuration_vishEditor').getOptions());
+  var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
+  console.log(options);
   res.render('presentation/new', { locals: { options: options }});
 }
 

@@ -1,7 +1,7 @@
 /node_modules
 /data
 /configuration/configuration.js
-/configuration/configuration_vishEditor.js
+public/vishEditor/configuration/configuration.js
 
 public/vishEditor/.DS_Store
 public/vishEditor/.project
@@ -10,3 +10,5 @@ public/vishEditor/rails/lib/
 public/vishEditor/.settings
 public/vishEditor/rails/.rvmrc
 public/vishEditor/.externalToolBuilders/
+
+.gitignore~
