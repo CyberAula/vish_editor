@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="UTF-8">	
+    <title>Vish Viewer</title>
+	
+    <style>  
+       .slides > article:not(.fill)::before {
+         content: '';
+         display: block;
+         width: 100px;
+         height: 100px;
+         position: absolute;
+         left: 0;
+         bottom: 0;
+       }
+    </style>
+
+  	  <meta name="viewport" content="width=910, initial-scale=1.0 , user-scalable=yes" />
+  	  <meta name="apple-mobile-web-app-capable" content="yes">
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	  <script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery-ui.1.8.20.min.js"></script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.core.min.js"></script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.mouse.min.js"></script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.widget.min.js"></script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.draggable.min.js"></script>
+	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.slider.min.js"></script>
+  </head>
+  
+  <body onload="start()" style="display: none" class="loaded" id="excursion_iframe">
+
+    <section class="slides layout-regular template-default">
+	    <button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
+	    
+    </section>
+    
+    <div id="viewbar" class="viewbar" style="display:none">
+		<button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
+	    <div id="slide-counter"></div>
+	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
+    </div>
+    
+  
+
+<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
+<!--[if gte IE 8]>
+  <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/ie/pack1explorer9.css">
+  <link type="text/css" rel="stylesheet" href="/vishEditor/stylesheets/ie/editorexplorer9.css">
+<![endif]-->
+<script type="text/javascript">
+if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ||(navigator.userAgent.match(/Android/i)) ){
+	document.write('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+} 
+</script>
+
+<script type="text/javascript" src="/vishEditor/js/libs/json2.js"></script>
+
+<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.SlidesUtilities.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Utils.loader.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Utils.canvas.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Utils.text.js"></script>
+<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.js"></script>
+<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.loader.js"></script>
+<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.player.js"></script>
+<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.template.js"></script>
+
+<script type="text/javascript" src="/vishEditor/js/libs/slides.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
+
+<script>
+  //First function called when page loads
+   function start(){
+    VISH.Debugging.init(true);
+    VISH.SlideManager.init(window.parent.options, VISH.Samples.quizes_samples);
+  }
+</script>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+h2 Title #{presentation.title}
+p Description #{presentation.description}
+p Author #{presentation.author}
+- if (presentation.avatar)
+	p
+		img(src= presentation.avatar);
+p
+	a(href='/presentation/'+presentation.id+'/edit') Edit
