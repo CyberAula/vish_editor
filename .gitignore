@@ -1,6 +1,7 @@
 /node_modules
 /data
 /configuration/configuration.js
+/configuration/configuration_vishEditor.js
 
 public/vishEditor/.DS_Store
 public/vishEditor/.project
