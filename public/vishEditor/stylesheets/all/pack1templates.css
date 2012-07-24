@@ -662,8 +662,11 @@
 
 .t11_header > span {
 	background-color:#CCCCCC;
-	-moz-border-radius:15px;
-	-webkit-border-radius: 15px;
+	/*-moz-border-radius:15px;
+	-webkit-border-radius: 15px; */
+	
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
 	padding: 1%;
 }
 
@@ -711,10 +714,19 @@
 	margin:0 auto;
 	
 }
+
+.mcoptions_container {
+	width: 80%;
+	height: 80%;
+	float:left;
+	
+}
+
+
 .mcquestion_form {
 	text-align:center;	
 	width: 100%;	
-	height: 70%;
+	height: 80%;
 	
 }
 
@@ -738,9 +750,12 @@
 	text-align:center;
 	font-weight:bold;
 	vertical-align:bottom;
-	margin-top:90%;
+	margin-top:20%; /* default 20%. It changes depending on the number of options*/
 	height:9%;
-	width: 80%;
+	width: 100%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	
 	
 	}
 .mcquestion_stop_button {
@@ -752,9 +767,12 @@
 	font-weight:bold;
 	text-align:center;
 	vertical-align:bottom;
-	margin-top:90%;
+margin-top:20%; /* default 20%. It changes depending on the number of options*/
 	height:9%;
-	width: 80%;
+	width: 100%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	
 	
 	
 }	

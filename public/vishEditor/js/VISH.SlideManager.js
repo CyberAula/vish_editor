@@ -58,7 +58,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			
 			//no username but quiz active --> (student) 
 			if(options['quiz_active']) {
-		 		user.role= "student" //logged and no token but quiz active " + options['quiz_active'];
+				V.Debugging.log("options quiz_active value is: " + options['quiz_active']);
+		 		user.role= "student";
 				status.quiz_active = options['quiz_active'];
 			}
 		//no username no quiz active --> (none)

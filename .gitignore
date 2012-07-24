@@ -1,6 +1,6 @@
-/node_modules
-/data
-/configuration/configuration.js
+node_modules
+data
+configuration/configuration.js
 public/vishEditor/configuration/configuration.js
 
 public/vishEditor/.DS_Store

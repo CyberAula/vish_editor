@@ -1,6 +1,7 @@
 VISH.Quiz = (function(V,$,undefined){
     var role;
     var slideToActivate;
+    var slideToStop;
     var slideToVote;
     var user;
     var userStatus; 
@@ -61,7 +62,7 @@ VISH.Quiz = (function(V,$,undefined){
     * add listeners and some functions and it is necessary that objects be loaded so that it's done later than 
     * render
     * */
-   var enableInteraction = function (slide){
+   var enableInteraction = function (slide, options){
    	
    	   	
    	switch(role) {
@@ -69,17 +70,17 @@ VISH.Quiz = (function(V,$,undefined){
    	
    			case "logged": 
    			slideToActivate = slide;
-      	   		//add listener to stat Button
+   			
+   			_alignStartButton(options);
+      	   		//add listener to start and statistic buttons
       		_activateLoggedInteraction();
-      		
-      		
+     		
    			break;
    
    			case "student":
    			//is this variable correctly initialized here?
    			slideToVote = slide;
 			_activateStudentInteraction();
-      		 	
 				  
    			break;
    
@@ -120,7 +121,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "<div class='mcquestion_container'>";
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-		
+		//ret += "<div class= 'mcoptions_container'>";
 		ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		
@@ -143,6 +144,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</div>";
 		ret += "</form>";
+		//ret += "</div>";
 		ret += "</div>";
 		return ret;
 	};
@@ -213,7 +215,8 @@ VISH.Quiz = (function(V,$,undefined){
 			var next_index = "a".charCodeAt(0) + (next_num); 
 			next_index = String.fromCharCode(next_index);
 			
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";	
+		//	ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
 			
 			//ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
 		
@@ -243,10 +246,12 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	var startButton = '#mcquestion_start_button_'+slideToActivate;
     	
+    	//
+    	
     	var statisticsButton = '#mch_statistics_button_'+slideToActivate;
     	
        	$(document).on('click', startButton, _onStartMcQuizButtonClicked);
-       		$(document).on('click', statisticsButton, _onStatisticsMcQuizButtonClicked);
+     	$(document).on('click', statisticsButton, _onStatisticsMcQuizButtonClicked);
     	
     };
     
@@ -267,13 +272,32 @@ VISH.Quiz = (function(V,$,undefined){
     	V.Debugging.log(" enter on _activeNoneInteraction function");
     };
     
+    
+    
+  var _alignStartButton = function (options) {
+  	var marginTopDefault = 18;
+  	V.Debugging.log("_alignStartButton was called and param options value is:" + options );
+  	
+  	var startButton = "mcquestion_start_button_" + slideToActivate;
+
+  	var marginTopPercentTxt = (marginTopDefault*parseInt(options).toString())+"%";
+  	
+  	//operations to move down the start button 
+      	$("#"+startButton).css("margin-top", marginTopPercentTxt);
+  	V.Debugging.log("marginTopPercentTxt value is:" + marginTopPercentTxt );
+  	
+  };
+  
+  
+  
     /*
      * Function activated when is pressed the start quiz button (teacher)
      * params --- we get the quiz to activate/deactivate from an form's hidden input that has the 
      * article value   
      */
       var _onStartMcQuizButtonClicked = function () {
-      	
+     
+		
       	//get values from the form
       	
       	//construct url (making an POST to VISH.Server. Which params does it need? 
@@ -282,7 +306,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	var URL = "<span> http://www.vishub.org/dasdas </span>";
     	
-    	var slideToPlay = $(".current").find("#slide_to_activate").val();
+    	slideToPlay = $(".current").find("#slide_to_activate").val();
     		
     	var shareButton = "<a class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";	
     	//make appear the voting URL and share icon
@@ -304,13 +328,15 @@ VISH.Quiz = (function(V,$,undefined){
     	//add onclick event to the new stop button
     	//$("#"+slideToPlay).find("form_"+slideToPlay > input ).attr('value', 'Stop Quiz');
     	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
-    	//$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).css('font-weight', 'bold');
+    	
+    	
+  	
     	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
     };
 
     var _onSendVoteMcQuizButtonClicked = function (event) {
     	
-    	var slideToVote = $(".current").find("#slide_to_vote").val();
+    	slideToVote = $(".current").find("#slide_to_vote").val();
     	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
     	
     	
@@ -340,15 +366,15 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
     var _onStopMcQuizButtonClicked = function () {
-
+		
     	//V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
     	
-    	var slideToStop = $(".current").find("#slide_to_stop").val();
+    	slideToStop = $(".current").find("#slide_to_stop").val();
     	
     	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
    		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
     	$("#"+slideToStop).find(".t11_header").text("");
-    	//TODO thing if the button at the end of the voting must be removed or just only show start again
+    	//TODO think if the button at the end of the voting must be removed or just only show start again
     	
     	//show start quiz again
     	
@@ -363,24 +389,69 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
     var _onStatisticsMcQuizButtonClicked = function () {
-    	
-    	
-    	//if it is shown --> hide 
+    	var marginTopDefault = 18; 
+    	var marginTopDefault2 = 24; 
+		var startButton = "mcquestion_start_button";
+		var stopButton = "mcquestion_stop_button";
+		
+		//find the number of slide 
+	//slideToActivate = $(".current").find("#slide_to_activate").val();
+	//slideToStop = $(".current").find("#slide_to_stop").val();
+	 
+	  	//if it is shown --> hide and move the button up  
     	if(	$(".current").find(".mc_meter").css('display')=="block") {
-    		
+    		var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
     		
     		$(".current").find(".mc_meter").css('display', 'none');
     		$(".current").find(".mcoption_label").css('display', 'none');
     		
-    		
+    		//if ($(".current").find("#" + startButton + "_" + slideToActivate)) {
+    		if ($(".current").find("#slide_to_activate").val()) {
+    			slideToActivate = $(".current").find("#slide_to_activate").val();
+    			$("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+    		} //mcquestion_stop_button_article1
+    	//	else if ($(".current").find("#" + stopButton + "_" + slideToStop))  {  // if ($(".current").find(".mcquestion_stop_button"))
+    		else if ($(".current").find("#slide_to_stop").val()) { 
+    			slideToStop = $(".current").find("#slide_to_stop").val();
+    			V.Debugging.log("slide to stop value: " +slideToStop);
+    			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+    			V.Debugging.log("stopButton detected ");
+    		}
     	} 
-    	//if it is hidden --> fill values, show statistics 
+    	//if it is hidden --> fill values, show statistics and move the button down 
     	//TODO call a function that do periodical get's to keep updated statistics values  
     	else {
+    		
+    		var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
+    		
+    		//get values from the server , send the quiz_session_id
+    		
     		//data must be received from the VISH Server 
     		var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			_showResultsToTeacher(data);
     		//$(".current").find(".mc_meter").css('display', 'block');
+    	
+    //	if ($(".current").find("#" + startButton + "_" + slideToActivate)) { //($(".current").find("."+startButton)) {
+    	if ($(".current").find("#slide_to_activate").val()) {	
+    			//try to read values from 
+    			slideToActivate = $(".current").find("#slide_to_activate").val();
+    			$("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+    				
+    			//$(".current").find("."+startButton).css("margin-top", marginTopPercentTxt);
+    		
+    		} else //if ($(".current").find("#" + stopButton + "_" + slideToStop)) {  // if ($(".current").find("."+stopButton)) {
+    			if ($(".current").find("#slide_to_stop").val()) { 
+    			V.Debugging.log("stopButton detected ");
+    			slideToStop = $(".current").find("#slide_to_stop").val();
+    			V.Debugging.log("slide to stop value: " +slideToStop);
+    			
+    			$("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+    			
+    			//$(".current").find("."+stopButton).css("margin-top", marginTopPercentTxt);
+    			
+    		} 
+    	
+    	
     	}
     	
     	
