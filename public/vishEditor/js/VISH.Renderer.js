@@ -9,7 +9,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer
 	 * Only gets the section element from the html page
 	 */
-	var init        = function(){
+	var init  = function(){
 		SLIDE_CONTAINER = $('.slides');
 		
 	}
@@ -57,7 +57,7 @@ VISH.Renderer = (function(V,$,undefined){
 				//isn't better to get the role value in the VISH.Quiz? 
 				//role = VISH.SlideManager.getUser().role;
 			
-				content +=VISH.Quiz.init(slide.elements[el],slide.template, slide.id);
+				content +=V.Quiz.init(slide.elements[el],slide.template, slide.id);
 				//content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
 			}
