@@ -36,12 +36,12 @@ body {
 }
 
 .slides {
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, -moz-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%, rgba(237,237,237,1) 100%);
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(237,237,237,1)));
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, -webkit-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);;
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, -o-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, -ms-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
-	background: url(/vishEditor/assets/background1.png) no-repeat 300px, url(/vishEditor/assets/background_text.png) no-repeat 300px, radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -moz-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%, rgba(237,237,237,1) 100%);
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(237,237,237,1)));
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -webkit-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);;
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -o-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, -ms-radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
+	background: url(/assets/background1.png) no-repeat 300px, url(/assets/background_text.png) no-repeat 300px, radial-gradient(center, ellipse cover, rgba(249,249,249,1) 20%,rgba(237,237,237,1) 100%);
 	background-position: center; 
   width: 100%;
   height: 100%;
@@ -103,8 +103,8 @@ body {
 } 
 
 .slides.template-io2011 > article:not(.nobackground):not(.biglogo) {
-  background: url(/vishEditor/assets/colorbar.png) 0 600px repeat-x,
-              url(/vishEditor/assets/googleio-logo.png) 640px 625px no-repeat;
+  background: url(/assets/colorbar.png) 0 600px repeat-x,
+              url(/assets/googleio-logo.png) 640px 625px no-repeat;
 
   background-size: 100%, 225px;  
 
@@ -155,11 +155,11 @@ body {
 /* Slide styles */
 
 .slides.template-default article.biglogo {
-  background: white url(/vishEditor/assets/google-logo.png) 50% 50% no-repeat;
+  background: white url(/assets/google-logo.png) 50% 50% no-repeat;
 }
 
 .slides.template-io2011 article.biglogo {
-  background: white url(/vishEditor/assets/googleio-logo.png) 50% 50% no-repeat;
+  background: white url(/assets/googleio-logo.png) 50% 50% no-repeat;
   background-size: 600px;
 }
 
@@ -481,7 +481,7 @@ article.smaller q::after {
 }
 
 #page-fullscreen{
-    background-image: url("/vishEditor/assets/fullscreen_all.png");
+    background-image: url("/assets/fullscreen_all.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     border: medium none;
@@ -507,7 +507,7 @@ article.smaller q::after {
 }
 
 .viewbar {
-	background-image: url(/vishEditor/assets/viewbar.png) ;
+	background-image: url(/assets/viewbar.png) ;
 	height: 40px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

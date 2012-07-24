@@ -11455,8 +11455,8 @@ Function.prototype.closureListener = function() {
 };
 var nicEditorConfig = bkClass.extend({buttons:{"bold":{name:__("Click to Bold"), command:"Bold", tags:["B", "STRONG"], css:{"font-weight":"bold"}, key:"b"}, "italic":{name:__("Click to Italic"), command:"Italic", tags:["EM", "I"], css:{"font-style":"italic"}, key:"i"}, "underline":{name:__("Click to Underline"), command:"Underline", tags:["U"], css:{"text-decoration":"underline"}, key:"u"}, "left":{name:__("Left Align"), command:"justifyleft", noActive:true}, "center":{name:__("Center Align"), command:"justifycenter", 
 noActive:true}, "right":{name:__("Right Align"), command:"justifyright", noActive:true}, "justify":{name:__("Justify Align"), command:"justifyfull", noActive:true}, "ol":{name:__("Insert Ordered List"), command:"insertorderedlist", tags:["OL"]}, "ul":{name:__("Insert Unordered List"), command:"insertunorderedlist", tags:["UL"]}, "subscript":{name:__("Click to Subscript"), command:"subscript", tags:["SUB"]}, "superscript":{name:__("Click to Superscript"), command:"superscript", tags:["SUP"]}, "strikethrough":{name:__("Click to Strike Through"), 
-command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:"/assets/nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", "justify", 
-"ol", "ul", "fontSize", "fontFamily", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
+command:"strikeThrough", css:{"text-decoration":"line-through"}}, "removeformat":{name:__("Remove Formatting"), command:"removeformat", noActive:true}, "indent":{name:__("Indent Text"), command:"indent", noActive:true}, "outdent":{name:__("Remove Indent"), command:"outdent", noActive:true}, "hr":{name:__("Horizontal Rule"), command:"insertHorizontalRule", noActive:true}}, iconsPath:VISH.ImagesPath + "nicEditorIcons.gif", buttonList:["save", "bold", "italic", "underline", "left", "center", "right", 
+"justify", "ol", "ul", "fontSize", "fontFamily", "upload", "link", "unlink", "forecolor", "bgcolor"], iconList:{"bgcolor":1, "forecolor":2, "bold":3, "center":4, "hr":5, "indent":6, "italic":7, "justify":8, "left":9, "ol":10, "outdent":11, "removeformat":12, "right":13, "save":24, "strikethrough":15, "subscript":16, "superscript":17, "ul":18, "underline":19, "image":20, "link":21, "unlink":22, "close":23, "arrow":25}});
 var nicEditors = {nicPlugins:[], editors:[], registerPlugin:function(plugin, options) {
   this.nicPlugins.push({p:plugin, o:options})
 }, allTextAreas:function(nicOptions) {
@@ -13032,8 +13032,8 @@ var VISH = VISH || {};
 VISH.Mods || (VISH.Mods = {});
 VISH.VERSION = "0.1";
 VISH.AUTHORS = "GING";
-VISH.ImagesPath = "/vishEditor/assets/";
-VISH.StylesheetsPath = "/vishEditor/assets/";
+VISH.ImagesPath = "/assets/";
+VISH.StylesheetsPath = "/assets/";
 VISH.Editing = false;
 VISH.Utils = function(V, undefined) {
   var init = function() {
@@ -14383,7 +14383,15 @@ VISH.Samples.API = function(V, undefined) {
   "author":"W3C", "object":'<iframe width="560" height="315" src="http://www.youtube.com/embed/1hR7EtD6Bns?wmode=opaque" frameborder="0" allowfullscreen></iframe>'}];
   var objectListDummy = [];
   var tagsList = {"tags":["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"]};
-  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, liveList:liveList, liveListLittle:liveListLittle, liveListDummy:liveListDummy, objectList:objectList, objectListLittle:objectListLittle, objectListDummy:objectListDummy, tagsList:tagsList}
+  var thumbnailsList = {"pictures":[{"title":"Thumbnail 1", "description":"Sample excursion thumbnail 1", "src":"/vishEditor/images/excursion_thumbnails/excursion-01.png"}, {"title":"Thumbnail 2", "description":"Sample excursion thumbnail 2", "src":"/vishEditor/images/excursion_thumbnails/excursion-02.png"}, {"title":"Thumbnail 3", "description":"Sample excursion thumbnail 3", "src":"/vishEditor/images/excursion_thumbnails/excursion-03.png"}, {"title":"Thumbnail 4", "description":"Sample excursion thumbnail 4", 
+  "src":"/vishEditor/images/excursion_thumbnails/excursion-04.png"}, {"title":"Thumbnail 5", "description":"Sample excursion thumbnail 5", "src":"/vishEditor/images/excursion_thumbnails/excursion-05.png"}, {"title":"Thumbnail 6", "description":"Sample excursion thumbnail 6", "src":"/vishEditor/images/excursion_thumbnails/excursion-06.png"}, {"title":"Thumbnail 7", "description":"Sample excursion thumbnail 7", "src":"/vishEditor/images/excursion_thumbnails/excursion-07.png"}, {"title":"Thumbnail 8", 
+  "description":"Sample excursion thumbnail 8", "src":"/vishEditor/images/excursion_thumbnails/excursion-08.png"}, {"title":"Thumbnail 9", "description":"Sample excursion thumbnail 9", "src":"/vishEditor/images/excursion_thumbnails/excursion-09.png"}, {"title":"Thumbnail 10", "description":"Sample excursion thumbnail 10", "src":"/vishEditor/images/excursion_thumbnails/excursion-10.png"}, {"title":"Thumbnail 11", "description":"Sample excursion thumbnail 11", "src":"/vishEditor/images/excursion_thumbnails/excursion-11.png"}, 
+  {"title":"Thumbnail 12", "description":"Sample excursion thumbnail 12", "src":"/vishEditor/images/excursion_thumbnails/excursion-12.png"}, {"title":"Thumbnail 13", "description":"Sample excursion thumbnail 13", "src":"/vishEditor/images/excursion_thumbnails/excursion-13.png"}, {"title":"Thumbnail 14", "description":"Sample excursion thumbnail 14", "src":"/vishEditor/images/excursion_thumbnails/excursion-14.png"}, {"title":"Thumbnail 15", "description":"Sample excursion thumbnail 15", "src":"/vishEditor/images/excursion_thumbnails/excursion-15.png"}, 
+  {"title":"Thumbnail 16", "description":"Sample excursion thumbnail 16", "src":"/vishEditor/images/excursion_thumbnails/excursion-16.png"}, {"title":"Thumbnail 17", "description":"Sample excursion thumbnail 17", "src":"/vishEditor/images/excursion_thumbnails/excursion-17.png"}, {"title":"Thumbnail 18", "description":"Sample excursion thumbnail 18", "src":"/vishEditor/images/excursion_thumbnails/excursion-18.png"}, {"title":"Thumbnail 19", "description":"Sample excursion thumbnail 19", "src":"/vishEditor/images/excursion_thumbnails/excursion-19.png"}, 
+  {"title":"Thumbnail 20", "description":"Sample excursion thumbnail 20", "src":"/vishEditor/images/excursion_thumbnails/excursion-20.png"}, {"title":"Thumbnail 21", "description":"Sample excursion thumbnail 21", "src":"/vishEditor/images/excursion_thumbnails/excursion-21.png"}, {"title":"Thumbnail 22", "description":"Sample excursion thumbnail 22", "src":"/vishEditor/images/excursion_thumbnails/excursion-22.png"}, {"title":"Thumbnail 23", "description":"Sample excursion thumbnail 23", "src":"/vishEditor/images/excursion_thumbnails/excursion-23.png"}, 
+  {"title":"Thumbnail 24", "description":"Sample excursion thumbnail 24", "src":"/vishEditor/images/excursion_thumbnails/excursion-24.png"}, {"title":"Thumbnail 25", "description":"Sample excursion thumbnail 25", "src":"/vishEditor/images/excursion_thumbnails/excursion-25.png"}, {"title":"Thumbnail 26", "description":"Sample excursion thumbnail 26", "src":"/vishEditor/images/excursion_thumbnails/excursion-26.png"}, {"title":"Thumbnail 27", "description":"Sample excursion thumbnail 27", "src":"/vishEditor/images/excursion_thumbnails/excursion-27.png"}, 
+  {"title":"Thumbnail 28", "description":"Sample excursion thumbnail 28", "src":"/vishEditor/images/excursion_thumbnails/excursion-28.png"}, {"title":"Thumbnail 29", "description":"Sample excursion thumbnail 29", "src":"/vishEditor/images/excursion_thumbnails/excursion-29.png"}, {"title":"Thumbnail 30", "description":"Sample excursion thumbnail 30", "src":"/vishEditor/images/excursion_thumbnails/excursion-30.png"}]};
+  return{imageList:imageList, imageListLittle:imageListLittle, imageListDummy:imageListDummy, videoList:videoList, videoListLittle:videoListLittle, videoListDummy:videoListDummy, flashList:flashList, flashListLittle:flashListLittle, flashListDummy:flashListDummy, liveList:liveList, liveListLittle:liveListLittle, liveListDummy:liveListDummy, objectList:objectList, objectListLittle:objectListLittle, objectListDummy:objectListDummy, tagsList:tagsList, thumbnailsList:thumbnailsList}
 }(VISH);
 VISH.AppletPlayer = function() {
   var loadApplet = function(element) {
@@ -14782,6 +14790,12 @@ VISH.Editor.API = function(V, $, undefined) {
     }})
   };
   var requestThumbnails = function(successCallback, failCallback) {
+    if(VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function") {
+        successCallback(VISH.Samples.API.thumbnailsList)
+      }
+      return
+    }
     $.ajax({async:false, type:"GET", url:"/excursion_thumbnails.json", dataType:"json", success:function(data) {
       if(typeof successCallback == "function") {
         successCallback(data)

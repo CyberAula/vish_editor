@@ -1,13 +1,9 @@
-require "bundler/gem_tasks"
 require "rails"
 
 # configure these defaults based on Your needs :
 JS_FILES_AND_DIRS = ['app/assets/js_to_compile/libs', 'app/assets/js_to_compile/lang','app/assets/js_to_compile/VISH.js', 'app/assets/js_to_compile/VISH.Utils.js', 'app/assets/js_to_compile/VISH.Editor.js', 'app/assets/js_to_compile/VISH.Editor.Video.js', 'app/assets/js_to_compile/VISH.Editor.Image.js', 'app/assets/js_to_compile/VISH.Editor.Object.js', 'app/assets/js_to_compile/VISH.Samples.js', 'app/assets/js_to_compile/VISH.Samples.API.js', 'app/assets/js_to_compile', 'app/assets/js_to_compile/mods/fc']
 
 COMPILER_JAR_PATH = "lib/java/build/compiler.jar" # adjust the jar path !
-# only required if running under JRuby - will compile multiple files
-# faster as it does not need to run system `java -jar ...` commands.
-#COMPILER_MAIN_CLASS = "com.google.javascript.jscomp.CommandLineRunner"
 COMPILER_DOWNLOAD_URI = 'http://closure-compiler.googlecode.com/files/compiler-latest.zip'
 
 #
@@ -16,32 +12,21 @@ COMPILER_DOWNLOAD_URI = 'http://closure-compiler.googlecode.com/files/compiler-l
 # @see http://code.google.com/closure/compiler/
 #
 namespace :vish_editor do
-  
-  task :release do
-    Rake::Task["vish_editor:compile"].invoke
-    system "git commit -am \"Preparing the gem.\""
-    Rake::Task["release"].invoke
-  end
-
-  task :build do
-    Rake::Task["vish_editor:compile"].invoke
-    Rake::Task["build"].invoke
-  end
-  
+    
   task :prepare do
     system "rm -rf app/assets/images"
     system "rm -rf app/assets/js_to_compile"
     system "rm -rf app/assets/stylesheets"
     system "rm -rf app/assets/javascripts/vishEditor.js"
     system "rm -rf app/assets/javascripts/vishEditor.min.js"
+    system "mkdir -p app/assets"
     system "cp -r ../images/ app/assets/images/"
     system "cp -r ../js/ app/assets/js_to_compile/"
     system "cp -r ../stylesheets/ app/assets/stylesheets/"
     #replace path /images and /stylesheets by /assets    
-    system "sed -i 's/\\/images/\\/assets/g' app/assets/stylesheets/*/*css"
-    system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/VISH.js"
-    system "sed -i \'s/\\/images/\\/assets/g\' app/assets/js_to_compile/libs/nicEdit.js"
-    system "sed -i \'s/\\/stylesheets/\\/assets/g\' app/assets/js_to_compile/VISH.js"
+    system "sed -i 's/vishEditor\\\/images/assets/g' app/assets/stylesheets/*/*css"
+    system "sed -i 's/vishEditor\\\/images/assets/g' app/assets/js_to_compile/VISH.js"
+    system "sed -i 's/vishEditor\\\/stylesheets/assets/g' app/assets/js_to_compile/VISH.js"
   end
 
   task :clean do
@@ -114,18 +99,14 @@ namespace :vish_editor do
     puts "----------------------------------------------------"
     puts "compiling ..."
 
-    # NOTE: JRuby "version" disabled as the closure java code does a System.exit !
-    #if defined?(JRUBY_VERSION) # JRuby style - will be much faster :
-    #  require 'java'; require compiler_jar_path
-    #  instance_eval "#{COMPILER_MAIN_CLASS}.main( #{compiler_options.to_a.flatten.inspect} )"
-    #else
+   
     system "java -jar #{compiler_jar_path} #{compiler_options.to_a.join(' ')}"
     system "java -jar #{compiler_jar_path} #{compiler_options2.to_a.join(' ')}"
-    #end
     puts "DONE"
     puts "----------------------------------------------------"
     puts "compiled #{files.size} javascript file(s) into vishEditor.js and vishEditor.min.js"
     puts ""
+    system "mkdir -p app/assets/javascripts"
     system "mv vishEditor.js app/assets/javascripts/vishEditor.js"
     system "mv vishEditor.min.js app/assets/javascripts/vishEditor.min.js"
 
