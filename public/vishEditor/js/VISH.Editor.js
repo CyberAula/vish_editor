@@ -40,18 +40,22 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(options){
 			initOptions = options;
-			if((options['developping']==true)&&(VISH.Debugging)){
-				VISH.Debugging.init(true);
-	      if ((VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
-	        excursion = VISH.Debugging.getExcursionSamples();
-	      }
+			if((options['developping']===true)&&(VISH.Debugging)){
+				  VISH.Debugging.init(true);
+			      if ((VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
+			        excursion = VISH.Debugging.getExcursionSamples();
+			      }
+			}
+			else{
+				 VISH.Debugging.init(false);
 			}
 			if((options["configuration"])&&(VISH.Configuration)){
-        VISH.Configuration.init(options["configuration"]);
+        		VISH.Configuration.init(options["configuration"]);
 				VISH.Configuration.applyConfiguration();
-      }
+      		}
 		}	else {
 			initOptions = {};
+			VISH.Debugging.init(false);
 		}
 		
 

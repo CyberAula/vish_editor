@@ -12,13 +12,13 @@ var debug = require('./debug');
 require("./db").connect();
 
 //Load models
-require("./models/all")
+require("./models/all");
 
 //EveryAuth Settings
 require('./everyauth');
 
 //MemStore for cookies
-var MemStore = express.session.MemoryStore
+var MemStore = express.session.MemoryStore;
 
 var app = module.exports = express.createServer(
   //Session management

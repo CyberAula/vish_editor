@@ -22,8 +22,8 @@ exports.get = function(req,res){
 }
 
 exports.show = function(req,res){
-  console.log("Presentation show")
-  var id = req.params.presentation;
+  console.log("Presentation show");
+  var id = req.params.id;
   var presentation = Presentation.findById(id, function(err,presentation){
     if(err){
       res.render('home')
@@ -48,7 +48,7 @@ exports.create = function(req,res){
   presentation.description = presentationJson.description;
   presentation.avatar = presentationJson.avatar;
   // presentation.tags = presentationJson.tags;
-  presentation.author = req.user.name;
+  presentation.author = req.user;
   presentation.content = req.body.presentation.json;
 
   presentation.save( function(err){
@@ -56,6 +56,13 @@ exports.create = function(req,res){
        req.flash('warn',err.message);
        res.render('home');
     } else {
+      //save the presentation in the user presentations array
+      req.user.presentations.push(presentation);
+      req.user.save(function(err){
+        if(err){
+          req.flash('warn',err.message);
+          res.render('home');
+        }});
       res.redirect('/presentation/' + presentation._id.toHexString());
     }  
   });

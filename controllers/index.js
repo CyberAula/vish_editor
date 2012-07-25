@@ -17,7 +17,8 @@ exports.index = function(req, res) {
 exports.home = function(req, res) {
   //Get user presentations
   //Coming soon...
-  res.render('home');
+  var presentations = 
+  res.render('home', {locals: { presentations: presentations}});
 };
 
 exports.error = function(req, res) {
