@@ -10,6 +10,6 @@ public/vishEditor/rails/lib/
 public/vishEditor/.settings
 public/vishEditor/rails/.rvmrc
 public/vishEditor/.externalToolBuilders/
-
+.project
 .gitignore~
 README.md~
