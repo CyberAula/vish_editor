@@ -652,7 +652,8 @@
 	margin-top:1.5%;
 	height: 10%;
 	width: 100%;	
-	display: block;	
+	/*display: block; */
+	display: inline-block;	
 	color: blue;
 	text-align:center;
 	font-size:2em;
@@ -660,7 +661,14 @@
 
 }
 
-.t11_header > span {
+.url_share {
+	
+width: 90%;
+height: 100%;	
+	
+}
+
+.url_share > span {
 	 background-color:#CCCCCC;
 	/*-moz-border-radius:15px;
 	-webkit-border-radius: 15px; */
@@ -668,6 +676,7 @@
 	-moz-border-radius:2em;
 	-webkit-border-radius: 2em;
 	padding: 1%;
+	position:relative;
 }
 
 
@@ -676,19 +685,23 @@
 	height: 5%;
 	width: 5%;
 	text-align: right;
+	position:relative;
 	
 }
 .shareQuizButton > img {
 	height: 70%;
 	width: 7%;
 	text-align: right;
+	position:relative;
 	
 }
 
 
 .shareContentIcons {
-	float:right;
+	position:relative;
 	display:none;
+	width: 5%;
+
 	
 }
 

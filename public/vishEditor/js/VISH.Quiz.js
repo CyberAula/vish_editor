@@ -302,25 +302,32 @@ VISH.Quiz = (function(V,$,undefined){
       	//construct url (making an POST to VISH.Server. Which params does it need? 
       		
       		// show (construct) share button 
+    	slideToPlay = $(".current").find("#slide_to_activate").val();
+    	
     	var url = "http://www.vishub.org/dasdas";
+    	
+    	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";
     	
-    	slideToPlay = $(".current").find("#slide_to_activate").val();
+    	
     		
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
     	
-    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <img src='"+V.ImagesPath+"quiz/fb_40x30.jpg'/></div>";	
+    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a href='' id='' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x30.jpg'/></a></div>";	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
     	if($("#"+slideToPlay).find(".t11_header").children()) {
     		
     		$("#"+slideToPlay).find(".t11_header").children().remove();
     	} 
-    	
-    	$("#"+slideToPlay).find(".t11_header").append(URL);
-    	$("#"+slideToPlay).find(".t11_header").append(shareButton);
-    	$("#"+slideToPlay).find(".t11_header").append(shareContentIcons);
-		
+    	$("#"+slideToPlay).find(".t11_header").append(divURLShare);
+    	$(".current").find("#url_share_"+slideToPlay).append(URL);
+    	$(".current").find("#url_share_"+slideToPlay).append(shareButton);
+    //	$("#"+slideToPlay).find(".t11_header").append(URL);
+    	//$("#"+slideToPlay).find(".t11_header").append(shareButton);
+    	//$("#"+slideToPlay).find(".t11_header").append("</div>"); //close url_share
+    	//$("#"+slideToPlay).find(".t11_header").append(shareContentIcons);
+		$(".current").find("#url_share_"+slideToPlay).append(shareContentIcons);
 		//show header 
     	$("#"+slideToPlay).find(".t11_header").show();
     	//change the value button (Start Quiz --> StopQuiz) and the id?
@@ -339,7 +346,8 @@ VISH.Quiz = (function(V,$,undefined){
 	  		
   		$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
-      		$(".current").find(".shareContentIcons").css("display", "block");
+      		$(".current").find(".shareContentIcons").css("display", "inline-block");
+      		$(".current").find(".a_share_content_icon").slideDown();
   
 		});
   		
@@ -349,25 +357,10 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		$(document).on("mouseleave", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
-  			$(".current").find(".shareContentIcons").css("display", "none");
+  			
+  		//	$(".current").find(".shareContentIcons").css("display", "none");
   			
 		});
-/*
-$(document).find("share_icon_"+slideToPlay).on({
-  click: function(){
-     event.preventDefault();
-    //$(this).toggleClass("active");
-  },
-  mouseenter: function(){
-    //$(this).css("display", "block");
-    alert("mouse enter");
-  },
-  mouseleave: function(){
-//$(this).css("display", "none");
-alert("mouse leave");
-  }
-});
-*/
   		
   		
     	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
