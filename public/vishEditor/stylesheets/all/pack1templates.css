@@ -661,7 +661,7 @@
 }
 
 .t11_header > span {
-	background-color:#CCCCCC;
+	 background-color:#CCCCCC;
 	/*-moz-border-radius:15px;
 	-webkit-border-radius: 15px; */
 	
@@ -672,7 +672,7 @@
 
 
 .shareQuizButton {
-	padding: 5%;
+	padding: 1%;
 	height: 5%;
 	width: 5%;
 	text-align: right;
@@ -682,6 +682,13 @@
 	height: 70%;
 	width: 7%;
 	text-align: right;
+	
+}
+
+
+.shareContentIcons {
+	float:right;
+	display:none;
 	
 }
 
