@@ -6,6 +6,7 @@ VISH.Debugging = (function(V,$,undefined){
 	//CONFIGURATION VARIABLES
 	
 	//Possible actions: "view", "edit", "default" or "nothing".
+	//"default" is to save excursion with node
 	var actionSave = "default";
 	
 	//Possible action: "nothing" or "loadSamples".

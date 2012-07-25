@@ -10,6 +10,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
 
+/* var myInput = $("#").find("input[type='search']");
+		$(myInput).watermark('Search content');
+		$(myInput).keydown(function(event) {
+			if(event.keyCode == 13) {
+				_requestData($(myInput).val());
+				$(myInput).blur();
+			}
+		});
+
+*/
 	};	
 	/*
 	 Function that add an input text option for the Multiple Choice Quiz  

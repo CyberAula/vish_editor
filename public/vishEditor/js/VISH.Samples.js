@@ -569,7 +569,7 @@ VISH.Samples = (function(V,undefined){
 			  			"id":"zone2",
 			  			"type":"mcquestion",
 			  			"areaid":"left",
-			  			"question":"Which is the capital of Peru",
+			  			"question":"Which is the capital of Perú",
 			  			"options":[
 			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
 			  			
@@ -611,6 +611,26 @@ VISH.Samples = (function(V,undefined){
 			  			"question":"Which which which which ... ",
 			  			"options":[
 			  			"Un texto largo, muy largo que puede sobrepasar los límites permitidos","Santiago","Río De Janeiro","Brasilia","Otro texto largo, muy largo y más largo que sobrepase los límites permitidos ... y más"]
+			  			
+			  		}
+		         ]
+		      } ,
+		    
+		    { 
+			  	"id":"article6",
+			  "template":"t11"
+			  ,"elements":[
+			  		{
+			  			"id":"zone1"
+			  		,"areaid":"header"
+			  		},
+			  		{
+			  			"id":"zone2",
+			  			"type":"mcquestion",
+			  			"areaid":"left",
+			  			"question":"Which color do you prefer .... ... ",
+			  			"options":[
+			  			"Red","White","Blue","Orange" ]
 			  			
 			  		}
 		         ]
