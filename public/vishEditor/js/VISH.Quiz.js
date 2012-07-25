@@ -309,11 +309,14 @@ VISH.Quiz = (function(V,$,undefined){
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";
     	
-    	
+    	//
+
     		
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
     	
-    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a href='' id='' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x30.jpg'/></a></div>";	
+    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a ";
+    	shareContentIcons += "href='http://www.google.es' id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+    	shareContentIcons+="<a href='' id='tw_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a></div>";	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
     	if($("#"+slideToPlay).find(".t11_header").children()) {
@@ -346,8 +349,8 @@ VISH.Quiz = (function(V,$,undefined){
 	  		
   		$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
-      		$(".current").find(".shareContentIcons").css("display", "inline-block");
-      		$(".current").find(".a_share_content_icon").slideDown();
+      		$(".current").find(".shareContentIcons").css("display", "block");
+      		//$(".current").find(".a_share_content_icon").slideDown();
   
 		});
   		
