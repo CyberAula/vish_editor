@@ -62,9 +62,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		VISH.ObjectPlayer.aftersetupSize(increase);
 	};
 	
-	
+	/**
+	* Method to add the src to the iframe, show it, hide the slides, and so on
+	*/
+	var setupGame = function(excursion){
+		$("#my_game_iframe").attr("src", excursion.files);
+		//load file game.css dinamically
+		var fileref=document.createElement("link");
+  		fileref.setAttribute("rel", "stylesheet");
+  		fileref.setAttribute("type", "text/css");
+  		fileref.setAttribute("href", "stylesheets/all/game.css");
+  		document.getElementsByTagName("body")[0].appendChild(fileref);
+	};
 	
 	return {
+		setupGame		: setupGame,
 		setupSize		: setupSize
 	};
 }) (VISH, jQuery);

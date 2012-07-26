@@ -180,10 +180,11 @@ VISH.Samples = (function(V,undefined){
 		"avatar" : "/assets/logos/original/excursion-10.png",
 		"author" : "",
 		"type"	 : "game", //flashcard, game, presentation, microscope, experiment, quiz
-		"actions": ["devil": {
-						"slide_id": "1",
-						"when"	  : "after"
-		}],
+		"actions": {"devil":  {"slide_id": "1",	"when" : "after"},
+					"diamond":{"slide_id": "2", "when" : "before"}
+				},
+		"files"  : ["games/sokoban/sokoban.html"
+		],
 		"slides" : [{
 			"id" : "1",
 			"template" : "t1",
