@@ -301,7 +301,7 @@ VISH.Quiz = (function(V,$,undefined){
       	
       	//construct url (making an POST to VISH.Server. Which params does it need? 
       		
-      		// show (construct) share button 
+      		// show (construct) share button and different buttons for social networks sharing
     	slideToPlay = $(".current").find("#slide_to_activate").val();
     	
     	var url = "http://www.vishub.org/dasdas";
@@ -309,14 +309,22 @@ VISH.Quiz = (function(V,$,undefined){
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";
     	
-    	//
-
-    		
-    	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
+    	//create share buttons:
     	
-    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a ";
-    	shareContentIcons += "href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
-    	shareContentIcons+="<a href='' id='tw_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a></div>";	
+    	var shareTwitterButton = "<a target='_blank' href='https://twitter.com/share' class='twitter-share-button' data-url='"+url+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+		//<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		var shareFacebookButton =  "<a target='_blank' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+		    shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+    		
+    	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
+    	
+    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> ";
+    //		shareContentIcons += "<a target='_blank' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' ";
+    	// 	shareContentIcons += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+    //	shareContentIcons+="<a href='' id='tw_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a></div>";	
+    	shareContentIcons += shareFacebookButton;
+    	shareContentIcons += shareTwitterButton;
+    	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
     	if($("#"+slideToPlay).find(".t11_header").children()) {
@@ -349,7 +357,7 @@ VISH.Quiz = (function(V,$,undefined){
 	  		
   		$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
-      		$(".current").find(".shareContentIcons").css("display", "block");
+      		$(".current").find(".shareContentIcons").css("display", "inline-block");
       		//$(".current").find(".a_share_content_icon").slideDown();
   
 		});
