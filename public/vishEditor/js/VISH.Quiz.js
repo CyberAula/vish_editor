@@ -98,11 +98,6 @@ VISH.Quiz = (function(V,$,undefined){
    	
    		}
    	
-   	
-   	
-   	
-   	
-   	
    };
    
 /*
@@ -114,16 +109,12 @@ VISH.Quiz = (function(V,$,undefined){
 
    var _renderMcquestionLogged = function(element, template, slide){
    	
-   //	V.Debugging.log("element is: " + element);
-   	
    		var next_num=0;
 		
-		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-		
-		ret += "<div class='mcquestion_container'>";
-		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-		ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+			ret += "<div class='mcquestion_container'>";
+			ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+			ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
@@ -158,7 +149,7 @@ VISH.Quiz = (function(V,$,undefined){
       var _renderMcquestionStudent = function(element, template, slide){
     
     	 		var next_num=0;
-		//V.Debugging.log("element is: " + element);
+		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
@@ -175,7 +166,7 @@ VISH.Quiz = (function(V,$,undefined){
 			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
 			ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
-		//style='width:33%;'
+	
 		}
 		
 		ret += "</div>";
@@ -301,7 +292,7 @@ VISH.Quiz = (function(V,$,undefined){
       	
       	//construct url (making an POST to VISH.Server. Which params does it need? 
       		
-      		// show (construct) share button 
+      		// show (construct) share button and different buttons for social networks sharing
     	slideToPlay = $(".current").find("#slide_to_activate").val();
     	
     	var url = "http://www.vishub.org/dasdas";
@@ -309,28 +300,31 @@ VISH.Quiz = (function(V,$,undefined){
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";
     	
-    	//
-
-    		
-    	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
     	
-    	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a ";
-    	shareContentIcons += "href='http://www.google.es' id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
-    	shareContentIcons+="<a href='' id='tw_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a></div>";	
+    	//create share buttons (Share, FB & TW):
+    	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
+    	
+    	var shareTwitterButton = "<a target='_blank' href='https://twitter.com/share' class='twitter-share-button' data-url='"+url+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+		var shareFacebookButton = "<a target='_blank' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+		    shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+    	
+    	//Container for share buttons	
+    	var shareContainerIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> ";
+        	shareContainerIcons += shareFacebookButton;
+    		shareContainerIcons += shareTwitterButton;
+    	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
     	if($("#"+slideToPlay).find(".t11_header").children()) {
     		
     		$("#"+slideToPlay).find(".t11_header").children().remove();
     	} 
+    	
+    	//add elements created  
     	$("#"+slideToPlay).find(".t11_header").append(divURLShare);
     	$(".current").find("#url_share_"+slideToPlay).append(URL);
     	$(".current").find("#url_share_"+slideToPlay).append(shareButton);
-    //	$("#"+slideToPlay).find(".t11_header").append(URL);
-    	//$("#"+slideToPlay).find(".t11_header").append(shareButton);
-    	//$("#"+slideToPlay).find(".t11_header").append("</div>"); //close url_share
-    	//$("#"+slideToPlay).find(".t11_header").append(shareContentIcons);
-		$(".current").find("#url_share_"+slideToPlay).append(shareContentIcons);
+    	$(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
 		//show header 
     	$("#"+slideToPlay).find(".t11_header").show();
     	//change the value button (Start Quiz --> StopQuiz) and the id?
@@ -341,27 +335,26 @@ VISH.Quiz = (function(V,$,undefined){
     	//$("#"+slideToPlay).find("form_"+slideToPlay > input ).attr('value', 'Stop Quiz');
     	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
     	
-    	//create share elements
     	
+    	//adding listeners for different events
     	
-    	
-    	
-	  		
-  		$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
+    	//appear share buttons when mouse over share button
+    	$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
-      		$(".current").find(".shareContentIcons").css("display", "block");
+      		$(".current").find(".shareContentIcons").css("display", "inline-block");
       		//$(".current").find(".a_share_content_icon").slideDown();
   
 		});
-  		
+  		//prevent default action for clicking the share button
   		$(document).on("click", "#share_icon_"+slideToPlay, function(event){
   			event.preventDefault();
 		}); 
 		
-		$(document).on("mouseleave", "#share_icon_"+slideToPlay, function(event){
+		//remove share buttons when mouseleave share buttons area
+		$(document).on("mouseleave", "#url_share_"+slideToPlay, function(event){
   			event.preventDefault();
   			
-  		//	$(".current").find(".shareContentIcons").css("display", "none");
+  		$(".current").find(".shareContentIcons").css("display", "none");
   			
 		});
   		
