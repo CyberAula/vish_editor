@@ -315,7 +315,7 @@ VISH.Quiz = (function(V,$,undefined){
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' href='http://www.vishub.org'><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
     	
     	var shareContentIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> <a ";
-    	shareContentIcons += "href='http://www.google.es' id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+    	shareContentIcons += "href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
     	shareContentIcons+="<a href='' id='tw_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a></div>";	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
