@@ -652,7 +652,8 @@
 	margin-top:1.5%;
 	height: 10%;
 	width: 100%;	
-	display: block;	
+	/*display: block; */
+	display: inline-block;	
 	color: blue;
 	text-align:center;
 	font-size:2em;
@@ -660,25 +661,60 @@
 
 }
 
-.t11_header > span {
-	background-color:#CCCCCC;
-	-moz-border-radius:15px;
-	-webkit-border-radius: 15px;
+.url_share {
+	
+width: 90%;
+height: 100%;	
+	
+}
+
+.url_share > span {
+	 background-color:#CCCCCC;
+	/*-moz-border-radius:15px;
+	-webkit-border-radius: 15px; */
+	
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
 	padding: 1%;
+	position:relative;
 }
 
 
 .shareQuizButton {
-	padding: 5%;
+	padding: 1%;
 	height: 5%;
 	width: 5%;
 	text-align: right;
+	position:relative;
 	
 }
 .shareQuizButton > img {
 	height: 70%;
 	width: 7%;
 	text-align: right;
+	position:relative;
+	
+}
+
+
+.shareContentIcons {
+	position:relative;
+	display:none;
+	width: 10%;
+	z-index: 1;
+	float:right;
+
+	
+}
+
+.shareContentIcons > a {
+	height: 20%;
+	width: 20%;
+}
+
+.shareContentIcons > a > img {
+	width: 100%;
+	height: 100%;
 	
 }
 
@@ -711,10 +747,19 @@
 	margin:0 auto;
 	
 }
+
+.mcoptions_container {
+	width: 80%;
+	height: 80%;
+	float:left;
+	
+}
+
+
 .mcquestion_form {
 	text-align:center;	
 	width: 100%;	
-	height: 70%;
+	height: 80%;
 	
 }
 
@@ -726,7 +771,7 @@
 	margin:0 auto;
 	margin-top:5%;
 	position:relative;	
-
+	cursor:pointer;
 
 }
 
@@ -738,9 +783,13 @@
 	text-align:center;
 	font-weight:bold;
 	vertical-align:bottom;
-	margin-top:90%;
+	margin-top:20%; /* default 20%. It changes depending on the number of options*/
 	height:9%;
-	width: 80%;
+	width: 100%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	cursor:pointer;
+	
 	
 	}
 .mcquestion_stop_button {
@@ -752,9 +801,12 @@
 	font-weight:bold;
 	text-align:center;
 	vertical-align:bottom;
-	margin-top:90%;
+	margin-top:20%; /* default 20%. It changes depending on the number of options*/
 	height:9%;
-	width: 80%;
+	width: 100%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	cursor:pointer;
 	
 	
 }	

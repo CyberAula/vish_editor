@@ -34,10 +34,10 @@ var app = module.exports = express.createServer(
 // Configuration
 app.configure(function(){
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'ejs');
   app.set('view options', {layout: true});
   app.use(express.static(__dirname + '/public'));
-  app.register('.html', require('jade'));
+  app.register('.html', require('ejs'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
 

@@ -1,0 +1,35 @@
+<html>
+
+  <head>
+    <title> Vish Editor Standalone</title>
+    <script type="text/javascript" src="/javascripts/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/javascripts/VISHWS.js"></script>
+    <script type="text/javascript" src="/javascripts/VISHWS.CORE.js"></script>
+    <script type="text/javascript" src="/javascripts/VISHWS.VALIDATION.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css"/>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <h1> Welcome to Vish Editor Standalone Version</h1>
+        <% if(everyauth.user){%>
+          <p>Logged as <%=everyauth.user.name%></p>
+          <a href="/home"> Home </a>
+             &nbsp;
+          <a href="/logout"> Logout</a>
+        <%}else{%>
+          <p>Please log in</p>
+        <%}%>
+      </div>
+      <div id="content">
+        <%= body %>
+      </div>
+      <div id="footer">
+        <a href="https://github.com/ging/vish_editor_standalone"> Vish Editor on GitHub</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,6 +1,6 @@
-script(src="/javascripts/view.index.js")
+<script type="text/javascript" src="/javascripts/view.index.js"></script>
 
-#login.loginWrapper.tabbable
+<div id="login.loginWrapper.tabbable">
   ul.nav.nav-tabs
     li(class='active')
       a.indexTab(href='#tab1', data-toggle='tab') Sign in
@@ -14,4 +14,4 @@ script(src="/javascripts/view.index.js")
       #form_alert.alert.alert-error
         - each error in errors
           p= error
-
+</div>
