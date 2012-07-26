@@ -1,17 +1,28 @@
 <script type="text/javascript" src="/javascripts/view.index.js"></script>
 
 <div id="login.loginWrapper.tabbable">
-  ul.nav.nav-tabs
-    li(class='active')
-      a.indexTab(href='#tab1', data-toggle='tab') Sign in
-    li
-      a.indexTab(href='#tab2', data-toggle='tab') Sign Up
-  .tab-content
-    #tab1.tab-pane.active!= partial('partials/signin')
-    #tab2.tab-pane!= partial('partials/signup')
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="tab1" class="indexTab"> Sign in </a>
+    </li>
+    <li>
+      <a href="tab2" class="indexTab"> Sign Up </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane active">
+      <%- partial('partials/signin')%>
+    </div>
+    <div id="tab2" class="tab-pane">
+      <%- partial('partials/signup')%>
+    </div>
+    <% if (typeof errors !== 'undefined' && errors.length){%>
+      <div id="form_alert" class="alert alert-error">
+        <%for(error in errors){%>
+          <p><%=error%></p>
+        <%}%>
+      </div>
+    <%}%>
+  </div>
 
-    - if (typeof errors !== 'undefined' && errors.length)
-      #form_alert.alert.alert-error
-        - each error in errors
-          p= error
 </div>
