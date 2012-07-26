@@ -61,12 +61,17 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   margin-bottom: 10px;
 }
 
-.form_buttons_wrapper{
-
-}
-
+.form_buttons_wrapper{ }
 
 .presentationJson{
   width: 100%;
   height: 500px;
+}
+
+ul.presentation_list {
+  margin-top: 50px;
+}
+
+li.presentation_list{
+  margin-bottom: 50px;
 }

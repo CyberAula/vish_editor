@@ -8,63 +8,48 @@
 // PUT     /presentation/:presentationId       ->  update
 // DELETE  /presentation/:presentationId       ->  destroy
 
- var db = require("../db").connect();
- var Presentation = db.model('Presentation');
+var database = require("../db/api");
+var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
 
 exports.index = function(req,res){
-  console.log("Presentation index");
   res.render('index');
 }
 
 exports.get = function(req,res){
-  console.log("Presentation get");
   res.render('index');
 }
 
 exports.show = function(req,res){
-  console.log("Presentation show");
   var id = req.params.id;
-  var presentation = Presentation.findById(id, function(err,presentation){
+  database.findPresentationById(id,function(err,presentation){
     if(err){
       res.render('home')
     } else {
-      res.render('presentation/show', {locals: {presentation: presentation}});
+      database.findUserById(presentation.author,function(err,user){
+        if((err)||(user===null)){
+          res.render('home')
+        } else {
+          res.render('presentation/show', {locals: {presentation: presentation, author: user.name, options: options}});
+        }
+      });
     }
   });
 }
 
 exports.new = function(req,res){
-  console.log("Presentation new")
-  var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
-  console.log(options);
   res.render('presentation/new', { locals: { options: options }});
 }
 
 exports.create = function(req,res){
-  console.log("New presentation called")
-  var presentation = new Presentation();
-  var presentationJson = JSON.parse(req.body.presentation.json);
-  presentation.title = presentationJson.title;
-  presentation.description = presentationJson.description;
-  presentation.avatar = presentationJson.avatar;
-  // presentation.tags = presentationJson.tags;
-  presentation.author = req.user;
-  presentation.content = req.body.presentation.json;
-
-  presentation.save( function(err){
+  database.createPresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
-       req.flash('warn',err.message);
-       res.render('home');
+      res.render('home')
     } else {
-      //save the presentation in the user presentations array
-      req.user.presentations.push(presentation);
-      req.user.save(function(err){
-        if(err){
-          req.flash('warn',err.message);
-          res.render('home');
-        }});
-      res.redirect('/presentation/' + presentation._id.toHexString());
-    }  
+      var data = new Object();
+      data.url = '/presentation/' + presentationId;
+      res.contentType('application/json');
+      res.send(data);
+    }
   });
 }
 

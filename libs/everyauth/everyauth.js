@@ -1,12 +1,12 @@
-var configuration = require('./configuration/configuration').getConfiguration();
+var configuration = require('../../configuration/configuration').getConfiguration();
 var util = require('util');
-var debug = require('./debug');
+var debug = require('../../utils/debug');
 var everyauth = require('everyauth');
 Promise = everyauth.Promise;
-var db = require("./db").connect();
+var db = require("../../db/db").connect();
 
 //Get User model
-require("./models/all")
+require("../../models/all")
 var User = db.model('User');
 
 //EveryAuth Settings

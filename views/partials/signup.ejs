@@ -1,13 +1,19 @@
-form(action="/register",method="post")
-  #sig_up_fields.form_fields_wrapper
-    .form_field_wrapper
-      label(for=everyauth.password.loginFormFieldName).form_label Login
-      input(type='text', name=everyauth.password.loginFormFieldName)
-    .form_field_wrapper
-      label.form_label Password
-      input(name=everyauth.password.passwordFormFieldName,type="password")
-    .form_field_wrapper
-      label.form_label Confirm Password
-      input(name="password2",type="password")
-  #sig_up_button.form_buttons_wrapper
-    input#sign_up_button(type="submit",value="Sign Up")
+<form action="/register" method="post">
+  <div id="sig_up_fields" class="form_fields_wrapper">
+    <div class="form_field_wrapper">
+      <label for="<%=everyauth.password.loginFormFieldName%>" class="form_label">Login</label>
+      <input type="text" name="<%=everyauth.password.loginFormFieldName%>"></input>
+    </div>
+    <div class="form_field_wrapper">
+      <label for="<%=everyauth.password.passwordFormFieldName%>" class="form_label">Password</label>
+      <input type="password" name="<%=everyauth.password.passwordFormFieldName%>"></input>
+    </div>
+    <div class="form_field_wrapper">
+      <label for="password2" class="form_label">Confirm Password</label>
+      <input type="password" name="password2"></input>
+    </div>
+  </div>
+  <div id="sig_up_button" class="form_buttons_wrapper">
+    <input id="sign_up_button" type="submit" value="Sign Up"></input>
+  </div>
+</form>

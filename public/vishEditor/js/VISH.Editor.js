@@ -88,24 +88,19 @@ VISH.Editor = (function(V,$,undefined){
 		if(!eventsLoaded){
 			eventsLoaded = true;
 			
-			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-      $(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
-      $(document).on('click','.templatethumb', _onTemplateThumbClicked);
-      
-      $(document).on('click','#save', _onSaveButtonClicked);
-      $(document).on('click','.editable', _onEditableClicked);
-      $(document).on('click','.selectable', _onSelectableClicked);
+		$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
+		$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
+		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
+
+		$(document).on('click','#save', _onSaveButtonClicked);
+		$(document).on('click','.editable', _onEditableClicked);
+		$(document).on('click','.selectable', _onSelectableClicked);
 			
-//			var notSelectable = $(document).find('div').not('.selectable');
-//			$(notSelectable).on('click', function(event) {
-//        console.log("Not selectable clicked!");
-//      });
-			
-      $(document).on('click','.delete_content', _onDeleteItemClicked);
-      $(document).on('click','.delete_slide', _onDeleteSlideClicked);
-      //arrows in button panel
-      $(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-      $(document).on('click','#arrow_right_div', _onArrowRightClicked);
+		$(document).on('click','.delete_content', _onDeleteItemClicked);
+		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
+		//arrows in button panel
+		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
     
       //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
       _addEditorEnterLeaveEvents();
@@ -914,9 +909,8 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 			url     : "/presentation/",
 			data    : params,
 			success : function(data) {
-			    /*if we redirect the parent frame*/
-			    // window.top.location.href = data.url;
-			    console.log("Deberiamos redirigir... al show...");
+				//Redirect
+			    window.top.location.href = data.url;
 			}     
 		});
 	}
