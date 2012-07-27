@@ -1,6 +1,10 @@
 <script type="text/javascript">	
 	var options = <%-options%>; 
-	var presentation = <%-presentation.content%>; 
+	<% var mypres = JSON.parse(presentation.content);
+	if(mypres.id ===""){
+		mypres.id = presentation._id;
+	}%>
+	var presentation = <%-JSON.stringify(mypres)%>;
 </script>
 
 <h2> Title <%=presentation.title%> </h2>
