@@ -4,6 +4,7 @@ var debug = require('../../utils/debug');
 var everyauth = require('everyauth');
 Promise = everyauth.Promise;
 var db = require("../../db/db").connect();
+var dbApi = require("../../db/api");
 
 //Get User model
 require("../../models/all")
@@ -12,7 +13,7 @@ var User = db.model('User');
 //EveryAuth Settings
 everyauth.everymodule
   .findUserById( function (id, callback) {
-    User.findById(id,function(err,user){
+    dbApi.findUserById(id,function(err,user){
       callback(err,user);
     });
   });
@@ -30,9 +31,17 @@ everyauth.password
   .postLoginPath('/login') // Uri path that your login form POSTs to
   .loginView('index')
   .authenticate( function (login, password) {
+
+
+    console.log("authenticate function called");
+
     var errors = [];
-    if (!login) errors.push('Missing login');
-    if (!password) errors.push('Missing password');
+    if (!login) {
+      errors.push('Missing login');
+    } 
+    if (!password) {
+      errors.push('Missing password');
+    }
     if (errors.length) {
       return errors;
     }
@@ -41,18 +50,21 @@ everyauth.password
 
     User.findOne({login: login, password: password, authBy: 'password'},function(err,user){
       if(err){
+         console.log("err vale " + err)
          promise.fulfill([err]);
       } else {
          if(user !== null){
+          console.log("Succesfull access");
           promise.fulfill(user);
          } else {
-          promise.fulfill(["Incorrect login or password."]);
+          console.log("Incorrect login or password.");
+          errors.push("Incorrect login or password.");
+          promise.fulfill(errors);
          }
       }
     });
 
     return promise;
-
   })
   .loginSuccessRedirect('/home') // Where to redirect to after a login
   .getRegisterPath('/register') // Uri path to the registration page

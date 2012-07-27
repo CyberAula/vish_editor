@@ -103,27 +103,3 @@ exports.updatePresentation = function(user,json,callback) {
     });
 }
 
-
-var getPresentationObjectFromJson = function(user, json){
-  var presentation;
-  var presentationJson = JSON.parse(json);
-  if(presentationJson.id !== ""){
-    Presentation.findById(presentationJson.id, function(err,pres){
-      if(err){
-        throw err;
-      } else {
-        presentation = pres;
-      }
-    });
-  } else { 
-    presentation = new Presentation();
-  }
-  presentation.title = presentationJson.title;
-  presentation.description = presentationJson.description;
-  presentation.avatar = presentationJson.avatar;
-  presentation.tags = presentationJson.tags;
-  presentation.author = user._id.toHexString();
-  presentation.content = json;  
-  return presentation;
-}
-

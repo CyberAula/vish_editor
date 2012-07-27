@@ -8,6 +8,7 @@
 // PUT     /presentation/:presentationId       ->  update
 // DELETE  /presentation/:presentationId       ->  destroy
 
+var fs = require('fs');
 var database = require("../db/api");
 var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
 
@@ -36,7 +37,8 @@ exports.show = function(req,res){
   var id = req.params.id;
   database.findPresentationById(id,function(err,presentation){
     if(err){
-      res.redirect('/home');
+      req.flash('warn','Presentation not found');
+      res.render('presentation/show');
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
@@ -51,13 +53,23 @@ exports.show = function(req,res){
 
 exports.edit = function(req,res){
   var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('presentation/show');
+    return;
+  }
+
   database.findPresentationById(id,function(err,presentation){
-    if(err){
-      res.redirect('/home');
+    if((err)||(presentation===null)){
+      req.flash('warn','Presentation not found');
+      res.render('presentation/show');
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
-          res.redirect('/home');
+          req.flash('warn','Presentation owner not found');
+          res.render('presentation/show');
         } else {
           res.render('presentation/edit', {locals: {presentation: presentation, author: user.name, options: options}});
         }
@@ -67,9 +79,19 @@ exports.edit = function(req,res){
 }
 
 exports.update = function(req,res){
-   database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
+  var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('presentation/show');
+    return;
+  }
+
+  database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
-      res.redirect('/home');
+      req.flash('warn','This presentation can\'t be updated');
+      res.render('presentation/show');
     } else {
       var data = new Object();
       data.url = '/presentation/' + presentationId;
@@ -81,12 +103,52 @@ exports.update = function(req,res){
 
 exports.destroy = function(req,res){
   var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('presentation/show');
+    return;
+  }
+
   database.destroyPresentation(id,function(err,presentation){
-    if(err){
-      res.redirect('/home');
+      if(err){
+        req.flash('warn','This presentation can\'t be destroyed');
+        res.render('presentation/show');
+      } else {
+        res.redirect('/home');
+      }
+  });
+}
+
+exports.download = function(req,res){
+  var id = req.params.id;
+  database.findPresentationById(id,function(err,presentation){
+    if((err)||(presentation===null)){
+      req.flash('warn','Presentation not found');
+      res.render('presentation/show');
     } else {
-      res.redirect('/home');
+      writeJsonToFile(presentation._id.toHexString(),presentation.content, function(err,outputFileName){
+          if((err)||(outputFileName===null)){
+            req.flash('warn','Presentation can\'t be downloaded');
+            res.render('presentation/show');
+          } else {
+            res.contentType('application/json');
+            res.attachment(outputFileName);
+            res.sendfile(outputFileName);
+          }
+      });
     }
   });
+}
 
+function writeJsonToFile(id,json,callback){
+  var outputFilename = "./data/presentations/" + id + ".json";
+    fs.writeFile(outputFilename, json, function(err) {
+        if(err) {
+          callback(err);
+        } else {
+          callback(err,outputFilename);
+        }
+    }); 
 }
