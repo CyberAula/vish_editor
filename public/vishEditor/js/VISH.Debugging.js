@@ -10,8 +10,8 @@ VISH.Debugging = (function(V,$,undefined){
 	var actionSave = "default";
 	
 	//Possible action: "nothing" or "loadSamples".
-	var actionInit = "nothing";
-	var excursionSamples = VISH.Samples.samples;
+	var actionInit = "loadSamples";
+	var excursionSamples = VISH.Samples.quizes_samples;
 	
 	
 	var developping = false;

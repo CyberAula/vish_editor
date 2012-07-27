@@ -163,7 +163,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var next_index = "a".charCodeAt(0) + (next_num); 
 			next_index = String.fromCharCode(next_index);
 			
-			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
+			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
 			ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
 	
@@ -304,8 +304,8 @@ VISH.Quiz = (function(V,$,undefined){
     	//create share buttons (Share, FB & TW):
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
     	
-    	var shareTwitterButton = "<a target='_blank' href='https://twitter.com/share' class='twitter-share-button' data-url='"+url+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
-		var shareFacebookButton = "<a target='_blank' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+    	var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='https://twitter.com/share' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+		var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
 		    shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
     	
     	//Container for share buttons	
@@ -366,9 +366,10 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	slideToVote = $(".current").find("#slide_to_vote").val();
     	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
+    	//get the selected option {a,b,c,d,e} 
+    	var answer = $(".current").find("input:radio[name='mc_radio']:checked'").val();
     	
-    	
-    	//TODO get the option value selected to attach
+    	V.Debugging.log(" mc_radio checked value is "+ answer);
     	
     	/*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
     	and we receive from the server the quantities of votes for each option in a JSON object:
@@ -387,8 +388,10 @@ VISH.Quiz = (function(V,$,undefined){
     	$(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
     	
     	
-    	//TODO update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
+    	// update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
+    	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     	
+    	_showResultsToParticipant(data);
     	
     	
     };
@@ -488,7 +491,7 @@ VISH.Quiz = (function(V,$,undefined){
      * Function called when the JSON object is received from the server 
      * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
      * actions to do: 
-     * TODO it could be used for all kind of users ...
+     * 
      */
     
     var _showResultsToParticipant = function (data) {
@@ -520,8 +523,12 @@ VISH.Quiz = (function(V,$,undefined){
     		V.Debugging.log(" The Quiz voted is not the active Quiz ... please reload the Quiz");
     		
     	}
-    	
+
     $(".current").find(".mc_meter").css('display', 'block');	
+    $(".current").find(".mcoption_label").css('display', 'block');
+
+    	
+  //  $(".current").find(".mc_meter").css('display', 'block');	
     };
     
     
