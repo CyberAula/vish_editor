@@ -78,7 +78,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(excursion.type ==="game"){
 			VISH.ViewerEngine = "game";
-			VISH.ViewerAdapter.setupGame(excursion);			
+			VISH.ViewerAdapter.setupGame(excursion);	
+			VISH.Game.registerActions(excursion);		
 		}
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);

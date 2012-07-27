@@ -109,6 +109,7 @@ function Game() {
             });
         }
         if(_map.Catched) {
+            window.parent.VISH.Game.raiseAction("devil");
         	$("#devil-dead").show();
         	$(document).unbind('keyup');
         }
