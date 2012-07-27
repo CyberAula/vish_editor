@@ -10,6 +10,7 @@ exports.findPresentationById = function(id,callback) {
 
 exports.createPresentation = function(user,json,callback) {
   var presentation = new Presentation();
+  var presentationJson = JSON.parse(json);
   presentation.title = presentationJson.title;
   presentation.description = presentationJson.description;
   presentation.avatar = presentationJson.avatar;

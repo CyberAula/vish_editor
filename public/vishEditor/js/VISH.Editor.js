@@ -730,7 +730,7 @@ VISH.Editor = (function(V,$,undefined){
   	$('.object_wrapper').show();
   	//now save the excursion
     var excursion = {};
-   	if(excursion_to_edit !== undefined){
+   	if(excursion_to_edit){
    		excursion.id = excursion_to_edit.id;
    	}else{
    		excursion.id = '';	
