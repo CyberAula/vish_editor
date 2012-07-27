@@ -18,8 +18,8 @@
     </div>
     <% if (typeof errors !== 'undefined' && errors.length){%>
       <div id="form_alert" class="alert alert-error">
-        <%for(error in errors){%>
-          <p><%=error%></p>
+         <%for(i=0; i<errors.length; i++){%>
+          <p><%=errors[i]%></p>
         <%}%>
       </div>
     <%}%>

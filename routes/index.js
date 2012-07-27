@@ -18,6 +18,8 @@ exports.init = function(app) {
 	}
 
 	app.get('/', controllers.index);
+	app.get('/login', controllers.index);
+	app.get('/register', controllers.index);
 	app.get('/home', requiresLogin, controllers.home);
 
 	//Routes for presentation resource
