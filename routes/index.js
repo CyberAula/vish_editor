@@ -30,6 +30,7 @@ exports.init = function(app) {
 	app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	app.put('/presentation/:id', requiresLogin,controllers.presentation.update);
 	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
+	app.get('/presentation/:id/download', requiresLogin,controllers.presentation.download);
 
 	//Not founded url
 	app.all('*', controllers.error);

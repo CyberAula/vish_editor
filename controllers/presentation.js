@@ -8,6 +8,7 @@
 // PUT     /presentation/:presentationId       ->  update
 // DELETE  /presentation/:presentationId       ->  destroy
 
+var fs = require('fs');
 var database = require("../db/api");
 var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
 
@@ -51,6 +52,12 @@ exports.show = function(req,res){
 
 exports.edit = function(req,res){
   var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    return res.redirect('/home');
+  }
+
   database.findPresentationById(id,function(err,presentation){
     if(err){
       res.redirect('/home');
@@ -67,7 +74,14 @@ exports.edit = function(req,res){
 }
 
 exports.update = function(req,res){
-   database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
+  var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    return res.redirect('/home');
+  }
+
+  database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
       res.redirect('/home');
     } else {
@@ -81,12 +95,47 @@ exports.update = function(req,res){
 
 exports.destroy = function(req,res){
   var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    return res.redirect('/home');
+  }
+
   database.destroyPresentation(id,function(err,presentation){
+      if(err){
+        res.redirect('/home');
+      } else {
+        res.redirect('/home');
+      }
+  });
+}
+
+exports.download = function(req,res){
+  var id = req.params.id;
+  database.findPresentationById(id,function(err,presentation){
     if(err){
       res.redirect('/home');
     } else {
-      res.redirect('/home');
+      writeJsonToFile(presentation._id.toHexString(),presentation.content, function(err,outputFileName){
+          if(err){
+            res.redirect('/home');
+          } else {
+            res.contentType('application/json');
+            res.attachment(outputFileName);
+            res.sendfile(outputFileName);
+          }
+      });
     }
   });
+}
 
+function writeJsonToFile(id,json,callback){
+  var outputFilename = "./data/presentations/" + id + ".json";
+    fs.writeFile(outputFilename, json, function(err) {
+        if(err) {
+          callback(err);
+        } else {
+          callback(err,outputFilename);
+        }
+    }); 
 }
