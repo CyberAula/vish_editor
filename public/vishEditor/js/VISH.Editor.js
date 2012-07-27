@@ -730,8 +730,12 @@ VISH.Editor = (function(V,$,undefined){
   	$('.object_wrapper').show();
   	//now save the excursion
     var excursion = {};
-    //TODO decide this params
-    excursion.id = '';
+   	if(excursion_to_edit !== undefined){
+   		excursion.id = excursion_to_edit.id;
+   	}else{
+   		excursion.id = '';	
+   	}
+    
     excursion.title = excursionDetails.title;
     excursion.description = excursionDetails.description;
     excursion.avatar = excursionDetails.avatar;
@@ -892,8 +896,10 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 	    console.log("uploadPresentation called")
 
 		var send_type;
+		var url = "/presentation/";
 		if(excursion_to_edit){
 			send_type = 'PUT'; //if we are editing
+			url = url + excursion_to_edit.id;
 		} else {
 			send_type = 'POST'; //if it is a new
 		} 
@@ -906,7 +912,7 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 		   
 		$.ajax({
 			type    : send_type,
-			url     : "/presentation/",
+			url     : url,
 			data    : params,
 			success : function(data) {
 				//Redirect

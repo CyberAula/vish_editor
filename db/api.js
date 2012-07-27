@@ -9,14 +9,7 @@ exports.findPresentationById = function(id,callback) {
 }
 
 exports.createPresentation = function(user,json,callback) {
-  var presentation = new Presentation();
-  var presentationJson = JSON.parse(json);
-  presentation.title = presentationJson.title;
-  presentation.description = presentationJson.description;
-  presentation.avatar = presentationJson.avatar;
-  presentation.tags = presentationJson.tags;
-  presentation.author = user._id.toHexString();
-  presentation.content = json;
+  var presentation = getPresentationObjectFromJson(user, json);
 
   presentation.save( function(err){
     if(err){
@@ -34,6 +27,39 @@ exports.createPresentation = function(user,json,callback) {
       });
     }
   });
+}
+
+exports.updatePresentation = function(user,json,callback) {
+  var presentation = getPresentationObjectFromJson(user, json);
+
+  presentation.save( function(err){
+    if(err){
+      callback(err,null);
+    } 
+  });
+}
+
+var getPresentationObjectFromJson = function(user, json){
+  var presentation;
+  var presentationJson = JSON.parse(json);
+  if(presentationJson.id !== ""){
+    api.findPresentationById(presentationJson.id,function(err,presentation){
+      if(err){
+        res.render('home');
+      } 
+    });
+  }
+  else{
+    presentation = new Presentation();
+  }
+
+  presentation.title = presentationJson.title;
+  presentation.description = presentationJson.description;
+  presentation.avatar = presentationJson.avatar;
+  presentation.tags = presentationJson.tags;
+  presentation.author = user._id.toHexString();
+  presentation.content = json;  
+  return presentation;
 }
 
 exports.findAllPresentationsOfUser = function(userId,callback) {

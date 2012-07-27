@@ -78,7 +78,16 @@ exports.edit = function(req,res){
 
 exports.update = function(req,res){
   console.log("Presentation update");
-  res.render('home');
+   database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
+    if(err){
+      res.render('home');
+    } else {
+      var data = new Object();
+      data.url = '/presentation/' + presentationId;
+      res.contentType('application/json');
+      res.send(data);
+    }
+  });
 }
 
 
