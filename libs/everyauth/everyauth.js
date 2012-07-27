@@ -28,7 +28,7 @@ everyauth.everymodule.moduleErrback( function (err) {
 everyauth.password
   .getLoginPath('/index') // Uri path to the login page
   .postLoginPath('/login') // Uri path that your login form POSTs to
-  .loginView('index.jade')
+  .loginView('index')
   .authenticate( function (login, password) {
     var errors = [];
     if (!login) errors.push('Missing login');
@@ -57,7 +57,7 @@ everyauth.password
   .loginSuccessRedirect('/home') // Where to redirect to after a login
   .getRegisterPath('/register') // Uri path to the registration page
   .postRegisterPath('/register') // The Uri path that your registration form POSTs to
-  .registerView('index.jade')
+  .registerView('index')
   .validateRegistration( function (newUserAttributes,errors) {
       var promise = this.Promise();
 

@@ -3,8 +3,20 @@
  var Presentation = db.model('Presentation');
 
 exports.findPresentationById = function(id,callback) {
-  var presentation = Presentation.findById(id, function(err,presentation){
+  Presentation.findById(id, function(err,presentation){
     callback(err,presentation);
+  });
+}
+
+exports.findUserById = function(userId,callback) {
+  User.findById(userId, function(err,user){
+    callback(err,user);
+  });
+}
+
+exports.findAllPresentationsOfUser = function(userId,callback) {
+  Presentation.find({author: userId}, function(err,presentations){
+    callback(err,presentations);
   });
 }
 
@@ -36,13 +48,48 @@ exports.createPresentation = function(user,json,callback) {
   });
 }
 
+exports.destroyPresentation = function(id,callback) {
+ Presentation.findById(id, function(err,presentation){
+    if((err)||(presentation===null){
+      callback(err);
+    } else {
+      var userId = presentation.author;
+      var presId = presentation._id;
+      presentation.remove(function(err){
+        if(err){
+          callback(err);
+        } else {
+          User.findById(userId,function(err,user){
+            if((err)||(user===null)){
+              callback(err);
+            } else {
+              //Remove presentation id from user.presentations
+              var index = user.presentations.indexOf(presId);
+              if(index!=-1){
+                user.presentations.splice(index, 1);
+              }
+              user.save(function(err){
+                if(err){
+                    callback(err);
+                } else {
+                  callback(err);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+
 exports.updatePresentation = function(user,json,callback) {
   var presentationJson = JSON.parse(json);
   Presentation.findById(presentationJson.id, function(err,presentation){
       if(err){
-        throw err;
-      }
-      else{
+        return callback(err);
+      } else {
         presentation.title = presentationJson.title;
         presentation.description = presentationJson.description;
         presentation.avatar = presentationJson.avatar;
@@ -50,29 +97,25 @@ exports.updatePresentation = function(user,json,callback) {
         presentation.author = user._id.toHexString();
         presentation.content = json;
         presentation.save(function (err) {
-          if (!err) {
-            console.log("updated");
-          } else {
-            console.log(err);
-          }
           return callback(err, presentationJson.id);
         }); 
       }
     });
 }
 
+
 var getPresentationObjectFromJson = function(user, json){
   var presentation;
   var presentationJson = JSON.parse(json);
   if(presentationJson.id !== ""){
     Presentation.findById(presentationJson.id, function(err,pres){
-      if(err){throw err;}
-      else{
+      if(err){
+        throw err;
+      } else {
         presentation = pres;
       }
     });
-  }
-  else{
+  } else { 
     presentation = new Presentation();
   }
   presentation.title = presentationJson.title;
@@ -84,14 +127,3 @@ var getPresentationObjectFromJson = function(user, json){
   return presentation;
 }
 
-exports.findAllPresentationsOfUser = function(userId,callback) {
-  var presentations = Presentation.find({author: userId}, function(err,presentations){
-    callback(err,presentations);
-  });
-}
-
-exports.findUserById = function(userId,callback) {
-  var user = User.findById(userId, function(err,user){
-    callback(err,user);
-  });
-}
