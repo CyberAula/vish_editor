@@ -50,7 +50,7 @@ exports.createPresentation = function(user,json,callback) {
 
 exports.destroyPresentation = function(id,callback) {
  Presentation.findById(id, function(err,presentation){
-    if((err)||(presentation===null){
+    if((err)||(presentation===null)){
       callback(err);
     } else {
       var userId = presentation.author;
