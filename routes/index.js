@@ -16,7 +16,7 @@ exports.init = function(app) {
 	    return controllers.index(req,res);
 	  }
 	}
-app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
+
 	app.get('/', controllers.index);
 	app.get('/home', requiresLogin, controllers.home);
 
@@ -25,7 +25,7 @@ app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	app.get('/presentation/new', requiresLogin, controllers.presentation.new);
 	app.post('/presentation', requiresLogin, controllers.presentation.create);
 	app.get('/presentation/:id', controllers.presentation.show); // this one does not require login
-	
+	app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	app.put('/presentation/:id', requiresLogin,controllers.presentation.update);
 	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
 

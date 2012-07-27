@@ -46,7 +46,7 @@ exports.new = function(req,res){
 exports.create = function(req,res){
   database.createPresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
-      res.render('home')
+      res.render('home');
     } else {
       var data = new Object();
       data.url = '/presentation/' + presentationId;
@@ -65,14 +65,15 @@ exports.edit = function(req,res){
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
+          console.log("err " +  err);
+          console.log("user " + user);
           res.render('home');
         } else {
           res.render('presentation/edit', {locals: {presentation: presentation, author: user.name, options: options}});
         }
       });
     }
-  });
-  res.render('home');
+  });  
 }
 
 exports.update = function(req,res){
