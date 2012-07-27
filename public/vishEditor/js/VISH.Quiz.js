@@ -119,8 +119,8 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
-		var next_index = "a".charCodeAt(0) + (next_num); 
-		next_index = String.fromCharCode(next_index);
+			var next_index = "a".charCodeAt(0) + (next_num); 
+			next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
 			//ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
@@ -163,7 +163,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var next_index = "a".charCodeAt(0) + (next_num); 
 			next_index = String.fromCharCode(next_index);
 			
-			ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
+			ret += "<label class='mc_answer' id='mc_answer_"+slide+"_option_"+next_index+"'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
 			ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
 	
@@ -246,14 +246,46 @@ VISH.Quiz = (function(V,$,undefined){
     	
     };
     
+    
+    /*
+     
+     * 
+     * */
+    
     var _activateStudentInteraction = function () {
-    	
+    	 
     	var button = '#mcquestion_send_vote_button_'+slideToVote;
    
     	//add listener to send button _onSendVoteMcQuizButtonClicked
     	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
-    	
     	$(".mc_meter").hide();
+    	var numOptions = $("#" +slideToVote).find(".mc_answer").size();
+    	 
+    	for(var i = 0; i<numOptions; i++){
+    		var next_num = i;
+			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
+			next_index = String.fromCharCode(next_index_prev);
+    		
+    		var overOptionZone = "#mc_answer_"+slideToVote+"_option_"+ next_index;
+    		//#mc_answer_article1_option_c
+    		
+    	    	V.Debugging.log("#mc_answer ssss vale: " + overOptionZone );	
+    		
+    		$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){
+  				//event.preventDefault();
+  				$(overOptionZone).css("color", "blue");
+      			$(overOptionZone).css("font-weight", "bold");
+      		});
+		
+			$("#"+slideToVote).on("mouseleave", overOptionZone, function(event){
+  				//event.preventDefault();
+  				$(overOptionZone).css("color", "black");
+      			$(overOptionZone).css("font-weight", "normal");
+      		});
+		
+		
+		}
+    	
     };
     
     
@@ -369,6 +401,13 @@ VISH.Quiz = (function(V,$,undefined){
     	//get the selected option {a,b,c,d,e} 
     	var answer = $(".current").find("input:radio[name='mc_radio']:checked'").val();
     	
+    	//check that student selected one option
+    	if(answer==undefined) {
+    		
+    		alert("You must choice your answer before polling");
+    	}
+    	//option selected
+    	else {
     	V.Debugging.log(" mc_radio checked value is "+ answer);
     	
     	/*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
@@ -393,7 +432,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	_showResultsToParticipant(data);
     	
-    	
+    	}
     };
     
     var _onStopMcQuizButtonClicked = function () {
