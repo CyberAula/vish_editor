@@ -1,0 +1,20 @@
+<form action="/login" method="post">
+	<div id="sig_in_fields" class="form_fields_wrapper">
+		<div class="form_field_wrapper">
+			<label for="<%=everyauth.password.loginFormFieldName%>" class="form_label">Login</label>
+			<input type="text" name="<%=everyauth.password.loginFormFieldName%>"></input>
+
+		</div>
+		<div class="form_field_wrapper">
+			<label for="<%=everyauth.password.passwordFormFieldName%>" class="form_label">Password</label>
+			<input type="password" name="<%=everyauth.password.passwordFormFieldName%>"></input>
+		</div>
+	</div>
+	<div id="sig_in_button" class="form_fields_wrapper">
+		<input id="sign_in_button" type="submit" value="Sign In"></input>
+	</div>
+
+</form>
+
+<p><a href="/auth/twitter">Log in with Twitter</a></p>
+<p><a href="/auth/facebook">Log in with Facebook</a></p>

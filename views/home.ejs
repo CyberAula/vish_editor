@@ -1,0 +1,18 @@
+<script type="text/javascript" src="/javascripts/view.home.js"></script>
+
+<h1> Your Home</h1>
+<h2> Your presentations</h2>
+
+<%if (typeof presentations != 'undefined') {%>
+	<ul class='presentation_list'>
+	<% for(i=0;i<presentations.length;i++){%>
+	 	<li class='presentation_list'>
+	 		<p> <%=presentations[i].title%> </p>
+	 		<img src='<%=presentations[i].avatar%>'/>
+	 		<a href='/presentation/<%=presentations[i]._id%>'>Show</a>
+	 	</li>
+	<%}%>
+	</ul>
+<%}%>
+
+<p><a href="/presentation/new">Create New Presentation</a></p>

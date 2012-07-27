@@ -1,4 +1,5 @@
 VISH.SlideManager = (function(V,$,undefined){
+	var initOptions;
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
@@ -19,6 +20,18 @@ VISH.SlideManager = (function(V,$,undefined){
 	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+
+		if(options){
+			initOptions = options;
+			if((options['developping']===true)&&(VISH.Debugging)){
+				  VISH.Debugging.init(true);
+			} else {
+				 VISH.Debugging.init(false);
+			}
+		}	else {
+			initOptions = {};
+			VISH.Debugging.init(false);
+		}
 	
 	//fixing editor mode when save an excursion
 		if(options['username']) {

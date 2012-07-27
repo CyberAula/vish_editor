@@ -1,10 +1,5 @@
-var everyauth = require('everyauth');
-var _ = require('underscore');
-var db = require("../db").connect();
+var db = require("../db/api");
 
-//Get models
-var User = db.model('User');
-var Presentation = db.model('Presentation');
 
 exports.index = function(req, res) {
   if(req.user){
@@ -15,10 +10,14 @@ exports.index = function(req, res) {
 };
 
 exports.home = function(req, res) {
-  //Get user presentations
-  //Coming soon...
-  var presentations = 
-  res.render('home', {locals: { presentations: presentations}});
+  db.findAllPresentationsOfUser(req.user._id.toHexString(), function(err,presentations){
+    if(err){
+      res.render('home');
+    } else {
+      res.render('home', {locals: { presentations: presentations}});
+    }
+  });
+  
 };
 
 exports.error = function(req, res) {

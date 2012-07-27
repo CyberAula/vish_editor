@@ -21,7 +21,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 */
 	};	
-	/*
+	/* TODO: change id of input 
 	 Function that add an input text option for the Multiple Choice Quiz  
 	 * */
 	var addMultipleChoiceOption = function(event){

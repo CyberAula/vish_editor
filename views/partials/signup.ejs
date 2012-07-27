@@ -1,0 +1,19 @@
+<form action="/register" method="post">
+  <div id="sig_up_fields" class="form_fields_wrapper">
+    <div class="form_field_wrapper">
+      <label for="<%=everyauth.password.loginFormFieldName%>" class="form_label">Login</label>
+      <input type="text" name="<%=everyauth.password.loginFormFieldName%>"></input>
+    </div>
+    <div class="form_field_wrapper">
+      <label for="<%=everyauth.password.passwordFormFieldName%>" class="form_label">Password</label>
+      <input type="password" name="<%=everyauth.password.passwordFormFieldName%>"></input>
+    </div>
+    <div class="form_field_wrapper">
+      <label for="password2" class="form_label">Confirm Password</label>
+      <input type="password" name="password2"></input>
+    </div>
+  </div>
+  <div id="sig_up_button" class="form_buttons_wrapper">
+    <input id="sign_up_button" type="submit" value="Sign Up"></input>
+  </div>
+</form>
