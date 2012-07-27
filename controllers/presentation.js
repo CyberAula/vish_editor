@@ -12,22 +12,25 @@ var database = require("../db/api");
 var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
 
 exports.index = function(req,res){
+  console.log("Presentation index");
   res.render('index');
 }
 
 exports.get = function(req,res){
+  console.log("Presentation get");
   res.render('index');
 }
 
 exports.show = function(req,res){
+  console.log("Presentation show");
   var id = req.params.id;
   database.findPresentationById(id,function(err,presentation){
     if(err){
-      res.render('home')
+      res.render('home');
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
-          res.render('home')
+          res.render('home');
         } else {
           res.render('presentation/show', {locals: {presentation: presentation, author: user.name, options: options}});
         }
@@ -55,6 +58,20 @@ exports.create = function(req,res){
 
 exports.edit = function(req,res){
   console.log("Presentation edit");
+  var id = req.params.id;
+  database.findPresentationById(id,function(err,presentation){
+    if(err){
+      res.render('home');
+    } else {
+      database.findUserById(presentation.author,function(err,user){
+        if((err)||(user===null)){
+          res.render('home');
+        } else {
+          res.render('presentation/edit', {locals: {presentation: presentation, author: user.name, options: options}});
+        }
+      });
+    }
+  });
   res.render('home');
 }
 
