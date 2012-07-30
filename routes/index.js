@@ -32,6 +32,12 @@ exports.init = function(app) {
 	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
 	app.get('/presentation/:id/download', requiresLogin,controllers.presentation.download);
 
+	//Post image route
+	app.post('/image', requiresLogin, controllers.image.create);
+
+	//Post objects route
+	app.post('/object', requiresLogin, controllers.object.create);
+
 	//Not founded url
 	app.all('*', controllers.error);
 }
