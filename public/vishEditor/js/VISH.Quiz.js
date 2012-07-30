@@ -260,7 +260,7 @@ VISH.Quiz = (function(V,$,undefined){
     	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
     	$(".mc_meter").hide();
     	var numOptions = $("#" +slideToVote).find(".mc_answer").size();
-    	 
+    	V.Debugging.log("numOptions value is:" + numOptions);
     	for(var i = 0; i<numOptions; i++){
     		var next_num = i;
 			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
@@ -273,6 +273,8 @@ VISH.Quiz = (function(V,$,undefined){
     		
     		$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){
   				//event.preventDefault();
+  				V.Debugging.log("event.target vale: "  + event.srcElement);
+  				
   				$(overOptionZone).css("color", "blue");
       			$(overOptionZone).css("font-weight", "bold");
       		});
@@ -335,7 +337,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	//create share buttons (Share, FB & TW):
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
-    	
+    																																				
     	var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='https://twitter.com/share' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
 		var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
 		    shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
