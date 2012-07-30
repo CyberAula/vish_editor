@@ -30,3 +30,5 @@ exports.authError = function(req,res){
 }
 
 exports.presentation = require('./presentation');
+exports.image = require('./image');
+exports.object = require('./object');
