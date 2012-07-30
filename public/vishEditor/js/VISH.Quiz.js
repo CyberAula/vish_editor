@@ -260,7 +260,7 @@ VISH.Quiz = (function(V,$,undefined){
     	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
     	$(".mc_meter").hide();
     	var numOptions = $("#" +slideToVote).find(".mc_answer").size();
-    	V.Debugging.log("numOptions value is:" + numOptions);
+    	
     	for(var i = 0; i<numOptions; i++){
     		var next_num = i;
 			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
@@ -269,20 +269,17 @@ VISH.Quiz = (function(V,$,undefined){
     		var overOptionZone = "#mc_answer_"+slideToVote+"_option_"+ next_index;
     		//#mc_answer_article1_option_c
     		
-    	    	V.Debugging.log("#mc_answer ssss vale: " + overOptionZone );	
-    		
-    		$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){
+    	  	$("#"+slideToVote).on("mouseenter", "#mc_answer_"+slideToVote+"_option_"+ next_index, function(event){
   				//event.preventDefault();
-  				V.Debugging.log("event.target vale: "  + event.srcElement);
   				
-  				$(overOptionZone).css("color", "blue");
-      			$(overOptionZone).css("font-weight", "bold");
-      		});
+  				$(event.srcElement).css("color", "blue");
+  				$(event.srcElement).css("font-weight", "bold");
+  			});
 		
 			$("#"+slideToVote).on("mouseleave", overOptionZone, function(event){
   				//event.preventDefault();
-  				$(overOptionZone).css("color", "black");
-      			$(overOptionZone).css("font-weight", "normal");
+  				$(event.srcElement).css("color", "black");
+      			$(event.srcElement).css("font-weight", "normal");
       		});
 		
 		

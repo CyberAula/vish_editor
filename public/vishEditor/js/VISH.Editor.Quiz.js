@@ -32,6 +32,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
+		
+		
 		V.Debugging.log("event.type vale: "  + event);
 		
 		//New element to apply operations  
@@ -40,7 +42,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			if((myInput.val() !="") && (myInput.val() != "write quiz options here")) {
 		
 		//the input in text type  
-				
+				$(".current").find("."+MultipleChoiceOptionClass).removeAttr("autofocus");	
 
 				var text  = $('<div>').append($('.' +MultipleChoiceOptionClass).clone()).html();
 				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
@@ -100,9 +102,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 		}); 
 		
-			$(".current").find("."+MultipleChoiceOptionClass).attr("autofocus", "false");		
-			$(".current").find("#radio_text_"+next_num).attr("autofocus", "autofocus");
-			};
+			//move cursor on the next input	
+			$(".current").find(myNextInput).attr("autofocus", "autofocus");
+	};
 	
 	
 	//remove a multiple choice option when click on the icon delete 
