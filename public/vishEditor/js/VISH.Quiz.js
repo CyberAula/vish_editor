@@ -254,10 +254,10 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _activateStudentInteraction = function () {
     	 
-    	var button = '#mcquestion_send_vote_button_'+slideToVote;
+    	var sendVoteButton = '#mcquestion_send_vote_button_'+slideToVote;
    
     	//add listener to send button _onSendVoteMcQuizButtonClicked
-    	$(document).on('click', button, _onSendVoteMcQuizButtonClicked);
+    	$(document).on('click', sendVoteButton, _onSendVoteMcQuizButtonClicked);
     	$(".mc_meter").hide();
     	var numOptions = $("#" +slideToVote).find(".mc_answer").size();
     	
@@ -269,7 +269,8 @@ VISH.Quiz = (function(V,$,undefined){
     		var overOptionZone = "#mc_answer_"+slideToVote+"_option_"+ next_index;
     		//#mc_answer_article1_option_c
     		
-    	  	$("#"+slideToVote).on("mouseenter", "#mc_answer_"+slideToVote+"_option_"+ next_index, function(event){
+    	  	//$("#"+slideToVote).on("mouseenter", "#mc_answer_"+slideToVote+"_option_"+ next_index, function(event){
+    	  	$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){	
   				//event.preventDefault();
   				
   				$(event.srcElement).css("color", "blue");
@@ -393,7 +394,14 @@ VISH.Quiz = (function(V,$,undefined){
     	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
     };
 
-    var _onSendVoteMcQuizButtonClicked = function (event) {
+/*Function executed when the studen has pressed the send vote button
+ * has to send the option choosen to the server and wait for total results till that moment. 
+ * 
+ * 
+ *
+ * 
+ */ 
+     var _onSendVoteMcQuizButtonClicked = function (event) {
     	
     	slideToVote = $(".current").find("#slide_to_vote").val();
     	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
@@ -407,7 +415,7 @@ VISH.Quiz = (function(V,$,undefined){
     	}
     	//option selected
     	else {
-    	V.Debugging.log(" mc_radio checked value is "+ answer);
+    	
     	
     	/*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
     	and we receive from the server the quantities of votes for each option in a JSON object:
@@ -430,6 +438,10 @@ VISH.Quiz = (function(V,$,undefined){
     	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     	
     	_showResultsToParticipant(data);
+    	
+    	_removeOptionsListener(slideToVote);
+    	
+    	
     	
     	}
     };
@@ -610,7 +622,37 @@ VISH.Quiz = (function(V,$,undefined){
     $(".current").find(".mcoption_label").css('display', 'block');
     };
     
-    
+
+	var _removeOptionsListener = function (slideToRemoveListeners) {
+		
+		var totalOptions = $(".current").find(".mc_answer").size();
+		V.Debugging.log("totalOptions value is: " + totalOptions);
+			
+			for(var i = 0; i<totalOptions; i++){
+    		
+    		
+    		var next_num = i;
+			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
+			next_index = String.fromCharCode(next_index_prev);
+    		
+    		var overOptionZone = "#mc_answer_"+slideToRemoveListeners+"_option_"+ next_index;
+    		//#mc_answer_article1_option_c
+    		
+    //	  	
+    	  	//didn't get to remove the listener ... it just does nothing diferent  
+    	  	$(document).on("mouseenter", overOptionZone, function(event){
+  			
+  				$(event.srcElement).css("color", "black");
+      			$(event.srcElement).css("font-weight", "normal");
+		});
+    	  	
+  			  				
+		}	
+			
+			
+			
+		
+	};
     
     
     
