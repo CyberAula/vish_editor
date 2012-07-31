@@ -248,7 +248,8 @@ VISH.Quiz = (function(V,$,undefined){
     
     
     /*
-     
+     *Function activate interactive elements in the Quiz for a student who is going
+     * to participate in a polling process 
      * 
      * */
     
@@ -269,10 +270,8 @@ VISH.Quiz = (function(V,$,undefined){
     		var overOptionZone = "#mc_answer_"+slideToVote+"_option_"+ next_index;
     		//#mc_answer_article1_option_c
     		
-    	  	//$("#"+slideToVote).on("mouseenter", "#mc_answer_"+slideToVote+"_option_"+ next_index, function(event){
     	  	$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){	
   				//event.preventDefault();
-  				
   				$(event.srcElement).css("color", "blue");
   				$(event.srcElement).css("font-weight", "bold");
   			});
@@ -364,7 +363,6 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('class', 'mcquestion_stop_button');
     	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('id', 'mcquestion_stop_button_'+slideToPlay);
     	//add onclick event to the new stop button
-    	//$("#"+slideToPlay).find("form_"+slideToPlay > input ).attr('value', 'Stop Quiz');
     	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
     	
     	
@@ -404,8 +402,8 @@ VISH.Quiz = (function(V,$,undefined){
      var _onSendVoteMcQuizButtonClicked = function (event) {
     	
     	slideToVote = $(".current").find("#slide_to_vote").val();
-    	//V.Debugging.log(" button pressed and  _onSendtMcQuizButtonClicked called");
-    	//get the selected option {a,b,c,d,e} 
+    
+       	//get the selected option {a,b,c,d,e} 
     	var answer = $(".current").find("input:radio[name='mc_radio']:checked'").val();
     	
     	//check that student selected one option
@@ -426,7 +424,7 @@ VISH.Quiz = (function(V,$,undefined){
     	//jQuery.getJSON(vote_url,function (data) {
     	//var for testing receive values for a pull	
     	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-			_showResultsToParticipant(data);
+			_showResultsToParticipant(data, slideToVote);
 		//});
     	
     	//remove input radio 
@@ -439,6 +437,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	_showResultsToParticipant(data);
     	
+    	//for avoid bring out when mouse over option
     	_removeOptionsListener(slideToVote);
     	
     	
@@ -544,9 +543,10 @@ VISH.Quiz = (function(V,$,undefined){
      * 
      */
     
-    var _showResultsToParticipant = function (data) {
+    var _showResultsToParticipant = function (data, slide) {
     	
-    	  	
+    	  var greatestId;
+    	  var greatest=0;	
     	//if (data.quiz_session_id==userQuizSessionID) ??
     	//TODO 
     	if(data.quiz_id == userStatus.quiz_active) {
@@ -556,6 +556,15 @@ VISH.Quiz = (function(V,$,undefined){
     	//calculate the vote's total sum 
     		for (votes in data.results) {
     			totalVotes 	+= parseInt(data.results[votes]);
+    			if(parseInt(data.results[votes])>greatest) {
+    				greatestId=votes;
+    				greatest=parseInt(data.results[votes]);
+    			  }
+    			 else {
+    			 	greatestId;
+    			 	
+    			 } 
+    			  
     		}
     		for (votes in data.results) {
 	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() ;
@@ -573,7 +582,12 @@ VISH.Quiz = (function(V,$,undefined){
     		V.Debugging.log(" The Quiz voted is not the active Quiz ... please reload the Quiz");
     		
     	}
-
+    	
+    	var indexOfGreatestVoted = String.fromCharCode("a".charCodeAt(0) + parseInt(greatestId)); //creating index 
+			
+    	
+	$(".current").find("#mc_answer_"+ slide + "_option_" + indexOfGreatestVoted).css('color', 'blue');
+	$(".current").find("#mc_answer_"+ slide + "_option_" + indexOfGreatestVoted).css('font-weight', 'bold');
     $(".current").find(".mc_meter").css('display', 'block');	
     $(".current").find(".mcoption_label").css('display', 'block');
 
@@ -629,16 +643,12 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Debugging.log("totalOptions value is: " + totalOptions);
 			
 			for(var i = 0; i<totalOptions; i++){
-    		
-    		
     		var next_num = i;
 			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
 			next_index = String.fromCharCode(next_index_prev);
     		
     		var overOptionZone = "#mc_answer_"+slideToRemoveListeners+"_option_"+ next_index;
-    		//#mc_answer_article1_option_c
     		
-    //	  	
     	  	//didn't get to remove the listener ... it just does nothing diferent  
     	  	$(document).on("mouseenter", overOptionZone, function(event){
   			
