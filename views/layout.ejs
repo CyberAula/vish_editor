@@ -7,29 +7,23 @@
     <script type="text/javascript" src="/javascripts/VISHWS.js"></script>
     <script type="text/javascript" src="/javascripts/VISHWS.CORE.js"></script>
     <script type="text/javascript" src="/javascripts/VISHWS.VALIDATION.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
   </head>
   <body>
-    <div id="container">
+    <div id="container" class="wrapper">
       <div id="header">
-        <h1> Welcome to Vish Editor Standalone Version</h1>
-        <% if(everyauth.user){%>
-          <p>Logged as <%=everyauth.user.name%></p>
-          <a href="/home"> Home </a>
-             &nbsp;
-          <a href="/logout"> Logout</a>
-        <%}else{%>
-          <p>Please log in</p>
-        <%}%>
+        <%- partial('partials/header') %>
       </div>
+
       <div id="content">
         <%- body %>
       </div>
-      <div id="footer">
-        <a href="https://github.com/ging/vish_editor_standalone"> Vish Editor on GitHub</a>
+
+      <div class="row span12 center" id="footer">
+        <%- partial('partials/footer') %>
       </div>
+
     </div>
   </body>
 </html>
