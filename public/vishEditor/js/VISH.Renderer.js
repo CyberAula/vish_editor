@@ -197,7 +197,7 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		//ret += "<label class='question_name'>Name:  </label>";
-	     ret+= "<table id='truefalse_quiz_table' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
+	     ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
 	     
 	     
 	     //<input type='checkbox' id='1_true'/></td><td id='td_false_1'><input type='checkbox' id='1_false'/></td><td id='td_question_1'><textarea rows='1' cols='50' class='value_multiplechoice_question' placeholder='Write question here'></textarea></td></tr>              </table></div>

@@ -275,6 +275,15 @@ img {
 	border-collapse: collapse;
 }
 
+.truefalse_quiz_table tr:nth-of-type(even) {
+	background-color:#F3F3F3;
+}
+
+.truefalse_quiz_table tr:nth-of-type(odd) {
+	background-color: #DDD;
+}
+
+
 .truefalse_quiz_table td th {
 	border:none;
 }
@@ -286,9 +295,25 @@ img {
 }
 
 .truefalse_quiz_table td {
-	background-color: #FFF;
+	
 	color:#000;
 }
+
+
+.true_false_question {
+	background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    margin-left:3%;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: relative;
+    z-index: 1000;
+}
+
+
 	
 #config_div {
 	background: url(/vishEditor/images/config.png);
