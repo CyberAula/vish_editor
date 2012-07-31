@@ -20,32 +20,26 @@ VISH.Quiz = (function(V,$,undefined){
    		role = user.role;
    		//TODO where initialize this variable (here or )
    		slideToVote = userStatus.quiz_active;
-   		
-   		 
    		//the object to be returned
    		var obj;
    		
    		switch(role) {
    	 
    			case "logged": 
-      	//render the slide for a logged user
+     	 	//render the slide for a logged user
       		obj = _renderMcquestionLogged (element, template, slide); 
       		//add listener to stat Button
-     		
-   			break;
+     		break;
    
    			case "student":
-   		//render the slide for a student (he knows the shared URL) and no logged user 
+   			//render the slide for a student (he knows the shared URL) and no logged user 
    			obj =  _renderMcquestionStudent (element, template, slide); 
    			//add listener to send button _onSendVoteMcQuizButtonClicked
-			
-   			break;
+			break;
    
    			case "none":
-   		//render the slide for a viewer (he doesn't know the shared) URL an not logged user
+   			//render the slide for a viewer (he doesn't know the shared) URL an not logged user
    			obj =  _renderMcquestionNone (element, template, slide);
-   			
-   			
    			break;
    
    			default: 
@@ -54,9 +48,7 @@ VISH.Quiz = (function(V,$,undefined){
    	
    		}
    
-   
    return obj;
-  
    
    };
    /**
@@ -69,7 +61,6 @@ VISH.Quiz = (function(V,$,undefined){
    	   	
    	switch(role) {
    	 
-   	
    			case "logged": 
    			slideToActivate = slide;
    			
@@ -105,8 +96,6 @@ VISH.Quiz = (function(V,$,undefined){
  * the user can start the Quiz so we show the quiz with all elements and buttons  
  * 
  */
-
-
    var _renderMcquestionLogged = function(element, template, slide){
    	
    		var next_num=0;
@@ -148,7 +137,7 @@ VISH.Quiz = (function(V,$,undefined){
  */
       var _renderMcquestionStudent = function(element, template, slide){
     
-    	 		var next_num=0;
+    	var next_num=0;
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
@@ -156,7 +145,6 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
 		
 		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-		
 		
 		for(var i = 0; i<element['options'].length; i++){
 			var next_num = i;
@@ -188,10 +176,8 @@ VISH.Quiz = (function(V,$,undefined){
  */    
     
     var _renderMcquestionNone = function(element, template, slide){
-    //	V.Debugging.log("enter to renderMcquestionNone");
-    	
-    	
-		var next_num=0;
+  
+  		var next_num=0;
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
@@ -207,16 +193,11 @@ VISH.Quiz = (function(V,$,undefined){
 			next_index = String.fromCharCode(next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";	
-		//	ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			
-			//ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
-		
+				
 		}
 		
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
-		//ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-	//	ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
 		
 		ret += "</div>";
 		ret += "</form>";
@@ -236,8 +217,6 @@ VISH.Quiz = (function(V,$,undefined){
     var _activateLoggedInteraction = function () {
     	
     	var startButton = '#mcquestion_start_button_'+slideToActivate;
-    	
-    	//
     	
     	var statisticsButton = '#mch_statistics_button_'+slideToActivate;
     	
@@ -268,7 +247,7 @@ VISH.Quiz = (function(V,$,undefined){
 			next_index = String.fromCharCode(next_index_prev);
     		
     		var overOptionZone = "#mc_answer_"+slideToVote+"_option_"+ next_index;
-    		//#mc_answer_article1_option_c
+    		
     		
     	  	$("#"+slideToVote).on("mouseenter", overOptionZone, function(event){	
   				//event.preventDefault();
@@ -465,17 +444,13 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
     	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _onStartMcQuizButtonClicked);
     	
-    	
     };
     
     var _onStatisticsMcQuizButtonClicked = function () {
     	var marginTopDefault = 18; 
     	var marginTopDefault2 = 24; 
-
 		
 		//find the number of slide 
-	//slideToActivate = $(".current").find("#slide_to_activate").val();
-	//slideToStop = $(".current").find("#slide_to_stop").val();
 	 
 	  	//if it is shown --> hide and move the button up  
     	if(	$(".current").find(".mc_meter").css('display')=="block") {
