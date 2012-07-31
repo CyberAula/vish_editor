@@ -651,9 +651,11 @@ VISH.Quiz = (function(V,$,undefined){
     		
     	  	//didn't get to remove the listener ... it just does nothing diferent  
     	  	$(document).on("mouseenter", overOptionZone, function(event){
-  			
-  				$(event.srcElement).css("color", "black");
-      			$(event.srcElement).css("font-weight", "normal");
+  			 
+  			 event.preventDefault();
+  			 event.srcElement.unbind("mouseenter");
+  			/*	$(event.srcElement).css("color", "black");
+      			$(event.srcElement).css("font-weight", "normal"); */
 		});
     	  	
   			  				
