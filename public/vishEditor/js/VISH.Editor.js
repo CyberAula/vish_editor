@@ -794,6 +794,20 @@ VISH.Editor = (function(V,$,undefined){
 						$(div).find('.multiplechoice_text').each(function(i, input_text){
 							element.options[i] = input_text.value;
 						}); 
+						
+						} else if (element.type=="truefalsequestion") {     		      	
+						
+							element.questions = [];	
+						$(div).find(".value_multiplechoice_question").each(function(i, input_text){
+							element.questions[i] = input_text.value;
+						});
+						
+						/*element.options = [];  	
+						$(div).find('.multiplechoice_text').each(function(i, input_text){
+							element.options[i] = input_text.value;
+						}); */ 
+						
+						
 					} else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];

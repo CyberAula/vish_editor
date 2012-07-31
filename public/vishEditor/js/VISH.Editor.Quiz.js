@@ -4,17 +4,23 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//var buttonAddOptionClass = "add_quiz_option"; //con esto sí funciona	
 	var MultipleChoiceOptionClass = "multiplechoice_text";
 	var searchOptionText= "mchoice_radio_option_";
-	var num_options = 6; // maximum input options 
+	var maxNumMultipleChoiceOptions = 6; // maximum input options 
+	
+	
+	//var for T/F Quiz
+	var buttonAddTrueFalseQuestionId = "a_add_true_false_question";
+	var maxNumTrueFalseQuestions = 6; // maximum input options
 	
 	var init = function(){
 		
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
+		$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
 
  var myInput = $(".current").find("input[type='text']");
 	//	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-				V.Debugging.log("event.type vale: "  + event.type); //KeyDown
+			
 				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
 					//call to addMultipleChoiceOption
 					addMultipleChoiceOption();
@@ -48,12 +54,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
 		
 				var next_num = inputs_search.size()+1;
-				var next_index = "a".charCodeAt(0) + (next_num-1); 
-				next_index = String.fromCharCode(next_index);
-
-
+				var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
+				
 		//remove add button , add option input 
-				if (next_num < num_options) {
+				if (next_num < maxNumMultipleChoiceOptions) {
 
 		    		$(".add_quiz_option").remove();
 		    
@@ -67,7 +71,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$(".current").find("#ul_mch_options").append(add_option);
 					//remove button + 
 					
-					} else if (next_num == (num_options)) {
+					} else if (next_num == (maxNumMultipleChoiceOptions)) {
 						//if the last one remove add button and add delete button to the preview and to the last one
 						$(".add_quiz_option").remove();
 			
@@ -127,7 +131,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 		
 		//if id less than number of inputs
-		if(id < (num_options) ) {
+		if(id < (maxNumMultipleChoiceOptions) ) {
 			
 			//OJO con el igual
 		for (i=id; i<=num_inputs; i++) {
@@ -165,7 +169,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		//if the selected input to remove is the last one of all options
 		
 		// id=6 
-		else if (id == (num_options) ) {
+		else if (id == (maxNumMultipleChoiceOptions) ) {
 			//remove the last input
 			 $(".current").find("#li_mch_option_"+id.toString()).remove();
 			
@@ -184,13 +188,46 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 		}
 	};
+	/*
+	 *Add a new row into the table with the elements that    
+	 * */
 	
-	
+	var  addTrueFalseQuestion = function(event){
+		
+			var numCurrentQuestions = $(".current").find(".true_false_question").size();
+			//test number of questios
+		if (numCurrentQuestions < maxNumTrueFalseQuestions)	{
+			
+			//test has been added text into current input
+			if(($(".current").find(".true_false_question").last().val()!="")&&($(".current").find(".true_false_question").last().val()!="Write question here")) {
+				//remove add question button
+				$(document).find('#'+buttonAddTrueFalseQuestionId).remove();
+			
+				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_false_"+(numCurrentQuestions+1)+"'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_question_"+(numCurrentQuestions+1)+"'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
+				
+				//add the row into the table 
+				$(".current").find(".truefalse_quiz_table").append(trueFalseQuestionRow);
+			 
+							
+			} 
+			
+			else {
+				
+				alert ("Must write question before add new row.");
+				
+			}
+			
+		} else {
+		
+		 			alert ("Number of maximum questions reached.");
+		}
+	};
 			
 	return {
 		init: init, 
-		addMultipleChoiceOption: addMultipleChoiceOption, 
-		removeMultipleChoiceOption: removeMultipleChoiceOption 
+		addMultipleChoiceOption		: addMultipleChoiceOption, 
+		removeMultipleChoiceOption	: removeMultipleChoiceOption, 
+		addTrueFalseQuestion		: addTrueFalseQuestion
 	};
 
 }) (VISH, jQuery);

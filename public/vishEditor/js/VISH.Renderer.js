@@ -55,11 +55,11 @@ VISH.Renderer = (function(V,$,undefined){
 				
 				//this will be call as many times as mcquestion have the excursion
 				//isn't better to get the role value in the VISH.Quiz? 
-				//role = VISH.SlideManager.getUser().role;
-			
 				content +=V.Quiz.init(slide.elements[el],slide.template, slide.id);
-				//content += _renderMcquestion(slide.elements[el],slide.template);
 				classes +="mcquestion";
+			} else if ( slide.elements[el].type === "truefalsequestion") {
+				
+				content += _renderTrueFalseQuestion(slide.elements[el],slide.template);
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -184,36 +184,40 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 	
 	/**
-	 * Function to render a multiple choice question form inside an article (a slide)
+	 * Function to render a True False Question choice question form inside an article (a slide)
 	 */
 	
-	var _renderMcquestion = function(element, template){
+	var _renderTrueFalseQuestion = function(element, template){
 		var next_num=0;
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
-		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
+		//ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['questions']+"?</h2>";
 		
 		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		//ret += "<label class='question_name'>Name:  </label>";
-		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
+	     ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
+	     
+	     
+	     //<input type='checkbox' id='1_true'/></td><td id='td_false_1'><input type='checkbox' id='1_false'/></td><td id='td_question_1'><textarea rows='1' cols='50' class='value_multiplechoice_question' placeholder='Write question here'></textarea></td></tr>              </table></div>
 		
 		
-		for(var i = 0; i<element['options'].length; i++){
-			var next_num = i;
-		var next_index = "a".charCodeAt(0) + (next_num); 
-		next_index = String.fromCharCode(next_index);
-			
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		for(var i = 0; i<element['questions'].length; i++){
+		//not used
+		var next_num = i;
+		//not used
+		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
+		
+			ret +="<tr id='tr_question_"+(i+1)+"'><td id='td_true_"+(i+1)+"'>";
+			ret += "<input type='checkbox' name='mc_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='mc_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]+"</label></td></tr>";
 		
 		}
 		
-		ret += "</div>";
-		ret += "<div class='mcquestion_right'>";
-		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+		ret += "</table>";
+		ret += "<div class='tfquestion_right'>";
+	//	ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+		ret += "<input type='submit' class='tfquestion_button' value='Start Quiz'/>";
 		
 		ret += "</div>";
 		ret += "</form>";
