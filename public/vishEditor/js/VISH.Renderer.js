@@ -190,12 +190,12 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderTrueFalseQuestion = function(element, template){
 		var next_num=0;
 		
-		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 		
-		ret += "<div class='mcquestion_container'>";
+		ret += "<div class='truefalse_question_container'>";
 		//ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['questions']+"?</h2>";
 		
-		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+		ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
 		//ret += "<label class='question_name'>Name:  </label>";
 	     ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
 	     
@@ -210,7 +210,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
 		
 			ret +="<tr id='tr_question_"+(i+1)+"'><td id='td_true_"+(i+1)+"'>";
-			ret += "<input type='checkbox' name='mc_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='mc_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]+"</label></td></tr>";
+			ret += "<input type='checkbox' name='tf_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='tf_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]+"</label></td></tr>";
 		
 		}
 		

@@ -798,8 +798,12 @@ VISH.Editor = (function(V,$,undefined){
 						} else if (element.type=="truefalsequestion") {     		      	
 						
 							element.questions = [];	
-						$(div).find(".value_multiplechoice_question").each(function(i, input_text){
+						$(div).find(".true_false_question").each(function(i, input_text){
+							
+							VISH.Debugging.log("input text for each question value is:" +input_text.value);
 							element.questions[i] = input_text.value;
+							
+							
 						});
 						
 						/*element.options = [];  	
