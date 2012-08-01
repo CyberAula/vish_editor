@@ -210,7 +210,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
 		
 			ret +="<tr id='tr_question_"+(i+1)+"'><td id='td_true_"+(i+1)+"'>";
-			ret += "<input type='checkbox' name='tf_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='tf_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]+"</label></td></tr>";
+			ret += "<input type='checkbox' name='tf_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='tf_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]['text_question']+"</label></td></tr>";
 		
 		}
 		
