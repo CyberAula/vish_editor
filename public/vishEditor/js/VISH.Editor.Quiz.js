@@ -203,7 +203,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//remove add question button
 				$(document).find('#'+buttonAddTrueFalseQuestionId).remove();
 			
-				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_false_"+(numCurrentQuestions+1)+"'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_question_"+(numCurrentQuestions+1)+"'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
+				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"' class='td_true'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_false_"+(numCurrentQuestions+1)+"' class='td_false'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_question_"+(numCurrentQuestions+1)+"' class='td_truefalse_question'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td class='td_add_button'><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
 				
 				//add the row into the table 
 				$(".current").find(".truefalse_quiz_table").append(trueFalseQuestionRow);

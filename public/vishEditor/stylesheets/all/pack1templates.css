@@ -935,6 +935,20 @@ text-align:left;
 	display:block;
 	
 }
+
+
+
+.t11_header {
+	
+	margin-top:1.5%;
+	height: 10%;
+	width: 100%;	
+	display: inline-block;	
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+
+}
 		
 
 .t12_left{
@@ -945,6 +959,20 @@ text-align:left;
 	float: left;
 	overflow:hidden;	
 }
+
+.truefalse_question {
+	padding: 2%;
+	width:100%;
+	height: 90%;
+	
+}
+
+
+
+
+
+
+
 
 
 
