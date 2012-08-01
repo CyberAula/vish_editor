@@ -38,7 +38,7 @@ exports.show = function(req,res){
   database.findPresentationById(id,function(err,presentation){
     if(err){
       req.flash('warn','Presentation not found');
-      res.render('presentation/show');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
@@ -57,19 +57,19 @@ exports.edit = function(req,res){
   if(req.user.presentations.indexOf(id)===-1){
     //Current user is not the owner of this presentation
     req.flash('warn','You don\'t have permissions to edit this presentation');
-    res.render('presentation/show');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
     return;
   }
 
   database.findPresentationById(id,function(err,presentation){
     if((err)||(presentation===null)){
       req.flash('warn','Presentation not found');
-      res.render('presentation/show');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
     } else {
       database.findUserById(presentation.author,function(err,user){
         if((err)||(user===null)){
           req.flash('warn','Presentation owner not found');
-          res.render('presentation/show');
+          res.render('genericError', { locals: {returnUrl: "/home" } });
         } else {
           res.render('presentation/edit', {locals: {presentation: presentation, author: user.name, options: options}});
         }
@@ -84,14 +84,14 @@ exports.update = function(req,res){
   if(req.user.presentations.indexOf(id)===-1){
     //Current user is not the owner of this presentation
     req.flash('warn','You don\'t have permissions to edit this presentation');
-    res.render('presentation/show');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
     return;
   }
 
   database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
       req.flash('warn','This presentation can\'t be updated');
-      res.render('presentation/show');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
     } else {
       var data = new Object();
       data.url = '/presentation/' + presentationId;
@@ -107,14 +107,14 @@ exports.destroy = function(req,res){
   if(req.user.presentations.indexOf(id)===-1){
     //Current user is not the owner of this presentation
     req.flash('warn','You don\'t have permissions to edit this presentation');
-    res.render('presentation/show');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
     return;
   }
 
   database.destroyPresentation(id,function(err,presentation){
       if(err){
         req.flash('warn','This presentation can\'t be destroyed');
-        res.render('presentation/show');
+        res.render('genericError', { locals: {returnUrl: "/home" } });
       } else {
         res.redirect('/home');
       }
@@ -126,12 +126,12 @@ exports.download = function(req,res){
   database.findPresentationById(id,function(err,presentation){
     if((err)||(presentation===null)){
       req.flash('warn','Presentation not found');
-      res.render('presentation/show');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
     } else {
       writeJsonToFile(presentation._id.toHexString(),presentation.content, function(err,outputFileName){
           if((err)||(outputFileName===null)){
             req.flash('warn','Presentation can\'t be downloaded');
-            res.render('presentation/show');
+            res.render('genericError', { locals: {returnUrl: "/home" } });
           } else {
             res.contentType('application/json');
             res.attachment(outputFileName);

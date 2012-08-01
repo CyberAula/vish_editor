@@ -40,6 +40,14 @@ html, body {
   margin-bottom: 30px !important;
 }
 
+.last{
+  border-radius: 5px;
+  background-color: #F1F1F1;
+  float: none !important;
+  text-align: center !important;
+  padding-top: 10px;
+}
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
@@ -106,19 +114,11 @@ hr, .hrcolor {
   cursor: pointer;
 }
 
-.example{
-  border-style:solid;
-  height: 90px;
-  border-color: #DDDDDD;
-
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  -moz-box-shadow: 5px 5px 5px #DDDDDD;
-  -webkit-box-shadow: 5px 5px 5px #DDDDDD;
-  box-shadow: 5px 5px 5px #DDDDDD;
+div.example{
+  text-align: center;
 }
 
-.examples{
+div.examples{
   height: 130px;
   margin-top: 20px;
 }
@@ -211,11 +211,9 @@ input[placeholder], [placeholder], *[placeholder]
 
 #topbar{
   padding-top: 5px;
-  height: 10px;
 }
 
 #topBarLoggedAs{
-  height: 100%;
 }
 
 p.loggedAs{
@@ -233,17 +231,6 @@ span.username{
   text-align: right;
   font-weight: normal;
   font-family: "Arial";
-}
-
-.last{
-  border-radius: 5px;
-  background-color: #DEDEDE;
-  margin: 0 auto !important;
-  float: none !important;
-  text-align: center;
-  margin-top: 30px;
-  padding-top: 10px;
-  margin-bottom: -10px !important;
 }
 
 .fontcolor{
@@ -559,6 +546,7 @@ li.presentation_list{
   text-align: center;
   margin-top: 10px;
   margin-bottom: 50px;
+  margin-left: 24%;
 }
 
 .metadata_title{
@@ -577,4 +565,68 @@ li.presentation_list{
 
 .homelink{
   cursor: pointer !important;
+}
+
+#loginError{
+  margin-left: 30px;
+  width: 70%;
+  text-align: center;
+  padding: 10px;
+}
+
+#registerError{
+  margin-left: 30px;
+  width: 70%;
+  text-align: center;
+  padding: 10px;
+}
+
+.messageError{
+  margin: auto;
+}
+
+.image_example{
+  width: 70%;
+}
+
+.videoWrapper{
+  margin-left: 23%;
+  margin-bottom: 30px;
+}
+
+.videoExampleIframe{
+  border: 5px solid #F1F1F1;
+}
+
+a.logout{
+  text-decoration: none;
+}
+
+span.logout{
+  color: #97969A;
+}
+
+#warn_alert{
+  margin-top: 17%;
+  padding: 20px;
+  text-align: center;
+}
+
+.tabVishEditorWrapper{
+  padding-left:0px !important;
+  margin-left: -30px !important;
+  padding-right:0px !important;
+  margin-right:0px !important;
+  width: 100% !important;
+}
+
+.overrideMarginsAndPadings{
+  padding-left:0px !important;
+  margin-left:0px !important;
+  padding-right:0px !important;
+  margin-right:0px !important;
+}
+
+.vishEditorIframeWrapper{
+  margin-right: 20% !important;
 }

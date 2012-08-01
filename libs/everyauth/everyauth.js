@@ -32,9 +32,6 @@ everyauth.password
   .loginView('index')
   .authenticate( function (login, password) {
 
-
-    console.log("authenticate function called");
-
     var errors = [];
     if (!login) {
       errors.push('Missing login');
@@ -43,6 +40,7 @@ everyauth.password
       errors.push('Missing password');
     }
     if (errors.length) {
+      errors.push('LOGIN_ERROR');
       return errors;
     }
 
@@ -50,15 +48,15 @@ everyauth.password
 
     User.findOne({login: login, password: password, authBy: 'password'},function(err,user){
       if(err){
-         console.log("err vale " + err)
+         errors.push('LOGIN_ERROR');
          promise.fulfill([err]);
       } else {
          if(user !== null){
-          console.log("Succesfull access");
+          // console.log("Succesfull access");
           promise.fulfill(user);
          } else {
-          console.log("Incorrect login or password.");
           errors.push("Incorrect login or password.");
+          errors.push('LOGIN_ERROR');
           promise.fulfill(errors);
          }
       }
@@ -74,12 +72,14 @@ everyauth.password
       var promise = this.Promise();
 
       if((errors)&&(errors.length)){
+        errors.push('REGISTER_ERROR');
         promise.fulfill(errors);
         return promise;
       }
 
       if((!newUserAttributes)||(!newUserAttributes.login)||(!newUserAttributes.password)){
         errors.push("Login or password missed");
+        errors.push('REGISTER_ERROR');
         promise.fulfill(errors);
         return promise;
       }
@@ -88,12 +88,14 @@ everyauth.password
         if(!err){
           if(user !== null){
             errors.push("Login already taken");
+            errors.push('REGISTER_ERROR');
             promise.fulfill(errors);
           }else{
             promise.fulfill([]);
           }
         }else{
           errors.push(err);
+          errors.push('REGISTER_ERROR');
           promise.fulfill(errors);
         }
       });
@@ -111,7 +113,6 @@ everyauth.password
       user.save( function(){
 	  	promise.fulfill(user);
 	  });
-
       return promise;
   })
   .registerSuccessRedirect('/home'); // Where to redirect to after a successful registration

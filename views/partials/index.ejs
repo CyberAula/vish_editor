@@ -1,12 +1,11 @@
+<script type="text/javascript" src="/javascripts/view.index.js"></script>
+
 <div class = "container">
-  <div class= "span1 centeri">
-    <p></p>
-  </div>
   <div class = "span1 centeri">
     <p> </p>
   </div>
   <div class = "span5 centeri">
-    <img id = "mainimage" width="100%" height="100%" src="images/show_big.png" >
+    <img id = "mainimage" width="100%" height="100%" src="/images/show_big.png" >
   </div>
   <div class = "span1 centeri" >
     <p></p>
@@ -14,9 +13,31 @@
   <div id ="login">
     <div class = "span3 centeri sign_box">
       <%- partial('partials/sign_in') %>
+      <% if (typeof errors !== 'undefined' && errors.length && errors.indexOf("LOGIN_ERROR")!=-1 ){%>
+        <div id="loginError" class="alert alert-error">
+           <%for(i=0; i<errors.length; i++){%>
+            <%if (errors[i]!="LOGIN_ERROR") {%>
+              <p class="messageError"><%=errors[i]%></p>
+            <%}%>
+          <%}%>
+        </div>
+      <%} else {%>
+        <div id="loginError" class="alert alert-error" style="display:none"></div>
+      <%}%>
     </div>
-    <div class = "span4 centeri sign_box signup_space">
+    <div class = "span3 centeri sign_box signup_space">
       <%- partial('partials/sign_up') %>
+      <% if (typeof errors !== 'undefined' && errors.length && errors.indexOf("REGISTER_ERROR")!=-1){%>
+        <div id="registerError" class="alert alert-error">
+           <%for(i=0; i<errors.length; i++){%>
+            <%if (errors[i]!="REGISTER_ERROR") {%>
+              <p class="messageError"><%=errors[i]%></p>
+            <%}%>
+          <%}%>
+        </div>
+      <%} else {%>
+        <div id="registerError" class="alert alert-error" style="display:none"></div>
+      <%}%>
     </div>
   </div>
   <div class= "span1 centeri">
@@ -35,29 +56,7 @@
     <div class = "row span1 space"></div>
 
     <div class = "row span12 text fontcolor features">
-      <div class = "row span9">
-          <img class ="span2 ico" src="images/www_black-01n.png"/>
-          <p  class ="span2 parrafo">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          </p>      
-          <img class ="span2 ico marg" src="images/editn.png"/>        
-          <p class ="span2 parrafo">
-            Lorem Ipsum is simply Lorem Ipsum is simply Lorem Ipsum is simply
-          </p>
-      </div>
-      <div class = "row span9 spaceFeatures">
-        
-        <img class ="span2 ico" src="images/slide_blackn.png"/>
-        <p class ="span2 parrafo">
-          Lorem Ipsum is simply Lorem Ipsum is simply Lorem Ipsum is simply
-        </p>
-        
-        <img class ="span2 ico marg" src="images/mobilen.png"/>  
-        <p class ="span2 parrafo">
-          Lorem Ipsum is simply Lorem Ipsum is simply Lorem Ipsum is simply
-        </p>                                
-      </div>
+      <%- partial('partials/features') %>
     </div>
   </div>
 </div>
-<div class="push"></div>

@@ -1,0 +1,8 @@
+<%if (flash.warn) {%>
+	<p id="warn_alert" class="alert alert-error row span8 offset1"><%=flash.warn%></p>
+	<% if (typeof returnUrl !== "undefined"){%>
+		<p class="span8 offset1"><a href='<%-returnUrl%>'> Come Back </a></p>
+	<%} else {%>
+		<p class="span8 offset1"><a href="/home"> Home </a></p>
+	<%}%>
+<%}%>

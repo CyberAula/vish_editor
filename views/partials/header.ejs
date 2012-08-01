@@ -1,10 +1,12 @@
 <div class= "row span12 center" id="topbar">
   <% if(everyauth.user){%>
     <div class= "row span12 offset9" id="topBarLoggedAs">
-      <p class="loggedAs">Logged as <span class="username"><%=everyauth.user.name%></span></p>
+      <p class="loggedAs">Logged as <span class="username"><%=everyauth.user.name%></span>
+      &nbsp;
+      <a class="logout" href="/logout"> <span class="logout">Logout</span> </a></p>
     </div>
   <%} else {%>
-    <div class= "span6 centero">
+    <div class= "row span7 centero">
       <p></p>
     </div>
     <div class= "row span3 centeroi">
@@ -15,9 +17,6 @@
         <a href="/auth/facebook"><img class= "imagen" width="23" height="23" src="/images/social_icons/facebook.svg"></a>
         <img class="imagen" width="23" height="23" src="/images/social_icons/gplus.svg" style='display:none' >
     </div>
-      <div class= "row span1 scenter">
-        <p> </p>
-      </div>
   <%}%>
 </div>
 

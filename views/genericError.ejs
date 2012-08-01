@@ -1,4 +1,13 @@
-<%if (flash.warn) {%>
-      <p id="warn_alert" class="alert alert-error"><%=flash.warn%></p>
-<%}%>
-<a href="/home"> Home </a>
+<div class="row span12 center main">
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+       <%- partial('partials/error') %>
+    </div>
+    <div class="tab-pane" id="tab2">
+       <%- partial('partials/help') %>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <%- partial('partials/aboutus') %>
+    </div>
+  </div>
+</div>

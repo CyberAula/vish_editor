@@ -13,7 +13,7 @@ exports.init = function(app) {
 	  if(req.user){
 	    return next();
 	  } else {
-	    return controllers.index(req,res);
+	    return controllers.index(req,res,req.url);
 	  }
 	}
 

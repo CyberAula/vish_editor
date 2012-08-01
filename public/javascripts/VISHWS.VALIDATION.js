@@ -1,8 +1,8 @@
 VISHWS.VALIDATION = (function(V,$,undefined){
 	
 	var init = function(){
-	};
-	
+	}
+
 	var validateSignIn = function(name,password){
 		if(!_validateString(name)){
 			return false;
