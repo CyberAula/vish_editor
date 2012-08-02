@@ -209,18 +209,23 @@ VISH.Renderer = (function(V,$,undefined){
 		//not used
 		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
 		
-			ret +="<tr id='tr_question_"+(i+1)+"'><td id='td_true_"+(i+1)+"'>";
-			ret += "<input type='checkbox' name='tf_radio' value='true' /></td><td id='td_false_"+(i+1)+"'><input type='checkbox' name='tf_radio' value='false'/></td><td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]['text_question']+"</label></td></tr>";
+			ret +="<tr id='tr_question_"+(i+1)+"'>";
+			ret +="<td id='td_true_"+(i+1)+"'>";
+			ret += "<input type='radio' name='tf_radio' value='true' /></td>";
+			ret += "<td id='td_false_"+(i+1)+"'><input type='radio' name='tf_radio' value='false'/></td>";
+			ret += "<td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]['text_question']+"</label></td>";
+			ret += "</tr>";
 		
 		}
 		
 		ret += "</table>";
-		ret += "<div class='tfquestion_right'>";
+	
 	//	ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' class='tfquestion_button' value='Start Quiz'/>";
-		
-		ret += "</div>";
+		//ret += "<input type='submit' class='tfquestion_button' value='Start Quiz'/>";
+
 		ret += "</form>";
+		
+		
 		ret += "</div>";
 		return ret;
 	};
