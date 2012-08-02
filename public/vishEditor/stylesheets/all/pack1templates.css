@@ -1019,15 +1019,29 @@ text-align:left;
 .true_false_question_txt {
 	background: none no-repeat scroll 5px 50% transparent;
     margin-left:1%;
+    text-align:left;
     font-family: Helvetica;
     font-size: 1.2em;
+    line-height: 110%;
     outline: 0 none;
     padding: 1%;
-    text-align:left;
-    z-index: 1000;
     width: 94%;
 }
 
+.tfquestion_button {
+	display:block;
+	position:relative;
+	float:right;
+	color: blue;
+	font-size:1.2em;
+	text-align:center;
+	vertical-align:bottom;
+	margin-top:5%;
+	margin-right:5%;
+	height:9%;
+	width: 20%;
+	
+}
 
 
 
