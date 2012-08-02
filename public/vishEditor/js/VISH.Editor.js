@@ -802,23 +802,16 @@ VISH.Editor = (function(V,$,undefined){
 						$(div).find(".true_false_question").each(function(i, input_text){
 							
 							VISH.Debugging.log("input text for each question value is:" +input_text.value);
-							//element.questions[i] = input_text.value;
+							
 							
 							question.id = i;
 							question.text_question = input_text.value;
-							question.answer = true;
-							//element.questions[i] = i;
-							//element.questions[i].question = input_text.value;
-							//element.questions[i].question = ;
-								element.questions.push(question);
-								question = {};
+							question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();;
+							element.questions.push(question);
+							question = {};
 						});
-						//var answer = $(".current").find("input:radio[name='mc_radio']:checked'").val();
-						/*element.options = [];  	
-						$(div).find('.multiplechoice_text').each(function(i, input_text){
-							element.options[i] = input_text.value;
-						}); */ 
 						
+												
 						
 					} else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");

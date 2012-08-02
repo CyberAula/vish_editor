@@ -189,7 +189,7 @@ VISH.Renderer = (function(V,$,undefined){
 	
 	var _renderTrueFalseQuestion = function(element, template){
 		var next_num=0;
-		
+		var answers = new Array();
 		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 		
 		ret += "<div class='truefalse_question_container'>";
@@ -204,16 +204,17 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		
 		for(var i = 0; i<element['questions'].length; i++){
-		//not used
-		var next_num = i;
+		
+		answers[i] =element['questions'][i]['answer'];
+		
 		//not used
 		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
 		
 			ret +="<tr id='tr_question_"+(i+1)+"'>";
-			ret +="<td id='td_true_"+(i+1)+"'>";
+			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
 			ret += "<input type='radio' name='tf_radio' value='true' /></td>";
-			ret += "<td id='td_false_"+(i+1)+"'><input type='radio' name='tf_radio' value='false'/></td>";
-			ret += "<td id='td_question_"+(i+1)+"'><label>"+element['questions'][i]['text_question']+"</label></td>";
+			ret += "<td id='td_false_"+(i+1)+"' class='td_false' ><input type='radio' name='tf_radio' value='false'/></td>";
+			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"</label></td>";
 			ret += "</tr>";
 		
 		}
@@ -221,12 +222,15 @@ VISH.Renderer = (function(V,$,undefined){
 		ret += "</table>";
 	
 	//	ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		//ret += "<input type='submit' class='tfquestion_button' value='Start Quiz'/>";
+		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
 
 		ret += "</form>";
 		
 		
 		ret += "</div>";
+		
+		VISH.Debugging.log("JSON object answer is: " + answers);
+		
 		return ret;
 	};
 

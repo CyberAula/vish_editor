@@ -959,7 +959,7 @@ text-align:left;
 	float: left;
 	overflow:hidden;	
 }
-
+/* cause the viewer is independent of the editor */
 .truefalse_question {
 	padding: 2%;
 	width:100%;
@@ -967,7 +967,66 @@ text-align:left;
 	
 }
 
+.truefalse_question_container {
+	padding: 2%;
+	width:100%;
+	height: 90%;
+	
+}
 
+.truefalse_quiz_table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align:center;
+}
+
+.truefalse_quiz_table tr:nth-of-type(even) {
+	background-color:#F3F3F3;
+}
+
+.truefalse_quiz_table tr:nth-of-type(odd) {
+	background-color: #DDD;
+}
+
+
+.truefalse_quiz_table td th {
+	border:none;
+}
+
+.truefalse_quiz_table th {
+	background-color: #000;
+	color:#fff;
+	border-left:5%;
+}
+
+.truefalse_quiz_table td {
+	color:#000;
+}
+
+.td_true {
+	width: 10%;
+}
+
+.td_false{
+	width: 10%;
+}
+
+.td_truefalse_question{
+	text-align:left;
+	width: 75%;
+}
+
+.true_false_question_txt {
+	background: none no-repeat scroll 5px 50% transparent;
+    margin-left:1%;
+    font-family: Helvetica;
+    font-size: 1.2em;
+    outline: 0 none;
+    padding: 1%;
+    text-align:left;
+    z-index: 1000;
+    width: 94%;
+}
 
 
 
