@@ -193,10 +193,9 @@ VISH.Renderer = (function(V,$,undefined){
 		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 		
 		ret += "<div class='truefalse_question_container'>";
-		//ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['questions']+"?</h2>";
-		
+			
 		ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
-		//ret += "<label class='question_name'>Name:  </label>";
+		
 	     ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
 	     
 	     
@@ -208,7 +207,7 @@ VISH.Renderer = (function(V,$,undefined){
 		answers[i] =element['questions'][i]['answer'];
 		
 		//not used
-		var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
+		//var nextIndex = String.fromCharCode("a".charCodeAt(0) + (next_num)); 
 		
 			ret +="<tr id='tr_question_"+(i+1)+"'>";
 			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
