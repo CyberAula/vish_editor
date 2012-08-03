@@ -174,9 +174,7 @@ VISH.Quiz = (function(V,$,undefined){
  */    
     
     var _renderMcquestionNone = function(element, template, slide){
-  
-  		var next_num=0;
-		
+  	
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
@@ -186,10 +184,9 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
-		//	var next_num = i;
+		
 			var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-			//next_index = next_index);
-			
+				
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";	
 				
 		}
@@ -263,7 +260,9 @@ VISH.Quiz = (function(V,$,undefined){
 		}
     	
     };
-    
+    /*
+     * External user does not have interaction with the Quiz , think about remove this function
+     */
     
     var _activateNoneInteraction = function () {
     	
@@ -298,12 +297,14 @@ VISH.Quiz = (function(V,$,undefined){
      
 	  	//get values from the form
       	
-      	//construct url (making an POST to VISH.Server. Which params does it need? 
-      		
-      		// show (construct) share button and different buttons for social networks sharing
-    	slideToPlay = $(".current").find("#slide_to_activate").val();
+      	/*construct url (making an POST to VISH.Server. Which params does it need? 
+      		number of Excursion and number of slide
+      		*/
+      	// show (construct) share button and different buttons for social networks sharing
+      	slideToPlay = $(".current").find("#slide_to_activate").val();
     	
-    	var url = "http://www.vishub.org/dasdas";
+    	//this URL is generated for VISHUB server (through Ajax POST) 
+    	var url = "http://www.vishub.org/quiz_session/456";
     	
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";
