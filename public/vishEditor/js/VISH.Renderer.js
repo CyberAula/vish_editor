@@ -212,8 +212,9 @@ VISH.Renderer = (function(V,$,undefined){
 		
 			ret +="<tr id='tr_question_"+(i+1)+"'>";
 			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-			ret += "<input type='radio' name='tf_radio' value='true' /></td>";
-			ret += "<td id='td_false_"+(i+1)+"' class='td_false' ><input type='radio' name='tf_radio' value='false'/></td>";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
+			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
 			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"</label></td>";
 			ret += "</tr>";
 		
