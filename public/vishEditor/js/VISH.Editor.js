@@ -806,7 +806,12 @@ VISH.Editor = (function(V,$,undefined){
 							
 							question.id = i;
 							question.text_question = input_text.value;
-							question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();;
+							
+							if($(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val()==undefined) {
+								question.answer = "null";
+							} else {
+								question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
+							}
 							element.questions.push(question);
 							question = {};
 						});

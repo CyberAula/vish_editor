@@ -97,9 +97,7 @@ VISH.Quiz = (function(V,$,undefined){
  * 
  */
    var _renderMcquestionLogged = function(element, template, slide){
-   	
-   		var next_num=0;
-		
+   		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 			ret += "<div class='mcquestion_container'>";
 			ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
@@ -107,9 +105,9 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
-			var next_num = i;
-			var next_index = "a".charCodeAt(0) + (next_num); 
-			next_index = String.fromCharCode(next_index);
+			
+			var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
+			
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
 			//ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
@@ -137,7 +135,7 @@ VISH.Quiz = (function(V,$,undefined){
  */
       var _renderMcquestionStudent = function(element, template, slide){
     
-    	var next_num=0;
+    	
 		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
@@ -147,9 +145,9 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 		
 		for(var i = 0; i<element['options'].length; i++){
-			var next_num = i;
-			var next_index = "a".charCodeAt(0) + (next_num); 
-			next_index = String.fromCharCode(next_index);
+			
+			var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
+			
 			
 			ret += "<label class='mc_answer' id='mc_answer_"+slide+"_option_"+next_index+"'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
 			ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
@@ -188,9 +186,9 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		
 		for(var i = 0; i<element['options'].length; i++){
-			var next_num = i;
-			var next_index = "a".charCodeAt(0) + (next_num); 
-			next_index = String.fromCharCode(next_index);
+		//	var next_num = i;
+			var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
+			//next_index = next_index);
 			
 			ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";	
 				
