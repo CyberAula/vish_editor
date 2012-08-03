@@ -615,29 +615,15 @@ VISH.Quiz = (function(V,$,undefined){
 	var _removeOptionsListener = function (slideToRemoveListeners) {
 		
 		var totalOptions = $(".current").find(".mc_answer").size();
-		V.Debugging.log("totalOptions value is: " + totalOptions);
-			
-			for(var i = 0; i<totalOptions; i++){
-    		var next_num = i;
-			var next_index_prev = "a".charCodeAt(0) + (next_num); //creating index 
-			next_index = String.fromCharCode(next_index_prev);
-    		
-    		var overOptionZone = "#mc_answer_"+slideToRemoveListeners+"_option_"+ next_index;
-    		
-    	  	//didn't get to remove the listener ... it just does nothing diferent  
-    	  	$(document).on("mouseenter", overOptionZone, function(event){
-  			 
-  			 event.preventDefault();
-  			 event.srcElement.unbind("mouseenter");
-  			/*	$(event.srcElement).css("color", "black");
-      			$(event.srcElement).css("font-weight", "normal"); */
-		});
-    	  	
-  			  				
-		}	
-			
-			
-			
+					
+		for(var i = 0; i<totalOptions; i++){
+    	//var next_num = i;
+			var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); //creating index 
+			var overOptionZone = "#mc_answer_"+slideToRemoveListeners+"_option_"+ next_index;
+    	
+    	//changing the id of the element so the listener won't be able on that element	
+      		$(overOptionZone).attr("id", "#mc_answer_"+slideToRemoveListeners+"_voted__option_"+ next_index);
+    	 }	
 		
 	};
     
