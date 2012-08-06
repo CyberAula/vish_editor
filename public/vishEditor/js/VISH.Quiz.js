@@ -91,6 +91,20 @@ VISH.Quiz = (function(V,$,undefined){
    	
    };
    
+   /*
+    * 
+    * 
+    */
+   
+   
+   var enableTrueFalseInteraction = function (slide, options) {
+   	
+   		VISH.Debugging.log(" enter in enableTrueFalseInteraction, slide value is: " + slide + " options value is: " + options );
+   	
+   	
+   };
+   
+   
 /*
  * Render an Multiple choice question slide for an user who is logged in. In this case 
  * the user can start the Quiz so we show the quiz with all elements and buttons  
@@ -629,9 +643,9 @@ VISH.Quiz = (function(V,$,undefined){
     
     
     return {
-    	init 			 	 : init,
-        enableInteraction    : enableInteraction
-        
+    	init				 	 	: init,
+        enableInteraction		    : enableInteraction, 
+        enableTrueFalseInteraction	: enableTrueFalseInteraction
         
     };
     

@@ -214,14 +214,13 @@ VISH.Renderer = (function(V,$,undefined){
 			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
 			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
 			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
-			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"</label></td>";
+			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
 			ret += "</tr>";
 		
 		}
 		
 		ret += "</table>";
 	
-	//	ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
 		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
 
 		ret += "</form>";
@@ -229,7 +228,7 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		ret += "</div>";
 		
-		VISH.Debugging.log("JSON object answer is: " + answers);
+		VISH.Debugging.log("JSON object answer is: " +answers);
 		
 		return ret;
 	};

@@ -45,6 +45,10 @@ VISH.Excursion = (function(V,undefined){
 					VISH.Quiz.enableInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].options.length);
 					
 					
+				}else if (mySlides[i].elements[num].type === "truefalsequestion") {
+				//number of slide and number of true/false questions 
+				VISH.Quiz.enableTrueFalseInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].questions.length);
+					
 				}
 			}
 		}
