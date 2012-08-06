@@ -7,13 +7,16 @@ VISH.Quiz = (function(V,$,undefined){
     var userStatus; 
    	var startButton = "mcquestion_start_button";
 	var stopButton = "mcquestion_stop_button";
-   
+   trueFalseAnswers = new Array(); //array to save the answers
     /**
     * called from VISH.Renderer.renderSlide when one of the slide's element type is a mcquestion 
     
     * */
    
    	var init = function(element, template, slide){
+		
+		if(element.type=="mcquestion") {
+		
 		//depending on the role we use a diferent rederer function      
    		user = V.SlideManager.getUser();
    		userStatus = V.SlideManager.getUserStatus();
@@ -48,8 +51,16 @@ VISH.Quiz = (function(V,$,undefined){
    	
    		}
    
-   return obj;
+  		return obj;
    
+  	}
+  
+  	else if (element.type=="truefalsequestion") {
+  	
+  		 obj= 	_renderTrueFalseQuestion(element, template);
+  
+  		return obj; 
+ 	 }
    };
    /**
     * called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
@@ -99,8 +110,13 @@ VISH.Quiz = (function(V,$,undefined){
    
    var enableTrueFalseInteraction = function (slide, options) {
    	
-   		VISH.Debugging.log(" enter in enableTrueFalseInteraction, slide value is: " + slide + " options value is: " + options );
-   	
+   		var sendButton = $("#" + slide).find(".tfquestion_button");
+
+		$("#"+slide).on("click", sendButton, function(event){	
+  			event.preventDefault();
+  			VISH.Debugging.log("Click detected: on send button");		
+  			//	$(event.srcElement).css("color", "blue");
+  		});
    	
    };
    
@@ -639,6 +655,47 @@ VISH.Quiz = (function(V,$,undefined){
     	 }	
 		
 	};
+	
+	
+	 var _renderTrueFalseQuestion = function(element, template){	
+  	
+  		var answers = new Array();
+		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
+		
+		ret += "<div class='truefalse_question_container'>";
+ 		ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
+	    ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
+	   
+		for(var i = 0; i<element['questions'].length; i++){
+		//saving correct answers 
+		answers[i] =element['questions'][i]['answer'];
+		
+		ret +="<tr id='tr_question_"+(i+1)+"'>";
+			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
+			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
+			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
+			ret += "</tr>";
+		
+		}
+		
+		ret += "</table>";
+	
+		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
+
+		ret += "</form>";
+		
+		
+		ret += "</div>";
+		
+		trueFalseAnswers = answers;
+		asnswers = [];
+		VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
+		
+		return ret;
+  }
+	
     
     
     
