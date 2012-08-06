@@ -111,12 +111,39 @@ VISH.Quiz = (function(V,$,undefined){
    var enableTrueFalseInteraction = function (slide, options) {
    	
    		var sendButton = $("#" + slide).find(".tfquestion_button");
+   		var radioInput = $("#"+slide).find("input[type=radio][name=tf_radio_1]");
 
+		//add listeners
 		$("#"+slide).on("click", sendButton, function(event){	
   			event.preventDefault();
   			VISH.Debugging.log("Click detected: on send button");		
   			//	$(event.srcElement).css("color", "blue");
   		});
+
+
+		$("#"+slide).on("click", radioInput, function(event){	
+  			event.preventDefault();
+  			VISH.Debugging.log("Click detected: on radio button 1");		
+  			//	$(event.srcElement).css("color", "blue");
+  			
+			valor = $("#"+slide).find("input[type=radio][name=tf_radio_1]").val();  			
+  			
+  			VISH.Debugging.log("Valor is: " + valor);
+  			VISH.Debugging.log("trueFalseAnswer 0 is : " + trueFalseAnswers[0]);
+  			
+  			if (valor==trueFalseAnswers[0]) {
+  				
+  				VISH.Debugging.log("Correct answer!!");
+  				
+  				
+  			} else {
+  				
+  				VISH.Debugging.log("Wrong answer!!");
+  				
+  			}
+  		});
+  		
+  		
    	
    };
    
@@ -691,7 +718,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		trueFalseAnswers = answers;
 		asnswers = [];
-		VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
+		VISH.Debugging.log("answer's array : " +trueFalseAnswers);
 		
 		return ret;
   }

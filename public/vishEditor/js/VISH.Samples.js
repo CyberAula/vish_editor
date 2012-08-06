@@ -579,7 +579,7 @@ VISH.Samples = (function(V,undefined){
 		      			{
 		      				"id":0,
 		      				"text_question":"Is carnivorous the iberian lynx",
-		      				"answer":"null"
+		      				"answer":"true"
 		      				},
 		      				{
 		      					"id":1,
