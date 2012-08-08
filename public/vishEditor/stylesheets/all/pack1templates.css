@@ -936,7 +936,7 @@ text-align:left;
 }
 .save_quiz {
 	
-display: inline-block;	
+display:none; /* inline-block; */	
 font-size:0.8em;	
 }
 

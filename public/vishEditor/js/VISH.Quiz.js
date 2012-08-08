@@ -183,8 +183,8 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
 		ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
 		ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
-		ret += "<div id='' class='save_quiz'><label>Do you want to save the polling results?</label>";
-		ret +="<input type='button'class='mcquestion_save_yes_button' value='Yes'><input type='button' class='mcquestion_save_no_button' value='No'></div>"
+		ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
+		ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
 		ret += "</div>";
 		ret += "</form>";
 		ret += "</div>";
@@ -199,9 +199,7 @@ VISH.Quiz = (function(V,$,undefined){
  */
       var _renderMcquestionStudent = function(element, template, slide){
     
-    	
-		
-		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+    	var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 		
 		ret += "<div class='mcquestion_container'>";
 		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
@@ -276,11 +274,14 @@ VISH.Quiz = (function(V,$,undefined){
     var _activateLoggedInteraction = function () {
     	
     	var startButton = '#mcquestion_start_button_'+slideToActivate;
-    	
     	var statisticsButton = '#mch_statistics_button_'+slideToActivate;
-    	
-       	$(document).on('click', startButton, _onStartMcQuizButtonClicked);
-     	$(document).on('click', statisticsButton, _onStatisticsMcQuizButtonClicked);
+		var saveQuizYesButton = '#mcquestion_save_yes_button_'+slideToActivate;
+		var saveQuizNoButton = '#mcquestion_save_no_button_'+slideToActivate;     	
+       	$(document).on('click', startButton, _startMcQuizButtonClicked);
+     	$(document).on('click', statisticsButton, _statisticsMcQuizButtonClicked);
+     	
+     	$(document).on('click', saveQuizYesButton, _saveQuizYesButtonClicked);
+     	$(document).on('click', saveQuizNoButton, _saveQuizNoButtonClicked);
     	
     };
     
@@ -357,7 +358,7 @@ VISH.Quiz = (function(V,$,undefined){
      * params --- we get the quiz to activate/deactivate from an form's hidden input that has the 
      * article value   
      */
-      var _onStartMcQuizButtonClicked = function () {
+      var _startMcQuizButtonClicked = function () {
      
 	  	//get values from the form
       	
@@ -497,7 +498,7 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToStop).find(".t11_header").text("");
     	//TODO remove stop button and save quiz into the server(popup) 
     	
-    	
+    	$(".current").find(".save_quiz").css("display", "inline-block"); 
     	
     	
     	
@@ -511,11 +512,11 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
     	
     	$("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
-    	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _onStartMcQuizButtonClicked);
+    	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
     	
     };
     
-    var _onStatisticsMcQuizButtonClicked = function () {
+    var _statisticsMcQuizButtonClicked = function () {
     	var marginTopDefault = 18; 
     	var marginTopDefault2 = 24; 
 		
@@ -579,6 +580,22 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	
     };
+    
+    
+    
+    var _saveQuizYesButtonClicked = function () {
+    	
+    V.Debugging.log("SaveQuizYes Button Clicked");	
+    	
+    };
+    
+    var _saveQuizNoButtonClicked = function () {
+    	
+    V.Debugging.log("SaveQuizNo Button Clicked");	
+    	
+    };
+    
+    
     
     /*
      * Function called when the JSON object is received from the server 
