@@ -11,16 +11,22 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var buttonAddTrueFalseQuestionId = "a_add_true_false_question";
 	var maxNumTrueFalseQuestions = 6; // maximum input options
 	
+	
 	var init = function(){
-		
+			
+		V.Debugging.log("enter to init function");
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-		$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
-
- var myInput = $(".current").find("input[type='text']");
+	
+		
+ 		var myInput = $(".current").find("input[type='text']");
+  		//var myInput = $(".current").find("input[type='text']");
+ 		//var myInput = $(".current").find("#radio_text_1");
+ 
+ 
 	//	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-			
+				V.Debugging.log("event.keyCode == 13");
 				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
 					//call to addMultipleChoiceOption
 					addMultipleChoiceOption();
@@ -32,15 +38,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}	
 			
 		}); 
+		
+			$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
+		
 	};	
 	/* TODO: change id of input 
 	 Function that add an input text option for the Multiple Choice Quiz  
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		
-		
-		V.Debugging.log("event.type vale: "  + event);
 		
 		//New element to apply operations  
 		var myInput = $(".current").find("input[type='text']").last(); 
@@ -54,7 +60,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
 		
 				var next_num = inputs_search.size()+1;
-				var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
+					
+			    var next_index = "a".charCodeAt(0) + (next_num-1); 
+  	
+		        next_index = String.fromCharCode(next_index);
+				
+				//var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
 				
 		//remove add button , add option input 
 				if (next_num < maxNumMultipleChoiceOptions) {
@@ -224,7 +235,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 			
 	return {
-		init: init, 
+		init						: init, 
 		addMultipleChoiceOption		: addMultipleChoiceOption, 
 		removeMultipleChoiceOption	: removeMultipleChoiceOption, 
 		addTrueFalseQuestion		: addTrueFalseQuestion

@@ -122,7 +122,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(excursion){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide()
+			$('.object_wrapper').hide();
 		}
 		
 		//Init submodules

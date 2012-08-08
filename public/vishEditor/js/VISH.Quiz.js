@@ -15,7 +15,7 @@ VISH.Quiz = (function(V,$,undefined){
    
    	var init = function(element, template, slide){
 		
-		if(element.type=="mcquestion") {
+		if(element.type==="mcquestion") {
 		
 		//depending on the role we use a diferent rederer function      
    		user = V.SlideManager.getUser();
@@ -55,7 +55,7 @@ VISH.Quiz = (function(V,$,undefined){
    
   	}
   
-  	else if (element.type=="truefalsequestion") {
+  	else if (element.type==="truefalsequestion") {
   	
   		 obj= 	_renderTrueFalseQuestion(element, template);
   
@@ -110,17 +110,23 @@ VISH.Quiz = (function(V,$,undefined){
    
    var enableTrueFalseInteraction = function (slide, options) {
    	
-   		var sendButton = $("#" + slide).find(".tfquestion_button");
-   		var radioInput = $("#"+slide).find("input[type=radio][name=tf_radio_1]");
+   		//var sendButton = $("#" + slide).find(".tfquestion_button");
+   		
+   		//var sendButton = $("#" + slide).find("input:button[class='tfquestion_button']");
+   		var sendButton = $("#" + slide).find("#tf_send_button");
+   		
+   		//var radioInput = $("#"+slide).find("input[type=radio][name=tf_radio_1]");
+   		var radioInput = $("#"+slide).find("input:radio[name='tf_radio_1']");
 
 		//add listeners
-		$("#"+slide).on("click", sendButton, function(event){	
+		//$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
+		/*$(document).on('click', sendButton, function(event){	
   			event.preventDefault();
-  			VISH.Debugging.log("Click detected: on send button");		
+  			VISH.Debugging.log("Click detected: on send button TF question");		
   			//	$(event.srcElement).css("color", "blue");
-  		});
+  	}); */
 
-
+/*
 		$("#"+slide).on("click", radioInput, function(event){	
   			event.preventDefault();
   			VISH.Debugging.log("Click detected: on radio button 1");		
@@ -142,7 +148,7 @@ VISH.Quiz = (function(V,$,undefined){
   				
   			}
   		});
-  		
+  	*/	
   		
    	
    };
@@ -177,7 +183,8 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
 		ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
 		ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
-		
+		ret += "<div id='' class='save_quiz'><label>Do you want to save the polling results?</label>";
+		ret +="<input type='button'class='mcquestion_save_yes_button' value='Yes'><input type='button' class='mcquestion_save_no_button' value='No'></div>"
 		ret += "</div>";
 		ret += "</form>";
 		ret += "</div>";
@@ -482,16 +489,22 @@ VISH.Quiz = (function(V,$,undefined){
     
     var _onStopMcQuizButtonClicked = function () {
 		
-    	//V.Debugging.log(" button pressed and  _onStopMcQuizButtonClicked called");
-    	
+    	   	
     	slideToStop = $(".current").find("#slide_to_stop").val();
     	
     	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
    		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
     	$("#"+slideToStop).find(".t11_header").text("");
-    	//TODO think if the button at the end of the voting must be removed or just only show start again
+    	//TODO remove stop button and save quiz into the server(popup) 
     	
-    	//show start quiz again
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	//show start quiz again?? --> 
     	
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
@@ -699,9 +712,9 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret +="<tr id='tr_question_"+(i+1)+"'>";
 			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true'  id='radio_true_"+(i+1)+"'/></td>";
 			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
-			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false' id='radio_false_"+(i+1)+"' /></td>";
 			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
 			ret += "</tr>";
 		
@@ -709,7 +722,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		ret += "</table>";
 	
-		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
+		ret += "<input type='button' class='tfquestion_button' value='Send' id='tf_send_button'/>";
 
 		ret += "</form>";
 		

@@ -934,8 +934,44 @@ text-align:left;
 	display:block;
 	
 }
+.save_quiz {
+	
+display: inline-block;	
+font-size:0.8em;	
+}
 
+.mcquestion_save_yes_button {
+	position:relative;
+	color: blue;
+	font-size:0.8em;
+	text-align:center;
+	font-weight:bold;
+	vertical-align:bottom;
+	margin-top:0%; /* default 20%. It changes depending on the number of options*/
+	height:9%;
+	width: 15%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	cursor:pointer;
+	
+	
+}	
 
+.mcquestion_save_no_button {
+	position:relative;
+	color: red;
+	font-size:0.8em;
+	text-align:center;
+	font-weight:bold;
+	vertical-align:bottom;
+	margin-top:0%; /* default 20%. It changes depending on the number of options*/
+	height:9%;
+	width: 15%;
+	-moz-border-radius:2em;
+	-webkit-border-radius: 2em;
+	cursor:pointer;
+	
+}
 
 .t12_header {
 	
