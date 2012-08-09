@@ -433,14 +433,18 @@ VISH.Quiz = (function(V,$,undefined){
   		
   		
     	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
+    	
+    	//hide save quiz div if it has been shown before
+    	if($(".current").find(".save_quiz").css("display")=="inline-block"){
+    	
+    	$(".current").find(".save_quiz").css("display", "none"); 
+    	}
     };
 
 /*Function executed when the studen has pressed the send vote button
  * has to send the option choosen to the server and wait for total results till that moment. 
  * 
- * 
- *
- * 
+ *  
  */ 
      var _onSendVoteMcQuizButtonClicked = function (event) {
     	
@@ -506,7 +510,7 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	
     	//show start quiz again?? --> 
-    	
+    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
@@ -580,19 +584,27 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	
     };
-    
+   /*
+    * for saving the voting results ... 
+    * 
+    */ 
     
     
     var _saveQuizYesButtonClicked = function () {
     	
     V.Debugging.log("SaveQuizYes Button Clicked");	
-    	
+    
+    $(".current").find(".mcquestion_start_button").removeAttr('disabled');
+    $(".current").find(".save_quiz").css("display", "none"); 	
     };
+    //no saving so nothing to do? 
     
     var _saveQuizNoButtonClicked = function () {
     	
     V.Debugging.log("SaveQuizNo Button Clicked");	
-    	
+    $(".current").find(".mcquestion_start_button").removeAttr('disabled');
+    $(".current").find(".save_quiz").css("display", "none");
+     	
     };
     
     
@@ -600,7 +612,7 @@ VISH.Quiz = (function(V,$,undefined){
     /*
      * Function called when the JSON object is received from the server 
      * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-     * actions to do: 
+     * actions to do: calculate the vote's total sum
      * 
      */
     
@@ -614,7 +626,8 @@ VISH.Quiz = (function(V,$,undefined){
     		
     		var votes;	
     		var totalVotes =0;
-    	//calculate the vote's total sum 
+    	//calculate the vote's total sum and the greatest option voted 
+    	
     		for (votes in data.results) {
     			totalVotes 	+= parseInt(data.results[votes]);
     			if(parseInt(data.results[votes])>greatest) {
@@ -628,8 +641,9 @@ VISH.Quiz = (function(V,$,undefined){
     			  
     		}
     		for (votes in data.results) {
-	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() ;
-    		   var percentString = percent  + "%";
+    			//calculate the percent of each option to show next to it
+	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
+    		   	var percentString = percent.toString()  + "%";
     		    var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
     		    //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
     			// change the value for span css('width','xx%')
@@ -677,8 +691,8 @@ VISH.Quiz = (function(V,$,undefined){
     			totalVotes 	+= parseInt(data.results[votes]);
     		}
     		for (votes in data.results) {
-	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100).toString() ;
-    		   var percentString = percent  + "%";
+	    		var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
+    		   var percentString = percent.toString()  + "%";
     		    var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
     		    //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
     			// change the value for span css('width','xx%')
@@ -690,8 +704,7 @@ VISH.Quiz = (function(V,$,undefined){
     	} 
     	else {
     		V.Debugging.log(" The User's role is not the correct");
-    		
-    	}
+    		}
     	
     $(".current").find(".mc_meter").css('display', 'block');	
     $(".current").find(".mcoption_label").css('display', 'block');
