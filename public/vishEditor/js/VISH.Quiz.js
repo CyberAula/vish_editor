@@ -654,7 +654,7 @@ VISH.Quiz = (function(V,$,undefined){
     		
     	} 
     	else {
-    		V.Debugging.log(" The Quiz voted is not the active Quiz ... please reload the Quiz");
+    		V.Debugging.log(" The Quiz voted is not the active Quiz. Reload the Quiz.");
     		
     	}
     	
@@ -666,6 +666,10 @@ VISH.Quiz = (function(V,$,undefined){
     $(".current").find(".mc_meter").css('display', 'block');	
     $(".current").find(".mcoption_label").css('display', 'block');
 
+    	//remove mcquestion_right (trying to fit better the quiz) and extend mcquestion_left div
+    	$(".current").find(".mcquestion_right").remove();
+    	$(".current").find(".mcquestion_left").css('width', '95%');
+    	
     	
   //  $(".current").find(".mc_meter").css('display', 'block');	
     };
