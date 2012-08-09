@@ -13,12 +13,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	
 	
 	var init = function(){
-			
+		var myInput = $(".current").find("input[type='text']");	
 		V.Debugging.log("enter to init function");
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
 	
 		
- 		var myInput = $(".current").find("input[type='text']");
+ 		
   		//var myInput = $(".current").find("input[type='text']");
  		//var myInput = $(".current").find("#radio_text_1");
  
@@ -26,7 +26,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-				V.Debugging.log("event.keyCode == 13");
+				V.Debugging.log("event.keyCode =" + event.keyCode);
 				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
 					//call to addMultipleChoiceOption
 					addMultipleChoiceOption();

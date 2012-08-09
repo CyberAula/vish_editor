@@ -765,7 +765,7 @@ input.rounded:focus {
 
 
 .okButton {
-    background: url('/vishEditor/images/carrousel_sprite2.png') 0 -150px no-repeat transparent;
+    background: url('/vishEditor/images/carrousel_sprite.png') 0 -150px no-repeat transparent;
     cursor:pointer;
     width: 150px;
     height: 50px;
@@ -781,7 +781,7 @@ input.rounded:focus {
 }
 
 .okButton:hover {
-    background: url('/vishEditor/images/carrousel_sprite2.png') 0 -200px no-repeat transparent;
+    background: url('/vishEditor/images/carrousel_sprite.png') 0 -200px no-repeat transparent;
 }
 
 .okButton::-moz-focus-inner {
