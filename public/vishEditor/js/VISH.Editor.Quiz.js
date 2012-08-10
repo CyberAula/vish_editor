@@ -204,7 +204,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * */
 	
 	var  addTrueFalseQuestion = function(event){
-		
+		 	$(".current").find(".true_false_question").removeAttr("autofocus");	
 			var numCurrentQuestions = $(".current").find(".true_false_question").size();
 			//test number of questios
 		if (numCurrentQuestions < maxNumTrueFalseQuestions)	{
@@ -219,6 +219,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//add the row into the table 
 				$(".current").find(".truefalse_quiz_table").append(trueFalseQuestionRow);
 			 
+			 	$(".current").find(".true_false_question").last().attr('autofocus', 'autofocus');
 							
 			} 
 			

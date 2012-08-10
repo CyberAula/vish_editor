@@ -118,6 +118,8 @@ VISH.Quiz = (function(V,$,undefined){
    		//var radioInput = $("#"+slide).find("input[type=radio][name=tf_radio_1]");
    		var radioInput = $("#"+slide).find("input:radio[name='tf_radio_1']");
 
+		
+	
 		//add listeners
 		//$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
 		/*$(document).on('click', sendButton, function(event){	
