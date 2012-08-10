@@ -409,7 +409,7 @@ VISH.Quiz = (function(V,$,undefined){
     	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('id', 'mcquestion_stop_button_'+slideToPlay);
     	//add onclick event to the new stop button
     	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
-    	
+    	 $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
     	
     	//adding listeners for different events
     	
@@ -514,12 +514,14 @@ VISH.Quiz = (function(V,$,undefined){
     	//show start quiz again?? --> 
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
+    	
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
     	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
     	
     	$("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
     	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
-    	
+    	$("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("color", "#F76464");
+    	$("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("background-color", "#F8F8F8");
     };
     
     var _statisticsMcQuizButtonClicked = function () {
@@ -598,6 +600,9 @@ VISH.Quiz = (function(V,$,undefined){
     
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none"); 	
+    $(".current").find(".mcquestion_start_button").css("color", "blue");
+    $(".current").find(".mcquestion_start_button").css("background-color", "buttonface");
+    	
     };
     //no saving so nothing to do? 
     
@@ -606,7 +611,8 @@ VISH.Quiz = (function(V,$,undefined){
     V.Debugging.log("SaveQuizNo Button Clicked");	
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");
-     	
+    $(".current").find(".mcquestion_start_button").css("color", "blue");
+    $(".current").find(".mcquestion_start_button").css("background-color", "buttonface");
     };
     
     
