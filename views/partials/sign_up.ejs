@@ -1,0 +1,23 @@
+<form class="form-horizontal" id="registerform" action="/register" method="post">
+  <fieldset id= "signup" class="email">             
+    <div class="control-group">
+      <div class="controls">
+        <h5>New to Vish Editor?</h5>
+        <h1 class = "fontcolor">Sign Up</h1>
+        <br>
+        <input type="text" class="input-large" name="<%=everyauth.password.loginFormFieldName%>" data-original-title="Email" placeholder="username"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input type="password" class="input-medium" name="<%=everyauth.password.passwordFormFieldName%>" placeholder="Password" data-original-title="Password"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input type="password" class="input-medium" name="password2" placeholder="Confirm your password" data-original-title="Re-Password"/>
+          <button type="submit" class="btn btn-warning" rel="tooltip" title="first tooltip" id="sign_up_button">Sign up</button>     
+      </div>
+    </div>     
+  </fieldset>
+</form>

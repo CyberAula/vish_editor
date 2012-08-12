@@ -1,11 +1,15 @@
 var db = require("../db/api");
 
 
-exports.index = function(req, res) {
+exports.index = function(req, res, redirectUrl) {
   if(req.user){
   	res.redirect('/home')
   } else {
-  	res.render('index')
+    if(redirectUrl){
+      res.render('index', { locals: {redirectUrl: redirectUrl } });
+    } else {
+      res.render('index');
+    }
   }
 };
 
@@ -22,11 +26,15 @@ exports.home = function(req, res) {
 };
 
 exports.error = function(req, res) {
-  res.render('error', { layout: false });
+  req.flash('warn','Resource not found');
+  res.render('genericError', { locals: {returnUrl: "/home" } });
 };
 
 exports.authError = function(req,res){
-	res.render('autherror', { layout: false });
+	req.flash('warn','Authorization error');
+  res.render('genericError', { locals: {returnUrl: "/home" } });
 }
 
 exports.presentation = require('./presentation');
+exports.image = require('./image');
+exports.object = require('./object');

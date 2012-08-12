@@ -1,9 +1,11 @@
 VISH.Renderer = (function(V,$,undefined){
 	
 	var SLIDE_CONTAINER = null;
-	var username = "";
+	/*var username = "";
 	var token = "";
-	var quiz_active = "";
+	var quiz_active = ""; */
+	var trueFalseAnswers;
+	
 
 	/**
 	 * Function to initialize the renderer
@@ -53,13 +55,15 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			else if(slide.elements[el].type === "mcquestion"){
 				
-				//this will be call as many times as mcquestion have the excursion
-				//isn't better to get the role value in the VISH.Quiz? 
-				//role = VISH.SlideManager.getUser().role;
-			
-				content +=V.Quiz.init(slide.elements[el],slide.template, slide.id);
-				//content += _renderMcquestion(slide.elements[el],slide.template);
+				//this will be call as many times as mcquestions have the excursion
+				 
+				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id);
 				classes +="mcquestion";
+			} 
+			else if ( slide.elements[el].type === "truefalsequestion") {
+				//content += _renderTrueFalseQuestion(slide.elements[el],slide.template);
+				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id);
+				classes +="truefalsequestion";
 			}
 			else{
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -184,42 +188,50 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 	
 	/**
-	 * Function to render a multiple choice question form inside an article (a slide)
-	 */
+	 * Function to render a True False Question choice question form inside an article (a slide)
+	 * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
+	 * */
 	
-	var _renderMcquestion = function(element, template){
+	/*var _renderTrueFalseQuestion = function(element, template){
 		var next_num=0;
+		var answers = new Array();
+		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 		
-		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
+		ret += "<div class='truefalse_question_container'>";
+ 		ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
+	    ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
+	   
+		for(var i = 0; i<element['questions'].length; i++){
+		//saving correct answers 
+		answers[i] =element['questions'][i]['answer'];
 		
-		ret += "<div class='mcquestion_container'>";
-		ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-		
-		ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-		//ret += "<label class='question_name'>Name:  </label>";
-		//ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-		
-		
-		for(var i = 0; i<element['options'].length; i++){
-			var next_num = i;
-		var next_index = "a".charCodeAt(0) + (next_num); 
-		next_index = String.fromCharCode(next_index);
-			
-			ret += "<label class='mc_answer'>"+next_index+") <input type='radio' name='mc_radio' value='"+next_index+"'>"+element['options'][i]+"</label>";
-			ret += "<div class='mc_meter'><span style='width:33%;'></span></div>";
+		ret +="<tr id='tr_question_"+(i+1)+"'>";
+			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
+			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
+			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
+			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
+			ret += "</tr>";
 		
 		}
 		
-		ret += "</div>";
-		ret += "<div class='mcquestion_right'>";
-		ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-		ret += "<input type='submit' class='mcquestion_button' value='Start Quiz'/>";
+		ret += "</table>";
+	
+		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
+
+		ret += "</form>";
+		
 		
 		ret += "</div>";
-		ret += "</form>";
-		ret += "</div>";
+		
+		trueFalseAnswers = answers;
+		asnswers = [];
+		VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
+		
 		return ret;
 	};
+	
+	*/
 
 	return {
 		init        : init,

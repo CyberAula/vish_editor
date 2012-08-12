@@ -13,11 +13,13 @@ exports.init = function(app) {
 	  if(req.user){
 	    return next();
 	  } else {
-	    return controllers.index(req,res);
+	    return controllers.index(req,res,req.url);
 	  }
 	}
 app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	app.get('/', controllers.index);
+	app.get('/login', controllers.index);
+	app.get('/register', controllers.index);
 	app.get('/home', requiresLogin, controllers.home);
 
 	//Routes for presentation resource
@@ -28,6 +30,13 @@ app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	
 	app.put('/presentation/:id', requiresLogin,controllers.presentation.update);
 	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
+	app.get('/presentation/:id/download', requiresLogin,controllers.presentation.download);
+
+	//Post image route
+	app.post('/image', requiresLogin, controllers.image.create);
+
+	//Post objects route
+	app.post('/object', requiresLogin, controllers.object.create);
 
 	//Not founded url
 	app.all('*', controllers.error);

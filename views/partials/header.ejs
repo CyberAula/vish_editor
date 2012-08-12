@@ -1,0 +1,43 @@
+<div class= "row span12 center" id="topbar">
+  <% if(everyauth.user){%>
+    <div class= "row span12 offset9" id="topBarLoggedAs">
+      <p class="loggedAs">Logged as <span class="username"><%=everyauth.user.name%></span>
+      &nbsp;
+      <a class="logout" href="/logout"> <span class="logout">Logout</span> </a></p>
+    </div>
+  <%} else {%>
+    <div class= "row span7 centero">
+      <p></p>
+    </div>
+    <div class= "row span3 centeroi">
+      <h4 class= "text fontcolor">Sign in using</h4>
+    </div>
+    <div class= "row span2 scenter">
+        <a href="/auth/twitter"><img class= "imagen" width="23" height="23" src="/images/social_icons/twitter.png"></a>
+        <a href="/auth/facebook"><img class= "imagen" width="23" height="23" src="/images/social_icons/facebook.svg"></a>
+        <img class="imagen" width="23" height="23" src="/images/social_icons/gplus.svg" style='display:none' >
+    </div>
+  <%}%>
+</div>
+
+<div class="row span12 center headermargin">
+  <div class= "span1 centeri">
+    <p> </p>
+  </div>
+  <div class = "span3 centeri logo">
+      <img src="/images/visheditor.png">
+    </div>
+  <div class = "span3 centeri size">
+    <p></p>
+  </div>
+  <div class= "span4 centeror centeri">
+    <ul class="nav nav-tabs">
+      <li class="active"><a class="homelink" href="/home"><h3 class= "text">Home</h3></a></li>
+      <li><a href="#tab2" data-toggle="tab"><h3 class= "text">Help</h3></a></li>
+      <li><a href="#tab3" data-toggle="tab"><h3 class= "text">About us</h3></a></li>
+    </ul>
+  </div>
+  <div class= "span1 centeri">
+    <p> </p>
+  </div>
+</div>

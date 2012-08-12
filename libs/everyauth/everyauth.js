@@ -4,6 +4,7 @@ var debug = require('../../utils/debug');
 var everyauth = require('everyauth');
 Promise = everyauth.Promise;
 var db = require("../../db/db").connect();
+var dbApi = require("../../db/api");
 
 //Get User model
 require("../../models/all")
@@ -12,7 +13,7 @@ var User = db.model('User');
 //EveryAuth Settings
 everyauth.everymodule
   .findUserById( function (id, callback) {
-    User.findById(id,function(err,user){
+    dbApi.findUserById(id,function(err,user){
       callback(err,user);
     });
   });
@@ -28,12 +29,18 @@ everyauth.everymodule.moduleErrback( function (err) {
 everyauth.password
   .getLoginPath('/index') // Uri path to the login page
   .postLoginPath('/login') // Uri path that your login form POSTs to
-  .loginView('index.jade')
+  .loginView('index')
   .authenticate( function (login, password) {
+
     var errors = [];
-    if (!login) errors.push('Missing login');
-    if (!password) errors.push('Missing password');
+    if (!login) {
+      errors.push('Missing login');
+    } 
+    if (!password) {
+      errors.push('Missing password');
+    }
     if (errors.length) {
+      errors.push('LOGIN_ERROR');
       return errors;
     }
 
@@ -41,33 +48,38 @@ everyauth.password
 
     User.findOne({login: login, password: password, authBy: 'password'},function(err,user){
       if(err){
+         errors.push('LOGIN_ERROR');
          promise.fulfill([err]);
       } else {
          if(user !== null){
+          // console.log("Succesfull access");
           promise.fulfill(user);
          } else {
-          promise.fulfill(["Incorrect login or password."]);
+          errors.push("Incorrect login or password.");
+          errors.push('LOGIN_ERROR');
+          promise.fulfill(errors);
          }
       }
     });
 
     return promise;
-
   })
   .loginSuccessRedirect('/home') // Where to redirect to after a login
   .getRegisterPath('/register') // Uri path to the registration page
   .postRegisterPath('/register') // The Uri path that your registration form POSTs to
-  .registerView('index.jade')
+  .registerView('index')
   .validateRegistration( function (newUserAttributes,errors) {
       var promise = this.Promise();
 
       if((errors)&&(errors.length)){
+        errors.push('REGISTER_ERROR');
         promise.fulfill(errors);
         return promise;
       }
 
       if((!newUserAttributes)||(!newUserAttributes.login)||(!newUserAttributes.password)){
         errors.push("Login or password missed");
+        errors.push('REGISTER_ERROR');
         promise.fulfill(errors);
         return promise;
       }
@@ -76,12 +88,14 @@ everyauth.password
         if(!err){
           if(user !== null){
             errors.push("Login already taken");
+            errors.push('REGISTER_ERROR');
             promise.fulfill(errors);
           }else{
             promise.fulfill([]);
           }
         }else{
           errors.push(err);
+          errors.push('REGISTER_ERROR');
           promise.fulfill(errors);
         }
       });
@@ -99,7 +113,6 @@ everyauth.password
       user.save( function(){
 	  	promise.fulfill(user);
 	  });
-
       return promise;
   })
   .registerSuccessRedirect('/home'); // Where to redirect to after a successful registration

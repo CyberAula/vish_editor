@@ -22,16 +22,17 @@ var getOptions = function(){
 		configuration["presentationTags"] = true;
 		configuration["presentationThumbnails"] = true;
 
-		configuration["Vish"] = false;
 		configuration["VishLives"] = true;
-		configuration["VishUpload"] = true;
 		configuration["VishRepo"] = true;
 
 		configuration["Flickr"] = true;
 		configuration["Youtube"] = true;
 		configuration["Vimeo"] = false;
 
-		configuration["VishIntegration"] = false;
+		configuration["Upload"] = true;
+
+		//Posible values: noserver, node, vish
+		configuration["mode"] = "node";
 
 		options["configuration"] = configuration;
 
@@ -46,6 +47,7 @@ var getOptions = function(){
 		}
 
 		options["lang"] = "en";
+
 
 		console.log("Vish Editor Configured Options")
 		console.log(options)

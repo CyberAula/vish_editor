@@ -2,7 +2,6 @@ VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
 	var domId = 0;  //number for next doom element id
-	
 
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
@@ -40,22 +39,28 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(options){
 			initOptions = options;
-			if((options['developping']===true)&&(VISH.Debugging)){
-				  VISH.Debugging.init(true);
-			      if ((VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
-			        excursion = VISH.Debugging.getExcursionSamples();
-			      }
+
+			if(VISH.Debugging){
+				if(options['developping']===true){
+					VISH.Debugging.init(true);
+				} else {
+					VISH.Debugging.init(false);
+				}
+				if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
+					excursion = VISH.Debugging.getExcursionSamples();
+				}
 			}
-			else{
-				 VISH.Debugging.init(false);
-			}
+
 			if((options["configuration"])&&(VISH.Configuration)){
-        		VISH.Configuration.init(options["configuration"]);
+				VISH.Configuration.init(options["configuration"]);
 				VISH.Configuration.applyConfiguration();
-      		}
-		}	else {
+			}
+
+		} else {
 			initOptions = {};
-			VISH.Debugging.init(false);
+			if(VISH.Debugging){
+				VISH.Debugging.init(false);
+			}
 		}
 		
 
@@ -75,49 +80,49 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'scrolling': 'no',
 			'width': 385,
-    		'height': 340,
-    		'padding': 0,
+			'height': 340,
+			'padding': 0,
 			"onStart"  : function(data) {
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
 				loadTab('tab_templates');
 			}
-    });
+		});
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;
-			
-		$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-		$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
-		$(document).on('click','.templatethumb', _onTemplateThumbClicked);
+				
+			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
+			$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
+			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 
-		$(document).on('click','#save', _onSaveButtonClicked);
-		$(document).on('click','.editable', _onEditableClicked);
-		$(document).on('click','.selectable', _onSelectableClicked);
-			
-		$(document).on('click','.delete_content', _onDeleteItemClicked);
-		$(document).on('click','.delete_slide', _onDeleteSlideClicked);
-		//arrows in button panel
-		$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-		$(document).on('click','#arrow_right_div', _onArrowRightClicked);
-    
-      //used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-      _addEditorEnterLeaveEvents();
-    
-      V.SlidesUtilities.redrawSlides();
-      V.Editor.Thumbnails.redrawThumbnails();
-    
-      addEventListeners(); //comes from slides.js to be called only once
-      
+			$(document).on('click','#save', _onSaveButtonClicked);
+			$(document).on('click','.editable', _onEditableClicked);
+			$(document).on('click','.selectable', _onSelectableClicked);
+				
+			$(document).on('click','.delete_content', _onDeleteItemClicked);
+			$(document).on('click','.delete_slide', _onDeleteSlideClicked);
+			//arrows in button panel
+			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
+			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
+
+			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+			_addEditorEnterLeaveEvents();
+
+			V.SlidesUtilities.redrawSlides();
+			V.Editor.Thumbnails.redrawThumbnails();
+
+			addEventListeners(); //comes from slides.js to be called only once
+
 			//if click on begginers tutorial->launch it
-      _addTutorialEvents();
+			_addTutorialEvents();
 		}
 
 		
 		if(excursion){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide()
+			$('.object_wrapper').hide();
 		}
 		
 		//Init submodules
@@ -133,99 +138,97 @@ VISH.Editor = (function(V,$,undefined){
 
 	
 		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
-				$("a#edit_excursion_details").fancybox({
-	        'autoDimensions' : false,
-	        'scrolling': 'no',
-	        'width': 800,
-	        'height': 660,
-	        'padding': 0,
-	        'hideOnOverlayClick': false,
-	        'hideOnContentClick': false,
-	        'showCloseButton': false
-	      }); 
-        $("#edit_excursion_details").trigger('click');
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'scrolling': 'no',
+				'width': 800,
+				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': false
+			}); 
+			$("#edit_excursion_details").trigger('click');
 		} else {
-				$("a#edit_excursion_details").fancybox({
-	        'autoDimensions' : false,
-	        'scrolling': 'no',
-	        'width': 800,
-	        'height': 660,
-	        'padding': 0,
-	        'hideOnOverlayClick': false,
-	        'hideOnContentClick': false,
-	        'showCloseButton': true
-	      }); 
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'scrolling': 'no',
+				'width': 800,
+				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': true
+			}); 
 		}
-		
 	};
 	
 	
 	
-  ////////////////
-  /// Helpers 
-  ////////////////
-  
-  
-  /**
-   * Return a unic id.
-   */
-  var getId = function(){
-    domId = domId +1;
-    return "unicID_" + domId;
-  }
+	////////////////
+	/// Helpers 
+	////////////////
+
+	/**
+	* Return a unic id.
+	*/
+	var getId = function(){
+		domId = domId +1;
+		return "unicID_" + domId;
+	}
 	
 	var getOptions = function(){
 		return initOptions;
 	}
 	
-  /**
-   * function to dinamically add a css
-   */
-  var _loadCSS = function(path){
-    $("head").append("<link>");
-    css = $("head").children(":last");
-    css.attr({
-      rel:  "stylesheet",
-      type: "text/css",
-      href: path
-    });
-  };
+	/**
+	* function to dinamically add a css
+	*/
+	var _loadCSS = function(path){
+		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel:  "stylesheet",
+			type: "text/css",
+			href: path
+		});
+	};
 
-  /**
-   * Function to add a delete button to the element
-   */
-  var addDeleteButton = function(element){
-  	element.append("<div class='delete_content'></div>");
-  };
+	/**
+	* Function to add a delete button to the element
+	*/
+	var addDeleteButton = function(element){
+		element.append("<div class='delete_content'></div>");
+	};
   
 
-  /////////////////////////
-  /// Fancy Box Functions
-  /////////////////////////
+	/////////////////////////
+	/// Fancy Box Functions
+	/////////////////////////
 
 	/**
 	 * function to load a tab and its content in the fancybox
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
-	  // first remove the walkthrough if open
-  	$('.joyride-close-tip').click();
-  	  
-	  //deselect all of them
-	  $(".fancy_tab").removeClass("fancy_selected");
-	  //select the correct one
-	  $("#" + tab_id).addClass("fancy_selected");
-	    
-	  //hide previous tab
-	  $(".fancy_tab_content").hide();
-	  //show content
-	  $("#" + tab_id + "_content").show();
+		// first remove the walkthrough if open
+		$('.joyride-close-tip').click();
+		  
+		//deselect all of them
+		$(".fancy_tab").removeClass("fancy_selected");
+		//select the correct one
+		$("#" + tab_id).addClass("fancy_selected");
+
+		//hide previous tab
+		$(".fancy_tab_content").hide();
+		//show content
+		$("#" + tab_id + "_content").show();
 
 		//hide previous help button
 		$(".help_in_fancybox").hide();
 		//show correct one
 		$("#"+ tab_id + "_help").show();
-		
+
         //Submodule callbacks	
 		switch (tab_id) {
 			//Image
@@ -256,16 +259,15 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Video.Vimeo.onLoadTab();
 				break;
 				
-				
 			//Objects
 			case "tab_object_from_url":
 				VISH.Editor.Object.onLoadTab("url");
 				break;
 			case "tab_object_from_web":
-        VISH.Editor.Object.Web.onLoadTab();
-        break;
+				VISH.Editor.Object.Web.onLoadTab();
+				break;
 			case "tab_object_snapshot":
-			  VISH.Editor.Object.Snapshot.onLoadTab();
+				VISH.Editor.Object.Snapshot.onLoadTab();
 				break;
 			case "tab_object_upload":
 				VISH.Editor.Object.onLoadTab("upload");
@@ -273,7 +275,6 @@ VISH.Editor = (function(V,$,undefined){
 			case "tab_object_repo":
 				VISH.Editor.Object.Repository.onLoadTab();
 				break;
-				
 				
 			//Live
 			case "tab_live_webcam":
@@ -283,145 +284,139 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
 				
-				
 			//Default
 			default:
 				break;
 	  }
 	};
 
-  /**
-   * Removes the lightbox
-   */
-  var _closeFancybox = function(){
-    $.fancybox.close();
-  };
+	/**
+	* Removes the lightbox
+	*/
+	var _closeFancybox = function(){
+		$.fancybox.close();
+	};
 
 
-  //////////////////
-  ///    Events
-  //////////////////
+	//////////////////
+	///    Events
+	//////////////////
   
-	
 	var _onInitialTagsReceived = function(data){
-		 var tagList = $(".tagBoxIntro .tagList");
-		 
-     if ($(tagList).children().length == 0){
+		var tagList = $(".tagBoxIntro .tagList");
 
-				if(!excursion_to_edit){
-          //Insert the two first tags.
-	        $.each(data, function(index, tag) {
-	          if(index==2){
-	            return false; //break the bucle
-	          }
-	          $(tagList).append("<li>" + tag + "</li>")
-	        });
-        } else {
-					
-					if(excursion_to_edit.tags){
-						//Insert excursion_to_edit tags
-	          $.each(excursion_to_edit.tags, function(index, tag) {
-	            $(tagList).append("<li>" + tag + "</li>")
-	          });
+		if ($(tagList).children().length == 0){
+			if(!excursion_to_edit){
+				//Insert the two first tags.
+				$.each(data, function(index, tag) {
+					if(index==2){
+						return false; //break the bucle
 					}
+					$(tagList).append("<li>" + tag + "</li>")
+				});
+			} else {	
+				if(excursion_to_edit.tags){
+					//Insert excursion_to_edit tags
+					$.each(excursion_to_edit.tags, function(index, tag) {
+						$(tagList).append("<li>" + tag + "</li>")
+					});
 				}
-				
-				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-				watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
-     }
+			}
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
+			watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
+		}
 	}
 	
-  /**
-   * function to add the events to the help buttons to launch joy ride bubbles
-   */
-  var _addTutorialEvents = function(){
-  	$(document).on('click','#start_tutorial', function(){
+	/**
+	* function to add the events to the help buttons to launch joy ride bubbles
+	*/
+ 	var _addTutorialEvents = function(){
+		$(document).on('click','#start_tutorial', function(){
 			V.Editor.Tour.startTourWithId('initial_screen_help', 'top');
-	});
-	$(document).on('click','#help_right', function(){
+		});
+		$(document).on('click','#help_right', function(){
 			V.Editor.Tour.startTourWithId('menubar_help', 'top');
-	});
-	
-	//template
-	$(document).on('click','#help_template_image', function(){			
+		});
+		
+		//template
+		$(document).on('click','#help_template_image', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
-	});
-	
-	//template selection fancybox	
-	$(document).on('click','#help_template_selection', function(){
+		});
+		
+		//template selection fancybox	
+		$(document).on('click','#help_template_selection', function(){
 			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
-	});	
-	
-	//image fancybox, one help button in each tab
-	$(document).on('click','#tab_pic_from_url_help', function(){
+		});	
+		
+		//image fancybox, one help button in each tab
+		$(document).on('click','#tab_pic_from_url_help', function(){
 			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
-	});	
-	$(document).on('click','#tab_pic_upload_help', function(){
+		});	
+		$(document).on('click','#tab_pic_upload_help', function(){
 			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
-	});
-	$(document).on('click','#tab_pic_repo_help', function(){
+		});
+		$(document).on('click','#tab_pic_repo_help', function(){
 			V.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
-	});
-	$(document).on('click','#tab_pic_flikr_help', function(){
+		});
+		$(document).on('click','#tab_pic_flikr_help', function(){
 			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
-	});
-	
-	//object fancybox, one help button in each tab
-	$(document).on('click','#tab_object_from_url_help', function(){
+		});
+		
+		//object fancybox, one help button in each tab
+		$(document).on('click','#tab_object_from_url_help', function(){
 			V.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
-	});	
-	$(document).on('click','#tab_object_upload_help', function(){
+		});	
+		$(document).on('click','#tab_object_upload_help', function(){
 			V.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
-	});
-	$(document).on('click','#tab_object_repo_help', function(){
+		});
+		$(document).on('click','#tab_object_repo_help', function(){
 			V.Editor.Tour.startTourWithId('search_object_help', 'bottom');
-	});
-	
-	//video fancybox, one help button in each tab
-	$(document).on('click','#tab_video_from_url_help', function(){
+		});
+		
+		//video fancybox, one help button in each tab
+		$(document).on('click','#tab_video_from_url_help', function(){
 			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
-	});	
-	$(document).on('click','#tab_video_repo_help', function(){
+		});	
+		$(document).on('click','#tab_video_repo_help', function(){
 			V.Editor.Tour.startTourWithId('search_video_help', 'top');
-	});
-	$(document).on('click','#tab_video_youtube_help', function(){
+		});
+		$(document).on('click','#tab_video_youtube_help', function(){
 			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
-	});
-	$(document).on('click','#tab_video_vimeo_help', function(){
+		});
+		$(document).on('click','#tab_video_vimeo_help', function(){
 			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
-	});
-	
-	// live fancybox, one help button in each tab
-	$(document).on('click','#tab_live_webcam_help', function(){
-			V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
-	});	
-	
-  };
+		});
+		
+		// live fancybox, one help button in each tab
+		$(document).on('click','#tab_live_webcam_help', function(){
+				V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+		});	
+	};
   
-  /**
-   * function to add enter and leave events only for the VISH editor
-   */
-  var _addEditorEnterLeaveEvents = function(){
-  	$('article').live('slideenter',_onslideenterEditor);
-	$('article').live('slideleave',_onslideleaveEditor);
-  };
+	/**
+	* function to add enter and leave events only for the VISH editor
+	*/
+	var _addEditorEnterLeaveEvents = function(){
+		$('article').live('slideenter',_onslideenterEditor);
+		$('article').live('slideleave',_onslideleaveEditor);
+	};
   
-  /**
-   * function called when entering slide in editor, we have to show the objects
-   */
-  var _onslideenterEditor = function(e){
-  	setTimeout(function(){
-  		$(e.target).find('.object_wrapper').show();
-  	},500);
-  };
+	/**
+	* function called when entering slide in editor, we have to show the objects
+	*/
+	var _onslideenterEditor = function(e){
+		setTimeout(function(){
+			$(e.target).find('.object_wrapper').show();
+		},500);
+	};
   
-  /**
-   * function called when leaving slide in editor, we have to hide the objects
-   */
-  var _onslideleaveEditor = function(){
-  	//radical way
-  	$('.object_wrapper').hide();
-  };
+	/**
+	* function called when leaving slide in editor, we have to hide the objects
+	*/
+	var _onslideleaveEditor = function(){
+		//radical way
+		$('.object_wrapper').hide();
+	};
   
    
 	/**
@@ -429,36 +424,37 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion details button
 	 */
 	
-  var firstCall = true;
+	var firstCall = true;
 	
 	var _onEditExcursionDetailsButtonClicked = function(event){
-		
+
 		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstCall)){
-      VISH.Editor.API.requestTags(_onInitialTagsReceived);
-			
+			VISH.Editor.API.requestTags(_onInitialTagsReceived);
+
 			if((excursionDetails)&&(excursionDetails.avatar)){
 				VISH.Editor.AvatarPicker.onLoadExcursionDetails(excursionDetails.avatar);
 			} else {
 				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
 			}
-    }
-		
+		}
+
 		if(firstCall){
-			 firstCall = false;
-      
-       $("a#edit_excursion_details").fancybox({
-          'autoDimensions' : false,
-          'scrolling': 'no',
-          'width': 800,
-          'height': 660,
-          'padding': 0,
-          'hideOnOverlayClick': false,
-          'hideOnContentClick': false,
-          'showCloseButton': true
-       }); 
+			firstCall = false;
+
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'scrolling': 'no',
+				'width': 800,
+				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': true
+			}); 
 		}
 	};
   
+
 	/**
 	 * function callen when the user clicks on the save button
 	 * in the initial excursion details fancybox to save
@@ -485,7 +481,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		
-	//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
+		//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 	
 		//VISH.Debugging.log("slide es: " + slide );
@@ -497,10 +493,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.SlidesUtilities.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		
-		
-		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);
-				
+		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);	
 	};
+
 
 	/**
 	 * Function called when user clicks on an editable element
@@ -514,7 +509,7 @@ VISH.Editor = (function(V,$,undefined){
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
 		var content = null;
-		
+
 		if($(this).attr("areaid")==="header" || $(this).attr("areaid")==="subheader"){
 			content = $("#menuselect_for_header").clone().attr('id','');
 		}	else {
@@ -525,15 +520,15 @@ VISH.Editor = (function(V,$,undefined){
 		content.find("a").each(function(index, domElem) {
 			$(domElem).attr("zone", getCurrentArea().attr("id"));
 		});
-		
+
 		$(this).html(content);
-		
-		
+
+
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
 			'scrolling': 'no',
-    	'height': 600,
+			'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
@@ -545,8 +540,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a.addobject").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-    	'height': 600,
-    	'scrolling': 'no',
+			'height': 600,
+			'scrolling': 'no',
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -558,7 +553,7 @@ VISH.Editor = (function(V,$,undefined){
 			'autoDimensions' : false,
 			'width': 800,
 			'scrolling': 'no',
-    	'height': 600,
+			'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -567,30 +562,30 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("a.addLive").fancybox({
-      'autoDimensions' : false,
-      'width': 800,
-      'scrolling': 'no',
-      'height': 600,
-      'padding' : 0,
-      "onStart"  : function(data) {
-        var clickedZoneId = $(data).attr("zone");
-        setCurrentArea($("#" + clickedZoneId));
-        loadTab('tab_live_webcam');
-      }
-    });
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				setCurrentArea($("#" + clickedZoneId));
+				loadTab('tab_live_webcam');
+			}
+		});
 	};
 
 
-  /**
-   * function called when user clicks on the delete icon of the zone
-   */
-  var _onDeleteItemClicked = function(){
+	/**
+	* function called when user clicks on the delete icon of the zone
+	*/
+	var _onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-  	$("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
-  	$.fancybox(
+		$("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
+		$.fancybox(
 			$("#prompt_form").html(),
 			{
-	      'autoDimensions'	: false,
+				'autoDimensions'	: false,
 				'scrolling': 'no',
 				'width'         	: 350,
 				'height'        	: 150,
@@ -607,19 +602,19 @@ VISH.Editor = (function(V,$,undefined){
 					}
 				}
 			}
-	  );
-  };
+		);
+	};
   
   /**
    * function called when user clicks on the delete icon of the zone
    */
-  var _onDeleteSlideClicked = function(){
-  	var article_to_delete = $(this).parent();
-  	$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
-  	$.fancybox(
-		  $("#prompt_form").html(),
-		  {
-	      'autoDimensions'	: false,
+	var _onDeleteSlideClicked = function(){
+		var article_to_delete = $(this).parent();
+		$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
+		$.fancybox(
+		$("#prompt_form").html(),
+			{
+				'autoDimensions'	: false,
 				'width'         	: 350,
 				'scrolling': 'no',
 				'height'        	: 150,
@@ -636,284 +631,313 @@ VISH.Editor = (function(V,$,undefined){
 							curSlide -=1;
 						}					
 						V.SlidesUtilities.redrawSlides();						
-		  			V.Editor.Thumbnails.redrawThumbnails();			
+						V.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
-		  }
-	  );
-  };
+			}
+		);
+	};
 
-  /**
-   * function called when user clicks on template zone with class selectable
-   * we change the border to indicate this zone has been selected and show the slider if the type is an image
-   */
-  var _onSelectableClicked = function(){
+
+	/**
+	* function called when user clicks on template zone with class selectable
+	* we change the border to indicate this zone has been selected and show the slider if the type is an image
+	*/
+	var _onSelectableClicked = function(){
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
 		VISH.Editor.Tools.loadZoneTools($(this));
-  };
+	};
   
 	
-	 var _addSelectableProperties = function(zone){
-    //add selectable css
-    $(zone).css("cursor", "auto");
-    $(zone).css("border-color", "rgb(255, 2, 94)");
-    $(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-    $(zone).css("outline", "0");
-    $(zone).css("outline", "thin dotted \9");
-  };
+	var _addSelectableProperties = function(zone){
+		//add selectable css
+		$(zone).css("cursor", "auto");
+		$(zone).css("border-color", "rgb(255, 2, 94)");
+		$(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(zone).css("outline", "0");
+		$(zone).css("outline", "thin dotted \9");
+	};
 	
-  var _removeSelectableProperties = function(zone){
-  	//Remove selectable css
-	  $(".selectable").css("border-color", "none");
+	var _removeSelectableProperties = function(zone){
+		//Remove selectable css
+		$(".selectable").css("border-color", "none");
 		$(".selectable").css("-webkit-box-shadow", "none");
 		$(".selectable").css("-moz-box-shadow", "none");
 		$(".selectable").css("box-shadow", "none");
 		$(".selectable").css("outline", "0");
 		$(".selectable").css("cursor", "pointer");
-  };
+	};
 
-  /**
-   * function called when user clicks on save
-   * Generates the json for the current slides
-   * covers the section element and every article inside
-   * finally calls SlideManager with the generated json
-   */
-  var _onSaveButtonClicked = function(){
-    if(slideEls.length === 0){
-    	$.fancybox(
-			  $("#message1_form").html(),
-			  {
-		      'autoDimensions'	: false,
-		      'scrolling': 'no',
+	/**
+	* function called when user clicks on save
+	* Generates the json for the current slides
+	* covers the section element and every article inside
+	* finally calls SlideManager with the generated json
+	*/
+	var _onSaveButtonClicked = function(){
+		if(slideEls.length === 0){
+			$.fancybox(
+				$("#message1_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
 					'width'         	: 350,
 					'height'        	: 200,
 					'showCloseButton'	: false,
 					'padding' 			: 5		
-			  }
-		  );
-    } else {    
-	    $.fancybox(
-			  $("#save_form").html(),
-			  {
-		      'autoDimensions'	: false,
+				}
+			);
+		} else {    
+			$.fancybox(
+				$("#save_form").html(),
+				{
+					'autoDimensions'	: false,
 					'width'         	: 350,
 					'scrolling': 'no',
 					'height'        	: 150,
 					'showCloseButton'	: false,
 					'padding' 			: 0,
 					'onClosed'			: function(){
-							//if user has answered "yes"
-							if($("#save_answer").val() ==="true"){
-								$("#save_answer").val("false");	
-								var excursion = saveExcursion();	
-								_afterSaveExcursion(excursion);			
-							}	else {
-								return false;
-							}
+						//if user has answered "yes"
+						if($("#save_answer").val() ==="true"){
+							$("#save_answer").val("false");	
+							var excursion = saveExcursion();	
+							_afterSaveExcursion(excursion);			
+						}	else {
+							return false;
+						}
 					}
-			  }
-		  );
-	  }
-  };
+				}
+			);
+		  }
+	};
     
     
-  /**
-   * function to save the excursion 
-   */
-  var saveExcursion = function(){
-  	//first of all show all objects that have been hidden because they are in previous and next slides
-  	//so they are not saved with style hidden
-  	$('.object_wrapper').show();
-  	//now save the excursion
-    var excursion = {};
-    //TODO decide this params
-    excursion.id = '';
-    excursion.title = excursionDetails.title;
-    excursion.description = excursionDetails.description;
-    excursion.avatar = excursionDetails.avatar;
-		excursion.tags = excursionDetails.tags;
-    excursion.author = '';
-    excursion.slides = [];
-    var slide = {};
-    $('article').each(function(index,s){
-      slide.id = $(s).attr('id'); //TODO what if saved before!
-      slide.template = $(s).attr('template');
-      slide.elements = [];
-      var element = {};
-      //important show it (the browser does not know the height and width if it is hidden)
-      $(s).show();
-      $(s).find('div').each(function(i,div){
-        //to remove all the divs of the sliders, only consider the final boxes
-        if($(div).attr("areaid") !== undefined){   
-					
-          element.id     = $(div).attr('id');
-          element.type   = $(div).attr('type');
-          element.areaid = $(div).attr('areaid');	 				 
-									 
-          if(element.type=="text"){
-            element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
-          } else if(element.type=="image"){
-            element.body   = $(div).find('img').attr('src');
-            element.style  = _getStylesInPercentages($(div), $(div).find('img'));
-          } else if(element.type=="video"){
-		          var video = $(div).find("video");
-							element.poster = $(video).attr("poster");
-							element.style  = _getStylesInPercentages($(div), $(video));
-							//Sources
-							var sources= '';				
-							$(video).find('source').each(function(index, source) {
-							  if(index!=0){
-							    sources = sources + ',';
-							  }
-							  var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
-				        sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
-				      });
-							sources = '[' + sources + ']'
-							element.sources = sources;
-		      } else if(element.type=="object"){
-		    	    var object = $(div).find(".object_wrapper").children()[0];
-							var myObject = $(object).clone();
-							$(myObject).removeAttr("style");
-		    	    element.body   = VISH.Utils.getOuterHTML(myObject);
-		    	    element.style  = _getStylesInPercentages($(div), $(object).parent());
-							var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
-							if(zoom!=1){
-								element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom);
+	/**
+	* function to save the excursion 
+	*/
+	var saveExcursion = function(){
+		//first of all show all objects that have been hidden because they are in previous and next slides
+		//so they are not saved with style hidden
+		$('.object_wrapper').show();
+
+		//now save the excursion
+		var excursion = {};
+		if(excursion_to_edit){
+			excursion.id = excursion_to_edit.id;
+		}else{
+			excursion.id = '';	
+		}
+
+		excursion.title = excursionDetails.title;
+		excursion.description = excursionDetails.description;
+		excursion.avatar = excursionDetails.avatar;
+			excursion.tags = excursionDetails.tags;
+		excursion.author = '';
+		excursion.slides = [];
+		var slide = {};
+		$('article').each(function(index,s){
+			slide.id = $(s).attr('id'); //TODO what if saved before!
+			slide.template = $(s).attr('template');
+			slide.elements = [];
+			var element = {};
+			//important show it (the browser does not know the height and width if it is hidden)
+			$(s).show();
+			$(s).find('div').each(function(i,div){
+				//to remove all the divs of the sliders, only consider the final boxes
+				if($(div).attr("areaid") !== undefined){   
+
+					element.id 		= $(div).attr('id');
+					element.type 	= $(div).attr('type');
+					element.areaid 	= $(div).attr('areaid');	 				 
+						 
+					if(element.type=="text"){
+						element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+					} else if(element.type=="image"){
+						element.body   = $(div).find('img').attr('src');
+						element.style  = _getStylesInPercentages($(div), $(div).find('img'));
+					} else if(element.type=="video"){
+						var video = $(div).find("video");
+						element.poster = $(video).attr("poster");
+						element.style  = _getStylesInPercentages($(div), $(video));
+						//Sources
+						var sources= '';				
+						$(video).find('source').each(function(index, source) {
+							if(index!=0){
+								sources = sources + ',';
 							}
-		      } else if (element.type=="openquestion") {	   
-		      		element.title   = $(div).find(".title_openquestion").val();
-		        	element.question   = $(div).find(".value_openquestion").val();
-		      } else if (element.type=="mcquestion") {     		      	
-		      		element.question   = $(div).find(".value_multiplechoice_question").val();
-		        	element.options = [];  	
-		        	$(div).find('.multiplechoice_text').each(function(i, input_text){
-				    element.options[i] = input_text.value;
-	          		}); 
-			  } else if(element.type === "snapshot"){
-						  var snapshotWrapper = $(div).find(".snapshot_wrapper");
-						  var snapshotIframe = $(snapshotWrapper).children()[0];
-              $(snapshotIframe).removeAttr("style");
-              element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
-              element.style  = _getStylesInPercentages($(div), snapshotWrapper);
-							element.scrollTop = $(snapshotWrapper).scrollTop();
-							element.scrollLeft = $(snapshotWrapper).scrollLeft();
-		      } else if(typeof element.type == "undefined"){
+							var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
+							sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
+						});
+						sources = '[' + sources + ']'
+						element.sources = sources;
+					} else if(element.type=="object"){
+						var object = $(div).find(".object_wrapper").children()[0];
+						var myObject = $(object).clone();
+						$(myObject).removeAttr("style");
+						element.body   = VISH.Utils.getOuterHTML(myObject);
+						element.style  = _getStylesInPercentages($(div), $(object).parent());
+						var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
+						if(zoom!=1){
+							element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom);
+						}
+					} else if (element.type=="openquestion") {	   
+						element.title   = $(div).find(".title_openquestion").val();
+						element.question   = $(div).find(".value_openquestion").val();
+					} else if (element.type=="mcquestion") {     		      	
+						element.question   = $(div).find(".value_multiplechoice_question").val();
+						element.options = [];  	
+						$(div).find('.multiplechoice_text').each(function(i, input_text){
+							element.options[i] = input_text.value;
+						}); 
+						
+						} else if (element.type=="truefalsequestion") {     		      	
+						
+							element.questions = [];	
+							var question = {};
+						$(div).find(".true_false_question").each(function(i, input_text){
+							
+							VISH.Debugging.log("input text for each question value is:" +input_text.value);
+							
+							
+							question.id = i;
+							question.text_question = input_text.value;
+							
+							if($(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val()==undefined) {
+								question.answer = "null";
+							} else {
+								question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
+							}
+							element.questions.push(question);
+							question = {};
+						});
+						
+												
+						
+					} else if(element.type === "snapshot"){
+						var snapshotWrapper = $(div).find(".snapshot_wrapper");
+						var snapshotIframe = $(snapshotWrapper).children()[0];
+						$(snapshotIframe).removeAttr("style");
+						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
+						element.style  = _getStylesInPercentages($(div), snapshotWrapper);
+						element.scrollTop = $(snapshotWrapper).scrollTop();
+						element.scrollLeft = $(snapshotWrapper).scrollLeft();
+					} else if(typeof element.type == "undefined"){
 						//Empty element, we don't save as empty text because if we do that when we edit everything is text
 						//element.type = "empty";
 						VISH.Debugging.log("Empty element");
 					}
-          slide.elements.push(element);
-          element = {};
-        }
-      });
-      excursion.slides.push(slide);
-      slide = {};
-    });
-    
+					slide.elements.push(element);
+					element = {};
+				}
+			});
+			excursion.slides.push(slide);
+			slide = {};
+		});
+
 		saved_excursion = excursion;  
 		VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
-  };
+	};
 	
+
 	var _afterSaveExcursion = function(excursion){
 
+		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 
-console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
+		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 
-	if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-      	  //Vish: OnSave Debug actions
-      
-	      if(VISH.Debugging.getActionSave()=="view"){
-	        $('article').remove();
-	        $('#menubar').hide();
-	        $('#menubar_helpsection').hide();
-	        $('#joyride_help_button').hide();
-	        $('.theslider').hide();
-	        $(".nicEdit-panelContain").hide();
-	        $("#menubar-viewer").show();
+			var send_type;
+	        if(excursion_to_edit){
+	          send_type = 'PUT'; //if we are editing
+	        } else {
+	          send_type = 'POST'; //if it is a new
+	        } 
 	        
-	        //here we must pass params 
-	        //options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
-	        VISH.SlideManager.init({"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}, excursion);
-	      } else if (VISH.Debugging.getActionSave()=="edit") {
-	        $('article').remove();
-	        var options = {};
-	        options["developping"] = true;
-	        options["configuration"] = configuration;
-	        VISH.Editor.init(options, excursion);  //to edit the excursion
-	      } else if(VISH.Debugging.getActionSave()=="default"){
-	      	uploadPresentation(excursion);
-	      }
+	        //POST to http://server/excursions/
+	        var jsonexcursion = JSON.stringify(excursion);
+	    	VISH.Debugging.log(jsonexcursion);   
+	        var params = {
+	          "excursion[json]": jsonexcursion,
+	          "authenticity_token" : initOptions["token"]
+	        }
+	        
+	        $.ajax({
+	          type    : send_type,
+	          url     : initOptions["postPath"],
+	          data    : params,
+	          success : function(data) {
+	              /*if we redirect the parent frame*/
+	              window.top.location.href = data.url;
+	          }     
+	        });
 
-    } else {
-      //Vish: OnSave Production actions
-      
-      if(VISH.Configuration.getConfiguration()["VishIntegration"]){
-        var send_type;
-        if(excursion_to_edit){
-          send_type = 'PUT'; //if we are editing
-        } else {
-          send_type = 'POST'; //if it is a new
-        } 
-        
-        //POST to http://server/excursions/
-        var jsonexcursion = JSON.stringify(excursion);
-    	VISH.Debugging.log(jsonexcursion);   
-        var params = {
-          "excursion[json]": jsonexcursion,
-          "authenticity_token" : initOptions["token"]
-        }
-        
-        $.ajax({
-          type    : send_type,
-          url     : initOptions["postPath"],
-          data    : params,
-          success : function(data) {
-              /*if we redirect the parent frame*/
-              window.top.location.href = data.url;
-          }     
-        }); 
-      } else {
-				//Vish Standalone actions
-        //Save to file its not possible... upload to another server? [...]
-        uploadPresentation(excursion);
-      }
-    } 
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
+
+			uploadPresentationWithNode(excursion);
+
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+
+			if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
+				
+				if(VISH.Debugging.getActionSave()=="view"){
+					$('article').remove();
+					$('#menubar').hide();
+					$('#menubar_helpsection').hide();
+					$('#joyride_help_button').hide();
+					$('.theslider').hide();
+					$(".nicEdit-panelContain").hide();
+					$("#menubar-viewer").show();
+
+					//here we must pass params 
+					//options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
+					VISH.SlideManager.init({"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}, excursion);
+				} else if (VISH.Debugging.getActionSave()=="edit") {
+					$('article').remove();
+					var options = {};
+					options["developping"] = true;
+					options["configuration"] = configuration;
+					VISH.Editor.init(options, excursion);  //to edit the excursion
+				}
+			}
+
+		}
+
 	}
 	
 
-	var uploadPresentation = function(excursion){
-		//Store in Node.js server
-
-	    console.log("uploadPresentation called")
-
+	var uploadPresentationWithNode = function(excursion){
 		var send_type;
+		var url = "/presentation/";
+
 		if(excursion_to_edit){
 			send_type = 'PUT'; //if we are editing
+			url = url + excursion_to_edit.id;
 		} else {
 			send_type = 'POST'; //if it is a new
 		} 
 	       
 		//POST to /server/presentation/
 		var jsonPresentation = JSON.stringify(excursion);   
-		    var params = {
-		      "presentation[json]": jsonPresentation
+		var params = {
+			"presentation[json]": jsonPresentation
 		}
 		   
 		$.ajax({
 			type    : send_type,
-			url     : "/presentation/",
+			url     : url,
 			data    : params,
 			success : function(data) {
 				//Redirect
-			    window.top.location.href = data.url;
-			}     
+				window.top.location.href = data.url;
+			}
 		});
 	}
+
 
 	/**
 	 * function to get the styles in percentages
@@ -921,15 +945,17 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 	var _getStylesInPercentages = function(parent, element){
 		var WidthPercent = element.width()*100/parent.width();
 		var HeightPercent = element.height()*100/parent.height();
-    var TopPercent = element.position().top*100/parent.height();
-    var LeftPercent = element.position().left*100/parent.width();
-    return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
+		var TopPercent = element.position().top*100/parent.height();
+		var LeftPercent = element.position().left*100/parent.width();
+		return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
 	};
 	
+
 	var _getAspectRatio = function(element){
 		return element.width()/element.height();
 	}
 	
+
 	/**
 	 * Function to move the slides left one item
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
@@ -938,6 +964,7 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 		V.SlidesUtilities.goToSlide(curSlide);
 	};
 	
+
 	/**
 	 * Function to move the slides right one item
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
@@ -947,10 +974,10 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 	};
 	
 	
-  //////////////////
-  ///    Getters
-  //////////////////
-	
+	//////////////////
+	///    Getters
+	//////////////////
+
 	var getParams = function(){
 		return params;
 	}
@@ -969,16 +996,16 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 	}
 	
 	var getCurrentArea = function() {
-    if(params['current_el']){
-      return params['current_el'];
-    }
-    return null;
-  }
+		if(params['current_el']){
+			return params['current_el'];
+		}
+		return null;
+	}
 	
 	var setCurrentArea = function(area){
 		params['current_el'] = area;
 	}
-  
+
 	var getSavedExcursion = function() {
 		if(saved_excursion){
 			return saved_excursion;
@@ -988,41 +1015,35 @@ console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
 	}
 	
 	
-  /*
-   Load the initial fancybox
-   */
-  
-  var loadFancyBox = function(fancy) {
-  	/* TODO: can we get all the tabs with JQuery and use it for construct the fancyBoxes hash? */ 
-  	
-        var fancyBoxes = {1: "templates", 2: "quizes"}	
+	/*
+	 * Load the initial fancybox
+	 */
+	var loadFancyBox = function(fancy) {
+		var fancyBoxes = {1: "templates", 2: "quizes"}	
 				
 		for( tab in fancyBoxes) {
-		
 			$('#'+fancyBoxes[tab]+'_content').hide();
-			
 			$('#tab_'+fancyBoxes[tab]).attr("class", "");
 			$('#tab_'+fancyBoxes[tab]).attr("class", "fancy_tab");
-			
 		} 
 		//just show the fancybox selected 
 		$('#'+fancy+'_content').show();
 		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
-  }
+	}
 
 
 	return {
-		init					         	  : init,
-		addDeleteButton						: addDeleteButton,
-		loadTab 				        	: loadTab,
-		getId                  		: getId,
-		getTemplate            		: getTemplate,
-		getCurrentArea        		: getCurrentArea,
-		getParams            			: getParams,
-		getOptions                : getOptions, 
-		loadFancyBox			        : loadFancyBox,
-		getSavedExcursion         : getSavedExcursion,
-		saveExcursion             : saveExcursion
+		init 				: init,
+		addDeleteButton 	: addDeleteButton,
+		loadTab 			: loadTab,
+		getId 				: getId,
+		getTemplate 		: getTemplate,
+		getCurrentArea 		: getCurrentArea,
+		getParams 			: getParams,
+		getOptions 			: getOptions, 
+		loadFancyBox 		: loadFancyBox,
+		getSavedExcursion 	: getSavedExcursion,
+		saveExcursion 		: saveExcursion
 	};
 
 }) (VISH, jQuery);
