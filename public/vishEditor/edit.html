@@ -1029,7 +1029,7 @@
 	
   <script type="text/javascript" src="/vishEditor/js/lang/translations.es.js"></script>
 
-  <script type="text/javascript" src="/vishEditor/js/libs/slides.js"></script>
+  <script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
 	
   <script type="text/javascript" src="/vishEditor/js/libs/nicEdit.js" ></script>
 
@@ -1037,6 +1037,7 @@
 	<script>
 		//First function called when page loads
 		 function start(){
+		 	VISH.Slides.init();
 			VISH.Editor.init(window.parent.options, window.parent.presentation);
 		}
 	</script>

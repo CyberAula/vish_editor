@@ -94,8 +94,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){
-			eventsLoaded = true;
-			addEventListeners(); //for the arrow keys
+			eventsLoaded = true;			
       		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
 		}
@@ -283,7 +282,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Mods.fc.player.clear();
 		}
 	};
-	
+
 	/**
 	 * function to hide/show the page-switchers buttons in the viewer
 	 * hide the left one if on first slide
@@ -291,27 +290,29 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var _decideIfPageSwitcher = function(){
-		if(curSlide===0){
+		if(V.curSlide===0){
 			$("#page-switcher-start").hide();
 		}
 		else{
 			$("#page-switcher-start").show();
 		}
 		
-		if(curSlide === slideEls.length-1){
+		if(V.curSlide === V.slideEls.length-1){
 			$("#page-switcher-end").hide();			
 		}
 		else{
 			$("#page-switcher-end").show();
 		}
 	};
+	
+	
 
 	return {
 		init          			: init,
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
-		toggleFullScreen : toggleFullScreen, 
+		toggleFullScreen 		: toggleFullScreen, 
 		getUser					: getUser, 
 		getUserStatus			: getUserStatus
 	};

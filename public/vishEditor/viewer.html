@@ -80,12 +80,13 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.player.js"></script>
 <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.template.js"></script>
 
-<script type="text/javascript" src="/vishEditor/js/libs/slides.js"></script>
+<script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
 <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
 
 <script>
   //First function called when page loads
    function start(){
+    VISH.Slides.init();
     VISH.SlideManager.init(window.parent.options, window.parent.presentation);
   }
 </script>

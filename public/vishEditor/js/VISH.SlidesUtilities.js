@@ -53,7 +53,7 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    * go to the last slide when adding a new one
    */
   var lastSlide = function(){
-    goToSlide(slideEls.length);
+    goToSlide(V.slideEls.length);
   };
 
   /**
@@ -62,15 +62,15 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    */
   var goToSlide = function(no){
   	
-    if((no > slideEls.length) || (no <= 0)){
+    if((no > V.slideEls.length) || (no <= 0)){
   	  return;
-    } else if (no > curSlide+1){
-  	  while (curSlide+1 < no) {
-    	 nextSlide();
+    } else if (no > V.curSlide+1){
+  	  while (V.curSlide+1 < no) {
+    	 V.Slides.nextSlide();
   	  }
-    } else if (no < curSlide+1){
-  	  while (curSlide+1 > no) {
-    	 prevSlide();
+    } else if (no < V.curSlide+1){
+  	  while (V.curSlide+1 > no) {
+    	 V.Slides.prevSlide();
   	  }
     }
     
@@ -92,14 +92,14 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
    * function to go to previous slide and change the thumbnails and focus 
    */
   var backwardOneSlide = function(){
-  	goToSlide(curSlide);
+  	goToSlide(V.curSlide);
   };
   
   /**
    * function to go to next slide and change the thumbnails and focus 
    */
   var forwardOneSlide = function(){
-  	goToSlide(curSlide+2);
+  	goToSlide(V.curSlide+2);
   };
 	
 	
@@ -307,8 +307,8 @@ var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
 	 * with this format: 1/12 2/12
 	 */
 	var updateSlideCounter = function(){
-		var number_of_slides = slideEls.length;
-		var slide_number = curSlide + 1;
+		var number_of_slides = V.slideEls.length;
+		var slide_number = V.curSlide + 1;
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};
 	
