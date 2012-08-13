@@ -780,9 +780,9 @@ VISH.Editor = (function(V,$,undefined){
 						$(myObject).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(myObject);
 						element.style  = _getStylesInPercentages($(div), $(object).parent());
-						var zoom = VISH.Editor.Utils.getZoomFromStyle($(object).attr("style"));
+						var zoom = VISH.Utils.getZoomFromStyle($(object).attr("style"));
 						if(zoom!=1){
-							element.zoomInStyle = VISH.Editor.Utils.getZoomInStyle(zoom);
+							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();

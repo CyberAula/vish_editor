@@ -16,7 +16,7 @@ VISH.SnapshotPlayer = (function(){
             var scrollLeft = $(value).attr("scrollLeft");
             $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(iframe) + "</div>");
 						if($(value).attr("zoom")){
-							$(value).find("." + content_class).attr("style",VISH.Editor.Utils.getZoomInStyle($(value).attr("zoom")));
+							$(value).find("." + content_class).attr("style",VISH.Utils.getZoomInStyle($(value).attr("zoom")));
 						}
 						$(value).find("." + wrapper_class).scrollTop(scrollTop);
             $(value).find("." + wrapper_class).scrollLeft(scrollLeft);
@@ -42,7 +42,7 @@ VISH.SnapshotPlayer = (function(){
 					var iframe_wrapper = $(iframe).parent();
 					
 					$(area).attr("zoom",increase);
-          $(iframe).attr("style",VISH.Editor.Utils.getZoomInStyle(increase));
+          $(iframe).attr("style",VISH.Utils.getZoomInStyle(increase));
 					
           var scrollLeft = $(area).attr("scrollLeftOrigin");
           var newScrollLeft = scrollLeft * increase;

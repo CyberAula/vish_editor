@@ -129,7 +129,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					} else {
 						zoom = zoom - 0.1;
 					}
-          $(iframe).attr("style",VISH.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
+          $(iframe).attr("style",VISH.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
 					
 					//Resize object to fix in its wrapper
 					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
