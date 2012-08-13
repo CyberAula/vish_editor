@@ -123,13 +123,13 @@ VISH.Editor.Tools = (function(V,$,undefined){
         var objectInfo = VISH.Editor.Object.getObjectInfo(object);
         if(objectInfo.type==="web"){
           var iframe = $(area).find("iframe");
-          var zoom = VISH.SlidesUtilities.getZoomFromStyle($(iframe).attr("style"));
+          var zoom = VISH.Editor.Utils.getZoomFromStyle($(iframe).attr("style"));
 					if(action=="+"){
 						zoom = zoom + 0.1;
 					} else {
 						zoom = zoom - 0.1;
 					}
-          $(iframe).attr("style",VISH.SlidesUtilities.addZoomToStyle($(iframe).attr("style"),zoom));
+          $(iframe).attr("style",VISH.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
 					
 					//Resize object to fix in its wrapper
 					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);

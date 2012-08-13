@@ -9,10 +9,7 @@ VISH.Slides = (function(V,$,undefined){
 	var init = function(){
 		getCurSlideFromHash();
 
-		$(document).bind('OURDOMContentLoaded', handleDomLoaded);
-		/*added by KIKE to hide address bar*/
-		window.addEventListener("load", function(){ if(!window.pageYOffset){ V.Slides.hideAddressBar(); } } );
-		window.addEventListener("orientationchange", V.Slides.hideAddressBar );
+		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
 
 	var handleDomLoaded = function () {
@@ -211,9 +208,9 @@ VISH.Slides = (function(V,$,undefined){
 
 	  if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
 	    if (touchDX > 0) {
-	      VISH.SlidesUtilities.backwardOneSlide();
+	      backwardOneSlide();
 	    } else {
-	      VISH.SlidesUtilities.forwardOneSlide();
+	      forwardOneSlide();
 	    }
 	  }
 	  
@@ -267,31 +264,31 @@ VISH.Slides = (function(V,$,undefined){
 	    case 39: // right arrow
 	    case 34: // PgDn	
 	      if(isSlideFocused()) {
-			    VISH.SlidesUtilities.forwardOneSlide();
+			    forwardOneSlide();
 			    event.preventDefault();
 	      }
 	      break;
 	    case 37: // left arrow
 	    	if(isSlideFocused()) {
-				VISH.SlidesUtilities.backwardOneSlide();
+				backwardOneSlide();
 	    		event.preventDefault();    		
 	    	}
 	    	break;
 	    case 33: // PgUp
-	      VISH.SlidesUtilities.backwardOneSlide();
+	      backwardOneSlide();
 	      event.preventDefault();
 	      break;
 
 	    case 40: // down arrow
 	      if(isSlideFocused()) {
-	      		VISH.SlidesUtilities.forwardOneSlide();
+	      		forwardOneSlide();
 	      		event.preventDefault();	
 	      	}	      
 	      break;
 
 	    case 38: // up arrow
 	     if(isSlideFocused()) {
-				    VISH.SlidesUtilities.backwardOneSlide();
+				    backwardOneSlide();
 				    event.preventDefault();     		
 	      }	      
 	      break;
@@ -332,36 +329,72 @@ VISH.Slides = (function(V,$,undefined){
 	  document.querySelector('head').appendChild(el);
 	};
 
+  /* slide movement */
+
+  /**
+   * go to the last slide when adding a new one
+   */
+  var lastSlide = function(){
+    goToSlide(V.slideEls.length);
+  };
+
+  /**
+   * go to the slide when clicking the thumbnail
+   * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
+   */
+  var goToSlide = function(no){
+  	
+    if((no > V.slideEls.length) || (no <= 0)){
+  	  return;
+    } else if (no > V.curSlide+1){
+  	  while (V.curSlide+1 < no) {
+    	 nextSlide();
+  	  }
+    } else if (no < V.curSlide+1){
+  	  while (V.curSlide+1 > no) {
+    	 prevSlide();
+  	  }
+    }
+    
+    if(VISH.Editing){
+  		//first deselect zone if anyone was selected
+  		$(".selectable").css("border-style", "none");
+			
+			VISH.Editor.Tools.cleanZoneTools();
+  		
+  		//finally add a background color to thumbnail of the selected slide
+    	V.Editor.Thumbnails.selectThumbnail(no);    	
+  	}	else {
+  		//update slide counter
+  		V.SlideManager.updateSlideCounter();
+  	}
+  };
+  
+  /**
+   * function to go to previous slide and change the thumbnails and focus 
+   */
+  var backwardOneSlide = function(){
+  	goToSlide(V.curSlide);
+  };
+  
+  /**
+   * function to go to next slide and change the thumbnails and focus 
+   */
+  var forwardOneSlide = function(){
+  	goToSlide(V.curSlide+2);
+  };
 	
 
-	/*
-	 * added by KIKE to hide the address bar after loading
-	 */
-	var hideAddressBar = function()
-	{	
-		VISH.Debugging.log("TODO method hideAddressBar in slides.js");
-	      /*
-	      if(document.height < window.outerHeight)
-	      {
-	          document.body.style.height = (window.outerHeight + 50) + 'px';
-	          VISH.Debugging.log("height " + document.body.style.height);
-	      }
-
-	      setTimeout( function(){ 
-	      	VISH.Debugging.log("scroll");
-	      	window.scrollTo(0, 1); 
-	      	}, 50 );
-	  */
-	};
-
 	
-
-		return {
-			addEventListeners 		: addEventListeners,
-			hideAddressBar			: hideAddressBar,
+	return {
+			addEventListeners 		: addEventListeners,	
+			backwardOneSlide		: backwardOneSlide,		
+			forwardOneSlide			: forwardOneSlide,
+			goToSlide				: goToSlide,
 			init          			: init,
 			nextSlide				: nextSlide,
-			prevSlide				: prevSlide
+			prevSlide				: prevSlide,
+			lastSlide				: lastSlide
 	};
 
 }) (VISH,jQuery);

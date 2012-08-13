@@ -15,7 +15,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
-		
+		V.Slides.init();
 		V.Status.init();
 	
 		//first set VISH.Editing to false
@@ -95,8 +95,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;			
-      		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
-      		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		}
 				
 		if(V.Status.getIsInIframe()){
@@ -122,7 +122,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		if (!V.Status.ua.mobile) {
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
-    		VISH.SlidesUtilities.updateSlideCounter();
+    		updateSlideCounter();
+		}
+		else{
+			window.addEventListener("load", function(){ if(!window.pageYOffset){ _hideAddressBar(); } } );
+			window.addEventListener("orientationchange", _hideAddressBar );
 		}
 	};
 
@@ -304,6 +308,37 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("#page-switcher-end").show();
 		}
 	};
+
+	/**
+	 * function to update the number that indicates what slide is diplayed
+	 * with this format: 1/12 2/12
+	 */
+	var updateSlideCounter = function(){
+		var number_of_slides = V.slideEls.length;
+		var slide_number = V.curSlide + 1;
+		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
+	};
+
+
+  /*
+   * added by KIKE to hide the address bar after loading
+   */
+  var _hideAddressBar = function()
+  { 
+    VISH.Debugging.log("TODO method hideAddressBar in slides.js");
+        /*
+        if(document.height < window.outerHeight)
+        {
+            document.body.style.height = (window.outerHeight + 50) + 'px';
+            VISH.Debugging.log("height " + document.body.style.height);
+        }
+
+        setTimeout( function(){ 
+          VISH.Debugging.log("scroll");
+          window.scrollTo(0, 1); 
+          }, 50 );
+    */
+  };
 	
 	
 
@@ -314,7 +349,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
 		toggleFullScreen 		: toggleFullScreen, 
 		getUser					: getUser, 
-		getUserStatus			: getUserStatus
+		getUserStatus			: getUserStatus,
+		updateSlideCounter		: updateSlideCounter
 	};
 
 }) (VISH,jQuery);

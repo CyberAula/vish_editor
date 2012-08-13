@@ -175,8 +175,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 
 		if(style){
-			style = V.SlidesUtilities.setStyleInPixels(style,current_area);
-			image_width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
+			style = V.Editor.Utils.setStyleInPixels(style,current_area);
+			image_width = V.Editor.Utils.getWidthFromStyle(style,current_area);
 		}
 
 		var template = VISH.Editor.getTemplate(); 

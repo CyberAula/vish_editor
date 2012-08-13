@@ -32,10 +32,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
 		var scaffold = V.Dummies.getDummy(template, slide.id);  
 		
-		V.SlidesUtilities.addSlide(scaffold);	
+		V.Editor.Utils.addSlide(scaffold);	
 		
-		V.SlidesUtilities.redrawSlides();
-		V.SlidesUtilities.lastSlide();  //important to get the browser to draw everything
+		V.Editor.Utils.redrawSlides();
+		V.Slides.lastSlide();  //important to get the browser to draw everything
 		
 		for(el in slide.elements){
 			var area = $("#article"+slide.id + " div[areaid='" + slide.elements[el].areaid +"']");
