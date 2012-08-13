@@ -195,6 +195,7 @@ VISH.Slides = (function(V,$,undefined){
 	    touchDX = touches[0].pageX - touchStartX;
 	    touchDY = touches[0].pageY - touchStartY;
 	    var zoom = document.documentElement.clientWidth / window.innerWidth;
+	  	//if you are zooming don´t pass the slide, you will move the full slide as it is zoomed
 	  	if(zoom < 1.5){
 	    	event.preventDefault();  //this is because if not done, the browser can take control of the event and cancels it, because it thinks that the touch is a scroll action
 	  	}
