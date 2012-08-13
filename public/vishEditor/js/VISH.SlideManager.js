@@ -1,4 +1,5 @@
 VISH.SlideManager = (function(V,$,undefined){
+	var initOptions;
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
@@ -14,11 +15,23 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
-		
+		V.Slides.init();
 		V.Status.init();
 	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+
+		if(options){
+			initOptions = options;
+			if((options['developping']===true)&&(VISH.Debugging)){
+				  VISH.Debugging.init(true);
+			} else {
+				 VISH.Debugging.init(false);
+			}
+		}	else {
+			initOptions = {};
+			VISH.Debugging.init(false);
+		}
 	
 	//fixing editor mode when save an excursion
 		if(options['username']) {
@@ -81,10 +94,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.ViewerAdapter.setupSize();
 		
 		if(!eventsLoaded){
-			eventsLoaded = true;
-			addEventListeners(); //for the arrow keys
-      		$(document).on('click', '#page-switcher-start', VISH.SlidesUtilities.backwardOneSlide);
-      		$(document).on('click', '#page-switcher-end', VISH.SlidesUtilities.forwardOneSlide);
+			eventsLoaded = true;			
+      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		}
 				
 		if(V.Status.getIsInIframe()){
@@ -110,7 +122,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		if (!V.Status.ua.mobile) {
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
-    		VISH.SlidesUtilities.updateSlideCounter();
+    		updateSlideCounter();
+		}
+		else{
+			window.addEventListener("load", function(){ if(!window.pageYOffset){ _hideAddressBar(); } } );
+			window.addEventListener("orientationchange", _hideAddressBar );
 		}
 	};
 
@@ -270,7 +286,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Mods.fc.player.clear();
 		}
 	};
-	
+
 	/**
 	 * function to hide/show the page-switchers buttons in the viewer
 	 * hide the left one if on first slide
@@ -278,14 +294,14 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var _decideIfPageSwitcher = function(){
-		if(curSlide===0){
+		if(V.curSlide===0){
 			$("#page-switcher-start").hide();
 		}
 		else{
 			$("#page-switcher-start").show();
 		}
 		
-		if(curSlide === slideEls.length-1){
+		if(V.curSlide === V.slideEls.length-1){
 			$("#page-switcher-end").hide();			
 		}
 		else{
@@ -293,14 +309,48 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 	};
 
+	/**
+	 * function to update the number that indicates what slide is diplayed
+	 * with this format: 1/12 2/12
+	 */
+	var updateSlideCounter = function(){
+		var number_of_slides = V.slideEls.length;
+		var slide_number = V.curSlide + 1;
+		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
+	};
+
+
+  /*
+   * added by KIKE to hide the address bar after loading
+   */
+  var _hideAddressBar = function()
+  { 
+    VISH.Debugging.log("TODO method hideAddressBar in slides.js");
+        /*
+        if(document.height < window.outerHeight)
+        {
+            document.body.style.height = (window.outerHeight + 50) + 'px';
+            VISH.Debugging.log("height " + document.body.style.height);
+        }
+
+        setTimeout( function(){ 
+          VISH.Debugging.log("scroll");
+          window.scrollTo(0, 1); 
+          }, 50 );
+    */
+  };
+	
+	
+
 	return {
 		init          			: init,
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
-		toggleFullScreen : toggleFullScreen, 
+		toggleFullScreen 		: toggleFullScreen, 
 		getUser					: getUser, 
-		getUserStatus			: getUserStatus
+		getUserStatus			: getUserStatus,
+		updateSlideCounter		: updateSlideCounter
 	};
 
 }) (VISH,jQuery);

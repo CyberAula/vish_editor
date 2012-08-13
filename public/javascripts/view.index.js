@@ -4,7 +4,8 @@ $(function() {
 	VISHWS.VALIDATION.init();
 
 	$(".indexTab").click(function(event) {
-		$("#form_alert").hide();
+		$("#loginError").hide();
+		$("#registerError").hide();
 	});
 
 	$("#sign_in_button").click(function(event) {
@@ -14,18 +15,18 @@ $(function() {
 
 		if(!VISHWS.VALIDATION.validateSignIn(name,password)){
 			event.preventDefault();
-			showInformationMessage("error","Please, write valid user and password.");
+			showInformationMessage("error","Please, write valid user and password.","login");
 		}
 	});
 
 	$("#sign_up_button").click(function(event) {
 		//Validate
-  		var name = $(this).parent().parent().find("input[name=login]").val();
-		var password = $(this).parent().parent().find("input[name=password]").val();
-		var cpassword = $(this).parent().parent().find("input[name=password2]").val();
+  		var name = $(this).parent().parent().parent().find("input[name=login]").val();
+		var password = $(this).parent().parent().parent().find("input[name=password]").val();
+		var cpassword = $(this).parent().parent().parent().find("input[name=password2]").val();
 
 		if(!VISHWS.VALIDATION.validateSignUp(name,password,cpassword)){
-			showInformationMessage("error","Please, write valid user and passwords.");
+			showInformationMessage("error","Please, write valid user and passwords.","register");
 			event.preventDefault();
 		}
 	});
@@ -33,19 +34,29 @@ $(function() {
 });
 
 
-var showInformationMessage = function(type,message){
-	$("#form_alert").attr("class","alert");
+var showInformationMessage = function(type,message,form){
+	var div;
 
-	if(type=="error"){
-		$("#form_alert").addClass("alert-error");
-	} else if(type=="success"){
-		$("#form_alert").addClass("alert-success");
+	if(form=="login"){
+		div = $("#loginError");
+		$("#registerError").hide();
+	} else if(form=="register"){
+		div = $("#registerError");
+		$("#loginError").hide();
 	}
 
-	if($("#form_alert").length==1){
-		$("#form_alert").html("<p>"+message+"</p>");
-		$("#form_alert").show();
+	div.attr("class","alert");
+
+	if(type=="error"){
+		div.addClass("alert-error");
+	} else if(type=="success"){
+		div.addClass("alert-success");
+	}
+
+	if(div.children().size()==1){
+		div.html("<p class='messageError'>"+message+"</p>");
+		div.show();
 	} else {
-		$(".tab-content").append("<div id='form_alert' class='alert alert-error'><p>"+message+"</p>");
+		div.append("<p class='messageError'>"+message+"</p>");
 	}
 }

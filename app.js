@@ -6,16 +6,16 @@ var fs = require('fs');
 var configuration = require('./configuration/configuration').getConfiguration();
 var configurationVishEditor = require('./public/vishEditor/configuration/configuration.js');
 var everyauth = require('everyauth');
-var debug = require('./debug');
+var debug = require('./utils/debug');
 
 //Open db
-require("./db").connect();
+require("./db/db").connect();
 
 //Load models
 require("./models/all");
 
 //EveryAuth Settings
-require('./everyauth');
+require('./libs/everyauth/everyauth');
 
 //MemStore for cookies
 var MemStore = express.session.MemoryStore;

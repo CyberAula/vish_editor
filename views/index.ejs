@@ -1,17 +1,15 @@
 <script type="text/javascript" src="/javascripts/view.index.js"></script>
 
-<div id="login.loginWrapper.tabbable">
-  ul.nav.nav-tabs
-    li(class='active')
-      a.indexTab(href='#tab1', data-toggle='tab') Sign in
-    li
-      a.indexTab(href='#tab2', data-toggle='tab') Sign Up
-  .tab-content
-    #tab1.tab-pane.active!= partial('partials/signin')
-    #tab2.tab-pane!= partial('partials/signup')
-
-    - if (typeof errors !== 'undefined' && errors.length)
-      #form_alert.alert.alert-error
-        - each error in errors
-          p= error
+<div class="row span12 center main">
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+       <%- partial('partials/index') %>
+    </div>
+    <div class="tab-pane" id="tab2">
+       <%- partial('partials/help') %>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <%- partial('partials/aboutus') %>
+    </div>
+  </div>
 </div>

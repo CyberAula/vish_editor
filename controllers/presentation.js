@@ -8,179 +8,147 @@
 // PUT     /presentation/:presentationId       ->  update
 // DELETE  /presentation/:presentationId       ->  destroy
 
- var db = require("../db").connect();
- var Presentation = db.model('Presentation');
+var fs = require('fs');
+var database = require("../db/api");
+var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
 
 exports.index = function(req,res){
-  console.log("Presentation index");
-  res.render('index');
-}
-
-exports.get = function(req,res){
-  console.log("Presentation get");
-  res.render('index');
-}
-
-exports.show = function(req,res){
-  console.log("Presentation show");
-  var id = req.params.id;
-  var presentation = Presentation.findById(id, function(err,presentation){
-    if(err){
-      res.render('home')
-    } else {
-      res.render('presentation/show', {locals: {presentation: presentation}});
-    }
-  });
+  res.redirect('/home');
 }
 
 exports.new = function(req,res){
-  console.log("Presentation new")
-  var options = JSON.stringify(require('../public/vishEditor/configuration/configuration.js').getOptions());
-  console.log(options);
   res.render('presentation/new', { locals: { options: options }});
 }
 
 exports.create = function(req,res){
-  console.log("New presentation called")
-  var presentation = new Presentation();
-  var presentationJson = JSON.parse(req.body.presentation.json);
-  presentation.title = presentationJson.title;
-  presentation.description = presentationJson.description;
-  presentation.avatar = presentationJson.avatar;
-  // presentation.tags = presentationJson.tags;
-  presentation.author = req.user;
-  presentation.content = req.body.presentation.json;
-
-  presentation.save( function(err){
+  database.createPresentation(req.user,req.body.presentation.json,function(err,presentationId){
     if(err){
-       req.flash('warn',err.message);
-       res.render('home');
+      res.redirect('/home');
     } else {
-      //save the presentation in the user presentations array
-      req.user.presentations.push(presentation);
-      req.user.save(function(err){
-        if(err){
-          req.flash('warn',err.message);
-          res.render('home');
-        }});
-      res.redirect('/presentation/' + presentation._id.toHexString());
-    }  
+      var data = new Object();
+      data.url = '/presentation/' + presentationId;
+      res.contentType('application/json');
+      res.send(data);
+    }
+  });
+}
+
+exports.show = function(req,res){
+  var id = req.params.id;
+  database.findPresentationById(id,function(err,presentation){
+    if(err){
+      req.flash('warn','Presentation not found');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
+    } else {
+      database.findUserById(presentation.author,function(err,user){
+        if((err)||(user===null)){
+          res.redirect('/home');
+        } else {
+          res.render('presentation/show', {locals: {presentation: presentation, author: user.name, options: options}});
+        }
+      });
+    }
   });
 }
 
 exports.edit = function(req,res){
-  console.log("Presentation edit");
-  res.render('home');
+  var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
+    return;
+  }
+
+  database.findPresentationById(id,function(err,presentation){
+    if((err)||(presentation===null)){
+      req.flash('warn','Presentation not found');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
+    } else {
+      database.findUserById(presentation.author,function(err,user){
+        if((err)||(user===null)){
+          req.flash('warn','Presentation owner not found');
+          res.render('genericError', { locals: {returnUrl: "/home" } });
+        } else {
+          res.render('presentation/edit', {locals: {presentation: presentation, author: user.name, options: options}});
+        }
+      });
+    }
+  });  
 }
 
 exports.update = function(req,res){
-  console.log("Presentation update");
-  res.render('home');
+  var id = req.params.id;
+
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
+    return;
+  }
+
+  database.updatePresentation(req.user,req.body.presentation.json,function(err,presentationId){
+    if(err){
+      req.flash('warn','This presentation can\'t be updated');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
+    } else {
+      var data = new Object();
+      data.url = '/presentation/' + presentationId;
+      res.contentType('application/json');
+      res.send(data);
+    }
+  });
 }
 
+exports.destroy = function(req,res){
+  var id = req.params.id;
 
+  if(req.user.presentations.indexOf(id)===-1){
+    //Current user is not the owner of this presentation
+    req.flash('warn','You don\'t have permissions to edit this presentation');
+    res.render('genericError', { locals: {returnUrl: "/home" } });
+    return;
+  }
 
+  database.destroyPresentation(id,function(err,presentation){
+      if(err){
+        req.flash('warn','This presentation can\'t be destroyed');
+        res.render('genericError', { locals: {returnUrl: "/home" } });
+      } else {
+        res.redirect('/home');
+      }
+  });
+}
 
-// var util = require('util');
+exports.download = function(req,res){
+  var id = req.params.id;
+  database.findPresentationById(id,function(err,presentation){
+    if((err)||(presentation===null)){
+      req.flash('warn','Presentation not found');
+      res.render('genericError', { locals: {returnUrl: "/home" } });
+    } else {
+      writeJsonToFile(presentation._id.toHexString(),presentation.content, function(err,outputFileName){
+          if((err)||(outputFileName===null)){
+            req.flash('warn','Presentation can\'t be downloaded');
+            res.render('genericError', { locals: {returnUrl: "/home" } });
+          } else {
+            res.contentType('application/json');
+            res.attachment(outputFileName);
+            res.sendfile(outputFileName);
+          }
+      });
+    }
+  });
+}
 
-
-// //DB settings
-// var Mongoose = require('mongoose');
-// var db = Mongoose.connect('mongodb://localhost/db')
-
-// require('../products');
-// var Product = db.model('Product');
-// var photos = require('../photos');
-
-
-// exports.index = function(req,res){
-//   console.log("Products index");
-//   Product.find({},function(err,products){
-//     if(err){
-//       console.log(err)
-//     }
-//     res.render('products/index', { locals: { products: products }});
-//   });
-// }
-
-// exports.get = function(req,res){
-//   console.log("Products get");
-// }
-
-// exports.show = function(req,res){
-//   console.log("Products show");
-//   var id = req.params.product;
-//   var product = Product.findById(id, function(err,product){
-//     console.log("err: " + err);
-//     console.log("product: " + product);
-//     if(err){
-//       res.send("Error on show product: " + err);
-//     } else {
-//       res.render('products/show', {locals: { product: product}})
-//     }
-//   });
-// }
-
-// exports.new = function(req,res){
-//     console.log("Products new");
-//     var product = req.body && req.body.product || new Product();
-
-//     photos.list(function(err,photo_list){
-//     if(err){
-//       throw err;
-//     }
-//     res.render('products/new', {locals: { 
-//       product: product,
-//       photos: photo_list
-//     }})
-//   })
-// }
-
-// exports.create = function(req,res){
-//   console.log("Products create");
-//   var product = new Product(req.body.product);
-//   product.save( function(err){
-//     if(err){
-//        req.flash('warn',err.message);
-//        res.render('sessions/new');
-//     } else {
-//       res.redirect('/products/' + product._id.toHexString());
-//     }  
-//   });
-// }
-
-// exports.edit = function(req,res){
-//   console.log("Products edit");
-//   var id = req.params.product;
-//   var product = Product.findById(id, function(err,product){
-//     photos.list(function(err,photo_list){
-//       if(err){
-//         throw err;
-//       }
-//       res.render('products/edit', {locals: { 
-//         product: product,
-//         photos: photo_list
-//       }})
-//     })
-//   });
-// }
-
-// exports.update = function(req,res){
-//   console.log("Products update");
-//   var id = req.params.product;
-
-//   Product.findById(id,function(err,product){
-//     product.name = req.body.product.name;
-//     product.description = req.body.product.description;
-//     product.price  = req.body.product.price;
-//     product.photo  = req.body.product.photo;
-//     product.save( function(){
-//       res.redirect('/products/'+product._id.toHexString());
-//     });
-//   });
-// }
-
-// exports.load = function(id,callback){
-//   console.log("Load");
-//   callback(null, {id: id, name: "Product #" + id});
-// }
+function writeJsonToFile(id,json,callback){
+  var outputFilename = "./data/presentations/" + id + ".json";
+    fs.writeFile(outputFilename, json, function(err) {
+        if(err) {
+          callback(err);
+        } else {
+          callback(err,outputFilename);
+        }
+    }); 
+}

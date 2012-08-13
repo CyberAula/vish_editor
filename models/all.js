@@ -7,15 +7,15 @@ var Schema = Mongoose.Schema;
 ////////////////
 
 var PresentationSchema = new Schema({
-  title : {type: String},
+  title : {type: String, index: true},
   description : {type: String},
   avatar : {type: String},
   tags : {type: [String]},
   author : {type: String },
   content : {type: String },
+  state : {type: String, enum: ['public','private','draft'], default: 'public', index: true},
   created  : { type: Date, default: Date.now },
-  updated : { type: Date, default: Date.now },
-  state : {type: String, enum: ['public','private','draft'], default: 'public', index: true}
+  updated : { type: Date, default: Date.now }
 });
 
 Mongoose.model('Presentation',PresentationSchema);
@@ -27,11 +27,13 @@ Mongoose.model('Presentation',PresentationSchema);
 
 var UserSchema = new Schema({
   login : {type: String, index:true},
-  password : {type: String, index:true},
-  role : {type: String , enum: ['user','admin'], default: 'user'},
   authBy : {type: String, enum: ['password','twitter','facebook'], default: 'password', index: true},
+  password : {type: String},
   name : {type: String},
-  presentations: [PresentationSchema]
+  role : {type: String , enum: ['user','admin'], default: 'user'},
+  presentations: [{type: String}],
+  created  : { type: Date, default: Date.now },
+  updated : { type: Date, default: Date.now }
 });
 
 Mongoose.model('User',UserSchema);

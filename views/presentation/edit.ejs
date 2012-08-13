@@ -1,0 +1,22 @@
+<script type="text/javascript">	
+	var options = <%-options%>; 
+	<% var mypres = JSON.parse(presentation.content);
+	if(mypres.id ===""){
+		mypres.id = presentation._id;
+	}%>
+	var presentation = <%-JSON.stringify(mypres)%>;
+</script>
+
+<div class="row span12 center main tabVishEditorWrapper">
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <%- partial('partials/vishEditor') %>
+    </div>
+    <div class="tab-pane" id="tab2">
+    <%- partial('partials/help') %>
+    </div>
+    <div class="tab-pane" id="tab3">
+    <%- partial('partials/aboutus') %>
+    </div>
+  </div>
+</div>

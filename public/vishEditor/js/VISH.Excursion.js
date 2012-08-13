@@ -40,10 +40,15 @@ VISH.Excursion = (function(V,undefined){
 				*  */
 				else if(mySlides[i].elements[num].type === "mcquestion") {
  
-					V.Debugging.log("length of elements is : " + mySlides[i].elements[num].options.length);
+					
 				    //param number of slide? and number of elements 
 					VISH.Quiz.enableInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].options.length);
 					
+					
+				}
+				else if (mySlides[i].elements[num].type === "truefalsequestion") {
+				//number of slide and number of true/false questions 
+				VISH.Quiz.enableTrueFalseInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].questions.length);
 					
 				}
 			}

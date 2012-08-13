@@ -2,6 +2,7 @@ node_modules
 data
 configuration/configuration.js
 public/vishEditor/configuration/configuration.js
+public/uploads/*
 
 public/vishEditor/.DS_Store
 public/vishEditor/.project
