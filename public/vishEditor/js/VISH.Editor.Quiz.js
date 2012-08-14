@@ -72,12 +72,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 		    		$(".add_quiz_option").remove();
 		    
-		    		var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+		    		var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
 		    
 		    		$(".current").find("#ul_mch_options").find("#li_mch_option_"+(next_num-1)).append(delete_icon);
 		    		var add_option = "<li id='li_mch_option_"+(next_num)+"' class='li_mch_option'>"+next_index+") <input id='radio_text_"+(next_num)+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
 			
-					add_option += "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
+					add_option += "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
 			
 					$(".current").find("#ul_mch_options").append(add_option);
 					//remove button + 
@@ -86,11 +86,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 						//if the last one remove add button and add delete button to the preview and to the last one
 						$(".add_quiz_option").remove();
 			
-						var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+						var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
 						$(".current").find("#ul_mch_options").find("#li_mch_option_"+(next_num-1).toString()).append(delete_icon);
 			
 						var add_option = "<li id='li_mch_option_"+next_num+"' class='li_mch_option'>"+next_index+")&nbsp;  <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
-						add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a></li>";
+						add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a></li>";
 			
 						$(".current").find("#ul_mch_options").append(add_option);
 
@@ -125,7 +125,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//remove a multiple choice option when click on the icon delete 
 	var removeMultipleChoiceOption = function(id) {
 		
-		var add_option_button = "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a>";
+		var add_option_button = "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a>";
 	 	
 	 	//remove children's li selected (id) except index a), b), etc ...  
 		$("#li_mch_option_"+id.toString()).children().remove();
