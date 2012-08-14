@@ -28,7 +28,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
-		
+		VISH.Slides.init();
+
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
@@ -110,10 +111,8 @@ VISH.Editor = (function(V,$,undefined){
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
-			V.SlidesUtilities.redrawSlides();
+			V.Editor.Utils.redrawSlides();
 			V.Editor.Thumbnails.redrawThumbnails();
-
-			addEventListeners(); //comes from slides.js to be called only once
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
@@ -486,14 +485,14 @@ VISH.Editor = (function(V,$,undefined){
 	
 		//VISH.Debugging.log("slide es: " + slide );
 				
-		V.SlidesUtilities.addSlide(slide);
+		V.Editor.Utils.addSlide(slide);
 		
 		$.fancybox.close();
 		
-		V.SlidesUtilities.redrawSlides();		
+		V.Editor.Utils.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		
-		setTimeout("VISH.SlidesUtilities.lastSlide()", 300);	
+		setTimeout("VISH.Slides.lastSlide()", 300);	
 	};
 
 
@@ -627,10 +626,10 @@ VISH.Editor = (function(V,$,undefined){
 						$(".theslider").hide();	
 						article_to_delete.remove();
 						//set curSlide to the preious one if this was the last one
-						if(curSlide == slideEls.length-1 && curSlide != 0){  //if we are in the first slide do not do -1
-							curSlide -=1;
+						if(V.curSlide == V.slideEls.length-1 && V.curSlide != 0){  //if we are in the first slide do not do -1
+							V.curSlide -=1;
 						}					
-						V.SlidesUtilities.redrawSlides();						
+						V.Editor.Utils.redrawSlides();						
 						V.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
@@ -679,7 +678,7 @@ VISH.Editor = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var _onSaveButtonClicked = function(){
-		if(slideEls.length === 0){
+		if(V.slideEls.length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
 				{
@@ -781,9 +780,9 @@ VISH.Editor = (function(V,$,undefined){
 						$(myObject).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(myObject);
 						element.style  = _getStylesInPercentages($(div), $(object).parent());
-						var zoom = VISH.SlidesUtilities.getZoomFromStyle($(object).attr("style"));
+						var zoom = VISH.Utils.getZoomFromStyle($(object).attr("style"));
 						if(zoom!=1){
-							element.zoomInStyle = VISH.SlidesUtilities.getZoomInStyle(zoom);
+							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();
@@ -961,7 +960,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
-		V.SlidesUtilities.goToSlide(curSlide);
+		V.Slides.backwardOneSlide();
 	};
 	
 
@@ -970,7 +969,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
-		V.SlidesUtilities.goToSlide(curSlide+2);
+		V.Slides.forwardOneSlide();
 	};
 	
 	

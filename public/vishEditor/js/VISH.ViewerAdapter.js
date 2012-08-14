@@ -12,7 +12,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		else{
 			var reserved_px_for_menubar = 40;
 			var margin_height = 40;
-			var margin_width = 110;
+			var margin_width = 30;
 		}
 		
 		var height = $(window).height() - reserved_px_for_menubar; //the height to use is the window height - 40px that is the menubar height
