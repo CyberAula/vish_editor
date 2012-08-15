@@ -94,6 +94,10 @@ VISH.SlideManager = (function(V,$,undefined){
 			VISH.ViewerAdapter.setupGame(excursion);	
 			VISH.Game.registerActions(excursion);		
 		}
+		else if(excursion.type === "flashcard"){
+			VISH.ViewerEngine = "flashcard";
+			VISH.Flashcard.init(excursion);
+		}
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize();

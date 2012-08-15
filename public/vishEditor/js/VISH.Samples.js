@@ -763,11 +763,12 @@ VISH.Samples = (function(V,undefined){
     };
 
 	return {
-		full_samples  : full_samples,
-		samples   	  : samples,
-		samples_game  : samples_game,
-		samples_aldo  : samples_aldo, 
-		quizes_samples : quizes_samples
+		full_samples  		: full_samples,
+		samples   	  		: samples,
+		samples_flashcard 	: samples_flashcard,
+		samples_game  		: samples_game,
+		samples_aldo  		: samples_aldo, 
+		quizes_samples 		: quizes_samples
 	};
 
 })(VISH);
