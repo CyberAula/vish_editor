@@ -1,0 +1,31 @@
+#viewbar{
+  display: none;
+}
+.slides {
+  display: none;
+}
+.slides > article.far-past {
+  display: none;  
+}
+.slides > article.past {
+  display: none; 
+}
+.slides > article.current {
+  display: none; 
+}
+.slides > article.next {
+  display: none; 
+}
+.slides > article.far-next {
+  display: none; 
+}
+
+
+#flashcard-background {
+	display: block;
+	width: 800px;
+	height: 600px;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center; 
+}
