@@ -39,6 +39,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		
 		for(el in slide.elements){
 			var area = $("#article"+slide.id + " div[areaid='" + slide.elements[el].areaid +"']");
+			if(area.length === 0){
+				continue; //with first version excursions we had different template names and some fails, this condition avoid that
+			}
 			if(slide.elements[el].type === "text"){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
 			} else if(slide.elements[el].type === "image"){
