@@ -43,10 +43,12 @@ VISH.Dummies = (function(VISH,undefined){
 		}
 		while(newString.indexOf("article_id_to_change") != -1){
 			if(article_id){
-				newString = newString.replace("article_id_to_change", "article" + article_id);
+				//newString = newString.replace("article_id_to_change", "article" + article_id);
+				newString = newString.replace("article_id_to_change", article_id);
 			}
 			else{
-				newString = newString.replace("article_id_to_change", "article" + nextArticleId);
+				//newString = newString.replace("article_id_to_change", "article" + nextArticleId);
+				newString = newString.replace("article_id_to_change",  nextArticleId);
 				nextArticleId++;
 			}
 		}

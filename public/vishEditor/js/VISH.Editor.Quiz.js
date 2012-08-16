@@ -15,6 +15,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var init = function(){
 		var myInput = $(".current").find("input[type='text']");	
 		V.Debugging.log("enter to init function");
+		
+		//TODO remove in Dummies <li>.....</li> for doing best programming practices and add  
+		//the first option calling to the function addMultipleChoiceOption
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
 	
 		
@@ -26,7 +29,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-				V.Debugging.log("event.keyCode =" + event.keyCode);
+				V.Debugging.log("event.keyCode in init =" + event.keyCode);
 				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
 					//call to addMultipleChoiceOption
 					addMultipleChoiceOption();
