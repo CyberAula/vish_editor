@@ -37,7 +37,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
+					var description = "Uploaded by " + options["ownerName"] + " via Vish Editor";
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
 					$("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
 					$("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
@@ -47,7 +47,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 						$("#" + uploadDivId + " .documentsForm").attr("action", "/image");
 					}
 					$("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
-					var tagList = $("#" + uploadDivId + " .tagList")
+					var tagList = $("#" + uploadDivId + " .tagList");
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
 				}
@@ -175,8 +175,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 
 		if(style){
-			style = V.SlidesUtilities.setStyleInPixels(style,current_area);
-			image_width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
+			style = V.Editor.Utils.setStyleInPixels(style,current_area);
+			image_width = V.Editor.Utils.getWidthFromStyle(style,current_area);
 		}
 
 		var template = VISH.Editor.getTemplate(); 

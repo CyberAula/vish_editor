@@ -82,7 +82,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	  //RESIZE
 		var width, value;
 		if(style){
-		   width = V.SlidesUtilities.getWidthFromStyle(style);
+		   width = V.Editor.Utils.getWidthFromStyle(style);
 		   value = width/80;
 		} else {
 			value = 4;

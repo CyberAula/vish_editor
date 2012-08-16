@@ -128,7 +128,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     //RESIZE
     var width, value;
     if(style){
-       width = V.SlidesUtilities.getWidthFromStyle(style,current_area);
+       width = V.Editor.Utils.getWidthFromStyle(style,current_area);
        value = 10*width/$(current_area).width();
     } else {      
       value = 10; //we set it to the maximum value

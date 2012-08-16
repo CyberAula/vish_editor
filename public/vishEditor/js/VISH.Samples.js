@@ -544,7 +544,7 @@ VISH.Samples = (function(V,undefined){
 		      } ,
 		    
 		    { 
-			  	"id":"article6",
+			  	"id":"article5",
 			  "template":"t11"
 			  ,"elements":[
 			  		{
@@ -561,9 +561,45 @@ VISH.Samples = (function(V,undefined){
 			  			
 			  		}
 		         ]
-		      } 
-		    
-		    
+		      }, 
+		      
+		      {
+		      	"id":"article6",
+		      	"template":"t12",
+		      	"elements":[
+		      		{
+		      		"id":"zone11",
+		      		"areaid":"header"
+		      		},
+		      		{
+		      			"id":"zone12",
+		      			"type":"truefalsequestion",
+		      			"areaid":"left",
+		      			"questions":[
+		      			{
+		      				"id":0,
+		      				"text_question":"Is carnivorous the iberian lynx",
+		      				"answer":"true"
+		      				},
+		      				{
+		      					"id":1,
+		      					"text_question":"a sdasd as d",
+		      					"answer":"true"
+		      					},
+		      					{
+		      						"id":2,
+		      						"text_question":"s adasdasd a",
+		      						"answer":"false"
+		      					},
+		      					{
+		      							"id":3,
+		      							"text_question":"as das dasd ad",
+		      							"answer":"null"
+		      					}
+		      				]
+		      			} 
+		    		]
+		    }
 		      
 		    ]
 		       

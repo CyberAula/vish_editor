@@ -32,7 +32,7 @@ VISH.ObjectPlayer = (function(){
 	
 	var adjustDimensionsAfterZoom = function(objectWithZoom){
 		var parent = $(objectWithZoom).parent();
-		var zoom = VISH.SlidesUtilities.getZoomFromStyle($(objectWithZoom).attr("style"));
+		var zoom = VISH.Utils.getZoomFromStyle($(objectWithZoom).attr("style"));
 		$(objectWithZoom).height($(parent).height()/zoom)
 		$(objectWithZoom).width($(parent).width()/zoom)
 	}

@@ -11,16 +11,22 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var buttonAddTrueFalseQuestionId = "a_add_true_false_question";
 	var maxNumTrueFalseQuestions = 6; // maximum input options
 	
+	
 	var init = function(){
-		
+		var myInput = $(".current").find("input[type='text']");	
+		V.Debugging.log("enter to init function");
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-		$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
-
- var myInput = $(".current").find("input[type='text']");
+	
+		
+ 		
+  		//var myInput = $(".current").find("input[type='text']");
+ 		//var myInput = $(".current").find("#radio_text_1");
+ 
+ 
 	//	$(myInput).watermark('Search content');
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-			
+				V.Debugging.log("event.keyCode =" + event.keyCode);
 				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
 					//call to addMultipleChoiceOption
 					addMultipleChoiceOption();
@@ -32,15 +38,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}	
 			
 		}); 
+		
+			$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
+		
 	};	
 	/* TODO: change id of input 
 	 Function that add an input text option for the Multiple Choice Quiz  
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		
-		
-		V.Debugging.log("event.type vale: "  + event);
 		
 		//New element to apply operations  
 		var myInput = $(".current").find("input[type='text']").last(); 
@@ -54,19 +60,24 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
 		
 				var next_num = inputs_search.size()+1;
-				var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
+					
+			    var next_index = "a".charCodeAt(0) + (next_num-1); 
+  	
+		        next_index = String.fromCharCode(next_index);
+				
+				//var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
 				
 		//remove add button , add option input 
 				if (next_num < maxNumMultipleChoiceOptions) {
 
 		    		$(".add_quiz_option").remove();
 		    
-		    		var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+		    		var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
 		    
 		    		$(".current").find("#ul_mch_options").find("#li_mch_option_"+(next_num-1)).append(delete_icon);
 		    		var add_option = "<li id='li_mch_option_"+(next_num)+"' class='li_mch_option'>"+next_index+") <input id='radio_text_"+(next_num)+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
 			
-					add_option += "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
+					add_option += "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
 			
 					$(".current").find("#ul_mch_options").append(add_option);
 					//remove button + 
@@ -75,11 +86,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 						//if the last one remove add button and add delete button to the preview and to the last one
 						$(".add_quiz_option").remove();
 			
-						var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a>";
+						var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
 						$(".current").find("#ul_mch_options").find("#li_mch_option_"+(next_num-1).toString()).append(delete_icon);
 			
 						var add_option = "<li id='li_mch_option_"+next_num+"' class='li_mch_option'>"+next_index+")&nbsp;  <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
-						add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='images/delete.png' id='remove_quiz_option_img'/></a></li>";
+						add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a></li>";
 			
 						$(".current").find("#ul_mch_options").append(add_option);
 
@@ -114,7 +125,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//remove a multiple choice option when click on the icon delete 
 	var removeMultipleChoiceOption = function(id) {
 		
-		var add_option_button = "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='images/add_quiz_option.png' id='add_quiz_option_img'/></a>";
+		var add_option_button = "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a>";
 	 	
 	 	//remove children's li selected (id) except index a), b), etc ...  
 		$("#li_mch_option_"+id.toString()).children().remove();
@@ -193,8 +204,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * */
 	
 	var  addTrueFalseQuestion = function(event){
-		
-			var numCurrentQuestions = $(".current").find(".true_false_question").size();
+			
+		$(".current").find(".true_false_question").removeAttr("autofocus");	
+		var numCurrentQuestions = $(".current").find(".true_false_question").size();
 			//test number of questios
 		if (numCurrentQuestions < maxNumTrueFalseQuestions)	{
 			
@@ -203,11 +215,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//remove add question button
 				$(document).find('#'+buttonAddTrueFalseQuestionId).remove();
 			
-				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"' class='td_true'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_false_"+(numCurrentQuestions+1)+"' class='td_false'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"'/></td><td id='td_question_"+(numCurrentQuestions+1)+"' class='td_truefalse_question'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td class='td_add_button'><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
+				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"' class='td_true'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"' class='truefalse_answer' value='true'/></td><td id='td_false_"+(numCurrentQuestions+1)+"' class='td_false'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"' class='truefalse_answer' value='false'/></td><td id='td_question_"+(numCurrentQuestions+1)+"' class='td_truefalse_question'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td class='td_add_button'><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
 				
 				//add the row into the table 
 				$(".current").find(".truefalse_quiz_table").append(trueFalseQuestionRow);
 			 
+			 	$(".current").find(".true_false_question").last().attr('autofocus', 'autofocus');
 							
 			} 
 			
@@ -224,7 +237,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 			
 	return {
-		init: init, 
+		init						: init, 
 		addMultipleChoiceOption		: addMultipleChoiceOption, 
 		removeMultipleChoiceOption	: removeMultipleChoiceOption, 
 		addTrueFalseQuestion		: addTrueFalseQuestion
