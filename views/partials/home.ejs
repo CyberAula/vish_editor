@@ -1,9 +1,11 @@
+<script type="text/javascript" src="/javascripts/view.home.js"></script>
+
 <div class ="row span12 content center" id="presentations_wrapper">
 	<div class = "row span1 space"><hr></div>
 	<div class = "row span1 reflected"><p>Excursions</p></div>
 	<div class = "row span8 space line"><hr></div>
 	<div class = "row span1 space"></div>
-	<div id= "page1">
+	<div id="page1">
 		<div class = "row span12 text fontcolor features">
 
 			<%if (typeof presentations != 'undefined') {%>
@@ -20,8 +22,27 @@
 						<li class="span1 actionsdiv">
 							<a href='/presentation/<%=presentations[i]._id%>/edit'><img class= "actions" src="images/edit.png"/></a><br>
 							<a href='/presentation/<%=presentations[i]._id%>/download'><img class= "actions" src="images/save.png"/></a><br>
-							<img class= "actions" src="images/share.png"/>
+							<a class="sharelink" presentationId="<%=presentations[i]._id%>"> <img class="actions" src="images/share.png"/> </a>
 						</li>
+
+						<div id="<%=presentations[i]._id%>" class="modal hide modalSharing">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								<h3>Share your presentation</h3>
+							</div>
+							<div class="modal-body">
+								<p class="presentationShareLink"><span class="presentationShareLink"></span></p>
+								<div class="shareOptions">
+									<p class="twitterSharing">
+										<%- partial('partials/shareOnTwitter', { locals: { title: presentations[i].title + " on Vish Editor: ", "url" : presentations[i]._id }}) %>
+									</p>
+								</div>
+							</div>
+							<div class="modal-footer">
+							  	<a href="#" class="btn" data-dismiss="modal">Close</a>  
+							</div>
+						</div>
+
 					<%}%>
 				</ul>
 			<%}%>
