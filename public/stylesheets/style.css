@@ -36,8 +36,8 @@ html, body {
 
 #footer{
   margin: auto;
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
+  margin-top: 20px !important;
+  margin-bottom: 15px !important;
 }
 
 .last{
@@ -119,8 +119,8 @@ div.example{
 }
 
 div.examples{
-  height: 130px;
-  margin-top: 20px;
+  height: 110px;
+  margin-top: 5px;
 }
 
 .content{
@@ -528,7 +528,7 @@ li.presentation_list{
 
 
 #content{
-  min-height: 75%;
+  min-height: 535px;
 }
 
 .contact{
@@ -591,7 +591,7 @@ li.presentation_list{
 
 .videoWrapper{
   margin-left: 23%;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .videoExampleIframe{

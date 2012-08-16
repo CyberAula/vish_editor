@@ -28,7 +28,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
-		V.Slides.init();
+		VISH.Slides.init();
 
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
