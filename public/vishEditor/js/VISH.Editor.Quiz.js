@@ -15,10 +15,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var init = function(){
 		var myInput = $(".current").find("input[type='text']");	
 		V.Debugging.log("enter to init function");
-		
+		addMultipleChoiceOption();
 		//TODO remove in Dummies <li>.....</li> for doing best programming practices and add  
 		//the first option calling to the function addMultipleChoiceOption
-		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
+		//$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
 	
 		
  		
@@ -50,11 +50,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * */
 	var addMultipleChoiceOption = function(event){
 		
-		
+		//what I removed from Dummies: <li id='li_mch_option_1' class='li_mch_option'>a) <input id='radio_text_1' class='multiplechoice_text' type='text' placeholder='write quiz options here' /><a src='' id='a_add_quiz_option' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a></li> 
+		var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
+		V.Debugging.log("inputs search value is: " + inputs_search.size());
 		//New element to apply operations  
 		var myInput = $(".current").find("input[type='text']").last(); 
 
 		V.Debugging.log("my Input value is: " + myInput);
+
+			//TODO inputs search is the number of inputs, depending on that we append different elementes
+			//if  0 the first line (removed from dummies)	
+			// if greater than 0 but minor than max num of inputs ... 
+			//and if is equal to the max num of inputs ... 
+
+
 				
 			if((myInput.val() !="") && (myInput.val() != "write quiz options here")) {
 		
