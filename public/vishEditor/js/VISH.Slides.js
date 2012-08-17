@@ -18,8 +18,8 @@ VISH.Slides = (function(V,$,undefined){
 	  addFontStyle();
 	  
 	  updateSlides();
-
-	  V.Slides.Events.init();	  
+	  //Commented by Victor Hugo 'cause there was not class VISH.Slides.Events
+	//  V.Slides.Events.init();	  
 
 	  $('body').addClass('loaded');
 	};

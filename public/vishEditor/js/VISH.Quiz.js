@@ -371,6 +371,9 @@ VISH.Quiz = (function(V,$,undefined){
       	slideToPlay = $(".current").find("#slide_to_activate").val();
     	
     	//this URL is generated for VISHUB server (through Ajax POST) 
+      //var url = V.Quiz.API.postStartQuiz(quiz_id);
+      //TODO URL shorter ?? talk to R & R 
+
     	var url = "http://www.vishub.org/quiz_session/456";
     	
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
@@ -379,15 +382,14 @@ VISH.Quiz = (function(V,$,undefined){
     	
     	//create share buttons (Share, FB & TW):
     	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
-    																																		//http://twitter.com/share?url=http://www.example.com/&text=Texto			
-    	var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+encodeURIComponent(url)+"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
-		var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
-		    shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+     	var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+encodeURIComponent(url)+"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+		  var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+		  shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
     	
     	//Container for share buttons	
     	var shareContainerIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> ";
-        	shareContainerIcons += shareFacebookButton;
-    		shareContainerIcons += shareTwitterButton;
+     	shareContainerIcons += shareFacebookButton;
+    	shareContainerIcons += shareTwitterButton;
     	
     	//make appear the voting URL and share icon
     	//first remove children if there are   
