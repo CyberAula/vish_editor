@@ -59,7 +59,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		VISH.SnapshotPlayer.aftersetupSize(increase);
 		
 		//Object callbacks
-		VISH.ObjectPlayer.aftersetupSize(increase);
+		VISH.ObjectPlayer.aftersetupSize(increase);		
 	};
 	
 	

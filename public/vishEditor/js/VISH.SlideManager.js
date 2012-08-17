@@ -112,7 +112,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		if (V.Status.features.fullscreen) {  
 		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
 		  $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-      		V.ViewerAdapter.setupSize();   
+      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
+      		setTimeout(V.ViewerAdapter.setupSize, 200);    
     	  });
 		}	else {
 		  $("#page-fullscreen").hide();

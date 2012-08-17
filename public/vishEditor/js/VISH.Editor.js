@@ -846,7 +846,8 @@ VISH.Editor = (function(V,$,undefined){
 
 	var _afterSaveExcursion = function(excursion){
 
-		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping())
+		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping());
+		console.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]);
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 

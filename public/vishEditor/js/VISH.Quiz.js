@@ -552,7 +552,10 @@ VISH.Quiz = (function(V,$,undefined){
     		}
     	} 
     	//if it is hidden --> fill values, show statistics and move the button down 
-    	//TODO call a function that do periodical get's to keep updated statistics values  
+    	//TODO
+    	//create a new class called: VISH.Quiz.API.js having all methods for communication with 
+    	//VISH server
+    	// call a function that do periodical get's to keep updated statistics values  
     	else {
     		
     		var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
@@ -560,6 +563,7 @@ VISH.Quiz = (function(V,$,undefined){
     		//get values from the server , send the quiz_session_id
     		
     		//data must be received from the VISH Server 
+    		//var data = V.Quiz.API.getStatistics(quiz_session)
     		var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			_showResultsToTeacher(data);
     
@@ -733,6 +737,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var overOptionZone = "#mc_answer_"+slideToRemoveListeners+"_option_"+ next_index;
     	
     	//changing the id of the element so the listener won't be able on that element	
+    	//TODO change class for removing events (hover) 
       		$(overOptionZone).attr("id", "#mc_answer_"+slideToRemoveListeners+"_voted__option_"+ next_index);
     	 }	
 		
