@@ -787,7 +787,8 @@ VISH.Editor = (function(V,$,undefined){
 					} else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();
 						element.question   = $(div).find(".value_openquestion").val();
-					} else if (element.type=="mcquestion") {     		      	
+					} else if (element.type=="mcquestion") {  
+							V.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
 						element.question   = $(div).find(".value_multiplechoice_question").val();
 						element.options = [];  	
 						$(div).find('.multiplechoice_text').each(function(i, input_text){
@@ -847,14 +848,19 @@ VISH.Editor = (function(V,$,undefined){
 	var _afterSaveExcursion = function(excursion){
 
 		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping());
+
 		console.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]);
 
+		VISH.Debugging.log(JSON.stringify(excursion));   
+
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+				console.log("VISH.Configuration.getConfiguration()[mode] : " + VISH.Configuration.getConfiguration()["mode"]);
 
 			var send_type;
 	        if(excursion_to_edit){
 	          send_type = 'PUT'; //if we are editing
 	        } else {
+	        			VISH.Debugging.log("send_type = post!!");   
 	          send_type = 'POST'; //if it is a new
 	        } 
 	        
