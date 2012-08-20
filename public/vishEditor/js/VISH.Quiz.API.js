@@ -14,7 +14,7 @@ VISH.Quiz.API = (function(V,$,undefined){
    function returns: string to construct the link to share
 	 */
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
-		V.Debugging.log("quiz_id to start Quiz Session is: " quiz_id);
+		V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
 		//POST 
 			var send_type = POST;
 	       
