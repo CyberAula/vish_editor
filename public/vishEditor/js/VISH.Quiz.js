@@ -373,9 +373,11 @@ VISH.Quiz = (function(V,$,undefined){
     	//this URL is generated for VISHUB server (through Ajax POST) 
       //var url = V.Quiz.API.postStartQuiz(quiz_id);
       //TODO URL shorter ?? talk to R & R 
-
-      var quiz_session = V.Quiz.API.postStartQuizSession();
-    	var url = "http://www.vishub.org/quiz_session/"+ quiz_session;
+		var quiz_id = 1;
+      var quiz_session_id = V.Quiz.API.postStartQuizSession(quiz_id);
+      
+       V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
+    	var url = "http://www.vishub.org/quiz_session/"+ quiz_session_id;
     	
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";

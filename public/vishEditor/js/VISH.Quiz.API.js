@@ -16,28 +16,28 @@ VISH.Quiz.API = (function(V,$,undefined){
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
 		V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
 		//POST 
-			var send_type = POST;
+			var send_type = 'POST';
 	       
-	        
+	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
 	        //POST to http://server/quiz_session/
-	     /* TODO  review what others params are required for post correctly 
+	     /* TODO  review what others params are required for post correctly */
 	        var params = {
-	     		
-	          "authenticity_token" : VISH.SlideManager.initOptions["token"]
+	     	  "quiz_id":quiz_id,
+	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
 	        }
 	        
 	        $.ajax({
 	          type    : send_type,
-	          url     : http://localhost/quiz_sessions
+	          url     : 'http://localhost:3000/quiz_sessions',
 	          data    : params,
 	          success : function(data) {
 	              //if we redirect the parent frame
 	            return data;
-	          }     */
-	return 5555;
+	          }     
+	// return 5555;
+	});
+		
 	};
-	
-	
 	/**
   * DELETE /quiz_sessions/X => close quiz => show results
 	 * function to call to VISH and request recommended videos
