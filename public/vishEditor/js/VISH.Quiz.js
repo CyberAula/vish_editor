@@ -374,7 +374,8 @@ VISH.Quiz = (function(V,$,undefined){
       //var url = V.Quiz.API.postStartQuiz(quiz_id);
       //TODO URL shorter ?? talk to R & R 
 
-    	var url = "http://www.vishub.org/quiz_session/456";
+      var quiz_session = V.Quiz.API.postStartQuizSession();
+    	var url = "http://www.vishub.org/quiz_session/"+ quiz_session;
     	
     	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
     	var URL = "<span>"+url+"</span>";

@@ -36,7 +36,7 @@ html, body {
 
 #footer{
   margin: auto;
-  margin-top: 35px !important;
+  margin-top: 25px !important;
   margin-bottom: 15px !important;
 }
 
@@ -522,7 +522,7 @@ li.presentation_list{
 
 
 #content{
-  min-height: 535px;
+  min-height: 520px;
 }
 
 .contact{
@@ -585,7 +585,8 @@ li.presentation_list{
 
 .videoWrapper{
   margin-left: 23%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: -5px;
 }
 
 .videoExampleIframe{
@@ -661,6 +662,8 @@ input[type="submit"].delete_action{
 .shareOptions{
   margin-top: 30px;
   margin-bottom: 20px;
+  display: inline;
+  margin-left: 35px;
 }
 
 p.presentationShareLink{
@@ -668,12 +671,66 @@ p.presentationShareLink{
   font-family: Helvetica;
   font-size: 17px;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+div.twitterSharing{
+  display: inline;
+  position: absolute;
+  margin-top: -5px;
+}
+
+div.facebookSharing{
+  display: inline;
+  margin-left: 90px;
 }
 
 span.presentationShareLink{
+  
 }
 
 .modalSharing{
   text-align: left;
+}
+
+.twitter-share-button{
+  margin-top: 5px;
+  height: 50px !important;
+}
+
+.facebookSpan{
+  min-height: 40px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.modal-body{
+  max-height: none;
+}
+
+.prepareShareOnFacebook{
+  margin-left: 20px;
+}
+
+.fb_edge_widget_with_comment{
+  margin-left: 20px;
+  margin-top: -17px;
+}
+
+img.facebookShareButton {
+  margin-top: 1px;
+  height: 27px;
+}
+
+iframe.fb_ltr{
+  min-height: 50px;
+}
+
+.presentationActionBar{
+  border-radius: 0px 0px 5px 5px;
+  background-color: #EFEDED;
+  text-align: center;
+  margin: 0 auto;
+  width:910px;
+  height: 30px;
 }

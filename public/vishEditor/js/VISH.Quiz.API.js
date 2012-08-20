@@ -1,6 +1,9 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
-	var init = function(){}
+	var init = function(){
+
+
+	}
 	
 	
 	/**
@@ -11,7 +14,27 @@ VISH.Quiz.API = (function(V,$,undefined){
    function returns: string to construct the link to share
 	 */
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
-	
+		V.Debugging.log("quiz_id to start Quiz Session is: " quiz_id);
+		//POST 
+			var send_type = POST;
+	       
+	        
+	        //POST to http://server/quiz_session/
+	     /* TODO  review what others params are required for post correctly 
+	        var params = {
+	     		
+	          "authenticity_token" : VISH.SlideManager.initOptions["token"]
+	        }
+	        
+	        $.ajax({
+	          type    : send_type,
+	          url     : http://localhost/quiz_sessions
+	          data    : params,
+	          success : function(data) {
+	              //if we redirect the parent frame
+	            return data;
+	          }     */
+	return 5555;
 	};
 	
 	
@@ -46,7 +69,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					            : init,
+		init					            : init, 
+		postStartQuizSession				: postStartQuizSession, 
+		deleteQuizSession					: deleteQuizSession, 
+		getQuizSession						: getQuizSession, 
+		putQuizSession						: putQuizSession
+
 		
 	};
 
