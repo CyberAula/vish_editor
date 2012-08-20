@@ -24,31 +24,31 @@ VISH.Slides.Events = (function(V,$,undefined){
 	    case 39: // right arrow
 	    case 34: // PgDn	
 	      if(isSlideFocused()) {
-			    forwardOneSlide();
+			   	V.Slides.forwardOneSlide();
 			    event.preventDefault();
 	      }
 	      break;
 	    case 37: // left arrow
 	    	if(isSlideFocused()) {
-				backwardOneSlide();
+				V.Slides.backwardOneSlide();
 	    		event.preventDefault();    		
 	    	}
 	    	break;
 	    case 33: // PgUp
-	      backwardOneSlide();
-	      event.preventDefault();
+	      		V.Slides.backwardOneSlide();
+	        	event.preventDefault();
 	      break;
 
 	    case 40: // down arrow
 	      if(isSlideFocused()) {
-	      		forwardOneSlide();
+	      		V.Slides.forwardOneSlide();
 	      		event.preventDefault();	
 	      	}	      
 	      break;
 
 	    case 38: // up arrow
 	     if(isSlideFocused()) {
-				    backwardOneSlide();
+				    V.Slides.backwardOneSlide();
 				    event.preventDefault();     		
 	      }	      
 	      break;
