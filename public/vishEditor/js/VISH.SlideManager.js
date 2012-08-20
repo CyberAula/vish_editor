@@ -20,6 +20,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	
 		//first set VISH.Editing to false
 		VISH.Editing = false;
+V.Debugging.log("options : username " + options['username'] + " token " + options['token'] + " quiz_active " + options['quiz_active']);
 
 		if(options){
 			initOptions = options;
