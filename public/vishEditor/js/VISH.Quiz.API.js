@@ -1,6 +1,9 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
-	var init = function(){}
+	var init = function(){
+
+
+	}
 	
 	
 	/**
@@ -46,7 +49,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					            : init,
+		init					            : init
 		
 	};
 
