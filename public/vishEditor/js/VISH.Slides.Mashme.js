@@ -1,7 +1,7 @@
 VISH.Slides.Mashme = (function(V,$,undefined){
 	var addedEventListeners = false;
-	//var MASHME_API_SCRIPT_URL = "https://mashme.tv/static/js/iframe/MashMe.API.iFrame.js";
-	var MASHME_API_SCRIPT_URL = "js/MashMe.API.iFrame.js";
+	var MASHME_API_SCRIPT_URL = "https://mashme.tv/static/js/iframe/MashMe.API.iFrame.js";
+	//var MASHME_API_SCRIPT_URL = "js/MashMe.API.iFrame.js";
 
 	var init = function() {
 	  //dinamically load mashme API
@@ -47,12 +47,12 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 		var command = message.data.substring(message.data.indexOf(":")+1);
 		switch (command) {
 			case "backwardOneSlide":
-				VISH.Debugging.log("backwardOneSlide");
-				VISH.Slides.backwardOneSlide();
+				V.Debugging.log("backwardOneSlide");
+				V.Slides.backwardOneSlide();
 				break;
 			case "forwardOneSlide":
-				VISH.Debugging.log("forwardOneSlide");
-				VISH.Slides.forwardOneSlide();
+				V.Debugging.log("forwardOneSlide");
+				V.Slides.forwardOneSlide();
 				break;	
 		}
 	};
