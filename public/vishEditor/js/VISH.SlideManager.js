@@ -3,8 +3,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
-	//Prevent to load events multiple times.
-  	var eventsLoaded = false;
+	
 	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
 	var status = {}; //{token: "token", quiz_active:"4" } quiz_active : number, false
 	
@@ -15,26 +14,22 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
-		V.Slides.init();
+		var with_mashme_integration = options["mashme"];
+		V.Slides.init(with_mashme_integration);
 		V.Status.init();
-	
+
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 V.Debugging.log("options : username " + options['username'] + " token " + options['token'] + " quiz_active " + options['quiz_active']);
 
-		if(options){
-			initOptions = options;
-			if((options['developping']===true)&&(VISH.Debugging)){
-				  VISH.Debugging.init(true);
-			} else {
-				 VISH.Debugging.init(false);
-			}
-		}	else {
-			initOptions = {};
-			VISH.Debugging.init(false);
+		initOptions = options;
+		if((options['developping']===true)&&(VISH.Debugging)){
+			  VISH.Debugging.init(true);
+		} else {
+			 VISH.Debugging.init(false);
 		}
 	
-	//fixing editor mode when save an excursion
+	    //fixing editor mode when save an excursion
 		if(options['username']) {
 			
 			user.username = options['username'];
@@ -93,13 +88,7 @@ V.Debugging.log("options : username " + options['username'] + " token " + option
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize();
-		
-		if(!eventsLoaded){
-			eventsLoaded = true;			
-      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-		}
-				
+						
 		if(V.Status.getIsInIframe()){
 			myDoc = parent.document;
 		} else {

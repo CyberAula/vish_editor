@@ -13,7 +13,9 @@ VISH.Slides.Events = (function(V,$,undefined){
 
 	var addEventListeners = function() {
 		if(!addedEventListeners){
-			$(document).bind('keydown', handleBodyKeyDown);  
+			$(document).bind('keydown', handleBodyKeyDown); 
+      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);		
 	    	addedEventListeners = true;
 		} 
 	};
@@ -21,37 +23,20 @@ VISH.Slides.Events = (function(V,$,undefined){
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
 	  switch (event.keyCode) {
-	    case 39: // right arrow
-	    case 34: // PgDn	
-	      if(isSlideFocused()) {
-			   	V.Slides.forwardOneSlide();
+	    case 39: // right arrow	    
+	    case 40: // down arrow
+	      if(V.Slides.isSlideFocused()) {
+			    V.Slides.forwardOneSlide();
 			    event.preventDefault();
 	      }
 	      break;
 	    case 37: // left arrow
-	    	if(isSlideFocused()) {
+	    case 38: // up arrow
+	    	if(V.Slides.isSlideFocused()) {
 				V.Slides.backwardOneSlide();
 	    		event.preventDefault();    		
 	    	}
-	    	break;
-	    case 33: // PgUp
-	      		V.Slides.backwardOneSlide();
-	        	event.preventDefault();
-	      break;
-
-	    case 40: // down arrow
-	      if(isSlideFocused()) {
-	      		V.Slides.forwardOneSlide();
-	      		event.preventDefault();	
-	      	}	      
-	      break;
-
-	    case 38: // up arrow
-	     if(isSlideFocused()) {
-				    V.Slides.backwardOneSlide();
-				    event.preventDefault();     		
-	      }	      
-	      break;
+	    	break;	     
 	  }
 	};
 
@@ -131,16 +116,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 
 
 
-	/**
-	 * function to know if the slides have the focus or not
-	 * @return false if other element (right now only wysiwyg instances are checked) has the focus
-	 */
-	var isSlideFocused = function() {
-		if($(".wysiwygInstance").is(":focus")){
-			return false;
-		}
-		return true;
-	};
+	
 	
 	return {
 			init 		: init

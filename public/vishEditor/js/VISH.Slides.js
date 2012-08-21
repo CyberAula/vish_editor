@@ -5,9 +5,12 @@ VISH.Slides = (function(V,$,undefined){
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
+	var with_mashme_integration;
 
-	var init = function(){
+	var init = function(mashme){
 		getCurSlideFromHash();
+
+		with_mashme_integration = mashme;
 
 		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
@@ -19,7 +22,12 @@ VISH.Slides = (function(V,$,undefined){
 	  
 	  updateSlides();
 	  
-	  V.Slides.Events.init();	  
+	  if(!with_mashme_integration){
+	  	V.Slides.Events.init();	  
+	  }else{
+	  	VISH.Debugging.log("INTEGRATION WITH MASHME, EVENTS WILL NOT WORK!!");
+		V.Slides.Mashme.init();
+	  }
 
 	  $('body').addClass('loaded');
 	};
@@ -245,6 +253,17 @@ VISH.Slides = (function(V,$,undefined){
   };
 	
 
+	/**
+	 * function to know if the slides have the focus or not
+	 * @return false if other element (right now only wysiwyg instances are checked) has the focus
+	 */
+	var isSlideFocused = function() {
+		if($(".wysiwygInstance").is(":focus")){
+			return false;
+		}
+		return true;
+	};
+
 	
 	return {				
 			backwardOneSlide		: backwardOneSlide,		
@@ -253,7 +272,8 @@ VISH.Slides = (function(V,$,undefined){
 			init          			: init,
 			nextSlide				: nextSlide,
 			prevSlide				: prevSlide,
-			lastSlide				: lastSlide
+			lastSlide				: lastSlide,
+			isSlideFocused			: isSlideFocused
 	};
 
 }) (VISH,jQuery);

@@ -19,8 +19,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var width = $(window).width();
 		var finalW = 800;
 		var finalH = 600;
-		VISH.Debugging.log("height " + height);
-		VISH.Debugging.log("width " + width);
+		//VISH.Debugging.log("height " + height);
+		//VISH.Debugging.log("width " + width);
 		var aspectRatio = width/height;
 		var slidesRatio = 4/3;
 		if(aspectRatio > slidesRatio){
@@ -30,8 +30,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			finalW = width - margin_width; //leave 110px free, at least, 55 left and 55 right ideally
 			finalH = finalW/slidesRatio;	
 		}
-		VISH.Debugging.log("finalH " + finalH);
-		VISH.Debugging.log("finalW " + finalW);
+		//VISH.Debugging.log("finalH " + finalH);
+		//VISH.Debugging.log("finalW " + finalW);
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
 		
