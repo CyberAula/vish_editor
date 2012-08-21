@@ -123,15 +123,13 @@ div.examples{
   margin-top: 5px;
 }
 
+div.examplesHeader{
+  margin-top: 15px;
+}
+
 .content{
   border-color: #6E6E6E;
   border-radius: 4px;
-}
-
-.features{
-  width: 600px;
-  margin-top: 25px;
-  margin-left: 80px;
 }
 
 .info{
@@ -154,27 +152,54 @@ div.examples{
   overflow-x: hidden;
 }
 
-.parrafo{
+.featureTitle{
   text-align: left;
   width: 200px;
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.featureDescription{
+  text-align: left;
+  width: 260px;
+  margin-bottom: 0px;
+}
+
+span.featureDescriptionHightligth{
+  font-weight: bold;
+  color: black;
 }
 
 .spaceFeatures{
-  margin-top: 20px;
+  margin-top: 25px;
+}
+
+.rowFeatures{
+  display: inline;
 }
 
 .marg{
   margin-left: 70px;
 }
 
-.ico{
-  width: 50px !important;
+.featureIcon{
+  width: 60px !important;
   background: #DEDEDE;
-    -moz-border-radius: 100px;
-    -webkit-border-radius: 100px;
-    border-radius: 100%;
-
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100%;
+  float: left;
+  margin-right: 5px;
 }
+
+.features{
+  width: 600px;
+  margin-top: 20px;
+  margin-left: 35px;
+}
+
 .reflectedc{
   color: #999;
     font-size: 25px;
@@ -522,7 +547,7 @@ li.presentation_list{
 
 
 #content{
-  min-height: 520px;
+  min-height: 535px;
 }
 
 .contact{
@@ -733,4 +758,39 @@ iframe.fb_ltr{
   margin: 0 auto;
   width:910px;
   height: 30px;
+}
+
+span.vishEditorEmail{
+  color: #505E85;
+  font-weight: bold;
+}
+
+p.pnomargin {
+  margin: 0px;
+}
+
+span.aboutUsHightligth{
+  font-weight: bold;
+  color: black;
+}
+
+span.aboutUsHightligthLow{
+  font-style: italic;
+}
+
+p.aboutUsAuthors{
+
+}
+
+p.aboutUsAuthor{
+
+}
+
+img.aboutUsLogo{
+  width: 75%;
+  margin-left: 5%;
+}
+
+div.aboutUsContainer{
+  margin-top:  10px;
 }
