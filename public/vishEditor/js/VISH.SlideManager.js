@@ -14,6 +14,12 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
+
+
+
+
+
+
 		var with_mashme_integration = options["mashme"];
 		V.Slides.init(with_mashme_integration);
 		V.Status.init();
@@ -23,6 +29,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Debugging.log("options : username " + options['username'] + " token " + options['token'] + " quiz_active " + options['quiz_active']);
 
 		initOptions = options;
+
+		if((options)&&(options["configuration"])&&(VISH.Configuration)){
+			VISH.Configuration.init(options["configuration"]);
+		}
+
 		if((options['developping']===true)&&(VISH.Debugging)){
 			  VISH.Debugging.init(true);
 		} else {

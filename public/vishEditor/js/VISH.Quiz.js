@@ -13,7 +13,7 @@ VISH.Quiz = (function(V,$,undefined){
     
     * */
    
-   	var init = function(element, template, slide){
+   	var init = function(element, template, slide, quiz_id){
 		
 		if(element.type==="mcquestion") {
 		
@@ -30,7 +30,7 @@ VISH.Quiz = (function(V,$,undefined){
    	 
    			case "logged": 
      	 	//render the slide for a logged user
-      		obj = _renderMcquestionLogged (element, template, slide); 
+      		obj = _renderMcquestionLogged (element, template, slide, quiz_id); 
       		//add listener to stat Button
      		break;
    
@@ -161,7 +161,7 @@ VISH.Quiz = (function(V,$,undefined){
  * the user can start the Quiz so we show the quiz with all elements and buttons  
  * 
  */
-   var _renderMcquestionLogged = function(element, template, slide){
+   var _renderMcquestionLogged = function(element, template, slide, quiz_id){
    		
 		var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
 			ret += "<div class='mcquestion_container'>";
@@ -184,6 +184,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "<div class='mcquestion_right'>";
 		ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
 		ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
+    ret += "<input type='hidden' id='quiz_id_to_activate' value='"+quiz_id+"'/>";
 		ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
 		ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
 		ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
@@ -361,92 +362,97 @@ VISH.Quiz = (function(V,$,undefined){
      * article value   
      */
       var _startMcQuizButtonClicked = function () {
-     
-	  	//get values from the form
-      	
-      	/*construct url (making an POST to VISH.Server. Which params does it need? 
-      		number of Excursion and number of slide
-      		*/
-      	// show (construct) share button and different buttons for social networks sharing
-      	slideToPlay = $(".current").find("#slide_to_activate").val();
-    	
-    	//this URL is generated for VISHUB server (through Ajax POST) 
-      //var url = V.Quiz.API.postStartQuiz(quiz_id);
-      //TODO URL shorter ?? talk to R & R 
-		var quiz_id = 1;
-      var quiz_session_id = V.Quiz.API.postStartQuizSession(quiz_id);
-      
-       V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
-    	var url = "http://www.vishub.org/quiz_session/"+ quiz_session_id;
-    	
-    	var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
-    	var URL = "<span>"+url+"</span>";
-    	
-    	
-    	//create share buttons (Share, FB & TW):
-    	var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
-     	var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+encodeURIComponent(url)+"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
-		  var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
-		  shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
-    	
-    	//Container for share buttons	
-    	var shareContainerIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> ";
-     	shareContainerIcons += shareFacebookButton;
-    	shareContainerIcons += shareTwitterButton;
-    	
-    	//make appear the voting URL and share icon
-    	//first remove children if there are   
-    	if($("#"+slideToPlay).find(".t11_header").children()) {
-    		
-    		$("#"+slideToPlay).find(".t11_header").children().remove();
-    	} 
-    	
-    	//add elements created  
-    	$("#"+slideToPlay).find(".t11_header").append(divURLShare);
-    	$(".current").find("#url_share_"+slideToPlay).append(URL);
-    	$(".current").find("#url_share_"+slideToPlay).append(shareButton);
-    	$(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
-		//show header 
-    	$("#"+slideToPlay).find(".t11_header").show();
-    	//change the value button (Start Quiz --> StopQuiz) and the id?
-    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('value', 'Stop Quiz');
-    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('class', 'mcquestion_stop_button');
-    	$("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('id', 'mcquestion_stop_button_'+slideToPlay);
-    	//add onclick event to the new stop button
-    	$("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
-    	 $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
-    	
-    	//adding listeners for different events
-    	
-    	//appear share buttons when mouse over share button
-    	$(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
-  			event.preventDefault();
-      		$(".current").find(".shareContentIcons").css("display", "inline-block");
-      		//$(".current").find(".a_share_content_icon").slideDown();
-  
-		});
-  		//prevent default action for clicking the share button
-  		$(document).on("click", "#share_icon_"+slideToPlay, function(event){
-  			event.preventDefault();
-		}); 
-		
-		//remove share buttons when mouseleave share buttons area
-		$(document).on("mouseleave", "#url_share_"+slideToPlay, function(event){
-  			event.preventDefault();
-  			
-  		$(".current").find(".shareContentIcons").css("display", "none");
-  			
-		});
-  		
-  		
-    	$(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
-    	
-    	//hide save quiz div if it has been shown before
-    	if($(".current").find(".save_quiz").css("display")=="inline-block"){
-    	
-    	$(".current").find(".save_quiz").css("display", "none"); 
-    	}
-    };
+    
+        //get values from the form
+
+        /*construct url (making an POST to VISH.Server. Which params does it need? 
+        number of Excursion and number of slide
+        */
+        // show (construct) share button and different buttons for social networks sharing
+        slideToPlay = $(".current").find("#slide_to_activate").val();
+
+        //this URL is generated for VISHUB server (through Ajax POST) 
+        //var url = V.Quiz.API.postStartQuiz(quiz_id);
+        //TODO URL shorter ?? talk to R & R 
+        var quiz_id =  $(".current").find("#quiz_id_to_activate").val();
+        // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
+        V.Debugging.log("Quiz_id from form : " + quiz_id);
+
+        V.Quiz.API.postStartQuizSession(quiz_id,_onQuizSessionReceived,_OnQuizSessionReceivedError);
+      };
+
+      var _onQuizSessionReceived = function(quiz_session_id){
+        V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
+        var url = "http://www.vishub.org/quiz_session/"+ quiz_session_id;
+
+        var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
+        var URL = "<span>"+url+"</span>";
+
+
+        //create share buttons (Share, FB & TW):
+        var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
+        var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+encodeURIComponent(url)+"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+        var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+        shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
+
+        //Container for share buttons 
+        var shareContainerIcons = "<div id='share_content_icons_"+slideToPlay+"' class='shareContentIcons'> ";
+        shareContainerIcons += shareFacebookButton;
+        shareContainerIcons += shareTwitterButton;
+
+        //make appear the voting URL and share icon
+        //first remove children if there are   
+        if($("#"+slideToPlay).find(".t11_header").children()) {
+          $("#"+slideToPlay).find(".t11_header").children().remove();
+        } 
+
+        //add elements created  
+        $("#"+slideToPlay).find(".t11_header").append(divURLShare);
+        $(".current").find("#url_share_"+slideToPlay).append(URL);
+        $(".current").find("#url_share_"+slideToPlay).append(shareButton);
+        $(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
+        //show header 
+        $("#"+slideToPlay).find(".t11_header").show();
+        //change the value button (Start Quiz --> StopQuiz) and the id?
+        $("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('value', 'Stop Quiz');
+        $("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('class', 'mcquestion_stop_button');
+        $("#"+slideToPlay).find("#mcquestion_start_button_"+slideToPlay).attr('id', 'mcquestion_stop_button_'+slideToPlay);
+        //add onclick event to the new stop button
+        $("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
+        $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
+
+        //adding listeners for different events
+
+        //appear share buttons when mouse over share button
+        $(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
+        event.preventDefault();
+          $(".current").find(".shareContentIcons").css("display", "inline-block");
+          //$(".current").find(".a_share_content_icon").slideDown();
+
+        });
+        //prevent default action for clicking the share button
+        $(document).on("click", "#share_icon_"+slideToPlay, function(event){
+          event.preventDefault();
+        }); 
+
+        //remove share buttons when mouseleave share buttons area
+        $(document).on("mouseleave", "#url_share_"+slideToPlay, function(event){
+          event.preventDefault();
+          $(".current").find(".shareContentIcons").css("display", "none");
+        });
+
+        $(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
+
+        //hide save quiz div if it has been shown before
+        if($(".current").find(".save_quiz").css("display")=="inline-block"){
+          $(".current").find(".save_quiz").css("display", "none"); 
+        }
+
+      }
+
+      var _OnQuizSessionReceivedError = function(){
+        console.log("_OnQuizSessionReceivedError");
+      }
 
 /*Function executed when the studen has pressed the send vote button
  * has to send the option choosen to the server and wait for total results till that moment. 

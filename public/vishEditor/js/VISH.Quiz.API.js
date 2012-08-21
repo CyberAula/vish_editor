@@ -14,7 +14,10 @@ VISH.Quiz.API = (function(V,$,undefined){
    function returns: string to construct the link to share
 	 */
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
-		V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
+		
+		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+
+			V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
 		//POST 
 			var send_type = 'POST';
 	       
@@ -25,19 +28,37 @@ VISH.Quiz.API = (function(V,$,undefined){
 	     	  "quiz_id":quiz_id,
 	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
 	        }
-	        
+
 	        $.ajax({
 	          type    : send_type,
 	          url     : 'http://localhost:3000/quiz_sessions',
 	          data    : params,
 	          success : function(data) {
+
 	              //if we redirect the parent frame
-	            return data;
-	          }     
-	// return 5555;
-	});
-		
+		            V.Debugging.log("data: "+ data);	
+	              	var quiz_session_id = data;
+	            	successCallback(quiz_session_id);
+	          },
+	          error: function(error){
+	          	failCallback(quiz_session_id);
+	          }
+	          
+             });
+
+	         return null;
+
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+			console.log("No server case");
+			var quiz_session_id = "121231321";
+			if(typeof successCallback=="function"){
+				successCallback(quiz_session_id);
+			}
+		}
+
+
 	};
+
 	/**
   * DELETE /quiz_sessions/X => close quiz => show results
 	 * function to call to VISH and request recommended videos
