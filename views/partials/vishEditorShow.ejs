@@ -1,5 +1,9 @@
-<div style='width:900px;height:750px;margin:0 auto; display:block'>
+<script type="text/javascript" src="/javascripts/share.js"></script>
+
+<div style='width:910px;height:750px;margin:0 auto; display:block'>
 	<iframe src='/vishEditor/viewer.html' style='border:0' width='910' height='750' iframeborder='0' frameborder='0' iframeElement.frameBorder = 0 id="presentation_iframe"></iframe>
 </div>
-
+<%- partial('partials/presentationActionbar') %>
 <%- partial('partials/metadata') %>
+<%- partial('partials/shareModal', { locals: { presentation: presentation}}) %>
+<%- partial('partials/embedModal', { locals: { presentation: presentation}}) %>

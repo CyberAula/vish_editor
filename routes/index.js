@@ -32,6 +32,9 @@ app.get('/presentation/:id/edit', requiresLogin, controllers.presentation.edit);
 	app.delete('/presentation/:id', requiresLogin,controllers.presentation.destroy);
 	app.get('/presentation/:id/download', requiresLogin,controllers.presentation.download);
 
+	//Embed presentation
+	app.get('/presentation/:id/full', controllers.presentation.full); // this one does not require login
+
 	//Post image route
 	app.post('/image', requiresLogin, controllers.image.create);
 

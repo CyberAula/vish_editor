@@ -36,8 +36,8 @@ html, body {
 
 #footer{
   margin: auto;
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
+  margin-top: 25px !important;
+  margin-bottom: 15px !important;
 }
 
 .last{
@@ -119,19 +119,17 @@ div.example{
 }
 
 div.examples{
-  height: 130px;
+  height: 110px;
+  margin-top: 5px;
+}
+
+div.examplesHeader{
   margin-top: 20px;
 }
 
 .content{
   border-color: #6E6E6E;
   border-radius: 4px;
-}
-
-.features{
-  width: 600px;
-  margin-top: 25px;
-  margin-left: 80px;
 }
 
 .info{
@@ -154,27 +152,51 @@ div.examples{
   overflow-x: hidden;
 }
 
-.parrafo{
+.featureTitle{
   text-align: left;
   width: 200px;
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.featureDescription{
+  text-align: left;
+  width: 260px;
+  margin-bottom: 0px;
+}
+
+span.featureDescriptionHightligth{
+  font-weight: bold;
+  color: black;
 }
 
 .spaceFeatures{
-  margin-top: 20px;
+  margin-top: 25px;
+}
+
+.rowFeatures{
+  display: inline;
 }
 
 .marg{
   margin-left: 70px;
 }
 
-.ico{
-  width: 50px !important;
-  background: #DEDEDE;
-    -moz-border-radius: 100px;
-    -webkit-border-radius: 100px;
-    border-radius: 100%;
-
+.featureIcon{
+  float: left;
+  margin-right: 5px;
+  margin-top: -2px;
+  width: 80px !important;
 }
+
+.features{
+  width: 600px;
+  margin-top: 20px;
+  margin-left: 35px;
+}
+
 .reflectedc{
   color: #999;
     font-size: 25px;
@@ -203,11 +225,10 @@ body{
   background-color: #F9F9F9;
 }
 
-
-input[placeholder], [placeholder], *[placeholder]
-    {
-        color:  #999999 !important;
-    }
+input[placeholder], [placeholder], *[placeholder]{
+  color:  #999999 !important;
+  min-height: 25px;
+}
 
 #topbar{
   padding-top: 5px;
@@ -314,18 +335,8 @@ float: right !important;
 }
 
 
-.email{
-  margin-top: 9px;
-  margin-bottom: 2px;
-}
-
 .email, .password, .checkbox{
   margin-left: 30px;
-
-}
-.boton{
-  margin-top: -8px;
-  margin-bottom: 0px;
 }
 
 .email{
@@ -333,7 +344,11 @@ float: right !important;
 }
 .checkbox{
   margin-bottom: 18px;
+}
 
+.boton{
+  margin-top: -8px;
+  margin-bottom: 0px;
 }
 
 .sign_box{
@@ -353,6 +368,7 @@ float: right !important;
   border-bottom: 1px #DDDDDD solid;
   
 }
+
 
 .logo{
   width: 143px;
@@ -528,7 +544,7 @@ li.presentation_list{
 
 
 #content{
-  min-height: 75%;
+  min-height: 535px;
 }
 
 .contact{
@@ -591,7 +607,8 @@ li.presentation_list{
 
 .videoWrapper{
   margin-left: 23%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  margin-top: -5px;
 }
 
 .videoExampleIframe{
@@ -630,3 +647,188 @@ span.logout{
 .vishEditorIframeWrapper{
   margin-right: 20% !important;
 }
+
+.edit_actions{
+  margin-top: 10px;
+  text-align: right;
+}
+
+#delete_presentation{
+  margin-right: 6%;
+  background: none;
+  border: none;
+  outline: none;
+  color: #97969A;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-style: italic;
+  cursor: pointer;
+  text-decoration:none;
+}
+
+#delete_presentation:hover {
+  color: #DB0606
+}
+
+input[type="submit"].delete_action{
+  margin-right: 5%;
+  background: none;
+  border: none;
+  outline: none;
+  color: #97969A;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.shareOptions{
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: inline;
+  margin-left: 35px;
+}
+
+p.presentationShareLink{
+  text-align: center;
+  font-family: Helvetica;
+  font-size: 17px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+a.shareLink, a.embedLink {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.embedLink {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+div.twitterSharing{
+  display: inline;
+  position: absolute;
+  margin-top: -5px;
+}
+
+div.facebookSharing{
+  display: inline;
+  margin-left: 90px;
+}
+
+span.presentationShareLink {
+  
+}
+
+.embedTextArea{
+  width: 620px;
+  cursor: default !important;
+  resize: none; 
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.modalSharing, .modalEmbeding{
+  text-align: left;
+}
+
+.twitter-share-button{
+  margin-top: 5px;
+  height: 50px !important;
+}
+
+.facebookSpan{
+  min-height: 40px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.modal-body{
+  max-height: none;
+}
+
+.prepareShareOnFacebook{
+  margin-left: 20px;
+}
+
+.fb_edge_widget_with_comment{
+  margin-left: 20px;
+  margin-top: -17px;
+}
+
+img.facebookShareButton {
+  margin-top: 1px;
+  height: 27px;
+}
+
+iframe.fb_ltr{
+  min-height: 50px;
+}
+
+.presentationActionBar{
+  border-radius: 0px 0px 5px 5px;
+  background-color: #EFEDED;
+  text-align: left;
+  margin-left: 5%;
+  margin: 0 auto;
+  width:910px;
+  height: 30px;
+}
+
+span.sharePresentation{
+  background: none;
+  border: none;
+  outline: none;
+  color: #97969A;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-style: italic;
+  cursor: pointer;
+  margin-left: 1px;
+}
+
+span.sharePresentation:hover{
+  color: black;
+}
+
+span.vishEditorEmail{
+  color: #505E85;
+  font-weight: bold;
+}
+
+p.pnomargin {
+  margin: 0px;
+}
+
+span.aboutUsHightligth{
+  font-weight: bold;
+  color: black;
+}
+
+span.aboutUsHightligthLow{
+  font-style: italic;
+}
+
+p.aboutUsAuthors{
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+p.aboutUsAuthor{
+  margin-left: 15px;
+}
+
+img.aboutUsLogo{
+  width: 75%;
+  margin-left: 5%;
+}
+
+div.aboutUsContainer{
+  margin-top:  10px;
+}
+
+

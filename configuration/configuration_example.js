@@ -8,6 +8,11 @@ var getConfiguration = function(){
 	if(!configuration){
 		configuration = {};
 
+		//Application settings
+		configuration["appName"]="VishEditor"
+		configuration["appVersion"]="0.1"
+		configuration["feedbackEmail"]="visheditor@outlook.com"
+
 		configuration["secret_key"] = "session_secret_key";
 		configuration["db"] = "vishEditorStandalone"; //your database name
 

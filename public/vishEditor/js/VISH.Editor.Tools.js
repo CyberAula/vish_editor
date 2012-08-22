@@ -123,7 +123,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
         var objectInfo = VISH.Editor.Object.getObjectInfo(object);
         if(objectInfo.type==="web"){
           var iframe = $(area).find("iframe");
-          var zoom = VISH.Editor.Utils.getZoomFromStyle($(iframe).attr("style"));
+          var zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
 					if(action=="+"){
 						zoom = zoom + 0.1;
 					} else {

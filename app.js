@@ -70,13 +70,10 @@ app.configure('production', function(){
 
  
 /**
- * DynamicHelpers
+ * Helpers
  */
-app.dynamicHelpers({
-    flash: function(req,res){
-      return req.flash();
-    }
-});
+app.helpers(require('./helpers.js').helpers);
+app.dynamicHelpers(require('./helpers.js').dynamicHelpers);
 
 
 //Load routes

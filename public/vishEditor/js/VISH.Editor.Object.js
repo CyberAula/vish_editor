@@ -323,7 +323,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(parent).width(newWrapperWidth);
 		$(parent).height(newWrapperHeight);
 
-		var zoom = V.Editor.Utils.getZoomFromStyle( $("#" + id).attr("style"));
+		var zoom = V.Utils.getZoomFromStyle( $("#" + id).attr("style"));
 
 		if(zoom!=1){
 			newWidth = newWidth/zoom;

@@ -1,0 +1,33 @@
+<div style='width:900px;height:750px;margin:0 auto; display:block'>
+	<iframe src='/vishEditor/edit.html' style='border:0' width='910' height='750' iframeborder='0' frameborder='0' iframeElement.frameBorder = 0 id="presentation_iframe"></iframe>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#delete_presentation").click(function(event) {
+			$('#deleteConfirmation').modal(null);
+		});
+	});
+</script>
+
+
+<div id="deleteConfirmation" class="modal hide">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Are you sure?</h3>
+	</div>
+	<div class="modal-body">
+		<p>If you delete an excursion, you can not access it anymore.</p>
+	</div>
+	<div class="modal-footer">
+		<form method="post" action="/presentation/<%=presentation._id%>">
+	  		<input type="hidden" name="_method" value="delete" />
+	  		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	  		<input class="btn btn-danger" type="submit" value="Delete" />    
+		</form>
+	</div>
+</div>
+
+<div class="row span12 offset2 edit_actions">
+	<a id="delete_presentation">Delete</a>
+</div>

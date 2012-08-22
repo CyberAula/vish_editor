@@ -54,10 +54,15 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "openquestion";
 			}
 			else if(slide.elements[el].type === "mcquestion"){
-				
+								
+				//var for activate a votation quiz 
+				var quiz_id = slide.quiz_id;
+
+				//V.Debugging.log("quiz id value is:" + quiz_id);
 				//this will be call as many times as mcquestions have the excursion
+				//before slide.id
 				 
-				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id);
+				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id, slide.quiz_id);
 				classes +="mcquestion";
 			} 
 			else if ( slide.elements[el].type === "truefalsequestion") {
