@@ -264,16 +264,38 @@ VISH.Slides = (function(V,$,undefined){
 		return true;
 	};
 
+	/**
+	 * function to show one specific slide in the flashcard
+	 */
+	var showSlide = function(slide_id){
+		if(V.slideEls.length >= slide_id-1){
+			$(V.slideEls[slide_id-1]).show();
+			triggerEnterEvent(slide_id-1);
+		}
+	};
+
+	/**
+	 * function to close one specific slide in the flashcard
+	 */
+	var closeSlide = function(slide_id){
+		if(V.slideEls.length >= slide_id-1){
+			$(V.slideEls[slide_id-1]).hide();
+			triggerLeaveEvent(slide_id-1);
+		}
+	};
+
 	
 	return {				
-			backwardOneSlide		: backwardOneSlide,		
+			backwardOneSlide		: backwardOneSlide,
+			closeSlide				: closeSlide,
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
 			init          			: init,
 			nextSlide				: nextSlide,
 			prevSlide				: prevSlide,
 			lastSlide				: lastSlide,
-			isSlideFocused			: isSlideFocused
+			isSlideFocused			: isSlideFocused,
+			showSlide				: showSlide
 	};
 
 }) (VISH,jQuery);

@@ -23,6 +23,7 @@ VISH.Renderer = (function(V,$,undefined){
 	var renderSlide = function(slide){
 		var content = "";
 		var classes = "";
+		var buttons = "";
 		for(el in slide.elements){
 			if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
@@ -74,8 +75,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
-
-		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
+		if(V.ViewerEngine === "flashcard"){
+			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
+		}
+		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
 		
 	};
 
