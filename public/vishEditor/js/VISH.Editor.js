@@ -735,15 +735,17 @@ VISH.Editor = (function(V,$,undefined){
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
 		excursion.avatar = excursionDetails.avatar;
-			excursion.tags = excursionDetails.tags;
+		excursion.tags = excursionDetails.tags;
 		excursion.author = '';
 		excursion.slides = [];
 		var slide = {};
 		$('article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
+			slide.type = "standard";
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
+
 			//important show it (the browser does not know the height and width if it is hidden)
 			$(s).show();
 			$(s).find('div').each(function(i,div){
@@ -788,13 +790,15 @@ VISH.Editor = (function(V,$,undefined){
 						element.title   = $(div).find(".title_openquestion").val();
 						element.question   = $(div).find(".value_openquestion").val();
 					} else if (element.type=="mcquestion") {  
-							V.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
+
+						V.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
 						element.question   = $(div).find(".value_multiplechoice_question").val();
 						element.options = [];  	
 						$(div).find('.multiplechoice_text').each(function(i, input_text){
 							element.options[i] = input_text.value;
 						}); 
-						
+						slide.type = "quiz";
+
 						} else if (element.type=="truefalsequestion") {     		      	
 						
 							element.questions = [];	
@@ -833,6 +837,23 @@ VISH.Editor = (function(V,$,undefined){
 					}
 					slide.elements.push(element);
 					element = {};
+
+					if(slide.type=="quiz"){
+						var quizSlide = $.extend(true, new Object(), slide);
+
+						//Apply excursion Wrapper
+						var quizExcursion = new Object();
+						quizExcursion.title = excursion.title;
+						quizExcursion.description = excursion.description;
+						quizExcursion.author = '';
+						quizExcursion.slides = [quizSlide];
+						quizExcursion.type = "quiz_simple";
+
+						slide.quiz_simple_json = quizExcursion;
+						VISH.Debugging.log(JSON.stringify(quizExcursion));  
+					}
+
+
 				}
 			});
 			excursion.slides.push(slide);
@@ -840,7 +861,8 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		saved_excursion = excursion;  
-		VISH.Debugging.log(JSON.stringify(excursion));    
+		  
+		//VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
 	};
 	

@@ -457,9 +457,33 @@ VISH.Samples = (function(V,undefined){
 		}
 		]};
 		
-		
-		
-		var quizes_samples = {
+	 
+	 	var quizes_samples = {
+	 		"id": 12313, 
+	 		"author":"",
+	 		"slides":[
+	 			{
+	 				"id":"articlearticle1",
+	 				"type":"quiz",
+	 				"template":"t11",
+	 				"elements":[
+	 					{
+	 						"id":"zone1",
+	 						"areaid":"header"
+	 					},
+	 					{	"id":"zone2",
+	 						"type":"mcquestion",
+	 						"areaid":"left",
+	 						"question":"¿Funcionara esta mierda?",
+	 						"options":["Si","Claro que si","Siempre",""]
+	 					}
+	 				]
+	 			}
+	 		],
+	 			"type":"quiz_simple"
+	 	}
+
+		var quizes_samples_2 = {
 			
 			"id":5555
 			,"author":"Víctor Hugo"
@@ -483,7 +507,10 @@ VISH.Samples = (function(V,undefined){
 			  			
 			  		}
 		         ]
-		      }, 
+		      }
+
+		     
+		      /*, 
 		    { 
 			  	"id":"article2",
 			  "template":"t11"
@@ -600,7 +627,7 @@ VISH.Samples = (function(V,undefined){
 		      			} 
 		    		]
 		    }
-		      
+		      */
 		    ]
 		       
     };

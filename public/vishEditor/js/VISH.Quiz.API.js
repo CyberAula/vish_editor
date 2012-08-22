@@ -15,7 +15,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 */
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
 		
-		//if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 			console.log("Vish case");
 			V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
 			//POST 
@@ -50,14 +50,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	         return null;
 
-		/*} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			console.log("No server case");
-			var quiz_session_id = "121231321";
+			var quiz_session_id = "123";
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
 			}
 		}
-	*/
+	
 
 	};
 
@@ -104,8 +104,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
 	
 	/**
-	 * GET /quiz_sessions/X => render vote or results page
-	 */
+	 * GET /quiz_sessions/X => render vote or results page 
+	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
+	 or for a student who has the shared quiz URL for voting.
+
+	  */
 	var getQuizSession = function(quiz_session_id, successCallback, failCallback){
 		
 		
