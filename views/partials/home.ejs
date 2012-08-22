@@ -14,7 +14,7 @@
 			<%if (typeof presentations != 'undefined') {%>
 				<ul class="thumbnails ">
 						<li class="span2">
-							<a href="/presentation/new" class="container"><img class="roundedCornersDivBgImage" src='http://cdn1.iconfinder.com/data/icons/prettyoffice/256/add1-.png'/></a>
+							<a href="/presentation/new" class="container"><img class="roundedCornersDivBgImage" src='/images/new_presentation_icon.png'/></a>
 							<div class="number_pages">New</div>
 						</li>
 						<li class="span1 actionsdiv"></li>
@@ -24,7 +24,7 @@
 						</li>
 						<li class="span1 actionsdiv">
 							<a href='/presentation/<%=presentations[i]._id%>/edit'><img class= "actions" src="/images/edit.png"/></a><br>
-							<a href='/presentation/<%=presentations[i]._id%>/download'><img class= "actions" src="/images/save.png"/></a><br>
+							<a href='/presentation/<%=presentations[i]._id%>/download'><img class= "actions" src="/images/download.png"/></a><br>
 							<a class="sharelink" presentationId="<%=presentations[i]._id%>"> <img class="actions" src="/images/share.png"/> </a>
 						</li>
 

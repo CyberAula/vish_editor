@@ -33,7 +33,15 @@ exports.create = function(req,res){
   });
 }
 
-exports.show = function(req,res){
+exports.show = function(req,res,full){
+  showPresentation(req,res,false);
+}
+
+exports.full = function(req,res){
+  showPresentation(req,res,true);
+}
+
+function showPresentation(req,res,full){
   var id = req.params.id;
   database.findPresentationById(id,function(err,presentation){
     if(err){
@@ -44,7 +52,11 @@ exports.show = function(req,res){
         if((err)||(user===null)){
           res.redirect('/home');
         } else {
-          res.render('presentation/show', {locals: {presentation: presentation, author: user.name, options: options}});
+          if((typeof full !== undefined)&&(full===true)) {
+            res.render('presentation/full', {locals: {layout: false, presentation: presentation, author: user.name, options: options}});
+          } else {
+            res.render('presentation/show', {locals: {presentation: presentation, author: user.name, options: options}});
+          }
         }
       });
     }

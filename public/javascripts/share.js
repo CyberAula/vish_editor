@@ -19,7 +19,7 @@ $(function() {
 		 var presentationId = $(this).attr("presentationId");
 
 		 if(presentationId){
-		 	var modal = $("#" + presentationId);
+		 	var modal = $("#share_" + presentationId);
 			
 			//Url
 			var spanUrl = $(modal).find("span.presentationShareLink")
@@ -31,8 +31,39 @@ $(function() {
 				initTwitterShareLinks();
 			}
 
-			//Show presentation
-			$("#" + presentationId).modal({ 
+			//Show modal
+			$(modal).modal({ 
+			        keyboard: true
+			    }).css({
+			       'width': function () { 
+			           return '650' + 'px';  
+			       },
+			       'margin-left': function () {
+			           return -($(this).width() / 2); 
+			       }
+			});
+		}
+	});
+
+	$(".embedlink").click(function(event) {
+		 var presentationId = $(this).attr("presentationId");
+
+		 if(presentationId){
+		 	var modal = $("#embed_" + presentationId);
+			
+			var url = "http://" + window.location.host + "/presentation/" + presentationId + "/full";
+
+		 	//Generate textArea element
+		 	var iframeElement = $('<iframe id="excursion_iframe" src="" width="925" height="760" style="border:0; overflow: hidden" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>')
+			$(iframeElement).attr("src",url);
+			var textAreaValue = getOuterHTML($(iframeElement));
+
+			var textArea = $(modal).find(".embedTextArea");
+
+			$(textArea).html(textAreaValue);
+
+			//Show modal
+			$(modal).modal({ 
 			        keyboard: true
 			    }).css({
 			       'width': function () { 
@@ -53,7 +84,7 @@ $(function() {
 	});
 
 	function initFacebookShareLinks(presentationId){
-		var modal = $("#" + presentationId);
+		var modal = $("#share_" + presentationId);
 		var facebookDiv = $(modal).find(".facebookSharing");
 
 		var url = "http://" + window.location.host + "/presentation/" + presentationId;
@@ -92,5 +123,15 @@ $(function() {
 		}
 		return url;
 	}
+
+	 var getOuterHTML = function(tag){
+      //In some old browsers (before firefox 11 for example) outerHTML does not work
+      //Trick to provide full browser support
+      if (typeof($(tag)[0].outerHTML)=='undefined'){
+        return $(tag).clone().wrap('<div></div>').parent().html();
+      } else {
+				return $(tag)[0].outerHTML;
+			}
+	  }
 
 });

@@ -124,7 +124,7 @@ div.examples{
 }
 
 div.examplesHeader{
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .content{
@@ -185,13 +185,10 @@ span.featureDescriptionHightligth{
 }
 
 .featureIcon{
-  width: 60px !important;
-  background: #DEDEDE;
-  -moz-border-radius: 100px;
-  -webkit-border-radius: 100px;
-  border-radius: 100%;
   float: left;
   margin-right: 5px;
+  margin-top: -2px;
+  width: 80px !important;
 }
 
 .features{
@@ -699,6 +696,16 @@ p.presentationShareLink{
   margin-bottom: 30px;
 }
 
+a.shareLink, a.embedLink {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.embedLink {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 div.twitterSharing{
   display: inline;
   position: absolute;
@@ -710,11 +717,21 @@ div.facebookSharing{
   margin-left: 90px;
 }
 
-span.presentationShareLink{
+span.presentationShareLink {
   
 }
 
-.modalSharing{
+.embedTextArea{
+  width: 620px;
+  cursor: default !important;
+  resize: none; 
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.modalSharing, .modalEmbeding{
   text-align: left;
 }
 
@@ -754,10 +771,27 @@ iframe.fb_ltr{
 .presentationActionBar{
   border-radius: 0px 0px 5px 5px;
   background-color: #EFEDED;
-  text-align: center;
+  text-align: left;
+  margin-left: 5%;
   margin: 0 auto;
   width:910px;
   height: 30px;
+}
+
+span.sharePresentation{
+  background: none;
+  border: none;
+  outline: none;
+  color: #97969A;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-style: italic;
+  cursor: pointer;
+  margin-left: 1px;
+}
+
+span.sharePresentation:hover{
+  color: black;
 }
 
 span.vishEditorEmail{
@@ -779,11 +813,13 @@ span.aboutUsHightligthLow{
 }
 
 p.aboutUsAuthors{
-
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 p.aboutUsAuthor{
-
+  margin-left: 15px;
 }
 
 img.aboutUsLogo{
@@ -794,3 +830,5 @@ img.aboutUsLogo{
 div.aboutUsContainer{
   margin-top:  10px;
 }
+
+
