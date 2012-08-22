@@ -835,26 +835,26 @@ VISH.Editor = (function(V,$,undefined){
 						//element.type = "empty";
 						VISH.Debugging.log("Empty element");
 					}
+
 					slide.elements.push(element);
 					element = {};
-
-					if(slide.type=="quiz"){
-						var quizSlide = $.extend(true, new Object(), slide);
-
-						//Apply excursion Wrapper
-						var quizExcursion = new Object();
-						quizExcursion.title = excursion.title;
-						quizExcursion.description = excursion.description;
-						quizExcursion.author = '';
-						quizExcursion.slides = [quizSlide];
-						quizExcursion.type = "quiz_simple";
-
-						slide.quiz_simple_json = quizExcursion;
-						VISH.Debugging.log(JSON.stringify(quizExcursion));  
-					}
-
-
 				}
+
+				if(slide.type=="quiz"){
+					var quizSlide = $.extend(true, new Object(), slide);
+
+					//Apply excursion Wrapper
+					var quizExcursion = new Object();
+					quizExcursion.title = excursion.title;
+					quizExcursion.description = excursion.description;
+					quizExcursion.author = '';
+					quizExcursion.slides = [quizSlide];
+					quizExcursion.type = "quiz_simple";
+
+					slide.quiz_simple_json = quizExcursion;
+					VISH.Debugging.log(JSON.stringify(quizExcursion));  
+				}
+				
 			});
 			excursion.slides.push(slide);
 			slide = {};
