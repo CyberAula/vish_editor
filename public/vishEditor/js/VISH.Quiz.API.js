@@ -15,10 +15,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 */
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
 		
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-
+		//if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+			console.log("Vish case");
 			V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
-		//POST 
+			//POST 
 			var send_type = 'POST';
 	       
 	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
@@ -38,33 +38,67 @@ VISH.Quiz.API = (function(V,$,undefined){
 	              //if we redirect the parent frame
 		            V.Debugging.log("data: "+ data);	
 	              	var quiz_session_id = data;
+	            if(typeof successCallback=="function"){
 	            	successCallback(quiz_session_id);
-	          },
+	            }
+	            		          },
 	          error: function(error){
-	          	failCallback(quiz_session_id);
+	          	failCallback(error);
 	          }
 	          
              });
 
 	         return null;
 
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		/*} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			console.log("No server case");
 			var quiz_session_id = "121231321";
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
 			}
 		}
-
+	*/
 
 	};
 
 	/**
   * DELETE /quiz_sessions/X => close quiz => show results
-	 * function to call to VISH and request recommended videos
+	 * function calls VISH server for closing a voting
 	 */
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback){
 	
+	V.Debugging.log("quiz_session_id to delete is: " + quiz_session_id);
+			//POST 
+			var send_type = 'DELETE';
+	       
+	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        //DELETE to http://server/quiz_session/X
+	     /* TODO  review what others params are required for post correctly */
+	        var params = {
+	     	  "id":quiz_session_id,
+	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	        }
+
+	        $.ajax({
+	          type    : send_type,
+	          url     : 'http://localhost:3000/quiz_sessions/'+quiz_session_id,
+	          data    : params,
+	          success : function(data) {
+
+	              //if we redirect the parent frame
+		            V.Debugging.log("data: "+ data);	
+	              	var results = data;
+	            if(typeof successCallback=="function"){
+	            	successCallback(results);
+	            }
+	            		          },
+	          error: function(error){
+	          	failCallback(error);
+	          }
+	          
+             });
+
+	         return null;
       
   };
 	

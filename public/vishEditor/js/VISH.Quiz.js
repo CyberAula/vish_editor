@@ -5,6 +5,7 @@ VISH.Quiz = (function(V,$,undefined){
     var slideToVote;
     var user;
     var userStatus; 
+    var quizUrlForSession =" http://www.vishub.org/quiz_sessions/";
    	var startButton = "mcquestion_start_button";
 	var stopButton = "mcquestion_stop_button";
    trueFalseAnswers = new Array(); //array to save the answers
@@ -363,8 +364,6 @@ VISH.Quiz = (function(V,$,undefined){
      */
       var _startMcQuizButtonClicked = function () {
     
-        //get values from the form
-
         /*construct url (making an POST to VISH.Server. Which params does it need? 
         number of Excursion and number of slide
         */
@@ -383,10 +382,10 @@ VISH.Quiz = (function(V,$,undefined){
 
       var _onQuizSessionReceived = function(quiz_session_id){
         V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
-        var url = "http://www.vishub.org/quiz_session/"+ quiz_session_id;
+        var url = quizUrlForSession + quiz_session_id;
 
         var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
-        var URL = "<span>"+url+"</span>";
+        var urlToAppend = "<span>"+url+"</span>";
 
 
         //create share buttons (Share, FB & TW):
@@ -408,7 +407,7 @@ VISH.Quiz = (function(V,$,undefined){
 
         //add elements created  
         $("#"+slideToPlay).find(".t11_header").append(divURLShare);
-        $(".current").find("#url_share_"+slideToPlay).append(URL);
+        $(".current").find("#url_share_"+slideToPlay).append(urlToAppend);
         $(".current").find("#url_share_"+slideToPlay).append(shareButton);
         $(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
         //show header 
@@ -420,7 +419,9 @@ VISH.Quiz = (function(V,$,undefined){
         //add onclick event to the new stop button
         $("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
         $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
-
+        //add the quiz_session_id to the form? for delete when stop
+        $(".current").find("#quiz_id_to_activate").attr("id", "quiz_session_id");
+         $(".current").find("#quiz_session_id").attr("value", quiz_session_id);
         //adding listeners for different events
 
         //appear share buttons when mouse over share button
@@ -450,8 +451,8 @@ VISH.Quiz = (function(V,$,undefined){
 
       }
 
-      var _OnQuizSessionReceivedError = function(){
-        console.log("_OnQuizSessionReceivedError");
+      var _OnQuizSessionReceivedError = function(error){
+        console.log("_OnQuizSessionReceivedError:  " + error);
       }
 
 /*Function executed when the studen has pressed the send vote button
@@ -506,35 +507,48 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
     var _onStopMcQuizButtonClicked = function () {
-		
-    	   	
-    	slideToStop = $(".current").find("#slide_to_stop").val();
+
+		var quiz_id =  $(".current").find("#quiz_session_id").val();
+        // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
+        V.Debugging.log("Quiz_session id from form : " + quiz_id);
+
+        V.Quiz.API.deleteQuizSession(quiz_id,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError);
+         	   	
     	
-    	//TODO just only hide not remove ... but disappear the element so all the remainder elements go up
-   		//	$("#"+slideToStop).find(".t11_header").css('display', 'block');
-    	$("#"+slideToStop).find(".t11_header").text("");
-    	//TODO remove stop button and save quiz into the server(popup) 
-    	
-    	$(".current").find(".save_quiz").css("display", "inline-block"); 
-    	
-    	
-    	
-    	
-    	
-    	
-    	//show start quiz again?? --> 
-    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
-    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
-    	
-    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
-    	$("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
-    	
-    	$("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
-    	$(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
-    	$("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("color", "#F76464");
-    	$("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("background-color", "#F8F8F8");
     };
     
+
+var _onQuizSessionCloseReceived = function(results){
+      console.log("_onQuizSessionCloseReceived:  " + results);
+      
+      slideToStop = $(".current").find("#slide_to_stop").val();
+           //TODO just only hide not remove ... but disappear the element so all the remainder elements go up
+      //  $("#"+slideToStop).find(".t11_header").css('display', 'block');
+      $("#"+slideToStop).find(".t11_header").text("");
+      //TODO remove stop button and save quiz into the server(popup) 
+      
+      $(".current").find(".save_quiz").css("display", "inline-block"); 
+    
+      //show start quiz again?? --> 
+      $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
+      $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
+      
+      $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('class', 'mcquestion_start_button');
+      $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
+      
+      $("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
+      $(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
+      $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("color", "#F76464");
+      $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("background-color", "#F8F8F8");
+
+             
+     // _showResultsToTeacher(results);
+      };
+
+     var _onQuizSessionCloseReceivedError = function(error){
+        console.log("_onQuizSessionCloseReceivedError:  " + error);
+      };
+
     var _statisticsMcQuizButtonClicked = function () {
     	var marginTopDefault = 18; 
     	var marginTopDefault2 = 24; 
