@@ -160,6 +160,9 @@ VISH.Editor = (function(V,$,undefined){
 				'showCloseButton': true
 			}); 
 		}
+
+		//flashcards
+		V.Editor.Flashcard.init();
 	};
 	
 	
