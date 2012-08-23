@@ -20,8 +20,10 @@ VISH.Slides = (function(V,$,undefined){
 	  updateSlides();
 	  
 	  V.Slides.Events.init();
-	  //wait for mashme hello message and if so init events
-	  window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
+	  if(!V.Editing){
+	  	//wait for mashme hello message and if so init events
+	  	window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
+	  }
 	  
 	  $('body').addClass('loaded');
 	};
