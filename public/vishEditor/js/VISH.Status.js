@@ -16,7 +16,23 @@ VISH.Status = (function(V,$,undefined){
 		//fullscreen supported
 		var elem = document.getElementById("page-fullscreen");
 		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
-			features.fullscreen = true;
+			if(!isInIframe){
+				features.fullscreen = true;
+			}
+			else{
+				//fullscreen supported by browser, let´s check that the iframe is the same domain as the vish_editor
+				try
+				{
+					if(window.parent.location.host == window.location.host){
+				    	features.fullscreen = true; 
+					}
+				}
+				catch (e)
+				{
+				    features.fullscreen = false;
+				}
+			}
+			
 		}
 		V.Debugging.log("Fullscreen supported: " + features.fullscreen);
 		

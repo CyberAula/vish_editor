@@ -93,24 +93,25 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize();
 						
-		if(V.Status.getIsInIframe()){
-			myDoc = parent.document;
-		} else {
-			myDoc = document;
-		}
+		
 				
 		$(window).on('orientationchange',function(){
       		V.ViewerAdapter.setupSize();      
     	});
 		
 		if (V.Status.features.fullscreen) {  
-		  $(document).on('click', '#page-fullscreen', toggleFullScreen);
-		  $(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
-      		setTimeout(V.ViewerAdapter.setupSize, 200);    
-    	  });
+			if(V.Status.getIsInIframe()){
+				myDoc = parent.document;
+			} else {
+				myDoc = document;
+			}
+			$(document).on('click', '#page-fullscreen', toggleFullScreen);
+			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+	      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
+	      		setTimeout(V.ViewerAdapter.setupSize, 200);    
+	    	});
 		}	else {
-		  $("#page-fullscreen").hide();
+		  	$("#page-fullscreen").hide();
 		}
 		
 	
