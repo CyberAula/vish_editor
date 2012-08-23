@@ -5,13 +5,13 @@ VISH.SlideManager = (function(V,$,undefined){
 	var myDoc; //to store document or parent.document depending if on iframe or not
 	
 	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
-	var status = {}; //{token: "token", quiz_active:"4" } quiz_active : number, false
+	var status = {}; //{token: "token", quiz_active_session_id:"4" } quiz_active_session_id : number, false
 	
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 * options is a hash with params and options from the server, example of full options hash:
-	 * {"quiz_active": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
+	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
 
@@ -20,7 +20,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//first set VISH.Editing to false
 		VISH.Editing = false;
-		V.Debugging.log("Vish.SlideManager: options [username] " + options['username'] + " [token] " + options['token'] + " [quiz_active] " + options['quiz_active']);
+		V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id']);
 		//Quiz_id is different of quiz_session_id !!	
 		initOptions = options;
 
@@ -29,6 +29,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		if((options['developping']===true)&&(VISH.Debugging)){
+
 			  VISH.Debugging.init(true);
 		} else {
 			 VISH.Debugging.init(false);
@@ -42,13 +43,13 @@ VISH.SlideManager = (function(V,$,undefined){
 			if(options['token']){
 				status.token = options['token'];
 			
-				if(options['quiz_active']) {
-					status.quiz_active = options['quiz_active'];
+				if(options['quiz_active_session_id']) {
+					status.quiz_active_session_id = options['quiz_active_session_id'];
 				} 
-				//when logged + token but no quiz_active
+				//when logged + token but no quiz_active_session_id
 				else { 
 				//must be false
-				status.quiz_active = options['quiz_active']; 
+				status.quiz_active_session_id = options['quiz_active_session_id']; 
 				}			
 			
 			}
@@ -56,10 +57,10 @@ VISH.SlideManager = (function(V,$,undefined){
 			else {
 			
 				status.token = "";
-				//logged, no token but quiz_active .... ?
-				if(options['quiz_active']) {
+				//logged, no token but quiz_active_session_id .... ?
+				if(options['quiz_active_session_id']) {
 					 	
-					status.quiz_active = options['quiz_active'];
+					status.quiz_active_session_id = options['quiz_active_session_id'];
 				
 				}
 			}
@@ -71,16 +72,16 @@ VISH.SlideManager = (function(V,$,undefined){
 			status.token=""; 
 			
 			//no username but quiz active --> (student) 
-			if(options['quiz_active']) {
-				V.Debugging.log("options quiz_active value is: " + options['quiz_active']);
+			if(options['quiz_active_session_id']) {
+				V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
 		 		user.role= "student";
-				status.quiz_active = options['quiz_active'];
+				status.quiz_active_session_id = options['quiz_active_session_id'];
 			}
 		//no username no quiz active --> (none)
 			else {
 				
 		 		user.role= "none";
-		 		status.quiz_active = options['quiz_active'];
+		 		status.quiz_active_session_id = options['quiz_active_session_id'];
 		 	} 
 		
 		 }	
