@@ -91,7 +91,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
-		V.ViewerAdapter.setupSize();
+		V.ViewerAdapter.setupSize(false);
 						
 		
 				
@@ -106,9 +106,10 @@ VISH.SlideManager = (function(V,$,undefined){
 				myDoc = document;
 			}
 			$(document).on('click', '#page-fullscreen', toggleFullScreen);
-			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
+	      		V.ViewerAdapter.setupElements();
 	      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
-	      		setTimeout(V.ViewerAdapter.setupSize, 200);    
+	      		setTimeout(function(){VISH.ViewerAdapter.setupSize(true)}, 400);    
 	    	});
 		}	else {
 		  	$("#page-fullscreen").hide();
@@ -142,14 +143,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		    	myElem.mozRequestFullScreen();
 		    } else if (myDoc.documentElement.webkitRequestFullScreen) {
 		    	myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
-		    }
-		    //change icon
-		    $("#page-fullscreen").css("background-position", "-45px 0px");
-		    $("#page-fullscreen").hover(function(){
-			    $("#page-fullscreen").css("background-position", "-45px -40px");
-			}, function() {
-			    $("#page-fullscreen").css("background-position", "-45px 0px");
-			});
+		    }		    
 		} else {
 		    if (myDoc.cancelFullScreen) {
 		    	myDoc.cancelFullScreen();
@@ -157,14 +151,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		    	myDoc.mozCancelFullScreen();
 		    } else if (myDoc.webkitCancelFullScreen) {
 		    	myDoc.webkitCancelFullScreen();
-		    }
-		    //change icon
-		    $("#page-fullscreen").css("background-position", "0px 0px");
-		    $("#page-fullscreen").hover(function(){
-			    $("#page-fullscreen").css("background-position", "0px -40px");
-			  }, function() {
-			    $("#page-fullscreen").css("background-position", "0px 0px");
-			  });
+		    }		    
 		  }
 	};
 	
@@ -228,7 +215,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var _onslideenter = function(e){
 		//hide/show page-switcher buttons if neccessary
-		_decideIfPageSwitcher();
+		V.ViewerAdapter.decideIfPageSwitcher();
 		
 		var fcElem, slideId;
 		setTimeout(function(){
@@ -283,27 +270,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 	};
 
-	/**
-	 * function to hide/show the page-switchers buttons in the viewer
-	 * hide the left one if on first slide
-	 * hide the right one if on last slide
-	 * show both otherwise
-	 */
-	var _decideIfPageSwitcher = function(){
-		if(V.curSlide===0){
-			$("#page-switcher-start").hide();
-		}
-		else{
-			$("#page-switcher-start").show();
-		}
-		
-		if(V.curSlide === V.slideEls.length-1){
-			$("#page-switcher-end").hide();			
-		}
-		else{
-			$("#page-switcher-end").show();
-		}
-	};
+	
 
 	/**
 	 * function to update the number that indicates what slide is diplayed

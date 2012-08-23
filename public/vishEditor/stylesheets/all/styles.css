@@ -312,3 +312,34 @@ body {
 .vish-fontverdana{
 	font-family: "verdana";	
 }
+
+#mobile_back_arrow{
+  width: 230px;
+  left: 0px;
+  top: 0px;
+  padding-bottom: 0px;
+}
+
+#mobile_forward_arrow{
+  width: 291.875px;
+  right: 0px;
+  top: 0px;
+  padding-bottom: 0px;
+}
+
+.vish_arrow{
+  color: rgba(0, 0, 0, 0.5);
+  -webkit-transition: width 150ms, right 150ms, background-color 150ms;
+  background-color: transparent;
+  border: none;
+  bottom: 0;
+  font-size: 40px;
+  margin: 0;
+  max-width: 150px;
+  min-width: 90px;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+}
