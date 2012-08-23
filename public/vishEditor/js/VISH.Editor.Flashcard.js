@@ -13,7 +13,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
-				loadTab('tab_pic_from_url');
+				V.Editor.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 	};
