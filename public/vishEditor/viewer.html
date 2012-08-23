@@ -87,17 +87,11 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
 <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
 <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
 
-<script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
-
 <script>
-  getOptions();
-
   //First function called when page loads
    function start(){
     VISH.Debugging.init(true);
-    VISH.SlideManager.init(options, VISH.Samples.samples);
+    VISH.SlideManager.init(window.parent.options, window.parent.presentation);
   }
 </script>
 
