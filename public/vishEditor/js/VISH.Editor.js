@@ -87,7 +87,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
-				loadTab('tab_templates');
+				V.Editor.Utils.loadTab('tab_templates');
 			}
 		});
 		
@@ -204,101 +204,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
 
-	/////////////////////////
-	/// Fancy Box Functions
-	/////////////////////////
-
-	/**
-	 * function to load a tab and its content in the fancybox
-	 * also changes the help button to show the correct help
-	 */
-	var loadTab = function (tab_id){
-		// first remove the walkthrough if open
-		$('.joyride-close-tip').click();
-		  
-		//deselect all of them
-		$(".fancy_tab").removeClass("fancy_selected");
-		//select the correct one
-		$("#" + tab_id).addClass("fancy_selected");
-
-		//hide previous tab
-		$(".fancy_tab_content").hide();
-		//show content
-		$("#" + tab_id + "_content").show();
-
-		//hide previous help button
-		$(".help_in_fancybox").hide();
-		//show correct one
-		$("#"+ tab_id + "_help").show();
-
-        //Submodule callbacks	
-		switch (tab_id) {
-			//Image
-			case "tab_pic_from_url":
-				V.Editor.Image.onLoadTab("url");
-				break;
-			case "tab_pic_upload":
-				V.Editor.Image.onLoadTab("upload");
-				break;
-			case "tab_pic_repo":
-				V.Editor.Image.Repository.onLoadTab();
-				break;
-			case "tab_pic_flikr":
-				V.Editor.Image.Flikr.onLoadTab();
-				break;
-				
-			//Video
-			case "tab_video_from_url":
-				VISH.Editor.Video.onLoadTab();
-				break;
-			case "tab_video_repo":
-				VISH.Editor.Video.Repository.onLoadTab();
-				break;
-			case "tab_video_youtube":
-				VISH.Editor.Video.Youtube.onLoadTab();
-				break;
-			case "tab_video_vimeo":
-				VISH.Editor.Video.Vimeo.onLoadTab();
-				break;
-				
-			//Objects
-			case "tab_object_from_url":
-				VISH.Editor.Object.onLoadTab("url");
-				break;
-			case "tab_object_from_web":
-				VISH.Editor.Object.Web.onLoadTab();
-				break;
-			case "tab_object_snapshot":
-				VISH.Editor.Object.Snapshot.onLoadTab();
-				break;
-			case "tab_object_upload":
-				VISH.Editor.Object.onLoadTab("upload");
-				break;
-			case "tab_object_repo":
-				VISH.Editor.Object.Repository.onLoadTab();
-				break;
-				
-			//Live
-			case "tab_live_webcam":
-				VISH.Editor.Object.Live.onLoadTab("webcam");
-				break;
-			case "tab_live_micro":
-				VISH.Editor.Object.Live.onLoadTab("micro");
-				break;
-				
-			//Default
-			default:
-				break;
-	  }
-	};
-
-	/**
-	* Removes the lightbox
-	*/
-	var _closeFancybox = function(){
-		$.fancybox.close();
-	};
-
+	
 
 	//////////////////
 	///    Events
@@ -536,7 +442,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				loadTab('tab_pic_from_url');
+				V.Editor.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 		$("a.addobject").fancybox({
@@ -548,7 +454,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				loadTab('tab_object_from_url');
+				V.Editor.Utils.loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -560,7 +466,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				loadTab('tab_video_from_url');
+				V.Editor.Utils.loadTab('tab_video_from_url');
 			}
 		});
 		$("a.addLive").fancybox({
@@ -572,7 +478,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				loadTab('tab_live_webcam');
+				V.Editor.Utils.loadTab('tab_live_webcam');
 			}
 		});
 	};
@@ -1066,7 +972,6 @@ VISH.Editor = (function(V,$,undefined){
 	return {
 		init 				: init,
 		addDeleteButton 	: addDeleteButton,
-		loadTab 			: loadTab,
 		getId 				: getId,
 		getTemplate 		: getTemplate,
 		getCurrentArea 		: getCurrentArea,
