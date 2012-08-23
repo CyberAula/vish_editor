@@ -15,13 +15,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var init = function(options, excursion){
 
-
-
-
-
-
-		var with_mashme_integration = options["mashme"];
-		V.Slides.init(with_mashme_integration);
+		V.Slides.init();
 		V.Status.init();
 
 		//first set VISH.Editing to false
@@ -84,7 +78,6 @@ VISH.SlideManager = (function(V,$,undefined){
 			}
 		//no username no quiz active --> (none)
 			else {
-				
 				
 		 		user.role= "none";
 		 		status.quiz_active = options['quiz_active'];

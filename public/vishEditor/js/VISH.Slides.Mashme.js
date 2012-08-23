@@ -2,6 +2,22 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 	var addedEventListeners = false;
 	var MASHME_API_SCRIPT_URL = "https://mashme.tv/static/js/iframe/MashMe.API.iFrame.js";
 	//var MASHME_API_SCRIPT_URL = "js/MashMe.API.iFrame.js";
+	var mashme_hello = "MASHMETV_HELLO";
+
+	/**
+	 * function that waits for a mashe hello message and if so inits all the events for synchronization
+	 */
+	var onMashmeHello = function(message){
+		V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
+		if(message.data === mashme_hello){
+			V.Slides.Events.unbindAll();
+			window.removeEventListener("message", V.Slides.onMashmeHello, false);
+			init();
+		}
+		else{
+			V.Debugging.log("WARNING unknown message received from " + message.origin + " with data: " + message.data);
+		}
+	};
 
 	var init = function() {
 	  //dinamically load mashme API
@@ -43,7 +59,7 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 	};
 
 	var _onMashmeMessage = function(message){
-		console.log("Recibiendo:" + message.data + " from:" + message.origin);
+		V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
 		var command = message.data.substring(message.data.indexOf(":")+1);
 		switch (command) {
 			case "backwardOneSlide":
@@ -70,7 +86,8 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 	};
 
 	return {
-			init 		: init
+			init 			: init,
+			onMashmeHello	: onMashmeHello
 	};
 
 }) (VISH,jQuery);

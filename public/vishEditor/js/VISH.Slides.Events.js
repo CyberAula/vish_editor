@@ -115,11 +115,18 @@ VISH.Slides.Events = (function(V,$,undefined){
 	};
 
 
+	var unbindAll = function(){
+		$(document).unbind('keydown', handleBodyKeyDown); 
+  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+  		$(document).unbind('touchstart', handleTouchStart); 
+	};
 
 	
 	
 	return {
-			init 		: init
+			init 		: init,
+			unbindAll	: unbindAll
 	};
 
 }) (VISH,jQuery);

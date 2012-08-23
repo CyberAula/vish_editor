@@ -5,12 +5,9 @@ VISH.Slides = (function(V,$,undefined){
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
-	var with_mashme_integration;
 
-	var init = function(mashme){
+	var init = function(){
 		getCurSlideFromHash();
-
-		with_mashme_integration = mashme;
 
 		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
@@ -22,13 +19,10 @@ VISH.Slides = (function(V,$,undefined){
 	  
 	  updateSlides();
 	  
-	  if(!with_mashme_integration){
-	  	V.Slides.Events.init();	  
-	  }else{
-	  	VISH.Debugging.log("INTEGRATION WITH MASHME, EVENTS WILL NOT WORK!!");
-		V.Slides.Mashme.init();
-	  }
-
+	  V.Slides.Events.init();
+	  //wait for mashme hello message and if so init events
+	  window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
+	  
 	  $('body').addClass('loaded');
 	};
 
