@@ -631,8 +631,8 @@ VISH.Samples = (function(V,undefined){
 	 					{	"id":"zone2",
 	 						"type":"mcquestion",
 	 						"areaid":"left",
-	 						"question":"¿Funcionara esta mierda?",
-	 						"options":["Si","Claro que si","Siempre",""]
+	 						"question":"¿Funcionara los Multiple Choice Quiz ?",
+	 						"options":["Si","Claro que si","Siempre","No"]
 	 					}
 	 				]
 	 			}

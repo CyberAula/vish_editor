@@ -1,18 +1,33 @@
 VISH.ViewerAdapter = (function(V,$,undefined){
-	
+	var page_is_fullscreen = false; //it always init without fullscreen
 	/**
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
+	 * param "fullscreen" indicates that the call comes from a fullscreen button
 	 */
-	var setupSize = function(){
+	var setupSize = function(fullscreen){
+		var reserved_px_for_menubar; //we don´t show the menubar
+		var margin_height;
+		var margin_width;
+
 		if (V.Status.ua.mobile) {
-			var reserved_px_for_menubar = 0; //we don´t show the menubar
-			var margin_height = 0;
-			var margin_width = 0;
+			reserved_px_for_menubar = 0; //we don´t show the menubar
+			margin_height = 0;
+			margin_width = 0;
 		}
 		else{
-			var reserved_px_for_menubar = 40;
-			var margin_height = 40;
-			var margin_width = 30;
+			if(fullscreen && !page_is_fullscreen){
+					//exit fullscreen
+					page_is_fullscreen = true;
+					reserved_px_for_menubar = 0; //we don´t show the menubar
+					margin_height = 0;
+					margin_width = 0;
+			}
+			else{
+				page_is_fullscreen = false;
+				reserved_px_for_menubar = 40;
+				margin_height = 40;
+				margin_width = 30;
+			}
 		}
 		
 		var height = $(window).height() - reserved_px_for_menubar; //the height to use is the window height - 40px that is the menubar height
@@ -61,6 +76,33 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Object callbacks
 		VISH.ObjectPlayer.aftersetupSize(increase);		
 	};
+
+
+	var setupElements = function(){
+		//if page is fullscreen, it means we are exiting it
+		if(page_is_fullscreen){
+			//change icon
+		    $("#page-fullscreen").css("background-position", "0px 0px");
+		    $("#page-fullscreen").hover(function(){
+			    $("#page-fullscreen").css("background-position", "0px -40px");
+			  }, function() {
+			    $("#page-fullscreen").css("background-position", "0px 0px");
+			  });
+		    $("#viewbar").show();
+		    $(".vish_arrow").hide();
+		}
+		else{
+			//change icon
+		    $("#page-fullscreen").css("background-position", "-45px 0px");
+		    $("#page-fullscreen").hover(function(){
+			    $("#page-fullscreen").css("background-position", "-45px -40px");
+			}, function() {
+			    $("#page-fullscreen").css("background-position", "-45px 0px");
+			});
+			$("#viewbar").hide();
+			$(".vish_arrow").show();
+		}
+	};
 	
 	/**
 	* Method to add the src to the iframe, show it, hide the slides, and so on
@@ -77,8 +119,49 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 
 	
+	/**
+	 * function to hide/show the page-switchers buttons in the viewer
+	 * hide the left one if on first slide
+	 * hide the right one if on last slide
+	 * show both otherwise
+	 */
+	var decideIfPageSwitcher = function(){
+		if(!page_is_fullscreen){
+			if(V.curSlide===0){
+				$("#page-switcher-start").hide();				
+			}
+			else{
+				$("#page-switcher-start").show();
+			}
+			
+			if(V.curSlide === V.slideEls.length-1){
+				$("#page-switcher-end").hide();	
+			}
+			else{
+				$("#page-switcher-end").show();
+			}
+		}
+		else{
+			if(V.curSlide===0){
+				$("#mobile_back_arrow").hide();
+			}
+			else{
+				$("#mobile_back_arrow").show();
+			}
+			
+			if(V.curSlide === V.slideEls.length-1){
+				$("#mobile_forward_arrow").hide();		
+			}
+			else{
+				$("#mobile_forward_arrow").show();
+			}
+		}
+	};
+	
 	return {
-		setupGame		: setupGame,
-		setupSize		: setupSize
+		decideIfPageSwitcher	: decideIfPageSwitcher,
+		setupElements			: setupElements,
+		setupGame				: setupGame,
+		setupSize				: setupSize
 	};
 }) (VISH, jQuery);
