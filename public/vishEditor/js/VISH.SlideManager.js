@@ -20,8 +20,8 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//first set VISH.Editing to false
 		VISH.Editing = false;
-		V.Debugging.log("options : username " + options['username'] + " token " + options['token'] + " quiz_active " + options['quiz_active']);
-
+		V.Debugging.log("Vish.SlideManager: options [username] " + options['username'] + " [token] " + options['token'] + " [quiz_active] " + options['quiz_active']);
+		//Quiz_id is different of quiz_session_id !!	
 		initOptions = options;
 
 		if((options)&&(options["configuration"])&&(VISH.Configuration)){
