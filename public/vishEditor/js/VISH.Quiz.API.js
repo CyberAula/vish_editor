@@ -119,8 +119,50 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 * PUT /quiz_sessions/X => vote => redirect to show
    * used for students when send a vote 
 	 */
-	var putQuizSession = function(quiz_session_id, successCallback, failCallback){
-		
+	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
+		V.Debugging.log("quiz_active_session_id for voting is : " + quiz_active_session_id);
+		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+			console.log("Vish case");
+
+			//POST 
+			var send_type = 'PUT';
+	       
+	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        //DELETE to http://server/quiz_session/X
+	     /* TODO  review what others params are required for post correctly */
+	        var params = {
+	     	  "option":answer_selected,
+	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	        }
+
+	        $.ajax({
+	          type    : send_type,
+	          url     : 'http://localhost:3000/quiz_sessions/'+quiz_active_session_id,
+	          data    : params,
+	          success : function(data) {
+
+	              //if we redirect the parent frame
+		            V.Debugging.log("data: "+ data);	
+	              	var results = data;
+	            if(typeof successCallback=="function"){
+	            	successCallback(results);
+	            }
+	            		          },
+	          error: function(error){
+	          	failCallback(error);
+	          }
+	          
+             });
+
+	         return null;
+	} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+			console.log("No server case");
+			var quiz_session_id = "123";
+			if(typeof successCallback=="function"){
+				successCallback(quiz_session_id);
+			}
+		}
+	
 
    };
  

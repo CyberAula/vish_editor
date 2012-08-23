@@ -224,6 +224,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
 		ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
+    ret += "<input type='hidden' id='quiz_active_session_id' value='"+slideToVote+"'/>";
 		ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
 		ret += "</div>";
 		ret += "</form>";
@@ -481,7 +482,11 @@ VISH.Quiz = (function(V,$,undefined){
     	{"quiz_session_id":"444", "quiz_id":"4", "option_a":"23", "option_b":"3", "option_c":"5", "option_d":"1", "option_e":"6"}
     	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     		*/
-    	var vote_url; //must include the session_quiz/id and the option to vote
+      var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
+V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
+
+      V.Quiz.API.putQuizSession(answer, quiz_active_session_id, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
+
     	//jQuery.getJSON(vote_url,function (data) {
     	//var for testing receive values for a pull	
     	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
@@ -507,16 +512,25 @@ VISH.Quiz = (function(V,$,undefined){
     };
     
 
+  var _onQuizVotingSuccessReceived = function(data){
 
 
-    
+  V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + data);
+
+
+  };
+  var _OnQuizVotingReceivedError = function(error){
+        console.log("_OnQuizVotingReceivedError:  " + error);
+      };
+
+
     /*
     called for a teacher who wants to stop a voting 
     */
 
-    var _onStopMcQuizButtonClicked = function () {
+  var _onStopMcQuizButtonClicked = function () {
 
-		var quiz_id =  $(".current").find("#quiz_session_id").val();
+	var quiz_id =  $(".current").find("#quiz_session_id").val();
         // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
         V.Debugging.log("Quiz_session id from form : " + quiz_id);
 
