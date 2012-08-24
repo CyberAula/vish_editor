@@ -112,7 +112,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(!page_is_fullscreen){
+		if(!page_is_fullscreen && !V.Status.ua.mobile){
 			if(V.curSlide===0){
 				$("#page-switcher-start").hide();				
 			}

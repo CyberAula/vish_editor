@@ -2,7 +2,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 	var addedEventListeners = false;
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
-	
+
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
 	 * and setup the events and interaction accordingly
@@ -18,8 +18,12 @@ VISH.Slides.Events = (function(V,$,undefined){
 			$(document).bind('keydown', handleBodyKeyDown); 
       		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
-      		$(document).on('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);		
+      		$(document).on('click', '#mobile_back_arrow', function(){
+      			console.log("entra back");
+      			V.Slides.backwardOneSlide();});
+      		$(document).on('click', '#mobile_forward_arrow', function(){
+      			console.log("entra back");
+      			V.Slides.forwardOneSlide();});		
 	    	addedEventListeners = true;
 		} 
 	};
@@ -74,7 +78,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 	    document.body.addEventListener('touchmove', handleTouchMove, true);
 	    document.body.addEventListener('touchend', handleTouchEnd, true);
 	    var zoom = document.documentElement.clientWidth / window.innerWidth;
-	    if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL){    	 
+	    if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && event.target.id !== "mobile_forward_arrow" && event.target.id !== "mobile_back_arrow"){    	 
 	    	//this is because if not done, the browser can take control of the event and cancels it, 
 	    	//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
 	    	//and there will be no scroll below that zoom level

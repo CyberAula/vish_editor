@@ -8,6 +8,14 @@
   color: #4866FA;
 }
 
+#mobile_back_arrow:hover{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#mobile_forward_arrow:hover{
+  color: rgba(0, 0, 0, 0.5);
+}
+
 
 .slides > article {
   display: none;
