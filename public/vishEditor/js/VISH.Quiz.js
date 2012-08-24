@@ -489,24 +489,6 @@ V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
 
     	//jQuery.getJSON(vote_url,function (data) {
     	//var for testing receive values for a pull	
-    	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-			_showResultsToParticipant(data, slideToVote);
-		//});
-    	
-    	//remove input radio 
-    	$(".current").find(".mc_radio").remove();
-    	$(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
-    	
-    	
-    	// update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
-    	var data = 	{"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-    	
-    	_showResultsToParticipant(data);
-    	
-    	//for avoid bring out when mouse over option
-    	_removeOptionsListener(slideToVote);
-    	
-    	
     	
     	}
     };
@@ -516,6 +498,26 @@ V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
 
 
   V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + data);
+
+
+var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+      _showResultsToParticipant(data, slideToVote);
+    //});
+      
+      //remove input radio 
+      $(".current").find(".mc_radio").remove();
+      $(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
+      
+      
+      // update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
+      var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+      
+      _showResultsToParticipant(data);
+      
+      //for avoid bring out when mouse over option
+      _removeOptionsListener(slideToVote);
+
+
 
 
   };
@@ -681,7 +683,7 @@ var _onQuizSessionCloseReceived = function(results){
     	  var greatest=0;	
     	//if (data.quiz_session_id==userQuizSessionID) ??
     	//TODO 
-    	if(data.quiz_id == userStatus.quiz_active_session_id) {
+    	//if(data.quiz_id == userStatus.quiz_active_session_id) {
     		
     		var votes;	
     		var totalVotes =0;
@@ -710,12 +712,12 @@ var _onQuizSessionCloseReceived = function(results){
     			$(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
     		}
     		//show results 
-    		
+    	/*	
     	} 
     	else {
     		V.Debugging.log(" The Quiz voted is not the active Quiz. Reload the Quiz.");
     		
-    	}
+    	} */
     	
     	var indexOfGreatestVoted = String.fromCharCode("a".charCodeAt(0) + parseInt(greatestId)); //creating index 
 			
