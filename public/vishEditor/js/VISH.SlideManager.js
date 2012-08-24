@@ -20,7 +20,6 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//first set VISH.Editing to false
 		VISH.Editing = false;
-		V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id']);
 		//Quiz_id is different of quiz_session_id !!	
 		initOptions = options;
 
@@ -88,7 +87,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		// VISH.Debugging.log("(SlideManager)username: " + user.username);
 		// VISH.Debugging.log("(SlideManager)role: " + user.role);
-		 
+		 V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id']);
 		 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);

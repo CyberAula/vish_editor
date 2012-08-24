@@ -5,7 +5,7 @@ VISH.Quiz = (function(V,$,undefined){
     var slideToVote;
     var user;
     var userStatus; 
-    var quizUrlForSession =" http://www.vishub.org/quiz_sessions/";
+    var quizUrlForSession =" http://"+window.location.host.toString() +"/quiz_sessions/";
    	var startButton = "mcquestion_start_button";
 	var stopButton = "mcquestion_stop_button";
    trueFalseAnswers = new Array(); //array to save the answers
@@ -224,7 +224,7 @@ VISH.Quiz = (function(V,$,undefined){
 		ret += "</div>";
 		ret += "<div class='mcquestion_right'>";
 		ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+slideToVote+"'/>";
+    ret += "<input type='hidden' id='quiz_active_session_id' value='"+V.SlideManager.getUserStatus().quiz_active_session_id +"'/>";
 		ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
 		ret += "</div>";
 		ret += "</form>";
@@ -391,8 +391,8 @@ VISH.Quiz = (function(V,$,undefined){
 
         //create share buttons (Share, FB & TW):
         var shareButton = "<a id='share_icon_"+slideToPlay+"' class='shareQuizButton' ><img src="+VISH.ImagesPath+"quiz/share-glossy-blue.png /></a>";
-        var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+encodeURIComponent(url)+"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
-        var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+encodeURIComponent(url)+"' "; 
+        var shareTwitterButton = "<a target='_blank' title='share on Twitter' href='http://twitter.com/share?url="+ encodeURIComponent(url) +"' class='twitter-share-button' data-url='"+encodeURIComponent(url)+"' data-size='large' data-count='none'><img src='"+V.ImagesPath+"quiz/tw_40x40.jpg'/></a>";
+        var shareFacebookButton = "<a target='_blank' title='share on Facebook' href='http://www.facebook.com/share.php?u="+ encodeURIComponent(url) +"' "; 
         shareFacebookButton += "id='fb_share_link_"+slideToPlay+"' class='a_share_content_icon'><img src='"+V.ImagesPath+"quiz/fb_40x40.jpg'/></a>";
 
         //Container for share buttons 
