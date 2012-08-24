@@ -3,8 +3,7 @@ VISH.Slides = (function(V,$,undefined){
 	 * 
 	 */
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
-	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
-	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
+	
 
 	var init = function(){
 		getCurSlideFromHash();

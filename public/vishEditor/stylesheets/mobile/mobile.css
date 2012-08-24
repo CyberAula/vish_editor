@@ -1,0 +1,26 @@
+/*done this way to remove the property in mobiles, because
+ * the arrow remained focused after clicked */
+#page-switcher-start:hover{
+  color: #4866FA;
+}
+
+#page-switcher-end:hover{
+  color: #4866FA;
+}
+
+
+.slides > article {
+  display: none;
+}
+.slides > article.far-past {
+  display: none;
+}
+.slides > article.past {
+  display: none;
+}
+.slides > article.next {
+  display: none;
+}
+.slides > article.far-next {
+  display: none;
+}

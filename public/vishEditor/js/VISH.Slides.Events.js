@@ -1,6 +1,8 @@
 VISH.Slides.Events = (function(V,$,undefined){
 	var addedEventListeners = false;
-
+	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
+	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
+	
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
 	 * and setup the events and interaction accordingly
@@ -102,9 +104,9 @@ VISH.Slides.Events = (function(V,$,undefined){
 
 	  if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
 	    if (touchDX > 0) {
-	      backwardOneSlide();
+	      V.Slides.backwardOneSlide();
 	    } else {
-	      forwardOneSlide();
+	      V.Slides.forwardOneSlide();
 	    }
 	  }
 	  
