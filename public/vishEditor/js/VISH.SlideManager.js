@@ -126,7 +126,7 @@ VISH.SlideManager = (function(V,$,undefined){
     		updateSlideCounter();
 		}
 		else{
-			window.addEventListener("load", function(){ if(!window.pageYOffset){ _hideAddressBar(); } } );
+			window.addEventListener("load", function(){ _hideAddressBar(); } );
 			window.addEventListener("orientationchange", _hideAddressBar );
 		}
 	};
@@ -292,9 +292,9 @@ VISH.SlideManager = (function(V,$,undefined){
    */
   var _hideAddressBar = function()
   { 
-    VISH.Debugging.log("TODO method hideAddressBar in slides.js");
+    	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
         /*
-        if(document.height < window.outerHeight)
+        if(document.body.style.height < window.outerHeight)
         {
             document.body.style.height = (window.outerHeight + 50) + 'px';
             VISH.Debugging.log("height " + document.body.style.height);
@@ -304,7 +304,16 @@ VISH.SlideManager = (function(V,$,undefined){
           VISH.Debugging.log("scroll");
           window.scrollTo(0, 1); 
           }, 50 );
-    */
+    	*/
+
+    	window.scrollTo(0, 10);
+         setTimeout(function() { 
+              
+                   window.scrollTo(0, 1);
+                   document.getElementById('scroller').style.height = window.innerHeight+'px';
+                   //launch();
+              
+         }, 500);
   };
 	
 	
