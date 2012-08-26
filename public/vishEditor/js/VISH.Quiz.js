@@ -495,9 +495,8 @@ V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
     
 
   var _onQuizVotingSuccessReceived = function(data){
-
-
-  V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + data);
+  var received = JSON.stringify(data);
+  V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + received);
 
 
 var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
@@ -522,7 +521,10 @@ var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5"
 
   };
   var _OnQuizVotingReceivedError = function(error){
-        console.log("_OnQuizVotingReceivedError:  " + error);
+
+        var received = JSON.stringify(error)
+
+        console.log("_OnQuizVotingReceivedError, and value received is:  " + received);
       };
 
 
@@ -570,7 +572,11 @@ var _onQuizSessionCloseReceived = function(results){
       };
 
      var _onQuizSessionCloseReceivedError = function(error){
-        console.log("_onQuizSessionCloseReceivedError:  " + error);
+
+              var received = JSON.stringify(error)
+
+        console.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
+        
       };
 
     var _statisticsMcQuizButtonClicked = function () {

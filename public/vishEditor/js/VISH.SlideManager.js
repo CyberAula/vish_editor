@@ -87,7 +87,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		// VISH.Debugging.log("(SlideManager)username: " + user.username);
 		// VISH.Debugging.log("(SlideManager)role: " + user.role);
-		 V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id']);
+		 V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
 		 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
