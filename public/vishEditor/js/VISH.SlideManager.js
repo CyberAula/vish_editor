@@ -87,9 +87,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	 var _getUserInfo = function(options,user){
 	 	if(options['username']) {
-
-	 		console.log("username: " + options['username']);
-			user.username = options['username'];
+ 		 	user.username = options['username'];
 		}
 
 		if(options['token']){
