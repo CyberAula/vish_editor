@@ -26,7 +26,7 @@ VISH.Quiz = (function(V,$,undefined){
     } else if(excursion.type=="standard") {
       switch(user.role){
         case "logged":
-          //Code here...
+          _renderMcquestionLogged()
           break;
         case "student":  
           //code ... 
@@ -692,7 +692,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 	
 	
-  var _renderTrueFalseQuestion = function(element, template){
+  var renderTrueFalseQuestion = function(element, template){
     var answers = new Array();
     var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 
@@ -831,6 +831,7 @@ VISH.Quiz = (function(V,$,undefined){
     init:                             init,
     renderMcQuestion:                 renderMcQuestion,
     renderOpenquestion:               renderOpenquestion,
+    renderTrueFalseQuestion:          renderTrueFalseQuestion,
     enableInteraction:                enableInteraction,
     enableTrueFalseInteraction:       enableTrueFalseInteraction
   };

@@ -164,6 +164,9 @@ VISH.Renderer = (function(V,$,undefined){
 			case "openQuestion":
 				return VISH.Quiz.renderOpenquestion(element, template);
 				break;
+			case "truefalsequestion":
+				return VISH.Quiz.renderTrueFalseQuestion(element, template);
+				break;
 			default:
 				break;
 		}
