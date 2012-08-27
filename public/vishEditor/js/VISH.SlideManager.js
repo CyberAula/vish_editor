@@ -18,6 +18,14 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Slides.init();
 		V.Status.init();
 
+		if(V.Status.ua.mobile){
+			V.Debugging.log("Load Mobile CSS");
+			$("body").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+		} else if(V.Status.ua.tablet){
+			V.Debugging.log("Tablet CSS use default css");
+			$("body").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+		}
+
 		//first set VISH.Editing to false
 		VISH.Editing = false;
 		//Quiz_id is different of quiz_session_id !!	
