@@ -23,18 +23,6 @@
 	  <link type="text/css" rel="stylesheet" href="/vishEditor/stylesheets/ie/editorexplorer9.css">
 	<![endif]-->
 
-    <style>  
-       .slides > article:not(.fill)::before {
-         content: '';
-         display: block;
-         width: 100px;
-         height: 100px;
-         position: absolute;
-         left: 0;
-         bottom: 0;
-       }
-    </style>
-
   	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -50,6 +38,77 @@
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.form.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/tagit.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/json2.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/modernizr.foundation.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/jquery.joyride-1.0.4.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.API.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Dummies.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Police.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Renderer.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Carrousel.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Repository.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Youtube.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Vimeo.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.HTML5.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Repository.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Flikr.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Flash.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Repository.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Live.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Web.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.PDF.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Snapshot.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.API.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Thumbnails.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.AvatarPicker.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.I18n.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tour.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Utils.loader.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Utils.canvas.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Utils.text.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.loader.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.player.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.template.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/lang/translations.es.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Slides.Events.js"></script>
+
+	<script type="text/javascript" src="/vishEditor/js/libs/nicEdit.js" ></script>
 		
   </head>
   
@@ -964,83 +1023,16 @@
 	  	    <p i18n-key="i.walk55">Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by click the "add button". Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	
       </ol> 
-	  	
-	  	
-  <script type="text/javascript" src="/vishEditor/js/libs/jquery.mousewheel-3.0.4.pack.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/libs/json2.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/libs/modernizr.foundation.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/libs/jquery.joyride-1.0.4.js"></script>
-	
-  <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Samples.API.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Dummies.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Police.js"></script>
-	
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Renderer.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Carrousel.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Repository.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Youtube.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.Vimeo.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Video.HTML5.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Repository.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Flikr.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Flash.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Repository.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Live.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Web.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.PDF.js"></script>
-  <script type="text/javascript" src="js/VISH.Editor.Object.Snapshot.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.API.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Thumbnails.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.AvatarPicker.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.I18n.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tour.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
-  <script type="text/javascript" src="js/VISH.Status.js"></script>
-  <script type="text/javascript" src="js/VISH.ViewerAdapter.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
-  
-  <script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Utils.loader.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Utils.canvas.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Utils.text.js"></script>
-	
-  <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.loader.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.player.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.template.js"></script>
-	
-  <script type="text/javascript" src="/vishEditor/js/lang/translations.es.js"></script>
 
-  <script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
-  <script type="text/javascript" src="/vishEditor/js/VISH.Slides.Events.js"></script>
-
-  <script type="text/javascript" src="/vishEditor/js/libs/nicEdit.js" ></script>
-
-	
 	<script>
 		//First function called when page loads
 		 function start(){
-			VISH.Editor.init(window.parent.options, window.parent.presentation);
+		 	if(window.parent.options){
+		 		VISH.Editor.init(window.parent.options, window.parent.presentation);
+		 	} else {
+		 		getOptions();
+		 		VISH.Editor.init(options);
+		 	}
 		}
 	</script>
 		

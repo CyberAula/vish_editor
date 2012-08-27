@@ -1,8 +1,7 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
 	var init = function(){
-
-
+		console.log("VIS.QUIZ.API init");
 	}
 	
 	
@@ -31,7 +30,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	        $.ajax({
 	          type    : send_type,
-	          url     : 'http://localhost:3000/quiz_sessions',
+	          url     : 'http://'+ window.location.host + '/quiz_sessions',
 	          data    : params,
 	          success : function(data) {
 
@@ -81,7 +80,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	        $.ajax({
 	          type    : send_type,
-	          url     : 'http://localhost:3000/quiz_sessions/'+quiz_session_id,
+	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_session_id,
 	          data    : params,
 	          success : function(data) {
 
@@ -121,6 +120,8 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
 		V.Debugging.log("quiz_active_session_id for voting is : " + quiz_active_session_id);
+
+		V.Debugging.log("Answer selected value is: " + answer_selected);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 			console.log("Vish case");
 
@@ -131,13 +132,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
+	        "id": quiz_active_session_id,
 	     	  "option":answer_selected,
 	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
 	        }
 
 	        $.ajax({
 	          type    : send_type,
-	          url     : 'http://localhost:3000/quiz_sessions/'+quiz_active_session_id,
+	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id,
 	          data    : params,
 	          success : function(data) {
 

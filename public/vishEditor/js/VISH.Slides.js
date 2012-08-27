@@ -3,8 +3,7 @@ VISH.Slides = (function(V,$,undefined){
 	 * 
 	 */
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
-	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
-	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
+	
 
 	var init = function(){
 		getCurSlideFromHash();
@@ -21,8 +20,10 @@ VISH.Slides = (function(V,$,undefined){
 	  
 	  V.Slides.Events.init();
 	  if(!V.Editing){
-	  	//wait for mashme hello message and if so init events
-	  	window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
+	  	if(typeof V.Slides.Mashme != "undefined"){
+	  		//wait for mashme hello message and if so init events
+	  		window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
+	  	}
 	  }
 	  
 	  $('body').addClass('loaded');
