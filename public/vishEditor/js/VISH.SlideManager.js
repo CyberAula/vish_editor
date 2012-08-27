@@ -4,9 +4,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
 	
-	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
-	var status = {}; //{token: "token", quiz_active_session_id:"4" } quiz_active_session_id : number, false
-	
+	var user = {}; //{username: "user_name", role:"none", token: "token"}
+	//Role values: none, logged, student
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
@@ -39,67 +38,10 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/tablet.css" type="text/css" />');
 		}
 
-		// V.Quiz.init();
+		//Get user (Currently only for quizs)
+		_getUserInfo(options,user);
 
-          //fixing editor mode when save an excursion
-    if(options['username']) {
-      
-     user.username = options['username'];
-     user.role  = "logged";
-     if(options['token']){
-       status.token = options['token'];
-
-
-     if (excursion.type=="quiz_simple") {
-       if(options['quiz_active_session_id']) {
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-       } 
-     }
-
-       //when logged + token but no quiz_active_session_id
-       else { 
-       //must be false
-       status.quiz_active_session_id = options['quiz_active_session_id']; 
-       }     
-      
-     }
-     //no token ( when? ) but logged 
-     else {
-      
-       status.token = "";
-       //logged, no token but quiz_active_session_id .... ?
-       if(options['quiz_active_session_id']) {
-            
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-        
-       }
-     }
-      
-    }  //no username 
-    else {
-    
-     user.username=""; //so no token
-     status.token=""; 
-      
-     //no username but quiz active --> (student) 
-     if(options['quiz_active_session_id']) {
-       V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
-         user.role= "student";
-       status.quiz_active_session_id = options['quiz_active_session_id'];
-     }
-    //no username no quiz active --> (none)
-     else {
-        
-         user.role= "none";
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-       } 
-    
-     }
-    VISH.Debugging.log("(SlideManager)username: " + user.username);
-    VISH.Debugging.log("(SlideManager)role: " + user.role);
-     V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
-  
-
+		V.Quiz.init(excursion);
 
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
@@ -140,6 +82,25 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	
+	/**
+	 * Get user info from options
+	 */
+	 var _getUserInfo = function(options,user){
+	 	if(options['username']) {
+			user.username = options['username'];
+		}
+
+		if(options['token']){
+       		user.token = options['token'];
+       	}
+
+       	if((user.username)&&(user.token)){
+       		user.role  = "logged";
+       	} else {
+       		user.role= "none";
+       	}
+	 }
+
 	/**
 	 * function to enter and exit fullscreen
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
@@ -203,9 +164,13 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * to get the user js object
 	 */
 	
-	var getUser = function(){
-		
+	var getUser = function(){	
 		return user;
+	};
+
+
+	var getOptions = function(){	
+		return initOptions;
 	};
 	
 		/*
@@ -213,7 +178,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	
 	var getUserStatus = function(){
-		
 		return status;
 	};
 
@@ -333,6 +297,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		addEnterLeaveEvents  	:  addEnterLeaveEvents,
 		toggleFullScreen 		: toggleFullScreen, 
 		getUser					: getUser, 
+		getOptions				: getOptions,
 		getUserStatus			: getUserStatus,
 		updateSlideCounter		: updateSlideCounter
 	};

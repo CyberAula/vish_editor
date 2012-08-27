@@ -8,71 +8,98 @@ VISH.Quiz = (function(V,$,undefined){
   var quizUrlForSession =" http://"+window.location.host.toString() +"/quiz_sessions/";
   var startButton = "mcquestion_start_button";
   var stopButton = "mcquestion_stop_button";
-  trueFalseAnswers = new Array(); //array to save the answers
-    
+  var trueFalseAnswers = new Array(); //array to save the answers
+  var quizStatus = {};
 
   //Called from VISH.SlideManager !
-  var init = function(){
+  var init = function(excursion){
     V.Debugging.log("Vish Quiz init");
-       //    //fixing editor mode when save an excursion
-    // if(options['username']) {
       
-    //  user.username = options['username'];
-    //  user.role  = "logged";
-    //  if(options['token']){
-    //    status.token = options['token'];
+    var options = VISH.SlideManager.getOptions();
+    var user = VISH.SlideManager.getUser();
 
+    if (excursion.type=="quiz_simple") {
+      //Allow any user to answer a quiz
+      if(options['quiz_active_session_id']) {
+        quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
+      } 
+    } else if(excursion.type=="standard") {
+      switch(user.role){
+        case "logged":
+          //Code here...
+          break;
+        case "none":
+          //Code here...
+          break;
+      }
+    }
 
-    //  if (excursion.type=="quiz_simple") {
-    //    if(options['quiz_active_session_id']) {
-    //      status.quiz_active_session_id = options['quiz_active_session_id'];
-    //    } 
-    //  }
-
-    //    //when logged + token but no quiz_active_session_id
-    //    else { 
-    //    //must be false
-    //    status.quiz_active_session_id = options['quiz_active_session_id']; 
-    //    }     
-      
-    //  }
-    //  //no token ( when? ) but logged 
-    //  else {
-      
-    //    status.token = "";
-    //    //logged, no token but quiz_active_session_id .... ?
-    //    if(options['quiz_active_session_id']) {
-            
-    //      status.quiz_active_session_id = options['quiz_active_session_id'];
-        
-    //    }
-    //  }
-      
-    // }  //no username 
-    // else {
-    
-    //  user.username=""; //so no token
-    //  status.token=""; 
-      
-    //  //no username but quiz active --> (student) 
-    //  if(options['quiz_active_session_id']) {
-    //    V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
-    //      user.role= "student";
-    //    status.quiz_active_session_id = options['quiz_active_session_id'];
-    //  }
-    // //no username no quiz active --> (none)
-    //  else {
-        
-    //      user.role= "none";
-    //      status.quiz_active_session_id = options['quiz_active_session_id'];
-    //    } 
-    
-    //  }
-    // VISH.Debugging.log("(SlideManager)username: " + user.username);
-    // VISH.Debugging.log("(SlideManager)role: " + user.role);
-     // V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
-  
+    VISH.Quiz.API.init();
   }
+
+  /////////////
+  // DEPRECATED CODE
+  ///////////
+/*
+          //fixing editor mode when save an excursion
+    if(options['username']) {
+      
+     user.username = options['username'];
+     user.role  = "logged";
+     if(options['token']){
+       status.token = options['token'];
+
+
+     if (excursion.type=="quiz_simple") {
+       if(options['quiz_active_session_id']) {
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+       } 
+     }
+
+       //when logged + token but no quiz_active_session_id
+       else { 
+       //must be false
+       status.quiz_active_session_id = options['quiz_active_session_id']; 
+       }     
+      
+     }
+     //no token ( when? ) but logged 
+     else {
+      
+       status.token = "";
+       //logged, no token but quiz_active_session_id .... ?
+       if(options['quiz_active_session_id']) {
+            
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+        
+       }
+     }
+      
+    }  //no username 
+    else {
+    
+     user.username=""; //so no token
+     status.token=""; 
+      
+     //no username but quiz active --> (student) 
+     if(options['quiz_active_session_id']) {
+       V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
+         user.role= "student";
+       status.quiz_active_session_id = options['quiz_active_session_id'];
+     }
+    //no username no quiz active --> (none)
+     else {
+        
+         user.role= "none";
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+       } 
+    
+     }
+    VISH.Debugging.log("(SlideManager)username: " + user.username);
+    VISH.Debugging.log("(SlideManager)role: " + user.role);
+     V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
+*/
+
 
   /**
   * called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
