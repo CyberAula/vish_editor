@@ -15,20 +15,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var init = function(options, excursion){
 
-		V.Slides.init();
-		V.Status.init();
-
-		if(V.Status.ua.mobile){
-			V.Debugging.log("Load Mobile CSS");
-			$("body").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
-		} else if(V.Status.ua.tablet){
-			V.Debugging.log("Tablet CSS use default css");
-			$("body").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
-		}
-
-		//first set VISH.Editing to false
-		VISH.Editing = false;
-		//Quiz_id is different of quiz_session_id !!	
+		VISH.Editing = false;	
 		initOptions = options;
 
 		if((options)&&(options["configuration"])&&(VISH.Configuration)){
@@ -36,82 +23,93 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		if((options['developping']===true)&&(VISH.Debugging)){
-
-			  VISH.Debugging.init(true);
+			VISH.Debugging.init(true);
 		} else {
 			 VISH.Debugging.init(false);
 		}
-	
-	    //fixing editor mode when save an excursion
-		if(options['username']) {
-			
-			user.username = options['username'];
-			user.role  = "logged";
-			if(options['token']){
-				status.token = options['token'];
+
+		V.Slides.init();
+		V.Status.init();
+
+		if(V.Status.ua.mobile){
+			V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+		} else if(V.Status.ua.tablet){
+			V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/tablet.css" type="text/css" />');
+		}
+
+		// V.Quiz.init();
+
+          //fixing editor mode when save an excursion
+    if(options['username']) {
+      
+     user.username = options['username'];
+     user.role  = "logged";
+     if(options['token']){
+       status.token = options['token'];
 
 
-			if (excursion.type=="quiz_simple") {
-				if(options['quiz_active_session_id']) {
-					status.quiz_active_session_id = options['quiz_active_session_id'];
-				} 
-			};
+     if (excursion.type=="quiz_simple") {
+       if(options['quiz_active_session_id']) {
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+       } 
+     }
 
-				//when logged + token but no quiz_active_session_id
-				else { 
-				//must be false
-				status.quiz_active_session_id = options['quiz_active_session_id']; 
-				}			
-			
-			}
-			//no token ( when? ) but logged 
-			else {
-			
-				status.token = "";
-				//logged, no token but quiz_active_session_id .... ?
-				if(options['quiz_active_session_id']) {
-					 	
-					status.quiz_active_session_id = options['quiz_active_session_id'];
-				
-				}
-			}
-			
-		}  //no username 
-		else {
-		
-			user.username=""; //so no token
-			status.token=""; 
-			
-			//no username but quiz active --> (student) 
-			if(options['quiz_active_session_id']) {
-				V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
-		 		user.role= "student";
-				status.quiz_active_session_id = options['quiz_active_session_id'];
-			}
-		//no username no quiz active --> (none)
-			else {
-				
-		 		user.role= "none";
-		 		status.quiz_active_session_id = options['quiz_active_session_id'];
-		 	} 
-		
-		 }	
-		
-		// VISH.Debugging.log("(SlideManager)username: " + user.username);
-		// VISH.Debugging.log("(SlideManager)role: " + user.role);
-		 V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
-		 
+       //when logged + token but no quiz_active_session_id
+       else { 
+       //must be false
+       status.quiz_active_session_id = options['quiz_active_session_id']; 
+       }     
+      
+     }
+     //no token ( when? ) but logged 
+     else {
+      
+       status.token = "";
+       //logged, no token but quiz_active_session_id .... ?
+       if(options['quiz_active_session_id']) {
+            
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+        
+       }
+     }
+      
+    }  //no username 
+    else {
+    
+     user.username=""; //so no token
+     status.token=""; 
+      
+     //no username but quiz active --> (student) 
+     if(options['quiz_active_session_id']) {
+       V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
+         user.role= "student";
+       status.quiz_active_session_id = options['quiz_active_session_id'];
+     }
+    //no username no quiz active --> (none)
+     else {
+        
+         user.role= "none";
+         status.quiz_active_session_id = options['quiz_active_session_id'];
+       } 
+    
+     }
+    VISH.Debugging.log("(SlideManager)username: " + user.username);
+    VISH.Debugging.log("(SlideManager)role: " + user.role);
+     V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
+  
+
+
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize(false);
-						
 		
-				
 		$(window).on('orientationchange',function(){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		if (V.Status.features.fullscreen) {  
+		if ((V.Status.features.fullscreen)&&(V.Status.ua.desktop)) {  
 			if(V.Status.getIsInIframe()){
 				myDoc = parent.document;
 			} else {
@@ -131,12 +129,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		
 	
-		if (!V.Status.ua.mobile) {
+		if (V.Status.ua.desktop) {
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
     		updateSlideCounter();
-		}
-		else{
+		} else {
 			window.addEventListener("load", function(){ _hideAddressBar(); } );
 			window.addEventListener("orientationchange", _hideAddressBar );
 		}

@@ -26,58 +26,45 @@ VISH.Renderer = (function(V,$,undefined){
 		for(el in slide.elements){
 			if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
-			}
-			else if(slide.elements[el].type === "image"){
+			} else if(slide.elements[el].type === "image"){
 				content += _renderImage(slide.elements[el],slide.template);
-			}
-			else if(slide.elements[el].type === "video"){
+			} else if(slide.elements[el].type === "video"){
 				content += renderVideo(slide.elements[el],slide.template);
-			}
-			else if(slide.elements[el].type === "object"){
+			} else if(slide.elements[el].type === "object"){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
-			}
-			else if(slide.elements[el].type === "snapshot"){
-        content += _renderSnapshot(slide.elements[el],slide.template);
-        classes += "snapshot ";
-      }
-			else if(slide.elements[el].type === "applet"){
+			} else if(slide.elements[el].type === "snapshot"){
+        		content += _renderSnapshot(slide.elements[el],slide.template);
+        		classes += "snapshot ";
+      		} else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
-			}
-			else if(slide.elements[el].type === "flashcard"){
+			} else if(slide.elements[el].type === "flashcard"){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
-			}
-			else if(slide.elements[el].type === "openquestion"){
-				content += _renderOpenquestion(slide.elements[el],slide.template);
+			} else if(slide.elements[el].type === "openquestion"){
+				content += _renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
-			}
-			else if(slide.elements[el].type === "mcquestion"){
-								
+			} else if(slide.elements[el].type === "mcquestion"){				
 				//var for activate a votation quiz 
 				var quiz_id = slide.quiz_id;
-
 				//V.Debugging.log("quiz id value is:" + quiz_id);
 				//this will be call as many times as mcquestions have the excursion
 				//before slide.id
-				 
-				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id, slide.quiz_id);
+				content +=_renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id, slide.quiz_id);
 				classes +="mcquestion";
-			} 
-			else if ( slide.elements[el].type === "truefalsequestion") {
+			} else if ( slide.elements[el].type === "truefalsequestion") {
 				//content += _renderTrueFalseQuestion(slide.elements[el],slide.template);
-				content +=V.Quiz.init(slide.elements[el], slide.template, slide.id);
+				content +=_renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);
 				classes +="truefalsequestion";
-			}
-			else{
+			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
 
 		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+content+"</article>");
-		
 	};
+
 
 	/**
 	 * Function to render text inside an article (a slide)
@@ -145,15 +132,14 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
    * Function to render an snapshot inside an article (a slide)
    */
-  var _renderSnapshot = function(element, template){
-    var style = (element['style'])? element['style'] : "";
-    var body = element['body'];
+	var _renderSnapshot = function(element, template){
+		var style = (element['style'])? element['style'] : "";
+		var body = element['body'];
 		var scrollTop = (element['scrollTop'])? element['scrollTop'] : 0;
 		var scrollLeft = (element['scrollLeft'])? element['scrollLeft'] : 0;
-    return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
-  };
+		return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
+	};
 	
-
 	/**
 	 * Function to render an applet inside an article (a slide)
 	 * the applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div
@@ -173,70 +159,20 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 
 	/**
-	 * Function to render an open question form inside an article (a slide)
+	 * Function to render a quiz inside an article (a slide)
 	 */
-	var _renderOpenquestion = function(element, template){
-		
-		var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
-			ret += "<label class='question_name'>Name:  </label>";
-			ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-			ret += "<h2 class='question'> Question: "+element['question']+"? </h2>";				
-		
-			ret += "<label class='label_question'>Answer: </label>";
-			ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
-		
-		
-			ret += "<button type='button' class='question_button'>Send</button>";
-		
-		
-		return ret;		
-	};
-	
-	/**
-	 * Function to render a True False Question choice question form inside an article (a slide)
-	 * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
-	 * */
-	
-	/*var _renderTrueFalseQuestion = function(element, template){
-		var next_num=0;
-		var answers = new Array();
-		var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
-		
-		ret += "<div class='truefalse_question_container'>";
- 		ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
-	    ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
-	   
-		for(var i = 0; i<element['questions'].length; i++){
-		//saving correct answers 
-		answers[i] =element['questions'][i]['answer'];
-		
-		ret +="<tr id='tr_question_"+(i+1)+"'>";
-			ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
-			ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
-			ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
-			ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
-			ret += "</tr>";
-		
+	var _renderQuiz = function(quizType, element, template, slide, quiz_id){
+		switch(quizType){
+			case "mcquestion":
+				return VISH.Quiz.renderMcQuestion(element, template, slide, quiz_id);
+				break;
+			case "openQuestion":
+				return VISH.Quiz.renderOpenquestion(element, template);
+				break;
+			default:
+				break;
 		}
-		
-		ret += "</table>";
-	
-		ret += "<input type='button' class='tfquestion_button' value='Send'/>";
-
-		ret += "</form>";
-		
-		
-		ret += "</div>";
-		
-		trueFalseAnswers = answers;
-		asnswers = [];
-		VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
-		
-		return ret;
 	};
-	
-	*/
 
 	return {
 		init        : init,
