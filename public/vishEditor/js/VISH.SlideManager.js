@@ -49,10 +49,14 @@ VISH.SlideManager = (function(V,$,undefined){
 			user.role  = "logged";
 			if(options['token']){
 				status.token = options['token'];
-			
+
+
+			if (excursion.type=="quiz_simple") {
 				if(options['quiz_active_session_id']) {
 					status.quiz_active_session_id = options['quiz_active_session_id'];
 				} 
+			};
+
 				//when logged + token but no quiz_active_session_id
 				else { 
 				//must be false
