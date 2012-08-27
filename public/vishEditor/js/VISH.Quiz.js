@@ -17,7 +17,7 @@ VISH.Quiz = (function(V,$,undefined){
       
     var options = VISH.SlideManager.getOptions();
     var user = VISH.SlideManager.getUser();
-
+       console.log("user.role: " +user.role);
     if (excursion.type=="quiz_simple") {
       //Allow any user to answer a quiz
       if(options['quiz_active_session_id']) {
@@ -27,6 +27,9 @@ VISH.Quiz = (function(V,$,undefined){
       switch(user.role){
         case "logged":
           //Code here...
+          break;
+        case "student":  
+          //code ... 
           break;
         case "none":
           //Code here...
@@ -432,7 +435,8 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var _OnQuizSessionReceivedError = function(error){
-    console.log("_OnQuizSessionReceivedError:  " + error);
+     var received = JSON.stringify(error);
+    console.log("_OnQuizSessionReceivedError:  " + received);
   }
 
   /*Function executed when the studen has pressed the send vote button

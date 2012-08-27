@@ -38,7 +38,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/tablet.css" type="text/css" />');
 		}
 
-		//Get user (Currently only for quizs)
+		//Get user (Currently only for quizes)
 		_getUserInfo(options,user);
 
 		V.Quiz.init(excursion);
@@ -87,6 +87,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	 var _getUserInfo = function(options,user){
 	 	if(options['username']) {
+
+	 		console.log("username: " + options['username']);
 			user.username = options['username'];
 		}
 
@@ -94,9 +96,13 @@ VISH.SlideManager = (function(V,$,undefined){
        		user.token = options['token'];
        	}
 
+
        	if((user.username)&&(user.token)){
        		user.role  = "logged";
-       	} else {
+       	} else if(options['quiz_active_session_id']) {
+       		user.role = "student";
+       	}
+       	else{
        		user.role= "none";
        	}
 	 }
