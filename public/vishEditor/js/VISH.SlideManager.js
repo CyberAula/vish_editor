@@ -12,13 +12,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
-
-		console.log("options")
-		console.log(options)
-		console.log("excursion")
-		console.log(excursion)
-
-
 		VISH.Debugging.init(options);
 
 		VISH.Editing = false;

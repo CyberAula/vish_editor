@@ -11,29 +11,31 @@ VISH.Quiz = (function(V,$,undefined){
   var trueFalseAnswers = new Array(); //array to save the answers
   var quizStatus = {};
 
-  //Called from VISH.SlideManager !
   var init = function(excursion){
     V.Debugging.log("Vish Quiz init");
       
     var options = VISH.SlideManager.getOptions();
-    var user = VISH.User.getUser();
     
     if (excursion.type=="quiz_simple") {
-      //Allow any user to answer a quiz
+      //Quiz to respond
       if(options['quiz_active_session_id']) {
         quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
       } 
+      //...
+
     } else if(excursion.type=="standard") {
-      switch(user.role){
-        case "logged":
-       //code
-          break;
-        case "student":  
-          //code ... 
-          break;
-        case "none":
-          //Code here...
-          break;
+      //Add events to start quiz
+      _loadEvents();
+
+      //Quiz to view
+      if(VISH.User.isLogged()){
+        //Case: Teacher
+        //Show start quiz button
+        //Code here...
+      } else {
+        //Case: Student
+        //Hide start quiz button
+        //Code here...
       }
     }
 
@@ -41,8 +43,15 @@ VISH.Quiz = (function(V,$,undefined){
     VISH.Quiz.API.init();
   }
 
-  /**
-  * called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
+  var _loadEvents = function(){      
+    $(document).on('click', $(".quiz_startButton"), _startMcQuizButtonClicked);
+    $(document).on('click', $(".quiz_statisticsButton"), _statisticsMcQuizButtonClicked);
+  }
+
+
+
+ /**
+  * Called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
   * add listeners and some functions and it is necessary that objects be loaded so that it's done later than 
   * render
   * */
@@ -63,8 +72,6 @@ VISH.Quiz = (function(V,$,undefined){
         break;
 
       case "none":
-        //render the slide for a viewer (he doesn't know the shared) URL an not logged user
-        _activateNoneInteraction();
         break;
 
       default: 
@@ -168,13 +175,6 @@ VISH.Quiz = (function(V,$,undefined){
   };
 
 
-  /*
-   * External user does not have interaction with the Quiz , think about remove this function
-   */
-  var _activateNoneInteraction = function () {
-  	V.Debugging.log(" enter on _activeNoneInteraction function");
-  };
-    
 
   /*   
    * Function that move the start button down when created 
@@ -189,6 +189,8 @@ VISH.Quiz = (function(V,$,undefined){
   };
   
   
+  
+
   
   /*
   * Function activated when is pressed the start quiz button (teacher)
