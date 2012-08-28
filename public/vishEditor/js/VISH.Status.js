@@ -64,8 +64,15 @@ VISH.Status = (function(V,$,undefined){
 		}
 		V.Debugging.log("Screen width: " + ua.screen.width);
 		V.Debugging.log("Screen height: " + ua.screen.height);
-		V.Debugging.log("Viewport width: " + ua.viewport.width);
-		V.Debugging.log("Viewport height: " + ua.viewport.height);
+		V.Debugging.log("Visual Viewport width: " + ua.viewport.width);
+		V.Debugging.log("Visual Viewport height: " + ua.viewport.height);
+		V.Debugging.log("Layout Viewport width: " + document.documentElement.clientWidth);
+		V.Debugging.log("Layout Viewport height: " + document.documentElement.clientHeight);
+		V.Debugging.log("HTML element width: " +  document.documentElement.offsetWidth);
+		V.Debugging.log("HTML element height: " +  document.documentElement.offsetHeight);
+		V.Debugging.log("window.screen.availWidth: " + window.screen.availWidth);
+		V.Debugging.log("window.screen.availHeight: " + window.screen.availHeight);
+
 	};
 	
 	var getIsInIframe = function(){

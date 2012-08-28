@@ -15,9 +15,8 @@
          bottom: 0;
        }
     </style>
-      <meta name="viewport" content="user-scalable=yes">
+      <meta name="viewport" content="width=800px, user-scalable=yes">
   	  <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta content="yes" name="apple-mobile-web-app-capable">
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
@@ -102,6 +101,8 @@ if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i
     VISH.Debugging.init(true);
 
     VISH.SlideManager.init(options, VISH.Samples.samples);
+
+    VISH.SlideManager.hideAddressBar();
    }
 </script>
 </body>

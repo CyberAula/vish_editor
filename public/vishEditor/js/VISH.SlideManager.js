@@ -125,8 +125,8 @@ VISH.SlideManager = (function(V,$,undefined){
     		updateSlideCounter();
 		}
 		else{
-			window.addEventListener("load", function(){ _hideAddressBar(); } );
-			window.addEventListener("orientationchange", _hideAddressBar );
+			window.addEventListener("load", function(){ hideAddressBar(); } );
+			window.addEventListener("orientationchange", hideAddressBar );
 		}
 	};
 
@@ -289,9 +289,10 @@ VISH.SlideManager = (function(V,$,undefined){
   /*
    * added by KIKE to hide the address bar after loading
    */
-  var _hideAddressBar = function()
+  var hideAddressBar = function()
   { 
     	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
+        
         /*
         if(document.body.style.height < window.outerHeight)
         {
@@ -303,16 +304,8 @@ VISH.SlideManager = (function(V,$,undefined){
           VISH.Debugging.log("scroll");
           window.scrollTo(0, 1); 
           }, 50 );
-    	*/
-
-    	window.scrollTo(0, 10);
-         setTimeout(function() { 
-              
-                   window.scrollTo(0, 1);
-                   document.getElementById('scroller').style.height = window.innerHeight+'px';
-                   //launch();
-              
-         }, 500);
+		*/
+		
   };
 	
 	
@@ -321,7 +314,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		init          			: init,
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
-		addEnterLeaveEvents  	:  addEnterLeaveEvents,
+		addEnterLeaveEvents  	: addEnterLeaveEvents,
+		hideAddressBar			: hideAddressBar,
 		toggleFullScreen 		: toggleFullScreen, 
 		getUser					: getUser, 
 		getUserStatus			: getUserStatus,
