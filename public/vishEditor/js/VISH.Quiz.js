@@ -16,7 +16,7 @@ VISH.Quiz = (function(V,$,undefined){
     V.Debugging.log("Vish Quiz init");
       
     var options = VISH.SlideManager.getOptions();
-    var user = VISH.SlideManager.getUser();
+    var user = VISH.User.getUser();
     
     if (excursion.type=="quiz_simple") {
       //Allow any user to answer a quiz
@@ -37,72 +37,9 @@ VISH.Quiz = (function(V,$,undefined){
       }
     }
 
+    VISH.Quiz.Renderer.init();
     VISH.Quiz.API.init();
   }
-
-  /////////////
-  // DEPRECATED CODE
-  ///////////
-/*
-          //fixing editor mode when save an excursion
-    if(options['username']) {
-      
-     user.username = options['username'];
-     user.role  = "logged";
-     if(options['token']){
-       status.token = options['token'];
-
-
-     if (excursion.type=="quiz_simple") {
-       if(options['quiz_active_session_id']) {
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-       } 
-     }
-
-       //when logged + token but no quiz_active_session_id
-       else { 
-       //must be false
-       status.quiz_active_session_id = options['quiz_active_session_id']; 
-       }     
-      
-     }
-     //no token ( when? ) but logged 
-     else {
-      
-       status.token = "";
-       //logged, no token but quiz_active_session_id .... ?
-       if(options['quiz_active_session_id']) {
-            
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-        
-       }
-     }
-      
-    }  //no username 
-    else {
-    
-     user.username=""; //so no token
-     status.token=""; 
-      
-     //no username but quiz active --> (student) 
-     if(options['quiz_active_session_id']) {
-       V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
-         user.role= "student";
-       status.quiz_active_session_id = options['quiz_active_session_id'];
-     }
-    //no username no quiz active --> (none)
-     else {
-        
-         user.role= "none";
-         status.quiz_active_session_id = options['quiz_active_session_id'];
-       } 
-    
-     }
-    VISH.Debugging.log("(SlideManager)username: " + user.username);
-    VISH.Debugging.log("(SlideManager)role: " + user.role);
-     V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
-*/
-
 
   /**
   * called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
@@ -178,98 +115,6 @@ VISH.Quiz = (function(V,$,undefined){
     });
     */
     };
-   
-   
-  /*
-  * Render an Multiple choice question slide for an user who is logged in. In this case 
-  * the user can start the Quiz so we show the quiz with all elements and buttons  
-  * 
-  */
-  var _renderMcquestionLogged = function(element, template, slide, quiz_id){
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-
-      ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
-      //ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-    ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_id_to_activate' value='"+quiz_id+"'/>";
-    ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
-    ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
-    ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
-  };
-	
-  /*
-  * Render an Multiple choice question slide for a student user who has the URL for voting. 
-  * In this case the render will show the Quiz with the input radio options for allowing to vote 
-  * and a send button for clicking when decide to vote  
-  * 
-  */
-  var _renderMcquestionStudent = function(element, template, slide){
-
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-      ret += "<label class='mc_answer' id='mc_answer_"+slide+"_option_"+next_index+"'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ quizStatus.quiz_active_session_id +"'/>";
-    ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
-  };
-
-  /*
-  * Render an Multiple choice question slide for a user who is not logged in and has not URL. Only is watching 
-  * the slide (excursion) 
-  * In this case the render will show the Quiz without the input radio options for allowing to vote 
-  * and without the buttons   
-  * 
-  */    
-  var _renderMcquestionNone = function(element, template, slide){
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-      ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";	
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
-  }; 
     
   /*
   * Function will be call when a teacher wants to start a voting or opinion pull
@@ -709,143 +554,10 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
       $(overOptionZone).attr("id", "#mc_answer_"+slideToRemoveListeners+"_voted__option_"+ next_index);
     }
 	};
-	
-	/*
-  var renderTrueFalseQuestion = function(element, template){
-    var answers = new Array();
-    var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
-
-    ret += "<div class='truefalse_question_container'>";
-    ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
-    ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
-
-    for(var i = 0; i<element['questions'].length; i++){
-      //saving correct answers 
-      answers[i] =element['questions'][i]['answer'];
-      ret +="<tr id='tr_question_"+(i+1)+"'>";
-      ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true'  id='radio_true_"+(i+1)+"'/></td>";
-      ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false' id='radio_false_"+(i+1)+"' /></td>";
-      ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
-      ret += "</tr>";
-    }
-
-    ret += "</table>";
-    ret += "<input type='button' class='tfquestion_button' value='Send' id='tf_send_button'/>";
-    ret += "</form>";
-    ret += "</div>";
-
-    trueFalseAnswers = answers;
-    asnswers = [];
-    VISH.Debugging.log("answer's array : " +trueFalseAnswers);
-    return ret;
-  }
-
-*/
-
-  ////////////////////
-  //VISH QUIZ RENDERER METHODS (Called from VISH.Renderer)
-  ///////////////////
-
-  var renderMcQuestion = function(element, template, slide, quiz_id){
-    if(element.type==="mcquestion") {
-      //depending on the role we use a diferent rederer function      
-      user = V.SlideManager.getUser();
-      userStatus = V.SlideManager.getUserStatus();
-      role = user.role;
-      //TODO where initialize this variable (here or )
-      slideToVote = userStatus.quiz_active_session_id;
-      //the object to be returned
-      var obj;
-
-      switch(role) {
-        case "logged": 
-          //render the slide for a logged user
-          obj = _renderMcquestionLogged (element, template, slide, quiz_id); 
-          //add listener to stat Button
-          break;
-        case "student":
-          //render the slide for a student (he knows the shared URL) and no logged user 
-          obj =  _renderMcquestionStudent (element, template, slide); 
-          //add listener to send button _onSendVoteMcQuizButtonClicked
-          break;
-        case "none":
-          //render the slide for a viewer (he doesn't know the shared) URL an not logged user
-          obj =  _renderMcquestionNone (element, template, slide);
-          break;
-        default: 
-          //obj could be an error message :  <p> Error</p>
-          VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: "+ role);  
-      }
-      return obj;
-    } else if (element.type==="truefalsequestion") {
-      obj=  _renderTrueFalseQuestion(element, template);
-      return obj; 
-    }
-  };
-
-  var renderOpenquestion = function(element, template){
-    var ret = "<form action='"+element['posturl']+"' method='post' style='text-align:center;'>";
-    ret += "<label class='question_name'>Name:  </label>";
-    ret += "<textarea id='pupil_name' rows='1' cols='50' class='question_name_input' placeholder='Write your name here'></textarea>";
-    ret += "<h2 class='question'> Question: "+element['question']+"? </h2>";        
-    
-    ret += "<label class='label_question'>Answer: </label>";
-    ret += "<textarea id='question_answer' rows='5' cols='50' class='question_answer' placeholder='Write your answer here'></textarea>";
-    
-    ret += "<button type='button' class='question_button'>Send</button>";
-    
-    return ret;   
-  };
-
-    /**
-   * Function to render a True False Question choice question form inside an article (a slide)
-   * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
-   * */
-  
-  var renderTrueFalseQuestion = function(element, template){
-    var next_num=0;
-    var answers = new Array();
-    var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
-    
-    ret += "<div class='truefalse_question_container'>";
-    ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
-      ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
-     
-    for(var i = 0; i<element['questions'].length; i++){
-      //saving correct answers 
-      answers[i] =element['questions'][i]['answer'];
-
-      ret +="<tr id='tr_question_"+(i+1)+"'>";
-      ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
-      ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
-      ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
-      ret += "</tr>";
-
-    }
-    
-    ret += "</table>";
-    ret += "<input type='button' class='tfquestion_button' value='Send'/>";
-    ret += "</form>";
-    ret += "</div>";
-    
-    trueFalseAnswers = answers;
-    asnswers = [];
-    VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
-    
-    return ret;
-  };
-  
 
 
   return {
     init:                             init,
-    renderMcQuestion:                 renderMcQuestion,
-    renderOpenquestion:               renderOpenquestion,
-    renderTrueFalseQuestion:          renderTrueFalseQuestion,
     enableInteraction:                enableInteraction,
     enableTrueFalseInteraction:       enableTrueFalseInteraction
   };

@@ -20,12 +20,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 			//POST 
 			var send_type = 'POST';
 	       
-	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        V.Debugging.log("token is: " + V.User.getToken());
 	        //POST to http://server/quiz_session/
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	     	  "quiz_id":quiz_id,
-	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	          "authenticity_token" : V.User.getToken()
 	        }
 
 	        $.ajax({
@@ -70,12 +70,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 			//POST 
 			var send_type = 'DELETE';
 	       
-	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	     	  "id":quiz_session_id,
-	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	          "authenticity_token" : V.User.getToken()
 	        }
 
 	        $.ajax({
@@ -128,13 +128,13 @@ VISH.Quiz.API = (function(V,$,undefined){
 			//POST 
 			var send_type = 'PUT';
 	       
-	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	        "id": quiz_active_session_id,
 	     	  "option":answer_selected,
-	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	          "authenticity_token" : V.User.getToken()
 	        }
 
 	        $.ajax({
@@ -178,12 +178,12 @@ V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_
 			//POST 
 			var send_type = 'GET';
 	       
-	        V.Debugging.log("token is: " + V.SlideManager.getUserStatus()["token"]);
+	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	        "id": quiz_active_session_id, 
-	          "authenticity_token" : V.SlideManager.getUserStatus()["token"]
+	          "authenticity_token" : V.User.getToken()
 	        }
 
 	        $.ajax({
