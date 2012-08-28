@@ -4,9 +4,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
 	
-	var user = {}; //{username: "user_name", role:"none"} role: none, logged, student
-	var status = {}; //{token: "token", quiz_active_session_id:"4" } quiz_active_session_id : number, false
-	
+	var user = {}; //{username: "user_name", token: "token"}
 	
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
@@ -14,92 +12,49 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
+		VISH.Debugging.init(options);
 
-		V.Slides.init();
-		V.Status.init();
-
-		//first set VISH.Editing to false
 		VISH.Editing = false;
-		//Quiz_id is different of quiz_session_id !!	
-		initOptions = options;
 
+		if(options){
+			initOptions = options;
+		} else {
+			initOptions = {};
+		}
+		
 		if((options)&&(options["configuration"])&&(VISH.Configuration)){
 			VISH.Configuration.init(options["configuration"]);
 		}
 
-		if((options['developping']===true)&&(VISH.Debugging)){
-
-			  VISH.Debugging.init(true);
-		} else {
-			 VISH.Debugging.init(false);
+		if(VISH.Debugging.isDevelopping()){
+			if ((options["configuration"]["mode"]=="noserver")&&(!excursion)&&(VISH.Debugging.getExcursionSamples()!=null)) {
+			 	excursion = VISH.Debugging.getExcursionSamples();
+			}
 		}
-	
-	    //fixing editor mode when save an excursion
-		if(options['username']) {
-			
-			user.username = options['username'];
-			user.role  = "logged";
-			if(options['token']){
-				status.token = options['token'];
-			
-				if(options['quiz_active_session_id']) {
-					status.quiz_active_session_id = options['quiz_active_session_id'];
-				} 
-				//when logged + token but no quiz_active_session_id
-				else { 
-				//must be false
-				status.quiz_active_session_id = options['quiz_active_session_id']; 
-				}			
-			
-			}
-			//no token ( when? ) but logged 
-			else {
-			
-				status.token = "";
-				//logged, no token but quiz_active_session_id .... ?
-				if(options['quiz_active_session_id']) {
-					 	
-					status.quiz_active_session_id = options['quiz_active_session_id'];
-				
-				}
-			}
-			
-		}  //no username 
-		else {
-		
-			user.username=""; //so no token
-			status.token=""; 
-			
-			//no username but quiz active --> (student) 
-			if(options['quiz_active_session_id']) {
-				V.Debugging.log("options quiz_active_session_id value is: " + options['quiz_active_session_id']);
-		 		user.role= "student";
-				status.quiz_active_session_id = options['quiz_active_session_id'];
-			}
-		//no username no quiz active --> (none)
-			else {
-				
-		 		user.role= "none";
-		 		status.quiz_active_session_id = options['quiz_active_session_id'];
-		 	} 
-		
-		 }	
-		
-		// VISH.Debugging.log("(SlideManager)username: " + user.username);
-		// VISH.Debugging.log("(SlideManager)role: " + user.role);
-		 V.Debugging.log("Vish.SlideManager: options [username]= " + options['username'] + ", [token]=" + options['token'], + " [quiz_active_session_id]= " + options['quiz_active_session_id'] , + " [show results]= " + options['show_results']);
-		 
+
+		V.Slides.init();
+		V.Status.init();
+
+		if(V.Status.ua.mobile){
+			V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+		} else if(V.Status.ua.tablet){
+			V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/tablet.css" type="text/css" />');
+		}
+
+		V.User.init(options);
+		V.Quiz.init(excursion);
+
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize(false);
-						
 		
-				
 		$(window).on('orientationchange',function(){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		if (V.Status.features.fullscreen) {  
+		if ((V.Status.features.fullscreen)&&(V.Status.ua.desktop)) {  
 			if(V.Status.getIsInIframe()){
 				myDoc = parent.document;
 			} else {
@@ -118,19 +73,17 @@ VISH.SlideManager = (function(V,$,undefined){
 		  	$("#page-fullscreen").hide();
 		}
 		
-	
-		if (!V.Status.ua.mobile) {
+		if (V.Status.ua.desktop) {
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
     		updateSlideCounter();
 		}
 		else{
 			window.addEventListener("load", function(){ hideAddressBar(); } );
-			window.addEventListener("orientationchange", hideAddressBar );
+			window.addEventListener("orientationchange", hideAddressBar );		
 		}
 	};
 
-	
 	/**
 	 * function to enter and exit fullscreen
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
@@ -190,24 +143,11 @@ VISH.SlideManager = (function(V,$,undefined){
 	var updateStatus = function(slideid, newStatus){
 		slideStatus[slideid] = newStatus;	
 	};
-	/*
-	 * to get the user js object
-	 */
-	
-	var getUser = function(){
-		
-		return user;
-	};
-	
-		/*
-	 * to get the user's status js object
-	 */
-	
-	var getUserStatus = function(){
-		
-		return status;
-	};
 
+
+	var getOptions = function(){	
+		return initOptions;
+	};
 
 
 	/**
@@ -317,8 +257,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		addEnterLeaveEvents  	: addEnterLeaveEvents,
 		hideAddressBar			: hideAddressBar,
 		toggleFullScreen 		: toggleFullScreen, 
-		getUser					: getUser, 
-		getUserStatus			: getUserStatus,
+		getOptions				: getOptions,
 		updateSlideCounter		: updateSlideCounter
 	};
 

@@ -18,21 +18,16 @@ VISH.Status = (function(V,$,undefined){
 		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
 			if(!isInIframe){
 				features.fullscreen = true;
-			}
-			else{
+			} else {
 				//fullscreen supported by browser, let´s check that the iframe is the same domain as the vish_editor
-				try
-				{
+				try	{
 					if(window.parent.location.host == window.location.host){
 				    	features.fullscreen = true; 
 					}
-				}
-				catch (e)
-				{
+				} catch (e)	{
 				    features.fullscreen = false;
 				}
 			}
-			
 		}
 		V.Debugging.log("Fullscreen supported: " + features.fullscreen);
 		
@@ -53,15 +48,62 @@ VISH.Status = (function(V,$,undefined){
 			height: window.screen.availHeight * ua.pixelRatio
 		};
 		
+		//Apple devices
 		ua.iPhone = /iPhone/i.test(navigator.userAgent);
 		ua.iPhone4 = (ua.iPhone && ua.pixelRatio == 2);
 		ua.iPad = /iPad/i.test(navigator.userAgent);
-		ua.android = /android/i.test(navigator.userAgent);
 		ua.iOS = ua.iPhone || ua.iPad;
-		ua.mobile = ua.iOS || ua.android;
+		ua.applePhone = ua.iPhone || ua.iPhone4;
+		ua.appleTablet = ua.iPad;
+
+		//Android devices
+		ua.android = /android/i.test(navigator.userAgent);
 		if(ua.android){
-			V.Debugging.log("Android device");
+			ua.androidPhone = false;
+			ua.androidTablet = false;
+
+			//First intent: Look for Tablet in userAgent
+			if(/tablet/i.test(navigator.userAgent)){
+				ua.androidTablet = true;
+			} else {
+				//Second intent: Check screen size
+
+				//We will consider android tablets devices with a screen that are at least 960dp x 720dp
+				//Taken from: http://developer.android.com/guide/practices/screens_support.html
+
+				var landscape = window.screen.availWidth > window.screen.availHeight;
+				if(landscape){
+					if((window.screen.availWidth>=1024)&&(window.screen.availHeight)>=720){
+						ua.androidTablet = true;
+					} else {
+						ua.androidPhone = true;
+					}
+				} else {
+					if((window.screen.availHeight>=1024)&&(window.screen.availWidth)>=720){
+						ua.androidTablet = true;
+					} else {
+						ua.androidPhone = true;
+					}
+				}
+			}
+
+		} else {
+			ua.androidPhone = false;
+			ua.androidTablet = false;
 		}
+
+		//Phones and Tablets
+		ua.mobile = ua.applePhone || ua.androidPhone;
+		ua.tablet = ua.appleTablet || ua.androidTablet;
+
+		if((!ua.mobile)&&(!ua.tablet)){
+			ua.desktop = true;
+		} else {
+			ua.desktop = false;
+		}
+
+		V.Debugging.log("isMobile " + ua.mobile);
+		V.Debugging.log("isTablet: " + ua.tablet);
 		V.Debugging.log("Screen width: " + ua.screen.width);
 		V.Debugging.log("Screen height: " + ua.screen.height);
 		V.Debugging.log("Visual Viewport width: " + ua.viewport.width);
@@ -72,8 +114,11 @@ VISH.Status = (function(V,$,undefined){
 		V.Debugging.log("HTML element height: " +  document.documentElement.offsetHeight);
 		V.Debugging.log("window.screen.availWidth: " + window.screen.availWidth);
 		V.Debugging.log("window.screen.availHeight: " + window.screen.availHeight);
-
 	};
+
+	var updateOrientation = function() {  
+    	  V.Debugging.log("updateOrientation called with " + window.orientation);
+  	};
 	
 	var getIsInIframe = function(){
 		return isInIframe;

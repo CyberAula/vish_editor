@@ -14,14 +14,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		var myInput = $(".current").find("input[type='text']");	
-		V.Debugging.log("enter to init function");
 
 		//TODO remove in Dummies <li>.....</li> for doing best programming practices and add  
 		//the first option calling to the function addMultipleChoiceOption
 		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-
-
- 		
+	
   		//var myInput = $(".current").find("input[type='text']");
  		//var myInput = $(".current").find("#radio_text_1");
  

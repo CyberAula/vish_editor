@@ -32,7 +32,7 @@ var getOptions = function(){
 		configuration["Upload"] = true;
 
 		//Posible values: noserver, node, vish
-		configuration["mode"] = "node";
+		configuration["mode"] = "noserver";
 
 		options["configuration"] = configuration;
 
@@ -46,9 +46,29 @@ var getOptions = function(){
 			options["developping"] = true;
 		}
 
-		options["lang"] = "en";
+		if(options["developping"]==true){
+			//Setting developping options
+			var developmentSettings = new Object();
+
+			//Possible action: "nothing" or "loadSamples".
+			developmentSettings.actionInit = "loadSamples";
+			//Select your samples
+			developmentSettings.samples = VISH.Samples.quizes_samples;
+
+			//Possible actions: "view", "edit", or "nothing".
+			developmentSettings.actionSave = "view";
+
+			options["developmentSettings"] = developmentSettings;
 
 
+			//Also you can define a username and token for testing purposes
+			options["username"] = "username";
+			options["token"] = "12345";
+
+			//And a default landguage
+			options["lang"] = "en";
+		}
+		
 		console.log("Vish Editor Configured Options")
 		console.log(options)
 	}

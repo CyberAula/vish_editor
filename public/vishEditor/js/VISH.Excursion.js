@@ -37,7 +37,7 @@ VISH.Excursion = (function(V,undefined){
 				
 				/*
 				*it is added some functions later the elements be loaded 
-				*  */
+				*  
 				else if(mySlides[i].elements[num].type === "mcquestion") {
  
 					
@@ -50,7 +50,7 @@ VISH.Excursion = (function(V,undefined){
 				//number of slide and number of true/false questions 
 				VISH.Quiz.enableTrueFalseInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].questions.length);
 					
-				}
+				}*/
 			}
 		}
 		

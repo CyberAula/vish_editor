@@ -1,5 +1,6 @@
 VISH.ViewerAdapter = (function(V,$,undefined){
 	var page_is_fullscreen = false; //it always init without fullscreen
+
 	/**
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
@@ -13,16 +14,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			reserved_px_for_menubar = 0; //we don´t show the menubar
 			margin_height = 0;
 			margin_width = 0;
-		}
-		else{
+		} else {
 			if(fullscreen && !page_is_fullscreen){
 					//exit fullscreen
 					page_is_fullscreen = true;
 					reserved_px_for_menubar = 0; //we don´t show the menubar
 					margin_height = 0;
 					margin_width = 0;
-			}
-			else{
+			} else {
 				page_is_fullscreen = false;
 				reserved_px_for_menubar = 40;
 				margin_height = 40;
@@ -126,8 +125,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			else{
 				$("#page-switcher-end").show();
 			}
-		}
-		else{
+		} else {
 			if(V.curSlide===0){
 				$("#mobile_back_arrow").hide();
 			}

@@ -28,7 +28,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
-		VISH.Slides.init();
+		
+		VISH.Debugging.init(options);
 
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
@@ -37,33 +38,24 @@ VISH.Editor = (function(V,$,undefined){
 
 		//first set VISH.Editing to true
 		VISH.Editing = true;
-		
+
 		if(options){
 			initOptions = options;
-
-			if(VISH.Debugging){
-				if(options['developping']===true){
-					VISH.Debugging.init(true);
-				} else {
-					VISH.Debugging.init(false);
-				}
-				if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
-					excursion = VISH.Debugging.getExcursionSamples();
-				}
-			}
-
 			if((options["configuration"])&&(VISH.Configuration)){
 				VISH.Configuration.init(options["configuration"]);
 				VISH.Configuration.applyConfiguration();
 			}
-
 		} else {
 			initOptions = {};
-			if(VISH.Debugging){
-				VISH.Debugging.init(false);
-			}
 		}
 		
+		VISH.Slides.init();
+
+		if(VISH.Debugging.isDevelopping()){
+			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
+			 	excursion = VISH.Debugging.getExcursionSamples();
+			}
+		}
 
 		//If we have to edit
 		if(excursion){
@@ -768,21 +760,16 @@ VISH.Editor = (function(V,$,undefined){
 
 		saved_excursion = excursion;  
 		  
-		//VISH.Debugging.log(JSON.stringify(excursion));    
+		VISH.Debugging.log("Excursion saved:")
+		VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
 	};
 	
 
 	var _afterSaveExcursion = function(excursion){
-
-		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping());
-
-		console.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]);
-
-		VISH.Debugging.log(JSON.stringify(excursion));   
+		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-				console.log("VISH.Configuration.getConfiguration()[mode] : " + VISH.Configuration.getConfiguration()["mode"]);
 
 			var send_type;
 	        if(excursion_to_edit){
@@ -827,15 +814,10 @@ VISH.Editor = (function(V,$,undefined){
 					$(".nicEdit-panelContain").hide();
 					$("#menubar-viewer").show();
 
-					//here we must pass params 
-					//options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
-					VISH.SlideManager.init({"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}, excursion);
+					VISH.SlideManager.init(initOptions, excursion);
 				} else if (VISH.Debugging.getActionSave()=="edit") {
 					$('article').remove();
-					var options = {};
-					options["developping"] = true;
-					options["configuration"] = configuration;
-					VISH.Editor.init(options, excursion);  //to edit the excursion
+					VISH.Editor.init(initOptions, excursion);  //to edit the excursion
 				}
 			}
 
