@@ -17,7 +17,7 @@ VISH.Quiz = (function(V,$,undefined){
       
     var options = VISH.SlideManager.getOptions();
     var user = VISH.SlideManager.getUser();
-
+    
     if (excursion.type=="quiz_simple") {
       //Allow any user to answer a quiz
       if(options['quiz_active_session_id']) {
@@ -26,7 +26,10 @@ VISH.Quiz = (function(V,$,undefined){
     } else if(excursion.type=="standard") {
       switch(user.role){
         case "logged":
-          //Code here...
+       //code
+          break;
+        case "student":  
+          //code ... 
           break;
         case "none":
           //Code here...
@@ -116,7 +119,7 @@ VISH.Quiz = (function(V,$,undefined){
         _activateLoggedInteraction();
         break;
 
-      case "student":
+      case "student": quizStatus.quiz_active_session_id
         //is this variable correctly initialized here?
         slideToVote = slide;
         _activateStudentInteraction();
@@ -234,7 +237,7 @@ VISH.Quiz = (function(V,$,undefined){
     ret += "</div>";
     ret += "<div class='mcquestion_right'>";
     ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+V.SlideManager.getUserStatus().quiz_active_session_id +"'/>";
+    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ quizStatus.quiz_active_session_id +"'/>";
     ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
     ret += "</div>";
     ret += "</form>";
@@ -432,7 +435,8 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var _OnQuizSessionReceivedError = function(error){
-    console.log("_OnQuizSessionReceivedError:  " + error);
+     var received = JSON.stringify(error);
+    console.log("_OnQuizSessionReceivedError:  " + received);
   }
 
   /*Function executed when the studen has pressed the send vote button
@@ -470,8 +474,23 @@ VISH.Quiz = (function(V,$,undefined){
   var _onQuizVotingSuccessReceived = function(data){
     var received = JSON.stringify(data);
     V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + received);
+  //call another API function that must make a  GET /quiz_sessions/X/results 
+var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
+V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
 
-    var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+  
+  };
+
+  var _OnQuizVotingReceivedError = function(error){
+    var received = JSON.stringify(error)
+    console.log("_OnQuizVotingReceivedError, and value received is:  " + received);
+  };
+
+  var _onQuizSessionResultsReceived = function(data) {
+ var received = JSON.stringify(data);
+    V.Debugging.log("_onQuizSessionResultsReceived and data received is: " + received);
+
+  var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     _showResultsToParticipant(data, slideToVote);
 
     //remove input radio 
@@ -484,11 +503,15 @@ VISH.Quiz = (function(V,$,undefined){
 
     //for avoid bring out when mouse over option
     _removeOptionsListener(slideToVote);
+
   };
 
-  var _OnQuizVotingReceivedError = function(error){
+  var _onQuizSessionResultsReceivedError = function(error) {
     var received = JSON.stringify(error)
-    console.log("_OnQuizVotingReceivedError, and value received is:  " + received);
+    console.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
+
+
+
   };
 
 
@@ -687,8 +710,8 @@ VISH.Quiz = (function(V,$,undefined){
     }
 	};
 	
-	
-  var _renderTrueFalseQuestion = function(element, template){
+	/*
+  var renderTrueFalseQuestion = function(element, template){
     var answers = new Array();
     var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
 
@@ -719,7 +742,7 @@ VISH.Quiz = (function(V,$,undefined){
     return ret;
   }
 
-
+*/
 
   ////////////////////
   //VISH QUIZ RENDERER METHODS (Called from VISH.Renderer)
@@ -781,7 +804,7 @@ VISH.Quiz = (function(V,$,undefined){
    * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
    * */
   
-  /*var _renderTrueFalseQuestion = function(element, template){
+  var renderTrueFalseQuestion = function(element, template){
     var next_num=0;
     var answers = new Array();
     var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
@@ -791,26 +814,22 @@ VISH.Quiz = (function(V,$,undefined){
       ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
      
     for(var i = 0; i<element['questions'].length; i++){
-    //saving correct answers 
-    answers[i] =element['questions'][i]['answer'];
-    
-    ret +="<tr id='tr_question_"+(i+1)+"'>";
+      //saving correct answers 
+      answers[i] =element['questions'][i]['answer'];
+
+      ret +="<tr id='tr_question_"+(i+1)+"'>";
       ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
       ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
       ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
       ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
       ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
       ret += "</tr>";
-    
+
     }
     
     ret += "</table>";
-  
     ret += "<input type='button' class='tfquestion_button' value='Send'/>";
-
     ret += "</form>";
-    
-    
     ret += "</div>";
     
     trueFalseAnswers = answers;
@@ -820,13 +839,13 @@ VISH.Quiz = (function(V,$,undefined){
     return ret;
   };
   
-  */
 
 
   return {
     init:                             init,
     renderMcQuestion:                 renderMcQuestion,
     renderOpenquestion:               renderOpenquestion,
+    renderTrueFalseQuestion:          renderTrueFalseQuestion,
     enableInteraction:                enableInteraction,
     enableTrueFalseInteraction:       enableTrueFalseInteraction
   };

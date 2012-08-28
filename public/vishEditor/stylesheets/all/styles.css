@@ -104,6 +104,7 @@ body {
 
 .slides > article {
   display: none;
+  z-index: 15000;
 }
 .slides > article.far-past {
   display: block;
@@ -128,7 +129,6 @@ body {
   -ms-transform: translate(0);  /* Added to fix explorer view*/
   /*-moz-transform: translate(0); /* REMOVED BY KIKE, BECAUSE IT BROKE FIREFOX SWF PRESENTATION*/
   -webkit-transform: translate3d(0, 0, 0);
-  z-index:1;
 }
 .slides > article.next {
   display: block;

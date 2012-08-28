@@ -6,7 +6,7 @@
   z-index: 1000;
 }
 .slides > article {
-  display: none;
+  display: none;  
 }
 .slides > article.far-past {
   display: none;
@@ -63,10 +63,17 @@
 }
 
 #flashcard-background {
+  z-index: 10000; 
 	display: block;
-	width: 800px;
-	height: 600px;
+  width: 800px;
+  height: 600px;
+  margin-top: -300px;
+  margin-left: -400px;
+  left: 50%;
+  top: 50%;
+  position: absolute;	
 	background-repeat:no-repeat;
 	background-attachment:fixed;
-	background-position:center; 
+	background-position:center center;
+
 }

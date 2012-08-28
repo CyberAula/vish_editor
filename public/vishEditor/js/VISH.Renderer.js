@@ -47,7 +47,8 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				
-				var quiz_id = slide.quiz_id;
+				var quiz_id = parseInt(slide.quiz_id);
+				
 				content +=_renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id, slide.quiz_id);
 				classes +="mcquestion";
 			} else if ( slide.elements[el].type === "truefalsequestion") {
@@ -167,6 +168,9 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 			case "openQuestion":
 				return VISH.Quiz.renderOpenquestion(element, template);
+				break;
+			case "truefalsequestion":
+				return VISH.Quiz.renderTrueFalseQuestion(element, template);
 				break;
 			default:
 				break;
