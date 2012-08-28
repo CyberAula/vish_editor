@@ -6,6 +6,9 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 
 	var _onFlashcardButtonClicked = function(){
+		$("#flashcard-background").show();
+
+		
 		$("#flashcard_button").fancybox({
 			'autoDimensions' : false,
 			'width': 800,

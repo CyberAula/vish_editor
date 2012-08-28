@@ -63,7 +63,7 @@
 }
 
 #flashcard-background {
-  z-index: 10000; 
+  z-index: 1050; 
 	display: block;
   width: 800px;
   height: 600px;

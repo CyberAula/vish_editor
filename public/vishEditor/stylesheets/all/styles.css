@@ -166,7 +166,10 @@ body {
 /*added by KIKE to put the flashcard in the full slide*/
 .slides > article.flashcard{
   padding: 0;
+
 }
+
+
 
 /* buttons next and previous */
 .page-switcher {
