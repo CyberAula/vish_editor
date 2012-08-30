@@ -221,18 +221,18 @@ VISH.Slides = (function(V,$,undefined){
   	  }
     }
     
-    if(VISH.Editing){
-  		//first deselect zone if anyone was selected
-  		$(".selectable").css("border-style", "none");
-			
-			VISH.Editor.Tools.cleanZoneTools();
-  		
-  		//finally add a background color to thumbnail of the selected slide
-    	V.Editor.Thumbnails.selectThumbnail(no);    	
-  	}	else {
-  		//update slide counter
-  		V.SlideManager.updateSlideCounter();
-  	}
+	if(VISH.Editing){
+		//first deselect zone if anyone was selected
+		$(".selectable").css("border-style", "none");
+
+		VISH.Editor.Tools.cleanZoneTools();
+
+		//finally add a background color to thumbnail of the selected slide
+		V.Editor.Thumbnails.selectThumbnail(no); 	   	
+	}	else {
+		//update slide counter
+		V.SlideManager.updateSlideCounter();
+	}
   };
   
   /**

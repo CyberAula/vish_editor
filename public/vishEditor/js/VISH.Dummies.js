@@ -36,7 +36,7 @@ VISH.Dummies = (function(VISH,undefined){
 	 */
 	var _replaceIds = function(string, article_id){
 		var newString = string;
-		VISH.Debugging.log("article_id passed like parameter is: " + article_id);
+		// VISH.Debugging.log("article_id passed like parameter is: " + article_id);
 		while(newString.indexOf("div_id_to_change") != -1){
 			newString = newString.replace("div_id_to_change", "zone" + nextDivId);
 			nextDivId++;

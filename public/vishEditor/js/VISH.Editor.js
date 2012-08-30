@@ -381,7 +381,8 @@ VISH.Editor = (function(V,$,undefined){
 		//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 	
-		//VISH.Debugging.log("slide es: " + slide );
+		// VISH.Debugging.log("slide es: " + slide );
+		VISH.Debugging.log("onTemplateclicked");
 				
 		V.Editor.Utils.addSlide(slide);
 		
@@ -503,7 +504,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   /**
-   * function called when user clicks on the delete icon of the zone
+   * function called when user delete a slide
    */
 	var _onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent();
@@ -544,7 +545,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
-		VISH.Editor.Tools.loadZoneTools($(this));
+		VISH.Editor.Tools.loadToolsForZone($(this));
 	};
   
 	
@@ -630,6 +631,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.id = '';	
 		}
 
+		excursion.type = "presentation";
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
 		excursion.avatar = excursionDetails.avatar;
@@ -922,6 +924,10 @@ VISH.Editor = (function(V,$,undefined){
 		params['current_el'] = area;
 	}
 
+	var getExcursion = function() {
+		return excursion_to_edit;
+	}
+
 	var getSavedExcursion = function() {
 		if(saved_excursion){
 			return saved_excursion;
@@ -929,7 +935,10 @@ VISH.Editor = (function(V,$,undefined){
 			return null;
 		}
 	}
-	
+
+	var getCurrentSlide = function(){
+		return VISH.curSlide;
+	}
 	
 	/*
 	 * Load the initial fancybox
@@ -954,9 +963,11 @@ VISH.Editor = (function(V,$,undefined){
 		getId 				: getId,
 		getTemplate 		: getTemplate,
 		getCurrentArea 		: getCurrentArea,
+		getCurrentSlide		: getCurrentSlide,
 		getParams 			: getParams,
 		getOptions 			: getOptions, 
 		loadFancyBox 		: loadFancyBox,
+		getExcursion 		: getExcursion,
 		getSavedExcursion 	: getSavedExcursion,
 		saveExcursion 		: saveExcursion
 	};
