@@ -7,12 +7,11 @@ VISH.Slides = (function(V,$,undefined){
 	
 	var init = function(){
 		getCurSlideFromHash();
-		curSlide = -1;
 		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
 
 	var handleDomLoaded = function () {
-	  V.slideEls = document.querySelectorAll('section.slides > article');
+	  slideEls = document.querySelectorAll('section.slides > article');
 
 	  addFontStyle();
 	  
@@ -68,14 +67,29 @@ VISH.Slides = (function(V,$,undefined){
 		setCurrentSlide(getCurrentSlide()-1);
 	}
 
+	var getNumberOfSlide = function(slide){
+		if(slideEls){
+			var result = 0;
+			$.each(slideEls, function(index, value) { 
+		  		if($(value).attr("id")==$(slide).attr("id")){
+		  			result = index;
+		  			return;
+		  		}
+			});
+			return result;
+		} else {
+			return 0;
+		}
+	}
+
 
 	/* Slide movement */
 
 	var getSlideEl = function(no) {
-	  if ((no < 0) || (no >= V.slideEls.length)) { 
+	  if ((no < 0) || (no >= slideEls.length)) { 
 	    return null;
 	  } else {
-	    return V.slideEls[no];
+	    return slideEls[no];
 	  }
 	};
 
@@ -100,7 +114,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	//MODIFIED BY KIKE TO DETERMINE IF GOING RIGHT OR LEFT
 	var updateSlides = function(goingRight) {
-	  for (var i = 0; i < V.slideEls.length; i++) {
+	  for (var i = 0; i < slideEls.length; i++) {
 	    switch (i) {
 	      case curSlide - 2:
 	        updateSlideClass(i, 'far-past');
@@ -141,7 +155,7 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var _nextSlide = function() {	  
-	  if (curSlide < V.slideEls.length - 1) {
+	  if (curSlide < slideEls.length - 1) {
 	    curSlide++;
 	    updateSlides(true);
 	  }
@@ -196,7 +210,7 @@ VISH.Slides = (function(V,$,undefined){
 	  if (slideNo) {
 	    curSlide = slideNo - 1;
 	  } else {
-	    curSlide = 0;
+	    curSlide = -1;
 	  }
 	};
 
@@ -235,14 +249,14 @@ VISH.Slides = (function(V,$,undefined){
    * Go to the last slide when adding a new one
    */
   var lastSlide = function(){
-    goToSlide(V.slideEls.length);
+    goToSlide(slideEls.length);
   };
 
   /**
    * go to the slide when clicking the thumbnail
    */
   var goToSlide = function(no){	
-    if((no > V.slideEls.length) || (no <= 0)){
+    if((no > slideEls.length) || (no <= 0)){
   	  return;
     } else if (no > curSlide+1){
   	  while (curSlide+1 < no) {
@@ -306,6 +320,7 @@ VISH.Slides = (function(V,$,undefined){
 			isCurrentLastSlide		: isCurrentLastSlide,
 			isSlideSelected 		: isSlideSelected,
 			onDeleteSlide			: onDeleteSlide,
+			getNumberOfSlide		: getNumberOfSlide,
 			getSlides 				: getSlides,
 			backwardOneSlide		: backwardOneSlide,		
 			forwardOneSlide			: forwardOneSlide,

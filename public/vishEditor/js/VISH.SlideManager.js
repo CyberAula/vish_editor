@@ -220,7 +220,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * with this format: 1/12 2/12
 	 */
 	var updateSlideCounter = function(){
-		var number_of_slides = V.slideEls.length;
+		var number_of_slides = V.Slides.getSlides().length;
 		var slide_number = VISH.Slides.getCurrentSlideNumber();
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};

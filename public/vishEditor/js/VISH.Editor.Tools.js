@@ -235,13 +235,56 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 	switch(direction){
 	 		case "right":
 	 			VISH.Debugging.log("moveSlide to right");
+	 			_moveSlideTo("after",$("article.next"));
 	 			break;
 	 		case "left":
 	 			VISH.Debugging.log("moveSlide to left");
+	 			_moveSlideTo("before",$("article.past"));
 	 			break;
 	 		default:
 	 			break;
 	 	}
+	 }
+
+	 var _moveSlideTo = function(position, reference_slide){
+
+	 	if(typeof reference_slide === "undefined"){
+	 		return;
+	 	}
+
+	 	if(typeof reference_slide.length !== undefined){
+	 		reference_slide = $(reference_slide)[0];
+	 		if(typeof reference_slide === "undefined"){
+	 			return;
+	 		}
+	 	}
+
+	 	if(reference_slide.tagName!="ARTICLE"){
+	 		return;
+	 	}
+
+	 	var slide_number = VISH.Slides.getCurrentSlideNumber();
+
+	 	var article_to_move = $("article.current")[0];
+	 	var article_reference = reference_slide;
+
+	 	$(article_to_move).remove();
+	 	if(position=="after"){
+	 		$(article_reference).after(article_to_move);
+	 	} else {
+	 		$(article_reference).before(article_to_move);
+	 	}
+	 	
+	 	V.Editor.Utils.redrawSlides();
+		V.Editor.Thumbnails.redrawThumbnails();
+
+		var slide_position = V.Slides.getNumberOfSlide(article_to_move)+1;
+
+	 	setTimeout(function(){
+	 			VISH.Editor.Thumbnails.selectThumbnail(slide_position);
+	 		}, 200);
+
+		VISH.Slides.goToSlide(slide_position);
 	 }
 	
    /*

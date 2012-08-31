@@ -574,7 +574,7 @@ VISH.Editor = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var _onSaveButtonClicked = function(){
-		if(V.slideEls.length === 0){
+		if(VISH.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
 				{
