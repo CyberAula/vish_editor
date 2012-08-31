@@ -9,7 +9,3 @@ VISH.ImagesPath = "/vishEditor/images/";
 VISH.StylesheetsPath = "/vishEditor/stylesheets/";
 
 VISH.Editing = false;  //variable to know in the common classes between editor and viewer if we are editing
-
-/* global variables to store slide elements and point to current slide*/
-VISH.slideEls;
-VISH.curSlide;

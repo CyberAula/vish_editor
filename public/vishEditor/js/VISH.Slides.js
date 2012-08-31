@@ -1,13 +1,13 @@
 VISH.Slides = (function(V,$,undefined){
-	/*
-	 * 
-	 */
+
+	/* Variables to store slide elements and point to current slide*/
+	var slideEls;
+	var curSlide;
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 	
-
 	var init = function(){
 		getCurSlideFromHash();
-
+		curSlide = -1;
 		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
 
@@ -28,6 +28,45 @@ VISH.Slides = (function(V,$,undefined){
 	  
 	  $('body').addClass('loaded');
 	};
+
+
+	var getCurrentSlide = function(){
+		return curSlide;
+	}
+
+	var getCurrentSlideNumber = function(){
+		return curSlide+1;
+	}
+
+	var setCurrentSlideNumber = function(currentSlideNumber){
+		curSlide = currentSlideNumber-1;
+	}
+
+	var setCurrentSlide = function(currentSlide){
+		curSlide = currentSlide;
+	}
+
+	var getSlides = function(){
+		return slideEls;
+	}
+
+	var isCurrentFirstSlide = function(){
+		return curSlide===0;
+	}
+
+	var isCurrentLastSlide = function(){
+		return curSlide===slideEls.length-1;
+	}
+
+	var isSlideSelected = function(){
+		if(curSlide>-1){
+			return true;
+		}
+	}
+
+	var onDeleteSlide = function(){
+		setCurrentSlide(getCurrentSlide()-1);
+	}
 
 
 	/* Slide movement */
@@ -63,19 +102,19 @@ VISH.Slides = (function(V,$,undefined){
 	var updateSlides = function(goingRight) {
 	  for (var i = 0; i < V.slideEls.length; i++) {
 	    switch (i) {
-	      case V.curSlide - 2:
+	      case curSlide - 2:
 	        updateSlideClass(i, 'far-past');
 	        break;
-	      case V.curSlide - 1:
+	      case curSlide - 1:
 	        updateSlideClass(i, 'past');
 	        break;
-	      case V.curSlide: 
+	      case curSlide: 
 	        updateSlideClass(i, 'current');
 	        break;
-	      case V.curSlide + 1:
+	      case curSlide + 1:
 	        updateSlideClass(i, 'next');      
 	        break;
-	      case V.curSlide + 2:
+	      case curSlide + 2:
 	        updateSlideClass(i, 'far-next');      
 	        break;
 	      default:
@@ -85,28 +124,25 @@ VISH.Slides = (function(V,$,undefined){
 	  }
 	  
 	  if(goingRight){
-	    triggerLeaveEvent(V.curSlide - 1);
+	    triggerLeaveEvent(curSlide - 1);
+	  } else {
+	    triggerLeaveEvent(curSlide + 1);    
 	  }
-	  else{
-	    triggerLeaveEvent(V.curSlide + 1);    
-	  }
-	  triggerEnterEvent(V.curSlide);
+	  triggerEnterEvent(curSlide);
 	  updateHash();
 	};
 
 	
-	var prevSlide = function() {
-	  if (V.curSlide > 0) {
-	    V.curSlide--;
-
+	var _prevSlide = function() {
+	  if (curSlide > 0) {
+	    curSlide--;
 	    updateSlides(false);
 	  }
 	};
 
-	var nextSlide = function() {	  
-	  if (V.curSlide < V.slideEls.length - 1) {
-	    V.curSlide++;
-
+	var _nextSlide = function() {	  
+	  if (curSlide < V.slideEls.length - 1) {
+	    curSlide++;
 	    updateSlides(true);
 	  }
 	};
@@ -158,14 +194,14 @@ VISH.Slides = (function(V,$,undefined){
 	  var slideNo = parseInt(location.hash.substr(1));
 
 	  if (slideNo) {
-	    V.curSlide = slideNo - 1;
+	    curSlide = slideNo - 1;
 	  } else {
-	    V.curSlide = 0;
+	    curSlide = 0;
 	  }
 	};
 
 	var updateHash = function() {
-	  location.replace('#' + (V.curSlide + 1));
+	  location.replace('#' + (curSlide + 1));
 	};
 
 	
@@ -177,12 +213,10 @@ VISH.Slides = (function(V,$,undefined){
 	  el.type = 'text/css';
 	  el.href = 'http://fonts.googleapis.com/css?family=' +
 	            'Open+Sans:regular,semibold,italic,italicsemibold|Droid+Sans+Mono';
-
 	  document.body.appendChild(el);
 	};
 
-	var addGeneralStyle = function() {
-	 
+	var addGeneralStyle = function() {	 
 	  var el = document.createElement('meta');
 	  el.name = 'viewport';
 	  el.content = 'width=900,height=750';
@@ -194,10 +228,11 @@ VISH.Slides = (function(V,$,undefined){
 	  document.querySelector('head').appendChild(el);
 	};
 
+
   /* slide movement */
 
   /**
-   * go to the last slide when adding a new one
+   * Go to the last slide when adding a new one
    */
   var lastSlide = function(){
     goToSlide(V.slideEls.length);
@@ -205,19 +240,17 @@ VISH.Slides = (function(V,$,undefined){
 
   /**
    * go to the slide when clicking the thumbnail
-   * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
-  var goToSlide = function(no){
-  	
+  var goToSlide = function(no){	
     if((no > V.slideEls.length) || (no <= 0)){
   	  return;
-    } else if (no > V.curSlide+1){
-  	  while (V.curSlide+1 < no) {
-    	 nextSlide();
+    } else if (no > curSlide+1){
+  	  while (curSlide+1 < no) {
+    	 _nextSlide();
   	  }
-    } else if (no < V.curSlide+1){
-  	  while (V.curSlide+1 > no) {
-    	 prevSlide();
+    } else if (no < curSlide+1){
+  	  while (curSlide+1 > no) {
+    	 _prevSlide();
   	  }
     }
     
@@ -235,19 +268,20 @@ VISH.Slides = (function(V,$,undefined){
 	}
   };
   
-  /**
-   * function to go to previous slide and change the thumbnails and focus 
-   */
-  var backwardOneSlide = function(){
-  	goToSlide(V.curSlide);
-  };
-  
-  /**
-   * function to go to next slide and change the thumbnails and focus 
-   */
-  var forwardOneSlide = function(){
-  	goToSlide(V.curSlide+2);
-  };
+
+	/**
+	* function to go to previous slide and change the thumbnails and focus 
+	*/
+	var backwardOneSlide = function(){
+		goToSlide(curSlide);
+	};
+
+	/**
+	* function to go to next slide and change the thumbnails and focus 
+	*/
+	var forwardOneSlide = function(){
+		goToSlide(curSlide+2);
+	};
 	
 
 	/**
@@ -262,13 +296,20 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	
-	return {				
+	return {	
+			init          			: init,
+			getCurrentSlide			: getCurrentSlide,		
+			setCurrentSlide			: setCurrentSlide,	
+			getCurrentSlideNumber	: getCurrentSlideNumber,
+			setCurrentSlideNumber	: setCurrentSlideNumber,
+			isCurrentFirstSlide		: isCurrentFirstSlide,
+			isCurrentLastSlide		: isCurrentLastSlide,
+			isSlideSelected 		: isSlideSelected,
+			onDeleteSlide			: onDeleteSlide,
+			getSlides 				: getSlides,
 			backwardOneSlide		: backwardOneSlide,		
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
-			init          			: init,
-			nextSlide				: nextSlide,
-			prevSlide				: prevSlide,
 			lastSlide				: lastSlide,
 			isSlideFocused			: isSlideFocused
 	};

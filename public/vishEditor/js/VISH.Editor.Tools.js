@@ -23,6 +23,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		});
 
 		loadPresentationToolbar();
+		loadSlidesToolbar();
 	} 
 	 
 
@@ -84,6 +85,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		_cleanElementToolbar();
 	}
 
+	var enableToolbar = function(){
+		$("#toolbar_wrapper").show();
+	}
+
 	var disableToolbar = function(){
 		$("#toolbar_wrapper").hide();
 	}
@@ -138,10 +143,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Slides Toolbar
 	*/
 	var loadSlidesToolbar = function(){
-		if(VISH.Editor.getCurrentSlide()!=null){
+		if(VISH.Slides.isSlideSelected()){
 			$("#toolbar_slide").find("img").show();
 		} else {
-			_cleanSlidesToolbar();
+			_cleanSlideToolbar();
 		}
 	}
 
@@ -293,6 +298,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		cleanZoneTools 					: cleanZoneTools,
 		cleanToolbar					: cleanToolbar,
 		switchMode 						: switchMode,
+		enableToolbar					: enableToolbar,
+		disableToolbar					: disableToolbar,
 		moveSlide						: moveSlide,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess

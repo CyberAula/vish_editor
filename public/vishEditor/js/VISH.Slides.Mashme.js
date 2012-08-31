@@ -75,11 +75,10 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 	};
 
 	var _sendSlideNumber = function(click){   
-		var slideNumber = V.curSlide+1;
+		var slideNumber = VISH.Slides.getCurrentSlideNumber();
 		if(click === "back"){
 			slideNumber -=1;
-		}
-		else{
+		} else {
 			slideNumber +=1;
 		}           
 		MASHME.API.iFrame.broadcast("MashMeAPIMessage:" + GO_TO_SLIDE + "//" + slideNumber);     

@@ -283,7 +283,7 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _OnQuizSessionReceivedError = function(error){
      var received = JSON.stringify(error);
-    console.log("_OnQuizSessionReceivedError:  " + received);
+    V.Debugging.log("_OnQuizSessionReceivedError:  " + received);
   }
 
   /*Function executed when the studen has pressed the send vote button
@@ -330,7 +330,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
 
   var _OnQuizVotingReceivedError = function(error){
     var received = JSON.stringify(error)
-    console.log("_OnQuizVotingReceivedError, and value received is:  " + received);
+    V.Debugging.log("_OnQuizVotingReceivedError, and value received is:  " + received);
   };
 
   var _onQuizSessionResultsReceived = function(data) {
@@ -355,7 +355,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
 
   var _onQuizSessionResultsReceivedError = function(error) {
     var received = JSON.stringify(error)
-    console.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
+    V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
 
 
 
@@ -397,7 +397,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
 
   var _onQuizSessionCloseReceivedError = function(error){
     var received = JSON.stringify(error)
-    console.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
+    V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
   };
 
   var _statisticsMcQuizButtonClicked = function () {

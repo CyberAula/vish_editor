@@ -19,10 +19,8 @@ VISH.Slides.Events = (function(V,$,undefined){
       		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
       		$(document).on('click', '#mobile_back_arrow', function(){
-      			console.log("entra back");
       			V.Slides.backwardOneSlide();});
       		$(document).on('click', '#mobile_forward_arrow', function(){
-      			console.log("entra back");
       			V.Slides.forwardOneSlide();});		
 	    	addedEventListeners = true;
 		} 

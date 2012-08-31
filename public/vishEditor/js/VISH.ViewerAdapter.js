@@ -112,31 +112,27 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 */
 	var decideIfPageSwitcher = function(){
 		if(!page_is_fullscreen && !V.Status.ua.mobile){
-			if(V.curSlide===0){
+			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#page-switcher-start").hide();				
-			}
-			else{
+			} else {
 				$("#page-switcher-start").show();
 			}
 			
-			if(V.curSlide === V.slideEls.length-1){
+			if(VISH.Slides.isCurrentLastSlide()){
 				$("#page-switcher-end").hide();	
-			}
-			else{
+			} else {
 				$("#page-switcher-end").show();
 			}
 		} else {
-			if(V.curSlide===0){
+			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#mobile_back_arrow").hide();
-			}
-			else{
+			} else {
 				$("#mobile_back_arrow").show();
 			}
 			
-			if(V.curSlide === V.slideEls.length-1){
+			if(VISH.Slides.isCurrentLastSlide()){
 				$("#mobile_forward_arrow").hide();		
-			}
-			else{
+			} else {
 				$("#mobile_forward_arrow").show();
 			}
 		}
