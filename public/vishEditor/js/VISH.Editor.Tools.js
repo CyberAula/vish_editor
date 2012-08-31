@@ -234,11 +234,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 	var direction = $(object).attr("direction");
 	 	switch(direction){
 	 		case "right":
-	 			VISH.Debugging.log("moveSlide to right");
 	 			_moveSlideTo("after",$("article.next"));
 	 			break;
 	 		case "left":
-	 			VISH.Debugging.log("moveSlide to left");
 	 			_moveSlideTo("before",$("article.past"));
 	 			break;
 	 		default:
@@ -262,8 +260,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 	if(reference_slide.tagName!="ARTICLE"){
 	 		return;
 	 	}
-
-	 	var slide_number = VISH.Slides.getCurrentSlideNumber();
 
 	 	var article_to_move = $("article.current")[0];
 	 	var article_reference = reference_slide;
