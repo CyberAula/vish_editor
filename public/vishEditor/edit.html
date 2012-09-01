@@ -47,6 +47,8 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.API.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.User.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
@@ -92,6 +94,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Renderer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
 
 	<script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
@@ -146,11 +149,27 @@
 		</div>
 		
 		
-		<!-- Generic toolbars -->
-		<div class="toolbar_wrapper" style="display:none">
-			<div class="toolbar_panel">
-				<img class="toolbar_icon toolbar_web toolbar_snapshot" action="zoomMore" src="/vishEditor/images/toolbar/zoomMore.png"></img>
-				<img class="toolbar_icon toolbar_web toolbar_snapshot" action="zoomLess" src="/vishEditor/images/toolbar/zoomLess.png"></img>
+		<!-- Toolbar -->
+		<div id="toolbar_wrapper">
+			<div id="toolbar_presentation">
+				<img class="toolbar_icon" action="switchMode" mode="presentation" 
+				src="/vishEditor/images/toolbar/presentation_active.png"></img>
+				<img class="toolbar_icon" action="switchMode" mode="flashcard" 
+				src="/vishEditor/images/toolbar/flashcard_unactive.png"></img>
+				<img class="toolbar_icon" action="switchMode" mode="game" 
+				src="/vishEditor/images/toolbar/game_unactive.png"></img>
+			</div>
+			<div id="toolbar_slide">
+				<img class="toolbar_icon" style="display:none" action="moveSlide" direction="left" 
+				src="/vishEditor/images/toolbar/slide_to_left.png"></img>
+				<img class="toolbar_icon" style="display:none" action="moveSlide" direction="right"
+				src="/vishEditor/images/toolbar/slides_to_right.png"></img>
+			</div>
+			<div id="toolbar_element">
+				<img class="toolbar_icon toolbar_web toolbar_snapshot"  style="display:none" action="zoomMore" 
+				src="/vishEditor/images/toolbar/zoomMore.png"></img>
+				<img class="toolbar_icon toolbar_web toolbar_snapshot" style="display:none" action="zoomLess" 
+				src="/vishEditor/images/toolbar/zoomLess.png"></img>
 			</div>
 		</div>
 		
@@ -193,12 +212,7 @@
       
       
 	  <div style='display:none'>
-	    
-	     
-	  
-	 
-	  
-	  
+
 	    <div id='thumbcontent'>
 	    	 <div class='fancy_tabs' id='thumcontent_tabs'>
 	  	<ul>

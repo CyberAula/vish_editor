@@ -10,7 +10,6 @@ VISH.StylesheetsPath = "/vishEditor/stylesheets/";
 
 VISH.Editing = false;  //variable to know in the common classes between editor and viewer if we are editing
 
-
 VISH.ViewerEngine = "presentation"; //can be "presentation", "game", "flashcard"
 
 /* global variables to store slide elements and point to current slide*/

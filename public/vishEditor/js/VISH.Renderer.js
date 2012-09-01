@@ -44,15 +44,14 @@ VISH.Renderer = (function(V,$,undefined){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
 			} else if(slide.elements[el].type === "openquestion"){
-				content += _renderQuiz("openquestion",slide.elements[el],slide.template);
+				content += V.Quiz.Renderer.renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				
 				var quiz_id = parseInt(slide.quiz_id);
-				
-				content +=_renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id, slide.quiz_id);
+				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id, slide.quiz_id);
 				classes +="mcquestion";
 			} else if ( slide.elements[el].type === "truefalsequestion") {
-				content +=_renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);
+				content +=V.Quiz.Renderer.renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);
 				classes +="truefalsequestion";
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -156,25 +155,6 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderFlashcard = function(element, template){
 		return "<div id='"+element['id']+"' class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
-	};
-
-	/**
-	 * Function to render a quiz inside an article (a slide)
-	 */
-	var _renderQuiz = function(quizType, element, template, slide, quiz_id){
-		switch(quizType){
-			case "mcquestion":
-				return VISH.Quiz.renderMcQuestion(element, template, slide, quiz_id);
-				break;
-			case "openQuestion":
-				return VISH.Quiz.renderOpenquestion(element, template);
-				break;
-			case "truefalsequestion":
-				return VISH.Quiz.renderTrueFalseQuestion(element, template);
-				break;
-			default:
-				break;
-		}
 	};
 
 	return {

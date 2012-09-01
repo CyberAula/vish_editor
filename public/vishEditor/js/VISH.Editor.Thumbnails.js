@@ -61,11 +61,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     options['callback'] = _onClickCarrouselElement;
     options['rowItems'] = 8;
     options['scrollItems'] = 1;
-		options['styleClass'] = "slides";
-		options['width'] = 900;
-		options['startAtLastElement'] = true;
-		options['pagination'] = false;
-		$("#" + carrouselDivId).show();
+	options['styleClass'] = "slides";
+	options['width'] = 900;
+	options['startAtLastElement'] = true;
+	options['pagination'] = false;
+	$("#" + carrouselDivId).show();
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
@@ -90,6 +90,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
   var selectThumbnail = function(no){
 		$(".image_barbutton").removeClass("selectedSlideThumbnail");
 		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
+		VISH.Editor.Tools.loadSlidesToolbar();
   };
     	
   

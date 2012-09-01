@@ -2,17 +2,28 @@
 <html>
     <head>
 	
-    <title>Vish Viewer</title>
-	
     <style>  
-       
+       .slides > article:not(.fill)::before {
+         content: '';
+         display: block;
+         width: 100px;
+         height: 100px;
+         position: absolute;
+         left: 0;
+         bottom: 0;
+       }
     </style>
+      <meta name="viewport" content="width=800px, user-scalable=yes">
+  	  <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Vish Viewer</title>
     
     <meta charset="UTF-8">  
     <meta name="viewport" content="user-scalable=yes">
   	<meta name="apple-mobile-web-app-capable" content="yes">
-    <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
 
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	  <script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
@@ -33,8 +44,9 @@
     <script type="text/javascript" src="/vishEditor/js/libs/json2.js"></script>
 
     <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
-    <script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.User.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
@@ -61,6 +73,7 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Slides.Events.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Slides.Mashme.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Renderer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
 
     <script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
@@ -88,16 +101,16 @@
     <button id="mobile_back_arrow" class="vish_arrow" tabindex="2" style="display:none"><</button>
     <button id="mobile_forward_arrow" class="vish_arrow" tabindex="2" style="display:none">></button>
 
-  <script>
 
-    //First function called when page loads
+    <script>
+     //First function called when page loads
     function start(){
       if(window.parent.options){
         VISH.SlideManager.init(window.parent.options, window.parent.presentation);
       } else {
         //Developping
         getOptions();
-        VISH.SlideManager.init(options, VISH.Samples.samples_flashcard);
+        VISH.SlideManager.init(options);
       }
     }
   </script>

@@ -28,7 +28,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
-		VISH.Slides.init();
+		
+		VISH.Debugging.init(options);
 
 		//Check minium requirements
 		if(!VISH.Utils.checkMiniumRequirements()){
@@ -37,33 +38,24 @@ VISH.Editor = (function(V,$,undefined){
 
 		//first set VISH.Editing to true
 		VISH.Editing = true;
-		
+
 		if(options){
 			initOptions = options;
-
-			if(VISH.Debugging){
-				if(options['developping']===true){
-					VISH.Debugging.init(true);
-				} else {
-					VISH.Debugging.init(false);
-				}
-				if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
-					excursion = VISH.Debugging.getExcursionSamples();
-				}
-			}
-
 			if((options["configuration"])&&(VISH.Configuration)){
 				VISH.Configuration.init(options["configuration"]);
 				VISH.Configuration.applyConfiguration();
 			}
-
 		} else {
 			initOptions = {};
-			if(VISH.Debugging){
-				VISH.Debugging.init(false);
-			}
 		}
 		
+		VISH.Slides.init();
+
+		if(VISH.Debugging.isDevelopping()){
+			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
+			 	excursion = VISH.Debugging.getExcursionSamples();
+			}
+		}
 
 		//If we have to edit
 		if(excursion){
@@ -392,7 +384,8 @@ VISH.Editor = (function(V,$,undefined){
 		//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
 	
-		//VISH.Debugging.log("slide es: " + slide );
+		// VISH.Debugging.log("slide es: " + slide );
+		VISH.Debugging.log("onTemplateclicked");
 				
 		V.Editor.Utils.addSlide(slide);
 		
@@ -514,7 +507,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   /**
-   * function called when user clicks on the delete icon of the zone
+   * function called when user delete a slide
    */
 	var _onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent();
@@ -534,10 +527,7 @@ VISH.Editor = (function(V,$,undefined){
 						$("#prompt_answer").val("false");
 						$(".theslider").hide();	
 						article_to_delete.remove();
-						//set curSlide to the preious one if this was the last one
-						if(V.curSlide == V.slideEls.length-1 && V.curSlide != 0){  //if we are in the first slide do not do -1
-							V.curSlide -=1;
-						}					
+						V.Slides.onDeleteSlide();					
 						V.Editor.Utils.redrawSlides();						
 						V.Editor.Thumbnails.redrawThumbnails();			
 					}
@@ -555,7 +545,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
-		VISH.Editor.Tools.loadZoneTools($(this));
+		VISH.Editor.Tools.loadToolsForZone($(this));
 	};
   
 	
@@ -587,7 +577,7 @@ VISH.Editor = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var _onSaveButtonClicked = function(){
-		if(V.slideEls.length === 0){
+		if(VISH.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
 				{
@@ -641,6 +631,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.id = '';	
 		}
 
+		excursion.type = "presentation";
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
 		excursion.avatar = excursionDetails.avatar;
@@ -771,21 +762,16 @@ VISH.Editor = (function(V,$,undefined){
 
 		saved_excursion = excursion;  
 		  
-		//VISH.Debugging.log(JSON.stringify(excursion));    
+		VISH.Debugging.log("Excursion saved:")
+		VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
 	};
 	
 
 	var _afterSaveExcursion = function(excursion){
-
-		console.log("VISH.Debugging.isDevelopping(): " + VISH.Debugging.isDevelopping());
-
-		console.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]);
-
-		VISH.Debugging.log(JSON.stringify(excursion));   
+		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-				console.log("VISH.Configuration.getConfiguration()[mode] : " + VISH.Configuration.getConfiguration()["mode"]);
 
 			var send_type;
 	        if(excursion_to_edit){
@@ -822,23 +808,9 @@ VISH.Editor = (function(V,$,undefined){
 			if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
 				
 				if(VISH.Debugging.getActionSave()=="view"){
-					$('article').remove();
-					$('#menubar').hide();
-					$('#menubar_helpsection').hide();
-					$('#joyride_help_button').hide();
-					$('.theslider').hide();
-					$(".nicEdit-panelContain").hide();
-					$("#menubar-viewer").show();
-
-					//here we must pass params 
-					//options_full = {"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"};
-					VISH.SlideManager.init({"quiz_active": "false", "token": "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}, excursion);
+					VISH.Debugging.initVishViewer();
 				} else if (VISH.Debugging.getActionSave()=="edit") {
-					$('article').remove();
-					var options = {};
-					options["developping"] = true;
-					options["configuration"] = configuration;
-					VISH.Editor.init(options, excursion);  //to edit the excursion
+					VISH.Debugging.initVishEditor();
 				}
 			}
 
@@ -892,19 +864,15 @@ VISH.Editor = (function(V,$,undefined){
 		return element.width()/element.height();
 	}
 	
-
 	/**
 	 * Function to move the slides left one item
-	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
 		V.Slides.backwardOneSlide();
 	};
 	
-
 	/**
 	 * Function to move the slides right one item
-	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
 		V.Slides.forwardOneSlide();
@@ -943,6 +911,10 @@ VISH.Editor = (function(V,$,undefined){
 		params['current_el'] = area;
 	}
 
+	var getExcursion = function() {
+		return excursion_to_edit;
+	}
+
 	var getSavedExcursion = function() {
 		if(saved_excursion){
 			return saved_excursion;
@@ -950,7 +922,6 @@ VISH.Editor = (function(V,$,undefined){
 			return null;
 		}
 	}
-	
 	
 	/*
 	 * Load the initial fancybox
@@ -978,6 +949,7 @@ VISH.Editor = (function(V,$,undefined){
 		getParams 			: getParams,
 		getOptions 			: getOptions, 
 		loadFancyBox 		: loadFancyBox,
+		getExcursion 		: getExcursion,
 		getSavedExcursion 	: getSavedExcursion,
 		saveExcursion 		: saveExcursion
 	};

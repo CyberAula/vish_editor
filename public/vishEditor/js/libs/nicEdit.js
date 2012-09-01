@@ -666,7 +666,9 @@ var nicEditorPanel = bkClass.extend({
 		
 		this.panelContain = new bkElement('DIV')./*setStyle({overflow : 'hidden', width : '100%', border : '1px solid #cccccc', backgroundColor : '#efefef'}).*/addClass('panelContain');
 		this.panelElm = new bkElement('DIV')./*setStyle({margin : '2px', marginTop : '0px', zoom : 1, overflow : 'hidden'}).*/addClass('panel').appendTo(this.panelContain);
-		this.panelContain.appendTo(e);
+		// this.panelContain.appendTo(e);
+		// Fix to integrate WYSIWYG in toolbar
+		this.panelContain.appendTo($("#toolbar_element")[0]);
 
 		var opt = this.ne.options;
 		var buttons = opt.buttons;
@@ -674,7 +676,9 @@ var nicEditorPanel = bkClass.extend({
 				this.addButton(button,opt,true);
 		}
 		this.reorder();
-		e.noSelect();
+		if(typeof e.noSelect != "undefined"){
+			e.noSelect();
+		}	
 	},
 	
 	addButton : function(buttonName,options,noOrder) {
