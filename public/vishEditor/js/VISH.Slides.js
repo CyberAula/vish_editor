@@ -210,7 +210,7 @@ VISH.Slides = (function(V,$,undefined){
 	  if (slideNo) {
 	    curSlide = slideNo - 1;
 	  } else {
-	    curSlide = -1;
+	    curSlide = 0;
 	  }
 	};
 
@@ -313,8 +313,8 @@ VISH.Slides = (function(V,$,undefined){
 	 * function to show one specific slide in the flashcard
 	 */
 	var showSlide = function(slide_id){
-		if(V.slideEls.length >= slide_id-1){
-			$(V.slideEls[slide_id-1]).show();
+		if(slideEls.length >= slide_id-1){
+			$(slideEls[slide_id-1]).show();
 			triggerEnterEvent(slide_id-1);
 		}
 	};
@@ -323,8 +323,8 @@ VISH.Slides = (function(V,$,undefined){
 	 * function to close one specific slide in the flashcard
 	 */
 	var closeSlide = function(slide_id){
-		if(V.slideEls.length >= slide_id-1){
-			$(V.slideEls[slide_id-1]).hide();
+		if(slideEls.length >= slide_id-1){
+			$(slideEls[slide_id-1]).hide();
 			triggerLeaveEvent(slide_id-1);
 		}
 	};
