@@ -521,7 +521,7 @@ VISH.Samples = (function(V,undefined){
 	 		"author":"",
 	 		"slides":[
 	 			{
-	 				"id":"articlearticle1",
+	 				"id":"article1",
 	 				"type":"quiz",
 	 				"template":"t11",
 	 				"elements":[
@@ -548,6 +548,7 @@ VISH.Samples = (function(V,undefined){
 			
 			  { 
 			  	"id":"article1",
+			  	"quiz_id":"1112",
 			  "template":"t11"
 			  ,"elements":[
 			  		{
@@ -694,7 +695,8 @@ VISH.Samples = (function(V,undefined){
 		samples   	  		: samples,
 		samples_flashcard 	: samples_flashcard,
 		samples_game  		: samples_game,
-		quizes_samples 		: quizes_samples
+		quizes_samples 		: quizes_samples,
+		quizes_samples_2 	: quizes_samples_2
 	};
 
 })(VISH);

@@ -23,15 +23,14 @@ VISH.Quiz = (function(V,$,undefined){
       } 
       //...
 
-    } else if(excursion.type=="standard") {
-      //Add events to start quiz
-      _loadEvents();
-
+    } else if(excursion.type=="presentation") {
       //Quiz to view
       if(VISH.User.isLogged()){
         //Case: Teacher
         //Show start quiz button
-        //Code here...
+        $(".mcquestion_start_button").show();
+        //Add events to start quiz
+        _loadEvents();
       } else {
         //Case: Student
         //Hide start quiz button
