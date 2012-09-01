@@ -1521,4 +1521,8 @@ iframe.snapshot_content{
 	left: 50%;
 	top: 50%;
 	position: absolute;
+	background-image: url(/vishEditor/images/flashcard_initial_background.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center center;
 }

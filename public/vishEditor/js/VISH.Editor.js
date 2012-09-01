@@ -3,6 +3,8 @@ VISH.Editor = (function(V,$,undefined){
 	var initOptions;
 	var domId = 0;  //number for next doom element id
 
+	//var to store the excursion type, by default it will be "presentation", but it can be changed to "flashcard" or "game"
+	var excursionType = "presentation";
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
 	var excursion_to_edit = null;
@@ -60,6 +62,7 @@ VISH.Editor = (function(V,$,undefined){
 		//If we have to edit
 		if(excursion){
 			excursion_to_edit = excursion;
+			setExcursionType(excursion.type);
 			excursionDetails.title = excursion.title;
 			excursionDetails.description = excursion.description;
 			excursionDetails.avatar = excursion.avatar;
@@ -631,7 +634,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.id = '';	
 		}
 
-		excursion.type = "presentation";
+		excursion.type = getExcursionType();
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
 		excursion.avatar = excursionDetails.avatar;
@@ -939,6 +942,21 @@ VISH.Editor = (function(V,$,undefined){
 		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
 	}
 
+	/*
+	 * type can be "presentation", "flashcard" or "game"
+	 */
+	var getExcursionType = function(){
+		return excursionType;
+	};
+
+	var setExcursionType = function(type){
+		if(type){
+			excursionType = type;
+		}
+		else{
+			excursionType = "presentation";
+		}
+	};
 
 	return {
 		init 				: init,
@@ -946,12 +964,14 @@ VISH.Editor = (function(V,$,undefined){
 		getId 				: getId,
 		getTemplate 		: getTemplate,
 		getCurrentArea 		: getCurrentArea,
+		getExcursionType	: getExcursionType,
 		getParams 			: getParams,
 		getOptions 			: getOptions, 
 		loadFancyBox 		: loadFancyBox,
 		getExcursion 		: getExcursion,
 		getSavedExcursion 	: getSavedExcursion,
-		saveExcursion 		: saveExcursion
+		saveExcursion 		: saveExcursion,
+		setExcursionType	: setExcursionType
 	};
 
 }) (VISH, jQuery);

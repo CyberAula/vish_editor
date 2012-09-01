@@ -283,6 +283,25 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		VISH.Slides.goToSlide(slide_position);
 	 }
 	
+	 /*
+	  * flashcard actions
+	  */
+
+	  var changeBackground = function(){
+	  	console.log("hola");
+	  	$.fancybox($("#picture_fancybox").html(),
+	  	    {
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				V.Editor.Utils.loadTab('tab_pic_from_url');
+			}
+		});
+	  }
+
    /*
 	* Element actions
 	*/
@@ -329,6 +348,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
   
 	return {
 		init							: init,
+		changeBackground				: changeBackground,
 		loadPresentationToolbar			: loadPresentationToolbar,
 		loadSlidesToolbar				: loadSlidesToolbar,
 		loadToolsForZone				: loadToolsForZone,

@@ -119,8 +119,7 @@
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
     
-    <div id="flashcard-background"></div>
-    <a id="flashcard_button" href="#picture_fancybox" style="display:none"><img src="/vishEditor/images/flashcard_button.jpg"/></a>
+    <div id="flashcard-background" style="display:none"></div>
     
     <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
 		<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/helptutorial_circle.png"/></div>
@@ -154,17 +153,18 @@
 			<div id="toolbar_presentation">
 				<img class="toolbar_icon" action="switchMode" mode="presentation" 
 				src="/vishEditor/images/toolbar/presentation_active.png"></img>
-				<img class="toolbar_icon" action="switchMode" mode="flashcard" 
-				src="/vishEditor/images/toolbar/flashcard_unactive.png"></img>
+				<a id="flashcard_button"><img class="toolbar_icon" action="switchMode" mode="flashcard" 
+				src="/vishEditor/images/toolbar/flashcard_unactive.png"></img></a>
 				<img class="toolbar_icon" action="switchMode" mode="game" 
 				src="/vishEditor/images/toolbar/game_unactive.png"></img>
+				<img class="toolbar_icon" action="changeBackground" src="/vishEditor/images/toolbar/change_background.png"></img>
 			</div>
 			<div id="toolbar_slide">
 				<img class="toolbar_icon" style="display:none" action="moveSlide" direction="left" 
 				src="/vishEditor/images/toolbar/slide_to_left.png"></img>
 				<img class="toolbar_icon" style="display:none" action="moveSlide" direction="right"
 				src="/vishEditor/images/toolbar/slides_to_right.png"></img>
-			</div>
+			</div>			
 			<div id="toolbar_element">
 				<img class="toolbar_icon toolbar_web toolbar_snapshot"  style="display:none" action="zoomMore" 
 				src="/vishEditor/images/toolbar/zoomMore.png"></img>

@@ -8,6 +8,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(document).trigger('OURDOMContentLoaded');
   };
     
+
+    var hideSlides = function(){
+    	$(".slides > article").hide();
+    };
+
 	/*
 	 * function to draw elements in an area, try to fit in the drawable area 
 	 * 
@@ -283,6 +288,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		getWidthFromStyle   : getWidthFromStyle,
 		getHeightFromStyle  : getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
+		hideSlides			: hideSlides,
 		setStyleInPixels  : setStyleInPixels,		
 		addZoomToStyle  : addZoomToStyle,		
 		addSlide		    : addSlide,

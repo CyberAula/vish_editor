@@ -58,7 +58,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		 
     var options = new Array();
     options['rows'] = 1;
-    options['callback'] = _onClickCarrouselElement;
+    if(V.Editor.getExcursionType() === "flashcard"){
+    	options['callback'] = _onClickCarrouselElementInFlashcard;
+    }
+    else{
+    	options['callback'] = _onClickCarrouselElement;
+    }
     options['rowItems'] = 8;
     options['scrollItems'] = 1;
 	options['styleClass'] = "slides";
@@ -82,7 +87,21 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			  break;
 		}
 	}
+
+	var _onClickCarrouselElementInFlashcard = function(event){
+		switch($(event.target).attr("action")){
+			case "plus":
+				V.Debugging.log("Show message warning that we are changing to presentation and change");
+			  break;
+			case "goToSlide":
+			  V.Debugging.log("Preview slide: " + $(event.target).attr("slideNumber"));
+			  break;
+			default:
+			  break;
+		}
+	}
 	
+
 	
   /**
    * function to select the thumbnail
