@@ -294,7 +294,7 @@ img.carrousel_element_single_row_slides{
   height: 52px;
   max-width: 150px;
   max-height: 150px;
-  margin-left: -140px;
+  /*margin-left: -140px;*/
   margin-top: 0px;
   background: none;
   border-radius: 6px;
@@ -332,7 +332,7 @@ p.carrousel_element_single_row_slides{
     border-radius: 10px 0 5px 0;
     font-family: Helvetica;
     font-size: 15px;
-    margin: 31px 0 0 -101px;
+    margin: 31px 0 0 41px;
     max-height: 20px;
     overflow: hidden;
     position: absolute;

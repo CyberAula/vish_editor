@@ -141,10 +141,10 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}	
 			
 		if(pagination){
-			_forceShowPagination(containerId)
+			_forceShowPagination(containerId);
 		}	
 		
-		return "Done"
+		return "Done";
   }
 
 	
