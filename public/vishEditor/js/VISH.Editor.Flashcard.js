@@ -22,7 +22,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//show change background button
 
 		//show draggable items to create the flashcard
-
+		//THIS ACTION WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
+		//var también si se pudiese hacer appendTo al background y así poder calcular facil la posición final
+		$("#poi1").draggable();
+		$(".image_carousel").css("overflow", "auto");
 
 		
 		

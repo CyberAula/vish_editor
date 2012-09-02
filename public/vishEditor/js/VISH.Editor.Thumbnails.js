@@ -19,9 +19,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		var carrouselElements = 0;
 		$('article').each(function(index,s){
           var template = $(s).attr('template');
-					carrouselElements += 1;
-					carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
-					carrouselImagesTitles.push(carrouselElements)
+		  carrouselElements += 1;
+		  carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
+		  carrouselImagesTitles.push(carrouselElements);
     });
 		
 		//Add plus button

@@ -1527,3 +1527,9 @@ iframe.snapshot_content{
 	background-position:center center;
 	background-size: 100%;
 }
+
+.carrousel_element_single_row_slides img.fc_draggable_arrow{
+	margin-top: -20px;
+	width: 30px;
+	height: 30px;
+}
