@@ -289,8 +289,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	  var changeBackground = function(){
 	  	console.log("hola");
-	  	$.fancybox($("#picture_fancybox").html(),
-	  	    {
+	  	
+	  	$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
 			'autoDimensions' : false,
 			'width': 800,
 			'scrolling': 'no',
@@ -300,6 +300,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				V.Editor.Utils.loadTab('tab_pic_from_url');
 			}
 		});
+
+		  $("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger('click');
+
+
+		  
 	  }
 
    /*

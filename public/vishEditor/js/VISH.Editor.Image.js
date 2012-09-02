@@ -159,7 +159,20 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing excursion
 	*/
 	var drawImage = function(image_url, area, style){    
+		if(V.Editor.getExcursionType() === "flashcard"){
+			_drawImageAsFlashcardBackground(image_url);
+		}
+		else{
+			_drawImageInArea(image_url, area, style);
+		}
+	};
 
+	var _drawImageAsFlashcardBackground = function(image_url){
+		$("#flashcard-background").css("background-image", "url("+image_url+")");
+
+	};
+
+	var _drawImageInArea = function(image_url, area, style){
 		var current_area;
 		var reference_width = 100; //Minimum image width
 		var image_width = 300; //default image width

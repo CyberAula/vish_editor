@@ -488,7 +488,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				//Draw object from source
 				switch (objectInfo.type) {
 					case "image":
-						V.Editor.Image.drawImage(object)
+						V.Editor.Image.drawImage(object);
 						break;
 
 					case "swf":

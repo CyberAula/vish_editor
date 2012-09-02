@@ -31,8 +31,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
     $("#" + carrouselDivId).hide();
 
-		var template = VISH.Editor.getParams()['current_el'].parent().attr('template');
-	  var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
+		var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
 		
 		var carrouselImages = [];
      
