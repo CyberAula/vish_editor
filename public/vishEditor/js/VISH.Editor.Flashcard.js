@@ -22,13 +22,14 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//show change background button
 
 		//show draggable items to create the flashcard
-		//THIS ACTION WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
+		//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
 		//var también si se pudiese hacer appendTo al background y así poder calcular facil la posición final
 		$("#poi1").draggable();
-		$(".image_carousel").css("overflow", "auto");
-
+		$(".image_carousel").css("overflow", "visible");
+		$("#menubar").css("z-index", "2000");
 		
-		
+		//cuando se salva en el vish.editor.js puedo recorrer todos los poiX y ver su offset(), que da la posicion en el iframe
+		//con eso calculo su posición final en el background
 	};
 
 	return {
