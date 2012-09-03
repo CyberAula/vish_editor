@@ -19,7 +19,11 @@ VISH.Quiz = (function(V,$,undefined){
     if (excursion.type=="quiz_simple") {
       //Quiz to respond
       if(options['quiz_active_session_id']) {
-        quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
+          V.Debugging.log("Quiz_active_session_id  detected");
+          quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
+
+           _activateStudentInteraction();
+
       } 
       //...
 
@@ -148,10 +152,11 @@ VISH.Quiz = (function(V,$,undefined){
   /*
    *Function activate interactive elements in the Quiz for a student who is going
    * to participate in a polling process 
-   * 
-   * */   
+   *  */   
   var _activateStudentInteraction = function () {
-    var sendVoteButton = '#mcquestion_send_vote_button_'+slideToVote;
+ //   var sendVoteButton = '#mcquestion_send_vote_button_'+slideToVote;
+    var sendVoteButton = '.mcquestion_send_vote_button';
+   
 
     //add listener to send button _onSendVoteMcQuizButtonClicked
     $(document).on('click', sendVoteButton, _onSendVoteMcQuizButtonClicked);
@@ -321,9 +326,7 @@ VISH.Quiz = (function(V,$,undefined){
     
 
   var _onQuizVotingSuccessReceived = function(data){
-    var received = JSON.stringify(data);
-    V.Debugging.log("_onQuizVotingSuccessReceived and data received is: " + received);
-  //call another API function that must make a  GET /quiz_sessions/X/results 
+   //call another API function that must make a  GET /quiz_sessions/X/results 
 var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
 V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
 
@@ -331,7 +334,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   };
 
   var _OnQuizVotingReceivedError = function(error){
-    var received = JSON.stringify(error)
+    var received = JSON.stringify(error);
     V.Debugging.log("_OnQuizVotingReceivedError, and value received is:  " + received);
   };
 
