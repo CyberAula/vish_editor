@@ -5,6 +5,7 @@ VISH.Quiz = (function(V,$,undefined){
   var slideToVote;
   var user;
   var userStatus; 
+  var quizIdToStartSession;
   var quizUrlForSession =" http://"+window.location.host.toString() +"/quiz_sessions/";
   var startButton = "mcquestion_start_button";
   var stopButton = "mcquestion_stop_button";
@@ -17,9 +18,10 @@ VISH.Quiz = (function(V,$,undefined){
     var options = VISH.SlideManager.getOptions();
     
     if (excursion.type=="quiz_simple") {
+
       //Quiz to respond
       if(options['quiz_active_session_id']) {
-          V.Debugging.log("Quiz_active_session_id  detected");
+
           quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
 
            _activateStudentInteraction();
@@ -28,7 +30,7 @@ VISH.Quiz = (function(V,$,undefined){
       //...
 
     } else if(excursion.type=="presentation") {
-
+        slideToActivate = excursion.slide.quiz_id;
       //add events 
 
       //Quiz to view
@@ -52,6 +54,8 @@ VISH.Quiz = (function(V,$,undefined){
   var _loadEvents = function(){      
     $(document).on('click', ".mcquestion_start_button", _startMcQuizButtonClicked);
     $(document).on('click', ".mch_statistics_icon", _statisticsMcQuizButtonClicked);
+    $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
+    $(document).on('click', ".mcquestion_save_yes_button", _saveQuizNoButtonClicked);
   }
 
 
@@ -144,8 +148,7 @@ VISH.Quiz = (function(V,$,undefined){
     var saveQuizNoButton = '#mcquestion_save_no_button_'+slideToActivate;       
     $(document).on('click', startButton, _startMcQuizButtonClicked);
     $(document).on('click', statisticsButton, _statisticsMcQuizButtonClicked);
-    $(document).on('click', saveQuizYesButton, _saveQuizYesButtonClicked);
-    $(document).on('click', saveQuizNoButton, _saveQuizNoButtonClicked);
+
   };
     
     
@@ -264,7 +267,7 @@ VISH.Quiz = (function(V,$,undefined){
 
     //appear share buttons when mouse over share button
     $(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
-    event.preventDefault();
+    event.preventDefault();setQuizToActivate
       $(".current").find(".shareContentIcons").css("display", "inline-block");
       //$(".current").find(".a_share_content_icon").slideDown();
     });
@@ -280,7 +283,8 @@ VISH.Quiz = (function(V,$,undefined){
       $(".current").find(".shareContentIcons").css("display", "none");
     });
 
-    $(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
+   // $(document).on('click', '#mcquestion_stop_button_'+slideToPlay, _onStopMcQuizButtonClicked);
+    $(document).on('click', '.mcquestion_stop_button', _onStopMcQuizButtonClicked);
 
     //hide save quiz div if it has been shown before
     if($(".current").find(".save_quiz").css("display")=="inline-block"){
@@ -321,7 +325,7 @@ VISH.Quiz = (function(V,$,undefined){
 
       //jQuery.getJSON(vote_url,function (data) {
       //var for testing receive values for a pull 
-    }
+    }setQuizToActivate
   };
     
 
@@ -409,7 +413,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     var marginTopDefault = 18; 
     var marginTopDefault2 = 24; 
 
-    //find the number of slide 
+    //find the number of slide setQuizToActivate
 
     //if it is shown --> hide and move the button up  
     if( $(".current").find(".mc_meter").css('display')=="block") {
@@ -567,11 +571,25 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     return quizStatus;
   };
 
+
+var  setQuizToActivate  = function (quizIdToStart)  {
+
+quizIdToStartSession = quizIdToStart;
+
+};
+
+var getQuizIdToStartSession = function(){
+
+return quizIdToStartSession;
+
+};  
   return {
     getQuizStatus       : getQuizStatus,
     init:                             init,
     enableInteraction:                enableInteraction,
-    enableTrueFalseInteraction:       enableTrueFalseInteraction
+    enableTrueFalseInteraction:       enableTrueFalseInteraction, 
+    setQuizToActivate     : setQuizToActivate, 
+    getQuizIdToStartSession:  getQuizIdToStartSession
   };
     
 }) (VISH, jQuery);

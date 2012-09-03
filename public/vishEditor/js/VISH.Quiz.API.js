@@ -173,18 +173,16 @@ VISH.Quiz.API = (function(V,$,undefined){
 		V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_session_id);
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			console.log("Vish case");
+			V.Debugging.log("Vish case");
 
 			//GET
 			var send_type = 'GET';
 	       
-	        // "authenticity_token" : V.User.getToken()
-
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
-	        "id": quiz_active_session_id
-	         
+	        "id": quiz_active_session_id, 
+	        "authenticity_token" : V.User.getToken()  
 	        }
 
 	        $.ajax({
@@ -194,7 +192,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          success : function(data) {
 
 	              //if we redirect the parent frame
-		          console.log("data: "+ data);	
+		          //console.log("data: "+ data);	
 	              	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);

@@ -523,6 +523,7 @@ VISH.Samples = (function(V,undefined){
 	 			{
 	 				"id":"article1",
 	 				"type":"quiz",
+	 				"quiz_id":"1112",
 	 				"template":"t11",
 	 				"elements":[
 	 					{
@@ -549,8 +550,8 @@ VISH.Samples = (function(V,undefined){
 			  { 
 			  	"id":"article1",
 			  	"quiz_id":"1112",
-			  "template":"t11"
-			  ,"elements":[
+			  "template":"t11",
+			  "elements":[
 			  		{
 			  			"id":"zone1"
 			  		,"areaid":"header"
@@ -566,7 +567,10 @@ VISH.Samples = (function(V,undefined){
 			  			
 			  		}
 		         ]
-		      }
+		         
+		      } 
+		    ] 
+		};
 
 
 		     
@@ -687,10 +691,10 @@ VISH.Samples = (function(V,undefined){
 		      			} 
 		    		]
 		    }
-		      */
+		      
 		    ]
 		       
-    };
+    };*/
 
 	return {
 		full_samples  		: full_samples,
