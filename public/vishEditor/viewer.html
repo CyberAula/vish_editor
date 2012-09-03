@@ -13,7 +13,7 @@
          bottom: 0;
        }
     </style>
-      <meta name="viewport" content="width=800px, user-scalable=yes">
+      <meta name="viewport" content="width=800, user-scalable=yes">
   	  <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -105,7 +105,13 @@
     <script>
      //First function called when page loads
     function start(){
-      if(window.parent.options){ 
+      if(window.parent.presentation_preview){
+        //called to show a preview
+        getOptions();
+        VISH.SlideManager.init(options, window.parent.presentation_preview);
+      }
+      else if(window.parent.options){
+        //called to show a presentation VISH VIEWER
         VISH.SlideManager.init(window.parent.options, window.parent.presentation);
       } else {
         //Developping
