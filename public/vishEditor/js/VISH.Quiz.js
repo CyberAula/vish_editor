@@ -13,7 +13,7 @@ VISH.Quiz = (function(V,$,undefined){
 
   var init = function(excursion){
     V.Debugging.log("Vish Quiz init");
-      
+       
     var options = VISH.SlideManager.getOptions();
     
     if (excursion.type=="quiz_simple") {
@@ -24,6 +24,9 @@ VISH.Quiz = (function(V,$,undefined){
       //...
 
     } else if(excursion.type=="presentation") {
+
+      //add events 
+
       //Quiz to view
       if(VISH.User.isLogged()){
         //Case: Teacher
@@ -38,7 +41,7 @@ VISH.Quiz = (function(V,$,undefined){
       }
     }
 
-    VISH.Quiz.Renderer.init();
+    VISH.Quiz.Renderer.init(quizStatus);
     VISH.Quiz.API.init();
   }
 
@@ -557,7 +560,12 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   };
 
 
+  var getQuizStatus = function(){
+    return quizStatus;
+  };
+
   return {
+    getQuizStatus       : getQuizStatus,
     init:                             init,
     enableInteraction:                enableInteraction,
     enableTrueFalseInteraction:       enableTrueFalseInteraction

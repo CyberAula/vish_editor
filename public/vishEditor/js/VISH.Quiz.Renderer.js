@@ -1,6 +1,11 @@
 VISH.Quiz.Renderer = (function(V,$,undefined){
 
-  var init = function(){
+  var quiz_id;
+
+  var init = function(quizStatus){
+    if(quizStatus && quizStatus.quiz_active_session_id){
+      quiz_id = quizStatus.quiz_active_session_id;
+    }
   }
 
   ////////////////////
@@ -10,10 +15,10 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /**
    * Function to render a quiz inside an article (a slide)
    */
-  var renderQuiz = function(quizType, element, template, slide, quiz_id){
+  var renderQuiz = function(quizType, element, template, slide){
     switch(quizType){
       case "mcquestion":
-        return _renderMcQuestion(element, template, slide, quiz_id);
+        return _renderMcQuestion(element, template, slide);
         break;
       case "openQuestion":
         return _renderOpenquestion(element, template);
@@ -27,16 +32,20 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
 
-  var _renderMcQuestion = function(element, template, slide, quiz_id){ 
+  var _renderMcQuestion = function(element, template, slide){ 
       var user = V.User.getUser();
       var logged = V.User.isLogged();
      
       var obj;
-
-      if(logged){
-        obj = _renderMcquestionLogged(element, template, slide, quiz_id); 
-      } else {
-        obj =  _renderMcquestionNone(element, template, slide);
+      if(quiz_id){
+        obj = _renderMcquestionToAnswer(element, template, slide); 
+      }
+      else{
+        if(logged){
+          obj = _renderMcquestionLogged(element, template, slide); 
+        } else {
+          obj =  _renderMcquestionNone(element, template, slide);
+        }
       }
 
       return obj;
@@ -122,7 +131,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     ret += "</div>";
     ret += "<div class='mcquestion_right'>";
     ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ quizStatus.quiz_active_session_id +"'/>";
+    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ V.Quiz.getQuizStatus().quiz_active_session_id +"'/>";
     ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
     ret += "</div>";
     ret += "</form>";
