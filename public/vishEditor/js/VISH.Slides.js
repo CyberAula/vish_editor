@@ -2,7 +2,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Variables to store slide elements and point to current slide*/
 	var slideEls;
-	var curSlideIndexIndex;
+	var curSlideIndex;
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 	
 	var init = function(){
