@@ -232,55 +232,32 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 	var moveSlide = function(object){
 	 	var direction = $(object).attr("direction");
+	 	var movement = null;
+	 	var article = null;
 	 	switch(direction){
 	 		case "right":
-	 			_moveSlideTo("after",$("article.next"));
+	 			movement = "after";
+	 			article = $("article.next");
+	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0])+2;
 	 			break;
 	 		case "left":
-	 			_moveSlideTo("before",$("article.past"));
+	 			movement = "before";
+	 			article = $("article.past");
+	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0]);
 	 			break;
 	 		default:
-	 			break;
-	 	}
-	 }
-
-	 var _moveSlideTo = function(position, reference_slide){
-
-	 	if(typeof reference_slide === "undefined"){
-	 		return;
-	 	}
-
-	 	if(typeof reference_slide.length !== undefined){
-	 		reference_slide = $(reference_slide)[0];
-	 		if(typeof reference_slide === "undefined"){
 	 			return;
-	 		}
 	 	}
 
-	 	if(reference_slide.tagName!="ARTICLE"){
-	 		return;
-	 	}
-
-	 	var article_to_move = $("article.current")[0];
-	 	var article_reference = reference_slide;
-
-	 	$(article_to_move).remove();
-	 	if(position=="after"){
-	 		$(article_reference).after(article_to_move);
-	 	} else {
-	 		$(article_reference).before(article_to_move);
-	 	}
-	 	
-	 	V.Editor.Utils.redrawSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
-
-		var slide_position = V.Slides.getNumberOfSlide(article_to_move)+1;
-
-	 	setTimeout(function(){
-	 			VISH.Editor.Thumbnails.selectThumbnail(slide_position);
-	 		}, 200);
-
-		VISH.Slides.goToSlide(slide_position);
+	 	if((movement!=null)&&(article!=null)){
+	 		V.Slides.moveSlideTo($("article.current")[0],article,movement);
+			V.Editor.Utils.redrawSlides();
+			V.Editor.Thumbnails.redrawThumbnails();
+			setTimeout(function(){
+					V.Editor.Thumbnails.selectThumbnail(slide_position);
+				}, 200);
+			V.Slides.goToSlide(slide_position);
+		 }
 	 }
 	
 	 /*

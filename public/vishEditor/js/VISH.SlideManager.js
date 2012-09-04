@@ -12,6 +12,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
+		
 		VISH.Debugging.init(options);
 
 		VISH.Editing = false;

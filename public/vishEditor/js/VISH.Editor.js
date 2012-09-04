@@ -241,6 +241,16 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
 		
+		$("#my_preview").fancybox({
+			'width'				: '8',
+			'height'			: '6',
+	        'autoScale'     	: false,
+	        'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe',
+			'onStart'			: VISH.Editor.Preview.prepare
+		});
+
 		//template
 		$(document).on('click','#help_template_image', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
