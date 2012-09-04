@@ -86,7 +86,7 @@ VISH.Utils.loader = (function(V,undefined){
 		}
 		
 		
-    var loadImagesOnCarrouselOrder = function(imagesArray,callback,carrouselDivId,titleArray){
+    var loadImagesOnCarrouselOrder = function(imagesArray,callback, data,carrouselDivId,titleArray){
 			var validImagesArray = imagesArray;
       var imagesLength = imagesArray.length;
       var imagesLoaded = 0;
@@ -96,7 +96,7 @@ VISH.Utils.loader = (function(V,undefined){
           imagesLoaded = imagesLoaded + 1;
           if(imagesLoaded == imagesLength){
 						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
-            callback();
+            callback(data);
           }
         })
         $(image).error(function(response) {
@@ -104,7 +104,7 @@ VISH.Utils.loader = (function(V,undefined){
 					validImagesArray.splice(validImagesArray.indexOf(image),1)
           if(imagesLoaded == imagesLength){
 						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
-            callback();
+            callback(data);
           }
         })
       });

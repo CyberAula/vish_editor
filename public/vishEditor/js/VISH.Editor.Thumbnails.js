@@ -6,7 +6,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var init = function(){ }
 	 
 	 
-	var redrawThumbnails = function(){
+	var redrawThumbnails = function(afterCreateCarruselFunction){
 
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
@@ -23,6 +23,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		  carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
 		  carrouselImagesTitles.push(carrouselElements);
     });
+		
 		//Add plus button
 		carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
 		carrouselElements += 1;
@@ -36,11 +37,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		}
 
-		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles); 	
+		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, afterCreateCarruselFunction, carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 
-	var _onImagesLoaded = function(){	
+	var _onImagesLoaded = function(afterCreateCarruselFunction){	
 		//Add button events
 		$(".add_slide_button").hover(
 			function () {
@@ -54,7 +55,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		//Unselect all thumbnails
 		$(".barbutton").css("background-color", "transparent");
 		 
-<<<<<<< HEAD
     var options = new Array();
     options['rows'] = 1;
     if(V.Editor.getExcursionType() === "flashcard"){
@@ -63,28 +63,20 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     else{
     	options['callback'] = _onClickCarrouselElement;
     }
+    
     options['rowItems'] = 8;
-    options['scrollItems'] = 1;
+	options['scrollItems'] = 1;
 	options['styleClass'] = "slides";
 	options['width'] = 900;
 	options['startAtLastElement'] = true;
 	options['pagination'] = false;
+	options['afterCreateCarruselFunction'] = afterCreateCarruselFunction;
 	$("#" + carrouselDivId).show();
+
     VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-=======
-		var options = new Array();
-		options['rows'] = 1;
-		options['callback'] = _onClickCarrouselElement;
-		options['rowItems'] = 8;
-		options['scrollItems'] = 1;
-		options['styleClass'] = "slides";
-		options['width'] = 900;
-		options['startAtLastElement'] = true;
-		options['pagination'] = false;
-		$("#" + carrouselDivId).show();
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
 
+	if(V.Editor.getExcursionType() === "presentation"){
 		//Add sortable
 		var firstCarrouselNumber;
 		$( "#" + carrouselDivId).sortable({ 
@@ -142,7 +134,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				}
 			}
 		});
->>>>>>> 8c045c212621d51f328eb98a89e11d9e28114969
+	}
+
   }
 	
 	

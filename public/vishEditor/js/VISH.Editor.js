@@ -645,6 +645,12 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		excursion.type = getExcursionType();
+		if(excursion.type==="flashcard"){
+			excursion.background = {};
+			excursion.background.src = $("#flashcard-background").css("background-image");
+			//save the pois
+
+		}
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
 		excursion.avatar = excursionDetails.avatar;
@@ -652,7 +658,7 @@ VISH.Editor = (function(V,$,undefined){
 		excursion.author = '';
 		excursion.slides = [];
 		var slide = {};
-		$('article').each(function(index,s){
+		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = "standard";
 			slide.template = $(s).attr('template');
