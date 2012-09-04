@@ -305,6 +305,7 @@ img.carrousel_element_single_row_slides{
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   opacity: 0.6;
+  cursor: pointer;
 }
 
 img.carrousel_element_single_row_slides:hover{

@@ -113,7 +113,7 @@ VISH.Utils.loader = (function(V,undefined){
 	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
 	 	 $.each(imagesArray, function(i, image) {
 	     if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
-				 	$("#" + carrouselDivId).append("<div><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+				 	$("#" + carrouselDivId).append("<div><p slidenumber='"+titleArray[imagesArray.indexOf(image)]+"' action='goToSlide'>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 	     } else {
 	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
 	     }
