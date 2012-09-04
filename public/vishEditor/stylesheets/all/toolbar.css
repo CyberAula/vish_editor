@@ -21,10 +21,8 @@
 }
 
 #toolbar_menu {
-    padding-right: 30px;
-    padding-left: 15px;
     border-right: 1px solid #ccc;
-    min-width: 125px;
+    min-width: 121px;
 }
 
 #toolbar_presentation {
@@ -43,8 +41,5 @@
 
 .toolbar_icon{
 	height: 22px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  margin-right: 2px;
-  margin-left: 2px;
+    margin: 1px -53px;
 }
