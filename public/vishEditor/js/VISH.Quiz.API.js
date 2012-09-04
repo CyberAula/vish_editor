@@ -64,10 +64,19 @@ VISH.Quiz.API = (function(V,$,undefined){
   * DELETE /quiz_sessions/X => close quiz => show results
 	 * function calls VISH server for closing a voting
 	 */
-	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback){
+	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
 	
-	V.Debugging.log("quiz_session_id to delete is: " + quiz_session_id);
-			//POST 
+		V.Debugging.log("quiz_session_id to delete is: " + quiz_session_id);
+		V.Debugging.log("quiz_name (if save) is: " + quiz_name);
+		var quizName;
+			if(quiz_name) {
+				quizName = quiz_name;
+
+			} else {
+				quizName = false;
+
+			}
+			//DELETE 
 			var send_type = 'DELETE';
 	       
 	        V.Debugging.log("token is: " + V.User.getToken());
@@ -75,7 +84,8 @@ VISH.Quiz.API = (function(V,$,undefined){
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	     	  "id":quiz_session_id,
-	          "authenticity_token" : V.User.getToken()
+	          "authenticity_token" : V.User.getToken(), 
+	          "name" : quizName
 	        }
 
 	        $.ajax({
@@ -85,7 +95,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          success : function(data) {
 
 	              //if we redirect the parent frame
-		            V.Debugging.log("data: "+ data);	
+		            //V.Debugging.log("data: "+ data);	
 	              	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
@@ -192,7 +202,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          success : function(data) {
 
 	              //if we redirect the parent frame
-		          //console.log("data: "+ data);	
+		          console.log("data: "+ data);	
 	              	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
