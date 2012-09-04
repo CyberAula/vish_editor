@@ -2,8 +2,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	
 	/*
 	 * Toolbar is divided in three zones.
+	 * 1) Menu botton (Menu toolbar)
 	 * 1) Presentation toolbar
-	 * 2) Slide toolbar
 	 * 3) Element toolbar
 	 */
 
@@ -23,8 +23,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		});
 
 		loadPresentationToolbar();
-		loadSlidesToolbar();
-	} 
+
+		VISH.Editor.Tools.Menu.init();
+	}
 	 
 
 
@@ -79,9 +80,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		_cleanElementToolbar();
 	}
 
+
+
+    /*
+     * Toolbar
+     */
+
 	var cleanToolbar = function(){
 		_cleanPresentationToolbar();
-		_cleanSlideToolbar();
 		_cleanElementToolbar();
 	}
 
@@ -95,32 +101,39 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 
    /*
+	* Menu Toolbar and Menu itself
+	*/
+	var disableMenu = function(){
+		$("#menuButton").hide();
+	}
+
+	var enableMenu = function(){
+		$("#menuButton").show();
+	}
+
+
+   /*
 	* Presentation Toolbar
 	*/
-
 	var loadPresentationToolbar = function(){
-		//All buttons of presentation toolbar are always visible unless the following cases:
-		// * Presentation that contain inside flascards or games
 
 		var presentation = VISH.Editor.getExcursion();
 
 		if(!presentation){
-			//Case: New presentation
-			$("#toolbar_presentation").find("img").show();
-			//Select presentation as default option
-			//Code here [...]
-			return;
+			//Case: New presentation with type 'presentation'
+			presentation = new Object();
+			presentation.type = "presentation";
 		}
 
 		switch(presentation.type){
 			case "presentation":
-				$("#toolbar_presentation").find("img").show();
+				$("#toolbar_presentation").find("img.toolbar_presentation").show();
 				break;
 			case "flashcard":
-				$("#toolbar_presentation").find("img").show();
+				$("#toolbar_presentation").find("img.toolbar_flashcard").show();
 				break;
 			case "game":
-				$("#toolbar_presentation").find("img").show();
+				$("#toolbar_presentation").find("img.toolbar_game").show();
 				break;
 			case "quiz_simple":
 				//Toolbar has no sense here...
@@ -139,20 +152,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$("#toolbar_presentation").find("img").hide();
 	}
 
-   /*
-	* Slides Toolbar
-	*/
-	var loadSlidesToolbar = function(){
-		if(VISH.Slides.isSlideSelected()){
-			$("#toolbar_slide").find("img").show();
-		} else {
-			_cleanSlideToolbar();
-		}
-	}
-
-	var _cleanSlideToolbar = function(){
-		$("#toolbar_slide").find("img").hide();
-	}
 
    /*
 	* Element Toolbar
@@ -206,60 +205,54 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	
 	
 
+ //   /*
+	// * Slide actions
+	// */
+	// var moveSlide = function(object){
+	//  	var direction = $(object).attr("direction");
+	//  	var movement = null;
+	//  	var article = null;
+	//  	switch(direction){
+	//  		case "right":
+	//  			movement = "after";
+	//  			article = $("article.next");
+	//  			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0])+2;
+	//  			break;
+	//  		case "left":
+	//  			movement = "before";
+	//  			article = $("article.past");
+	//  			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0]);
+	//  			break;
+	//  		default:
+	//  			return;
+	//  	}
+
+	//  	if((movement!=null)&&(article!=null)){
+	//  		V.Slides.moveSlideTo($("article.current")[0],article,movement);
+	// 		V.Editor.Utils.redrawSlides();
+	// 		V.Editor.Thumbnails.redrawThumbnails();
+	// 		setTimeout(function(){
+	// 				V.Editor.Thumbnails.selectThumbnail(slide_position);
+	// 			}, 200);
+	// 		V.Slides.goToSlide(slide_position);
+	// 	 }
+	//  }
+	
+
+
    /*
 	* Presentation actions
-	*/
-	 var switchMode = function(object){
-	 	var mode = $(object).attr("mode");
-	 	switch(mode){
-	 		case "presentation":
-	 			VISH.Debugging.log("Presentation clicked");
-	 			break;
-	 		case "flashcard":
-	 			VISH.Debugging.log("Flashcard clicked");
-	 			break;
-	 		case "game":
-	 			VISH.Debugging.log("Game clicked");
-	 			break;
-	 		default:
-	 			break;
-	 	}
-	 }
+    */
+
+	var selectTheme = function(){
+		V.Debugging.log("selectTheme called");
+	}
+
+	var changeFlashcardBackground = function(){
+		V.Debugging.log("changeFlashcardBackground called");
+	}
 
 
-   /*
-	* Slide actions
-	*/
-	var moveSlide = function(object){
-	 	var direction = $(object).attr("direction");
-	 	var movement = null;
-	 	var article = null;
-	 	switch(direction){
-	 		case "right":
-	 			movement = "after";
-	 			article = $("article.next");
-	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0])+2;
-	 			break;
-	 		case "left":
-	 			movement = "before";
-	 			article = $("article.past");
-	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0]);
-	 			break;
-	 		default:
-	 			return;
-	 	}
-
-	 	if((movement!=null)&&(article!=null)){
-	 		V.Slides.moveSlideTo($("article.current")[0],article,movement);
-			V.Editor.Utils.redrawSlides();
-			V.Editor.Thumbnails.redrawThumbnails();
-			setTimeout(function(){
-					V.Editor.Thumbnails.selectThumbnail(slide_position);
-				}, 200);
-			V.Slides.goToSlide(slide_position);
-		 }
-	 }
-	
    /*
 	* Element actions
 	*/
@@ -307,16 +300,15 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	return {
 		init							: init,
 		loadPresentationToolbar			: loadPresentationToolbar,
-		loadSlidesToolbar				: loadSlidesToolbar,
 		loadToolsForZone				: loadToolsForZone,
 		loadToolbarForObject			: loadToolbarForObject,
 		loadToolbarForElement			: loadToolbarForElement,
 		cleanZoneTools 					: cleanZoneTools,
 		cleanToolbar					: cleanToolbar,
-		switchMode 						: switchMode,
 		enableToolbar					: enableToolbar,
 		disableToolbar					: disableToolbar,
-		moveSlide						: moveSlide,
+		selectTheme						: selectTheme,
+		changeFlashcardBackground		: changeFlashcardBackground,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess
 	};
