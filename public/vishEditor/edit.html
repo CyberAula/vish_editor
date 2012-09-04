@@ -87,6 +87,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tour.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.Menu.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
@@ -163,22 +164,24 @@
 						<a class="menu_option_main" href="#">
 							<img class="toolbar_icon" id="menuButton" src="/vishEditor/images/toolbar/menu_button.png"/>
 						</a>
-						<ul>
+						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option menu_option_save" href="#">Save</a>
+								<a class="menu_option_first menu_option menu_option_save" href="#">Save</a>
 							</li>
 							<li>
-								<a class="menu_option menu_option_save" href="#">Export as</a>
+								<a class="menu_option menu_option_export" href="#">Export as</a>
 								<ul>
-									<li>
-										<a class="menu_option menu_option_save" href="#">File</a>
+										<a class="menu_option menu_option_file" href="#">File</a>
 									</li>
-                                    <li>
-                                     	<a class="menu_option menu_option_save" href="#">PDF</a>
-                                    </li>
-									<li><a href="http://www.webdesignerwall.com">Web Designer Wall</a>
+									<li>
+										<a class="menu_option menu_option_pdf" href="#">PDF</a>
+									</li>
+									<li>
+										<a href="http://www.webdesignerwall.com">Web Designer Wall</a>
 										<ul>
-											<li><a href="http://jobs.webdesignerwall.com">Design Job Wall</a></li>
+											<li>
+												<a href="http://jobs.webdesignerwall.com">Design Job Wall</a>
+											</li>
 										</ul>
 									</li>
 									<li><a href="http://icondock.com">IconDock</a></li>

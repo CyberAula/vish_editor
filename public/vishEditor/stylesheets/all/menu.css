@@ -66,10 +66,10 @@ a {
 	display: none;
 	margin: 0;
 	padding: 0;
-	width: 141px;
+	width: 152px;
 	position: absolute;
 	top: 25px;
-	left: -65px;
+	left: -20px;
 
 	-webkit-border-radius: 0px 0px 10px 10px;
 	-moz-border-radius: 0px 0px 10px 10px;
@@ -78,6 +78,10 @@ a {
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+
+ul.menu_option_main ul {
+	margin-left: 12px !important;
 }
 
 /* dropdown */
@@ -97,8 +101,10 @@ a {
 }
 
 #menu a.menu_option_main{
-	padding: 0px;
-	padding-bottom: 20px;
+	padding-top: 0px;
+	padding-bottom: 50px;
+	padding-right: 50px;
+	padding-left: 50px;
 }
 
 /* level 3+ list */

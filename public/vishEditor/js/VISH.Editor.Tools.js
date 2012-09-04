@@ -23,6 +23,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		});
 
 		loadPresentationToolbar();
+
+		VISH.Editor.Tools.Menu.init();
 	}
 	 
 

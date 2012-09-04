@@ -23,6 +23,7 @@
 #toolbar_menu {
     border-right: 1px solid #ccc;
     min-width: 121px;
+    float: left;
 }
 
 #toolbar_presentation {
