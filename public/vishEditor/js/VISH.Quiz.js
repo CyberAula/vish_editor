@@ -55,7 +55,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".mcquestion_start_button", _startMcQuizButtonClicked);
     $(document).on('click', ".mch_statistics_icon", _statisticsMcQuizButtonClicked);
     $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
-    $(document).on('click', ".mcquestion_save_yes_button", _saveQuizNoButtonClicked);
+    $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
   }
 
 
@@ -262,7 +262,8 @@ VISH.Quiz = (function(V,$,undefined){
     $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
     //add the quiz_session_id to the form? for delete when stop
     $(".current").find("#quiz_id_to_activate").attr("id", "quiz_session_id");
-     $(".current").find("#quiz_session_id").attr("value", quiz_session_id);
+    $(".current").find("#quiz_session_id").attr("value", quiz_session_id);
+    $(".current").find("#quiz_session_id").attr("class", "quiz_session_id");
     //adding listeners for different events
 
     //appear share buttons when mouse over share button
@@ -295,7 +296,7 @@ VISH.Quiz = (function(V,$,undefined){
   var _OnQuizSessionReceivedError = function(error){
      var received = JSON.stringify(error);
     V.Debugging.log("_OnQuizSessionReceivedError:  " + received);
-  }
+  };
 
   /*Function executed when the studen has pressed the send vote button
   * has to send the option choosen to the server and wait for total results till that moment. 
@@ -375,20 +376,31 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   *called for a teacher who wants to stop a voting 
   */
   var _onStopMcQuizButtonClicked = function () {
-    var quiz_id =  $(".current").find("#quiz_session_id").val();
-    V.Debugging.log("Quiz_session id from form : " + quiz_id);
-    V.Quiz.API.deleteQuizSession(quiz_id,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError);
+
+    V.Debugging.log("_onStopMcQuizButtonClicked function called. ");
+
+//first show save results (put a name) div 
+  $(".current").find(".save_quiz").css("display", "inline-block"); 
+//then wait answer (yes or not) depending on that we put name or not 
+
+
+   // this function will be called when the user does not want to save the results
+   // V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError);
   };
     
 
   var _onQuizSessionCloseReceived = function(results){
+
+    V.Debugging.log("_onQuizSessionCloseReceived ");
     slideToStop = $(".current").find("#slide_to_stop").val();
     //TODO just only hide not remove ... but disappear the element so all the remainder elements go up
     //  $("#"+slideToStop).find(".t11_header").css('display', 'block');
     $("#"+slideToStop).find(".t11_header").text("");
     //TODO remove stop button and save quiz into the server(popup) 
+    var quiz_active_session_id = $(".current").find(".quiz_session_id").val();
+    V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _showResultsToTeacher, _onQuizSessionResultsReceivedError);
 
-    $(".current").find(".save_quiz").css("display", "inline-block"); 
+  
 
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
@@ -397,11 +409,23 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
 
     $("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
-    $(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
+    
+    $(document).on('click', '.mcquestion_start_button', _startMcQuizButtonClicked);
+    //$(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
+
     $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("color", "#F76464");
     $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("background-color", "#F8F8F8");
-     
-    // _showResultsToTeacher(results);
+    
+
+  //
+
+    $(".current").find(".mcquestion_start_button").removeAttr('disabled');
+    $(".current").find(".save_quiz").css("display", "none");  
+    $(".current").find(".mcquestion_start_button").css("color", "blue");
+    $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
+
+
+    //_showResultsToTeacher(results);
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
@@ -454,9 +478,19 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
       }
     }
   };
-
+/*
+Must call API's method to destroy the quiz's session
+*/
   var _saveQuizYesButtonClicked = function () { 
     V.Debugging.log("SaveQuizYes Button Clicked");  
+    //quiz to stop
+    var quizSessionActiveId =  $(".current").find("#quiz_session_id").val();
+    V.Debugging.log("Quiz_session id from form : " + quizSessionActiveId);
+    //name's value:
+    var quizNameForSaving = $(".current").find(".save_results_quiz").val();
+    V.Debugging.log("save_results_quiz : " + quizNameForSaving);
+     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizNameForSaving);
+    
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");  
     $(".current").find(".mcquestion_start_button").css("color", "blue");
@@ -466,10 +500,23 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     
   var _saveQuizNoButtonClicked = function () {
     V.Debugging.log("SaveQuizNo Button Clicked"); 
+    //TODO change to class insted of id
+    var quizSessionActiveId =  $(".current").find("#quiz_session_id").val();
+    V.Debugging.log("Quiz_session id from form : " + quizSessionActiveId);
+
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface");
+
+    V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError);
+    //TODO call a function that do this ('cause there are duplicated code)
+    $(".current").find(".mcquestion_start_button").removeAttr('disabled');
+    $(".current").find(".save_quiz").css("display", "none");  
+    $(".current").find(".mcquestion_start_button").css("color", "blue");
+    $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
+
+
   };
     
     
@@ -526,9 +573,12 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   /*
   * Function called when the JSON object is received from the server 
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-  * actions to do:  */
+  * actions to do: show results received by server and  do a bucle for ask more results every X seconds?*/
   var _showResultsToTeacher = function (data) {
-    if(role=="logged") {
+    
+ var received = JSON.stringify(data)
+
+    V.Debugging.log("_showResultsToTeacher and data is: " + received); 
       var votes;  
       var totalVotes =0;
       //calculate the vote's total sum 
@@ -544,9 +594,9 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
         $(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percentString);
         $(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
       }
-    } else {
-      V.Debugging.log(" The User's role is not the correct");
-    }
+    
+
+
     $(".current").find(".mc_meter").css('display', 'block');  
     $(".current").find(".mcoption_label").css('display', 'block');
   };

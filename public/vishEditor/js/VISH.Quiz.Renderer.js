@@ -79,6 +79,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     ret += "<input type='hidden' id='quiz_id_to_activate' value='"+V.Quiz.getQuizIdToStartSession()+"'/>";
     ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
     ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
+    ret +="<input type='text' id='save_name_quiz_"+slide+" class='save_results_quiz' type='text' placeholder='write a name for saving' />";
     ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
     ret += "</div>";
     ret += "</form>";
