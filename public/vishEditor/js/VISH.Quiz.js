@@ -49,14 +49,39 @@ VISH.Quiz = (function(V,$,undefined){
 
     VISH.Quiz.Renderer.init(quizStatus);
     VISH.Quiz.API.init();
-  }
+  };
 
   var _loadEvents = function(){      
+    var myInput = $(".current").find("input[class='save_results_quiz']"); 
+
+        //var quizNameForSaving = $(".current").find(".save_results_quiz").val();
+
     $(document).on('click', ".mcquestion_start_button", _startMcQuizButtonClicked);
     $(document).on('click', ".mch_statistics_icon", _statisticsMcQuizButtonClicked);
+
     $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
     $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
-  }
+
+$(myInput).keydown(function(event) {
+  event.preventDefault();
+      if(event.keyCode == 13) {
+        V.Debugging.log("event.keyCode  =" + event.keyCode);
+        if(($(myInput).val()!="")&& ($(myInput).val()!="write a name for saving")) {
+          //call to addMultipleChoiceOption
+          _saveQuizYesButtonClicked();
+          $(myInput).blur();
+        } 
+        else {
+          alert("You must enter some text option.");  
+        }
+    } 
+
+    }); 
+    
+     
+      //$(".current").find(".a_share_content_icon").slideDown();
+    
+  };
 
 
 
@@ -214,7 +239,7 @@ VISH.Quiz = (function(V,$,undefined){
     //this URL is generated for VISHUB server (through Ajax POST) 
     //var url = V.Quiz.API.postStartQuiz(quiz_id);
     //TODO URL shorter ?? talk to R & R 
-    var quiz_id =  $(".current").find("#quiz_id_to_activate").val();
+    var quiz_id =  $(".current").find(".quiz_id_to_activate").val();
     // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
     V.Debugging.log("Quiz_id from form : " + quiz_id);
 
@@ -261,14 +286,14 @@ VISH.Quiz = (function(V,$,undefined){
     $("#"+slideToPlay).find("#slide_to_activate" ).attr('id', 'slide_to_stop');
     $("#"+slideToPlay).find(".mcquestion_stop_button").css("color", "red");
     //add the quiz_session_id to the form? for delete when stop
-    $(".current").find("#quiz_id_to_activate").attr("id", "quiz_session_id");
+    $(".current").find(".quiz_id_to_activate").attr("id", "quiz_session_id"); 
     $(".current").find("#quiz_session_id").attr("value", quiz_session_id);
     $(".current").find("#quiz_session_id").attr("class", "quiz_session_id");
     //adding listeners for different events
 
     //appear share buttons when mouse over share button
     $(".current").on("mouseenter", "#share_icon_"+slideToPlay, function(event){
-    event.preventDefault();setQuizToActivate
+    event.preventDefault();//setQuizToActivate
       $(".current").find(".shareContentIcons").css("display", "inline-block");
       //$(".current").find(".a_share_content_icon").slideDown();
     });
@@ -424,6 +449,8 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
 
+$(".current").find(".quiz_session_id").attr("class", "quiz_id_to_activate"); 
+$(".current").find(".quiz_id_to_activate").val(quizIdToStartSession); 
 
     //_showResultsToTeacher(results);
   };
@@ -495,6 +522,8 @@ Must call API's method to destroy the quiz's session
     $(".current").find(".save_quiz").css("display", "none");  
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
+//quiz_session_id change to 
+
   };
     
     
