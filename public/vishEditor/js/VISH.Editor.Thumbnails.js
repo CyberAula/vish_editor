@@ -70,7 +70,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		//Add sortable
 		var firstCarrouselNumber;
-/* commented by Vhbazan because there was found a compilation error in rake task 
 		$( "#" + carrouselDivId).sortable({ 
 			items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
 			change: function(event, ui) {
@@ -124,10 +123,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 						}
 					});
 				}
-			},
+			}
 		});
-  */
-
   }
 	
 	
