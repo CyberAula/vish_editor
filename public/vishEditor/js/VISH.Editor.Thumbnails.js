@@ -148,7 +148,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
   var selectThumbnail = function(no){
 		$(".image_barbutton").removeClass("selectedSlideThumbnail");
 		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
-		VISH.Editor.Tools.loadSlidesToolbar();
   };
     	
   
