@@ -111,6 +111,16 @@ VISH.Editor = (function(V,$,undefined){
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
+			
+			$("#preview_circle").fancybox({
+			'width'				: '8',
+			'height'			: '6',
+	        'autoScale'     	: false,
+	        'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe',
+			'onStart'			: VISH.Editor.Preview.prepare
+		});
 		}
 
 		

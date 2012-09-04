@@ -523,6 +523,7 @@ VISH.Samples = (function(V,undefined){
 	 			{
 	 				"id":"article1",
 	 				"type":"quiz",
+	 				"quiz_id":"1112",
 	 				"template":"t11",
 	 				"elements":[
 	 					{
@@ -537,8 +538,8 @@ VISH.Samples = (function(V,undefined){
 	 					}
 	 				]
 	 			}
-	 		],
-	 	}
+	 		]
+	 	};
 
 		var quizes_samples_2 = {
 			"type": "presentation",
@@ -549,8 +550,8 @@ VISH.Samples = (function(V,undefined){
 			  { 
 			  	"id":"article1",
 			  	"quiz_id":"1112",
-			  "template":"t11"
-			  ,"elements":[
+			  "template":"t11",
+			  "elements":[
 			  		{
 			  			"id":"zone1"
 			  		,"areaid":"header"
@@ -561,11 +562,16 @@ VISH.Samples = (function(V,undefined){
 			  			"areaid":"left",
 			  			"question":"Which is the capital of Brazil",
 			  			"options":[
-			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
+			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"],
+			  			"quiz_simple_json" : {"type": "quiz_simple","id": 12313, "author":"","slides":[{"id":"article1","type":"quiz","template":"t11","elements":[{"id":"zone1","areaid":"header"},{	"id":"zone2","type":"mcquestion","areaid":"left","question":"¿Funcionara los Multiple Choice Quiz ?","options":["Si","Claro que si","Siempre","No"]}]}]}
 			  			
 			  		}
 		         ]
-		      }
+		         
+		      } 
+		    ] 
+		};
+
 
 		     
 		      /*, 
@@ -685,10 +691,10 @@ VISH.Samples = (function(V,undefined){
 		      			} 
 		    		]
 		    }
-		      */
+		      
 		    ]
 		       
-    };
+    };*/
 
 	return {
 		full_samples  		: full_samples,

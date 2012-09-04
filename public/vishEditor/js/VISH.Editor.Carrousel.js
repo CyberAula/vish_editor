@@ -19,36 +19,40 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		var width = 750;
 		var startAtLastElement = false;
 		var pagination = true;
+		var sortable = false;
 		
 		//Read options
 		if(options){
 			if(options['rows']){
-        rows = options['rows'];
-      }
-      if(options['rowItems']){
-        rowItems = options['rowItems']
-      }
+				rows = options['rows'];
+			}
+			if(options['rowItems']){
+				rowItems = options['rowItems']
+			}
 			if(options['scrollItems']){
 				scrollItems = options['scrollItems']
 			}
 			if(options['styleClass']){
-        styleClass = options['styleClass']
-      }
+				styleClass = options['styleClass']
+			}
 			if(options['titleClass']){
-        titleClass = options['titleClass']
-      }
+				titleClass = options['titleClass']
+			}
 			if(options['callback']){
-        callback = options['callback'];
-      }
+				callback = options['callback'];
+			}
 			if(options['width']){
-        width = options['width'];
-      }
+				width = options['width'];
+			}
 			if(options['startAtLastElement']){
-        startAtLastElement = options['startAtLastElement'];
-      }
+				startAtLastElement = options['startAtLastElement'];
+			}
 			if(typeof options['pagination'] == 'boolean'){
-        pagination = options['pagination'];
-      }
+				pagination = options['pagination'];
+			}
+			if(typeof options['sortable'] == 'boolean'){
+				sortable = options['sortable'];
+			}
 		}
 
 
@@ -65,10 +69,10 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if(multipleRow){
-		  var rowClass = "multiple_row" + carrouselClass;
-	  } else {
-	    var rowClass = "single_row" + carrouselClass;
-	  }		
+			var rowClass = "multiple_row" + carrouselClass;
+		} else {
+			var rowClass = "single_row" + carrouselClass;
+		}		
 			
 		//Wrapper main div with a image carousel class container.
 		var wrapperDiv = $("#" + containerId);
@@ -92,22 +96,22 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		$(button_prev).addClass("prev_" + rowClass);
 		$(button_next).addClass("next_" + rowClass);
 		button_prev.setAttribute('href', "#");
-	  button_next.setAttribute('href', "#");
+		button_next.setAttribute('href', "#");
 		button_prev.setAttribute('id', "carrousel_prev" + containerId);
-	  button_next.setAttribute('id', "carrousel_next" + containerId);
+		button_next.setAttribute('id', "carrousel_next" + containerId);
 		$(button_prev).html("<span>prev</span>");
-	  $(button_next).html("<span>next</span>");
+		$(button_next).html("<span>next</span>");
 			
 		     		 
 		$(wrapperDiv).append(clearFix);
 		$(wrapperDiv).append(button_prev);
-	  $(wrapperDiv).append(button_next);
+		$(wrapperDiv).append(button_next);
 		
 		if(pagination){
 			var paginationDiv = document.createElement('div');
-      paginationDiv.setAttribute('class','pagination pagination_' + rowClass);
-      paginationDiv.setAttribute('id','carrousel_pag' + containerId);
-      $(wrapperDiv).append(paginationDiv);
+			paginationDiv.setAttribute('class','pagination pagination_' + rowClass);
+			paginationDiv.setAttribute('id','carrousel_pag' + containerId);
+			$(wrapperDiv).append(paginationDiv);
 		}
 					 
 		//Element stylesheet
@@ -129,22 +133,27 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass,width);
 		} else {
 		  $(wrapperDiv).prepend(mainDiv);
-			
+
 			//Get start index
 			if(startAtLastElement){
-        var start = ($(mainDiv).children().length-rowItems+1);
-		  } else {
-		    var start = 0;
-		  }
+				var start = ($(mainDiv).children().length-rowItems+1);
+			} else {
+				var start = 0;
+			}
 			
 		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start);
 		}	
 			
 		if(pagination){
-			_forceShowPagination(containerId)
+			_forceShowPagination(containerId);
 		}	
 		
-		return "Done"
+		if(sortable){
+			$("#" + containerId).sortable();
+			// $( "#slides_carrousel" ).sortable({ items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])' });
+		}
+
+		return "Done";
   }
 
 	

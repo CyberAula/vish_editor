@@ -47,8 +47,9 @@ VISH.Renderer = (function(V,$,undefined){
 				content += V.Quiz.Renderer.renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				
-				var quiz_id = parseInt(slide.quiz_id);
-				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id, slide.quiz_id);
+								//set value for quizToActivate
+				V.Quiz.setQuizToActivate(parseInt(slide.quiz_id));
+				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id);
 				classes +="mcquestion";
 			} else if ( slide.elements[el].type === "truefalsequestion") {
 				content +=V.Quiz.Renderer.renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);

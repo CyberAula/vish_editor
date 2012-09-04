@@ -104,7 +104,7 @@ body {
 
 .slides > article {
   display: none;
-  z-index: 15000;
+  z-index: 1075;
 }
 .slides > article.far-past {
   display: block;

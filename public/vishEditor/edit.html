@@ -17,6 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/carrousel.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/tags.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/toolbar.css">
+	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/menu.css">
 
 	<!--[if gte IE 8]>      
 	  <link type="text/css" rel="stylesheet" href="/vishEditor/stylesheets/ie/pack1explorer9.css">
@@ -86,8 +87,10 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tour.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.Menu.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
@@ -122,7 +125,9 @@
     <div id="flashcard-background" style="display:none"></div>
     
     <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
+    <div id="menubar_helpsection2"><img src="/vishEditor/images/menubar_helpsection2.png"/></div>
 		<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/helptutorial_circle.png"/></div>
+        <div id="preview"><img id="preview_circle" src="/vishEditor/images/preview_circle.png"/></div>        
 		<div id='menubar'>
 			  <div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
 				<div id="menubarButtons">
@@ -165,11 +170,56 @@
 				<img class="toolbar_icon" style="display:none" action="moveSlide" direction="right"
 				src="/vishEditor/images/toolbar/slides_to_right.png"></img>
 			</div>			
+			<div id="toolbar_menu">
+
+				<!-- MENU -->
+				<ul id="menu">
+					<li class="current">
+						<a class="menu_option_main" href="#">
+							<img class="toolbar_icon" id="menuButton" src="/vishEditor/images/toolbar/menu_button.png"/>
+						</a>
+						<ul class="menu_option_main">
+							<li>
+								<a class="menu_option_first menu_option menu_option_save" href="#">Save</a>
+							</li>
+							<li>
+								<a class="menu_option menu_option_export" href="#">Export as</a>
+								<ul>
+										<a class="menu_option menu_option_file" href="#">File</a>
+									</li>
+									<li>
+										<a class="menu_option menu_option_pdf" href="#">PDF</a>
+									</li>
+									<li>
+										<a href="http://www.webdesignerwall.com">Web Designer Wall</a>
+										<ul>
+											<li>
+												<a href="http://jobs.webdesignerwall.com">Design Job Wall</a>
+											</li>
+										</ul>
+									</li>
+									<li><a href="http://icondock.com">IconDock</a></li>
+									<li><a href="http://bestwebgallery.com">Best Web Gallery</a></li>
+								</ul>
+							</li>
+							<li><a href="#">About</a></li>
+							<li><a href="#">Contact Us</a></li>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+			<div id="toolbar_presentation">
+				<img class="toolbar_icon toolbar_presentation toolbar_flashcard" style="display:none" 
+				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
+				<img class="toolbar_icon toolbar_flashcard" style="display:none" 
+				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png"/>
+			</div>
 			<div id="toolbar_element">
 				<img class="toolbar_icon toolbar_web toolbar_snapshot"  style="display:none" action="zoomMore" 
-				src="/vishEditor/images/toolbar/zoomMore.png"></img>
+				src="/vishEditor/images/toolbar/zoomMore.png"/>
 				<img class="toolbar_icon toolbar_web toolbar_snapshot" style="display:none" action="zoomLess" 
-				src="/vishEditor/images/toolbar/zoomLess.png"></img>
+				src="/vishEditor/images/toolbar/zoomLess.png"/>
 			</div>
 		</div>
 		
@@ -298,8 +348,7 @@
 	    </div>
 	    
 	  </div>
-	  
-	  
+	  	  
 	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
@@ -1045,6 +1094,7 @@
       </ol> 
 
 	<script>
+		var presentation_preview;
 		//First function called when page loads
 		 function start(){
 		 	if(window.parent.options){
