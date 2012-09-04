@@ -18,7 +18,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		var carrouselElements = 0;
 		$('article').each(function(index,s){
-<<<<<<< HEAD
           var template = $(s).attr('template');
 		  carrouselElements += 1;
 		  carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
@@ -142,8 +141,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 						}
 					});
 				}
-			},
+			}
 		});  
+
   }
 	
 	
