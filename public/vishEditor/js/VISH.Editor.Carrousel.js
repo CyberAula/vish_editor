@@ -3,7 +3,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	//Available Options: rows,callback,rowItems,scrollItems,styleClass
 	
   var createCarrousel = function(containerId,options){
-		
+		console.log("CREATE WITH CONTAINER: " + containerId);
 		//Necessary params
 		if(!containerId){
 			return;

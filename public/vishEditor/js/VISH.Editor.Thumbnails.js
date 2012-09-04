@@ -65,27 +65,20 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     else{
     	options['callback'] = _onClickCarrouselElement;
     }
-    options['rowItems'] = 8;
-    options['scrollItems'] = 1;
+    
+	var options = new Array();
+	options['rows'] = 1;
+	options['callback'] = _onClickCarrouselElement;
+	options['rowItems'] = 8;
+	options['scrollItems'] = 1;
 	options['styleClass'] = "slides";
 	options['width'] = 900;
 	options['startAtLastElement'] = true;
 	options['pagination'] = false;
 	$("#" + carrouselDivId).show();
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-		var options = new Array();
-		options['rows'] = 1;
-		options['callback'] = _onClickCarrouselElement;
-		options['rowItems'] = 8;
-		options['scrollItems'] = 1;
-		options['styleClass'] = "slides";
-		options['width'] = 900;
-		options['startAtLastElement'] = true;
-		options['pagination'] = false;
-		$("#" + carrouselDivId).show();
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+	VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
-
+	if(V.Editor.getExcursionType() === "presentation"){
 		//Add sortable
 		var firstCarrouselNumber;
 		$( "#" + carrouselDivId).sortable({ 
@@ -142,7 +135,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					});
 				}
 			}
-		});  
+		});
+	}
 
   }
 	
