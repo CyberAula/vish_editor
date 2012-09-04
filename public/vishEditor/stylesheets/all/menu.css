@@ -18,6 +18,7 @@ a {
 	float: left;
 	position: relative;
 	list-style: none;
+	z-index: 9999;
 }
 
 /* main level link */
@@ -107,7 +108,27 @@ ul.menu_option_main ul {
 	padding-left: 50px;
 }
 
-/* level 3+ list */
+
+/* First level */
+
+#menu ul li:first-child > a {
+	-webkit-border-top-left-radius: 0px;	
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-radius-topright: 0px;
+	border-radius: 0px 0px 0px 0px;
+}
+
+#menu ul li:last-child > a {
+	-webkit-border-bottom-left-radius: 9px;
+	-moz-border-radius-bottomleft: 9px;
+	-webkit-border-bottom-right-radius: 9px;
+	-moz-border-radius-bottomright: 9px;
+	border-radius: 0px 0px 9px 9px;
+}
+
+
+/* Second level */
 #menu ul ul {
 	border-radius: 0px 9px 9px 9px;
 	-webkit-border-top-left-radius: 0px 9px 9px 9px;
@@ -121,22 +142,31 @@ ul.menu_option_main ul {
 	-webkit-border-top-left-radius: 0px;	
 	-moz-border-radius-topleft: 0px;
 	-webkit-border-top-right-radius: 8px;
-	-moz-border-radius-topright: 0px;
+	-moz-border-radius-topright: 8px;
+	border-radius: 0px 8px 0px 0px;
 }
 
-#menu ul li:first-child > a {
-	-webkit-border-top-left-radius: 0px;	
-	-moz-border-radius-topleft: 0px;
-	-webkit-border-top-right-radius: 0px;
-	-moz-border-radius-topright: 0px;
+/* Third level */
+#menu ul ul ul {
+	border-radius: 0px 9px 9px 9px;
+	-webkit-border-top-left-radius: 0px 9px 9px 9px;
+	-moz-border-radius-topleft: 0px 9px 9px 9px;
+	left: 140px;
+	top: -1px;
 }
 
-#menu ul li:last-child > a {
-	-webkit-border-bottom-left-radius: 9px;
-	-moz-border-radius-bottomleft: 9px;
-	-webkit-border-bottom-right-radius: 9px;
-	-moz-border-radius-bottomright: 9px;
+#menu ul ul ul li:first-child > a {
+	-webkit-border-top-right-radius: 8px;
+	-moz-border-radius-topright: 8px;
+	border-radius-top-right: 8px;
 }
+
+#menu ul ul ul li:last-child > a {
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-bottomright: 8px;
+	border-radius-bottom-right: 8px;
+}
+
 
 /* clearfix */
 #menu:after {
