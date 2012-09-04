@@ -39,6 +39,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       var obj;
       if(quiz_id){
         obj = _renderMcquestionToAnswer(element, template, slide); 
+        V.Quiz.setSlideToVote (slide);
       }
       else{
         if(logged){

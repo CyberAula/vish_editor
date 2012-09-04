@@ -30,7 +30,7 @@ VISH.Quiz = (function(V,$,undefined){
       //...
 
     } else if(excursion.type=="presentation") {
-        slideToActivate = excursion.slide.quiz_id;
+      //  slideToActivate = excursion.slide.quiz_id;
       //add events 
 
       //Quiz to view
@@ -346,7 +346,7 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
  var received = JSON.stringify(data);
     V.Debugging.log("_onQuizSessionResultsReceived and data received is: " + received);
 
-  var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+ // var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     _showResultsToParticipant(data, slideToVote);
 
     //remove input radio 
@@ -354,8 +354,8 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     $(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
 
     // update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
-    var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-    _showResultsToParticipant(data);
+    /*var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+    _showResultsToParticipant(data); */
 
     //for avoid bring out when mouse over option
     _removeOptionsListener(slideToVote);
@@ -583,13 +583,20 @@ var getQuizIdToStartSession = function(){
 return quizIdToStartSession;
 
 };  
+
+
+var setSlideToVote = function (slide) {
+
+  slideToVote = slide; 
+};
   return {
-    getQuizStatus       : getQuizStatus,
-    init:                             init,
-    enableInteraction:                enableInteraction,
-    enableTrueFalseInteraction:       enableTrueFalseInteraction, 
-    setQuizToActivate     : setQuizToActivate, 
-    getQuizIdToStartSession:  getQuizIdToStartSession
+    getQuizStatus               : getQuizStatus,
+    init                        : init,
+    enableInteraction           : enableInteraction,
+    enableTrueFalseInteraction  : enableTrueFalseInteraction, 
+    setQuizToActivate           : setQuizToActivate, 
+    getQuizIdToStartSession     : getQuizIdToStartSession, 
+    setSlideToVote              : setSlideToVote
   };
     
 }) (VISH, jQuery);
