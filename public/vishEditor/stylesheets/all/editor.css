@@ -1518,3 +1518,25 @@ iframe.snapshot_content{
 	opacity: 1.0 !important;
 	border: 1px solid #005fdd;
 }
+
+/* Flashcards */
+#flashcard_button img{
+	width: 40px;
+	height: 40px;
+}
+
+#flashcard_button{
+	display: inline-block;
+}
+
+#flashcard-background{
+	display:none;
+	z-index: 1050;
+	width: 800px;
+	height: 600px;
+	margin-top: -300px;
+	margin-left: -400px;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+}

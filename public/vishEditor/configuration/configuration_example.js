@@ -69,8 +69,10 @@ var getOptions = function(){
 			options["lang"] = "en";
 		}
 		
-		console.log("Vish Editor Configured Options")
-		console.log(options)
+		if((window.console) && (window.console.log)){
+			console.log("Vish Editor Configured Options")
+			console.log(options)
+		}
 	}
 
 	return options;

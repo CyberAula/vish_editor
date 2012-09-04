@@ -152,6 +152,9 @@ VISH.Editor = (function(V,$,undefined){
 				'showCloseButton': true
 			}); 
 		}
+
+		//flashcards
+		V.Editor.Flashcard.init();
 	};
 	
 	
@@ -235,6 +238,16 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
 		
+		$("#my_preview").fancybox({
+			'width'				: '8',
+			'height'			: '6',
+	        'autoScale'     	: false,
+	        'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe',
+			'onStart'			: VISH.Editor.Preview.prepare
+		});
+
 		//template
 		$(document).on('click','#help_template_image', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
@@ -524,10 +537,7 @@ VISH.Editor = (function(V,$,undefined){
 						$("#prompt_answer").val("false");
 						$(".theslider").hide();	
 						article_to_delete.remove();
-						//set curSlide to the preious one if this was the last one
-						if(V.curSlide == V.slideEls.length-1 && V.curSlide != 0){  //if we are in the first slide do not do -1
-							V.curSlide -=1;
-						}					
+						V.Slides.onDeleteSlide();					
 						V.Editor.Utils.redrawSlides();						
 						V.Editor.Thumbnails.redrawThumbnails();			
 					}
@@ -577,7 +587,7 @@ VISH.Editor = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var _onSaveButtonClicked = function(){
-		if(V.slideEls.length === 0){
+		if(VISH.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
 				{
@@ -808,18 +818,9 @@ VISH.Editor = (function(V,$,undefined){
 			if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
 				
 				if(VISH.Debugging.getActionSave()=="view"){
-					$('article').remove();
-					$('#menubar').hide();
-					$('#menubar_helpsection').hide();
-					$('#joyride_help_button').hide();
-					$('.theslider').hide();
-					$(".nicEdit-panelContain").hide();
-					$("#menubar-viewer").show();
-
-					VISH.SlideManager.init(initOptions, excursion);
+					VISH.Debugging.initVishViewer();
 				} else if (VISH.Debugging.getActionSave()=="edit") {
-					$('article').remove();
-					VISH.Editor.init(initOptions, excursion);  //to edit the excursion
+					VISH.Debugging.initVishEditor();
 				}
 			}
 
@@ -873,19 +874,15 @@ VISH.Editor = (function(V,$,undefined){
 		return element.width()/element.height();
 	}
 	
-
 	/**
 	 * Function to move the slides left one item
-	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use it to move one to the left
 	 */
 	var _onArrowLeftClicked = function(){
 		V.Slides.backwardOneSlide();
 	};
 	
-
 	/**
 	 * Function to move the slides right one item
-	 * curSlide is set by slides.js and it is between 0 and the number of slides, so we use +2 to move one to the right
 	 */
 	var _onArrowRightClicked = function(){
 		V.Slides.forwardOneSlide();
@@ -935,10 +932,6 @@ VISH.Editor = (function(V,$,undefined){
 			return null;
 		}
 	}
-
-	var getCurrentSlide = function(){
-		return VISH.curSlide;
-	}
 	
 	/*
 	 * Load the initial fancybox
@@ -963,7 +956,6 @@ VISH.Editor = (function(V,$,undefined){
 		getId 				: getId,
 		getTemplate 		: getTemplate,
 		getCurrentArea 		: getCurrentArea,
-		getCurrentSlide		: getCurrentSlide,
 		getParams 			: getParams,
 		getOptions 			: getOptions, 
 		loadFancyBox 		: loadFancyBox,

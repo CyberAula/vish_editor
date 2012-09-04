@@ -1,18 +1,17 @@
 VISH.Slides = (function(V,$,undefined){
-	/*
-	 * 
-	 */
+
+	/* Variables to store slide elements and point to current slide*/
+	var slideEls;
+	var curSlideIndex;
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 	
-
 	var init = function(){
-		getCurSlideFromHash();
-
+		getcurSlideIndexFromHash();
 		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
 	};
 
 	var handleDomLoaded = function () {
-	  V.slideEls = document.querySelectorAll('section.slides > article');
+	  slideEls = document.querySelectorAll('section.slides > article');
 
 	  addFontStyle();
 	  
@@ -30,18 +29,73 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
+	var getCurrentSlide = function(){
+		return slideEls[curSlideIndex];
+	}
+
+	var getCurrentSlideNumber = function(){
+		return curSlideIndex+1;
+	}
+
+	var setCurrentSlideNumber = function(currentSlideNumber){
+		curSlideIndex = currentSlideNumber-1;
+	}
+
+	var getSlides = function(){
+		return slideEls;
+	}
+
+	var isCurrentFirstSlide = function(){
+		return curSlideIndex===0;
+	}
+
+	var isCurrentLastSlide = function(){
+		return curSlideIndex===slideEls.length-1;
+	}
+
+	var isSlideSelected = function(){
+		if(curSlideIndex>-1){
+			return true;
+		}
+	}
+
+	var onDeleteSlide = function(){
+		setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	}
+
+	var getNumberOfSlide = function(slide){
+		if(slideEls){
+			var result = 0;
+			$.each(slideEls, function(index, value) { 
+		  		if($(value).attr("id")==$(slide).attr("id")){
+		  			result = index;
+		  			return;
+		  		}
+			});
+			return result;
+		} else {
+			return 0;
+		}
+	}
+
+
 	/* Slide movement */
 
-	var getSlideEl = function(no) {
-	  if ((no < 0) || (no >= V.slideEls.length)) { 
+	var _getSlide = function(no) {
+	  return getSlideWithNumber(no+1);
+	};
+
+	var getSlideWithNumber = function(slideNumber) {
+	  var no = slideNumber-1;
+	  if ((no < 0) || (no >= slideEls.length)) { 
 	    return null;
 	  } else {
-	    return V.slideEls[no];
+	    return slideEls[no];
 	  }
 	};
 
 	var updateSlideClass = function(slideNo, className) {
-	  var el = getSlideEl(slideNo);
+	  var el = _getSlide(slideNo);
 	  
 	  if (!el) {
 	    return;
@@ -61,52 +115,54 @@ VISH.Slides = (function(V,$,undefined){
 
 	//MODIFIED BY KIKE TO DETERMINE IF GOING RIGHT OR LEFT
 	var updateSlides = function(goingRight) {
-	  for (var i = 0; i < V.slideEls.length; i++) {
-	    switch (i) {
-	      case V.curSlide - 2:
-	        updateSlideClass(i, 'far-past');
-	        break;
-	      case V.curSlide - 1:
-	        updateSlideClass(i, 'past');
-	        break;
-	      case V.curSlide: 
-	        updateSlideClass(i, 'current');
-	        break;
-	      case V.curSlide + 1:
-	        updateSlideClass(i, 'next');      
-	        break;
-	      case V.curSlide + 2:
-	        updateSlideClass(i, 'far-next');      
-	        break;
-	      default:
-	        updateSlideClass(i);
-	        break;
-	    }
-	  }
-	  
+	 
+	  _updateSlideEls();
+
 	  if(goingRight){
-	    triggerLeaveEvent(V.curSlide - 1);
+	    triggerLeaveEvent(curSlideIndex - 1);
+	  } else {
+	    triggerLeaveEvent(curSlideIndex + 1);    
 	  }
-	  else{
-	    triggerLeaveEvent(V.curSlide + 1);    
-	  }
-	  triggerEnterEvent(V.curSlide);
+	  triggerEnterEvent(curSlideIndex);
 	  updateHash();
 	};
 
-	
-	var prevSlide = function() {
-	  if (V.curSlide > 0) {
-	    V.curSlide--;
+	var _updateSlideEls = function() {
+		for (var i = 0; i < slideEls.length; i++) {
+			switch (i) {
+				case curSlideIndex - 2:
+					updateSlideClass(i, 'far-past');
+					break;
+				case curSlideIndex - 1:
+					updateSlideClass(i, 'past');
+					break;
+				case curSlideIndex: 
+					updateSlideClass(i, 'current');
+					break;
+				case curSlideIndex + 1:
+					updateSlideClass(i, 'next');      
+					break;
+				case curSlideIndex + 2:
+					updateSlideClass(i, 'far-next');      
+					break;
+				default:
+					updateSlideClass(i);
+					break;
+			}
+		}
+	}
 
+	
+	var _prevSlide = function() {
+	  if (curSlideIndex > 0) {
+	    curSlideIndex--;
 	    updateSlides(false);
 	  }
 	};
 
-	var nextSlide = function() {	  
-	  if (V.curSlide < V.slideEls.length - 1) {
-	    V.curSlide++;
-
+	var _nextSlide = function() {	  
+	  if (curSlideIndex < slideEls.length - 1) {
+	    curSlideIndex++;
 	    updateSlides(true);
 	  }
 	};
@@ -116,7 +172,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerEnterEvent = function (no) {
 	  
-	  var el = getSlideEl(no);
+	  var el = _getSlide(no);
 	  if (!el) {
 	    return;
 	  }
@@ -134,7 +190,7 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var triggerLeaveEvent = function(no) {
-	  var el = getSlideEl(no);
+	  var el = _getSlide(no);
 	  if (!el) {    
 	    return;
 	  }
@@ -154,18 +210,18 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Hash functions */
 
-	var getCurSlideFromHash = function() {
+	var getcurSlideIndexFromHash = function() {
 	  var slideNo = parseInt(location.hash.substr(1));
 
 	  if (slideNo) {
-	    V.curSlide = slideNo - 1;
+	    curSlideIndex = slideNo - 1;
 	  } else {
-	    V.curSlide = 0;
+	    curSlideIndex = 0;
 	  }
 	};
 
 	var updateHash = function() {
-	  location.replace('#' + (V.curSlide + 1));
+	  location.replace('#' + (curSlideIndex + 1));
 	};
 
 	
@@ -177,12 +233,10 @@ VISH.Slides = (function(V,$,undefined){
 	  el.type = 'text/css';
 	  el.href = 'http://fonts.googleapis.com/css?family=' +
 	            'Open+Sans:regular,semibold,italic,italicsemibold|Droid+Sans+Mono';
-
 	  document.body.appendChild(el);
 	};
 
-	var addGeneralStyle = function() {
-	 
+	var addGeneralStyle = function() {	 
 	  var el = document.createElement('meta');
 	  el.name = 'viewport';
 	  el.content = 'width=900,height=750';
@@ -194,30 +248,29 @@ VISH.Slides = (function(V,$,undefined){
 	  document.querySelector('head').appendChild(el);
 	};
 
+
   /* slide movement */
 
   /**
-   * go to the last slide when adding a new one
+   * Go to the last slide when adding a new one
    */
   var lastSlide = function(){
-    goToSlide(V.slideEls.length);
+    goToSlide(slideEls.length);
   };
 
   /**
    * go to the slide when clicking the thumbnail
-   * curSlide is set by slides.js and it is between 0 and the number of slides, so we add 1 in the if conditions
    */
-  var goToSlide = function(no){
-  	
-    if((no > V.slideEls.length) || (no <= 0)){
+  var goToSlide = function(no){	
+    if((no > slideEls.length) || (no <= 0)){
   	  return;
-    } else if (no > V.curSlide+1){
-  	  while (V.curSlide+1 < no) {
-    	 nextSlide();
+    } else if (no > curSlideIndex+1){
+  	  while (curSlideIndex+1 < no) {
+    	 _nextSlide();
   	  }
-    } else if (no < V.curSlide+1){
-  	  while (V.curSlide+1 > no) {
-    	 prevSlide();
+    } else if (no < curSlideIndex+1){
+  	  while (curSlideIndex+1 > no) {
+    	 _prevSlide();
   	  }
     }
     
@@ -235,19 +288,20 @@ VISH.Slides = (function(V,$,undefined){
 	}
   };
   
-  /**
-   * function to go to previous slide and change the thumbnails and focus 
-   */
-  var backwardOneSlide = function(){
-  	goToSlide(V.curSlide);
-  };
-  
-  /**
-   * function to go to next slide and change the thumbnails and focus 
-   */
-  var forwardOneSlide = function(){
-  	goToSlide(V.curSlide+2);
-  };
+
+	/**
+	* function to go to previous slide and change the thumbnails and focus 
+	*/
+	var backwardOneSlide = function(){
+		goToSlide(curSlideIndex);
+	};
+
+	/**
+	* function to go to next slide and change the thumbnails and focus 
+	*/
+	var forwardOneSlide = function(){
+		goToSlide(curSlideIndex+2);
+	};
 	
 
 	/**
@@ -261,16 +315,109 @@ VISH.Slides = (function(V,$,undefined){
 		return true;
 	};
 
+	/**
+	 * function to show one specific slide in the flashcard
+	 */
+	var showSlide = function(slide_id){
+		if(slideEls.length >= slide_id-1){
+			$(slideEls[slide_id-1]).show();
+			triggerEnterEvent(slide_id-1);
+		}
+	};
+
+	/**
+	 * function to close one specific slide in the flashcard
+	 */
+	var closeSlide = function(slide_id){
+		if(slideEls.length >= slide_id-1){
+			$(slideEls[slide_id-1]).hide();
+			triggerLeaveEvent(slide_id-1);
+		}
+	};
+
+
+	/*
+	 *	Move slide_to_move after or before reference_slide.
+	 *  Movement param posible values: "after", "before"
+	 */
+	var moveSlideTo = function(slide_to_move, reference_slide, movement){
+
+	 	if((typeof slide_to_move === "undefined")||(typeof reference_slide === "undefined")){
+	 		return;
+	 	}
+
+	 	if(typeof slide_to_move.length !== undefined){
+	 		slide_to_move = $(slide_to_move)[0];
+	 		if(typeof slide_to_move === "undefined"){
+	 			return;
+	 		}
+	 	}
+
+	 	if(typeof reference_slide.length !== undefined){
+	 		reference_slide = $(reference_slide)[0];
+	 		if(typeof reference_slide === "undefined"){
+	 			return;
+	 		}
+	 	}
+
+	 	if((slide_to_move.tagName!="ARTICLE")||(reference_slide.tagName!="ARTICLE")||(slide_to_move==reference_slide)){
+	 		return;
+	 	}
+
+
+	 	var article_to_move = slide_to_move;
+	 	var article_reference = reference_slide;
+
+
+	 	var moving_current_slide = false;
+	 	if(getCurrentSlide() === article_to_move){
+	 		moving_current_slide = true;
+	 	}
+
+	 	$(article_to_move).remove();
+	 	if(movement=="after"){
+	 		$(article_reference).after(article_to_move);
+	 	} else if(movement=="before") {
+	 		$(article_reference).before(article_to_move);
+	 	} else {
+	 		VISH.Debugging.log("VISH.Slides: Error. Movement not defined... !");
+	 		return;
+	 	}
+
+	 	//Update slideEls
+	 	slideEls = document.querySelectorAll('section.slides > article');
+
+	 	if(moving_current_slide){
+	 		//Update currentSlide
+	 		curSlideIndex = getNumberOfSlide(article_to_move);
+	 	}
+
+	 	//Update slides classes next and past.
+	 	//Current slide needs to be stablished before this call.
+	 	_updateSlideEls();
+	 	
+	 }
 	
-	return {				
-			backwardOneSlide		: backwardOneSlide,		
+	return {	
+			init          			: init,	
+			getCurrentSlide 		: getCurrentSlide,
+			getCurrentSlideNumber	: getCurrentSlideNumber,
+			setCurrentSlideNumber	: setCurrentSlideNumber,
+			isCurrentFirstSlide		: isCurrentFirstSlide,
+			isCurrentLastSlide		: isCurrentLastSlide,
+			isSlideSelected 		: isSlideSelected,
+			onDeleteSlide			: onDeleteSlide,
+			getNumberOfSlide		: getNumberOfSlide,
+			getSlides 				: getSlides,
+			getSlideWithNumber		: getSlideWithNumber,
+			backwardOneSlide		: backwardOneSlide,	
+			closeSlide				: closeSlide,	
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
-			init          			: init,
-			nextSlide				: nextSlide,
-			prevSlide				: prevSlide,
 			lastSlide				: lastSlide,
-			isSlideFocused			: isSlideFocused
+			isSlideFocused			: isSlideFocused,
+			moveSlideTo				: moveSlideTo,
+			showSlide				: showSlide
 	};
 
 }) (VISH,jQuery);

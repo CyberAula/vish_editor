@@ -135,11 +135,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var processResponse = function(response){
 		try  {
-			console.log("response")
-			console.log(response)
 			var jsonResponse = JSON.parse(response)
 			if(jsonResponse.src){
-				console.log(jsonResponse.src)
 				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
 					VISH.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
 					contentToAdd = jsonResponse.src

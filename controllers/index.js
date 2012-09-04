@@ -14,6 +14,7 @@ exports.index = function(req, res, redirectUrl) {
 };
 
 exports.home = function(req, res) {
+  console.log("User Home");
   db.findAllPresentationsOfUser(req.user._id.toHexString(), function(err,presentations){
     if(err){
       res.render('home');

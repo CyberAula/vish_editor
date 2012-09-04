@@ -23,6 +23,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		});
 
 		loadPresentationToolbar();
+		loadSlidesToolbar();
 	} 
 	 
 
@@ -84,6 +85,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		_cleanElementToolbar();
 	}
 
+	var enableToolbar = function(){
+		$("#toolbar_wrapper").show();
+	}
+
 	var disableToolbar = function(){
 		$("#toolbar_wrapper").hide();
 	}
@@ -138,10 +143,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Slides Toolbar
 	*/
 	var loadSlidesToolbar = function(){
-		if(VISH.Editor.getCurrentSlide()!=null){
+		if(VISH.Slides.isSlideSelected()){
 			$("#toolbar_slide").find("img").show();
 		} else {
-			_cleanSlidesToolbar();
+			_cleanSlideToolbar();
 		}
 	}
 
@@ -227,16 +232,32 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 	var moveSlide = function(object){
 	 	var direction = $(object).attr("direction");
+	 	var movement = null;
+	 	var article = null;
 	 	switch(direction){
 	 		case "right":
-	 			VISH.Debugging.log("moveSlide to right");
+	 			movement = "after";
+	 			article = $("article.next");
+	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0])+2;
 	 			break;
 	 		case "left":
-	 			VISH.Debugging.log("moveSlide to left");
+	 			movement = "before";
+	 			article = $("article.past");
+	 			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0]);
 	 			break;
 	 		default:
-	 			break;
+	 			return;
 	 	}
+
+	 	if((movement!=null)&&(article!=null)){
+	 		V.Slides.moveSlideTo($("article.current")[0],article,movement);
+			V.Editor.Utils.redrawSlides();
+			V.Editor.Thumbnails.redrawThumbnails();
+			setTimeout(function(){
+					V.Editor.Thumbnails.selectThumbnail(slide_position);
+				}, 200);
+			V.Slides.goToSlide(slide_position);
+		 }
 	 }
 	
    /*
@@ -293,6 +314,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		cleanZoneTools 					: cleanZoneTools,
 		cleanToolbar					: cleanToolbar,
 		switchMode 						: switchMode,
+		enableToolbar					: enableToolbar,
+		disableToolbar					: disableToolbar,
 		moveSlide						: moveSlide,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess

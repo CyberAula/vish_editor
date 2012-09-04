@@ -1,7 +1,7 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
 	var init = function(){
-		console.log("VIS.QUIZ.API init");
+		V.Debugging.log("VIS.QUIZ.API init");
 	}
 	
 	
@@ -15,7 +15,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
 		
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			console.log("Vish case");
+			V.Debugging.log("Vish case");
 			V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
 			//POST 
 			var send_type = 'POST';
@@ -50,7 +50,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	         return null;
 
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			console.log("No server case");
+			V.Debugging.log("No server case");
 			var quiz_session_id = "123";
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
@@ -123,7 +123,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 		V.Debugging.log("Answer selected value is: " + answer_selected);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			console.log("Vish case");
+			V.Debugging.log("Vish case");
 
 			//POST 
 			var send_type = 'PUT';
@@ -158,7 +158,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	         return null;
 	} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			console.log("No server case");
+			V.Debugging.log("No server case");
 			var quiz_session_id = "123";
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
@@ -170,30 +170,29 @@ VISH.Quiz.API = (function(V,$,undefined){
  
 	var getQuizSessionResults = function (quiz_active_session_id, successCallback, failCallback) {
 
-V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_session_id);
+		V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_session_id);
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			console.log("Vish case");
+			V.Debugging.log("Vish case");
 
-			//POST 
+			//GET
 			var send_type = 'GET';
 	       
-	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
 	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	        "id": quiz_active_session_id, 
-	          "authenticity_token" : V.User.getToken()
+	        "authenticity_token" : V.User.getToken()  
 	        }
 
 	        $.ajax({
 	          type    : send_type,
-	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id + '/results',
+	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id + '/results.json',
 	          data    : params,
 	          success : function(data) {
 
 	              //if we redirect the parent frame
-		            V.Debugging.log("data: "+ data);	
+		          //console.log("data: "+ data);	
 	              	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
@@ -207,7 +206,7 @@ V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_
 
 	         return null;
 	} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			console.log("No server case");
+			V.Debugging.log("No server case");
 			var results = {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]}; ;
 			if(typeof successCallback=="function"){
 				successCallback(results);

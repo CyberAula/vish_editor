@@ -1,0 +1,89 @@
+<html><head>
+  <title>Sokoban JS</title>
+  <link rel="StyleSheet" href="Content/pepper-grinder/jquery-ui-1.8.4.custom.css" type="text/css">
+  <link rel="StyleSheet" href="Content/Site.css" type="text/css">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.2/build/cssreset/reset-context-min.css">
+  <script src="Scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+  <script src="Scripts/jquery-ui-1.8.4.custom.min.js" type="text/javascript"></script>
+  <script src="Scripts/jquery.cookie.js" type="text/javascript"></script>
+  <script src="Scripts/GameJs/LevelStatistics.js" type="text/javascript"></script>
+  <script src="Scripts/GameJs/DrawableElements.js" type="text/javascript"></script>
+  <script src="Scripts/GameJs/Map.js" type="text/javascript"></script>  
+  <script src="Scripts/GameJs/Game.js" type="text/javascript"></script>
+ </head>
+
+ <body>
+<!--[if !IE]-->
+    <div id="wasd">        
+        <p>Please use WASD keys to move the character. W = Up, A = Right, S = Down, D = Right.</p>
+    </div>
+<!--[endif]-->
+
+   <canvas id="canvas" width="800" height="500">
+    Sorry your browser does not support Canvas. Please use different browser:
+    <a href="http://www.mozilla-europe.org/en/firefox/">Get Firefox</a> or
+    <a href="http://www.google.com/chrome">Get Chrome</a>
+
+   </canvas>
+    
+        
+   <script type="text/javascript">
+       document.sokobanGame = new Game();
+       document.sokobanGame.Run();
+       $("div#dialog").dialog(
+                {
+                    autoOpen:false,
+                    modal: true,
+                    width: 400
+                });
+        $("div#gameOverDialog").dialog(
+        {
+            autoOpen: false,
+            modal: true,
+            width: 400
+        });
+   </script>
+   <div id="completed" style="display: none; z-index: 1000; outline-width: 0px; outline-style: initial; outline-color: initial; " class="ui-dialog ui-widget ui-widget-content ui-corner-all " tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-dialog">
+   <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" unselectable="on">
+   <span class="ui-dialog-title" id="ui-dialog-title-dialog" unselectable="on">Congratulations
+   </span>
+   <a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on">
+   <span class="ui-icon ui-icon-closethick" unselectable="on">close
+   </span>
+   </a>
+   </div>   
+   <div id="dialog" class="ui-dialog-content ui-widget-content">
+	    <p>Congratulations, level is completed!</p>
+        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover">Go to the next level
+        </button>
+    </div>
+    </div>
+    
+    <div id="devil-dead" style="display: none; z-index: 1000; outline-width: 0px; outline-style: initial; outline-color: initial; " 
+    class="ui-dialog ui-widget ui-widget-content ui-corner-all " 
+    tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-dialog">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" unselectable="on">
+    <span class="ui-dialog-title" id="ui-dialog-title-dialog" unselectable="on">Sorry
+    </span>
+    <a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on">
+    <span class="ui-icon ui-icon-closethick" unselectable="on">close
+    </span>
+    </a>
+    </div>
+    <div id="dialog2" class="ui-dialog-content ui-widget-content">
+	    <p>Devil got you!!</p>
+        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover" onClick="window.location.reload()">Retry</button>
+    </div>
+    </div>
+    
+    <div style="display: none; z-index: 1000; outline-width: 0px; outline-style: initial; outline-color: initial; " class="ui-dialog ui-widget ui-widget-content ui-corner-all " tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-gameOverDialog">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" unselectable="on">
+    <span class="ui-dialog-title" id="ui-dialog-title-gameOverDialog" unselectable="on">Game over</span>
+    <a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on">
+    <span class="ui-icon ui-icon-closethick" unselectable="on">close</span></a></div><div id="gameOverDialog" class="ui-dialog-content ui-widget-content">
+	    <p>Congratulations, you beat the game!</p>        
+    </div>
+    </div>
+ 
+
+</body></html>

@@ -77,7 +77,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Live.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Web.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.PDF.js"></script>
-	<script type="text/javascript" src="js/VISH.Editor.Object.Snapshot.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Snapshot.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Thumbnails.js"></script>
@@ -87,8 +87,13 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tour.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
-	<script type="text/javascript" src="js/VISH.Status.js"></script>
-	<script type="text/javascript" src="js/VISH.ViewerAdapter.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Renderer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
@@ -114,6 +119,10 @@
   
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
+    
+    <div id="flashcard-background"></div>
+    <a id="flashcard_button" href="#picture_fancybox" style="display:none"><img src="/vishEditor/images/flashcard_button.jpg"/></a>
+    
     <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
     <div id="menubar_helpsection2"><img src="/vishEditor/images/menubar_helpsection2.png"/></div>
 		<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/helptutorial_circle.png"/></div>
@@ -292,8 +301,7 @@
 	    </div>
 	    
 	  </div>
-	  
-	  
+	  	  
 	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
@@ -1037,6 +1045,7 @@
       </ol> 
 
 	<script>
+		var presentation_preview;
 		//First function called when page loads
 		 function start(){
 		 	if(window.parent.options){

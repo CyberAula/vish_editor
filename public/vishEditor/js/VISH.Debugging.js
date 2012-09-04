@@ -100,10 +100,11 @@ VISH.Debugging = (function(V,$,undefined){
 	    $('#menubar').hide();
 	    $('#menubar_helpsection').hide();
 	    $('#joyride_help_button').hide();
-	    $('.theslider').hide();
-	    $(".nicEdit-panelContain").hide();
+	    VISH.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
+
 		log("Init Vish Viewer with excursion: " + JSON.stringify(myexcursion));
+
 		VISH.SlideManager.init(presentationOptions, myexcursion);
 	}
 	
@@ -126,10 +127,11 @@ VISH.Debugging = (function(V,$,undefined){
 		$('#menubar').show();
 		$('#menubar_helpsection').show();
 		$('#joyride_help_button').show();
-		$('.theslider').show();
-		$(".nicEdit-panelContain").show();
+		VISH.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
+
 		VISH.Debugging.log("Init Vish Editor with excursion: " + JSON.stringify(myexcursion));
+		
 		VISH.Editor.init(presentationOptions, myexcursion);
   }
 	

@@ -103,6 +103,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 	};
 	
+	/**
+	* Method to add the src to the iframe, show it, hide the slides, and so on
+	*/
+	var setupGame = function(excursion){
+		$("#my_game_iframe").attr("src", excursion.game.src);
+		//load file game.css dinamically
+		var fileref=document.createElement("link");
+  		fileref.setAttribute("rel", "stylesheet");
+  		fileref.setAttribute("type", "text/css");
+  		fileref.setAttribute("href", "stylesheets/all/game.css");
+  		document.getElementsByTagName("body")[0].appendChild(fileref);
+	};
+
+
 	
 	/**
 	 * function to hide/show the page-switchers buttons in the viewer
@@ -112,31 +126,27 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 */
 	var decideIfPageSwitcher = function(){
 		if(!page_is_fullscreen && !V.Status.ua.mobile){
-			if(V.curSlide===0){
+			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#page-switcher-start").hide();				
-			}
-			else{
+			} else {
 				$("#page-switcher-start").show();
 			}
 			
-			if(V.curSlide === V.slideEls.length-1){
+			if(VISH.Slides.isCurrentLastSlide()){
 				$("#page-switcher-end").hide();	
-			}
-			else{
+			} else {
 				$("#page-switcher-end").show();
 			}
 		} else {
-			if(V.curSlide===0){
+			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#mobile_back_arrow").hide();
-			}
-			else{
+			} else {
 				$("#mobile_back_arrow").show();
 			}
 			
-			if(V.curSlide === V.slideEls.length-1){
+			if(VISH.Slides.isCurrentLastSlide()){
 				$("#mobile_forward_arrow").hide();		
-			}
-			else{
+			} else {
 				$("#mobile_forward_arrow").show();
 			}
 		}
@@ -145,6 +155,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	return {
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		setupElements			: setupElements,
+		setupGame				: setupGame,
 		setupSize				: setupSize
 	};
 }) (VISH, jQuery);

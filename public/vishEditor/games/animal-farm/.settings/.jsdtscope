@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="levels/|entities/" kind="src" path="lib/game"/>
+	<classpathentry kind="src" path="lib/game/entities"/>
+	<classpathentry kind="src" path="lib/game/levels"/>
+	<classpathentry excluding="debug/" kind="src" path="lib/impact"/>
+	<classpathentry kind="src" path="lib/impact/debug"/>
+	<classpathentry kind="src" path="lib/jquery"/>
+	<classpathentry kind="src" path="lib/plugins/director"/>
+	<classpathentry kind="src" path="lib/plugins/rpgwizard"/>
+	<classpathentry kind="src" path="lib/weltmeister"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

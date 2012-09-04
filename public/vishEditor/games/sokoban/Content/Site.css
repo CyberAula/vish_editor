@@ -1,0 +1,13 @@
+
+div#wasd
+{
+    margin-left:100px;
+    padding-left:10px;
+    border : 2px solid #808080;
+    color: #7F0000;
+    font-family:Arial;
+    width:700px;
+    font-size:0.7em;
+
+}
+

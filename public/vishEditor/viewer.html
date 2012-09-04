@@ -13,7 +13,7 @@
          bottom: 0;
        }
     </style>
-      <meta name="viewport" content="width=800px, user-scalable=yes">
+      <meta name="viewport" content="width=800, user-scalable=yes">
   	  <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -58,6 +58,9 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
+
     <script type="text/javascript" src="/vishEditor/js/VISH.Utils.loader.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Utils.canvas.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Utils.text.js"></script>
@@ -82,7 +85,7 @@
 
     <section class="slides layout-regular template-default">
 	    <button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
-	    
+	    <div id="flashcard-background"></div>
     </section>
     
     <div id="viewbar" class="viewbar" style="display:none">   
@@ -91,13 +94,24 @@
 	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
     </div>
     
+    <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
+    
+    
+
     <button id="mobile_back_arrow" class="vish_arrow" tabindex="2" style="display:none"><</button>
     <button id="mobile_forward_arrow" class="vish_arrow" tabindex="2" style="display:none">></button>
+
 
     <script>
      //First function called when page loads
     function start(){
-      if(window.parent.options){
+      if(window.parent.presentation_preview){
+        //called to show a preview
+        getOptions();
+        VISH.SlideManager.init(options, window.parent.presentation_preview);
+      }
+      else if(window.parent.options){
+        //called to show a presentation VISH VIEWER
         VISH.SlideManager.init(window.parent.options, window.parent.presentation);
       } else {
         //Developping

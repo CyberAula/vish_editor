@@ -1,6 +1,11 @@
 VISH.Quiz.Renderer = (function(V,$,undefined){
 
-  var init = function(){
+  var quiz_id;
+
+  var init = function(quizStatus){
+    if(quizStatus && quizStatus.quiz_active_session_id){
+      quiz_id = quizStatus.quiz_active_session_id;
+    }
   }
 
   ////////////////////
@@ -10,10 +15,10 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /**
    * Function to render a quiz inside an article (a slide)
    */
-  var renderQuiz = function(quizType, element, template, slide, quiz_id){
+  var renderQuiz = function(quizType, element, template, slide){
     switch(quizType){
       case "mcquestion":
-        return _renderMcQuestion(element, template, slide, quiz_id);
+        return _renderMcQuestion(element, template, slide);
         break;
       case "openQuestion":
         return _renderOpenquestion(element, template);
@@ -27,16 +32,21 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
 
-  var _renderMcQuestion = function(element, template, slide, quiz_id){ 
+  var _renderMcQuestion = function(element, template, slide){ 
       var user = V.User.getUser();
       var logged = V.User.isLogged();
      
       var obj;
-
-      if(logged){
-        obj = _renderMcquestionLogged(element, template, slide, quiz_id); 
-      } else {
-        obj =  _renderMcquestionNone(element, template, slide);
+      if(quiz_id){
+        obj = _renderMcquestionToAnswer(element, template, slide); 
+        V.Quiz.setSlideToVote (slide);
+      }
+      else{
+        if(logged){
+          obj = _renderMcquestionLogged(element, template, slide); 
+        } else {
+          obj =  _renderMcquestionNone(element, template, slide);
+        }
       }
 
       return obj;
@@ -46,8 +56,8 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /*
   * Render an Multiple choice question slide for an user who is logged in. In this case 
   * the user can start the Quiz so we show the quiz with all elements and buttons  
-  */
-  var _renderMcquestionLogged = function(element, template, slide, quiz_id){
+   *we use geter of Quiz Class for using the quiz id to Start Session */
+  var _renderMcquestionLogged = function(element, template, slide){
     var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
     ret += "<div class='mcquestion_container'>";
     ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
@@ -66,7 +76,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     ret += "<div class='mcquestion_right'>";
     ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
     ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_id_to_activate' value='"+quiz_id+"'/>";
+    ret += "<input type='hidden' id='quiz_id_to_activate' value='"+V.Quiz.getQuizIdToStartSession()+"'/>";
     ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
     ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
     ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
@@ -122,7 +132,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     ret += "</div>";
     ret += "<div class='mcquestion_right'>";
     ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ quizStatus.quiz_active_session_id +"'/>";
+    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ V.Quiz.getQuizStatus().quiz_active_session_id +"'/>";
     ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
     ret += "</div>";
     ret += "</form>";

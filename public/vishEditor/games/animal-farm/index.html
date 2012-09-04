@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impact Game</title>
+	<style type="text/css">
+		html,body {
+			background-color: #FFF;
+			color: #fff;
+			font-family: helvetica, arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 12pt;
+		}
+		
+		#canvas {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+	</style>
+	
+	<script type="text/javascript" src="lib/jquery/jquery-1.7.min.js"></script>
+	<script type="text/javascript" src="lib/impact/impact.js"></script>
+	<script type="text/javascript" src="lib/game/main.js"></script>	
+	
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<div id="event-router"></div>
+</body>
+<script type="text/javascript">		
+       //document.addEventListener("DOMContentLoaded", init, false);
+      //method to know the position of mouse click (used to determine the position of the fence)
+      function init()
+      {
+        var canvas = document.getElementById("canvas");
+        canvas.addEventListener("mousedown", getPosition, false);
+      }
+
+      function getPosition(event)
+      {
+        var x = new Number();
+        var y = new Number();
+        var canvas = document.getElementById("canvas");
+
+        if (event.x != undefined && event.y != undefined)
+        {
+          x = event.x;
+          y = event.y;
+        }
+        else // Firefox method to get the position
+        {
+          x = event.clientX + document.body.scrollLeft +
+              document.documentElement.scrollLeft;
+          y = event.clientY + document.body.scrollTop +
+              document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+
+        alert("x: " + x + "  y: " + y);
+      }
+</script>	
+</html>

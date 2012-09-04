@@ -12,6 +12,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
 	 */
 	var init = function(options, excursion){
+		
 		VISH.Debugging.init(options);
 
 		VISH.Editing = false;
@@ -46,6 +47,17 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 		V.Quiz.init(excursion);
 
+
+		//first action will be to detect what kind of view we have, game, flashcard, presentation
+		if(excursion.type ==="game"){
+			VISH.ViewerEngine = "game";
+			VISH.ViewerAdapter.setupGame(excursion);	
+			VISH.Game.registerActions(excursion);		
+		}
+		else if(excursion.type === "flashcard"){
+			VISH.ViewerEngine = "flashcard";
+			VISH.Flashcard.init(excursion);
+		}
 		mySlides = excursion.slides;
 		V.Excursion.init(mySlides);
 		V.ViewerAdapter.setupSize(false);
@@ -220,8 +232,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * with this format: 1/12 2/12
 	 */
 	var updateSlideCounter = function(){
-		var number_of_slides = V.slideEls.length;
-		var slide_number = V.curSlide + 1;
+		var number_of_slides = V.Slides.getSlides().length;
+		var slide_number = VISH.Slides.getCurrentSlideNumber();
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};
 
