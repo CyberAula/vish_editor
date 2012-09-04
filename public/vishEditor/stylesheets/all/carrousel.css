@@ -307,9 +307,6 @@ img.carrousel_element_single_row_slides{
   opacity: 0.6;
 }
 
-img.carrousel_element_single_row_slides:hover{
-}
-
 img.carrousel_element_single_row_slides:active{
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.1);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.1);

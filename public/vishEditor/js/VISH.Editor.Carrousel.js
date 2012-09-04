@@ -3,7 +3,6 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	//Available Options: rows,callback,rowItems,scrollItems,styleClass
 	
   var createCarrousel = function(containerId,options){
-		console.log("CREATE WITH CONTAINER: " + containerId);
 		//Necessary params
 		if(!containerId){
 			return;
@@ -20,6 +19,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		var startAtLastElement = false;
 		var pagination = true;
 		var sortable = false;
+		var afterCreateCarruselFunction = null;
 		
 		//Read options
 		if(options){
@@ -52,6 +52,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			}
 			if(typeof options['sortable'] == 'boolean'){
 				sortable = options['sortable'];
+			}
+			if(options['afterCreateCarruselFunction']){
+				afterCreateCarruselFunction = options['afterCreateCarruselFunction'];
 			}
 		}
 
@@ -141,7 +144,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				var start = 0;
 			}
 			
-		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start);
+		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start, afterCreateCarruselFunction);
 		}	
 			
 		if(pagination){
@@ -215,7 +218,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
   }
 
 
-  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start){
+  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start, afterCreateCarruselFunction){
 		
 		if(!start){
 			start = 0;
@@ -248,7 +251,8 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		    button  : "#carrousel_next" + widgetsId,
 		    key     : "right"
 		  },
-		  pagination  : "#carrousel_pag"  + widgetsId              
+		  pagination  : "#carrousel_pag"  + widgetsId,
+		  onCreate    : afterCreateCarruselFunction         
 		});  
 			
 		if(synchronizeIds){

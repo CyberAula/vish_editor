@@ -86,7 +86,7 @@ VISH.Utils.loader = (function(V,undefined){
 		}
 		
 		
-    var loadImagesOnCarrouselOrder = function(imagesArray,callback,carrouselDivId,titleArray){
+    var loadImagesOnCarrouselOrder = function(imagesArray,callback, data,carrouselDivId,titleArray){
 			var validImagesArray = imagesArray;
       var imagesLength = imagesArray.length;
       var imagesLoaded = 0;
@@ -96,7 +96,7 @@ VISH.Utils.loader = (function(V,undefined){
           imagesLoaded = imagesLoaded + 1;
           if(imagesLoaded == imagesLength){
 						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
-            callback();
+            callback(data);
           }
         })
         $(image).error(function(response) {
@@ -104,7 +104,7 @@ VISH.Utils.loader = (function(V,undefined){
 					validImagesArray.splice(validImagesArray.indexOf(image),1)
           if(imagesLoaded == imagesLength){
 						_insertElementsWithOrder(validImagesArray,carrouselDivId,titleArray);
-            callback();
+            callback(data);
           }
         })
       });
@@ -113,7 +113,7 @@ VISH.Utils.loader = (function(V,undefined){
 	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
 	 	 $.each(imagesArray, function(i, image) {
 	     if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
-				 	$("#" + carrouselDivId).append("<div><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+				 	$("#" + carrouselDivId).append("<div><img src='/vishEditor/images/flashcard_button.jpg' id='poi"+titleArray[imagesArray.indexOf(image)]+"' class='fc_draggable_arrow'/><p>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
           
 	     } else {
 	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
