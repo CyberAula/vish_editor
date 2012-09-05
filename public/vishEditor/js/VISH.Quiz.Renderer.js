@@ -68,7 +68,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
       ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
       //ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"'></span></div>";
+      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"' style='width:0%'></span></div>";
       ret += "<label class='mcoption_label' id='mcoption_label_"+next_index+"'></label>";
     }
 
