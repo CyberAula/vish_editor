@@ -18,10 +18,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
 		V.Editor.Thumbnails.redrawThumbnails(_redrawPois);
 
-		//show change background button
+		VISH.Editor.Tools.init();
 		
-		//cuando se salva en el vish.editor.js puedo recorrer todos los poiX y ver su offset(), que da la posicion en el iframe
-		//con eso calculo su posición final en el background
 	};
 
 

@@ -2,14 +2,10 @@ VISH.Editor = (function(V,$,undefined){
 	
 	var initOptions;
 	var domId = 0;  //number for next doom element id
-
-	//var to store the excursion type, by default it will be "presentation", but it can be changed to "flashcard" or "game"
-	var excursionType = "presentation";
-	// hash to store the excursions details like Title, Description, etc.
-	var excursionDetails = {}; 
+	
 	//var to store the excursion we are showing, used when changing from presentation to flashcard
 	//and when editing an excursion
-	var draftExcursion = null;
+	var draftExcursion = {};
 	var saved_excursion = null;
 	
 	// Hash to store: 
@@ -64,10 +60,6 @@ VISH.Editor = (function(V,$,undefined){
 		//If we have to edit
 		if(excursion){
 			setExcursion(excursion);
-			setExcursionType(excursion.type);
-			excursionDetails.title = excursion.title;
-			excursionDetails.description = excursion.description;
-			excursionDetails.avatar = excursion.avatar;
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
 			_removeSelectableProperties();			
@@ -343,8 +335,8 @@ VISH.Editor = (function(V,$,undefined){
 		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstCall)){
 			VISH.Editor.API.requestTags(_onInitialTagsReceived);
 
-			if((excursionDetails)&&(excursionDetails.avatar)){
-				VISH.Editor.AvatarPicker.onLoadExcursionDetails(excursionDetails.avatar);
+			if(draftExcursion && draftExcursion.avatar){
+				VISH.Editor.AvatarPicker.onLoadExcursionDetails(draftExcursion.avatar);
 			} else {
 				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
 			}
@@ -378,11 +370,11 @@ VISH.Editor = (function(V,$,undefined){
 			$('#excursion_details_error').show();
 			return false;
 		}
-		// save the details in a hash object
-		excursionDetails.title = $('#excursion_title').val();
-		excursionDetails.description = $('#excursion_description').val();
-		excursionDetails.avatar = $('#excursion_avatar').val();
-		excursionDetails.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+		// save the details in the excursion
+		draftExcursion.title = $('#excursion_title').val();
+		draftExcursion.description = $('#excursion_description').val();
+		draftExcursion.avatar = $('#excursion_avatar').val();
+		draftExcursion.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 		$('#excursion_details_error').hide();
 		$.fancybox.close();
 	};
@@ -650,10 +642,10 @@ VISH.Editor = (function(V,$,undefined){
 			//save the pois
 			excursion.background.pois = V.Editor.Flashcard.savePois();
 		}
-		excursion.title = excursionDetails.title;
-		excursion.description = excursionDetails.description;
-		excursion.avatar = excursionDetails.avatar;
-		excursion.tags = excursionDetails.tags;
+		excursion.title = draftExcursion.title;
+		excursion.description = draftExcursion.description;
+		excursion.avatar = draftExcursion.avatar;
+		excursion.tags = draftExcursion.tags;
 		excursion.author = '';
 		excursion.slides = [];
 		var slide = {};
@@ -935,7 +927,6 @@ VISH.Editor = (function(V,$,undefined){
 
 	var setExcursion = function(excursion) {
 		draftExcursion = excursion;
-		excursionType = excursion.type;
 	}
 
 	var getSavedExcursion = function() {
@@ -966,15 +957,15 @@ VISH.Editor = (function(V,$,undefined){
 	 * type can be "presentation", "flashcard" or "game"
 	 */
 	var getExcursionType = function(){
-		return excursionType;
+		return draftExcursion.type;
 	};
 
 	var setExcursionType = function(type){
 		if(type){
-			excursionType = type;
+			draftExcursion.type = type;
 		}
 		else{
-			excursionType = "presentation";
+			draftExcursion.type = "presentation";
 		}
 	};
 
