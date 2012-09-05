@@ -139,7 +139,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.init();
 
 	
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!draftExcursion)){
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!initial_excursion)){
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
