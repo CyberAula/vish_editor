@@ -7,7 +7,9 @@ VISH.Editor = (function(V,$,undefined){
 	var excursionType = "presentation";
 	// hash to store the excursions details like Title, Description, etc.
 	var excursionDetails = {}; 
-	var excursion_to_edit = null;
+	//var to store the excursion we are showing, used when changing from presentation to flashcard
+	//and when editing an excursion
+	var draftExcursion = null;
 	var saved_excursion = null;
 	
 	// Hash to store: 
@@ -61,7 +63,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		//If we have to edit
 		if(excursion){
-			excursion_to_edit = excursion;
+			setExcursion(excursion);
 			setExcursionType(excursion.type);
 			excursionDetails.title = excursion.title;
 			excursionDetails.description = excursion.description;
@@ -141,7 +143,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.init();
 
 	
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!excursion_to_edit)){
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!draftExcursion)){
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
@@ -165,9 +167,6 @@ VISH.Editor = (function(V,$,undefined){
 				'showCloseButton': true
 			}); 
 		}
-
-		//flashcards
-		V.Editor.Flashcard.init();
 	};
 	
 	
@@ -219,7 +218,7 @@ VISH.Editor = (function(V,$,undefined){
 		var tagList = $(".tagBoxIntro .tagList");
 
 		if ($(tagList).children().length == 0){
-			if(!excursion_to_edit){
+			if(!draftExcursion){
 				//Insert the two first tags.
 				$.each(data, function(index, tag) {
 					if(index==2){
@@ -228,9 +227,9 @@ VISH.Editor = (function(V,$,undefined){
 					$(tagList).append("<li>" + tag + "</li>")
 				});
 			} else {	
-				if(excursion_to_edit.tags){
-					//Insert excursion_to_edit tags
-					$.each(excursion_to_edit.tags, function(index, tag) {
+				if(draftExcursion.tags){
+					//Insert draftExcursion tags
+					$.each(draftExcursion.tags, function(index, tag) {
 						$(tagList).append("<li>" + tag + "</li>")
 					});
 				}
@@ -638,8 +637,8 @@ VISH.Editor = (function(V,$,undefined){
 
 		//now save the excursion
 		var excursion = {};
-		if(excursion_to_edit){
-			excursion.id = excursion_to_edit.id;
+		if(draftExcursion){
+			excursion.id = draftExcursion.id;
 		}else{
 			excursion.id = '';	
 		}
@@ -649,7 +648,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.background = {};
 			excursion.background.src = $("#flashcard-background").css("background-image");
 			//save the pois
-
+			excursion.background.pois = V.Editor.Flashcard.savePois();
 		}
 		excursion.title = excursionDetails.title;
 		excursion.description = excursionDetails.description;
@@ -793,7 +792,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 
 			var send_type;
-	        if(excursion_to_edit){
+	        if(draftExcursion){
 	          send_type = 'PUT'; //if we are editing
 	        } else {
 	        			VISH.Debugging.log("send_type = post!!");   
@@ -842,9 +841,9 @@ VISH.Editor = (function(V,$,undefined){
 		var send_type;
 		var url = "/presentation/";
 
-		if(excursion_to_edit){
+		if(draftExcursion){
 			send_type = 'PUT'; //if we are editing
-			url = url + excursion_to_edit.id;
+			url = url + draftExcursion.id;
 		} else {
 			send_type = 'POST'; //if it is a new
 		} 
@@ -931,7 +930,12 @@ VISH.Editor = (function(V,$,undefined){
 	}
 
 	var getExcursion = function() {
-		return excursion_to_edit;
+		return draftExcursion;
+	}
+
+	var setExcursion = function(excursion) {
+		draftExcursion = excursion;
+		excursionType = excursion.type;
 	}
 
 	var getSavedExcursion = function() {
@@ -985,6 +989,7 @@ VISH.Editor = (function(V,$,undefined){
 		getOptions 			: getOptions, 
 		loadFancyBox 		: loadFancyBox,
 		getExcursion 		: getExcursion,
+		setExcursion 		: setExcursion,
 		getSavedExcursion 	: getSavedExcursion,
 		saveExcursion 		: saveExcursion,
 		setExcursionType	: setExcursionType

@@ -1,11 +1,7 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
-	var init = function(){
-		$(document).on("click", "#flashcard_button", _onFlashcardButtonClicked );
-	};
-
-
-	var _onFlashcardButtonClicked = function(){
+	
+	var switchToFlashcard = function(){
 		//first action, set excursion type to "flashcard"
 		V.Editor.setExcursionType("flashcard");
 		
@@ -15,7 +11,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//show flashcard background, should be an image with help
 		$("#flashcard-background").show();
 		
-		$( "#flashcard-background" ).droppable();  //to accept the pois
+		$( "#flashcard-background").droppable();  //to accept the pois
 		
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on excursionType, also remove drag and drop to order slides
@@ -28,12 +24,14 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//con eso calculo su posición final en el background
 	};
 
+
+	//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
 	var _redrawPois = function(){
-		console.log("_redrawPois");
-		$(".fc_draggable_arrow").show();
 		//show draggable items to create the flashcard
-		//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
-		//var también si se pudiese hacer appendTo al background y así poder calcular facil la posición final
+		$(".fc_draggable_arrow").show();
+		//apply them the style to get the previous position
+		_applyStyleToPois();
+
 		$(".fc_draggable_arrow").draggable({
 			stop: function(event, ui) { console.log("start drag");},
 			revert: "invalid",   //poi will return to original position if not dropped on the background
@@ -53,12 +51,22 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(".fc_draggable_arrow").css("z-index", "2000");
 	};
 
+
+	var _applyStyleToPois = function(){
+		var excursion = V.Editor.getExcursion();
+		if(excursion && excursion.background && excursion.background.pois){
+			$.each(excursion.background.pois, function(index, value) { 
+  				console.log("val" + value);
+			});
+		}
+	};
+
 	/*
 	 * returns an array of pois
 	 */
 	var savePois = function(){
 		var pois = [];
-		$(".fc_draggable_arrow [moved='true']").each(function(index,s){
+		$(".fc_draggable_arrow[moved='true']").each(function(index,s){
 			pois[index]= {};
 			pois[index].id = $(s).attr('id');
 			pois[index].x = $(s).offset().left - 55;
@@ -73,9 +81,9 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	return {
-		init 				: init,
 		removePois			: removePois,
-		savePois			: savePois
+		savePois			: savePois,
+		switchToFlashcard	: switchToFlashcard
 	};
 
 }) (VISH, jQuery);

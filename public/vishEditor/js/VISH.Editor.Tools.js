@@ -125,6 +125,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			presentation.type = "presentation";
 		}
 
+		_cleanPresentationToolbar();
+		
 		switch(presentation.type){
 			case "presentation":
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();

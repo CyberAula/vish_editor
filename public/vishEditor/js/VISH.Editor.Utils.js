@@ -13,6 +13,15 @@ VISH.Editor.Utils = (function(V,$,undefined){
     	$(".slides > article").hide();
     };
 
+    var showSlides = function(){
+    	//only show the current, the two next and the two before
+    	$(".slides > article.far-past").show();
+    	$(".slides > article.past").show();
+    	$(".slides > article.current").show();
+    	$(".slides > article.next").show();
+    	$(".slides > article.far-next").show();
+    };
+
 	/*
 	 * function to draw elements in an area, try to fit in the drawable area 
 	 * 
@@ -294,7 +303,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		addSlide		    : addSlide,
 		redrawSlides	    : redrawSlides,
 		dimentionToDraw     : dimentionToDraw,
-		loadTab 			: loadTab
+		loadTab 			: loadTab,
+		showSlides			: showSlides
 	};
 
 }) (VISH, jQuery);

@@ -98,10 +98,34 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		);
 	}
 
+	var switchToFlashcard = function(){		
+		V.Editor.Flashcard.switchToFlashcard();
+	};
+
+	var switchToPresentation = function(){
+
+		var excursion = V.Editor.saveExcursion();
+		V.Editor.setExcursion(excursion);
+
+		V.Editor.setExcursionType("presentation");
+		
+		//hide slides
+		V.Editor.Utils.showSlides();
+
+		//show flashcard background, should be an image with help
+		$("#flashcard-background").hide();
+		
+		V.Editor.Thumbnails.redrawThumbnails();
+
+
+	};
+
 
 	return {
 		init							: init,
-		settings						: settings
+		settings						: settings,
+		switchToFlashcard				: switchToFlashcard,
+		switchToPresentation			: switchToPresentation
 	};
 
 }) (VISH, jQuery);
