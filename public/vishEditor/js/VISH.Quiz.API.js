@@ -73,7 +73,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 				quizName = quiz_name;
 
 			} else {
-				quizName = false;
+				quizName = "";
 
 			}
 			//DELETE 

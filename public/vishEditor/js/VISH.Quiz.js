@@ -69,7 +69,7 @@ $(myInput).keydown(function(event) {
         V.Debugging.log("event.keyCode  =" + event.keyCode);
         if(($(myInput).val()!="")&& ($(myInput).val()!="write a name for saving")) {
           //call to addMultipleChoiceOption
-          _saveQuizYesButtonClicked();
+        return false;
           $(myInput).blur();
         } 
         else {
@@ -487,7 +487,7 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
           //
            var quiz_active_session_id = $(".current").find(".quiz_session_id").val();
            V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _showResultsToTeacher, _onQuizSessionResultsReceivedError);
-           
+
            var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
 
       //  var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
