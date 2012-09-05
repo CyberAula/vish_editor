@@ -113,7 +113,6 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
-	//MODIFIED BY KIKE TO DETERMINE IF GOING RIGHT OR LEFT
 	var updateSlides = function(goingRight) {
 	 
 	  _updateSlideEls();
@@ -126,6 +125,7 @@ VISH.Slides = (function(V,$,undefined){
 	  triggerEnterEvent(curSlideIndex);
 	  updateHash();
 	};
+
 
 	var _updateSlideEls = function() {
 		for (var i = 0; i < slideEls.length; i++) {
@@ -216,7 +216,7 @@ VISH.Slides = (function(V,$,undefined){
 	  if (slideNo) {
 	    curSlideIndex = slideNo - 1;
 	  } else {
-	    curSlideIndex = 0;
+	    curSlideIndex = -1;
 	  }
 	};
 

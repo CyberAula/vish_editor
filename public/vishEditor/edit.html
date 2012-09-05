@@ -165,7 +165,7 @@
 						</a>
 						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option menu_action menu_all" action="save">Save</a>
+								<a class="menu_option menu_action menu_all" action="onSaveButtonClicked">Save</a>
 							</li>
 							<li>
 								<a class="menu_option">Export as</a>
@@ -219,7 +219,7 @@
 								<a class="menu_option menu_action menu_all" action="preview">Preview</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action menu_all" action="settings">Settings</a>
+								<a class="menu_option menu_action menu_all" action="displaySettings">Settings</a>
 							</li>
 							<li>
 								<a class="menu_option menu_action menu_all" action="help">Help</a>
@@ -1114,7 +1114,6 @@
       </ol> 
 
 	<script>
-		var presentation_preview;
 		//First function called when page loads
 		 function start(){
 		 	if(window.parent.options){

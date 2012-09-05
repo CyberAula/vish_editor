@@ -105,13 +105,12 @@
     <script>
      //First function called when page loads
     function start(){
-      if(window.parent.presentation_preview){
+      if(typeof window.parent.VISH.Editor.Preview.getPreview == "function"){
         //called to show a preview
         getOptions();
-        VISH.SlideManager.init(options, window.parent.presentation_preview);
-      }
-      else if(window.parent.options){
-        //called to show a presentation VISH VIEWER
+        VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());
+      } else if(window.parent.options){
+        //called from web server to show a presentation
         VISH.SlideManager.init(window.parent.options, window.parent.presentation);
       } else {
         //Developping
