@@ -146,7 +146,7 @@
 		<div id="menubar-viewer" style="display:none">
 			<button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
 	    <div id="viewbar" class="viewbar">
-		    <button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
+		    <button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
 	      <div id="slide-counter"></div>
 	  	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
 			</div>
@@ -165,42 +165,65 @@
 						</a>
 						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option_first menu_option menu_option_save" href="#">Save</a>
+								<a class="menu_option menu_action menu_all" action="save">Save</a>
 							</li>
 							<li>
-								<a class="menu_option menu_option_export" href="#">Export as</a>
+								<a class="menu_option">Export as</a>
 								<ul>
 									<li>
-										<a class="menu_option menu_option_file" href="#">File</a>
+										<a class="menu_option menu_action menu_all">File</a>
 									</li>
 									<li>
-										<a class="menu_option menu_option_pdf" href="#">PDF</a>
+										<a class="menu_option menu_action menu_all">PDF</a>
 									</li>
 									<li>
-										<a href="http://www.webdesignerwall.com">Web Designer Wall</a>
-										<ul>
-											<li>
-												<a href="http://jobs.webdesignerwall.com">Design Job Wall</a>
-											</li>
-											<li>
-												<a href="http://jobs.webdesignerwall.com">Design Job Wall</a>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<a href="http://icondock.com">IconDock</a>
-									</li>
-									<li>
-										<a href="http://bestwebgallery.com">Best Web Gallery</a>
+										<a class="menu_option menu_action menu_all">HTML5 Application</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option_first menu_option menu_option_save" href="#">About</a>
+								<a class="menu_option" href="#">Import</a>
+								<ul>
+									<li>
+										<a class="menu_option menu_action menu_all">File</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_all">Presentation</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation">Flashcard</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation">Game</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation">Virtual Experiment</a>
+									</li>
+								</ul>
 							</li>
 							<li>
-								<a class="menu_option_first menu_option menu_option_save" href="#">Contact</a>
+								<a class="menu_option menu_all">Convert to</a>
+								<ul>
+									<li>
+										<a class="menu_option menu_action menu_flashcard menu_game">Presentation</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_standard_presentation menu_game" action="switchToFlashcard">Flashcard</a>
+									</li>
+									<li>
+										<a style="display:none" class="menu_option menu_action" action="switchToGame">Game</a>
+									</li>
+								</ul>
 							</li>
+							<li>
+								<a class="menu_option menu_action menu_all" action="preview">Preview</a>
+							</li>
+							<li>
+								<a class="menu_option menu_action menu_all" action="settings">Settings</a>
+							</li>
+							<li>
+								<a class="menu_option menu_action menu_all" action="help">Help</a>
+							</li
 						</ul>
 					</li>
 				</ul>

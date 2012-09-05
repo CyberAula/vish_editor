@@ -1,8 +1,4 @@
-body {
-
-}
-
-a {
+#menu a {
 	color: #333;
 }
 
@@ -21,6 +17,7 @@ a {
 	z-index: 9999;
 }
 
+
 /* main level link */
 #menu a {
 	font-weight: bold;
@@ -35,7 +32,8 @@ a {
 }
 
 
-/* sub levels link hover */
+/* Level 1 */
+
 #menu ul li:hover a, #menu li:hover li a {
 	background: none;
 	border: none;
@@ -50,15 +48,12 @@ a {
 	background: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba)) !important; /* for webkit browsers */
 	background: -moz-linear-gradient(top,  #04acec,  #0186ba) !important; /* for firefox 3.6+ */
 	color: #fff !important;
-
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
 }
 
-/* level 2 list */
 #menu ul {
 	background: #ddd; /* for non-css3 browsers */
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cfcfcf'); /* for IE */
@@ -85,6 +80,13 @@ ul.menu_option_main ul {
 	margin-left: 12px !important;
 }
 
+#menu a.menu_option_main{
+	padding-top: 0px;
+	padding-bottom: 50px;
+	padding-right: 50px;
+	padding-left: 50px;
+}
+
 /* dropdown */
 #menu li:hover > ul {
 	display: block;
@@ -101,12 +103,6 @@ ul.menu_option_main ul {
 	text-shadow: 0 1px 1px rgba(255, 255, 255, .9);
 }
 
-#menu a.menu_option_main{
-	padding-top: 0px;
-	padding-bottom: 50px;
-	padding-right: 50px;
-	padding-left: 50px;
-}
 
 
 /* First level */
@@ -128,6 +124,8 @@ ul.menu_option_main ul {
 }
 
 
+/* rounded corners for first and last child */
+
 /* Second level */
 #menu ul ul {
 	border-radius: 0px 9px 9px 9px;
@@ -137,16 +135,21 @@ ul.menu_option_main ul {
 	top: -1px;
 }
 
-/* rounded corners for first and last child */
 #menu ul ul li:first-child > a {
-	-webkit-border-top-left-radius: 0px;	
-	-moz-border-radius-topleft: 0px;
 	-webkit-border-top-right-radius: 8px;
 	-moz-border-radius-topright: 8px;
-	border-radius: 0px 8px 0px 0px;
+	border-radius-top-right: 8px;
 }
 
+#menu ul ul li:last-child > a {
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-bottomright: 8px;
+	border-radius-bottom-right: 8px;
+}
+
+
 /* Third level */
+
 #menu ul ul ul {
 	border-radius: 0px 9px 9px 9px;
 	-webkit-border-top-left-radius: 0px 9px 9px 9px;
@@ -165,6 +168,12 @@ ul.menu_option_main ul {
 	-webkit-border-bottom-right-radius: 8px;
 	-moz-border-radius-bottomright: 8px;
 	border-radius-bottom-right: 8px;
+}
+
+a.menu_single_element {
+	border-radius: 0px 9px 9px 9px !important;
+	-webkit-border-top-left-radius: 0px 9px 9px 9px !important;
+	-moz-border-radius-topleft: 0px 9px 9px 9px !important;
 }
 
 
@@ -188,4 +197,8 @@ html[xmlns] #menu {
 
 * html #menu {
 	height: 1%;
+}
+
+a.menu_option{
+	cursor: pointer !important;
 }
