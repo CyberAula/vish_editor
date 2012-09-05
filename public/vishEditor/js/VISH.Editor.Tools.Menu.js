@@ -337,6 +337,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#flashcard-background").hide();
 		
 		V.Editor.Thumbnails.redrawThumbnails();
+		VISH.Editor.Tools.init();
 	};
 
 

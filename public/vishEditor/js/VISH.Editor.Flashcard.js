@@ -53,8 +53,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	var _applyStyleToPois = function(){
 		var excursion = V.Editor.getExcursion();
 		if(excursion && excursion.background && excursion.background.pois){
-			$.each(excursion.background.pois, function(index, value) { 
-  				console.log("val" + value);
+			$.each(excursion.background.pois, function(index, val) { 
+  				$("#" + val.id).offset({ top: val.y + 75, left: val.x + 55});
 			});
 		}
 	};

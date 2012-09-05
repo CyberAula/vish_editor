@@ -105,7 +105,7 @@
     <script>
      //First function called when page loads
     function start(){
-      if(typeof window.parent.VISH.Editor.Preview.getPreview == "function"){
+      if(window.parent.VISH.Editor && (typeof window.parent.VISH.Editor.Preview.getPreview == "function")){
         //called to show a preview
         getOptions();
         VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());

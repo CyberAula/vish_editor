@@ -112,7 +112,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var fileref=document.createElement("link");
   		fileref.setAttribute("rel", "stylesheet");
   		fileref.setAttribute("type", "text/css");
-  		fileref.setAttribute("href", "stylesheets/all/game.css");
+  		fileref.setAttribute("href", "stylesheets/game/game.css");
   		document.getElementsByTagName("body")[0].appendChild(fileref);
 	};
 

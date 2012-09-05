@@ -78,7 +78,7 @@ VISH.Samples = (function(V,undefined){
 		"avatar" 		: "/assets/logos/original/excursion-10.png",
 		"author" 		: "",
 		"type"	 		: "flashcard", //flashcard, game, presentation, microscope, experiment, quiz
-		"background"	: { "src" : "http://www.andaluciacar.com/images/imagesMaps/donanabig.jpg",
+		"background"	: { "src" : "url(http://www.andaluciacar.com/images/imagesMaps/donanabig.jpg)",
 					 		"pois": [{"id": "poi1",
 					 				  "x" : "200",
 					 				  "y" : "200",

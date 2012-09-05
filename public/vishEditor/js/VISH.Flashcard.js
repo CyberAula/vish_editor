@@ -5,12 +5,12 @@ VISH.Flashcard = (function(V,$,undefined){
 		var fileref=document.createElement("link");
   		fileref.setAttribute("rel", "stylesheet");
   		fileref.setAttribute("type", "text/css");
-  		fileref.setAttribute("href", "stylesheets/all/flashcard.css");
+  		fileref.setAttribute("href", "stylesheets/flashcard/flashcard.css");
   		document.getElementsByTagName("body")[0].appendChild(fileref);
 
   		var flashcard_div = $("#flashcard-background");
   		//first we set the flashcard background image
-  		flashcard_div.css("background-image", "url('" + excursion.background.src + "')");
+  		flashcard_div.css("background-image", excursion.background.src);
 
   		//and now we add the points of interest with their click events to show the slides
   		for(index in excursion.background.pois){
