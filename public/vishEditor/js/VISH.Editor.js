@@ -7,6 +7,8 @@ VISH.Editor = (function(V,$,undefined){
 	//and when editing an excursion
 	var draftExcursion = {};
 	var saved_excursion = null;
+	//boolean to indicate if we are in edit (and then do a PUT instead a POST)
+	var initial_excursion = false;
 	
 	// Hash to store: 
 	// current_el that will be the zone of the template that the user has clicked
@@ -59,6 +61,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		//If we have to edit
 		if(excursion){
+			initial_excursion = true;
 			setExcursion(excursion);
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
@@ -784,7 +787,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 
 			var send_type;
-	        if(draftExcursion){
+	        if(initial_excursion){
 	          send_type = 'PUT'; //if we are editing
 	        } else {
 	        			VISH.Debugging.log("send_type = post!!");   
