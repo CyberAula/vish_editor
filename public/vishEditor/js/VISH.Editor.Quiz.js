@@ -60,9 +60,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 				var text  = $('<div>').append($('.' +MultipleChoiceOptionClass).clone()).html();
 				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
-				V.Debugging.log("inputs search value is: " + inputs_search);
+				//V.Debugging.log("inputs search value is: " + inputs_search);
 				var next_num = inputs_search.size()+1;
-					V.Debugging.log("next_num value is: " + next_num);
+					//V.Debugging.log("next_num value is: " + next_num);
 			    var next_index = "a".charCodeAt(0) + (next_num-1); 
   	
 		        next_index = String.fromCharCode(next_index);

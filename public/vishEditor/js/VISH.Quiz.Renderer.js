@@ -68,8 +68,8 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
       ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
       //ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
+      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"'></span></div>";
+      ret += "<label class='mcoption_label' id='mcoption_label_"+next_index+"'></label>";
     }
 
     ret += "</div>";
@@ -126,8 +126,8 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     for(var i = 0; i<element['options'].length; i++){
       var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
       ret += "<label class='mc_answer' id='mc_answer_"+slide+"_option_"+next_index+"'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+(i+1)+"'></label>";
+      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"'></span></div>";
+      ret += "<label class='mcoption_label' id='mcoption_label_"+next_index+"'></label>";
     }
 
     ret += "</div>";

@@ -865,7 +865,7 @@ text-align:left;
 
 	}		
 
-.mc_meter #mcoption1 { 
+.mc_meter #mcoption_a { 
 		width:0%;
 		height:100%;
 		background-color: red;
@@ -875,7 +875,7 @@ text-align:left;
 
 	}		
 		
-.mc_meter #mcoption2 { 
+.mc_meter #mcoption_b { 
 		width:0%;
 		height:100%;
 		background-color: green;
@@ -885,7 +885,7 @@ text-align:left;
 
 	}	
 
-.mc_meter #mcoption3 { 
+.mc_meter #mcoption_c { 
 		width:0%;
 		height:100%;
 		background-color: yellow;
@@ -894,7 +894,7 @@ text-align:left;
 		float:left;
 	}	
 
-.mc_meter #mcoption4 { 
+.mc_meter #mcoption_d { 
 		width:0%;
 		height:100%;
 		background-color: orange;
@@ -904,7 +904,7 @@ text-align:left;
 
 	}	
 		
-.mc_meter #mcoption5 { 
+.mc_meter #mcoption_e { 
 		width:0%;
 		height:100%;
 		background-color: blue;
@@ -914,7 +914,7 @@ text-align:left;
 
 	}		
 		
-.mc_meter #mcoption6 { 
+.mc_meter #mcoption_f { 
 		width:0%;
 		height:100%;
 		background-color:#FF05DD;

@@ -33,10 +33,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          url     : 'http://'+ window.location.host + '/quiz_sessions',
 	          data    : params,
 	          success : function(data) {
-
-	              //if we redirect the parent frame
-		            V.Debugging.log("data: "+ data);	
-	              	var quiz_session_id = data;
+	         	var quiz_session_id = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(quiz_session_id);
 	            }
@@ -81,22 +78,17 @@ VISH.Quiz.API = (function(V,$,undefined){
 	       
 	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
-	     /* TODO  review what others params are required for post correctly */
-	        var params = {
+	          var params = {
 	     	  "id":quiz_session_id,
 	          "authenticity_token" : V.User.getToken(), 
 	          "name" : quizName
 	        }
-
 	        $.ajax({
 	          type    : send_type,
 	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_session_id,
 	          data    : params,
 	          success : function(data) {
-
-	              //if we redirect the parent frame
-		            //V.Debugging.log("data: "+ data);	
-	              	var results = data;
+		      	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
 	            }
@@ -104,25 +96,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          error: function(error){
 	          	failCallback(error);
 	          }
-	          
+	        
              });
 
 	         return null;
       
   };
-	
-	
-	/**
-	 * GET /quiz_sessions/X => render vote or results page 
-	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
-	 or for a student who has the shared quiz URL for voting.
-
-	  */
-	var getQuizSession = function(quiz_session_id, successCallback, failCallback){
-		
-		
-	};
-	
 	
 	/**
 	 * PUT /quiz_sessions/X => vote => redirect to show
@@ -139,10 +118,8 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var send_type = 'PUT';
 	       
 	        V.Debugging.log("token is: " + V.User.getToken());
-	        //DELETE to http://server/quiz_session/X
-	     /* TODO  review what others params are required for post correctly */
 	        var params = {
-	        "id": quiz_active_session_id,
+	      	  "id": quiz_active_session_id,
 	     	  "option":answer_selected,
 	          "authenticity_token" : V.User.getToken()
 	        }
@@ -152,18 +129,15 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id,
 	          data    : params,
 	          success : function(data) {
-
-	              //if we redirect the parent frame
-		            V.Debugging.log("data: "+ data);	
-	              	var results = data;
+	            var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
 	            }
-	            		          },
+	          },
 	          error: function(error){
 	          	failCallback(error);
 	          }
-	          
+
              });
 
 	         return null;
@@ -177,7 +151,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
 
    };
- 
+ 	/**
+	 * GET /quiz_sessions/X => render vote or results page 
+	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
+	 or for a student who has the shared quiz URL for voting.
+
+	  */
 	var getQuizSessionResults = function (quiz_active_session_id, successCallback, failCallback) {
 
 		V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_session_id);
@@ -187,9 +166,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			//GET
 			var send_type = 'GET';
-	       
-	        //DELETE to http://server/quiz_session/X
-	     /* TODO  review what others params are required for post correctly */
 	        var params = {
 	        "id": quiz_active_session_id, 
 	        "authenticity_token" : V.User.getToken()  
@@ -200,10 +176,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id + '/results.json',
 	          data    : params,
 	          success : function(data) {
-
-	              //if we redirect the parent frame
-		          console.log("data: "+ data);	
-	              	var results = data;
+               	var results = data;
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
 	            }
@@ -233,7 +206,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 		init					            : init, 
 		postStartQuizSession				: postStartQuizSession, 
 		deleteQuizSession					: deleteQuizSession, 
-		getQuizSession						: getQuizSession, 
 		putQuizSession						: putQuizSession, 
 		getQuizSessionResults				: getQuizSessionResults
 

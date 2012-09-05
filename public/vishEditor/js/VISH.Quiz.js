@@ -62,8 +62,8 @@ VISH.Quiz = (function(V,$,undefined){
 
     $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
     $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
-
-$(myInput).keydown(function(event) {
+//TODO correct this , because doesn't avoid the enter action ... 
+$(myInput).keydown(function(event) { 
   event.preventDefault();
       if(event.keyCode == 13) {
         V.Debugging.log("event.keyCode  =" + event.keyCode);
@@ -242,14 +242,14 @@ $(myInput).keydown(function(event) {
     //TODO URL shorter ?? talk to R & R 
     var quiz_id =  $(".current").find(".quiz_id_to_activate").val();
     // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
-    V.Debugging.log("Quiz_id from form : " + quiz_id);
+   // V.Debugging.log("Quiz_id from form : " + quiz_id);
 
     V.Quiz.API.postStartQuizSession(quiz_id,_onQuizSessionReceived,_OnQuizSessionReceivedError);
   };
 
 
   var _onQuizSessionReceived = function(quiz_session_id){
-    V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
+    //V.Debugging.log("returned value is (quiz_Session_id?): " + quiz_session_id);
     var url = quizUrlForSession + quiz_session_id;
 
     var divURLShare = "<div id='url_share_"+slideToPlay+"' class='url_share'></div>";
@@ -343,16 +343,23 @@ $(myInput).keydown(function(event) {
       /*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
       and we receive from the server the quantities of votes for each option in a JSON object:
       {"quiz_session_id":"444", "quiz_id":"4", "option_a":"23", "option_b":"3", "option_c":"5", "option_d":"1", "option_e":"6"}
-      {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+     var data {"quiz_session_id":"444", "quiz_id":"4", "results" : ["0":"23", "1":"3","2":"5","3": "1", "3":"6"]};
       */
       var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
       V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
 
-      V.Quiz.API.putQuizSession(answer, quiz_active_session_id, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
+      //added for test new format from object received
+      //var data = {"quiz_session_id":"444", "quiz_id":"4", "results" : [{"a":"23"},{"b":"3"},{"c":"5"},{"d":"1"}, {"e":"6"}]};
+
+      //_showResultsToParticipant(data, slideToVote);
+  //TODO uncomment this line for call to server 
+   V.Quiz.API.putQuizSession(answer, quiz_active_session_id, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
 
       //jQuery.getJSON(vote_url,function (data) {
       //var for testing receive values for a pull 
-    }setQuizToActivate
+    }
+
+
   };
     
 
@@ -370,22 +377,22 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   };
 
   var _onQuizSessionResultsReceived = function(data) {
- var received = JSON.stringify(data);
-    V.Debugging.log("_onQuizSessionResultsReceived and data received is: " + received);
+      var received = JSON.stringify(data);
+      //V.Debugging.log("_onQuizSessionResultsReceived and data received is: " + received);
 
- // var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-    _showResultsToParticipant(data, slideToVote);
+    //  var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+      _showResultsToParticipant(data, slideToVote);
 
     //remove input radio 
-    $(".current").find(".mc_radio").remove();
-    $(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
+      $(".current").find(".mc_radio").remove();
+      $(".current").find("#mcquestion_send_vote_button_"+slideToVote).remove();
 
     // update values to span css('width','xx%') ..it will be done by the function _showResultsToParticipant
     /*var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
     _showResultsToParticipant(data); */
 
     //for avoid bring out when mouse over option
-    _removeOptionsListener(slideToVote);
+      _removeOptionsListener(slideToVote);
 
   };
 
@@ -403,21 +410,15 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   */
   var _onStopMcQuizButtonClicked = function () {
 
-    V.Debugging.log("_onStopMcQuizButtonClicked function called. ");
-
-//first show save results (put a name) div 
+   
+//first show save results  div (put a name for saving)
   $(".current").find(".save_quiz").css("display", "inline-block"); 
 //then wait answer (yes or not) depending on that we put name or not 
 
-
-   // this function will be called when the user does not want to save the results
-   // V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError);
   };
     
 
   var _onQuizSessionCloseReceived = function(results){
-
-    V.Debugging.log("_onQuizSessionCloseReceived ");
     slideToStop = $(".current").find("#slide_to_stop").val();
     //TODO just only hide not remove ... but disappear the element so all the remainder elements go up
     //  $("#"+slideToStop).find(".t11_header").css('display', 'block');
@@ -457,7 +458,7 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
-    var received = JSON.stringify(error)
+    var received = JSON.stringify(error);
     V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
   };
 
@@ -466,8 +467,6 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
     var marginTopDefault2 = 24; 
 
     //find the number of slide setQuizToActivate
- 
-
     //if it is shown --> hide and move the button up  
     if( $(".current").find(".mc_meter").css('display')=="block") {
         var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
@@ -507,30 +506,23 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
 Must call API's method to destroy the quiz's session
 */
   var _saveQuizYesButtonClicked = function () { 
-    V.Debugging.log("SaveQuizYes Button Clicked");  
-    //quiz to stop
+      //quiz to stop
     var quizSessionActiveId =  $(".current").find("#quiz_session_id").val();
-    V.Debugging.log("Quiz_session id from form : " + quizSessionActiveId);
-    //name's value:
+      //name's value:
     var quizNameForSaving = $(".current").find(".save_results_quiz").val();
-    V.Debugging.log("save_results_quiz : " + quizNameForSaving);
-     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizNameForSaving);
-    
+    V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizNameForSaving);
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");  
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
 //quiz_session_id change to 
-
   };
     
     
   var _saveQuizNoButtonClicked = function () {
-    V.Debugging.log("SaveQuizNo Button Clicked"); 
-    //TODO change to class insted of id
+        //TODO change to class insted of id
     var quizSessionActiveId =  $(".current").find("#quiz_session_id").val();
-    V.Debugging.log("Quiz_session id from form : " + quizSessionActiveId);
-
+    
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");
     $(".current").find(".mcquestion_start_button").css("color", "blue");
@@ -546,8 +538,6 @@ Must call API's method to destroy the quiz's session
 
   };
     
-    
-    
   /*
   * Function called when the JSON object is received from the server 
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
@@ -560,13 +550,16 @@ Must call API's method to destroy the quiz's session
 
     var votes;  
     var totalVotes =0;
+    var index = "";
     //calculate the vote's total sum and the greatest option voted 
-
+    var received = JSON.stringify(data);
+    V.Debugging.log("_showResultsToParticipant data received: " + received);
     for (votes in data.results) {
-      totalVotes  += parseInt(data.results[votes]);
-      if(parseInt(data.results[votes])>greatest) {
+      //votes is the letter (a, b , c ... ) in order received by server.
+           totalVotes  += data.results[votes];
+      if(data.results[votes]>greatest) {
         greatestId=votes;
-        greatest=parseInt(data.results[votes]);
+        greatest=data.results[votes];
       } else {
         greatestId;
       } 
@@ -577,16 +570,15 @@ Must call API's method to destroy the quiz's session
       var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
       var percentString = percent.toString()  + "%";
       var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-      //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
-      // change the value for span css('width','xx%')
-      $(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percentString);
-      $(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
+      $(".current").find("#mcoption_"+votes).css("width", percentString);
+      $(".current").find("#mcoption_label_"+votes).text(newnumber+"%");
     }
 
-    var indexOfGreatestVoted = String.fromCharCode("a".charCodeAt(0) + parseInt(greatestId)); //creating index 
+    //var indexOfGreatestVoted = String.fromCharCode("a".charCodeAt(0) + parseInt(greatestId)); //creating index 
+    var indexOfGreatestVoted = String.fromCharCode(greatestId); //creating index 
 
-    $(".current").find("#mc_answer_"+ slide + "_option_" + indexOfGreatestVoted).css('color', 'blue');
-    $(".current").find("#mc_answer_"+ slide + "_option_" + indexOfGreatestVoted).css('font-weight', 'bold');
+    $(".current").find("#mc_answer_"+ slideToVote + "_option_" + indexOfGreatestVoted).css('color', 'blue');
+    $(".current").find("#mc_answer_"+ slideToVote + "_option_" + indexOfGreatestVoted).css('font-weight', 'bold');
     $(".current").find(".mc_meter").css('display', 'block');  
     $(".current").find(".mcoption_label").css('display', 'block');
 
@@ -595,8 +587,6 @@ Must call API's method to destroy the quiz's session
     $(".current").find(".mcquestion_left").css('width', '95%');
     //  $(".current").find(".mc_meter").css('display', 'block');  
   };
-    
-    
   /*
   * Function called when the JSON object is received from the server 
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
@@ -616,14 +606,10 @@ Must call API's method to destroy the quiz's session
         var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
         var percentString = percent.toString()  + "%";
         var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-        //V.Debugging.log(" data result "+ (votes+1).toString() +" value " + data.results[votes]);
-        // change the value for span css('width','xx%')
-        $(".current").find("#mcoption"+(parseInt(votes)+1).toString()).css("width", percentString);
-        $(".current").find("#mcoption_label_"+(parseInt(votes)+1).toString()).text(newnumber+"%");
+        $(".current").find("#mcoption_"+votes).css("width", percentString);
+        $(".current").find("#mcoption_label_"+votes).text(newnumber+"%");
       }
     
-
-
     $(".current").find(".mc_meter").css('display', 'block');  
     $(".current").find(".mcoption_label").css('display', 'block');
   };
