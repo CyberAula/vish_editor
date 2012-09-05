@@ -113,7 +113,6 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
-	//MODIFIED BY KIKE TO DETERMINE IF GOING RIGHT OR LEFT
 	var updateSlides = function(goingRight) {
 	 
 	  _updateSlideEls();
@@ -126,6 +125,7 @@ VISH.Slides = (function(V,$,undefined){
 	  triggerEnterEvent(curSlideIndex);
 	  updateHash();
 	};
+
 
 	var _updateSlideEls = function() {
 		for (var i = 0; i < slideEls.length; i++) {
@@ -212,11 +212,14 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getcurSlideIndexFromHash = function() {
 	  var slideNo = parseInt(location.hash.substr(1));
-
 	  if (slideNo) {
 	    curSlideIndex = slideNo - 1;
 	  } else {
-	    curSlideIndex = 0;
+	  	if(VISH.Editing){
+	  		curSlideIndex = -1; //Start in 0 (no slides)
+	  	} else {
+	  		curSlideIndex = 0; //Start in 1 (first slide)
+	  	}
 	  }
 	};
 

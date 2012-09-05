@@ -5,7 +5,7 @@ VISH.Editor = (function(V,$,undefined){
 	
 	//var to store the excursion we are showing, used when changing from presentation to flashcard
 	//and when editing an excursion
-	var draftExcursion = {};
+	var draftExcursion = null;
 	var saved_excursion = null;
 	//boolean to indicate if we are in edit (and then do a PUT instead a POST)
 	var initial_excursion = false;
@@ -52,6 +52,18 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		VISH.Slides.init();
+		VISH.Status.init();
+
+		if(V.Status.ua.desktop){
+			// V.Debugging.log("Load Desktop CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/desktop.css" type="text/css" />');
+		} else if(V.Status.ua.mobile){
+			// V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/mobile.css" type="text/css" />');
+		} else if(V.Status.ua.tablet){
+			// V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
+		}
 
 		if(VISH.Debugging.isDevelopping()){
 			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
@@ -86,15 +98,15 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;
-				
-			$(document).on('click', '#edit_excursion_details', _onEditExcursionDetailsButtonClicked);
-			$(document).on('click', '#save_excursion_details', _onSaveExcursionDetailsButtonClicked);   
-			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
+				 
+			$(document).on('click', '#edit_excursion_details', VISH.Editor.Tools.Menu.onSettings); 
+			$(document).on('click','#save', VISH.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on('click', '#save_excursion_details', VISH.Editor.Tools.Menu.onSaveExcursionDetailsButtonClicked);
 
-			$(document).on('click','#save', _onSaveButtonClicked);
+			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 			$(document).on('click','.editable', _onEditableClicked);
 			$(document).on('click','.selectable', _onSelectableClicked);
-				
+			
 			$(document).on('click','.delete_content', _onDeleteItemClicked);
 			$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 			//arrows in button panel
@@ -109,16 +121,6 @@ VISH.Editor = (function(V,$,undefined){
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
-			
-			$("#preview_circle").fancybox({
-			'width'				: '8',
-			'height'			: '6',
-	        'autoScale'     	: false,
-	        'transitionIn'		: 'none',
-			'transitionOut'		: 'none',
-			'type'				: 'iframe',
-			'onStart'			: VISH.Editor.Preview.prepare
-		});
 		}
 
 		
@@ -137,32 +139,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.I18n.init(options["lang"]);
 		V.Editor.Quiz.init();
 		V.Editor.Tools.init();
-
-	
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!initial_excursion)){
-			$("a#edit_excursion_details").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 660,
-				'padding': 0,
-				'hideOnOverlayClick': false,
-				'hideOnContentClick': false,
-				'showCloseButton': false
-			}); 
-			$("#edit_excursion_details").trigger('click');
-		} else {
-			$("a#edit_excursion_details").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 660,
-				'padding': 0,
-				'hideOnOverlayClick': false,
-				'hideOnContentClick': false,
-				'showCloseButton': true
-			}); 
-		}
 	};
 	
 	
@@ -209,31 +185,6 @@ VISH.Editor = (function(V,$,undefined){
 	//////////////////
 	///    Events
 	//////////////////
-  
-	var _onInitialTagsReceived = function(data){
-		var tagList = $(".tagBoxIntro .tagList");
-
-		if ($(tagList).children().length == 0){
-			if(!draftExcursion){
-				//Insert the two first tags.
-				$.each(data, function(index, tag) {
-					if(index==2){
-						return false; //break the bucle
-					}
-					$(tagList).append("<li>" + tag + "</li>")
-				});
-			} else {	
-				if(draftExcursion.tags){
-					//Insert draftExcursion tags
-					$.each(draftExcursion.tags, function(index, tag) {
-						$(tagList).append("<li>" + tag + "</li>")
-					});
-				}
-			}
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
-		}
-	}
 	
 	/**
 	* function to add the events to the help buttons to launch joy ride bubbles
@@ -242,10 +193,11 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#start_tutorial', function(){
 			V.Editor.Tour.startTourWithId('initial_screen_help', 'top');
 		});
+
 		$(document).on('click','#help_right', function(){
 			V.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
-		
+
 		//template
 		$(document).on('click','#help_template_image', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
@@ -326,62 +278,7 @@ VISH.Editor = (function(V,$,undefined){
 		$('.object_wrapper').hide();
 	};
   
-   
-	/**
-	 * function callen when the user clicks on the edit
-	 * excursion details button
-	 */
-	
-	var firstCall = true;
-	
-	var _onEditExcursionDetailsButtonClicked = function(event){
 
-		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstCall)){
-			VISH.Editor.API.requestTags(_onInitialTagsReceived);
-
-			if(draftExcursion && draftExcursion.avatar){
-				VISH.Editor.AvatarPicker.onLoadExcursionDetails(draftExcursion.avatar);
-			} else {
-				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
-			}
-		}
-
-		if(firstCall){
-			firstCall = false;
-
-			$("a#edit_excursion_details").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 660,
-				'padding': 0,
-				'hideOnOverlayClick': false,
-				'hideOnContentClick': false,
-				'showCloseButton': true
-			}); 
-		}
-	};
-  
-
-	/**
-	 * function callen when the user clicks on the save button
-	 * in the initial excursion details fancybox to save
-	 * the data in order to be stored at the end in the JSON file   
-	 */
-	var _onSaveExcursionDetailsButtonClicked = function(event){
-		if($('#excursion_title').val().length < 1) {
-			$('#excursion_details_error').slideDown("slow");
-			$('#excursion_details_error').show();
-			return false;
-		}
-		// save the details in the excursion
-		draftExcursion.title = $('#excursion_title').val();
-		draftExcursion.description = $('#excursion_description').val();
-		draftExcursion.avatar = $('#excursion_avatar').val();
-		draftExcursion.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
-		$('#excursion_details_error').hide();
-		$.fancybox.close();
-	};
 
 	/**
 	 * function called when user clicks on template
@@ -573,49 +470,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(".selectable").css("cursor", "pointer");
 	};
 
-	/**
-	* function called when user clicks on save
-	* Generates the json for the current slides
-	* covers the section element and every article inside
-	* finally calls SlideManager with the generated json
-	*/
-	var _onSaveButtonClicked = function(){
-		if(VISH.Slides.getSlides().length === 0){
-			$.fancybox(
-				$("#message1_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 350,
-					'height'        	: 200,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else {    
-			$.fancybox(
-				$("#save_form").html(),
-				{
-					'autoDimensions'	: false,
-					'width'         	: 350,
-					'scrolling': 'no',
-					'height'        	: 150,
-					'showCloseButton'	: false,
-					'padding' 			: 0,
-					'onClosed'			: function(){
-						//if user has answered "yes"
-						if($("#save_answer").val() ==="true"){
-							$("#save_answer").val("false");	
-							var excursion = saveExcursion();	
-							_afterSaveExcursion(excursion);			
-						}	else {
-							return false;
-						}
-					}
-				}
-			);
-		  }
-	};
+	
     
     
 	/**
@@ -641,10 +496,12 @@ VISH.Editor = (function(V,$,undefined){
 			//save the pois
 			excursion.background.pois = V.Editor.Flashcard.savePois();
 		}
-		excursion.title = draftExcursion.title;
-		excursion.description = draftExcursion.description;
-		excursion.avatar = draftExcursion.avatar;
-		excursion.tags = draftExcursion.tags;
+		if(draftExcursion){
+			excursion.title = draftExcursion.title;
+			excursion.description = draftExcursion.description;
+			excursion.avatar = draftExcursion.avatar;
+			excursion.tags = draftExcursion.tags;
+		}
 		excursion.author = '';
 		excursion.slides = [];
 		var slide = {};
@@ -742,7 +599,7 @@ VISH.Editor = (function(V,$,undefined){
 					} else if(typeof element.type == "undefined"){
 						//Empty element, we don't save as empty text because if we do that when we edit everything is text
 						//element.type = "empty";
-						VISH.Debugging.log("Empty element");
+						// VISH.Debugging.log("Empty element");
 					}
 
 					slide.elements.push(element);
@@ -777,7 +634,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 
-	var _afterSaveExcursion = function(excursion){
+	var afterSaveExcursion = function(excursion){
 		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
@@ -935,6 +792,10 @@ VISH.Editor = (function(V,$,undefined){
 			return null;
 		}
 	}
+
+	var hasInitialExcursion = function(){
+		return initial_excursion;
+	}
 	
 	/*
 	 * Load the initial fancybox
@@ -963,10 +824,12 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var setExcursionType = function(type){
+		if(!draftExcursion){
+			draftExcursion = new Object();
+		}
 		if(type){
 			draftExcursion.type = type;
-		}
-		else{
+		} else {
 			draftExcursion.type = "presentation";
 		}
 	};
@@ -1015,7 +878,9 @@ VISH.Editor = (function(V,$,undefined){
 		setExcursion 		: setExcursion,
 		isPresentationStandard : isPresentationStandard,
 		getSavedExcursion 	: getSavedExcursion,
+		hasInitialExcursion	: hasInitialExcursion,
 		saveExcursion 		: saveExcursion,
+		afterSaveExcursion  : afterSaveExcursion,
 		setExcursionType	: setExcursionType
 	};
 

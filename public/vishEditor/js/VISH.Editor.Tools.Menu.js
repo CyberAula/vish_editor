@@ -14,6 +14,17 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var init = function(){
 
+		$("#menu").hide();
+
+		if(!VISH.Status.ua.desktop){
+			if(VISH.Status.ua.tablet){
+				VISH.Editor.MenuTablet.init();
+			} else {
+				disableMenu();
+				return;
+			}
+		}
+
 		var presentationType = VISH.Editor.getExcursionType();
 
 		$("ul.menu_option_main").find("li").hide();
@@ -84,33 +95,236 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			menuEventsLoaded = true;
 		}
 
+		$("#menu").show();
+
+		_initSettings();
+		_initPreview();
 	}
-  
 
-	var settings = function(){
-		V.Debugging.log("Settings called");
+	var disableMenu = function(){
+		$("#menu").hide();
+		$("#menu").attr("id","menuDisabled");
+	}
 
-		$.fancybox(
-			$("#excursiondetails").html(),
-			{
-				'autoDimensions'	: false,
+	var enableMenu = function(){
+		$("#menuDisabled").show();
+		$("#menuDisabled").attr("id","menu");
+	}
+
+
+	/////////////////////
+	/// SETTINGS
+	///////////////////////
+
+	var initializedSettings = false;
+
+	var _initSettings = function(){
+
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!VISH.Editor.hasInitialExcursion())){
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'scrolling': 'no',
 				'width': 800,
 				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': false
+			});
+			displaySettings();
+		} else {
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
 				'scrolling': 'no',
-				'showCloseButton'	: true,
-				'padding' 			: 0,
-				'onClosed'			: function(){
+				'width': 800,
+				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': true
+			});
+		}
+	}
+
+
+	var displaySettings = function(){
+		$("a#edit_excursion_details").trigger('click');
+	}
+
+
+	var firstSettingsCall = true;
+
+	var onSettings = function(){
+		
+		if(firstSettingsCall){
+			$("a#edit_excursion_details").fancybox({
+				'autoDimensions' : false,
+				'scrolling': 'no',
+				'width': 800,
+				'height': 660,
+				'padding': 0,
+				'hideOnOverlayClick': false,
+				'hideOnContentClick': false,
+				'showCloseButton': true
+			});
+		}
+
+		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstSettingsCall)){
+			VISH.Editor.API.requestTags(_onInitialTagsReceived);
+			var draftExcursion = VISH.Editor.getExcursion();
+			if(draftExcursion && draftExcursion.avatar){
+				VISH.Editor.AvatarPicker.onLoadExcursionDetails(draftExcursion.avatar);
+			} else {
+				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
+			}
+		}
+	}
+
+	var _onInitialTagsReceived = function(data){
+		var tagList = $(".tagBoxIntro .tagList");
+		var draftExcursion = VISH.Editor.getExcursion();
+
+		if ($(tagList).children().length == 0){
+			if(!draftExcursion){
+				//Insert the two first tags.
+				$.each(data, function(index, tag) {
+					if(index==2){
+						return false; //break the bucle
+					}
+					$(tagList).append("<li>" + tag + "</li>")
+				});
+			} else {	
+				if(draftExcursion.tags){
+					//Insert draftExcursion tags
+					$.each(draftExcursion.tags, function(index, tag) {
+						$(tagList).append("<li>" + tag + "</li>")
+					});
 				}
 			}
-		);
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
+			watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
+		}
 	}
+
+
+	/**
+	 * function called when the user clicks on the save button
+	 * in the initial excursion details fancybox to save
+	 * the data in order to be stored at the end in the JSON file   
+	 */
+	var onSaveExcursionDetailsButtonClicked = function(event){
+		if($('#excursion_title').val().length < 1) {
+			$('#excursion_details_error').slideDown("slow");
+			$('#excursion_details_error').show();
+			return false;
+		}
+		
+		var draftExcursion = VISH.Editor.getExcursion();
+
+		if(!draftExcursion){
+			draftExcursion = {};
+		}
+
+		draftExcursion.title = $('#excursion_title').val();
+		draftExcursion.description = $('#excursion_description').val();
+		draftExcursion.avatar = $('#excursion_avatar').val();
+		draftExcursion.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+
+		VISH.Editor.setExcursion(draftExcursion);
+
+		$('#excursion_details_error').hide();
+		$.fancybox.close();
+	};
+
+
+	//////////////////
+	/// SAVE
+	/////////////////
+
+	/**
+	* function called when user clicks on save
+	* Generates the json for the current slides
+	* covers the section element and every article inside
+	* finally calls SlideManager with the generated json
+	*/
+	var onSaveButtonClicked = function(){
+		if(VISH.Slides.getSlides().length === 0){
+			$.fancybox(
+				$("#message1_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
+					'width'         	: 350,
+					'height'        	: 200,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+				}
+			);
+		} else {    
+			$.fancybox(
+				$("#save_form").html(),
+				{
+					'autoDimensions'	: false,
+					'width'         	: 350,
+					'scrolling': 'no',
+					'height'        	: 150,
+					'showCloseButton'	: false,
+					'padding' 			: 0,
+					'onClosed'			: function(){
+						//if user has answered "yes"
+						if($("#save_answer").val() ==="true"){
+							$("#save_answer").val("false");	
+							var excursion = VISH.Editor.saveExcursion();	
+							VISH.Editor.afterSaveExcursion(excursion);			
+						}	else {
+							return false;
+						}
+					}
+				}
+			);
+		  }
+	};
+
+
+	/////////////////////
+	/// PREVIEW
+	///////////////////////
+
+	var preview = function(){
+		$("img#preview_circle").trigger('click');
+	}
+
+	var _initPreview = function(){
+		$("img#preview_circle").fancybox({
+			'width'				: '8',
+			'height'			: '6',
+			'autoScale'     	: false,
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe',
+			'onStart'			: VISH.Editor.Preview.prepare
+		});	
+	}
+
+
+	/////////////////////
+	/// HELP
+	///////////////////////
+
+	var help = function(){
+		$("#help_right").trigger('click');
+	}
+
+
+	/////////////////////
+	/// CONVERSION
+	///////////////////////
 
 	var switchToFlashcard = function(){		
 		V.Editor.Flashcard.switchToFlashcard();
 	};
 
 	var switchToPresentation = function(){
-
 		var excursion = V.Editor.saveExcursion();
 		V.Editor.setExcursion(excursion);
 
@@ -123,14 +337,21 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#flashcard-background").hide();
 		
 		V.Editor.Thumbnails.redrawThumbnails();
-
-
 	};
+
+
 
 
 	return {
 		init							: init,
-		settings						: settings,
+		disableMenu 					: disableMenu ,
+		enableMenu 						: enableMenu,
+		displaySettings					: displaySettings,
+		onSettings						: onSettings,
+		onSaveExcursionDetailsButtonClicked	: onSaveExcursionDetailsButtonClicked,
+		onSaveButtonClicked             : onSaveButtonClicked,
+		preview 						: preview,
+		help 							: help,
 		switchToFlashcard				: switchToFlashcard,
 		switchToPresentation			: switchToPresentation
 	};

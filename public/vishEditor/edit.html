@@ -91,6 +91,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
@@ -158,14 +159,14 @@
 			<div id="toolbar_menu">
 
 				<!-- MENU -->
-				<ul id="menu">
+				<ul id="menu" style="display:none">
 					<li class="current">
 						<a class="menu_option_main" href="#">
 							<img class="toolbar_icon" id="menuButton" src="/vishEditor/images/toolbar/menu_button.png"/>
 						</a>
 						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option menu_action menu_all" action="save">Save</a>
+								<a class="menu_option menu_action menu_all" action="onSaveButtonClicked">Save</a>
 							</li>
 							<li>
 								<a class="menu_option">Export as</a>
@@ -219,7 +220,7 @@
 								<a class="menu_option menu_action menu_all" action="preview">Preview</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action menu_all" action="settings">Settings</a>
+								<a class="menu_option menu_action menu_all" action="displaySettings">Settings</a>
 							</li>
 							<li>
 								<a class="menu_option menu_action menu_all" action="help">Help</a>
@@ -230,7 +231,7 @@
 
 			</div>
 			<div id="toolbar_presentation">
-				<img class="toolbar_icon toolbar_presentation" style="display:none" 
+				<img class="toolbar_icon" style="display:none" 
 				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
 				<img class="toolbar_icon toolbar_flashcard" style="display:none" 
 				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png"/>
@@ -1114,7 +1115,6 @@
       </ol> 
 
 	<script>
-		var presentation_preview;
 		//First function called when page loads
 		 function start(){
 		 	if(window.parent.options){

@@ -1,5 +1,7 @@
 VISH.Editor.Preview = (function(V,$,undefined){
 
+	var presentation_preview;
+
 	/*
 	 * function to prepare the preview of the excursion as it is now
 	 * <a id="preview_circle" href="/vishEditor/viewer.html"></a>
@@ -9,10 +11,13 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		presentation_preview = V.Editor.saveExcursion();		
 	};
 
-
+	var getPreview = function(){
+		return presentation_preview;
+	}
 
 	return {
-		prepare	 				: prepare
+		prepare	 				: prepare,
+		getPreview 				: getPreview
 	};
 
 }) (VISH, jQuery);

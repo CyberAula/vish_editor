@@ -3,7 +3,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var toolbarEventsLoaded = false;
 	
 
-
 	/*
 	 * Toolbar is divided in three zones.
 	 * 1) Menu botton (Menu toolbar)
@@ -109,13 +108,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
    /*
 	* Menu Toolbar and Menu itself
 	*/
-	var disableMenu = function(){
-		$("#menuButton").hide();
-	}
-
-	var enableMenu = function(){
-		$("#menuButton").show();
-	}
+	//Enable and disable menu methods in VISH.Editor.Tools.Menu.js
 
 
    /*
