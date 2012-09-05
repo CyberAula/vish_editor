@@ -67,6 +67,7 @@ VISH.Editor = (function(V,$,undefined){
 			//remove focus from any zone
 			_removeSelectableProperties();			
 		}
+
 		
 		// fancybox to create a new slide		
 		$("a#addSlideFancybox").fancybox({
@@ -387,12 +388,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
-		
-		//VISH.Debugging.log(" attrib template vale:  " + $(this).attr('template') );
 		var slide = V.Dummies.getDummy($(this).attr('template'));
-	
-		// VISH.Debugging.log("slide es: " + slide );
-		VISH.Debugging.log("onTemplateclicked");
 				
 		V.Editor.Utils.addSlide(slide);
 		
@@ -960,6 +956,9 @@ VISH.Editor = (function(V,$,undefined){
 	 * type can be "presentation", "flashcard" or "game"
 	 */
 	var getExcursionType = function(){
+		if((!draftExcursion)||(!draftExcursion.type)){
+			return "presentation";
+		}
 		return draftExcursion.type;
 	};
 
@@ -971,6 +970,36 @@ VISH.Editor = (function(V,$,undefined){
 			draftExcursion.type = "presentation";
 		}
 	};
+
+	/*
+	 * Check if a presentation is standard.
+	 * true when only contain standard slides.
+	 * false when contains other slide types like flashcards, games or virtual experiments.
+	 */
+	var isPresentationStandard = function(){
+		var type = getExcursionType();
+		if(type!="presentation"){
+			return false;
+		}
+
+		if($("article[template]").length===0){
+			//Empty presentation, optimization for first call
+			return true;
+		}
+
+		var isStandard = true;
+		excursion = saveExcursion();
+
+		$.each(excursion.slides, function(index, slide) {
+			if((slide.type)&&(slide.type!="standard")){
+				isStandard = false;
+				return;
+			}
+		});
+
+		return isStandard;
+	}
+
 
 	return {
 		init 				: init,
@@ -984,6 +1013,7 @@ VISH.Editor = (function(V,$,undefined){
 		loadFancyBox 		: loadFancyBox,
 		getExcursion 		: getExcursion,
 		setExcursion 		: setExcursion,
+		isPresentationStandard : isPresentationStandard,
 		getSavedExcursion 	: getSavedExcursion,
 		saveExcursion 		: saveExcursion,
 		setExcursionType	: setExcursionType

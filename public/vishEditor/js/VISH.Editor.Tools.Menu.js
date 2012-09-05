@@ -1,5 +1,8 @@
 VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
+	var menuEventsLoaded = false;
+
+
 	/**
 	* Menu item classes:
 	* menu_all : Always visible
@@ -11,23 +14,18 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var init = function(){
 
-		var presentation = VISH.Editor.getExcursion();
-		if(!presentation){
-			//Case: New presentation with type 'presentation'
-			presentation = new Object();
-			presentation.type = "presentation";
-		}
+		var presentationType = VISH.Editor.getExcursionType();
 
 		$("ul.menu_option_main").find("li").hide();
 		$("ul.menu_option_main").find("a.menu_all").parent().show();
 
-		switch(presentation.type){
+		switch(presentationType){
 			case "presentation":
 				$("ul.menu_option_main").find("a.menu_presentation").parent().show();
 
-				// if(standard){
+				if(V.Editor.isPresentationStandard()){
 					$("ul.menu_option_main").find("a.menu_standard_presentation").parent().show();
-				// }
+				}
 
 				break;
 			case "flashcard":
@@ -44,6 +42,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		//Check for single elements and death menus
 		var menus = $("ul.menu_option_main").find("ul");
+
 		$.each($(menus), function(index, menu) {
 			var lis = $(menu).find("li");
 			var visibleLis = 0;
@@ -57,8 +56,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			});
 			
 			if(visibleLis==0){
-				//No elements... hide ul?
-				//Unknown use case...
+				//No elements... hide li that contains ul.
+				var liContainer = $(menu).parent();
+				
+				if($(liContainer)[0].tagName=="LI"){
+					$(liContainer).hide();
+				}
+				
 			} else if(visibleLis==1){
 				//Add special class for single elements
 				$(lastVisibleLi).find("a").addClass("menu_single_element");
@@ -67,16 +71,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			visibleLis = 0;
 		});
 
-
-		//Add listeners to menu buttons
-		$.each($("#menu a.menu_action"), function(index, menuButton) {
-			$(menuButton).on("click", function(event){
-				event.preventDefault();
-				if(typeof VISH.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
-					VISH.Editor.Tools.Menu[$(menuButton).attr("action")](this);
-				}
+		if(!menuEventsLoaded){
+			//Add listeners to menu buttons
+			$.each($("#menu a.menu_action"), function(index, menuButton) {
+				$(menuButton).on("click", function(event){
+					event.preventDefault();
+					if(typeof VISH.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
+						VISH.Editor.Tools.Menu[$(menuButton).attr("action")](this);
+					}
+				});
 			});
-		});
+			menuEventsLoaded = true;
+		}
+
 	}
   
 
