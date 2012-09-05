@@ -275,8 +275,11 @@ $(myInput).keydown(function(event) {
     //add elements created  
     $("#"+slideToPlay).find(".t11_header").append(divURLShare);
     $(".current").find("#url_share_"+slideToPlay).append(urlToAppend);
-    $(".current").find("#url_share_"+slideToPlay).append(shareButton);
-    $(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
+   
+    //TODO improve the share URL method meanwhile remove element to share
+    
+    //$(".current").find("#url_share_"+slideToPlay).append(shareButton);
+    //$(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
     //show header 
     $("#"+slideToPlay).find(".t11_header").show();
     //change the value button (Start Quiz --> StopQuiz) and the id?
