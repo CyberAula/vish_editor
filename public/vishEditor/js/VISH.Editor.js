@@ -52,6 +52,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		VISH.Slides.init();
+		VISH.Status.init();
 
 		if(VISH.Debugging.isDevelopping()){
 			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {

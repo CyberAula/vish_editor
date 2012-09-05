@@ -14,6 +14,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var init = function(){
 
+		$("#menu").hide();
+
+		if(!VISH.Status.ua.desktop){
+			disableMenu();
+		}
+
 		var presentationType = VISH.Editor.getExcursionType();
 
 		$("ul.menu_option_main").find("li").hide();
@@ -83,8 +89,21 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			});
 			menuEventsLoaded = true;
 		}
+
+		$("#menu").show();
+
 		_initSettings();
 		_initPreview();
+	}
+
+	var disableMenu = function(){
+		$("#menu").hide();
+		$("#menu").attr("id","menuDisabled");
+	}
+
+	var enableMenu = function(){
+		$("#menuDisabled").show();
+		$("#menuDisabled").attr("id","menu");
 	}
 
 
@@ -196,7 +215,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 		
 		var draftExcursion = VISH.Editor.getExcursion();
-		
+
 		if(!draftExcursion){
 			draftExcursion = {};
 		}
@@ -320,6 +339,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	return {
 		init							: init,
+		disableMenu 					: disableMenu ,
+		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
 		onSettings						: onSettings,
 		onSaveExcursionDetailsButtonClicked	: onSaveExcursionDetailsButtonClicked,

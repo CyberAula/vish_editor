@@ -109,13 +109,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
    /*
 	* Menu Toolbar and Menu itself
 	*/
-	var disableMenu = function(){
-		$("#menuButton").hide();
-	}
-
-	var enableMenu = function(){
-		$("#menuButton").show();
-	}
+	//Enable and disable menu methods in VISH.Editor.Tools.Menu.js
 
 
    /*
