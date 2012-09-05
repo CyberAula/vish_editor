@@ -1,5 +1,9 @@
 VISH.Editor.Tools = (function(V,$,undefined){
 	
+	var toolbarEventsLoaded = false;
+	
+
+
 	/*
 	 * Toolbar is divided in three zones.
 	 * 1) Menu botton (Menu toolbar)
@@ -7,20 +11,22 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 * 3) Element toolbar
 	 */
 
-
 	var init = function(){
 
 		cleanZoneTools();
 		cleanToolbar();
 
-		//Add listeners to toolbar buttons
-		$.each($("img.toolbar_icon"), function(index, toolbarButton) {
-			$(toolbarButton).on("click", function(event){
-				if(typeof VISH.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
-					VISH.Editor.Tools[$(toolbarButton).attr("action")](this);
-				}
+		if(!toolbarEventsLoaded){
+			//Add listeners to toolbar buttons
+			$.each($("img.toolbar_icon"), function(index, toolbarButton) {
+				$(toolbarButton).on("click", function(event){
+					if(typeof VISH.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
+						VISH.Editor.Tools[$(toolbarButton).attr("action")](this);
+					}
+				});
 			});
-		});
+			toolbarEventsLoaded = true;
+		}
 
 		loadPresentationToolbar();
 
@@ -117,17 +123,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 	var loadPresentationToolbar = function(){
 
-		var presentation = VISH.Editor.getExcursion();
+		var presentationType = VISH.Editor.getExcursionType();
 
-		if(!presentation){
-			//Case: New presentation with type 'presentation'
-			presentation = new Object();
-			presentation.type = "presentation";
-		}
-
-		_cleanPresentationToolbar();
-		
-		switch(presentation.type){
+		switch(presentationType){
 			case "presentation":
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();
 				break;
@@ -254,85 +252,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		V.Debugging.log("changeFlashcardBackground called");
 	}
 
-   /*
-	* Slide actions
-	*/
-	var moveSlide = function(object){
-	 	var direction = $(object).attr("direction");
-	 	switch(direction){
-	 		case "right":
-	 			_moveSlideTo("after",$("article.next"));
-	 			break;
-	 		case "left":
-	 			_moveSlideTo("before",$("article.past"));
-	 			break;
-	 		default:
-	 			break;
-	 	}
-	 }
-
-	 var _moveSlideTo = function(position, reference_slide){
-
-	 	if(typeof reference_slide === "undefined"){
-	 		return;
-	 	}
-
-	 	if(typeof reference_slide.length !== undefined){
-	 		reference_slide = $(reference_slide)[0];
-	 		if(typeof reference_slide === "undefined"){
-	 			return;
-	 		}
-	 	}
-
-	 	if(reference_slide.tagName!="ARTICLE"){
-	 		return;
-	 	}
-
-	 	var article_to_move = $("article.current")[0];
-	 	var article_reference = reference_slide;
-
-	 	$(article_to_move).remove();
-	 	if(position=="after"){
-	 		$(article_reference).after(article_to_move);
-	 	} else {
-	 		$(article_reference).before(article_to_move);
-	 	}
-	 	
-	 	V.Editor.Utils.redrawSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
-
-		var slide_position = V.Slides.getNumberOfSlide(article_to_move)+1;
-
-	 	setTimeout(function(){
-	 			VISH.Editor.Thumbnails.selectThumbnail(slide_position);
-	 		}, 200);
-
-		VISH.Slides.goToSlide(slide_position);
-	 }
-	
-	 /*
-	  * flashcard actions
-	  */
-
-	  var changeBackground = function(){
-	  	console.log("hola");
-	  	
-	  	$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				V.Editor.Utils.loadTab('tab_pic_from_url');
-			}
-		});
-
-		  $("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger('click');
-
-
-		  
-	  }
 
    /*
 	* Element actions
@@ -380,7 +299,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
   
 	return {
 		init							: init,
-		changeBackground				: changeBackground,
 		loadPresentationToolbar			: loadPresentationToolbar,
 		loadToolsForZone				: loadToolsForZone,
 		loadToolbarForObject			: loadToolbarForObject,
