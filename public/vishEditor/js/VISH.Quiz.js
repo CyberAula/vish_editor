@@ -14,22 +14,15 @@ VISH.Quiz = (function(V,$,undefined){
   var quizStatus = {};
 
   var init = function(excursion){
-    V.Debugging.log("Vish Quiz init");
-       
     var options = VISH.SlideManager.getOptions();
     
     if (excursion.type=="quiz_simple") {
-
       //Quiz to respond
       if(options['quiz_active_session_id']) {
-
           quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
-
            _activateStudentInteraction();
-
       } 
       //...
-
     } else if(excursion.type=="presentation") {
       //  slideToActivate = excursion.slide.quiz_id;
       //add events 
@@ -55,22 +48,20 @@ VISH.Quiz = (function(V,$,undefined){
   var _loadEvents = function(){      
     var myInput = $(".current").find("input[class='save_results_quiz']"); 
 
-        //var quizNameForSaving = $(".current").find(".save_results_quiz").val();
-
     $(document).on('click', ".mcquestion_start_button", _startMcQuizButtonClicked);
     $(document).on('click', ".mch_statistics_icon", _statisticsMcQuizButtonClicked);
 
     $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
     $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
-//TODO correct this , because doesn't avoid the enter action ... 
+//TODO correct this , because doesn't avoid the press enter action instead pressed ok button for saving
 $(myInput).keydown(function(event) { 
   event.preventDefault();
       if(event.keyCode == 13) {
         V.Debugging.log("event.keyCode  =" + event.keyCode);
         if(($(myInput).val()!="")&& ($(myInput).val()!="write a name for saving")) {
           //call to addMultipleChoiceOption
-        return false;
-          $(myInput).blur();
+          _saveQuizYesButtonClicked();
+          return false;
         } 
         else {
           alert("You must enter some text option.");  
@@ -78,8 +69,6 @@ $(myInput).keydown(function(event) {
     } 
 
     }); 
-    
-     
       //$(".current").find(".a_share_content_icon").slideDown();
     
   };
@@ -90,7 +79,7 @@ $(myInput).keydown(function(event) {
   * Called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
   * add listeners and some functions and it is necessary that objects be loaded so that it's done later than 
   * render
-  * */
+  * 
   var enableInteraction = function (slide, options){
     switch(role) {
       case "logged": 
@@ -114,7 +103,7 @@ $(myInput).keydown(function(event) {
         //obj could be an error message :  <p> Error</p>
         VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: "+ role);  
     }
-  };
+  };*/
 
 
   var enableTrueFalseInteraction = function (slide, options) {
@@ -277,7 +266,7 @@ $(myInput).keydown(function(event) {
     $(".current").find("#url_share_"+slideToPlay).append(urlToAppend);
    
     //TODO improve the share URL method meanwhile remove element to share
-    
+
     //$(".current").find("#url_share_"+slideToPlay).append(shareButton);
     //$(".current").find("#url_share_"+slideToPlay).append(shareContainerIcons);
     //show header 
@@ -342,27 +331,9 @@ $(myInput).keydown(function(event) {
     if(answer==undefined) {
       alert("You must choice your answer before polling");
     } else {
-      V.Debugging.log("answer option selected is: " + answer);
-      /*TODO we have to send the vote to the Server (PUT /quiz_sessions/ID)
-      and we receive from the server the quantities of votes for each option in a JSON object:
-      {"quiz_session_id":"444", "quiz_id":"4", "option_a":"23", "option_b":"3", "option_c":"5", "option_d":"1", "option_e":"6"}
-     var data {"quiz_session_id":"444", "quiz_id":"4", "results" : ["0":"23", "1":"3","2":"5","3": "1", "3":"6"]};
-      */
-      var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
-      V.Debugging.log("quiz_active_session_id is: " + quiz_active_session_id);
-
-      //added for test new format from object received
-      //var data = {"quiz_session_id":"444", "quiz_id":"4", "results" : [{"a":"23"},{"b":"3"},{"c":"5"},{"d":"1"}, {"e":"6"}]};
-
-      //_showResultsToParticipant(data, slideToVote);
-  //TODO uncomment this line for call to server 
-   V.Quiz.API.putQuizSession(answer, quiz_active_session_id, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
-
-      //jQuery.getJSON(vote_url,function (data) {
-      //var for testing receive values for a pull 
-    }
-
-
+       var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
+       V.Quiz.API.putQuizSession(answer, quiz_active_session_id, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
+      }
   };
     
 
@@ -555,8 +526,7 @@ Must call API's method to destroy the quiz's session
     var totalVotes =0;
     var index = "";
     //calculate the vote's total sum and the greatest option voted 
-    var received = JSON.stringify(data);
-    V.Debugging.log("_showResultsToParticipant data received: " + received);
+    
     for (votes in data.results) {
       //votes is the letter (a, b , c ... ) in order received by server.
            totalVotes  += data.results[votes];
@@ -595,10 +565,8 @@ Must call API's method to destroy the quiz's session
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
   * actions to do: show results received by server and  do a bucle for ask more results every X seconds?*/
   var _showResultsToTeacher = function (data) {
-    
- var received = JSON.stringify(data)
-
-    V.Debugging.log("_showResultsToTeacher and data is: " + received); 
+      //var received = JSON.stringify(data)
+      //V.Debugging.log("_showResultsToTeacher and data is: " + received); 
       var votes;  
       var totalVotes =0;
       //calculate the vote's total sum 
@@ -658,7 +626,6 @@ var setSlideToVote = function (slide) {
   return {
     getQuizStatus               : getQuizStatus,
     init                        : init,
-    enableInteraction           : enableInteraction,
     enableTrueFalseInteraction  : enableTrueFalseInteraction, 
     setQuizToActivate           : setQuizToActivate, 
     getQuizIdToStartSession     : getQuizIdToStartSession, 
