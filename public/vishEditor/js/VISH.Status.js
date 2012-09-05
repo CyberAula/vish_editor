@@ -11,7 +11,7 @@ VISH.Status = (function(V,$,undefined){
 	var fillFeatures = function(){
 		//to see if we are inside an iframe
 		setIsInIframe((window.location != window.parent.location) ? true : false);
-		V.Debugging.log("We are in iframe: " + getIsInIframe());		
+		// V.Debugging.log("We are in iframe: " + getIsInIframe());		
 		
 		//fullscreen supported
 		var elem = document.getElementById("page-fullscreen");
@@ -30,11 +30,11 @@ VISH.Status = (function(V,$,undefined){
 				}
 			}
 		}
-		V.Debugging.log("Fullscreen supported: " + features.fullscreen);
+		// V.Debugging.log("Fullscreen supported: " + features.fullscreen);
 		
 		//touchscreen detection
 		features.touchScreen = !!('ontouchstart' in window);
-		V.Debugging.log("TouchScreen supported: " + features.touchScreen);
+		// V.Debugging.log("TouchScreen supported: " + features.touchScreen);
 	};
 	
 	var fillUserAgent = function(){
@@ -103,22 +103,22 @@ VISH.Status = (function(V,$,undefined){
 			ua.desktop = false;
 		}
 
-		V.Debugging.log("isMobile " + ua.mobile);
-		V.Debugging.log("isTablet: " + ua.tablet);
-		V.Debugging.log("Screen width: " + ua.screen.width);
-		V.Debugging.log("Screen height: " + ua.screen.height);
-		V.Debugging.log("Visual Viewport width: " + ua.viewport.width);
-		V.Debugging.log("Visual Viewport height: " + ua.viewport.height);
-		V.Debugging.log("Layout Viewport width: " + document.documentElement.clientWidth);
-		V.Debugging.log("Layout Viewport height: " + document.documentElement.clientHeight);
-		V.Debugging.log("HTML element width: " +  document.documentElement.offsetWidth);
-		V.Debugging.log("HTML element height: " +  document.documentElement.offsetHeight);
-		V.Debugging.log("window.screen.availWidth: " + window.screen.availWidth);
-		V.Debugging.log("window.screen.availHeight: " + window.screen.availHeight);
+		// V.Debugging.log("isMobile " + ua.mobile);
+		// V.Debugging.log("isTablet: " + ua.tablet);
+		// V.Debugging.log("Screen width: " + ua.screen.width);
+		// V.Debugging.log("Screen height: " + ua.screen.height);
+		// V.Debugging.log("Visual Viewport width: " + ua.viewport.width);
+		// V.Debugging.log("Visual Viewport height: " + ua.viewport.height);
+		// V.Debugging.log("Layout Viewport width: " + document.documentElement.clientWidth);
+		// V.Debugging.log("Layout Viewport height: " + document.documentElement.clientHeight);
+		// V.Debugging.log("HTML element width: " +  document.documentElement.offsetWidth);
+		// V.Debugging.log("HTML element height: " +  document.documentElement.offsetHeight);
+		// V.Debugging.log("window.screen.availWidth: " + window.screen.availWidth);
+		// V.Debugging.log("window.screen.availHeight: " + window.screen.availHeight);
 	};
 
 	var updateOrientation = function() {  
-    	  V.Debugging.log("updateOrientation called with " + window.orientation);
+    	  // V.Debugging.log("updateOrientation called with " + window.orientation);
   	};
 	
 	var getIsInIframe = function(){

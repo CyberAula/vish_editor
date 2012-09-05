@@ -17,7 +17,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#menu").hide();
 
 		if(!VISH.Status.ua.desktop){
-			disableMenu();
+			if(VISH.Status.ua.tablet){
+				VISH.Editor.MenuTablet.init();
+			} else {
+				disableMenu();
+				return;
+			}
 		}
 
 		var presentationType = VISH.Editor.getExcursionType();

@@ -3,7 +3,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var toolbarEventsLoaded = false;
 	
 
-
 	/*
 	 * Toolbar is divided in three zones.
 	 * 1) Menu botton (Menu toolbar)

@@ -87,11 +87,6 @@ ul.menu_option_main ul {
 	padding-left: 50px;
 }
 
-/* dropdown */
-#menu li:hover > ul {
-	display: block;
-}
-
 #menu ul li {
 	float: none;
 	margin: 0;

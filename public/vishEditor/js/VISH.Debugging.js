@@ -99,7 +99,9 @@ VISH.Debugging = (function(V,$,undefined){
 	    $('article').remove();
 	    $('#menubar').hide();
 	    $('#menubar_helpsection').hide();
+	    $('#menubar_helpsection2').hide();
 	    $('#joyride_help_button').hide();
+	    $('#preview_circle').hide();
 	    VISH.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
 
@@ -126,7 +128,9 @@ VISH.Debugging = (function(V,$,undefined){
 		$('article').remove();
 		$('#menubar').show();
 		$('#menubar_helpsection').show();
+		$('#menubar_helpsection2').show();
 		$('#joyride_help_button').show();
+		$('#preview_circle').show();
 		VISH.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
 

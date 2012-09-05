@@ -54,6 +54,17 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Slides.init();
 		VISH.Status.init();
 
+		if(V.Status.ua.desktop){
+			// V.Debugging.log("Load Desktop CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/desktop.css" type="text/css" />');
+		} else if(V.Status.ua.mobile){
+			// V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/mobile.css" type="text/css" />');
+		} else if(V.Status.ua.tablet){
+			// V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
+		}
+
 		if(VISH.Debugging.isDevelopping()){
 			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
 			 	excursion = VISH.Debugging.getExcursionSamples();
@@ -588,7 +599,7 @@ VISH.Editor = (function(V,$,undefined){
 					} else if(typeof element.type == "undefined"){
 						//Empty element, we don't save as empty text because if we do that when we edit everything is text
 						//element.type = "empty";
-						VISH.Debugging.log("Empty element");
+						// VISH.Debugging.log("Empty element");
 					}
 
 					slide.elements.push(element);
@@ -813,10 +824,12 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var setExcursionType = function(type){
+		if(!draftExcursion){
+			draftExcursion = new Object();
+		}
 		if(type){
 			draftExcursion.type = type;
-		}
-		else{
+		} else {
 			draftExcursion.type = "presentation";
 		}
 	};

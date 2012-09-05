@@ -36,25 +36,26 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Slides.init();
 		V.Status.init();
 
-		if(V.Status.ua.mobile){
-			V.Debugging.log("Load Mobile CSS");
-			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/mobile.css" type="text/css" />');
+		if(V.Status.ua.desktop){
+			// V.Debugging.log("Load Desktop CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/desktop.css" type="text/css" />');
+		} else if(V.Status.ua.mobile){
+			// V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/mobile.css" type="text/css" />');
 		} else if(V.Status.ua.tablet){
-			V.Debugging.log("Load Tablet CSS");
-			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/mobile/tablet.css" type="text/css" />');
+			// V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
 		}
 
 		V.User.init(options);
 		V.Quiz.init(excursion);
-
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(excursion.type ==="game"){
 			VISH.ViewerEngine = "game";
 			VISH.ViewerAdapter.setupGame(excursion);	
 			VISH.Game.registerActions(excursion);		
-		}
-		else if(excursion.type === "flashcard"){
+		} else if(excursion.type === "flashcard"){
 			VISH.ViewerEngine = "flashcard";
 			VISH.Flashcard.init(excursion);
 		}
@@ -89,8 +90,7 @@ VISH.SlideManager = (function(V,$,undefined){
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
     		updateSlideCounter();
-		}
-		else{
+		} else {
 			window.addEventListener("load", function(){ hideAddressBar(); } );
 			window.addEventListener("orientationchange", hideAddressBar );		
 		}
@@ -234,6 +234,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	var updateSlideCounter = function(){
 		var number_of_slides = V.Slides.getSlides().length;
 		var slide_number = VISH.Slides.getCurrentSlideNumber();
+		if(number_of_slides===0){
+			slide_number=0;
+		}
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};
 
