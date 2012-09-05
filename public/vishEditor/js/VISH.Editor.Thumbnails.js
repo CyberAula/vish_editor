@@ -99,9 +99,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				var orgPosition = parseInt($(img).attr("slidenumber"));
 				var destPosition = firstCarrouselNumber + $("div.carrousel_element_single_row_slides").index($("div.carrousel_element_single_row_slides:has(img[slidenumber='" + orgPosition + "'])"));
 
-				V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
-				V.Debugging.log("Org position: " + orgPosition);
-				V.Debugging.log("Dest position: " + destPosition);
+				// V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
+				// V.Debugging.log("Org position: " + orgPosition);
+				// V.Debugging.log("Dest position: " + destPosition);
 
 				//We must move slide orgPosition after or before destPosition
 				var movement = null;
