@@ -6,6 +6,7 @@ VISH.Quiz = (function(V,$,undefined){
   var user;
   var userStatus; 
   var quizIdToStartSession;
+
   var quizUrlForSession =" http://"+window.location.host.toString() +"/quiz_sessions/";
   var startButton = "mcquestion_start_button";
   var stopButton = "mcquestion_stop_button";
@@ -68,7 +69,7 @@ $(myInput).keydown(function(event) {
         V.Debugging.log("event.keyCode  =" + event.keyCode);
         if(($(myInput).val()!="")&& ($(myInput).val()!="write a name for saving")) {
           //call to addMultipleChoiceOption
-          _saveQuizYesButtonClicked();
+        return false;
           $(myInput).blur();
         } 
         else {
@@ -465,45 +466,42 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
     var marginTopDefault2 = 24; 
 
     //find the number of slide setQuizToActivate
+ 
 
     //if it is shown --> hide and move the button up  
     if( $(".current").find(".mc_meter").css('display')=="block") {
-      var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
+        var marginTopPercentTxt = (marginTopDefault*parseInt($(".current").find(".mc_answer").length).toString())+"%";
 
-      $(".current").find(".mc_meter").css('display', 'none');
-      $(".current").find(".mcoption_label").css('display', 'none');
+        $(".current").find(".mc_meter").css('display', 'none');
+        $(".current").find(".mcoption_label").css('display', 'none');
 
-      if ($(".current").find("#slide_to_activate").val()) {
-        slideToActivate = $(".current").find("#slide_to_activate").val();
-        $("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
-      } else if ($(".current").find("#slide_to_stop").val()) { 
-        slideToStop = $(".current").find("#slide_to_stop").val();
-        $("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
-      }
+        if ($(".current").find("#slide_to_activate").val()) {
+          slideToActivate = $(".current").find("#slide_to_activate").val();
+          $("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+        } else if ($(".current").find("#slide_to_stop").val()) { 
+          slideToStop = $(".current").find("#slide_to_stop").val();
+          $("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+        }
     } else {
-      //if it is hidden --> fill values, show statistics and move the button down 
-      //create a new class called: VISH.Quiz.API.js having all methods for communication with 
-      //VISH server
-      // call a function that do periodical get's to keep updated statistics values  
+   
+          //
+           var quiz_active_session_id = $(".current").find(".quiz_session_id").val();
+           V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _showResultsToTeacher, _onQuizSessionResultsReceivedError);
 
-      var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
+           var marginTopPercentTxt = (marginTopDefault2*parseInt($(".current").find(".mc_answer").length).toString())+"%";
 
-      //get values from the server , send the quiz_session_id
+      //  var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
+      
 
-      //data must be received from the VISH Server 
-      //var data = V.Quiz.API.getStatistics(quiz_session)
-      var data =  {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
-      _showResultsToTeacher(data);
-
-      if ($(".current").find("#slide_to_activate").val()) {
-        //try to read values from 
-        slideToActivate = $(".current").find("#slide_to_activate").val();
-        $("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
-      } else  if ($(".current").find("#slide_to_stop").val()) {
-        slideToStop = $(".current").find("#slide_to_stop").val();
-        $("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+        if ($(".current").find("#slide_to_activate").val()) {
+          //try to read values from 
+          slideToActivate = $(".current").find("#slide_to_activate").val();
+          $("#" + startButton + "_" + slideToActivate).css("margin-top", marginTopPercentTxt);
+        } else  if ($(".current").find("#slide_to_stop").val()) {
+          slideToStop = $(".current").find("#slide_to_stop").val();
+          $("#" + stopButton + "_" + slideToStop).css("margin-top", marginTopPercentTxt);
+        }
       }
-    }
   };
 /*
 Must call API's method to destroy the quiz's session
