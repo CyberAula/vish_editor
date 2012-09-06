@@ -34,18 +34,18 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			revert: "invalid",   //poi will return to original position if not dropped on the background
 			stop: function(event, ui) { //change the moved attribute of the poi
 				//check if inside background
-				if($(event.srcElement).offset().top > 100 && $(event.srcElement).offset().top < 700 && $(event.srcElement).offset().left > 55 && $(event.srcElement).offset().left < 855){
-					$(event.srcElement).parent().attr("moved", "true");
+				if($(event.target).offset().top > 100 && $(event.target).offset().top < 700 && $(event.target).offset().left > 55 && $(event.target).offset().left < 855){
+					$(event.target).attr("moved", "true");
 				}
 				else{
-					$(event.srcElement).parent().attr("moved", "false");
+					$(event.target).attr("moved", "false");
 				}
 			}
 		});
 		$(".carrousel_element_single_row_slides").droppable();
 		$(".image_carousel").css("overflow", "visible");
-		$("#menubar").css("z-index", "2000");
-		$(".draggable_arrow_div").css("z-index", "2000");
+		$("#menubar").css("z-index", "1075");
+		$(".draggable_arrow_div").css("z-index", "1075");
 	};
 
 
