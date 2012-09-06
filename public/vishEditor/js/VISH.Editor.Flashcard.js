@@ -26,27 +26,26 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
 	var _redrawPois = function(){
 		//show draggable items to create the flashcard
-		$(".fc_draggable_arrow").show();
+		$(".draggable_arrow_div").show();
 		//apply them the style to get the previous position
 		_applyStyleToPois();
 
-		$(".fc_draggable_arrow").draggable({
-			stop: function(event, ui) { console.log("start drag");},
+		$(".draggable_arrow_div").draggable({
 			revert: "invalid",   //poi will return to original position if not dropped on the background
 			stop: function(event, ui) { //change the moved attribute of the poi
 				//check if inside background
 				if($(event.srcElement).offset().top > 100 && $(event.srcElement).offset().top < 700 && $(event.srcElement).offset().left > 55 && $(event.srcElement).offset().left < 855){
-					$(event.srcElement).attr("moved", "true");
+					$(event.srcElement).parent().attr("moved", "true");
 				}
 				else{
-					$(event.srcElement).attr("moved", "false");
+					$(event.srcElement).parent().attr("moved", "false");
 				}
 			}
 		});
 		$(".carrousel_element_single_row_slides").droppable();
 		$(".image_carousel").css("overflow", "visible");
 		$("#menubar").css("z-index", "2000");
-		$(".fc_draggable_arrow").css("z-index", "2000");
+		$(".draggable_arrow_div").css("z-index", "2000");
 	};
 
 
@@ -65,7 +64,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	 */
 	var savePois = function(){
 		var pois = [];
-		$(".fc_draggable_arrow[moved='true']").each(function(index,s){
+		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
 			pois[index].id = $(s).attr('id');
 			pois[index].x = $(s).offset().left - 55;
@@ -76,7 +75,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	var removePois = function(){
-		$(".fc_draggable_arrow").hide();
+		$(".draggable_arrow_div").hide();
 	};
 
 	return {

@@ -332,10 +332,9 @@ VISH.Slides = (function(V,$,undefined){
 	 * function to close one specific slide in the flashcard
 	 */
 	var closeSlide = function(slide_id){
-		if(slideEls.length >= slide_id-1){
-			$(slideEls[slide_id-1]).hide();
-			triggerLeaveEvent(slide_id-1);
-		}
+		$("#"+slide_id).hide();
+		var slideNumber = $.inArray($("#"+slide_id)[0], slideEls);
+		triggerLeaveEvent(slideNumber);		
 	};
 
 

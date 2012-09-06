@@ -1549,10 +1549,20 @@ iframe.snapshot_content{
 	moz-border-radius: 20px;
 }
 
-.carrousel_element_single_row_slides img.fc_draggable_arrow{
+.carrousel_element_single_row_slides div.draggable_arrow_div{
 	display: none;
-	margin-top: -20px;
+	margin-top: -30px;
 	margin-bottom: -30px;
-	width: 30px;
-	height: 30px;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.draggable_arrow_div img.fc_draggable_arrow{
+	background-color: transparent;
+}
+
+.draggable_number{
+	position: relative;
+	top: -45px;
+	left: 27px;
 }
