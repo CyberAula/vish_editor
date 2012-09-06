@@ -302,7 +302,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			'transitionIn'		: 'none',
 			'transitionOut'		: 'none',
 			'type'				: 'iframe',
-			'onStart'			: VISH.Editor.Preview.prepare
+			'onStart'			: function(){
+				VISH.Editor.Preview.prepare(V.Slides.getCurrentSlideNumber());
+			},
+			'onClosed'			: function() {
+	    		V.Editor.Preview.setForcePresentation(false);
+			}
 		});	
 	}
 

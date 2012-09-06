@@ -160,7 +160,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				V.Debugging.log("Show message warning that we are changing to presentation and change");
 			  break;
 			case "goToSlide":
-			  V.Debugging.log("Preview slide: " + $(event.target).attr("slideNumber"));
+				V.Slides.setCurrentSlideNumber($(event.target).attr("slideNumber"));
+			  	//we want to show the slide, not the flashcard
+			  	V.Editor.Preview.setForcePresentation(true);
+			  	$("img#preview_circle").trigger('click');
 			  break;
 			default:
 			  break;

@@ -474,9 +474,12 @@ VISH.Editor = (function(V,$,undefined){
     
     
 	/**
-	* function to save the excursion 
+	* function to save the excursion
+	* 
+	* forcePresentation is a boolean to indicate if we should force type to presentation, although we might be in flashcard
+	* It is used for preview in the flashcard
 	*/
-	var saveExcursion = function(){
+	var saveExcursion = function(forcePresentation){
 		//first of all show all objects that have been hidden because they are in previous and next slides
 		//so they are not saved with style hidden
 		$('.object_wrapper').show();
@@ -489,7 +492,13 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.id = '';	
 		}
 
-		excursion.type = getExcursionType();
+		if(forcePresentation){
+			excursion.type = "presentation";
+		}
+		else{
+			excursion.type = getExcursionType();
+		}
+		
 		if(excursion.type==="flashcard"){
 			excursion.background = {};
 			excursion.background.src = $("#flashcard-background").css("background-image");
@@ -513,6 +522,7 @@ VISH.Editor = (function(V,$,undefined){
 			var element = {};
 
 			//important show it (the browser does not know the height and width if it is hidden)
+			var was_visible = $(s).is(":visible");
 			$(s).show();
 			$(s).find('div').each(function(i,div){
 				//to remove all the divs of the sliders, only consider the final boxes
@@ -624,6 +634,9 @@ VISH.Editor = (function(V,$,undefined){
 			});
 			excursion.slides.push(slide);
 			slide = {};
+			if(!was_visible){
+				$(s).hide();
+			}			
 		});
 
 		saved_excursion = excursion;  
