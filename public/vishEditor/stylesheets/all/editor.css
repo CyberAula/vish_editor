@@ -1534,7 +1534,7 @@ iframe.snapshot_content{
 	z-index: 1050;
 	width: 800px;
 	height: 600px;
-	margin-top: -300px;
+	margin-top: -327px;
 	margin-left: -400px;
 	left: 50%;
 	top: 50%;
@@ -1544,6 +1544,9 @@ iframe.snapshot_content{
 	background-attachment:fixed;
 	background-position:center center;
 	background-size: 100%;
+	border-radius: 20px;
+	webkit-border-radius: 20px;
+	moz-border-radius: 20px;
 }
 
 .carrousel_element_single_row_slides img.fc_draggable_arrow{
