@@ -243,6 +243,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var changeFlashcardBackground = function(){
 		V.Debugging.log("changeFlashcardBackground called");
+
+		
 	}
 
 
