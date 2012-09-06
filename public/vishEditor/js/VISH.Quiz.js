@@ -565,8 +565,8 @@ Must call API's method to destroy the quiz's session
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
   * actions to do: show results received by server and  do a bucle for ask more results every X seconds?*/
   var _showResultsToTeacher = function (data) {
-      //var received = JSON.stringify(data)
-      //V.Debugging.log("_showResultsToTeacher and data is: " + received); 
+     // var received = JSON.stringify(data)
+     // V.Debugging.log("_showResultsToTeacher and data is: " + received); 
       var votes;  
       var totalVotes =0;
       //calculate the vote's total sum 
@@ -574,11 +574,21 @@ Must call API's method to destroy the quiz's session
         totalVotes  += parseInt(data.results[votes]);
       }
       for (votes in data.results) {
-        var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
-        var percentString = percent.toString()  + "%";
-        var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-        $(".current").find("#mcoption_"+votes).css("width", percentString);
-        $(".current").find("#mcoption_label_"+votes).text(newnumber+"%");
+
+         if(data.results[votes]!=0) { 
+            var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
+            var percentString = percent.toString()  + "%";
+            var newnumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
+           //   $(".current").find("#mcoption_"+votes).css("width", percentString);
+           //  $(".current").find("#mcoption_label_"+votes).text(newnumber+"%");
+          }
+          else {
+              var percentString = "0%";
+              var newnumber = 0;
+
+          }
+          $(".current").find("#mcoption_"+votes).css("width", percentString);
+          $(".current").find("#mcoption_label_"+votes).text(newnumber+"%");
       }
     
     $(".current").find(".mc_meter").css('display', 'block');  
