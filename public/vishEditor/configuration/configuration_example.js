@@ -51,7 +51,7 @@ var getOptions = function(){
 			var developmentSettings = new Object();
 
 			//Possible action: "nothing" or "loadSamples".
-			developmentSettings.actionInit = "loadSamples";
+			developmentSettings.actionInit = "nothing";
 			//Select your samples
 			developmentSettings.samples = VISH.Samples.quizes_samples;
 
