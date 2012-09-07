@@ -258,7 +258,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var changeFlashcardBackground = function(){
 		V.Debugging.log("changeFlashcardBackground called");
 		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger("click");
-		
 	}
 
 
