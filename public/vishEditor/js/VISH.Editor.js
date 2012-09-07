@@ -77,7 +77,10 @@ VISH.Editor = (function(V,$,undefined){
 			setExcursion(excursion);
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
-			_removeSelectableProperties();			
+			_removeSelectableProperties();
+			if(excursion.type === "flashcard"){
+				V.Editor.Flashcard.loadFlashcard();
+			}			
 		}
 
 		
@@ -285,7 +288,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
-		var slide = V.Dummies.getDummy($(this).attr('template'));
+		var theid = draftExcursion ? draftExcursion.id : "";
+		var slide = V.Dummies.getDummy($(this).attr('template'), V.Slides.getSlides().length, theid, false);
 				
 		V.Editor.Utils.addSlide(slide);
 		
@@ -471,8 +475,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	
-    
-    
+	
 	/**
 	* function to save the excursion
 	* 
@@ -522,7 +525,6 @@ VISH.Editor = (function(V,$,undefined){
 			var element = {};
 
 			//important show it (the browser does not know the height and width if it is hidden)
-			var was_visible = $(s).is(":visible");
 			$(s).addClass("temp_shown");
 			$(s).find('div').each(function(i,div){
 				//to remove all the divs of the sliders, only consider the final boxes
@@ -634,15 +636,13 @@ VISH.Editor = (function(V,$,undefined){
 			});
 			excursion.slides.push(slide);
 			slide = {};
-			if(!was_visible){
-				$(s).removeClass("temp_shown");
-			}			
+			$(s).removeClass("temp_shown");						
 		});
 
 		saved_excursion = excursion;  
 		  
-		VISH.Debugging.log("Excursion saved:")
-		VISH.Debugging.log(JSON.stringify(excursion));    
+		// VISH.Debugging.log("Excursion saved:")
+		// VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
 	};
 	
@@ -817,12 +817,12 @@ VISH.Editor = (function(V,$,undefined){
 		var fancyBoxes = {1: "templates", 2: "quizes"}	
 				
 		for( tab in fancyBoxes) {
-			$('#'+fancyBoxes[tab]+'_content').hide();
+			$('#tab_'+fancyBoxes[tab]+'_content').hide();
 			$('#tab_'+fancyBoxes[tab]).attr("class", "");
 			$('#tab_'+fancyBoxes[tab]).attr("class", "fancy_tab");
 		} 
 		//just show the fancybox selected 
-		$('#'+fancy+'_content').show();
+		$('#tab_'+fancy+'_content').show();
 		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
 	}
 

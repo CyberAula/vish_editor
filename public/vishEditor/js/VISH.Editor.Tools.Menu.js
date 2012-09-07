@@ -335,7 +335,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		V.Editor.setExcursionType("presentation");
 		
-		//hide slides
+		//show slides
 		V.Editor.Utils.showSlides();
 
 		//show flashcard background, should be an image with help

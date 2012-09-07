@@ -6,7 +6,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var init = function(){ }
 	 
 	 
-	var redrawThumbnails = function(afterCreateCarruselFunction){
+	var redrawThumbnails = function(){
 
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
@@ -37,11 +37,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		}
 
-		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, afterCreateCarruselFunction, carrouselDivId,carrouselImagesTitles); 	
+		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 
-	var _onImagesLoaded = function(afterCreateCarruselFunction){	
+	var _onImagesLoaded = function(){	
 		//Add button events
 		$(".add_slide_button").hover(
 			function () {
@@ -54,91 +54,100 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		
 		//Unselect all thumbnails
 		$(".barbutton").css("background-color", "transparent");
-		 
-    var options = new Array();
-    options['rows'] = 1;
-    if(V.Editor.getExcursionType() === "flashcard"){
-    	options['callback'] = _onClickCarrouselElementInFlashcard;
-    }
-    else{
-    	options['callback'] = _onClickCarrouselElement;
-    }
-    
-    options['rowItems'] = 8;
-	options['scrollItems'] = 1;
-	options['styleClass'] = "slides";
-	options['width'] = 900;
-	options['startAtLastElement'] = true;
-	options['pagination'] = false;
-	options['afterCreateCarruselFunction'] = afterCreateCarruselFunction;
-	$("#" + carrouselDivId).show();
 
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		var options = new Array();
+		options['rows'] = 1;
+		if(V.Editor.getExcursionType() === "flashcard"){
+			options['callback'] = _onClickCarrouselElementInFlashcard;
+		}
+		else{
+			options['callback'] = _onClickCarrouselElement;
+		}
 
+		options['rowItems'] = 8;
+		options['scrollItems'] = 1;
+		options['styleClass'] = "slides";
+		options['width'] = 900;
+		options['startAtLastElement'] = true;
+		options['pagination'] = false;
+		if(V.Editor.getExcursionType() === "flashcard"){
+			options['afterCreateCarruselFunction'] = VISH.Editor.Flashcard.redrawPois;
+		}
+		$("#" + carrouselDivId).show();
 
-	if(V.Editor.getExcursionType() === "presentation"){
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		if(VISH.Slides.getCurrentSlideNumber()>0){
+			selectThumbnail(VISH.Slides.getCurrentSlideNumber());
+		}	
 
-		//Add sortable
-		var firstCarrouselNumber;
-		$( "#" + carrouselDivId).sortable({ 
-			items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
-			change: function(event, ui) {
-				//Do nothing
-			},
-			start: function(event, ui) { 
-				firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
-			},
-			stop: function(event, ui) { 
-				var dragElement = ui.item;
+		if(V.Editor.getExcursionType() === "presentation"){
 
-				var img = $(ui.item).find("img.carrousel_element_single_row_slides[slidenumber]");
-				if(isNaN($(img).attr("slidenumber"))){
-					return;
-				}
+			//Add sortable
+			var firstCarrouselNumber;
+			$( "#" + carrouselDivId).sortable({ 
+				items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
+				change: function(event, ui) {
+					//Do nothing
+				},
+				start: function(event, ui) { 
+					firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
+				},
+				stop: function(event, ui) { 
+					var dragElement = ui.item;
 
-				var orgPosition = parseInt($(img).attr("slidenumber"));
-				var destPosition = firstCarrouselNumber + $("div.carrousel_element_single_row_slides").index($("div.carrousel_element_single_row_slides:has(img[slidenumber='" + orgPosition + "'])"));
+					var img = $(ui.item).find("img.carrousel_element_single_row_slides[slidenumber]");
+					if(isNaN($(img).attr("slidenumber"))){
+						return;
+					}
 
-				// V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
-				// V.Debugging.log("Org position: " + orgPosition);
-				// V.Debugging.log("Dest position: " + destPosition);
+					var orgPosition = parseInt($(img).attr("slidenumber"));
+					var carrouselContainer =  [];
 
-				//We must move slide orgPosition after or before destPosition
-				var movement = null;
-				if(destPosition > orgPosition){
-					movement = "after";
-				} else if(destPosition < orgPosition){
-					movement = "before";
-				} else {
-					return;
-				}
-
-				var slideOrg = VISH.Slides.getSlideWithNumber(orgPosition);
-				var slideDst= VISH.Slides.getSlideWithNumber(destPosition);
-
-				if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
-					VISH.Slides.moveSlideTo(slideOrg, slideDst, movement);
-
-					//Update params and counters
-					var carrouselVisibleElements = 8;
 					$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
-						var slideNumber = $(value).find("img.carrousel_element_single_row_slides").attr("slidenumber");
-						if((slideNumber < firstCarrouselNumber)||(slideNumber > firstCarrouselNumber+carrouselVisibleElements-1)){
-							return;
-						} else {
-							var slideNumber = firstCarrouselNumber + index;
-							var p = $(value).find("p.carrousel_element_single_row_slides");
-							$(p).html(slideNumber);
-							var img = $(value).find("img.carrousel_element_single_row_slides");
-							$(img).attr("slidenumber",slideNumber);
-						}
+						carrouselContainer.push(value);
 					});
-				}
-			}
-		});
-	}
 
-  }
+					var destPosition = firstCarrouselNumber + $(carrouselContainer).index($("div.carrousel_element_single_row_slides:has(img[slidenumber='" + orgPosition + "'])"));
+
+					// V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
+					// V.Debugging.log("Org position: " + orgPosition);
+					// V.Debugging.log("Dest position: " + destPosition);
+
+					//We must move slide orgPosition after or before destPosition
+					var movement = null;
+					if(destPosition > orgPosition){
+						movement = "after";
+					} else if(destPosition < orgPosition){
+						movement = "before";
+					} else {
+						return;
+					}
+
+					var slideOrg = VISH.Slides.getSlideWithNumber(orgPosition);
+					var slideDst= VISH.Slides.getSlideWithNumber(destPosition);
+
+					if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
+						VISH.Slides.moveSlideTo(slideOrg, slideDst, movement);
+
+						//Update params and counters
+						var carrouselVisibleElements = 8;
+						$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
+							var slideNumber = $(value).find("img.carrousel_element_single_row_slides").attr("slidenumber");
+							if((slideNumber < firstCarrouselNumber)||(slideNumber > firstCarrouselNumber+carrouselVisibleElements-1)){
+								return;
+							} else {
+								var slideNumber = firstCarrouselNumber + index;
+								var p = $(value).find("p.carrousel_element_single_row_slides");
+								$(p).html(slideNumber);
+								var img = $(value).find("img.carrousel_element_single_row_slides");
+								$(img).attr("slidenumber",slideNumber);
+							}
+						});
+					}
+				}
+			});
+		}
+	}
 	
 	
 	var _onClickCarrouselElement = function(event){
@@ -171,14 +180,13 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
 	
 
-	
-  /**
-   * function to select the thumbnail
-   */
-  var selectThumbnail = function(no){
+	/**
+	* function to select the thumbnail
+	*/
+	var selectThumbnail = function(no){
 		$(".image_barbutton").removeClass("selectedSlideThumbnail");
 		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
-  };
+	};
     	
   
 	return {

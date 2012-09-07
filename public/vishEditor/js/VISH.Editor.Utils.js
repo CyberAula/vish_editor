@@ -10,16 +10,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
     
 
     var hideSlides = function(){
-    	$(".slides > article").hide();
+    	$(".slides > article").addClass("temp_hidden");
     };
 
     var showSlides = function(){
-    	//only show the current, the two next and the two before
-    	$(".slides > article.far-past").show();
-    	$(".slides > article.past").show();
-    	$(".slides > article.current").show();
-    	$(".slides > article.next").show();
-    	$(".slides > article.far-next").show();
+    	$(".slides > article").removeClass("temp_hidden");
     };
 
 	/*
@@ -86,13 +81,13 @@ VISH.Editor.Utils = (function(V,$,undefined){
   * If widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.
   */
   var getPixelDimensionsFromStyle = function(style,area){
-		var dimensions = [];
-    var width=null;
-		var height=null;
-		var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
-		var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
-		var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
-    var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
+	var dimensions = [];
+	var width=null;
+	var height=null;
+	var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
+	var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
+	var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
+	var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
     
     $.each(style.split(";"), function(index, property){
         //Look for property starting by width
@@ -136,9 +131,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
         }
     });
 		
-		dimensions.push(width);
-    dimensions.push(height);
-    return dimensions;
+	dimensions.push(width);
+	dimensions.push(height);
+	return dimensions;
   };
 	
 	
@@ -162,43 +157,42 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	
 	
 	 
-	 var addZoomToStyle = function(style,zoom){
-	 	
+	var addZoomToStyle = function(style,zoom){
 		if(!style){
 			return null;
 		}
-		
+
 		var filterStyle = "";
-    $.each(style.split(";"), function(index, property){
-       if ((property.indexOf("-ms-transform") === -1)&&(property.indexOf("-moz-transform") === -1)
+		$.each(style.split(";"), function(index, property){
+			if ((property.indexOf("-ms-transform") === -1)&&(property.indexOf("-moz-transform") === -1)
 			 &&(property.indexOf("-o-transform") === -1)&&(property.indexOf("-webkit-transform") === -1)
 			 &&(property.indexOf("-moz-transform-origin") === -1)&&(property.indexOf("-webkit-transform-origin") === -1)
 			 &&(property.indexOf("-o-transform-origin") === -1)&&(property.indexOf("-ms-transform-origin") === -1)) {
-         filterStyle = filterStyle + property + "; ";
-       }
-    });
-		
-//  -moz-transform: scale(1.0);
-//  -moz-transform-origin: 0 0;
-//  -o-transform: scale(1.0);
-//  -o-transform-origin: 0 0;
-//  -webkit-transform: scale(1.0);
-//  -webkit-transform-origin: 0 0;
-//  -ms-transform: scale(1.0);
-//  -ms-transform-origin: 0 0;
-		
+				filterStyle = filterStyle + property + "; ";
+			}
+		});
+			
+	//  -moz-transform: scale(1.0);
+	//  -moz-transform-origin: 0 0;
+	//  -o-transform: scale(1.0);
+	//  -o-transform-origin: 0 0;
+	//  -webkit-transform: scale(1.0);
+	//  -webkit-transform-origin: 0 0;
+	//  -ms-transform: scale(1.0);
+	//  -ms-transform-origin: 0 0;
+			
 		if(zoom){
 			filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
-	    filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
-	    filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
-	    filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
-	    filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
-	    filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
-	    filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
-	    filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
+			filterStyle = filterStyle + "-ms-transform-origin: 0 0; ";
+			filterStyle = filterStyle + "-moz-transform: scale(" + zoom + "); ";
+			filterStyle = filterStyle + "-moz-transform-origin: 0 0; ";
+			filterStyle = filterStyle + "-o-transform: scale(" + zoom + "); ";
+			filterStyle = filterStyle + "-o-transform-origin: 0 0; ";
+			filterStyle = filterStyle + "-webkit-transform: scale(" + zoom + "); ";
+			filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
 		}
 
-    return filterStyle;
+	    return filterStyle;
    }
 	 
 	 
@@ -212,18 +206,19 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
+
 		// first remove the walkthrough if open
 		$('.joyride-close-tip').click();
-		  
-		//deselect all of them
-		$(".fancy_tab").removeClass("fancy_selected");
-		//select the correct one
-		$("#" + tab_id).addClass("fancy_selected");
 
 		//hide previous tab
 		$(".fancy_tab_content").hide();
 		//show content
 		$("#" + tab_id + "_content").show();
+
+		//deselect all of them
+		$(".fancy_tab").removeClass("fancy_selected");
+		//select the correct one
+		$("#" + tab_id).addClass("fancy_selected");
 
 		//hide previous help button
 		$(".help_in_fancybox").hide();
@@ -245,7 +240,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_pic_flikr":
 				V.Editor.Image.Flikr.onLoadTab();
 				break;
-				
 			//Video
 			case "tab_video_from_url":
 				VISH.Editor.Video.onLoadTab();
