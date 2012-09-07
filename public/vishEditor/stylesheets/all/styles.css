@@ -111,6 +111,21 @@ this can not be done with show() and hide() because then it remains with display
 .slides > article.temp_shown {
   display: block;
 }
+.slides > article.far-past.temp_hidden {
+  display: none;
+}
+.slides > article.past.temp_hidden {
+  display: none;
+}
+.slides > article.current.temp_hidden {
+  display: none;
+}
+.slides > article.next.temp_hidden {
+  display: none;
+}
+.slides > article.far-next.temp_hidden {
+  display: none;
+}
 
 .slides > article.far-past {
   display: block;
