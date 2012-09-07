@@ -522,7 +522,6 @@ VISH.Editor = (function(V,$,undefined){
 			var element = {};
 
 			//important show it (the browser does not know the height and width if it is hidden)
-			var was_visible = $(s).is(":visible");
 			$(s).addClass("temp_shown");
 			$(s).find('div').each(function(i,div){
 				//to remove all the divs of the sliders, only consider the final boxes
@@ -634,9 +633,7 @@ VISH.Editor = (function(V,$,undefined){
 			});
 			excursion.slides.push(slide);
 			slide = {};
-			if(!was_visible){
-				$(s).removeClass("temp_shown");
-			}			
+			$(s).removeClass("temp_shown");						
 		});
 
 		saved_excursion = excursion;  
