@@ -14,12 +14,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
     };
 
     var showSlides = function(){
-    	//only show the current, the two next and the two before
-    	$(".slides > article.far-past").removeClass("temp_hidden");
-    	$(".slides > article.past").removeClass("temp_hidden");
-    	$(".slides > article.current").removeClass("temp_hidden");
-    	$(".slides > article.next").removeClass("temp_hidden");
-    	$(".slides > article.far-next").removeClass("temp_hidden");
+    	$(".slides > article").removeClass("temp_hidden");
     };
 
 	/*
