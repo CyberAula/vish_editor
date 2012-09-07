@@ -151,7 +151,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 				_unnestFontTags(elem);
 			} else if(!$(elem).is('font')) {
 				//if tipe font-> do nothing
-				$(elem).wrap("<font size='" + $(myelem).attr("size") + "' style='" + $(myelem).attr("style") + "' face='" + $(myelem).attr("face") + "'>");
+				$(elem).wrap("<font size='" + $(myelem).attr("size") + "' style='" + $(myelem).attr("style") + "' color='" + $(myelem).attr("color") + "' face='" + $(myelem).attr("face") + "'>");
 			}
 		});
 		$(myelem).children().unwrap();

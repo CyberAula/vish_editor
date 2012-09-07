@@ -56,7 +56,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		var excursion = V.Editor.getExcursion();
 		if(excursion && excursion.background && excursion.background.pois){
 			$.each(excursion.background.pois, function(index, val) { 
-  				$("#" + val.id).offset({ top: val.y + 75, left: val.x + 55});
+  				$("#" + val.id).offset({ top: parseInt(val.y) + 75, left: parseInt(val.x) + 55});
   				$("#" + val.id).attr("moved", "true");
 			});
 		}
@@ -82,7 +82,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	return {
-		redrawPois 		: redrawPois,
+		loadFlashcard		: loadFlashcard,
+		redrawPois 			: redrawPois,
 		removePois			: removePois,
 		savePois			: savePois,
 		switchToFlashcard	: switchToFlashcard

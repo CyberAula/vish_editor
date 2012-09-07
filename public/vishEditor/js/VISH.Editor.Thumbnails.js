@@ -6,7 +6,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var init = function(){ }
 	 
 	 
-	var redrawThumbnails = function(afterCreateCarruselFunction){
+	var redrawThumbnails = function(){
 
 		//Clean previous content
 		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
@@ -37,11 +37,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		}
 
-		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, afterCreateCarruselFunction, carrouselDivId, carrouselImagesTitles); 	
+		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 
-	var _onImagesLoaded = function(afterCreateCarruselFunction){	
+	var _onImagesLoaded = function(){	
 		//Add button events
 		$(".add_slide_button").hover(
 			function () {
@@ -70,7 +70,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options['width'] = 900;
 		options['startAtLastElement'] = true;
 		options['pagination'] = false;
-		options['afterCreateCarruselFunction'] = afterCreateCarruselFunction;
+		if(V.Editor.getExcursionType() === "flashcard"){
+			options['afterCreateCarruselFunction'] = VISH.Editor.Flashcard.redrawPois;
+		}
 		$("#" + carrouselDivId).show();
 
 		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
