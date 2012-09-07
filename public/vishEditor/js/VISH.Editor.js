@@ -1,5 +1,7 @@
 VISH.Editor = (function(V,$,undefined){
 	
+
+
 	var initOptions;
 	var domId = 0;  //number for next doom element id
 	
@@ -30,7 +32,6 @@ VISH.Editor = (function(V,$,undefined){
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
-		
 		VISH.Debugging.init(options);
 
 		//Check minium requirements
@@ -55,14 +56,14 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Status.init();
 
 		if(V.Status.ua.desktop){
-			// V.Debugging.log("Load Desktop CSS");
+			V.Debugging.log("Load Desktop CSS");
 			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/desktop.css" type="text/css" />');
 		} else if(V.Status.ua.mobile){
-			// V.Debugging.log("Load Mobile CSS");
+			V.Debugging.log("Load Mobile CSS");
 			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/mobile.css" type="text/css" />');
 		} else if(V.Status.ua.tablet){
-			// V.Debugging.log("Load Tablet CSS");
-			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
+			V.Debugging.log("Load Tablet CSS");
+			// $("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
 		}
 
 		if(VISH.Debugging.isDevelopping()){

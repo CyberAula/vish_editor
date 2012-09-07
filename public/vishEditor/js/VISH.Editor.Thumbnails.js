@@ -22,7 +22,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		  carrouselElements += 1;
 		  carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + VISH.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
 		  carrouselImagesTitles.push(carrouselElements);
-    });
+    	});
 		
 		//Add plus button
 		carrouselImages.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + VISH.ImagesPath + "templatesthumbs/add_slide.png' />"));
