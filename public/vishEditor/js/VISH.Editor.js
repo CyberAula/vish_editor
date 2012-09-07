@@ -288,7 +288,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
-		var slide = V.Dummies.getDummy($(this).attr('template'), V.Slides.getSlides().length);
+		var theid = draftExcursion ? draftExcursion.id : "";
+		var slide = V.Dummies.getDummy($(this).attr('template'), V.Slides.getSlides().length, theid, false);
 				
 		V.Editor.Utils.addSlide(slide);
 		
