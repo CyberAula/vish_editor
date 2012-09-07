@@ -4,6 +4,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	var uploadDivId = "tab_pic_upload_content";
 	var urlDivId = "tab_pic_from_url_content";
 	var urlInputId = "picture_url";
+	var flashcard_background_mode = false;
 	
 	var init = function(){
 		VISH.Editor.Image.Flikr.init();
@@ -159,7 +160,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing excursion
 	*/
 	var drawImage = function(image_url, area, style){    
-		if(V.Editor.getExcursionType() === "flashcard"){
+		if(flashcard_background_mode){
 			_drawImageAsFlashcardBackground(image_url);
 		}
 		else{
@@ -234,12 +235,16 @@ VISH.Editor.Image = (function(V,$,undefined){
 		});
 	};
   
+  	var setFlashcardMode = function(is_flashcard){
+  		flashcard_background_mode = is_flashcard;
+  	};
 
 	return {
 		init 				: init,
 		onLoadTab 			: onLoadTab,
 		drawImage 			: drawImage,
-		drawPreviewElement 	: drawPreviewElement
+		drawPreviewElement 	: drawPreviewElement,
+		setFlashcardMode	: setFlashcardMode
 	};
 
 }) (VISH, jQuery);

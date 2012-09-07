@@ -22,7 +22,7 @@ VISH.Status = (function(V,$,undefined){
 				//fullscreen supported by browser, let´s check that the iframe is the same domain as the vish_editor
 				//and that we are not in preview in the editor (in that case we don't want fullscreen)
 				try	{
-					if((window.parent.location.host === window.location.host) && (!(typeof window.parent.VISH.Editor.Preview.getPreview == "function"))){
+					if((window.parent.location.host === window.location.host) && (!window.parent.VISH || !window.parent.VISH.Editor || !(typeof window.parent.VISH.Editor.Preview.getPreview === "function"))){
 				    	features.fullscreen = true; 
 					}
 				} catch (e)	{

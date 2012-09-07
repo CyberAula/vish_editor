@@ -123,6 +123,20 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();
 				break;
 			case "flashcard":
+				$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
+					'autoDimensions' : false,
+					'width': 800,
+					'scrolling': 'no',
+					'height': 600,
+					'padding' : 0,
+					"onStart"  : function(data) {						
+						V.Editor.Image.setFlashcardMode(true);
+						V.Editor.Utils.loadTab('tab_pic_from_url');
+					},
+					"onClosed"	: function(data){
+						V.Editor.Image.setFlashcardMode(false);
+					}
+				});
 				$("#toolbar_presentation").find("img.toolbar_flashcard").show();
 				break;
 			case "game":
@@ -243,7 +257,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var changeFlashcardBackground = function(){
 		V.Debugging.log("changeFlashcardBackground called");
-
+		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger("click");
 		
 	}
 
