@@ -19,7 +19,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		
 		slides = excursion.slides;
 		for(var i=0;i<slides.length;i++){
-				_renderSlide(slides[i], i);			
+				_renderSlide(slides[i], i, excursion.id);			
 		}	
 	};
 	
@@ -27,10 +27,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one slide in editor
 	 */
-	var _renderSlide = function(slide, position){
+	var _renderSlide = function(slide, position, excursion_id){
 		
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
-		var scaffold = V.Dummies.getDummy(template, slide.id);  
+		var scaffold = V.Dummies.getDummy(template, position, excursion_id, true);  
 		
 		V.Editor.Utils.addSlide(scaffold);	
 		
@@ -38,7 +38,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		V.Slides.lastSlide();  //important to get the browser to draw everything
 		
 		for(el in slide.elements){
-			var area = $("#article"+slide.id + " div[areaid='" + slide.elements[el].areaid +"']");
+			var area = $("#article_" + excursion_id + "_" + position + " div[areaid='" + slide.elements[el].areaid +"']");
 			if(area.length === 0){
 				continue; //with first version excursions we had different template names and some fails, this condition avoid that
 			}
