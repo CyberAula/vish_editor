@@ -75,7 +75,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone4",
 				"type" : "text",
 				"areaid" : "header",
-				"body" : "Puesta de sol..."
+				"body" : "NUEVA Puesta de sol..."
 			}, {
 				"id" : "zone5",
 				"type" : "image",

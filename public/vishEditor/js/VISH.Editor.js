@@ -474,8 +474,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	
-    
-    
+	
 	/**
 	* function to save the excursion
 	* 
@@ -641,8 +640,8 @@ VISH.Editor = (function(V,$,undefined){
 
 		saved_excursion = excursion;  
 		  
-		VISH.Debugging.log("Excursion saved:")
-		VISH.Debugging.log(JSON.stringify(excursion));    
+		// VISH.Debugging.log("Excursion saved:")
+		// VISH.Debugging.log(JSON.stringify(excursion));    
 		return saved_excursion;     
 	};
 	
