@@ -56,14 +56,14 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Status.init();
 
 		if(V.Status.ua.desktop){
-			V.Debugging.log("Load Desktop CSS");
-			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/desktop.css" type="text/css" />');
+			// V.Debugging.log("Load Desktop CSS");
+			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
 		} else if(V.Status.ua.mobile){
-			V.Debugging.log("Load Mobile CSS");
-			$("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/mobile.css" type="text/css" />');
+			// V.Debugging.log("Load Mobile CSS");
+			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
 		} else if(V.Status.ua.tablet){
-			V.Debugging.log("Load Tablet CSS");
-			// $("head").append('<link rel="stylesheet" href="/vishEditor/stylesheets/device/tablet.css" type="text/css" />');
+			// V.Debugging.log("Load Tablet CSS");
+			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
 		}
 
 		if(VISH.Debugging.isDevelopping()){

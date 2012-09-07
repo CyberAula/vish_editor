@@ -65,7 +65,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
 			});
 			//replace contentusetut image
-			$("#contentusetut").attr("src", "images/contentuse_"+language+".png");
+			$("#contentusetut").attr("src", VISH.ImagesPath + "contentuse_"+language+".png");
   		}
 				
 		var duration = new Date().getTime() - initTime;

@@ -113,7 +113,7 @@ VISH.Utils.loader = (function(V,undefined){
 	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
 	 	 $.each(imagesArray, function(i, image) {
 	     if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
-				  $("#" + carrouselDivId).append("<div><div class='draggable_arrow_div' slide_id='"+titleArray[imagesArray.indexOf(image)]+"' id='poi"+titleArray[imagesArray.indexOf(image)]+"'><img src='/vishEditor/images/flashcard_button.png'  class='fc_draggable_arrow'/><p class='draggable_number'>"+titleArray[imagesArray.indexOf(image)]+"</p></div><p slidenumber='"+titleArray[imagesArray.indexOf(image)]+"' action='goToSlide'>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+				  $("#" + carrouselDivId).append("<div><div class='draggable_arrow_div' slide_id='"+titleArray[imagesArray.indexOf(image)]+"' id='poi"+titleArray[imagesArray.indexOf(image)]+"'><img src='" + VISH.ImagesPath + "flashcard_button.png'  class='fc_draggable_arrow'/><p class='draggable_number'>"+titleArray[imagesArray.indexOf(image)]+"</p></div><p slidenumber='"+titleArray[imagesArray.indexOf(image)]+"' action='goToSlide'>"+titleArray[imagesArray.indexOf(image)]+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 	     } else {
 	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
 	     }

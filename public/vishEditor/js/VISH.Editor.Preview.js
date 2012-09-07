@@ -14,9 +14,16 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		if(!slideNumberToPreview){
 			slideNumberToPreview =  V.Slides.getCurrentSlideNumber();
 		}
-		$("#preview_circle").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
-		
-		presentation_preview = V.Editor.saveExcursion(forcePresentation);	
+
+		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+			$("#preview_circle").attr("href", "/");
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+			$("#preview_circle").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
+			//Code here
+		}
+			
+		presentation_preview = V.Editor.saveExcursion(forcePresentation);
 	};
 
 	var setForcePresentation = function(force){
