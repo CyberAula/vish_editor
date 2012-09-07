@@ -77,7 +77,10 @@ VISH.Editor = (function(V,$,undefined){
 			setExcursion(excursion);
 			V.Editor.Renderer.init(excursion);
 			//remove focus from any zone
-			_removeSelectableProperties();			
+			_removeSelectableProperties();
+			if(excursion.type === "flashcard"){
+				V.Editor.Flashcard.loadFlashcard();
+			}			
 		}
 
 		

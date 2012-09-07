@@ -10,16 +10,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
     
 
     var hideSlides = function(){
-    	$(".slides > article").hide();
+    	$(".slides > article").addClass("temp_hidden");
     };
 
     var showSlides = function(){
     	//only show the current, the two next and the two before
-    	$(".slides > article.far-past").show();
-    	$(".slides > article.past").show();
-    	$(".slides > article.current").show();
-    	$(".slides > article.next").show();
-    	$(".slides > article.far-next").show();
+    	$(".slides > article.far-past").removeClass("temp_hidden");
+    	$(".slides > article.past").removeClass("temp_hidden");
+    	$(".slides > article.current").removeClass("temp_hidden");
+    	$(".slides > article.next").removeClass("temp_hidden");
+    	$(".slides > article.far-next").removeClass("temp_hidden");
     };
 
 	/*

@@ -1,7 +1,6 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
-	
-	var switchToFlashcard = function(){
+	var loadFlashcard = function(){
 		//first action, set excursion type to "flashcard"
 		V.Editor.setExcursionType("flashcard");
 		
@@ -11,12 +10,16 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//show flashcard background, should be an image with help
 		$("#flashcard-background").show();
 		
-		$( "#flashcard-background").droppable();  //to accept the pois
+		$("#flashcard-background").droppable();  //to accept the pois
+	};
+
+	var switchToFlashcard = function(){
 		
+		loadFlashcard();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on excursionType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
-		V.Editor.Thumbnails.redrawThumbnails(_redrawPois);
+		V.Editor.Thumbnails.redrawThumbnails(redrawPois);
 
 		VISH.Editor.Tools.init();
 		
@@ -24,7 +27,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 
 	//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
-	var _redrawPois = function(){
+	var redrawPois = function(){
 		//show draggable items to create the flashcard
 		$(".draggable_arrow_div").show();
 		//apply them the style to get the previous position
@@ -79,6 +82,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	return {
+		redrawPois 		: redrawPois,
 		removePois			: removePois,
 		savePois			: savePois,
 		switchToFlashcard	: switchToFlashcard

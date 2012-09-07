@@ -7,7 +7,7 @@ VISH.Game = (function(V,$,undefined){
 
 	var raiseAction = function(action_name){
 		if(actions[action_name]){
-			console.log("show slide " + actions[action_name].slide_id);
+			V.Debugging.log("show slide " + actions[action_name].slide_id);
 		}
 	};
 
