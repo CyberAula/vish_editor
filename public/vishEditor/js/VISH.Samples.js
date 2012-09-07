@@ -68,6 +68,21 @@ VISH.Samples = (function(V,undefined){
 				"areaid" : "right",
 				"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
 			}]
+		}, {
+			"id" : "articlevish43",
+			"template" : "t3",
+			"elements" : [{
+				"id" : "zone4",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "Puesta de sol..."
+			}, {
+				"id" : "zone5",
+				"type" : "image",
+				"areaid" : "left",
+				"body" : "http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg",
+				"style" : "position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"
+			}]
 		}]
 	};
 

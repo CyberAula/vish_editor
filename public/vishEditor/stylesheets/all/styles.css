@@ -106,6 +106,12 @@ body {
   display: none;
   z-index: 1075;
 }
+/*class used to show a slide to get width and height and after that remove the class
+this can not be done with show() and hide() because then it remains with display:none*/
+.slides > article.temp_shown {
+  display: block;
+}
+
 .slides > article.far-past {
   display: block;
   transform: translate(-230%);
