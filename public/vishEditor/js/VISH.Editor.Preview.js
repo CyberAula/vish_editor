@@ -18,7 +18,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 			$("#preview_circle").attr("href", "/");
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			$("#preview_circle").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
+			$("#preview_circle").attr("href", V.PreviewPath + "#" + slideNumberToPreview);
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
 			//Code here
 		}
