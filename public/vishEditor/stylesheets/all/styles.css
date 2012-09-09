@@ -424,3 +424,7 @@ this can not be done with show() and hide() because then it remains with display
 {  
     outline: none;  
 }  
+
+#flashcard-background{
+  position: relative; /*to position the arrows relative to it*/
+}

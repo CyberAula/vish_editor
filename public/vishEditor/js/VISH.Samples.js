@@ -102,13 +102,17 @@ VISH.Samples = (function(V,undefined){
 		"type"	 		: "flashcard", //flashcard, game, presentation, microscope, experiment, quiz
 		"background"	: { "src" : "url(http://www.andaluciacar.com/images/imagesMaps/donanabig.jpg)",
 					 		"pois": [{"id": "poi1",
-					 				  "x" : "200",
-					 				  "y" : "200",
+					 				  "x" : "20",
+					 				  "y" : "20",
 					 				  "slide_id": "1"},
 					 				 {"id": "poi2",
-					 				  "x" : "400",
-					 				  "y" : "400",
-					 				  "slide_id": "2"}]		 		
+					 				  "x" : "70",
+					 				  "y" : "30",
+					 				  "slide_id": "2"},
+					 				 {"id": "poi3",
+					 				  "x" : "45",
+					 				  "y" : "90",
+					 				  "slide_id": "3"}]		 		
 							},
 		"slides" : [{
 			"id" : "1",
