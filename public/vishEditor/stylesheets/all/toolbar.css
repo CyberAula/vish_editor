@@ -43,4 +43,10 @@
 .toolbar_icon{
 	height: 22px;
   margin: 1px -53px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toolbar_icon:hover{
+    opacity: 1;
 }

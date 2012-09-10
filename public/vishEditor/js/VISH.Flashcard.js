@@ -1,5 +1,4 @@
 VISH.Flashcard = (function(V,$,undefined){
-	
 
 	var init = function(excursion){
 		var fileref=document.createElement("link");
@@ -15,7 +14,7 @@ VISH.Flashcard = (function(V,$,undefined){
   		//and now we add the points of interest with their click events to show the slides
   		for(index in excursion.background.pois){
   			var poi = excursion.background.pois[index];
-  			var div_to_add = "<div id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'><img src='"+VISH.ImagesPath +"arrow_down.gif'/></div>";
+  			var div_to_add = "<div id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'><img src='"+ VISH.ImagesPath +"arrow_down.gif'/></div>";
 
   			flashcard_div.append(div_to_add);
   			$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onPoiClicked);
