@@ -25,7 +25,7 @@ VISH.Editor.Text = (function(V,$,undefined){
   	}
   	else{
   		current_area = $(this).parents(".selectable");
-  		initial_text = "<div><font size='3'>Insert text here</font></div>";
+  		initial_text = "<div><font size='3'>" + VISH.Editor.I18n.getTrans("Insert text here") + "</font></div>";
   	}
 	
 	// only one instance of the NicEditor is created

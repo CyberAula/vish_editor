@@ -29,15 +29,15 @@ VISH.Utils = (function(V,undefined){
     
       return "<table class=\"metadata\">"+
          "<tr class=\"even\">" +
-           "<td class=\"title header_left\">Author</td>" + 
+           "<td class=\"title header_left\">" + VISH.Editor.I18n.getTrans("Author") + "</td>" + 
            "<td class=\"title header_right\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
          "</tr>" + 
          "<tr class=\"odd\">" + 
-           "<td class=\"title\">Title</td>" + 
+           "<td class=\"title\">" + VISH.Editor.I18n.getTrans("Title") + "</td>" + 
            "<td class=\"info\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
          "</tr>" + 
          "<tr class=\"even\">" + 
-           "<td colspan=\"2\" class=\"title_description\">Description</td>" + 
+           "<td colspan=\"2\" class=\"title_description\">" + VISH.Editor.I18n.getTrans("Description") + "</td>" + 
          "</tr>" + 
          "<tr class=\"odd\">" + 
            "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 

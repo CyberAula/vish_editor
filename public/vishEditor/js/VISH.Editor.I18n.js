@@ -24,7 +24,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
   		
   		//substitute data-text attribute of the walkthrough
   		$("[data-text]").each(function(index, elem){
-				$(elem).attr("data-text", _getTrans($(elem).attr("data-text")));
+				$(elem).attr("data-text", getTrans($(elem).attr("data-text")));
 		});	
   	
   		//now the elements with attribute i18n-key (long phrases)
@@ -33,20 +33,20 @@ VISH.Editor.I18n = (function(V,$,undefined){
   		
   		//now the div titles (used as tooltips for help)
   		$('div[title]').each(function(index, elem){
-  			$(elem).attr("title", _getTrans($(elem).attr("title")));
+  			$(elem).attr("title", getTrans($(elem).attr("title")));
   		});
   		
   		//finally input and textareas have value and placeholder
   		$('input').each(function(index, elem){
 				if($(elem).val()!==""){
-					$(elem).val(_getTrans($(elem).val()));
+					$(elem).val(getTrans($(elem).val()));
 				}
 				if($(elem).attr("placeholder")){
-					$(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")));
+					$(elem).attr("placeholder", getTrans($(elem).attr("placeholder")));
 				}
 		});
 		$('textarea[placeholder]').each(function(index, elem){
-				$(elem).attr("placeholder", _getTrans($(elem).attr("placeholder")));
+				$(elem).attr("placeholder", getTrans($(elem).attr("placeholder")));
 		});
   		
   		if (typeof(i18n[language])!='undefined'){
@@ -81,7 +81,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			return $(this).children().length < 1 && ($(this).attr("i18n-key") === undefined) && $(this).text().trim() !== "";
 			})
 			.each(function(index, elem){
-				$(elem).text(_getTrans($(elem).text()));
+				$(elem).text(getTrans($(elem).text()));
 		});
 	};
 	
@@ -90,22 +90,23 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	 */
 	var _elementsWithKey = function(){
 		$("[i18n-key]").each(function(index, elem){
-				$(elem).text(_getTrans($(elem).attr("i18n-key")));
+				$(elem).text(getTrans($(elem).attr("i18n-key")));
 		});
 	};
 	
 	/**
 	 * function to translate a text
 	 */
-	var _getTrans = function (s) {
+	var getTrans = function (s) {
 	  if (typeof(i18n[language])!='undefined' && i18n[language][s]) {
 	    return i18n[language][s];
 	  }
-	  VISH.Debugging.log("Text without translation: " + s);
+	  // VISH.Debugging.log("Text without translation: " + s);
 	  return s;
 	};
 	
 	return {
+		getTrans 		  : getTrans,
 		init              : init
 	};
 

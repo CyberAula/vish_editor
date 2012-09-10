@@ -126,15 +126,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		//Insert the three first tags.
 		if ($(tagList).children().length == 0){
-		$.each(data, function(index, tag) {
-		  if(index==3){
-		    return false; //break the bucle
-		  }
-		  $(tagList).append("<li>" + tag + "</li>")
-		});
+			$.each(data, function(index, tag) {
+			  if(index==3){
+			    return false; //break the bucle
+			  }
+			  $(tagList).append("<li>" + tag + "</li>")
+			});
 
-				$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
-		watermarkAllowMessage: "Add tags", watermarkDenyMessage: "limit reached" });
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+			watermarkAllowMessage: VISH.Editor.I18n.getTrans("Add tags"), watermarkDenyMessage: VISH.Editor.I18n.getTrans("limit reached")});
 		}
 	}
 	
