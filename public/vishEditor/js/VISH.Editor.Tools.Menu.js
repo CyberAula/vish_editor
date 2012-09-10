@@ -260,6 +260,18 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
+		} else if(VISH.Editor.getExcursionType() === "flashcard" && !VISH.Editor.Flashcard.hasPoiInBackground()){
+			$.fancybox(
+				$("#message3_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
+					'width'         	: 350,
+					'height'        	: 250,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+				}
+			);
 		} else {    
 			$.fancybox(
 				$("#save_form").html(),

@@ -167,6 +167,17 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		switch($(event.target).attr("action")){
 			case "plus":
 				V.Debugging.log("Show message warning that we are changing to presentation and change");
+					$.fancybox(
+						$("#message2_form").html(),
+						{
+							'autoDimensions'	: false,
+							'scrolling'			: 'no',
+							'width'         	: 550,
+							'height'        	: 200,
+							'showCloseButton'	: false,
+							'padding' 			: 5		
+						}
+					);
 			  break;
 			case "goToSlide":
 				V.Slides.setCurrentSlideNumber($(event.target).attr("slideNumber"));

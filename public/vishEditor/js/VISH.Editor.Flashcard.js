@@ -37,7 +37,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			revert: "invalid",   //poi will return to original position if not dropped on the background
 			stop: function(event, ui) { //change the moved attribute of the poi
 				//check if inside background
-				if($(event.target).offset().top > 100 && $(event.target).offset().top < 700 && $(event.target).offset().left > 55 && $(event.target).offset().left < 855){
+				if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
 					$(event.target).attr("moved", "true");
 				}
 				else{
@@ -56,7 +56,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		var excursion = V.Editor.getExcursion();
 		if(excursion && excursion.background && excursion.background.pois){
 			$.each(excursion.background.pois, function(index, val) { 
-  				$("#" + val.id).offset({ top: parseInt(val.y) + 75, left: parseInt(val.x) + 55});
+  				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
   				$("#" + val.id).attr("moved", "true");
 			});
 		}
@@ -70,8 +70,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
 			pois[index].id = $(s).attr('id');
-			pois[index].x = $(s).offset().left - 55;
-			pois[index].y = $(s).offset().top - 75;
+			pois[index].x = 100*($(s).offset().left - 55)/800; //to be relative to his parent, the flashcard-background
+			pois[index].y = 100*($(s).offset().top - 75)/600; //to be relative to his parent, the flashcard-background
 			pois[index].slide_id = $(s).attr('slide_id');
 		});
 		return pois;
@@ -81,7 +81,13 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(".draggable_arrow_div").hide();
 	};
 
+
+	var hasPoiInBackground = function(){
+		return $(".draggable_arrow_div[moved='true']").length > 0;
+	};
+
 	return {
+		hasPoiInBackground	: hasPoiInBackground,
 		loadFlashcard		: loadFlashcard,
 		redrawPois 			: redrawPois,
 		removePois			: removePois,

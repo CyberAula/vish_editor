@@ -102,16 +102,16 @@ VISH.Samples = (function(V,undefined){
 		"type"	 		: "flashcard", //flashcard, game, presentation, microscope, experiment, quiz
 		"background"	: { "src" : "url(http://i3.photobucket.com/albums/y78/Txemin/cuadricula/cuadriculamostra.jpg)",
 					 		"pois": [{"id": "poi1",
-					 				  "x" : "20",
-					 				  "y" : "20",
+					 				  "x" : "11",
+					 				  "y" : "4.5",
 					 				  "slide_id": "1"},
 					 				 {"id": "poi2",
-					 				  "x" : "70",
-					 				  "y" : "30",
+					 				  "x" : "47",
+					 				  "y" : "34",
 					 				  "slide_id": "2"},
 					 				 {"id": "poi3",
-					 				  "x" : "45",
-					 				  "y" : "90",
+					 				  "x" : "84",
+					 				  "y" : "81",
 					 				  "slide_id": "3"}]		 		
 							},
 		"slides" : [{
