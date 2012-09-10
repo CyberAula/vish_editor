@@ -23,7 +23,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 					margin_width = 0;
 			} else {
 				page_is_fullscreen = false;
-				reserved_px_for_menubar = 40;
+				if(VISH.ViewerEngine === "presentation"){
+					reserved_px_for_menubar = 40;
+				}
+				else{
+					reserved_px_for_menubar = 0;
+				}				
 				margin_height = 40;
 				margin_width = 30;
 			}
@@ -73,6 +78,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".slides > article").css("font-size", font_size*increase + "px");
 		$(".slides > article").css("line-height", font_size*increase + "px");
 		
+		//and now the arrows have to be increased or decreased
+		$(".fc_poi img").css("width", 50*increase + "px");
+		$(".fc_poi img").css("height", 50*increase + "px");
 		
 		//Snapshot callbacks
 		VISH.SnapshotPlayer.aftersetupSize(increase);

@@ -65,13 +65,9 @@
 #flashcard-background {
   z-index: 1050; 
 	display: block;
-  width: 800px;
-  height: 600px;
-  margin-top: -300px;
-  margin-left: -400px;
   left: 50%;
   top: 50%;
-  position: absolute;	
+  position: relative;	
 	background-repeat:no-repeat;
 	background-attachment:fixed;
 	background-position:center center;
