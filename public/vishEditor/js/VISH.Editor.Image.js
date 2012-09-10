@@ -38,15 +38,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = "Uploaded by " + options["ownerName"] + " via Vish Editor";
+					var description = "Uploaded by " + VISH.User.getName() + " via Vish Editor";
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
-					$("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
-					if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-						$("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
-					} else if (VISH.Configuration.getConfiguration()["mode"]=="node") {
-						$("#" + uploadDivId + " .documentsForm").attr("action", "/image");
-					}
+					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
+					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
+					$("#" + uploadDivId + " .documentsForm").attr("action", VISH.UploadImagePath);
 					$("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					var tagList = $("#" + uploadDivId + " .tagList");
 					$(tagList).parent().hide();

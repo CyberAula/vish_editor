@@ -430,3 +430,9 @@ this can not be done with show() and hide() because then it remains with display
 #flashcard-background{
   position: relative; /*to position the arrows relative to it*/
 }
+
+
+.fc_poi img{
+  width: 50px;
+  height: 50px;
+}

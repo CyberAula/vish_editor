@@ -17,6 +17,13 @@ var getOptions = function(){
 		var configuration = {};
 
 		//Specified VISH Editor Configuration
+		
+		//Paths
+		configuration["ImagesPath"] = "/vishEditor/images/";
+		configuration["StylesheetsPath"] = "/vishEditor/stylesheets/";
+		configuration["uploadImagePath"] = "/image";
+		configuration["uploadObjectPath"] = "/object";
+		configuration["uploadPresentationPath"] = "/presentation/";
 
 		configuration["presentationSettings"] = true;
 		configuration["presentationTags"] = true;
@@ -62,8 +69,9 @@ var getOptions = function(){
 
 
 			//Also you can define a username and token for testing purposes
-			options["username"] = "username";
-			options["token"] = "12345";
+			options["username"] = "ebarra";
+			options["userId"] = "3456";
+			options["token"] = "12xfDgR345x6";
 
 			//And a default landguage
 			options["lang"] = "en";

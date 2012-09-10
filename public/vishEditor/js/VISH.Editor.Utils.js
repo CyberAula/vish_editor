@@ -195,7 +195,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	    return filterStyle;
    }
 	 
-	 
+	/**
+	 * function to get the styles in percentages
+	 */
+	var getStylesInPercentages = function(parent, element){
+		var WidthPercent = element.width()*100/parent.width();
+		var HeightPercent = element.height()*100/parent.height();
+		var TopPercent = element.position().top*100/parent.height();
+		var LeftPercent = element.position().left*100/parent.width();
+		return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
+	}; 
 	
 	/////////////////////////
 	/// Fancy Box Functions
@@ -293,7 +302,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		hideSlides			: hideSlides,
 		setStyleInPixels  : setStyleInPixels,		
-		addZoomToStyle  : addZoomToStyle,		
+		addZoomToStyle  : addZoomToStyle,	
+		getStylesInPercentages : 	getStylesInPercentages,	
 		addSlide		    : addSlide,
 		redrawSlides	    : redrawSlides,
 		dimentionToDraw     : dimentionToDraw,

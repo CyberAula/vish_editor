@@ -1,7 +1,5 @@
 VISH.Editor = (function(V,$,undefined){
 	
-
-
 	var initOptions;
 	var domId = 0;  //number for next doom element id
 	
@@ -27,8 +25,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Initializes the VISH editor
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
-	 * options is a hash with params and options from the server, example of full options hash:
-	 * {"token"; "453452453", "ownerId":"ebarra", "ownerName": "Enrique Barra", "postPath": "/excursions.json", "documentsPath": "/documents.json", "lang": "es"}
+	 * options is a hash with params and options from the server
 	 * excursion is the excursion to edit (in not present, a new excursion is created)
 	 */
 	var init = function(options, excursion){
@@ -52,17 +49,19 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		VISH.Dummies.init();
 		VISH.Slides.init();
 		VISH.Status.init();
+		VISH.User.init(options);
 
-		if(V.Status.ua.desktop){
-			// V.Debugging.log("Load Desktop CSS");
+		if(VISH.Status.ua.desktop){
+			// VISH.Debugging.log("Load Desktop CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
-		} else if(V.Status.ua.mobile){
-			// V.Debugging.log("Load Mobile CSS");
+		} else if(VISH.Status.ua.mobile){
+			// VISH.Debugging.log("Load Mobile CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
-		} else if(V.Status.ua.tablet){
-			// V.Debugging.log("Load Tablet CSS");
+		} else if(VISH.Status.ua.tablet){
+			// VISH.Debugging.log("Load Tablet CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
 		}
 
@@ -76,11 +75,11 @@ VISH.Editor = (function(V,$,undefined){
 		if(excursion){
 			initial_excursion = true;
 			setExcursion(excursion);
-			V.Editor.Renderer.init(excursion);
+			VISH.Editor.Renderer.init(excursion);
 			//remove focus from any zone
 			_removeSelectableProperties();
 			if(excursion.type === "flashcard"){
-				V.Editor.Flashcard.loadFlashcard();
+				VISH.Editor.Flashcard.loadFlashcard();
 			}			
 		}
 
@@ -96,7 +95,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				params['current_el'] = $("#" + clickedZoneId);
-				V.Editor.Utils.loadTab('tab_templates');
+				VISH.Editor.Utils.loadTab('tab_templates');
 			}
 		});
 		
@@ -120,13 +119,12 @@ VISH.Editor = (function(V,$,undefined){
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
-			V.Editor.Utils.redrawSlides();
-			V.Editor.Thumbnails.redrawThumbnails();
+			VISH.Editor.Utils.redrawSlides();
+			VISH.Editor.Thumbnails.redrawThumbnails();
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
 		}
-
 		
 		if(excursion){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
@@ -134,15 +132,15 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		//Init submodules
-		V.Editor.Text.init();
-		V.Editor.Image.init();
-		V.Editor.Video.init();
-		V.Editor.Object.init();
-		V.Editor.Thumbnails.init();
-		V.Editor.AvatarPicker.init();
-		V.Editor.I18n.init(options["lang"]);
-		V.Editor.Quiz.init();
-		V.Editor.Tools.init();
+		VISH.Editor.Text.init();
+		VISH.Editor.Image.init();
+		VISH.Editor.Video.init();
+		VISH.Editor.Object.init();
+		VISH.Editor.Thumbnails.init();
+		VISH.Editor.AvatarPicker.init();
+		VISH.Editor.I18n.init(options["lang"]);
+		VISH.Editor.Quiz.init();
+		VISH.Editor.Tools.init();
 	};
 	
 	
@@ -195,65 +193,65 @@ VISH.Editor = (function(V,$,undefined){
 	*/
  	var _addTutorialEvents = function(){
 		$(document).on('click','#start_tutorial', function(){
-			V.Editor.Tour.startTourWithId('initial_screen_help', 'top');
+			VISH.Editor.Tour.startTourWithId('initial_screen_help', 'top');
 		});
 
 		$(document).on('click','#help_right', function(){
-			V.Editor.Tour.startTourWithId('menubar_help', 'top');
+			VISH.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
 
 		//template
 		$(document).on('click','#help_template_image', function(){			
-			V.Editor.Tour.startTourWithId('template_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
 		
 		//template selection fancybox	
 		$(document).on('click','#help_template_selection', function(){
-			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
 		});	
 		
 		//image fancybox, one help button in each tab
 		$(document).on('click','#tab_pic_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
+			VISH.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_pic_upload_help', function(){
-			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
+			VISH.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
 		});
 		$(document).on('click','#tab_pic_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
 		});
 		$(document).on('click','#tab_pic_flikr_help', function(){
-			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
 		
 		//object fancybox, one help button in each tab
 		$(document).on('click','#tab_object_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
+			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_object_upload_help', function(){
-			V.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
+			VISH.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_object_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('search_object_help', 'bottom');
 		});
 		
 		//video fancybox, one help button in each tab
 		$(document).on('click','#tab_video_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+			VISH.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_video_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_video_help', 'top');
+			VISH.Editor.Tour.startTourWithId('search_video_help', 'top');
 		});
 		$(document).on('click','#tab_video_youtube_help', function(){
-			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
 		});
 		$(document).on('click','#tab_video_vimeo_help', function(){
-			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
+			VISH.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
 		});
 		
 		// live fancybox, one help button in each tab
 		$(document).on('click','#tab_live_webcam_help', function(){
-				V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+				VISH.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
 		});	
 	};
   
@@ -290,14 +288,14 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftExcursion ? draftExcursion.id : "";
-		var slide = V.Dummies.getDummy($(this).attr('template'), V.Slides.getSlides().length, theid, false);
+		var slide = VISH.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false);
 				
-		V.Editor.Utils.addSlide(slide);
+		VISH.Editor.Utils.addSlide(slide);
 		
 		$.fancybox.close();
 		
-		V.Editor.Utils.redrawSlides();		
-		V.Editor.Thumbnails.redrawThumbnails();
+		VISH.Editor.Utils.redrawSlides();		
+		VISH.Editor.Thumbnails.redrawThumbnails();
 		
 		setTimeout("VISH.Slides.lastSlide()", 300);	
 	};
@@ -340,7 +338,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_pic_from_url');
+				VISH.Editor.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 		$("a.addobject").fancybox({
@@ -352,7 +350,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_object_from_url');
+				VISH.Editor.Utils.loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -364,7 +362,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_video_from_url');
+				VISH.Editor.Utils.loadTab('tab_video_from_url');
 			}
 		});
 		$("a.addLive").fancybox({
@@ -376,7 +374,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_live_webcam');
+				VISH.Editor.Utils.loadTab('tab_live_webcam');
 			}
 		});
 	};
@@ -432,9 +430,9 @@ VISH.Editor = (function(V,$,undefined){
 						$("#prompt_answer").val("false");
 						$(".theslider").hide();	
 						article_to_delete.remove();
-						V.Slides.onDeleteSlide();					
-						V.Editor.Utils.redrawSlides();						
-						V.Editor.Thumbnails.redrawThumbnails();			
+						VISH.Slides.onDeleteSlide();					
+						VISH.Editor.Utils.redrawSlides();						
+						VISH.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 			}
@@ -507,7 +505,7 @@ VISH.Editor = (function(V,$,undefined){
 			excursion.background = {};
 			excursion.background.src = $("#flashcard-background").css("background-image");
 			//save the pois
-			excursion.background.pois = V.Editor.Flashcard.savePois();
+			excursion.background.pois = VISH.Editor.Flashcard.savePois();
 		}
 		if(draftExcursion){
 			excursion.title = draftExcursion.title;
@@ -536,14 +534,14 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type=="text"){
-						element.body   = V.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
-						element.style  = _getStylesInPercentages($(div), $(div).find('img'));
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
 					} else if(element.type=="video"){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
-						element.style  = _getStylesInPercentages($(div), $(video));
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
 						//Sources
 						var sources= '';				
 						$(video).find('source').each(function(index, source) {
@@ -560,7 +558,7 @@ VISH.Editor = (function(V,$,undefined){
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(myObject);
-						element.style  = _getStylesInPercentages($(div), $(object).parent());
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
 						var zoom = VISH.Utils.getZoomFromStyle($(object).attr("style"));
 						if(zoom!=1){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
@@ -570,7 +568,7 @@ VISH.Editor = (function(V,$,undefined){
 						element.question   = $(div).find(".value_openquestion").val();
 					} else if (element.type=="mcquestion") {  
 
-						V.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
+						VISH.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
 						element.question   = $(div).find(".value_multiplechoice_question").val();
 						element.options = [];  	
 						$(div).find('.multiplechoice_text').each(function(i, input_text){
@@ -606,7 +604,7 @@ VISH.Editor = (function(V,$,undefined){
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
-						element.style  = _getStylesInPercentages($(div), snapshotWrapper);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
 						element.scrollTop = $(snapshotWrapper).scrollTop();
 						element.scrollLeft = $(snapshotWrapper).scrollLeft();
 					} else if(typeof element.type == "undefined"){
@@ -671,7 +669,7 @@ VISH.Editor = (function(V,$,undefined){
 	        
 	        $.ajax({
 	          type    : send_type,
-	          url     : initOptions["postPath"],
+	          url     : VISH.UploadPresentationPath,
 	          data    : params,
 	          success : function(data) {
 	              /*if we redirect the parent frame*/
@@ -701,7 +699,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var uploadPresentationWithNode = function(excursion){
 		var send_type;
-		var url = "/presentation/";
+		var url = VISH.UploadPresentationPath;
 
 		if(draftExcursion){
 			send_type = 'PUT'; //if we are editing
@@ -728,34 +726,20 @@ VISH.Editor = (function(V,$,undefined){
 	}
 
 
-	/**
-	 * function to get the styles in percentages
-	 */
-	var _getStylesInPercentages = function(parent, element){
-		var WidthPercent = element.width()*100/parent.width();
-		var HeightPercent = element.height()*100/parent.height();
-		var TopPercent = element.position().top*100/parent.height();
-		var LeftPercent = element.position().left*100/parent.width();
-		return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
-	};
-	
 
-	var _getAspectRatio = function(element){
-		return element.width()/element.height();
-	}
 	
 	/**
 	 * Function to move the slides left one item
 	 */
 	var _onArrowLeftClicked = function(){
-		V.Slides.backwardOneSlide();
+		VISH.Slides.backwardOneSlide();
 	};
 	
 	/**
 	 * Function to move the slides right one item
 	 */
 	var _onArrowRightClicked = function(){
-		V.Slides.forwardOneSlide();
+		VISH.Slides.forwardOneSlide();
 	};
 	
 	

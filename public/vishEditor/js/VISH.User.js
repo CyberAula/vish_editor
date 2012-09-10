@@ -1,11 +1,14 @@
 VISH.User = (function(V,$,undefined){
 
-	var user; //{username: "user_name", token: "token"}
+	var user; //{username: "user_name", id: "id", token: "token"}
 
 	var init = function(options){
 		user = new Object();
 		if(options['username']) {
 		 	user.username = options['username'];
+		}
+		if(options['userId']) {
+		 	user.id= options['userId'];
 		}
 		if(options['token']){
 			user.token = options['token'];
@@ -36,6 +39,14 @@ VISH.User = (function(V,$,undefined){
 		}
 	}
 
+	var getId = function(){
+		if((user)&&(user.id)){
+			return user.id;
+		} else {
+			return null;
+		}
+	}
+
 	var getToken = function(){
 		if((user)&&(user.token)){
 			return user.token;
@@ -49,6 +60,7 @@ VISH.User = (function(V,$,undefined){
 		isLogged: 		isLogged,
 		getUser: 		getUser,
 		getName:  		getName,
+		getId: 			getId,
 		getToken:   	getToken
 	};
     
