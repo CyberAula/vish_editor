@@ -102,6 +102,7 @@ VISH.Debugging = (function(V,$,undefined){
 	    $('#menubar_helpsection2').hide();
 	    $('#joyride_help_button').hide();
 	    $('#preview_circle').hide();
+	    VISH.Editor.Tools.cleanZoneTools();
 	    VISH.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
 

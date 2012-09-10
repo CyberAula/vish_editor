@@ -17,6 +17,13 @@ var getOptions = function(){
 		var configuration = {};
 
 		//Specified VISH Editor Configuration
+		
+		//Paths
+		configuration["ImagesPath"] = "/vishEditor/images/";
+		configuration["StylesheetsPath"] = "/vishEditor/stylesheets/";
+		configuration["uploadImagePath"] = "/image";
+		configuration["uploadObjectPath"] = "/object";
+		configuration["uploadPresentationPath"] = "/presentation/";
 
 		configuration["presentationSettings"] = true;
 		configuration["presentationTags"] = true;

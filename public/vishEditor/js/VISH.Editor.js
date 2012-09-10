@@ -537,11 +537,11 @@ VISH.Editor = (function(V,$,undefined){
 						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
-						element.style  = _getStylesInPercentages($(div), $(div).find('img'));
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
 					} else if(element.type=="video"){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
-						element.style  = _getStylesInPercentages($(div), $(video));
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
 						//Sources
 						var sources= '';				
 						$(video).find('source').each(function(index, source) {
@@ -558,7 +558,7 @@ VISH.Editor = (function(V,$,undefined){
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(myObject);
-						element.style  = _getStylesInPercentages($(div), $(object).parent());
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
 						var zoom = VISH.Utils.getZoomFromStyle($(object).attr("style"));
 						if(zoom!=1){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
@@ -604,7 +604,7 @@ VISH.Editor = (function(V,$,undefined){
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
-						element.style  = _getStylesInPercentages($(div), snapshotWrapper);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
 						element.scrollTop = $(snapshotWrapper).scrollTop();
 						element.scrollLeft = $(snapshotWrapper).scrollLeft();
 					} else if(typeof element.type == "undefined"){
@@ -669,7 +669,7 @@ VISH.Editor = (function(V,$,undefined){
 	        
 	        $.ajax({
 	          type    : send_type,
-	          url     : initOptions["postPath"],
+	          url     : VISH.UploadPresentationPath,
 	          data    : params,
 	          success : function(data) {
 	              /*if we redirect the parent frame*/
@@ -699,7 +699,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var uploadPresentationWithNode = function(excursion){
 		var send_type;
-		var url = "/presentation/";
+		var url = VISH.UploadPresentationPath;
 
 		if(draftExcursion){
 			send_type = 'PUT'; //if we are editing
@@ -726,21 +726,7 @@ VISH.Editor = (function(V,$,undefined){
 	}
 
 
-	/**
-	 * function to get the styles in percentages
-	 */
-	var _getStylesInPercentages = function(parent, element){
-		var WidthPercent = element.width()*100/parent.width();
-		var HeightPercent = element.height()*100/parent.height();
-		var TopPercent = element.position().top*100/parent.height();
-		var LeftPercent = element.position().left*100/parent.width();
-		return "position: relative; width:" + WidthPercent + "%; height:" + HeightPercent + "%; top:" + TopPercent + "%; left:" + LeftPercent + "%;" ;
-	};
-	
 
-	var _getAspectRatio = function(element){
-		return element.width()/element.height();
-	}
 	
 	/**
 	 * Function to move the slides left one item

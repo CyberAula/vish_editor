@@ -50,11 +50,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
 					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
 					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
-					if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-						$("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
-					} else if (VISH.Configuration.getConfiguration()["mode"]=="node") {
-						$("#" + uploadDivId + " .documentsForm").attr("action", "/object");
-					}
+					$("#" + uploadDivId + " .documentsForm").attr("action", VISH.UploadObjectPath);
 					$("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					var tagList = $("#" + uploadDivId + " .tagList")
 					$(tagList).parent().hide();
