@@ -46,10 +46,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = "Uploaded by " + options["ownerName"] + " via Vish Editor"
+					var description = "Uploaded by " + VISH.User.getName() + " via Vish Editor"
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
-					$("#" + uploadDivId + " input[name='document[owner_id]']").val(options["ownerId"]);
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(options["token"]);
+					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
+					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
 					if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 						$("#" + uploadDivId + " .documentsForm").attr("action", options["documentsPath"]);
 					} else if (VISH.Configuration.getConfiguration()["mode"]=="node") {

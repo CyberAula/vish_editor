@@ -62,8 +62,9 @@ var getOptions = function(){
 
 
 			//Also you can define a username and token for testing purposes
-			options["username"] = "username";
-			options["token"] = "12345";
+			options["username"] = "ebarra";
+			options["userId"] = "3456";
+			options["token"] = "12xfDgR345x6";
 
 			//And a default landguage
 			options["lang"] = "en";

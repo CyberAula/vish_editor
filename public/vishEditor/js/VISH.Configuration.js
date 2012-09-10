@@ -4,7 +4,13 @@ VISH.Configuration = (function(V,$,undefined){
 	
 	var init = function(myConfiguration){ 
 		configuration = myConfiguration;
+		_initPaths();
 	};
+
+	var _initPaths = function(){
+		VISH.ImagesPath = configuration["ImagesPath"];
+		VISH.StylesheetsPath = configuration["StylesheetsPath"];
+	}
 	
 	var applyConfiguration = function(){
 		

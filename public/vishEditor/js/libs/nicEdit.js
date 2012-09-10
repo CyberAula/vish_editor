@@ -249,6 +249,25 @@ Function.prototype.closureListener = function() {
 
 /* START CONFIG */
 
+
+/*
+ * Function to get ImagesPath when nicEdit.js is loaded.
+ * We can't access VISH.ImagesPath directly because isn't loaded.
+ */
+var getImagesPathFromNicEdit = function(){
+	if(window.parent.options){
+		var vishEditorOptions = window.parent.options;
+	} else if(options){
+		var vishEditorOptions = options;
+	}
+	if((vishEditorOptions)&&(vishEditorOptions["configuration"])&&(vishEditorOptions["configuration"]["ImagesPath"])){
+		return vishEditorOptions["configuration"]["ImagesPath"];
+	} else {
+		VISH.Debugging.log("ImagesPath not specified");
+		return null;
+	}
+}
+
 var nicEditorConfig = bkClass.extend({
 	buttons : {
 		'bold' : {name : __('Click to Bold'), command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, key : 'b'},
@@ -268,11 +287,11 @@ var nicEditorConfig = bkClass.extend({
 		'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
 		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
-	iconsPath : VISH.ImagesPath + 'nicEditorIcons.gif',
+	iconsPath : getImagesPathFromNicEdit() + 'nicEditorIcons.gif',
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily',/*'fontFormat','indent','outdent','image',*/'upload','link','unlink','forecolor','bgcolor'],
 	iconList : {"bgcolor":1,"forecolor":2,"bold":3,"center":4,"hr":5,"indent":6,"italic":7,"justify":8,"left":9,"ol":10,"outdent":11,"removeformat":12,"right":13,"save":24,"strikethrough":15,"subscript":16,"superscript":17,"ul":18,"underline":19,"image":20,"link":21,"unlink":22,"close":23,"arrow":25}
-	
 });
+
 /* END CONFIG */
 
 

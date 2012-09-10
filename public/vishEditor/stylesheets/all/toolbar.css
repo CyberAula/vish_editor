@@ -42,5 +42,8 @@
 
 .toolbar_icon{
 	height: 22px;
-  margin: 1px -53px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-right: 1px;
+  margin-left: 1px;
 }

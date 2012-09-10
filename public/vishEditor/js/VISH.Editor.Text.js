@@ -3,8 +3,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 	var myNicEditor; // to manage the NicEditor WYSIWYG
 	
 	var init = function(){
-		$(document).on('click','.textthumb', launchTextEditor);
-	}
+	  	$(document).on('click','.textthumb', launchTextEditor);
+  	}
+	
 	
  /**
   * function called when user clicks on the text thumb
@@ -35,8 +36,7 @@ VISH.Editor.Text = (function(V,$,undefined){
     myNicEditor.addInstance(wysiwygId);
 
 	// add a button to delete the current text area   
-    V.Editor.addDeleteButton(current_area);
-    
+    V.Editor.addDeleteButton(current_area); 
   };
 	
 	/**
