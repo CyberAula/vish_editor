@@ -1,11 +1,15 @@
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var myNicEditor; // to manage the NicEditor WYSIWYG
-	
+	var initialized = false;
+
 	var init = function(){
-	  	$(document).on('click','.textthumb', launchTextEditor);
+		if(!initialized){
+			$(document).on('click','.textthumb', launchTextEditor);
+			nicEditorInit();
+			initialized=true;
+		}	
   	}
-	
 	
  /**
   * function called when user clicks on the text thumb
@@ -13,6 +17,8 @@ VISH.Editor.Text = (function(V,$,undefined){
   * param area: optional param indicating the area to add the wysiwyg, used for editing excursions
   */
   var launchTextEditor = function(event, area, initial_text ){
+  	init();
+
   	var current_area;
   	if(area){
   		current_area = area;
