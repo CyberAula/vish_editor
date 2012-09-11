@@ -8,7 +8,7 @@ VISH.Status = (function(V,$,undefined){
 		device.features = {};
 		fillBrowser();	
 		fillUserAgent();
-		fillFeatures();		
+		fillFeatures();
 	};
 	
 	var fillFeatures = function(){
@@ -147,8 +147,6 @@ VISH.Status = (function(V,$,undefined){
 			return;
 		}
 
-
-		// console.log("No browser founded");
 		//No browser founded
 		device.browser.name = VISH.Constant.UNKNOWN;
 		device.browser.name = -1;
@@ -156,7 +154,7 @@ VISH.Status = (function(V,$,undefined){
 
 	var _getInternetExplorerVersion = function() {
 		var rv = -1; //No explorer
-		if (navigator.appName === VISH.Constant.IE) {
+		if (navigator.appName === VISH.Constant.UA_IE) {
 			var ua = navigator.userAgent;
 			var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
 			if (re.exec(ua) != null){
@@ -168,23 +166,25 @@ VISH.Status = (function(V,$,undefined){
 			
 	var _getFirefoxVersion = function() {
       var rv = -1; //No firefox
-      if (navigator.appName === VISH.Constant.FIREFOX) {
+      if (navigator.appName === VISH.Constant.UA_NETSCAPE) {
           var ua = navigator.userAgent;
           var re = new RegExp(".* Firefox/([0-9.]+)");
-          if (re.exec(ua) != null)
-          rv = parseFloat(RegExp.$1); 
+          if (re.exec(ua) != null){
+           	rv = parseFloat(RegExp.$1);
+          } 
       }
       return rv;
     }
 
 	var _getGoogleChromeVersion = function() {
       var rv = -1; //No Google Chrome
-      // if (navigator.appName === VISH.Constant.CHROME) {
-      //     var ua = navigator.userAgent;
-      //     var re = new RegExp(".* Firefox/([0-9.]+)");
-      //     if (re.exec(ua) != null)
-      //     rv = parseFloat(RegExp.$1); 
-      // }
+      if (navigator.appName === VISH.Constant.UA_NETSCAPE) {
+          var ua = navigator.userAgent;
+          var re = new RegExp(".* Chrome/([0-9.]+)");
+           if (re.exec(ua) != null){
+           	rv = parseFloat(RegExp.$1);
+           }
+      }
       return rv;
     }
 	
