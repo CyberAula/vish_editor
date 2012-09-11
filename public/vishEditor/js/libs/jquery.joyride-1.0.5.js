@@ -222,7 +222,7 @@
                 });
                 nub.addClass('bottom');
               }
-            } else if(settings.tipLocation == "bottom"){
+            } else if(tipSettings.tipLocation == "bottom"){
               //KIKE: ADDED HERE THE IF, SO WE CAN CALL IT WITH LOCATION NONE AND ADD THE LOCATION BY A CLASS
               // Default is bottom alignment.
               currentTip.offset({
