@@ -194,6 +194,7 @@ VISH.Editor = (function(V,$,undefined){
  	var _addTutorialEvents = function(){
 		$(document).on('click','#start_tutorial', function(){
 			VISH.Editor.Tour.startTourWithId('initial_screen_help', 'top');
+			console.log("hola");
 		});
 
 		$(document).on('click','#help_right', function(){
