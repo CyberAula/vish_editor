@@ -44,76 +44,53 @@ VISH.Utils = (function(V,undefined){
          "</tr>" + 
        "</table>";
     }
-		
-		
-		//Check minium requirements to init vish editor
-		var checkMiniumRequirements = function(){
-					
-			var browserRequirements = true;
 			
-			//Check for Internet Explorer old versions
-		  if ((navigator.appName == 'Microsoft Internet Explorer')&&(_getInternetExplorerVersion()<9)) {
-        browserRequirements = false;
-      }
-			
-			//Firefox
-//			if ((navigator.appName == 'Netscape')&&(_getFirefoxVersion()<0)) {
-//        browserRequirements = false;
-//      }
-			
-			//Add more browser requirements
-			//[...]
-				
-			if(!browserRequirements){
-				$.fancybox(
-          $("#requirements_form_wrapper").html(),
-          {
-            'autoDimensions'  : false,
-            'width'           : 650,
-            'height'          : 400,
-            'showCloseButton' : false,
-            'padding'       : 0,
-            'onClosed'      : function(){
-              //Do nothing!
-            }
-          }
-        );
-				return false;
-			}
-			
-			
-			//Add more requirements
-			//[...]
-			
-			return true;
+	//Check minium requirements to init vish editor
+	var checkMiniumRequirements = function(){
+		var browserRequirements = true;
+		var device = VISH.Status.getDevice();
+
+		switch(device.browser.name){
+			case VISH.Constant.IE:
+				if(VISH.Editing){
+					if(device.browser.version < 9){
+						browserRequirements = false;
+					}
+				} else {
+					if(device.browser.version < 8){
+						browserRequirements = false;
+					}
+				}
+				break;
+			case VISH.Constant.FIREFOX:
+				break;
+			case VISH.Constant.CHROME:
+				break;
+			default:
+				//Allow...
+			break;
 		}
-		
-		
-		function _getInternetExplorerVersion() {
-	    var rv = -1;
-	    if (navigator.appName == 'Microsoft Internet Explorer') {
-	        var ua = navigator.userAgent;
-	        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-	        if (re.exec(ua) != null){
-						rv = parseFloat(RegExp.$1);
-					} 
-	    }
-	    return rv;
-    }
-		
-		
-		function _getFirefoxVersion() {
-      var rv = -1; // Return value assumes failure.
-      if (navigator.appName == 'Netscape') {
-          var ua = navigator.userAgent;
-          var re = new RegExp(".* Firefox/([0-9.]+)");
-          if (re.exec(ua) != null)
-          rv = parseFloat(RegExp.$1); 
-      }
-      return rv;
-    }
+				
+		if(!browserRequirements){
+			$.fancybox(
+				$("#requirements_form_wrapper").html(),
+				{
+					'autoDimensions'  : false,
+					'width'           : 650,
+					'height'          : 400,
+					'showCloseButton' : false,
+					'padding'       : 0,
+					'onClosed'      : function(){
+						//Do nothing!
+					}
+				}
+			);
+			return false;
+		}
 
-
+		return true;
+	}
+		
     var convertToTagsArray = function(tags){
 	    var tagsArray = [];
 	    

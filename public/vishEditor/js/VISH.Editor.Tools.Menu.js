@@ -16,8 +16,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		$("#menu").hide();
 
-		if(!VISH.Status.ua.desktop){
-			if(VISH.Status.ua.tablet){
+		if(!VISH.Status.getDevice().desktop){
+			if(VISH.Status.getDevice().tablet){
 				VISH.Editor.MenuTablet.init();
 			} else {
 				disableMenu();

@@ -68,8 +68,8 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			$("#contentusetut").attr("src", VISH.ImagesPath + "contentuse_"+language+".png");
   		}
 				
-		var duration = new Date().getTime() - initTime;
-		VISH.Debugging.log("Internationalization took " + duration + " ms.");
+		// var duration = new Date().getTime() - initTime;
+		// VISH.Debugging.log("Internationalization took " + duration + " ms.");
 	};
 	
 	

@@ -36,14 +36,14 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Slides.init();
 		V.Status.init();
 
-		if(V.Status.ua.desktop){
-			// V.Debugging.log("Load Desktop CSS");
+		if(VISH.Status.getDevice().desktop){
+			// VISH.Debugging.log("Load Desktop CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
-		} else if(V.Status.ua.mobile){
-			// V.Debugging.log("Load Mobile CSS");
+		} else if(VISH.Status.getDevice().mobile){
+			// VISH.Debugging.log("Load Mobile CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
-		} else if(V.Status.ua.tablet){
-			// V.Debugging.log("Load Tablet CSS");
+		} else if(VISH.Status.getDevice().tablet){
+			// VISH.Debugging.log("Load Tablet CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
 		}
 
@@ -67,7 +67,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		if ((V.Status.features.fullscreen)&&(V.Status.ua.desktop)) {  
+		if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {  
 			if(V.Status.getIsInIframe()){
 				myDoc = parent.document;
 			} else {
@@ -86,7 +86,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		  	$("#page-fullscreen").hide();
 		}
 		
-		if (V.Status.ua.desktop) {
+		if (V.Status.getDevice().desktop) {
     		//show page counter (only for desktop, in mobile the slides are passed touching)
     		$("#viewbar").show();
     		updateSlideCounter();

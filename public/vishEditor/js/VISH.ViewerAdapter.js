@@ -10,7 +10,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var margin_height;
 		var margin_width;
 
-		if (V.Status.ua.mobile) {
+		if (V.Status.getDevice().mobile) {
 			reserved_px_for_menubar = 0; //we don´t show the menubar
 			margin_height = 0;
 			margin_width = 0;
@@ -73,7 +73,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
 		var increase = finalH/600;
-		var font_size = V.Status.ua.mobile ? 15:16 ;
+		var font_size = V.Status.getDevice().mobile ? 15:16 ;
 		
 		$(".slides > article").css("font-size", font_size*increase + "px");
 		$(".slides > article").css("line-height", font_size*increase + "px");
@@ -138,7 +138,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(!page_is_fullscreen && !V.Status.ua.mobile){
+		if(!page_is_fullscreen && !V.Status.getDevice().mobile){
 			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#page-switcher-start").hide();				
 			} else {

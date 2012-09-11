@@ -31,11 +31,6 @@ VISH.Editor = (function(V,$,undefined){
 	var init = function(options, excursion){
 		VISH.Debugging.init(options);
 
-		//Check minium requirements
-		if(!VISH.Utils.checkMiniumRequirements()){
-			return;
-		}
-
 		//first set VISH.Editing to true
 		VISH.Editing = true;
 
@@ -49,18 +44,22 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		VISH.Status.init();
+		if(!VISH.Utils.checkMiniumRequirements()){
+			return;
+		}
+
 		VISH.Dummies.init();
 		VISH.Slides.init();
-		VISH.Status.init();
 		VISH.User.init(options);
 
-		if(VISH.Status.ua.desktop){
+		if(VISH.Status.getDevice().desktop){
 			// VISH.Debugging.log("Load Desktop CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
-		} else if(VISH.Status.ua.mobile){
+		} else if(VISH.Status.getDevice().mobile){
 			// VISH.Debugging.log("Load Mobile CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
-		} else if(VISH.Status.ua.tablet){
+		} else if(VISH.Status.getDevice().tablet){
 			// VISH.Debugging.log("Load Tablet CSS");
 			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
 		}
