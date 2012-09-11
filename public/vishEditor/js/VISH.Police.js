@@ -17,7 +17,7 @@ VISH.Police = (function(V,$,undefined){
 			return [false,"Object is an empty string"];
 		}
 		
-		var objectInfo = VISH.Editor.Object.getObjectInfo(object)
+		var objectInfo = VISH.Object.getObjectInfo(object);
 		
 		if(!objectInfo){
 			return [false,"Can't get Object info"];

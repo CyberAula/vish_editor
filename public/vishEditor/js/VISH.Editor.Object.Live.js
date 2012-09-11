@@ -69,7 +69,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
     } 
 		
     $.each(data, function(index, object) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(object.fulltext)
+      var objectInfo = VISH.Object.getObjectInfo(object.fulltext)
       var imageSource = null;
       
       switch (objectInfo.type){

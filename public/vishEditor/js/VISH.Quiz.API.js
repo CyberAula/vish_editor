@@ -1,7 +1,7 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
 	var init = function(){
-		V.Debugging.log("VIS.QUIZ.API init");
+		// V.Debugging.log("VIS.QUIZ.API init");
 	}
 	
 	

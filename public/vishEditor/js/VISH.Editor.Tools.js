@@ -183,7 +183,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var loadToolbarForObject = function(object){
-		var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+		var objectInfo = VISH.Object.getObjectInfo(object);
 
 		switch(objectInfo.type){
 			case "web":
@@ -280,7 +280,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		switch(type){
 			case "object":
 				var object = area.children()[0].children[0];
-				var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+				var objectInfo = VISH.Object.getObjectInfo(object);
 				if(objectInfo.type==="web"){
 					var iframe = $(area).find("iframe");
 					var zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));

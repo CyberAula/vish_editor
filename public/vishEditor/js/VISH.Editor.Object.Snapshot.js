@@ -35,7 +35,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	
 	var _validateSnapShot = function(object){	
-		var objectInfo = VISH.Editor.Object.getObjectInfo(object);
+		var objectInfo = VISH.Object.getObjectInfo(object);
 		
     switch (objectInfo.wrapper) {
       case null:
@@ -66,7 +66,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	
 	var _wrapperSnapShot = function(content){
-		var objectInfo = VISH.Editor.Object.getObjectInfo(content);
+		var objectInfo = VISH.Object.getObjectInfo(content);
 		if(objectInfo.wrapper===null){
 			return "<iframe src='" + content + "'></iframe>";
 		} else {

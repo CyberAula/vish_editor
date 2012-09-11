@@ -64,7 +64,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
     } 
 		
     $.each(data, function(index, objectItem) {
-      var objectInfo = VISH.Editor.Object.getObjectInfo(objectItem.object)
+      var objectInfo = VISH.Object.getObjectInfo(objectItem.object);
       var imageSource = null;        
       
       switch (objectInfo.type){

@@ -8,7 +8,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   }
 	
 	var _getVideoType = function(url){
-		var source = (VISH.Editor.Object.getObjectInfo(url)).source;
+		var source = (VISH.Object.getObjectInfo(url)).source;
     return "video/" + source.split('.').pop();
 	}
 
