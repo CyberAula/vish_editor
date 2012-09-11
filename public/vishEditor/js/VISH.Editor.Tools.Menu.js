@@ -120,7 +120,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initSettings = function(){
 
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"])&&(!VISH.Editor.hasInitialExcursion())){
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"]) && (!VISH.Editor.hasInitialExcursion()) && !initializedSettings){
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
@@ -132,6 +132,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				'showCloseButton': false
 			});
 			displaySettings();
+			initializedSettings = true;
 		} else {
 			$("a#edit_excursion_details").fancybox({
 				'autoDimensions' : false,
