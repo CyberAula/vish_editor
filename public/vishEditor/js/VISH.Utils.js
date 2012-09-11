@@ -113,7 +113,7 @@ VISH.Utils = (function(V,undefined){
 		//Add HTTP if is not present.
 		var autocompleteUrls = function(input){
 			var http_urls_pattern=/(^http(s)?:\/\/)/g
-			var objectInfo = VISH.Editor.Object.getObjectInfo();
+			var objectInfo = VISH.Object.getObjectInfo();
 			
 			if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
         return "http://" + input;

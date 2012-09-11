@@ -14,7 +14,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone1",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 			}, {
 				"id" : "zone2",
@@ -39,7 +39,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone5",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"
 			}]
 		}, {
@@ -121,7 +121,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone1",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 			}, {
 				"id" : "zone2",
@@ -146,7 +146,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone5",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"
 			}]
 		}, {
@@ -197,7 +197,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone1",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 			}, {
 				"id" : "zone2",
@@ -222,7 +222,7 @@ VISH.Samples = (function(V,undefined){
 				"id" : "zone5",
 				"type" : "image",
 				"areaid" : "left",
-				"body" : "http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 				"style" : "position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"
 			}]
 		}, {
@@ -304,7 +304,7 @@ VISH.Samples = (function(V,undefined){
                     'id'     : '319',
 					'type'   : 'image',
 					'areaid' : 'left',
-					'body'   : 'http://www.absoluthuelva.com/wp-content/uploads/2009/03/donana.jpg'		
+					'body'   : 'http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg'		
 				}
 			]
 		},
@@ -346,7 +346,7 @@ VISH.Samples = (function(V,undefined){
                     'id'     : '324',
 					'type'   : 'image',
 					'areaid' : 'left',
-					'body'   : 'http://www.viajes.okviajar.es/wp-content/uploads/2010/11/parque-donana.jpg'		
+					'body'   : 'http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg'		
 				}
 			]
 		},
@@ -364,7 +364,7 @@ VISH.Samples = (function(V,undefined){
           'id'     : '7335',
           'type'   : 'object',
           'areaid' : 'left',
-          'body'   : '<embed width="99%" height="99%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+          'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
         }	
 			]
 		},		
@@ -377,7 +377,7 @@ VISH.Samples = (function(V,undefined){
 					'type'        : 'flashcard',
 					'areaid'      : 'left',
 					'canvasid'    : 'myCanvas',
-					'jsoncontent' : '{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t�ntalo es un elemento qu�mico de n�mero at�mico 73, que se sit�a en el grupo 5 de la tabla peri�dica de los elementos. Su s�mbolo es Ta. Se trata de un metal de transici�n raro, azul gris�ceo, duro, que presenta brillo met�lico y resiste muy bien la corrosi�n. Se encuentra en el mineral tantalita. Es fisiol�gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci�n de instrumentos quir�rgicos y en implantes. En ocasiones se le llama t�ntalo, pero el �nico nombre reconocido por la Real Academia Espa�ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t�ntalo es un elemento qu�mico de n�mero at�mico 73, que se sit�a en el grupo 5 de la tabla peri�dica de los elementos. Su s�mbolo es Ta. Se trata de un metal de transici�n raro, azul gris�ceo, duro, que presenta brillo met�lico y resiste muy bien la corrosi�n. Se encuentra en el mineral tantalita. Es fisiol�gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci�n de instrumentos quir�rgicos y en implantes. En ocasiones se le llama t�ntalo, pero el �nico nombre reconocido por la Real Academia Espa�ola es tantalio."}]}]}',
+					'jsoncontent' : '{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "contents/images/background.jpg","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "El tantalio o t�ntalo es un elemento qu�mico de n�mero at�mico 73, que se sit�a en el grupo 5 de la tabla peri�dica de los elementos. Su s�mbolo es Ta. Se trata de un metal de transici�n raro, azul gris�ceo, duro, que presenta brillo met�lico y resiste muy bien la corrosi�n. Se encuentra en el mineral tantalita. Es fisiol�gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci�n de instrumentos quir�rgicos y en implantes. En ocasiones se le llama t�ntalo, pero el �nico nombre reconocido por la Real Academia Espa�ola es tantalio."}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "contents/images/3.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "contents/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "El tantalio o t�ntalo es un elemento qu�mico de n�mero at�mico 73, que se sit�a en el grupo 5 de la tabla peri�dica de los elementos. Su s�mbolo es Ta. Se trata de un metal de transici�n raro, azul gris�ceo, duro, que presenta brillo met�lico y resiste muy bien la corrosi�n. Se encuentra en el mineral tantalita. Es fisiol�gicamente inerte, por lo que, entre sus variadas aplicaciones, se puede emplear para la fabricaci�n de instrumentos quir�rgicos y en implantes. En ocasiones se le llama t�ntalo, pero el �nico nombre reconocido por la Real Academia Espa�ola es tantalio."}]}]}',
 					'js'          : 'js/mods/fc/VISH.Mods.fc.js'
 				}
 			]
@@ -391,7 +391,7 @@ VISH.Samples = (function(V,undefined){
 					'type'        : 'flashcard',
 					'areaid'      : 'left',
 					'canvasid'    : 'myCanvas2',
-					'jsoncontent' : '{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "media/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "media/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "media/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}',
+					'jsoncontent' : '{"name": "myFirstFlashcard","description": "flashcard explanation","type": "flashcard","backgroundSrc": "contents/images/background2.png","pois": [{"id": 1,"x": 200,"y": 325,"templateNumber": 0,"zonesContent": [{"type": "text","content": "texto texto texto"}]},{"id": 2,"x": 458,"y": 285,"templateNumber": 1,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "image","content": "contents/images/plata.jpg"}]},{"id": 3,"x": 658,"y": 285,"templateNumber": 0,"zonesContent": [{"type": "video","content": [{"mimetype": "video/webm","src": "contents/videos/video1.webm"},{"mimetype": "video/mp4","src": "http://video-js.zencoder.com/oceans-clip.mp4"}]}]},{"id": 4,"x": 458,"y": 457,"templateNumber": 2,"zonesContent": [{"type": "text","content": "Image shows silver rock"},{"type": "empty","content": ""},{"type": "text","content": "texto 2 texto 2."}]}]}',
 					'js'          : 'js/mods/fc/VISH.Mods.fc.js'
 				}
 			]
@@ -534,7 +534,7 @@ VISH.Samples = (function(V,undefined){
           'id'     : '7335',
 					'type'   : 'object',
 					'areaid' : 'right',
-					'body'   : '<embed width="100%" height="80%" src="/media/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+					'body'   : '<embed width="100%" height="80%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
 				}
 			]
 		}

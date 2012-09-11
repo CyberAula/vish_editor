@@ -1,10 +1,6 @@
 VISH.Renderer = (function(V,$,undefined){
 	
 	var SLIDE_CONTAINER = null;
-	/*var username = "";
-	var token = "";
-	var quiz_active = ""; */
-	var trueFalseAnswers;
 	
 
 	/**
@@ -13,7 +9,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var init  = function(){
 		SLIDE_CONTAINER = $('.slides');
-		
+		VISH.Renderer.Filter.init();
 	}
 
 	/**
@@ -25,6 +21,12 @@ VISH.Renderer = (function(V,$,undefined){
 		var classes = "";
 		var buttons = "";
 		for(el in slide.elements){
+
+			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
+				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
+				break;
+			}
+
 			if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "image"){
