@@ -52,7 +52,20 @@ width: 100%;
   height: 0;
   border: solid 14px;
 }
+.joyride-tip-guide span.joyride-nub.right {
+   left: auto;
+   right: 22px;
+}
 .joyride-tip-guide span.joyride-nub.top {
+   /*
+  IE7/IE8 Don't support rgba so we set the fallback
+  border color here. However, IE7/IE8 are also buggy
+  in that the fallback color doesn't work for
+  border-bottom-color so here we set the border-color
+  and override the top,left,right colors below.
+  */
+  border-color: #000;
+  border-color: rgba(0,0,0,0.8);
   border-top-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
@@ -60,6 +73,15 @@ width: 100%;
   top: -28px;
 }
 .joyride-tip-guide span.joyride-nub.bottom {
+   /*
+  IE7/IE8 Don't support rgba so we set the fallback
+  border color here. However, IE7/IE8 are also buggy
+  in that the fallback color doesn't work for
+  border-top-color so here we set the border-color
+  and override the bottom,left,right colors below.
+  */
+  border-color: #000;
+  border-color: rgba(0,0,0,0.8) !important;
   border-bottom-color: transparent !important;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
@@ -97,15 +119,10 @@ width: 100%;
 }
 
 /* Button Style */
-.joyride-tip-guide .joyride-next-tip:after {
-  clear: both;
-}
 .joyride-tip-guide .joyride-next-tip {
   width: auto;
   padding: 6px 18px 4px;
   font-size: 13px;
-  float: right;
-  margin: 0 6px 8px 0px;
     display: inline;
 	text-decoration:none;
     background: #ff005d repeat-x bottom;
