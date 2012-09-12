@@ -87,13 +87,23 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		return $(".draggable_arrow_div[moved='true']").length > 0;
 	};
 
+	var hasChangedBackground = function(){
+		if($("#flashcard-background").css("background-image").indexOf("flashcard_initial_background.jpg") != -1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	};
+
 	return {
-		hasPoiInBackground	: hasPoiInBackground,
-		loadFlashcard		: loadFlashcard,
-		redrawPois 			: redrawPois,
-		removePois			: removePois,
-		savePois			: savePois,
-		switchToFlashcard	: switchToFlashcard
+		hasChangedBackground : hasChangedBackground,
+		hasPoiInBackground	 : hasPoiInBackground,
+		loadFlashcard		 : loadFlashcard,
+		redrawPois 			 : redrawPois,
+		removePois			 : removePois,
+		savePois			 : savePois,
+		switchToFlashcard	 : switchToFlashcard
 	};
 
 }) (VISH, jQuery);

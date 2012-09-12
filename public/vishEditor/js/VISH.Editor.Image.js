@@ -158,6 +158,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	var drawImage = function(image_url, area, style){    
 		if(flashcard_background_mode){
 			_drawImageAsFlashcardBackground(image_url);
+			$("#fc_change_bg_big").hide();
 		}
 		else{
 			_drawImageInArea(image_url, area, style);

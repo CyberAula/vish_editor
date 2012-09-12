@@ -475,6 +475,19 @@
 	  		</div>
 	  	</div>
 	  </div>
+
+	  <!-- PROMPT WHEN TRY TO SAVE AND BACKGROUND IS NOT SET-->
+	  <div style='display:none'>
+	  	<div id='message4_form'>
+	  		<div class="text_in_fancybox">
+	  			<img id="message4img" src="/vishEditor/images/content_fail.png">
+	  			<span class="deltext">Please change the flashcard background before saving.</span>
+	  		</div> 		
+	  		<div id="button_accept_when_fail">
+	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
+	  		</div>
+	  	</div>
+	  </div>
   
   	<!-- IMAGE -->
   	  <a id="hidden_button_to_launch_picture_fancybox_for_flashcard" href="#picture_fancybox" style="display:none"> Change background</a>
