@@ -1335,6 +1335,18 @@ textarea {
 	left: 255px;
 }
 
+.imagetutflash {
+	position: absolute;
+	top:98px;
+	left:380px;
+}
+
+.imagetutflash2 {
+	position: absolute;
+	top:202px;
+	left:399px;
+}
+
 .tut_menubar{
   top: 510px;
   left: 255px ;
