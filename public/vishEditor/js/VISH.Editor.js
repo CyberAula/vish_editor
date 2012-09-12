@@ -140,6 +140,7 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.I18n.init(options["lang"]);
 		VISH.Editor.Quiz.init();
 		VISH.Editor.Tools.init();
+		VISH.Editor.Filter.init();
 	};
 	
 	
