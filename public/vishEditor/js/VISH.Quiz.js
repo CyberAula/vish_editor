@@ -1,43 +1,28 @@
 VISH.Quiz = (function(V,$,undefined){
-  var role;
   var slideToActivate;
   var slideToStop;
   var slideToVote;
-  var user;
-  var userStatus; 
   var quizIdToStartSession;
-
   var quizUrlForSession =" http://"+window.location.host.toString() +"/quiz_sessions/";
+  var quizStatus = {};
   var startButton = "mcquestion_start_button";
   var stopButton = "mcquestion_stop_button";
-  var trueFalseAnswers = new Array(); //array to save the answers
-  var quizStatus = {};
+
 
   var init = function(excursion){
     var options = VISH.SlideManager.getOptions();
     
     if (excursion.type=="quiz_simple") {
-      //Quiz to respond
       if(options['quiz_active_session_id']) {
           quizStatus.quiz_active_session_id = options['quiz_active_session_id'];
            _activateStudentInteraction();
       } 
-      //...
     } else if(excursion.type=="presentation") {
-      //  slideToActivate = excursion.slide.quiz_id;
-      //add events 
-
-      //Quiz to view
       if(VISH.User.isLogged()){
-        //Case: Teacher
-        //Show start quiz button
         $(".mcquestion_start_button").show();
-        //Add events to start quiz
         _loadEvents();
       } else {
-        //Case: Student
-        //Hide start quiz button
-        //Code here...
+        $(".mcquestion_start_button").hide();
       }
     }
 
@@ -53,107 +38,27 @@ VISH.Quiz = (function(V,$,undefined){
 
     $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
     $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
-//TODO correct this , because doesn't avoid the press enter action instead pressed ok button for saving
-$(myInput).keydown(function(event) { 
-  event.preventDefault();
+
+    //TODO correct this , because doesn't avoid the press enter action instead pressed ok button for saving
+    $(myInput).keydown(function(event) {
+      V.Debugging.log("event.keyCode  =" + event.keyCode);
+      event.preventDefault();
       if(event.keyCode == 13) {
         V.Debugging.log("event.keyCode  =" + event.keyCode);
         if(($(myInput).val()!="")&& ($(myInput).val()!="write a name for saving")) {
-          //call to addMultipleChoiceOption
           _saveQuizYesButtonClicked();
           return false;
-        } 
-        else {
-          alert("You must enter some text option.");  
+        } else {
+          // alert("You must enter some text option.");  
         }
-    } 
-
+      }
     }); 
-      //$(".current").find(".a_share_content_icon").slideDown();
-    
   };
 
-
-
- /**
-  * Called from VISH.Excursion._finishRenderer only when one of the slide's element type is a mcquestion 
-  * add listeners and some functions and it is necessary that objects be loaded so that it's done later than 
-  * render
-  * 
-  var enableInteraction = function (slide, options){
-    switch(role) {
-      case "logged": 
-        slideToActivate = slide;
-
-        _alignStartButton(options);
-        //add listener to start and statistic buttons
-        _activateLoggedInteraction();
-        break;
-
-      case "student": quizStatus.quiz_active_session_id
-        //is this variable correctly initialized here?
-        slideToVote = slide;
-        _activateStudentInteraction();
-        break;
-
-      case "none":
-        break;
-
-      default: 
-        //obj could be an error message :  <p> Error</p>
-        VISH.Debugging.log("Something went wrong while processing the Quiz, role value is: "+ role);  
-    }
-  };*/
-
-
-  var enableTrueFalseInteraction = function (slide, options) {
-    //var sendButton = $("#" + slide).find(".tfquestion_button");
-
-    //var sendButton = $("#" + slide).find("input:button[class='tfquestion_button']");
-    var sendButton = $("#" + slide).find("#tf_send_button");
-
-    //var radioInput = $("#"+slide).find("input[type=radio][name=tf_radio_1]");
-    var radioInput = $("#"+slide).find("input:radio[name='tf_radio_1']");
-
-    //add listeners
-    //$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-    /*$(document).on('click', sendButton, function(event){  
-    event.preventDefault();
-    VISH.Debugging.log("Click detected: on send button TF question");   
-    //  $(event.srcElement).css("color", "blue");
-    }); */
-
-    /*
-    $("#"+slide).on("click", radioInput, function(event){ 
-    event.preventDefault();
-    VISH.Debugging.log("Click detected: on radio button 1");    
-    //  $(event.srcElement).css("color", "blue");
-
-    valor = $("#"+slide).find("input[type=radio][name=tf_radio_1]").val();        
-
-    VISH.Debugging.log("Valor is: " + valor);
-    VISH.Debugging.log("trueFalseAnswer 0 is : " + trueFalseAnswers[0]);
-
-    if (valor==trueFalseAnswers[0]) {
-      
-      VISH.Debugging.log("Correct answer!!");
-      
-      
-    } else {
-      
-      VISH.Debugging.log("Wrong answer!!");
-      
-    }
-    });
-    */
-    };
     
   /*
   * Function will be call when a teacher wants to start a voting or opinion pull
   * so must do an post to the ViSH server, 
-  * 
-  * params: 
-  * 
   */
 
   var _activateLoggedInteraction = function () {
@@ -163,19 +68,16 @@ $(myInput).keydown(function(event) {
     var saveQuizNoButton = '#mcquestion_save_no_button_'+slideToActivate;       
     $(document).on('click', startButton, _startMcQuizButtonClicked);
     $(document).on('click', statisticsButton, _statisticsMcQuizButtonClicked);
-
   };
     
     
   /*
-   *Function activate interactive elements in the Quiz for a student who is going
+   * Function activate interactive elements in the Quiz for a student who is going
    * to participate in a polling process 
-   *  */   
+   */   
   var _activateStudentInteraction = function () {
- //   var sendVoteButton = '#mcquestion_send_vote_button_'+slideToVote;
     var sendVoteButton = '.mcquestion_send_vote_button';
    
-
     //add listener to send button _onSendVoteMcQuizButtonClicked
     $(document).on('click', sendVoteButton, _onSendVoteMcQuizButtonClicked);
     $(".mc_meter").hide();
@@ -225,14 +127,7 @@ $(myInput).keydown(function(event) {
   var _startMcQuizButtonClicked = function () {
     // show (construct) share button and different buttons for social networks sharing
     slideToPlay = $(".current").find("#slide_to_activate").val();
-
-    //this URL is generated for VISHUB server (through Ajax POST) 
-    //var url = V.Quiz.API.postStartQuiz(quiz_id);
-    //TODO URL shorter ?? talk to R & R 
     var quiz_id =  $(".current").find(".quiz_id_to_activate").val();
-    // var quiz_id = 1; //sacarlo de la slide el parámetro quiz_id (verlo en modelo de la excursion)
-   // V.Debugging.log("Quiz_id from form : " + quiz_id);
-
     V.Quiz.API.postStartQuizSession(quiz_id,_onQuizSessionReceived,_OnQuizSessionReceivedError);
   };
 
@@ -337,12 +232,9 @@ $(myInput).keydown(function(event) {
   };
     
 
-  var _onQuizVotingSuccessReceived = function(data){
-   //call another API function that must make a  GET /quiz_sessions/X/results 
-var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
-V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
-
-  
+  var _onQuizVotingSuccessReceived = function(data){ 
+    var quiz_active_session_id = $(".current").find("#quiz_active_session_id").val();
+    V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
   var _OnQuizVotingReceivedError = function(error){
@@ -367,15 +259,11 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
 
     //for avoid bring out when mouse over option
       _removeOptionsListener(slideToVote);
-
   };
 
   var _onQuizSessionResultsReceivedError = function(error) {
     var received = JSON.stringify(error)
     V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
-
-
-
   };
 
 
@@ -383,12 +271,9 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
   *called for a teacher who wants to stop a voting 
   */
   var _onStopMcQuizButtonClicked = function () {
-
-   
-//first show save results  div (put a name for saving)
-  $(".current").find(".save_quiz").css("display", "inline-block"); 
-//then wait answer (yes or not) depending on that we put name or not 
-
+    //first show save results  div (put a name for saving)
+    $(".current").find(".save_quiz").css("display", "inline-block"); 
+    //then wait answer (yes or not) depending on that we put name or not 
   };
     
 
@@ -401,8 +286,6 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     var quiz_active_session_id = $(".current").find(".quiz_session_id").val();
     V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _showResultsToTeacher, _onQuizSessionResultsReceivedError);
 
-  
-
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('disabled', 'disabled');
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('value', 'Start Quiz');
 
@@ -410,25 +293,19 @@ V.Quiz.API.getQuizSessionResults(quiz_active_session_id, _onQuizSessionResultsRe
     $("#"+slideToStop).find("#mcquestion_stop_button_"+slideToStop).attr('id', 'mcquestion_start_button_'+slideToStop);
 
     $("#"+slideToStop).find("#slide_to_stop" ).attr('id', 'slide_to_activate');
-    
+
     $(document).on('click', '.mcquestion_start_button', _startMcQuizButtonClicked);
-    //$(document).on('click', '#mcquestion_start_button_'+slideToStop, _startMcQuizButtonClicked);
 
     $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("color", "#F76464");
     $("#"+slideToStop).find("#mcquestion_start_button_"+slideToStop).css("background-color", "#F8F8F8");
-    
-
-  //
 
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");  
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
 
-$(".current").find(".quiz_session_id").attr("class", "quiz_id_to_activate"); 
-$(".current").find(".quiz_id_to_activate").val(quizIdToStartSession); 
-
-    //_showResultsToTeacher(results);
+    $(".current").find(".quiz_session_id").attr("class", "quiz_id_to_activate"); 
+    $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession); 
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
@@ -476,20 +353,18 @@ $(".current").find(".quiz_id_to_activate").val(quizIdToStartSession);
         }
       }
   };
+
 /*
 Must call API's method to destroy the quiz's session
 */
   var _saveQuizYesButtonClicked = function () { 
-      //quiz to stop
     var quizSessionActiveId =  $(".current").find("#quiz_session_id").val();
-      //name's value:
     var quizNameForSaving = $(".current").find(".save_results_quiz").val();
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizNameForSaving);
     $(".current").find(".mcquestion_start_button").removeAttr('disabled');
     $(".current").find(".save_quiz").css("display", "none");  
     $(".current").find(".mcquestion_start_button").css("color", "blue");
     $(".current").find(".mcquestion_start_button").css("background-color", "buttonface"); 
-//quiz_session_id change to 
   };
     
     
@@ -560,6 +435,8 @@ Must call API's method to destroy the quiz's session
     $(".current").find(".mcquestion_left").css('width', '95%');
     //  $(".current").find(".mc_meter").css('display', 'block');  
   };
+
+
   /*
   * Function called when the JSON object is received from the server 
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
@@ -616,27 +493,22 @@ Must call API's method to destroy the quiz's session
   };
 
 
-var  setQuizToActivate  = function (quizIdToStart)  {
+  var setQuizToActivate = function (quizIdToStart)  {
+    quizIdToStartSession = quizIdToStart;
+  };
 
-quizIdToStartSession = quizIdToStart;
-
-};
-
-var getQuizIdToStartSession = function(){
-
-return quizIdToStartSession;
-
-};  
+  var getQuizIdToStartSession = function(){
+    return quizIdToStartSession;
+  };  
 
 
-var setSlideToVote = function (slide) {
+  var setSlideToVote = function (slide) {
+    slideToVote = slide; 
+  };
 
-  slideToVote = slide; 
-};
   return {
     getQuizStatus               : getQuizStatus,
-    init                        : init,
-    enableTrueFalseInteraction  : enableTrueFalseInteraction, 
+    init                        : init, 
     setQuizToActivate           : setQuizToActivate, 
     getQuizIdToStartSession     : getQuizIdToStartSession, 
     setSlideToVote              : setSlideToVote

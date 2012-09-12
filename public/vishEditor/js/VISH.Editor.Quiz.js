@@ -1,252 +1,97 @@
 VISH.Editor.Quiz = (function(V,$,undefined){
-	var buttonAddOptionId = "a_add_quiz_option";
-	var buttonRemoveOptionId = "a_remove_quiz_option";
-	//var buttonAddOptionClass = "add_quiz_option"; //con esto sí funciona	
-	var MultipleChoiceOptionClass = "multiplechoice_text";
-	var searchOptionText= "mchoice_radio_option_";
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
-
-
-	//var for T/F Quiz
-	var buttonAddTrueFalseQuestionId = "a_add_true_false_question";
-	var maxNumTrueFalseQuestions = 6; // maximum input options
-
+	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
 
 	var init = function(){
-		var myInput = $(".current").find("input[type='text']");	
-
-		//TODO remove in Dummies <li>.....</li> for doing best programming practices and add  
-		//the first option calling to the function addMultipleChoiceOption
-		$(document).on('click','#'+buttonAddOptionId , addMultipleChoiceOption);
-	
-  		//var myInput = $(".current").find("input[type='text']");
- 		//var myInput = $(".current").find("#radio_text_1");
- 
- 
-	//	$(myInput).watermark('Search content');
-		$(myInput).keydown(function(event) {
-			if(event.keyCode == 13) {
-				V.Debugging.log("event.keyCode in init =" + event.keyCode);
-				if(($(myInput).val()!="")&& ($(myInput).val()!="write quiz options here")) {
-					//call to addMultipleChoiceOption
-					addMultipleChoiceOption();
-					$(myInput).blur();
-				} 
-				else {
-					alert("You must enter some text option.");	
-				}
-		}	
-
-		}); 
-
-			$(document).on('click','#'+buttonAddTrueFalseQuestionId , addTrueFalseQuestion);
-
+		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
+		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
+		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
 	};	
-	/* TODO: change id of input 
-	 Function that add an input text option for the Multiple Choice Quiz  
-	 * */
-	var addMultipleChoiceOption = function(event){
 
-
-		//New element to apply operations  
-		var myInput = $(".current").find("input[type='text']").last(); 
-
-		V.Debugging.log("my Input value is: " + myInput);
-
-			if((myInput.val() !="") && (myInput.val() != "write quiz options here")) {
-
-		//the input in text type  
-				$(".current").find("."+MultipleChoiceOptionClass).removeAttr("autofocus");	
-
-				var text  = $('<div>').append($('.' +MultipleChoiceOptionClass).clone()).html();
-				var inputs_search = $(".current").find("."+MultipleChoiceOptionClass);
-				//V.Debugging.log("inputs search value is: " + inputs_search);
-				var next_num = inputs_search.size()+1;
-					//V.Debugging.log("next_num value is: " + next_num);
-			    var next_index = "a".charCodeAt(0) + (next_num-1); 
-  	
-		        next_index = String.fromCharCode(next_index);
-
-				//var next_index = String.fromCharCode("a".charCodeAt(0) + (next_num-1)); 
-
-		//remove add button , add option input 
-				if (next_num < maxNumMultipleChoiceOptions) {
-
-		    		$(".add_quiz_option").remove();
-
-		    		var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
-
-		    		$(".current").find(".ul_mch_options").find("#li_mch_option_"+(next_num-1)).append(delete_icon);
-		    		var add_option = "<li id='li_mch_option_"+(next_num)+"' class='li_mch_option'>"+next_index+") <input id='radio_text_"+(next_num)+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
-
-					add_option += "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a></li>";
-
-					$(".current").find(".ul_mch_options").append(add_option);
-					//remove button + 
-
-					} else if (next_num == (maxNumMultipleChoiceOptions)) {
-						//if the last one remove add button and add delete button to the preview and to the last one
-						$(".add_quiz_option").remove();
-
-						var delete_icon = "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num-1)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a>";
-						$(".current").find(".ul_mch_options").find("#li_mch_option_"+(next_num-1).toString()).append(delete_icon);
-
-						var add_option = "<li id='li_mch_option_"+next_num+"' class='li_mch_option'>"+next_index+")&nbsp;  <input id='radio_text_"+next_num+"' class='"+MultipleChoiceOptionClass+"' type='text' placeholder='write quiz options here' />";
-						add_option += "<a href='javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+(next_num)+")' id='"+buttonRemoveOptionId+"' class='remove_quiz_option'><img src='"+VISH.ImagesPath+"/delete.png' id='remove_quiz_option_img'/></a></li>";
-
-						$(".current").find(".ul_mch_options").append(add_option);
-
-					}
-					else {
-						V.Debugging.log("Something went wrong: next num greater than maximum number of options allowed");
-
-					}
-				} 
-				else {
-
-				alert("You must enter some text option.");	
-				}
-		myNextInput =$(".current").find("#radio_text_"+next_num); 	
-
-		myNextInput.keydown(function(event) {
-			if(event.keyCode == 13) {
-				V.Debugging.log("event.type vale (inside addMultipleChoiceOption): "  + event.type); //KeyDown
-				if(($(myNextInput).val()!="") && ($(myInput).val()!="write quiz options here"))  {
-					//call to addMultipleChoiceOption
-					addMultipleChoiceOption();
-					$(myNextInput).blur();
-				} 
-				else {
-					alert("You must enter some text option.");	
-				}
+	var _onKeyDown = function(event){
+		if(event.keyCode == 13) {
+			 var target = event.target;
+			if(($(target).val()!="")&& ($(target).val()!="write quiz options here")) {
+				_addMultipleChoiceOption(event);
+			}
 		}	
+	}
 
-		}); 
+	var _addMultipleChoiceOption = function(event){
+		var optionsLength = $(".current").find(".ul_mch_options > li").length;
+		if(optionsLength >= maxNumMultipleChoiceOptions){
+			return;
+		}
 
-			//move cursor on the next input	
-			$(".current").find(myNextInput).attr("autofocus", "autofocus");
+		if(event.target.tagName === "INPUT"){
+			//addMultipleChoiceOption trigger from keyboard input
+			var img = $(event.target).parent().find("img");
+			var input = event.target;
+		} else if(event.target.tagName === "IMG"){
+			//addMultipleChoiceOption trigger from img click
+			var img = event.target;
+			var input = $(event.target).parent().parent().find("input");
+		}
+
+		var a = $(img).parent();
+		var li = $(input).parent();
+
+		var targetChoice = $(".current").find(".ul_mch_options > li").index(li);
+		var isLastChoice = (targetChoice === (optionsLength-1));
+
+		if(!isLastChoice){
+			return;
+		}
+
+		$(img).attr("src",VISH.ImagesPath + "delete.png");
+		$(a).removeClass().addClass("remove_quiz_option");
+		$(input).blur();
+
+		var maxChoicesReached = (optionsLength == maxNumMultipleChoiceOptions-1);
+		var newMultipleChoice = _renderDummyMultipleChoice(choicesLetters[optionsLength],!maxChoicesReached);
+		$(".current").find(".ul_mch_options").append(newMultipleChoice);
+
+		$(".current").find(".ul_mch_options > li").last().find("input").focus();
 	};
 
-
-	//remove a multiple choice option when click on the icon delete 
-	var removeMultipleChoiceOption = function(id) {
-
-		var add_option_button = "<a id='"+buttonAddOptionId+"' class='add_quiz_option'><img src='"+VISH.ImagesPath+"/add_quiz_option.png' id='add_quiz_option_img'/></a>";
-
-	 	//remove children's li selected (id) except index a), b), etc ...  
-		$("#li_mch_option_"+id.toString()).children().remove();
-		//all the inputs in the Multiple Choice Quiz
-		//var num_inputs = $(".current").find("."+MultipleChoiceOptionClass).size();
-
-		//testing
-		var num_inputs = $(".current").find(".li_mch_option").size();
-
-		var i;
-		var next_index;
-
-		//when the option clicked to remove is diferent from the last one 
-
-
-		//if id less than number of inputs
-		if(id < (maxNumMultipleChoiceOptions) ) {
-
-			//OJO con el igual
-		for (i=id; i<=num_inputs; i++) {
-
-			next_index = "a".charCodeAt(0)+ i; 
-			next_index = String.fromCharCode(next_index);
-
-			//change the id of inputs (decrease one number) the next one will be the deleted
-			$(".current").find("li#li_mch_option_"+(i+1).toString()+"> input").attr('id', "radio_text_"+i.toString());//.attr(id, "radio_text_"+i.toString());
-
-			//change the href to the next elements (even the last one ?) 
-
-			$(".current").find("li#li_mch_option_"+(i+1).toString()+"> a").attr('href', "javascript:VISH.Editor.Quiz.removeMultipleChoiceOption("+i.toString()+")");
-
-			//move children up 
-
-			$("#li_mch_option_"+i.toString()).append($("#li_mch_option_"+(i+1).toString()).children());
-
-			//TODO ask Kike how to do this better....
-			if (i==(num_inputs)){ 
-				//for the last one the icon is for adding and input element , so remove whatever 
-				//there was add the add option button 
-				$(".current").find("#li_mch_option_"+(i-1).toString()+" > a").remove();
-				$(".current").find("#li_mch_option_"+(i-1).toString()).append(add_option_button);
-
-			}
-
-
+	var _renderDummyMultipleChoice = function(text, addImage){
+		var li = $("<li class='li_mch_option'></li>");
+		$(li).append("<span class='mcChoiceSpan'>" + text + "</span>");
+		$(li).append("<input type='text' class='multiplechoice_text'></input>");
+		if(addImage === true){
+			$(li).append(_renderAddImg());
 		}
-		//remove the last index 
-		$(".current").find("#li_mch_option_"+(num_inputs).toString()).remove();
-		//add new counter to add option 
+		return li;
+	}
 
-		}
-		//if the selected input to remove is the last one of all options
+	var _renderAddImg = function(){
+		var a = $("<a class='add_quiz_option'></a>");
+		var addImg = $("<img src='" + VISH.ImagesPath + "add_quiz_option.png'/>");
+		$(a).append(addImg);
+		return a;
+	}
 
-		// id=6 
-		else if (id == (maxNumMultipleChoiceOptions) ) {
-			//remove the last input
-			 $(".current").find("#li_mch_option_"+id.toString()).remove();
+	var _removeMultipleChoiceOption = function(id) {
+		//removeMultipleChoiceOption trigger always from img click
+		var li = $(event.target).parent().parent();
+		$(li).remove();
 
+		//Rewrite index letters
+		$(".current").find(".ul_mch_options > li").each(function(index, value) {
+			var span = $(value).find("span");
+			$(span).html(choicesLetters[index]);
+		});
 
-			//remove the delete icon from the preview input
-			$(".current").find("li#li_mch_option_"+(id-1).toString()+" > #a_remove_quiz_option").remove();
-
-			//add the add icon to the preview input 
-			$(".current").find("#li_mch_option_"+(id-1).toString()).append(add_option_button);
-
-		}
-
-		else {
-
-			VISH.Debugging.log("Error executing VISH.Editor.Quiz.removeMultipleChoiceOption function with parameter: " + id);
-
-		}
-	};
-	/*
-	 *Add a new row into the table with the elements that    
-	 * */
-
-	var  addTrueFalseQuestion = function(event){
-
-		$(".current").find(".true_false_question").removeAttr("autofocus");	
-		var numCurrentQuestions = $(".current").find(".true_false_question").size();
-			//test number of questios
-		if (numCurrentQuestions < maxNumTrueFalseQuestions)	{
-
-			//test has been added text into current input
-			if(($(".current").find(".true_false_question").last().val()!="")&&($(".current").find(".true_false_question").last().val()!="Write question here")) {
-				//remove add question button
-				$(document).find('#'+buttonAddTrueFalseQuestionId).remove();
-
-				var trueFalseQuestionRow = "<tr id='tr_question_"+(numCurrentQuestions+1)+"'><td id='td_true_"+(numCurrentQuestions+1)+"' class='td_true'><input type='radio' id='true_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"' class='truefalse_answer' value='true'/></td><td id='td_false_"+(numCurrentQuestions+1)+"' class='td_false'><input type='radio' id='false_"+(numCurrentQuestions+1)+"' name='answer_"+(numCurrentQuestions+1)+"' class='truefalse_answer' value='false'/></td><td id='td_question_"+(numCurrentQuestions+1)+"' class='td_truefalse_question'><textarea rows='1' cols='50' class='true_false_question' placeholder='Write question here' id='true_false_question__"+(numCurrentQuestions+1)+"'></textarea></td><td class='td_add_button'><a id='a_add_true_false_question' ><img src='"+VISH.ImagesPath+"/add_quiz_option.png' /></a> </td></tr>";
-
-				//add the row into the table 
-				$(".current").find(".truefalse_quiz_table").append(trueFalseQuestionRow);
-
-			 	$(".current").find(".true_false_question").last().attr('autofocus', 'autofocus');
-
-			} 
-
-			else {
-
-				alert ("Must write question before add new row.");
-
-			}
-
-		} else {
-
-		 			alert ("Number of maximum questions reached.");
+		//Ensure that last choice has plus option
+		var lastLi = $(".current").find(".ul_mch_options > li").last();
+		var lastA = $(lastLi).find("a");
+		if(($(lastA).length==0)||($(lastA).hasClass("add_quiz_option")===false)){
+			$(lastLi).append(_renderAddImg());
 		}
 	};
 
 	return {
-		init						: init, 
-		addMultipleChoiceOption		: addMultipleChoiceOption, 
-		removeMultipleChoiceOption	: removeMultipleChoiceOption, 
-		addTrueFalseQuestion		: addTrueFalseQuestion
+		init : init
 	};
 
 }) (VISH, jQuery);
