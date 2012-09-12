@@ -352,7 +352,22 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	///////////////////////
 
 	var switchToFlashcard = function(){		
-		V.Editor.Flashcard.switchToFlashcard();
+		if(V.Slides.getSlides().length === 0){
+			$.fancybox(
+				$("#message5_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
+					'width'         	: 450,
+					'height'        	: 220,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+				}
+			);
+		}
+		else{
+			V.Editor.Flashcard.switchToFlashcard();
+		}
 	};
 
 	var switchToPresentation = function(){

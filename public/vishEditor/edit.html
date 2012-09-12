@@ -488,6 +488,19 @@
 	  		</div>
 	  	</div>
 	  </div>
+
+	<!-- PROMPT WHEN TRY TO CHANGE TO FLASHCARD AND THERE IS NO SLIDES-->
+    <div style='display:none'>
+      <div id='message5_form'>
+        <div class="text_in_fancybox">
+          <img id="message5img" src="/vishEditor/images/content_fail.png">
+          <span class="deltext">Please create at least one slide before changing to flashcard mode.</span>
+        </div>    
+        <div id="button_accept_when_fail">
+          <a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
+        </div>
+      </div>
+    </div>
   
   	<!-- IMAGE -->
   	  <a id="hidden_button_to_launch_picture_fancybox_for_flashcard" href="#picture_fancybox" style="display:none"> Change background</a>
