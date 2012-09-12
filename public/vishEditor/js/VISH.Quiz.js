@@ -19,8 +19,8 @@ VISH.Quiz = (function(V,$,undefined){
       } 
     } else if(excursion.type=="presentation") {
       if(VISH.User.isLogged()){
+        _loadLoggedEvents();
         $(".mcquestion_start_button").show();
-        _loadEvents();
       } else {
         $(".mcquestion_start_button").hide();
       }
@@ -30,7 +30,7 @@ VISH.Quiz = (function(V,$,undefined){
     VISH.Quiz.API.init();
   };
 
-  var _loadEvents = function(){      
+  var _loadLoggedEvents = function(){
     var myInput = $(".current").find("input[class='save_results_quiz']"); 
 
     $(document).on('click', ".mcquestion_start_button", _startMcQuizButtonClicked);

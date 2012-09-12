@@ -5,7 +5,6 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 	}
 
 	var allowElement = function(element){
-
 		var device = VISH.Status.getDevice();
 
 		if(device.desktop){
@@ -53,7 +52,7 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 
 
 	var renderContentFiltered = function(element,template){
-		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+VISH.ImagesPath+"background_ie.png'/></div>";
+		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+VISH.ImagesPath+"advert_new_grey.png'/></div>";
 	}
 
 
