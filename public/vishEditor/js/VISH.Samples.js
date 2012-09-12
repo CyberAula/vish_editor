@@ -135,20 +135,22 @@ VISH.Samples = (function(V,undefined){
 				"body" : "<div class=\"vish-parent-font3 vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></span><br></span></div>"
 			}]
 		}, {
-			"id" : "2",
-			"template" : "t3",
-			"elements" : [{
-				"id" : "zone4",
-				"type" : "text",
-				"areaid" : "header",
-				"body" : "Puesta de sol..."
-			}, {
-				"id" : "zone5",
-				"type" : "image",
-				"areaid" : "left",
-				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
-				"style" : "position: relative; width:44.31314623338257%; height:50.90909090909091%; top:0%; left:0%;"
-			}]
+			'id'       :'2',
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '325',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Experimento virtual1'
+				},
+				{
+          'id'     : '7335',
+          'type'   : 'object',
+          'areaid' : 'left',
+          'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        }	
+			]
 		}, {
 			"id" : "3",
 			"template" : "t6",
