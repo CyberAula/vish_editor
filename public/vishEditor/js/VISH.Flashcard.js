@@ -4,7 +4,7 @@ VISH.Flashcard = (function(V,$,undefined){
 		var fileref=document.createElement("link");
   		fileref.setAttribute("rel", "stylesheet");
   		fileref.setAttribute("type", "text/css");
-  		fileref.setAttribute("href", "stylesheets/flashcard/flashcard.css");
+  		fileref.setAttribute("href", VISH.StylesheetsPath + "flashcard/flashcard.css");
   		document.getElementsByTagName("body")[0].appendChild(fileref);
 
   		var flashcard_div = $("#flashcard-background");
