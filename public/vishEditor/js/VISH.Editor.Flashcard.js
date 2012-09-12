@@ -11,6 +11,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$("#flashcard-background").show();
 		
 		$("#flashcard-background").droppable();  //to accept the pois
+		
 	};
 
 	var switchToFlashcard = function(){

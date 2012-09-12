@@ -115,6 +115,8 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 
+			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
+
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
