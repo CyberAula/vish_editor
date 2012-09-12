@@ -24,10 +24,7 @@ VISH.Renderer = (function(V,$,undefined){
 
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
-				break;
-			}
-
-			if(slide.elements[el].type === "text"){
+			} else if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "image"){
 				content += _renderImage(slide.elements[el],slide.template);
