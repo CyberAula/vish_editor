@@ -199,6 +199,11 @@ VISH.Editor = (function(V,$,undefined){
 			VISH.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
 
+		//flashcard
+		$(document).on('click','#help_flashcard', function(){
+			VISH.Editor.Tour.startTourWithId('fc_help', 'top');
+		});
+
 		//template
 		$(document).on('click','#help_template_image', function(){			
 			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');

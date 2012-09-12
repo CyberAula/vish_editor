@@ -126,7 +126,9 @@
   <body onload="start()" style="display: none" class="loaded">
 	<section class="slides layout-regular template-default" id="slides_panel">
     
-    <div id="flashcard-background" style="display:none"></div>
+    <div id="flashcard-background" style="display:none">
+		<div id="flashcard_help_button"><img id="help_flashcard" src="/vishEditor/images/helptutorial_circle.png"></div>
+    </div>
     
     <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
     <div id="menubar_helpsection2"><img src="/vishEditor/images/menubar_helpsection2.png"/></div>
@@ -236,7 +238,7 @@
 			<div id="toolbar_presentation">
 				<img class="toolbar_icon" style="display:none" 
 				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
-				<img class="toolbar_icon toolbar_flashcard" style="display:none" 
+				<img id="change_background_fc" class="toolbar_icon toolbar_flashcard" style="display:none" 
 				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png" title="Change background"/>
 			</div>
 			<div id="toolbar_element">
@@ -857,6 +859,14 @@
         <li data-id="addslidebutton" class="tut_addslide tut_with_arrow" data-text="Close">
 	  	    <h2>Add new slide button</h2>
 	        <p i18n-key="i.walk13">This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as a icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walkthrough and start adding content to your excursion.</p>
+	  	  </li>
+	  	</ol>
+
+	  	<!--help for flashcard -->
+	  	<ol id="fc_help" class="joyRideTipContent">
+          <li data-id="change_background_fc" data-text="Next" class="Next" data-options="tipLocation:bottom">
+	  	    <h2>This is ViSH editor!</h2>
+	  	    <p i18n-key="i.walk8">Remember that you can use the "Walkthrough icon"<img src="images/helptutorial_circle.png"/> when you need any help around the application. This is the application desktop where you can create your excursions.Click on "Next" to continue.</p>
 	  	  </li>
 	  	</ol>
 	  	
