@@ -100,8 +100,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			  }, function() {
 			    $("#page-fullscreen").css("background-position", "0px 0px");
 			  });
-		    $("#viewbar").show();
-		    $(".vish_arrow").hide();
+		    if(VISH.ViewerEngine === "presentation"){
+		    	$("#viewbar").show();
+		    	$(".vish_arrow").hide();
+		    }		    
 		}
 		else{
 			//change icon
@@ -111,8 +113,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}, function() {
 			    $("#page-fullscreen").css("background-position", "-45px 0px");
 			});
-			$("#viewbar").hide();
-			$(".vish_arrow").show();
+			if(VISH.ViewerEngine === "presentation"){
+				$("#viewbar").hide();
+				$(".vish_arrow").show();
+			}
 		}
 	};
 	
@@ -138,29 +142,32 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(!page_is_fullscreen && !V.Status.getDevice().mobile){
-			if(VISH.Slides.isCurrentFirstSlide()){
-				$("#page-switcher-start").hide();				
+		//page switchers only for presentations
+		if(VISH.ViewerEngine === "presentation"){
+			if(!page_is_fullscreen && !V.Status.getDevice().mobile){
+				if(VISH.Slides.isCurrentFirstSlide()){
+					$("#page-switcher-start").hide();				
+				} else {
+					$("#page-switcher-start").show();
+				}
+				
+				if(VISH.Slides.isCurrentLastSlide()){
+					$("#page-switcher-end").hide();	
+				} else {
+					$("#page-switcher-end").show();
+				}
 			} else {
-				$("#page-switcher-start").show();
-			}
-			
-			if(VISH.Slides.isCurrentLastSlide()){
-				$("#page-switcher-end").hide();	
-			} else {
-				$("#page-switcher-end").show();
-			}
-		} else {
-			if(VISH.Slides.isCurrentFirstSlide()){
-				$("#mobile_back_arrow").hide();
-			} else {
-				$("#mobile_back_arrow").show();
-			}
-			
-			if(VISH.Slides.isCurrentLastSlide()){
-				$("#mobile_forward_arrow").hide();		
-			} else {
-				$("#mobile_forward_arrow").show();
+				if(VISH.Slides.isCurrentFirstSlide()){
+					$("#mobile_back_arrow").hide();
+				} else {
+					$("#mobile_back_arrow").show();
+				}
+				
+				if(VISH.Slides.isCurrentLastSlide()){
+					$("#mobile_forward_arrow").hide();		
+				} else {
+					$("#mobile_forward_arrow").show();
+				}
 			}
 		}
 	};
