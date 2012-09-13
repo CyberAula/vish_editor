@@ -68,6 +68,8 @@ VISH.Quiz = (function(V,$,undefined){
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
 
+     $(header).show();
+
      //Change Start Button
      var startButton = $(current_slide).find("." + startButtonClass);
      $(startButton).val("Stop Quiz");
@@ -118,8 +120,6 @@ VISH.Quiz = (function(V,$,undefined){
   };
 
   var _statisticsMcQuizButtonClicked = function () {
-
-    
     if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
       //Hide results
       $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','none');
@@ -143,7 +143,8 @@ VISH.Quiz = (function(V,$,undefined){
     if(typeof answer !== "undefined") {
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
        V.Quiz.API.putQuizSession(answer, quizSessionActiveId, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
-      }
+       $("."+startButtonClass).hide();
+    }
   };
 
   var _onQuizVotingSuccessReceived = function(data){ 
