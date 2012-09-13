@@ -59,6 +59,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].zoomInStyle);
 			} else if(slide.elements[el].type === "snapshot"){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
+			} else if(slide.elements[el].type === "mcquestion"){
+				V.Editor.Quiz.drawQuiz(slide.elements[el].question, slide.elements[el].options);
 			}
 		}
 	
