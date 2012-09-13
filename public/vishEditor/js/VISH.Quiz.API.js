@@ -1,59 +1,49 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
 	var init = function(){
-		// V.Debugging.log("VIS.QUIZ.API init");
+		
 	}
 	
-	
-	/**
-	 * function to call to VISH and start a poll activating the quiz 
-	 
-	 POST /quiz_sessions => open quiz to collect answers => respond with quiz_session id
-   server returns: value of: quiz_session_id 
-   function returns: string to construct the link to share
-	 */
-	var postStartQuizSession = function(quiz_id, successCallback, failCallback){
+
+   /*
+	* Request new quiz session
+	* Server responds with a quiz_session_id
+	*/
+	var postStartQuizSession = function(quizId,successCallback, failCallback){
 		
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			V.Debugging.log("Vish case");
-			V.Debugging.log("quiz_id to start Quiz Session is: " + quiz_id);
-			//POST 
+			
 			var send_type = 'POST';
 	       
-	        V.Debugging.log("token is: " + V.User.getToken());
-	        //POST to http://server/quiz_session/
-	     /* TODO  review what others params are required for post correctly */
 	        var params = {
-	     	  "quiz_id":quiz_id,
+	          "quiz_id": quizId,
 	          "authenticity_token" : V.User.getToken()
 	        }
 
-	        $.ajax({
-	          type    : send_type,
-	          url     : 'http://'+ window.location.host + '/quiz_sessions',
-	          data    : params,
-	          success : function(data) {
-	         	var quiz_session_id = data;
-	            if(typeof successCallback=="function"){
-	            	successCallback(quiz_session_id);
-	            }
-	            		          },
-	          error: function(error){
-	          	failCallback(error);
-	          }
-	          
-             });
+			$.ajax({
+				type    : send_type,
+				url     : 'http://'+ window.location.host + '/quiz_sessions',
+				data    : params,
+				success : function(data) {
+					var quiz_session_id = data;
+					if(typeof successCallback=="function"){
+						successCallback(quiz_session_id);
+					}
+				},
+				error: function(error){
+					failCallback(error);
+				}
+			});
 
 	         return null;
 
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
-			var quiz_session_id = "123";
+			var quiz_session_id = "quiz_session_id_example";
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
 			}
 		}
-	
 
 	};
 
@@ -108,11 +98,8 @@ VISH.Quiz.API = (function(V,$,undefined){
    * used for students when send a vote 
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-		V.Debugging.log("quiz_active_session_id for voting is : " + quiz_active_session_id);
 
-		V.Debugging.log("Answer selected value is: " + answer_selected);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			V.Debugging.log("Vish case");
 
 			//POST 
 			var send_type = 'PUT';
@@ -159,16 +146,13 @@ VISH.Quiz.API = (function(V,$,undefined){
 	  */
 	var getQuizSessionResults = function (quiz_active_session_id, successCallback, failCallback) {
 
-		V.Debugging.log("quiz_active_session_id for asking results is : " + quiz_active_session_id);
-
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			V.Debugging.log("Vish case");
 
 			//GET
 			var send_type = 'GET';
 	        var params = {
-	        "id": quiz_active_session_id, 
-	        "authenticity_token" : V.User.getToken()  
+	        	"id": quiz_active_session_id, 
+	        	"authenticity_token" : V.User.getToken()  
 	        }
 
 	        $.ajax({
@@ -188,14 +172,13 @@ VISH.Quiz.API = (function(V,$,undefined){
              });
 
 	         return null;
-	} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
-			var results = {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]}; ;
+			var results = {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			if(typeof successCallback=="function"){
 				successCallback(results);
 			}
 		}
-
 
 	};
 

@@ -3,9 +3,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	var mySlides = null;   //object with the slides to get the content to represent
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
-	
-	var user = {}; //{username: "user_name", token: "token"}
-	
+	var current_presentation;
+
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
 	 * options is a hash with params and options from the server, example of full options hash:
@@ -33,6 +32,10 @@ VISH.SlideManager = (function(V,$,undefined){
 			}
 		}
 
+		current_presentation = excursion;
+		console.log(current_presentation);
+
+		V.Quiz.init(excursion);
 		V.Slides.init();
 		V.Status.init();
 
@@ -48,7 +51,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		V.User.init(options);
-		V.Quiz.init(excursion);
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(excursion.type ==="game"){
@@ -94,6 +96,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			window.addEventListener("load", function(){ hideAddressBar(); } );
 			window.addEventListener("orientationchange", hideAddressBar );		
 		}
+
+		V.Quiz.prepareQuiz(excursion);
 	};
 
 	/**
@@ -263,7 +267,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		
   };
 	
-	
+	var getCurrentPresentation = function(){
+		return current_presentation;
+	}
 
 	return {
 		init          			: init,
@@ -273,7 +279,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		hideAddressBar			: hideAddressBar,
 		toggleFullScreen 		: toggleFullScreen, 
 		getOptions				: getOptions,
-		updateSlideCounter		: updateSlideCounter
+		updateSlideCounter		: updateSlideCounter,
+		getCurrentPresentation	: getCurrentPresentation
 	};
 
 }) (VISH,jQuery);

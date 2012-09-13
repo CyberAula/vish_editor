@@ -1,10 +1,12 @@
 VISH.Quiz.Renderer = (function(V,$,undefined){
 
-  var quiz_id;
+  var quizMode;
 
-  var init = function(quizStatus){
-    if(quizStatus && quizStatus.quiz_active_session_id){
-      quiz_id = quizStatus.quiz_active_session_id;
+  var init = function(excursion){
+    if (excursion.type=="quiz_simple"){
+      quizMode = "answer";
+    } else {
+      quizMode = "question";
     }
   }
 
@@ -33,112 +35,33 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
 
   var _renderMcQuestion = function(element, template, slide){ 
-      var user = V.User.getUser();
-      var logged = V.User.isLogged();
-     
-      var obj;
-      if(quiz_id){
-        obj = _renderMcquestionToAnswer(element, template, slide); 
-        V.Quiz.setSlideToVote (slide);
-      }
-      else{
-        if(logged){
-          obj = _renderMcquestionLogged(element, template, slide); 
+      var ret = "<div id='"+element['id']+"'class='multiplechoicequestion'>";
+      ret += "<div class='mcquestion_container'>";
+      ret += "<div class='mcquestion_body'><h2 class='question'>"+ element['question']+"</h2>";
+      ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
+
+      for(var i = 0; i<element['options'].length; i++){
+        var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
+        if(quizMode=="answer"){
+          ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
         } else {
-          obj =  _renderMcquestionNone(element, template, slide);
+          ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
         }
+        ret += "<div class='mc_meter'><span style='width:0%'></span></div>";
+        ret += "<label class='mcoption_label'></label>";
       }
 
-      return obj;
-  };
-
-
-  /*
-  * Render an Multiple choice question slide for an user who is logged in. In this case 
-  * the user can start the Quiz so we show the quiz with all elements and buttons  
-   *we use geter of Quiz Class for using the quiz id to Start Session */
-  var _renderMcquestionLogged = function(element, template, slide){
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form id='form_"+slide+"'class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-
-      ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
-      //ret += "<div class='mc_meter'><span id='mcoption"+(i+1)+"'></span></div>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"' style='width:0%'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+next_index+"'></label>";
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "<img id='mch_statistics_button_"+slide+"' class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
-    ret += "<input type='hidden' id='slide_to_activate' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_id_to_activate_"+slide+"' value='"+V.Quiz.getQuizIdToStartSession()+"' class='quiz_id_to_activate'/>";
-    ret += "<input type='button' id='mcquestion_start_button_"+slide+"' class='mcquestion_start_button' value='Start Quiz'/>";
-    ret += "<div id='save_quiz_"+slide+"' class='save_quiz'><label>Do you want to save the polling results?</label>";
-    ret +="<input type='text' id='save_name_quiz_"+slide+"' class='save_results_quiz' type='text' placeholder='write a name for saving' />";
-    ret +="<input type='button'class='mcquestion_save_yes_button' id='mcquestion_save_yes_button_"+slide+"' value='Yes'><input type='button' class='mcquestion_save_no_button' id='mcquestion_save_no_button_"+slide+"' value='No'></div>"
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
-  };
-
-  /*
-  * Render an Multiple choice question slide for a user who is not logged in. 
-  * Only is watching the excursion
-  * In this case the render will show the Quiz without the input radio options for allowing to vote 
-  * and without the buttons
-  */    
-  var _renderMcquestionNone = function(element, template, slide){
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-      ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";  
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
-  }; 
-
- /*
-  * Render an Multiple choice question slide to allow a user, who has access by URL, to answer the mcquestion. 
-  * In this case the render will show the Quiz with the input radio options for allowing to vote 
-  * and a send button for clicking when decide to vote  
-  */
-  var _renderMcquestionToAnswer = function(element, template, slide){
-    var ret = "<div id='"+element['id']+"' class='multiplechoicequestion'>";
-    ret += "<div class='mcquestion_container'>";
-    ret += "<div class='mcquestion_left'><h2 class='question'>"+ element['question']+"?</h2>";
-    ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
-
-    for(var i = 0; i<element['options'].length; i++){
-      var next_index = String.fromCharCode("a".charCodeAt(0) + (i)); 
-      ret += "<label class='mc_answer' id='mc_answer_"+slide+"_option_"+next_index+"'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
-      ret += "<div class='mc_meter' id='mcoption_div_"+(i+1)+"'><span  id='mcoption_"+next_index+"'></span></div>";
-      ret += "<label class='mcoption_label' id='mcoption_label_"+next_index+"'></label>";
-    }
-
-    ret += "</div>";
-    ret += "<div class='mcquestion_right'>";
-    ret += "<input type='hidden' id='slide_to_vote' value='"+slide+"'/>";
-    ret += "<input type='hidden' id='quiz_active_session_id' value='"+ V.Quiz.getQuizStatus().quiz_active_session_id +"'/>";
-    ret += "<input type='button' id='mcquestion_send_vote_button_"+slide+"' class='mcquestion_send_vote_button' value='Send'/>";
-    ret += "</div>";
-    ret += "</form>";
-    ret += "</div>";
-    return ret;
+      ret += "</div>";
+      ret += "<div class='mcquestion_buttons'>";
+      ret += "<div class='mch_statistics_icon_wrapper'>";
+      ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
+      ret += "</div>";
+      ret += "<div class='mch_inputs_wrapper'>";
+      ret += "<input type='button' class='mcquestion_start_button' value='Start Quiz'/>";
+      ret += "</div>";
+      ret += "</form>";
+      ret += "</div>";
+      return ret;
   };
 
 

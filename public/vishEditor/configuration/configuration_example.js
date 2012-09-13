@@ -72,6 +72,7 @@ var getOptions = function(){
 			options["username"] = "ebarra";
 			options["userId"] = "3456";
 			options["token"] = "12xfDgR345x6";
+			options["quiz_active_session_id"] = "29";
 
 			//And a default landguage
 			options["lang"] = "en";

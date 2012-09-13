@@ -573,39 +573,29 @@ VISH.Editor = (function(V,$,undefined){
 					} else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();
 						element.question   = $(div).find(".value_openquestion").val();
-					} else if (element.type=="mcquestion") {  
-
-						VISH.Debugging.log(" enter in element type mcquestion while creating the json");    		      	
+					} else if (element.type=="mcquestion") {     		      	
 						element.question   = $(div).find(".value_multiplechoice_question").val();
 						element.options = [];  	
 						$(div).find('.multiplechoice_text').each(function(i, input_text){
-							element.options[i] = input_text.value;
-						}); 
-						slide.type = "quiz";
-
-						} else if (element.type=="truefalsequestion") {     		      	
-						
-							element.questions = [];	
-							var question = {};
-						$(div).find(".true_false_question").each(function(i, input_text){
-							
-							VISH.Debugging.log("input text for each question value is:" +input_text.value);
-							
-							
-							question.id = i;
-							question.text_question = input_text.value;
-							
-							if($(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val()==undefined) {
-								question.answer = "null";
-							} else {
-								question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
+							if((input_text)&&(input_text.value != "")){
+								element.options.push(input_text.value);
 							}
+						});
+						slide.type = "quiz";
+					} else if (element.type=="truefalsequestion") {     		      	
+						element.questions = [];	
+						var question = {};
+						$(div).find(".true_false_question").each(function(i, input_text){
+						question.id = i;
+						question.text_question = input_text.value;
+						if($(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val()==undefined) {
+							question.answer = "null";
+						} else {
+							question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
+						}
 							element.questions.push(question);
 							question = {};
-						});
-						
-												
-						
+						});						
 					} else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];

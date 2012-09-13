@@ -21,7 +21,6 @@ VISH.Renderer = (function(V,$,undefined){
 		var classes = "";
 		var buttons = "";
 		for(el in slide.elements){
-
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
@@ -46,8 +45,7 @@ VISH.Renderer = (function(V,$,undefined){
 				content += V.Quiz.Renderer.renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				
-								//set value for quizToActivate
-				V.Quiz.setQuizToActivate(parseInt(slide.quiz_id));
+				var quizId = parseInt(slide.quiz_id)
 				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id);
 				classes +="mcquestion";
 			} else if ( slide.elements[el].type === "truefalsequestion") {
@@ -57,10 +55,18 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
+
 		if(V.ViewerEngine === "flashcard"){
 			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
 		}
-		SLIDE_CONTAINER.append("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
+		
+		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
+
+		if(quizId){
+			$(article).attr("quizId",quizId);
+		}
+
+		SLIDE_CONTAINER.append(article);
 		
 	};
 
