@@ -1,13 +1,8 @@
 VISH.Quiz.Renderer = (function(V,$,undefined){
 
-  var quizMode;
 
-  var init = function(excursion){
-    if (excursion.type=="quiz_simple"){
-      quizMode = "answer";
-    } else {
-      quizMode = "question";
-    }
+  var init = function(){
+
   }
 
   ////////////////////
@@ -42,7 +37,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
       for(var i = 0; i<element['options'].length; i++){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
-        if(quizMode=="answer"){
+        if(VISH.Quiz.getQuizMode()=="answer"){
           ret += "<label class='mc_answer'>"+next_index+") <input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+element['options'][i]+"</label>";
         } else {
           ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
