@@ -264,7 +264,7 @@ span.mcChoiceSpan{
     text-align: justify;
     color: black;
     font-size: 1.2em;
-    width:90%;
+    width:100%;
     display: block;
     margin: 1%;
     line-height: 110%;
@@ -363,12 +363,12 @@ span.mcChoiceSpan{
     margin-right:2%;
     margin-top:1.5%;
     display:block;
-    
+    text-align: left;
 }
+
 .save_quiz {
-    
-display:none; /* inline-block; */   
-font-size:0.8em;    
+    display:none; /* inline-block; */   
+    font-size:0.8em;    
 }
 
 .save_results_quiz {

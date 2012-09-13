@@ -58,7 +58,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 		var quizName;
 			if(quiz_name) {
 				quizName = quiz_name;
-
 			} else {
 				quizName = "";
 
@@ -69,7 +68,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	        V.Debugging.log("token is: " + V.User.getToken());
 	        //DELETE to http://server/quiz_session/X
 	          var params = {
-	     	  "id":quiz_session_id,
+	     	  "id": quiz_session_id,
 	          "authenticity_token" : V.User.getToken(), 
 	          "name" : quizName
 	        }
@@ -82,20 +81,18 @@ VISH.Quiz.API = (function(V,$,undefined){
 	            if(typeof successCallback=="function"){
 	            	successCallback(results);
 	            }
-	            		          },
+	          },
 	          error: function(error){
 	          	failCallback(error);
 	          }
-	        
-             });
+            });
 
-	         return null;
-      
+	        return null;
   };
 	
 	/**
 	 * PUT /quiz_sessions/X => vote => redirect to show
-   * used for students when send a vote 
+     * used for students when send a vote 
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
 
