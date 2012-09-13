@@ -33,7 +33,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		current_presentation = excursion;
-		console.log(current_presentation);
 
 		V.Quiz.init(excursion);
 		V.Slides.init();

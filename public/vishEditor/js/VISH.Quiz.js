@@ -2,6 +2,14 @@ VISH.Quiz = (function(V,$,undefined){
   
   var quizMode;
 
+  var mcOptionsHash = new Array();
+  mcOptionsHash['a'] = 0;
+  mcOptionsHash['b'] = 1;
+  mcOptionsHash['c'] = 2;
+  mcOptionsHash['d'] = 3;
+  mcOptionsHash['e'] = 4;
+  mcOptionsHash['f'] = 5;
+
   var startButtonClass = "mcquestion_start_button";
   var stopButtonClass = "mcquestion_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
@@ -68,18 +76,20 @@ VISH.Quiz = (function(V,$,undefined){
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
 
-     $(header).show();
+    $(header).show();
 
-     //Change Start Button
-     var startButton = $(current_slide).find("." + startButtonClass);
-     $(startButton).val("Stop Quiz");
-     $(startButton).removeClass().addClass(stopButtonClass);
+    _hideResultsUI();
 
-     //Show statictics button
-     $("."+statisticsButtonClass).show();
+    //Change Start Button
+    var startButton = $(current_slide).find("." + startButtonClass);
+    $(startButton).val("Stop Quiz");
+    $(startButton).removeClass().addClass(stopButtonClass);
 
-     //Store quiz_session_id in the quiz element
-     $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
+    //Show statictics button
+    $("."+statisticsButtonClass).show();
+
+    //Store quiz_session_id in the quiz element
+    $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
   }
 
   var _OnQuizSessionReceivedError = function(error){
@@ -121,13 +131,22 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _statisticsMcQuizButtonClicked = function () {
     if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
-      //Hide results
-      $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','none');
+      _hideResultsUI();
     } else {
       var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
       V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
     }
   };
+
+  var _hideResultsUI = function(){
+    $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','none');
+    $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").css('display','none');
+  }
+
+  var _showResultsUI = function(){
+  $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','block');
+    $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").css('display','block');
+  }
 
 
   /////////////////////////
@@ -177,23 +196,39 @@ VISH.Quiz = (function(V,$,undefined){
   * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
   */
   var _showResults = function (data) {
-      var totalVotes =0;
+     var maxWidth = 70;
+     var scaleFactor = maxWidth/100;
 
-      for (votes in data.results) {
-        totalVotes  += parseInt(data.results[votes]);
+     //Reset values
+      var totalVotes =0;
+      $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
+      $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
+
+      for (option in data.results) {
+        if((option in mcOptionsHash)){
+          var votes = data.results[option];
+          totalVotes  += votes;
+        } 
       }
-     
-      for (votes in data.results) {
-             var percent= ((((parseInt(data.results[votes]))/totalVotes))*100) ;
-             var percentString = percent.toString()  + "%";
-             var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-             if(typeof $(VISH.Slides.getCurrentSlide()).find(".mc_meter")[votes] != "undefined"){
-                $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[votes]).css("width", percentString);
-                $($(VISH.Slides.getCurrentSlide()).find(".mcoption_label")[votes]).text(roundedNumber+"%");
-             }
+
+      if(totalVotes>0){
+         for (option in data.results) {
+          if((option in mcOptionsHash)){
+            var index = mcOptionsHash[option];
+            var votes = data.results[option];
+            var percent= (votes/totalVotes)*100;
+            var percentString = (percent*scaleFactor).toString()  + "%";
+            var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
+
+            if(typeof $(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index] != "undefined"){
+                $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index]).css("width", percentString);
+                $($(VISH.Slides.getCurrentSlide()).find(".mcoption_label")[index]).text(roundedNumber+"%");
+            }
+          }
+        }
       }
-    $(".current").find(".mc_meter").css('display', 'block');  
-    $(".current").find(".mcoption_label").css('display', 'block');
+
+      _showResultsUI();
   };
 
 
