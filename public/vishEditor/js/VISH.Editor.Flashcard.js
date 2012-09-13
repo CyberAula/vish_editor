@@ -1,14 +1,20 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
-	var loadFlashcard = function(){
+	var loadFlashcard = function(excursion){
 		//first action, set excursion type to "flashcard"
 		V.Editor.setExcursionType("flashcard");
 		
 		//hide slides
 		V.Editor.Utils.hideSlides();
 
-		//show flashcard background, should be an image with help
+		//show flashcard background, should be an image with help by default
 		$("#flashcard-background").show();
+		if(excursion){
+			//if we are editing an excursion
+			$("#flashcard-background").css("background-image", excursion.background.src);
+			$("#fc_change_bg_big").hide();
+		}
+
 		
 		$("#flashcard-background").droppable();  //to accept the pois
 		
@@ -20,7 +26,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on excursionType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
-		V.Editor.Thumbnails.redrawThumbnails(redrawPois);
+		V.Editor.Thumbnails.redrawThumbnails();
 
 		VISH.Editor.Tools.init();
 		
