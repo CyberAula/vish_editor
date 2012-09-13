@@ -100,8 +100,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			  }, function() {
 			    $("#page-fullscreen").css("background-position", "0px 0px");
 			  });
-		    $("#viewbar").show();
-		    $(".vish_arrow").hide();
+		    if(VISH.ViewerEngine === "presentation"){
+		    	$("#viewbar").show();
+		    	$(".vish_arrow").hide();
+		    }		    
 		}
 		else{
 			//change icon
@@ -111,8 +113,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}, function() {
 			    $("#page-fullscreen").css("background-position", "-45px 0px");
 			});
-			$("#viewbar").hide();
-			$(".vish_arrow").show();
+			if(VISH.ViewerEngine === "presentation"){
+				$("#viewbar").hide();
+				$(".vish_arrow").show();
+			}
 		}
 	};
 	
