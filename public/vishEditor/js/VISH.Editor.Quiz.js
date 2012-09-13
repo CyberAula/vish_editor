@@ -8,6 +8,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
 	};	
 
+	//used for editing a quiz
+	var drawQuiz = function(question, options){
+		//first the question in the textarea
+		$(".current").find(".value_multiplechoice_question").val(question);
+		//now the options
+		for (var i = 0;  i <= options.length - 1; i++) {
+			var optionText = options[i];
+			var myInput = $(".current").find(".ul_mch_options > li").last().find("input");
+			var myImg = $(".current").find(".ul_mch_options > li").last().find("img");
+			_addMultipleChoiceOption(null, myInput, myImg, optionText);
+		};
+		
+	};
+
 	var _onKeyDown = function(event){
 		if(event.keyCode == 13) {
 			 var target = event.target;
@@ -17,20 +31,28 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}	
 	}
 
-	var _addMultipleChoiceOption = function(event){
+	//myInput, myImg and optionText are used to add the options when editing a mc question.
+	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
+		var img, input;
 		var optionsLength = $(".current").find(".ul_mch_options > li").length;
 		if(optionsLength >= maxNumMultipleChoiceOptions){
 			return;
 		}
-
-		if(event.target.tagName === "INPUT"){
-			//addMultipleChoiceOption trigger from keyboard input
-			var img = $(event.target).parent().find("img");
-			var input = event.target;
-		} else if(event.target.tagName === "IMG"){
-			//addMultipleChoiceOption trigger from img click
-			var img = event.target;
-			var input = $(event.target).parent().parent().find("input");
+		if(event){
+			if(event.target.tagName === "INPUT"){
+				//addMultipleChoiceOption trigger from keyboard input
+				img = $(event.target).parent().find("img");
+				input = event.target;
+			} else if(event.target.tagName === "IMG"){
+				//addMultipleChoiceOption trigger from img click
+				img = event.target;
+				input = $(event.target).parent().parent().find("input");
+			}
+		}
+		else{
+			img = myImg;
+			input = myInput;
+			$(input).val(optionText);
 		}
 
 		var a = $(img).parent();
@@ -91,7 +113,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	return {
-		init : init
+		drawQuiz	: drawQuiz,
+		init 		: init
 	};
 
 }) (VISH, jQuery);
