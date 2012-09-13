@@ -34,8 +34,8 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', "."+stopButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+statisticsButtonClass, _statisticsMcQuizButtonClicked);
 
-    $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
-    $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
+    // $(document).on('click', ".mcquestion_save_yes_button", _saveQuizYesButtonClicked);
+    // $(document).on('click', ".mcquestion_save_no_button", _saveQuizNoButtonClicked);
   };
 
   var _loadAnswerEvents = function(){
