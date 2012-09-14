@@ -42,18 +42,21 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
+	  var click = {};
 	  switch (event.keyCode) {
 	    case 39: // right arrow	    
 	    case 40: // down arrow
 	      if(V.Slides.isSlideFocused()) {
-			    __sendSlideNumber("forward");
+	      		click.data = "forward";
+			    _sendSlideNumber(click);
 			    event.preventDefault();
 	      }
 	      break;
 	    case 37: // left arrow
 	    case 38: // up arrow
 	    	if(V.Slides.isSlideFocused()) {
-				_sendSlideNumber("back");
+	    		click.data = "back";
+				_sendSlideNumber(click);
 	    		event.preventDefault();    		
 	    	}
 	    	break;	     
@@ -76,7 +79,7 @@ VISH.Slides.Mashme = (function(V,$,undefined){
 
 	var _sendSlideNumber = function(click){   
 		var slideNumber = VISH.Slides.getCurrentSlideNumber();
-		if(click === "back"){
+		if(click && click.data === "back"){
 			slideNumber -=1;
 		} else {
 			slideNumber +=1;
