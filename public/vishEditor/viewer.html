@@ -92,11 +92,21 @@
     <script>
      //First function called when page loads
     function start(){
-      if(window.parent.VISH && window.parent.VISH.Editor && (typeof window.parent.VISH.Editor.Preview.getPreview == "function")){
+        var isPreview = false;
+        var parentSameDomain = false;
+        try{
+            isPreview = window.parent.VISH && window.parent.VISH.Editor && (typeof window.parent.VISH.Editor.Preview.getPreview == "function");
+            parentSameDomain = true;
+        }
+        catch(exception){
+            isPreview = false;
+            parentSameDomain = false;
+        }
+      if(isPreview){
         //called to show a preview
         getOptions();
         VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());
-      } else if(window.parent.options){
+      } else if(parentSameDomain && window.parent.options){
         //called from web server to show a presentation
         VISH.SlideManager.init(window.parent.options, window.parent.presentation);
       } else {
