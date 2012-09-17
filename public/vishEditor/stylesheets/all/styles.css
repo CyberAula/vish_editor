@@ -440,7 +440,7 @@ div.contentfiltered {
   text-align: center !important;
 }
 
-div#preview {
+div#viewerpreview {
   position: absolute; 
   top: 47px; 
   left: -262px; 

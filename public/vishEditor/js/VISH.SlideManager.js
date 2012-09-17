@@ -98,7 +98,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Quiz.prepareQuiz(excursion);
 
 		if((options)&&(options["preview"])){
-			$("div#preview").show();
+			$("div#viewerpreview").show();
 		}
 
 		if((!V.Status.getDevice().desktop)&&(!VISH.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
