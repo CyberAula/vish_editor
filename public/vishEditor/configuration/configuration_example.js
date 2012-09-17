@@ -72,7 +72,16 @@ var getOptions = function(){
 			options["username"] = "ebarra";
 			options["userId"] = "3456";
 			options["token"] = "12xfDgR345x6";
+
+			//Testing Quizes
 			options["quiz_active_session_id"] = "29";
+
+			//Preview
+			options["preview"] = true;
+
+			//Close or come back button
+			//If comeBackUrl not exists, back button will be hidden
+        	options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
 			//And a default landguage
 			options["lang"] = "en";

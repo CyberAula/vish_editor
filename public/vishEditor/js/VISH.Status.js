@@ -44,6 +44,7 @@ VISH.Status = (function(V,$,undefined){
 	};
 	
 	var fillUserAgent = function(){
+
 		// Probe user agent string
 		device.pixelRatio = window.devicePixelRatio || 1;
 		device.viewport = {
@@ -77,16 +78,18 @@ VISH.Status = (function(V,$,undefined){
 
 				//We will consider android tablets devices with a screen that are at least 960dp x 720dp
 				//Taken from: http://developer.android.com/guide/practices/screens_support.html
+				var maxWidth = 1024 * 1.5;
+				var maxHeight = 720 * 1.5;
 
 				var landscape = window.screen.availWidth > window.screen.availHeight;
 				if(landscape){
-					if((window.screen.availWidth>=1024)&&(window.screen.availHeight)>=720){
+					if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
 					}
 				} else {
-					if((window.screen.availHeight>=1024)&&(window.screen.availWidth)>=720){
+					if((window.screen.availHeight>=maxWidth)&&(window.screen.availWidth)>=maxHeight){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
@@ -109,10 +112,10 @@ VISH.Status = (function(V,$,undefined){
 			device.desktop = false;
 		}
 
-		// V.Debugging.log("isMobile " + device.mobile);
-		// V.Debugging.log("isTablet: " + device.tablet);
-		// V.Debugging.log("Screen width: " + device.screen.width);
-		// V.Debugging.log("Screen height: " + device.screen.height);
+		 // V.Debugging.log("isMobile " + device.mobile);
+		 // V.Debugging.log("isTablet: " + device.tablet);
+		 // V.Debugging.log("Screen width: " + device.screen.width);
+		 // V.Debugging.log("Screen height: " + device.screen.height);
 		// V.Debugging.log("Visdevicel Viewport width: " + device.viewport.width);
 		// V.Debugging.log("Visdevicel Viewport height: " + device.viewport.height);
 		// V.Debugging.log("Layout Viewport width: " + document.documentElement.clientWidth);
@@ -121,6 +124,15 @@ VISH.Status = (function(V,$,undefined){
 		// V.Debugging.log("HTML element height: " +  document.documentElement.offsetHeight);
 		// V.Debugging.log("window.screen.availWidth: " + window.screen.availWidth);
 		// V.Debugging.log("window.screen.availHeight: " + window.screen.availHeight);
+
+		 // alert("isMobile " + device.mobile);
+		 // alert("isTablet: " + device.tablet);
+		 // alert("Screen width: " + device.screen.width);
+		 // alert("Screen height: " + device.screen.height);
+		 // alert("Visdevicel Viewport width: " + device.viewport.width);
+		 // alert("Visdevicel Viewport height: " + device.viewport.height);
+		 // alert("Layout Viewport width: " + document.documentElement.clientWidth);
+		 // alert("window.screen.availWidth: " + window.screen.availWidth);
 	};
 
 	var fillBrowser = function(){

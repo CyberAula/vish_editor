@@ -7,8 +7,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
-	 * options is a hash with params and options from the server, example of full options hash:
-	 * {"quiz_active_session_id": "7", "token"; "453452453", "username":"ebarra", "postPath": "/quiz.json", "lang": "es"}
+	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, excursion){
 		
@@ -97,6 +96,14 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		V.Quiz.prepareQuiz(excursion);
+
+		if((options)&&(options["preview"])){
+			$("div#preview").show();
+		}
+
+		if((!V.Status.getDevice().desktop)&&(!VISH.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
+			$("button#closeButton").show();
+		}
 	};
 
 	/**

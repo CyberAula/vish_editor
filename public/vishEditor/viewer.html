@@ -4,8 +4,9 @@
     <title>Vish Viewer</title>
     
     <meta charset="UTF-8">  
-    <meta name="viewport" content="user-scalable=yes">
   	<meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- <meta name="viewport" content="width=device-width, user-scalable=yes"/> -->
+    <meta name="viewport" content="user-scalable=yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -83,28 +84,33 @@
     
     <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
     
-    
-
+    <div style="display:none" id="preview">Preview</div>
+    <button id="closeButton" style="display:none" ><img id="closeButtonImg" src="/vishEditor/images/back_icon.png"/></button>
     <button id="mobile_back_arrow" class="vish_arrow" tabindex="2" style="display:none"><</button>
     <button id="mobile_forward_arrow" class="vish_arrow" tabindex="2" style="display:none">></button>
 
 
     <script>
-     //First function called when page loads
+    
     function start(){
         var isPreview = false;
         var parentSameDomain = false;
         try{
-            isPreview = window.parent.VISH && window.parent.VISH.Editor && (typeof window.parent.VISH.Editor.Preview.getPreview == "function");
+            isPreview = 
+                (window.parent.VISH)                                                        && 
+                (window.parent.VISH.Editor)                                                 && 
+                (typeof window.parent.VISH.Editor.Preview.getPreview == "function")         && 
+                (typeof window.parent.VISH.Editor.Preview.getPreview() != "undefined");
             parentSameDomain = true;
-        }
-        catch(exception){
+        } catch(exception){
             isPreview = false;
             parentSameDomain = false;
         }
+
       if(isPreview){
         //called to show a preview
         getOptions();
+        options["preview"] = true;
         VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());
       } else if(parentSameDomain && window.parent.options){
         //called from web server to show a presentation
@@ -115,6 +121,7 @@
         VISH.SlideManager.init(options);
       }
     }
+
   </script>
 </body>
 </html>

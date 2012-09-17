@@ -104,8 +104,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		    	$("#viewbar").show();
 		    	$(".vish_arrow").hide();
 		    }		    
-		}
-		else{
+		} else {
 			//change icon
 		    $("#page-fullscreen").css("background-position", "-45px 0px");
 		    $("#page-fullscreen").hover(function(){

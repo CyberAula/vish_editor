@@ -2,6 +2,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 	var addedEventListeners = false;
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
+	var registeredEvents = [];
 
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
@@ -14,17 +15,36 @@ VISH.Slides.Events = (function(V,$,undefined){
 	};
 
 	var addEventListeners = function() {
+
 		if(!addedEventListeners){
 			$(document).bind('keydown', handleBodyKeyDown); 
       		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-      		$(document).on('click', '#mobile_back_arrow', function(){
-      			V.Slides.backwardOneSlide();});
-      		$(document).on('click', '#mobile_forward_arrow', function(){
-      			V.Slides.forwardOneSlide();});		
+      		_registerEvent("mobile_back_arrow");
+      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
+      		_registerEvent("mobile_forward_arrow");
+      		$(document).on('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);	
+      		_registerEvent("closeButton");
+      		_registerEvent("closeButtonImg");
+      		$(document).on('click', '#closeButton', function(){
+      			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+      		});
 	    	addedEventListeners = true;
 		} 
 	};
+
+	/* Register events */
+	var _registerEvent = function(eventTargetId){
+		if(registeredEvents.indexOf(eventTargetId)==-1){
+			registeredEvents.push(eventTargetId);
+		}
+	}
+
+	var _unregisterEvent = function(eventTargetId){
+		if(registeredEvents.indexOf(eventTargetId)!=-1){
+			registeredEvents.splice(registeredEvents.indexOf(eventTargetId), 1);
+		}
+	}
 
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
@@ -77,7 +97,9 @@ VISH.Slides.Events = (function(V,$,undefined){
 			    document.body.addEventListener('touchmove', handleTouchMove, true);
 			    document.body.addEventListener('touchend', handleTouchEnd, true);
 			    var zoom = document.documentElement.clientWidth / window.innerWidth;
-			    if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && event.target.id !== "mobile_forward_arrow" && event.target.id !== "mobile_back_arrow"){    	 
+
+			    var eventNotRegister = (registeredEvents.indexOf(event.target.id)==-1);
+			    if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && eventNotRegister){    	 
 			    	//this is because if not done, the browser can take control of the event and cancels it, 
 			    	//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
 			    	//and there will be no scroll below that zoom level
@@ -130,11 +152,15 @@ VISH.Slides.Events = (function(V,$,undefined){
 		$(document).unbind('keydown', handleBodyKeyDown); 
   		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
   		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+  		_unregisterEvent("mobile_back_arrow");
   		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
+  		_unregisterEvent("mobile_forward_arrow");
   		$(document).off('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);
+  		_unregisterEvent("closeButton");
+  		_unregisterEvent("closeButtonImg");
+  		$(document).off('click', '#closeButton');
   		$(document).unbind('touchstart', handleTouchStart); 
 	};
-
 	
 	
 	return {
