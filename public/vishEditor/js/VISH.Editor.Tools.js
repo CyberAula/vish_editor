@@ -116,7 +116,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 	var loadPresentationToolbar = function(){
 
-		var presentationType = VISH.Editor.getExcursionType();
+		var presentationType = VISH.Editor.getPresentationType();
 
 		switch(presentationType){
 			case "presentation":

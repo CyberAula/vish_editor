@@ -57,7 +57,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		var options = new Array();
 		options['rows'] = 1;
-		if(V.Editor.getExcursionType() === "flashcard"){
+		if(V.Editor.getPresentationType() === "flashcard"){
 			options['callback'] = _onClickCarrouselElementInFlashcard;
 		}
 		else{
@@ -70,7 +70,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options['width'] = 900;
 		options['startAtLastElement'] = true;
 		options['pagination'] = false;
-		if(V.Editor.getExcursionType() === "flashcard"){
+		if(V.Editor.getPresentationType() === "flashcard"){
 			options['afterCreateCarruselFunction'] = VISH.Editor.Flashcard.redrawPois;
 		}
 		$("#" + carrouselDivId).show();
@@ -80,7 +80,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			selectThumbnail(VISH.Slides.getCurrentSlideNumber());
 		}	
 
-		if(V.Editor.getExcursionType() === "presentation"){
+		if(V.Editor.getPresentationType() === "presentation"){
 
 			//Add sortable
 			var firstCarrouselNumber;

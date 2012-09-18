@@ -16,8 +16,8 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
    * Returns a video object prepared to draw.
    * Sources: array of arrays [[source src, source type],...] .
    * Options: hash with additional data like poster url or autoplay
-   * param area: optional param indicating the area to add the video, used for editing excursions
-   * param style: optional param with the style, used in editing excursion
+   * param area: optional param indicating the area to add the video, used for editing presentations
+   * param style: optional param with the style, used in editing presentation
    */
   var drawVideo = function(sources,options, area, style){
 		

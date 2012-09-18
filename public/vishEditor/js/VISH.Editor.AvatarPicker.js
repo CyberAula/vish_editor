@@ -11,7 +11,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	 	  
    };	
 	 
-	var onLoadExcursionDetails = function(mySelectedAvatar){
+	var onLoadPresentationDetails = function(mySelectedAvatar){
 		selectedAvatar = mySelectedAvatar;
 		$("#" + thumbnailsDetailsId).hide();
 		VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
@@ -102,7 +102,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	return {
 		init	       : init,
 		selectRandom   : selectRandom,
-		onLoadExcursionDetails : onLoadExcursionDetails
+		onLoadPresentationDetails : onLoadPresentationDetails
 		
 	};
 

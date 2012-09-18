@@ -3,7 +3,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var menuEventsLoaded = false;
 
 
-	/**
+   /**
 	* Menu item classes:
 	* menu_all : Always visible
 	* menu_standard_presentation: 	Visible for standard presentations
@@ -25,7 +25,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			}
 		}
 
-		var presentationType = VISH.Editor.getExcursionType();
+		var presentationType = VISH.Editor.getPresentationType();
 
 		$("ul.menu_option_main").find("li").hide();
 		$("ul.menu_option_main").find("a.menu_all").parent().show();
@@ -120,8 +120,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initSettings = function(){
 
-		if ((VISH.Configuration.getConfiguration()["presentationSettings"]) && (!VISH.Editor.hasInitialExcursion()) && !initializedSettings){
-			$("a#edit_excursion_details").fancybox({
+		if ((VISH.Configuration.getConfiguration()["presentationSettings"]) && (!VISH.Editor.hasInitialPresentation()) && !initializedSettings){
+			$("a#edit_presentation_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
@@ -134,7 +134,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			displaySettings();
 			initializedSettings = true;
 		} else {
-			$("a#edit_excursion_details").fancybox({
+			$("a#edit_presentation_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
@@ -149,7 +149,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 
 	var displaySettings = function(){
-		$("a#edit_excursion_details").trigger('click');
+		$("a#edit_presentation_details").trigger('click');
 	}
 
 
@@ -158,7 +158,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var onSettings = function(){
 		
 		if(firstSettingsCall){
-			$("a#edit_excursion_details").fancybox({
+			$("a#edit_presentation_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
@@ -172,21 +172,21 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		if((VISH.Configuration.getConfiguration()["presentationTags"])&&(firstSettingsCall)){
 			VISH.Editor.API.requestTags(_onInitialTagsReceived);
-			var draftExcursion = VISH.Editor.getExcursion();
-			if(draftExcursion && draftExcursion.avatar){
-				VISH.Editor.AvatarPicker.onLoadExcursionDetails(draftExcursion.avatar);
+			var draftPresentation = VISH.Editor.getPresentation();
+			if(draftPresentation && draftPresentation.avatar){
+				VISH.Editor.AvatarPicker.onLoadPresentationDetails(draftPresentation.avatar);
 			} else {
-				VISH.Editor.AvatarPicker.onLoadExcursionDetails(null);
+				VISH.Editor.AvatarPicker.onLoadPresentationDetails(null);
 			}
 		}
 	}
 
 	var _onInitialTagsReceived = function(data){
 		var tagList = $(".tagBoxIntro .tagList");
-		var draftExcursion = VISH.Editor.getExcursion();
+		var draftPresentation = VISH.Editor.getPresentation();
 
 		if ($(tagList).children().length == 0){
-			if(!draftExcursion){
+			if(!draftPresentation){
 				//Insert the two first tags.
 				$.each(data, function(index, tag) {
 					if(index==2){
@@ -195,9 +195,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					$(tagList).append("<li>" + tag + "</li>")
 				});
 			} else {	
-				if(draftExcursion.tags){
-					//Insert draftExcursion tags
-					$.each(draftExcursion.tags, function(index, tag) {
+				if(draftPresentation.tags){
+					//Insert draftPresentation tags
+					$.each(draftPresentation.tags, function(index, tag) {
 						$(tagList).append("<li>" + tag + "</li>")
 					});
 				}
@@ -210,30 +210,30 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	/**
 	 * function called when the user clicks on the save button
-	 * in the initial excursion details fancybox to save
+	 * in the initial presentation details fancybox to save
 	 * the data in order to be stored at the end in the JSON file   
 	 */
-	var onSaveExcursionDetailsButtonClicked = function(event){
-		if($('#excursion_title').val().length < 1) {
-			$('#excursion_details_error').slideDown("slow");
-			$('#excursion_details_error').show();
+	var onSavePresentationDetailsButtonClicked = function(event){
+		if($('#presentation_title').val().length < 1) {
+			$('#presentation_details_error').slideDown("slow");
+			$('#presentation_details_error').show();
 			return false;
 		}
 		
-		var draftExcursion = VISH.Editor.getExcursion();
+		var draftPresentation = VISH.Editor.getPresentation();
 
-		if(!draftExcursion){
-			draftExcursion = {};
+		if(!draftPresentation){
+			draftPresentation = {};
 		}
 
-		draftExcursion.title = $('#excursion_title').val();
-		draftExcursion.description = $('#excursion_description').val();
-		draftExcursion.avatar = $('#excursion_avatar').val();
-		draftExcursion.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+		draftPresentation.title = $('#presentation_title').val();
+		draftPresentation.description = $('#presentation_description').val();
+		draftPresentation.avatar = $('#presentation_avatar').val();
+		draftPresentation.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 
-		VISH.Editor.setExcursion(draftExcursion);
+		VISH.Editor.setPresentation(draftPresentation);
 
-		$('#excursion_details_error').hide();
+		$('#presentation_details_error').hide();
 		$.fancybox.close();
 	};
 
@@ -261,7 +261,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(VISH.Editor.getExcursionType() === "flashcard" && !VISH.Editor.Flashcard.hasPoiInBackground()){
+		} else if(VISH.Editor.getPresentationType() === "flashcard" && !VISH.Editor.Flashcard.hasPoiInBackground()){
 			$.fancybox(
 				$("#message3_form").html(),
 				{
@@ -273,7 +273,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(VISH.Editor.getExcursionType() === "flashcard" && !VISH.Editor.Flashcard.hasChangedBackground()){
+		} else if(VISH.Editor.getPresentationType() === "flashcard" && !VISH.Editor.Flashcard.hasChangedBackground()){
 			$.fancybox(
 				$("#message4_form").html(),
 				{
@@ -300,8 +300,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 						//if user has answered "yes"
 						if($("#save_answer").val() ==="true"){
 							$("#save_answer").val("false");	
-							var excursion = VISH.Editor.saveExcursion();	
-							VISH.Editor.afterSaveExcursion(excursion);			
+							var presentation = VISH.Editor.savePresentation();	
+							VISH.Editor.afterSavePresentation(presentation);			
 						}	else {
 							return false;
 						}
@@ -371,10 +371,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var switchToPresentation = function(){
-		var excursion = V.Editor.saveExcursion();
-		V.Editor.setExcursion(excursion);
+		var presentation = V.Editor.savePresentation();
+		V.Editor.setPresentation(presentation);
 
-		V.Editor.setExcursionType("presentation");
+		V.Editor.setPresentationType("presentation");
 		
 		//show slides
 		V.Editor.Utils.showSlides();
@@ -395,7 +395,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
 		onSettings						: onSettings,
-		onSaveExcursionDetailsButtonClicked	: onSaveExcursionDetailsButtonClicked,
+		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,

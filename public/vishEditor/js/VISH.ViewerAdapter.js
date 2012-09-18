@@ -122,8 +122,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	/**
 	* Method to add the src to the iframe, show it, hide the slides, and so on
 	*/
-	var setupGame = function(excursion){
-		$("#my_game_iframe").attr("src", excursion.game.src);
+	var setupGame = function(presentation){
+		$("#my_game_iframe").attr("src", presentation.game.src);
 		//load file game.css dinamically
 		var fileref=document.createElement("link");
   		fileref.setAttribute("rel", "stylesheet");

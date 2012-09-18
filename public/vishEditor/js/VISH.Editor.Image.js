@@ -152,8 +152,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* Function to draw an image in a zone of the template
 	* the zone to draw is the one in current_area (params['current_el'])
 	* this function also adds the slider and makes the image draggable
-	* param area: optional param indicating the area to add the image, used for editing excursions
-	* param style: optional param with the style, used in editing excursion
+	* param area: optional param indicating the area to add the image, used for editing presentations
+	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawImage = function(image_url, area, style){    
 		if(flashcard_background_mode){

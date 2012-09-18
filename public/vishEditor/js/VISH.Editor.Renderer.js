@@ -5,21 +5,21 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to initialize the renderer 
 	 */
-	var init = function(excursion){
+	var init = function(presentation){
 		//first set title and description
-		$('#excursion_title').val(excursion.title);
-		$('#excursion_description').val(excursion.description);
-		$('#excursion_avatar').val(excursion.avatar);
+		$('#presentation_title').val(presentation.title);
+		$('#presentation_description').val(presentation.description);
+		$('#presentation_avatar').val(presentation.avatar);
 		//select the avatar from the carrousel
-		$("thumbnails_in_excursion_details .carrousel_element_single_row img").each(function(index, elem) {
-				if(elem.attr("src")===excursion.avatar);
+		$("thumbnails_in_presentation_details .carrousel_element_single_row img").each(function(index, elem) {
+				if(elem.attr("src")===presentation.avatar);
 				elem.addClass("carrousel_element_selected");
 				//TODO move the carrousel to the page with the element
 		});
 		
-		slides = excursion.slides;
+		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
-				_renderSlide(slides[i], i, excursion.id);			
+				_renderSlide(slides[i], i, presentation.id);			
 		}	
 	};
 	
@@ -27,10 +27,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one slide in editor
 	 */
-	var _renderSlide = function(slide, position, excursion_id){
+	var _renderSlide = function(slide, position, presentation_id){
 		
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
-		var scaffold = V.Dummies.getDummy(template, position, excursion_id, true);  
+		var scaffold = V.Dummies.getDummy(template, position, presentation_id, true);  
 		
 		V.Editor.Utils.addSlide(scaffold);	
 		
@@ -38,9 +38,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		V.Slides.lastSlide();  //important to get the browser to draw everything
 		
 		for(el in slide.elements){
-			var area = $("#article_" + excursion_id + "_" + position + " div[areaid='" + slide.elements[el].areaid +"']");
+			var area = $("#article_" + presentation_id + "_" + position + " div[areaid='" + slide.elements[el].areaid +"']");
 			if(area.length === 0){
-				continue; //with first version excursions we had different template names and some fails, this condition avoid that
+				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
 			if(slide.elements[el].type === "text"){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object

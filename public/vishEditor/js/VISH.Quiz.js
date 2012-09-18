@@ -14,8 +14,8 @@ VISH.Quiz = (function(V,$,undefined){
   var stopButtonClass = "mcquestion_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
 
-  var init = function(excursion){
-    if (excursion.type=="quiz_simple"){
+  var init = function(presentation){
+    if (presentation.type=="quiz_simple"){
       quizMode = "answer";
        _loadAnswerEvents();
     } else {

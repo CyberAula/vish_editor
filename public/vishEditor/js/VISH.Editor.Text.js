@@ -14,7 +14,7 @@ VISH.Editor.Text = (function(V,$,undefined){
  /**
   * function called when user clicks on the text thumb
   * Allows users to include text content in the slide using a WYSIWYG editor
-  * param area: optional param indicating the area to add the wysiwyg, used for editing excursions
+  * param area: optional param indicating the area to add the wysiwyg, used for editing presentations
   */
   var launchTextEditor = function(event, area, initial_text ){
   	init();

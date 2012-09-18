@@ -1,8 +1,8 @@
-VISH.Excursion = (function(V,undefined){
+VISH.Presentation = (function(V,undefined){
 	var mySlides = null;
 	
 	/**
-	 * Function to initialize the excursion
+	 * Function to initialize the presentation
 	 * Initialize renderer and call it to render each slide
 	 */
 	var init = function(slides){
@@ -13,7 +13,7 @@ VISH.Excursion = (function(V,undefined){
 		for(var i=0;i<slides.length;i++){
 			V.Renderer.renderSlide(slides[i]);			
 		}
-		//TODO preload all content of the excursion
+		//TODO preload all content of the presentation
 
 		_finishRenderer();
 	};

@@ -6,10 +6,10 @@ VISH.SlideManager = (function(V,$,undefined){
 	var current_presentation;
 
 	/**
-	 * Function to initialize the SlideManager, saves the slides object and init the excursion with it
+	 * Function to initialize the SlideManager, saves the slides object and init the presentation with it
 	 * options is a hash with params and options from the server.
 	 */
-	var init = function(options, excursion){
+	var init = function(options, presentation){
 		
 		VISH.Debugging.init(options);
 
@@ -26,14 +26,14 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		if(VISH.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]=="noserver")&&(!excursion)&&(VISH.Debugging.getExcursionSamples()!=null)) {
-			 	excursion = VISH.Debugging.getExcursionSamples();
+			if ((options["configuration"]["mode"]=="noserver")&&(!presentation)&&(VISH.Debugging.getPresentationSamples()!=null)) {
+			 	presentation = VISH.Debugging.getPresentationSamples();
 			}
 		}
 
-		current_presentation = excursion;
+		current_presentation = presentation;
 
-		V.Quiz.init(excursion);
+		V.Quiz.init(presentation);
 		V.Slides.init();
 		V.Status.init();
 
@@ -51,16 +51,16 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
-		if(excursion.type ==="game"){
+		if(presentation.type ==="game"){
 			VISH.ViewerEngine = "game";
-			VISH.ViewerAdapter.setupGame(excursion);	
-			VISH.Game.registerActions(excursion);		
-		} else if(excursion.type === "flashcard"){
+			VISH.ViewerAdapter.setupGame(presentation);	
+			VISH.Game.registerActions(presentation);		
+		} else if(presentation.type === "flashcard"){
 			VISH.ViewerEngine = "flashcard";
-			VISH.Flashcard.init(excursion);
+			VISH.Flashcard.init(presentation);
 		}
-		mySlides = excursion.slides;
-		V.Excursion.init(mySlides);
+		mySlides = presentation.slides;
+		V.Presentation.init(mySlides);
 		V.ViewerAdapter.setupSize(false);
 		
 		$(window).on('orientationchange',function(){
@@ -95,7 +95,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			window.addEventListener("orientationchange", hideAddressBar );		
 		}
 
-		V.Quiz.prepareQuiz(excursion);
+		V.Quiz.prepareQuiz(presentation);
 
 		if((options)&&(options["preview"])){
 			$("div#viewerpreview").show();
@@ -112,7 +112,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		var myElem = myDoc.getElementById('excursion_iframe'); //excursion_iframe is the iframe id and the body id
+		var myElem = myDoc.getElementById('presentation_iframe');
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
 		    if (myDoc.documentElement.requestFullScreen) {
@@ -137,7 +137,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	
 	/**
 	 * function to add enter and leave events
-	 * it is called from vish.excursion.js because we need to add the events before loading slides.js
 	 * it is called with live() because in the editor we need to add this event for articles now and in the future as the user is adding articles on the fly
 	 */
 	var addEnterLeaveEvents = function(){

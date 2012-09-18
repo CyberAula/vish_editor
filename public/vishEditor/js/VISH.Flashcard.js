@@ -1,6 +1,6 @@
 VISH.Flashcard = (function(V,$,undefined){
 
-	var init = function(excursion){
+	var init = function(presentation){
 		var fileref=document.createElement("link");
   		fileref.setAttribute("rel", "stylesheet");
   		fileref.setAttribute("type", "text/css");
@@ -9,11 +9,11 @@ VISH.Flashcard = (function(V,$,undefined){
 
   		var flashcard_div = $("#flashcard-background");
   		//first we set the flashcard background image
-  		flashcard_div.css("background-image", excursion.background.src);
+  		flashcard_div.css("background-image", presentation.background.src);
 
   		//and now we add the points of interest with their click events to show the slides
-  		for(index in excursion.background.pois){
-  			var poi = excursion.background.pois[index];
+  		for(index in presentation.background.pois){
+  			var poi = presentation.background.pois[index];
   			var div_to_add = "<div class='fc_poi' id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'><img src='"+ VISH.ImagesPath +"arrow_down.gif'/></div>";
 
   			flashcard_div.append(div_to_add);

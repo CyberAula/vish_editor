@@ -26,19 +26,19 @@ VISH.Dummies = (function(VISH,undefined){
 
 	/**
 	 * function to get the string for the new slide
-	 * param article_id: id of the article, used for editing excursions
+	 * param article_id: id of the article, used for editing presentations
 	 */
-	var getDummy = function(template, position, excursion_id, existing_slide){
+	var getDummy = function(template, position, presentation_id, existing_slide){
 		var dum = dummies[parseInt(template,10)-1];
-		return _replaceIds(dum, position, excursion_id, existing_slide);
+		return _replaceIds(dum, position, presentation_id, existing_slide);
 	};
 	
 	/**
 	 * Function to replace the text id_to_change by the next id
 	 * the added id will be "zone + nextId"
-	 * CAREFUL: if article_id is passed we remove "editable" class because we are editing an existing excursion
+	 * CAREFUL: if article_id is passed we remove "editable" class because we are editing an existing presentation
 	 */
-	var _replaceIds = function(string, position, excursion_id, existing_slide){
+	var _replaceIds = function(string, position, presentation_id, existing_slide){
 		var newString = string;
 		// VISH.Debugging.log("article_id passed like parameter is: " + article_id);
 		while(newString.indexOf("div_id_to_change") != -1){
@@ -46,10 +46,10 @@ VISH.Dummies = (function(VISH,undefined){
 			nextDivId++;
 		}
 		while(newString.indexOf("article_id_to_change") != -1){			
-				if(!excursion_id){
-					excursion_id = "";
+				if(!presentation_id){
+					presentation_id = "";
 				}
-				newString = newString.replace("article_id_to_change", "article_" + excursion_id + "_" + position);				
+				newString = newString.replace("article_id_to_change", "article_" + presentation_id + "_" + position);				
 		}
 		while(newString.indexOf("slidenumber_to_change") != -1){	
 				newString = newString.replace("slidenumber_to_change", position);

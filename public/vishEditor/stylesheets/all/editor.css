@@ -11,7 +11,7 @@ img {
 	margin-top: 50px;
 }
 
-#excursiondetails {
+#presentationdetails {
 	background: url(/vishEditor/images/excursiondetails_bg.png) no-repeat top;
 }
 
@@ -820,7 +820,7 @@ div.object_wrapper{
  * EXCURSION DETAILS FANCYBOX
  ***********************************/ 
 
-#excursion_details_error{
+#presentation_details_error{
 }
 	
 .formsizefancy3 {
@@ -907,7 +907,7 @@ textarea {
 	cursor: pointer;
 }
 
-#excursion_details_fields{
+#presentation_details_fields{
 	position: relative;
 }
 
@@ -1193,12 +1193,12 @@ textarea {
   left: 190px;
 }
 
-.tut_saveexcursion{
+.tut_savepresentation{
 	top: 542px;
 	left: 505px;
 }
 
-.tut_saveexcursion span.joyride-nub{
+.tut_savepresentation span.joyride-nub{
   bottom: -28px;
   left: 341px;
 }

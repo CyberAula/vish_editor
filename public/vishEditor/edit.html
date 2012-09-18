@@ -57,7 +57,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Object.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Renderer.Filter.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Excursion.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Presentation.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
@@ -141,7 +141,7 @@
 		<div id='menubar'>
 			  <div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
 				<div id="menubarButtons">
-					<a id="edit_excursion_details" href="#excursiondetails">
+					<a id="edit_presentation_details" href="#presentationdetails">
 	          <div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
 	        </a>
 					<a id="save" href="#thumbcontent">
@@ -258,34 +258,34 @@
     <!-- Hidden link to open fancybox when adding a slide -->
     <a id="addSlideFancybox" href="#thumbcontent" style="display: none;"></a>
     
-    <!-- Hidden link to open fancybox when creating a new excursion -->
-    <a id="launch_excursion_details" href="#excursiondetails" style="display: none;"></a>
+    <!-- Hidden link to open fancybox when creating a new presentation -->
+    <a id="launch_presentation_details" href="#presentationdetails" style="display: none;"></a>
 
     <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
     <div style='display:none'>    
-      <form id='excursiondetails'>         
-        <div id="excursion_details_fields">
-          <label for="excursion_title">
+      <form id='presentationdetails'>         
+        <div id="presentation_details_fields">
+          <label for="presentation_title">
             <div id="tutorialstart" class="textintro1 textintromargin1">Title</div>
           </label>
-          <input id='excursion_title' class="input_text_fancy title1 formsizefancy3" type="text" name="excursion_title" placeholder="Excursion title"> <img id="start_tutorial" src="/vishEditor/images/tutorialimage_blank.png"/>
-          <label for="excursion_description">
+          <input id='presentation_title' class="input_text_fancy title1 formsizefancy3" type="text" name="presentation_title" placeholder="Excursion title"> <img id="start_tutorial" src="/vishEditor/images/tutorialimage_blank.png"/>
+          <label for="presentation_description">
             <div class="textintro1 textintromargin2">Description</div>
           </label>
-          <textarea id='excursion_description' class="input_text_fancy description1 formsizefancy4" name="excursion_description" placeholder="Describe the excursion in a few words..."></textarea>
+          <textarea id='presentation_description' class="input_text_fancy description1 formsizefancy4" name="presentation_description" placeholder="Describe the presentation in a few words..."></textarea>
           <div class="tagBoxIntro">
             <ul id="tagindex" class="tagList"></ul>
           </div>
-	        <div id="thumbnails_in_excursion_details">
-	          <label for="excursion_avatar">
+	        <div id="thumbnails_in_presentation_details">
+	          <label for="presentation_avatar">
 	            <div class="textintro1 textintromargin3">Thumbnail</div>
 	          </label>
 	          <div id="avatars_carrousel"></div>
-	          <input type="hidden" id="excursion_avatar" value="">
+	          <input type="hidden" id="presentation_avatar" value="">
 	        </div>
         
-          <input id='save_excursion_details' submit='disable' class='button buttonintro' value="Continue">
-          <p id="excursion_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
+          <input id='save_presentation_details' submit='disable' class='button buttonintro' value="Continue">
+          <p id="presentation_details_error" class="error_intro" style='display:none'>Please, enter a title</p>
         </div>
       </form>
     </div>  
@@ -456,7 +456,7 @@
 	  	<div id='message2_form'>
 	  		<div class="text_in_fancybox">
 	  			<img id="message2img" src="/vishEditor/images/content_fail.png">
-	  			<span class="deltext">Transform the excursion to presentation to add a new slide.</span>
+	  			<span class="deltext">Transform the flashcard to standard presentation to add a new slide.</span>
 	  		</div> 		
 	  		<div id="button_accept_when_fail">
 	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
@@ -843,11 +843,11 @@
 						<span i18n-key="i.walk2">around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.</span>
 					</p>
 	  	  </li>
-	  	  <li data-id="excursion_title" data-text="Next" data-options="tipLocation:bottom;" class="Next">
+	  	  <li data-id="presentation_title" data-text="Next" data-options="tipLocation:bottom;" class="Next">
 	  	    <h2>Let´s write a title (Obligatory)</h2>
 	  	    <p i18n-key="i.walk3">This black space will allow you to write a title to name your excursions. The title in the excursion it is obligatory cause with this feature other user can find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
 	  	  </li>
-	  	  <li data-id="excursion_description" data-options="tipLocation:bottom;" data-text="Next">
+	  	  <li data-id="presentation_description" data-options="tipLocation:bottom;" data-text="Next">
 	  	    <h2>Write a description (optional)</h2>
 	        <p i18n-key="i.walk4">Here you can explain in a little more detail what the excursion is about. Click on "Next" to continue.</p>
 	  	  </li>
@@ -859,7 +859,7 @@
 	  	    <h2>Choose an image that will represent your excursion</h2>
 	        <p i18n-key="i.walk6">In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
 	  	  </li>
-        <li data-id="save_excursion_details"  class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close">
+        <li data-id="save_presentation_details"  class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close">
 	  	    <h2>Save your excursion details</h2>
 	        <p i18n-key="i.walk7">Once you click on the close button, you will be able to click on continue to save your excursion details, and to start adding content to your excursion.</p>
 	  	  </li>
@@ -882,7 +882,7 @@
 	  	    <h2>This is the tools menu</h2>
 	  	    <p i18n-key="i.walk11">In this zone you will manage all the slides in the grey spaces at the bottom. Every next slide available will be appearing at the grey zones. Click on "Next" to continue. </p>
         </li>
-        <li data-id="save_excursion_details"  class="tut_saveexcursion tut_with_arrow" data-options="tipLocation:none;" data-text="Next">
+        <li data-id="save_presentation_details"  class="tut_savepresentation tut_with_arrow" data-options="tipLocation:none;" data-text="Next">
 	  	    <h2>Save Button</h2>
 	        <p i18n-key="i.walk12">This button will able you to save your excursion.Click on "Next" to continue.</p>
 	  	  </li>

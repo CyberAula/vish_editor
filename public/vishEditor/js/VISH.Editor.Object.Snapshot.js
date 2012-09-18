@@ -75,7 +75,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	}
 	
 	/**
-   * Param style: optional param with the style, used in editing excursion
+   * Param style: optional param with the style, used in editing presentation
    */
   var drawSnapShot = function(wrapper, area, style,scrollTop,scrollLeft){
 
