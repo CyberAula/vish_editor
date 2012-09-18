@@ -223,7 +223,8 @@ VISH.Quiz = (function(V,$,undefined){
             if(typeof $(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index] != "undefined"){
                 $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index]).css("width", percentString);
                 $($(VISH.Slides.getCurrentSlide()).find(".mcoption_label")[index]).text(roundedNumber+"%");
-            }
+                $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index]).addClass("mcoption_" +option );
+             }
           }
         }
       }
@@ -239,3 +240,4 @@ VISH.Quiz = (function(V,$,undefined){
   };
     
 }) (VISH, jQuery);
+
