@@ -136,13 +136,13 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		//Init submodules
+		VISH.Editor.I18n.init(options["lang"]);
 		VISH.Editor.Text.init();
 		VISH.Editor.Image.init();
 		VISH.Editor.Video.init();
 		VISH.Editor.Object.init();
 		VISH.Editor.Thumbnails.init();
 		VISH.Editor.AvatarPicker.init();
-		VISH.Editor.I18n.init(options["lang"]);
 		VISH.Editor.Quiz.init();
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();

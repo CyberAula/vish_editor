@@ -48,8 +48,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				img = event.target;
 				input = $(event.target).parent().parent().find("input");
 			}
-		}
-		else{
+		} else {
 			img = myImg;
 			input = myInput;
 			$(input).val(optionText);

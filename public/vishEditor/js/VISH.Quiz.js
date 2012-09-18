@@ -193,7 +193,6 @@ VISH.Quiz = (function(V,$,undefined){
     
  /*
   * Data format 
-  * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
   */
   var _showResults = function (data) {
      var maxWidth = 70;
