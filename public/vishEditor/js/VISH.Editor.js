@@ -657,48 +657,53 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 
-	var afterSavePresentation = function(presentation){
+	var afterSavePresentation = function(presentation, order){
 		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
 
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-
-			var send_type;
-	        if(initialPresentation){
-	          send_type = 'PUT'; //if we are editing
-	        } else {  
-	          send_type = 'POST'; //if it is a new
-	        } 
-	        
-	        //POST to http://server/excursions/
-	        var jsonPresentation = JSON.stringify(presentation);
-	    	VISH.Debugging.log(jsonPresentation);   
-	        var params = {
-	          "excursion[json]": jsonPresentation,
-	          "authenticity_token" : initOptions["token"]
-	        }
-	        
-	        $.ajax({
-	          type    : send_type,
-	          url     : VISH.UploadPresentationPath,
-	          data    : params,
-	          success : function(data) {
-	              /*if we redirect the parent frame*/
-	              window.top.location.href = data.url;
-	          }     
-	        });
-
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
-			uploadPresentationWithNode(presentation);
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-				if(VISH.Debugging.getActionSave()=="view"){
-					VISH.Debugging.initVishViewer();
-				} else if (VISH.Debugging.getActionSave()=="edit") {
-					VISH.Debugging.initVishEditor();
+		switch(VISH.Configuration.getConfiguration()["mode"]){
+			case VISH.Constant.NOSERVER:
+				//Ignore order param for developping
+				if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
+					if(VISH.Debugging.getActionSave()=="view"){
+						VISH.Debugging.initVishViewer();
+					} else if (VISH.Debugging.getActionSave()=="edit") {
+						VISH.Debugging.initVishEditor();
+					}
 				}
-			}
-		}
+				break;
+			case VISH.Constant.VISH:
+				var send_type;
+		        if(initialPresentation){
+		          send_type = 'PUT'; //if we are editing
+		        } else {  
+		          send_type = 'POST'; //if it is a new
+		        } 
 
+		        var draft = (order==="draft");
+		        
+		        //POST to http://server/excursions/
+		        var jsonPresentation = JSON.stringify(presentation);
+		    	VISH.Debugging.log(jsonPresentation);   
+		        var params = {
+		          "excursion[json]": jsonPresentation,
+		          "authenticity_token" : initOptions["token"],
+		          "draft": draft
+		        }
+		        
+		        $.ajax({
+		          type    : send_type,
+		          url     : VISH.UploadPresentationPath,
+		          data    : params,
+		          success : function(data) {
+		              window.top.location.href = data.url;
+		          }     
+		        });
+				break;
+			case VISH.Constant.STANDALONE:
+				//Order is always save, ignore order param
+				uploadPresentationWithNode(presentation);
+				break;
+		}
 	}
 	
 
@@ -862,6 +867,24 @@ VISH.Editor = (function(V,$,undefined){
 		return isStandard;
 	}
 
+	/*
+	 * Returns if the server has checked the presentation has a draft.
+	 */
+	var isPresentationDraft = function(){
+		if(initialPresentation){
+			//Look for options["draft"]
+			if((initOptions["draft"])&&(typeof initOptions["draft"] === "boolean")){
+				return initOptions["draft"];
+			} else {
+				//Server must indicate explicity that this presentation is a draft with the "draft" option.
+				return false;
+			}
+		} else {
+			//New presentation created, draft by default.
+			return true;
+		}
+	}
+
 
 	return {
 		init 					: init,
@@ -875,11 +898,12 @@ VISH.Editor = (function(V,$,undefined){
 		getPresentation 		: getPresentation,
 		setPresentation 		: setPresentation,
 		isPresentationStandard 	: isPresentationStandard,
+		isPresentationDraft		: isPresentationDraft,
 		getSavedPresentation 	: getSavedPresentation,
 		hasInitialPresentation	: hasInitialPresentation,
 		savePresentation 		: savePresentation,
 		afterSavePresentation  	: afterSavePresentation,
-		setPresentationType 	: setPresentationType 
+		setPresentationType 	: setPresentationType
 	};
 
 }) (VISH, jQuery);

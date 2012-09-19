@@ -155,7 +155,9 @@ var i18n =
 				"Add tags"				: "Añadir etiquetas",
 				"limit reached"			: "limite alcanzado",
 				"i.Templates"			: "Plantillas",
-				"Author"				: "Autor"
+				"Author"				: "Autor",
+				"i.draft"				: "Borrador",
+				"i.publish"				: "Publicar"
 			}
 		},
 	 "standalone":

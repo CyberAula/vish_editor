@@ -249,6 +249,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
+
 		if(VISH.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
@@ -286,7 +287,26 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				}
 			);
 
-		} else {    
+		} else {  
+
+			switch(VISH.Configuration.getConfiguration()["mode"]){
+				case VISH.Constant.NOSERVER:
+					$("a[save-option-id='save']").hide();
+					break;
+				case VISH.Constant.VISH:
+					if(VISH.Editor.isPresentationDraft()){
+						$("a[save-option-id='save']").hide();
+					} else {
+						$("a[save-option-id='draft']").hide();
+						$("a[save-option-id='publish']").hide();
+					}
+					break;
+				case VISH.Constant.STANDALONE:
+					$("a[save-option-id='publish']").hide();
+					$("a[save-option-id='draft']").hide();
+					break;
+			}
+
 			$.fancybox(
 				$("#save_form").html(),
 				{
@@ -297,11 +317,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'showCloseButton'	: false,
 					'padding' 			: 0,
 					'onClosed'			: function(){
-						//if user has answered "yes"
-						if($("#save_answer").val() ==="true"){
-							$("#save_answer").val("false");	
+						var response = $("#save_answer").val();
+						if(response !=="cancel"){
+							$("#save_answer").val("cancel");	
 							var presentation = VISH.Editor.savePresentation();	
-							VISH.Editor.afterSavePresentation(presentation);			
+							VISH.Editor.afterSavePresentation(presentation,response);			
 						}	else {
 							return false;
 						}
