@@ -1,17 +1,17 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
-	var loadFlashcard = function(excursion){
-		//first action, set excursion type to "flashcard"
-		V.Editor.setExcursionType("flashcard");
+	var loadFlashcard = function(presentation){
+		//first action, set presentation type to "flashcard"
+		V.Editor.setPresentationType("flashcard");
 		
 		//hide slides
 		V.Editor.Utils.hideSlides();
 
 		//show flashcard background, should be an image with help by default
 		$("#flashcard-background").show();
-		if(excursion){
-			//if we are editing an excursion
-			$("#flashcard-background").css("background-image", excursion.background.src);
+		if(presentation){
+			//if we are editing an presentation
+			$("#flashcard-background").css("background-image", presentation.background.src);
 			$("#fc_change_bg_big").hide();
 		}
 
@@ -24,7 +24,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		
 		loadFlashcard();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
-		//it will change itself depending on excursionType, also remove drag and drop to order slides
+		//it will change itself depending on presentationType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
 		V.Editor.Thumbnails.redrawThumbnails();
 
@@ -60,9 +60,9 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 
 	var _applyStyleToPois = function(){
-		var excursion = V.Editor.getExcursion();
-		if(excursion && excursion.background && excursion.background.pois){
-			$.each(excursion.background.pois, function(index, val) { 
+		var presentation = V.Editor.getPresentation();
+		if(presentation && presentation.background && presentation.background.pois){
+			$.each(presentation.background.pois, function(index, val) { 
   				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
   				$("#" + val.id).attr("moved", "true");
 			});

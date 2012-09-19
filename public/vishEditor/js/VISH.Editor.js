@@ -1,34 +1,38 @@
 VISH.Editor = (function(V,$,undefined){
 	
+	//boolean to indicate if we are editing a previous presentation.
+	var initialPresentation = false;
+
+	//Store the initialOptions
 	var initOptions;
-	var domId = 0;  //number for next doom element id
-	
-	//var to store the excursion we are showing, used when changing from presentation to flashcard
-	//and when editing an excursion
-	var draftExcursion = null;
-	var saved_excursion = null;
-	//boolean to indicate if we are in edit (and then do a PUT instead a POST)
-	var initial_excursion = false;
-	
-	// Hash to store: 
-	// current_el that will be the zone of the template that the user has clicked
-	var params = {
-		current_el : null		
-	};
-	
-	
+
+	//Pointer to the currentZone
+	var currentZone;
+
 	//Prevent to load events multiple times.
 	var eventsLoaded = false;
+
+	//Control elements id.
+	var domId = 0; 
 	
-	
+	//drafPresentation uses:
+	//* Store the presentation we are previewing
+	//* Used when changing from presentation to flashcard
+	//* Used when editing an presentation
+	var draftPresentation = null;
+
+	//savedPresentation uses:
+	var savedPresentation = null;
+
+
 	/**
-	 * Initializes the VISH editor
+	 * VISH editor initializer
 	 * Adds the listeners to the click events in the different images and buttons
 	 * Call submodule initializers
-	 * options is a hash with params and options from the server
-	 * excursion is the excursion to edit (in not present, a new excursion is created)
+	 * options is a hash with params and options received from the server
+	 * presentation is the presentation to edit (in not present, a new presentation is created)
 	 */
-	var init = function(options, excursion){
+	var init = function(options, presentation){
 		VISH.Debugging.init(options);
 
 		//first set VISH.Editing to true
@@ -65,20 +69,20 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		if(VISH.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!excursion)) {
-			 	excursion = VISH.Debugging.getExcursionSamples();
+			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+			 	presentation = VISH.Debugging.getPresentationSamples();
 			}
 		}
 
 		//If we have to edit
-		if(excursion){
-			initial_excursion = true;
-			setExcursion(excursion);
-			VISH.Editor.Renderer.init(excursion);
+		if(presentation){
+			initialPresentation = true;
+			setPresentation(presentation);
+			VISH.Editor.Renderer.init(presentation);
 			//remove focus from any zone
 			_removeSelectableProperties();
-			if(excursion.type === "flashcard"){
-				VISH.Editor.Flashcard.loadFlashcard(excursion);
+			if(presentation.type === "flashcard"){
+				VISH.Editor.Flashcard.loadFlashcard(presentation);
 			}			
 		}
 
@@ -91,9 +95,8 @@ VISH.Editor = (function(V,$,undefined){
 			'height': 340,
 			'padding': 0,
 			"onStart"  : function(data) {
-				//re-set the params['current_el'] to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
-				params['current_el'] = $("#" + clickedZoneId);
+				currentZone = $("#" + clickedZoneId);
 				VISH.Editor.Utils.loadTab('tab_templates');
 			}
 		});
@@ -101,9 +104,9 @@ VISH.Editor = (function(V,$,undefined){
 		if(!eventsLoaded){
 			eventsLoaded = true;
 				 
-			$(document).on('click', '#edit_excursion_details', VISH.Editor.Tools.Menu.onSettings); 
+			$(document).on('click', '#edit_presentation_details', VISH.Editor.Tools.Menu.onSettings); 
 			$(document).on('click','#save', VISH.Editor.Tools.Menu.onSaveButtonClicked);
-			$(document).on('click', '#save_excursion_details', VISH.Editor.Tools.Menu.onSaveExcursionDetailsButtonClicked);
+			$(document).on('click', '#save_presentation_details', VISH.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
 
 			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 			$(document).on('click','.editable', _onEditableClicked);
@@ -127,19 +130,19 @@ VISH.Editor = (function(V,$,undefined){
 			_addTutorialEvents();
 		}
 		
-		if(excursion){
+		if(presentation){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
 			$('.object_wrapper').hide();
 		}
 		
 		//Init submodules
+		VISH.Editor.I18n.init(options["lang"]);
 		VISH.Editor.Text.init();
 		VISH.Editor.Image.init();
 		VISH.Editor.Video.init();
 		VISH.Editor.Object.init();
 		VISH.Editor.Thumbnails.init();
 		VISH.Editor.AvatarPicker.init();
-		VISH.Editor.I18n.init(options["lang"]);
 		VISH.Editor.Quiz.init();
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
@@ -294,7 +297,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var _onTemplateThumbClicked = function(event){
-		var theid = draftExcursion ? draftExcursion.id : "";
+		var theid = draftPresentation ? draftPresentation.id : "";
 		var slide = VISH.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false);
 				
 		VISH.Editor.Utils.addSlide(slide);
@@ -483,45 +486,44 @@ VISH.Editor = (function(V,$,undefined){
 	
 	
 	/**
-	* function to save the excursion
+	* function to save the presentation
 	* 
 	* forcePresentation is a boolean to indicate if we should force type to presentation, although we might be in flashcard
 	* It is used for preview in the flashcard
 	*/
-	var saveExcursion = function(forcePresentation){
+	var savePresentation = function(forcePresentation){
 		//first of all show all objects that have been hidden because they are in previous and next slides
 		//so they are not saved with style hidden
 		$('.object_wrapper').show();
 
-		//now save the excursion
-		var excursion = {};
-		if(draftExcursion){
-			excursion.id = draftExcursion.id;
+		//now save the presentation
+		var presentation = {};
+		if(draftPresentation){
+			presentation.id = draftPresentation.id;
 		}else{
-			excursion.id = '';	
+			presentation.id = '';	
 		}
 
 		if(forcePresentation){
-			excursion.type = "presentation";
-		}
-		else{
-			excursion.type = getExcursionType();
+			presentation.type = "presentation";
+		} else {
+			presentation.type = getPresentationType();
 		}
 		
-		if(excursion.type==="flashcard"){
-			excursion.background = {};
-			excursion.background.src = $("#flashcard-background").css("background-image");
+		if(presentation.type==="flashcard"){
+			presentation.background = {};
+			presentation.background.src = $("#flashcard-background").css("background-image");
 			//save the pois
-			excursion.background.pois = VISH.Editor.Flashcard.savePois();
+			presentation.background.pois = VISH.Editor.Flashcard.savePois();
 		}
-		if(draftExcursion){
-			excursion.title = draftExcursion.title;
-			excursion.description = draftExcursion.description;
-			excursion.avatar = draftExcursion.avatar;
-			excursion.tags = draftExcursion.tags;
+		if(draftPresentation){
+			presentation.title = draftPresentation.title;
+			presentation.description = draftPresentation.description;
+			presentation.avatar = draftPresentation.avatar;
+			presentation.tags = draftPresentation.tags;
 		}
-		excursion.author = '';
-		excursion.slides = [];
+		presentation.author = '';
+		presentation.slides = [];
 		var slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
@@ -617,50 +619,49 @@ VISH.Editor = (function(V,$,undefined){
 				if(slide.type=="quiz"){
 					var quizSlide = $.extend(true, new Object(), slide);
 
-					//Apply excursion Wrapper
-					var quizExcursion = new Object();
-					quizExcursion.title = excursion.title;
-					quizExcursion.description = excursion.description;
-					quizExcursion.author = '';
-					quizExcursion.slides = [quizSlide];
-					quizExcursion.type = "quiz_simple";
+					//Apply presentation Wrapper
+					var quizPresentation = new Object();
+					quizPresentation.title = presentation.title;
+					quizPresentation.description = presentation.description;
+					quizPresentation.author = '';
+					quizPresentation.slides = [quizSlide];
+					quizPresentation.type = "quiz_simple";
 
-					slide.quiz_simple_json = quizExcursion;
-					VISH.Debugging.log(JSON.stringify(quizExcursion));  
+					slide.quiz_simple_json = quizPresentation;
+					VISH.Debugging.log(JSON.stringify(quizPresentation));  
 				}
 				
 			});
-			excursion.slides.push(slide);
+			presentation.slides.push(slide);
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});
 
-		saved_excursion = excursion;  
+		savedPresentation = presentation;  
 		  
-		// VISH.Debugging.log("Excursion saved:")
-		// VISH.Debugging.log(JSON.stringify(excursion));    
-		return saved_excursion;     
+		// VISH.Debugging.log("Presentation saved:")
+		// VISH.Debugging.log(JSON.stringify(presentation));    
+		return savedPresentation;     
 	};
 	
 
-	var afterSaveExcursion = function(excursion){
+	var afterSavePresentation = function(presentation){
 		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
 
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 
 			var send_type;
-	        if(initial_excursion){
+	        if(initialPresentation){
 	          send_type = 'PUT'; //if we are editing
-	        } else {
-	        			VISH.Debugging.log("send_type = post!!");   
+	        } else {  
 	          send_type = 'POST'; //if it is a new
 	        } 
 	        
 	        //POST to http://server/excursions/
-	        var jsonexcursion = JSON.stringify(excursion);
-	    	VISH.Debugging.log(jsonexcursion);   
+	        var jsonPresentation = JSON.stringify(presentation);
+	    	VISH.Debugging.log(jsonPresentation);   
 	        var params = {
-	          "excursion[json]": jsonexcursion,
+	          "excursion[json]": jsonPresentation,
 	          "authenticity_token" : initOptions["token"]
 	        }
 	        
@@ -675,38 +676,33 @@ VISH.Editor = (function(V,$,undefined){
 	        });
 
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
-
-			uploadPresentationWithNode(excursion);
-
+			uploadPresentationWithNode(presentation);
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-
 			if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-				
 				if(VISH.Debugging.getActionSave()=="view"){
 					VISH.Debugging.initVishViewer();
 				} else if (VISH.Debugging.getActionSave()=="edit") {
 					VISH.Debugging.initVishEditor();
 				}
 			}
-
 		}
 
 	}
 	
 
-	var uploadPresentationWithNode = function(excursion){
+	var uploadPresentationWithNode = function(presentation){
 		var send_type;
 		var url = VISH.UploadPresentationPath;
 
-		if(draftExcursion){
+		if(draftPresentation){
 			send_type = 'PUT'; //if we are editing
-			url = url + draftExcursion.id;
+			url = url + draftPresentation.id;
 		} else {
 			send_type = 'POST'; //if it is a new
 		} 
 	       
 		//POST to /server/presentation/
-		var jsonPresentation = JSON.stringify(excursion);   
+		var jsonPresentation = JSON.stringify(presentation);   
 		var params = {
 			"presentation[json]": jsonPresentation
 		}
@@ -744,13 +740,9 @@ VISH.Editor = (function(V,$,undefined){
 	///    Getters
 	//////////////////
 
-	var getParams = function(){
-		return params;
-	}
-	
 	/**
 	 * function to get the template of the slide of current_el
-	 * param area: optional param indicating the area to get the template, used for editing excursions
+	 * param area: optional param indicating the area to get the template, used for editing presentations
 	 */
 	var getTemplate = function(area) {
 		if(area){
@@ -762,34 +754,34 @@ VISH.Editor = (function(V,$,undefined){
 	}
 	
 	var getCurrentArea = function() {
-		if(params['current_el']){
-			return params['current_el'];
+		if(currentZone){
+			return currentZone;
 		}
 		return null;
 	}
 	
 	var setCurrentArea = function(area){
-		params['current_el'] = area;
+		currentZone = area;
 	}
 
-	var getExcursion = function() {
-		return draftExcursion;
+	var getPresentation = function() {
+		return draftPresentation;
 	}
 
-	var setExcursion = function(excursion) {
-		draftExcursion = excursion;
+	var setPresentation = function(presentation) {
+		draftPresentation = presentation;
 	}
 
-	var getSavedExcursion = function() {
-		if(saved_excursion){
-			return saved_excursion;
+	var getSavedPresentation = function() {
+		if(savedPresentation){
+			return savedPresentation;
 		} else {
 			return null;
 		}
 	}
 
-	var hasInitialExcursion = function(){
-		return initial_excursion;
+	var hasInitialPresentation = function(){
+		return initialPresentation;
 	}
 	
 	/*
@@ -811,21 +803,21 @@ VISH.Editor = (function(V,$,undefined){
 	/*
 	 * type can be "presentation", "flashcard" or "game"
 	 */
-	var getExcursionType = function(){
-		if((!draftExcursion)||(!draftExcursion.type)){
+	var getPresentationType = function(){
+		if((!draftPresentation)||(!draftPresentation.type)){
 			return "presentation";
 		}
-		return draftExcursion.type;
+		return draftPresentation.type;
 	};
 
-	var setExcursionType = function(type){
-		if(!draftExcursion){
-			draftExcursion = new Object();
+	var setPresentationType  = function(type){
+		if(!draftPresentation){
+			draftPresentation = new Object();
 		}
 		if(type){
-			draftExcursion.type = type;
+			draftPresentation.type = type;
 		} else {
-			draftExcursion.type = "presentation";
+			draftPresentation.type = "presentation";
 		}
 	};
 
@@ -835,7 +827,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * false when contains other slide types like flashcards, games or virtual experiments.
 	 */
 	var isPresentationStandard = function(){
-		var type = getExcursionType();
+		var type = getPresentationType();
 		if(type!="presentation"){
 			return false;
 		}
@@ -846,9 +838,9 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		var isStandard = true;
-		excursion = saveExcursion();
+		presentation = savePresentation();
 
-		$.each(excursion.slides, function(index, slide) {
+		$.each(presentation.slides, function(index, slide) {
 			if((slide.type)&&(slide.type!="standard")){
 				isStandard = false;
 				return;
@@ -860,23 +852,22 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	return {
-		init 				: init,
-		addDeleteButton 	: addDeleteButton,
-		getId 				: getId,
-		getTemplate 		: getTemplate,
-		getCurrentArea 		: getCurrentArea,
-		getExcursionType	: getExcursionType,
-		getParams 			: getParams,
-		getOptions 			: getOptions, 
-		loadFancyBox 		: loadFancyBox,
-		getExcursion 		: getExcursion,
-		setExcursion 		: setExcursion,
-		isPresentationStandard : isPresentationStandard,
-		getSavedExcursion 	: getSavedExcursion,
-		hasInitialExcursion	: hasInitialExcursion,
-		saveExcursion 		: saveExcursion,
-		afterSaveExcursion  : afterSaveExcursion,
-		setExcursionType	: setExcursionType
+		init 					: init,
+		addDeleteButton 		: addDeleteButton,
+		getId 					: getId,
+		getTemplate 			: getTemplate,
+		getCurrentArea 			: getCurrentArea,
+		getPresentationType		: getPresentationType,
+		getOptions 				: getOptions, 
+		loadFancyBox 			: loadFancyBox,
+		getPresentation 		: getPresentation,
+		setPresentation 		: setPresentation,
+		isPresentationStandard 	: isPresentationStandard,
+		getSavedPresentation 	: getSavedPresentation,
+		hasInitialPresentation	: hasInitialPresentation,
+		savePresentation 		: savePresentation,
+		afterSavePresentation  	: afterSavePresentation,
+		setPresentationType 	: setPresentationType 
 	};
 
 }) (VISH, jQuery);

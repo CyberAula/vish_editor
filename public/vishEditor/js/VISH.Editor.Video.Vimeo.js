@@ -8,7 +8,7 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	
 	var init = function(){
 		var myInput = $("#tab_video_vimeo_content").find("input[type='search']");
-	  $(myInput).watermark('Search content');
+	  $(myInput).watermark(VISH.Editor.I18n.getTrans("Search Content"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 		        	VISH.Editor.Video.Vimeo.requestVimeoData($(myInput).val());

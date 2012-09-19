@@ -346,8 +346,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
    /**
 	* Returns a object prepared to draw.   * 
-	* param area: optional param indicating the area to add the object, used for editing excursions
-	* param style: optional param with the style, used in editing excursion
+	* param area: optional param indicating the area to add the object, used for editing presentations
+	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, area, style, zoomInStyle){	
 
@@ -422,7 +422,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	}
 	
 	/**
-	 * param style: optional param with the style, used in editing excursion
+	 * param style: optional param with the style, used in editing presentation
 	 */
 	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
 	 

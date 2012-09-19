@@ -8,7 +8,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	
 	var init = function() {
 		var myInput = $("#tab_pic_repo_content").find("input[type='search']");
-		$(myInput).watermark('Search content');
+		$(myInput).watermark(VISH.Editor.I18n.getTrans("Search Content"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());

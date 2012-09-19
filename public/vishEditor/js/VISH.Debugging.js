@@ -73,7 +73,7 @@ VISH.Debugging = (function(V,$,undefined){
 		}
     }
 	
-	var getExcursionSamples = function(){
+	var getPresentationSamples = function(){
 		if((settings)&&(settings.samples)){
 			return settings.samples;
 		} else {
@@ -83,14 +83,14 @@ VISH.Debugging = (function(V,$,undefined){
 	}
 	
 	var initVishViewer = function(){
-		var myexcursion = null;
+		var mypresentation = null;
 		
 		if(VISH.Editing){
 			if(!presentationOptions){
 				log("VISH.Debugging Error: Specify presentationOptions");
 				return;
 			}
-			myexcursion = VISH.Editor.saveExcursion();
+			mypresentation = VISH.Editor.savePresentation();
 		} else {
 			log("You are already in Vish Viewer");
       		return;
@@ -106,14 +106,14 @@ VISH.Debugging = (function(V,$,undefined){
 	    VISH.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
 
-		log("Init Vish Viewer with excursion: " + JSON.stringify(myexcursion));
+		log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
 
-		VISH.SlideManager.init(presentationOptions, myexcursion);
+		VISH.SlideManager.init(presentationOptions, mypresentation);
 	}
 	
 	var initVishEditor = function(){
 		
-		var myexcursion = null;
+		var mypresentation = null;
 		
 		if(VISH.Editing){
 			log("You are already in Vish Editor");
@@ -123,7 +123,7 @@ VISH.Debugging = (function(V,$,undefined){
 				log("VISH.Debugging Error: Specify presentationOptions");
 				return;
 			}
-			myexcursion = VISH.Editor.getSavedExcursion();
+			mypresentation = VISH.Editor.getSavedPresentation();
 		}
 		
 		$('article').remove();
@@ -135,23 +135,23 @@ VISH.Debugging = (function(V,$,undefined){
 		VISH.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
 
-		VISH.Debugging.log("Init Vish Editor with excursion: " + JSON.stringify(myexcursion));
+		VISH.Debugging.log("Init Vish Editor with presentation: " + JSON.stringify(mypresentation));
 		
-		VISH.Editor.init(presentationOptions, myexcursion);
-  }
+		VISH.Editor.init(presentationOptions, mypresentation);
+	}
 	
 	return {
-		init                    : init,
-		log                     : log,
-		shuffleJson             : shuffleJson,
-		enableDevelopingMode    : enableDevelopingMode,
-		disableDevelopingMode   : disableDevelopingMode,
-		isDevelopping           : isDevelopping,
-		getActionSave           : getActionSave,
-		getActionInit           : getActionInit,
-		getExcursionSamples     : getExcursionSamples,
-		initVishViewer          : initVishViewer,
-		initVishEditor          : initVishEditor
+		init                    	: init,
+		log                     	: log,
+		shuffleJson             	: shuffleJson,
+		enableDevelopingMode    	: enableDevelopingMode,
+		disableDevelopingMode   	: disableDevelopingMode,
+		isDevelopping           	: isDevelopping,
+		getActionSave           	: getActionSave,
+		getActionInit           	: getActionInit,
+		getPresentationSamples     	: getPresentationSamples,
+		initVishViewer          	: initVishViewer,
+		initVishEditor          	: initVishEditor
 	};
 
 }) (VISH, jQuery);

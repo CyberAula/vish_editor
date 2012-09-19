@@ -4,7 +4,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 	var forcePresentation = false;
 
 	/*
-	 * function to prepare the preview of the excursion as it is now
+	 * function to prepare the preview of the presentation as it is now
 	 * <a id="preview_circle" href="/vishEditor/viewer.html"></a>
 	 *
 	 * forcePresentation is a boolean to indicate if we should preview only the slide, although we might be in flashcard
@@ -23,7 +23,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			//Code here
 		}
 			
-		presentation_preview = V.Editor.saveExcursion(forcePresentation);
+		presentation_preview = V.Editor.savePresentation(forcePresentation);
 	};
 
 	var setForcePresentation = function(force){

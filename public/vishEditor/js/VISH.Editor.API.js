@@ -1,3 +1,7 @@
+ /**
+  * Provide an API with Global Excursions (VISH)
+  */
+
 VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
@@ -274,11 +278,11 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	
-	  /**
-     * Specific function to call VISH and request lives
-     * The request is:
-     * GET /resources/search.json?live=1&q=
-     */    
+  /**
+   * Specific function to call VISH and request lives
+   * The request is:
+   * GET /resources/search.json?live=1&q=
+   */    
   var _requestResourceType = function(type, query, successCallback, failCallback){
     $.ajax({
               type: "GET",
@@ -345,7 +349,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	
 	/**
-   * function to get the available avatars from the server, they should be at /excursion_thumbnails.json
+   * Function to get the available avatars from the server, they should be at /excursion_thumbnails.json
    */
 	var requestThumbnails = function(successCallback, failCallback){
 

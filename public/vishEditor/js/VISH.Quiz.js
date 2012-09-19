@@ -14,8 +14,8 @@ VISH.Quiz = (function(V,$,undefined){
   var stopButtonClass = "mcquestion_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
 
-  var init = function(excursion){
-    if (excursion.type=="quiz_simple"){
+  var init = function(presentation){
+    if (presentation.type=="quiz_simple"){
       quizMode = "answer";
        _loadAnswerEvents();
     } else {
@@ -193,7 +193,6 @@ VISH.Quiz = (function(V,$,undefined){
     
  /*
   * Data format 
-  * {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
   */
   var _showResults = function (data) {
      var maxWidth = 70;

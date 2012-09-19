@@ -1,56 +1,110 @@
 VISH.Editor.I18n = (function(V,$,undefined){
-	var language;
 	
+	var translations;
+	var language;
+
 	/**
-	 * function to do the languaje translation
-	 * if this function is called there should be defined an i18n array with the translations 
+	 * Function to do the language translation
+	 * If this function is called there should be defined an i18n array with the translations 
 	 */
 	var init = function(lang){
-		var initTime = new Date().getTime();
-		
-		language = lang;  
-		//check that we have the language and if not return
-		if (typeof(i18n[language])==='undefined'){
+		// var initTime = new Date().getTime();
+
+		if(typeof lang !== "undefined"){
+			language = lang;
+		} else {
 			return;
 		}
-		//cover all elements and translate their content		
-		_filterAndSubText('div');
-		_filterAndSubText('a');
-		_filterAndSubText('span');
-		_filterAndSubText('p');		
-  		_filterAndSubText('button');
-  		_filterAndSubText('h2');
-		_filterAndSubText('h1');
-  		
-  		//substitute data-text attribute of the walkthrough
-  		$("[data-text]").each(function(index, elem){
-				$(elem).attr("data-text", getTrans($(elem).attr("data-text")));
-		});	
-  	
-  		//now the elements with attribute i18n-key (long phrases)
-  		_elementsWithKey();
-  		
-  		
-  		//now the div titles (used as tooltips for help)
-  		$('div[title]').each(function(index, elem){
-  			$(elem).attr("title", getTrans($(elem).attr("title")));
-  		});
-  		
-  		//finally input and textareas have value and placeholder
-  		$('input').each(function(index, elem){
-				if($(elem).val()!==""){
-					$(elem).val(getTrans($(elem).val()));
+		
+		switch(VISH.Configuration.getConfiguration()["mode"]){
+			case VISH.Constant.NOSERVER:
+				//Load Vish translation
+				if (typeof(i18n["vish"][language])!=='undefined'){
+					translations = i18n["vish"][language];
 				}
-				if($(elem).attr("placeholder")){
-					$(elem).attr("placeholder", getTrans($(elem).attr("placeholder")));
+				break;
+			case VISH.Constant.VISH:
+				if (typeof(i18n["vish"][language])!=='undefined'){
+					translations = i18n["vish"][language];
 				}
+				break;
+			case VISH.Constant.STANDALONE:
+				if (typeof(i18n["standalone"][language])!=='undefined'){
+					translations = i18n["standalone"][language];
+				}
+				break;
+		}
+
+		if (typeof(translations)==='undefined'){
+			return;
+		}
+
+		$("[i18n-key]").each(function(index, elem){
+			var translation = getTrans($(elem).attr("i18n-key"));
+			if(translation!=null){
+				switch(elem.tagName){
+					 case "INPUT":
+					 	_translateInput(elem,translation);
+					 	break;
+					 case "TEXTAREA":
+					 	_translateTextArea(elem,translation);
+					 	break;
+					 case "DIV":
+					 	_translateDiv(elem,translation);
+					 	break;
+					 case "LI":
+					 	_translateLI(elem,translation);
+					 	break;
+					default:
+						//Generic translation (for h,p or span elements)
+						_genericTranslate(elem,translation);
+						break;
+				}
+			}
 		});
-		$('textarea[placeholder]').each(function(index, elem){
-				$(elem).attr("placeholder", getTrans($(elem).attr("placeholder")));
-		});
-  		
-  		if (typeof(i18n[language])!='undefined'){
-  			//replace start_tutorial image
+
+		_translateTutorialImage();
+
+		// var duration = new Date().getTime() - initTime;
+		// VISH.Debugging.log("Internationalization took " + duration + " ms.");
+	};
+		
+	var _translateInput = function(input,translation){
+		if($(input).val()!==""){
+			$(input).val(translation);
+		}
+		if($(input).attr("placeholder")){
+			$(input).attr("placeholder", translation);
+		}
+	}
+
+	var _translateDiv = function(div,translation){
+		if($(div).attr("title") != undefined){
+			$(div).attr("title", translation);
+		}
+		if($(div).attr("data-text") != undefined){
+			$(div).attr("data-text", translation);
+		}
+	}
+
+	var _translateTextArea = function(textArea,translation){
+		$(textArea).attr("placeholder", translation);
+	}
+
+	var _translateLI = function(elem,translation){
+		if($(elem).attr("data-text") != undefined){
+			$(elem).attr("data-text", translation);
+		} else {
+			_genericTranslate(elem,translation);
+		}
+	}
+
+	var _genericTranslate = function(elem,translation){
+		$(elem).text(translation);
+	}
+
+	var _translateTutorialImage = function(){
+		if ((typeof(translations)!='undefined')&&(typeof language !== "undefined")){
   			var factor;
   			if(language === "es"){
   				factor = 2;
@@ -67,44 +121,28 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			//replace contentusetut image
 			$("#contentusetut").attr("src", VISH.ImagesPath + "contentuse_"+language+".png");
   		}
-				
-		// var duration = new Date().getTime() - initTime;
-		// VISH.Debugging.log("Internationalization took " + duration + " ms.");
-	};
-	
-	
+	}
+
 	/**
-	 * function to get all elements of one type and filter them to substutute their inner text
-	 */
-	var _filterAndSubText = function(elemType){
-		$(elemType).filter(function(index){
-			return $(this).children().length < 1 && ($(this).attr("i18n-key") === undefined) && $(this).text().trim() !== "";
-			})
-			.each(function(index, elem){
-				$(elem).text(getTrans($(elem).text()));
-		});
-	};
-	
-	/**
-	 * function to cover all elements with i18n-key to translate them
-	 */
-	var _elementsWithKey = function(){
-		$("[i18n-key]").each(function(index, elem){
-				$(elem).text(getTrans($(elem).attr("i18n-key")));
-		});
-	};
-	
-	/**
-	 * function to translate a text
+	 * Function to translate a text
 	 */
 	var getTrans = function (s) {
-	  if (typeof(i18n[language])!='undefined' && i18n[language][s]) {
-	    return i18n[language][s];
+	  if (typeof(translations)!== 'undefined' && translations[s]) {
+	    return translations[s];
 	  }
+
 	  // VISH.Debugging.log("Text without translation: " + s);
-	  return s;
+
+	  //Don't return s if s is a key.
+	  var key_pattern =/^i\./g;
+	  if(key_pattern.exec(s)!=null){
+	  	return null;
+	  } else {
+	  	 return s;
+	  }
 	};
 	
+
 	return {
 		getTrans 		  : getTrans,
 		init              : init

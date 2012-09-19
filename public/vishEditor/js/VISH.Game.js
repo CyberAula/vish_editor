@@ -1,8 +1,8 @@
 VISH.Game = (function(V,$,undefined){
 	var actions = {};
 
-	var registerActions = function(excursion){
-		actions = excursion.game.actions;
+	var registerActions = function(presentation){
+		actions = presentation.game.actions;
 	};
 
 	var raiseAction = function(action_name){

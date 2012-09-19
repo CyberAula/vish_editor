@@ -4,7 +4,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 		
 	}
 	
-
    /*
 	* Request new quiz session
 	* Server responds with a quiz_session_id
@@ -171,7 +170,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 	         return null;
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
-			// var results = {"quiz_session_id":"444", "quiz_id":"4", "results" : ["23", "3", "5", "1", "6"]};
 			var results = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
 			if(typeof successCallback=="function"){
 				successCallback(results);

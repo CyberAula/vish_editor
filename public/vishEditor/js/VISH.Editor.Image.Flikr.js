@@ -6,7 +6,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	//add events to inputs
 	var init = function(){
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-		$(myInput).watermark('Search content');
+		$(myInput).watermark(VISH.Editor.I18n.getTrans("Search Content"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 		        	VISH.Editor.Image.Flikr.listImages($(myInput).val());
