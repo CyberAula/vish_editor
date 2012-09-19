@@ -83,6 +83,9 @@ var getOptions = function(){
 			//If comeBackUrl not exists, back button will be hidden
         	options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
+        	//Draft presentations
+        	options["draft"] = false;
+
 			//And a default landguage
 			options["lang"] = "en";
 		}

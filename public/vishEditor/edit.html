@@ -426,13 +426,15 @@
   
   	  <!-- PROMPT USER IF SHE IS SURE TO SAVE THE SLIDE -->
 	  <div style='display:none'>
-	  	<input type="hidden" id="save_answer" value="false"></input>
+	  	<input type="hidden" id="save_answer" value="cancel"></input>
 	  	<div id='save_form'>
 	  		<img id="saveimg" class="delete_img" src="/vishEditor/images/save_document.png">
 	  		<span i18n-key="i.sure" class="deltext">are you sure?</span> 		
 	  		<div class="buttons_together">
-	  			<a href="#" onclick="$('#save_answer').val('true'); $.fancybox.close();" class="prompt_button button button1" i18n-key="i.save">save</a>
-	  			<a i18n-key="i.cancel" href="#" onclick="$('#save_answer').val('false'); $.fancybox.close();" class="prompt_button button button2">cancel</a>
+	  			<a save-option-id="save" href="#" onclick="$('#save_answer').val('save'); $.fancybox.close();" class="prompt_button button" i18n-key="i.save">Save</a>
+	  			<a save-option-id="publish" href="#" onclick="$('#save_answer').val('publish'); $.fancybox.close();" class="prompt_button button" i18n-key="i.publish">Publish</a>
+	  			<a save-option-id="draft" href="#" onclick="$('#save_answer').val('draft'); $.fancybox.close();" class="prompt_button button" i18n-key="i.draft">Draft</a>
+	  			<a save-option-id="cancel" i18n-key="i.cancel" href="#" onclick="$('#save_answer').val('cancel'); $.fancybox.close();" class="prompt_button button button2">cancel</a>
 	  		</div>
 	  	</div>
 	  </div>
