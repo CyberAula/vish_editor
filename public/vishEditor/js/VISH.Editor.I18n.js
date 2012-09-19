@@ -1,6 +1,7 @@
 VISH.Editor.I18n = (function(V,$,undefined){
 	
 	var translations;
+	var defaultTranslations;
 	var language;
 
 	/**
@@ -21,16 +22,19 @@ VISH.Editor.I18n = (function(V,$,undefined){
 				//Load Vish translation
 				if (typeof(i18n["vish"][language])!=='undefined'){
 					translations = i18n["vish"][language];
+					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case VISH.Constant.VISH:
 				if (typeof(i18n["vish"][language])!=='undefined'){
 					translations = i18n["vish"][language];
+					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case VISH.Constant.STANDALONE:
 				if (typeof(i18n["standalone"][language])!=='undefined'){
 					translations = i18n["standalone"][language];
+					defaultTranslations = i18n["standalone"]["default"];
 				}
 				break;
 		}
@@ -127,19 +131,24 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	 * Function to translate a text
 	 */
 	var getTrans = function (s) {
-	  if (typeof(translations)!== 'undefined' && translations[s]) {
-	    return translations[s];
-	  }
+		if (typeof(translations)!== 'undefined' && translations[s]) {
+			return translations[s];
+		}
+		// VISH.Debugging.log("Text without translation: " + s);
 
-	  // VISH.Debugging.log("Text without translation: " + s);
+		//Search in default language
+		if (typeof(defaultTranslations)!== 'undefined' && defaultTranslations[s]) {
+			return defaultTranslations[s];
+		}
+		// VISH.Debugging.log("Text without default translation: " + s);
 
-	  //Don't return s if s is a key.
-	  var key_pattern =/^i\./g;
-	  if(key_pattern.exec(s)!=null){
-	  	return null;
-	  } else {
-	  	 return s;
-	  }
+		//Don't return s if s is a key. //DEPRECATED
+		var key_pattern =/^i\./g;
+		if(key_pattern.exec(s)!=null){
+			return null;
+		} else {
+			return s;
+		}
 	};
 	
 

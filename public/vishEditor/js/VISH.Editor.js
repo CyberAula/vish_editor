@@ -14,6 +14,9 @@ VISH.Editor = (function(V,$,undefined){
 
 	//Control elements id.
 	var domId = 0; 
+
+	//Confirm on exit
+	var confirmOnExit;
 	
 	//drafPresentation uses:
 	//* Store the presentation we are previewing
@@ -128,6 +131,10 @@ VISH.Editor = (function(V,$,undefined){
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
+
+			//onbeforeunload event
+			window.onbeforeunload = exitConfirmation;
+			confirmOnExit = true;
 		}
 		
 		if(presentation){
@@ -695,7 +702,8 @@ VISH.Editor = (function(V,$,undefined){
 		          url     : VISH.UploadPresentationPath,
 		          data    : params,
 		          success : function(data) {
-		              window.top.location.href = data.url;
+		          	  allowExitWithoutConfirmation();
+		          	  window.top.location.href = data.url;
 		          }     
 		        });
 				break;
@@ -730,6 +738,7 @@ VISH.Editor = (function(V,$,undefined){
 			data    : params,
 			success : function(data) {
 				//Redirect
+				allowExitWithoutConfirmation();
 				window.top.location.href = data.url;
 			}
 		});
@@ -886,6 +895,19 @@ VISH.Editor = (function(V,$,undefined){
 	}
 
 
+	var exitConfirmation = function(){
+		if(confirmOnExit){
+			return VISH.Editor.I18n.getTrans("i.exitConfirmation");
+		} else {
+			return
+		}
+	}
+
+	var allowExitWithoutConfirmation = function(){
+		confirmOnExit = false;
+	}
+
+
 	return {
 		init 					: init,
 		addDeleteButton 		: addDeleteButton,
@@ -903,7 +925,8 @@ VISH.Editor = (function(V,$,undefined){
 		hasInitialPresentation	: hasInitialPresentation,
 		savePresentation 		: savePresentation,
 		afterSavePresentation  	: afterSavePresentation,
-		setPresentationType 	: setPresentationType
+		setPresentationType 	: setPresentationType,
+		allowExitWithoutConfirmation	: allowExitWithoutConfirmation
 	};
 
 }) (VISH, jQuery);

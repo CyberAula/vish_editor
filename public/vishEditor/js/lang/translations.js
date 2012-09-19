@@ -113,7 +113,7 @@ var i18n =
 				"i.SaveButton"		: "Botón de salvar",
 				"i.SaveSlides"		: "Salvar las diapositivas",
 				"i.SavePresentationDetails"	: "Salva los detalles de tu excursión",
-				"Search Content"	: "Buscar contenido",
+				"i.SearchContent"	: "Buscar contenido",
 				"i.SearchObjectContent"	: "Buscar contenido flash",
 				"i.SearchImagesFlickr"	: "Buscar imágenes en Flickr",
 				"i.SearchImagesVish"	: "Buscar imágenes en el repositorio ViSH",
@@ -143,7 +143,7 @@ var i18n =
 				"i.ExportAs"			: "Exportar como",
 				"i.File"				: "Archivo",
 				"i.Presentation"		: "Presentación",
-				"Insert text here"		: "Insertar texto aquí",
+				"i.WysiwygInit"			: "Insertar texto aquí",
 				"i.embedObject"			: "embeber objeto",
 				"i.embedWebsites"		: "embeber web",
 				"i.html5App"			: "Aplicación HTML5",
@@ -152,18 +152,34 @@ var i18n =
 				"i.vExperiment"			: "Experimento virtual",
 				"i.changeBackground"	: "Cambiar fondo",
 				"i.Microscopes"			: "Microscopios",
-				"Add tags"				: "Añadir etiquetas",
-				"limit reached"			: "limite alcanzado",
+				"i.AddTags"				: "Añadir etiquetas",
+				"i.limitReached"		: "limite alcanzado",
 				"i.Templates"			: "Plantillas",
-				"Author"				: "Autor",
+				"i.Author"				: "Autor",
 				"i.draft"				: "Borrador",
-				"i.publish"				: "Publicar"
+				"i.publish"				: "Publicar",
+				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Si has hecho algun cambio sin grabar vas a perder todos los datos."
+			},
+			
+		  "default" :
+			{
+				"i.Author"						: "Author",
+				"i.AddTags"						: "Add tags",
+				"i.WysiwygInit"					: "Insert text here",
+				"i.SearchContent"				: "Search Content",
+				"i.Description"					: "Description",
+				"i.limitReached"				: "limit reached",
+				"i.exitConfirmation"			: "You are about to leave this website. If you have made any changes without saving you will lose all data."
 			}
 		},
 	 "standalone":
 	  	{ "es":
 	  		{
-	  			"i.save"	: "Standalone",
-	  		}
+	  			"i.save"	: "Standalone"
+	  		},
+	  	  "default" :
+	  	  	{
+	  	  		"i.save"	: "Standalone"
+	  	  	}
 	  	}
 	};

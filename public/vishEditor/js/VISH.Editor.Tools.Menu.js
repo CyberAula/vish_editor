@@ -203,7 +203,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				}
 			}
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: VISH.Editor.I18n.getTrans("Add tags"), watermarkDenyMessage: VISH.Editor.I18n.getTrans("limit reached")});
+			watermarkAllowMessage: VISH.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: VISH.Editor.I18n.getTrans("i.limitReached")});
 		}
 	}
 
