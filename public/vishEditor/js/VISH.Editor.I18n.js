@@ -11,6 +11,26 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	var init = function(lang){
 		// var initTime = new Date().getTime();
 
+		//Set default translation
+		switch(VISH.Configuration.getConfiguration()["mode"]){
+			case VISH.Constant.NOSERVER:
+				if (typeof(i18n["vish"]["default"])!=='undefined'){
+					defaultTranslations = i18n["vish"]["default"];
+				}
+				break;
+			case VISH.Constant.VISH:
+				if (typeof(i18n["vish"]["default"])!=='undefined'){
+					defaultTranslations = i18n["vish"]["default"];
+				}
+				break;
+			case VISH.Constant.STANDALONE:
+				if (typeof(i18n["standalone"]["default"])!=='undefined'){
+					defaultTranslations = i18n["standalone"]["default"];
+				}
+				break;
+		}
+
+		//Set lang specific translation
 		if(typeof lang !== "undefined"){
 			language = lang;
 		} else {
@@ -22,7 +42,6 @@ VISH.Editor.I18n = (function(V,$,undefined){
 				//Load Vish translation
 				if (typeof(i18n["vish"][language])!=='undefined'){
 					translations = i18n["vish"][language];
-					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case VISH.Constant.VISH:

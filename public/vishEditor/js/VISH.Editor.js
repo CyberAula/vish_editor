@@ -896,7 +896,7 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	var exitConfirmation = function(){
-		if(confirmOnExit){
+		if((VISH.Configuration.getConfiguration()["mode"]===VISH.Constant.VISH)&&(confirmOnExit)){
 			return VISH.Editor.I18n.getTrans("i.exitConfirmation");
 		} else {
 			return
