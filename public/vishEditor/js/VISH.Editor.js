@@ -396,7 +396,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_quiz');
+				VISH.Editor.Utils.loadTab('tab_quiz_mchoice');
 			}
 		});
 	};

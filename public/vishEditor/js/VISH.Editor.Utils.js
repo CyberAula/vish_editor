@@ -289,8 +289,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 
 			//Quiz
-			case "tab_quiz":
-				VISH.Editor.Object.Live.onLoadTab("quiz");
+			case "tab_quiz_mchoice":
+				VISH.Editor.Quiz.onLoadTab("quiz_mchoice");
 				break;
 				
 

@@ -7,7 +7,19 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
 	};	
+	//for embeding a quiz into a template
+	var onLoadTab = function (tab) {
 
+		if(tab=="quiz_mchoice") {
+
+			_onLoadTabMChoiceQuiz();
+		} else if (tab=="quiz_open"){
+
+			V.Debugging.log("quiz open load tab");
+
+		}
+
+	};
 	//used for editing a quiz
 	var drawQuiz = function(question, options){
 		//first the question in the textarea
@@ -110,10 +122,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$(lastLi).append(_renderAddImg());
 		}
 	};
+	//first kind of quiz shown
+	var _onLoadTabMChoiceQuiz = function() {
+
+		V.Debugging.log("enter into onLoadTabMChoiceQuiz");
+
+	};
 
 	return {
-		drawQuiz	: drawQuiz,
-		init 		: init
+		drawQuiz				: drawQuiz,
+		init			 		: init, 
+		onLoadTab				:onLoadTab
 	};
 
 }) (VISH, jQuery);

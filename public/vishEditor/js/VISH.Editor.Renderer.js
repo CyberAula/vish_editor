@@ -71,7 +71,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 
 return {
-		init					: init		
+		init					: init
+
 	};
 
 }) (VISH, jQuery);
