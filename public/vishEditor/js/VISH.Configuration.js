@@ -54,11 +54,6 @@ VISH.Configuration = (function(V,$,undefined){
 			$("#tab_pic_flikr").css("display","none");
 		}
 
-		if(!configuration["Quiz"]){
-			$(".addQuiz").css("display","none");
-		}
-
-
 	    //    VISH.Debugging.log("Configuration completed")
 	};
 	
