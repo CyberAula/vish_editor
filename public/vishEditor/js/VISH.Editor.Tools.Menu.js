@@ -187,13 +187,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		if ($(tagList).children().length == 0){
 			if(!draftPresentation){
-				//Insert the two first tags.
-				$.each(data, function(index, tag) {
-					if(index==2){
-						return false; //break the bucle
-					}
-					$(tagList).append("<li>" + tag + "</li>")
-				});
+				// //Insert the two first tags. //DEPRECATED
+				// $.each(data, function(index, tag) {
+				// 	if(index==2){
+				// 		return false; //break the bucle
+				// 	}
+				// 	$(tagList).append("<li>" + tag + "</li>")
+				// });
 			} else {	
 				if(draftPresentation.tags){
 					//Insert draftPresentation tags
