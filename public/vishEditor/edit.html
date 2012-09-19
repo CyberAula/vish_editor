@@ -368,6 +368,10 @@
 				<a class="addLive" href="#live_fancybox">
           <div class='menuicon livethumb' i18n-key="i.Live" title="Live"></div>
         </a>
+		<a class="addQuiz" href="#quiz_fancybox">
+          <div class='menuicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
+        </a>
+
 	    </div>
 	    
 	    <div id='menuselect_for_header' class="menuselect_hide">
@@ -830,6 +834,58 @@
         </div>  
       </div>
     </div>
+  	<!-- QUIZ -->
+	 <div style='display:none'>
+	    <div id="quiz_fancybox" class="outer_box">
+				<div class="fancy_tabs" id="quiz_fancy_tabs_id">	   
+				    <ul>
+				      <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_quiz_mchoice')" id="tab_quiz_mchoice" class="fancy_tab" i18n-key="i.mchquiz">Multiple Choice</a></li>
+				      
+				    </ul>
+				    <img class='help_in_fancybox' id='tab_quiz_mchoice_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+				</div>
+				<div id='tab_video_from_url_content' class="fancy_tab_content">
+	        	<div id="box1" class="box1 box1fancy1">
+	             <p i18n-key="i.AddVideoUrl" class="textfancy">add video url</p></br>
+	             <img id="image_add_url" class="image_add_url" src="/vishEditor/images/url_img.png"/>
+	    	       <input id="video_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="video_url">
+			        <button type="button" class="button buttonfancy previewButton" i18n-key="i.preview">Preview</button>
+	          </div>
+	          <div id="box2" class="box2">
+	        		<div id="previewimgbox" class="previewimgbox">
+	            	<button i18n-key="i.AddContent" type="button" class="button buttonaddfancy" onclick="VISH.Editor.Video.drawPreviewElement()">Add Content</button>
+	            </div>
+	          </div>
+       </div>
+				
+				
+			
+                <div id='tab_video_vimeo_content' class="fancy_tab_content">
+                  <div class="box1 box1fancy2">
+					<img src="images/quizlogo.png" class="imagelogotab">
+					<div class="search_container" id="vimeo_search_container">
+					  <input id="search_vimeo_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" id="vimeo_text_to_search"> </input>
+					</div>
+				 
+				
+					<div id="tab_video_vimeo_content_carrousel"></div>
+					<div id="tab_video_vimeo_content_preview" class="content_preview">
+						<div id="tab_video_vimeo_content_preview_video" class="content_preview_data">
+							
+						</div>
+						<div id="tab_video_vimeo_content_preview_metadata" class="content_preview_metadata"></div>
+						<div id="tab_video_vimeo_content_preview_foot" class="content_preview_foot">
+							<button type="button" class="okButton" onclick="VISH.Editor.Video.vimeo.addSelectedVideo()">Add</button>
+						</div>
+					</div>
+					
+				  </div>
+                </div>
+          </div>
+	  </div>
+
+
+
 			
 			
 	   <!-- WALKTHROUGH HELP SECTION -->

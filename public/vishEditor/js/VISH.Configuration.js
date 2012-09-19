@@ -13,7 +13,7 @@ VISH.Configuration = (function(V,$,undefined){
 		VISH.UploadImagePath = configuration["uploadImagePath"];
 		VISH.UploadObjectPath = configuration["uploadObjectPath"];
 		VISH.UploadPresentationPath = configuration["uploadPresentationPath"];
-	}
+	};
 	
 	var applyConfiguration = function(){
 		if(configuration["presentationSettings"]){
@@ -54,8 +54,13 @@ VISH.Configuration = (function(V,$,undefined){
 			$("#tab_pic_flikr").css("display","none");
 		}
 
+		if(!configuration["Quiz"]){
+			$(".addQuiz").css("display","none");
+		}
+
+
 	    //    VISH.Debugging.log("Configuration completed")
-	}
+	};
 	
 	var getConfiguration = function(){
 		return configuration;

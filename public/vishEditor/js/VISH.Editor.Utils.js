@@ -287,7 +287,13 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_live_micro":
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
+
+			//Quiz
+			case "tab_quiz":
+				VISH.Editor.Object.Live.onLoadTab("quiz");
+				break;
 				
+
 			//Default
 			default:
 				break;

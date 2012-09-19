@@ -544,7 +544,7 @@ VISH.Samples = (function(V,undefined){
 		
 	 
 	 	var quizes_samples = {
-	 		"type": "quiz_simple",
+	 		"type": "presentation",
 	 		"id": 12313, 
 	 		"author":"",
 	 		"slides":[

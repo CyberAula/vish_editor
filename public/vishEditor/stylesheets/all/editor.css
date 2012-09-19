@@ -267,6 +267,10 @@ img {
 	background: url(/vishEditor/images/live.png);
 }
 
+.quizthumb {
+	background: url(/vishEditor/images/quiz.png);
+}
+
 .livethumb:hover {
 	background: url(/vishEditor/images/hover/live_hover.png);
 }

@@ -387,6 +387,18 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Utils.loadTab('tab_live_webcam');
 			}
 		});
+		$("a.addQuiz").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				setCurrentArea($("#" + clickedZoneId));
+				VISH.Editor.Utils.loadTab('tab_quiz');
+			}
+		});
 	};
 
 

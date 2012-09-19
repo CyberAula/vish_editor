@@ -13,7 +13,7 @@ VISH.User = (function(V,$,undefined){
 		if(options['token']){
 			user.token = options['token'];
 		}
-	}
+	};
 
 	var isLogged = function(){
 		if((user)&&(user.token)){
@@ -21,7 +21,7 @@ VISH.User = (function(V,$,undefined){
 		} else {
 			return false;
 		}
-	}
+	};
 
 	var getUser = function(){
 		if(user){
@@ -29,7 +29,7 @@ VISH.User = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	var getName = function(){
 		if((user)&&(user.username)){
@@ -37,7 +37,7 @@ VISH.User = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	var getId = function(){
 		if((user)&&(user.id)){
@@ -45,7 +45,7 @@ VISH.User = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	var getToken = function(){
 		if((user)&&(user.token)){
@@ -53,7 +53,7 @@ VISH.User = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	return {
 		init:           init,

@@ -36,6 +36,8 @@ var getOptions = function(){
 		configuration["Youtube"] = true;
 		configuration["Vimeo"] = false;
 
+
+		configuration["Quiz"] = false;
 		configuration["Upload"] = true;
 
 		//Posible values: noserver, node, vish
