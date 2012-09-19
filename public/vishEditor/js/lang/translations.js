@@ -158,7 +158,7 @@ var i18n =
 				"i.Author"				: "Autor",
 				"i.draft"				: "Borrador",
 				"i.publish"				: "Publicar",
-				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Si has hecho algun cambio sin grabar vas a perder todos los datos."
+				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado."
 			},
 			
 		  "default" :
@@ -169,7 +169,7 @@ var i18n =
 				"i.SearchContent"				: "Search Content",
 				"i.Description"					: "Description",
 				"i.limitReached"				: "limit reached",
-				"i.exitConfirmation"			: "You are about to leave this website. If you have made any changes without saving you will lose all data."
+				"i.exitConfirmation"			: "You are about to leave this website. You will lose any changes you have not saved."
 			}
 		},
 	 "standalone":

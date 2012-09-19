@@ -516,10 +516,20 @@ var nicEditorInstance = bkClass.extend({
 	getRng : function() {
 		//Vish Fix
 		var A = this.getSel();
-    if((!A)||(!A.rangeCount)||(!A.getRangeAt)||(!A.createRange)) {
-      return null
-    }
-    return (A.rangeCount > 0) ? A.getRangeAt(0) : A.createRange()
+
+		if(!A) {
+	      return null
+	    }
+
+	    if((A.rangeCount)&&(A.rangeCount > 0)){
+	    	return A.getRangeAt(0);
+	    }
+
+	    if(A.createRange) {
+	      return A.createRange();
+	    }
+
+    	return null;
 	},
 	selRng : function(A, B) {
 		if(window.getSelection) {
@@ -1212,15 +1222,17 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 		this.addForm({
 			'' : {type : 'title', txt : 'Add/Edit Link'},
 			'href' : {type : 'text', txt : 'URL', value : 'http://', style : {width: '150px'}},
-			'title' : {type : 'text', txt : 'Title'},
-			'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
+			'title' : {type : 'text', txt : 'Title'}
+			// 'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
 		},this.ln);
 	},
 	
 	submit : function(e) {
+		// console.log("Submit called")
+		//ulr is ok... but this.ln not exists
+
 		var url = this.inputs['href'].value;
 		if(url == "http://" || url == "") {
-			alert("You must enter a URL to Create a Link");
 			return false;
 		}
 		this.removePane();
@@ -1230,6 +1242,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			this.ne.nicCommand("createlink",tmp);
 			this.ln = this.findElm('A','href',tmp);
 		}
+
 		if(this.ln) {
 			this.ln.setAttributes({
 				href : this.inputs['href'].value,
