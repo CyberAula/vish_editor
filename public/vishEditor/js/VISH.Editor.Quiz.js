@@ -20,6 +20,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 	};
+
+	var addMChoiceQuiz = function () {
+
+	V.Debugging.log("add MChoice Quiz Button clicked");
+
+	};
+
 	//used for editing a quiz
 	var drawQuiz = function(question, options){
 		//first the question in the textarea
@@ -99,7 +106,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var _renderAddImg = function(){
 		var a = $("<a class='add_quiz_option'></a>");
-		var addImg = $("<img src='" + VISH.ImagesPath + "add_quiz_option.png'/>");
+		var addImg = $("<img src='" + VISH.ImagesPath add_quiz_option+ "add_quiz_option.png'/>");
 		$(a).append(addImg);
 		return a;
 	}
@@ -111,7 +118,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 		//Rewrite index letters
 		$(".current").find(".ul_mch_options > li").each(function(index, value) {
-			var span = $(value).find("span");
+			var span = $(value).find("span");add_quiz_option
 			$(span).html(choicesLetters[index]);
 		});
 
@@ -124,6 +131,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 	//first kind of quiz shown
 	var _onLoadTabMChoiceQuiz = function() {
+		$("#tab_quiz_mchoice").show();
+		$("#tab_quiz_mchoice_content").find(".add_quiz_option_img").attr("src", VISH.ImagesPath+"add_quiz_option.png");
 
 		V.Debugging.log("enter into onLoadTabMChoiceQuiz");
 
@@ -132,7 +141,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	return {
 		drawQuiz				: drawQuiz,
 		init			 		: init, 
-		onLoadTab				:onLoadTab
+		onLoadTab				: onLoadTab, 
+		addMChoiceQuiz			: addMChoiceQuiz 				
+
 	};
 
 }) (VISH, jQuery);
