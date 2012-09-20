@@ -62,6 +62,7 @@ var i18n =
 				"i.browserrequirements" 	: "El navegador que estas utilizando no cumple los requisitos minimos para utilizar esta aplicación. Por favor, actualiza tu navegador",
 				"i.accept"			: "aceptar",
 				"i.Add"				: "Añadir",
+				"i.add"				: "añadir",
 				"i.AddContent"		: "Añadir Contenido",
 				"i.AddSlide"		: "Añadir botón de nueva slide",
 				"i.AddVideoUrl"		: "añadir URL de video",
@@ -158,6 +159,7 @@ var i18n =
 				"i.Author"				: "Autor",
 				"i.draft"				: "Borrador",
 				"i.publish"				: "Publicar",
+				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado."
 			},
 			
@@ -165,10 +167,14 @@ var i18n =
 			{
 				"i.Author"						: "Author",
 				"i.AddTags"						: "Add tags",
+				"i.Add"							: "Add",
+				"i.add"							: "add",
 				"i.WysiwygInit"					: "Insert text here",
 				"i.SearchContent"				: "Search Content",
 				"i.Description"					: "Description",
 				"i.limitReached"				: "limit reached",
+				"i.wysiwyg.addurl"				: "Add link",
+				"i.Title"						: "Título",
 				"i.exitConfirmation"			: "You are about to leave this website. You will lose any changes you have not saved."
 			}
 		},
