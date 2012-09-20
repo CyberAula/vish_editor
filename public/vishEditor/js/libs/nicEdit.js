@@ -20,7 +20,7 @@ bkClass.extend = function(def) {
   var proto = new this(bkClass);
   bkExtend(proto,def);
   classDef.prototype = proto;
-  classDef.extend = this.extend;      
+  classDef.extend = this.extend;
   return classDef;
 };
 
@@ -1228,28 +1228,42 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 	},
 	
 	submit : function(e) {
-		// console.log("Submit called")
-		//ulr is ok... but this.ln not exists
-
 		var url = this.inputs['href'].value;
 		if(url == "http://" || url == "") {
 			return false;
 		}
+
+		var titleParam = (typeof this.inputs['title'].value == "string")&&((this.inputs['title'].value)!="");
+		if(titleParam){
+			title = this.inputs['title'].value;
+		} else {
+			title = url;
+		}
+
 		this.removePane();
 		
 		if(!this.ln) {
-			var tmp = 'javascript:nicTemp();';
+			var tmp = title;
 			this.ne.nicCommand("createlink",tmp);
 			this.ln = this.findElm('A','href',tmp);
 		}
 
+
+		var linkTxtParam = (typeof $(this.ln).val() == "string")&&($(this.ln).val()!="");
+
+		if((!titleParam)&&(linkTxtParam)){
+			title = $(this.ln).val();
+		}
+
 		if(this.ln) {
 			this.ln.setAttributes({
-				href : this.inputs['href'].value,
-				title : this.inputs['title'].value,
-				target : this.inputs['target'].options[this.inputs['target'].selectedIndex].value
+				href : url,
+				title : title,
+				target : "blank_"
 			});
 		}
+
+		// VISH.Debugging.log(this.ln)
 	}
 });
 
