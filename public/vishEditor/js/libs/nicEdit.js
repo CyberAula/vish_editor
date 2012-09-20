@@ -5,6 +5,22 @@
  * For more information visit http://nicedit.com/
  * Do not remove this copyright message
  */
+
+
+//Wysiwyg translation
+var getTrans = function(s){
+	if ((typeof VISH !== "undefined")				&&
+	   	(typeof VISH.Editor !== "undefined")		&&
+	   	(typeof VISH.Editor.I18n !== "undefined"))	{
+		var translate = VISH.Editor.I18n.getTrans(s);
+		if(translate!=null){
+			return translate;
+		}
+	}
+	return s;
+}
+
+
 var bkExtend = function(){
 	var args = arguments;
 	if (args.length == 1) args = [this, args[0]];
@@ -1043,7 +1059,8 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				}	
 			}
 		}
-		new bkElement('input').setAttributes({'type' : 'submit'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
+
+		new bkElement('input').setAttributes({value : getTrans("i.add") , type : 'submit'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
 		this.form.onsubmit = bkLib.cancelEvent;	
 	},
 	
@@ -1220,9 +1237,9 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 	addPane : function() {
 		this.ln = this.ne.selectedInstance.selElm().parentTag('A');
 		this.addForm({
-			'' : {type : 'title', txt : 'Add/Edit Link'},
-			'href' : {type : 'text', txt : 'URL', value : 'http://', style : {width: '150px'}},
-			'title' : {type : 'text', txt : 'Title'}
+			'' : {type : 'title', txt : getTrans('i.wysiwyg.addurl')},
+			'href' : {type : 'text', txt : 'Url', value : 'http://', style : {width: '150px'}},
+			'title' : {type : 'text', txt : getTrans('i.Title')}
 			// 'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
 		},this.ln);
 	},
@@ -1244,10 +1261,10 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 		
 		if(!this.ln) {
 			var tmp = title;
+			//Brokes on firefox for new txts
 			this.ne.nicCommand("createlink",tmp);
 			this.ln = this.findElm('A','href',tmp);
 		}
-
 
 		var linkTxtParam = (typeof $(this.ln).val() == "string")&&($(this.ln).val()!="");
 
