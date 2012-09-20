@@ -11,3 +11,7 @@ VISH.Constant.UNKNOWN = 'Unknown';
 VISH.Constant.NOSERVER = "noserver";
 VISH.Constant.VISH = "vish";
 VISH.Constant.STANDALONE = "node";
+
+VISH.Constant.SMALL = "small";
+VISH.Constant.MEDIUM = "medium";
+VISH.Constant.LARGE = "large";
