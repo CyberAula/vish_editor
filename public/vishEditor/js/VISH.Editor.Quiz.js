@@ -1,7 +1,7 @@
 VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
-
+	var fancyTabs = false;
 	var init = function(){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
@@ -52,18 +52,23 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	//myInput, myImg and optionText are used to add the options when editing a mc question.
 	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
+
+
 		var img, input;
 		var optionsLength = $(".current").find(".ul_mch_options > li").length;
 		if(optionsLength >= maxNumMultipleChoiceOptions){
 			return;
 		}
 		if(event){
+			V.Debugging.log("event.target.tagName addMultipleChoiceOption: "+ event.target.tagName);
+
 			if(event.target.tagName === "INPUT"){
 				//addMultipleChoiceOption trigger from keyboard input
 				img = $(event.target).parent().find("img");
 				input = event.target;
 			} else if(event.target.tagName === "IMG"){
 				//addMultipleChoiceOption trigger from img click
+				V.Debugging.log("event.target : "+ event.target);
 				img = event.target;
 				input = $(event.target).parent().parent().find("input");
 			}
@@ -76,7 +81,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var a = $(img).parent();
 		var li = $(input).parent();
 
+		if(fancyTabs) {
+			V.Debugging.log("enter into fancyTabs true first");	
+		var targetChoice = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").index(li);
+		}
+
+		else { 
+		
 		var targetChoice = $(".current").find(".ul_mch_options > li").index(li);
+		}
+		V.Debugging.log("targetChoice" + targetChoice);
 		var isLastChoice = (targetChoice === (optionsLength-1));
 
 		if(!isLastChoice){
@@ -89,12 +103,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 		var maxChoicesReached = (optionsLength == maxNumMultipleChoiceOptions-1);
 		var newMultipleChoice = _renderDummyMultipleChoice(choicesLetters[optionsLength],!maxChoicesReached);
-		$(".current").find(".ul_mch_options").append(newMultipleChoice);
+				V.Debugging.log("newMultipleChoice" + newMultipleChoice);
+		if(fancyTabs) { 
+		V.Debugging.log("fancyTabs true second one");
+			$("#tab_quiz_mchoice_content").find(".ul_mch_options").append(newMultipleChoice);
+			$("#tab_quiz_mchoice_content").find(".ul_mch_options > li").last().find("input").focus();
+		}	
+		else {
+			$(".current").find(".ul_mch_options").append(newMultipleChoice);
+			$(".current").find(".ul_mch_options > li").last().find("input").focus();
+		}
 
-		$(".current").find(".ul_mch_options > li").last().find("input").focus();
 	};
 
 	var _renderDummyMultipleChoice = function(text, addImage){
+				V.Debugging.log("enter into _renderDummyMultipleChoice");
 		var li = $("<li class='li_mch_option'></li>");
 		$(li).append("<span class='mcChoiceSpan'>" + text + "</span>");
 		$(li).append("<input type='text' class='multiplechoice_text'></input>");
@@ -106,19 +129,19 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var _renderAddImg = function(){
 		var a = $("<a class='add_quiz_option'></a>");
-		var addImg = $("<img src='" + VISH.ImagesPath add_quiz_option+ "add_quiz_option.png'/>");
+		var addImg = $("<img src='" + VISH.ImagesPath + "add_quiz_option.png'/>");
 		$(a).append(addImg);
 		return a;
 	}
 
 	var _removeMultipleChoiceOption = function(id) {
-		//removeMultipleChoiceOption trigger always from img click
+		//removeMultipleChoiconLoadTabMChoiceQuizeOption trigger always from img click
 		var li = $(event.target).parent().parent();
 		$(li).remove();
 
 		//Rewrite index letters
 		$(".current").find(".ul_mch_options > li").each(function(index, value) {
-			var span = $(value).find("span");add_quiz_option
+			var span = $(value).find("span");
 			$(span).html(choicesLetters[index]);
 		});
 
@@ -131,12 +154,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 	//first kind of quiz shown
 	var _onLoadTabMChoiceQuiz = function() {
+		fancyTabs = true;
 		$("#tab_quiz_mchoice").show();
 		$("#tab_quiz_mchoice_content").find(".add_quiz_option_img").attr("src", VISH.ImagesPath+"add_quiz_option.png");
-
-		V.Debugging.log("enter into onLoadTabMChoiceQuiz");
-
-	};
+		
+			};
 
 	return {
 		drawQuiz				: drawQuiz,
