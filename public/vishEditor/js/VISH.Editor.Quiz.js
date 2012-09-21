@@ -1,7 +1,7 @@
 VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
-	var fancyTabs = false;
+	var fancyTabs = false; //differentiate between fancy tabs and quiz template
 	var init = function(){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
@@ -52,10 +52,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	//myInput, myImg and optionText are used to add the options when editing a mc question.
 	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
-
-
 		var img, input;
-		var optionsLength = $(".current").find(".ul_mch_options > li").length;
+
+		if(fancyTabs) {
+			var optionsLength = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").length;
+		}
+		else {
+			var optionsLength = $(".current").find(".ul_mch_options > li").length;
+		}
+
 		if(optionsLength >= maxNumMultipleChoiceOptions){
 			return;
 		}
@@ -90,9 +95,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 		var targetChoice = $(".current").find(".ul_mch_options > li").index(li);
 		}
-		V.Debugging.log("targetChoice" + targetChoice);
+		V.Debugging.log("targetChoice " + targetChoice);
 		var isLastChoice = (targetChoice === (optionsLength-1));
-
+		V.Debugging.log("isLastChoice " + isLastChoice);	
 		if(!isLastChoice){
 			return;
 		}
@@ -105,7 +110,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var newMultipleChoice = _renderDummyMultipleChoice(choicesLetters[optionsLength],!maxChoicesReached);
 				V.Debugging.log("newMultipleChoice" + newMultipleChoice);
 		if(fancyTabs) { 
-		V.Debugging.log("fancyTabs true second one");
 			$("#tab_quiz_mchoice_content").find(".ul_mch_options").append(newMultipleChoice);
 			$("#tab_quiz_mchoice_content").find(".ul_mch_options > li").last().find("input").focus();
 		}	
@@ -117,7 +121,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var _renderDummyMultipleChoice = function(text, addImage){
-				V.Debugging.log("enter into _renderDummyMultipleChoice");
 		var li = $("<li class='li_mch_option'></li>");
 		$(li).append("<span class='mcChoiceSpan'>" + text + "</span>");
 		$(li).append("<input type='text' class='multiplechoice_text'></input>");
@@ -135,18 +138,31 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	}
 
 	var _removeMultipleChoiceOption = function(id) {
+		V.Debugging.log("_removeMultipleChoiceOption param id value: " + id);
 		//removeMultipleChoiconLoadTabMChoiceQuizeOption trigger always from img click
 		var li = $(event.target).parent().parent();
 		$(li).remove();
 
 		//Rewrite index letters
-		$(".current").find(".ul_mch_options > li").each(function(index, value) {
+		if(fancyTabs){
+			$("#tab_quiz_mchoice_content").find(".ul_mch_options > li").each(function(index, value) {
 			var span = $(value).find("span");
 			$(span).html(choicesLetters[index]);
 		});
-
+		//Ensure that last choice has plus option
+		var lastLi = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").last();			
+		} else {
+		$(".current").find(".ul_mch_options > li").each(function(index, value) {
+			var span = $(value).find("span");
+			$(span).html(choicesLetters[index]);
+		}); 
+		
 		//Ensure that last choice has plus option
 		var lastLi = $(".current").find(".ul_mch_options > li").last();
+
+		}
+
+		
 		var lastA = $(lastLi).find("a");
 		if(($(lastA).length==0)||($(lastA).hasClass("add_quiz_option")===false)){
 			$(lastLi).append(_renderAddImg());

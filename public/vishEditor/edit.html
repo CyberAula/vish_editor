@@ -862,7 +862,8 @@
 				    <img class='help_in_fancybox' id='tab_quiz_mchoice_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
 				</div>
 				<div id='tab_quiz_mchoice_content' class="fancy_tab_content">
-	        	<div id="box1" class="box2 box1fancy1">
+	        	<div id="box1" class="box3 box1fancy1">
+	        		      	<!-- here construct the Quiz -->  
 					<div id='tab_quiz_mchoice_content_header' areaid='header' class='t11_header'>
 					</div>
 					<div id='tab_quiz_mchoice_content_container' areaid='left' class='t11_left mcquestion' type='mcquestion'>
@@ -876,13 +877,10 @@
 								</a>
 							</li> 
 						</ul>
+						<div id='tab_quiz_mchoice' class='quiz_mchoice_content_foot'>
+	    					<button type="button" class="okButton" onclick="VISH.Editor.Quiz.addMChoiceQuiz()">Add Quiz</button>
+	    				</div>
 					 </div>
-
-
-	        	<!-- here construct the Quiz -->     
-	    		<div id='tab_quiz_mchoice' class='quiz_mchoice_content_foot'>
-	    			<button type="button" class="okButton" onclick="VISH.Editor.Quiz.addMChoiceQuiz()">Add Quiz</button>
-	    		</div>
 	          </div>
 	      </div>
 		</div>
