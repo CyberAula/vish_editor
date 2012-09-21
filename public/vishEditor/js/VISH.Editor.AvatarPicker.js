@@ -5,7 +5,24 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		var carrouselDivId = "avatars_carrousel";
     
 
-   var init = function(){ 	  
+   var init = function(){
+
+   		//Add fancybox to upload Thumbnail	
+   		//COMPLETE CODE!! UPLOAD THUMBNAILS FEATURE
+   		$("#hidden_button_to_launch_picture_fancybox_for_thumbnail").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {						
+				// V.Editor.Image.setFlashcardMode(true);
+				V.Editor.Utils.loadTab('tab_pic_from_url');
+			},
+			"onClosed"	: function(data){
+				// V.Editor.Image.setFlashcardMode(false);
+			}
+		});
    };	
 	 
 	var onLoadPresentationDetails = function(mySelectedAvatar){
@@ -21,7 +38,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
   	var avatar = $(event.target);
 
   	if($(avatar).hasClass("uploadThumbnail")){
-  		VISH.Debugging.log("uploadThumbnail clicked");
+  		$("#hidden_button_to_launch_picture_fancybox_for_thumbnail").trigger("click");
   		return;
   	}
 
@@ -58,7 +75,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	};
     
 	
-	var _onThumbnailsReceived = function(data){	
+	var _onThumbnailsReceived = function(data){
 		avatars = data;
 
 		//Clean previous carrousel
@@ -67,7 +84,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		//Build new carrousel
 		var content = "";
 		var carrouselImages = [];
-		carrouselImages.push($("<img class='uploadThumbnail' src='" + VISH.ImagesPath + "addThumbnail.png'/>")[0]);
+		// Uncomment to allow uploadThumbnail button
+		//carrouselImages.push($("<img class='uploadThumbnail' src='" + VISH.ImagesPath + "addThumbnail.png'/>")[0]);
 		$.each(avatars.pictures, function(i, item) {
 			var myImg = $("<img src="+item.src+" />");
 			carrouselImages.push($(myImg)[0]);
@@ -102,7 +120,6 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			selectRandom(5);  //Randomly select one between first page
 		}
 	}
-  
   
 	return {
 		init	       : init,

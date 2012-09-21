@@ -25,7 +25,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				});
 			});
 
-			//Add key events for inputs
+			//Add key event for Add Url Input
 			$(document).on('keydown', '.tools_input_addUrl', _addUrlOnKeyDown);
 
 			toolbarEventsLoaded = true;
