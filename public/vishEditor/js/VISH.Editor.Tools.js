@@ -24,6 +24,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					}
 				});
 			});
+
+			//Add key events for inputs
+			$(document).on('keydown', '.tools_input_addUrl', _addUrlOnKeyDown);
+
 			toolbarEventsLoaded = true;
 		}
 
@@ -316,11 +320,28 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				'padding' 			: 0,
 				'onStart'			: function(){
 				},
+				'onComplete'		: function(){
+					var area = VISH.Editor.getCurrentArea();
+					var hyperlink = $(area).attr("hyperlink");
+					if(hyperlink){
+						$(".tools_input_addUrl").val(hyperlink);
+					}
+				},
 				'onClosed'			: function(){
 				}
 			}
 		);
 	} 
+
+	var _addUrlOnKeyDown = function(event){
+		switch (event.keyCode) {
+			case 13:
+				addUrl();
+				break;
+			default:
+				break;
+		}
+	}
 
 	var addUrl = function(){
 		var url;

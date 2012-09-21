@@ -52,8 +52,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
    * function to add a new slide
    */
   var addSlide = function(slide){
-  	//VISH.Debugging.log("slide es " + slide);
-  	//VISH.Debugging.log(".slides es " + $('.slides'));
   	$('.slides').append(slide);
   };
 
