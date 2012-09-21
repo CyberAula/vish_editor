@@ -1,7 +1,7 @@
 VISH.Editor.AvatarPicker = (function(V,$,undefined){
     var avatars = null;
 		var selectedAvatar;
-		var thumbnailsDetailsId = "thumbnails_in_excursion_details";
+		var thumbnailsDetailsId = "thumbnails_in_presentation_details";
 		var carrouselDivId = "avatars_carrousel";
     
    /**
