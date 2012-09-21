@@ -55,6 +55,7 @@ VISH.Samples = (function(V,undefined){
 				"type" : "image",
 				"areaid" : "left",
 				"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
+				"hyperlink" : "http://www.google.es",
 				"style" : "position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"
 			}, {
 				"id" : "zone8",

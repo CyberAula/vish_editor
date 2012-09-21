@@ -155,13 +155,13 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param area: optional param indicating the area to add the image, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*/
-	var drawImage = function(image_url, area, style){    
+	var drawImage = function(image_url, area, style, hyperlink){    
 		if(flashcard_background_mode){
 			_drawImageAsFlashcardBackground(image_url);
 			$("#fc_change_bg_big").hide();
 		}
 		else{
-			_drawImageInArea(image_url, area, style);
+			_drawImageInArea(image_url, area, style, hyperlink);
 		}
 	};
 
@@ -170,7 +170,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 	};
 
-	var _drawImageInArea = function(image_url, area, style){
+	var _drawImageInArea = function(image_url, area, style, hyperlink){
 		var current_area;
 		var reference_width = 100; //Minimum image width
 		var image_width = 300; //default image width
@@ -191,6 +191,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 		var nextImageId = VISH.Editor.getId();
 		var idToDragAndResize = "draggable" + nextImageId;
 		current_area.attr('type','image');
+		if(hyperlink){
+			current_area.attr('hyperlink',hyperlink);
+		}
 		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
 
 		V.Editor.addDeleteButton(current_area);

@@ -303,7 +303,47 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				break;
 		}
 	}
-	 
+
+	var addLink = function(){
+		$.fancybox(
+			$("#tools_addUrl").html(),
+			{
+				'autoDimensions'	: false,
+				'scrolling': 'no',
+				'width'         	: 800,
+				'height'        	: 215,
+				'showCloseButton'	: true,
+				'padding' 			: 0,
+				'onStart'			: function(){
+				},
+				'onClosed'			: function(){
+				}
+			}
+		);
+	} 
+
+	var addUrl = function(){
+		var url;
+		$(".tools_input_addUrl").each(function(index,input){
+			if($($(input).parent().parent()).attr("id") !== "tools_addUrl"){
+				url = $(input).val();
+			}
+		});
+		if(url){
+			url = VISH.Utils.autocompleteUrls(url);
+
+			var area = VISH.Editor.getCurrentArea();
+			switch($(area).attr("type")){
+				case "image":
+					$(area).attr("hyperlink",url);
+					break;
+				default:
+					//Currently only for images
+					break;
+			}
+		}
+		$.fancybox.close();
+	}
   
 	return {
 		init							: init,
@@ -317,6 +357,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		disableToolbar					: disableToolbar,
 		selectTheme						: selectTheme,
 		changeFlashcardBackground		: changeFlashcardBackground,
+		addLink							: addLink,
+		addUrl 							: addUrl,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess
 	};

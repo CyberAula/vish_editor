@@ -246,10 +246,12 @@
 				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png" title="Change background"/>
 			</div>
 			<div id="toolbar_element">
-				<img class="toolbar_icon toolbar_web toolbar_snapshot"  style="display:none" action="zoomMore" 
+				<img class="toolbar_icon toolbar_web"  style="display:none" action="zoomMore" 
 				src="/vishEditor/images/toolbar/zoomMore.png"/>
-				<img class="toolbar_icon toolbar_web toolbar_snapshot" style="display:none" action="zoomLess" 
+				<img class="toolbar_icon toolbar_web" style="display:none" action="zoomLess" 
 				src="/vishEditor/images/toolbar/zoomLess.png"/>
+				<img class="toolbar_icon toolbar_image" style="display:none" action="addLink" 
+				src="/vishEditor/images/toolbar/addLink.png"/>
 			</div>
 		</div>
 		
@@ -456,6 +458,18 @@
 	  	</div>
 	  </div>
 	  
+	<!-- PROMPT TO ADD A LINK TO A ELEMENT (IMAGE,etc) -->
+	<div style='display:none' isFancyBoxContainer="true">
+	  	<div id='tools_addUrl'>	  		
+			<div class="box1 box1fancy1">
+				<p class="textfancy">Url</p></br>
+				<img class="image_add_url" src="/vishEditor/images/url_img.png"/>
+				<input class="input_text_fancy formsizefancy1 marginsfancy1 tools_input_addUrl" type="text" size="25" value="">
+				<button type="button" class="button buttonfancy previewButton" i18n-key="i.Add" 
+				onclick="VISH.Editor.Tools.addUrl()">Add</button>
+			</div>
+	  	</div>
+	</div>
 
 	  <!-- PROMPT WHEN CLICK ON ADD SLIDE IN FLASHCARD MODE -->
 	  <div style='display:none'>

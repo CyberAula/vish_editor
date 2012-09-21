@@ -45,7 +45,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			if(slide.elements[el].type === "text"){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
 			} else if(slide.elements[el].type === "image"){
-				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style);
+				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink);
 			}	else if(slide.elements[el].type === "video"){
 				var options = [];
 				options['poster'] = slide.elements[el].poster;

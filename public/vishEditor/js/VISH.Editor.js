@@ -566,6 +566,10 @@ VISH.Editor = (function(V,$,undefined){
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
+						
+						if($(div).attr("hyperlink")){
+							element.hyperlink = $(div).attr("hyperlink");
+						}
 					} else if(element.type=="video"){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
