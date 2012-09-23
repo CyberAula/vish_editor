@@ -20,12 +20,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 	};
-
+	/**/ 
 	var addMChoiceQuiz = function () {
+		V.Debugging.log("add MChoice Quiz Button clicked");
+		//test values for elements
 
-	V.Debugging.log("add MChoice Quiz Button clicked");
-
-	};
+		_generateWrapper();
+	  $.fancybox.close();
+	  
+  	};
 
 	//used for editing a quiz
 	var drawQuiz = function(question, options){
@@ -175,6 +178,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$("#tab_quiz_mchoice_content").find(".add_quiz_option_img").attr("src", VISH.ImagesPath+"add_quiz_option.png");
 		
 			};
+
+	var _generateWrapper = function() {
+		current_area =  VISH.Editor.getCurrentArea();
+		var nextQuizId = VISH.Editor.getId();
+		current_area.attr('type','quiz');
+		//TODO change id? ask to Kike 
+		var header ="<div id='tab_quiz_mchoice_content_header' areaid='header' class='t11_header'> </div>";
+		var question = "<h2 class='quiz_mch_question' >" + $("#tab_quiz_mchoice_content_container").find(".value_multiplechoice_question").val(); + "</h2>";
+		//var options = $("#tab_quiz_mchoice_content_container").find(".ul_mch_options").html();
+		current_area.html( header + question  );
+		V.Editor.addDeleteButton(current_area);
+		return current_area;
+
+
+	};		
 
 	return {
 		drawQuiz				: drawQuiz,
