@@ -174,6 +174,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//first kind of quiz shown
 	var _onLoadTabMChoiceQuiz = function() {
 		fancyTabs = true;
+		$("#tab_quiz_mchoice_content").find(".value_multiplechoice_question").attr("value", "");
+		$("#tab_quiz_mchoice_content").find(".ul_mch_options").children().remove();
+		_addMultipleChoiceOption(); 
 		$("#tab_quiz_mchoice").show();
 		$("#tab_quiz_mchoice_content").find(".add_quiz_option_img").attr("src", VISH.ImagesPath+"add_quiz_option.png");
 		
@@ -184,12 +187,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var nextQuizId = VISH.Editor.getId();
 		current_area.attr('type','quiz');
 		//TODO change id? ask to Kike 
+		var container = "<div class='mcquestion_container'><div class='mcquestion_body'></div><div class='mcquestion_buttons'></div></div>";
+		current_area.html(container);
 		var header ="<div id='tab_quiz_mchoice_content_header' areaid='header' class='t11_header'> </div>";
-		var question = "<h2 class='quiz_mch_question' >" + $("#tab_quiz_mchoice_content_container").find(".value_multiplechoice_question").val(); + "</h2>";
-		//var options = $("#tab_quiz_mchoice_content_container").find(".ul_mch_options").html();
-		current_area.html( header + question  );
+		var question = "<h2 class='quiz_mch_question_in_template' >" + $("#tab_quiz_mchoice_content_container").find(".value_multiplechoice_question").val() + "</h2>";
+		var form = "<form class='mcquestion_form' method='post'></form>";
+		current_area.find(".mcquestion_body").append(header + question + form);
+		$("#tab_quiz_mchoice_content_container").find(".ul_mch_options > li").each(function(index, value) {
+			var option = "<label class='mc_answer'>" + choicesLetters[index]+ " " + $(value).find(".multiplechoice_text").val() + "</label>";
+			//var percentBar = "<div class='mc_meter'><span style='width:0%'></span></div><label class='mcoption_label'></label>";
+			current_area.find(".mcquestion_form").append(option);
+		}); 
+		
 		V.Editor.addDeleteButton(current_area);
-		return current_area;
+		//return current_area;
 
 
 	};		

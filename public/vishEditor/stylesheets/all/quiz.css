@@ -678,18 +678,30 @@ span.mcChoiceSpan{
 }
 
 
-.quiz_mch_question {
+.quiz_mch_question_in_template {
     border-radius: 0.4em 0.4em 0em 0em;
     color: #212121;
     display: block;
     font-family: Helvetica;
-    font-size: 1.2em;
+    font-size: 1.25em;
     font-weight: bold;
     padding: 1%;
     text-decoration: none;
     width:96%; 
     float: left;
     line-height: 120%;
-    text-align:left;
+    text-align:justify;
     margin: 1%; 
+}
+.quiz_mch_answer_in_template {
+text-align: justify;
+color: 
+black;
+font-size: 1.2em;
+width: 100%;
+display: block;
+margin: 1%;
+line-height: 110%;
+float: left;
+position: relative;
 }

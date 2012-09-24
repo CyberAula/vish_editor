@@ -368,7 +368,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 		
 		var objectInfo = VISH.Object.getObjectInfo(object);
-V.Debugging.log("objectInfo.type: " + objectInfo.type );
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
