@@ -16,15 +16,7 @@ VISH.Slides = (function(V,$,undefined){
 	  addFontStyle();
 	  
 	  updateSlides();
-	  
-	  V.Slides.Events.init();
-	  if(!V.Editing){
-	  	if(typeof V.Slides.Mashme != "undefined"){
-	  		//wait for mashme hello message and if so init events
-	  		window.addEventListener("message", V.Slides.Mashme.onMashmeHello, false);  
-	  	}
-	  }
-	  
+	  	  
 	  $('body').addClass('loaded');
 	};
 
@@ -337,6 +329,13 @@ VISH.Slides = (function(V,$,undefined){
 		triggerLeaveEvent(slideNumber);		
 	};
 
+	/**
+	 * function to close all slides in the flashcard, in case one remains open (used for mashme tv before receiving a show slide)
+	 */
+	var closeAllSlides = function(){
+		$(".slides > article").hide();	
+	};
+
 
 	/*
 	 *	Move slide_to_move after or before reference_slide.
@@ -413,7 +412,8 @@ VISH.Slides = (function(V,$,undefined){
 			getSlides 				: getSlides,
 			getSlideWithNumber		: getSlideWithNumber,
 			backwardOneSlide		: backwardOneSlide,	
-			closeSlide				: closeSlide,	
+			closeSlide				: closeSlide,
+			closeAllSlides			: closeAllSlides,
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,

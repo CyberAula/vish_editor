@@ -4,6 +4,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	var slideStatus = {};  //array to save the status of each slide
 	var myDoc; //to store document or parent.document depending if on iframe or not
 	var current_presentation;
+	var presentationType = "presentation"; //can be "presentation", "game", "flashcard"
+
 
 	/**
 	 * Function to initialize the SlideManager, saves the slides object and init the presentation with it
@@ -52,13 +54,18 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(presentation.type ==="game"){
-			VISH.ViewerEngine = "game";
+			setPresentationType("game");
 			VISH.ViewerAdapter.setupGame(presentation);	
 			VISH.Game.registerActions(presentation);		
 		} else if(presentation.type === "flashcard"){
-			VISH.ViewerEngine = "flashcard";
+			setPresentationType("flashcard");
 			VISH.Flashcard.init(presentation);
 		}
+
+		//important that events are initialized after presentation type is proccessed
+		V.Events.init();
+	  	
+
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
 		V.ViewerAdapter.setupSize(false);
@@ -274,7 +281,16 @@ VISH.SlideManager = (function(V,$,undefined){
 	
 	var getCurrentPresentation = function(){
 		return current_presentation;
-	}
+	};
+
+
+	var getPresentationType = function(){
+		return presentationType;
+	};
+
+	var setPresentationType = function(type){
+		presentationType = type;
+	};
 
 	return {
 		init          			: init,
@@ -285,7 +301,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		toggleFullScreen 		: toggleFullScreen, 
 		getOptions				: getOptions,
 		updateSlideCounter		: updateSlideCounter,
-		getCurrentPresentation	: getCurrentPresentation
+		getCurrentPresentation	: getCurrentPresentation,
+		getPresentationType		: getPresentationType,
+		setPresentationType		: setPresentationType
 	};
 
 }) (VISH,jQuery);

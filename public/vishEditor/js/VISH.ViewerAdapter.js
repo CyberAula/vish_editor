@@ -23,7 +23,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 					margin_width = 0;
 			} else {
 				page_is_fullscreen = false;
-				if(VISH.ViewerEngine === "presentation"){
+				if(V.SlideManager.getPresentationType() === "presentation"){
 					reserved_px_for_menubar = 40;
 				}
 				else{
@@ -100,7 +100,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			  }, function() {
 			    $("#page-fullscreen").css("background-position", "0px 0px");
 			  });
-		    if(VISH.ViewerEngine === "presentation"){
+		    if(V.SlideManager.getPresentationType() === "presentation"){
 		    	$("#viewbar").show();
 		    	$(".vish_arrow").hide();
 		    }		    
@@ -112,7 +112,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}, function() {
 			    $("#page-fullscreen").css("background-position", "-45px 0px");
 			});
-			if(VISH.ViewerEngine === "presentation"){
+			if(V.SlideManager.getPresentationType() === "presentation"){
 				$("#viewbar").hide();
 				$(".vish_arrow").show();
 			}
@@ -142,7 +142,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 */
 	var decideIfPageSwitcher = function(){
 		//page switchers only for presentations
-		if(VISH.ViewerEngine === "presentation"){
+		if(V.SlideManager.getPresentationType() === "presentation"){
 			if(!page_is_fullscreen && !V.Status.getDevice().mobile){
 				if(VISH.Slides.isCurrentFirstSlide()){
 					$("#page-switcher-start").hide();				

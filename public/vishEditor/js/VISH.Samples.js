@@ -101,7 +101,7 @@ VISH.Samples = (function(V,undefined){
 		"avatar" 		: "/assets/logos/original/excursion-10.png",
 		"author" 		: "",
 		"type"	 		: "flashcard", //flashcard, game, presentation, microscope, experiment, quiz
-		"background"	: { "src" : "url(http://i3.photobucket.com/albums/y78/Txemin/cuadricula/cuadriculamostra.jpg)",
+		"background"	: { "src" : "url(http://html.rincondelvago.com/000563580.png)",
 					 		"pois": [{"id": "poi1",
 					 				  "x" : "11",
 					 				  "y" : "4.5",

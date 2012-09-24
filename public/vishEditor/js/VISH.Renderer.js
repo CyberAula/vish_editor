@@ -56,7 +56,7 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		if(V.ViewerEngine === "flashcard"){
+		if(V.SlideManager.getPresentationType() === "flashcard"){
 			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
 		}
 		

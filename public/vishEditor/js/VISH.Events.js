@@ -1,4 +1,4 @@
-VISH.Slides.Events = (function(V,$,undefined){
+VISH.Events = (function(V,$,undefined){
 	var addedEventListeners = false;
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
@@ -10,41 +10,61 @@ VISH.Slides.Events = (function(V,$,undefined){
 	 */
 	var init = function() {
 	  addEventListeners();
-	  /* Swiping */
-	  $(document).bind('touchstart', handleTouchStart); 
+	  
+	  if(!V.Editing){
+	  		if(typeof V.Events.Mashme != "undefined"){
+	  			//wait for mashme hello message and if so init events
+	  			window.addEventListener("message", V.Events.Mashme.onMashmeHello, false);  
+	  		}
+	  	}
 	};
 
 	var addEventListeners = function() {
 
 		if(!addedEventListeners){
-			$(document).bind('keydown', handleBodyKeyDown); 
-      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-      		_registerEvent("mobile_back_arrow");
-      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
-      		_registerEvent("mobile_forward_arrow");
-      		$(document).on('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);	
-      		_registerEvent("closeButton");
-      		_registerEvent("closeButtonImg");
-      		$(document).on('click', '#closeButton', function(){
-      			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
-      		});
-	    	addedEventListeners = true;
+			if(V.SlideManager.getPresentationType() === "presentation"){
+				$(document).bind('keydown', handleBodyKeyDown); 
+	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+	      		_registerEvent("mobile_back_arrow");
+	      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
+	      		_registerEvent("mobile_forward_arrow");
+	      		$(document).on('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);	
+	      		_registerEvent("closeButton");
+	      		_registerEvent("closeButtonImg");
+	      		$(document).on('click', '#closeButton', function(){
+	      			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+	      		});
+	      		/* Swiping */
+	 			 $(document).bind('touchstart', handleTouchStart); 
+	      	}
+	      	else if(V.SlideManager.getPresentationType() === "flashcard"){
+				var presentation = V.SlideManager.getCurrentPresentation();
+				//and now we add the points of interest with their click events to show the slides
+  				for(index in presentation.background.pois){
+  					var poi = presentation.background.pois[index];
+  					$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+  				}
+  		
+      			$(document).on('click','.close_slide', _onFlashcardCloseSlideClicked);
+  		   	} 	
 		} 
+		addedEventListeners = true;
 	};
+
 
 	/* Register events */
 	var _registerEvent = function(eventTargetId){
 		if(registeredEvents.indexOf(eventTargetId)==-1){
 			registeredEvents.push(eventTargetId);
 		}
-	}
+	};
 
 	var _unregisterEvent = function(eventTargetId){
 		if(registeredEvents.indexOf(eventTargetId)!=-1){
 			registeredEvents.splice(registeredEvents.indexOf(eventTargetId), 1);
 		}
-	}
+	};
 
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
@@ -85,7 +105,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 
 
 	var handleTouchStart = function(event) {
-	  if(V.ViewerEngine === "presentation"){
+	  if(V.SlideManager.getPresentationType() === "presentation"){
 			  var touches = getTouches(event);
 			  if (touches.length === 1) {
 			    touchDX = 0;
@@ -110,7 +130,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 	};
 
 	var handleTouchMove = function(event) {
-		if(V.ViewerEngine === "presentation"){
+		if(V.SlideManager.getPresentationType() === "presentation"){
 		  var touches = getTouches(event);
 		  if (touches.length > 1) {
 		    cancelTouch();
@@ -126,7 +146,7 @@ VISH.Slides.Events = (function(V,$,undefined){
 	};
 
 	var handleTouchEnd = function(event) {
-		if(V.ViewerEngine === "presentation"){
+		if(V.SlideManager.getPresentationType() === "presentation"){
 		  var dx = Math.abs(touchDX);
 		  var dy = Math.abs(touchDY);
 
@@ -147,19 +167,45 @@ VISH.Slides.Events = (function(V,$,undefined){
 	  document.body.removeEventListener('touchend', handleTouchEnd, true); 
 	};
 
+	/**
+	 * function called when a poi is clicked
+	 */
+	 var _onFlashcardPoiClicked = function(event){
+	 	V.Debugging.log("Show slide " + event.data.slide_id);
+    	V.Slides.showSlide(event.data.slide_id);
+	 };
+
+
+   var _onFlashcardCloseSlideClicked = function(event){
+	    var close_slide = event.target.id.substring(5); //the id is close3
+	    V.Debugging.log("Close slide " + close_slide);
+	    V.Slides.closeSlide(close_slide);
+   };
 
 	var unbindAll = function(){
-		$(document).unbind('keydown', handleBodyKeyDown); 
-  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-  		_unregisterEvent("mobile_back_arrow");
-  		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
-  		_unregisterEvent("mobile_forward_arrow");
-  		$(document).off('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);
-  		_unregisterEvent("closeButton");
-  		_unregisterEvent("closeButtonImg");
-  		$(document).off('click', '#closeButton');
-  		$(document).unbind('touchstart', handleTouchStart); 
+		if(V.SlideManager.getPresentationType() === "presentation"){
+			$(document).unbind('keydown', handleBodyKeyDown); 
+	  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+	  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+	  		_unregisterEvent("mobile_back_arrow");
+	  		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
+	  		_unregisterEvent("mobile_forward_arrow");
+	  		$(document).off('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);
+	  		_unregisterEvent("closeButton");
+	  		_unregisterEvent("closeButtonImg");
+	  		$(document).off('click', '#closeButton');
+	  		$(document).unbind('touchstart', handleTouchStart); 
+  		} else if(V.SlideManager.getPresentationType() === "flashcard"){
+				var presentation = V.SlideManager.getCurrentPresentation();
+				//and now we add the points of interest with their click events to show the slides
+  				for(index in presentation.background.pois){
+  					var poi = presentation.background.pois[index];
+  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+  				}
+  		
+      			$(document).off('click','.close_slide', _onFlashcardCloseSlideClicked);
+  		   	} 	
+
 	};
 	
 	
