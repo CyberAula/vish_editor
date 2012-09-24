@@ -14,31 +14,11 @@ VISH.Flashcard = (function(V,$,undefined){
   		//and now we add the points of interest with their click events to show the slides
   		for(index in presentation.background.pois){
   			var poi = presentation.background.pois[index];
-  			var div_to_add = "<div class='fc_poi' id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'><img src='"+ VISH.ImagesPath +"arrow_down.gif'/></div>";
-
-  			flashcard_div.append(div_to_add);
-  			$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onPoiClicked);
+  			  			
+        V.Flashcard.Arrow.addArrow(poi, false);
   		}
-  		
-      $(document).on('click','.close_slide', _onCloseSlideClicked);
-  		
+      V.Flashcard.Arrow.init();
 	};
-
-
-	/**
-	 * function called when a poi is clicked
-	 */
-	 var _onPoiClicked = function(event){
-	 	V.Debugging.log("Show slide " + event.data.slide_id);
-    V.Slides.showSlide(event.data.slide_id);
-	 };
-
-
-   var _onCloseSlideClicked = function(event){
-    var close_slide = event.target.id.substring(5); //the id is close3
-    V.Debugging.log("Close slide " + close_slide);
-    V.Slides.closeSlide(close_slide);
-   };
 
 	return {
 		init		: init
