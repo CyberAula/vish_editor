@@ -35,7 +35,7 @@ VISH.Flashcard.Arrow = (function(V,$,undefined){
       var pos = arrow_positions[index];
       var new_pos = (pos + FRAME_WIDTH)%(TOTAL_FRAMES*FRAME_WIDTH);
 
-      $("#"+id).css("background-position-x", new_pos + "px");
+      $("#"+id).css("background-position", new_pos + "px" + " 0px");
       arrow_positions[index] = new_pos;
 
     }
