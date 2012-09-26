@@ -336,7 +336,7 @@
 		   </div>
 	      </div>
 
-<div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
+     <div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
 	      <img id='help_template_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
 	      
 	      <div style="display:none" class='templatethumb' template='10'>
@@ -354,6 +354,31 @@
 	     </div>
 	  </div>
 
+<!-- fancy quizes content -->
+<div style='display:none'>
+
+	<div id='quiz_fancybox' class="fancybox_quiz_content" style='display:none' > 
+		   <img id='help_help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+		<h2 id='quiz_fancybox_title' class='quiz_fancybox_title' > Quiz </h2>
+	   
+	      
+	      <div style="display:none" class='templatethumb' template='10'>
+		      <img src='/vishEditor/images/templatesthumbs/t10.png' />
+	      </div>
+	      <div class='templatethumb' id='mchoice_quiz_thumb'>
+		      <img src='/vishEditor/images/templatesthumbs/t11.png' />
+	      </div>
+          
+          <div style="display:none" class='templatethumb' template='12'>
+		      <img src='/vishEditor/images/templatesthumbs/t12.png' />
+	      </div>
+          
+	 </div>
+</div> 
+
+<!--end quiz content -->
+
+
   	  <div style='display:none'>
 	  	
 	    <div id='menuselect' class="menuselect_hide">
@@ -370,7 +395,7 @@
 				<a class="addLive" href="#live_fancybox">
           <div class='menuicon livethumb' i18n-key="i.Live" title="Live"></div>
         </a>
-		<a class="addQuiz" href="#quiz_fancybox">
+		<a class="addQuiz" href="#quiz_fancybox" id="add_quiz_thumb">
           <div class='menuicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
         </a>
 
@@ -852,33 +877,7 @@
       </div>
     </div>
   	<!-- QUIZ -->
-	<div style='display:none'>
-	    <div id="quiz_fancybox" class="outer_box">
-				<div class="fancy_tabs" id="quiz_fancy_tabs_id">	   
-				    <ul>
-				      <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_quiz_mchoice')" id="tab_quiz_mchoice" class="fancy_tab" i18n-key="i.mchquiz">Multiple Choice</a></li>
-				      
-				    </ul>
-				    <img class='help_in_fancybox' id='tab_quiz_mchoice_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-				</div>
-				<div id='tab_quiz_mchoice_content' class="fancy_tab_content">
-	        	<div id="box1" class="box3 box1fancy1">
-	        		      	<!-- here construct the Quiz -->  
-			
-					<div id='tab_quiz_mchoice_content_container' class='mcquestion' type='mcquestion'>
-						<textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='write question here'></textarea>
-						<ul class='ul_mch_options'>
-							
-						</ul>
-						<div id='tab_quiz_mchoice' class='quiz_mchoice_content_foot'>
-	    					<button type="button" class="okButton" onclick="VISH.Editor.Quiz.addMChoiceQuiz()">Add Quiz</button>
-	    				</div>
-					 </div>
-	          </div>
-	      </div>
-		</div>
-	</div>
-
+	
 
 
 			
@@ -1026,6 +1025,15 @@
 	  	    <p i18n-key="i.walk14">This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	 	  
 	  	</ol>
+	<!--help for quiz selection fancybox-->
+	  	<ol id="help_quiz_selection_help" class="joyRideTipContent">
+	  	  <li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+	  	    <h2 i18n-key="i.selectSlide">Selecting a Quiz</h2>
+	  	    <p i18n-key="i.walk14">........quiz ....</p>
+	  	  </li>	 	  
+	  	</ol>
+
+
     
     	<!--help for fancybox of images-->
 		  <ol id="images_fancy_tabs_id_help" class="joyRideTipContent">

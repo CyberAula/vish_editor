@@ -286,9 +286,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
 
-			//Quiz
-			case "tab_quiz_mchoice":
-				VISH.Editor.Quiz.onLoadTab("quiz_mchoice");
+			//Quizes
+			case "tab_quizes":
+
+					V.Debugging.log("tab_quizes case ");
+				VISH.Editor.Quiz.onLoadTab("quizes");
 				break;
 				
 
@@ -296,6 +298,22 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			default:
 				break;
 	  }
+	};
+
+	var loadQuizFancyBox = function (id) {
+
+$('.joyride-close-tip').click();
+
+		//hide previous tab
+		$(".menuselect_hide").hide();
+		//show content
+		$("#" + id).show();
+
+		//hide previous help button
+		$(".help_in_fancybox").hide();
+		//show correct one
+		$("#"+ id + "_help").show();
+
 	};
 
 	
@@ -312,7 +330,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		redrawSlides	    : redrawSlides,
 		dimentionToDraw     : dimentionToDraw,
 		loadTab 			: loadTab,
-		showSlides			: showSlides
+		showSlides			: showSlides, 
+		loadQuizFancyBox	:loadQuizFancyBox
 	};
 
 }) (VISH, jQuery);

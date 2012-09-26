@@ -837,6 +837,12 @@ div.object_wrapper{
   margin-left: 70px;
 }
 
+.fancybox_quiz_content {
+text-align: center;
+}
+.quiz_fancybox_title {
+	text-align: center;
+}
 
 /************************************
  * EXCURSION DETAILS FANCYBOX
@@ -1151,6 +1157,13 @@ textarea {
 #help_template_selection:hover {
 	background-image:url(/vishEditor/images/hover/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
+}
+
+#help_quiz_selection {
+	background-image:url(/vishEditor/images/helptutorial_circle_tp.png);
+	position: absolute;
+	margin-top: -20px;
+	right: 21px;
 }
 
 /* Joyride positions */
