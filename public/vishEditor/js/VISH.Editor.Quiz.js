@@ -206,12 +206,42 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	};		
 
+
+	var _addOpenQuiz = function() {
+
+	};
+
+	var _addMultipleChoiceQuiz = function() {
+			V.Debugging.log(" addMultipleChoiceQuiz detected");	
+		var quiz = VISH.Dummies.getQuizDummy("multiplechoice");
+		var current_area = V.Editor.getCurrentArea();
+		current_area.append(quiz);
+		V.Editor.addDeleteButton(current_area);
+	};
+
+	var _addTrueFalseQuiz = function() {
+	};
+
 	var addQuiz = function(quiz_type) {
 		V.Debugging.log(" addQuiz detected, quiz_type: " + quiz_type);
 		$.fancybox.close();
 		$(".menuselect_hide").hide();
-		var current_area = V.Editor.getCurrentArea();
-		V.Debugging.log(" current area : " + current_area.html());
+			
+		switch (quiz_type) {
+			case "open":
+				_addOpenQuiz();
+				 break;
+			case "multiplechoice":
+				_addMultipleChoiceQuiz();
+				 break;
+			case "truefañse":
+				_addTrueFalseQuiz();
+			 	break;
+			default: 
+				break;
+
+		}
+
 
 	};
 

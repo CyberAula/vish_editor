@@ -2,10 +2,11 @@ VISH.Dummies = (function(VISH,undefined){
 	//variable to add to the id when replacing id_to_change in the dummy
 	var nextDivId = 1;
 	var nextArticleId = 1;
-
+	var hashTypeQuiz = {"open":0,  "multiplechoice" : 1, "truefalse": 2 };
 	//array with the articles (slides) definition, one for each template
 	//the ids of each div are id='id_to_change' and will be replaced by the next id by the function _replaceIds(string)
 	var dummies = [];
+	var quizDummies = [];
 
 	var init = function(){
 		dummies = [
@@ -20,7 +21,12 @@ VISH.Dummies = (function(VISH,undefined){
 		"<article id='article_id_to_change' template='t9' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' size='small' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' size='medium' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' size='medium' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' size='medium'    class='t9_right editable grey_background selectable'></div></article>",
 		"<article id='article_id_to_change' template='t10' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><div id='div_id_to_change' areaid='left' class='t10_left' type='openquestion'><h2 class='header_openquestion'>Open Question:</h2><textarea rows='4' cols='50' class='value_openquestion' placeholder='write open question here'></textarea></div></article>",
 		"<article id='article_id_to_change' template='t11' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='write question here'></textarea><ul class='ul_mch_options'><li class='li_mch_option'>a)<input class='multiplechoice_text' type='text' placeholder='write quiz options here' /><a class='add_quiz_option'><img src='"+VISH.ImagesPath+"add_quiz_option.png' /></a></li></ul></div></article>"
-		]; 
+		];
+
+		quizDummies = ["<p> quiz dummy open</p>", 
+		"<p> quiz dummy multiplechoice</p>" , 
+		"<p> quiz dummy truefalse</p>"
+		];
 	}
 
 	/**
@@ -33,6 +39,13 @@ VISH.Dummies = (function(VISH,undefined){
 		var dum = dummies[parseInt(template,10)-1];
 		return _replaceIds(dum, position, presentation_id, existing_slide);
 	};
+
+	var getQuizDummy = function(type_quiz) {
+		VISH.Debugging.log(" type_quiz value: " + type_quiz);
+		VISH.Debugging.log(" hashTypeQuiz {type_quiz}: " + hashTypeQuiz[type_quiz] );
+		return quizDummies[hashTypeQuiz[type_quiz]];
+
+	}
 	
 	/**
 	 * Function to replace the text id_to_change by the next id
@@ -63,8 +76,10 @@ VISH.Dummies = (function(VISH,undefined){
 	
 	
 	return {
-		init		: init,
-		getDummy	: getDummy
+		init			: init,
+		getDummy		: getDummy, 
+		getQuizDummy	: getQuizDummy
+
 	};
 
 }) (VISH);
