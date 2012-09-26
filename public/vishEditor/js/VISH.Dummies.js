@@ -23,9 +23,9 @@ VISH.Dummies = (function(VISH,undefined){
 		"<article id='article_id_to_change' template='t11' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><div id='div_id_to_change' areaid='header' class='t11_header'></div><div id='div_id_to_change' areaid='left' class='t11_left mcquestion' type='mcquestion'><h2 class='header_multiplechoice_question'>Multiple Choice Question:</h2><textarea rows='4' cols='50' class='value_multiplechoice_question' placeholder='write question here'></textarea><ul class='ul_mch_options'><li class='li_mch_option'>a)<input class='multiplechoice_text' type='text' placeholder='write quiz options here' /><a class='add_quiz_option'><img src='"+VISH.ImagesPath+"add_quiz_option.png' /></a></li></ul></div></article>"
 		];
 
-		quizDummies = ["<p> quiz dummy open</p>", 
-		"<p> quiz dummy multiplechoice</p>" , 
-		"<p> quiz dummy truefalse</p>"
+		quizDummies = ["<div class='simpleQuizContainer'><p> quiz dummy open</p></div>", 
+		"<div class='multipleChoiceQuizContainer'><h2 class='header_multiplechoice_question'>Multiple Choice Question:</h2><textarea class='value_multiplechoice_question_in_zone' placeholder='write question here'></textarea><ul class='ul_mch_options_in_zone'><li class='li_mch_options_in_zone '><span>a)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li><li class='li_mch_options_in_zone '><span>b)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li><li class='li_mch_options_in_zone '><span>c)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li><li class='li_mch_options_in_zone '><span>d)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li><li class='li_mch_options_in_zone '><span>e)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li><li class='li_mch_options_in_zone '><span>f)</span><input class='multiplechoice_text_in_zone' type='text' placeholder='write quiz options here' /></li></ul></div></div>" , 
+		"<div class='trueFalseQuizContainer'><p> quiz dummy truefalse</p></div>"
 		];
 	}
 
@@ -40,9 +40,9 @@ VISH.Dummies = (function(VISH,undefined){
 		return _replaceIds(dum, position, presentation_id, existing_slide);
 	};
 
-	var getQuizDummy = function(type_quiz) {
+	var getQuizDummy = function(type_quiz, position) {
 		VISH.Debugging.log(" type_quiz value: " + type_quiz);
-		VISH.Debugging.log(" hashTypeQuiz {type_quiz}: " + hashTypeQuiz[type_quiz] );
+		VISH.Debugging.log(" hashTypeQuiz {type_quiz}: " + hashTypeQuiz[type_quiz]);
 		return quizDummies[hashTypeQuiz[type_quiz]];
 
 	}

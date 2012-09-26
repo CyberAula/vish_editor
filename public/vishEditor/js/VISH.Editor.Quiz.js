@@ -6,10 +6,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
-		//$(document).on('click', '#mchoice_quiz_thumb', _addMultipleChoiceQuizInTemplate )
-		
 	};	
-	//for embeding a quiz into a template
+	//for embeding a quiz into a template 
 	var onLoadTab = function (tab) {
 			V.Debugging.log("onLoadTab Quiz : " + tab);
 		if(tab=="quiz_mchoice") {
@@ -26,8 +24,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var addMChoiceQuiz = function () {
 		V.Debugging.log("add MChoice Quiz Button clicked");
 		//test values for elements
- 	   _generateWrapper();
-	  $.fancybox.close();
+ 	  // _generateWrapper();
+	//  $.fancybox.close();
 	  
   	};
 
@@ -44,6 +42,26 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		};
 		
 	};
+/* function called when click an element of the quiz fancybox */
+	var addQuiz = function(quiz_type) {
+		$.fancybox.close();
+		
+		switch (quiz_type) {
+			case "open":
+				_addOpenQuiz();
+				 break;
+			case "multiplechoice":
+				_addMultipleChoiceQuiz();
+				 break;
+			case "truefañse":
+				_addTrueFalseQuiz();
+			 	break;
+			default: 
+				break;
+		}
+	};
+
+
 
 	var _onKeyDown = function(event){
 		if(event.keyCode == 13) {
@@ -183,7 +201,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 			};
 
-	var _generateWrapper = function() {
+	/*var _generateWrapper = function() {
 		current_area =  VISH.Editor.getCurrentArea();
 		var nextQuizId = VISH.Editor.getId();
 		current_area.attr('type','quiz');
@@ -204,45 +222,30 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		//return current_area;
 
 
-	};		
+	}; */		
 
 
 	var _addOpenQuiz = function() {
 
 	};
 
-	var _addMultipleChoiceQuiz = function() {
-			V.Debugging.log(" addMultipleChoiceQuiz detected");	
-		var quiz = VISH.Dummies.getQuizDummy("multiplechoice");
-		var current_area = V.Editor.getCurrentArea();
+	var _addMultipleChoiceQuiz = function(area) {
+		V.Debugging.log(" addMultipleChoiceQuiz detected");	
+		//getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false)
+		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
+		if(area){
+			var current_area = area;
+		}	else {
+			var current_area = VISH.Editor.getCurrentArea();
+		}
+		$(current_area).find(".menuselect_hide").remove();
+		current_area.attr('type','quiz');
 		current_area.append(quiz);
+		
 		V.Editor.addDeleteButton(current_area);
 	};
 
 	var _addTrueFalseQuiz = function() {
-	};
-
-	var addQuiz = function(quiz_type) {
-		V.Debugging.log(" addQuiz detected, quiz_type: " + quiz_type);
-		$.fancybox.close();
-		$(".menuselect_hide").hide();
-			
-		switch (quiz_type) {
-			case "open":
-				_addOpenQuiz();
-				 break;
-			case "multiplechoice":
-				_addMultipleChoiceQuiz();
-				 break;
-			case "truefañse":
-				_addTrueFalseQuiz();
-			 	break;
-			default: 
-				break;
-
-		}
-
-
 	};
 
 	return {

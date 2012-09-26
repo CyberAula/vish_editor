@@ -63,8 +63,9 @@
     padding: 2% 4%;
     position: relative;
     z-index: 1000;
-	max-width: 100%;
+	max-width: 90%;
 	min-width: 50%;
+    max-height: 40%;
 }
 
 .multiplechoice_text {
@@ -83,6 +84,51 @@
 .li_mch_option {
 	
 	list-style:none;
+}
+
+
+.value_multiplechoice_question_in_zone {
+    background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 1.2em;
+    outline: 0 none;
+    padding: 2%;
+    position: relative;
+    z-index: 1000;
+    width: 90%;
+    min-width: 50%;
+    max-height: 40%;
+}
+
+
+.ul_mch_options_in_zone {
+    padding: 0%;
+
+}
+.li_mch_options_in_zone {
+    display: inline-block;
+    padding: 0%;
+    width: 100%;
+}
+.li_mch_options_in_zone > span{
+    display: inline-block;
+    padding: 1%;
+    width: 4%;
+}
+
+.multiplechoice_text_in_zone {
+    background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Helvetica;
+    font-size: 1em;
+    outline: 0 none;
+    padding: 1%;
+    position: relative;
+    z-index: 1000;
+    width: 92%;
 }
 
 /* True/False Question Quiz*/
