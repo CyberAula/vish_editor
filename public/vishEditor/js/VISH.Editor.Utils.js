@@ -288,8 +288,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 			//Quizes
 			case "tab_quizes":
-
-					V.Debugging.log("tab_quizes case ");
+				V.Debugging.log("tab_quizes case ");
 				VISH.Editor.Quiz.onLoadTab("quizes");
 				break;
 				
@@ -301,18 +300,23 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 	var loadQuizFancyBox = function (id) {
-
-$('.joyride-close-tip').click();
-
-		//hide previous tab
-		$(".menuselect_hide").hide();
-		//show content
-		$("#" + id).show();
-
+		V.Debugging.log(" loadQuizFancyBox detected and ID: " + id);
+		$('.joyride-close-tip').click();
+		$("#" +id).show();
 		//hide previous help button
 		$(".help_in_fancybox").hide();
 		//show correct one
-		$("#"+ id + "_help").show();
+		$("#help_quiz_selection_help").show();
+		$(".menuselect_hide").hide();
+		//hide previous tab
+		//$(".menuselect_hide").hide();
+		//show content
+		//$("#" + id).show();
+
+		//hide previous help button
+		//$(".help_in_fancybox").hide();
+		//show correct one
+		//$("#"+ id + "_help").show();
 
 	};
 

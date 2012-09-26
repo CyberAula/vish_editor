@@ -206,9 +206,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	};		
 
-	var addMultipleChoiceQuizInTemplate = function() {
-		V.Debugging.log(" addMultipleChoice Quiz in Template Detected  ");
+	var addQuiz = function(quiz_type) {
+		V.Debugging.log(" addQuiz detected, quiz_type: " + quiz_type);
+		$.fancybox.close();
 		$(".menuselect_hide").hide();
+		var current_area = V.Editor.getCurrentArea();
+		V.Debugging.log(" current area : " + current_area.html());
+
 	};
 
 	return {
@@ -216,7 +220,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		init			 				: init, 
 		onLoadTab						: onLoadTab, 
 		addMChoiceQuiz					: addMChoiceQuiz, 
-		addMultipleChoiceQuizInTemplate : addMultipleChoiceQuizInTemplate 				
+		addQuiz							: addQuiz
 
 	};
 

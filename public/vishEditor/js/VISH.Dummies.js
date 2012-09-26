@@ -28,6 +28,8 @@ VISH.Dummies = (function(VISH,undefined){
 	 * param article_id: id of the article, used for editing presentations
 	 */
 	var getDummy = function(template, position, presentation_id, existing_slide){
+				VISH.Debugging.log(" template value: " + template);
+
 		var dum = dummies[parseInt(template,10)-1];
 		return _replaceIds(dum, position, presentation_id, existing_slide);
 	};

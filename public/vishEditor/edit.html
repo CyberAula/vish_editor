@@ -358,19 +358,19 @@
 <div style='display:none'>
 
 	<div id='quiz_fancybox' class="fancybox_quiz_content" style='display:none' > 
-		   <img id='help_help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+		   <img id='help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
 		<h2 id='quiz_fancybox_title' class='quiz_fancybox_title' > Quiz </h2>
 	   
 	      
-	      <div style="display:none" class='templatethumb' template='10'>
-		      <img src='/vishEditor/images/templatesthumbs/t10.png' />
+	      <div style="display:none" class='quiztypethumb' id='open_quiz_thumb'>
+		      <img src='/vishEditor/images/templatesthumbs/t10.png' onclick='VISH.Editor.Quiz.addQuiz("open");'/>
 	      </div>
-	      <div class='templatethumb' id='mchoice_quiz_thumb'>
-		      <img src='/vishEditor/images/templatesthumbs/t11.png' />
+	      <div class='quiztypethumb' id='mchoice_quiz_thumb'>
+		      <img src='/vishEditor/images/templatesthumbs/t11.png' onclick='VISH.Editor.Quiz.addQuiz("multiplechoice");'/>
 	      </div>
           
-          <div style="display:none" class='templatethumb' template='12'>
-		      <img src='/vishEditor/images/templatesthumbs/t12.png' />
+          <div style="display:none" class='quiztypethumb' id='truefalse_quiz_thumb'>
+		      <img src='/vishEditor/images/templatesthumbs/t12.png' onclick='VISH.Editor.Quiz.addQuiz("truefalse");'/>
 	      </div>
           
 	 </div>
