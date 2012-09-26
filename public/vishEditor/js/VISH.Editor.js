@@ -103,6 +103,7 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Utils.loadTab('tab_templates');
 			}
 		});
+
 		
 		if(!eventsLoaded){
 			eventsLoaded = true;
@@ -115,11 +116,14 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click','.editable', _onEditableClicked);
 			$(document).on('click','.selectable', _onSelectableClicked);
 			
+			$(document).on('click','.addQuiz', _onQuizThumbClicked);
+
 			$(document).on('click','.delete_content', _onDeleteItemClicked);
 			$(document).on('click','.delete_slide', _onDeleteSlideClicked);
 			//arrows in button panel
 			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
+			
 
 			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
 
@@ -305,18 +309,56 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : "";
-		var slide = VISH.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false);
-				
-		VISH.Editor.Utils.addSlide(slide);
 		
-		$.fancybox.close();
-		
-		VISH.Editor.Utils.redrawSlides();		
-		VISH.Editor.Thumbnails.redrawThumbnails();
-		
-		setTimeout("VISH.Slides.lastSlide()", 300);	
+		//TODO ask Kike for a better way to do it
+		//detecting add quiz into a template 
+		if($(event.target).parent().attr('id')=="mchoice_quiz_thumb") {
+			V.Editor.Quiz.addMultipleChoiceQuizInTemplate();
+			$.fancybox.close();
+		}
+		//default (add a template)
+		else {		
+			var slide = VISH.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false);	
+			VISH.Editor.Utils.addSlide(slide);
+			$.fancybox.close();
+			VISH.Editor.Utils.redrawSlides();		
+			VISH.Editor.Thumbnails.redrawThumbnails();
+			setTimeout("VISH.Slides.lastSlide()", 300);	
+		}
 	};
 
+
+
+	/**
+	 * function called when user clicks on Quiz icon to add a Quiz into a Template
+	 */
+var _onQuizThumbClicked = function (event) {
+	$("a.addQuiz").fancybox({
+		'autoDimensions' : false,
+		'scrolling': 'no',
+		'width': 385,
+		'height': 340,
+		'padding': 0,
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false, 
+		'onStart' : function (data)	{
+			var clickedZoneId = $(data).attr("zone");
+			currentZone = $("#" + clickedZoneId);
+			V.Debugging.log("onStart fancy Box");
+			//$(".menuselect_hide").hide();
+			$("#quiz_fancybox").show();
+			//hide previous help button
+			$(".help_in_fancybox").hide();
+			//show correct one
+			$("#help_quiz_selection_help").show();
+		}	
+	});
+
+
+};
 
 	/**
 	 * Function called when user clicks on an editable element
@@ -394,19 +436,7 @@ VISH.Editor = (function(V,$,undefined){
 				VISH.Editor.Utils.loadTab('tab_live_webcam');
 			}
 		});
-		$("a.addQuiz").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_quiz_mchoice');
-			}
-		});
-	};
+	}; 
 
 
 	/**

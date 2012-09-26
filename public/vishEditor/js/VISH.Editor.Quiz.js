@@ -6,10 +6,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
+		//$(document).on('click', '#mchoice_quiz_thumb', _addMultipleChoiceQuizInTemplate )
+		
 	};	
 	//for embeding a quiz into a template
 	var onLoadTab = function (tab) {
-
+			V.Debugging.log("onLoadTab Quiz : " + tab);
 		if(tab=="quiz_mchoice") {
 
 			_onLoadTabMChoiceQuiz();
@@ -24,8 +26,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var addMChoiceQuiz = function () {
 		V.Debugging.log("add MChoice Quiz Button clicked");
 		//test values for elements
-
-		_generateWrapper();
+ 	   _generateWrapper();
 	  $.fancybox.close();
 	  
   	};
@@ -205,11 +206,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	};		
 
+	var addMultipleChoiceQuizInTemplate = function() {
+		V.Debugging.log(" addMultipleChoice Quiz in Template Detected  ");
+		$(".menuselect_hide").hide();
+	};
+
 	return {
-		drawQuiz				: drawQuiz,
-		init			 		: init, 
-		onLoadTab				: onLoadTab, 
-		addMChoiceQuiz			: addMChoiceQuiz 				
+		drawQuiz						: drawQuiz,
+		init			 				: init, 
+		onLoadTab						: onLoadTab, 
+		addMChoiceQuiz					: addMChoiceQuiz, 
+		addMultipleChoiceQuizInTemplate : addMultipleChoiceQuizInTemplate 				
 
 	};
 
