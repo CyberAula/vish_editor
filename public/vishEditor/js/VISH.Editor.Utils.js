@@ -1,5 +1,6 @@
 VISH.Editor.Utils = (function(V,$,undefined){
 
+
   /**
    * function to dispatch the event that redraws the slides
    * also redraws the thumbnails

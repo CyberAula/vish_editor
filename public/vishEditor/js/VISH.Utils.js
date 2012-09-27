@@ -14,6 +14,18 @@ VISH.Utils = (function(V,undefined){
 			}
 	  }
 
+/**
+	* function to dinamically add a css
+	*/
+	var loadCSS = function(path){
+		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel:  "stylesheet",
+			type: "text/css",
+			href: path
+		});
+	};
 
     var generateTable = function(author,title,description){
         
@@ -193,8 +205,9 @@ var getZoomFromStyle = function(style){
 
    return {
 			init : init,
-	    getOuterHTML : getOuterHTML,
+	    	getOuterHTML : getOuterHTML,
 			generateTable : generateTable,
+			loadCSS			: loadCSS,
 			checkMiniumRequirements : checkMiniumRequirements,
 			convertToTagsArray : convertToTagsArray,
 			getURLParameter : getURLParameter,

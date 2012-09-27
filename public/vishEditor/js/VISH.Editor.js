@@ -167,24 +167,12 @@ VISH.Editor = (function(V,$,undefined){
 	var getId = function(){
 		domId = domId +1;
 		return "unicID_" + domId;
-	}
+	};
 	
 	var getOptions = function(){
 		return initOptions;
-	}
+	};	
 	
-	/**
-	* function to dinamically add a css
-	*/
-	var _loadCSS = function(path){
-		$("head").append("<link>");
-		css = $("head").children(":last");
-		css.attr({
-			rel:  "stylesheet",
-			type: "text/css",
-			href: path
-		});
-	};
 
 	/**
 	* Function to add a delete button to the element
@@ -538,6 +526,7 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.description = draftPresentation.description;
 			presentation.avatar = draftPresentation.avatar;
 			presentation.tags = draftPresentation.tags;
+			presentation.theme = draftPresentation.theme;
 		}
 		presentation.author = '';
 		presentation.slides = [];

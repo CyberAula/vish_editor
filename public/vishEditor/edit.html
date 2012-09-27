@@ -99,7 +99,8 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
+	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
@@ -240,8 +241,8 @@
 
 			</div>
 			<div id="toolbar_presentation">
-				<img class="toolbar_icon" style="display:none" 
-				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
+				<img class="toolbar_icon toolbar_presentation" style="display:none" 
+				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png" title="Select theme"/>
 				<img id="change_background_fc" class="toolbar_icon toolbar_flashcard" style="display:none" 
 				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png" title="Change background"/>
 			</div>
@@ -640,7 +641,23 @@
 	    </div>
 	  </div>
   
-  
+
+	<!-- Select theme fancybox -->
+  	<a id="hidden_button_to_launch_theme_fancybox" href="#theme_fancybox" style="display:none" i18n-key="i.selectTheme">Select theme</a>
+  	<div style='display:none'>
+	    <div id="theme_fancybox" class="">
+	    	<div id='select_theme1'>
+		      <img src='/vishEditor/images/themes/theme1/select.png' onclick="VISH.Themes.selectTheme('theme1')"/>
+	      </div>
+	      <div id='select_theme2'>
+		      <img src='/vishEditor/images/themes/theme2/select.png' onclick="VISH.Themes.selectTheme('theme2')"/>
+	      </div>
+	    </div>
+	</div>
+
+
+
+
   	<!-- Objects -->
 	  <div style='display:none'>
 	    <div id="object_fancybox" class="outer_box">

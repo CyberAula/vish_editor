@@ -123,7 +123,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var presentationType = VISH.Editor.getPresentationType();
 
 		switch(presentationType){
-			case "presentation":
+			case "presentation":				
+				$("#hidden_button_to_launch_theme_fancybox").fancybox({
+					'autoDimensions' : false,
+					'width': 800,
+					'scrolling': 'no',
+					'height': 600,
+					'padding' : 0
+				});
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();
 				break;
 			case "flashcard":
@@ -257,6 +264,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var selectTheme = function(){
 		V.Debugging.log("selectTheme called");
+		$("#hidden_button_to_launch_theme_fancybox").trigger("click");
 	}
 
 	var changeFlashcardBackground = function(){
@@ -364,7 +372,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			}
 		}
 		$.fancybox.close();
-	}
+	};
+
+	
   
 	return {
 		init							: init,
