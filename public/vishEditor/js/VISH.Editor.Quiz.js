@@ -229,8 +229,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	}; */		
 
 
-	var _addOpenQuiz = function() {
-
+	var _addOpenQuiz = function(area) {
+		V.Debugging.log(" addOpenQuiz detected");	
+		var quiz = VISH.Dummies.getQuizDummy("open", V.Slides.getSlides().length);
+		if(area){
+			var current_area = area;
+		}
+		else {
+			var current_area = VISH.Editor.getCurrentArea();
+		}
+		$(current_area).find(".menuselect_hide").remove();
+		current_area.attr('type','quiz');
+		current_area.append(quiz);
+		V.Editor.addDeleteButton(current_area);
+		launchTextEditorInTextArea(current_area, "open");
 	};
 
 	var _addMultipleChoiceQuiz = function(area) {
@@ -245,11 +257,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(current_area).find(".menuselect_hide").remove();
 		current_area.attr('type','quiz');
 		current_area.append(quiz);
-		
 		V.Editor.addDeleteButton(current_area);
-		
-		
-		launchTextEditorInTextArea(current_area);
+		launchTextEditorInTextArea(current_area, "multiplechoice");
 
 	};
 
@@ -258,10 +267,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 
 
- var launchTextEditorInTextArea = function(area){
+ var launchTextEditorInTextArea = function(area, type){
  		//TODO Ask Aldo about the use of nicEditor
- 	current_area = area;
-   	var textArea = $(current_area).find(".value_multiplechoice_question_in_zone");		
+ 	current_area = area;   //value_openquestion_in_zone
+   	var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
    	var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwig_zoneX 
    	textArea.attr("id", wysiwygId);
   	textArea.addClass("wysiwygInstance");

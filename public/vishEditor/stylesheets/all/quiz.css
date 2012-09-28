@@ -39,6 +39,26 @@
     text-decoration: none;
     text-align:left;
 }
+.value_open_question_in_zone {   
+    background: none no-repeat scroll 5px 50% transparent;
+    border: 1px solid #9B999D;
+    border-radius: 10px 10px 10px 10px;
+    margin-left:3%;
+    font-family: Helvetica;
+    font-size: 16px;
+    outline: 0 none;
+    padding: 5px 7px;
+    position: relative;
+    text-align:left;
+    z-index: 1000;
+    width: 610px;
+}
+
+.participant_answer {
+
+    display: none;
+}
+
 
 /* Multiple Choice Question Quiz*/
 .header_multiplechoice_question {
@@ -345,15 +365,9 @@ span.mcChoiceSpan{
 
  .mcoption_a { 
         background-color: red;
-    /* width:0%;
-        height:100%;
-       
-        position: relative;
-        display:block; 
-        float:left;
-    */
+
     }       
-/* .mc_meter #mcoption_b {  */        
+    
  .mcoption_b { 
             background-color: green;
   }   
