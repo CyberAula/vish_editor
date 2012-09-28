@@ -15,8 +15,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				if(elem.attr("src")===presentation.avatar);
 				elem.addClass("carrousel_element_selected");
 				//TODO move the carrousel to the page with the element
-		});		
-		V.Themes.selectTheme(presentation.theme);		
+		});
+
+		//Commented by V. Hugo 'cause it caused crash the editor
+		//VISH.Themes.selectTheme(presentation.theme);		
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
 				_renderSlide(slides[i], i, presentation.id);			

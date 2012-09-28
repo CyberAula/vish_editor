@@ -44,9 +44,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var loadToolsForZone = function(zone){
 		cleanZoneTools();
-
+		
 		var type = $(zone).attr("type");
-
 		switch(type){
 			case "text":  
 				loadToolbarForElement(type);
@@ -121,7 +120,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var loadPresentationToolbar = function(){
 
 		var presentationType = VISH.Editor.getPresentationType();
-
 		switch(presentationType){
 			case "presentation":				
 				$("#hidden_button_to_launch_theme_fancybox").fancybox({
