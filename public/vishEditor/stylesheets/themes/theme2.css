@@ -1,3 +1,29 @@
-.slides > article {
-	background-color: red;
+@-moz-keyframes myfirst /* Firefox */
+{
+0%   {background-position: 0% 0%;}
+100% {background-position: 100% 0%;}
 }
+
+.slides > article {
+	background-color: transparent;
+	border: none;
+background: url(/vishEditor/images/textures/notebook5.png) top;
+background-size: 100% 100%;
+padding-top: 120px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+}
+
+
+.slides {
+	background: white url(/vishEditor/images/test.png);
+	background-size: 50% 100%;
+	background-repeat: repeat-x;
+	-moz-animation: myfirst 30s linear;
+	-moz-animation-iteration-count: infinite;
+	bo
+}
+
+
+
