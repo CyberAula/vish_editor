@@ -162,6 +162,9 @@ var i18n =
 				"i.publish"				: "Publicar",
 				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado."
+				
+				
+
 			},
 			
 		  "default" :

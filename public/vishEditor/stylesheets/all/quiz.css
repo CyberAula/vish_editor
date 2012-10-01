@@ -54,6 +54,12 @@
     width: 610px;
 }
 
+.openQuizContainer {
+
+width: 100%;
+
+}
+
 .participant_answer {
 
     display: none;

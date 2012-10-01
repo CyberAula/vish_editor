@@ -67,11 +67,15 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				_showSlider($(zone).find(".snapshot_wrapper").attr("id"));
 				loadToolbarForElement("snapshot");
 				break;
+			case "quiz":
+				loadToolbarForElement("quiz");
+				break;
 			case undefined:
 
 				//Add menuselect button
 				$(zone).find(".menuselect_hide").show();
 				return;
+
 			default:
 				break;
 		}
@@ -175,8 +179,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var loadToolbarForElement = function(type){
 		_cleanElementToolbar();
-
-		if(type=="text"){
+		if(type=="text" || type=="quiz"){
 			_loadNiceEditorToolbar();
 			return;
 		}

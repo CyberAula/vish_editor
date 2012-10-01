@@ -42,8 +42,6 @@ VISH.Editor.Text = (function(V,$,undefined){
   		}
   		initial_text = "<div><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
-	
-	 V.Debugging.log("myNicEditor in launchTextEditor function: " + myNicEditor);
 	// only one instance of the NicEditor is created
     if(myNicEditor == null) {
       myNicEditor = new nicEditor();
@@ -181,7 +179,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 
 	var getNicEditor = function () {
-		 V.Debugging.log("myNicEditor in text class : " + myNicEditor);
 		if(myNicEditor== null) {
 			myNicEditor = new nicEditor();
       		myNicEditor.setPanel('slides_panel');
@@ -195,7 +192,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 	};
 
 	var setNicEditor = function (nicEditor) {
- V.Debugging.log("myNicEditor : " + myNicEditor);
 		if(myNicEditor == null) {
      		 myNicEditor = nicEditor;
      	 	myNicEditor.setPanel('slides_panel');
