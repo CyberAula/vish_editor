@@ -1,30 +1,50 @@
 VISH.Utils = (function(V,undefined){
 	
-	  var init = function(){
-			//Code here...
-		}
-	
-	  var getOuterHTML = function(tag){
-      //In some old browsers (before firefox 11 for example) outerHTML does not work
-      //Trick to provide full browser support
-      if (typeof($(tag)[0].outerHTML)=='undefined'){
-        return $(tag).clone().wrap('<div></div>').parent().html();
-      } else {
-				return $(tag)[0].outerHTML;
-			}
-	  }
+	var init = function(){
+		//Code here...
+	}
 
-/**
-	* function to dinamically add a css
+	var getOuterHTML = function(tag){
+		//In some old browsers (before firefox 11 for example) outerHTML does not work
+		//Trick to provide full browser support
+		if (typeof($(tag)[0].outerHTML)=='undefined'){
+			return $(tag).clone().wrap('<div></div>').parent().html();
+		} else {
+			return $(tag)[0].outerHTML;
+		}
+	}
+
+
+
+	var loadDeviceCSS = function(){
+		//Set device CSS
+		if(VISH.Status.getDevice().desktop){
+			loadCSS("device/desktop.css");
+		} else if(VISH.Status.getDevice().mobile){
+			loadCSS("device/mobile.css");
+		} else if(VISH.Status.getDevice().tablet){
+			loadCSS("device/tablet.css");
+		}
+
+		//Set browser CSS
+		switch(VISH.Status.getDevice().browser.name){
+			case VISH.Constant.FIREFOX:
+				loadCSS("browser/firefox.css");
+				break;
+			case VISH.Constant.IE:
+				loadCSS("browser/ie.css");
+				break;
+			case VISH.Constant.CHROME:
+				loadCSS("browser/chrome.css");
+				break;
+		}
+	}
+
+   /**
+	* Function to dinamically add a css
 	*/
 	var loadCSS = function(path){
-		$("head").append("<link>");
-		css = $("head").children(":last");
-		css.attr({
-			rel:  "stylesheet",
-			type: "text/css",
-			href: path
-		});
+		$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + path + '" type="text/css" />');
 	};
 
     var generateTable = function(author,title,description){
@@ -207,6 +227,7 @@ var getZoomFromStyle = function(style){
 			init : init,
 	    	getOuterHTML : getOuterHTML,
 			generateTable : generateTable,
+			loadDeviceCSS	: loadDeviceCSS,
 			loadCSS			: loadCSS,
 			checkMiniumRequirements : checkMiniumRequirements,
 			convertToTagsArray : convertToTagsArray,

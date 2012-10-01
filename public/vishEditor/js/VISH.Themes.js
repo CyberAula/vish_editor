@@ -4,7 +4,7 @@ VISH.Themes = (function(V,$,undefined){
 		if(!theme){
 			theme = "theme1";  //default theme
 		}
-		V.Utils.loadCSS(VISH.StylesheetsPath + "themes/" + theme + ".css");
+		V.Utils.loadCSS("themes/" + theme + ".css");
 
 		if(V.Editing){
 			//save it in the draftPresentation
