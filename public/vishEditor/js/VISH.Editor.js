@@ -54,21 +54,11 @@ VISH.Editor = (function(V,$,undefined){
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
 		}
+		VISH.Utils.loadDeviceCSS();
 
 		VISH.Dummies.init();
 		VISH.Slides.init();
 		VISH.User.init(options);
-
-		if(VISH.Status.getDevice().desktop){
-			// VISH.Debugging.log("Load Desktop CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
-		} else if(VISH.Status.getDevice().mobile){
-			// VISH.Debugging.log("Load Mobile CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
-		} else if(VISH.Status.getDevice().tablet){
-			// VISH.Debugging.log("Load Tablet CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
-		}
 
 		if(VISH.Debugging.isDevelopping()){
 			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {

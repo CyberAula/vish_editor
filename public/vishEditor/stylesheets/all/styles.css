@@ -480,7 +480,7 @@ div#viewerpreview {
   border-left-color: rgb(170, 170, 170); 
   border-image: initial; 
   opacity: 0.5; 
-  z-index: 12;
+  z-index: 1080;
 }
 
 

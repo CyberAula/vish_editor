@@ -43,6 +43,7 @@ VISH.Editor.Text = (function(V,$,undefined){
   		initial_text = "<div><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
 	
+	 V.Debugging.log("myNicEditor in launchTextEditor function: " + myNicEditor);
 	// only one instance of the NicEditor is created
     if(myNicEditor == null) {
       myNicEditor = new nicEditor();
@@ -178,11 +179,43 @@ VISH.Editor.Text = (function(V,$,undefined){
 		$(myelem).children().unwrap();
 	};
 
+
+	var getNicEditor = function () {
+		 V.Debugging.log("myNicEditor in text class : " + myNicEditor);
+		if(myNicEditor== null) {
+			myNicEditor = new nicEditor();
+      		myNicEditor.setPanel('slides_panel');
+			val = myNicEditor;
+
+		} 
+		else {
+			val = myNicEditor;
+	}
+		return val;
+	};
+
+	var setNicEditor = function (nicEditor) {
+ V.Debugging.log("myNicEditor : " + myNicEditor);
+		if(myNicEditor == null) {
+     		 myNicEditor = nicEditor;
+     	 	myNicEditor.setPanel('slides_panel');
+    	}
+		else {
+			return false;
+		}
+	};
+var nicInitilized = function()  {
+
+	return initialized;
+};
 	
 	return {
 		init              			: init,
 		launchTextEditor  			: launchTextEditor,
-		changeFontPropertiesToSpan  : changeFontPropertiesToSpan
+		changeFontPropertiesToSpan  : changeFontPropertiesToSpan, 
+		getNicEditor 				: getNicEditor, 
+		setNicEditor				: setNicEditor, 
+		nicInitilized				: nicInitilized
 	};
 
 }) (VISH, jQuery);

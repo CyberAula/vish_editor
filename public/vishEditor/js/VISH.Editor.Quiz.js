@@ -2,10 +2,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
 	var fancyTabs = false; //differentiate between fancy tabs and quiz template
+
+	var myNicEditor; // to manage the NicEditor WYSIWYG
+
 	var init = function(){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
+	
 	};	
 	//for embeding a quiz into a template 
 	var onLoadTab = function (tab) {
@@ -225,8 +229,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	}; */		
 
 
-	var _addOpenQuiz = function() {
-
+	var _addOpenQuiz = function(area) {
+		V.Debugging.log(" addOpenQuiz detected");	
+		var quiz = VISH.Dummies.getQuizDummy("open", V.Slides.getSlides().length);
+		if(area){
+			var current_area = area;
+		}
+		else {
+			var current_area = VISH.Editor.getCurrentArea();
+		}
+		$(current_area).find(".menuselect_hide").remove();
+		current_area.attr('type','quiz');
+		current_area.append(quiz);
+		V.Editor.addDeleteButton(current_area);
+		launchTextEditorInTextArea(current_area, "open");
 	};
 
 	var _addMultipleChoiceQuiz = function(area) {
@@ -241,12 +257,43 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(current_area).find(".menuselect_hide").remove();
 		current_area.attr('type','quiz');
 		current_area.append(quiz);
-		
 		V.Editor.addDeleteButton(current_area);
+		launchTextEditorInTextArea(current_area, "multiplechoice");
+
 	};
 
 	var _addTrueFalseQuiz = function() {
 	};
+
+
+
+ var launchTextEditorInTextArea = function(area, type){
+ 		//TODO Ask Aldo about the use of nicEditor
+ 	current_area = area;   //value_openquestion_in_zone
+   	var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
+   	var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwig_zoneX 
+   	textArea.attr("id", wysiwygId);
+  	textArea.addClass("wysiwygInstance");
+    // textArea.addClass("wysiwygInstance");	
+	// only one instance of the NicEditor is created
+	V.Debugging.log("myNicEditor initilized : " + V.Editor.Text.nicInitilized());
+    if(V.Editor.Text.nicInitilized() == false) { 
+
+		VISH.Editor.Text.init();
+		myNicEditor = VISH.Editor.Text.getNicEditor();
+
+	} else { 
+
+		myNicEditor = VISH.Editor.Text.getNicEditor();
+	    V.Debugging.log("myNicEditor : " + myNicEditor);
+	}
+	   	var test =  myNicEditor.addInstance(wysiwygId);
+
+   	V.Debugging.log("returned value when add Instance to NicEditor : " + $(test).html());
+    V.Debugging.log("textArea id : " + textArea.attr("id"));
+  };
+
+
 
 	return {
 		drawQuiz						: drawQuiz,

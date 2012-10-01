@@ -38,19 +38,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Quiz.init(presentation);
 		V.Slides.init();
 		V.Status.init();
-
-		if(VISH.Status.getDevice().desktop){
-			// VISH.Debugging.log("Load Desktop CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/desktop.css" type="text/css" />');
-		} else if(VISH.Status.getDevice().mobile){
-			// VISH.Debugging.log("Load Mobile CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/mobile.css" type="text/css" />');
-		} else if(VISH.Status.getDevice().tablet){
-			// VISH.Debugging.log("Load Tablet CSS");
-			$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + 'device/tablet.css" type="text/css" />');
-		}
-
+		V.Utils.loadDeviceCSS();
 		V.User.init(options);
+		
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(presentation.type ==="game"){
