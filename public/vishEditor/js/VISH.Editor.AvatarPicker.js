@@ -170,13 +170,18 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	}
 
 	var _isDefaultAvatar = function(avatar){
-		var avatarName = avatar.split("/").pop();
-		pattern = "(^excursion-)";
-		if (avatar.match(pattern)===null){
+		if(!avatar){
 			return false;
 		}
-		pattern = "(^" + VISH.ImagesPath + ")";
-		return avatar.match(pattern)!==null;
+
+		var namePattern = "(^excursion-)";
+		var avatarName = avatar.split("/").pop();
+		if (avatarName.match(namePattern)===null){
+			return false;
+		}
+		
+		var pathPattern = "(^" + VISH.ImagesPath + ")";
+		return avatar.match(pathPattern)!==null;
 	}
   
 	return {

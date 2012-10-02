@@ -14,7 +14,6 @@ VISH.Themes = (function(V,$,undefined){
 		}		
 	};
 
-
 	var _loadTheme = function(theme){
 		if(!theme){
 			theme = "theme1";  //Default theme
@@ -33,7 +32,6 @@ VISH.Themes = (function(V,$,undefined){
 				}
 			}
 		});
-
 	}
 
 	return {
