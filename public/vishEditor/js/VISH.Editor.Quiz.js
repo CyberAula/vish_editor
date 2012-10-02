@@ -276,14 +276,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    	textArea.attr("id", wysiwygId);
   	textArea.addClass("wysiwygInstance");
     // only one instance of the NicEditor is created
-	V.Debugging.log("myNicEditor initilized : " + V.Editor.Text.nicInitilized());
-    if(V.Editor.Text.nicInitilized() == false) { 
+	    if(V.Editor.Text.nicInitilized() == false) { 
 		VISH.Editor.Text.init();
 		myNicEditor = VISH.Editor.Text.getNicEditor();
 	}
 	else { 
 		myNicEditor = VISH.Editor.Text.getNicEditor();
-	    V.Debugging.log("myNicEditor : " + myNicEditor);
+	 
 	}
 	   	var test =  myNicEditor.addInstance(wysiwygId);
 

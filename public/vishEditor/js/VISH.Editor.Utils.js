@@ -274,7 +274,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
 
-			//Quizes
+			//TODO remove when quizes be implemented into templates 
 			case "tab_quizes":
 				V.Debugging.log("tab_quizes case ");
 				VISH.Editor.Quiz.onLoadTab("quizes");
@@ -288,7 +288,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 	var loadQuizFancyBox = function (id) {
-		V.Debugging.log(" loadQuizFancyBox detected and ID: " + id);
 		$('.joyride-close-tip').click();
 		$("#" +id).show();
 		//hide previous help button
@@ -296,16 +295,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		//show correct one
 		$("#help_quiz_selection_help").show();
 		$(".menuselect_hide").hide();
-		//hide previous tab
-		//$(".menuselect_hide").hide();
-		//show content
-		//$("#" + id).show();
-
-		//hide previous help button
-		//$(".help_in_fancybox").hide();
-		//show correct one
-		//$("#"+ id + "_help").show();
-
+	
 	};
 
 	

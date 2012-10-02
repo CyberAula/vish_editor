@@ -572,7 +572,30 @@ VISH.Editor = (function(V,$,undefined){
 						if(zoom!=1){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
-					} else if (element.type=="openquestion") {	   
+					} else if (element.type =="quiz") {
+						V.Debugging.log("element type quiz detected");
+						//slide.type = "quiz";	//the type goes in element 
+						V.Debugging.log(".instnace change changeFontPropertiesToSpan: " +VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children()));
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children());
+
+						//multiplechoice quiz
+							if($(div).find(".multiplechoice_text_in_zone")) {
+								element.options = [];  	
+								$(div).find('.multiplechoice_text_in_zone').each(function(i, input_text){
+									if((input_text)&&(input_text.value != "")){
+										element.options.push(input_text.value);
+									}
+								});
+							} else {
+									V.Debugging.log("another kind of quiz detected");
+
+
+							} 
+						} 
+
+
+
+					else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();
 						element.question   = $(div).find(".value_openquestion").val();
 					} else if (element.type=="mcquestion") {     		      	
@@ -584,7 +607,8 @@ VISH.Editor = (function(V,$,undefined){
 							}
 						});
 						slide.type = "quiz";
-					} else if (element.type=="truefalsequestion") {     		      	
+					} else if (element.type=="truefalsequestion") {
+					  	V.Debugging.log("element type truefalsequestion detected");   		      	
 						element.questions = [];	
 						var question = {};
 						$(div).find(".true_false_question").each(function(i, input_text){
