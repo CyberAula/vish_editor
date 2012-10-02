@@ -550,7 +550,7 @@
   
   	<!-- IMAGE -->
   	  <a id="hidden_button_to_launch_picture_fancybox_for_flashcard" href="#picture_fancybox" style="display:none" i18n-key="i.changeBackground">Change background</a>
-  	  <a id="hidden_button_to_launch_picture_fancybox_for_thumbnail" href="#picture_fancybox" style="display:none">Upload Thumbnail</a>
+  	  <a id="hidden_button_to_uploadThumbnail" href="#picture_fancybox" style="display:none">Upload Thumbnail</a>
 
 	  <div style='display:none'>
 	    <div id="picture_fancybox" class="outer_box">
@@ -575,7 +575,7 @@
               		</div>
             			<div class="box2">
             				<div id="picture_preview" class="previewimgbox">
-                				<button i18n-key="i.AddContent" type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
+                				<button i18n-key="i.AddContent" type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.addContent()">Add Content</button>
                 			</div>
             			</div>
 				</div>      
@@ -606,7 +606,7 @@
 							</div>
               <div class="box2 box2_upload">
             				<div class="previewimgbox">
-                				<button i18n-key="i.AddContent" type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.drawPreviewElement()">Add Content</button>
+                				<button i18n-key="i.AddContent" type="button" class="button buttonaddfancy" onclick="VISH.Editor.Image.addContent()">Add Content</button>
                     </div>
 							</div>
         </div>            

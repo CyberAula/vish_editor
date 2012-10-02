@@ -43,7 +43,8 @@ VISH.Editor.Text = (function(V,$,undefined){
   		initial_text = "<div><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
 	
-	 V.Debugging.log("myNicEditor in launchTextEditor function: " + myNicEditor);
+	// V.Debugging.log("myNicEditor in launchTextEditor function: " + myNicEditor);
+
 	// only one instance of the NicEditor is created
     if(myNicEditor == null) {
       myNicEditor = new nicEditor();

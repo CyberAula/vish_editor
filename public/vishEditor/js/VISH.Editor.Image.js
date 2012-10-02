@@ -1,10 +1,10 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
+	var contentAddMode = VISH.Constant.NONE;
 	var uploadDivId = "tab_pic_upload_content";
 	var urlDivId = "tab_pic_from_url_content";
 	var urlInputId = "picture_url";
-	var flashcard_background_mode = false;
 	
 	var init = function(){
 		VISH.Editor.Image.Flikr.init();
@@ -140,34 +140,37 @@ VISH.Editor.Image = (function(V,$,undefined){
 				}
 			}
 		} catch(e) {
-		//No JSON response
+			//No JSON response
 		}
 	}
 	
-	var drawPreviewElement = function(divId){
-		VISH.Editor.Object.drawPreviewObject(contentToAdd);
+	var addContent = function(content){
+		if(content){
+			contentToAdd = content;
+		}
+		switch(contentAddMode){
+			case VISH.Constant.FLASHCARD:
+				VISH.Editor.Flashcard.onBackgroundSelected(contentToAdd);
+				break;
+			case VISH.Constant.THUMBNAIL:
+				VISH.Editor.AvatarPicker.onCustomThumbnailSelected(contentToAdd);
+				break;
+			default:
+				VISH.Editor.Object.drawPreviewObject(contentToAdd);
+		}
+		//Reset contentAddMode
+		contentAddMode = VISH.Constant.NONE;
 	}
 	
-	/**
+   /**
 	* Function to draw an image in a zone of the template
-	* the zone to draw is the one in current_area (params['current_el'])
+	* the zone to draw is the one in current_area
 	* this function also adds the slider and makes the image draggable
 	* param area: optional param indicating the area to add the image, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawImage = function(image_url, area, style, hyperlink){    
-		if(flashcard_background_mode){
-			_drawImageAsFlashcardBackground(image_url);
-			$("#fc_change_bg_big").hide();
-		}
-		else{
-			_drawImageInArea(image_url, area, style, hyperlink);
-		}
-	};
-
-	var _drawImageAsFlashcardBackground = function(image_url){
-		$("#flashcard-background").css("background-image", "url("+image_url+")");
-
+		_drawImageInArea(image_url, area, style, hyperlink);
 	};
 
 	var _drawImageInArea = function(image_url, area, style, hyperlink){
@@ -234,17 +237,17 @@ VISH.Editor.Image = (function(V,$,undefined){
 			}
 		});
 	};
-  
-  	var setFlashcardMode = function(is_flashcard){
-  		flashcard_background_mode = is_flashcard;
-  	};
+
+	var setAddContentMode = function(mode){
+		contentAddMode = mode;
+	}
 
 	return {
 		init 				: init,
 		onLoadTab 			: onLoadTab,
 		drawImage 			: drawImage,
-		drawPreviewElement 	: drawPreviewElement,
-		setFlashcardMode	: setFlashcardMode
+		addContent 			: addContent,
+		setAddContentMode	: setAddContentMode
 	};
 
 }) (VISH, jQuery);

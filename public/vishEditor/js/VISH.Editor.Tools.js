@@ -139,11 +139,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					'height': 600,
 					'padding' : 0,
 					"onStart"  : function(data) {						
-						V.Editor.Image.setFlashcardMode(true);
+						V.Editor.Image.setAddContentMode(VISH.Constant.FLASHCARD);
 						V.Editor.Utils.loadTab('tab_pic_from_url');
-					},
-					"onClosed"	: function(data){
-						V.Editor.Image.setFlashcardMode(false);
 					}
 				});
 				$("#toolbar_presentation").find("img.toolbar_flashcard").show();

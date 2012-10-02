@@ -42,10 +42,9 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 * Fill tab_pic_repo_content_carrousel div with server data.
 	 */
 	var _onDataReceived = function(data) {
-		
 		//Clean previous content
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-    $("#" + carrouselDivId).hide();
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$("#" + carrouselDivId).hide();
 
 		//Clean previous Images
 		currentImages = new Array();
@@ -70,25 +69,24 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	};
 	
 	var _onImagesLoaded = function(){
-    $("#" + carrouselDivId).show();
+		$("#" + carrouselDivId).show();
 		var options = new Array();
 		options['rows'] = 2;
 		options['callback'] = _onClickCarrouselElement;
 		options['rowItems'] = 4;
 		options['scrollItems'] = 4;
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-  }
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+	}
 	
 	var _onAPIError = function() {
 		VISH.Debugging.log("API error");
 	};
 	
 	var _onClickCarrouselElement = function(event) {
-		V.Editor.Image.drawImage($(event.target).attr("src"));
-		$.fancybox.close();
+		var image_url = $(event.target).attr("src");
+		V.Editor.Image.addContent(image_url);
 	};
-	
-		
+			
 	return {
 		init 					    : init,
 		onLoadTab 				: onLoadTab

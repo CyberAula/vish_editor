@@ -2,7 +2,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	
 	//Available Options: rows,callback,rowItems,scrollItems,styleClass
 	
-  var createCarrousel = function(containerId,options){
+	var createCarrousel = function(containerId,options){
 		//Necessary params
 		if(!containerId){
 			return;
@@ -133,9 +133,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if (multipleRow) {
-		  _applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass,width);
+			_applyMultipleRows(containerId, wrapperDiv, mainDiv, rows,rowItems,scrollItems,rowClass,width);
 		} else {
-		  $(wrapperDiv).prepend(mainDiv);
+			$(wrapperDiv).prepend(mainDiv);
 
 			//Get start index
 			if(startAtLastElement){
@@ -144,7 +144,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				var start = 0;
 			}
 			
-		  _setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start, afterCreateCarruselFunction);
+			_setMainCarrousel(containerId,containerId, rows,[],rowItems,scrollItems,width,start, afterCreateCarruselFunction);
 		}	
 			
 		if(pagination){
@@ -157,73 +157,72 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 
 		return "Done";
-  }
+	}
 
 	
-  var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass,width){
-		
-    var synchronizeIds = [];
-		
+	var _applyMultipleRows = function(containerId, wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass,width){
+
+		var synchronizeIds = [];
+
 		//Create one div for each row.
 		var i;
 		for (i=0;i<rows;i++) {
-		  window[mainDiv.id + "_row" + i ] = document.createElement('div');
-		  window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
+			window[mainDiv.id + "_row" + i ] = document.createElement('div');
+			window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
 			window[mainDiv.id + "_row" + i ].setAttribute('class',"carrousel_wrapper_" + rowClass);
-		  if(i!=0){
-		    synchronizeIds.push(mainDiv.id + "_row" + i)
-		  }
-	  }
+			if(i!=0){
+				synchronizeIds.push(mainDiv.id + "_row" + i)
+			}
+		}
 			
 		//Divide children into the different divs.
 		$(mainDiv).children().each(function(index,value){
-		  $(window[mainDiv.id + "_row" + index%rows  ]).append(value)
+			$(window[mainDiv.id + "_row" + index%rows  ]).append(value)
 		});
 			
 			
 		//Add divs to the wrapper and invoke carrousel Plugin
 		for (i=rows-1;i>=0;i--) {
-	    $(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
-		  if(i==0){
-			  var newContainerId = mainDiv.id + "_row" + i;
-		    _setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width);
-		  } else {
-			  _setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width);
-		  }
-	  }
+			$(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
+			if(i==0){
+				var newContainerId = mainDiv.id + "_row" + i;
+				_setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width);
+			} else {
+				_setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width);
+			}
+		}
 		$(".caroufredsel_wrapper").css("margin-bottom","30px")
-  }
+	}
 
 
-  var _setRowCarrousel = function (id,rowItems,scrollItems,width){
-    $("#" + id).carouFredSel({
-      auto    : false,
-      circular: false,
-      infinite: false,
-      width   : width,
-	    scroll : {
-        //items         : "page",
-        items           : scrollItems,
-        fx              : "scroll",
-        duration        : 1000,
-        pauseDuration   : 2000                
-      },
-	    items : {
-	      visible    : {
-		      min : rowItems,
-		      max : rowItems
-		    }
-	    }
-    }); 
-  }
+	var _setRowCarrousel = function (id,rowItems,scrollItems,width){
+		$("#" + id).carouFredSel({
+			auto    : false,
+			circular: false,
+			infinite: false,
+			width   : width,
+			scroll : {
+			//items         : "page",
+			items           : scrollItems,
+			fx              : "scroll",
+			duration        : 1000,
+			pauseDuration   : 2000                
+			},
+			items : {
+			  visible    : {
+			      min : rowItems,
+			      max : rowItems
+			    }
+			}
+		}); 
+	}
 
 
-  var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start, afterCreateCarruselFunction){
-		
+	var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start, afterCreateCarruselFunction){
 		if(!start){
 			start = 0;
 		}
-		
+
 		$("#" + id).carouFredSel({
 		  circular: false,
 		  infinite: false,
@@ -232,7 +231,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		  scroll : {
 		    //items         : "page",
 		    items           : scrollItems,
-	      //fx              : "scroll",
+		    //fx              : "scroll",
 		    duration        : 1000,
 		    pauseDuration   : 2000                
 		  },
@@ -256,41 +255,41 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		});  
 			
 		if(synchronizeIds){
-		  $(synchronizeIds).each(function(index,value){
-	      $("#" + id).trigger("configuration", ["synchronise", "#" + value]);
-	    });
+			$(synchronizeIds).each(function(index,value){
+		  		$("#" + id).trigger("configuration", ["synchronise", "#" + value]);
+			});
 		}
+
+		$("#" + id).attr("rows",rows)
+	}
 	
-	  $("#" + id).attr("rows",rows)
-  }
 	
-	
-  var cleanCarrousel = function(containerId){
+	var cleanCarrousel = function(containerId){
 		//Remove content
 		$("#" + containerId).html("");
-		
-	  //Check if is a multirow carrousel
-	  var containderIdForMultiRow = containerId + "_row0";
-	  if($("#" + containderIdForMultiRow).attr("rows")){
-		  var rows = $("#" + containderIdForMultiRow).attr("rows");
-		  var i;
-		  for(i=0; i<rows;i++){
-			  _cleanOneRowCarrousel(containerId + "_row" + i);
-		  }
-		  $("#" + containderIdForMultiRow).attr("id",containerId)
-	  } else {
-		  _cleanOneRowCarrousel(containerId);
-	  }
-  }
+
+		//Check if is a multirow carrousel
+		var containderIdForMultiRow = containerId + "_row0";
+		if($("#" + containderIdForMultiRow).attr("rows")){
+			var rows = $("#" + containderIdForMultiRow).attr("rows");
+			var i;
+			for(i=0; i<rows;i++){
+				_cleanOneRowCarrousel(containerId + "_row" + i);
+			}
+			$("#" + containderIdForMultiRow).attr("id",containerId)
+		} else {
+			_cleanOneRowCarrousel(containerId);
+		}
+	}
   
-  var _cleanOneRowCarrousel = function(containerId){
-    var carrouselWrapper = $("#" + containerId).parent().parent();
-	  if($(carrouselWrapper).hasClass('image_carousel')){
-	    $(carrouselWrapper).removeClass()
-		  $(carrouselWrapper).html("")
-		  $(carrouselWrapper).attr("id",containerId)
-	  }
-  }
+	var _cleanOneRowCarrousel = function(containerId){
+		var carrouselWrapper = $("#" + containerId).parent().parent();
+		if($(carrouselWrapper).hasClass('image_carousel')){
+			$(carrouselWrapper).removeClass()
+			$(carrouselWrapper).html("")
+			$(carrouselWrapper).attr("id",containerId)
+		}
+	}
 	
 	var _forceShowPagination = function(containerId){
 		var parent = $("#" + containerId).parent().parent();
@@ -299,27 +298,32 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 	}
 
-  var goToElement = function(carrouselDivId,element){
+	var goToElement = function(carrouselDivId,element){
 		if($(element).is("IMG")){
 			element = $(element).parent();
 		}
-    $("#" + carrouselDivId).trigger("slideTo", element);
-  }
+		$("#" + carrouselDivId).trigger("slideTo", element);
+	}
   
-  var advanceCarrousel = function(carrouselDivId,no){
-    $("#" + carrouselDivId).trigger("next", no);
-  }
-  
-  var backCarrousel = function(carrouselDivId,no){
-    $("#" + carrouselDivId).trigger("prev", no);
-  }
+	var advanceCarrousel = function(carrouselDivId,no){
+		$("#" + carrouselDivId).trigger("next", no);
+	}
 
-  return {
+	var backCarrousel = function(carrouselDivId,no){
+		$("#" + carrouselDivId).trigger("prev", no);
+	}
+
+	var insertElement = function(carrouselDivId,element,posc){
+		$("#" + carrouselDivId).trigger("insertItem", [element, posc]);
+	}
+
+	return {
 		createCarrousel	  : createCarrousel,
 		cleanCarrousel    : cleanCarrousel,
 		goToElement       : goToElement,
 		advanceCarrousel  : advanceCarrousel,
-		backCarrousel     : backCarrousel
-  };
+		backCarrousel     : backCarrousel,
+		insertElement	  : insertElement
+	};
 
 }) (VISH, jQuery);
