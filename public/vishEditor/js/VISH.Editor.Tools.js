@@ -258,7 +258,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
     */
 
 	var selectTheme = function(){
-		V.Debugging.log("selectTheme called");
 		$("#hidden_button_to_launch_theme_fancybox").trigger("click");
 	}
 

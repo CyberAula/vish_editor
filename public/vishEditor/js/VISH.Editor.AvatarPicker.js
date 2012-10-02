@@ -170,6 +170,11 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	}
 
 	var _isDefaultAvatar = function(avatar){
+		var avatarName = avatar.split("/").pop();
+		pattern = "(^excursion-)";
+		if (avatar.match(pattern)===null){
+			return false;
+		}
 		pattern = "(^" + VISH.ImagesPath + ")";
 		return avatar.match(pattern)!==null;
 	}
@@ -177,7 +182,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	return {
 		init	       				: init,
 		onLoadPresentationDetails 	: onLoadPresentationDetails,
-		onCustomThumbnailSelected	: onCustomThumbnailSelected
+		onCustomThumbnailSelected	: onCustomThumbnailSelected,
+		_isDefaultAvatar			: _isDefaultAvatar
 	};
 
 }) (VISH, jQuery);

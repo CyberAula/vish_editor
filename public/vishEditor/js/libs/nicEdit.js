@@ -597,6 +597,7 @@ var nicEditorInstance = bkClass.extend({
 		if(!A) {
 			A = this.selElm()
 		}
+
 		if(!C.ctrlKey) {
 			var B = this.ne.selectedInstance;
 			if(B != this) {

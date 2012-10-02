@@ -8,6 +8,7 @@ VISH.Samples = (function(V,undefined){
 		// "avatar" : "/vishEditor/images/excursion_thumbnails/excursion-10.png",
 		"avatar" : "http://static.betazeta.com/www.veoverde.com/wp-content/uploads/2011/07/fotos-gatos.jpg",
 		// "avatar" 		: "/assets/logos/original/excursion-10.png",
+		"tags": ["Samples","Test","Development"],
 		"author" : "",
 		"theme"	 : "theme2",
 		"slides" : [{

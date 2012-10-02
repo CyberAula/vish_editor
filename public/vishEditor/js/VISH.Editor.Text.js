@@ -40,10 +40,8 @@ VISH.Editor.Text = (function(V,$,undefined){
   			default:
   				break;
   		}
-  		initial_text = "<div><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
+  		initial_text = "<div class='initTextDiv'><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
-	
-	// V.Debugging.log("myNicEditor in launchTextEditor function: " + myNicEditor);
 
 	// only one instance of the NicEditor is created
     if(myNicEditor == null) {
@@ -60,6 +58,24 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 	// add a button to delete the current text area   
     V.Editor.addDeleteButton(current_area); 
+
+    //Remove initial text onClick
+    $(".initTextDiv").click(function(event){
+    	if(event.target.tagName=="FONT"){
+    		var font = $(event.target);
+    		var div =  $(event.target).parent();
+    	} else if(event.target.tagName=="DIV"){
+    		var div = $(event.target);
+    		var font = $(event.target).find("font");
+    	}
+    	if($(font).text()===VISH.Editor.I18n.getTrans("i.WysiwygInit")){
+    			//Remove text
+    			$(font).text("");
+    			$(div).removeClass("initTextDiv");
+    			$("#" + wysiwygId).trigger("click");
+    	}
+    });
+
   };
 	
 	/**
@@ -180,14 +196,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 		$(myelem).children().unwrap();
 	};
 
-
 	var getNicEditor = function () {
-		 V.Debugging.log("myNicEditor in text class : " + myNicEditor);
 		if(myNicEditor== null) {
 			myNicEditor = new nicEditor();
       		myNicEditor.setPanel('slides_panel');
 			val = myNicEditor;
-
 		} 
 		else {
 			val = myNicEditor;
@@ -196,19 +209,17 @@ VISH.Editor.Text = (function(V,$,undefined){
 	};
 
 	var setNicEditor = function (nicEditor) {
- V.Debugging.log("myNicEditor : " + myNicEditor);
 		if(myNicEditor == null) {
      		 myNicEditor = nicEditor;
      	 	myNicEditor.setPanel('slides_panel');
-    	}
-		else {
+    	} else {
 			return false;
 		}
 	};
-var nicInitilized = function()  {
 
-	return initialized;
-};
+	var nicInitilized = function()  {
+		return initialized;
+	};
 	
 	return {
 		init              			: init,
