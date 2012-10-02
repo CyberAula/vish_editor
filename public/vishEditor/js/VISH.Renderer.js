@@ -21,6 +21,8 @@ VISH.Renderer = (function(V,$,undefined){
 		var classes = "";
 		var buttons = "";
 		for(el in slide.elements){
+	
+
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
@@ -41,7 +43,19 @@ VISH.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === "flashcard"){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
-			} else if(slide.elements[el].type === "openquestion"){
+			}
+			 else if(slide.elements[el].type === "quiz"){
+			 	V.Debugging.log("VISH.Renderer: Slide element type: quiz");
+					
+				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template);
+
+				
+
+				classes += "quiz";
+			} 
+
+			//TODO remove different renderQuiz , just only one for quiz and decide in quiz class what to do
+			 else if(slide.elements[el].type === "openquestion"){
 				content += V.Quiz.Renderer.renderQuiz("openquestion",slide.elements[el],slide.template);
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				

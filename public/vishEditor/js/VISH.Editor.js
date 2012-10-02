@@ -575,11 +575,12 @@ VISH.Editor = (function(V,$,undefined){
 					} else if (element.type =="quiz") {
 						V.Debugging.log("element type quiz detected");
 						//slide.type = "quiz";	//the type goes in element 
-						V.Debugging.log(".instnace change changeFontPropertiesToSpan: " +VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children()));
+						//V.Debugging.log(".instance change changeFontPropertiesToSpan: " +VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children()));
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children());
 
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
+								element.quiztype = "multiplechoice";
 								element.options = [];  	
 								$(div).find('.multiplechoice_text_in_zone').each(function(i, input_text){
 									if((input_text)&&(input_text.value != "")){
@@ -592,8 +593,6 @@ VISH.Editor = (function(V,$,undefined){
 
 							} 
 						} 
-
-
 
 					else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();

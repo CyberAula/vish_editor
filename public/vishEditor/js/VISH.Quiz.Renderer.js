@@ -13,7 +13,12 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
    * Function to render a quiz inside an article (a slide)
    */
   var renderQuiz = function(quizType, element, template, slide){
+
+    V.Debugging.log("V.Quiz.Renderes, quizType:" + quizType)
     switch(quizType){
+      case "multiplechoice":
+        return _renderMcQuestion(element, template, slide);
+        break;
       case "mcquestion":
         return _renderMcQuestion(element, template, slide);
         break;

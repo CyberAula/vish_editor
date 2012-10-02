@@ -276,7 +276,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    	textArea.attr("id", wysiwygId);
   	textArea.addClass("wysiwygInstance");
     // only one instance of the NicEditor is created
-	    if(V.Editor.Text.nicInitilized() == false) { 
+	if(V.Editor.Text.nicInitilized() == false) { 
 		VISH.Editor.Text.init();
 		myNicEditor = VISH.Editor.Text.getNicEditor();
 	}
