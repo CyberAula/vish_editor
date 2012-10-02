@@ -6,19 +6,12 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 */
 	var init = function(presentation){
-		//first set title and description
 		$('#presentation_title').val(presentation.title);
 		$('#presentation_description').val(presentation.description);
 		$('#presentation_avatar').val(presentation.avatar);
-		//select the avatar from the carrousel
-		$("thumbnails_in_presentation_details .carrousel_element_single_row img").each(function(index, elem) {
-				if(elem.attr("src")===presentation.avatar);
-				elem.addClass("carrousel_element_selected");
-				//TODO move the carrousel to the page with the element
-		});
 
-		//Commented by V. Hugo 'cause it caused crash the editor
-		//VISH.Themes.selectTheme(presentation.theme);		
+		VISH.Themes.selectTheme(presentation.theme);	
+
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
 				_renderSlide(slides[i], i, presentation.id);			

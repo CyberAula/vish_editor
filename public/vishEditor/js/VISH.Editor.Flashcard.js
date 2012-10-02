@@ -15,13 +15,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			$("#fc_change_bg_big").hide();
 		}
 
-		
 		$("#flashcard-background").droppable();  //to accept the pois
-		
 	};
 
 	var switchToFlashcard = function(){
-		
 		loadFlashcard();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
@@ -29,8 +26,13 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails();
 
 		VISH.Editor.Tools.init();
-		
 	};
+
+	var onBackgroundSelected = function(contentToAdd){
+		$("#flashcard-background").css("background-image", "url("+contentToAdd+")");
+		$("#fc_change_bg_big").hide();
+		$.fancybox.close();
+	}
 
 
 	//ALL THIS ACTIONS WILL HAVE TO BE CALLED AFTER THE THUMBNAILS HAVE BEEN REWRITTEN
@@ -119,7 +121,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		redrawPois 			 : redrawPois,
 		removePois			 : removePois,
 		savePois			 : savePois,
-		switchToFlashcard	 : switchToFlashcard
+		switchToFlashcard	 : switchToFlashcard,
+		onBackgroundSelected	: onBackgroundSelected
 	};
 
 }) (VISH, jQuery);

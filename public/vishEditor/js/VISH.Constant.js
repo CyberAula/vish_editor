@@ -15,3 +15,10 @@ VISH.Constant.STANDALONE = "node";
 VISH.Constant.SMALL = "small";
 VISH.Constant.MEDIUM = "medium";
 VISH.Constant.LARGE = "large";
+
+VISH.Constant.PRESENTATION = "presentation";
+VISH.Constant.FLASHCARD = "flashcard";
+VISH.Constant.GAME = "game";
+
+VISH.Constant.THUMBNAIL = "thumbnail";
+VISH.Constant.NONE = "none";
