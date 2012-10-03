@@ -12,15 +12,15 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /**
    * Function to render a quiz inside an article (a slide)
    */
-  var renderQuiz = function(quizType, element, template, slide){
+  var renderQuiz = function(quizType, element, zone_class, slide){
 
     V.Debugging.log("V.Quiz.Renderes, quizType:" + quizType)
     switch(quizType){
       case "multiplechoice":
-        return _renderMcQuestion(element, template, slide);
+        return _renderMcQuestion(element, zone_class, slide);
         break;
       case "mcquestion":
-        return _renderMcQuestion(element, template, slide);
+        return _renderMcQuestion(element, zone_class, slide);
         break;
       case "openQuestion":
         return _renderOpenquestion(element, template);
@@ -34,9 +34,12 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
 
-  var _renderMcQuestion = function(element, template, slide){ 
-      var ret = "<div id='"+element['id']+"'class='multiplechoicequestion'>";
+  var _renderMcQuestion = function(element, zone_class, slide){ 
+
+
+      var ret = "<div id='"+element['id']+"'class='"+ zone_class + "'>";
       ret += "<div class='mcquestion_container'>";
+      ret += "<div class='mcquestion_header'></div>";
       ret += "<div class='mcquestion_body'><h2 class='question'>"+ element['question']+"</h2>";
       ret += "<form class='mcquestion_form' action='"+element['posturl']+"' method='post'>";
 

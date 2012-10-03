@@ -605,129 +605,49 @@ VISH.Samples = (function(V,undefined){
 		    ] 
 		};
 
+		var quizes_samples_3 = {
+			"id":12314,
+			"type":"presentation",
+			"author":"V. Hugo", 
+			"slides":[
+				{
+					"id":"article_12313_1",
+					"type":"standard",
+					"template":"t8",
+					"elements":[
+						{
+							"id":"zone1",
+							"type":"text",
+							"areaid":"header",
+							"body":"<div class=\"initTextDiv vish-parent-font6\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><u><i><b>Testing Quiz Inside Template</b></i></u></span></div>"
+						}, 
+						{
+							"id":"zone2",
+							"type":"image",
+							"areaid":"left",
+							"body":"http://farm9.staticflickr.com/8309/8039451611_e4bb74e963_m.jpg",
+							"style":"position: relative; width:135.13513513513513%; height:97.0873786407767%; top:0%; left:0%;"
+						},
+						{
+							"id":"zone3",
+							"type":"quiz",
+							"areaid":"center",
+							"question":"What are <b> you  <u>talking</u> <i> about bla bla bla bla ... large textttttt </i></b> ?",
+							"quiztype":"multiplechoice",
+							"options":[
+								"Something","Nothing","Everything","Option D"
+								]
+						},
+						{
+							"id":"zone4",
+							"areaid":"right"
+						}
+					]
+				}
+			]
+		}; 
 
-		     
-		      /*, 
-		    { 
-			  	"id":"article2",
-			  "template":"t11"
-			  ,"elements":[
-			  		{
-			  			"id":"zone1"
-			  		,"areaid":"header"
-			  		},
-			  		{
-			  			"id":"zone2",
-			  			"type":"mcquestion",
-			  			"areaid":"left",
-			  			"question":"Which is the capital of Perú",
-			  			"options":[
-			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
-			  			
-			  		}
-		         ]
-		      }, 
-		    { 
-			  	"id":"article3",
-			  "template":"t11"
-			  ,"elements":[
-			  		{
-			  			"id":"zone1"
-			  		,"areaid":"header"
-			  		},
-			  		{
-			  			"id":"zone2",
-			  			"type":"mcquestion",
-			  			"areaid":"left",
-			  			"question":"Which is the capital of Colombia",
-			  			"options":[
-			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"]
-			  			
-			  		}
-		         ]
-		    },
-		    
-		    { 
-			  	"id":"article4",
-			  "template":"t11"
-			  ,"elements":[
-			  		{
-			  			"id":"zone1"
-			  		,"areaid":"header"
-			  		},
-			  		{
-			  			"id":"zone2",
-			  			"type":"mcquestion",
-			  			"areaid":"left",
-			  			"question":"Which which which which ... ",
-			  			"options":[
-			  			"Un texto largo, muy largo que puede sobrepasar los límites permitidos","Santiago","Río De Janeiro","Brasilia","Otro texto largo, muy largo y más largo que sobrepase los límites permitidos ... y más"]
-			  			
-			  		}
-		         ]
-		      } ,
-		    
-		    { 
-			  	"id":"article5",
-			  "template":"t11"
-			  ,"elements":[
-			  		{
-			  			"id":"zone1"
-			  		,"areaid":"header"
-			  		},
-			  		{
-			  			"id":"zone2",
-			  			"type":"mcquestion",
-			  			"areaid":"left",
-			  			"question":"Which color do you prefer .... ... ",
-			  			"options":[
-			  			"Red","White","Blue","Orange" ]
-			  			
-			  		}
-		         ]
-		      }, 
-		      
-		      {
-		      	"id":"article6",
-		      	"template":"t12",
-		      	"elements":[
-		      		{
-		      		"id":"zone11",
-		      		"areaid":"header"
-		      		},
-		      		{
-		      			"id":"zone12",
-		      			"type":"truefalsequestion",
-		      			"areaid":"left",
-		      			"questions":[
-		      			{
-		      				"id":0,
-		      				"text_question":"Is carnivorous the iberian lynx",
-		      				"answer":"true"
-		      				},
-		      				{
-		      					"id":1,
-		      					"text_question":"a sdasd as d",
-		      					"answer":"true"
-		      					},
-		      					{
-		      						"id":2,
-		      						"text_question":"s adasdasd a",
-		      						"answer":"false"
-		      					},
-		      					{
-		      							"id":3,
-		      							"text_question":"as das dasd ad",
-		      							"answer":"null"
-		      					}
-		      				]
-		      			} 
-		    		]
-		    }
-		      
-		    ]
-		       
-    };*/
+
 
 	return {
 		full_samples  		: full_samples,
@@ -735,7 +655,8 @@ VISH.Samples = (function(V,undefined){
 		samples_flashcard 	: samples_flashcard,
 		samples_game  		: samples_game,
 		quizes_samples 		: quizes_samples,
-		quizes_samples_2 	: quizes_samples_2
+		quizes_samples_2 	: quizes_samples_2, 
+		quizes_samples_3 	: quizes_samples_3
 	};
 
 })(VISH);
