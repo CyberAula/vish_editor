@@ -10,6 +10,15 @@ VISH.Editor.Text = (function(V,$,undefined){
 			initialized=true;
 		}	
   	}
+
+  	//Singleton: Only one instance of nicEditor
+  	var getNicEditor = function(){
+		if(!myNicEditor) {
+			myNicEditor = new nicEditor();
+			myNicEditor.setPanel('slides_panel');
+		}
+		return myNicEditor;
+  	}
 	
  /**
   * function called when user clicks on the text thumb
@@ -22,8 +31,7 @@ VISH.Editor.Text = (function(V,$,undefined){
   	var current_area;
   	if(area){
   		current_area = area;
-  	}
-  	else{
+  	} else {
   		current_area = $(this).parents(".selectable");
 
   		var fontSize;
@@ -42,11 +50,8 @@ VISH.Editor.Text = (function(V,$,undefined){
   		}
   		initial_text = "<div class='initTextDiv'><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
-	// only one instance of the NicEditor is created
-    if(myNicEditor == null) {
-      myNicEditor = new nicEditor();
-      myNicEditor.setPanel('slides_panel');
-    }
+
+ 	getNicEditor();
     
     current_area.attr('type','text');
     var wysiwygId = "wysiwyg_" + current_area.attr("id");
@@ -127,8 +132,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 					var tmpsemicolon = tmpstyle.indexOf(";", tmpindex);
 					finalstyle = tmpstyle.substring(0,tmpindex) + tmpstyle.substring(tmpsemicolon+1); //remove the font-size
 					var tmpfont = tmpstyle.substring(tmpindex+10,tmpsemicolon );  //+10 because we want to capture the end of font-size
-					switch(tmpfont.trim())
-					{
+					switch(tmpfont.trim()) {
 					case "xxx-large":
 						size = 7;
 						break;
@@ -151,8 +155,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 						size = 1;
 						break;
 					}
-				}
-				else{
+				} else {
 					finalstyle = tmpstyle;
 				}
 					
@@ -194,39 +197,12 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 		$(myelem).children().unwrap();
 	};
-
-	var getNicEditor = function () {
-		if(myNicEditor== null) {
-			myNicEditor = new nicEditor();
-      		myNicEditor.setPanel('slides_panel');
-			val = myNicEditor;
-		} 
-		else {
-			val = myNicEditor;
-	}
-		return val;
-	};
-
-	var setNicEditor = function (nicEditor) {
-		if(myNicEditor == null) {
-     		 myNicEditor = nicEditor;
-     	 	myNicEditor.setPanel('slides_panel');
-    	} else {
-			return false;
-		}
-	};
-
-	var nicInitilized = function()  {
-		return initialized;
-	};
 	
 	return {
 		init              			: init,
 		launchTextEditor  			: launchTextEditor,
 		changeFontPropertiesToSpan  : changeFontPropertiesToSpan, 
-		getNicEditor 				: getNicEditor, 
-		setNicEditor				: setNicEditor, 
-		nicInitilized				: nicInitilized
+		getNicEditor 				: getNicEditor
 	};
 
 }) (VISH, jQuery);

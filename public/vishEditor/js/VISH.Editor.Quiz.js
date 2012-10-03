@@ -2,8 +2,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
 
-	var myNicEditor; // to manage the NicEditor WYSIWYG
-
 	var init = function(){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
@@ -165,14 +163,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		textArea.attr("id", wysiwygId);
 		textArea.addClass("wysiwygInstance");
 
-		// only one instance of the NicEditor is created
-		if(V.Editor.Text.nicInitilized() == false) { 
-			VISH.Editor.Text.init();
-			myNicEditor = VISH.Editor.Text.getNicEditor();
-		} else { 
-			myNicEditor = VISH.Editor.Text.getNicEditor();
-		}
-		var test =  myNicEditor.addInstance(wysiwygId);
+		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 	};
 
 
