@@ -135,18 +135,18 @@
 		<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/helptutorial_circle.png"/></div>
         <div id="preview"><img id="preview_circle" src="/vishEditor/images/preview_circle.png"/></div>        
 		<div id='menubar'>
-			  <div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
-				<div id="menubarButtons">
-					<a id="edit_presentation_details" href="#presentationdetails">
-	          <div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
-	        </a>
-					<a id="save" href="#thumbcontent">
-            <div id="save_div" class='barbuttonaddsave' i18n-key="i.SaveSlides" title="Save slides"></div>
-          </a>
-				</div>	
-				<div id="menubarCarrousel">
-           <div id="slides_carrousel"></div>   
-        </div>
+			<div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
+			<div id="menubarButtons">
+				<a id="edit_presentation_details" href="#presentationdetails">
+					<div id="config_div" class='barbuttonaddsave' title="Edit details"></div>
+				</a>
+				<a id="save">
+					<div id="save_div" class='barbuttonaddsave' i18n-key="i.SaveSlides" title="Save slides"></div>
+				</a>
+			</div>	
+			<div id="menubarCarrousel">
+			<div id="slides_carrousel"></div>   
+			</div>
 		</div>
 		
 		<div id="menubar-viewer" style="display:none">
@@ -255,6 +255,8 @@
 
     <!-- Hidden link to open fancybox when adding a slide -->
     <a id="addSlideFancybox" href="#thumbcontent" style="display: none;"></a>
+    <!-- Hidden link to open fancybox when adding a quiz inside a slide -->
+    <a id="addQuizFancybox" href="#quizcontent" style="display: none;"></a>
     
     <!-- Hidden link to open fancybox when creating a new presentation -->
     <a id="launch_presentation_details" href="#presentationdetails" style="display: none;"></a>
@@ -289,117 +291,99 @@
     </div>  
       
       
-	  <div style='display:none'>
+    <!-- Thumbnails fancybox -->
+	<div style='display:none'>
+		<div id='thumbcontent'>
 
-	    <div id='thumbcontent'>
-	    	 <div class='fancy_tabs' id='thumcontent_tabs'>
-	  	<ul>
-	  		<li><a href="#" onclick="VISH.Editor.loadFancyBox('templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a></li>
-	  		<li><a href="#" onclick="VISH.Editor.loadFancyBox('quizes')" id="tab_quizes" class="fancy_tab">Quiz</a></li>
-	  	</ul>
-	  	
+			<div class='fancy_tabs' id='thumcontent_tabs'>
+				<ul>
+					<li>
+						<a href="#" onclick="VISH.Editor.loadFancyBox('templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a>
+					</li>
+				</ul>
 			</div> 
-	    	<div id='tab_templates_content' class="fancy_tab_content" style='display:inline' > 
-	      <img id='help_template_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-	      
-	      <div class='templatethumb' template='1'>
-		      <img src='/vishEditor/images/templatesthumbs/t1.png' />
-	      </div>
-	      <div class='templatethumb' template='2'>
-		      <img src='/vishEditor/images/templatesthumbs/t2.png' />
-	      </div>
-          <div class='templatethumb' template='3'>
-		      <img src='/vishEditor/images/templatesthumbs/t3.png' />
-	      </div>
-          <div class='templatethumb' template='4'>
-		      <img src='/vishEditor/images/templatesthumbs/t4.png' />
-	      </div>
-          <div class='templatethumb' template='5'>
-		      <img src='/vishEditor/images/templatesthumbs/t5.png' />
-	      </div>
-          <div class='templatethumb' template='6'>
-		      <img src='/vishEditor/images/templatesthumbs/t6.png' />
-	      </div>
-          <div class='templatethumb' template='7'>
-		      <img src='/vishEditor/images/templatesthumbs/t7.png' />
-	      </div>
-          <div class='templatethumb' template='8'>
-		      <img src='/vishEditor/images/templatesthumbs/t8.png' />
-	      </div>
-          <div class='templatethumb' template='9'>
-		      <img src='/vishEditor/images/templatesthumbs/t9.png' />
-		      
-		   </div>
-	      </div>
 
-     <div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
-	      <img id='help_template_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-	      
-	      <div style="display:none" class='templatethumb' template='10'>
-		      <img src='/vishEditor/images/templatesthumbs/t10.png' />
-	      </div>
-	      <div class='templatethumb' template='11'>
-		      <img src='/vishEditor/images/templatesthumbs/t11.png' />
-	      </div>
-          
-          <div style="display:none" class='templatethumb' template='12'>
-		      <img src='/vishEditor/images/templatesthumbs/t12.png' />
-	      </div>
-          
-	      </div>
-	     </div>
-	  </div>
+			<div id='tab_templates_content' class="fancy_tab_content" style='display:inline' > 
+				<img id='help_template_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+				<div class='templatethumb' template='1'>
+					<img src='/vishEditor/images/templatesthumbs/t1.png' />
+				</div>
+				<div class='templatethumb' template='2'>
+					<img src='/vishEditor/images/templatesthumbs/t2.png' />
+				</div>
+				<div class='templatethumb' template='3'>
+					<img src='/vishEditor/images/templatesthumbs/t3.png' />
+				</div>
+				<div class='templatethumb' template='4'>
+					<img src='/vishEditor/images/templatesthumbs/t4.png' />
+				</div>
+				<div class='templatethumb' template='5'>
+					<img src='/vishEditor/images/templatesthumbs/t5.png' />
+				</div>
+				<div class='templatethumb' template='6'>
+					<img src='/vishEditor/images/templatesthumbs/t6.png' />
+				</div>
+				<div class='templatethumb' template='7'>
+					<img src='/vishEditor/images/templatesthumbs/t7.png' />
+				</div>
+				<div class='templatethumb' template='8'>
+					<img src='/vishEditor/images/templatesthumbs/t8.png' />
+				</div>
+				<div class='templatethumb' template='9'>
+					<img src='/vishEditor/images/templatesthumbs/t9.png' />
+				</div>
+			</div>
+		</div>
+	</div>
 
-<!-- fancy quizes content -->
-<div style='display:none'>
+	<!-- Quizes fancybox -->
+	<div style='display:none'>
+		<div id='quizcontent'>
 
-	<div id='quiz_fancybox' class="fancybox_quiz_content" style='display:none' > 
-		   <img id='help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-		<h2 id='quiz_fancybox_title' class='quiz_fancybox_title' > Quiz </h2>
-	   
-	      
-	      <div class='quiztypethumb' id='open_quiz_thumb'>
-		      <img src='/vishEditor/images/templatesthumbs/t10.png' onclick='VISH.Editor.Quiz.addQuiz("open");'/>
-	      </div>
-	      <div class='quiztypethumb' id='mchoice_quiz_thumb'>
-		      <img src='/vishEditor/images/templatesthumbs/t11.png' onclick='VISH.Editor.Quiz.addQuiz("multiplechoice");'/>
-	      </div>
-          
-          <div style="display:none" class='quiztypethumb' id='truefalse_quiz_thumb'>
-		      <img src='/vishEditor/images/templatesthumbs/t12.png' onclick='VISH.Editor.Quiz.addQuiz("truefalse");'/>
-	      </div>
-          
-	 </div>
-</div> 
+			<div class='fancy_tabs' id='quizcontent_tabs'>
+				<ul>
+					<li>
+						<a href="#" id="tab_quizes" class="fancy_tab">Quiz</a>
+					</li>
+				</ul>
+			</div> 
 
-
-
-
-
-<!--end quiz content -->
+			<div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
+				<img id='help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+				<div style="display:none" class='quizFancythumb' template='10'>
+					<img src='/vishEditor/images/templatesthumbs/t10.png' />
+				</div>
+				<div class='quizFancythumb' template='11'>
+					<img src='/vishEditor/images/templatesthumbs/t11.png' onclick='VISH.Editor.Quiz.addQuiz("multiplechoice");' />
+				</div>
+				<div style="display:none" class='quizFancythumb' template='12'>
+					<img src='/vishEditor/images/templatesthumbs/t12.png' />
+				</div>
+			</div>
+		</div>
+	</div>
 
 
   	  <div style='display:none'>
 	  	
-	    <div id='menuselect' class="menuselect_hide">
-			  <div class='menuicon textthumb' i18n-key="i.Text" title="Text"></div>
-	      <a class="addpicture" href="#picture_fancybox">
-	        <div class='menuicon picthumb' i18n-key="i.Image" title="Image"></div>
-	      </a>
-	      <a class="addobject" href="#object_fancybox">
-	        <div class='menuicon objectthumb' i18n-key="i.Object" title="Object"></div>
-	      </a>
-	      <a class="addvideo" href="#video_fancybox">
-	        <div class='menuicon videothumb' i18n-key="i.Video" title="Video"></div>
-	      </a>
-				<a class="addLive" href="#live_fancybox">
-          <div class='menuicon livethumb' i18n-key="i.Live" title="Live"></div>
-        </a>
-		<a class="addQuiz" href="#quiz_fancybox" id="add_quiz_thumb">
-          <div class='menuicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
-        </a>
-
-	    </div>
+		<div id='menuselect' class="menuselect_hide">
+			<div class='menuicon textthumb' i18n-key="i.Text" title="Text"></div>
+			<a class="addpicture" href="#picture_fancybox">
+				<div class='menuicon picthumb' i18n-key="i.Image" title="Image"></div>
+			</a>
+			<a class="addobject" href="#object_fancybox">
+				<div class='menuicon objectthumb' i18n-key="i.Object" title="Object"></div>
+			</a>
+			<a class="addvideo" href="#video_fancybox">
+				<div class='menuicon videothumb' i18n-key="i.Video" title="Video"></div>
+			</a>
+			<a class="addLive" href="#live_fancybox">
+				<div class='menuicon livethumb' i18n-key="i.Live" title="Live"></div>
+			</a>
+			<a class="addQuiz" href="#quiz_fancybox" id="add_quiz_thumb">
+				<div class='menuicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
+			</a>
+		</div>
 	    
 	    <div id='menuselect_for_header' class="menuselect_hide">
 			  <div class='menuicon_small textthumb textthumb_small' i18n-key="i.Text" title="Text"></div>
@@ -892,12 +876,8 @@
         </div>  
       </div>
     </div>
-  	<!-- QUIZ -->
 	
-
-
-			
-			
+	
 	   <!-- WALKTHROUGH HELP SECTION -->
 	    <!-- help for initial screen -->
 	    <ol id="initial_screen_help" class="joyRideTipContent">
@@ -1043,7 +1023,7 @@
 	  	</ol>
 	<!--help for quiz selection fancybox-->
 	  	<ol id="help_quiz_selection_help" class="joyRideTipContent">
-	  	  <li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+	  	  <li data-id="quizcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2 i18n-key="i.selectSlide">Selecting a Quiz</h2>
 	  	    <p i18n-key="i.walk14">........quiz ....</p>
 	  	  </li>	 	  

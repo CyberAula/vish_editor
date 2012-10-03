@@ -312,7 +312,7 @@ img {
 	height: 90px;
 }
 
-.templatethumb{
+.templatethumb, .quizFancythumb {
 	width: 100px;
 	height: 75px;
 	margin: 16px 11px 6px 16px;
@@ -322,7 +322,7 @@ img {
 	opacity: 0.7;
 }
 
-.templatethumb img{
+.templatethumb img, .quizFancythumb img {
 	width:100%;
 	height:100%;
 	border-radius: 9px;
@@ -331,7 +331,7 @@ img {
 	opacity: 0.7;
 }
 
-.templatethumb:hover{
+.templatethumb:hover, .quizFancythumb:hover {
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
@@ -341,7 +341,7 @@ img {
 	opacity: 1.0;	
 }
 
-.templatethumb:active{
+.templatethumb:active, .quizFancythumb:active {
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.0);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -1187,23 +1187,16 @@ textarea {
 	top: 631px;
 }
 
-#help_template_selection {
+#help_template_selection, #help_quiz_selection {
 	background-image:url(/vishEditor/images/helptutorial_circle_tp.png);
 	position: absolute;
 	margin-top: -43px;
 	right: 21px;
 }
 
-#help_template_selection:hover {
+#help_template_selection:hover, #help_quiz_selection:hover {
 	background-image:url(/vishEditor/images/hover/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
-}
-
-#help_quiz_selection {
-	background-image:url(/vishEditor/images/helptutorial_circle_tp.png);
-	position: absolute;
-	margin-top: -20px;
-	right: 21px;
 }
 
 /* Joyride positions */

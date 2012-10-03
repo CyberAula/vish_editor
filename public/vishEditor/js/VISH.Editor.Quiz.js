@@ -1,7 +1,6 @@
 VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
-	var fancyTabs = false; //differentiate between fancy tabs and quiz template
 
 	var myNicEditor; // to manage the NicEditor WYSIWYG
 
@@ -9,62 +8,44 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
-	
 	};	
-	//for embeding a quiz into a template 
+
+	 
+	////////////
+	// Tabs and fancybox
+	////////////
+
 	var onLoadTab = function (tab) {
-			V.Debugging.log("onLoadTab Quiz : " + tab);
-		if(tab=="quiz_mchoice") {
-
-			_onLoadTabMChoiceQuiz();
-		} else if (tab=="quiz_open"){
-
-			V.Debugging.log("quiz open load tab");
-
-		}
-
 	};
-	/**/ 
-	var addMChoiceQuiz = function () {
-		V.Debugging.log("add MChoice Quiz Button clicked");
-		//test values for elements
- 	  // _generateWrapper();
-	//  $.fancybox.close();
-	  
-  	};
 
-	//used for editing a quiz
+	//Function called from quiz fancybox
+	var addQuiz = function(quiz_type) {
+		switch (quiz_type) {
+			case "open":
+				// _addOpenQuiz();
+				 break;
+			case "multiplechoice":
+				_addMultipleChoiceQuiz();
+				 break;
+			case "truefalse":
+				// _addTrueFalseQuiz();
+			 	break;
+			default: 
+				break;
+		}
+		$.fancybox.close();
+	};
+
+
 	var drawQuiz = function(question, options){
-		//first the question in the textarea
 		$(".current").find(".value_multiplechoice_question").val(question);
-		//now the options
 		for (var i = 0;  i <= options.length - 1; i++) {
 			var optionText = options[i];
 			var myInput = $(".current").find(".ul_mch_options > li").last().find("input");
 			var myImg = $(".current").find(".ul_mch_options > li").last().find("img");
 			_addMultipleChoiceOption(null, myInput, myImg, optionText);
 		};
-		
 	};
-/* function called when click an element of the quiz fancybox */
-	var addQuiz = function(quiz_type) {
-		$.fancybox.close();
-		
-		switch (quiz_type) {
-			case "open":
-				_addOpenQuiz();
-				 break;
-			case "multiplechoice":
-				_addMultipleChoiceQuiz();
-				 break;
-			case "truefañse":
-				_addTrueFalseQuiz();
-			 	break;
-			default: 
-				break;
-		}
-	};
-
 
 
 	var _onKeyDown = function(event){
@@ -79,27 +60,19 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//myInput, myImg and optionText are used to add the options when editing a mc question.
 	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
 		var img, input;
-
-		if(fancyTabs) {
-			var optionsLength = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").length;
-		}
-		else {
-			var optionsLength = $(".current").find(".ul_mch_options > li").length;
-		}
+		var optionsLength = $(".current").find(".ul_mch_options > li").length;
 
 		if(optionsLength >= maxNumMultipleChoiceOptions){
 			return;
 		}
-		if(event){
-			V.Debugging.log("event.target.tagName addMultipleChoiceOption: "+ event.target.tagName);
 
+		if(event){
 			if(event.target.tagName === "INPUT"){
 				//addMultipleChoiceOption trigger from keyboard input
 				img = $(event.target).parent().find("img");
 				input = event.target;
 			} else if(event.target.tagName === "IMG"){
 				//addMultipleChoiceOption trigger from img click
-				V.Debugging.log("event.target : "+ event.target);
 				img = event.target;
 				input = $(event.target).parent().parent().find("input");
 			}
@@ -112,18 +85,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var a = $(img).parent();
 		var li = $(input).parent();
 
-		if(fancyTabs) {
-			V.Debugging.log("enter into fancyTabs true first");	
-		var targetChoice = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").index(li);
-		}
-
-		else { 
-		
 		var targetChoice = $(".current").find(".ul_mch_options > li").index(li);
-		}
-		V.Debugging.log("targetChoice " + targetChoice);
 		var isLastChoice = (targetChoice === (optionsLength-1));
-		V.Debugging.log("isLastChoice " + isLastChoice);	
 		if(!isLastChoice){
 			return;
 		}
@@ -134,15 +97,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 		var maxChoicesReached = (optionsLength == maxNumMultipleChoiceOptions-1);
 		var newMultipleChoice = _renderDummyMultipleChoice(choicesLetters[optionsLength],!maxChoicesReached);
-		if(fancyTabs) { 
-			$("#tab_quiz_mchoice_content").find(".ul_mch_options").append(newMultipleChoice);
-			$("#tab_quiz_mchoice_content").find(".ul_mch_options > li").last().find("input").focus();
-		}	
-		else {
-			$(".current").find(".ul_mch_options").append(newMultipleChoice);
-			$(".current").find(".ul_mch_options > li").last().find("input").focus();
-		}
-
+		$(".current").find(".ul_mch_options").append(newMultipleChoice);
+		$(".current").find(".ul_mch_options > li").last().find("input").focus();
 	};
 
 	var _renderDummyMultipleChoice = function(text, addImage){
@@ -163,92 +119,30 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	}
 
 	var _removeMultipleChoiceOption = function(id) {
-		V.Debugging.log("_removeMultipleChoiceOption param id value: " + id);
 		//removeMultipleChoiconLoadTabMChoiceQuizeOption trigger always from img click
 		var li = $(event.target).parent().parent();
 		$(li).remove();
 
 		//Rewrite index letters
-		if(fancyTabs){
-			$("#tab_quiz_mchoice_content").find(".ul_mch_options > li").each(function(index, value) {
-			var span = $(value).find("span");
-			$(span).html(choicesLetters[index]);
-		});
-		//Ensure that last choice has plus option
-		var lastLi = $("#tab_quiz_mchoice_content").find(".ul_mch_options > li").last();			
-		} else {
 		$(".current").find(".ul_mch_options > li").each(function(index, value) {
 			var span = $(value).find("span");
 			$(span).html(choicesLetters[index]);
 		}); 
-		
 		//Ensure that last choice has plus option
 		var lastLi = $(".current").find(".ul_mch_options > li").last();
-
-		}
-
 		
 		var lastA = $(lastLi).find("a");
 		if(($(lastA).length==0)||($(lastA).hasClass("add_quiz_option")===false)){
 			$(lastLi).append(_renderAddImg());
 		}
 	};
-	//first kind of quiz shown
-	var _onLoadTabMChoiceQuiz = function() {
-		fancyTabs = true;
-		$("#tab_quiz_mchoice_content").find(".value_multiplechoice_question").attr("value", "");
-		$("#tab_quiz_mchoice_content").find(".ul_mch_options").children().remove();
-		_addMultipleChoiceOption(); 
-		$("#tab_quiz_mchoice").show();
-		$("#tab_quiz_mchoice_content").find(".add_quiz_option_img").attr("src", VISH.ImagesPath+"add_quiz_option.png");
-		
-			};
 
-	/*var _generateWrapper = function() {
-		current_area =  VISH.Editor.getCurrentArea();
-		var nextQuizId = VISH.Editor.getId();
-		current_area.attr('type','quiz');
-		//TODO change id? ask to Kike 
-		var container = "<div class='mcquestion_container'><div class='mcquestion_body'></div><div class='mcquestion_buttons'></div></div>";
-		current_area.html(container);
-		var header ="<div id='tab_quiz_mchoice_content_header' areaid='header' class='t11_header'> </div>";
-		var question = "<h2 class='quiz_mch_question_in_template' >" + $("#tab_quiz_mchoice_content_container").find(".value_multiplechoice_question").val() + "</h2>";
-		var form = "<form class='mcquestion_form' method='post'></form>";
-		current_area.find(".mcquestion_body").append(header + question + form);
-		$("#tab_quiz_mchoice_content_container").find(".ul_mch_options > li").each(function(index, value) {
-			var option = "<label class='mc_answer'>" + choicesLetters[index]+ " " + $(value).find(".multiplechoice_text").val() + "</label>";
-			//var percentBar = "<div class='mc_meter'><span style='width:0%'></span></div><label class='mcoption_label'></label>";
-			current_area.find(".mcquestion_form").append(option);
-		}); 
-		
-		V.Editor.addDeleteButton(current_area);
-		//return current_area;
-
-
-	}; */		
-
-
-	var _addOpenQuiz = function(area) {
-		var quiz = VISH.Dummies.getQuizDummy("open", V.Slides.getSlides().length);
-		if(area){
-			var current_area = area;
-		}
-		else {
-			var current_area = VISH.Editor.getCurrentArea();
-		}
-		$(current_area).find(".menuselect_hide").remove();
-		current_area.attr('type','quiz');
-		current_area.append(quiz);
-		V.Editor.addDeleteButton(current_area);
-		launchTextEditorInTextArea(current_area, "open");
-	};
 
 	var _addMultipleChoiceQuiz = function(area) {
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		if(area){
 			var current_area = area;
-		}
-		else {
+		} else {
 			var current_area = VISH.Editor.getCurrentArea();
 		}
 		$(current_area).find(".menuselect_hide").remove();
@@ -256,47 +150,37 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
 		launchTextEditorInTextArea(current_area, "multiplechoice");
-
-	};
-
-	var _addTrueFalseQuiz = function() {
 	};
 
 
+	var launchTextEditorInTextArea = function(area, type){
+		if (area) {
+			current_area = area;
+		} else {
+			current_area = V.Editor.getCurrentArea();
+		}
 
- var launchTextEditorInTextArea = function(area, type){
- 	if (area) {
- 		current_area = area;   //value_openquestion_in_zone
- 	}
- 	else {
- 		current_area = V.Editor.getCurrentArea();
- 	}
-   	var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
-   	var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwig_zoneX 
-   	textArea.attr("id", wysiwygId);
-  	textArea.addClass("wysiwygInstance");
-    // only one instance of the NicEditor is created
-	if(V.Editor.Text.nicInitilized() == false) { 
-		VISH.Editor.Text.init();
-		myNicEditor = VISH.Editor.Text.getNicEditor();
-	}
-	else { 
-		myNicEditor = VISH.Editor.Text.getNicEditor();
-	 
-	}
-	   	var test =  myNicEditor.addInstance(wysiwygId);
+		var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
+		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwig_zoneX 
+		textArea.attr("id", wysiwygId);
+		textArea.addClass("wysiwygInstance");
 
-  };
-
+		// only one instance of the NicEditor is created
+		if(V.Editor.Text.nicInitilized() == false) { 
+			VISH.Editor.Text.init();
+			myNicEditor = VISH.Editor.Text.getNicEditor();
+		} else { 
+			myNicEditor = VISH.Editor.Text.getNicEditor();
+		}
+		var test =  myNicEditor.addInstance(wysiwygId);
+	};
 
 
 	return {
-		drawQuiz						: drawQuiz,
 		init			 				: init, 
-		onLoadTab						: onLoadTab, 
-		addMChoiceQuiz					: addMChoiceQuiz, 
+		onLoadTab						: onLoadTab,
+		drawQuiz						: drawQuiz,
 		addQuiz							: addQuiz
-
 	};
 
 }) (VISH, jQuery);

@@ -273,13 +273,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_live_micro":
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
-
-			//TODO remove when quizes be implemented into templates 
+ 
 			case "tab_quizes":
-				V.Debugging.log("tab_quizes case ");
 				VISH.Editor.Quiz.onLoadTab("quizes");
 				break;
-				
 
 			//Default
 			default:

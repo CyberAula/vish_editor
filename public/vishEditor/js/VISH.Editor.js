@@ -88,8 +88,20 @@ VISH.Editor = (function(V,$,undefined){
 			'padding': 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
-				currentZone = $("#" + clickedZoneId);
+				setCurrentArea($("#" + clickedZoneId));
 				VISH.Editor.Utils.loadTab('tab_templates');
+			}
+		});
+
+		// fancybox to create a new quiz		
+		$("a#addQuizFancybox").fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': 385,
+			'height': 340,
+			'padding': 0,
+			"onStart"  : function(data) {
+				VISH.Editor.Utils.loadTab('tab_quizes');
 			}
 		});
 	
@@ -368,20 +380,10 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 
-		$("a.addQuiz").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 385,
-			'height': 340,
-			'padding': 0,
-			'onStart' : function (data)	{
-				var clickedZoneId = $(data).attr("zone");
-				currentZone = $("#" + clickedZoneId);
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadQuizFancyBox("quiz_fancybox");
-				
-			}	
+		$("a.addQuiz").click(function(event){
+			$("a#addQuizFancybox").trigger("click");
 		});
+
 	}; 
 
 
