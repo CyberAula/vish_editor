@@ -46,8 +46,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 		switch (quiz_type) {
+
+
 			case "multiplechoice": 
-				$(zone).find(".value_multiplechoice_question_in_zone").val(question);
+				//$(zone).find(".value_multiplechoice_question_in_zone").val(question);
+				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").children().remove();
+				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").append(question);
 				for (var i = 0;  i <= options.length - 1; i++) {
 					var optionText = options[i];
 					var myInput = $(zone).find(".ul_mch_options > li").last().find("input");
