@@ -15,7 +15,6 @@ VISH.Quiz = (function(V,$,undefined){
   var statisticsButtonClass = "mch_statistics_icon";
 
   var init = function(presentation){
-      V.Debugging.log("presentation type: " + presentation.type);
     if (presentation.type=="quiz_simple"){
       quizMode = "answer";
        _loadAnswerEvents();
