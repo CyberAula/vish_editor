@@ -581,8 +581,6 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-						V.Debugging.log("element type quiz detected");
-						//slide.type = "quiz";	//the type goes in element 
 						//V.Debugging.log(".instance change changeFontPropertiesToSpan: " +VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children()));
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children());
 

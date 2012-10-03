@@ -37,6 +37,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			if(area.length === 0){
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
+
 			if(slide.elements[el].type === "text"){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
 			} else if(slide.elements[el].type === "image"){
@@ -56,6 +57,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			} else if(slide.elements[el].type === "mcquestion"){
 				V.Editor.Quiz.drawQuiz(slide.elements[el].question, slide.elements[el].options);
+			} else if(slide.elements[el].type === "quiz"){
+				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, slide.elements[el].id);
+				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype,slide.elements[el].id , slide.elements[el].question, slide.elements[el].options);
 			}
 		}
 	
