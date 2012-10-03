@@ -290,6 +290,31 @@ img {
 	background: url(/vishEditor/images/hover/live_hover.png);
 }
 
+.thumbicon{
+	float: left;
+	
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	cursor: pointer;
+	background-size: 100%;
+}
+
+.thumb_small {
+	width: 26px;
+	height: 32px;
+}
+
+.thumb_medium {
+	width: 40px;
+	height: 49px;
+}
+
+.thumb_large {
+	width: 44px;
+	height: 55px;
+}
+
 .barbutton {
 	position: relative;
 	top: 6px;
@@ -368,27 +393,6 @@ img {
 
 .editable:hover{
 	/*background-color: rgba(217,188,43,0.4);*/
-}
-
-.menuicon{
-	float: left;
-	width: 44px;
-	height: 55px;
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-left: 10px;
-	cursor: pointer;
-	background-size: 100%;
-}
-
-.menuicon_small{
-	float: left;
-	width: 24px;
-	height: 31px;
-	margin-right: 10px;
-	margin-left: 10px;
-	cursor: pointer;
-	background-size: 100%;
 }
 
 .menu{

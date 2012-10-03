@@ -314,21 +314,27 @@ VISH.Editor = (function(V,$,undefined){
 				
 		//need to clone it, because we need to show it many times, not only the first one
 		//so we need to remove its id		
-		var content = null;
+		var content = $("#menuselect").clone().attr('id','current_menu');
 
-		if($(this).attr("areaid")==="header" || $(this).attr("areaid")==="subheader"){
-			content = $("#menuselect_for_header").clone().attr('id','');
-		}	else {
-			content = $("#menuselect").clone().attr('id','');
+		$(content).find("a").css("display","none");
+		$(content).find("a.all").css("display","inline");
+
+		switch($(this).attr("size")){
+			case VISH.Constant.SMALL:
+				$(content).find("a.small").css("display","inline");
+				$(content).find("a > div").addClass("thumb_small");
+				break;
+			case VISH.Constant.MEDIUM:
+				$(content).find("a.medium").css("display","inline");
+				$(content).find("a > div").addClass("thumb_medium");
+				break;
+			case VISH.Constant.LARGE:
+				$(content).find("a.large").css("display","inline");
+				$(content).find("a > div").addClass("thumb_large");
+				break;
 		}
-				
-		//add zone attr to the a elements to remember where to add the content
-		content.find("a").each(function(index, domElem) {
-			$(domElem).attr("zone", getCurrentArea().attr("id"));
-		});
 
 		$(this).html(content);
-
 
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
