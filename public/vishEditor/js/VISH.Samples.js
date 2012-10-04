@@ -643,25 +643,7 @@ VISH.Samples = (function(V,undefined){
 							"areaid":"right"
 						}
 					]
-				}, 
-				{
-	 				"id":"article11111",
-	 				"type":"quiz",
-	 				"quiz_id":"1112",
-	 				"template":"t11",
-	 				"elements":[
-	 					{
-	 						"id":"zone4",
-	 						"areaid":"header"
-	 					},
-	 					{	"id":"zone5",
-	 						"type":"mcquestion",
-	 						"areaid":"left",
-	 						"question":"¿Funcionara los Multiple Choice Quiz ?",
-	 						"options":["Si","Claro que si","Siempre","No"]
-	 					}
-	 				]
-	 			}
+				}
 
 
 			]
