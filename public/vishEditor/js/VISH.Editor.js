@@ -581,8 +581,9 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-						//V.Debugging.log(".instance change changeFontPropertiesToSpan: " +VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children()));
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div").children());
+					
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($("#zone3").find(".wysiwygInstance").parent().find("div > div"));
+
 
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
