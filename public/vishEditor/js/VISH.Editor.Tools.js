@@ -122,10 +122,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Presentation Toolbar
 	*/
 	var loadPresentationToolbar = function(){
-
 		var presentationType = VISH.Editor.getPresentationType();
 		switch(presentationType){
-			case "presentation":				
+			case "presentation":			
 				$("#hidden_button_to_launch_theme_fancybox").fancybox({
 					'autoDimensions' : false,
 					'width': 600,
@@ -265,7 +264,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var changeFlashcardBackground = function(){
-		V.Debugging.log("changeFlashcardBackground called");
 		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger("click");
 	}
 
