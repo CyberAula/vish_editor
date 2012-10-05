@@ -1,25 +1,46 @@
 VISH.VideoPlayer = (function(){
-			
-	/**
-	 * Set video events
-	 */
-	var setVideoTagEvents = function(){
+		
+	//Flag to prevent notify startVideo events
+	//Prevent bucles
+	var notifyEventFlag = true;
+
+	var setVideoEvents = function(){
 		var videos = $("video")
 		$.each(videos, function(index, video) {
 			video.addEventListener('play', function () {
-				  //VISH.Debugging.log("Play " + video.currentTime)
+				// VISH.Debugging.log("Play at " + video.currentTime);
+				if((VISH.Messenger)&&(notifyEventFlag)){
+					VISH.Messenger.sendMessage("playVideo",["HTML5",video.currentTime,VISH.Slides.getCurrentSlideNumber(),video.id]);
+				} 
+				notifyEventFlag = true;
 			}, false);
 			video.addEventListener('pause', function () {
-				//VISH.Debugging.log("Pause " + video.currentTime);
+				// VISH.Debugging.log("Pause " + video.currentTime);
+				if((VISH.Messenger)&&(notifyEventFlag)){
+					VISH.Messenger.sendMessage("pauseVideo",["HTML5",video.currentTime,VISH.Slides.getCurrentSlideNumber(),video.id]);
+				}
+				notifyEventFlag = true;
 			}, false);
 			video.addEventListener('ended', function () {
-				//VISH.Debugging.log("Ended " + video.currentTime)
+				// VISH.Debugging.log("Ended " + video.currentTime)
 			}, false);
-			
+
+			video.addEventListener("error", function(err) {
+                // VISH.Debugging.log("Video error: " + err)
+            }, false);
+
+			video.addEventListener("seeked", function(err) {
+                // VISH.Debugging.log("Seek at " + video.currentTime)
+                if((VISH.Messenger)&&(notifyEventFlag)){
+					VISH.Messenger.sendMessage("seekVideo",["HTML5",video.currentTime,VISH.Slides.getCurrentSlideNumber(),video.id]);
+				}
+				notifyEventFlag = true;
+            }, false);
+
 			//PREVENT KEYBOARD EVENTS ON FIREFOX!
 			$(video).focus(function(event) {
-        this.blur();
-      });
+				this.blur();
+			});
 		});
 	}
 	
@@ -61,10 +82,68 @@ VISH.VideoPlayer = (function(){
 		});
 	}
 
+	/**
+	 * Function to start a specific video
+	 */
+	var startVideo = function(videoType,currentTime,videoSlideNumber,videoId){
+		if(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber){
+			VISH.Slides.goToSlide(videoSlideNumber,false);
+		}
+
+		var video = $("#"+videoId)[0];
+
+		switch(videoType){
+			case "HTML5":
+				notifyEventFlag = false;
+				video.currentTime = currentTime;
+				video.play();
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * Function to pause a specific video
+	 */
+	var pauseVideo = function(videoType,currentTime,videoSlideNumber,videoId){
+		var video = $("#"+videoId)[0];
+
+		switch(videoType){
+			case "HTML5":
+				notifyEventFlag = false;
+				video.currentTime = currentTime;
+				video.pause();
+				break;
+			default:
+				break;
+		}
+	}
+
+
+	/**
+	 * Function to seek a specific video
+	 */
+	var seekVideo = function(videoType,currentTime,videoSlideNumber,videoId){
+		var video = $("#"+videoId)[0];
+
+		switch(videoType){
+			case "HTML5":
+				notifyEventFlag = false;
+				video.currentTime = currentTime;
+				break;
+			default:
+				break;
+		}
+	}
+
 	return {
-		setVideoTagEvents: setVideoTagEvents,
-		playVideos: playVideos,
-		stopVideos:stopVideos
+		setVideoEvents 		: setVideoEvents,
+		playVideos 			: playVideos,
+		stopVideos 			: stopVideos,
+		startVideo 			: startVideo,
+		pauseVideo 			: pauseVideo,
+		seekVideo			: seekVideo
 	};
 
 })(VISH,jQuery);

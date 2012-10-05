@@ -4,6 +4,15 @@ VISH.Utils = (function(V,undefined){
 		//Code here...
 	}
 
+   /**
+	* Return a unic id.
+	*/
+	var domId = 0; 
+	var getId = function(){
+		domId = domId +1;
+		return "unicID_" + domId;
+	};
+
 	var getOuterHTML = function(tag){
 		//In some old browsers (before firefox 11 for example) outerHTML does not work
 		//Trick to provide full browser support
@@ -224,20 +233,19 @@ var getZoomFromStyle = function(style){
    }
 
    return {
-			init : init,
-	    	getOuterHTML : getOuterHTML,
-			generateTable : generateTable,
-			loadDeviceCSS	: loadDeviceCSS,
-			loadCSS			: loadCSS,
-			checkMiniumRequirements : checkMiniumRequirements,
-			convertToTagsArray : convertToTagsArray,
-			getURLParameter : getURLParameter,
-			getZoomFromStyle : getZoomFromStyle,
-			getZoomInStyle    : getZoomInStyle,
-			autocompleteUrls : autocompleteUrls,
-			filterFilePath : filterFilePath
+		init 					: init,
+		getId					: getId,
+		getOuterHTML 			: getOuterHTML,
+		generateTable 			: generateTable,
+		loadDeviceCSS			: loadDeviceCSS,
+		loadCSS					: loadCSS,
+		checkMiniumRequirements : checkMiniumRequirements,
+		convertToTagsArray 		: convertToTagsArray,
+		getURLParameter 		: getURLParameter,
+		getZoomFromStyle 		: getZoomFromStyle,
+		getZoomInStyle    		: getZoomInStyle,
+		autocompleteUrls 		: autocompleteUrls,
+		filterFilePath 			: filterFilePath
    };
-
-
 
 }) (VISH);

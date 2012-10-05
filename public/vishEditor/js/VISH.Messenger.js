@@ -1,3 +1,10 @@
+/*
+ * VISH Messenger
+ * Provides an API that allows web applications to communicate with Vish Editor
+ * @author GING
+ * @version 1.0
+ */
+
 var VISH = VISH || {};
 
 VISH.Messenger = (function(V,undefined){
@@ -68,8 +75,14 @@ VISH.Messenger = (function(V,undefined){
 			return;
 		}
 		if(external){
-			var iframe = document.getElementById(destination).contentWindow;
-			iframe.postMessage(message,'*');
+			if(typeof destination === "string"){
+				var iframe = document.getElementById(destination).contentWindow;
+				iframe.postMessage(message,'*');
+			} else if((_isArray(destination))&&(typeof destination[0] == "string")){
+				for(var i=0; i<destination.length; i++){
+					document.getElementById(destination[i]).contentWindow.postMessage(message,'*');
+				}
+			}
 		} else {
 			if(V.Status.getIsInIframe()){
 				window.parent.postMessage(message,'*');
@@ -123,7 +136,7 @@ VISH.Messenger = (function(V,undefined){
 	}
 	
 
-	////////////
+	////////////sendMessage
 	//Process Actions
 	///////////
 
@@ -131,18 +144,73 @@ VISH.Messenger = (function(V,undefined){
 		switch(message.action){
 			case "goToSlide":
 				if((message.params)&&(message.params[0])){
+					var slideNumber = message.params[0];
 					if(external){
 						//Callback
 						if(typeof onGoToSlide === "function"){
-							onGoToSlide(message.params[0],message.origin);
+							onGoToSlide(slideNumber,message.origin);
 						}
 					} else {
-						VISH.Slides.goToSlide(message.params[0]);
+						VISH.Slides.goToSlide(slideNumber,false);
 					}
 				}
 				break;
+			case "playVideo":
+				if((message.params)&&(message.params.length===4)){
+					var videoType = message.params[0];
+					var currentTime = message.params[1];
+					var videoSlideNumber = message.params[2];
+					var videoId = message.params[3];
+
+					if(external){
+						//Callback
+						if(typeof onPlayVideo === "function"){
+							onPlayVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+						}
+					} else {
+						VISH.VideoPlayer.startVideo(videoType,currentTime,videoSlideNumber,videoId);
+					}
+
+				}
+				break;
+			case "pauseVideo":
+				if((message.params)&&(message.params.length===4)){
+					var videoType = message.params[0];
+					var currentTime = message.params[1];
+					var videoSlideNumber = message.params[2];
+					var videoId = message.params[3];
+
+					if(external){
+						//Callback
+						if(typeof onPauseVideo === "function"){
+							onPauseVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+						}
+					} else {
+						VISH.VideoPlayer.pauseVideo(videoType,currentTime,videoSlideNumber,videoId);
+					}
+
+				}
+				break;
+			case "seekVideo":
+				if((message.params)&&(message.params.length===4)){
+					var videoType = message.params[0];
+					var currentTime = message.params[1];
+					var videoSlideNumber = message.params[2];
+					var videoId = message.params[3];
+
+					if(external){
+						//Callback
+						if(typeof onSeekVideo === "function"){
+							onSeekVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+						}
+					} else {
+						VISH.VideoPlayer.seekVideo(videoType,currentTime,videoSlideNumber,videoId);
+					}
+
+				}
+				break;
 			default:
-					_print("VISH Messenger Error: Unrecognized action");
+					_print("VISH Messenger Error: Unrecognized action: " + message.action);
 				break;
 		}
 	}
@@ -155,6 +223,17 @@ VISH.Messenger = (function(V,undefined){
 		VISH.Messenger.sendMessage("goToSlide",[slideNumber],null,null,destination);
 	}
 
+	var playVideo = function(videoType,currentTime,videoSlide,videoId,destination){
+		VISH.Messenger.sendMessage("playVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	}
+
+	var pauseVideo = function(videoType,currentTime,videoSlide,videoId,destination){
+		VISH.Messenger.sendMessage("pauseVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	}
+
+	var seekVideo = function(videoType,currentTime,videoSlide,videoId,destination){
+		VISH.Messenger.sendMessage("seekVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	}
 
 	///////////
 	//SUPPORT
@@ -170,10 +249,20 @@ VISH.Messenger = (function(V,undefined){
 		}
 	}
 
+	var _isArray = function(object) {
+		if (typeof object !== "undefined") {
+			return object.constructor === Array;
+		}
+		return false;
+	}
+
 	return {
 			init 		: init,
 			sendMessage	: sendMessage,
-			goToSlide 	: goToSlide
+			goToSlide 	: goToSlide,
+			playVideo   : playVideo,
+			pauseVideo	: pauseVideo,
+			seekVideo   : seekVideo
 	};
 
 }) (VISH);

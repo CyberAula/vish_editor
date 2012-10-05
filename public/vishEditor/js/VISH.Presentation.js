@@ -34,27 +34,10 @@ VISH.Presentation = (function(V,undefined){
 						V.Mods.fc.loader.init(flashcard);
 					//});
 				}
-				
-				/*
-				*it is added some functions later the elements be loaded 
-				*  
-				else if(mySlides[i].elements[num].type === "mcquestion") {
- 
-					
-				    //param number of slide? and number of elements 
-					VISH.Quiz.enableInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].options.length);
-					
-					
-				}
-				else if (mySlides[i].elements[num].type === "truefalsequestion") {
-				//number of slide and number of true/false questions 
-				VISH.Quiz.enableTrueFalseInteraction(mySlides[i].id.toString(), mySlides[i].elements[num].questions.length);
-					
-				}*/
 			}
 		}
 		
-		V.VideoPlayer.setVideoTagEvents();
+		V.VideoPlayer.setVideoEvents();
 		
 		V.SlideManager.addEnterLeaveEvents();
 		

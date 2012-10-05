@@ -45,7 +45,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	
     var template = VISH.Editor.getTemplate(area);
 
-    var nextVideoId = VISH.Editor.getId();
+    var nextVideoId = VISH.Utils.getId();
     var idToDragAndResize = "draggable" + nextVideoId;
     current_area.attr('type','video');
     

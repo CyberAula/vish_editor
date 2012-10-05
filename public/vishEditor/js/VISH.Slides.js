@@ -253,7 +253,7 @@ VISH.Slides = (function(V,$,undefined){
   /**
    * go to the slide when clicking the thumbnail
    */
-  var goToSlide = function(no){
+  var goToSlide = function(no,notify){
 
   	if(no === getCurrentSlideNumber()){
   		//Do nothing
@@ -285,7 +285,7 @@ VISH.Slides = (function(V,$,undefined){
 		V.SlideManager.updateSlideCounter();
 	}
 
-	if(VISH.Messenger){
+	if((VISH.Messenger)&&(notify!==false)){
 		VISH.Messenger.sendMessage("goToSlide",[no]);
 	}
 	

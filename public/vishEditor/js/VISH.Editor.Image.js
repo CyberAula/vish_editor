@@ -191,7 +191,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 
 		var template = VISH.Editor.getTemplate(); 
-		var nextImageId = VISH.Editor.getId();
+		var nextImageId = VISH.Utils.getId();
 		var idToDragAndResize = "draggable" + nextImageId;
 		current_area.attr('type','image');
 		if(hyperlink){

@@ -12,9 +12,6 @@ VISH.Editor = (function(V,$,undefined){
 	//Prevent to load events multiple times.
 	var eventsLoaded = false;
 
-	//Control elements id.
-	var domId = 0; 
-
 	//Confirm on exit
 	var confirmOnExit;
 	
@@ -163,14 +160,6 @@ VISH.Editor = (function(V,$,undefined){
 	/// Helpers 
 	////////////////
 
-	/**
-	* Return a unic id.
-	*/
-	var getId = function(){
-		domId = domId +1;
-		return "unicID_" + domId;
-	};
-	
 	var getOptions = function(){
 		return initOptions;
 	};	
@@ -922,7 +911,6 @@ VISH.Editor = (function(V,$,undefined){
 	return {
 		init 					: init,
 		addDeleteButton 		: addDeleteButton,
-		getId 					: getId,
 		getTemplate 			: getTemplate,
 		getCurrentArea 			: getCurrentArea,
 		getPresentationType		: getPresentationType,

@@ -20,9 +20,8 @@ VISH.Renderer = (function(V,$,undefined){
 		var content = "";
 		var classes = "";
 		var buttons = "";
-		for(el in slide.elements){
-	
 
+		for(el in slide.elements){
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
@@ -43,28 +42,9 @@ VISH.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === "flashcard"){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
-			}
-			 else if(slide.elements[el].type === "quiz"){
-			 	V.Debugging.log("VISH.Renderer: Slide element type: quiz");
-					V.Debugging.log("VISH.Renderer: Slide.template:" + slide.template + ", slide template areaid:" + slide.elements[el].areaid);
+			} else if(slide.elements[el].type === "quiz"){
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template +"_"+slide.elements[el].areaid );
-
-				
-
 				classes += "quiz";
-			} 
-
-			//TODO remove different renderQuiz , just only one for quiz and decide in quiz class what to do
-			 else if(slide.elements[el].type === "openquestion"){
-				content += V.Quiz.Renderer.renderQuiz("openquestion",slide.elements[el],slide.template);
-				classes += "openquestion";
-			} else if(slide.elements[el].type === "mcquestion"){				
-				var quizId = parseInt(slide.quiz_id)
-				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], "multiplechoicequestion", slide.id);
-				classes +="mcquestion";
-			} else if ( slide.elements[el].type === "truefalsequestion") {
-				content +=V.Quiz.Renderer.renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);
-				classes +="truefalsequestion";
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
@@ -76,12 +56,7 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
 
-		if(quizId){
-			$(article).attr("quizId",quizId);
-		}
-
 		SLIDE_CONTAINER.append(article);
-		
 	};
 
 
@@ -128,11 +103,13 @@ VISH.Renderer = (function(V,$,undefined){
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
 		var loop=(element['loop'])?"loop='loop' ":"";
 		var sources = element['sources'];
+		var videoId = VISH.Utils.getId();
+
 		if(typeof sources == "string"){
 			sources = JSON.parse(sources)
 		}
 		
-		rendered = rendered + "<video class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
+		rendered = rendered + "<video id='" + videoId + "' class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		
 		$.each(sources, function(index, source) {
 			var type = (source.type)?"type='" + source.type + "' ":"";
