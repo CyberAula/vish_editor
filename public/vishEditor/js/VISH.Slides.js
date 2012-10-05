@@ -12,11 +12,8 @@ VISH.Slides = (function(V,$,undefined){
 
 	var handleDomLoaded = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
-
 	  addFontStyle();
-	  
-	  updateSlides();
-	  	  
+	  updateSlides(); 
 	  $('body').addClass('loaded');
 	};
 
@@ -256,7 +253,13 @@ VISH.Slides = (function(V,$,undefined){
   /**
    * go to the slide when clicking the thumbnail
    */
-  var goToSlide = function(no){	
+  var goToSlide = function(no){
+
+  	if(no === getCurrentSlideNumber()){
+  		//Do nothing
+  		return;
+  	};
+
     if((no > slideEls.length) || (no <= 0)){
   	  return;
     } else if (no > curSlideIndex+1){
@@ -281,6 +284,11 @@ VISH.Slides = (function(V,$,undefined){
 		//update slide counter
 		V.SlideManager.updateSlideCounter();
 	}
+
+	if(VISH.Messenger){
+		VISH.Messenger.sendMessage("goToSlide",[no]);
+	}
+	
   };
   
 

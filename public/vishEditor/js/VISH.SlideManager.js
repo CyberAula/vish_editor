@@ -54,8 +54,11 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//important that events are initialized after presentation type is proccessed
 		V.Events.init();
-		//Comented by V.Hugo 'cause crashed the app
-		//V.Messenger.init();
+
+		//Allow cross-domain communication through iframes
+		if(V.Status.getIsInIframe()){
+			V.Messenger.init(false);
+		}
 	  	
 		V.Themes.selectTheme(presentation.theme);
 		mySlides = presentation.slides;
@@ -111,7 +114,11 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		var myElem = myDoc.getElementById('presentation_iframe');
+		if(VISH.Status.getIsInIframe()){
+			var myElem = VISH.Status.getIframe();
+		} else {
+			var myElem = myDoc.getElementById('presentation_iframe');
+		}
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
 		    if (myDoc.documentElement.requestFullScreen) {
@@ -252,10 +259,8 @@ VISH.SlideManager = (function(V,$,undefined){
   /*
    * added by KIKE to hide the address bar after loading
    */
-  var hideAddressBar = function()
-  { 
+  var hideAddressBar = function(){ 
     	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
-        
         /*
         if(document.body.style.height < window.outerHeight)
         {
@@ -268,7 +273,6 @@ VISH.SlideManager = (function(V,$,undefined){
           window.scrollTo(0, 1); 
           }, 50 );
 		*/
-		
   };
 	
 	var getCurrentPresentation = function(){

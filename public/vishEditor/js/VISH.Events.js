@@ -37,8 +37,7 @@ VISH.Events = (function(V,$,undefined){
 	      		});
 	      		/* Swiping */
 	 			 $(document).bind('touchstart', handleTouchStart); 
-	      	}
-	      	else if(V.SlideManager.getPresentationType() === "flashcard"){
+	      	} else if(V.SlideManager.getPresentationType() === "flashcard"){
 				var presentation = V.SlideManager.getCurrentPresentation();
 				//and now we add the points of interest with their click events to show the slides
   				for(index in presentation.background.pois){
@@ -196,15 +195,15 @@ VISH.Events = (function(V,$,undefined){
 	  		$(document).off('click', '#closeButton');
 	  		$(document).unbind('touchstart', handleTouchStart); 
   		} else if(V.SlideManager.getPresentationType() === "flashcard"){
-				var presentation = V.SlideManager.getCurrentPresentation();
-				//and now we add the points of interest with their click events to show the slides
-  				for(index in presentation.background.pois){
-  					var poi = presentation.background.pois[index];
-  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
-  				}
-  		
-      			$(document).off('click','.close_slide', _onFlashcardCloseSlideClicked);
-  		   	} 	
+			var presentation = V.SlideManager.getCurrentPresentation();
+			//and now we add the points of interest with their click events to show the slides
+			for(index in presentation.background.pois){
+				var poi = presentation.background.pois[index];
+				$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+			}
+
+			$(document).off('click','.close_slide', _onFlashcardCloseSlideClicked);
+  		}	
 
 	};
 	
