@@ -17,13 +17,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	//Function called from quiz fancybox
-	var addQuiz = function(quiz_type) {
+	var addQuiz = function(quiz_type, area) {
 		switch (quiz_type) {
 			case "open":
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
-				_addMultipleChoiceQuiz();
+				_addMultipleChoiceQuiz(area);
 				 break;
 			case "truefalse":
 				// _addTrueFalseQuiz();
@@ -35,14 +35,49 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
-	var drawQuiz = function(question, options){
-		$(".current").find(".value_multiplechoice_question").val(question);
-		for (var i = 0;  i <= options.length - 1; i++) {
-			var optionText = options[i];
-			var myInput = $(".current").find(".ul_mch_options > li").last().find("input");
-			var myImg = $(".current").find(".ul_mch_options > li").last().find("img");
-			_addMultipleChoiceOption(null, myInput, myImg, optionText);
-		};
+	var drawQuiz = function(quiz_type, zone_id, question, options){
+		//var typeQuiz = $(".current").find(".value_multiplechoice_question").val(question);
+		var zone;
+		if(zone_id) {
+			zone = "#"+ zone_id;
+		} else {
+
+			zone = ".current";
+		}
+
+		switch (quiz_type) {
+
+
+			case "multiplechoice": 
+				
+				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").children().remove();
+				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").append(question);
+				var inputs = $(zone).find(".multiplechoice_text_in_zone"); //all inputs (less or equal than options received)
+				
+				for (var i = 0;  i <= options.length - 1; i++) {
+					$(inputs[i]).val(options[i]);
+					/*	
+					var optionText = options[i];
+					var myInput = $(zone).find(".ul_mch_options > li").last().find("input");
+					var myImg = $(zone).find(".ul_mch_options > li").last().find("img");
+					_addMultipleChoiceOption(null, myInput, myImg, optionText);
+					*/
+				}
+				break;
+			case "open":
+
+			break;
+
+			case "truefalse":
+
+			break;
+
+			default: 
+
+			break;
+		}
+
+		
 	};
 
 
@@ -59,7 +94,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
 		var img, input;
 		var optionsLength = $(".current").find(".ul_mch_options > li").length;
-
 		if(optionsLength >= maxNumMultipleChoiceOptions){
 			return;
 		}
@@ -139,11 +173,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var _addMultipleChoiceQuiz = function(area) {
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		if(area){
-			var current_area = area;
-		} else {
-			var current_area = VISH.Editor.getCurrentArea();
+			var current_area = $("#"+area);
 		}
-		$(current_area).find(".menuselect_hide").remove();
+		else {
+			var current_area = VISH.Editor.getCurrentArea();
+			current_area.find(".menuselect_hide").remove();
+		}
+		
 		current_area.attr('type','quiz');
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);

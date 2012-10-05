@@ -209,6 +209,14 @@ VISH.Status = (function(V,$,undefined){
 		isInIframe = isIframe;
 	};
 
+	var getIframe = function(){
+		if(isInIframe){
+			return window.frameElement;
+		} else {
+			return null;
+		}
+	};
+
 	var getDevice = function(){
 		return device;
 	}
@@ -216,6 +224,7 @@ VISH.Status = (function(V,$,undefined){
 	return {
 		init            : init,
 		getIsInIframe	: getIsInIframe,
+		getIframe   	: getIframe,
 		getDevice		: getDevice
 	};
 

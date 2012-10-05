@@ -46,8 +46,8 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 			 else if(slide.elements[el].type === "quiz"){
 			 	V.Debugging.log("VISH.Renderer: Slide element type: quiz");
-					
-				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template);
+					V.Debugging.log("VISH.Renderer: Slide.template:" + slide.template + ", slide template areaid:" + slide.elements[el].areaid);
+				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template +"_"+slide.elements[el].areaid );
 
 				
 
@@ -60,7 +60,7 @@ VISH.Renderer = (function(V,$,undefined){
 				classes += "openquestion";
 			} else if(slide.elements[el].type === "mcquestion"){				
 				var quizId = parseInt(slide.quiz_id)
-				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], slide.template, slide.id);
+				content +=V.Quiz.Renderer.renderQuiz("mcquestion",slide.elements[el], "multiplechoicequestion", slide.id);
 				classes +="mcquestion";
 			} else if ( slide.elements[el].type === "truefalsequestion") {
 				content +=V.Quiz.Renderer.renderQuiz("truefalsequestion",slide.elements[el], slide.template, slide.id);

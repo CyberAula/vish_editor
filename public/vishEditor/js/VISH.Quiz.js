@@ -15,7 +15,6 @@ VISH.Quiz = (function(V,$,undefined){
   var statisticsButtonClass = "mch_statistics_icon";
 
   var init = function(presentation){
-      V.Debugging.log("presentation type: " + presentation.type);
     if (presentation.type=="quiz_simple"){
       quizMode = "answer";
        _loadAnswerEvents();
@@ -72,7 +71,8 @@ VISH.Quiz = (function(V,$,undefined){
     var url = quizUrlForSession + quiz_session_id;
 
     var current_slide = V.Slides.getCurrentSlide();
-    var header = $(current_slide).find(".t11_header");
+    //var header = $(current_slide).find(".t11_header");
+    var header = $(current_slide).find(".mcquestion_header");
 
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
@@ -104,8 +104,8 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _stopAndSaveQuiz = function(quizName) { 
     var current_slide = VISH.Slides.getCurrentSlide();
-    var header = $(current_slide).find(".t11_header");
-
+    //var header = $(current_slide).find(".t11_header");
+    var header = $(current_slide).find(".mcquestion_header");
     var quizSessionActiveId =  $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId");
     if(!quizName){
       quizName = "Unknown";

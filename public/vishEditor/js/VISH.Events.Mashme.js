@@ -17,9 +17,8 @@ VISH.Events.Mashme = (function(V,$,undefined){
 			window.removeEventListener("message", V.Slides.onMashmeHello, false);
 			V.Events.unbindAll();
 			init();
-		}
-		else{
-			V.Debugging.log("WARNING unknown message received from " + message.origin + " with data: " + message.data);
+		} else {
+			// V.Debugging.log("WARNING unknown message received from " + message.origin + " with data: " + message.data);
 		}
 	};
 
@@ -114,7 +113,7 @@ VISH.Events.Mashme = (function(V,$,undefined){
 
 
 	var _onMashmeMessage = function(message){
-		V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
+		// V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
 		var command = message.data.substring(message.data.indexOf(":")+1, message.data.indexOf("//"));
 		var data = message.data.substring(message.data.indexOf("//")+2);
 		switch (command) {
