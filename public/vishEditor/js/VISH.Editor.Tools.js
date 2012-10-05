@@ -128,9 +128,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			case "presentation":				
 				$("#hidden_button_to_launch_theme_fancybox").fancybox({
 					'autoDimensions' : false,
-					'width': 800,
+					'width': 600,
 					'scrolling': 'no',
-					'height': 600,
+					'height': 400,
 					'padding' : 0
 				});
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();

@@ -10,7 +10,7 @@ VISH.Samples = (function(V,undefined){
 		// "avatar" 		: "/assets/logos/original/excursion-10.png",
 		"tags": ["Samples","Test","Development"],
 		"author" : "",
-		"theme"	 : "theme2",
+		"theme"	 : "theme11",
 		"slides" : [{
 			"id" : "articlearticle1",
 			"template" : "t1",
