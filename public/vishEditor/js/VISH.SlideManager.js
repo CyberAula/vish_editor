@@ -57,7 +57,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//Allow cross-domain communication through iframes
 		if(V.Status.getIsInIframe()){
-			V.Messenger.init(false);
+		//	V.Messenger.init(false);
 		}
 	  	
 		V.Themes.selectTheme(presentation.theme);

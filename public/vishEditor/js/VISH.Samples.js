@@ -647,7 +647,7 @@ VISH.Samples = (function(V,undefined){
 							"id":"zone3",
 							"type":"quiz",
 							"areaid":"center",
-							"question":"What are <b> you  <u>talking</u> <i> <font size='5'> about </font> bla bla bla bla ... large textttttt </i></b> ?",
+							"question":"What are <b> you  <u>talking</u> <i> <font size='7'> about </font> bla bla bla bla ... large textttttt </i></b> ?",
 							"quiztype":"multiplechoice",
 							"options":[
 								"Something","Nothing","Everything","Option D"
