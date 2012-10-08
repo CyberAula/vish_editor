@@ -15,6 +15,6 @@ background: radial-gradient(ellipse at center,  rgba(214,219,191,1) 0%,rgba(254,
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6dbbf', endColorstr='#feffe8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-.wysiwygInstance span {
+/*.wysiwygInstance span {
 	color: black;
-}
+}*/

@@ -95,7 +95,22 @@ VISH.Samples = (function(V,undefined){
 					'sources': '[{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},{"type": "video/mp4","src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4"}]'
 				}
 			]
-		}]
+		},
+		{
+			"id":"article__4",
+			"type":"standard",
+			"template":"t2",
+			"elements":[
+				{
+					"id":"zone11",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe src=\"http://www.youtube.com/embed/VAEp2gT-2a8?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_7\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"style":"position: relative; width:89.9390243902439%; height:89.6774193548387%; top:3.225806451612903%; left:3.3536585365853657%;"
+				}
+			]
+		}
+		]
 	};
 
 	var samples_flashcard = {
@@ -644,8 +659,6 @@ VISH.Samples = (function(V,undefined){
 						}
 					]
 				}
-
-
 			]
 		}; 
 

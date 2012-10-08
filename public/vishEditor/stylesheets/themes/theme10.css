@@ -21,6 +21,6 @@ background: radial-gradient(ellipse at center,  #f2f5f6 0%,#afafaf 100%); /* W3C
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', endColorstr='#afafaf',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-.wysiwygInstance span {
+/*.wysiwygInstance span {
 	color: black;
-}
+}*/

@@ -15,6 +15,6 @@ background: linear-gradient(to bottom,  rgba(229,235,238,1) 0%,rgba(215,222,227,
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5ebee', endColorstr='#d7dee3',GradientType=0 ); /* IE6-9 */
 }
 
-.wysiwygInstance span {
+/*.wysiwygInstance span {
 	color: white;
-}
+}*/

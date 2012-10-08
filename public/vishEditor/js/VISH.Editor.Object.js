@@ -428,7 +428,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
 	 
 		var template = V.Editor.getTemplate(current_area);
-		var nextWrapperId = V.Editor.getId();
+		var nextWrapperId = V.Utils.getId();
 		var idToDrag = "draggable" + nextWrapperId;
 		var idToResize = "resizable" + nextWrapperId;
 		current_area.attr('type', 'object');
