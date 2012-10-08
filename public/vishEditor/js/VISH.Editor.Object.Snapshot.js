@@ -91,7 +91,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     }
 	 
     var template = V.Editor.getTemplate(current_area);
-    var nextWrapperId = V.Editor.getId();
+    var nextWrapperId = V.Utils.getId();
     var idToDrag = "draggable" + nextWrapperId;
     var idToResize = "resizable" + nextWrapperId;
     current_area.attr('type', 'snapshot');
