@@ -44,23 +44,13 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 		$(".draggable_arrow_div").draggable({
 			revert: "invalid",   //poi will return to original position if not dropped on the background
-			stop: function(event, ui) { //change the moved attribute of the poi, and change it to position absolute
+			stop: function(event, ui) { //change the moved attribute of the poi
 				//check if inside background
 				if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
 					$(event.target).attr("moved", "true");
-					//change to position absolute
-					var old_offset = $(event.target).offset();
-					$(event.target).css("position", "absolute");
-					$(event.target).css("top", old_offset.top + "px");
-					$(event.target).css("left", old_offset.left + "px");
 				}
 				else{
 					$(event.target).attr("moved", "false");
-					//change to position relative so it moves with the carrusel
-					var reative_pos = $(event.target).position();
-					$(event.target).css("position", "relative");
-					$(event.target).css("top", reative_pos.top + "px");
-					$(event.target).css("left", reative_pos.left + "px");
 				}
 			}
 		});
