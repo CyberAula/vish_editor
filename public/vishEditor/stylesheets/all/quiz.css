@@ -364,7 +364,6 @@ span.mcChoiceSpan{
     width:100%;
     display: block;
     margin: 1%;
-    line-height: 110%;
     float:left;
     position: relative;
 }
@@ -608,14 +607,11 @@ span.mcChoiceSpan{
     border-radius: 0.4em 0.4em 0em 0em;
     color: #212121;
     display: block;
-    /*font-family: Helvetica;
-    font-size: 1.4em; 
-    font-weight: bold; */
     padding: 0.1em;
     text-decoration: none;
     width:100%; 
     float: left;
-    line-height: 110%;
+    line-height: 105%;
     text-align:left;
     margin-left: 0%;
 }

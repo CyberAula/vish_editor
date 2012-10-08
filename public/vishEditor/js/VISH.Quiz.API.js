@@ -8,7 +8,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Request new quiz session
 	* Server responds with a quiz_session_id
 	*/
-	var postStartQuizSession = function(quizId,successCallback, failCallback){
+	var postStartQuizSession = function(quizId, successCallback, failCallback){
 		
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 			

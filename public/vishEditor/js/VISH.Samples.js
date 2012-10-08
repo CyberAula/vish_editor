@@ -626,7 +626,7 @@ VISH.Samples = (function(V,undefined){
 			"author":"V. Hugo", 
 			"slides":[
 				{
-					"id":"article_12313_1",
+					"id":"article12312",
 					"type":"standard",
 					"template":"t8",
 					"elements":[
