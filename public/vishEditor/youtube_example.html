@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Youtube API Example</title>
+</head>
+<body>
+
+ <script type="text/javascript" src="/vishEditor/swfobject/swfobject.js"></script>    
+  <div id="ytapiplayer">
+    You need Flash player 8+ and JavaScript enabled to view this video.
+  </div>
+
+  <script type="text/javascript">
+
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myytplayer" };
+    swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer", 
+                       "ytapiplayer", "425", "356", "8", null, null, params, atts);
+
+    function onYouTubePlayerReady(playerId) {
+      console.log("onYouTubePlayerRead with playerId " + playerId);
+      var ytplayer = document.getElementById(playerId);
+      console.log(ytplayer);
+      ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+    }
+
+    function onytplayerStateChange(newState) {
+    	console.log("Player's new state: " + newState);
+    	switch(newState){
+    		case -1:
+    			console.log("No iniciado");
+    			break;
+    		case 0:
+    			console.log("Finalizado");
+    			break;
+    		case 1:
+    			console.log("En reproduccion");
+    			break;
+    		case 2:
+    			console.log("Pausado");
+    			break;
+    		case 3:
+    			console.log("Almacenamiento en buffer");
+    			break;
+    		case 4:
+    			break;
+    		case 5:
+    			console.log("Almacenamiento en cola de videos");
+    			break;
+    		default:
+    			console.log("Estado desconocido: " + newState);
+    			break;
+    	}
+	}
+
+
+	function playVideo(ytplayer){
+		if (ytplayer) {
+			ytplayer.playVideo();
+		}
+	}
+
+  </script>
+
+
+
+
+    
+</body>
+</html>
