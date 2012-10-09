@@ -20,7 +20,7 @@ VISH.Dummies = (function(VISH,undefined){
 		"<article id='article_id_to_change' template='t8' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' size='small' class='t8_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' size='small'  class='t8_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' size='large'  class='t8_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' size='small'     class='t8_right editable grey_background selectable'></div></article>",
 		"<article id='article_id_to_change' template='t9' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' size='small' class='t9_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' size='medium' class='t9_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' size='medium' class='t9_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' size='medium'    class='t9_right editable grey_background selectable'></div></article>",
 		"<article id='article_id_to_change' template='t10' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='left' size='large' class='t10_left editable grey_background selectable'></div></article>",
-		"<article id='article_id_to_change' template='t11' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' size='medium' class='t11_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' size='medium'  class='t11_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right'  size='medium'  class='t11_right editable grey_background selectable'></div></article>",
+		"<article id='article_id_to_change' template='t11' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' areaid='header' size='medium' class='t11_header editable grey_background selectable'></div><div id='div_id_to_change' areaid='left' size='medium'  class='t11_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='right'  size='medium'  class='t11_right editable grey_background selectable'></div></article>"
 		];
 
 		quizDummies = ["<div class='openQuizContainer'><textarea class='value_open_question_in_zone'><div><font size="+4+">Write question here</font></div></textarea></div>", 
@@ -34,12 +34,8 @@ VISH.Dummies = (function(VISH,undefined){
 	 * param article_id: id of the article, used for editing presentations
 	 */
 	var getDummy = function(template, position, presentation_id, existing_slide){
-		// VISH.Debugging.log(" template value: " + template);
-	VISH.Debugging.log("template value: " + template);
-		VISH.Debugging.log("parseInt: " + parseInt(template,10));
-		var dum = dummies[parseInt(template,10)-1];
-		VISH.Debugging.log("dum value: " + dum);
-		return _replaceIds(dum, position, presentation_id, existing_slide);
+			var dum = dummies[parseInt(template,10)-1];
+			return _replaceIds(dum, position, presentation_id, existing_slide);
 	};
 
 	var getQuizDummy = function(type_quiz, position) {

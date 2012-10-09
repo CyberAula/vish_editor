@@ -517,6 +517,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		presentation.author = '';
 		presentation.slides = [];
+		presentation.contain_quiz = false;
 		var slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
@@ -570,10 +571,11 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
+							presentation.contain_quiz = true; //added to try save quiz in vish
 						V.Debugging.log("quiz detected");
 						V.Debugging.log("div value:" + $(div));
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
-							V.Debugging.log("question value: " + element.question);
+						//	V.Debugging.log("question value: " + element.question);
 
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
@@ -602,7 +604,7 @@ VISH.Editor = (function(V,$,undefined){
 								element.options.push(input_text.value);
 							}
 						});
-						slide.type = "quiz";
+					
 					} else if (element.type=="truefalsequestion") {
 					  	V.Debugging.log("element type truefalsequestion detected");   		      	
 						element.questions = [];	
