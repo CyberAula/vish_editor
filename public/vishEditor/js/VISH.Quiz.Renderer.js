@@ -12,12 +12,12 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /**
    * Function to render a quiz inside an article (a slide)
    */
-  var renderQuiz = function(quizType, element, zone_class, slide){
+  var renderQuiz = function(quizType, element, zone_class, slide, zone){
 
     V.Debugging.log("V.Quiz.Renderes, quizType:" + quizType)
     switch(quizType){
       case "multiplechoice":
-        return _renderMcQuestion(element, zone_class, slide);
+        return _renderMcQuestion(element, zone_class, slide, zone);
         break;
       case "mcquestion":
         return _renderMcQuestion(element, zone_class, slide);
@@ -34,7 +34,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
 
-  var _renderMcQuestion = function(element, zone_class, slide){ 
+  var _renderMcQuestion = function(element, zone_class, slide, zone){ 
 
 
       var ret = "<div id='"+element['id']+"'class='"+ zone_class + "'>";
@@ -53,7 +53,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         ret += "<div class='mc_meter'><span style='width:0%'></span></div>";
         ret += "<label class='mcoption_label'></label>";
       }
-
+      ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' />";
       ret += "</div>";
       ret += "<div class='mcquestion_buttons'>";
       ret += "<div class='mch_statistics_icon_wrapper'>";

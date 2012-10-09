@@ -43,7 +43,7 @@ VISH.Renderer = (function(V,$,undefined){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
 			} else if(slide.elements[el].type === "quiz"){
-				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template +"_"+slide.elements[el].areaid );
+				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				classes += "quiz";
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
