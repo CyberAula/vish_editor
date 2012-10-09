@@ -80,8 +80,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a#addSlideFancybox").fancybox({
 			'autoDimensions' : false,
 			'scrolling': 'no',
-			'width': 385,
-			'height': 340,
+			'width': 640,
+			'height': 350,
 			'padding': 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
