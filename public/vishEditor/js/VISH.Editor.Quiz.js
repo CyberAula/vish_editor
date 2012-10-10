@@ -56,12 +56,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				for (var i = 0;  i <= options.length - 1; i++) {
 					$(inputs[i]).val(options[i]);
-					/*	
-					var optionText = options[i];
-					var myInput = $(zone).find(".ul_mch_options > li").last().find("input");
-					var myImg = $(zone).find(".ul_mch_options > li").last().find("img");
-					_addMultipleChoiceOption(null, myInput, myImg, optionText);
-					*/
 				}
 				break;
 			case "open":

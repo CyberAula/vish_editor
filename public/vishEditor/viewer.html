@@ -17,10 +17,12 @@
 	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.widget.min.js"></script>
 	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.draggable.min.js"></script>
 	  <script type="text/javascript" src="/vishEditor/js/libs/jquery.slider.min.js"></script>
+      <script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/quiz.css">
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery.fancybox-1.3.4.css"/>
 
     <script type="text/javascript" src="/vishEditor/js/libs/json2.js"></script>
 
@@ -82,6 +84,39 @@
     </div>
     
     <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
+
+    <!-- Hidden link to open fancybox when start a quiz session inside a slide 
+    <a id="quizSessionFancybox" href="#quizcontent" style="display: none;"></a> -->
+
+    <!-- quiz Session Fancybox fancybox -->
+    <div style='display:none'>
+        <div id='quizSessionOpenContent'>
+
+            <div class='fancy_tabs' id='quizSessionOpenContent_tabs'>
+                <ul>
+                    <li>
+                        <a href="#" id="tab_quizes" class="fancy_tab">Quiz</a>
+                    </li>
+                </ul>
+            </div> 
+
+            <div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
+                <img id='help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                <div style="display:none" class='quizFancythumb'>
+                    <img src='/vishEditor/images/templatesthumbs/tquiz1.png' />
+                </div>
+                <div class='quizFancythumb'>
+                    <img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.addQuiz("multiplechoice");' />
+                </div>
+                <div style="display:none" class='quizFancythumb'>
+                    <img src='/vishEditor/images/templatesthumbs/tquiz3.png' />
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Hidden link to open fancybox to show quiz options -->
+    <a id="quizSessionOpenContentlink" href="#quizSessionOpenContent" style="display: none;"></a>
     
     <div style="display:none" id="viewerpreview">Preview</div>
     <button id="closeButton" style="display:none" ><img id="closeButtonImg" src="/vishEditor/images/back_icon.png"/></button>
