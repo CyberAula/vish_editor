@@ -72,14 +72,34 @@ var setQuizEvents = function() {
       'height': '80%',
       'padding': 0,
       "onStart"  : function(data) {
-
+        VISH.Quiz.loadSessionTab('quiz_session');
         VISH.Debugging.log("onStart launchQuiz");
-        var zone = $(".current").find(".quiz_id").val();
-        VISH.Debugging.log("zone value: " + zone);
-
+        var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
+        VISH.Debugging.log("QuizId: " + quizId);
+        
       }
     });
 
+};
+/*called when start a Quiz session with default tab (*/
+var loadSessionTab = function (tab_name) {
+
+  switch (tab_name) {
+
+    case "quiz_session": 
+      VISH.Debugging.log("quiz_session click detected");
+      _startMcQuizButtonClicked();
+    break;
+
+    case "quiz_statistics":
+        VISH.Debugging.log("quiz_statistics click detected");
+    break;
+
+    default:
+
+    break;
+
+}
 };
 
   /////////////////////////
@@ -97,12 +117,13 @@ var setQuizEvents = function() {
   var _startMcQuizButtonClicked = function () {
     V.Debugging.log("startQuizButtonClicked received");
     if(V.User.isLogged()){
-      var quizId = $(VISH.Slides.getCurrentSlide()).attr("quizid");
+      var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
+
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
     }
   };
 
-/* must construct the URL and add an QR code inside */
+/* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
     V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
 
@@ -276,7 +297,8 @@ var setQuizEvents = function() {
     init              : init, 
     prepareQuiz       : prepareQuiz,
     getQuizMode       : getQuizMode, 
-    setQuizEvents     : setQuizEvents
+    setQuizEvents     : setQuizEvents, 
+    loadSessionTab    : loadSessionTab
   };
     
 }) (VISH, jQuery);

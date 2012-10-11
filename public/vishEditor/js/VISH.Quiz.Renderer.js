@@ -55,7 +55,8 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         ret += "<div class='mc_meter'><span style='width:0%'></span></div>";
         ret += "<label class='mcoption_label'></label>";
       }
-      ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' class='quiz_id' />";
+      ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' />";
+      ret += "<input type='hidden' value='"+element['quizid']+"' name='quizid' class='quizId' />";
       ret += "</div>";
       ret += "<div class='mcquestion_buttons'>";
       ret += "<div class='mch_statistics_icon_wrapper'>";
