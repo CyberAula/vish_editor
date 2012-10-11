@@ -99,24 +99,30 @@
         <div id="start_quiz_fancybox" class="outer_box">
              <div class="fancy_tabs" id="start_quiz_fancy_tabs_id">      
                     <ul>
-                      <li><a href="#" onclick="VISH.Quiz.loadSessionTab('quiz_session')" id="quiz_session_tab" class="fancy_tab fancy_selected" i18n-key="i.quiz_session">Quiz Session</a></li>
-                      <li><a href="#" onclick="VISH.Quiz.loadSessionTab('quiz_statistics')" id="quiz_statistics_tab" class="fancy_tab" i18n-key="i.statistics">Statistics</a></li>
+                      <li><a href="#" onclick="VISH.Quiz.loadSessionTab('quiz_session')" id="tab_quiz_session" class="fancy_tab fancy_selected" i18n-key="i.quiz_session">Quiz Session</a></li>
+                      <li><a href="#" onclick="VISH.Quiz.loadSessionTab('quiz_statistics')" id="tab_quiz_statistics" class="fancy_tab" i18n-key="i.statistics">Statistics</a></li>
                      
                     </ul>
                     <img class='help_in_fancybox' id='tab_quiz_session_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
                     <img class='help_in_fancybox' id='tab_quiz_statistics_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
                    
             </div>
-            <div id='tab_quiz_session_content' class="fancy_tab_content">
+            <div id='tab_quiz_session_content' class="fancy_tab_content" style='display:none;'>
                 <div class='quiz_session_header'></div>
                 <div class='quiz_session_body'>
                     <div class='quiz_session_qrcode_container'>
                     </div>
+                    <div class='quiz_sesssion_inputs_container'>
+                        <input type='hidden' class='quiz_session_id' name='quiz_session_id' />
+                        <input type='button' class='quiz_session_stop_button' value='Stop Quiz'/>
+                    </div>
                 </div>
-
             </div>
-            <div id='tab_quiz_statistics_content' class="fancy_tab_content">     
-                  
+            <div id='tab_quiz_statistics_content' class="fancy_tab_content" style='display:none;'>     
+                  <div id='quiz_statistics_content' class='quiz_statistics_content'>
+
+
+                  </div>
             </div>  
                 
          </div>       

@@ -51,7 +51,8 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 * function calls VISH server for closing a voting
 	 */
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
-	
+	if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+
 		V.Debugging.log("quiz_session_id to delete is: " + quiz_session_id);
 		V.Debugging.log("quiz_name (if save) is: " + quiz_name);
 		var quizName;
@@ -87,6 +88,14 @@ VISH.Quiz.API = (function(V,$,undefined){
             });
 
 	        return null;
+} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+			V.Debugging.log("No server case");
+			var results = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
+			if(typeof successCallback=="function"){
+				successCallback(results);
+			}
+		}
+
   };
 	
 	/**

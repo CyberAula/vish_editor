@@ -320,7 +320,7 @@ span.mcChoiceSpan{
     width:100%;
     height: 95%;
 }
-
+/*remove when works quiz */
 .mcquestion_start_button, .mcquestion_stop_button{
     display: block;
     font-size:1.2em;
@@ -781,4 +781,32 @@ position: relative;
     padding-top:1%;
     padding-bottom: 1%;
     text-align: center;
+}
+
+.quiz_sesssion_inputs_container {
+    display: block;
+    height:30%;
+    width: 100%;
+    text-align: right;
+}
+/*TODO change class name to start button and remove anoothers styles above*/
+.mcquestion_start_button, .quiz_session_stop_button {
+
+    display: block;
+    font-size:1.2em;
+    text-align:center;
+    font-weight:bold;
+    height: 100%;
+    -moz-border-radius:2em;
+    -webkit-border-radius: 2em;
+    cursor:pointer;
+    float: right;
+    margin-top: 0.5%;
+    margin-right: 4%;
+
+}
+
+.quiz_session_stop_button {
+
+    color: red;
 }
