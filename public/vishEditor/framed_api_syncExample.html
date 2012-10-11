@@ -23,36 +23,36 @@
 			}
 		}
 
-		var onPlayVideo = function(videoType,currentTime,videoSlide,videoId,origin){
-			// console.log("onPlayVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlide + " videoId " + videoId + " and origin " + origin);
+		var onPlayVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
+			// console.log("onPlayVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlideNumber + " videoId " + videoId + " and origin " + origin);
 			if(origin=="presentation_iframe_1"){
 			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.playVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.playVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			} else if(origin=="presentation_iframe_2") {
 				dest = "presentation_iframe_1";
-			 	VISH.Messenger.playVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.playVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			}
 		}
 
-		var onPauseVideo = function(videoType,currentTime,videoSlide,videoId,origin){
+		var onPauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
 			// console.log("onPauseVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlide + " videoId " + videoId + " and origin " + origin);
 			if(origin=="presentation_iframe_1"){
 			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.pauseVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.pauseVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			} else if(origin=="presentation_iframe_2") {
 				dest = "presentation_iframe_1";
-			 	VISH.Messenger.pauseVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.pauseVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			}
 		}
 
-		var onSeekVideo = function(videoType,currentTime,videoSlide,videoId,origin){
+		var onSeekVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
 			// console.log("onSeekVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlide + " videoId " + videoId + " and origin " + origin);
 			if(origin=="presentation_iframe_1"){
 			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.seekVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.seekVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			} else if(origin=="presentation_iframe_2") {
 				dest = "presentation_iframe_1";
-			 	VISH.Messenger.seekVideo(videoType,currentTime,videoSlide,videoId,dest);
+			 	VISH.Messenger.seekVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
 			}
 		}
 	</script>

@@ -37,7 +37,7 @@ VISH.Presentation = (function(V,undefined){
 			}
 		}
 		
-		V.VideoPlayer.setVideoEvents();
+		V.VideoPlayer.HTML5.setVideoEvents();
 		
 		V.SlideManager.addEnterLeaveEvents();
 		

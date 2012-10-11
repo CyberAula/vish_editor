@@ -5,7 +5,7 @@
 </head>
 <body>
 
- <script type="text/javascript" src="/vishEditor/swfobject/swfobject.js"></script>    
+ <script type="text/javascript" src="/vishEditor/js/libs/swfobject.js"></script>    
   <div id="ytapiplayer">
     You need Flash player 8+ and JavaScript enabled to view this video.
   </div>
@@ -14,44 +14,57 @@
 
     var params = { allowScriptAccess: "always" };
     var atts = { id: "myytplayer" };
-    swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer", 
+    swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer&wmodetransparent=true", 
                        "ytapiplayer", "425", "356", "8", null, null, params, atts);
 
-    function onYouTubePlayerReady(playerId) {
-      console.log("onYouTubePlayerRead with playerId " + playerId);
-      var ytplayer = document.getElementById(playerId);
-      console.log(ytplayer);
-      ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
-    }
+  var players = {};
+  function onYouTubePlayerReady (playerId) {
+     var ytPlayer = document.getElementById(playerId);
+     var idPlayerParams = 'yt_' + playerId;
+     players [idPlayerParams] = {
+          playerId: playerId,
+          onStateChanged: function (state) {
+              onytplayerStateChange(playerId,state);
+          },
+          onError: function (err) {
+              onytplayerError(playerId,err);
+          }
+      };
+      ytPlayer.addEventListener ('onStateChange', 'players.' + idPlayerParams + '.onStateChanged');
+      ytPlayer.addEventListener ('onError', 'players.' + idPlayerParams + '.onError');
+  }
 
-    function onytplayerStateChange(newState) {
-    	console.log("Player's new state: " + newState);
+    function onytplayerStateChange(playerId,newState) {
     	switch(newState){
     		case -1:
-    			console.log("No iniciado");
+    			console.log(playerId + ": Not initialized");
     			break;
     		case 0:
-    			console.log("Finalizado");
+    			console.log(playerId + ": Ended");
     			break;
     		case 1:
-    			console.log("En reproduccion");
+    			console.log(playerId + ": Reproducing");
     			break;
     		case 2:
-    			console.log("Pausado");
+    			console.log(playerId + ": Pause");
     			break;
     		case 3:
-    			console.log("Almacenamiento en buffer");
+    			console.log(playerId + ": Buffer Store");
     			break;
     		case 4:
     			break;
     		case 5:
-    			console.log("Almacenamiento en cola de videos");
+    			console.log(playerId + ": Video Tail Store");
     			break;
     		default:
-    			console.log("Estado desconocido: " + newState);
+    			console.log(playerId + ": Unknown state: " + newState);
     			break;
     	}
 	}
+
+  function onytplayerError(playerId,error) {
+    console.log(playerId + " error: " + error);
+  }
 
 
 	function playVideo(ytplayer){

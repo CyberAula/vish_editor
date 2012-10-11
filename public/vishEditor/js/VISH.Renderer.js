@@ -130,11 +130,28 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an object inside an article (a slide)
 	 */
 	var _renderObject = function(element, template){
+		var objectInfo = VISH.Object.getObjectInfo(element.body);
+		switch(objectInfo.type){
+			case "youtube":
+				return _renderYoutubeVideo(element,template,objectInfo.source);
+				break;
+			default:
+				var style = (element['style'])? element['style'] : "";
+				var body = element['body'];
+				var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
+				return "<div id='"+element['id']+"' class='objectelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
+				break;
+		}
+	};
+
+	var _renderYoutubeVideo = function(element,template,source){
+		var ytVideoId = VISH.Utils.getId();
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
 		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
-		return "<div id='"+element['id']+"' class='objectelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
-	};
+		source = source.replace("http://www.youtube.com/embed/","http://www.youtube.com/v/"); //Source fix
+		return "<div id='"+element['id']+"' class='objectelement youtubeelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + source + "' ytVideoId='" + ytVideoId + "'>" + "</div>";
+	}
 	
 	/**
    * Function to render an snapshot inside an article (a slide)

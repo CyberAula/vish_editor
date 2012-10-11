@@ -56,7 +56,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Events.init();
 
 		//Allow cross-domain communication through iframes
-		if(V.Status.getIsInIframe()){
+		if((V.Messenger)&&(V.Status.getIsInIframe())){
 			V.Messenger.init(false);
 		}
 	  	
@@ -204,7 +204,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			fcElem = _getFlashcardFromSlideId(slideId);	
 			V.Mods.fc.player.init(fcElem, slideId);
 		}
-		V.VideoPlayer.playVideos(e.target);
+		V.VideoPlayer.HTML5.playVideos(e.target);
 	};
 
 	/**
@@ -230,9 +230,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * and we stop flashcards
 	 */
 	var _onslideleave = function(e){
-		//TODO detect class of e.target and unload only when neccesary
-		//XXX optimize detecting class and type
-		V.VideoPlayer.stopVideos(e.target);
+		V.VideoPlayer.HTML5.stopVideos(e.target);
 		V.ObjectPlayer.unloadObject();
 		V.AppletPlayer.unloadApplet();
 		if($(e.target).hasClass('flashcard')){				

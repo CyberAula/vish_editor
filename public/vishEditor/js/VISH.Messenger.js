@@ -65,6 +65,8 @@ VISH.Messenger = (function(V,undefined){
 	///////////////
 
 	var sendMessage = function(action,params,text,origin,destination){
+		// _print("Send Message")
+		// _print(params)
 		if(isInitialized()){
 			_sendMessage(_createMessage(action,params,text,origin,destination),destination);
 		}
@@ -94,7 +96,7 @@ VISH.Messenger = (function(V,undefined){
 
 	var _onMessage = function(message){
 		// _print("onMessage");
-		// _print(message);
+		// _print(message.data);
 
 		var vishEditorMessage = _validateMessage(message);
 		if(!vishEditorMessage){
@@ -158,17 +160,17 @@ VISH.Messenger = (function(V,undefined){
 			case "playVideo":
 				if((message.params)&&(message.params.length===4)){
 					var videoType = message.params[0];
-					var currentTime = message.params[1];
-					var videoSlideNumber = message.params[2];
-					var videoId = message.params[3];
+					var videoId = message.params[1];
+					var currentTime = message.params[2];
+					var videoSlideNumber = message.params[3];
 
 					if(external){
 						//Callback
 						if(typeof onPlayVideo === "function"){
-							onPlayVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+							onPlayVideo(videoType,videoId,currentTime,videoSlideNumber,message.origin);
 						}
 					} else {
-						VISH.VideoPlayer.startVideo(videoType,currentTime,videoSlideNumber,videoId);
+						VISH.VideoPlayer.startVideo(videoType,videoId,currentTime,videoSlideNumber);
 					}
 
 				}
@@ -176,17 +178,17 @@ VISH.Messenger = (function(V,undefined){
 			case "pauseVideo":
 				if((message.params)&&(message.params.length===4)){
 					var videoType = message.params[0];
-					var currentTime = message.params[1];
-					var videoSlideNumber = message.params[2];
-					var videoId = message.params[3];
+					var videoId = message.params[1];
+					var currentTime = message.params[2];
+					var videoSlideNumber = message.params[3];
 
 					if(external){
 						//Callback
 						if(typeof onPauseVideo === "function"){
-							onPauseVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+							onPauseVideo(videoType,videoId,currentTime,videoSlideNumber,message.origin);
 						}
 					} else {
-						VISH.VideoPlayer.pauseVideo(videoType,currentTime,videoSlideNumber,videoId);
+						VISH.VideoPlayer.pauseVideo(videoType,videoId,currentTime,videoSlideNumber);
 					}
 
 				}
@@ -194,17 +196,17 @@ VISH.Messenger = (function(V,undefined){
 			case "seekVideo":
 				if((message.params)&&(message.params.length===4)){
 					var videoType = message.params[0];
-					var currentTime = message.params[1];
-					var videoSlideNumber = message.params[2];
-					var videoId = message.params[3];
+					var videoId = message.params[1];
+					var currentTime = message.params[2];
+					var videoSlideNumber = message.params[3];
 
 					if(external){
 						//Callback
 						if(typeof onSeekVideo === "function"){
-							onSeekVideo(videoType,currentTime,videoSlideNumber,videoId,message.origin);
+							onSeekVideo(videoType,videoId,currentTime,videoSlideNumber,message.origin);
 						}
 					} else {
-						VISH.VideoPlayer.seekVideo(videoType,currentTime,videoSlideNumber,videoId);
+						VISH.VideoPlayer.seekVideo(videoType,videoId,currentTime,videoSlideNumber);
 					}
 
 				}
@@ -223,16 +225,16 @@ VISH.Messenger = (function(V,undefined){
 		VISH.Messenger.sendMessage("goToSlide",[slideNumber],null,null,destination);
 	}
 
-	var playVideo = function(videoType,currentTime,videoSlide,videoId,destination){
-		VISH.Messenger.sendMessage("playVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	var playVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+		VISH.Messenger.sendMessage("playVideo",[videoType,videoId,currentTime,videoSlideNumber],null,null,destination);
 	}
 
-	var pauseVideo = function(videoType,currentTime,videoSlide,videoId,destination){
-		VISH.Messenger.sendMessage("pauseVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	var pauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+		VISH.Messenger.sendMessage("pauseVideo",[videoType,videoId,currentTime,videoSlideNumber],null,null,destination);
 	}
 
-	var seekVideo = function(videoType,currentTime,videoSlide,videoId,destination){
-		VISH.Messenger.sendMessage("seekVideo",[videoType,currentTime,videoSlide,videoId],null,null,destination);
+	var seekVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+		VISH.Messenger.sendMessage("seekVideo",[videoType,videoId,currentTime,videoSlideNumber],null,null,destination);
 	}
 
 	///////////
@@ -241,9 +243,9 @@ VISH.Messenger = (function(V,undefined){
 
 	var _print = function(objectToPrint){
 		if(external){
-			if((console)&&(console.log)){
-				console.log(objectToPrint);
-			}
+			// if((console)&&(console.log)){
+			// 	console.log(objectToPrint);
+			// }
 		} else {
 			VISH.Debugging.log(objectToPrint);
 		}
