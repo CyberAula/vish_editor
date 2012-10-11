@@ -10,7 +10,7 @@ VISH.Samples = (function(V,undefined){
 		// "avatar" 		: "/assets/logos/original/excursion-10.png",
 		"tags": ["Samples","Test","Development"],
 		"author" : "",
-		"theme"	 : "theme11",
+		"theme"	 : "theme1",
 		"slides" : [{
 			"id" : "articlearticle1",
 			"template" : "t1",
@@ -750,7 +750,7 @@ VISH.Samples = (function(V,undefined){
 			"author":"V. Hugo", 
 			"slides":[
 				{
-					"id":"article_12313_1",
+					"id":"article12312",
 					"type":"standard",
 					"template":"t8",
 					"elements":[
@@ -771,7 +771,7 @@ VISH.Samples = (function(V,undefined){
 							"id":"zone3",
 							"type":"quiz",
 							"areaid":"center",
-							"question":"What are <b> you  <u>talking</u> <i> <font size='5'> about </font> bla bla bla bla ... large textttttt </i></b> ?",
+							"question":"What are <b> you  <u>talking</u> <i> <font size='7'> about </font> bla bla bla bla ... large textttttt </i></b> ?",
 							"quiztype":"multiplechoice",
 							"options":[
 								"Something","Nothing","Everything","Option D"
@@ -780,6 +780,19 @@ VISH.Samples = (function(V,undefined){
 						{
 							"id":"zone4",
 							"areaid":"right"
+						}
+					]
+				}, 
+				
+				{"id":"article_12314_1",
+					"type":"standard",
+					"template":"t7",
+					"elements":
+					[
+						{"id":"zone5","type":"text","areaid":"header","body":"<div style=\"text-align: center; font-weight: normal; \" class=\"vish-parent-font6\"><i><b><span class=\"vish-font6 vish-fontgeorgia\" style=\"color:undefined;undefined;\">Titling ... one two three</span></b></i></div><div class=\"vish-parent-font4\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"},
+						{"id":"zone6","type":"text","areaid":"left","body":"<div class=\"initTextDiv vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div><div class=\"initTextDiv vish-parent-font5\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The code that has</span><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div>"},
+						{"id":"zone7","type":"quiz","areaid":"center","question":"<b style=\"font-weight: normal; \"><i><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Second </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;undefined;\">question</span><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"> quiz quiz quiz ... ?</span></i></b>","quiztype":"multiplechoice","options":["aaa ... mucha a ","bbb ... mucha b ","ccc ... mucha c"]},
+						{"id":"zone8","type":"image","areaid":"subheader","body":"http://farm3.staticflickr.com/2653/3950938406_8a2429bf14_m.jpg","style":"position: relative; width:68.18181818181819%; height:333.3333333333333%; top:-126.3157894736842%; left:14.242428866299717%;"
 						}
 					]
 				}

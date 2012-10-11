@@ -505,6 +505,101 @@
 	border: none;
 }
 
+/*
+	TEMPLATE 10
+*/
+
+.t10_left{
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    float: left;
+    height: 102.6%;
+    margin-left: -8.3%;
+    margin-top: -6.4%;
+    overflow: hidden;
+    position: absolute;
+    width: 102.1%;
+}
+
+.t10_image{
+	border: none;
+	padding: none;
+}
+
+.t10_video{
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: none;
+}
+
+.t10_object{
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: none;
+}
+
+.t10_swf{
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: none;
+}
+
+
+/*
+	TEMPLATE 11
+*/
+
+.t11_header{
+    height: 31%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.t11_left{
+    float: left;
+    height: 31%;
+    margin-top: 3%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.t11_right{
+    float: left;
+    height: 31%;
+    margin-top: 3%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;	
+}
+
+.t11_image{
+	border: none;
+}
+
+.t11_video{
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.t11_object{
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.t11_swf{
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
 
 /* 
 	Snapshots 

@@ -80,8 +80,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a#addSlideFancybox").fancybox({
 			'autoDimensions' : false,
 			'scrolling': 'no',
-			'width': 385,
-			'height': 340,
+			'width': 640,
+			'height': 350,
 			'padding': 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -517,6 +517,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		presentation.author = '';
 		presentation.slides = [];
+		presentation.contain_quiz = false;
 		var slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
@@ -570,9 +571,11 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-					
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($("#zone3").find(".wysiwygInstance").parent().find("div > div"));
-
+							presentation.contain_quiz = true; //added to try save quiz in vish
+						V.Debugging.log("quiz detected");
+						V.Debugging.log("div value:" + $(div));
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
+						//	V.Debugging.log("question value: " + element.question);
 
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
@@ -601,7 +604,7 @@ VISH.Editor = (function(V,$,undefined){
 								element.options.push(input_text.value);
 							}
 						});
-						slide.type = "quiz";
+					
 					} else if (element.type=="truefalsequestion") {
 					  	V.Debugging.log("element type truefalsequestion detected");   		      	
 						element.questions = [];	
@@ -659,7 +662,8 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 		  
 		// VISH.Debugging.log("Presentation saved:")
-		// VISH.Debugging.log(JSON.stringify(presentation));    
+		 //VISH.Debugging.log(JSON.stringify(presentation));    
+		 console.log(JSON.stringify(presentation));    
 		return savedPresentation;     
 	};
 	
@@ -694,7 +698,8 @@ VISH.Editor = (function(V,$,undefined){
 		        var params = {
 		          "excursion[json]": jsonPresentation,
 		          "authenticity_token" : initOptions["token"],
-		          "draft": draft
+		          "draft": draft, 
+		          "contain_quiz": presentation.contain_quiz
 		        }
 		        
 		        $.ajax({
@@ -742,7 +747,7 @@ VISH.Editor = (function(V,$,undefined){
 				window.top.location.href = data.url;
 			}
 		});
-	}
+	};
 
 
 

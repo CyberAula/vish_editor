@@ -3,6 +3,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   var init = function(){
 
+
   }
 
   ////////////////////
@@ -12,12 +13,13 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   /**
    * Function to render a quiz inside an article (a slide)
    */
-  var renderQuiz = function(quizType, element, zone_class, slide){
+  var renderQuiz = function(quizType, element, zone_class, slide, zone){
 
     V.Debugging.log("V.Quiz.Renderes, quizType:" + quizType)
     switch(quizType){
       case "multiplechoice":
-        return _renderMcQuestion(element, zone_class, slide);
+        return _renderMcQuestion(element, zone_class, slide, zone);
+
         break;
       case "mcquestion":
         return _renderMcQuestion(element, zone_class, slide);
@@ -34,10 +36,10 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
 
-  var _renderMcQuestion = function(element, zone_class, slide){ 
+  var _renderMcQuestion = function(element, zone_class, slide, zone){ 
 
 
-      var ret = "<div id='"+element['id']+"'class='"+ zone_class + "'>";
+      var ret = "<div id='"+element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_header'></div>";
       ret += "<div class='mcquestion_body'><h2 class='question'>"+ element['question']+"</h2>";
@@ -53,14 +55,15 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         ret += "<div class='mc_meter'><span style='width:0%'></span></div>";
         ret += "<label class='mcoption_label'></label>";
       }
-
+      ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' class='quiz_id' />";
       ret += "</div>";
       ret += "<div class='mcquestion_buttons'>";
       ret += "<div class='mch_statistics_icon_wrapper'>";
       ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
       ret += "</div>";
       ret += "<div class='mch_inputs_wrapper'>";
-      ret += "<input type='button' class='mcquestion_start_button' value='Start Quiz'/>";
+      //ret += "<a href='#quizSessionOpenContent' class='mcquestion_start_button' id='mcquestion_start_button'><input type='button' class='mcquestion_start_button' value='Start Quiz'/></a>";
+      ret += "<a href='#quizSessionOpenContent' class='mcquestion_start_button' id='launchQuizFancybox'><input type='button' class='mcquestion_start_button' value='Start Quiz'/></a>";
       ret += "</div>";
       ret += "</form>";
       ret += "</div>";
