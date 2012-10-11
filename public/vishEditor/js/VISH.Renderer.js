@@ -57,6 +57,8 @@ VISH.Renderer = (function(V,$,undefined){
 		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
 
 		SLIDE_CONTAINER.append(article);
+
+
 	};
 
 

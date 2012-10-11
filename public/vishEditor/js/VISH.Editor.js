@@ -662,7 +662,8 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 		  
 		// VISH.Debugging.log("Presentation saved:")
-		// VISH.Debugging.log(JSON.stringify(presentation));    
+		 //VISH.Debugging.log(JSON.stringify(presentation));    
+		 console.log(JSON.stringify(presentation));    
 		return savedPresentation;     
 	};
 	
@@ -697,7 +698,8 @@ VISH.Editor = (function(V,$,undefined){
 		        var params = {
 		          "excursion[json]": jsonPresentation,
 		          "authenticity_token" : initOptions["token"],
-		          "draft": draft
+		          "draft": draft, 
+		          "contain_quiz": presentation.contain_quiz
 		        }
 		        
 		        $.ajax({
@@ -745,7 +747,7 @@ VISH.Editor = (function(V,$,undefined){
 				window.top.location.href = data.url;
 			}
 		});
-	}
+	};
 
 
 

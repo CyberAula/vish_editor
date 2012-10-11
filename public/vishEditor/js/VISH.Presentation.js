@@ -26,6 +26,8 @@ VISH.Presentation = (function(V,undefined){
 	var _finishRenderer = function(){		
 		for(var i=0;i<mySlides.length;i++){
 			for(var num=0;num<mySlides[i].elements.length;num++){
+
+				V.Debugging.log("mySlides[i].elements[num].type in VISH.presentation.js : " + mySlides[i].elements[num].type)
 				if(mySlides[i].elements[num].type === "flashcard"){					
 					var flashcard = JSON.parse(mySlides[i].elements[num].jsoncontent);
 					//uncomment when it is only one script
@@ -33,6 +35,11 @@ VISH.Presentation = (function(V,undefined){
 						//preload content for the flashcard
 						V.Mods.fc.loader.init(flashcard);
 					//});
+				}
+				else if (mySlides[i].elements[num].type === "quiz") {
+					V.Quiz.setQuizEvents();
+
+
 				}
 			}
 		}

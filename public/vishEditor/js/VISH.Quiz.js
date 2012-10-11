@@ -15,16 +15,33 @@ VISH.Quiz = (function(V,$,undefined){
   var statisticsButtonClass = "mch_statistics_icon";
 
   var init = function(presentation){
-    if (presentation.type=="quiz_simple"){
+   V.Debugging.log("presentation value: " + presentation);
+     
+     if (presentation.type=="quiz_simple"){
       quizMode = "answer";
        _loadAnswerEvents();
     } else {
       quizMode = "question";
       _loadEvents();
+    //     $("#quizSessionOpenContent").fancybox({
+    //   'autoDimensions' : false,
+    //   'scrolling': 'no',
+    //   'width': 385,
+    //   'height': 340,
+    //   'padding': 0,
+    //   "onStart"  : function(data) {
+    //     V.Debugging.log("quizSessionFancybox opened");
+    //     _startMcQuizButtonClicked();
+    //   }
+    // });
+
+
     }
 
     VISH.Quiz.Renderer.init();
     VISH.Quiz.API.init();
+
+
   };
 
   var getQuizMode = function(){
@@ -45,25 +62,47 @@ VISH.Quiz = (function(V,$,undefined){
       }
     }
   }
+/*called when quiz has been rendered */
+var setQuizEvents = function() {
 
+     $("a#launchQuizFancybox").fancybox({
+      'autoDimensions' : false,
+      'scrolling': 'no',
+      'width': '80%',
+      'height': '80%',
+      'padding': 0,
+      "onStart"  : function(data) {
+
+        VISH.Debugging.log("onStart launchQuiz");
+        var zone = $(".current").find(".quiz_id").val();
+        VISH.Debugging.log("zone value: " + zone);
+
+      }
+    });
+
+};
 
   /////////////////////////
   //// QUIZ MODE: QUESTION
   ////////////////////////
 
   var _loadEvents = function(){
-    $(document).on('click', "."+startButtonClass, _startMcQuizButtonClicked);
+            V.Debugging.log("loadEvents called");
+   // $(document).on('click', "."+startButtonClass, _startMcQuizButtonClicked);
     $(document).on('click', "."+stopButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+statisticsButtonClass, _statisticsMcQuizButtonClicked);
-  };
 
+  };
+/* Chek if user is logged in and call VISH's API for starting a voting) */
   var _startMcQuizButtonClicked = function () {
+    V.Debugging.log("startQuizButtonClicked received");
     if(V.User.isLogged()){
       var quizId = $(VISH.Slides.getCurrentSlide()).attr("quizid");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
     }
   };
 
+/* must construct the URL and add an QR code inside */
   var _onQuizSessionReceived = function(quiz_session_id){
     V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
 
@@ -236,7 +275,8 @@ VISH.Quiz = (function(V,$,undefined){
   return {
     init              : init, 
     prepareQuiz       : prepareQuiz,
-    getQuizMode       : getQuizMode
+    getQuizMode       : getQuizMode, 
+    setQuizEvents     : setQuizEvents
   };
     
 }) (VISH, jQuery);

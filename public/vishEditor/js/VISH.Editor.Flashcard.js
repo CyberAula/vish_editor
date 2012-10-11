@@ -44,13 +44,23 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 		$(".draggable_arrow_div").draggable({
 			revert: "invalid",   //poi will return to original position if not dropped on the background
-			stop: function(event, ui) { //change the moved attribute of the poi
+			stop: function(event, ui) { //change the moved attribute of the poi, and change it to position absolute
 				//check if inside background
 				if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
 					$(event.target).attr("moved", "true");
+					//change to position absolute
+					var old_pos = $(event.target).offset();
+					$(event.target).css("position", "fixed");
+					$(event.target).css("top", (old_pos.top +30) + "px");
+					$(event.target).css("left", (old_pos.left -16) + "px");
+					
 				}
 				else{
 					$(event.target).attr("moved", "false");
+					//change to position relative so it moves with the carrusel
+					var old_pos = $(event.target).offset();
+					$(event.target).css("top", (old_pos.top +30) + "px");
+					$(event.target).css("left", (old_pos.left -16) + "px");
 				}
 			}
 		});
@@ -65,6 +75,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		var presentation = V.Editor.getPresentation();
 		if(presentation && presentation.background && presentation.background.pois){
 			$.each(presentation.background.pois, function(index, val) { 
+  				$("#" + val.id).css("position", "fixed");
   				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
   				$("#" + val.id).attr("moved", "true");
 			});
