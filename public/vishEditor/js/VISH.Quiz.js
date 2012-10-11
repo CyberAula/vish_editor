@@ -15,7 +15,7 @@ VISH.Quiz = (function(V,$,undefined){
   var statisticsButtonClass = "mch_statistics_icon";
 
   var init = function(presentation){
-   V.Debugging.log("presentation value: " + presentation);
+  // V.Debugging.log("presentation value: " + presentation);
      
      if (presentation.type=="quiz_simple"){
       quizMode = "answer";
@@ -96,7 +96,7 @@ var loadSessionTab = function (tab_name) {
   };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
   var _startMcQuizButtonClicked = function () {
-    V.Debugging.log("startQuizButtonClicked received");
+    
     if(V.User.isLogged()){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
 
@@ -117,9 +117,9 @@ var loadSessionTab = function (tab_name) {
 
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
-
+    $("#tab_quiz_session_content").find(".quiz_session_qrcode_container").qrcode(url.toString());
     $(header).show();
-
+$("#tab_quiz_session_content").show();
     _hideResultsUI();
 
     //Change Start Button

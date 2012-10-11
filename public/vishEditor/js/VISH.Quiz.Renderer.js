@@ -15,15 +15,14 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
    */
   var renderQuiz = function(quizType, element, zone_class, slide, zone){
 
-    V.Debugging.log("V.Quiz.Renderes, quizType:" + quizType)
     switch(quizType){
       case "multiplechoice":
         return _renderMcQuestion(element, zone_class, slide, zone);
 
         break;
-      case "mcquestion":
+   /*   case "mcquestion":
         return _renderMcQuestion(element, zone_class, slide);
-        break;
+        break; */
       case "openQuestion":
         return _renderOpenquestion(element, template);
         break;
