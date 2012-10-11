@@ -3,14 +3,13 @@
 	border: none;
 	background: url(/vishEditor/images/themes/theme11/bg.png) top;
 	background-size: 100% 100%;
-	padding-bottom: 8%;
-	padding-top: 7%;
-	padding-left: 8%;
-	padding-right: 8%;
-  box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
-  moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 0);
-  webkit-box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
-
+  	box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
+  	moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 0);
+  	webkit-box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
+  	padding-top: 7%;
+  	padding-bottom: 8%;
+  	padding-left: 7%;
+  	padding-right: 7%;
 }
 
 

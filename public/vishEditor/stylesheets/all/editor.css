@@ -292,9 +292,9 @@ img {
 
 .thumbicon{
 	float: left;
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-left: 10px;
+	margin-top: 34px;
+	margin-right: -10px;
+	margin-left: 33px;
 	cursor: pointer;
 	background-size: 100%;
 }
@@ -410,7 +410,7 @@ img {
 }
 
 #thumbcontent{
-	width: 385px;
+	width: 638px;
 	height: 340px;
 }
 
@@ -501,6 +501,7 @@ img {
 	height: 22px;
 	cursor:pointer;
 	background: url(/vishEditor/images/delete_slide.png);
+	z-index: 200000;
 }
 
 .delete_slide:hover{
@@ -1100,6 +1101,7 @@ textarea {
 	right: 27px;
 	top: 2px;
 	color: #FF005D;
+	z-index: 200000;
 }
 
 .help_in_template:hover{

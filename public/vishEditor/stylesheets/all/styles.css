@@ -73,7 +73,7 @@ body {
   left: 0;
   top: 0;
   position: absolute; 
-   -webkit-transform: translate3d(0, 0, 0);
+  
 }
 
 .slides > article {
@@ -86,7 +86,7 @@ body {
   height: 600px;
   
   overflow: hidden;
-  padding: 40px 60px;
+  padding: 35px 50px;
   position: absolute;  
   display: block;
   box-sizing: border-box;

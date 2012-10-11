@@ -34,7 +34,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		current_presentation = presentation;
-
+		
 		V.Quiz.init(presentation);
 		V.Slides.init();
 		V.Status.init();
