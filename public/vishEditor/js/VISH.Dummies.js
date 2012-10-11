@@ -37,12 +37,8 @@ VISH.Dummies = (function(VISH,undefined){
 	 * param article_id: id of the article, used for editing presentations
 	 */
 	var getDummy = function(template, position, presentation_id, existing_slide){
-		// VISH.Debugging.log(" template value: " + template);
-	VISH.Debugging.log("template value: " + template);
-		VISH.Debugging.log("parseInt: " + parseInt(template,10));
-		var dum = dummies[parseInt(template,10)-1];
-		VISH.Debugging.log("dum value: " + dum);
-		return _replaceIds(dum, position, presentation_id, existing_slide);
+			var dum = dummies[parseInt(template,10)-1];
+			return _replaceIds(dum, position, presentation_id, existing_slide);
 	};
 
 	var getQuizDummy = function(type_quiz, position) {
