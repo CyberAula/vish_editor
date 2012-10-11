@@ -572,7 +572,6 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 							presentation.contain_quiz = true; //added to try save quiz in vish
-						V.Debugging.log("quiz detected");
 						V.Debugging.log("div value:" + $(div));
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
 						//	V.Debugging.log("question value: " + element.question);

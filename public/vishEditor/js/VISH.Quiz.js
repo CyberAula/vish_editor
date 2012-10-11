@@ -23,19 +23,6 @@ VISH.Quiz = (function(V,$,undefined){
     } else {
       quizMode = "question";
       _loadEvents();
-    //     $("#quizSessionOpenContent").fancybox({
-    //   'autoDimensions' : false,
-    //   'scrolling': 'no',
-    //   'width': 385,
-    //   'height': 340,
-    //   'padding': 0,
-    //   "onStart"  : function(data) {
-    //     V.Debugging.log("quizSessionFancybox opened");
-    //     _startMcQuizButtonClicked();
-    //   }
-    // });
-
-
     }
 
     VISH.Quiz.Renderer.init();
@@ -73,10 +60,6 @@ var setQuizEvents = function() {
       'padding': 0,
       "onStart"  : function(data) {
         VISH.Quiz.loadSessionTab('quiz_session');
-        VISH.Debugging.log("onStart launchQuiz");
-        var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
-        VISH.Debugging.log("QuizId: " + quizId);
-        
       }
     });
 
@@ -87,16 +70,15 @@ var loadSessionTab = function (tab_name) {
   switch (tab_name) {
 
     case "quiz_session": 
-      VISH.Debugging.log("quiz_session click detected");
-      _startMcQuizButtonClicked();
+          _startMcQuizButtonClicked();
     break;
 
     case "quiz_statistics":
-        VISH.Debugging.log("quiz_statistics click detected");
+        VISH.Debugging.log("quiz_statistics tab click detected");
     break;
 
     default:
-
+      VISH.Debugging.log("other tab click detected");
     break;
 
 }
@@ -107,8 +89,7 @@ var loadSessionTab = function (tab_name) {
   ////////////////////////
 
   var _loadEvents = function(){
-            V.Debugging.log("loadEvents called");
-   // $(document).on('click', "."+startButtonClass, _startMcQuizButtonClicked);
+    // $(document).on('click', "."+startButtonClass, _startMcQuizButtonClicked);
     $(document).on('click', "."+stopButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+statisticsButtonClass, _statisticsMcQuizButtonClicked);
 
@@ -131,8 +112,8 @@ var loadSessionTab = function (tab_name) {
     var url = quizUrlForSession + quiz_session_id;
 
     var current_slide = V.Slides.getCurrentSlide();
-    //var header = $(current_slide).find(".t11_header");
-    var header = $(current_slide).find(".mcquestion_header");
+    //var header = $(current_slide).find("sess_header");
+    var header = $("#"+"tab_quiz_session_content").find(".quiz_session_header");
 
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
