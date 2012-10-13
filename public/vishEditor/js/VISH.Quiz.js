@@ -61,21 +61,38 @@ var setQuizEvents = function() {
       'height': '80%',
       'padding': 0,
       "onStart"  : function(data) {
-        VISH.Quiz.loadSessionTab('quiz_session');
+        VISH.Quiz.loadQuizSessionTab('tab_quiz_session');
       }
     });
 
 };
 /*called when start a Quiz session with default tab (*/
-var loadSessionTab = function (tab_name) {
+var loadQuizSessionTab = function (tab_id) {
 
-  switch (tab_name) {
+    // first remove the walkthrough if open
+    $('.joyride-close-tip').click();
 
-    case "quiz_session": 
+    //hide previous tab
+    $(".fancy_tab_content").hide();
+    //show content
+    $("#" + tab_id + "_content").show();
+
+    //deselect all of them
+    $(".fancy_tab").removeClass("fancy_selected");
+    //select the correct one
+    $("#" + tab_id).addClass("fancy_selected");
+
+    //hide previous help button
+    $(".help_in_fancybox").hide();
+    //show correct one
+    $("#"+ tab_id + "_help").show();
+  switch (tab_id) {
+
+    case "tab_quiz_session": 
           _startMcQuizButtonClicked();
     break;
 
-    case "quiz_statistics":
+    case "tab_quiz_statistics":
         VISH.Debugging.log("quiz_statistics tab click detected");
        // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
        _onStatisticsQuizButtonClicked();
@@ -116,22 +133,13 @@ var loadSessionTab = function (tab_name) {
     var url = quizUrlForSession + quiz_session_id;
 
     var current_slide = V.Slides.getCurrentSlide();
-    //var header = $(current_slide).find("sess_header");
+ 
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
 
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
-    //$(header).show();
-    $("#" + tabQuizSessionContent).show();
-      //trying to do fancybox function (because it didn't work out)
-    //TODO ask to Kike to try to solve the problem
-     $("#start_quiz_fancybox").find("#tab_quiz_statistics_content").css("display", "none");
-    $("#start_quiz_fancybox").find("#tab_quiz_session_content").css("display", "block");
-   
-
-
 
     _hideResultsUI();
 
@@ -156,8 +164,7 @@ var loadSessionTab = function (tab_name) {
 
   var _stopAndSaveQuiz = function(quizName) { 
     var current_slide = VISH.Slides.getCurrentSlide();
-    //var header = $(current_slide).find(".t11_header");
-    //var header = $(current_slide).find(".mcquestion_header");
+
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
    // var quizSessionActiveId =  $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
@@ -165,9 +172,7 @@ var loadSessionTab = function (tab_name) {
       quizName = "Unknown";
     }
 
-    //$(header).hide(); 
-
-    //Change Stop Button
+   //Change Stop Button
     var stopButton = $(current_slide).find("." + stopSessionButtonClass);
     //$(stopButton).val("Start Quiz");
     $(stopButton).removeClass().addClass(startButtonClass);
@@ -179,7 +184,7 @@ var loadSessionTab = function (tab_name) {
          V.Debugging.log("_onQuizSessionCloseReceived");
 //    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-    loadSessionTab('quiz_statistics');
+    loadQuizSessionTab('tab_quiz_statistics');
     //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
   };
 
@@ -197,14 +202,6 @@ var loadSessionTab = function (tab_name) {
      var question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
     $(".quiz_statistics_content").append(question);
     $(".quiz_statistics_content").find("div.mcquestion_body").addClass("quiz_in_satistics");
-
-    //trying to do fancybox function (because it didn't work out)
-    //TODO ask to Kike to try to solve the problem
-    $("#start_quiz_fancybox").find("a.fancy_tab").removeClass("fancy_selected");
-    $("#start_quiz_fancybox").find("a#tab_quiz_statistics").addClass("fancy_selected");
-    $("#start_quiz_fancybox").find("#tab_quiz_session_content").css("display", "none");
-    $("#start_quiz_fancybox").find("#tab_quiz_statistics_content").css("display", "block");
-
 
     if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
       _hideResultsUI();
@@ -309,11 +306,11 @@ var loadSessionTab = function (tab_name) {
 
 
   return {
-    init              : init, 
-    prepareQuiz       : prepareQuiz,
-    getQuizMode       : getQuizMode, 
-    setQuizEvents     : setQuizEvents, 
-    loadSessionTab    : loadSessionTab
+    init                  : init, 
+    prepareQuiz           : prepareQuiz,
+    getQuizMode           : getQuizMode, 
+    setQuizEvents         : setQuizEvents, 
+    loadQuizSessionTab    : loadQuizSessionTab
   };
     
 }) (VISH, jQuery);
