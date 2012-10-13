@@ -777,6 +777,7 @@ position: relative;
 
     text-align: center;
 }
+
 .quiz_session_qrcode_container {
     padding-top:1%;
     padding-bottom: 1%;
@@ -809,4 +810,23 @@ position: relative;
 .quiz_session_stop_button {
 
     color: red;
+}
+
+#tab_quiz_statistics_content {
+
+    text-align: center;
+}
+
+
+.quiz_statistics_content {
+
+ width: 90%;
+ height:90%;
+text-align: center;
+
+}
+.quiz_in_satistics { /* for all quiz types */
+
+  text-align: center;  
+  margin: 3%;
 }

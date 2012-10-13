@@ -125,7 +125,13 @@ var loadSessionTab = function (tab_name) {
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
     //$(header).show();
     $("#" + tabQuizSessionContent).show();
-    
+      //trying to do fancybox function (because it didn't work out)
+    //TODO ask to Kike to try to solve the problem
+     $("#start_quiz_fancybox").find("#tab_quiz_statistics_content").css("display", "none");
+    $("#start_quiz_fancybox").find("#tab_quiz_session_content").css("display", "block");
+   
+
+
 
     _hideResultsUI();
 
@@ -183,9 +189,22 @@ var loadSessionTab = function (tab_name) {
   };
 /* Called when stop quiz session and when statistics tab session clicked*/
   var _onStatisticsQuizButtonClicked = function () {
-    V.Debugging.log("_onStatisticsQuizButtonClicked" );
-    var question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body");
+    V.Debugging.log("_onStatisticsQuizButtonClicked " );
+    if($(".quiz_statistics_content").children()) {
+      $(".quiz_statistics_content").children().remove();
+    }
+    //clone all the question content to show into fancybox 
+     var question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
     $(".quiz_statistics_content").append(question);
+    $(".quiz_statistics_content").find("div.mcquestion_body").addClass("quiz_in_satistics");
+
+    //trying to do fancybox function (because it didn't work out)
+    //TODO ask to Kike to try to solve the problem
+    $("#start_quiz_fancybox").find("a.fancy_tab").removeClass("fancy_selected");
+    $("#start_quiz_fancybox").find("a#tab_quiz_statistics").addClass("fancy_selected");
+    $("#start_quiz_fancybox").find("#tab_quiz_session_content").css("display", "none");
+    $("#start_quiz_fancybox").find("#tab_quiz_statistics_content").css("display", "block");
+
 
     if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
       _hideResultsUI();
