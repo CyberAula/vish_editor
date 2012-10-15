@@ -68,7 +68,8 @@ var setQuizEvents = function() {
 };
 /*called when start a Quiz session with default tab (*/
 var loadQuizSessionTab = function (tab_id) {
-
+    // TODO ask Kike 
+    //copied from VISH.Editor.util.js consider to use that class to di this function
     // first remove the walkthrough if open
     $('.joyride-close-tip').click();
 
@@ -194,31 +195,51 @@ var loadQuizSessionTab = function (tab_id) {
   };
 /* Called when stop quiz session and when statistics tab session clicked*/
   var _onStatisticsQuizButtonClicked = function () {
+    var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
+    var question = all_quiz.find(".question");
+    var form = all_quiz.find(".mcquestion_form");
+
     V.Debugging.log("_onStatisticsQuizButtonClicked " );
-    if($(".quiz_statistics_content").children()) {
-      $(".quiz_statistics_content").children().remove();
+    if($(".quiz_statistics_content").find(".question")) {
+      $(".quiz_statistics_content").find(".question").remove();
+    }
+    if ($(".quiz_statistics_content").find(".mcquestion_form")) {
+      $(".quiz_statistics_content").find(".mcquestion_form").remove();
     }
     //clone all the question content to show into fancybox 
-     var question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
-    $(".quiz_statistics_content").append(question);
+ 
+    $(".quiz_statistics_content").find(".quiz_question_container").append(question);
+    $(".quiz_statistics_content").find(".quiz_options_container").append(form);
     $(".quiz_statistics_content").find("div.mcquestion_body").addClass("quiz_in_satistics");
-
-    if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
+    //$(".quiz_statistics_content").find(".mcquestion_form").removeClass().addClass("mcquestion_form_in_fancybox");
+    
+ 
+  if( $(".quiz_statistics_content").find(".mc_meter").css('display')=="block") {
       _hideResultsUI();
     } else {
       var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
       V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
     }
+    /* if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
+      _hideResultsUI();
+    } else {
+      var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
+      V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
+    } */
   };
 
   var _hideResultsUI = function(){
+    $(".quiz_statistics_content").find(".mc_meter").css('display','none');
+    $(".quiz_statistics_content").find(".mcoption_label").css('display','none');
+    /*
     $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','none');
     $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").css('display','none');
+    */
   }
 
   var _showResultsUI = function(){
-  $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','block');
-    $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").css('display','block');
+    $(".quiz_statistics_content").find(".mc_meter").css('display','block');
+    $(".quiz_statistics_content").find(".mcoption_label").css('display','block');
   }
 
 

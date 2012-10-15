@@ -302,12 +302,18 @@ span.mcChoiceSpan{
     text-align: right;
 }
 
-
 .mcquestion_form {
     text-align:center;  
     width: 100%;    
     height: 62%;    
 }
+
+.mcquestion_form_in_fancybox{
+    width: 50%;
+    height: 62%;    
+}
+
+
 
 .mch_statistics_icon {
     cursor: pointer;
@@ -822,9 +828,20 @@ position: relative;
 
  width: 90%;
  height:90%;
-text-align: center;
+ text-align: center;
+ margin-left: 3%;
 
 }
+
+.quiz_options_container {
+width: 50%;
+ height:90%;
+ text-align: left;
+ margin-left: 0%;
+
+
+}
+
 .quiz_in_satistics { /* for all quiz types */
 
   text-align: center;  
