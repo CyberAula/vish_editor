@@ -825,20 +825,31 @@ position: relative;
 
 
 .quiz_statistics_content {
-
- width: 90%;
- height:90%;
- text-align: center;
- margin-left: 3%;
+    display: inline-block;
+    width: 96%;
+    height:90%;
+    text-align: center;
+    margin-left: 3%;
 
 }
 
 .quiz_options_container {
-width: 50%;
- height:90%;
- text-align: left;
- margin-left: 0%;
 
+    position: relative;
+    float:left;
+    width: 40%;
+    height:90%;
+    text-align: left;
+    margin-left: 0%;
+}
+
+.quiz_chart_container {
+    position: relative;
+    float:left;
+    width: 55%;
+    height:90%;
+    text-align: center;
+    margin-left: 2%;
 
 }
 

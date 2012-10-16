@@ -217,7 +217,8 @@ var loadQuizSessionTab = function (tab_id) {
   if( $(".quiz_statistics_content").find(".mc_meter").css('display')=="block") {
       _hideResultsUI();
     } else {
-      var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
+      var quizSessionActiveId =  $(".quiz_session_body").find("div.quiz_sesssion_inputs_container").find(".quiz_session_id").val()
+          V.Debugging.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
       V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
     }
     /* if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
@@ -262,6 +263,8 @@ var loadQuizSessionTab = function (tab_id) {
 
   var _onQuizVotingSuccessReceived = function(data){ 
     var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
+    V.Debugging.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
+
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
@@ -275,16 +278,89 @@ var loadQuizSessionTab = function (tab_id) {
   /////////////////////////
   //// COMMON METHODS
   ////////////////////////
-
+//data = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
   var _onQuizSessionResultsReceived = function(data) {
-    _showResults(data);
+    //_showResults(data);  
+    //trying to use google chart 
+      _displayResults(data.results);
+
   };
 
   var _onQuizSessionResultsReceivedError = function(error) {
-    var received = JSON.stringify(error)
+    var received = JSON.stringify(error);
     V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
   };
     
+
+//trying google chart 
+var _displayResults = function(data) {
+  var received = JSON.stringify(data);
+  V.Debugging.log("_displayResults, and value received is:  " + received);
+  var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
+  //45,32,17&chl=Diseño|Programación|Otras+cosas&chtt=Posts+en+Theproc.es&chco=ff0000&chf=bg,s,fff6f6";
+  var js_object = jQuery.parseJSON(data);
+  var lenght_array = 0;
+$.each(data, function(clave, valor) {
+
+lenght_array += 1;
+
+});
+
+  var counter = 0;
+  V.Debugging.log("array lenght:  " + lenght_array);
+  $.each(data, function(clave, valor){ 
+    V.Debugging.log("clave :  " + clave);
+    V.Debugging.log("valor :  " + valor);
+    url+= valor;
+    counter++;
+    if(counter==lenght_array) {
+      url+= "&chl=";
+    }
+    else {
+      url+= ",";
+    } 
+  });
+  var counter = 0;
+
+  $.each(data, function(clave, valor){ 
+    V.Debugging.log("clave :  " + clave);
+    V.Debugging.log("valor :  " + valor);
+    url+= clave;
+    counter++;
+    if(counter==lenght_array) {
+      url+= "&chtt=testedVish";
+    }
+    else {
+      url+= "|";
+    } 
+  });
+
+  V.Debugging.log("chart url :  " + url );
+ $(".quiz_statistics_content").find(".img_chart").attr("src", url);
+ /* google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+        chart.draw(data, options);
+
+};   */
+
+};
+
+
  /*
   * Data format 
   */
