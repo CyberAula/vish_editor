@@ -326,29 +326,7 @@ span.mcChoiceSpan{
     width:100%;
     height: 95%;
 }
-/*remove when works quiz */
-.mcquestion_start_button, .mcquestion_stop_button{
-    display: block;
-    font-size:1.2em;
-    text-align:center;
-    font-weight:bold;
-    height: 100%;
-    -moz-border-radius:2em;
-    -webkit-border-radius: 2em;
-    cursor:pointer;
-    float: right;
-    margin-top: 0.5%;
-    margin-right: 4%;
-}
 
-.mcquestion_start_button {
-    color: blue;
-}
-
-.mcquestion_stop_button {
-    color: red;
-}   
-    
     
 .mcquestion_send_vote_button{
     display:block;
@@ -769,7 +747,7 @@ position: relative;
     display: inline-block;  
     color:#000066;
     text-align:center;
-    font-size:1.4em;
+    font-size:1.7em;
     font-weight:bold;
     
 }
@@ -797,7 +775,7 @@ position: relative;
     text-align: right;
 }
 /*TODO change class name to start button and remove anoothers styles above*/
-.mcquestion_start_button, .quiz_session_stop_button {
+.quiz_session_start_button, .quiz_session_stop_button {
 
     display: block;
     font-size:1.2em;
@@ -812,6 +790,11 @@ position: relative;
     margin-right: 4%;
 
 }
+.quiz_session_start_button {
+
+    color: blue;
+}
+
 
 .quiz_session_stop_button {
 

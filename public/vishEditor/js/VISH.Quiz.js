@@ -10,7 +10,7 @@ VISH.Quiz = (function(V,$,undefined){
   mcOptionsHash['e'] = 4;
   mcOptionsHash['f'] = 5;
 
-  var startButtonClass = "mcquestion_start_button";
+  var startButtonClass = "quiz_session_start_button";
   //var stopButtonClass = "mcquestion_stop_button";
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
@@ -61,6 +61,7 @@ var setQuizEvents = function() {
       'height': '80%',
       'padding': 0,
       "onStart"  : function(data) {
+                VISH.Debugging.log("onStart launch quiz fancybox");
         VISH.Quiz.loadQuizSessionTab('tab_quiz_session');
       }
     });
@@ -145,8 +146,9 @@ var loadQuizSessionTab = function (tab_id) {
     _hideResultsUI();
 
     //Change Start Button ?
-    var startButton = $(current_slide).find("." + startButtonClass);
+    var startButton = $(current_slide).find("input." + startButtonClass);
     $(startButton).val("Stop Quiz");
+    //tODO , when change class happens like a click in stopButton 
     //$(startButton).removeClass().addClass(stopSessionButtonClass);
 
    // $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
@@ -164,6 +166,8 @@ var loadQuizSessionTab = function (tab_id) {
   };
 
   var _stopAndSaveQuiz = function(quizName) { 
+
+     V.Debugging.log("_stopAndSaveQuiz ");
     var current_slide = VISH.Slides.getCurrentSlide();
 
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
@@ -173,9 +177,9 @@ var loadQuizSessionTab = function (tab_id) {
       quizName = "Unknown";
     }
 
-   //Change Stop Button
+   //Change Stop Button to Start Button
     var stopButton = $(current_slide).find("." + stopSessionButtonClass);
-    //$(stopButton).val("Start Quiz");
+    $(stopButton).val("Start Quiz");
     $(stopButton).removeClass().addClass(startButtonClass);
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
@@ -297,20 +301,12 @@ var _displayResults = function(data) {
   var received = JSON.stringify(data);
   V.Debugging.log("_displayResults, and value received is:  " + received);
   var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
-  //45,32,17&chl=Diseño|Programación|Otras+cosas&chtt=Posts+en+Theproc.es&chco=ff0000&chf=bg,s,fff6f6";
-  var js_object = jQuery.parseJSON(data);
   var lenght_array = 0;
-$.each(data, function(clave, valor) {
-
-lenght_array += 1;
-
-});
-
+  $.each(data, function(clave, valor) {
+    lenght_array += 1;
+  });
   var counter = 0;
-  V.Debugging.log("array lenght:  " + lenght_array);
   $.each(data, function(clave, valor){ 
-    V.Debugging.log("clave :  " + clave);
-    V.Debugging.log("valor :  " + valor);
     url+= valor;
     counter++;
     if(counter==lenght_array) {
@@ -321,10 +317,7 @@ lenght_array += 1;
     } 
   });
   var counter = 0;
-
   $.each(data, function(clave, valor){ 
-    V.Debugging.log("clave :  " + clave);
-    V.Debugging.log("valor :  " + valor);
     url+= clave;
     counter++;
     if(counter==lenght_array) {
@@ -334,30 +327,8 @@ lenght_array += 1;
       url+= "|";
     } 
   });
-
   V.Debugging.log("chart url :  " + url );
  $(".quiz_statistics_content").find(".img_chart").attr("src", url);
- /* google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data, options);
-
-};   */
-
 };
 
 

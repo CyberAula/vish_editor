@@ -62,7 +62,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
       ret += "</div>";
       ret += "<div class='mch_inputs_wrapper'>";
-      ret += "<a href='#start_quiz_fancybox' class='mcquestion_start_button' id='launchQuizFancybox'><input type='button' class='mcquestion_start_button' value='Start Quiz'/></a>";
+      ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_button' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
       ret += "</div>";
       ret += "</form>";
       ret += "</div>";
