@@ -53,72 +53,34 @@ VISH.Quiz = (function(V,$,undefined){
   }
 /*called when quiz has been rendered */
 var setQuizEvents = function() {
-
-     $("a#launchQuizFancybox").fancybox({
+    $("a#launchQuizFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
       'width': '80%',
       'height': '80%',
       'padding': 0,
       "onStart"  : function(data) {
-                VISH.Debugging.log("onStart launch quiz fancybox");
-        VISH.Quiz.loadQuizSessionTab('tab_quiz_session');
+        VISH.Debugging.log("onStart launch quiz fancybox");
+        VISH.Utils.loadTab('tab_quiz_session');
       }
     });
+    
+
+
 
 };
-/*called when start a Quiz session with default tab (*/
-var loadQuizSessionTab = function (tab_id) {
-    // TODO ask Kike 
-    //copied from VISH.Editor.util.js consider to use that class to di this function
-    // first remove the walkthrough if open
-    $('.joyride-close-tip').click();
-
-    //hide previous tab
-    $(".fancy_tab_content").hide();
-    //show content
-    $("#" + tab_id + "_content").show();
-
-    //deselect all of them
-    $(".fancy_tab").removeClass("fancy_selected");
-    //select the correct one
-    $("#" + tab_id).addClass("fancy_selected");
-
-    //hide previous help button
-    $(".help_in_fancybox").hide();
-    //show correct one
-    $("#"+ tab_id + "_help").show();
-  switch (tab_id) {
-
-    case "tab_quiz_session": 
-          _startMcQuizButtonClicked();
-    break;
-
-    case "tab_quiz_statistics":
-        VISH.Debugging.log("quiz_statistics tab click detected");
-       // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
-       _onStatisticsQuizButtonClicked();
-    break;
-
-    default:
-      VISH.Debugging.log("other tab click detected");
-    break;
-
-}
-};
-
   /////////////////////////
   //// QUIZ MODE: QUESTION
   ////////////////////////
 
   var _loadEvents = function(){
-    // $(document).on('click', "."+startButtonClass, _startMcQuizButtonClicked);
+    // $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
-    $(document).on('click', "."+statisticsButtonClass, _onStatisticsQuizButtonClicked);
+    $(document).on('click', "."+statisticsButtonClass, onStatisticsQuizButtonClicked);
 
   };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
-  var _startMcQuizButtonClicked = function () {
+  var startMcQuizButtonClicked = function () {
     
     if(V.User.isLogged()){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
@@ -189,7 +151,7 @@ var loadQuizSessionTab = function (tab_id) {
          V.Debugging.log("_onQuizSessionCloseReceived");
 //    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-    loadQuizSessionTab('tab_quiz_statistics');
+    VISH.Utils.loadTab('tab_quiz_statistics');
     //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
   };
 
@@ -198,12 +160,12 @@ var loadQuizSessionTab = function (tab_id) {
     V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
   };
 /* Called when stop quiz session and when statistics tab session clicked*/
-  var _onStatisticsQuizButtonClicked = function () {
+  var onStatisticsQuizButtonClicked = function () {
     var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
     var question = all_quiz.find(".question");
     var form = all_quiz.find(".mcquestion_form");
 
-    V.Debugging.log("_onStatisticsQuizButtonClicked " );
+    V.Debugging.log("onStatisticsQuizButtonClicked " );
     if($(".quiz_statistics_content").find(".question")) {
       $(".quiz_statistics_content").find(".question").remove();
     }
@@ -374,11 +336,13 @@ var _displayResults = function(data) {
 
 
   return {
-    init                  : init, 
-    prepareQuiz           : prepareQuiz,
-    getQuizMode           : getQuizMode, 
-    setQuizEvents         : setQuizEvents, 
-    loadQuizSessionTab    : loadQuizSessionTab
+    init                      : init, 
+    prepareQuiz               : prepareQuiz,
+    getQuizMode               : getQuizMode, 
+    setQuizEvents             : setQuizEvents, 
+    startMcQuizButtonClicked  :startMcQuizButtonClicked, 
+    onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked
+
   };
     
 }) (VISH, jQuery);

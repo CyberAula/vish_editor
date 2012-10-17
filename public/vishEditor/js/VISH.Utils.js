@@ -230,7 +230,112 @@ var getZoomFromStyle = function(style){
     });
 		
     return zoom;
-   }
+   };
+
+   /////////////////////////
+	/// Fancy Box Functions
+	/////////////////////////
+
+	/**
+	 * function to load a tab and its content in the fancybox
+	 * also changes the help button to show the correct help
+	 */
+	var loadTab = function (tab_id){
+
+		// first remove the walkthrough if open
+		$('.joyride-close-tip').click();
+
+		//hide previous tab
+		$(".fancy_tab_content").hide();
+		//show content
+		$("#" + tab_id + "_content").show();
+
+		//deselect all of them
+		$(".fancy_tab").removeClass("fancy_selected");
+		//select the correct one
+		$("#" + tab_id).addClass("fancy_selected");
+
+		//hide previous help button
+		$(".help_in_fancybox").hide();
+		//show correct one
+		$("#"+ tab_id + "_help").show();
+
+        //Submodule callbacks	
+		switch (tab_id) {
+			//Image
+			case "tab_pic_from_url":
+				V.Editor.Image.onLoadTab("url");
+				break;
+			case "tab_pic_upload":
+				V.Editor.Image.onLoadTab("upload");
+				break;
+			case "tab_pic_repo":
+				V.Editor.Image.Repository.onLoadTab();
+				break;
+			case "tab_pic_flikr":
+				V.Editor.Image.Flikr.onLoadTab();
+				break;
+			//Video
+			case "tab_video_from_url":
+				VISH.Editor.Video.onLoadTab();
+				break;
+			case "tab_video_repo":
+				VISH.Editor.Video.Repository.onLoadTab();
+				break;
+			case "tab_video_youtube":
+				VISH.Editor.Video.Youtube.onLoadTab();
+				break;
+			case "tab_video_vimeo":
+				VISH.Editor.Video.Vimeo.onLoadTab();
+				break;
+				
+			//Objects
+			case "tab_object_from_url":
+				VISH.Editor.Object.onLoadTab("url");
+				break;
+			case "tab_object_from_web":
+				VISH.Editor.Object.Web.onLoadTab();
+				break;
+			case "tab_object_snapshot":
+				VISH.Editor.Object.Snapshot.onLoadTab();
+				break;
+			case "tab_object_upload":
+				VISH.Editor.Object.onLoadTab("upload");
+				break;
+			case "tab_object_repo":
+				VISH.Editor.Object.Repository.onLoadTab();
+				break;
+				
+			//Live
+			case "tab_live_webcam":
+				VISH.Editor.Object.Live.onLoadTab("webcam");
+				break;
+			case "tab_live_micro":
+				VISH.Editor.Object.Live.onLoadTab("micro");
+				break;
+ 
+ 			//Quizes ????
+			case "tab_quizes":
+				VISH.Editor.Quiz.onLoadTab("quizes");
+				break;
+			//Viewer
+    		case "tab_quiz_session": 
+      			VISH.Quiz.startMcQuizButtonClicked();
+    			break;
+    		case "tab_quiz_statistics":
+      			VISH.Debugging.log("quiz_statistics tab click detected");
+      			VISH.Quiz.onStatisticsQuizButtonClicked();
+    			break;
+
+			//Default
+			default:
+				break;
+	  }
+	};
+
+
+
+
 
    return {
 		init 					: init,
@@ -245,7 +350,8 @@ var getZoomFromStyle = function(style){
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
 		autocompleteUrls 		: autocompleteUrls,
-		filterFilePath 			: filterFilePath
+		filterFilePath 			: filterFilePath, 
+		loadTab 				: loadTab
    };
 
 }) (VISH);

@@ -86,7 +86,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_templates');
+				VISH.Utils.loadTab('tab_templates');
 			}
 		});
 
@@ -98,7 +98,7 @@ VISH.Editor = (function(V,$,undefined){
 			'height': 340,
 			'padding': 0,
 			"onStart"  : function(data) {
-				VISH.Editor.Utils.loadTab('tab_quizes');
+				VISH.Utils.loadTab('tab_quizes');
 			}
 		});
 	
@@ -335,7 +335,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_pic_from_url');
+				VISH.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 		$("a.addobject").fancybox({
@@ -347,7 +347,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_object_from_url');
+				VISH.Utils.loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -359,7 +359,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_video_from_url');
+				VISH.Utils.loadTab('tab_video_from_url');
 			}
 		});
 		$("a.addLive").fancybox({
@@ -371,7 +371,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Editor.Utils.loadTab('tab_live_webcam');
+				VISH.Utils.loadTab('tab_live_webcam');
 			}
 		});
 

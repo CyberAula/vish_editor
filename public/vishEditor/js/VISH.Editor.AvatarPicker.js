@@ -15,7 +15,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {						
 				V.Editor.Image.setAddContentMode(VISH.Constant.THUMBNAIL);
-				V.Editor.Utils.loadTab('tab_pic_from_url');
+				V.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 	};	
