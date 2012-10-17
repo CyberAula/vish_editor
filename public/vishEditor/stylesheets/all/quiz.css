@@ -775,7 +775,7 @@ position: relative;
     text-align: right;
 }
 /*TODO change class name to start button and remove anoothers styles above*/
-.quiz_session_start_button, .quiz_session_stop_button {
+.quiz_session_start_button, .quiz_session_stop_button, .quiz_session_options_button {
 
     display: block;
     font-size:1.2em;
@@ -800,6 +800,12 @@ position: relative;
 
     color: red;
 }
+
+.quiz_session_options_button {
+    color: #FF0080;
+    display:none;
+}
+
 
 #tab_quiz_statistics_content {
 

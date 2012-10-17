@@ -11,6 +11,7 @@ VISH.Quiz = (function(V,$,undefined){
   mcOptionsHash['f'] = 5;
 
   var startButtonClass = "quiz_session_start_button";
+  var optionsButtonClass = "quiz_session_options_button";
   //var stopButtonClass = "mcquestion_stop_button";
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
@@ -65,9 +66,6 @@ var setQuizEvents = function() {
       }
     });
     
-
-
-
 };
   /////////////////////////
   //// QUIZ MODE: QUESTION
@@ -107,9 +105,10 @@ var setQuizEvents = function() {
 
     _hideResultsUI();
 
-    //Change Start Button ?
-    var startButton = $(current_slide).find("input." + startButtonClass);
-    $(startButton).val("Stop Quiz");
+    //Hide Start Button and show options button
+    $(current_slide).find("input." + startButtonClass).hide();
+    $(current_slide).find("input." + optionsButtonClass).show();
+    // $(startButton).val("Stop Quiz");
     //tODO , when change class happens like a click in stopButton 
     //$(startButton).removeClass().addClass(stopSessionButtonClass);
 
