@@ -813,7 +813,16 @@ position: relative;
 }
 
 
-.quiz_statistics_content {
+.quiz_stats_bars_content {
+    display: inline-block;
+    width: 96%;
+    height:90%;
+    text-align: center;
+    margin-left: 3%;
+
+}
+
+.quiz_stats_pie_content {
     display: inline-block;
     width: 96%;
     height:90%;

@@ -30,6 +30,16 @@ VISH.Quiz = (function(V,$,undefined){
 
     VISH.Quiz.Renderer.init();
     VISH.Quiz.API.init();
+$("a#addQuizSessionFancybox").fancybox({
+      'autoDimensions' : false,
+      'scrolling': 'no',
+      'width': '80%',
+      'height': '80%',
+      'padding': 0,
+      "onStart"  : function(data) {
+       VISH.Utils.loadTab('tab_quiz_session');
+      }
+    });
 
 
   };
@@ -52,29 +62,25 @@ VISH.Quiz = (function(V,$,undefined){
       }
     }
   }
-/*called when quiz has been rendered */
-var setQuizEvents = function() {
-    $("a#launchQuizFancybox").fancybox({
-      'autoDimensions' : false,
-      'scrolling': 'no',
-      'width': '80%',
-      'height': '80%',
-      'padding': 0,
-      "onStart"  : function(data) {
-        VISH.Debugging.log("onStart launch quiz fancybox");
-        VISH.Utils.loadTab('tab_quiz_session');
-      }
-    });
-    
+
+
+var showQuizStats = function(){
+  //open the fancybox
+  $("a#addQuizSessionFancybox").trigger("click"); 
 };
   /////////////////////////
   //// QUIZ MODE: QUESTION
   ////////////////////////
 
   var _loadEvents = function(){
-    // $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
+    $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
-    $(document).on('click', "."+statisticsButtonClass, onStatisticsQuizButtonClicked);
+    $(document).on('click', "."+ optionsButtonClass, showQuizStats);
+    //$(document).on('click', "."+statisticsButtonClass,  onStatisticsQuizButtonClicked);
+
+    //$(document).on('')
+    //$("#addQuizSessionFancybox").trigger('click');
+        
 
   };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
@@ -84,6 +90,21 @@ var setQuizEvents = function() {
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
 
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
+       //   showQuizStats();
+       //init the stats, empty
+       //function updateStats que si la llamas sin params las pinta a cero pero si la llamas con datos los pinta
+       //otro parametro podría ser el tipo de stadistica, barras, quesito o lo que sea
+       //ultimo parametro-> el tiempo de refresco
+
+
+       //open the fancybox
+       $("a#addQuizSessionFancybox").trigger("click");
+
+    }
+    else {
+
+          V.Debugging.log("User not logged");
+
     }
   };
 
@@ -108,14 +129,14 @@ var setQuizEvents = function() {
     //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
     $(current_slide).find("input." + optionsButtonClass).show();
-    // $(startButton).val("Stop Quiz");
-    //tODO , when change class happens like a click in stopButton 
-    //$(startButton).removeClass().addClass(stopSessionButtonClass);
+
 
    // $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
    //put quiz_session_id value in the input hidden for stopping quiz session
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
-  }
+
+
+    };
 
   var _OnQuizSessionReceivedError = function(error){
      var received = JSON.stringify(error);
@@ -138,11 +159,18 @@ var setQuizEvents = function() {
       quizName = "Unknown";
     }
 
-   //Change Stop Button to Start Button
+   //Show Start Button and hide Options Button
+    $(current_slide).find("input." + optionsButtonClass).hide();
+    $(current_slide).find("input." + startButtonClass).show();
+
+/*
+
     var stopButton = $(current_slide).find("." + stopSessionButtonClass);
+
+
     $(stopButton).val("Start Quiz");
     $(stopButton).removeClass().addClass(startButtonClass);
-
+*/
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
   };
 
@@ -158,6 +186,8 @@ var setQuizEvents = function() {
     var received = JSON.stringify(error);
     V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
   };
+
+
 /* Called when stop quiz session and when statistics tab session clicked*/
   var onStatisticsQuizButtonClicked = function () {
     var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
@@ -338,7 +368,6 @@ var _displayResults = function(data) {
     init                      : init, 
     prepareQuiz               : prepareQuiz,
     getQuizMode               : getQuizMode, 
-    setQuizEvents             : setQuizEvents, 
     startMcQuizButtonClicked  :startMcQuizButtonClicked, 
     onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked
 

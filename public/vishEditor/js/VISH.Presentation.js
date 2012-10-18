@@ -34,12 +34,7 @@ VISH.Presentation = (function(V,undefined){
 						//preload content for the flashcard
 						V.Mods.fc.loader.init(flashcard);
 					//});
-				}
-				else if (mySlides[i].elements[num].type === "quiz") {
-					V.Quiz.setQuizEvents();
-
-
-				}
+				}				
 			}
 		}
 		

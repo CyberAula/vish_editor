@@ -92,22 +92,22 @@
     
     <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
 
-    <!-- Hidden link to open fancybox when start a quiz session inside a slide 
-    <a id="quizSessionFancybox" href="#quizcontent" style="display: none;"></a> -->
-
+    <!-- Hidden link to open fancybox when start a quiz session inside a slide  -->
+    <a id="addQuizSessionFancybox" href="#start_quiz_fancybox" style="display: none;"></a>    
+    
     <!-- quiz Session Fancybox fancybox -->
     <div style='display:none'>
         <div id="start_quiz_fancybox" class="outer_box">
              <div class="fancy_tabs" id="start_quiz_fancy_tabs_id">      
                     <ul>
-                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_session')" id="tab_quiz_session" class="fancy_tab" i18n-key="i.quiz_session">Quiz Session</a></li>
-                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_statistics')" id="tab_quiz_statistics" class="fancy_tab" i18n-key="i.statistics">Statistics</a></li>
-                     
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_session')" id="tab_quiz_session" class="fancy_tab" i18n-key="i.quiz_session">url</a></li>
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_stats_bars')" id="tab_quiz_stats_bars" class="fancy_tab" i18n-key="i.statistics_bars">Stats 1</a></li>
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_stats_pie')" id="tab_quiz_stats_pie" class="fancy_tab" i18n-key="i.statistics_pie">Stats 2</a></li>
                     </ul>
                     <img class='help_in_fancybox' id='tab_quiz_session_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-                    <img class='help_in_fancybox' id='tab_quiz_statistics_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
-                   
-            </div>
+                    <img class='help_in_fancybox' id='tab_quiz_stats_bars_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                    <img class='help_in_fancybox' id='tab_quiz_stats_pie_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                </div>
             <div id='tab_quiz_session_content' class="fancy_tab_content" style='display:none;'>
                 <div class='quiz_session_header'></div>
                 <div class='quiz_session_body'>
@@ -119,8 +119,19 @@
                     </div>
                 </div>
             </div>
-            <div id='tab_quiz_statistics_content' class="fancy_tab_content" style='display:none;'>     
-                  <div id='quiz_statistics_content_id' class='quiz_statistics_content'>
+            <div id='tab_quiz_stats_bars_content' class="fancy_tab_content" style='display:none;'>     
+                  <div id='quiz_stats_bars_content_id' class='quiz_stats_bars_content'>
+                        <div id='quiz_question_container_id' class='quiz_question_container'>
+                        </div>
+                        <div id='quiz_options_container_id' class='quiz_options_container'> </div>
+                        <div id='quiz_chart_container_id' class='quiz_chart_container'><img class='img_chart'/>
+                        </div>
+                         <input type='button' class='quiz_session_stop_button' value='Stop Quiz'/>
+                  </div>
+
+            </div>  
+             <div id='tab_quiz_stats_pie_content' class="fancy_tab_content" style='display:none;'>     
+                  <div id='quiz_stats_pie_content_id' class='quiz_stats_pie_content'>
                         <div id='quiz_question_container_id' class='quiz_question_container'>
                         </div>
                         <div id='quiz_options_container_id' class='quiz_options_container'> </div>
