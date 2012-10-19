@@ -115,23 +115,19 @@ var _startStats = function() {
   V.Debugging.log("_startStats called");
   var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
   var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
-  var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
-  var question = all_quiz.find(".question");
-  V.Debugging.log("Question: " + question.html());
-  var form = all_quiz.find(".mcquestion_form");
-    if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
-        V.Debugging.log("Question container children detected ");
-      $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
-    }
-    $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append(form);
-    $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append(question);
-    if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ 
-      $("#"+tabQuizStatPieContentId).find(".quiz_question_container").children().remove();
-    }
-    $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
-    $("#"+tabQuizStatPieContentId).find(".quiz_question_container").append(question);
-    
-    _showResultsUI();
+  if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
+    $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
+  }
+  if($("#"+tabQuizStatBarsContentId).find(".quiz_options_container").contents()){
+    $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").children().remove();
+  }
+  if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ 
+    $("#"+tabQuizStatPieContentId).find(".quiz_question_container").children().remove();
+  }
+  $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
+  $("#"+tabQuizStatPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
+  $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form"));
+  $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
 
 };
 
