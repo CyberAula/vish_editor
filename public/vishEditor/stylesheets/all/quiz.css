@@ -762,6 +762,10 @@ position: relative;
     text-align: center;
 }
 
+.quiz_session_body{
+
+
+}
 .quiz_session_qrcode_container {
     padding-top:1%;
     padding-bottom: 1%;
@@ -794,17 +798,30 @@ position: relative;
 
     color: blue;
 }
+.quiz_session_start_button:hover {
 
+    color: blue;
+    background-color: #BDBDBD;
+}
 
 .quiz_session_stop_button {
 
     color: red;
 }
 
+.quiz_session_stop_button:hover {
+   background-color: #BDBDBD;
+
+}
+
 .quiz_session_options_button {
     color: #FF0080;
     display:none;
 }
+.quiz_session_options_button:hover {
+
+    background-color: #BDBDBD;
+    }
 
 
 #tab_quiz_statistics_content {
@@ -845,7 +862,7 @@ position: relative;
     position: relative;
     float:left;
     width: 55%;
-    height:90%;
+    min-height:90%;
     text-align: center;
     margin-left: 2%;
 

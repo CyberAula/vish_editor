@@ -241,20 +241,16 @@ var getZoomFromStyle = function(style){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
-		VISH.Debugging.log("load tab id: " + tab_id);
 		// first remove the walkthrough if open
 		$('.joyride-close-tip').click();
-
 		//hide previous tab
 		$(".fancy_tab_content").hide();
 		//show content
-
-			$("#" + tab_id + "_content").show();
+		$("#" + tab_id + "_content").show();
 		//deselect all of them
 		$(".fancy_tab").removeClass("fancy_selected");
 		//select the correct one
 		$("#" + tab_id).addClass("fancy_selected");
-
 		//hide previous help button
 		$(".help_in_fancybox").hide();
 		//show correct one
@@ -313,8 +309,7 @@ var getZoomFromStyle = function(style){
 			case "tab_live_micro":
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
- 
-			//Default
+ 			//Default
 			default:
 				break;
 	  }

@@ -77,9 +77,6 @@ var showQuizStats = function(){
     //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
-    //$(document).on('click', "."+statisticsButtonClass,  onStatisticsQuizButtonClicked);
-
-    //$(document).on('')
     //$("#addQuizSessionFancybox").trigger('click');
         
 
@@ -89,7 +86,7 @@ var showQuizStats = function(){
     
     if(V.User.isLogged()){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
-
+      $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
        //   showQuizStats();
        //init the stats, empty
@@ -101,7 +98,7 @@ var showQuizStats = function(){
 
 
        //open the fancybox
-       $("a#addQuizSessionFancybox").trigger("click");
+      
     _startStats();
     }
     else {
@@ -111,7 +108,7 @@ var showQuizStats = function(){
     }
   };
 /*  
-Load the question and all options into the stats containers
+Load the question  options into the stats containers
  */
 
 var _startStats = function() {
@@ -122,13 +119,17 @@ var _startStats = function() {
   var question = all_quiz.find(".question");
   V.Debugging.log("Question: " + question);
   var form = all_quiz.find(".mcquestion_form");
-
-    
+    if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children()){ //ACABAR
+      $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
+    }
     $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append(form);
     $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append(question);
+    if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ //ACABAR
+      $("#"+tabQuizStatPieContentId).find(".quiz_question_container").children().remove();
+    }
     $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
     $("#"+tabQuizStatPieContentId).find(".quiz_question_container").append(question);
-    $("#"+tabQuizStatPieContentId).find(".quiz_options_container").append(form);
+    
     _showResultsUI();
 
 };
