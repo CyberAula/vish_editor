@@ -88,18 +88,14 @@ var showQuizStats = function(){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
-       //   showQuizStats();
        //init the stats, empty
-   
+       _startStats();   
 
        //function updateStats que si la llamas sin params las pinta a cero pero si la llamas con datos los pinta
        //otro parametro podría ser el tipo de stadistica, barras, quesito o lo que sea
        //ultimo parametro-> el tiempo de refresco
+      _updateBarsStats();
 
-
-       //open the fancybox
-      
-    _startStats();
     }
     else {
 
@@ -112,7 +108,6 @@ Load the question  options into the stats containers
  */
 
 var _startStats = function() {
-  V.Debugging.log("_startStats called");
   var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
   var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
   if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
@@ -131,6 +126,36 @@ var _startStats = function() {
 
 };
 
+/* 
+used to display statistics
+ */
+
+var _updateBarsStats = function(data) {
+  var tabQuizStatBarsContentId = "quiz_stats_bars_content_id";
+
+  if(data) {
+    V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
+
+
+  } 
+//display empty stats
+  else {
+    V.Debugging.log("_updateBarsStats with no data params");
+
+    $("#"+tabQuizStatBarsContentId).find(".mc_meter").css('display','block');
+    $("#"+tabQuizStatBarsContentId).find(".mcoption_label").css('display','block');
+    $("#"+tabQuizStatBarsContentId).find(".mcoption_label").text("0%");
+    $("#"+tabQuizStatBarsContentId).find(".mc_meter > span").css('width','0%');
+  }
+
+
+};
+
+var _updatePieStats = function() {
+
+
+};
+
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
@@ -138,19 +163,14 @@ var _startStats = function() {
 
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
-
     var current_slide = V.Slides.getCurrentSlide();
- 
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
-
     var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
     $(header).html(divURLShare);
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
 
-    _hideResultsUI();
-
-    //Hide Start Button and show options button
+     //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
     $(current_slide).find("input." + optionsButtonClass).show();
 
@@ -233,34 +253,14 @@ var _startStats = function() {
     
  
   if( $(".quiz_statistics_content").find(".mc_meter").css('display')=="block") {
-      _hideResultsUI();
+      V.Debugging.log("hide element");
     } else {
       var quizSessionActiveId =  $(".quiz_session_body").find("div.quiz_sesssion_inputs_container").find(".quiz_session_id").val()
           V.Debugging.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
       V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
     }
-    /* if( $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display')=="block") {
-      _hideResultsUI();
-    } else {
-      var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
-      V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
-    } */
+  
   };
-
-  var _hideResultsUI = function(){
-    $(".quiz_statistics_content").find(".mc_meter").css('display','none');
-    $(".quiz_statistics_content").find(".mcoption_label").css('display','none');
-    /*
-    $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css('display','none');
-    $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").css('display','none');
-    */
-  }
-
-  var _showResultsUI = function(){
-    $(".quiz_statistics_content").find(".mc_meter").css('display','block');
-    $(".quiz_statistics_content").find(".mcoption_label").css('display','block');
-  }
-
 
   /////////////////////////
   //// QUIZ MODE: ANSWERS
@@ -349,7 +349,7 @@ var _displayResults = function(data) {
  /* NOT USED
   * Data format 
   */
-/*
+
 
   var _showResults = function (data) {
      var maxWidth = 70;
@@ -385,9 +385,9 @@ var _displayResults = function(data) {
         }
       }
 
-      _showResultsUI();
+
   };
-*/
+
 
   return {
     init                      : init, 

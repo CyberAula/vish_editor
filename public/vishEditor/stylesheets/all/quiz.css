@@ -364,7 +364,7 @@ span.mcChoiceSpan{
         display:none;
         margin-left:2%;
         margin-right:2%;
-        margin-top:1.5%;
+        margin-top:1%;
         float:left;
     }
         
@@ -373,7 +373,7 @@ span.mcChoiceSpan{
         height:100%;
        
         position: relative;
-        /* display:block; */
+         display:block; 
 
     }       
 
