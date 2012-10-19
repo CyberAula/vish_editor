@@ -74,6 +74,7 @@ var showQuizStats = function(){
 
   var _loadEvents = function(){
     $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
+    //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
     //$(document).on('click', "."+statisticsButtonClass,  onStatisticsQuizButtonClicked);
@@ -92,6 +93,8 @@ var showQuizStats = function(){
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
        //   showQuizStats();
        //init the stats, empty
+   
+
        //function updateStats que si la llamas sin params las pinta a cero pero si la llamas con datos los pinta
        //otro parametro podría ser el tipo de stadistica, barras, quesito o lo que sea
        //ultimo parametro-> el tiempo de refresco
@@ -99,7 +102,7 @@ var showQuizStats = function(){
 
        //open the fancybox
        $("a#addQuizSessionFancybox").trigger("click");
-
+    _startStats();
     }
     else {
 
@@ -107,6 +110,29 @@ var showQuizStats = function(){
 
     }
   };
+/*  
+Load the question and all options into the stats containers
+ */
+
+var _startStats = function() {
+  V.Debugging.log("_startStats called");
+  var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
+  var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
+  var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
+  var question = all_quiz.find(".question");
+  V.Debugging.log("Question: " + question);
+  var form = all_quiz.find(".mcquestion_form");
+
+    
+    $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append(form);
+    $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append(question);
+    $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
+    $("#"+tabQuizStatPieContentId).find(".quiz_question_container").append(question);
+    $("#"+tabQuizStatPieContentId).find(".quiz_options_container").append(form);
+    _showResultsUI();
+
+};
+
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
@@ -194,7 +220,6 @@ var showQuizStats = function(){
     var question = all_quiz.find(".question");
     var form = all_quiz.find(".mcquestion_form");
 
-    V.Debugging.log("onStatisticsQuizButtonClicked " );
     if($(".quiz_statistics_content").find(".question")) {
       $(".quiz_statistics_content").find(".question").remove();
     }
@@ -323,9 +348,11 @@ var _displayResults = function(data) {
 };
 
 
- /*
+ /* NOT USED
   * Data format 
   */
+/*
+
   var _showResults = function (data) {
      var maxWidth = 70;
      var scaleFactor = maxWidth/100;
@@ -362,7 +389,7 @@ var _displayResults = function(data) {
 
       _showResultsUI();
   };
-
+*/
 
   return {
     init                      : init, 
