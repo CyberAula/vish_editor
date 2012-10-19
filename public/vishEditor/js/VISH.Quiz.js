@@ -117,14 +117,15 @@ var _startStats = function() {
   var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
   var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
   var question = all_quiz.find(".question");
-  V.Debugging.log("Question: " + question);
+  V.Debugging.log("Question: " + question.html());
   var form = all_quiz.find(".mcquestion_form");
-    if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children()){ //ACABAR
+    if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
+        V.Debugging.log("Question container children detected ");
       $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
     }
     $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append(form);
     $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append(question);
-    if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ //ACABAR
+    if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ 
       $("#"+tabQuizStatPieContentId).find(".quiz_question_container").children().remove();
     }
     $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");

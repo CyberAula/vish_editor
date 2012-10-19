@@ -848,11 +848,17 @@ position: relative;
 
 }
 
+.quiz_question_container{
+    display: block;
+    min-height: 10%;
+
+}
+
 .quiz_options_container {
 
-    position: relative;
+    display: block;
     float:left;
-    width: 40%;
+    width: 90%;
     height:90%;
     text-align: left;
     margin-left: 0%;
