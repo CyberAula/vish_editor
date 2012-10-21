@@ -51,7 +51,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         } else {
           ret += "<label class='mc_answer'>"+next_index+") "+element['options'][i]+"</label>";
         }
-        ret += "<div class='mc_meter'><span style='width:0%' class='mcoption_"+next_index+"'>&nbsp;</span></div>";
+        ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
         ret += "<label class='mcoption_label'></label>";
       }
       ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' />";

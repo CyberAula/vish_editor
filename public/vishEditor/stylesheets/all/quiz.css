@@ -364,16 +364,15 @@ span.mcChoiceSpan{
         display:none;
         margin-left:2%;
         margin-right:2%;
-        margin-top:1%;
+        margin-top:0%;
         float:left;
     }
         
 .mc_meter > span { 
         width:0%;
         height:100%;
-       
         position: relative;
-         display:block; 
+        display:block; 
 
     }       
 
@@ -409,7 +408,7 @@ span.mcChoiceSpan{
     width:10%;
     margin-left:2%;
     margin-right:2%;
-    margin-top:1.5%;
+    margin-top:0%;
     display:block;
     text-align: left;
 }

@@ -16,6 +16,7 @@ VISH.Quiz = (function(V,$,undefined){
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
   var tabQuizSessionContent = "tab_quiz_session_content";
+  var tabQuizStatBarsContentId = "quiz_stats_bars_content_id";
 
   var init = function(presentation){
   // V.Debugging.log("presentation value: " + presentation);
@@ -30,7 +31,7 @@ VISH.Quiz = (function(V,$,undefined){
 
     VISH.Quiz.Renderer.init();
     VISH.Quiz.API.init();
-$("a#addQuizSessionFancybox").fancybox({
+   $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
       'width': '80%',
@@ -40,8 +41,6 @@ $("a#addQuizSessionFancybox").fancybox({
        VISH.Utils.loadTab('tab_quiz_session');
       }
     });
-
-
   };
 
   var getQuizMode = function(){
@@ -77,9 +76,6 @@ var showQuizStats = function(){
     //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
-    //$("#addQuizSessionFancybox").trigger('click');
-        
-
   };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
@@ -91,10 +87,14 @@ var showQuizStats = function(){
        //init the stats, empty
        _startStats();   
 
-       //function updateStats que si la llamas sin params las pinta a cero pero si la llamas con datos los pinta
-       //otro parametro podría ser el tipo de stadistica, barras, quesito o lo que sea
-       //ultimo parametro-> el tiempo de refresco
+       
       _updateBarsStats();
+      _updatePieStats();
+
+       var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();
+     //   V.Debugging.log("session ID to get results from server is: " +  quizSessionActiveId);
+    //get results
+   // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
 
     }
     else {
@@ -108,7 +108,7 @@ Load the question  options into the stats containers
  */
 
 var _startStats = function() {
-  var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
+  //var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
   var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
   if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
     $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
@@ -127,14 +127,20 @@ var _startStats = function() {
 };
 
 /* 
-used to display statistics
+used to display statistics 
+params:
+  data 
+  timeout: refresh time
  */
 
-var _updateBarsStats = function(data) {
-  var tabQuizStatBarsContentId = "quiz_stats_bars_content_id";
-
+var _updateBarsStats = function(data, timeout) {
+ var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();
+   V.Debugging.log("_updateBarsStats  quizSessionId: " + quizSessionActiveId);
+/* called from  */
   if(data) {
     V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
+
+
 
 
   } 
@@ -146,6 +152,7 @@ var _updateBarsStats = function(data) {
     $("#"+tabQuizStatBarsContentId).find(".mcoption_label").css('display','block');
     $("#"+tabQuizStatBarsContentId).find(".mcoption_label").text("0%");
     $("#"+tabQuizStatBarsContentId).find(".mc_meter > span").css('width','0%');
+V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
   }
 
 
@@ -350,15 +357,17 @@ var _displayResults = function(data) {
   * Data format 
   */
 
-
+/*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
+    var received = JSON.stringify(data);
+    V.Debugging.log("_displayResults, and value received is:  " + received);
      var maxWidth = 70;
      var scaleFactor = maxWidth/100;
 
      //Reset values
       var totalVotes =0;
-      $(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
-      $(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
+      //$(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
+      //$(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
 
       for (option in data.results) {
         if((option in mcOptionsHash)){
@@ -371,16 +380,22 @@ var _displayResults = function(data) {
          for (option in data.results) {
           if((option in mcOptionsHash)){
             var index = mcOptionsHash[option];
+
             var votes = data.results[option];
             var percent= (votes/totalVotes)*100;
             var percentString = (percent*scaleFactor).toString()  + "%";
             var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
 
-            if(typeof $(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index] != "undefined"){
-                $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index]).css("width", percentString);
-                $($(VISH.Slides.getCurrentSlide()).find(".mcoption_label")[index]).text(roundedNumber+"%");
-                $($(VISH.Slides.getCurrentSlide()).find(".mc_meter")[index]).addClass("mcoption_" +option );
-             }
+ //$("#quiz_stats_bars_content_id").find(".mc_meter")[index].css("width", percentString);
+
+            if(typeof $("#"+tabQuizStatBarsContentId).find(".mc_meter")[index] != "undefined"){
+             //$("#"+tabQuizStatBarsContentId).find(".mc_meter")[index].css("width", percentString);
+             $("#"+tabQuizStatBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
+           //  $("#"+tabQuizStatBarsContentId).find(".mcoption_label")[index].text(roundedNumber+"%");
+             $($("#"+tabQuizStatBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
+            // $("#"+tabQuizStatBarsContentId).find(".mc_meter")[index].addClass("mcoption_" +option );
+             $($("#"+tabQuizStatBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
+            }
           }
         }
       }
