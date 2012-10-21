@@ -16,7 +16,8 @@ VISH.Quiz = (function(V,$,undefined){
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
   var tabQuizSessionContent = "tab_quiz_session_content";
-  var tabQuizStatBarsContentId = "quiz_stats_bars_content_id";
+  var tabQuizStatsBarsContentId = "quiz_stats_bars_content_id";
+  var tabQuizStatsPieContentId = "quiz_stats_pie_content_id";
 
   var init = function(presentation){
   // V.Debugging.log("presentation value: " + presentation);
@@ -108,21 +109,21 @@ Load the question  options into the stats containers
  */
 
 var _startStats = function() {
-  //var tabQuizStatBarsContentId = "tab_quiz_stats_bars_content";
-  var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
-  if($("#"+tabQuizStatBarsContentId).find(".quiz_question_container").contents()){ 
-    $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").children().remove();
+  //var tabQuizStatsBarsContentId = "tab_quiz_stats_bars_content";
+  //var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
+  if($("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").contents()){ 
+    $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").children().remove();
   }
-  if($("#"+tabQuizStatBarsContentId).find(".quiz_options_container").contents()){
-    $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").children().remove();
+  if($("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").contents()){
+    $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").children().remove();
   }
-  if($("#"+tabQuizStatPieContentId).find(".quiz_question_container").children()){ 
-    $("#"+tabQuizStatPieContentId).find(".quiz_question_container").children().remove();
+  if($("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children()){ 
+    $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children().remove();
   }
-  $("#"+tabQuizStatBarsContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
-  $("#"+tabQuizStatPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
-  $("#"+tabQuizStatBarsContentId).find(".quiz_options_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form"));
-  $("#"+tabQuizStatBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
+  $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
+  $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
+  $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form"));
+  $("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
 
 };
 
@@ -148,10 +149,10 @@ var _updateBarsStats = function(data, timeout) {
   else {
     V.Debugging.log("_updateBarsStats with no data params");
 
-    $("#"+tabQuizStatBarsContentId).find(".mc_meter").css('display','block');
-    $("#"+tabQuizStatBarsContentId).find(".mcoption_label").css('display','block');
-    $("#"+tabQuizStatBarsContentId).find(".mcoption_label").text("0%");
-    $("#"+tabQuizStatBarsContentId).find(".mc_meter > span").css('width','0%');
+    $("#"+tabQuizStatsBarsContentId).find(".mc_meter").css('display','block');
+    $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").css('display','block');
+    $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").text("0%");
+    $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span").css('width','0%');
 V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
   }
 
@@ -361,14 +362,13 @@ var _displayResults = function(data) {
   var _showResults = function (data) {
     var received = JSON.stringify(data);
     V.Debugging.log("_displayResults, and value received is:  " + received);
-     var maxWidth = 70;
-     var scaleFactor = maxWidth/100;
+    var maxWidth = 70;
+    var scaleFactor = maxWidth/100;
 
-     //Reset values
-      var totalVotes =0;
-      //$(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
-      //$(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
-
+    //Reset values
+     var totalVotes =0;
+     //$(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
+     //$(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
       for (option in data.results) {
         if((option in mcOptionsHash)){
           var votes = data.results[option];
@@ -385,21 +385,46 @@ var _displayResults = function(data) {
             var percent= (votes/totalVotes)*100;
             var percentString = (percent*scaleFactor).toString()  + "%";
             var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-
- //$("#quiz_stats_bars_content_id").find(".mc_meter")[index].css("width", percentString);
-
-            if(typeof $("#"+tabQuizStatBarsContentId).find(".mc_meter")[index] != "undefined"){
-             //$("#"+tabQuizStatBarsContentId).find(".mc_meter")[index].css("width", percentString);
-             $("#"+tabQuizStatBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
-           //  $("#"+tabQuizStatBarsContentId).find(".mcoption_label")[index].text(roundedNumber+"%");
-             $($("#"+tabQuizStatBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
-            // $("#"+tabQuizStatBarsContentId).find(".mc_meter")[index].addClass("mcoption_" +option );
-             $($("#"+tabQuizStatBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
+            if(typeof $("#"+tabQuizStatsBarsContentId).find(".mc_meter")[index] != "undefined"){
+             $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
+             $($("#"+tabQuizStatsBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
+             $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
             }
           }
         }
       }
 
+  //display google chart pie
+  var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
+  var lenght_array = 0;
+  $.each(data.results, function(clave, valor) {
+
+    lenght_array += 1;
+  });
+  var counter = 0;
+  $.each(data.results, function(clave, valor){ 
+    url+= valor;
+    counter++;
+    if(counter==lenght_array) {
+      url+= "&chl=";
+    }
+    else {
+      url+= ",";
+    } 
+  });
+  var counter = 0;
+  $.each(data.results, function(clave, valor){ 
+    url+= clave;
+    counter++;
+    if(counter==lenght_array) {
+      url+= "&chtt=testedVish";
+    }
+    else {
+      url+= "|";
+    } 
+  });
+  V.Debugging.log("chart url :  " + url );
+ $("#"+tabQuizStatsPieContentId).find(".img_chart").attr("src", url);
 
   };
 
