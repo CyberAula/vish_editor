@@ -1,5 +1,8 @@
 VISH.VideoPlayer.Youtube = (function(){
 		
+	//Slave Mode
+	var isSlaveMode;
+
 	//Flag to prevent notify startVideo events
 	//Prevent sync bucles
 	var playTriggeredByUser = true;
@@ -14,7 +17,14 @@ VISH.VideoPlayer.Youtube = (function(){
 				// VISH.Debugging.log(playerId + ": Ended");
 				break;
 			case 1:
-				// VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
+				VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
+
+				if(isSlaveMode){
+					console.log("ASDASD");
+					var ytPlayer = document.getElementById(playerId);
+					console.log(ytPlayer.getPlayerState());
+					//STORE VIDEO PLAYER PREV STATUS...
+				}
 
 				var params = new Object();
 				params.type = "Youtube";
@@ -122,10 +132,15 @@ VISH.VideoPlayer.Youtube = (function(){
 		}
 	}
 
+	var setSlaveMode = function(slave){
+		isSlaveMode = slave;
+	}
+
 	return {
 		startVideo 			: startVideo,
 		pauseVideo 			: pauseVideo,
-		onytplayerStateChange	: onytplayerStateChange
+		onytplayerStateChange	: onytplayerStateChange,
+		setSlaveMode		: setSlaveMode
 	};
 
 })(VISH,jQuery);

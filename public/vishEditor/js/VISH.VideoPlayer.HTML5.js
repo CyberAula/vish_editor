@@ -141,13 +141,25 @@ VISH.VideoPlayer.HTML5 = (function(){
 		}
 	}
 
+	var showControls = function(showControls){
+		var videos = $("video")
+		$.each(videos, function(index, video) {
+			if(!showControls){
+				$(video).removeAttr("controls");
+			} else {
+				$(video).attr("controls",true);
+			}
+		});
+	}
+
 	return {
 		setVideoEvents 		: setVideoEvents,
 		playVideos 			: playVideos,
 		stopVideos 			: stopVideos,
 		startVideo 			: startVideo,
 		pauseVideo 			: pauseVideo,
-		seekVideo			: seekVideo
+		seekVideo			: seekVideo,
+		showControls 		: showControls
 	};
 
 })(VISH,jQuery);

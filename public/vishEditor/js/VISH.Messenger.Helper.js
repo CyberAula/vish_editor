@@ -33,7 +33,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 	}
 
 
-	var validateVEMessage = function(VEMessage){
+	var validateVEMessage = function(VEMessage,params){
 		if(typeof VEMessage !== "string"){
 			return false;
 		}
@@ -47,6 +47,11 @@ VISH.Messenger.Helper = (function(V,undefined){
 			}
 			if(!VEMessageObject.VEevent){
 				return false;
+			}
+			if((VISH.Status.getIsInIframe())&&(params)&&(params.allowSelfMessages===false)){
+				if(VEMessageObject.origin===VISH.Status.getIframe().id){
+					return false;
+				}
 			}
 		} catch(e){
 			return false;
@@ -82,6 +87,11 @@ VISH.Messenger.Helper = (function(V,undefined){
 						VISH.VideoPlayer.seekVideo(VEMessageObject.params.type,VEMessageObject.params.videoId,VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber);
 				}
 				break;
+			case VISH.Constant.Event.onSetSlave:
+				if((VEMessageObject.params)&&(typeof VEMessageObject.params.slave != "undefined")){
+					VISH.Events.setSlaveMode(VEMessageObject.params.slave);
+				}
+				break;	
 			default:
 					VISH.Debugging.log("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
 				break;

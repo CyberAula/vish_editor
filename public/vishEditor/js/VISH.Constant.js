@@ -34,3 +34,4 @@ VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
+VISH.Constant.Event.onSetSlave = "onSetSlave";
