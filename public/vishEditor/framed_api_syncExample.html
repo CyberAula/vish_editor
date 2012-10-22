@@ -4,57 +4,16 @@
 	<title>Vish Viewer: API Testing</title>
 </head>
 <body>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Messenger.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
 	<script type="text/javascript">
-		VISH.Messenger.init();
+		window.onload = function(){
+			VISH.IframeAPI.init();
+			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				VISH.IframeAPI.sendMessage(VEMessage,"*");
+			});
+			VISH.IframeAPI.setSlave(true);
+		};
 
-		/////////////////
-		//	Callbacks
-		/////////////////
-
-		var onGoToSlide = function(slideNumber,origin){
-			// console.log("onGoToSlide called with slideNumber: " + slideNumber + " and origin " + origin);
-			if(origin=="presentation_iframe_1"){
-			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.goToSlide(slideNumber,dest);
-			} else if(origin=="presentation_iframe_2") {
-				dest = "presentation_iframe_1";
-			 	VISH.Messenger.goToSlide(slideNumber,dest);
-			}
-		}
-
-		var onPlayVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
-			// console.log("onPlayVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlideNumber + " videoId " + videoId + " and origin " + origin);
-			if(origin=="presentation_iframe_1"){
-			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.playVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			} else if(origin=="presentation_iframe_2") {
-				dest = "presentation_iframe_1";
-			 	VISH.Messenger.playVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			}
-		}
-
-		var onPauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
-			// console.log("onPauseVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlide + " videoId " + videoId + " and origin " + origin);
-			if(origin=="presentation_iframe_1"){
-			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.pauseVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			} else if(origin=="presentation_iframe_2") {
-				dest = "presentation_iframe_1";
-			 	VISH.Messenger.pauseVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			}
-		}
-
-		var onSeekVideo = function(videoType,videoId,currentTime,videoSlideNumber,origin){
-			// console.log("onSeekVideo with videoType " + videoType + " and currentTime " + currentTime + " and videoSlide " + videoSlide + " videoId " + videoId + " and origin " + origin);
-			if(origin=="presentation_iframe_1"){
-			 	dest = "presentation_iframe_2";
-			 	VISH.Messenger.seekVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			} else if(origin=="presentation_iframe_2") {
-				dest = "presentation_iframe_1";
-			 	VISH.Messenger.seekVideo(videoType,videoId,currentTime,videoSlideNumber,dest);
-			}
-		}
 	</script>
 
     <div style="width:900px;height:300px;margin:0 auto; display:block">

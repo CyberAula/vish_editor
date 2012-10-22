@@ -15,7 +15,7 @@ VISH.Events.Mashme = (function(V,$,undefined){
 		// V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
 		if(message.data === MASHME_HELLO){
 			window.removeEventListener("message", V.Slides.onMashmeHello, false);
-			V.Events.unbindAll();
+			V.Events.unbindAllEventListeners();
 			init();
 		} else {
 			// V.Debugging.log("WARNING unknown message received from " + message.origin + " with data: " + message.data);

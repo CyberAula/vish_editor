@@ -65,7 +65,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {  
+		if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
 			if(V.Status.getIsInIframe()){
 				myDoc = parent.document;
 			} else {
@@ -114,6 +114,10 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
 	 */
 	var toggleFullScreen = function () {
+
+		if(VISH.Events.isSlaveMode()){
+			return;
+		}
 
 		if(VISH.Status.getIsInIframe()){
 			var myElem = VISH.Status.getIframe();

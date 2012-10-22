@@ -1,5 +1,7 @@
 VISH.Addons.IframeMessenger = (function(V,undefined){
 
+	var listenerInitialized = false;
+
 	var init = function(config){
 		if((!config)||(!config.enable)){
 			return;
@@ -17,6 +19,7 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 
 	var _initListener = function(){
 		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onMessage,_onVishEditorMessage);
+		listenerInitialized = true;
 	}
 
 	var _onVishEditorMessage = function(VEMessage){
@@ -28,10 +31,12 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 		if(webAppMessage){
 			// VISH.Debugging.log(webAppMessage.data);
 			var VEMessage = webAppMessage.data;
-			if(VISH.Messenger.Helper.validateVEMessage(VEMessage)){
+			if(VISH.Messenger.Helper.validateVEMessage(VEMessage,{allowSelfMessages: false})){
 				if(_isVEHelloMessage(VEMessage)){
-					_initListener();
-					_sendMessage(VEMessage);
+					if(!listenerInitialized){
+						_initListener();
+						_sendMessage(VEMessage);
+					}
 				} else {
 					VISH.Messenger.Helper.processVEMessage(VEMessage);
 				}

@@ -13,6 +13,7 @@ VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
+VISH.Constant.Event.onSetSlave = "onSetSlave";
 //Constant added by IframeAPI addon
 VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 
@@ -53,7 +54,7 @@ VISH.IframeAPI = (function(V,undefined){
 
 	var _sayHello = function(){
 		var helloMessage = _createMessage(VISH.Constant.Event.onIframeMessengerHello);
-		_sendMessage(helloMessage,"*");
+		sendMessage(helloMessage,"*");
 		helloAttempts++;
 		if((helloAttempts>=maxHelloAttempts)&&(helloTimeout)){
 			clearTimeout(helloTimeout);
@@ -126,7 +127,7 @@ VISH.IframeAPI = (function(V,undefined){
 	// Communication Methods
 	///////////////
 
-	var _sendMessage = function(VEMessage,destination){
+	var sendMessage = function(VEMessage,destination){
 		if(typeof destination === "string"){
 			if(destination==="*"){
 				_broadcastMessage(VEMessage);
@@ -167,6 +168,12 @@ VISH.IframeAPI = (function(V,undefined){
 	
 	var _processVEMessage = function(VEMessage){
 		var VEMessageObject = JSON.parse(VEMessage);
+
+		//"onMessage" callback
+		if(listeners[VISH.Constant.Event.onMessage]){
+			listeners[VISH.Constant.Event.onMessage](VEMessage,VEMessageObject.origin);
+		}
+
 		var callback = listeners[VEMessageObject.VEevent];
 		if(!callback){
 			//Nobody listen to this event
@@ -219,7 +226,7 @@ VISH.IframeAPI = (function(V,undefined){
 		var params = {};
 		params.slideNumber = slideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onGoToSlide,params,null,destination);
-		_sendMessage(VEMessage,destination);
+		sendMessage(VEMessage,destination);
 	}
 
 	var playVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
@@ -229,7 +236,7 @@ VISH.IframeAPI = (function(V,undefined){
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onPlayVideo,params,null,destination);
-		_sendMessage(VEMessage,destination);
+		sendMessage(VEMessage,destination);
 	}
 
 	var pauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
@@ -239,7 +246,7 @@ VISH.IframeAPI = (function(V,undefined){
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onPauseVideo,params,null,destination);
-		_sendMessage(VEMessage,destination);
+		sendMessage(VEMessage,destination);
 	}
 
 	var seekVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
@@ -249,7 +256,14 @@ VISH.IframeAPI = (function(V,undefined){
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onSeekVideo,params,null,destination);
-		_sendMessage(VEMessage,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var setSlave = function(slave,destination){
+		var params = {};
+		params.slave = slave;
+		var VEMessage = _createMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
+		sendMessage(VEMessage,destination);
 	}
 
 
@@ -274,6 +288,8 @@ VISH.IframeAPI = (function(V,undefined){
 			init 				: init,
 			registerCallback 	: registerCallback,
 			unRegisterCallback 	: unRegisterCallback,
+			sendMessage			: sendMessage,
+			setSlave			: setSlave,
 			goToSlide 			: goToSlide,
 			playVideo 			: playVideo,
 			pauseVideo 			: pauseVideo,
