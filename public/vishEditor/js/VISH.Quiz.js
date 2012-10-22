@@ -363,8 +363,7 @@ var _displayResults = function(data) {
     var received = JSON.stringify(data);
     V.Debugging.log("_displayResults, and value received is:  " + received);
     var maxWidth = 70;
-    var scaleFactor = maxWidth/100;
-
+    //var scaleFactor = maxWidth/100;
     //Reset values
      var totalVotes =0;
      //$(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
@@ -374,16 +373,15 @@ var _displayResults = function(data) {
           var votes = data.results[option];
           totalVotes  += votes;
         } 
-      }
 
+      }
       if(totalVotes>0){
          for (option in data.results) {
           if((option in mcOptionsHash)){
             var index = mcOptionsHash[option];
-
             var votes = data.results[option];
             var percent= (votes/totalVotes)*100;
-            var percentString = (percent*scaleFactor).toString()  + "%";
+            var percentString = (percent).toString()  + "%";
             var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
             if(typeof $("#"+tabQuizStatsBarsContentId).find(".mc_meter")[index] != "undefined"){
              $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
