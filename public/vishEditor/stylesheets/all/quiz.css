@@ -839,7 +839,7 @@ position: relative;
 }
 
 .quiz_stats_pie_content {
-    display: inline-block;
+    display: block;
     width: 96%;
     height:90%;
     text-align: center;
@@ -864,8 +864,6 @@ position: relative;
 }
 
 .quiz_chart_container {
-    position: relative;
-    float:left;
     width: 55%;
     min-height:90%;
     text-align: center;
