@@ -128,7 +128,7 @@ var _startStats = function() {
   //add class to resize div inside fancybox 
   $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
   $("#tab_quiz_stats_pie_content").addClass("resized_fancybox_for_stats");
-
+  $("#tab_quiz_session_content").addClass("resized_fancybox_for_stats");
 };
 
 /* 
@@ -395,7 +395,7 @@ var _displayResults = function(data) {
           }
         }
       }
- google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart()});
+ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart(data)});
 
       // Load the Visualization API and the piechart package.
      // google.load('visualization', '1.0', {'packages':['corechart']});
@@ -489,10 +489,9 @@ var data = new google.visualization.DataTable();
   };
 
 
-  var drawChart = function () {
-
-        V.Debugging.log("drawChart executed");
-
+  var drawChart = function (data) {
+var received = JSON.stringify(data);
+    V.Debugging.log("drawChart executed, and value received is:  " + received);
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
