@@ -395,123 +395,41 @@ var _displayResults = function(data) {
           }
         }
       }
- google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart(data)});
+ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart(data.results)});
 
-      // Load the Visualization API and the piechart package.
-     // google.load('visualization', '1.0', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      //google.setOnLoadCallback(drawChart);
-   /*  google.setOnLoadCallback(function() {
-        $(function() {
-        // init my stuff
-        V.Debugging.log("drawChart executed");
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data, options);
-  });
-}); */
-      /*
-var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data, options);
-  */
-
-/*
-  //display google chart pie
-  var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
-  var lenght_array = 0;
-  $.each(data.results, function(clave, valor) {
-
-    lenght_array += 1;
-  });
-  var counter = 0;
-  $.each(data.results, function(clave, valor){ 
-    url+= valor;
-    counter++;
-    if(counter==lenght_array) {
-      url+= "&chl=";
-    }
-    else {
-      url+= ",";
-    } 
-  });
-  var counter = 0;
-  $.each(data.results, function(clave, valor){ 
-    url+= clave;
-    counter++;
-    if(counter==lenght_array) {
-      url+= "&chtt=testedVish";
-    }
-    else {
-      url+= "|";
-    } 
-  });
-  V.Debugging.log("chart url :  " + url );
- $("#"+tabQuizStatsPieContentId).find(".img_chart").attr("src", url);
-*/
-
-
-
-  };
+ };
 
 
   var drawChart = function (data) {
-var received = JSON.stringify(data);
-    V.Debugging.log("drawChart executed, and value received is:  " + received);
         // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
+        var data_for_chart = new google.visualization.DataTable();
+        data_for_chart.addColumn('string', 'Question');
+        data_for_chart.addColumn('number', 'Slices');
+        
+        for (option in data) {
+
+          if((option in mcOptionsHash)){ // a --> 2 , b -->3
+            var votes = data[option];
+            data_for_chart.addRow([option, votes]);
+          }
+        }; 
+
+        /*data.addRows([
           ['Mushrooms', 3],
           ['Onions', 1],
           ['Olives', 1],
           ['Zucchini', 1],
           ['Pepperoni', 2]
-        ]);
-
+        ]); */
+        var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
+        var options = {'title':'',
                        'width':400,
                        'height':300};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data, options);
+        chart.draw(data_for_chart, options);
       }
 
 
