@@ -19,6 +19,7 @@ VISH.Quiz = (function(V,$,undefined){
   var tabQuizStatsBarsContentId = "quiz_stats_bars_content_id";
   var tabQuizStatsPieContentId = "quiz_stats_pie_content_id";
 
+
   var init = function(presentation){
   // V.Debugging.log("presentation value: " + presentation);
      
@@ -77,7 +78,7 @@ var showQuizStats = function(){
     //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
-  };
+   };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
     
@@ -124,6 +125,9 @@ var _startStats = function() {
   $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".question"));
   $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form"));
   $("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
+  //add class to resize div inside fancybox 
+  $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
+  $("#tab_quiz_stats_pie_content").addClass("resized_fancybox_for_stats");
 
 };
 
@@ -391,7 +395,62 @@ var _displayResults = function(data) {
           }
         }
       }
+ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart()});
 
+      // Load the Visualization API and the piechart package.
+     // google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      //google.setOnLoadCallback(drawChart);
+   /*  google.setOnLoadCallback(function() {
+        $(function() {
+        // init my stuff
+        V.Debugging.log("drawChart executed");
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+        chart.draw(data, options);
+  });
+}); */
+      /*
+var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+        chart.draw(data, options);
+  */
+
+/*
   //display google chart pie
   var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
   var lenght_array = 0;
@@ -423,8 +482,38 @@ var _displayResults = function(data) {
   });
   V.Debugging.log("chart url :  " + url );
  $("#"+tabQuizStatsPieContentId).find(".img_chart").attr("src", url);
+*/
+
+
 
   };
+
+
+  var drawChart = function () {
+
+        V.Debugging.log("drawChart executed");
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+        chart.draw(data, options);
+      }
 
 
   return {
@@ -432,7 +521,8 @@ var _displayResults = function(data) {
     prepareQuiz               : prepareQuiz,
     getQuizMode               : getQuizMode, 
     startMcQuizButtonClicked  :startMcQuizButtonClicked, 
-    onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked
+    onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked, 
+    drawChart                 : drawChart
 
   };
     

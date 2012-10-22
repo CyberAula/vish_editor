@@ -760,6 +760,10 @@ position: relative;
 
     text-align: center;
 }
+.resized_fancybox_for_stats {
+width: 100%;
+height: 90%;
+}
 
 .quiz_session_body{
 
@@ -773,7 +777,7 @@ position: relative;
 
 .quiz_sesssion_inputs_container {
     display: block;
-    height:30%;
+    height:10%;
     width: 100%;
     text-align: right;
 }
@@ -832,7 +836,7 @@ position: relative;
 .quiz_stats_bars_content {
     display: inline-block;
     width: 96%;
-    height:90%;
+    height:100%;
     text-align: center;
     margin-left: 3%;
 
@@ -849,7 +853,7 @@ position: relative;
 
 .quiz_question_container{
     display: block;
-    min-height: 10%;
+    min-height: 20%;
 
 }
 
@@ -858,14 +862,14 @@ position: relative;
     display: block;
     float:left;
     width: 90%;
-    height:90%;
+    height:60%;
     text-align: left;
     margin-left: 0%;
 }
 
 .quiz_chart_container {
-    width: 55%;
-    min-height:90%;
+    width: 50%;
+    height:60%;
     text-align: center;
     margin-left: 2%;
 

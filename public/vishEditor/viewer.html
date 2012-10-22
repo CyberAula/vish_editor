@@ -67,6 +67,11 @@
     <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.player.js"></script>
     <script type="text/javascript" src="/vishEditor/js/mods/fc/VISH.Mods.fc.template.js"></script>
 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+     <!-- load google visualization libraries -->
+    <script type="text/javascript">
+     google.load('visualization', '1.0', {'packages':['corechart']});
+    </script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Events.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Events.Notifier.js"></script>
@@ -74,11 +79,11 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Renderer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
-
+   
     <script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
   </head>
   
   <body onload="start()" style="display: none" class="loaded" id="presentation_iframe">
@@ -138,7 +143,6 @@
                   <div id='quiz_stats_pie_content_id' class='quiz_stats_pie_content'>
                         <div id='quiz_question_container_id' class='quiz_question_container'>
                         </div>
-                        <div id='quiz_options_container_id' class='quiz_options_container'> </div>
                         <div id='quiz_chart_container_id' class='quiz_chart_container'><img class='img_chart'/>
                         </div>
                         <div class='quiz_sesssion_inputs_container'>
