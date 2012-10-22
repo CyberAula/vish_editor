@@ -2,7 +2,8 @@ VISH.VideoPlayer.Youtube = (function(){
 		
 	//Flag to prevent notify startVideo events
 	//Prevent sync bucles
-	var notifyEventFlag = true;
+	var playTriggeredByUser = true;
+	var pauseTriggeredByUser = true;
 	
 	var onytplayerStateChange = function(playerId,newState) {
 		switch(newState){
@@ -14,17 +15,27 @@ VISH.VideoPlayer.Youtube = (function(){
 				break;
 			case 1:
 				// VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
-				if((VISH.Messenger)&&(notifyEventFlag)){
-					VISH.Messenger.sendMessage("playVideo",["Youtube",playerId,$("#"+playerId)[0].getCurrentTime(),VISH.Slides.getCurrentSlideNumber()]);
-				}
-				notifyEventFlag = true;
+
+				var params = new Object();
+				params.type = "Youtube";
+				params.videoId = playerId;
+				params.currentTime = $("#"+playerId)[0].getCurrentTime();
+				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+
+				playTriggeredByUser = true;
 				break;
 			case 2:
 				// VISH.Debugging.log(playerId + ": Pause at " + $("#"+playerId)[0].getCurrentTime());
-				if((VISH.Messenger)&&(notifyEventFlag)){
-					VISH.Messenger.sendMessage("pauseVideo",["Youtube",playerId,$("#"+playerId)[0].getCurrentTime(),VISH.Slides.getCurrentSlideNumber()]);
-				}
-				notifyEventFlag = true;
+				
+				var params = new Object();
+				params.type = "Youtube";
+				params.videoId = playerId;
+				params.currentTime = $("#"+playerId)[0].getCurrentTime();
+				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+
+				pauseTriggeredByUser = true;
 				break;
 			case 3:
 				// VISH.Debugging.log(playerId + ": Buffer Store");
@@ -41,7 +52,7 @@ VISH.VideoPlayer.Youtube = (function(){
 	}
 
 	var onytplayerError = function(playerId,error) {
-		VISH.Debugging.log(playerId + " error: " + error);
+		// VISH.Debugging.log(playerId + " error: " + error);
 	}
 
 	/**
@@ -49,15 +60,33 @@ VISH.VideoPlayer.Youtube = (function(){
 	 */
 	var startVideo = function(videoId,currentTime){
 		var ytPlayer = document.getElementById(videoId);
-		if(ytPlayer.getCurrentTime()!==currentTime){
-			notifyEventFlag = false;
-			ytPlayer.seekTo(currentTime);
-		}
-		if(ytPlayer.getPlayerState()==YT.PlayerState.PLAYING){
+		if(!ytPlayer){
 			return;
 		}
-		notifyEventFlag = false;
-		ytPlayer.playVideo();
+
+		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
+		
+		switch(ytPlayer.getPlayerState()){
+			case YT.PlayerState.PLAYING:
+				if(changeCurrentTime){
+					playTriggeredByUser = false;
+					ytPlayer.seekTo(currentTime);
+				}
+				break;
+			case YT.PlayerState.PAUSED:
+				if(changeCurrentTime){
+					pauseTriggeredByUser = false;
+					ytPlayer.seekTo(currentTime);
+				}
+				playTriggeredByUser = false;
+				ytPlayer.playVideo();
+				break;
+			case YT.PlayerState.UNSTARTED:
+				playTriggeredByUser = false;
+				ytPlayer.playVideo();
+			default:
+				break;
+		}
 	}
 
 	/**
@@ -65,15 +94,32 @@ VISH.VideoPlayer.Youtube = (function(){
 	 */
 	var pauseVideo = function(videoId,currentTime){
 		var ytPlayer = document.getElementById(videoId);
-		if(ytPlayer.getCurrentTime()!==currentTime){
-			notifyEventFlag = false;
-			ytPlayer.seekTo(currentTime);
-		}
-		if(ytPlayer.getPlayerState()==YT.PlayerState.PAUSED){
+		if(!ytPlayer){
 			return;
 		}
-		notifyEventFlag = false;
-		ytPlayer.pauseVideo();
+
+		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
+		
+		switch(ytPlayer.getPlayerState()){
+			case YT.PlayerState.PLAYING:
+				if(changeCurrentTime){
+					playTriggeredByUser = false;
+					ytPlayer.seekTo(currentTime);
+				}
+				pauseTriggeredByUser = false;
+				ytPlayer.pauseVideo();
+				break;
+			case YT.PlayerState.PAUSED:
+				if(changeCurrentTime){
+					pauseTriggeredByUser = false;
+					ytPlayer.seekTo(currentTime);
+				}
+				break;
+			case YT.PlayerState.UNSTARTED:
+				break;
+			default:
+				break;
+		}
 	}
 
 	return {

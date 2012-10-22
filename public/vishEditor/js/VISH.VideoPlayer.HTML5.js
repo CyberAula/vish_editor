@@ -1,25 +1,36 @@
 VISH.VideoPlayer.HTML5 = (function(){
 		
-	//Flag to prevent notify startVideo events
-	//Prevent sync bucles
-	var notifyEventFlag = true;
+	//Is the event trigger by the user or via code?
+	var playTriggeredByUser = true;
+	var pauseTriggeredByUser = true;
+	var seekTriggeredByUser = true;
 
 	var setVideoEvents = function(){
 		var videos = $("video")
 		$.each(videos, function(index, video) {
 			video.addEventListener('play', function () {
 				// VISH.Debugging.log("Play at " + video.currentTime);
-				if((VISH.Messenger)&&(notifyEventFlag)){
-					VISH.Messenger.sendMessage("playVideo",["HTML5",video.id,video.currentTime,VISH.Slides.getCurrentSlideNumber()]);
-				} 
-				notifyEventFlag = true;
+
+				var params = new Object();
+				params.type = "HTML5";
+				params.videoId = video.id;
+				params.currentTime = video.currentTime;
+				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+
+				playTriggeredByUser = true;
 			}, false);
 			video.addEventListener('pause', function () {
 				// VISH.Debugging.log("Pause " + video.currentTime);
-				if((VISH.Messenger)&&(notifyEventFlag)){
-					VISH.Messenger.sendMessage("pauseVideo",["HTML5",video.id,video.currentTime,VISH.Slides.getCurrentSlideNumber()]);
-				}
-				notifyEventFlag = true;
+
+				var params = new Object();
+				params.type = "HTML5";
+				params.videoId = video.id;
+				params.currentTime = video.currentTime;
+				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				
+				pauseTriggeredByUser = true;
 			}, false);
 			video.addEventListener('ended', function () {
 				// VISH.Debugging.log("Ended " + video.currentTime)
@@ -31,10 +42,15 @@ VISH.VideoPlayer.HTML5 = (function(){
 
 			video.addEventListener("seeked", function(err) {
                 // VISH.Debugging.log("Seek at " + video.currentTime)
-                if((VISH.Messenger)&&(notifyEventFlag)){
-					VISH.Messenger.sendMessage("seekVideo",["HTML5",video.id,video.currentTime,VISH.Slides.getCurrentSlideNumber()]);
-				}
-				notifyEventFlag = true;
+
+                var params = new Object();
+				params.type = "HTML5";
+				params.videoId = video.id;
+				params.currentTime = video.currentTime;
+				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				
+				seekTriggeredByUser = true;
             }, false);
 
 			//PREVENT KEYBOARD EVENTS ON FIREFOX!
@@ -87,9 +103,15 @@ VISH.VideoPlayer.HTML5 = (function(){
 	 */
 	var startVideo = function(videoId,currentTime){
 		var video = $("#"+videoId)[0];
-		notifyEventFlag = false;
-		video.currentTime = currentTime;
-		video.play();
+
+		if((typeof currentTime === 'number')&&(video.currentTime !== currentTime)){
+			seekTriggeredByUser = false;
+			video.currentTime = currentTime;
+		}
+		if(video.paused){
+			playTriggeredByUser = false;
+			video.play();
+		}
 	}
 
 	/**
@@ -97,9 +119,14 @@ VISH.VideoPlayer.HTML5 = (function(){
 	 */
 	var pauseVideo = function(videoId,currentTime){
 		var video = $("#"+videoId)[0];
-		notifyEventFlag = false;
-		video.currentTime = currentTime;
-		video.pause();
+		if((typeof currentTime === 'number')&&(video.currentTime !== currentTime)){
+			seekTriggeredByUser = false;
+			video.currentTime = currentTime;
+		}
+		if(!video.paused){
+			pauseTriggeredByUser = false;
+			video.pause();
+		}
 	}
 
 
@@ -108,8 +135,10 @@ VISH.VideoPlayer.HTML5 = (function(){
 	 */
 	var seekVideo = function(videoId,currentTime){
 		var video = $("#"+videoId)[0];
-		notifyEventFlag = false;
-		video.currentTime = currentTime;
+		if((typeof currentTime === 'number')&&(video.currentTime !== currentTime)){
+			seekTriggeredByUser = false;
+			video.currentTime = currentTime;
+		}
 	}
 
 	return {

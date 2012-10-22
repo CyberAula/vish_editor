@@ -4,7 +4,7 @@ VISH.VideoPlayer = (function(){
 	 * Function to start a specific video
 	 */
 	var startVideo = function(videoType,videoId,currentTime,videoSlideNumber){
-		if(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber){
+		if((videoSlideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber)){
 			VISH.Slides.goToSlide(videoSlideNumber,false);
 		}
 		switch(videoType){

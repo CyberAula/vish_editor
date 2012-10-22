@@ -54,11 +54,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//important that events are initialized after presentation type is proccessed
 		V.Events.init();
-
-		//Allow cross-domain communication through iframes
-		if((V.Messenger)&&(V.Status.getIsInIframe())){
-			V.Messenger.init(false);
-		}
+		V.Events.Notifier.init();
 	  	
 		V.Themes.selectTheme(presentation.theme);
 		mySlides = presentation.slides;
@@ -105,6 +101,11 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		if((!V.Status.getDevice().desktop)&&(!VISH.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
 			$("button#closeButton").show();
+		}
+
+		//Init Vish Editor Addons
+		if(options.addons){
+			VISH.Addons.init(options.addons);
 		}
 	};
 

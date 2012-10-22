@@ -12,7 +12,7 @@ VISH.Events.Mashme = (function(V,$,undefined){
 	 * function that waits for a mashe hello message and if so inits all the events for synchronization
 	 */
 	var onMashmeHello = function(message){
-		V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
+		// V.Debugging.log("Recibiendo:" + message.data + " from:" + message.origin);
 		if(message.data === MASHME_HELLO){
 			window.removeEventListener("message", V.Slides.onMashmeHello, false);
 			V.Events.unbindAll();

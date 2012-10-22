@@ -152,6 +152,11 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Quiz.init();
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
+
+		//Init Vish Editor Addons
+		if(options.addons){
+			VISH.Addons.init(options.addons);
+		}
 	};
 	
 	
