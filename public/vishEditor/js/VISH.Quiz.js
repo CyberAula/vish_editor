@@ -118,6 +118,7 @@ var showQuizStats = function(){
     $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
+    $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
     
 
    };
@@ -278,6 +279,21 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   var _onQuizSessionCloseReceivedError = function(error){
     var received = JSON.stringify(error);
     V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
+  };
+
+  var _stopAndDontSaveQuiz = function() {
+    V.Debugging.log("_stopAndDontSaveQuiz detected");
+    var current_slide = VISH.Slides.getCurrentSlide();
+    var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
+    _hideStopQuizPopup();
+    $.fancybox.close();
+    quizName= false; //to inform that is not going to save the quiz session
+    //Show Start Button and hide Options Button
+    $(current_slide).find("input." + optionsButtonClass).hide();
+    $(current_slide).find("input." + startButtonClass).show();
+
+    V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
+
   };
 
 
