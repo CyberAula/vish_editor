@@ -229,7 +229,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 */ 
  var _onStopMcQuizButtonClicked = function () {
        V.Debugging.log("_onStopMcQuizButtonClicked");
-    var id = $('a[name=modal_fancybox]').attr('href'); //todo in different way
+    var id = $('a[name=modal_fancybox]').attr('href'); //TODO in different way
     //Get the screen height and width
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
@@ -243,19 +243,18 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(id).css('left', maskWidth/2-$(id).width()/2);
     $(id).show();
     $(id).children().show();
+    var date = new Date();
+    var date_string = date.getFullYear().toString()+(date.getMonth()+1).toString()+date.getDate().toString()+"_"+date.getHours().toString() + date.getMinutes().toString();
+    $(id).find(".quiz_saved_session_name").val(date_string);
         //transition effect
         $(id).fadeIn(2000); 
   };
 /*Called when press save button in the stop quiz session popup*/
-  var _stopAndSaveQuiz = function(quizName) { 
-
-     V.Debugging.log("_stopAndSaveQuiz detected ");
+  var _stopAndSaveQuiz = function() { 
     var current_slide = VISH.Slides.getCurrentSlide();
-
+    quizName = $("#stop_quiz_fancybox").find(".quiz_saved_session_name").val();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
-   // var quizSessionActiveId =  $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-    V.Debugging.log("quizSessionActiveId " + quizSessionActiveId);
     if(!quizName){
       quizName = "Unknown";
     }
@@ -266,14 +265,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(current_slide).find("input." + optionsButtonClass).hide();
     $(current_slide).find("input." + startButtonClass).show();
 
-/*
-
-    var stopButton = $(current_slide).find("." + stopSessionButtonClass);
-
-
-    $(stopButton).val("Start Quiz");
-    $(stopButton).removeClass().addClass(startButtonClass);
-*/
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
   };
 
