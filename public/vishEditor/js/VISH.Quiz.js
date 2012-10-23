@@ -117,6 +117,8 @@ var showQuizStats = function(){
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
     $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
+    $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
+    
 
    };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
@@ -222,50 +224,45 @@ var _updatePieStats = function() {
      V.Debugging.log("_OnQuizSessionReceivedError:  " + received);
   };
 
-  var _onStopMcQuizButtonClicked = function () {
+/*
+Show a popup with three buttons (Cancel, DOn't save & Save)
+*/ 
+ var _onStopMcQuizButtonClicked = function () {
        V.Debugging.log("_onStopMcQuizButtonClicked");
     var id = $('a[name=modal_fancybox]').attr('href'); //todo in different way
-    V.Debugging.log("id detected :  " + id);
     //Get the screen height and width
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
        V.Debugging.log("maskHeight and width: "+ maskHeight + " and " + maskWidth );
-     //Maks is used like background shadow
+     //Mask_stop_quiz is used like background shadow
      $('#mask_stop_quiz').css({'width':maskWidth,'height':maskHeight});
     //transition effect     
-    //$('#mask').fadeIn();    
     $('#mask_stop_quiz').fadeTo("slow",0.6);  
-    //var winH = $(window).height();
-    //var winW = $(window).width();
- 
-    var winW = 910;
-    var winH = 750;
-    V.Debugging.log("id height entre dos : "+ $(id).height()/2);
-    V.Debugging.log("id width entre dos : " + $(id).width()/2);
+    //TODO ask Nestor how to set the popup position in the center 
     $(id).css('top',  maskHeight/2-$(id).height()/2);
     $(id).css('left', maskWidth/2-$(id).width()/2);
     $(id).show();
     $(id).children().show();
         //transition effect
         $(id).fadeIn(2000); 
-
-    //Commented while solve fancybox popup
-    //_stopAndSaveQuiz();
   };
-
+/*Called when press save button in the stop quiz session popup*/
   var _stopAndSaveQuiz = function(quizName) { 
 
-     V.Debugging.log("_stopAndSaveQuiz ");
+     V.Debugging.log("_stopAndSaveQuiz detected ");
     var current_slide = VISH.Slides.getCurrentSlide();
 
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
    // var quizSessionActiveId =  $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
+    V.Debugging.log("quizSessionActiveId " + quizSessionActiveId);
     if(!quizName){
       quizName = "Unknown";
     }
-
-   //Show Start Button and hide Options Button
+    //remove stop quiz fancybox
+    _hideStopQuizPopup();
+    $.fancybox.close();
+    //Show Start Button and hide Options Button
     $(current_slide).find("input." + optionsButtonClass).hide();
     $(current_slide).find("input." + startButtonClass).show();
 
@@ -284,8 +281,7 @@ var _updatePieStats = function() {
          V.Debugging.log("_onQuizSessionCloseReceived");
 //    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-    VISH.Utils.loadTab('tab_quiz_statistics');
-    //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
+        //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
