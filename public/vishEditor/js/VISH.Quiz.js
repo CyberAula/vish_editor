@@ -21,11 +21,9 @@ VISH.Quiz = (function(V,$,undefined){
 
 
   var init = function(presentation){
-  // V.Debugging.log("presentation value: " + presentation);
-     
-     if (presentation.type=="quiz_simple"){
+    if (presentation.type=="quiz_simple"){
       quizMode = "answer";
-       _loadAnswerEvents();
+      _loadAnswerEvents();
     } else {
       quizMode = "question";
       _loadEvents();
@@ -43,6 +41,42 @@ VISH.Quiz = (function(V,$,undefined){
        VISH.Utils.loadTab('tab_quiz_session');
       }
     });
+   /*
+$( "."+stopSessionButtonClass).click(function(e) {
+      //Get the A tag
+      var id = $('a[name=modal_fancybox]').attr('href');
+      //Get the screen height and width
+      var maskHeight = $(document).height();
+      var maskWidth = $(window).width();
+     //Maks is used like background shadow
+     $('#mask').css({'width':maskWidth,'height':maskHeight});
+    //transition effect     
+        $('#mask').fadeIn(1000);    
+        $('#mask').fadeTo("slow",0.8);  
+        var winH = $(window).height();
+        var winW = $(window).width();
+
+        $(id).css('top',  winH/2-$(id).height()/2);
+        $(id).css('left', winW/2-$(id).width()/2);
+     
+        //transition effect
+        $(id).fadeIn(2000); 
+    });
+
+    //if close button is clicked
+    $('.window .close').click(function (e) {
+        //Cancel the link behavior
+        e.preventDefault();
+        $('#mask, .window').hide();
+    });     
+     
+    //if mask is clicked
+    $('#mask').click(function () {
+        $(this).hide();
+        $('.window').hide();
+    }); 
+
+*/
   };
 
   var getQuizMode = function(){
@@ -69,6 +103,8 @@ var showQuizStats = function(){
   //open the fancybox
   $("a#addQuizSessionFancybox").trigger("click"); 
 };
+
+
   /////////////////////////
   //// QUIZ MODE: QUESTION
   ////////////////////////
@@ -77,6 +113,7 @@ var showQuizStats = function(){
     $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
     //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
+    //$(document).on('click', "."+stopSessionButtonClass, showStopFancybox);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
    };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
@@ -86,23 +123,15 @@ var showQuizStats = function(){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
-       //init the stats, empty
-       _startStats();   
-
-       
-      _updateBarsStats();
-      _updatePieStats();
-
-       var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();
-     //   V.Debugging.log("session ID to get results from server is: " +  quizSessionActiveId);
-    //get results
-   // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
-
+      //init the stats, empty
+      _startStats();   
+      _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
+      //_updatePieStats();
+      //get results
+      // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
     }
     else {
-
           V.Debugging.log("User not logged");
-
     }
   };
 /*  
@@ -110,8 +139,6 @@ Load the question  options into the stats containers
  */
 
 var _startStats = function() {
-  //var tabQuizStatsBarsContentId = "tab_quiz_stats_bars_content";
-  //var tabQuizStatPieContentId = "tab_quiz_stats_pie_content";
   if($("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").contents()){ 
     $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").children().remove();
   }
@@ -144,23 +171,16 @@ var _updateBarsStats = function(data, timeout) {
 /* called from  */
   if(data) {
     V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
-
-
-
-
   } 
 //display empty stats
   else {
     V.Debugging.log("_updateBarsStats with no data params");
-
     $("#"+tabQuizStatsBarsContentId).find(".mc_meter").css('display','block');
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").css('display','block');
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").text("0%");
     $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span").css('width','0%');
-V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
+    V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
   }
-
-
 };
 
 var _updatePieStats = function() {
@@ -200,7 +220,33 @@ var _updatePieStats = function() {
   };
 
   var _onStopMcQuizButtonClicked = function () {
-    _stopAndSaveQuiz();
+       V.Debugging.log("_onStopMcQuizButtonClicked" );
+    var id = $('a[name=modal_fancybox]').attr('href'); //todo in different way
+    V.Debugging.log("id detected :  " + id);
+    //Get the screen height and width
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+       V.Debugging.log("maskHeight and width: "+ maskHeight + " and " + maskWidth );
+     //Maks is used like background shadow
+     $('#mask').css({'width':maskWidth,'height':maskHeight});
+    //transition effect     
+    //$('#mask').fadeIn();    
+    $('#mask').fadeTo("slow",0.8);  
+    //var winH = $(window).height();
+    //var winW = $(window).width();
+    var winH = 750;
+    var winW = 910;
+    V.Debugging.log("id height entre dos : "+ $(id).height()/2);
+    V.Debugging.log("id width entre dos : " + $(id).width()/2);
+    $(id).css('top',  maskHeight/2-$(id).height()/2);
+    $(id).css('left', maskWidth/2-$(id).width()/2);
+    $(id).show();
+    $(id).children().show();
+        //transition effect
+        $(id).fadeIn(2000); 
+
+    //Commented while solve fancybox popup
+    //_stopAndSaveQuiz();
   };
 
   var _stopAndSaveQuiz = function(quizName) { 

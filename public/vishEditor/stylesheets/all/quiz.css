@@ -882,3 +882,49 @@ height: 60%;
   text-align: center;  
   margin: 3%;
 }
+#mask {
+  position:absolute;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+
+#stop_quiz_fancybox {
+position: absolute;
+width: 100px;
+height: 80px;
+}
+
+#stop_quiz_fancybox .window {
+  background-color: white;
+  position:fixed;
+  width:28%;
+  height:15%;
+  display:none;
+  z-index:9999;
+  padding:20px;
+}
+
+
+.quiz_stop_session {
+padding: 5px 10px;
+display: inline;
+text-decoration: none;
+background: #FF005D repeat-x bottom;
+opacity: 0.6;
+color: #F9F9F9;
+cursor: pointer;
+font-weight: bold;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+}
+
+.stop_quiz_text{
+text-decoration: none;
+font-family: Helvetica;
+font-size: 2em;
+margin: 1%;
+color: #CCC;
+
+}
