@@ -115,6 +115,9 @@ var showQuizStats = function(){
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     //$(document).on('click', "."+stopSessionButtonClass, showStopFancybox);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
+    $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
+    $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
+
    };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
@@ -220,7 +223,7 @@ var _updatePieStats = function() {
   };
 
   var _onStopMcQuizButtonClicked = function () {
-       V.Debugging.log("_onStopMcQuizButtonClicked" );
+       V.Debugging.log("_onStopMcQuizButtonClicked");
     var id = $('a[name=modal_fancybox]').attr('href'); //todo in different way
     V.Debugging.log("id detected :  " + id);
     //Get the screen height and width
@@ -228,14 +231,15 @@ var _updatePieStats = function() {
     var maskWidth = $(window).width();
        V.Debugging.log("maskHeight and width: "+ maskHeight + " and " + maskWidth );
      //Maks is used like background shadow
-     $('#mask').css({'width':maskWidth,'height':maskHeight});
+     $('#mask_stop_quiz').css({'width':maskWidth,'height':maskHeight});
     //transition effect     
     //$('#mask').fadeIn();    
-    $('#mask').fadeTo("slow",0.8);  
+    $('#mask_stop_quiz').fadeTo("slow",0.6);  
     //var winH = $(window).height();
     //var winW = $(window).width();
-    var winH = 750;
+ 
     var winW = 910;
+    var winH = 750;
     V.Debugging.log("id height entre dos : "+ $(id).height()/2);
     V.Debugging.log("id width entre dos : " + $(id).width()/2);
     $(id).css('top',  maskHeight/2-$(id).height()/2);
@@ -477,6 +481,16 @@ var _displayResults = function(data) {
         var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
         chart.draw(data_for_chart, options);
       }
+
+
+      var _hideStopQuizPopup = function() {
+
+            V.Debugging.log(" hideStopQuizPopup detected");
+            $('#mask_stop_quiz').fadeTo("slow",0);  
+            $('#mask_stop_quiz').hide();  
+            $('#stop_quiz_fancybox').hide();
+
+      };
 
 
   return {
