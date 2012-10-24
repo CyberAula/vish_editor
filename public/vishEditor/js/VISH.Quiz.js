@@ -206,7 +206,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     //Get the screen height and width
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
-       V.Debugging.log("maskHeight and width: "+ maskHeight + " and " + maskWidth );
+       
      //Mask_stop_quiz is used like background shadow
      $('#mask_stop_quiz').css({'width':maskWidth,'height':maskHeight});
     //transition effect     

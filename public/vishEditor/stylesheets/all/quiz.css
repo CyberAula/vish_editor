@@ -766,14 +766,26 @@ height: 90%;
 }
 
 .quiz_session_body{
-
-height: 60%;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    height: 60%;
 }
 .quiz_session_qrcode_container {
     height: 100%;
+    
     padding-top:1%;
     padding-bottom: 1%;
     text-align: center;
+    display: inline-block;
+}
+
+.buttons_container {
+    display: inline-block;
+    
+    width: 10%;
+    height: 100%;
+
 }
 
 .quiz_sesssion_inputs_container {
@@ -858,8 +870,27 @@ height: 60%;
 
 }
 
-.quiz_options_container {
+#quiz_full_screen{
+    background-image: url("/vishEditor/images/fullscreen_all.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    border: medium none;
+    top:0%;
+    height: 40px;
+    opacity: 1;
+ 
+ 
+    text-align: center;
+    width: 45px;
+    z-index: 10;
+    
+}
 
+#quiz_full_screen:over {
+  background-position:0px -41px;
+}
+
+.quiz_options_container {
     display: block;
     float:left;
     width: 90%;

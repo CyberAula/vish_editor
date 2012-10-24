@@ -5,6 +5,7 @@ VISH.Editor.Tour = (function(V,$,undefined){
 	 * tipLocation can be 'top' or 'bottom' in relation to parent element
 	 */
 	var startTourWithId = function(helpid, tipLocation){
+		V.Debugging.log("startTourWithId with help id: "  + helpid + " & tipLocation " + tipLocation);
 		var loc;
 		if(tipLocation === undefined){
 			loc = "top";
