@@ -19,6 +19,8 @@ VISH.Quiz = (function(V,$,undefined){
   var tabQuizStatsBarsContentId = "quiz_stats_bars_content_id";
   var tabQuizStatsPieContentId = "quiz_stats_pie_content_id";
 
+  var getResultsPeriod = 3000; //milliseconds
+  var getResultsTimeOut; //must be global
 
   var init = function(presentation){
     if (presentation.type=="quiz_simple"){
@@ -41,42 +43,7 @@ VISH.Quiz = (function(V,$,undefined){
        VISH.Utils.loadTab('tab_quiz_session');
       }
     });
-   /*
-$( "."+stopSessionButtonClass).click(function(e) {
-      //Get the A tag
-      var id = $('a[name=modal_fancybox]').attr('href');
-      //Get the screen height and width
-      var maskHeight = $(document).height();
-      var maskWidth = $(window).width();
-     //Maks is used like background shadow
-     $('#mask').css({'width':maskWidth,'height':maskHeight});
-    //transition effect     
-        $('#mask').fadeIn(1000);    
-        $('#mask').fadeTo("slow",0.8);  
-        var winH = $(window).height();
-        var winW = $(window).width();
-
-        $(id).css('top',  winH/2-$(id).height()/2);
-        $(id).css('left', winW/2-$(id).width()/2);
-     
-        //transition effect
-        $(id).fadeIn(2000); 
-    });
-
-    //if close button is clicked
-    $('.window .close').click(function (e) {
-        //Cancel the link behavior
-        e.preventDefault();
-        $('#mask, .window').hide();
-    });     
-     
-    //if mask is clicked
-    $('#mask').click(function () {
-        $(this).hide();
-        $('.window').hide();
-    }); 
-
-*/
+   
   };
 
   var getQuizMode = function(){
@@ -115,6 +82,12 @@ var showQuizStats = function(){
     $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
     //$(document).on('click', "."+stopSessionButtonClass, showStopFancybox);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
+    $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
+    $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
+    $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
+    $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
+    
+
    };
 /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
@@ -126,7 +99,7 @@ var showQuizStats = function(){
       //init the stats, empty
       _startStats();   
       _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
-      //_updatePieStats();
+      
       //get results
       // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
     }
@@ -165,10 +138,8 @@ params:
   timeout: refresh time
  */
 
-var _updateBarsStats = function(data, timeout) {
- var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();
-   V.Debugging.log("_updateBarsStats  quizSessionId: " + quizSessionActiveId);
-/* called from  */
+var _updateBarsStats = function(data) {
+   /* called from  */
   if(data) {
     V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
   } 
@@ -179,13 +150,20 @@ var _updateBarsStats = function(data, timeout) {
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").css('display','block');
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").text("0%");
     $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span").css('width','0%');
-    V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
+    //testing timeout
+    _getResults();
+     getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
   }
 };
-
-var _updatePieStats = function() {
-
-
+/* function that calls to VISH API to receive voting's results  */
+var _getResults =  function(quiz_session_active_id) {
+  if(quiz_session_active_id) {
+    var quizSessionActiveId = quiz_session_active_id;
+  }
+  else {
+    var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();      
+  }
+  V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
 };
 
 
@@ -219,69 +197,56 @@ var _updatePieStats = function() {
      V.Debugging.log("_OnQuizSessionReceivedError:  " + received);
   };
 
-  var _onStopMcQuizButtonClicked = function () {
-       V.Debugging.log("_onStopMcQuizButtonClicked" );
-    var id = $('a[name=modal_fancybox]').attr('href'); //todo in different way
-    V.Debugging.log("id detected :  " + id);
+/*
+Show a popup with three buttons (Cancel, DOn't save & Save)
+*/ 
+ var _onStopMcQuizButtonClicked = function () {
+       V.Debugging.log("_onStopMcQuizButtonClicked");
+    var id = $('a[name=modal_fancybox]').attr('href'); //TODO in different way
     //Get the screen height and width
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
        V.Debugging.log("maskHeight and width: "+ maskHeight + " and " + maskWidth );
-     //Maks is used like background shadow
-     $('#mask').css({'width':maskWidth,'height':maskHeight});
+     //Mask_stop_quiz is used like background shadow
+     $('#mask_stop_quiz').css({'width':maskWidth,'height':maskHeight});
     //transition effect     
-    //$('#mask').fadeIn();    
-    $('#mask').fadeTo("slow",0.8);  
-    //var winH = $(window).height();
-    //var winW = $(window).width();
-    var winH = 750;
-    var winW = 910;
-    V.Debugging.log("id height entre dos : "+ $(id).height()/2);
-    V.Debugging.log("id width entre dos : " + $(id).width()/2);
+    $('#mask_stop_quiz').fadeTo("slow",0.6);  
+    //TODO ask Nestor how to set the popup position in the center 
     $(id).css('top',  maskHeight/2-$(id).height()/2);
     $(id).css('left', maskWidth/2-$(id).width()/2);
     $(id).show();
     $(id).children().show();
+    var date = new Date();
+    var date_string = date.getFullYear().toString()+(date.getMonth()+1).toString()+date.getDate().toString()+"_"+date.getHours().toString() + date.getMinutes().toString();
+    $(id).find(".quiz_saved_session_name").val(date_string);
         //transition effect
         $(id).fadeIn(2000); 
-
-    //Commented while solve fancybox popup
-    //_stopAndSaveQuiz();
   };
-
-  var _stopAndSaveQuiz = function(quizName) { 
-
-     V.Debugging.log("_stopAndSaveQuiz ");
+/*Called when press save button in the stop quiz session popup*/
+  var _stopAndSaveQuiz = function() { 
     var current_slide = VISH.Slides.getCurrentSlide();
-
+    quizName = $("#stop_quiz_fancybox").find(".quiz_saved_session_name").val();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
-   // var quizSessionActiveId =  $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
     if(!quizName){
       quizName = "Unknown";
     }
-
-   //Show Start Button and hide Options Button
+    //remove stop quiz fancybox
+    _hideStopQuizPopup();
+    $.fancybox.close();
+    //Show Start Button and hide Options Button
     $(current_slide).find("input." + optionsButtonClass).hide();
     $(current_slide).find("input." + startButtonClass).show();
 
-/*
-
-    var stopButton = $(current_slide).find("." + stopSessionButtonClass);
-
-
-    $(stopButton).val("Start Quiz");
-    $(stopButton).removeClass().addClass(startButtonClass);
-*/
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
+    clearInterval(getResultsTimeOut);
   };
 
   var _onQuizSessionCloseReceived = function(results){
          V.Debugging.log("_onQuizSessionCloseReceived");
 //    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-    VISH.Utils.loadTab('tab_quiz_statistics');
-    //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
+        //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
@@ -289,35 +254,19 @@ var _updatePieStats = function() {
     V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
   };
 
+  var _stopAndDontSaveQuiz = function() {
+    V.Debugging.log("_stopAndDontSaveQuiz detected");
+    var current_slide = VISH.Slides.getCurrentSlide();
+    var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
+    _hideStopQuizPopup();
+    $.fancybox.close();
+    quizName= false; //to inform that is not going to save the quiz session
+    //Show Start Button and hide Options Button
+    $(current_slide).find("input." + optionsButtonClass).hide();
+    $(current_slide).find("input." + startButtonClass).show();
 
-/* Called when stop quiz session and when statistics tab session clicked*/
-  var onStatisticsQuizButtonClicked = function () {
-    var all_quiz = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone();
-    var question = all_quiz.find(".question");
-    var form = all_quiz.find(".mcquestion_form");
-
-    if($(".quiz_statistics_content").find(".question")) {
-      $(".quiz_statistics_content").find(".question").remove();
-    }
-    if ($(".quiz_statistics_content").find(".mcquestion_form")) {
-      $(".quiz_statistics_content").find(".mcquestion_form").remove();
-    }
-    //clone all the question content to show into fancybox 
- 
-    $(".quiz_statistics_content").find(".quiz_question_container").append(question);
-    $(".quiz_statistics_content").find(".quiz_options_container").append(form);
-    $(".quiz_statistics_content").find("div.mcquestion_body").addClass("quiz_in_satistics");
-    //$(".quiz_statistics_content").find(".mcquestion_form").removeClass().addClass("mcquestion_form_in_fancybox");
-    
- 
-  if( $(".quiz_statistics_content").find(".mc_meter").css('display')=="block") {
-      V.Debugging.log("hide element");
-    } else {
-      var quizSessionActiveId =  $(".quiz_session_body").find("div.quiz_sesssion_inputs_container").find(".quiz_session_id").val()
-          V.Debugging.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
-      V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
-    }
-  
+    V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
+    clearInterval(getResultsTimeOut);
   };
 
   /////////////////////////
@@ -370,8 +319,8 @@ var _updatePieStats = function() {
 
 //trying google chart 
 var _displayResults = function(data) {
-  var received = JSON.stringify(data);
-  V.Debugging.log("_displayResults, and value received is:  " + received);
+  //var received = JSON.stringify(data);
+  //V.Debugging.log("_displayResults, and value received is:  " + received);
   var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
   var lenght_array = 0;
   $.each(data, function(clave, valor) {
@@ -416,8 +365,6 @@ var _displayResults = function(data) {
     //var scaleFactor = maxWidth/100;
     //Reset values
      var totalVotes =0;
-     //$(VISH.Slides.getCurrentSlide()).find(".mc_meter").css("width", "0%");
-     //$(VISH.Slides.getCurrentSlide()).find(".mcoption_label").text("0%");
       for (option in data.results) {
         if((option in mcOptionsHash)){
           var votes = data.results[option];
@@ -441,12 +388,13 @@ var _displayResults = function(data) {
           }
         }
       }
- google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart(data.results)});
+ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
 
  };
 
 
-  var drawChart = function (data) {
+  var drawPieChart = function (data) {
+        V.Debugging.log("drawPieChart called");
         // Create the data table.
         var data_for_chart = new google.visualization.DataTable();
         data_for_chart.addColumn('string', 'Question');
@@ -460,14 +408,9 @@ var _displayResults = function(data) {
           }
         }; 
 
-        /*data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]); */
         var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
+        
+        //TODO set values in percents for resizing 
         // Set chart options
         var options = {'title':'',
                        'width':400,
@@ -479,13 +422,19 @@ var _displayResults = function(data) {
       }
 
 
+      var _hideStopQuizPopup = function() {
+            $('#mask_stop_quiz').fadeTo("slow",0);  
+            $('#mask_stop_quiz').hide();  
+            $('#stop_quiz_fancybox').hide();
+      };
+
+
   return {
     init                      : init, 
     prepareQuiz               : prepareQuiz,
     getQuizMode               : getQuizMode, 
     startMcQuizButtonClicked  :startMcQuizButtonClicked, 
-    onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked, 
-    drawChart                 : drawChart
+    drawPieChart                 : drawPieChart
 
   };
     
