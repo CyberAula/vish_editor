@@ -19,6 +19,8 @@ VISH.Quiz = (function(V,$,undefined){
   var tabQuizStatsBarsContentId = "quiz_stats_bars_content_id";
   var tabQuizStatsPieContentId = "quiz_stats_pie_content_id";
 
+  var getResultsPeriod = 3000; //milliseconds
+  var getResultsTimeOut; //must be global
 
   var init = function(presentation){
     if (presentation.type=="quiz_simple"){
@@ -171,10 +173,8 @@ params:
   timeout: refresh time
  */
 
-var _updateBarsStats = function(data, timeout) {
- var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();
-   V.Debugging.log("_updateBarsStats  quizSessionId: " + quizSessionActiveId);
-/* called from  */
+var _updateBarsStats = function(data) {
+   /* called from  */
   if(data) {
     V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
   } 
@@ -185,13 +185,19 @@ var _updateBarsStats = function(data, timeout) {
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").css('display','block');
     $("#"+tabQuizStatsBarsContentId).find(".mcoption_label").text("0%");
     $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span").css('width','0%');
-    V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);  
+    //testing timeout
+     getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
   }
 };
-
-var _updatePieStats = function() {
-
-
+/* function that calls to VISH API to receive voting's results  */
+var _getResults =  function(quiz_session_active_id) {
+  if(quiz_session_active_id) {
+    var quizSessionActiveId = quiz_session_active_id;
+  }
+  else {
+  var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").val();      
+  }
+  V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
 };
 
 
@@ -267,6 +273,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(current_slide).find("input." + startButtonClass).show();
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
+    clearInterval(getResultsTimeOut);
   };
 
   var _onQuizSessionCloseReceived = function(results){
@@ -293,7 +300,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(current_slide).find("input." + startButtonClass).show();
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
-
+    clearInterval(getResultsTimeOut);
   };
 
 
@@ -448,12 +455,12 @@ var _displayResults = function(data) {
           }
         }
       }
- google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawChart(data.results)});
+ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
 
  };
 
 
-  var drawChart = function (data) {
+  var drawPieChart = function (data) {
         // Create the data table.
         var data_for_chart = new google.visualization.DataTable();
         data_for_chart.addColumn('string', 'Question');
@@ -467,13 +474,6 @@ var _displayResults = function(data) {
           }
         }; 
 
-        /*data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]); */
         var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
         // Set chart options
         var options = {'title':'',
@@ -487,12 +487,9 @@ var _displayResults = function(data) {
 
 
       var _hideStopQuizPopup = function() {
-
-            V.Debugging.log(" hideStopQuizPopup detected");
             $('#mask_stop_quiz').fadeTo("slow",0);  
             $('#mask_stop_quiz').hide();  
             $('#stop_quiz_fancybox').hide();
-
       };
 
 
@@ -502,7 +499,7 @@ var _displayResults = function(data) {
     getQuizMode               : getQuizMode, 
     startMcQuizButtonClicked  :startMcQuizButtonClicked, 
     onStatisticsQuizButtonClicked : onStatisticsQuizButtonClicked, 
-    drawChart                 : drawChart
+    drawPieChart                 : drawPieChart
 
   };
     

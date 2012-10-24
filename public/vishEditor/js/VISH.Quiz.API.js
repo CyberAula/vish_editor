@@ -182,7 +182,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	         return null;
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
-			V.Debugging.log("No server case");
+			V.Debugging.log("No server case: and quiz session get results: " + quiz_active_session_id);
 			if(quiz_active_session_id==98988){
 				var results = {"quiz_session_id":98988,"quiz_id":12,"results":{"b":4,"a":2,"c":1, "d":1}};
 			} else if (quiz_active_session_id==98955) {
