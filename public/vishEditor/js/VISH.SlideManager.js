@@ -107,6 +107,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(options.addons){
 			VISH.Addons.init(options.addons);
 		}
+
+		VISH.LocalStorage.addPresentation(presentation);
 	};
 
 	/**

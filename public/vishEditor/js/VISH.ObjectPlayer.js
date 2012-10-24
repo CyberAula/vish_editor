@@ -10,6 +10,10 @@ VISH.ObjectPlayer = (function(){
 				loadYoutubeObject(element,value);
 				return;
 			}
+			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
+				$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+				return;
+			}
 			var object = $($(value).attr("objectWrapper"));
 			$(object).attr("style",$(value).attr("zoomInStyle"));
 			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(object) + "</div>");
@@ -18,17 +22,22 @@ VISH.ObjectPlayer = (function(){
 	};
 
 	var loadYoutubeObject = function(element,value){
-		var source = $(value).attr("source");
-		var ytVideoId = $(value).attr("ytVideoId");
-		$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
-		var newYtVideoId = VISH.Utils.getId();
-		var params = { allowScriptAccess: "always" };
-    	var atts = { id: newYtVideoId };
-    	source = source.split("?")[0]; //Remove params
-    	source = source + "?enablejsapi=1&playerapiid="+newYtVideoId+"&wmodetransparent=true" //Add yt necessary params
-    	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
-    	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
-		$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
+		if(VISH.Status.getOnline()=== false){
+			$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+		}
+		else{
+			var source = $(value).attr("source");
+			var ytVideoId = $(value).attr("ytVideoId");
+			$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
+			var newYtVideoId = VISH.Utils.getId();
+			var params = { allowScriptAccess: "always" };
+	    	var atts = { id: newYtVideoId };
+	    	source = source.split("?")[0]; //Remove params
+	    	source = source + "?enablejsapi=1&playerapiid="+newYtVideoId+"&wmodetransparent=true" //Add yt necessary params
+	    	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
+	    	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
+			$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
+		}
 	}
 
 	/**
