@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2012-10-22:v1.1
+
+CACHE:
+js/VISH.js
+js/VISH.Samples.js
+configuration/configuration.js
+
+FALLBACK:
+/ images/advert_new_grey.png
+
+NETWORK:
+images/blank.png
+*
