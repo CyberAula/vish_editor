@@ -23,7 +23,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
+			
 				_addMultipleChoiceQuiz(area);
+				//hide & show fancybox elements 
+				VISH.Utils.loadTab('tab_quizes'); 
 				 break;
 			case "truefalse":
 				// _addTrueFalseQuiz();
