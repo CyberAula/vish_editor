@@ -7,7 +7,24 @@ VISH.VideoPlayer.Youtube = (function(){
 	//Prevent sync bucles
 	var playTriggeredByUser = true;
 	var pauseTriggeredByUser = true;
-	
+
+
+	var loadYoutubeObject = function(element,value){
+		var source = $(value).attr("source");
+		var ytVideoId = $(value).attr("ytVideoId");
+		$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
+		var newYtVideoId = VISH.Utils.getId();
+		var params = { allowScriptAccess: "always", wmode: "transparent" };
+    	var atts = { id: newYtVideoId };
+    	source = source.split("?")[0]; //Remove params
+    	source = source + "?enablejsapi=1&controls=0&playerapiid="+newYtVideoId+"&wmodetransparent=true" //Add yt necessary params
+    	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
+    	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
+		$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
+	}
+
+
+
 	var onytplayerStateChange = function(playerId,newState) {
 		switch(newState){
 			case -1:
@@ -137,6 +154,7 @@ VISH.VideoPlayer.Youtube = (function(){
 	}
 
 	return {
+		loadYoutubeObject	: loadYoutubeObject,
 		startVideo 			: startVideo,
 		pauseVideo 			: pauseVideo,
 		onytplayerStateChange	: onytplayerStateChange,
