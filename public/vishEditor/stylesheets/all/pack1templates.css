@@ -835,7 +835,7 @@
 
 .t15_header{
     float: left;
-    height: 41%;
+    height: 35%;
     margin-bottom: 3%;
     margin-right: 3%;
     overflow: hidden;
@@ -845,7 +845,7 @@
 
 .t15_left{
     float: left;
-    height: 41%;
+    height: 35%;
     margin-bottom: 3%;
     margin-right: 3%;
     overflow: hidden;
@@ -855,7 +855,7 @@
 
 .t15_right{
     float: left;
-    height: 54%;
+    height: 60%;
     margin-bottom: 3%;
     margin-right: 3%;
     overflow: hidden;
@@ -865,7 +865,7 @@
 
 .t15_center{
     float: left;
-    height: 41%;
+    height: 35%;
     overflow: hidden;
     position: relative;
     width: 30%;
