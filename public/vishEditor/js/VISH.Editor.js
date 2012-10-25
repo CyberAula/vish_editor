@@ -208,7 +208,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		//Quiz
 		$(document).on('click','#tab_quizes_help', function(){		
+			V.Debugging.log("click tab_quizes_help detected");	
 			VISH.Editor.Tour.startTourWithId('help_quiz_selection_help', 'bottom');
+		});
 
 		//themes
 		$(document).on('click','#help_themes_selection', function(){			
