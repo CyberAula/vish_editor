@@ -10,6 +10,10 @@ VISH.VideoPlayer.Youtube = (function(){
 
 
 	var loadYoutubeObject = function(element,value){
+		if(VISH.Status.getOnline()=== false){
+			$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+			return;
+		}
 		var source = $(value).attr("source");
 		var ytVideoId = $(value).attr("ytVideoId");
 		$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");

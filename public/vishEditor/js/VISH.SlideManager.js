@@ -107,6 +107,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(options.addons){
 			VISH.Addons.init(options.addons);
 		}
+
+		VISH.LocalStorage.addPresentation(presentation);
 	};
 
 	/**
@@ -118,7 +120,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(VISH.Events.isSlaveMode()){
 			return;
 		}
-
+		
 		if(VISH.Status.getIsInIframe()){
 			var myElem = VISH.Status.getIframe();
 		} else {

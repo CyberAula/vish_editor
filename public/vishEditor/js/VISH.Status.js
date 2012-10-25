@@ -1,6 +1,7 @@
 VISH.Status = (function(V,$,undefined){
 	var device;
 	var isInIframe;
+	var isOnline;
 	
 	var init = function(){
 		device = {};
@@ -9,7 +10,41 @@ VISH.Status = (function(V,$,undefined){
 		fillBrowser();	
 		fillUserAgent();
 		fillFeatures();
+		_checkOnline();
 	};
+
+	//this function is done like this because navigator.online lies
+	var _checkOnline = function(){		
+		if (navigator.onLine) {
+		        // Just because the browser says we're online doesn't mean we're online. The browser lies.
+		        // Check to see if we are really online by making a call for a static JSON resource on
+		        // the originating Web site. If we can get to it, we're online. If not, assume we're
+		        // offline.
+		        $.ajax({
+		            async: true,
+		            cache: false,
+		            error: function (req, status, ex) {
+		                console.log("Error: " + ex);
+		                // We might not be technically "offline" if the error is not a timeout, but
+		                // otherwise we're getting some sort of error when we shouldn't, so we're
+		                // going to treat it as if we're offline.
+		                // Note: This might not be totally correct if the error is because the
+		                // manifest is ill-formed.
+		                isOnline = false;
+		            },
+		            success: function (data, status, req) {
+		                isOnline = true;
+		            },
+		            timeout: 5000,
+		            type: "GET",
+		            url: "images/blank.png"
+		        });
+		    }
+		    else {
+		        isOnline = false;
+		    }		
+	};
+
 	
 	var fillFeatures = function(){
 		//To see if we are inside an iframe
@@ -219,13 +254,18 @@ VISH.Status = (function(V,$,undefined){
 
 	var getDevice = function(){
 		return device;
-	}
+	};
+
+	var getOnline = function(){
+		return isOnline;
+	};
 	
 	return {
 		init            : init,
 		getIsInIframe	: getIsInIframe,
 		getIframe   	: getIframe,
-		getDevice		: getDevice
+		getDevice		: getDevice,
+		getOnline		: getOnline
 	};
 
 }) (VISH, jQuery);

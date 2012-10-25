@@ -241,6 +241,7 @@ var getZoomFromStyle = function(style){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
+		V.Debugging.log("load tab id: " + tab_id);
 		// first remove the walkthrough if open
 		$('.joyride-close-tip').click();
 		//hide previous tab
@@ -309,6 +310,7 @@ var getZoomFromStyle = function(style){
 			case "tab_live_micro":
 				VISH.Editor.Object.Live.onLoadTab("micro");
 				break;
+			
  			//Default
 			default:
 				break;

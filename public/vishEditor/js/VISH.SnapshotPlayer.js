@@ -9,7 +9,11 @@ VISH.SnapshotPlayer = (function(){
             var wrapper_class = "snapshot_wrapper" + "_viewer";
             var content_class = "snapshot_content" + "_viewer";
             var content = $(value).attr("objectWrapper");
-						var iframe = $(VISH.Utils.getOuterHTML($(content)));
+            if(VISH.Status.getOnline()=== false){
+              $(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+              return;
+            }
+            var iframe = $(VISH.Utils.getOuterHTML($(content)));
 						$(iframe).removeClass();
             $(iframe).addClass(content_class);
             var scrollTop = $(value).attr("scrollTop");

@@ -205,6 +205,17 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#help_template_image', function(){			
 			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
+
+		//Quiz
+		$(document).on('click','#tab_quizes_help', function(){		
+			V.Debugging.log("click tab_quizes_help detected");	
+			VISH.Editor.Tour.startTourWithId('help_quiz_selection_help', 'bottom');
+		});
+
+		//themes
+		$(document).on('click','#help_themes_selection', function(){			
+			VISH.Editor.Tour.startTourWithId('themes_help', 'bottom');
+		});
 		
 		//template selection fancybox	
 		$(document).on('click','#help_template_selection', function(){
@@ -229,12 +240,19 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#tab_object_from_url_help', function(){
 			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 		});	
+		$(document).on('click','#tab_object_from_web_help', function(){
+			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
+		});
 		$(document).on('click','#tab_object_upload_help', function(){
 			VISH.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
 			VISH.Editor.Tour.startTourWithId('search_object_help', 'bottom');
 		});
+		$(document).on('click','#tab_object_snapshot_help', function(){
+			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
+		});
+
 		
 		//video fancybox, one help button in each tab
 		$(document).on('click','#tab_video_from_url_help', function(){

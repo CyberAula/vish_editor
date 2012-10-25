@@ -292,9 +292,9 @@ img {
 
 .thumbicon{
 	float: left;
-	margin-top: 34px;
-	margin-right: -10px;
-	margin-left: 33px;
+    margin-left: 15px;
+    margin-right: 2px;
+    margin-top: 12px;
 	cursor: pointer;
 	background-size: 100%;
 }
@@ -1211,6 +1211,19 @@ textarea {
 	right: 21px;
 }
 
+#help_themes_selection {
+	position: absolute;
+	margin-top: -88px;
+	right: 21px;
+	cursor: pointer;
+}
+
+#help_themes_selection:hover {
+	background-image:url(/vishEditor/images/hover/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
+}
+
+
 #help_template_selection:hover, #help_quiz_selection:hover {
 	background-image:url(/vishEditor/images/hover/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
@@ -1290,20 +1303,15 @@ textarea {
 
 .tut_addslide{
 	top: 470px;
-	left: 160px;
+	right: 319px;
 }
-
-.tut_addslide span.joyride-nub{
-  bottom: -28px;
-}
-
 .tut_templatesel {
 	top: 250px;
 	left:255px;
 }
 
 .tut_template{
-	top: 46px;
+	top: 50px;
 	left: 55px;
 	width: 800px;
 }
@@ -1325,9 +1333,9 @@ textarea {
 	margin-top: -50px;
 }
 #videoimagetut {
-	padding-left: 200px;
-	position:absolute;
-	margin-top: -50px;
+    margin-top: -48px;
+    padding-left: 200px;
+    position: absolute;
 }
 
 #deleteimagetut {
@@ -1348,9 +1356,10 @@ textarea {
 }
 
 #contentusetut {
-	top:98px;
-	left:360px;
-	position:absolute;
+    left: 405px;
+    position: absolute;
+    top: 378px;
+    width: 341px;
 }
 
 .tut_fancy_index {
@@ -1526,4 +1535,91 @@ span.mcChoiceSpan{
 
 .change_bg_button_class:hover {
 	background: url(/vishEditor/images/hover/flashcard_add_img_button_hover.png);
+}
+
+
+.l11 {
+    left: 400px;
+    position: absolute;
+    top: 88px;
+}
+
+#objectimagetut {
+    margin-top: -48px;
+    padding-left: 200px;
+    position: absolute;
+}
+
+.l22 {
+    left: 400px;
+    position: absolute;
+    top: 123px;
+}
+
+#quizimagetut {
+    margin-top: -48px;
+    padding-left: 200px;
+    position: absolute;
+}
+
+.l33 {
+    left: 400px;
+    position: absolute;
+    top: 159px;
+}
+
+#liveimagetut {
+    margin-top: -48px;
+    padding-left: 200px;
+    position: absolute;
+}
+
+.tut_menubuttonpresentation span.joyride-nub {
+    bottom: -28px;
+    left: 37px;
+}
+
+.imagetut {
+	float: left;
+	padding-right: 44px;
+}
+
+.tutaddlink {
+    left: 226px;
+    position: absolute;
+    top: 100px;
+    width: 26px;
+}
+
+.tutresize {
+    left: 246px;
+    position: absolute;
+    top: 136px;
+    width: 25px;
+}
+
+.tutresize2 {
+    left: 212px;
+    position: absolute;
+    top: 136px;
+    width: 25px;
+}
+
+.tuttext {
+    left: 167px;
+    position: absolute;
+    top: 177px;
+    width: 243px;
+}
+
+.tutflashbg {
+    left: 258px;
+    position: absolute;
+    top: 206px;
+}
+
+.tut_themes {
+    left: 250px;
+    position: absolute;
+    top: 265px;
 }

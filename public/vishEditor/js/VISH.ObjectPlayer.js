@@ -10,14 +10,16 @@ VISH.ObjectPlayer = (function(){
 				VISH.VideoPlayer.Youtube.loadYoutubeObject(element,value);
 				return;
 			}
+			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
+				$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+				return;
+			}
 			var object = $($(value).attr("objectWrapper"));
 			$(object).attr("style",$(value).attr("zoomInStyle"));
 			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(object) + "</div>");
 			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
 		});
 	};
-
-
 
 	/**
 	 * Function to remove the flash objects from the slides

@@ -20,7 +20,6 @@ VISH.Events = (function(V,$,undefined){
 	  	}
 	};
 
-
 	/* Register events */
 	var _registerEvent = function(eventTargetId){
 		if(registeredEvents.indexOf(eventTargetId)==-1){

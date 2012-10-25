@@ -26,13 +26,11 @@ VISH.Messenger = (function(V,undefined){
 			return;
 		}
 		var VEMessage = VISH.Messenger.Helper.createMessage(event,params);
-
-		//Trigger onMessageEvent
 		VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onMessage,VEMessage,true);
 	}
 
 	return {
-			init : init
+		init : init
 	};
 
 }) (VISH);

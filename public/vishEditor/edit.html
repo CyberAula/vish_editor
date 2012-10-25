@@ -58,6 +58,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.HTML5.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Dummies.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
@@ -98,6 +99,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
 	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.LocalStorage.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
@@ -369,10 +371,11 @@
 						<a href="#" id="tab_quizes" class="fancy_tab">Quiz</a>
 					</li>
 				</ul>
+				<img class='help_in_fancybox' id='tab_quizes_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
 			</div> 
 
 			<div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
-				<img id='help_quiz_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+				
 				<div style="display:none" class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz1.png' />
 				</div>
@@ -643,6 +646,7 @@
   	<a id="hidden_button_to_launch_theme_fancybox" href="#theme_fancybox" style="display:none" i18n-key="i.selectTheme">Select theme</a>
   	<div style='display:none'>
 	    <div id="theme_fancybox" class="theme_fancybox_class">
+	    	<img id="help_themes_selection" src="/vishEditor/images/helptutorial_circle.png"/>
 	    	<div id='select_theme1'>
 		      <img src='/vishEditor/images/themes/theme1/select.png' class="templathumb quizFancythumb" onclick="VISH.Themes.selectTheme('theme1')"/>
 	      </div>
@@ -940,9 +944,9 @@
 	  	    <h2 i18n-key="i.welcomeVishEditor">Welcome to ViSH editor!</h2>
 	  	    <p>
 	  	    	<span i18n-key="i.walk1">Using the "Walkthrough icon"</span>
-						<img src="images/helptutorial_circle.png"/> 
-						<span i18n-key="i.walk2">around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.</span>
-					</p>
+				<img src="images/helptutorial_circle.png"/> 
+				<span i18n-key="i.walk2">around the application, will show you in several easy steps how to use the ViSH editor.All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walkthrough.</span>
+			</p>
 	  	  </li>
 	  	  <li data-id="presentation_title" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
 	  	    <h2 i18n-key="i.writeTitle">Let´s write a title (Mandatory)</h2>
@@ -957,8 +961,8 @@
 	        <p i18n-key="i.walk5">In this zone you can add topics words that will represent your excursion when users search in the ViSH platform. Click on "Next" to continue.</p>
 	  	  </li>
         <li data-id="avatars_carrousel" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
-	  	    <h2 i18n-key="i.thumbnailsChoosing">Choose an image that will represent your excursion</h2>
-	        <p i18n-key="i.walk6">In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.Then click "Next" to continue.</p>
+	  	    <h2 i18n-key="i.thumbnailsChoosing">Choose or add an image that will represent your excursion</h2>
+	        <p i18n-key="i.walk6">In this zone you can choose an image that will represent your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.If you want, you can add your thumbnail by pressing the plus icon at the left of the carrousel.Then click "Next" to continue.</p>
 	  	  </li>
         <li data-id="save_presentation_details"  class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close" i18n-key="i.Close">
 	  	    <h2 i18n-key="i.SavePresentationDetails">Save your excursion details</h2>
@@ -969,7 +973,7 @@
 	  	<ol id="menubar_help" class="joyRideTipContent">
         <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_welcome_exc tut_without_arrow Next" data-options="tipLocation:none">
 	  	    <h2 i18n-key="i.thisIsVishEditor">This is ViSH editor!</h2>
-	  	    <p i18n-key="i.walk8">Remember that you can use the "Walkthrough icon"<img src="images/helptutorial_circle.png"/> when you need any help around the application. This is the application desktop where you can create your excursions.Click on "Next" to continue.</p>
+	  	    <p i18n-key="i.walk8">Welcome, this is the application desktop where you can create your excursions.Click on "Next" to continue.</p>
 	  	  </li>
         <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
 	  	    <h2 i18n-key="i.thisIsToolsMenu">This is the tools menu</h2>
@@ -979,14 +983,46 @@
 	  	    <h2 i18n-key="i.configButton">Configuration Button</h2>
 	        <p i18n-key="i.walk10">Clicking this button will get you to the first screen where you added the title and the description to your excursion.Click on "Next" to continue.</p>
 	  	  </li>
+	  	  <li data-id="help_right" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
+	  	    <h2 i18n-key="i.configButton">Tutorial buttons</h2>
+	        <p i18n-key="i.walk10">Clicking these buttons,<img src="images/helptutorial_circle.png"/> will get you to every tutorial around the VisH Editor interface</p>
+	  	  </li>
         <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
-	  	    <h2>This is the tools menu</h2>
+	  	    <h2>This is the slides menu</h2>
 	  	    <p i18n-key="i.walk11">In this zone you will manage all the slides in the grey spaces at the bottom. Every next slide available will be appearing at the grey zones. Click on "Next" to continue. </p>
         </li>
         <li data-id="save_presentation_details"  class="tut_savepresentation tut_with_arrow" data-options="tipLocation:none;" data-text="Next" i18n-key="i.Next">
-	  	    <h2 i18n-key="i.SaveButton">Save Button</h2>
+	  	    <h2 i18n-key="i.SaveButton">Save Buwebcamstton</h2>
 	        <p i18n-key="i.walk12">This button will able you to save your excursion.Click on "Next" to continue.</p>
 	  	  </li>
+	  	<li data-id="preview_circle" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
+	  	    <h2 i18n-key="i.configButton">Preview</h2>
+	        <p i18n-key="i.walk10">Clicking this button will get you to preview your excursion as if you were watching it already published</p>
+	  	</li>
+	  	<li data-id="menuButton"  class="tut_menubuttonpresentation tut_with_arrow" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.SaveButton">Vish Editor Menu</h2>
+	        <p i18n-key="i.walk12">This button will able you to choose some options for the excursion:</p>
+	        <img class="imagetut" src="images/menutut.png"/>
+	        <p>Using this menu you can save your excursion, convert your presentation visualization to a flashcard, preview your excursion before you publish it, change your excursion details and settings and start this tutorial everytime that you want to.</p>
+	        <p>Most of these options are on Vish Editor space, but you can always have them here for an easier use.</p>
+	  	</li>
+	  	<li data-id="toolbar_presentation"  class="tut_menubuttonpresentation tut_with_arrow" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.SaveButton">Vish Editor Themes</h2>
+	        <p i18n-key="i.walk12">This button will able you to choose some Visual themes for your presentation, you can change the theme of your excursion everytime without saving it</p>
+	  	</li>
+
+	  	<li data-id="toolbar_element"  class="tut_toolbarpresentation tut_with_arrow" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.SaveButton">Toolbar Options</h2>
+	        <p i18n-key="i.walk12">This space will content the options to edit your content on the slides:</p>
+	        <ul>
+	  	     	<li><h1>Link Image to Url</h1></li> <img class="tutaddlink" src="images/toolbar/addLink.png"/> 
+	  	     	<li><h1>Resize content</h1></li> <img class="tutresize" src="images/toolbar/zoomLess.png"/> <img class="tutresize2" src="images/toolbar/zoomMore.png"/> 
+	  	     	<li><h1>Text Editor</h1></li> <img class="tuttext" src="images/textedimg.png"/> 
+	  	     	<li><h1>Flashcard Background</h1></li> <img class="tutflashbg" src="images/toolbar/flashcard_background.png"/> 
+	  	 	</ul>
+	  	 	<p> Everytime that you add or select content in your excursion this toolbar will provide you with tools to interact with that content</p>
+	  	</li>
+
         <li data-id="addslidebutton" class="tut_addslide tut_with_arrow" data-text="Close" i18n-key="i.Close">
 	  	    <h2 i18n-key="i.AddSlide">Add new slide button</h2>
 	        <p i18n-key="i.walk13">This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as a icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walkthrough and start adding content to your excursion.</p>
@@ -1014,14 +1050,22 @@
 
 	  	  </li>
 	  	</ol>
-	  	
+	  
+	  <!--help for themes-->
+	  <ol id="themes_help" class="joyRideTipContent">>
+	  	<li data-id="select_theme3"  class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.SaveButton">Vish Editor Themes</h2>
+	        <p i18n-key="i.walk12">Choose Between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal.Have fun!</p>
+	  	</li>
+	  </ol>
+
+
 		<!--help for template-->
 		<ol id="template_help" class="joyRideTipContent">
 			<li data-id="zone1" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
 				<h2 i18n-key="i.AddSlideContent">Adding content to a slide</h2>
 				<p>
 					<span i18n-key="i.walk15">To fill the slide you choosen with content, you can click the grey spaces in the template.If you click on one of them,the content icons will appear:</span>
-					<img id="contentusetut" src="images/contentuse.png"/>
 					<ul>
 						<li>
 							<h1 i18n-key="i.Text">Text</h1>
@@ -1032,12 +1076,20 @@
 							<img id="imageimagetut" src="images/image_small.png"/>
 						</li>
 						<li>
-							<h1 i18n-key="i.objectContent">Flash Content</h1> 
+							<h1 i18n-key="i.objectContent">Object</h1> 
 							<img id="objectimagetut" src="images/flash_small.png"/>
 						</li>
-						<li>
+						<li class="l11">
 							<h1 i18n-key="i.Videos">Videos</h1> 
 							<img id="videoimagetut" src="images/video_small.png"/>
+						</li>
+						<li class="l22">
+							<h1 i18n-key="i.Live">Live</h1> 
+							<img id="liveimagetut" src="images/live_small.png"/>
+						</li>
+						<li class="l33">
+							<h1 i18n-key="i.Quiz">Quiz</h1> 
+							<img id="quizimagetut" src="images/quiz_small.png"/>
 						</li>
 					</ul>
 					<span i18n-key="i.walk16">
@@ -1050,20 +1102,20 @@
 					<img id="textedimagetut" src="images/textedimg.png">
 				</p>
 				<p>
-					<span i18n-key="i.walk17">Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, and in case you want to delete the content you can use the icon at the right bottom corner on your space:</span>
+					<span i18n-key="i.walk17">Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, and in case you want to delete the content you can use the icon at the right bottom corner on your space, and if you want to delete a slide you can use the close icon to do the task at the right upper corner:</span>
+					<img id="contentusetut" src="images/contentuse.png"/>
+				</br>
 					<ul>
 						<li>
 							<h1 i18n-key="i.deleteContent">Delete Content</h1>
 							<img id="deleteimagetut" src="images/del_content_small.png"/>
 						</li>
-					</ul>
-					<span i18n-key="i.walk18">If you want to delete a slide you can use the close icon to do the task at the right upper corner:</span>
-					<ul>
-						<li>
+						 <li>
 							<h1 i18n-key="i.closeOrDelete">Close or Delete</h1>
 							<img id="delimagetut" src="images/delete.png"/>
 						</li>
 					</ul>
+				</br>
 					<span i18n-key="i.walk19">If you need any help with any of the content you can always use the help icons in their respective windows.Click on "Close" to finish this walkthrough.</span>
 				</p>          
 			</li>	  	  
@@ -1076,11 +1128,12 @@
 	  	    <p i18n-key="i.walk14">This window offers you a variety of templates to create your excursion.You just have to click on one of the image to add it in order to fill it with your content.Click on "Close" to finish this walkthrough.</p>
 	  	  </li>	 	  
 	  	</ol>
-	<!--help for quiz selection fancybox-->
-	  	<ol id="help_quiz_selection_help" class="joyRideTipContent">
+	  	
+	<!--help for quiz selection fancybox-->	 
+	  <ol id="help_quiz_selection_help" class="joyRideTipContent">
 	  	  <li data-id="quizcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 	  	    <h2 i18n-key="i.selectSlide">Selecting a Quiz</h2>
-	  	    <p i18n-key="i.walk14">........quiz ....</p>
+	  	    <p i18n-key="i.walk14">This window offers you a choice of quizes for you to add them on your excursion.</p>
 	  	  </li>	 	  
 	  	</ol>
 
@@ -1158,15 +1211,20 @@
 	  	<!--help for fancybox of object-->
 		  <ol id="object_fancy_tabs_id_help" class="joyRideTipContent">
 	  	  <li data-id="object_fancy_tabs_id" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
-          	<h2 i18n-key="i.AddObjectContent">Adding flash content</h2>
+          	<h2 i18n-key="i.AddObjectContent">Adding Object content</h2>
 	  	      <p> 
-						  <span i18n-key="i.walk32">This window will help you in order to add Flash content to the slide. As you can see in the top zone of this window there are few choices:</span> 
+						  <span i18n-key="i.walk32">This window will help you in order to add objects content (Flash and webs) to the slide. As you can see in the top zone of this window there are few choices:</span> 
 						</p>
             <ul>
 	            <li data-options="tipLocation:bottom">
 	            	<h1>Embed</h1>
 								<span i18n-key="i.walk33">(add flash content by pasting a url)</span>
 							</li>
+				<li>
+	            	<h1>Web</h1>
+								<span i18n-key="i.walk35"> (add web content by pasting a url)</span>
+							</li>
+
 	            <li>
 	            	<h1 i18n-key="i.Upload">Upload</h1> 
 								<span i18n-key="i.walk34">(add flash content by upload it from your computer)</span>
@@ -1174,6 +1232,10 @@
 	            <li>
 	            	<h1>Vish</h1>
 								<span i18n-key="i.walk35"> (add flash content by choosing one from the ViSH repository)</span>
+							</li>
+				<li>
+	            	<h1>Web Snapshot</h1>
+								<span i18n-key="i.walk35"> (add a web live screenshot content by pasting a url)</span>
 							</li>
             </ul>
             <span i18n-key="i.walk36">Now, you are on the url section, Click on "Next" to continue.</span>
@@ -1195,6 +1257,29 @@
           </p>
 	  	  </li>	  
 	  	</ol>
+
+
+	  	<ol id="object_fancy_tabs_web_help" class="joyRideTipContent">
+        <li data-id="object_embedWeb_code" data-text="Next" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.AddObjectContentUrl">Adding Web content by url</h2>
+	  	    <p> 
+					  <span i18n-key="i.walk37"> This box is used for pasting or writing on it a url, by example:</span>
+            <h1>http://www.####.com/</h1>
+            <span i18n-key="i.walk38">This supports any website url .Click on "Next" to continue.</span>
+          </p>
+	  	  </li>	 
+	  	  <li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none;">
+	  	    <h2 i18n-key="i.SeeContentBefore">See the content before you add it</h2>
+	  	    <p i18n-key="i.walk28">This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.
+               Once you are ready to add the content, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).
+               Click on "Close" to finish this Walkthrough.
+          </p>
+	  	  </li>	   	 
+	  	</ol>
+
+
+
 	  		  	
 	  	<ol id="upload_object_form_help" class="joyRideTipContent">
 	  	  <li data-id="object_file_input" data-text="Next" i18n-key="i.Next" class="custom" data-options="tipLocation:bottom;">
@@ -1222,6 +1307,26 @@
 					</p>
 	  	  </li>	  	  
 	  	</ol>
+
+
+	  	<ol id="object_fancy_tabs_websnapshot_help" class="joyRideTipContent">
+        <li data-id="object_snapshot_code" data-text="Next" i18n-key="i.Next">
+	  	    <h2 i18n-key="i.AddObjectContentUrl">Adding Web Snapshot by url</h2>
+	  	    <p> 
+					  <span i18n-key="i.walk37"> This box is used for pasting or writing on it a url, by example:</span>
+            <h1>http://www.####.com/</h1>
+            <span i18n-key="i.walk38">This supports any website url and it will create a live window to the website.Click on "Next" to continue.</span>
+          </p>
+	  	  </li>	 
+	  	  <li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none;">
+	  	    <h2 i18n-key="i.SeeContentBefore">See the content before you add it</h2>
+	  	    <p i18n-key="i.walk28">This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.
+               Once you are ready to add the content, you just have to click and the button in the right of this zone called
+               "add content"(this button will appear when the content is on preview).
+               Click on "Close" to finish this Walkthrough.
+          </p>
+	  	  </li>	   	 
+	  	</ol>
 	  	
 	  	
 	  	<!--help for fancybox of videos-->
@@ -1242,10 +1347,6 @@
 	            <li>
 	            	<h1>Youtube</h1>
 								<span i18n-key="i.walk44">(add video by choosing one from Youtube)</span>
-							</li>
-	            <li>
-	            	<h1>Vimeo</h1>  
-								<span i18n-key="i.walk45">(add video by choosing one from Vimeo)</span>
 							</li>
             </ul>
             <span i18n-key="i.walk46">Now, you are on the url section, Click on "Next" to continue.</span>
@@ -1297,9 +1398,11 @@
 	  	    <p i18n-key="i.walk52">This window will help you in order to add Live content to a slide. As you can see in the top zone of this window there just one choice for now:</p>
           <ul>
           	<li data-options="tipLocation:none;">
-          		<h1>Webcam</h1>
-							<span i18n-key="i.walk53">(add video from a live webcam)<span>
-						</li>
+          		<h1>Webcam</h1><span i18n-key="i.walk53">(add video from a live webcam)<span>
+			</li>
+			<li data-options="tipLocation:none;">
+          		<h1>Microscope</h1><span i18n-key="i.walk53">(add video from a live microscope stream)<span>
+			</li>
           </ul>
           <p i18n-key="i.walk54">Now, you are on the webcam section, Click on "Next" to continue</p>.
         </li>
