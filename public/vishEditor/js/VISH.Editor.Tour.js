@@ -6,6 +6,7 @@ VISH.Editor.Tour = (function(V,$,undefined){
 	 */
 	var startTourWithId = function(helpid, tipLocation){
 		V.Debugging.log("startTourWithId with help id: "  + helpid + " & tipLocation " + tipLocation);
+		clear();
 		var loc;
 		if(tipLocation === undefined){
 			loc = "top";
