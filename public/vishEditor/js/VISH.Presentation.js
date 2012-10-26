@@ -23,21 +23,7 @@ VISH.Presentation = (function(V,undefined){
 	 * Cover all the slides array to preload the flashcards content
 	 * Finally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run
 	 */
-	var _finishRenderer = function(){		
-		for(var i=0;i<mySlides.length;i++){
-			for(var num=0;num<mySlides[i].elements.length;num++){
-
-				if(mySlides[i].elements[num].type === "flashcard"){					
-					var flashcard = JSON.parse(mySlides[i].elements[num].jsoncontent);
-					//uncomment when it is only one script
-					//$.getScript(mySlides[i].elements[num].js,function(){
-						//preload content for the flashcard
-						V.Mods.fc.loader.init(flashcard);
-					//});
-				}				
-			}
-		}
-		
+	var _finishRenderer = function(){				
 		V.VideoPlayer.HTML5.setVideoEvents();
 		
 		V.SlideManager.addEnterLeaveEvents();

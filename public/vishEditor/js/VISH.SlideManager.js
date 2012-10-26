@@ -207,29 +207,8 @@ VISH.SlideManager = (function(V,$,undefined){
         V.SnapshotPlayer.loadSnapshot($(e.target));
       }
 		},500);
-		if($(e.target).hasClass('flashcard')){
-			slideId = $(e.target).attr("id");
-			fcElem = _getFlashcardFromSlideId(slideId);	
-			V.Mods.fc.player.init(fcElem, slideId);
-		}
+		
 		V.VideoPlayer.HTML5.playVideos(e.target);
-	};
-
-	/**
-	 * Function to get the flashcard json element from the slide element
-	 */
-	var _getFlashcardFromSlideId = function(id){
-		var fc = null;
-		for(var i=0;i<mySlides.length;i++){
-			if(mySlides[i].id===id){
-				for(var num=0;num<mySlides[i].elements.length;num++){
-					if(mySlides[i].elements[num].type === "flashcard"){					
-						return mySlides[i].elements[num];
-					}
-				}
-			}		
-		}
-		return null;
 	};
 
 	/**
