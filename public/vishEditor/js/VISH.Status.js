@@ -15,8 +15,10 @@ VISH.Status = (function(V,$,undefined){
 
 	//this function is done like this because navigator.online lies
 	var _checkOnline = function(){		
-		if (navigator.onLine) {
-		        // Just because the browser says we're online doesn't mean we're online. The browser lies.
+		//uncomment when navigator.online works,
+		//even if it works in all browsers we can remove the ajax call
+		//but now (10-2012) it gives false positive and false negative and it can´t be used
+		//if (navigator.onLine) {
 		        // Check to see if we are really online by making a call for a static JSON resource on
 		        // the originating Web site. If we can get to it, we're online. If not, assume we're
 		        // offline.
@@ -39,10 +41,10 @@ VISH.Status = (function(V,$,undefined){
 		            type: "GET",
 		            url: VISH.ImagesPath+"blank.png"
 		        });
-		    }
-		    else {
-		        isOnline = false;
-		    }		
+		    //}
+		    //else {
+		    //    isOnline = false;
+		    //}		
 	};
 
 	
