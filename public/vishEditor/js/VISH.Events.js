@@ -3,7 +3,7 @@ VISH.Events = (function(V,$,undefined){
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
 	var registeredEvents = [];
-	var isSlaveMode;
+
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
 	 * and setup the events and interaction accordingly
@@ -185,6 +185,8 @@ VISH.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
+				$(document).off('click', '#page-switcher-start', isActiveQuizSessionBackward);
+	      		$(document).off('click', '#page-switcher-end', isActiveQuizSessionForward);
 		  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		  		_unregisterEvent("mobile_back_arrow");
@@ -206,27 +208,6 @@ VISH.Events = (function(V,$,undefined){
 	  		}
 	  		bindedEventListeners = false;
 		}
-	};
-
-	var setSlaveMode = function(slaveMode){
-		console.log("setSlaveMode " + slaveMode);
-		if(slaveMode!==isSlaveMode){
-			if(slaveMode){
-				unbindAllEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(false);
-				VISH.VideoPlayer.Youtube.setSlaveMode(true);
-				isSlaveMode=true;
-			} else {
-				bindAllEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(true);
-				VISH.VideoPlayer.Youtube.setSlaveMode(false);
-				isSlaveMode=false;
-			}
-		}
-	}
-
-	var isSlaveMode = function(){
-		return isSlaveMode;
 	};
 
 	var isActiveQuizSessionBackward = function() {
@@ -259,9 +240,7 @@ VISH.Events = (function(V,$,undefined){
 	return {
 			init 		: init,
 			bindAllEventListeners	: bindAllEventListeners,
-			unbindAllEventListeners	: unbindAllEventListeners,
-			setSlaveMode			: setSlaveMode,
-			isSlaveMode 			: isSlaveMode
+			unbindAllEventListeners	: unbindAllEventListeners
 	};
 
 }) (VISH,jQuery);

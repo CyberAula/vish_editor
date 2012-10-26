@@ -119,7 +119,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		if(VISH.Events.isSlaveMode()){
+		if(VISH.Status.isSlaveMode()){
 			return;
 		}
 		

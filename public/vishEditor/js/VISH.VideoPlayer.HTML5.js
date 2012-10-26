@@ -106,7 +106,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 	/**
 	 * Function to start a specific video
 	 */
-	var startVideo = function(videoId,currentTime){
+	var playVideo = function(videoId,currentTime){
 		var video = $("#"+videoId)[0];
 
 		if((typeof currentTime === 'number')&&(video.currentTime !== currentTime)){
@@ -162,7 +162,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 		setVideoEvents 		: setVideoEvents,
 		playVideos 			: playVideos,
 		stopVideos 			: stopVideos,
-		startVideo 			: startVideo,
+		playVideo 			: playVideo,
 		pauseVideo 			: pauseVideo,
 		seekVideo			: seekVideo,
 		showControls 		: showControls

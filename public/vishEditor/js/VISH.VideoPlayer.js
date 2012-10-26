@@ -6,34 +6,44 @@ VISH.VideoPlayer = (function(){
 		VISH.VideoPlayer.Youtube.init();
 	}
 
-	/**
-	 * Function to start a specific video
-	 */
-	var startVideo = function(videoType,videoId,currentTime,videoSlideNumber){
-		if((videoSlideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber)){
-			VISH.Slides.goToSlide(videoSlideNumber,false);
+	var getTypeVideoWithId = function(videoId){
+		return getTypeVideo(document.getElementById(videoId));
+	}
+
+	var getTypeVideo = function(video){
+		if(!video){
+			return VISH.Constant.UNKNOWN;
+		} else if(video.tagName==="VIDEO"){
+			return VISH.Constant.Video.HTML5;
+		} else if(video.tagName==="OBJECT"){
+			return VISH.Constant.Video.Youtube;
 		}
-		switch(videoType){
-			case "HTML5":
-				VISH.VideoPlayer.HTML5.startVideo(videoId,currentTime);
+		return VISH.Constant.UNKNOWN;
+	}
+
+	var playVideo = function(videoId,currentTime,triggeredByUser){
+		switch(getTypeVideoWithId(videoId)){
+			case VISH.Constant.Video.HTML5:
+				VISH.VideoPlayer.HTML5.playVideo(videoId,currentTime);
 				break;
-			case "Youtube":
-				VISH.VideoPlayer.Youtube.startVideo(videoId,currentTime);
+			case VISH.Constant.Video.Youtube:
+				VISH.VideoPlayer.Youtube.playVideo(videoId,currentTime);
 				break;
 			default:
 				break;
 		}
 	}
 
-	/**
-	 * Function to pause a specific video
-	 */
-	var pauseVideo = function(videoType,videoId,currentTime,videoSlideNumber){
-		switch(videoType){
-			case "HTML5":
+			// if((videoSlideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber)){
+		// 	VISH.Slides.goToSlide(videoSlideNumber,false);
+		// }
+
+	var pauseVideo = function(videoId,currentTime,triggeredByUser){
+		switch(getTypeVideoWithId(videoId)){
+			case VISH.Constant.Video.HTML5:
 				VISH.VideoPlayer.HTML5.pauseVideo(videoId,currentTime);
 				break;
-			case "Youtube":
+			case VISH.Constant.Video.Youtube:
 				VISH.VideoPlayer.Youtube.pauseVideo(videoId,currentTime);
 				break;
 			default:
@@ -41,14 +51,45 @@ VISH.VideoPlayer = (function(){
 		}
 	}
 
-
-	/**
-	 * Function to seek a specific video
-	 */
-	var seekVideo = function(videoType,videoId,currentTime,videoSlideNumber){
-		switch(videoType){
-			case "HTML5":
+	var seekVideo = function(videoId,currentTime,triggeredByUser){
+		switch(getTypeVideoWithId(videoId)){
+			case VISH.Constant.Video.HTML5:
 				VISH.VideoPlayer.HTML5.seekVideo(videoId,currentTime);
+				break;
+			case VISH.Constant.Video.Youtube:
+				VISH.VideoPlayer.Youtube.seekVideo(videoId,currentTime);
+				break;
+			default:
+				break;
+		}
+	}
+
+
+
+	//Wrapper
+	//Get parameters regardless of video type
+
+	var getDuration = function(video){
+		switch(getTypeVideo(video)){
+			case VISH.Constant.Video.HTML5:
+				return video.getDuration();
+				break;
+			case VISH.Constant.Video.Youtube:
+				return video.getDuration();
+				break;
+			default:
+				break;
+		}
+	}
+
+
+	var getCurrentTime = function(video){
+		switch(getTypeVideo(video)){
+			case VISH.Constant.Video.HTML5:
+				return video.getCurrentTime();
+				break;
+			case VISH.Constant.Video.Youtube:
+				return video.getCurrentTime();
 				break;
 			default:
 				break;
@@ -57,9 +98,13 @@ VISH.VideoPlayer = (function(){
 
 	return {
 		init				: init,
-		startVideo 			: startVideo,
+		getTypeVideoWithId  : getTypeVideoWithId,
+		getTypeVideo        : getTypeVideo,
+		playVideo 			: playVideo,
 		pauseVideo 			: pauseVideo,
-		seekVideo			: seekVideo
+		seekVideo			: seekVideo,
+		getDuration 		: getDuration,
+		getCurrentTime 		: getCurrentTime
 	};
 
 })(VISH,jQuery);

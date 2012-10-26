@@ -2,6 +2,7 @@ VISH.Status = (function(V,$,undefined){
 	var device;
 	var isInIframe;
 	var isOnline;
+	var isSlave;
 	
 	var init = function(){
 		device = {};
@@ -261,13 +262,38 @@ VISH.Status = (function(V,$,undefined){
 	var getOnline = function(){
 		return isOnline;
 	};
+
+	var setSlaveMode = function(slaveMode){
+		console.log("setSlaveMode " + slaveMode);
+		if(slaveMode!==isSlave){
+			if(slaveMode){
+				VISH.Events.unbindAllEventListeners();
+				VISH.VideoPlayer.HTML5.showControls(false);
+				isSlave=true;
+			} else {
+				VISH.Events.bindAllEventListeners();
+				VISH.VideoPlayer.HTML5.showControls(true);
+				isSlave=false;
+			}
+		}
+	}
+
+	var isSlaveMode = function(){
+		if(typeof isSlave!=='undefined'){
+			return isSlave;
+		} else {
+			return false;
+		}
+	};
 	
 	return {
 		init            : init,
 		getIsInIframe	: getIsInIframe,
 		getIframe   	: getIframe,
 		getDevice		: getDevice,
-		getOnline		: getOnline
+		getOnline		: getOnline,
+		setSlaveMode	: setSlaveMode,
+		isSlaveMode 	: isSlaveMode
 	};
 
 }) (VISH, jQuery);

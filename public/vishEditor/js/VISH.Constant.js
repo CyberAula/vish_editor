@@ -27,6 +27,10 @@ VISH.Constant.GAME = "game";
 VISH.Constant.THUMBNAIL = "thumbnail";
 VISH.Constant.NONE = "none";
 
+VISH.Constant.Video = {};
+VISH.Constant.Video.HTML5 = "HTML5";
+VISH.Constant.Video.Youtube = "Youtube";
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";

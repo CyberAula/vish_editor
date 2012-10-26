@@ -1,12 +1,8 @@
 VISH.VideoPlayer.Youtube = (function(){
-		
-	//Slave Mode
-	var isSlaveMode;
 
 	var init = function(){
 
 	}
-
 
 	var loadYoutubeObject = function(element,value){
 		if(VISH.Status.getOnline()=== false){
@@ -25,15 +21,16 @@ VISH.VideoPlayer.Youtube = (function(){
     	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
 		$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
 
-		VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(newYtVideoId);
+		VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(newYtVideoId,false);
 	}
-
 
 
 	var onytplayerStateChange = function(playerId,newState) {
 		switch(newState){
 			case -1:
 				// VISH.Debugging.log(playerId + ": Not initialized");
+				var player = document.getElementById(playerId);
+				VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(player);
 				break;
 			case 0:
 				// VISH.Debugging.log(playerId + ": Ended");
@@ -78,17 +75,13 @@ VISH.VideoPlayer.Youtube = (function(){
 	/**
 	 * Function to start a specific video
 	 */
-	var startVideo = function(videoId,currentTime){
+	var playVideo = function(videoId,currentTime){
 		var ytPlayer = document.getElementById(videoId);
-		if(!ytPlayer){
-			return;
-		}
-		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		if(changeCurrentTime){
-			ytPlayer.seekTo(currentTime);
-		}
-		if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
-			ytPlayer.playVideo();
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
+			_seekVideo(ytPlayer,currentTime);
+			if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
+				ytPlayer.playVideo();
+			}
 		}
 	}
 
@@ -97,29 +90,38 @@ VISH.VideoPlayer.Youtube = (function(){
 	 */
 	var pauseVideo = function(videoId,currentTime){
 		var ytPlayer = document.getElementById(videoId);
-		if(!ytPlayer){
-			return;
-		}
-		if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
-			ytPlayer.pauseVideo();
-		}
-		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		if(changeCurrentTime){
-			ytPlayer.seekTo(currentTime);
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
+			if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
+				ytPlayer.pauseVideo();
+			}
+			_seekVideo(ytPlayer,currentTime);
 		}
 	}
 
-	var setSlaveMode = function(slave){
-		isSlaveMode = slave;
+	/**
+	 * Function to pause a specific video
+	 */
+	var seekVideo = function(videoId,currentTime){
+		var ytPlayer = document.getElementById(videoId);
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
+			_seekVideo(ytPlayer,currentTime);
+		}
+	}
+
+	var _seekVideo = function(video,currentTime){
+		var changeCurrentTime = (typeof currentTime === 'number')&&(video.getCurrentTime()!==currentTime);
+		if(changeCurrentTime){
+			video.seekTo(currentTime);
+		}
 	}
 
 	return {
 		init 				: init,
 		loadYoutubeObject	: loadYoutubeObject,
-		startVideo 			: startVideo,
-		pauseVideo 			: pauseVideo,
 		onytplayerStateChange	: onytplayerStateChange,
-		setSlaveMode		: setSlaveMode
+		playVideo 			: playVideo,
+		pauseVideo 			: pauseVideo,
+		seekVideo 			: seekVideo
 	};
 
 })(VISH,jQuery);

@@ -89,7 +89,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 				break;
 			case VISH.Constant.Event.onSetSlave:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.slave != "undefined")){
-					VISH.Events.setSlaveMode(VEMessageObject.params.slave);
+					VISH.Status.setSlaveMode(VEMessageObject.params.slave);
 				}
 				break;	
 			default:
