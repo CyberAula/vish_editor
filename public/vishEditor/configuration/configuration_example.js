@@ -77,7 +77,7 @@ var getOptions = function(){
 			options["quiz_active_session_id"] = "29";
 
 			//Preview
-			options["preview"] = true;
+			options["preview"] = false;
 
 			//Close or come back button
 			//If comeBackUrl not exists, back button will be hidden

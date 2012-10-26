@@ -57,7 +57,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		//important that events are initialized after presentation type is proccessed
 		V.Events.init();
 		V.Events.Notifier.init();
-	  	
+	  	V.VideoPlayer.init();
+
 		V.Themes.selectTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);

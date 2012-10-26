@@ -2,10 +2,7 @@ div.customPlayerContainer{
 	position: relative;
 	overflow: hidden;
 	border: 1px solid white;
-	margin: 40px auto;
 	outline: 1px solid #AAA;
-	width: 425px;
-	height: 356px;
 }
 
 div.customPlayerControls {
@@ -13,8 +10,6 @@ div.customPlayerControls {
 	top: 0%;
 	left: 0%;
 	cursor: pointer;
-	width: 425px;
-	height: 356px;
 }
 
 div.customPlayerPlay {

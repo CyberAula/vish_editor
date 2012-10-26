@@ -161,7 +161,7 @@ YT.PlayerState.CUED = 5;
 
   var params = { allowScriptAccess: "always" };
   var atts = { id: "myytplayer", wmode: "transparent" };
-  swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer&wmodetransparent=true&controls=0&showinfo=0&rel=0","ytapiplayer", "425", "356", "8", null, null, params, atts);
+  swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer&wmodetransparent=true&controls=0&showinfo=0&rel=0&modestbranding=1","ytapiplayer", "425", "356", "8", null, null, params, atts);
 
   var players = {};
   function onYouTubePlayerReady (playerId) {
@@ -180,6 +180,10 @@ YT.PlayerState.CUED = 5;
       ytPlayer.addEventListener ('onError', 'players.' + idPlayerParams + '.onError');
       $(ytPlayer).attr("customPlayerStatus","ready");
       loadCustomPlayerControlEvents();
+
+      $(".customPlayerContainer").attr("style","width:425px ;height:356px");
+      $(ytPlayer).attr("style","width:100%; height:100%;")
+      $(".customPlayerControls").attr("style","width: 100%; height:100%;")
   }
 
     function onytplayerStateChange(playerId,newState) {

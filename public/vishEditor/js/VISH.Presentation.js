@@ -28,11 +28,9 @@ VISH.Presentation = (function(V,undefined){
 		
 		V.SlideManager.addEnterLeaveEvents();
 		
-		//$.getScript('js/slides.js',function(){
 		var evt = document.createEvent("Event");
 		evt.initEvent("OURDOMContentLoaded", false, true); // event type,bubbling,cancelable
-		document.dispatchEvent(evt);	
-		//});		
+		document.dispatchEvent(evt);		
 	};
 
 	return {

@@ -1,5 +1,11 @@
 VISH.VideoPlayer = (function(){
-		
+	
+	var init = function(){
+		VISH.VideoPlayer.CustomPlayer.init();
+		VISH.VideoPlayer.HTML5.init();
+		VISH.VideoPlayer.Youtube.init();
+	}
+
 	/**
 	 * Function to start a specific video
 	 */
@@ -50,6 +56,7 @@ VISH.VideoPlayer = (function(){
 	}
 
 	return {
+		init				: init,
 		startVideo 			: startVideo,
 		pauseVideo 			: pauseVideo,
 		seekVideo			: seekVideo

@@ -5,6 +5,11 @@ VISH.VideoPlayer.HTML5 = (function(){
 	var pauseTriggeredByUser = true;
 	var seekTriggeredByUser = true;
 
+
+	var init = function(){
+
+	}
+
 	var setVideoEvents = function(){
 		var videos = $("video")
 		$.each(videos, function(index, video) {
@@ -153,6 +158,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 	}
 
 	return {
+		init 				: init,
 		setVideoEvents 		: setVideoEvents,
 		playVideos 			: playVideos,
 		stopVideos 			: stopVideos,

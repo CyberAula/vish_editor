@@ -3,10 +3,9 @@ VISH.VideoPlayer.Youtube = (function(){
 	//Slave Mode
 	var isSlaveMode;
 
-	//Flag to prevent notify startVideo events
-	//Prevent sync bucles
-	var playTriggeredByUser = true;
-	var pauseTriggeredByUser = true;
+	var init = function(){
+
+	}
 
 
 	var loadYoutubeObject = function(element,value){
@@ -18,13 +17,15 @@ VISH.VideoPlayer.Youtube = (function(){
 		var ytVideoId = $(value).attr("ytVideoId");
 		$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
 		var newYtVideoId = VISH.Utils.getId();
-		var params = { allowScriptAccess: "always", wmode: "transparent" };
-    	var atts = { id: newYtVideoId };
+		var params = { allowScriptAccess: "always" };
+    	var atts = { id: newYtVideoId , wmode: "transparent" };
     	source = source.split("?")[0]; //Remove params
-    	source = source + "?enablejsapi=1&controls=0&playerapiid="+newYtVideoId+"&wmodetransparent=true" //Add yt necessary params
+    	source = source + "?enablejsapi=1&controls=0&showinfo=0&rel=0&modestbranding=1&wmodetransparent=true&playerapiid="+newYtVideoId //Add yt necessary params
     	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
     	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
 		$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
+
+		VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(newYtVideoId);
 	}
 
 
@@ -36,37 +37,25 @@ VISH.VideoPlayer.Youtube = (function(){
 				break;
 			case 0:
 				// VISH.Debugging.log(playerId + ": Ended");
+				VISH.VideoPlayer.CustomPlayer.onEndVideo(playerId);
 				break;
 			case 1:
-				VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
-
-				if(isSlaveMode){
-					console.log("ASDASD");
-					var ytPlayer = document.getElementById(playerId);
-					console.log(ytPlayer.getPlayerState());
-					//STORE VIDEO PLAYER PREV STATUS...
-				}
-
-				var params = new Object();
-				params.type = "Youtube";
-				params.videoId = playerId;
-				params.currentTime = $("#"+playerId)[0].getCurrentTime();
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
-
-				playTriggeredByUser = true;
+				// VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
+				// var params = new Object();
+				// params.type = "Youtube";
+				// params.videoId = playerId;
+				// params.currentTime = $("#"+playerId)[0].getCurrentTime();
+				// params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				// VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
 				break;
 			case 2:
 				// VISH.Debugging.log(playerId + ": Pause at " + $("#"+playerId)[0].getCurrentTime());
-				
-				var params = new Object();
-				params.type = "Youtube";
-				params.videoId = playerId;
-				params.currentTime = $("#"+playerId)[0].getCurrentTime();
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
-
-				pauseTriggeredByUser = true;
+				// var params = new Object();
+				// params.type = "Youtube";
+				// params.videoId = playerId;
+				// params.currentTime = $("#"+playerId)[0].getCurrentTime();
+				// params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+				// VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
 				break;
 			case 3:
 				// VISH.Debugging.log(playerId + ": Buffer Store");
@@ -94,29 +83,12 @@ VISH.VideoPlayer.Youtube = (function(){
 		if(!ytPlayer){
 			return;
 		}
-
 		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		
-		switch(ytPlayer.getPlayerState()){
-			case YT.PlayerState.PLAYING:
-				if(changeCurrentTime){
-					playTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				break;
-			case YT.PlayerState.PAUSED:
-				if(changeCurrentTime){
-					pauseTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				playTriggeredByUser = false;
-				ytPlayer.playVideo();
-				break;
-			case YT.PlayerState.UNSTARTED:
-				playTriggeredByUser = false;
-				ytPlayer.playVideo();
-			default:
-				break;
+		if(changeCurrentTime){
+			ytPlayer.seekTo(currentTime);
+		}
+		if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
+			ytPlayer.playVideo();
 		}
 	}
 
@@ -128,28 +100,12 @@ VISH.VideoPlayer.Youtube = (function(){
 		if(!ytPlayer){
 			return;
 		}
-
+		if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
+			ytPlayer.pauseVideo();
+		}
 		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		
-		switch(ytPlayer.getPlayerState()){
-			case YT.PlayerState.PLAYING:
-				if(changeCurrentTime){
-					playTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				pauseTriggeredByUser = false;
-				ytPlayer.pauseVideo();
-				break;
-			case YT.PlayerState.PAUSED:
-				if(changeCurrentTime){
-					pauseTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				break;
-			case YT.PlayerState.UNSTARTED:
-				break;
-			default:
-				break;
+		if(changeCurrentTime){
+			ytPlayer.seekTo(currentTime);
 		}
 	}
 
@@ -158,6 +114,7 @@ VISH.VideoPlayer.Youtube = (function(){
 	}
 
 	return {
+		init 				: init,
 		loadYoutubeObject	: loadYoutubeObject,
 		startVideo 			: startVideo,
 		pauseVideo 			: pauseVideo,
