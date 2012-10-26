@@ -193,8 +193,7 @@ var _getResults =  function(quiz_session_active_id) {
    // $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
    //put quiz_session_id value in the input hidden for stopping quiz session
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
-
-
+    $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='/vishEditor/images/VISH_frontpage.png' />")
     };
 
   var _OnQuizSessionReceivedError = function(error){
@@ -442,7 +441,7 @@ var _displayResults = function(data) {
       $("#" +tabQuizSessionContent).find(".hide_qrcode").hide();
       $("#" +tabQuizSessionContent).find(".show_qrcode").show();
    
-      if ($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
+      if ($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").attr("src")) {
 
         $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").show();
       }
