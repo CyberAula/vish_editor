@@ -86,6 +86,11 @@ var showQuizStats = function(){
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
+    $(document).on('click', '#quiz_full_screen', VISH.SlideManager.toggleFullScreen);
+    $(document).on('click', '.hide_qrcode', _hideQRCode);
+    $(document).on('click', '.show_qrcode', _showQRCode);
+    
+
     
 
    };
@@ -394,39 +399,72 @@ var _displayResults = function(data) {
 
 
   var drawPieChart = function (data) {
-        V.Debugging.log("drawPieChart called");
-        // Create the data table.
-        var data_for_chart = new google.visualization.DataTable();
-        data_for_chart.addColumn('string', 'Question');
-        data_for_chart.addColumn('number', 'Slices');
-        
-        for (option in data) {
+    V.Debugging.log("drawPieChart called");
+    // Create the data table.
+    var data_for_chart = new google.visualization.DataTable();
+    data_for_chart.addColumn('string', 'Question');
+    data_for_chart.addColumn('number', 'Slices');
 
-          if((option in mcOptionsHash)){ // a --> 2 , b -->3
-            var votes = data[option];
-            data_for_chart.addRow([option, votes]);
-          }
-        }; 
+    for (option in data) {
 
-        var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
+      if((option in mcOptionsHash)){ // a --> 2 , b -->3
+        var votes = data[option];
+        data_for_chart.addRow([option, votes]);
+      }
+    }; 
+
+  var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
         
-        //TODO set values in percents for resizing 
-        // Set chart options
-        var options = {'title':'',
-                       'width':400,
-                       'height':300};
+  //TODO set values in percents for resizing 
+  // Set chart options
+    var options = {'title':'',
+                   'width':400,
+                   'height':300
+                  };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data_for_chart, options);
+    var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+    chart.draw(data_for_chart, options);
+  };
+
+
+  var _hideStopQuizPopup = function() {
+    $('#mask_stop_quiz').fadeTo("slow",0);  
+    $('#mask_stop_quiz').hide();  
+    $('#stop_quiz_fancybox').hide();
+};
+
+
+  var _hideQRCode = function () {
+       //there is the QR Code
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas")) {
+      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").hide();
+      $("#" +tabQuizSessionContent).find(".hide_qrcode").hide();
+      $("#" +tabQuizSessionContent).find(".show_qrcode").show();
+   
+      if ($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
+
+        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").show();
       }
+      else {
+        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='/vishEditor/images/VISH_frontpage.png' />")
+      }
+    }
+  };
+
+  var _showQRCode = function () {
+       //there is the QR Code
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
+      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").hide();
+       $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").show();
+        $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
+        $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
+    }
+  };
 
 
-      var _hideStopQuizPopup = function() {
-            $('#mask_stop_quiz').fadeTo("slow",0);  
-            $('#mask_stop_quiz').hide();  
-            $('#stop_quiz_fancybox').hide();
-      };
+
+
 
 
   return {
