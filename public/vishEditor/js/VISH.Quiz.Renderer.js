@@ -4,7 +4,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   var init = function(){
 
 
-  }
+  };
 
   ////////////////////
   //renderer methods called from VISH.Renderer
@@ -56,10 +56,6 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       }
       ret += "<input type='hidden' value='"+ slide + "_"+ zone +"' name='zone' />";
       ret += "<input type='hidden' value='"+element['quizid']+"' name='quizid' class='quizId' />";
-      ret += "</div>";
-      ret += "<div class='mcquestion_buttons'>";
-      ret += "<div class='mch_statistics_icon_wrapper'>";
-      ret += "<img class='mch_statistics_icon' src='"+VISH.ImagesPath+"quiz/eye.png'/>";
       ret += "</div>";
       ret += "<div class='mch_inputs_wrapper'>";
       ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";

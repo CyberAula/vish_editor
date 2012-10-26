@@ -31,8 +31,8 @@ VISH.Quiz = (function(V,$,undefined){
       quizMode = "answer";
       _loadAnswerEvents();
     } else {
-      quizMode = "question";
-      _loadEvents();
+        quizMode = "question";
+        _loadEvents();
     }
 
     VISH.Quiz.Renderer.init();
@@ -55,25 +55,24 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var prepareQuiz = function(){
-    $("." + statisticsButtonClass).hide();
-
     if (quizMode=="answer") {
       $("." + startButtonClass).show();
       $("." + startButtonClass).val("Send");
     } else if(quizMode=="question") {
+      V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
       if(!VISH.User.isLogged()){
         $("." + startButtonClass).hide();
       } else {
         $("." + startButtonClass).show();
       }
     }
-  }
+  };
 
 
-var showQuizStats = function(){
-  //open the fancybox
-  $("a#addQuizSessionFancybox").trigger("click"); 
-};
+  var showQuizStats = function(){
+    //open the fancybox
+    $("a#addQuizSessionFancybox").trigger("click"); 
+  };
 
 
   /////////////////////////
@@ -82,9 +81,7 @@ var showQuizStats = function(){
 
   var _loadEvents = function(){
     $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
-    //before close the quiz session ask to the user what want to do ...
     $(document).on('click', "."+stopSessionButtonClass, onStopMcQuizButtonClicked);
-    //$(document).on('click', "."+stopSessionButtonClass, showStopFancybox);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
     $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
@@ -93,15 +90,11 @@ var showQuizStats = function(){
     $(document).on('click', '#quiz_full_screen', VISH.SlideManager.toggleFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
-    
-
-    
-
    };
-/* Chek if user is logged in and call VISH's API for starting a voting) */
+  /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
-    
     if(V.User.isLogged()){
+      V.Debugging.log("User logged");
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
@@ -109,8 +102,6 @@ var showQuizStats = function(){
       _startStats();   
       _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
       
-      //get results
-      // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
     }
     else {
           V.Debugging.log("User not logged");
