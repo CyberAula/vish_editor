@@ -37,7 +37,7 @@ VISH.Status = (function(V,$,undefined){
 		            },
 		            timeout: 5000,
 		            type: "GET",
-		            url: "images/blank.png"
+		            url: VISH.ImagesPath+"blank.png"
 		        });
 		    }
 		    else {
