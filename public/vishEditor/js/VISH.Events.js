@@ -4,7 +4,6 @@ VISH.Events = (function(V,$,undefined){
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
 	var registeredEvents = [];
 	var isSlaveMode;
-
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
 	 * and setup the events and interaction accordingly
@@ -154,8 +153,11 @@ VISH.Events = (function(V,$,undefined){
    		if(!bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
-	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+				//modified by V.Hugo to get move slide(forward & backward) while is started a quiz session
+	      		$(document).on('click', '#page-switcher-start', isActiveQuizSessionBackward);
+	      		$(document).on('click', '#page-switcher-end', isActiveQuizSessionForward);
+	      		//$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+	      		//$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 	      		_registerEvent("mobile_back_arrow");
 	      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
 	      		_registerEvent("mobile_forward_arrow");
@@ -225,8 +227,34 @@ VISH.Events = (function(V,$,undefined){
 
 	var isSlaveMode = function(){
 		return isSlaveMode;
-	}
+	};
+
+	var isActiveQuizSessionBackward = function() {
+		//session started 
+		if(V.Quiz.getIsQuizSessionStarted()) {
+			VISH.Quiz.setIsWaitingBackwardOneSlide(true);
+			VISH.Quiz.onStopMcQuizButtonClicked();
+		} //old case (just slide backward)
+				else {
+			 V.Slides.backwardOneSlide();
+		}
+	};
+
+	var isActiveQuizSessionForward = function() {
+		// session started
+		if(V.Quiz.getIsQuizSessionStarted()) {
+			VISH.Quiz.setIsWaitingForwardOneSlide(true);
+			VISH.Quiz.onStopMcQuizButtonClicked();
+		} //old case (just slide forward)
+		else {
+			 V.Slides.forwardOneSlide();
+		}
+
+
+	};
 	
+
+
 	
 	return {
 			init 		: init,

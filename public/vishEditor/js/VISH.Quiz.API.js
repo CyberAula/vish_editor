@@ -2,7 +2,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
 	var init = function(){
 		
-	}
+	};
 	
    /*
 	* Request new quiz session
