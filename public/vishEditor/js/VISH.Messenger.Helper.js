@@ -73,18 +73,27 @@ VISH.Messenger.Helper = (function(V,undefined){
 				}
 				break;
 			case VISH.Constant.Event.onPlayVideo:
-				if((VEMessageObject.params)&&(VEMessageObject.params.type)&&(VEMessageObject.params.videoId)){
-						VISH.VideoPlayer.startVideo(VEMessageObject.params.type,VEMessageObject.params.videoId,VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber);
+				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
+						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						}
+						VISH.VideoPlayer.playVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case VISH.Constant.Event.onPauseVideo:
-				if((VEMessageObject.params)&&(VEMessageObject.params.type)&&(VEMessageObject.params.videoId)){
-						VISH.VideoPlayer.pauseVideo(VEMessageObject.params.type,VEMessageObject.params.videoId,VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber);
+				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
+						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						}
+						VISH.VideoPlayer.pauseVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case VISH.Constant.Event.onSeekVideo:
-				if((VEMessageObject.params)&&(VEMessageObject.params.type)&&(VEMessageObject.params.videoId)){
-						VISH.VideoPlayer.seekVideo(VEMessageObject.params.type,VEMessageObject.params.videoId,VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber);
+				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
+						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						}
+						VISH.VideoPlayer.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case VISH.Constant.Event.onSetSlave:

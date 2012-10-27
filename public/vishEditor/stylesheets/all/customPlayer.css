@@ -14,34 +14,34 @@ div.customPlayerControls {
 
 div.customPlayerPlay {
 	position: absolute;
-	width: 120px;
-	height: 120px;
+	width: 50%;
+	height: 50%;
 	cursor: pointer;
-	top: 50%;
-	left: 50%;
-	margin: -60px 0 0 -60px;
+	top: 25%;
+	left: 25%;
+	background-size: 70%;
 	background: url('/vishEditor/images/customPlayer/play.png') no-repeat center center;
 }
 
 div.customPlayerPause {
 	position: absolute;
-	width: 120px;
-	height: 120px;
+	width: 50%;
+	height: 50%;
 	cursor: pointer;
-	top: 50%;
-	left: 50%;
-	margin: -60px 0 0 -60px;
+	top: 25%;
+	left: 25%;
+	background-size: 70%;
 	background: url('/vishEditor/images/customPlayer/pause.png') no-repeat center center;
 }
 
 div.customPlayerReplay {
 	position: absolute;
-	width: 120px;
-	height: 120px;
+	width: 50%;
+	height: 50%;
 	cursor: pointer;
-	top: 50%;
-	left: 50%;
-	margin: -60px 0 0 -60px;
+	top: 25%;
+	left: 25%;
+	background-size: 70%;
 	background: url('/vishEditor/images/customPlayer/replay.png') no-repeat center center;
 }
 

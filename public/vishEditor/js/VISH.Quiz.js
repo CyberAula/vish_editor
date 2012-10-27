@@ -59,7 +59,7 @@ VISH.Quiz = (function(V,$,undefined){
       $("." + startButtonClass).show();
       $("." + startButtonClass).val("Send");
     } else if(quizMode=="question") {
-      V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
+      // V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
       if(!VISH.User.isLogged()){
         $("." + startButtonClass).hide();
       } else {

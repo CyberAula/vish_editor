@@ -12,15 +12,15 @@
 				console.log("onGoToSlide: " + slideNumber + " from " + origin);
 			});
 			VISH.IframeAPI.registerCallback("onPlayVideo",
-				function(videoType,videoId,currentTime,slideNumber,origin){
+				function(videoId,currentTime,slideNumber,origin){
 					console.log("onPlayVideo: " + videoId + " from " + origin);
 			});
 			VISH.IframeAPI.registerCallback("onPauseVideo",
-				function(videoType,videoId,currentTime,slideNumber,origin){
+				function(videoId,currentTime,slideNumber,origin){
 					console.log("onPauseVideo: " + videoId + " from " + origin);
 			});
 			VISH.IframeAPI.registerCallback("onSeekVideo",
-				function(videoType,videoId,currentTime,slideNumber,origin){
+				function(videoId,currentTime,slideNumber,origin){
 					console.log("onSeekVideo: " + videoId + " from " + origin);
 			});
 			// VISH.IframeAPI.setSlave(true);
@@ -31,16 +31,14 @@
 		// VISH.IframeAPI.goToSlide(3,"presentation_iframe_1");
 		// VISH.IframeAPI.goToSlide(3, ["presentation_iframe_1","presentation_iframe2"]);
 
-		// VISH.IframeAPI.playVideo("HTML5","unicID_1",20,4,"presentation_iframe_1");
-		// VISH.IframeAPI.pauseVideo("HTML5","unicID_1",20,4,"presentation_iframe_1");
+		// VISH.IframeAPI.playVideo("unicID_2");
+		// VISH.IframeAPI.pauseVideo("unicID_2");
+		// VISH.IframeAPI.playVideo("unicID_2",20,4,"presentation_iframe_1");
+		// VISH.IframeAPI.pauseVideo("unicID_2",20,4,"presentation_iframe_1");
 	</script>
 
     <div style="width:900px;height:500px;margin:0 auto; display:block">
         <iframe class="vishEditorIframe" src="/vishEditor/viewer.html" id="presentation_iframe_1" style="border:0" width="910" height="500" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
-    <br/>
-    <div style="width:900px;height:300px;margin:0 auto; display:block">
-        <iframe src="/vishEditor/viewer.html" id="presentation_iframe_2" style="border:0" width="910" height="300" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
-    </div>
     
 </body>
 </html>

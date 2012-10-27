@@ -24,40 +24,36 @@ VISH.VideoPlayer = (function(){
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
 			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.playVideo(videoId,currentTime);
+				VISH.VideoPlayer.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.playVideo(videoId,currentTime);
+				VISH.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
 		}
 	}
-
-			// if((videoSlideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=videoSlideNumber)){
-		// 	VISH.Slides.goToSlide(videoSlideNumber,false);
-		// }
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
 			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.pauseVideo(videoId,currentTime);
+				VISH.VideoPlayer.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.pauseVideo(videoId,currentTime);
+				VISH.VideoPlayer.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
 		}
 	}
 
-	var seekVideo = function(videoId,currentTime,triggeredByUser){
+	var seekVideo = function(videoId,seekTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
 			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.seekVideo(videoId,currentTime);
+				VISH.VideoPlayer.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.seekVideo(videoId,currentTime);
+				VISH.VideoPlayer.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			default:
 				break;

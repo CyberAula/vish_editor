@@ -21,7 +21,7 @@ VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 VISH.IframeAPI = (function(V,undefined){
 
 	var helloAttempts;
-	var maxHelloAttempts = 10;
+	var maxHelloAttempts = 15;
 	var helloTimeout;
 
 	var listeners;
@@ -40,7 +40,7 @@ VISH.IframeAPI = (function(V,undefined){
 	var _startHelloExchange = function(){
 		registerCallback(VISH.Constant.Event.onIframeMessengerHello, function(){
 			//Communication stablished
-			// console.log("Communication stablished");
+			console.log("Communication stablished");
 			if(helloTimeout){
 				clearTimeout(helloTimeout);
 			}	
@@ -48,7 +48,7 @@ VISH.IframeAPI = (function(V,undefined){
 		helloAttempts = 0;
 		helloTimeout = setInterval(function(){
 			_sayHello();
-		}, 2000);
+		}, 1000);
 		_sayHello();
 	}
 
@@ -188,21 +188,21 @@ VISH.IframeAPI = (function(V,undefined){
 				break;
 			case VISH.Constant.Event.onPlayVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
 				break;
 			case VISH.Constant.Event.onPauseVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
 				break;
 			case VISH.Constant.Event.onSeekVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
@@ -229,9 +229,8 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var playVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var playVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
@@ -239,9 +238,8 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var pauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var pauseVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
@@ -249,9 +247,8 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var seekVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var seekVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
@@ -264,6 +261,21 @@ VISH.IframeAPI = (function(V,undefined){
 		params.slave = slave;
 		var VEMessage = _createMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
 		sendMessage(VEMessage,destination);
+	}
+
+	var setMaster = function(master){
+		var params = {};
+		var allVEIframes = document.querySelectorAll(".vishEditorIframe");
+		for(var i=0; i<allVEIframes.length; i++){
+			if(allVEIframes[i].id!==master){
+				params.slave = true;
+			} else {
+				params.slave = false;
+			}
+			var destination = allVEIframes[i].id;
+			var VEMessage = _createMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
+			sendMessage(VEMessage,destination);
+		}
 	}
 
 
@@ -290,6 +302,7 @@ VISH.IframeAPI = (function(V,undefined){
 			unRegisterCallback 	: unRegisterCallback,
 			sendMessage			: sendMessage,
 			setSlave			: setSlave,
+			setMaster			: setMaster,
 			goToSlide 			: goToSlide,
 			playVideo 			: playVideo,
 			pauseVideo 			: pauseVideo,

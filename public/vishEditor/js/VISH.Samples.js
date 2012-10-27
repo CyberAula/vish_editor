@@ -176,7 +176,7 @@ VISH.Samples = (function(V,undefined){
 					"id":"zone11",
 					"type":"object",
 					"areaid":"left",
-					"body":"<iframe src=\"http://www.youtube.com/embed/VAEp2gT-2a8?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_7\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"body":"<iframe src=\"http://www.youtube.com/embed/bT2yo3_R51o?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_7\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
 					"style":"position: relative; width:99.9390243902439%; height:99.6774193548387%; top:2.225806451612903%; left:2.3536585365853657%;"
 				}
 			]

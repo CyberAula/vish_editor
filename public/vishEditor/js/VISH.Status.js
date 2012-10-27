@@ -264,7 +264,6 @@ VISH.Status = (function(V,$,undefined){
 	};
 
 	var setSlaveMode = function(slaveMode){
-		console.log("setSlaveMode " + slaveMode);
 		if(slaveMode!==isSlave){
 			if(slaveMode){
 				VISH.Events.unbindAllEventListeners();

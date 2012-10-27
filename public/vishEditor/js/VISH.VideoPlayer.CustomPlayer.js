@@ -1,5 +1,7 @@
 VISH.VideoPlayer.CustomPlayer = (function(){
 
+	var progressBarTimer;
+
 	var init = function(){
 	}
 
@@ -54,8 +56,16 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 
 	var _startProgressBar = function(video){
 		var progressBar = $(video).parent().find("div.progressBarElapsed");
-		setInterval(function(){
-			$(progressBar).width((VISH.VideoPlayer.getCurrentTime(video)/VISH.VideoPlayer.getDuration(video))*100+'%');
+		var timer = progressBarTimer = setInterval(function(){
+			try {
+				var ratio = (VISH.VideoPlayer.getCurrentTime(video)/VISH.VideoPlayer.getDuration(video))*100;
+				$(progressBar).width(ratio+'%');
+				if(ratio===100){
+					clearTimeout(timer);
+				}
+			} catch(e){
+				clearTimeout(timer);
+			}
 		},400);
 	}
 
@@ -90,21 +100,12 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		}
 		switch($(video).attr("customPlayerStatus")){
 			case "ready":
-				_startProgressBar(video);
 			case "pause":
-				var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
-				var progressBar = $(video).parent().find("div.customPlayerProgressBar");
-				$(customPlayerControlsButton).removeClass().addClass("customPlayerPause");
-				$(customPlayerControlsButton).hide();
-				$(video).attr("customPlayerStatus","playing");  
-				$(progressBar).show();
+				onPlayVideo(video);
 				VISH.VideoPlayer.playVideo(video.id,null,true);
 				break;
 			case "playing":
-				var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
-				$(customPlayerControlsButton).removeClass().addClass("customPlayerPlay");
-				$(customPlayerControlsButton).show();
-				$(video).attr("customPlayerStatus","pause");
+				onPauseVideo(video);
 				VISH.VideoPlayer.pauseVideo(video.id,null,true);
 				break;
 			default:
@@ -112,9 +113,27 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		}
 	}
 
-	//Callback
-	var onEndVideo = function(videoId){
-		var video = $("#"+videoId);
+	//Callbacks
+
+	var onPlayVideo = function(video){
+		_startProgressBar(video);
+		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
+		var progressBar = $(video).parent().find("div.customPlayerProgressBar");
+		$(customPlayerControlsButton).removeClass().addClass("customPlayerPause");
+		$(customPlayerControlsButton).hide();
+		$(video).attr("customPlayerStatus","playing");  
+		$(progressBar).show();
+	}
+
+	var onPauseVideo = function(video){
+		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
+		$(customPlayerControlsButton).removeClass().addClass("customPlayerPlay");
+		$(customPlayerControlsButton).show();
+		$(video).attr("customPlayerStatus","pause");
+	}
+
+
+	var onEndVideo = function(video){
 		$(video).attr("customPlayerStatus","pause");
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
 		$(customPlayerControlsButton).removeClass().addClass("customPlayerReplay");
@@ -126,6 +145,8 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		init : init,
 		addCustomPlayerControls : addCustomPlayerControls,
 		loadCustomPlayerControlEvents : loadCustomPlayerControlEvents,
+		onPlayVideo : onPlayVideo,
+		onPauseVideo : onPauseVideo,
 		onEndVideo 	: onEndVideo
 	};
 
