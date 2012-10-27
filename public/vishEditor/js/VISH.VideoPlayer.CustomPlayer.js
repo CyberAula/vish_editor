@@ -88,7 +88,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 
 		var video = $(progressBar).parent().find("object")[0];
 		var ratio = (event.pageX-$(progressBar).offset().left)/$(progressBar).outerWidth();
-		if(!VISH.Status.isPreventDefault()){
+		if(!VISH.Status.isPreventDefaultMode()){
 			$(elapsed).width(ratio*100+'%');
 		}	
 		var seekToPos = Math.round(VISH.VideoPlayer.getDuration(video)*ratio);
@@ -103,13 +103,13 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		switch($(video).attr("customPlayerStatus")){
 			case "ready":
 			case "pause":
-				if(!VISH.Status.isPreventDefault()){
+				if(!VISH.Status.isPreventDefaultMode()){
 					onPlayVideo(video);
 				}
 				VISH.VideoPlayer.playVideo(video.id,null,true);
 				break;
 			case "playing":
-				if(!VISH.Status.isPreventDefault()){
+				if(!VISH.Status.isPreventDefaultMode()){
 					onPauseVideo(video);
 				}
 				VISH.VideoPlayer.pauseVideo(video.id,null,true);

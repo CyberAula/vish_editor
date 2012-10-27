@@ -88,6 +88,20 @@ var getOptions = function(){
 
 			//And a default landguage
 			options["lang"] = "en";
+
+
+			//Addons Configuration
+			var addons = [];
+
+			//Add a new addon: For example, VISH.Addons.IFrameMessenger
+			var addon = new Object();
+			addon.target = "Viewer";
+			addon.id = "IframeMessenger";
+			//Specific addon config, readed by VISH.Addons.IFrameMessenger
+			addon.config = {enable: true};
+			addons.push(addon);
+
+			options["addons"] = addons;
 		}
 		
 		if((window.console) && (window.console.log)){

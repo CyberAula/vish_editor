@@ -32,7 +32,7 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 			// VISH.Debugging.log(webAppMessage.data);
 			var VEMessage = webAppMessage.data;
 			//We only process our own messages when default events are disabled.
-			var processSelfMessages = VISH.Status.isPreventDefault();
+			var processSelfMessages = VISH.Status.isPreventDefaultMode();
 			if(VISH.Messenger.Helper.validateVEMessage(VEMessage,{allowSelfMessages: processSelfMessages})){
 				if(_isVEHelloMessage(VEMessage)){
 					if(!listenerInitialized){

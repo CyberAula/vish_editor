@@ -261,7 +261,7 @@ VISH.Slides = (function(V,$,undefined){
 
   	triggeredByUser = !(triggeredByUser===false);
 
-  	if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+  	if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
   		var params = new Object();
 		params.slideNumber = no;
   		VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onGoToSlide,params);

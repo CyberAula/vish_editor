@@ -73,7 +73,7 @@ VISH.VideoPlayer.Youtube = (function(){
 			params.currentTime = ytPlayer.getCurrentTime();
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
 				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPlayVideo,params);
 				return;
 			}
@@ -99,7 +99,7 @@ VISH.VideoPlayer.Youtube = (function(){
 			params.currentTime = ytPlayer.getCurrentTime();
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
 				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPauseVideo,params);
 				return;
 			}
@@ -131,7 +131,7 @@ VISH.VideoPlayer.Youtube = (function(){
 			params.currentTime = seekTime;
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
 				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
 				return;
 			}

@@ -286,7 +286,7 @@ VISH.Status = (function(V,$,undefined){
 		}
 	};
 
-	var setPreventDefault = function(preventDefault){
+	var setPreventDefaultMode = function(preventDefault){
 		if(preventDefault!==isPreventDefault){
 			if(preventDefault===true){
 				isPreventDefault=true;
@@ -296,7 +296,7 @@ VISH.Status = (function(V,$,undefined){
 		}
 	}
 
-	var isPreventDefault = function(){
+	var isPreventDefaultMode = function(){
 		if(typeof isPreventDefault !=='undefined'){
 			return isPreventDefault;
 		} else {
@@ -305,15 +305,15 @@ VISH.Status = (function(V,$,undefined){
 	};
 	
 	return {
-		init            : init,
-		getIsInIframe	: getIsInIframe,
-		getIframe   	: getIframe,
-		getDevice		: getDevice,
-		getOnline		: getOnline,
-		setSlaveMode	: setSlaveMode,
-		isSlaveMode 	: isSlaveMode,
-		setPreventDefault : setPreventDefault,
-		isPreventDefault : isPreventDefault
+		init            		: init,
+		getIsInIframe			: getIsInIframe,
+		getIframe   			: getIframe,
+		getDevice				: getDevice,
+		getOnline				: getOnline,
+		setSlaveMode			: setSlaveMode,
+		isSlaveMode 			: isSlaveMode,
+		setPreventDefaultMode 	: setPreventDefaultMode,
+		isPreventDefaultMode 	: isPreventDefaultMode
 	};
 
 }) (VISH, jQuery);

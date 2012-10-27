@@ -103,7 +103,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 				break;	
 			case VISH.Constant.Event.onPreventDefault:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.preventDefaults != "undefined")){
-					VISH.Status.setPreventDefault(VEMessageObject.params.preventDefaults);
+					VISH.Status.setPreventDefaultMode(VEMessageObject.params.preventDefaults);
 				}
 				break;
 			default:
