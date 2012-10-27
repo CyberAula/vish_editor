@@ -14,6 +14,7 @@ VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
+VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 //Constant added by IframeAPI addon
 VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 
@@ -24,10 +25,13 @@ VISH.IframeAPI = (function(V,undefined){
 	var maxHelloAttempts = 15;
 	var helloTimeout;
 
+	var options;
+
 	var listeners;
 	// listeners['event'] = callback;
 
-	var init = function(options) {
+	var init = function(initOptions) {
+		options = initOptions;
 		if (window.addEventListener){
 			window.addEventListener("message", _onWrapperedVEMessage, false);
 		} else if (el.attachEvent){
@@ -38,12 +42,15 @@ VISH.IframeAPI = (function(V,undefined){
 	};
 
 	var _startHelloExchange = function(){
-		registerCallback(VISH.Constant.Event.onIframeMessengerHello, function(){
+		registerCallback(VISH.Constant.Event.onIframeMessengerHello, function(origin){
 			//Communication stablished
-			console.log("Communication stablished");
 			if(helloTimeout){
 				clearTimeout(helloTimeout);
-			}	
+			}
+			_applyOptions(origin);
+			if(typeof options.callback === "function"){
+				options.callback(origin);
+			}
 		});
 		helloAttempts = 0;
 		helloTimeout = setInterval(function(){
@@ -58,6 +65,21 @@ VISH.IframeAPI = (function(V,undefined){
 		helloAttempts++;
 		if((helloAttempts>=maxHelloAttempts)&&(helloTimeout)){
 			clearTimeout(helloTimeout);
+		}
+	}
+
+	var _sendPreventDefaults = function(preventDefaults,destination){
+		var params = {};
+		params.preventDefaults = preventDefaults;
+		var VEMessage = _createMessage(VISH.Constant.Event.onPreventDefault,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var _applyOptions = function(destination){
+		if(options){
+			if(options.preventDefault===true){
+				_sendPreventDefaults(true,destination);
+			}
 		}
 	}
 
@@ -208,7 +230,7 @@ VISH.IframeAPI = (function(V,undefined){
 				}
 				break;
 			case VISH.Constant.Event.onIframeMessengerHello:
-				callback();
+				callback(VEMessageObject.origin);
 				break;
 			default:
 				_print("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);

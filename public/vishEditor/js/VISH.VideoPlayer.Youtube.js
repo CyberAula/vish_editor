@@ -68,11 +68,16 @@ VISH.VideoPlayer.Youtube = (function(){
 		//ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
 		if((ytPlayer)&&(ytPlayer.getPlayerState)){
 
-			//Notifiy event
 			var params = new Object();
 			params.videoId = videoId;
 			params.currentTime = ytPlayer.getCurrentTime();
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+
+			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPlayVideo,params);
+				return;
+			}
+
 			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,triggeredByUser);
 
 			_seekVideo(ytPlayer,currentTime,false);
@@ -89,11 +94,16 @@ VISH.VideoPlayer.Youtube = (function(){
 		var ytPlayer = document.getElementById(videoId);
 		if((ytPlayer)&&(ytPlayer.getPlayerState)){
 
-			//Notifiy event
 			var params = new Object();
 			params.videoId = videoId;
 			params.currentTime = ytPlayer.getCurrentTime();
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+
+			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPauseVideo,params);
+				return;
+			}
+
 			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,triggeredByUser);
 
 			if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
@@ -116,13 +126,18 @@ VISH.VideoPlayer.Youtube = (function(){
 	var _seekVideo = function(video,seekTime,triggeredByUser){
 		var changeCurrentTime = (typeof seekTime === 'number')&&(video.getCurrentTime()!==seekTime);
 		if(changeCurrentTime){
-			//Notifiy event
 			var params = new Object();
 			params.videoId = video.id;
 			params.currentTime = seekTime;
 			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
 
+			if((triggeredByUser)&&(VISH.Status.isPreventDefault())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
+				return;
+			}
+
+			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
+			
 			video.seekTo(seekTime);
 		}
 	}

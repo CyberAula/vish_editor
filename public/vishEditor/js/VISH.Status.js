@@ -3,6 +3,7 @@ VISH.Status = (function(V,$,undefined){
 	var isInIframe;
 	var isOnline;
 	var isSlave;
+	var isPreventDefault;
 	
 	var init = function(){
 		device = {};
@@ -265,7 +266,7 @@ VISH.Status = (function(V,$,undefined){
 
 	var setSlaveMode = function(slaveMode){
 		if(slaveMode!==isSlave){
-			if(slaveMode){
+			if(slaveMode===true){
 				VISH.Events.unbindAllEventListeners();
 				VISH.VideoPlayer.HTML5.showControls(false);
 				isSlave=true;
@@ -284,6 +285,24 @@ VISH.Status = (function(V,$,undefined){
 			return false;
 		}
 	};
+
+	var setPreventDefault = function(preventDefault){
+		if(preventDefault!==isPreventDefault){
+			if(preventDefault===true){
+				isPreventDefault=true;
+			} else {
+				isPreventDefault=false;
+			}
+		}
+	}
+
+	var isPreventDefault = function(){
+		if(typeof isPreventDefault !=='undefined'){
+			return isPreventDefault;
+		} else {
+			return false;
+		}
+	};
 	
 	return {
 		init            : init,
@@ -292,7 +311,9 @@ VISH.Status = (function(V,$,undefined){
 		getDevice		: getDevice,
 		getOnline		: getOnline,
 		setSlaveMode	: setSlaveMode,
-		isSlaveMode 	: isSlaveMode
+		isSlaveMode 	: isSlaveMode,
+		setPreventDefault : setPreventDefault,
+		isPreventDefault : isPreventDefault
 	};
 
 }) (VISH, jQuery);

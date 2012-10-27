@@ -101,6 +101,11 @@ VISH.Messenger.Helper = (function(V,undefined){
 					VISH.Status.setSlaveMode(VEMessageObject.params.slave);
 				}
 				break;	
+			case VISH.Constant.Event.onPreventDefault:
+				if((VEMessageObject.params)&&(typeof VEMessageObject.params.preventDefaults != "undefined")){
+					VISH.Status.setPreventDefault(VEMessageObject.params.preventDefaults);
+				}
+				break;
 			default:
 					VISH.Debugging.log("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
 				break;
