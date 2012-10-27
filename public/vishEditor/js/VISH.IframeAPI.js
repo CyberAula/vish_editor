@@ -48,7 +48,7 @@ VISH.IframeAPI = (function(V,undefined){
 				clearTimeout(helloTimeout);
 			}
 			_applyOptions(origin);
-			if(typeof options.callback === "function"){
+			if((options)&&(typeof options.callback === "function")){
 				options.callback(origin);
 			}
 		});
