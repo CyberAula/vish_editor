@@ -6,7 +6,7 @@
  */
 
 var VISH = VISH || {};
-VISH.Constant = {};
+VISH.Constant = VISH.Constant || {};
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
