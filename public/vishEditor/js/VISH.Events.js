@@ -154,8 +154,11 @@ VISH.Events = (function(V,$,undefined){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
 				//modified by V.Hugo to get move slide(forward & backward) while is started a quiz session
-	      		$(document).on('click', '#page-switcher-start', isActiveQuizSessionBackward);
-	      		$(document).on('click', '#page-switcher-end', isActiveQuizSessionForward);
+	      		//$(document).on('click', '#page-switcher-start', isActiveQuizSessionBackward);
+	      		//$(document).on('click', '#page-switcher-end', isActiveQuizSessionForward);
+	      		
+	      		$(document).on('click', '#page-switcher-start', isActiveQuizSession);
+	      		$(document).on('click', '#page-switcher-end', isActiveQuizSession);
 	      		//$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 	      		//$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 	      		_registerEvent("mobile_back_arrow");
@@ -209,8 +212,9 @@ VISH.Events = (function(V,$,undefined){
 	  		bindedEventListeners = false;
 		}
 	};
-
-	var isActiveQuizSessionBackward = function() {
+/*
+	var isActiveQuizSessionBackward = function(event) {
+		V.Debugging.log("event: " + event);
 		//session started 
 		if(V.Quiz.getIsQuizSessionStarted()) {
 			VISH.Quiz.setIsWaitingBackwardOneSlide(true);
@@ -221,7 +225,8 @@ VISH.Events = (function(V,$,undefined){
 		}
 	};
 
-	var isActiveQuizSessionForward = function() {
+	var isActiveQuizSessionForward = function(event) {
+		V.Debugging.log("event id : " + event.id);
 		// session started
 		if(V.Quiz.getIsQuizSessionStarted()) {
 			VISH.Quiz.setIsWaitingForwardOneSlide(true);
@@ -230,11 +235,31 @@ VISH.Events = (function(V,$,undefined){
 		else {
 			 V.Slides.forwardOneSlide();
 		}
-
-
 	};
-	
-
+*/	
+//TODO Ask Kike
+	var isActiveQuizSession = function(event) {
+		V.Debugging.log("event id : " + event.srcElement.id);
+		// session started
+		if(event.srcElement.id =="page-switcher-end") {
+			if(V.Quiz.getIsQuizSessionStarted()) {
+				VISH.Quiz.setIsWaitingForwardOneSlide(true);
+				VISH.Quiz.onStopMcQuizButtonClicked();
+			} //old case (just slide forward)
+			else {
+				 V.Slides.forwardOneSlide();
+			} 
+		} 
+		else if (event.srcElement.id =="page-switcher-start") {
+			if(V.Quiz.getIsQuizSessionStarted()) {
+				VISH.Quiz.setIsWaitingBackwardOneSlide(true);
+				VISH.Quiz.onStopMcQuizButtonClicked();
+			} //old case (just slide backward)
+			else {
+				V.Slides.backwardOneSlide();
+			}
+		}
+	};
 
 	
 	return {
