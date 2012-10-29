@@ -320,8 +320,6 @@ VISH.Editor = (function(V,$,undefined){
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
 	var _onEditableClicked = function(event){
-
-		console.log("_onEditableClicked detected");
 		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
 		setCurrentArea($(this));
@@ -473,7 +471,6 @@ VISH.Editor = (function(V,$,undefined){
 	* we change the border to indicate this zone has been selected and show the slider if the type is an image
 	*/
 	var _onSelectableClicked = function(){
-		console.log("_onSelectableClicked detected");
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
