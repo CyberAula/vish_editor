@@ -358,6 +358,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
 				VISH.Utils.loadTab('tab_pic_from_url');
 			}
 		});
