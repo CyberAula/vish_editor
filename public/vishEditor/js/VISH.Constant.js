@@ -1,4 +1,4 @@
-VISH.Constant = {};
+VISH.Constant = VISH.Constant || {};
 
 VISH.Constant.Edit = "Edit";
 VISH.Constant.Viewer  = "Viewer";

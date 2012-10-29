@@ -188,8 +188,8 @@ VISH.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
-				$(document).off('click', '#page-switcher-start', isActiveQuizSessionBackward);
-	      		$(document).off('click', '#page-switcher-end', isActiveQuizSessionForward);
+				$(document).off('click', '#page-switcher-start', isActiveQuizSession);
+	      		$(document).off('click', '#page-switcher-end', isActiveQuizSession);
 		  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		  		_unregisterEvent("mobile_back_arrow");
