@@ -137,15 +137,13 @@ VISH.Events = (function(V,$,undefined){
 	 * function called when a poi is clicked
 	 */
 	 var _onFlashcardPoiClicked = function(event){
-	 	V.Debugging.log("Show slide " + event.data.slide_id);
-    	V.Slides.showSlide(event.data.slide_id);
+    	V.Slides.showSlide(event.data.slide_id,true);
 	 };
 
 
    var _onFlashcardCloseSlideClicked = function(event){
 	    var close_slide = event.target.id.substring(5); //the id is close3
-	    V.Debugging.log("Close slide " + close_slide);
-	    V.Slides.closeSlide(close_slide);
+	    V.Slides.closeSlide(close_slide,true);
    };
 
 

@@ -96,6 +96,16 @@ VISH.Messenger.Helper = (function(V,undefined){
 						VISH.VideoPlayer.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
+			case VISH.Constant.Event.onFlashcardPointClicked:
+				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
+						VISH.Slides.showSlide(VEMessageObject.params.slideNumber,false);
+				}
+				break;
+			case VISH.Constant.Event.onFlashcardSlideClosed:
+				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
+						VISH.Slides.closeSlide(VEMessageObject.params.slideNumber,false);
+				}
+				break;
 			case VISH.Constant.Event.onSetSlave:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.slave != "undefined")){
 					VISH.Status.setSlaveMode(VEMessageObject.params.slave);
