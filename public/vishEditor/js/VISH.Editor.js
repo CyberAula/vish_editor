@@ -206,10 +206,9 @@ VISH.Editor = (function(V,$,undefined){
 			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
 
-		//Quiz
-		$(document).on('click','#tab_quizes_help', function(){		
-			V.Debugging.log("click tab_quizes_help detected");	
-			VISH.Editor.Tour.startTourWithId('help_quiz_selection_help', 'bottom');
+		$(document).on('click','#help_quiz_selection', function(){			
+			VISH.Editor.Tour.startTourWithId('quiz_help', 'bottom');
+
 		});
 
 		//themes
