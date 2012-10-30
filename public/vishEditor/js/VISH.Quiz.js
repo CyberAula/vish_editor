@@ -1,7 +1,7 @@
 VISH.Quiz = (function(V,$,undefined){
   
   var quizMode;
-
+  var quizSessionStarted = false; 
   var mcOptionsHash = new Array();
   mcOptionsHash['a'] = 0;
   mcOptionsHash['b'] = 1;
@@ -18,17 +18,21 @@ VISH.Quiz = (function(V,$,undefined){
   var tabQuizSessionContent = "tab_quiz_session_content";
   var tabQuizStatsBarsContentId = "quiz_stats_bars_content_id";
   var tabQuizStatsPieContentId = "quiz_stats_pie_content_id";
-
+//vars for periodical calls to server data 
   var getResultsPeriod = 3000; //milliseconds
   var getResultsTimeOut; //must be global
+//variables to control slide forward and backward 
+  var isWaitingBackwardOneSlide = false; 
+  var isWaitingForwardOneSlide = false; 
+
 
   var init = function(presentation){
     if (presentation.type=="quiz_simple"){
       quizMode = "answer";
       _loadAnswerEvents();
     } else {
-      quizMode = "question";
-      _loadEvents();
+        quizMode = "question";
+        _loadEvents();
     }
 
     VISH.Quiz.Renderer.init();
@@ -51,25 +55,24 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var prepareQuiz = function(){
-    $("." + statisticsButtonClass).hide();
-
     if (quizMode=="answer") {
       $("." + startButtonClass).show();
       $("." + startButtonClass).val("Send");
     } else if(quizMode=="question") {
+      // V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
       if(!VISH.User.isLogged()){
         $("." + startButtonClass).hide();
       } else {
         $("." + startButtonClass).show();
       }
     }
-  }
+  };
 
 
-var showQuizStats = function(){
-  //open the fancybox
-  $("a#addQuizSessionFancybox").trigger("click"); 
-};
+  var showQuizStats = function(){
+    //open the fancybox
+    $("a#addQuizSessionFancybox").trigger("click"); 
+  };
 
 
   /////////////////////////
@@ -78,21 +81,20 @@ var showQuizStats = function(){
 
   var _loadEvents = function(){
     $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
-    //before close the quiz session ask to the user what want to do ...
-    $(document).on('click', "."+stopSessionButtonClass, _onStopMcQuizButtonClicked);
-    //$(document).on('click', "."+stopSessionButtonClass, showStopFancybox);
+    $(document).on('click', "."+stopSessionButtonClass, onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
     $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
-    
-
+    $(document).on('click', '#quiz_full_screen', VISH.SlideManager.toggleFullScreen);
+    $(document).on('click', '.hide_qrcode', _hideQRCode);
+    $(document).on('click', '.show_qrcode', _showQRCode);
    };
-/* Chek if user is logged in and call VISH's API for starting a voting) */
+  /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
-    
     if(V.User.isLogged()){
+      V.Debugging.log("User logged");
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
@@ -100,8 +102,6 @@ var showQuizStats = function(){
       _startStats();   
       _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
       
-      //get results
-      // V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
     }
     else {
           V.Debugging.log("User not logged");
@@ -183,13 +183,10 @@ var _getResults =  function(quiz_session_active_id) {
      //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
     $(current_slide).find("input." + optionsButtonClass).show();
-
-
-   // $(current_slide).find("div.multiplechoicequestion").attr("quizSessionId",quiz_session_id);
+    quizSessionStarted = true;
    //put quiz_session_id value in the input hidden for stopping quiz session
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
-
-
+    $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='"+VISH.ImagesPath +"qrcode_background.png' />")
     };
 
   var _OnQuizSessionReceivedError = function(error){
@@ -200,8 +197,8 @@ var _getResults =  function(quiz_session_active_id) {
 /*
 Show a popup with three buttons (Cancel, DOn't save & Save)
 */ 
- var _onStopMcQuizButtonClicked = function () {
-       V.Debugging.log("_onStopMcQuizButtonClicked");
+ var onStopMcQuizButtonClicked = function () {
+       V.Debugging.log("onStopMcQuizButtonClicked");
     var id = $('a[name=modal_fancybox]').attr('href'); //TODO in different way
     //Get the screen height and width
     var maskHeight = $(document).height();
@@ -240,6 +237,13 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
     clearInterval(getResultsTimeOut);
+    quizSessionStarted = false;
+    if(isWaitingForwardOneSlide) {
+      V.Slides.forwardOneSlide();
+    }
+    else if(isWaitingBackwardOneSlide) {
+      V.Slides.backwardOneSlide();
+    }
   };
 
   var _onQuizSessionCloseReceived = function(results){
@@ -267,6 +271,13 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
     clearInterval(getResultsTimeOut);
+    quizSessionStarted = false;
+        if(isWaitingForwardOneSlide) {
+      V.Slides.forwardOneSlide();
+    }
+    else if(isWaitingBackwardOneSlide) {
+      V.Slides.backwardOneSlide();
+    }
   };
 
   /////////////////////////
@@ -394,47 +405,92 @@ var _displayResults = function(data) {
 
 
   var drawPieChart = function (data) {
-        V.Debugging.log("drawPieChart called");
-        // Create the data table.
-        var data_for_chart = new google.visualization.DataTable();
-        data_for_chart.addColumn('string', 'Question');
-        data_for_chart.addColumn('number', 'Slices');
-        
-        for (option in data) {
+    V.Debugging.log("drawPieChart called");
+    // Create the data table.
+    var data_for_chart = new google.visualization.DataTable();
+    data_for_chart.addColumn('string', 'Question');
+    data_for_chart.addColumn('number', 'Slices');
 
-          if((option in mcOptionsHash)){ // a --> 2 , b -->3
-            var votes = data[option];
-            data_for_chart.addRow([option, votes]);
-          }
-        }; 
+    for (option in data) {
 
-        var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
+      if((option in mcOptionsHash)){ // a --> 2 , b -->3
+        var votes = data[option];
+        data_for_chart.addRow([option, votes]);
+      }
+    }; 
+
+  var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
         
-        //TODO set values in percents for resizing 
-        // Set chart options
-        var options = {'title':'',
-                       'width':400,
-                       'height':300};
+  //TODO set values in percents for resizing 
+  // Set chart options
+    var options = {'title':'',
+                   'width':400,
+                   'height':300
+                  };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
-        chart.draw(data_for_chart, options);
+    var chart = new google.visualization.PieChart(document.getElementById('quiz_chart_container_id'));
+    chart.draw(data_for_chart, options);
+  };
+
+
+  var _hideStopQuizPopup = function() {
+    $('#mask_stop_quiz').fadeTo("slow",0);  
+    $('#mask_stop_quiz').hide();  
+    $('#stop_quiz_fancybox').hide();
+};
+
+
+  var _hideQRCode = function () {
+       //there is the QR Code
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas")) {
+      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").hide();
+      $("#" +tabQuizSessionContent).find(".hide_qrcode").hide();
+      $("#" +tabQuizSessionContent).find(".show_qrcode").show();
+   
+      if ($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").attr("src")) {
+
+        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").show();
       }
+      else {
+        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='/vishEditor/images/VISH_frontpage.png' />")
+      }
+    }
+  };
 
+  var _showQRCode = function () {
+       //there is the QR Code
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
+      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").hide();
+       $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").show();
+        $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
+        $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
+    }
+  };
 
-      var _hideStopQuizPopup = function() {
-            $('#mask_stop_quiz').fadeTo("slow",0);  
-            $('#mask_stop_quiz').hide();  
-            $('#stop_quiz_fancybox').hide();
-      };
+  var getIsQuizSessionStarted = function() {
+    return quizSessionStarted;
+  };
+
+  var setIsWaitingForwardOneSlide = function (val) {
+    isWaitingForwardOneSlide = val; 
+  };
+  var setIsWaitingBackwardOneSlide = function (val) {
+    isWaitingBackwardOneSlide = val; 
+  };
+
 
 
   return {
-    init                      : init, 
-    prepareQuiz               : prepareQuiz,
-    getQuizMode               : getQuizMode, 
-    startMcQuizButtonClicked  :startMcQuizButtonClicked, 
-    drawPieChart                 : drawPieChart
+    init                        : init, 
+    prepareQuiz                 : prepareQuiz,
+    getQuizMode                 : getQuizMode, 
+    startMcQuizButtonClicked    :startMcQuizButtonClicked, 
+    drawPieChart                : drawPieChart, 
+    getIsQuizSessionStarted     : getIsQuizSessionStarted, 
+    onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
+    setIsWaitingForwardOneSlide : setIsWaitingForwardOneSlide, 
+    setIsWaitingBackwardOneSlide: setIsWaitingBackwardOneSlide
 
   };
     

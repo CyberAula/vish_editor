@@ -358,6 +358,7 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
 				VISH.Utils.loadTab('tab_pic_from_url');
 			}
 		});
@@ -594,11 +595,9 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-							presentation.contain_quiz = true; //added to try save quiz in vish
-						V.Debugging.log("div value:" + $(div));
+						//added to try save quiz in vish
+						//presentation.contain_quiz = true;
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
-						//	V.Debugging.log("question value: " + element.question);
-
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
 								element.quiztype = "multiplechoice";
@@ -608,13 +607,12 @@ VISH.Editor = (function(V,$,undefined){
 										element.options.push(input_text.value);
 									}
 								});
-							} else {
+							}
+							else {
 									V.Debugging.log("another kind of quiz detected");
-
-
 							} 
 						} 
-
+						/*
 					else if (element.type=="openquestion") {	   
 						element.title   = $(div).find(".title_openquestion").val();
 						element.question   = $(div).find(".value_openquestion").val();
@@ -640,9 +638,12 @@ VISH.Editor = (function(V,$,undefined){
 							question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
 						}
 							element.questions.push(question);
+
 							question = {};
 						});						
-					} else if(element.type === "snapshot"){
+					} */
+
+					 else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
@@ -657,10 +658,29 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					element = {};
+					//testing create simple_quiz
+					if(element.type=="quiz"){
+							
+					var quizSlide = $.extend(true, new Object(), element);
+
+					//Apply presentation Wrapper
+					var quizPresentation = new Object();
+					quizPresentation.title = presentation.title;
+					quizPresentation.description = presentation.description;
+					quizPresentation.author = '';
+					quizPresentation.slides = [quizSlide];
+					quizPresentation.type = "quiz_simple";
+
+					//slide.quiz_simple_json = quizPresentation;
+					element.quiz_simple_json = quizPresentation;
+					VISH.Debugging.log(JSON.stringify(quizPresentation));  
 				}
 
+					element = {};
+				}
+				// TODO Construct the simple_quiz object 
 				if(slide.type=="quiz"){
+							
 					var quizSlide = $.extend(true, new Object(), slide);
 
 					//Apply presentation Wrapper

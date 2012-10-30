@@ -3,7 +3,6 @@ VISH.Events = (function(V,$,undefined){
 	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
 	var registeredEvents = [];
-	var isSlaveMode;
 
 	/**
 	 * method to detect if keys present, if touch screen present or mashme integration
@@ -19,7 +18,6 @@ VISH.Events = (function(V,$,undefined){
 	  		}
 	  	}
 	};
-
 
 	/* Register events */
 	var _registerEvent = function(eventTargetId){
@@ -139,15 +137,13 @@ VISH.Events = (function(V,$,undefined){
 	 * function called when a poi is clicked
 	 */
 	 var _onFlashcardPoiClicked = function(event){
-	 	V.Debugging.log("Show slide " + event.data.slide_id);
-    	V.Slides.showSlide(event.data.slide_id);
+    	V.Slides.showSlide(event.data.slide_id,true);
 	 };
 
 
    var _onFlashcardCloseSlideClicked = function(event){
 	    var close_slide = event.target.id.substring(5); //the id is close3
-	    V.Debugging.log("Close slide " + close_slide);
-	    V.Slides.closeSlide(close_slide);
+	    V.Slides.closeSlide(close_slide,true);
    };
 
 
@@ -155,6 +151,7 @@ VISH.Events = (function(V,$,undefined){
    		if(!bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
+				
 	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 	      		_registerEvent("mobile_back_arrow");
@@ -184,7 +181,7 @@ VISH.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
-		  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+				$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		  		_unregisterEvent("mobile_back_arrow");
 		  		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
@@ -206,35 +203,60 @@ VISH.Events = (function(V,$,undefined){
 	  		bindedEventListeners = false;
 		}
 	};
+/*
+	var isActiveQuizSessionBackward = function(event) {
+		V.Debugging.log("event: " + event);
+		//session started 
+		if(V.Quiz.getIsQuizSessionStarted()) {
+			VISH.Quiz.setIsWaitingBackwardOneSlide(true);
+			VISH.Quiz.onStopMcQuizButtonClicked();
+		} //old case (just slide backward)
+				else {
+			 V.Slides.backwardOneSlide();
+		}
+	};
 
-	var setSlaveMode = function(slaveMode){
-		console.log("setSlaveMode " + slaveMode);
-		if(slaveMode!==isSlaveMode){
-			if(slaveMode){
-				unbindAllEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(false);
-				VISH.VideoPlayer.Youtube.setSlaveMode(true);
-				isSlaveMode=true;
-			} else {
-				bindAllEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(true);
-				VISH.VideoPlayer.Youtube.setSlaveMode(false);
-				isSlaveMode=false;
+	var isActiveQuizSessionForward = function(event) {
+		V.Debugging.log("event id : " + event.id);
+		// session started
+		if(V.Quiz.getIsQuizSessionStarted()) {
+			VISH.Quiz.setIsWaitingForwardOneSlide(true);
+			VISH.Quiz.onStopMcQuizButtonClicked();
+		} //old case (just slide forward)
+		else {
+			 V.Slides.forwardOneSlide();
+		}
+	};
+*/	
+//TODO Ask Kike
+	/*var isActiveQuizSession = function(event) {
+		V.Debugging.log("event id : " + event.srcElement.id);
+		// session started
+		if(event.srcElement.id =="page-switcher-end") {
+			if(V.Quiz.getIsQuizSessionStarted()) {
+				VISH.Quiz.setIsWaitingForwardOneSlide(true);
+				VISH.Quiz.onStopMcQuizButtonClicked();
+			} //old case (just slide forward)
+			else {
+				 V.Slides.forwardOneSlide();
+			} 
+		} 
+		else if (event.srcElement.id =="page-switcher-start") {
+			if(V.Quiz.getIsQuizSessionStarted()) {
+				VISH.Quiz.setIsWaitingBackwardOneSlide(true);
+				VISH.Quiz.onStopMcQuizButtonClicked();
+			} //old case (just slide backward)
+			else {
+				V.Slides.backwardOneSlide();
 			}
 		}
-	}
-
-	var isSlaveMode = function(){
-		return isSlaveMode;
-	}
-	
+	};
+*/
 	
 	return {
 			init 		: init,
 			bindAllEventListeners	: bindAllEventListeners,
-			unbindAllEventListeners	: unbindAllEventListeners,
-			setSlaveMode			: setSlaveMode,
-			isSlaveMode 			: isSlaveMode
+			unbindAllEventListeners	: unbindAllEventListeners
 	};
 
 }) (VISH,jQuery);

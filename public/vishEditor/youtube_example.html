@@ -5,17 +5,163 @@
 </head>
 <body>
 
- <script type="text/javascript" src="/vishEditor/js/libs/swfobject.js"></script>    
-  <div id="ytapiplayer">
-    You need Flash player 8+ and JavaScript enabled to view this video.
-  </div>
+ <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/customPlayer.css"/>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+ <script type="text/javascript" src="/vishEditor/js/libs/swfobject.js"></script> 
+
+ <div class="customPlayerContainer">   
+   <div id="ytapiplayer">
+     You need Flash player 8+ and JavaScript enabled to view this video.
+   </div>
+   <div class="customPlayerControls">
+    <div class="customPlayerPlay">
+    </div>
+   </div>
+   <div class="customPlayerProgressBar" hover="false" style="display:none">
+      <div class="progressBarElapsed">
+      </div>
+   </div>
+ </div>
 
   <script type="text/javascript">
 
-    var params = { allowScriptAccess: "always" };
-    var atts = { id: "myytplayer" };
-    swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer&wmodetransparent=true", 
-                       "ytapiplayer", "425", "356", "8", null, null, params, atts);
+
+var youtubePlayers = {};
+var YT = YT || {};
+YT.PlayerState = YT.PlayerState || {};
+YT.PlayerState.UNSTARTED = -1;
+YT.PlayerState.ENDED = 0;
+YT.PlayerState.PLAYING = 1;
+YT.PlayerState.PAUSED = 2;
+YT.PlayerState.BUFFERING = 3;
+YT.PlayerState.CUED = 5;
+
+  $(document).ready(function(){
+
+
+  });
+
+
+  var loadCustomPlayerControlEvents = function(){
+
+    $(".customPlayerControls").click(function(e){
+      e.preventDefault();
+      var video = $(this).parent().find("object")[0];
+      onClickVideo(video);
+    });
+
+    $(".customPlayerProgressBar").hover(
+      function(event) {
+        //onMouseEnter
+        $(event.target).attr("hover",true);
+      },
+      function (event) {
+        //onMouseLeave
+        $(event.target).attr("hover",false);
+      }
+    );
+
+    $(".progressBarElapsed").hover(
+      function(event) {
+        //onMouseEnter
+        $(event.target).attr("hover",true);
+      },
+      function (event) {
+        //onMouseLeave
+        $(event.target).attr("hover",false);
+      }
+    );
+
+    $(".customPlayerControls").hover(
+      function(event) {
+        $(event.target).attr("hover",true);
+        var video = $(this).parent().find("object")[0];
+        if($(video).attr("customPlayerStatus")!=="ready"){
+          var progressBar = $(this).parent().find("div.customPlayerProgressBar");
+          $(progressBar).show();
+        }
+      },
+      function (event) {
+        $(event.target).attr("hover",false);
+        setTimeout(function(){
+          var customPlayerControls = $(event.target);
+          var progressBar = $(customPlayerControls).parent().find("div.customPlayerProgressBar");
+          var progressBarElapsed = $(customPlayerControls).parent().find("div.progressBarElapsed");
+          var customPlayerControlsHover = $(customPlayerControls).attr("hover")==="true";
+          var progressBarHover = ($(progressBar).attr("hover")==="true")||($(progressBarElapsed).attr("hover")==="true");
+           if((!customPlayerControlsHover)&&(!progressBarHover)){
+             $(progressBar).hide();
+          }
+        },300);
+      }
+    );
+
+    $(".customPlayerProgressBar").click(function(event){
+      onClickProgressBar(event);
+    });
+  }
+
+    var startProgressBar = function(video){
+      var progressBar = $(video).parent().find("div.progressBarElapsed");
+      setInterval(function(){
+        $(progressBar).width((video.getCurrentTime()/video.getDuration())*100+'%');
+      },400);
+    }
+
+    var onClickProgressBar = function(event){ 
+      if($(event.target).hasClass("customPlayerProgressBar")){
+        var progressBar =  event.target;
+        var elapsed = $(progressBar).find("div.progressBarElapsed")[0];
+      } else if($(event.target).hasClass("progressBarElapsed")){
+        var elapsed =  event.target;
+        var progressBar = $(elapsed).parent();
+      } else {
+        return;
+      }
+      var video = $(progressBar).parent().find("object")[0];
+      var ratio = (event.pageX-$(progressBar).offset().left)/$(progressBar).outerWidth();
+      $(elapsed).width(ratio*100+'%');
+      video.seekTo(Math.round(video.getDuration()*ratio), true);
+    }
+  
+
+  var onClickVideo = function(video){
+    switch($(video).attr("customPlayerStatus")){
+      case "ready":
+        startProgressBar(video);
+      case "pause":
+        var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
+        var progressBar = $(video).parent().find("div.customPlayerProgressBar");
+        $(customPlayerControlsButton).removeClass().addClass("customPlayerPause");
+        $(customPlayerControlsButton).hide();
+        $(video).attr("customPlayerStatus","playing");  
+        $(progressBar).show();
+        video.playVideo();
+        break;
+      case "playing":
+        var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
+        $(customPlayerControlsButton).removeClass().addClass("customPlayerPlay");
+        $(customPlayerControlsButton).show();
+        $(video).attr("customPlayerStatus","pause");
+        video.pauseVideo();
+        break;
+      default:
+       break;
+    }
+  }
+
+  var onEndVideo = function(videoId){
+    var video = $("#"+videoId);
+    $(video).attr("customPlayerStatus","pause");
+    var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
+    $(customPlayerControlsButton).removeClass().addClass("customPlayerReplay");
+    $(customPlayerControlsButton).show();
+  }
+
+
+  var params = { allowScriptAccess: "always" };
+  var atts = { id: "myytplayer", wmode: "transparent" };
+  swfobject.embedSWF("http://www.youtube.com/v/bT2yo3_R51o?enablejsapi=1&playerapiid=myytplayer&wmodetransparent=true&controls=0&showinfo=0&rel=0&modestbranding=1","ytapiplayer", "425", "356", "8", null, null, params, atts);
 
   var players = {};
   function onYouTubePlayerReady (playerId) {
@@ -32,6 +178,12 @@
       };
       ytPlayer.addEventListener ('onStateChange', 'players.' + idPlayerParams + '.onStateChanged');
       ytPlayer.addEventListener ('onError', 'players.' + idPlayerParams + '.onError');
+      $(ytPlayer).attr("customPlayerStatus","ready");
+      loadCustomPlayerControlEvents();
+
+      $(".customPlayerContainer").attr("style","width:425px ;height:356px");
+      $(ytPlayer).attr("style","width:100%; height:100%;")
+      $(".customPlayerControls").attr("style","width: 100%; height:100%;")
   }
 
     function onytplayerStateChange(playerId,newState) {
@@ -41,6 +193,7 @@
     			break;
     		case 0:
     			console.log(playerId + ": Ended");
+          onEndVideo(playerId);
     			break;
     		case 1:
     			console.log(playerId + ": Reproducing");

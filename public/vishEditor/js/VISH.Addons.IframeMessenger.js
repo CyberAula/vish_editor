@@ -31,10 +31,17 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 		if(webAppMessage){
 			// VISH.Debugging.log(webAppMessage.data);
 			var VEMessage = webAppMessage.data;
-			if(VISH.Messenger.Helper.validateVEMessage(VEMessage,{allowSelfMessages: false})){
+			//We only process our own messages when default events are disabled.
+			var processSelfMessages = VISH.Status.isPreventDefaultMode();
+			if(VISH.Messenger.Helper.validateVEMessage(VEMessage,{allowSelfMessages: processSelfMessages})){
 				if(_isVEHelloMessage(VEMessage)){
 					if(!listenerInitialized){
 						_initListener();
+						if(VISH.Status.getIsInIframe()){
+							var helloEcho = JSON.parse(VEMessage);
+							helloEcho.origin = VISH.Status.getIframe().id;
+							VEMessage = JSON.stringify(helloEcho);
+						}
 						_sendMessage(VEMessage);
 					}
 				} else {

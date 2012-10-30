@@ -4,19 +4,15 @@
 	<title>Vish Viewer: API Testing</title>
 </head>
 <body>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Messenger.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
 	<script type="text/javascript">
-		VISH.Messenger.init();
-		var onGoToSlide = function(slideNumber,origin){
-			var dest = [];
-			var iframes = document.querySelectorAll(".vishEditorIframe");
-			for(var i=0; i<iframes.length; i++){
-				if(iframes[i].id!=origin){
-					dest.push(iframes[i].id);
-				}
-			}
-			VISH.Messenger.goToSlide(slideNumber,dest);
-		}
+		window.onload = function(){
+			VISH.IframeAPI.init();
+			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				VISH.IframeAPI.sendMessage(VEMessage,"*");
+			});
+			VISH.IframeAPI.setMaster("presentation_iframe_1");
+		};
 	</script>
 
     <div style="width:900px;height:200px;margin:0 auto; display:block">

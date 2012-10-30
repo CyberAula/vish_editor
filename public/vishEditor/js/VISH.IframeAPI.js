@@ -6,14 +6,17 @@
  */
 
 var VISH = VISH || {};
-VISH.Constant = {};
+VISH.Constant = VISH.Constant || {};
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
+VISH.Constant.Event.onFlashcardPointClicked = "onFlashcardPointClicked";
+VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
+VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 //Constant added by IframeAPI addon
 VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 
@@ -21,13 +24,16 @@ VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 VISH.IframeAPI = (function(V,undefined){
 
 	var helloAttempts;
-	var maxHelloAttempts = 10;
+	var maxHelloAttempts = 15;
 	var helloTimeout;
+
+	var options;
 
 	var listeners;
 	// listeners['event'] = callback;
 
-	var init = function(options) {
+	var init = function(initOptions) {
+		options = initOptions;
 		if (window.addEventListener){
 			window.addEventListener("message", _onWrapperedVEMessage, false);
 		} else if (el.attachEvent){
@@ -38,17 +44,20 @@ VISH.IframeAPI = (function(V,undefined){
 	};
 
 	var _startHelloExchange = function(){
-		registerCallback(VISH.Constant.Event.onIframeMessengerHello, function(){
+		registerCallback(VISH.Constant.Event.onIframeMessengerHello, function(origin){
 			//Communication stablished
-			// console.log("Communication stablished");
 			if(helloTimeout){
 				clearTimeout(helloTimeout);
-			}	
+			}
+			_applyOptions(origin);
+			if((options)&&(typeof options.callback === "function")){
+				options.callback(origin);
+			}
 		});
 		helloAttempts = 0;
 		helloTimeout = setInterval(function(){
 			_sayHello();
-		}, 2000);
+		}, 1000);
 		_sayHello();
 	}
 
@@ -58,6 +67,21 @@ VISH.IframeAPI = (function(V,undefined){
 		helloAttempts++;
 		if((helloAttempts>=maxHelloAttempts)&&(helloTimeout)){
 			clearTimeout(helloTimeout);
+		}
+	}
+
+	var _sendPreventDefaults = function(preventDefaults,destination){
+		var params = {};
+		params.preventDefaults = preventDefaults;
+		var VEMessage = _createMessage(VISH.Constant.Event.onPreventDefault,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var _applyOptions = function(destination){
+		if(options){
+			if(options.preventDefault===true){
+				_sendPreventDefaults(true,destination);
+			}
 		}
 	}
 
@@ -188,27 +212,39 @@ VISH.IframeAPI = (function(V,undefined){
 				break;
 			case VISH.Constant.Event.onPlayVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
 				break;
 			case VISH.Constant.Event.onPauseVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
 				break;
 			case VISH.Constant.Event.onSeekVideo:
 				if(VEMessageObject.params){
-					callback(VEMessageObject.params.type,VEMessageObject.params.videoId,
+					callback(VEMessageObject.params.videoId,
 							 VEMessageObject.params.currentTime,VEMessageObject.params.slideNumber,
 							 VEMessageObject.origin);
 				}
 				break;
+			case VISH.Constant.Event.onFlashcardPointClicked:
+				if(VEMessageObject.params){
+					callback(VEMessageObject.params.slideNumber,
+							 VEMessageObject.origin);
+				}
+				break;
+			case VISH.Constant.Event.onFlashcardSlideClosed:
+				if(VEMessageObject.params){
+					callback(VEMessageObject.params.slideNumber,
+							 VEMessageObject.origin);
+				}
+				break;
 			case VISH.Constant.Event.onIframeMessengerHello:
-				callback();
+				callback(VEMessageObject.origin);
 				break;
 			default:
 				_print("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
@@ -229,9 +265,8 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var playVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var playVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
@@ -239,9 +274,8 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var pauseVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var pauseVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
@@ -249,13 +283,28 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(VEMessage,destination);
 	}
 
-	var seekVideo = function(videoType,videoId,currentTime,videoSlideNumber,destination){
+	var seekVideo = function(videoId,currentTime,videoSlideNumber,destination){
 		var params = {};
-		params.type = videoType;
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onSeekVideo,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var openSlideInFlashcard = function(flashcardSlideNumber,slideNumber,destination){
+		var params = {};
+		params.flashcardSlideNumber = flashcardSlideNumber;
+		params.slideNumber = slideNumber;
+		var VEMessage = _createMessage(VISH.Constant.Event.onFlashcardPointClicked,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var closeSlideInFlashcard = function(flashcardSlideNumber,slideNumber,destination){
+		var params = {};
+		params.flashcardSlideNumber = flashcardSlideNumber;
+		params.slideNumber = slideNumber;
+		var VEMessage = _createMessage(VISH.Constant.Event.onFlashcardSlideClosed,params,null,destination);
 		sendMessage(VEMessage,destination);
 	}
 
@@ -264,6 +313,21 @@ VISH.IframeAPI = (function(V,undefined){
 		params.slave = slave;
 		var VEMessage = _createMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
 		sendMessage(VEMessage,destination);
+	}
+
+	var setMaster = function(master){
+		var params = {};
+		var allVEIframes = document.querySelectorAll(".vishEditorIframe");
+		for(var i=0; i<allVEIframes.length; i++){
+			if(allVEIframes[i].id!==master){
+				params.slave = true;
+			} else {
+				params.slave = false;
+			}
+			var destination = allVEIframes[i].id;
+			var VEMessage = _createMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
+			sendMessage(VEMessage,destination);
+		}
 	}
 
 
@@ -290,10 +354,13 @@ VISH.IframeAPI = (function(V,undefined){
 			unRegisterCallback 	: unRegisterCallback,
 			sendMessage			: sendMessage,
 			setSlave			: setSlave,
+			setMaster			: setMaster,
 			goToSlide 			: goToSlide,
 			playVideo 			: playVideo,
 			pauseVideo 			: pauseVideo,
-			seekVideo 			: seekVideo
+			seekVideo 			: seekVideo,
+			openSlideInFlashcard	: openSlideInFlashcard,
+			closeSlideInFlashcard	: closeSlideInFlashcard
 	};
 
 }) (VISH);

@@ -77,7 +77,7 @@ var getOptions = function(){
 			options["quiz_active_session_id"] = "29";
 
 			//Preview
-			options["preview"] = true;
+			options["preview"] = false;
 
 			//Close or come back button
 			//If comeBackUrl not exists, back button will be hidden
@@ -88,6 +88,20 @@ var getOptions = function(){
 
 			//And a default landguage
 			options["lang"] = "en";
+
+
+			//Addons Configuration
+			options.addons = [];
+
+			//Add a new addon: For example, VISH.Addons.IFrameMessenger
+			var addon = new Object();
+			addon.target = "Viewer";
+			addon.id = "IframeMessenger";
+			addon.url = "";
+			//Specific addon config, readed by VISH.Addons.IFrameMessenger
+			addon.config = {enable: true};
+
+			options.addons.push(addon);
 		}
 		
 		if((window.console) && (window.console.log)){

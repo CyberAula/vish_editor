@@ -7,7 +7,7 @@ VISH.ObjectPlayer = (function(){
 	var loadObject = function(element){
 		$.each(element.children('.objectelement'),function(index,value){
 			if($(value).hasClass('youtubeelement')){
-				loadYoutubeObject(element,value);
+				VISH.VideoPlayer.Youtube.loadYoutubeObject(element,value);
 				return;
 			}
 			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
@@ -20,25 +20,6 @@ VISH.ObjectPlayer = (function(){
 			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
 		});
 	};
-
-	var loadYoutubeObject = function(element,value){
-		if(VISH.Status.getOnline()=== false){
-			$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
-		}
-		else{
-			var source = $(value).attr("source");
-			var ytVideoId = $(value).attr("ytVideoId");
-			$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
-			var newYtVideoId = VISH.Utils.getId();
-			var params = { allowScriptAccess: "always" };
-	    	var atts = { id: newYtVideoId };
-	    	source = source.split("?")[0]; //Remove params
-	    	source = source + "?enablejsapi=1&playerapiid="+newYtVideoId+"&wmodetransparent=true" //Add yt necessary params
-	    	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
-	    	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
-			$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
-		}
-	}
 
 	/**
 	 * Function to remove the flash objects from the slides

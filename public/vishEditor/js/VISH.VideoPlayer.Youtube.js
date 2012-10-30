@@ -1,51 +1,48 @@
 VISH.VideoPlayer.Youtube = (function(){
-		
-	//Slave Mode
-	var isSlaveMode;
 
-	//Flag to prevent notify startVideo events
-	//Prevent sync bucles
-	var playTriggeredByUser = true;
-	var pauseTriggeredByUser = true;
-	
+	var init = function(){
+
+	}
+
+	var loadYoutubeObject = function(element,value){
+		if(VISH.Status.getOnline()=== false){
+			$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+			return;
+		}
+		var source = $(value).attr("source");
+		var ytVideoId = $(value).attr("ytVideoId");
+		$(value).html("<div id='" + ytVideoId + "' style='" + $(value).attr("objectStyle") + "'></div>");
+		var newYtVideoId = VISH.Utils.getId();
+		var params = { allowScriptAccess: "always" };
+    	var atts = { id: newYtVideoId , wmode: "transparent" };
+    	source = source.split("?")[0]; //Remove params
+    	source = source + "?enablejsapi=1&controls=0&showinfo=0&rel=0&modestbranding=1&wmodetransparent=true&playerapiid="+newYtVideoId //Add yt necessary params
+    	//swfobject library doc in http://code.google.com/p/swfobject/wiki/api
+    	swfobject.embedSWF(source,ytVideoId, "100%", "100%", "8", null, null, params, atts); 
+		$("#"+newYtVideoId).attr("style",$(value).attr("objectStyle"));
+
+		VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(newYtVideoId,false);
+	}
+
+
 	var onytplayerStateChange = function(playerId,newState) {
+		var player = document.getElementById(playerId);
 		switch(newState){
 			case -1:
 				// VISH.Debugging.log(playerId + ": Not initialized");
+				VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(player);
 				break;
 			case 0:
 				// VISH.Debugging.log(playerId + ": Ended");
+				VISH.VideoPlayer.CustomPlayer.onEndVideo(player);
 				break;
 			case 1:
-				VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
-
-				if(isSlaveMode){
-					console.log("ASDASD");
-					var ytPlayer = document.getElementById(playerId);
-					console.log(ytPlayer.getPlayerState());
-					//STORE VIDEO PLAYER PREV STATUS...
-				}
-
-				var params = new Object();
-				params.type = "Youtube";
-				params.videoId = playerId;
-				params.currentTime = $("#"+playerId)[0].getCurrentTime();
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
-
-				playTriggeredByUser = true;
+				// VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
+				VISH.VideoPlayer.CustomPlayer.onPlayVideo(player);
 				break;
 			case 2:
 				// VISH.Debugging.log(playerId + ": Pause at " + $("#"+playerId)[0].getCurrentTime());
-				
-				var params = new Object();
-				params.type = "Youtube";
-				params.videoId = playerId;
-				params.currentTime = $("#"+playerId)[0].getCurrentTime();
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
-
-				pauseTriggeredByUser = true;
+				VISH.VideoPlayer.CustomPlayer.onPauseVideo(player);
 				break;
 			case 3:
 				// VISH.Debugging.log(playerId + ": Buffer Store");
@@ -65,82 +62,93 @@ VISH.VideoPlayer.Youtube = (function(){
 		// VISH.Debugging.log(playerId + " error: " + error);
 	}
 
-	/**
-	 * Function to start a specific video
-	 */
-	var startVideo = function(videoId,currentTime){
+	var playVideo = function(videoId,currentTime,triggeredByUser){
 		var ytPlayer = document.getElementById(videoId);
-		if(!ytPlayer){
-			return;
-		}
 
-		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		
-		switch(ytPlayer.getPlayerState()){
-			case YT.PlayerState.PLAYING:
-				if(changeCurrentTime){
-					playTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				break;
-			case YT.PlayerState.PAUSED:
-				if(changeCurrentTime){
-					pauseTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				playTriggeredByUser = false;
+		//ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
+
+			var params = new Object();
+			params.videoId = videoId;
+			params.currentTime = ytPlayer.getCurrentTime();
+			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPlayVideo,params);
+				return;
+			}
+
+			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,triggeredByUser);
+
+			_seekVideo(ytPlayer,currentTime,false);
+			if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
 				ytPlayer.playVideo();
-				break;
-			case YT.PlayerState.UNSTARTED:
-				playTriggeredByUser = false;
-				ytPlayer.playVideo();
-			default:
-				break;
+			}
 		}
 	}
 
 	/**
 	 * Function to pause a specific video
 	 */
-	var pauseVideo = function(videoId,currentTime){
+	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		var ytPlayer = document.getElementById(videoId);
-		if(!ytPlayer){
-			return;
-		}
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
 
-		var changeCurrentTime = (typeof currentTime === 'number')&&(ytPlayer.getCurrentTime()!==currentTime);
-		
-		switch(ytPlayer.getPlayerState()){
-			case YT.PlayerState.PLAYING:
-				if(changeCurrentTime){
-					playTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				pauseTriggeredByUser = false;
+			var params = new Object();
+			params.videoId = videoId;
+			params.currentTime = ytPlayer.getCurrentTime();
+			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPauseVideo,params);
+				return;
+			}
+
+			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,triggeredByUser);
+
+			if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
 				ytPlayer.pauseVideo();
-				break;
-			case YT.PlayerState.PAUSED:
-				if(changeCurrentTime){
-					pauseTriggeredByUser = false;
-					ytPlayer.seekTo(currentTime);
-				}
-				break;
-			case YT.PlayerState.UNSTARTED:
-				break;
-			default:
-				break;
+			}
+			_seekVideo(ytPlayer,currentTime,false);
 		}
 	}
 
-	var setSlaveMode = function(slave){
-		isSlaveMode = slave;
+	/**
+	 * Function to pause a specific video
+	 */
+	var seekVideo = function(videoId,seekTime,triggeredByUser){
+		var ytPlayer = document.getElementById(videoId);
+		if((ytPlayer)&&(ytPlayer.getPlayerState)){
+			_seekVideo(ytPlayer,seekTime,triggeredByUser);
+		}
+	}
+
+	var _seekVideo = function(video,seekTime,triggeredByUser){
+		var changeCurrentTime = (typeof seekTime === 'number')&&(video.getCurrentTime()!==seekTime);
+		if(changeCurrentTime){
+			var params = new Object();
+			params.videoId = video.id;
+			params.currentTime = seekTime;
+			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+
+			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
+				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
+				return;
+			}
+
+			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
+			
+			video.seekTo(seekTime);
+		}
 	}
 
 	return {
-		startVideo 			: startVideo,
-		pauseVideo 			: pauseVideo,
+		init 				: init,
+		loadYoutubeObject	: loadYoutubeObject,
 		onytplayerStateChange	: onytplayerStateChange,
-		setSlaveMode		: setSlaveMode
+		playVideo 			: playVideo,
+		pauseVideo 			: pauseVideo,
+		seekVideo 			: seekVideo
 	};
 
 })(VISH,jQuery);

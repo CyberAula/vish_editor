@@ -41,6 +41,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		
+		//when page is cached, add presentation to localstorage
+		applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(presentation.type ==="game"){
@@ -55,7 +57,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		//important that events are initialized after presentation type is proccessed
 		V.Events.init();
 		V.Events.Notifier.init();
-	  	
+	  	V.VideoPlayer.init();
+
 		V.Themes.selectTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
@@ -107,8 +110,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(options.addons){
 			VISH.Addons.init(options.addons);
 		}
-
-		VISH.LocalStorage.addPresentation(presentation);
+		
 	};
 
 	/**
@@ -117,10 +119,10 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		if(VISH.Events.isSlaveMode()){
+		if(VISH.Status.isSlaveMode()){
 			return;
 		}
-
+		
 		if(VISH.Status.getIsInIframe()){
 			var myElem = VISH.Status.getIframe();
 		} else {
@@ -206,29 +208,8 @@ VISH.SlideManager = (function(V,$,undefined){
         V.SnapshotPlayer.loadSnapshot($(e.target));
       }
 		},500);
-		if($(e.target).hasClass('flashcard')){
-			slideId = $(e.target).attr("id");
-			fcElem = _getFlashcardFromSlideId(slideId);	
-			V.Mods.fc.player.init(fcElem, slideId);
-		}
+		
 		V.VideoPlayer.HTML5.playVideos(e.target);
-	};
-
-	/**
-	 * Function to get the flashcard json element from the slide element
-	 */
-	var _getFlashcardFromSlideId = function(id){
-		var fc = null;
-		for(var i=0;i<mySlides.length;i++){
-			if(mySlides[i].id===id){
-				for(var num=0;num<mySlides[i].elements.length;num++){
-					if(mySlides[i].elements[num].type === "flashcard"){					
-						return mySlides[i].elements[num];
-					}
-				}
-			}		
-		}
-		return null;
 	};
 
 	/**

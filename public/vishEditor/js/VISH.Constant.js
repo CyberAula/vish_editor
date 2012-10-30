@@ -1,4 +1,4 @@
-VISH.Constant = {};
+VISH.Constant = VISH.Constant || {};
 
 VISH.Constant.Edit = "Edit";
 VISH.Constant.Viewer  = "Viewer";
@@ -27,6 +27,10 @@ VISH.Constant.GAME = "game";
 VISH.Constant.THUMBNAIL = "thumbnail";
 VISH.Constant.NONE = "none";
 
+VISH.Constant.Video = {};
+VISH.Constant.Video.HTML5 = "HTML5";
+VISH.Constant.Video.Youtube = "Youtube";
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
@@ -34,4 +38,7 @@ VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
+VISH.Constant.Event.onFlashcardPointClicked = "onFlashcardPointClicked";
+VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
+VISH.Constant.Event.onPreventDefault = "onPreventDefault";
