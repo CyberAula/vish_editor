@@ -79,7 +79,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	* Function to select a random avatar, it will be chosen between the first and the max (to be in the first carrousel page)
 	*/
 	var _selectRandom = function(max){
-		var randomnumber = Math.ceil(Math.random()*max);
+		var randomnumber = Math.ceil(Math.random()*max) + 1; //pick between 2 and max (because the first one is the + avatar used to upload a new one)
 		$("#" + carrouselDivId + " .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").addClass("selectedThumbnail");
 		$('#presentation_avatar').val($("#" + carrouselDivId + " .carrousel_element_single_row_thumbnails:nth-child("+randomnumber+") img").attr("src"));
 	};
@@ -165,7 +165,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 				_selectDefaultAvatarInCarrousel(selectedAvatar);
 			}
 		} else {
-			_selectRandom(5);  //Randomly select one between first page
+			_selectRandom(4);  //Randomly select one between first page (it can´t be the first one that is used to upload a new avatar)
 		}
 	}
 
