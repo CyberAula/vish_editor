@@ -6,13 +6,15 @@
  */
 
 var VISH = VISH || {};
-VISH.Constant = {};
+VISH.Constant = VISH.Constant || {};
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
+VISH.Constant.Event.onFlashcardPointClicked = "onFlashcardPointClicked";
+VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 //Constant added by IframeAPI addon
@@ -229,6 +231,18 @@ VISH.IframeAPI = (function(V,undefined){
 							 VEMessageObject.origin);
 				}
 				break;
+			case VISH.Constant.Event.onFlashcardPointClicked:
+				if(VEMessageObject.params){
+					callback(VEMessageObject.params.slideNumber,
+							 VEMessageObject.origin);
+				}
+				break;
+			case VISH.Constant.Event.onFlashcardSlideClosed:
+				if(VEMessageObject.params){
+					callback(VEMessageObject.params.slideNumber,
+							 VEMessageObject.origin);
+				}
+				break;
 			case VISH.Constant.Event.onIframeMessengerHello:
 				callback(VEMessageObject.origin);
 				break;
@@ -275,6 +289,22 @@ VISH.IframeAPI = (function(V,undefined){
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
 		var VEMessage = _createMessage(VISH.Constant.Event.onSeekVideo,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var openSlideInFlashcard = function(flashcardSlideNumber,slideNumber,destination){
+		var params = {};
+		params.flashcardSlideNumber = flashcardSlideNumber;
+		params.slideNumber = slideNumber;
+		var VEMessage = _createMessage(VISH.Constant.Event.onFlashcardPointClicked,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
+	var closeSlideInFlashcard = function(flashcardSlideNumber,slideNumber,destination){
+		var params = {};
+		params.flashcardSlideNumber = flashcardSlideNumber;
+		params.slideNumber = slideNumber;
+		var VEMessage = _createMessage(VISH.Constant.Event.onFlashcardSlideClosed,params,null,destination);
 		sendMessage(VEMessage,destination);
 	}
 
@@ -328,7 +358,9 @@ VISH.IframeAPI = (function(V,undefined){
 			goToSlide 			: goToSlide,
 			playVideo 			: playVideo,
 			pauseVideo 			: pauseVideo,
-			seekVideo 			: seekVideo
+			seekVideo 			: seekVideo,
+			openSlideInFlashcard	: openSlideInFlashcard,
+			closeSlideInFlashcard	: closeSlideInFlashcard
 	};
 
 }) (VISH);

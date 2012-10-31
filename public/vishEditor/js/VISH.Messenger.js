@@ -18,6 +18,14 @@ VISH.Messenger = (function(V,undefined){
 		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onSeekVideo, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
 		});
+
+		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onFlashcardPointClicked, function(params){ 
+			notifyEventByMessage(VISH.Constant.Event.onFlashcardPointClicked,params);
+		});
+
+		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onFlashcardSlideClosed, function(params){ 
+			notifyEventByMessage(VISH.Constant.Event.onFlashcardSlideClosed,params);
+		});
 	};
 
 	var notifyEventByMessage = function(event,params){

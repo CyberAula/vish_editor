@@ -91,17 +91,17 @@ var getOptions = function(){
 
 
 			//Addons Configuration
-			var addons = [];
+			options.addons = [];
 
 			//Add a new addon: For example, VISH.Addons.IFrameMessenger
 			var addon = new Object();
 			addon.target = "Viewer";
 			addon.id = "IframeMessenger";
+			addon.url = "";
 			//Specific addon config, readed by VISH.Addons.IFrameMessenger
 			addon.config = {enable: true};
-			addons.push(addon);
 
-			options["addons"] = addons;
+			options.addons.push(addon);
 		}
 		
 		if((window.console) && (window.console.log)){

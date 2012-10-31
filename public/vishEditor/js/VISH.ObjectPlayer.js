@@ -11,7 +11,7 @@ VISH.ObjectPlayer = (function(){
 				return;
 			}
 			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
-				$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey.png'/>");
+				$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey_iframe.png'/>");
 				return;
 			}
 			var object = $($(value).attr("objectWrapper"));

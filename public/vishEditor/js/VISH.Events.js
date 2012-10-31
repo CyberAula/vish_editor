@@ -137,15 +137,13 @@ VISH.Events = (function(V,$,undefined){
 	 * function called when a poi is clicked
 	 */
 	 var _onFlashcardPoiClicked = function(event){
-	 	V.Debugging.log("Show slide " + event.data.slide_id);
-    	V.Slides.showSlide(event.data.slide_id);
+    	V.Slides.showSlide(event.data.slide_id,true);
 	 };
 
 
    var _onFlashcardCloseSlideClicked = function(event){
 	    var close_slide = event.target.id.substring(5); //the id is close3
-	    V.Debugging.log("Close slide " + close_slide);
-	    V.Slides.closeSlide(close_slide);
+	    V.Slides.closeSlide(close_slide,true);
    };
 
 
@@ -153,14 +151,9 @@ VISH.Events = (function(V,$,undefined){
    		if(!bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
-				//modified by V.Hugo to get move slide(forward & backward) while is started a quiz session
-	      		//$(document).on('click', '#page-switcher-start', isActiveQuizSessionBackward);
-	      		//$(document).on('click', '#page-switcher-end', isActiveQuizSessionForward);
-	      		
-	      		$(document).on('click', '#page-switcher-start', isActiveQuizSession);
-	      		$(document).on('click', '#page-switcher-end', isActiveQuizSession);
-	      		//$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-	      		//$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+				
+	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 	      		_registerEvent("mobile_back_arrow");
 	      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
 	      		_registerEvent("mobile_forward_arrow");
@@ -188,9 +181,7 @@ VISH.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
-				$(document).off('click', '#page-switcher-start', isActiveQuizSessionBackward);
-	      		$(document).off('click', '#page-switcher-end', isActiveQuizSessionForward);
-		  		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+				$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 		  		_unregisterEvent("mobile_back_arrow");
 		  		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
@@ -238,7 +229,7 @@ VISH.Events = (function(V,$,undefined){
 	};
 */	
 //TODO Ask Kike
-	var isActiveQuizSession = function(event) {
+	/*var isActiveQuizSession = function(event) {
 		V.Debugging.log("event id : " + event.srcElement.id);
 		// session started
 		if(event.srcElement.id =="page-switcher-end") {
@@ -260,7 +251,7 @@ VISH.Events = (function(V,$,undefined){
 			}
 		}
 	};
-
+*/
 	
 	return {
 			init 		: init,

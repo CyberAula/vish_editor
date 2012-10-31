@@ -14,7 +14,7 @@ VISH.LocalStorage = (function(V,$,undefined){
 		 	}
 		 	//save the presentation, we save the full json in case we need info about the slides in the future
 		 	localStorage.setItem("presentation_"+presentation.id, JSON.stringify(presentation));
-
+		 	_saveImage(presentation.avatar);
 		}
 		else
 		{
@@ -22,6 +22,23 @@ VISH.LocalStorage = (function(V,$,undefined){
 		  	V.Debugging.log("Sorry! No web storage support.");
 		}
 	};
+
+	//method to store an image in the localstorage
+	var _saveImage = function(path){
+		if(localStorage.getItem(path) === null){
+			var canvas = document.createElement("canvas");
+			var ctx = canvas.getContext("2d");
+			var img = new Image();
+			img.src = path;
+			img.onload = function () {
+			    canvas.width = this.width;
+			    canvas.height = this.height;
+			    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+			    var name = img.src.replace(/http:\/\/[^\/]+/i, ""); //remove the domain name
+			    localStorage.setItem(name, canvas.toDataURL());
+			};
+		}
+	}
 
 
 	return {
