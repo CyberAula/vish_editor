@@ -331,6 +331,10 @@ VISH.Editor = (function(V,$,undefined){
 		$(content).find("a.all").css("display","inline");
 
 		switch($(this).attr("size")){
+			case VISH.Constant.EXTRA_SMALL:
+				$(content).find("a.small").css("display","inline");
+				$(content).find("a > div").addClass("thumb_extra_small");
+				break;
 			case VISH.Constant.SMALL:
 				$(content).find("a.small").css("display","inline");
 				$(content).find("a > div").addClass("thumb_small");

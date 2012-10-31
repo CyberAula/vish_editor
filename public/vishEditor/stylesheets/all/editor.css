@@ -105,8 +105,33 @@ img {
 }
 
 .image_add_url {
-	margin-left: 20px;
-	margin-top: 18px;
+	position: absolute;
+	margin-left: 16px;
+	margin-top: 25px;	
+}
+
+.addUrlButton {
+  padding: 5px 10px;
+  display: inline;
+  text-decoration: none;
+  background: #FF005D repeat-x bottom;
+  opacity: 0.6;
+  color: #F9F9F9;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-left: 640px;
+  margin-top: 85px;
+}
+
+.addUrlButton:hover {
+  text-shadow: none;
+}
+
+.tools_input_addUrl{
+	margin-left: 70px !important;
 }
 
 .documentblank {
@@ -297,11 +322,19 @@ img {
     margin-top: 12px;
 	cursor: pointer;
 	background-size: 100%;
+
+}
+
+.thumb_extra_small {
+	width: 19px;
+	height: 23px;
+	margin-top: 3px;
 }
 
 .thumb_small {
-	width: 26px;
-	height: 32px;
+	width: 34px;
+	height: 42px;
+	margin-top: 6px;
 }
 
 .thumb_medium {
