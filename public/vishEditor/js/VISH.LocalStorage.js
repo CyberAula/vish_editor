@@ -14,6 +14,7 @@ VISH.LocalStorage = (function(V,$,undefined){
 		 	}
 		 	//save the presentation, we save the full json in case we need info about the slides in the future
 		 	localStorage.setItem("presentation_"+presentation.id, JSON.stringify(presentation));
+		 	localStorage.setItem("presentation_"+presentation.id+"_url", window.location.href);
 		 	_saveImage(presentation.avatar);
 		}
 		else
@@ -25,7 +26,8 @@ VISH.LocalStorage = (function(V,$,undefined){
 
 	//method to store an image in the localstorage
 	var _saveImage = function(path){
-		if(localStorage.getItem(path) === null){
+		//save in localstorage only if path is relative, for now, we can't save there flickr images (we have 5MB max for everything)
+		if(localStorage.getItem(path) === null && !path.match(/^http/)){
 			var canvas = document.createElement("canvas");
 			var ctx = canvas.getContext("2d");
 			var img = new Image();
