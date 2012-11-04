@@ -9,7 +9,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Server responds with a quiz_session_id
 	*/
 	var postStartQuizSession = function(quizId, successCallback, failCallback){
-		
+		console.log("postStartQuizSession and quizId : " + quizId);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
 			
 			var send_type = 'POST';
@@ -107,9 +107,9 @@ VISH.Quiz.API = (function(V,$,undefined){
      * used for students when send a vote 
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-
+		V.Debugging.log("putQuizSession called");
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-
+			V.Debugging.log("VISH mode");
 			//POST 
 			var send_type = 'PUT';
 	       

@@ -12,7 +12,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		
+		 var received = JSON.stringify(presentation);
+	    console.log("SlideManager.init and presentation: " + received);
 		VISH.Debugging.init(options);
 
 		VISH.Editing = false;

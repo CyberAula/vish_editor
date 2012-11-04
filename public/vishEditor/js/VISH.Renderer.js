@@ -20,8 +20,10 @@ VISH.Renderer = (function(V,$,undefined){
 		var content = "";
 		var classes = "";
 		var buttons = "";
-
+		var received = JSON.stringify(slide);
+	console.log("renderSlide and slide to render:"+ received);
 		for(el in slide.elements){
+			console.log("element type: " + slide.elements[el].type);
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
@@ -43,7 +45,10 @@ VISH.Renderer = (function(V,$,undefined){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
 			} else if(slide.elements[el].type === "quiz"){
-				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el],slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
+				//  var renderQuiz = function(quizType, element??, zone_class, slide, zone)
+				console.log("element value: " + slide.elements[el]);
+				//content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el], slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
+				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				classes += "quiz";
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -53,7 +58,12 @@ VISH.Renderer = (function(V,$,undefined){
 		if(V.SlideManager.getPresentationType() === "flashcard"){
 			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
 		}
-		
+		//when render a simple_quiz for voting
+		if(slide.type=="quiz") {
+			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
+			classes += "quiz";
+		}
+
 		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
 
 		SLIDE_CONTAINER.append(article);

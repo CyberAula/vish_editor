@@ -661,28 +661,28 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					//testing create simple_quiz
+					//testing create simple_quiz 
+					//TODO ask Kike which info must go in quiz_simple_json
 					if(element.type=="quiz"){
-							
-					var quizSlide = $.extend(true, new Object(), element);
-
-					//Apply presentation Wrapper
-					var quizPresentation = new Object();
-					quizPresentation.title = presentation.title;
-					quizPresentation.description = presentation.description;
-					quizPresentation.author = '';
-					quizPresentation.slides = [quizSlide];
-					quizPresentation.type = "quiz_simple";
-
-					//slide.quiz_simple_json = quizPresentation;
-					element.quiz_simple_json = quizPresentation;
-					VISH.Debugging.log(JSON.stringify(quizPresentation));  
+						var quizSlide = $.extend(true, new Object(), element);
+						//Apply presentation Wrapper
+						var quizPresentation = new Object();
+						quizPresentation.title = presentation.title;
+						quizPresentation.description = presentation.description;
+						quizPresentation.author = '';
+						//quizPresentation.element = [quizSlide];
+						quizPresentation.slides = [quizSlide];
+						console.log("composing quiz_simple_json QuizSlide:" + JSON.stringify(quizSlide));
+						quizPresentation.type = "quiz_simple";
+						element.quiz_simple_json = quizPresentation;
+						//VISH.Debugging.log(JSON.stringify(quizPresentation));  
+						
 				}
 
 					element = {};
 				}
 				// TODO Construct the simple_quiz object 
-				if(slide.type=="quiz"){
+				/*if(slide.type=="quiz"){
 							
 					var quizSlide = $.extend(true, new Object(), slide);
 
@@ -696,7 +696,7 @@ VISH.Editor = (function(V,$,undefined){
 
 					slide.quiz_simple_json = quizPresentation;
 					VISH.Debugging.log(JSON.stringify(quizPresentation));  
-				}
+				} */
 				
 			});
 			presentation.slides.push(slide);

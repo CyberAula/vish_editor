@@ -169,8 +169,8 @@ var _getResults =  function(quiz_session_active_id) {
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
-    V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
-
+    //V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
+ console.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
@@ -289,6 +289,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _sendVote = function (event) {
+
     var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
     if(typeof answer !== "undefined") {
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
@@ -318,7 +319,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   var _onQuizSessionResultsReceived = function(data) {
     //_showResults(data);  
     //trying to use google chart 
-      _displayResults(data.results);
+     // _displayResults(data.results);
 
   };
 
@@ -328,7 +329,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
     
 
-//trying google chart 
+/*trying google chart 
 var _displayResults = function(data) {
   //var received = JSON.stringify(data);
   //V.Debugging.log("_displayResults, and value received is:  " + received);
@@ -362,7 +363,7 @@ var _displayResults = function(data) {
   V.Debugging.log("chart url :  " + url );
  $(".quiz_statistics_content").find(".img_chart").attr("src", url);
 };
-
+*/
 
  /* NOT USED
   * Data format 
@@ -370,8 +371,9 @@ var _displayResults = function(data) {
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
+
     var received = JSON.stringify(data);
-    V.Debugging.log("_displayResults, and value received is:  " + received);
+    console.log("_displayResults, and value received is:  " + received );
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values
@@ -399,13 +401,13 @@ var _displayResults = function(data) {
           }
         }
       }
- google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
-
+google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
  };
 
 
   var drawPieChart = function (data) {
-    V.Debugging.log("drawPieChart called");
+    var received = JSON.stringify(data);
+    console.log("drawPieChart, and value received is:  " + received );
     // Create the data table.
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
