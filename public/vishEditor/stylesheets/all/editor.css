@@ -105,12 +105,18 @@ img {
 }
 
 .image_add_url {
-	position: absolute;
-	margin-left: 16px;
-	margin-top: 25px;	
+  margin-left: 20px;
+  margin-top: 18px;	
+}
+
+.image_add_link {
+  position: absolute;	
+  margin-left: 16px;	
+  margin-top: 25px;
 }
 
 .addUrlButton {
+  position: absolute;
   padding: 5px 10px;
   display: inline;
   text-decoration: none;
@@ -982,7 +988,7 @@ text-align: center;
 .buttonintro {
 	margin-top: 368px;
 	margin-left: 640px;
-	width:75px;
+	width: 90px;
 	text-align: center;
 }
 

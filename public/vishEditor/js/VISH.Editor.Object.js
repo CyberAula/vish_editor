@@ -62,9 +62,9 @@ VISH.Editor.Object = (function(V,$,undefined){
         
 		$("#" + uploadDivId + ' form').ajaxForm({
 			beforeSend: function() {
-			var percentVal = '0%';
-			bar.width(percentVal);
-			percent.html(percentVal);
+				var percentVal = '0%';
+				bar.width(percentVal);
+				percent.html(percentVal);
 			},
 			uploadProgress: function(event, position, total, percentComplete) {
 				var percentVal = percentComplete + '%';
@@ -72,12 +72,26 @@ VISH.Editor.Object = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				processResponse(xhr.responseText);
+				switch(VISH.Configuration.getConfiguration()["mode"]){
+					case VISH.Constant.NOSERVER:
+						processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
+					break;
+					case VISH.Constant.VISH:
+						processResponse(xhr.responseText);
+					break;
+					case VISH.Constant.STANDALONE:
+						processResponse(xhr.responseText);
+					break;
+				}
 				var percentVal = '100%';
 				bar.width(percentVal)
 				percent.html(percentVal);
+			},
+			error: function(error){
+				VISH.Debugging.log("Upload error");
+				VISH.Debugging.log(error);
 			}
-		}); 
+		});	
 	}
 	
 	var onLoadTab = function(tab){
@@ -118,7 +132,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		resetPreview(uploadDivId)
 
 		var tagList = $("#" + uploadDivId + " .tagList")
-		$(tagList).tagit("reset")
+		if($(tagList)[0].children.length!==0){
+			$(tagList).tagit("reset")
+		}
 	}
    
 	var _onTagsReceived = function(data){

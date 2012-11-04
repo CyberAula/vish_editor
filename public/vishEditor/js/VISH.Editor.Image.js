@@ -63,10 +63,24 @@ VISH.Editor.Image = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				processResponse(xhr.responseText);
+				switch(VISH.Configuration.getConfiguration()["mode"]){
+					case VISH.Constant.NOSERVER:
+						processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
+					break;
+					case VISH.Constant.VISH:
+						processResponse(xhr.responseText);
+					break;
+					case VISH.Constant.STANDALONE:
+						processResponse(xhr.responseText);
+					break;
+				}
 				var percentVal = '100%';
 				bar.width(percentVal)
 				percent.html(percentVal);
+			},
+			error: function(error){
+				VISH.Debugging.log("Upload error");
+				VISH.Debugging.log(error);
 			}
 		});	
 	};
@@ -109,7 +123,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 		VISH.Editor.Object.resetPreview(uploadDivId)
 
 		var tagList = $("#" + uploadDivId + " .tagList")
-		$(tagList).tagit("reset")
+		if($(tagList)[0].children.length!==0){
+			$(tagList).tagit("reset")
+		}
 	}
 	 
 	var _onTagsReceived = function(data){
