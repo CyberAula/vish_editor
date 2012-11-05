@@ -107,10 +107,8 @@ VISH.Quiz.API = (function(V,$,undefined){
      * used for students when send a vote 
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-		V.Debugging.log("putQuizSession called");
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			V.Debugging.log("VISH mode");
-			//POST 
+		//POST 
 			var send_type = 'PUT';
 	       
 	        V.Debugging.log("token is: " + V.User.getToken());

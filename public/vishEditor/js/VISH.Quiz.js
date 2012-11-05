@@ -169,8 +169,6 @@ var _getResults =  function(quiz_session_active_id) {
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
-    //V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
- // console.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
@@ -316,12 +314,12 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   //// COMMON METHODS
   ////////////////////////
 //data = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
-  var _onQuizSessionResultsReceived = function(data) {
+  //var _onQuizSessionResultsReceived = function(data) {
     //_showResults(data);  
     //trying to use google chart 
      // _displayResults(data.results);
 
-  };
+  //};
 
   var _onQuizSessionResultsReceivedError = function(error) {
     var received = JSON.stringify(error);
@@ -329,41 +327,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
     
 
-/*trying google chart 
-var _displayResults = function(data) {
-  //var received = JSON.stringify(data);
-  //V.Debugging.log("_displayResults, and value received is:  " + received);
-  var url = "http://chart.apis.google.com/chart?cht=p3&chs=300x200&chd=t:";
-  var lenght_array = 0;
-  $.each(data, function(clave, valor) {
-    lenght_array += 1;
-  });
-  var counter = 0;
-  $.each(data, function(clave, valor){ 
-    url+= valor;
-    counter++;
-    if(counter==lenght_array) {
-      url+= "&chl=";
-    }
-    else {
-      url+= ",";
-    } 
-  });
-  var counter = 0;
-  $.each(data, function(clave, valor){ 
-    url+= clave;
-    counter++;
-    if(counter==lenght_array) {
-      url+= "&chtt=testedVish";
-    }
-    else {
-      url+= "|";
-    } 
-  });
-  V.Debugging.log("chart url :  " + url );
- $(".quiz_statistics_content").find(".img_chart").attr("src", url);
-};
-*/
 
  /* NOT USED
   * Data format 
@@ -401,13 +364,11 @@ var _displayResults = function(data) {
           }
         }
       }
-google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
- };
+    google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
+  };
 
 
   var drawPieChart = function (data) {
-    var received = JSON.stringify(data);
-    // console.log("drawPieChart, and value received is:  " + received );
     // Create the data table.
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
@@ -464,9 +425,9 @@ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VI
        //there is the QR Code
     if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
       $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").hide();
-       $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").show();
-        $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
-        $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
+      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").show();
+      $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
+      $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
     }
   };
 

@@ -547,6 +547,8 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.contain_quiz = false;
 		var slide = {};
 		$('.slides > article').each(function(index,s){
+			//var received = JSON.stringify(s);
+    		V.Debugging.log(" article to save: " + $(s));
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = "standard";
 			slide.template = $(s).attr('template');
@@ -599,7 +601,6 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						//added to try save quiz in vish
-						//presentation.contain_quiz = true;
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
@@ -742,8 +743,8 @@ VISH.Editor = (function(V,$,undefined){
 		        var params = {
 		          "excursion[json]": jsonPresentation,
 		          "authenticity_token" : initOptions["token"],
-		          "draft": draft, 
-		          "contain_quiz": presentation.contain_quiz
+		          "draft": draft
+		          
 		        }
 		        
 		        $.ajax({

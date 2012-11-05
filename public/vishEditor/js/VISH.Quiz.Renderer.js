@@ -64,6 +64,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "</div>";
       ret += "</form>";
       ret += "</div>";
+      ret += "</div>";
       return ret;
   };
 
