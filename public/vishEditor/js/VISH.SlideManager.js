@@ -12,9 +12,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		 var received = JSON.stringify(presentation);
-	    console.log("SlideManager.init and presentation: " + received);
 		VISH.Debugging.init(options);
+		VISH.Debugging.log("SlideManager.init with presentation: " + JSON.stringify(presentation));
 
 		VISH.Editing = false;
 
@@ -69,23 +68,27 @@ VISH.SlideManager = (function(V,$,undefined){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
-			if(V.Status.getIsInIframe()){
-				myDoc = parent.document;
-			} else {
-				myDoc = document;
+		var renderFull = (options["full"]===true)&&(!V.Status.getIsInIframe());
+		
+		if(!renderFull){
+			if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
+				if(V.Status.getIsInIframe()){
+					myDoc = parent.document;
+				} else {
+					myDoc = document;
+				}
+				$(document).on('click', '#page-fullscreen', toggleFullScreen);
+				$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
+		      		V.ViewerAdapter.setupElements();
+		      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
+		      		setTimeout(function(){
+		      			V.ViewerAdapter.setupSize(true);
+		      			V.ViewerAdapter.decideIfPageSwitcher();
+		      		}, 400);    
+		    	});
+			}	else {
+			  	$("#page-fullscreen").hide();
 			}
-			$(document).on('click', '#page-fullscreen', toggleFullScreen);
-			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
-	      		V.ViewerAdapter.setupElements();
-	      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
-	      		setTimeout(function(){
-	      			VISH.ViewerAdapter.setupSize(true);
-	      			VISH.ViewerAdapter.decideIfPageSwitcher();
-	      		}, 400);    
-	    	});
-		}	else {
-		  	$("#page-fullscreen").hide();
 		}
 		
 		if (V.Status.getDevice().desktop) {
@@ -97,8 +100,6 @@ VISH.SlideManager = (function(V,$,undefined){
 			window.addEventListener("orientationchange", hideAddressBar );		
 		}
 
-		V.Quiz.prepareQuiz(presentation);
-
 		if((options)&&(options["preview"])){
 			$("div#viewerpreview").show();
 		}
@@ -107,9 +108,18 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("button#closeButton").show();
 		}
 
+		V.Quiz.prepareQuiz(presentation);
+
 		//Init Vish Editor Addons
 		if(options.addons){
 			VISH.Addons.init(options.addons);
+		}
+
+		if(renderFull){
+			$("#page-fullscreen").hide();
+			V.ViewerAdapter.setupElements();
+			V.ViewerAdapter.setupSize(true);
+	      	V.ViewerAdapter.decideIfPageSwitcher();
 		}
 		
 	};

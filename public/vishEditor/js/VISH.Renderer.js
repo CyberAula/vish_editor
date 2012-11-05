@@ -21,9 +21,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var classes = "";
 		var buttons = "";
 		var received = JSON.stringify(slide);
-	console.log("renderSlide and slide to render:"+ received);
 		for(el in slide.elements){
-			console.log("element type: " + slide.elements[el].type);
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
@@ -45,9 +43,6 @@ VISH.Renderer = (function(V,$,undefined){
 				content = _renderFlashcard(slide.elements[el],slide.template);
 				classes += "flashcard";
 			} else if(slide.elements[el].type === "quiz"){
-				//  var renderQuiz = function(quizType, element??, zone_class, slide, zone)
-				console.log("element value: " + slide.elements[el]);
-				//content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el], slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				classes += "quiz";
 			} else {

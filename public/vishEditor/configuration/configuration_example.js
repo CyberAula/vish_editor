@@ -76,6 +76,8 @@ var getOptions = function(){
 			//Testing Quizes
 			options["quiz_active_session_id"] = "29";
 
+			options["full"] = false;
+
 			//Preview
 			options["preview"] = false;
 

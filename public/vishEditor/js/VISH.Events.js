@@ -151,7 +151,6 @@ VISH.Events = (function(V,$,undefined){
    		if(!bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
-				
 	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 	      		_registerEvent("mobile_back_arrow");
