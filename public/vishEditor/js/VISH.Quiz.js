@@ -170,7 +170,7 @@ var _getResults =  function(quiz_session_active_id) {
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
     //V.Debugging.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
- console.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
+ // console.log("_onQuizSessionReceived with  quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
@@ -373,7 +373,7 @@ var _displayResults = function(data) {
   var _showResults = function (data) {
 
     var received = JSON.stringify(data);
-    console.log("_displayResults, and value received is:  " + received );
+    // console.log("_displayResults, and value received is:  " + received );
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values
@@ -407,7 +407,7 @@ google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VI
 
   var drawPieChart = function (data) {
     var received = JSON.stringify(data);
-    console.log("drawPieChart, and value received is:  " + received );
+    // console.log("drawPieChart, and value received is:  " + received );
     // Create the data table.
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');

@@ -25,8 +25,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				page_is_fullscreen = false;
 				if(V.SlideManager.getPresentationType() === "presentation"){
 					reserved_px_for_menubar = 40;
-				}
-				else{
+				} else {
 					reserved_px_for_menubar = 0;
 				}				
 				margin_height = 40;

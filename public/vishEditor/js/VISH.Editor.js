@@ -672,7 +672,7 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.author = '';
 						//quizPresentation.element = [quizSlide];
 						quizPresentation.slides = [quizSlide];
-						console.log("composing quiz_simple_json QuizSlide:" + JSON.stringify(quizSlide));
+						// VISH.Debugging.log("composing quiz_simple_json QuizSlide:" + JSON.stringify(quizSlide));
 						quizPresentation.type = "quiz_simple";
 						element.quiz_simple_json = quizPresentation;
 						//VISH.Debugging.log(JSON.stringify(quizPresentation));  
@@ -707,9 +707,8 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 		  
 		// VISH.Debugging.log("Presentation saved:")
-		 //VISH.Debugging.log(JSON.stringify(presentation));    
-		 console.log(JSON.stringify(presentation));    
-		return savedPresentation;     
+		VISH.Debugging.log(JSON.stringify(presentation));      
+		return savedPresentation; 
 	};
 	
 
