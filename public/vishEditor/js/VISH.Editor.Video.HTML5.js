@@ -78,30 +78,6 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $(current_area).append(videoTag)
     
     VISH.Editor.addDeleteButton($(current_area));
-    	
-      /*
-	  //RESIZE
-		var width, value;
-		if(style){
-		   width = V.Editor.Utils.getWidthFromStyle(style);
-		   value = width/80;
-		} else {
-			value = 4;
-		}
-    $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-            
-    $("#imageSlider"+nextVideoId).slider({
-      from: 1,
-      to: 8,
-      step: 0.2,
-      round: 1,
-      dimension: "x",
-      skin: "blue",
-      onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(80*value);
-      }
-    });
-    */
 
     $("#" + idToDragAndResize).draggable({cursor: "move"});
   }
