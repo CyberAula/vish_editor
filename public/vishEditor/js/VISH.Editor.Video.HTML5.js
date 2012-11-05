@@ -29,7 +29,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	}
   	
     //Default options
-	  var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+	  var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
 	  var autoplay = false;
 		
 	//Replace defeault options if options hash is defined
@@ -71,41 +71,19 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     });
     
     var fallbackText = document.createElement('p');
-    $(fallbackText).html("Your browser does not support HTML5 video.")
-    $(videoTag).append(fallbackText)
+    $(fallbackText).html("Your browser does not support HTML5 video.");
+    $(videoTag).append(fallbackText);
     
     $(current_area).html("");
     $(current_area).append(videoTag)
     
     VISH.Editor.addDeleteButton($(current_area));
-    	
-	  //RESIZE
-		var width, value;
-		if(style){
-		   width = V.Editor.Utils.getWidthFromStyle(style);
-		   value = width/80;
-		} else {
-			value = 4;
-		}
-    $("#menubar").before("<div id='sliderId"+nextVideoId+"' class='theslider'><input id='imageSlider"+nextVideoId+"' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-            
-    $("#imageSlider"+nextVideoId).slider({
-      from: 1,
-      to: 8,
-      step: 0.2,
-      round: 1,
-      dimension: "x",
-      skin: "blue",
-      onstatechange: function( value ){
-          $("#" + idToDragAndResize).width(80*value);
-      }
-    });
 
     $("#" + idToDragAndResize).draggable({cursor: "move"});
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+    var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
     var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
        rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";

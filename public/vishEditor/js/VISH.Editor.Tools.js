@@ -1,7 +1,8 @@
 VISH.Editor.Tools = (function(V,$,undefined){
 	
 	var toolbarEventsLoaded = false;
-	
+	var INCREASE_ZOOM = 1.2; //Constant to multiply or divide the actual size of the element
+
 
 	/*
 	 * Toolbar is divided in three zones.
@@ -285,15 +286,18 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	
 
 	var _changeZoom = function(action){
+		var object, objectInfo, zoom;
 		var area = VISH.Editor.getCurrentArea();
 		var type = $(area).attr("type");    
 		switch(type){
 			case "object":
-				var object = area.children()[0].children[0];
-				var objectInfo = VISH.Object.getObjectInfo(object);
+			case "snapshot":
+				var parent = area.children(":first");
+				object = parent.children(":first");
+				objectInfo = VISH.Object.getObjectInfo(object);
 				if(objectInfo.type==="web"){
 					var iframe = $(area).find("iframe");
-					var zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
+					zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
 
 					if(action=="+"){
 						zoom = zoom + 0.1;
@@ -306,8 +310,69 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					//Resize object to fix in its wrapper
 					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
 				}
+				else{ //type swf, youtube or anything else
+					var newWidth, newHeight;
+					var aspectRatio = parent.width()/parent.height();
+					var originalHeight = object.height();
+					var originalWidth = object.width();
+					var parentoriginalHeight = parent.height();
+					var parentoriginalWidth = parent.width();
+
+					//Change width
+					if(action=="+"){
+						zoom = INCREASE_ZOOM;
+					} else {
+						zoom = 1/INCREASE_ZOOM;
+					}
+					$(parent).width(parentoriginalWidth*zoom);
+					$(parent).height(parentoriginalHeight*zoom);
+
+					var styleZoom = V.Utils.getZoomFromStyle( $(object).attr("style"));
+
+					if(styleZoom!=1){
+						newWidth = newWidth/styleZoom;
+						newHeight = Math.round(newWidth/aspectRatio);
+						newWidth = Math.round(newWidth);
+					} else {
+						newHeight = parentoriginalHeight*zoom;
+						newWidth = parentoriginalWidth*zoom;
+					}			
+						
+					$(object).width(newWidth);
+					$(object).height(newHeight);
+				}
 				break;
-			case "snapshot":
+			case "image":
+				object = $(area).find("img");
+
+				var originalHeight = object.height();
+				var originalWidth = object.width();
+
+				//Change width
+				if(action=="+"){
+					zoom = INCREASE_ZOOM;
+				} else {
+					zoom = 1/INCREASE_ZOOM;
+				}
+				object.width(originalWidth*zoom);
+				object.height(originalHeight*zoom);
+
+				break;
+			case "video":
+				object = $(area).find("video");
+
+				var originalHeight = object.height();
+				var originalWidth = object.width();
+
+				//Change width
+				if(action=="+"){
+					zoom = INCREASE_ZOOM;
+				} else {
+					zoom = 1/INCREASE_ZOOM;
+				}
+				object.width(originalWidth*zoom);
+				object.height(originalHeight*zoom);
+
 				break;
 			default:
 				break;

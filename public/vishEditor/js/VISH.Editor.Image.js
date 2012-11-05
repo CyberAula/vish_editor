@@ -216,42 +216,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
 
 		V.Editor.addDeleteButton(current_area);
-
-		//the value to set the slider depends on the width if passed in the style, we have saved that value in image_width    
-		var scaleFactor = image_width/reference_width;
-		$("#menubar").before("<div id='sliderId"+nextImageId+"' class='theslider'><input id='imageSlider"+nextImageId+"' type='slider' name='size' value='"+scaleFactor+"' style='display: none; '></div>");
-		    
-		$("#imageSlider"+nextImageId).slider({
-			from: 1,
-			to: 15,
-			step: 0.25,
-			round: 1,
-			dimension: "x",
-			skin: "blue",
-			onstatechange: function( value ){
-				var originalHeight = $("#" + idToDragAndResize).height();
-				var originalWidth = $("#" + idToDragAndResize).width();
-
-				//Change width
-				var newWidth = reference_width*value;
-				$("#" + idToDragAndResize).width(newWidth);
-
-				if(originalHeight===$("#" + idToDragAndResize).height()){
-					//change height
-					var aspectRatio = originalHeight/originalWidth;
-					if(aspectRatio!=0){
-						$("#" + idToDragAndResize).height(newWidth*aspectRatio);
-					}
-				} 
-			}
-		});
-
+		
 		$("#" + idToDragAndResize).draggable({
 			cursor: "move",
 			stop: function(){
 				$(this).parent().click();  //call parent click to select it in case it was unselected	
 			}
 		});
+
 	};
 
 	var setAddContentMode = function(mode){
