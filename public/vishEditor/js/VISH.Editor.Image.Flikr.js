@@ -44,7 +44,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 
 			$.each(data.items, function(i,item){
 				//add every image in the carrousel
-				var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m + " imageFlikrId=" + i + "/>")
+				var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m.replace(/_m/i, "") + " imageFlikrId=" + i + "/>")
 				carrouselImages.push(myImg);
 			});
 			VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);

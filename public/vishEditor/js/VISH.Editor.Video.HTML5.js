@@ -29,7 +29,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	}
   	
     //Default options
-	  var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+	  var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
 	  var autoplay = false;
 		
 	//Replace defeault options if options hash is defined
@@ -71,14 +71,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     });
     
     var fallbackText = document.createElement('p');
-    $(fallbackText).html("Your browser does not support HTML5 video.")
-    $(videoTag).append(fallbackText)
+    $(fallbackText).html("Your browser does not support HTML5 video.");
+    $(videoTag).append(fallbackText);
     
     $(current_area).html("");
     $(current_area).append(videoTag)
     
     VISH.Editor.addDeleteButton($(current_area));
     	
+      /*
 	  //RESIZE
 		var width, value;
 		if(style){
@@ -100,12 +101,13 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
           $("#" + idToDragAndResize).width(80*value);
       }
     });
+    */
 
     $("#" + idToDragAndResize).draggable({cursor: "move"});
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = "https://github.com/ging/vish_editor/raw/master/images/example_poster_image.jpg";
+    var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
     var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
        rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";

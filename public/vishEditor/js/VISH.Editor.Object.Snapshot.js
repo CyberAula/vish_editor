@@ -125,6 +125,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
       $('#' + idToDrag).scrollLeft(scrollLeft);
     }
     
+    /*
     //RESIZE
     var width, value;
     if(style){
@@ -147,7 +148,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
         _resizeWebIframe(idToDrag, mystep * value);
       }
     });
-
+    */
 		
 		$('#' + idToDrag).bind('mousedown',function(event){
 			 event.preventDefault();

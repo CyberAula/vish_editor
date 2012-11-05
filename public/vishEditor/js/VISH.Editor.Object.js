@@ -467,29 +467,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			
 		$(wrapperDiv).append(wrapperTag);
 		
-		//RESIZE
-		var width, value;
-		if(style){
-			width = V.Editor.Utils.getWidthFromStyle(style,current_area);
-			value = 10*width/$(current_area).width();
-		} else {			
-			value = 10; //we set it to the maximum value
-		}
-		var mystep = $(current_area).width()/10; //the step to multiply the value
-		$("#menubar").before("<div id='sliderId" + nextWrapperId + "' class='theslider'><input id='imageSlider" + nextWrapperId + "' type='slider' name='size' value='"+value+"' style='display: none; '></div>");
-
-		$("#imageSlider" + nextWrapperId).slider({
-			from : 1,
-			to : 10,
-			step : 0.2,
-			round : 1,
-			dimension : "x",
-			skin : "blue",
-			onstatechange : function(value) {
-				resizeObject(idToResize, mystep * value);
-			}
-		});
-
 		$("#" + idToDrag).draggable({
 			cursor : "move"
 		});
