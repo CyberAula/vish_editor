@@ -58,6 +58,13 @@ var i18n =
 				"i.walk53"			: "(añadir video desde una camara en directo)",
 				"i.walk54"			: "Ahora estas en la sección Webcam.Haz click en \"Continuar\"",
 				"i.walk55"			: "En este espacio puedes buscar contenido en directo dentro del repositorio. Solamente escribe lo que busques y en la zona inferior te aparecerá una galería, desde la cual solo debes pulsar encima del contenido para acceder a una pequeña ventana con título y descripción mas detallada del contenido que te ofrecera la posibilidad de añadirlo. Solo debes pulsar ese botón para realizar esa tarea..Haz click en \"cerrar\" para terminar este tutorial.",
+				"i.walk56"			: "Una Flashcard es una aplicación que te ayudará a representar tu excursión como una infografía, usando una imagen para representar el concepto de la misma y marcando las zonas para que el usuario interactue con ellas de manera que pueda visualizar las paginas de la excursión.",
+				"i.walk57"			: "Primero, utiliza estos iconos para añadir una imagen de fondo.",
+				"i.walk58"			: "Puedes añadir imagenes por:",
+				"i.walk59"			: "Una vez hecho esto, puedes arrastrar las flechas de la zona inferior hacia la flashcard para marcar la zona de cada página dentro de esta",
+				"i.walk60"			: "Puedes previsualizar la flashcard en cualquier momento utilizando el icono de previsualizar.", 
+				"i.walk61"			: "Si salvas tu presentación como una flashcard, se mostrará como tal, pero en cualquier momento puedes editarla y mostrasla como una presentación normal de nuevo.", 
+
 				"i.pic.add"			: "añadir URL de imagen",
 				"i.browserrequirements" 	: "El navegador que estas utilizando no cumple los requisitos minimos para utilizar esta aplicación. Por favor, actualiza tu navegador",
 				"i.accept"			: "aceptar",
@@ -162,6 +169,7 @@ var i18n =
 				"i.publish"				: "Publicar",
 				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado."
+
 				
 				
 
