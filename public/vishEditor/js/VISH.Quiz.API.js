@@ -56,9 +56,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 */
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
 	if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-
-		V.Debugging.log("quiz_session_id to delete is: " + quiz_session_id);
-		V.Debugging.log("quiz_name (if save) is: " + quiz_name);
 		var quizName;
 			if(quiz_name) {
 				quizName = quiz_name;

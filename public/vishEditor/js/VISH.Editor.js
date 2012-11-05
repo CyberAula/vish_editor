@@ -547,8 +547,6 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.contain_quiz = false;
 		var slide = {};
 		$('.slides > article').each(function(index,s){
-			//var received = JSON.stringify(s);
-    		V.Debugging.log(" article to save: " + $(s));
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = "standard";
 			slide.template = $(s).attr('template');
@@ -616,37 +614,7 @@ VISH.Editor = (function(V,$,undefined){
 									V.Debugging.log("another kind of quiz detected");
 							} 
 						} 
-						/*
-					else if (element.type=="openquestion") {	   
-						element.title   = $(div).find(".title_openquestion").val();
-						element.question   = $(div).find(".value_openquestion").val();
-					} else if (element.type=="mcquestion") {     		      	
-						element.question   = $(div).find(".value_multiplechoice_question").val();
-						element.options = [];  	
-						$(div).find('.multiplechoice_text').each(function(i, input_text){
-							if((input_text)&&(input_text.value != "")){
-								element.options.push(input_text.value);
-							}
-						});
-					
-					} else if (element.type=="truefalsequestion") {
-					  	V.Debugging.log("element type truefalsequestion detected");   		      	
-						element.questions = [];	
-						var question = {};
-						$(div).find(".true_false_question").each(function(i, input_text){
-						question.id = i;
-						question.text_question = input_text.value;
-						if($(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val()==undefined) {
-							question.answer = "null";
-						} else {
-							question.answer = $(".current").find("input:radio[name='answer_"+(i+1)+"']:checked").val();
-						}
-							element.questions.push(question);
-
-							question = {};
-						});						
-					} */
-
+						
 					 else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
@@ -671,14 +639,10 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.title = presentation.title;
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
-						//quizPresentation.element = [quizSlide];
-						quizPresentation.slides = [quizSlide];
-						// VISH.Debugging.log("composing quiz_simple_json QuizSlide:" + JSON.stringify(quizSlide));
+					    quizPresentation.slides = [quizSlide];
 						quizPresentation.type = "quiz_simple";
 						element.quiz_simple_json = quizPresentation;
-						//VISH.Debugging.log(JSON.stringify(quizPresentation));  
-						
-				}
+					}
 
 					element = {};
 				}
