@@ -330,13 +330,13 @@ VISH.Editor.API = (function(V,$,undefined){
         success:function(response){
             if(typeof successCallback == "function"){
               var tagsJSON = JSON.parse(response);
-							if(tagsJSON.length>0){
-								 tags = [];
+							tags = [];
+              if(tagsJSON.length>0){								 
 		             $.each(tagsJSON, function(index, tagJSON) {
 		               tags.push(tagJSON.value)
 		             });
-		             successCallback(tags);
-							}
+		          }
+              successCallback(tags);
             }
         },
         error:function (xhr, ajaxOptions, thrownError){
