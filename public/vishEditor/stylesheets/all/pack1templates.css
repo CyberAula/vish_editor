@@ -692,7 +692,6 @@
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-    z-index: 11;
 }
 
 .t13_circle > div.menuselect_hide {
