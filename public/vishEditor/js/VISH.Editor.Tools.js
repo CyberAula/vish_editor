@@ -397,6 +397,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					if(hyperlink){
 						$(".tools_input_addUrl").val(hyperlink);
 					}
+
 				},
 				'onClosed'			: function(){
 				}
