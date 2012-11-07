@@ -249,18 +249,12 @@ VISH.Samples = (function(V,undefined){
 			}]
 		}, {
 			'id'       :'2',
-			'template' :'t2',
-			'elements':[
-				{
-                    'id'     : '325',
-					'type'   : 'text',
-					'areaid' : 'header',
-					'body'   : 'Experimento virtual1'
-				},
+			'template' :'t10',
+			'elements':[				
 				{
           'id'     : '7335',
           'type'   : 'object',
-          'areaid' : 'left',
+          'areaid' : 'center',
           'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
         }	
 			]
