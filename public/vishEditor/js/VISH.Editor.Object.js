@@ -434,6 +434,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 				VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
 				break;
 		}
+		//finally load the tools in the toolbar
+		VISH.Editor.Tools.loadToolsForZone(current_area);
 
 	}
 	
