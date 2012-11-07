@@ -556,6 +556,7 @@ img {
 	height: 40px;
 	cursor:pointer;
 	background: url(/vishEditor/images/delete_content.png);
+	z-index: 10000;
 }
 
 .delete_content:hover{

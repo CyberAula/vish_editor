@@ -197,6 +197,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		textArea.addClass("wysiwygInstance");
 
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
+
+		$(".value_multiplechoice_question_in_zone").parent().find("div")[0].addClass("mcquestion_header");
 	};
 
 
