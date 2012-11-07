@@ -392,7 +392,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case "image":
 						V.Editor.Image.drawImage(object);
 						break;
-
 					case "swf":
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
@@ -450,6 +449,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		current_area.attr('type', 'object');
 		var wrapperDiv = document.createElement('div');
 		wrapperDiv.setAttribute('id', idToDrag);
+		wrapperDiv.setAttribute('draggable', true);
 		if(style){
 			wrapperDiv.setAttribute('style', style);
 		}
@@ -457,6 +457,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		var wrapperTag = $(wrapper);
 		$(wrapperTag).attr('id', idToResize);
+		$(wrapperTag).css('pointer-events', "none");
 		$(wrapperTag).attr('class', template + "_object");
 		$(wrapperTag).attr('wmode', "opaque");
 

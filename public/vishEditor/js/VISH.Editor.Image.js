@@ -213,7 +213,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(hyperlink){
 			current_area.attr('hyperlink',hyperlink);
 		}
-		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
+		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' draggable='true' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
 
 		V.Editor.addDeleteButton(current_area);
 		

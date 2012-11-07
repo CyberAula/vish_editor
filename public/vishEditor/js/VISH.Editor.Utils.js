@@ -192,6 +192,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	}; 
 	
 	
+	var refreshDraggables = function(slide){
+		//Class ui_draggable has removed... look for draggable=true param
+		$(slide).find("[draggable='true']").draggable({
+			cursor: "move",
+			stop: function(){
+				$(this).parent().click();  //call parent click to select it in case it was unselected	
+			}
+		});
+	}
+
 
 	return {
 		getWidthFromStyle   : getWidthFromStyle,
@@ -204,7 +214,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		addSlide		    : addSlide,
 		redrawSlides	    : redrawSlides,
 		dimentionToDraw     : dimentionToDraw,
-		showSlides			: showSlides
+		showSlides			: showSlides,
+		refreshDraggables	: refreshDraggables
 	};
 
 }) (VISH, jQuery);

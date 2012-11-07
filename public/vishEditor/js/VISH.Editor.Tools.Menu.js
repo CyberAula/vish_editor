@@ -214,6 +214,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 * the data in order to be stored at the end in the JSON file   
 	 */
 	var onSavePresentationDetailsButtonClicked = function(event){
+		event.preventDefault();
+		
 		if($('#presentation_title').val().length < 1) {
 			$('#presentation_details_error').slideDown("slow");
 			$('#presentation_details_error').show();
