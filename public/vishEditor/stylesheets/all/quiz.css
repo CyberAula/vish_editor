@@ -173,13 +173,14 @@ height: 100%;
     background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
-    font-family: Helvetica;
+    font-family: Arial;
     font-size: 1em;
+    margin-top: 0.5%;
     outline: 0 none;
-    padding: 1%;
+    padding: 0.5%;
     position: relative;
-    z-index: 1000;
     width: 92%;
+    z-index: 1000;
 }
 
 /* True/False Question Quiz*/
