@@ -36,12 +36,12 @@ VISH.Quiz = (function(V,$,undefined){
     }
 
     VISH.Quiz.Renderer.init();
-    VISH.Quiz.API.init();
+    VISH.Quiz.API.init();tab_quiz_session
    $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
-      'width': '80%',
-      'height': '80%',
+      'width': '90%',
+      'height': '100%',
       'padding': 0,
       "onStart"  : function(data) {
        VISH.Utils.loadTab('tab_quiz_session');
