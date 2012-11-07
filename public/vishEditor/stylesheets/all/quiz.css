@@ -897,7 +897,7 @@ span.mcChoiceSpan{
     border: 1px solid #EEEEEE;
     border-radius: 10px 10px 10px 10px;
     cursor: pointer;
-    display: block;
+    display: none;
     margin-left: -31%;
     margin-top: 70%;
     opacity: 0.7;
@@ -939,7 +939,7 @@ height: 20%;
     cursor: pointer;
     display: block;
     margin-left: -32%;
-    margin-top: -68%;
+    margin-top: 16%;
     opacity: 0.7;
     padding: 5px;
 }
@@ -958,7 +958,7 @@ height: 20%;
     cursor: pointer;
     display: none;
     margin-left: -32%;
-    margin-top: -68%;
+    margin-top: 17%;
     opacity: 0.7;
     padding: 5px;
 }
