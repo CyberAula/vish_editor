@@ -51,6 +51,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     
     var videoTag = document.createElement('video');
     videoTag.setAttribute('id', idToDragAndResize);
+    videoTag.setAttribute('draggable', true);
     videoTag.setAttribute('class', template + "_video");
     videoTag.setAttribute('title', "Click to drag");
     videoTag.setAttribute('controls', "controls");

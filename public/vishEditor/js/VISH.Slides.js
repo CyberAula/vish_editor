@@ -428,6 +428,9 @@ VISH.Slides = (function(V,$,undefined){
 	 		return;
 	 	}
 
+	 	//Refresh Draggable Objects
+	 	VISH.Editor.Utils.refreshDraggables(article_to_move);
+
 	 	//Update slideEls
 	 	slideEls = document.querySelectorAll('section.slides > article');
 
