@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+    <head>
+    <title>Vish Viewer</title>
+    
+    <meta charset="UTF-8">  
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- <meta name="viewport" content="width=device-width, user-scalable=yes"/> -->
+    <meta name="viewport" content="user-scalable=yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.1.custom.min.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
+
+    <script type="text/javascript" src="/vishEditor/js/libs/swfobject.js"></script>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery.fancybox-1.3.4.css"/>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/editor.css"/>
+   <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/quiz.css">
+   <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/customPlayer.css"/>
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery-ui-1.9.1.custom.min.css">
+
+
+    <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Constant.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.User.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Object.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Renderer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Renderer.Filter.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Debugging.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Presentation.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.CustomPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.HTML5.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.VideoPlayer.Youtube.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.Arrow.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Messenger.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Messenger.Helper.js"></script>
+     <script type="text/javascript" src="/vishEditor/js/VISH.Addons.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Addons.IframeMessenger.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.LocalStorage.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Utils.loader.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Utils.canvas.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Utils.text.js"></script>
+    
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+     <!-- load google visualization libraries -->
+    <script type="text/javascript">
+     google.load('visualization', '1.0', {'packages':['corechart']});
+    </script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Events.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Events.Notifier.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Events.Mashme.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Renderer.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
+   
+    <script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+  </head>
+  
+  <body onload="start()" style="display: none" class="loaded" id="presentation_iframe">
+
+    <section class="slides layout-regular template-default">
+	    <button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
+	    <div id="flashcard-background"></div>
+    </section>
+    
+    <div id="viewbar" class="viewbar" style="display:none">   
+		<button id="page-switcher-start" class="page-switcher" tabindex="2"><</button>
+	    <div id="slide-counter"></div>
+	  <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
+    </div>
+    
+    <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
+
+    <!-- Hidden link to open fancybox when start a quiz session inside a slide  -->
+    <a id="addQuizSessionFancybox" href="#start_quiz_fancybox" style="display: none;"></a>    
+    <!-- Hidden link to open fancybox when stop a quiz session  -->
+    <a id="stopQuizSessionFancybox" href="#stop_quiz_fancybox" style="display: none;" name='modal_fancybox'></a>    
+    
+    <!-- quiz Session Fancybox fancybox -->
+    <div style='display:none'>
+        <div id="start_quiz_fancybox" class="outer_box">
+             <div class="fancy_tabs" id="start_quiz_fancy_tabs_id">      
+                    <ul>
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_session')" id="tab_quiz_session" class="fancy_tab" i18n-key="i.quiz_session">url</a></li>
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_stats_bars')" id="tab_quiz_stats_bars" class="fancy_tab" i18n-key="i.statistics_bars">Stats 1</a></li>
+                      <li><a href="#" onclick="VISH.Utils.loadTab('tab_quiz_stats_pie')" id="tab_quiz_stats_pie" class="fancy_tab" i18n-key="i.statistics_pie">Stats 2</a></li>
+                    </ul>
+                    <img class='help_in_fancybox' id='tab_quiz_session_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                    <img class='help_in_fancybox' id='tab_quiz_stats_bars_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                    <img class='help_in_fancybox' id='tab_quiz_stats_pie_help' src='/vishEditor/images/helptutorial_circle_blank.png'/>
+                </div>
+            <div id='tab_quiz_session_content' class="fancy_tab_content" style='display:none;'>
+                <div class='quiz_session_header'></div>
+                <div class='quiz_session_body'>
+                    <div class='quiz_session_qrcode_container'>
+                   
+                    </div>
+                    <div class='buttons_container'>
+                        <button class='fullscreen' id='quiz_full_screen'  style="border: none; background-color: transparent" tab-index='2'></button>
+                         <img class='hide_qrcode' id='hide_qrcode_button_img' src='/vishEditor/images/quiz/hide_eye.png' /><img class='show_qrcode' id='show_qrcode_button_img' src='/vishEditor/images/quiz/eye.png' />
+                    </div>
+                </div>
+                <div class='quiz_session_inputs_container'>
+                        <input type='hidden' class='quiz_session_id' name='quiz_session_id' />
+                        <input type='button' class='quiz_session_stop_button' value='Stop Quiz'/>
+                    </div>
+            </div>
+            <div id='tab_quiz_stats_bars_content' class="fancy_tab_content" style='display:none;'>     
+                  <div id='quiz_stats_bars_content_id' class='quiz_stats_bars_content'>
+                        <div id='quiz_question_container_id' class='quiz_question_container'>
+                        </div>
+                        <div id='quiz_options_container_id' class='quiz_options_container'> </div>
+                        <div class='quiz_sesssion_inputs_container'>
+                            <input type='button' class='quiz_session_stop_button' value='Stop Quiz'/>
+                        </div>
+                  </div>
+
+            </div>  
+             <div id='tab_quiz_stats_pie_content' class="fancy_tab_content" style='display:none;'>     
+                  <div id='quiz_stats_pie_content_id' class='quiz_stats_pie_content'>
+
+                        <div id='quiz_question_container_id' class='quiz_question_container'>
+                        </div>
+                        <div id='quiz_chart_container_id' class='quiz_chart_container'><img class='img_chart'/>
+                        </div>
+                        <div class='quiz_sesssion_inputs_container'>
+                            <input type='button' class='quiz_session_stop_button' value='Stop Quiz'/>
+                        </div>
+                  </div>
+
+            </div>  
+                
+         </div>       
+    </div>
+    <!-- testing second fancybox over fancybox -->
+<!--<div style='display:none'> -->
+        <div id="stop_quiz_fancybox" class="outer_box" style='diplay:none;'>
+            <div id='stop_quiz_fancybox_content' class='window'>
+                 <p class='stop_quiz_text'> Are you sure to stop the quiz?</p>
+                <input type='text' class='input_text_fancy quiz_saved_session_name' style='position:relative;'  />
+                <input type='button' class='quiz_stop_session quiz_stop_session_cancel' value='Cancel'/>
+                <input type='button' class='quiz_stop_session quiz_stop_session_dont_save' value='Dont save'/>
+                <input type='button' class='quiz_stop_session quiz_stop_session_save' value='Save'/>
+            </div>    
+         </div>       
+    <!--</div> -->
+<div id='mask_stop_quiz' style='display:none,'></div>
+
+    <div style="display:none" id="viewerpreview">Preview</div>
+    <button id="closeButton" style="display:none" ><img id="closeButtonImg" src="/vishEditor/images/back_icon.png"/></button>
+    <button id="mobile_back_arrow" class="vish_arrow" tabindex="2" style="display:none"><</button>
+    <button id="mobile_forward_arrow" class="vish_arrow" tabindex="2" style="display:none">></button>
+
+
+    <script>
+    
+    function start(){
+        var isPreview = false;
+        var parentSameDomain = false;
+        try{
+            isPreview = 
+                (window.parent.VISH)                                                        &&
+                (window.parent.VISH.Editor)                                                 &&
+                (typeof window.parent.VISH.Editor.Preview.getPreview == "function")         &&
+                (typeof window.parent.VISH.Editor.Preview.getPreview() != "undefined");
+            parentSameDomain = true;
+        } catch(exception){
+            isPreview = false;
+            parentSameDomain = false;
+        }
+
+      if(isPreview){
+        //called to show a preview
+        getOptions();
+        options["preview"] = true;
+        VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());
+      } else if(parentSameDomain && window.parent.options){
+        //called from web server to show a presentation
+        VISH.SlideManager.init(window.parent.options, window.parent.presentation);
+      } else {
+        //Developping
+        getOptions();
+        VISH.SlideManager.init(options);
+      }
+    }
+
+  </script>
+</body>
+</html>
