@@ -51,7 +51,7 @@
     position: relative;
     text-align:left;
     z-index: 1000;
-    width: 98%;
+    width: 100%;
     max-height: 40%;
 }
 
@@ -87,7 +87,8 @@ height: 100%;
     font-size: 16px;
     font-weight: bold;
     padding: 0.5em 1.5em;
-    text-decoration: none;	
+    text-decoration: none;
+    width: 100%;	
 }
 
 .mcquestion_header {
@@ -160,26 +161,31 @@ height: 100%;
 }
 .li_mch_options_in_zone {
     display: inline-block;
-    padding: 0%;
+    padding: 0.2%;
     width: 100%;
 }
 .li_mch_options_in_zone > span{
+    color: #FFFFFF;
     display: inline-block;
-    padding: 0.1%;
+    font-size: 27px;
+    text-align: center;
     width: 4%;
+    padding: 0.5%;
 }
 
 .multiplechoice_text_in_zone {
-    background: none no-repeat scroll 5px 50% transparent;
-    border: 1px solid #9B999D;
+    background: #fff url(/vishEditor/images/background_text3.png) no-repeat 46px;
+    border: 1px solid #666;
     border-radius: 10px 10px 10px 10px;
-    font-family: Helvetica;
+    font-family: Arial;
     font-size: 1em;
+    margin-top: 0.5%;
     outline: 0 none;
-    padding: 1%;
+    padding: 0.7%;
     position: relative;
-    z-index: 1000;
     width: 92%;
+    color: #000;
+    z-index: 1000;
 }
 
 /* True/False Question Quiz*/
@@ -322,14 +328,16 @@ span.mcChoiceSpan{
     }
 
 .mc_answer{
-    text-align: justify;
     color: black;
-    font-size: 1.2em;
-    width:100%;
     display: block;
+    float: left;
+    font-family: Arial;
+    font-size: 1.8em;
     margin: 1%;
-    float:left;
+    padding-top: 2.5%;
     position: relative;
+    text-align: justify;
+    width: 100%;
 }
 
 .mc_answer input{
@@ -718,16 +726,17 @@ position: relative;
 }
 
 .quiz_session_header {
-    padding-left: 0%;
-    margin-top:3%;
-    margin-bottom: 2%;
-    width: 90%;  
+    background-color: #F7F7F7;
+    border-radius: 16px 16px 16px 16px;
+    color: #000000;
+    display: inline-block;
+    font-size: 1.7em;
     height: 10%;
-    display: inline-block;  
-    color:#000066;
-    text-align:center;
-    font-size:1.7em;
-    font-weight:bold;
+    margin-bottom: 2%;
+    margin-top: 3%;
+    padding-left: 0;
+    text-align: center;
+    width: 94%;
     
 }
 

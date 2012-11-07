@@ -198,6 +198,7 @@ img {
 	font-size: 16px;
 	background: 5px 50% no-repeat;
 	position:absolute;
+	left: 29px;
 	border: 1px solid #9B999D;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -555,6 +556,7 @@ img {
 	height: 40px;
 	cursor:pointer;
 	background: url(/vishEditor/images/delete_content.png);
+	z-index: 10000;
 }
 
 .delete_content:hover{
