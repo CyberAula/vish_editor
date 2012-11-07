@@ -59,9 +59,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Quiz.drawQuiz(slide.elements[el].question, slide.elements[el].options); 
 			} */
 			 else if(slide.elements[el].type === "quiz"){
+			 	V.Debugging.log("quiz element quiz id " +slide.elements[el].quiz_id );
 			 	//
 				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, slide.elements[el].id);
-				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype,slide.elements[el].id , slide.elements[el].question, slide.elements[el].options);
+				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype,slide.elements[el].id , slide.elements[el].question, slide.elements[el].options, slide.elements[el].quiz_id);
 			}
 		}
 	

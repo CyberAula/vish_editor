@@ -38,7 +38,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
-	var drawQuiz = function(quiz_type, zone_id, question, options){
+	var drawQuiz = function(quiz_type, zone_id, question, options, quiz_id){
 		//var typeQuiz = $(".current").find(".value_multiplechoice_question").val(question);
 		var zone;
 		if(zone_id) {
@@ -59,6 +59,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				for (var i = 0;  i <= options.length - 1; i++) {
 					$(inputs[i]).val(options[i]);
+				}
+				if(quiz_id) {
+					$(zone).find('input[name="quiz_id"]').val(quiz_id);
 				}
 				break;
 			case "open":
