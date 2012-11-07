@@ -59,8 +59,9 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 					$(event.target).attr("moved", "false");
 					//change to position relative so it moves with the carrusel
 					var old_pos = $(event.target).offset();
-					$(event.target).css("top", (old_pos.top +30) + "px");
-					$(event.target).css("left", (old_pos.left -16) + "px");
+					$(event.target).css("position", "relative");
+					$(event.target).css("top", "auto");
+					$(event.target).css("left", "auto");
 				}
 			}
 		});

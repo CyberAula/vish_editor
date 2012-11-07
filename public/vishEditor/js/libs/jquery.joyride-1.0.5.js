@@ -44,8 +44,10 @@
 
       $(options.tipContent).hide();
 
+      //MODIFIED BY KIKE, Added ">" in " > li" to create a better selector, because we have li items inside the tutorials and 
+      //tipcontent captures also those as tips
       var bodyOffset = $(options.tipContainer).children('*').first().position(),
-      tipContent = $(options.tipContent + ' li'),
+      tipContent = $(options.tipContent + ' > li'),
       count = skipCount = 0,
       prevCount = -1,
       timerIndicatorInstance,

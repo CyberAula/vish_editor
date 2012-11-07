@@ -278,11 +278,19 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var zoomMore = function(){
     	_changeZoom("+");
-	}
+	};
 	
 	var zoomLess = function(){
     	_changeZoom("-");
-	}
+	};
+
+	var webBigger = function(){
+		_webZoom("+");
+	};
+
+	var webSmaller = function(){
+		_webZoom("-");
+	};
 	
 
 	var _changeZoom = function(action){
@@ -295,22 +303,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				var parent = area.children(":first");
 				object = parent.children(":first");
 				objectInfo = VISH.Object.getObjectInfo(object);
-				if(objectInfo.type==="web"){
-					var iframe = $(area).find("iframe");
-					zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
-
-					if(action=="+"){
-						zoom = zoom + 0.1;
-					} else {
-						zoom = zoom - 0.1;
-					}
-
-					$(iframe).attr("style",VISH.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
-
-					//Resize object to fix in its wrapper
-					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
-				}
-				else{ //type swf, youtube or anything else
+				
 					var newWidth, newHeight;
 					var aspectRatio = parent.width()/parent.height();
 					var originalHeight = object.height();
@@ -340,7 +333,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 						
 					$(object).width(newWidth);
 					$(object).height(newHeight);
-				}
+				
 				break;
 			case "image":
 				object = $(area).find("img");
@@ -373,6 +366,37 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				object.width(originalWidth*zoom);
 				object.height(originalHeight*zoom);
 
+				break;
+			default:
+				break;
+		}
+	};
+
+	var _webZoom = function(action){
+		var object, objectInfo, zoom;
+		var area = VISH.Editor.getCurrentArea();
+		var type = $(area).attr("type");    
+		switch(type){
+			case "object":
+			case "snapshot":
+				var parent = area.children(":first");
+				object = parent.children(":first");
+				objectInfo = VISH.Object.getObjectInfo(object);
+				if(objectInfo.type==="web"){
+					var iframe = $(area).find("iframe");
+					zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
+
+					if(action=="+"){
+						zoom = zoom + 0.1;
+					} else {
+						zoom = zoom - 0.1;
+					}
+
+					$(iframe).attr("style",VISH.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
+
+					//Resize object to fix in its wrapper
+					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
+				}				
 				break;
 			default:
 				break;
@@ -454,6 +478,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		changeFlashcardBackground		: changeFlashcardBackground,
 		addLink							: addLink,
 		addUrl 							: addUrl,
+		webBigger						: webBigger,
+		webSmaller						: webSmaller,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess
 	};
