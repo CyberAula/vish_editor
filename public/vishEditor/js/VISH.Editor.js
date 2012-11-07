@@ -208,7 +208,6 @@ VISH.Editor = (function(V,$,undefined){
 
 		$(document).on('click','#help_quiz_selection', function(){			
 			VISH.Editor.Tour.startTourWithId('quiz_help', 'bottom');
-
 		});
 
 		//themes
