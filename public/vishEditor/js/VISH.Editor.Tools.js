@@ -284,16 +284,16 @@ VISH.Editor.Tools = (function(V,$,undefined){
     	_changeZoom("-");
 	};
 
-	var webBigger = function(){
-		_webZoom("+");
+	var resizeMore = function(){
+		_resize("+");
 	};
 
-	var webSmaller = function(){
-		_webZoom("-");
+	var resizeLess = function(){
+		_resize("-");
 	};
 	
 
-	var _changeZoom = function(action){
+	var _resize = function(action){
 		var object, objectInfo, zoom;
 		var area = VISH.Editor.getCurrentArea();
 		var type = $(area).attr("type");    
@@ -372,7 +372,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		}
 	};
 
-	var _webZoom = function(action){
+	var _changeZoom = function(action){
 		var object, objectInfo, zoom;
 		var area = VISH.Editor.getCurrentArea();
 		var type = $(area).attr("type");    
@@ -478,8 +478,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		changeFlashcardBackground		: changeFlashcardBackground,
 		addLink							: addLink,
 		addUrl 							: addUrl,
-		webBigger						: webBigger,
-		webSmaller						: webSmaller,
+		resizeMore						: resizeMore,
+		resizeLess						: resizeLess,
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess
 	};

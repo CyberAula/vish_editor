@@ -24,7 +24,7 @@ js/VISH.Constant.js
 js/VISH.Configuration.js  
 js/VISH.User.js  
 js/VISH.Object.js  
-js/VISH.Renderer.js  
+js/VISH.Renderer.js
 js/VISH.Renderer.Filter.js
 js/VISH.Debugging.js  
 js/VISH.Presentation.js  
