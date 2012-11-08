@@ -177,7 +177,7 @@ height: 100%;
 }
 
 .multiplechoice_text_in_zone {
-    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center #FFFFFF;
+    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center transparent;
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;
     color: #000000;
@@ -1056,10 +1056,10 @@ height: 20%;
 
 
 .nicEdit-mcquestion_header {
-    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center #FFFFFF;
+    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center;
+    color: #000000;
     border: 1px solid #666666 !important;
     border-radius: 20px 20px 20px 20px;
-    color: #000000;
     margin-left: 11%;
     margin-top: 3%;
     width: 81% !important;

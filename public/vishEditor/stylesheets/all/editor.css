@@ -1054,7 +1054,7 @@ textarea {
 }
 
 .upload_progress_bar { 
-  background-color: #B4F5B4; 
+  	background-color: #B4F5B4; 
 	width:0%; 
 	height:20px; 
 	border-radius: 3px; 
