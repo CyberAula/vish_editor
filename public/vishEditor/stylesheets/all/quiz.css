@@ -280,8 +280,6 @@ span.mcChoiceSpan{
     width:100%;
     height: 95%;
 }
-
-    
 .mcquestion_send_vote_button{
     display:block;
     position:relative;
@@ -292,7 +290,6 @@ span.mcChoiceSpan{
     margin-top:100%;
     height:9%;
     width: 80%;
-    
     }
 
 .mc_answer{
@@ -400,7 +397,6 @@ span.mcChoiceSpan{
     -webkit-border-radius: 2em;
     cursor:pointer;
     
-    
 }   
 
 .mcquestion_save_no_button {
@@ -422,7 +418,6 @@ span.mcChoiceSpan{
     padding: 2%;
     width:100%;
     height: 90%;
-    
 }
 
 .truefalse_question_container {
@@ -527,7 +522,7 @@ span.mcChoiceSpan{
     border-radius: 0.4em 0.4em 0em 0em;
     color: #212121;
     display: block;
-    padding: 0.1em;
+    padding: 0.8em;
     text-decoration: none;
     width:100%; 
     float: left;
@@ -812,12 +807,9 @@ span.mcChoiceSpan{
     box-shadow: 10px 10px 5px #888;
     }
 
-
 #tab_quiz_statistics_content {
-
     text-align: center;
 }
-
 
 .quiz_stats_bars_content {
     display: block;
@@ -825,7 +817,6 @@ span.mcChoiceSpan{
     height:100%;
     text-align: center;
     margin-left: 3%;
-
 }
 
 .quiz_stats_pie_content {
@@ -834,13 +825,11 @@ span.mcChoiceSpan{
     height:100%;
     text-align: center;
     margin-left: 3%;
-
 }
 
 .quiz_question_container{
     display: block;
     min-height: 20%;
-
 }
 
 .quiz_full_screen{
@@ -1009,8 +998,6 @@ height: 20%;
     margin: 1%;
     color: #CCC;
 }
-
-
 .nicEdit-mcquestion_header {
     background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center;
     color: #000000;
