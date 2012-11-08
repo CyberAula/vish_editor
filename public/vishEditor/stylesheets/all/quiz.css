@@ -24,7 +24,6 @@
 	color: black;
 	font-size: 1.3em;
 	display: block;	
-	
 }
 	
 .header_openquestion {
@@ -63,48 +62,13 @@ height: 100%;
 }
 
 .participant_answer {
-
     display: none;
 }
-
-
 /* Multiple Choice Question Quiz*/
-
 .multipleChoiceQuizContainer {
-
 width: 100%;
 height: 100%;
-
 }
-
-
-.header_multiplechoice_question {
-	background: none repeat scroll 0 0 #F9F9F9;
-    border-radius: 4px 4px 0 0;
-    color: #FF005D;
-    display: block;
-    font-family: Helvetica;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0.5em 1.5em;
-    text-decoration: none;
-    width: 100%;	
-}
-
-.mcquestion_header {
-    padding-left: 0%;
-    margin-top:1.5%;
-    width: 100%;  
-    height: 5%;
-    display: inline-block;  
-    color:#000066;
-    text-align:center;
-    font-size:1.2em;
-    font-weight:bold;
-}
-
-
-
 .value_multiplechoice_question {
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
@@ -785,8 +749,6 @@ span.mcChoiceSpan{
     display: inline-block;
     width: 10%;
     height: 70%;
-
-
 }
 
 .quiz_session_inputs_container {
@@ -797,7 +759,6 @@ span.mcChoiceSpan{
 }
 /*TODO change class name to start button and remove anoothers styles above*/
 .quiz_session_start_button, .quiz_session_stop_button, .quiz_session_options_button {
-
     background-color: #EEEEEE;
     border: 1px solid #CBCBCB;
     border-radius: 14px 14px 14px 14px;
@@ -815,7 +776,6 @@ span.mcChoiceSpan{
     position: absolute;
     right: -1%;
     text-align: center;
-
 }
 .quiz_session_start_button {
 
@@ -1020,8 +980,6 @@ height: 20%;
       padding:20px;
       border-radius: 21px 21px 21px 21px;
 }
-
-
 .quiz_stop_session {
     padding: 5px 10px;
     display: inline;
@@ -1045,13 +1003,11 @@ height: 20%;
 }
 
 .stop_quiz_text{
-    
     text-decoration: none;
     font-family: Helvetica;
     font-size: 2em;
     margin: 1%;
     color: #CCC;
-
 }
 
 

@@ -37,11 +37,11 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
     var received = JSON.stringify(quiz_element);
-    V.Debugging.log("_renderMCQuestion : and slide:  " + received);
+    V.Debugging.log("_renderMCQuestion : and quiz_element:  " + received);
 
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
-      ret += "<div class='mcquestion_header'></div>";
+      //ret += "<div class='mcquestion_header'></div>";
       ret += "<div class='mcquestion_body'><h2 class='question'>"+ quiz_element['question']+"</h2>";
       ret += "<form class='mcquestion_form' action='"+quiz_element['posturl']+"' method='post'>";
 

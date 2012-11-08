@@ -36,7 +36,7 @@ VISH.Quiz = (function(V,$,undefined){
     }
 
     VISH.Quiz.Renderer.init();
-    VISH.Quiz.API.init();tab_quiz_session
+    VISH.Quiz.API.init();
    $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
@@ -158,6 +158,7 @@ var _updateBarsStats = function(data) {
 };
 /* function that calls to VISH API to receive voting's results  */
 var _getResults =  function(quiz_session_active_id) {
+   //V.Debugging.log("_getResults and quiz_Session_active id" + quiz_session_active_id);
   if(quiz_session_active_id) {
     var quizSessionActiveId = quiz_session_active_id;
   }
@@ -170,12 +171,13 @@ var _getResults =  function(quiz_session_active_id) {
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
+    V.Debugging.log("_onQuizSessionReceived quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
-    var divURLShare = "<div class='url_share'><span><a target='blank_' href=" + url + ">"+url+"</a></span></div>";
-    $(header).html(divURLShare);
+    $(header).find(".url_share > span > a").attr("href",url);
+    $(header).find(".url_share > span > a").append(url.toString());
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
 
