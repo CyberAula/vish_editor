@@ -185,7 +185,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$("#" + divId + " .previewimgbox").append(wrapper);
 		$("#" + divId + " .previewimgbox button").show();
 		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin")
-		$("#" + divId + " .buttonaddfancy").addClass("buttonaddfancy_extraMargin")
 	}
 	
 	var resetPreview = function(divId){
@@ -196,7 +195,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$("#" + divId + " .previewimgbox").css("background-image", previewBackground);
 		}
 		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin")
-		$("#" + divId + " .buttonaddfancy").removeClass("buttonaddfancy_extraMargin")
 	}
 	
 	var drawPreviewElement = function(){

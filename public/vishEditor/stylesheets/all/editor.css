@@ -83,17 +83,20 @@ img {
 .previewimgbox {
 	position:absolute;
 	background: url(/vishEditor/images/imgprev.png) no-repeat;
-  margin-left: 30px;
+	margin-left: 30px;
 	margin-top: 15px;
-  width: 370px;
-  height: 275px;
+	width: 370px;
+	height: 275px;
 	border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 	text-align: center;
 	vertical-align: middle;
 }
 
+.previewButton{
+
+}
 
 .textfancy {
 	position:absolute;
@@ -150,17 +153,17 @@ img {
 	position:absolute;
 	margin-top: 67%;
 	margin-left: 145%;	
-  display: inline;
+	display: inline;
 	text-decoration:none;
-  background: #CCC repeat-x bottom !important;
+	background: #CCC repeat-x bottom !important;
 	width: 150px !important;
 	opacity: 0.6;
 	color:#f9f9f9;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }	
 	
 .buttonaddfancy:hover {
@@ -837,6 +840,7 @@ table.metadata td div.height_wrapper_description{
 	margin-left: 200px;
 	margin-top: 25px;
 }
+
 .button {
     padding: 5px 10px;
     display: inline;
@@ -849,7 +853,7 @@ table.metadata td div.height_wrapper_description{
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    }	
+}	
 	
 .button:hover {
 	opacity: 1;
@@ -857,7 +861,8 @@ table.metadata td div.height_wrapper_description{
 }
 
 .buttonfancy {
-	margin-left: 600px;
+	margin-left: 620px;
+	margin-top: 2px;
 }
 	
 .button:active {
@@ -1075,8 +1080,21 @@ textarea {
 	margin-top: 9%;
 }
 
-.buttonaddfancy_extraMargin {
+.button_addContent {
 	margin-left: 140%;
+	position:absolute;
+	margin-top: 60%;
+	margin-left: 140%;	
+	display: inline;
+	text-decoration:none;
+	width: 150px !important;
+	opacity: 0.6;
+	color:#f9f9f9;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 .documentblank_extraMargin {
