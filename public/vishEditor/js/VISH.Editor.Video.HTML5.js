@@ -32,7 +32,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	  var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
 	  var autoplay = false;
 		
-	//Replace defeault options if options hash is defined
+	  //Replace defeault options if options hash is defined
 		if(options){
 		  if(options['poster']){
 		    posterUrl = options['poster'];
@@ -42,7 +42,6 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	    }
 		}
 		
-	
     var template = VISH.Editor.getTemplate(area);
 
     var nextVideoId = VISH.Utils.getId();
@@ -81,6 +80,8 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     VISH.Editor.addDeleteButton($(current_area));
 
     $("#" + idToDragAndResize).draggable({cursor: "move"});
+
+    VISH.Editor.Tools.loadToolsForZone(current_area);
   }
 
   var renderVideoFromSources = function(sources){

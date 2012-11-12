@@ -24,6 +24,7 @@ VISH.Quiz = (function(V,$,undefined){
 //variables to control slide forward and backward 
   var isWaitingBackwardOneSlide = false; 
   var isWaitingForwardOneSlide = false; 
+  var pollingActivated = false;
 
 
   var init = function(presentation){
@@ -89,7 +90,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
-    $(document).on('click', '#quiz_full_screen', VISH.SlideManager.toggleFullScreen);
+    $(document).on('click', '.quiz_full_screen', VISH.SlideManager.toggleFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
    };
@@ -102,7 +103,7 @@ VISH.Quiz = (function(V,$,undefined){
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
       //init the stats, empty
       _startStats();   
-      _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
+     // _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
       
     }
     else {
@@ -131,6 +132,21 @@ var _startStats = function() {
   $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
   $("#tab_quiz_stats_pie_content").addClass("resized_fancybox_for_stats");
   $("#tab_quiz_session_content").addClass("resized_fancybox_for_stats");
+};
+
+
+var activatePolling = function (activate_boolean) {
+  V.Debugging.log("activatePolling and boolean:" + activate_boolean);
+  pollingActivated = activate_boolean;
+V.Debugging.log("pollingActivated is :" + pollingActivated);
+  if(pollingActivated) {
+    _updateBarsStats();
+  }
+
+    else {
+      clearInterval(getResultsTimeOut);
+    }
+
 };
 
 /* 
@@ -457,6 +473,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     drawPieChart                : drawPieChart, 
     getIsQuizSessionStarted     : getIsQuizSessionStarted, 
     onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
+    activatePolling             : activatePolling,
     setIsWaitingForwardOneSlide : setIsWaitingForwardOneSlide, 
     setIsWaitingBackwardOneSlide: setIsWaitingBackwardOneSlide
 
