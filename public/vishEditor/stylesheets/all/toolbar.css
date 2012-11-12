@@ -42,17 +42,20 @@
 
 
 .toolbar_icon{
-  padding: 1px;
+    top: -1px;
     cursor: pointer;
-    height: 20px;
+    height: 21px;
     margin: 1px 10px 0 8px;
     opacity: 0.6;
     border: 1px solid #EFEFEF;
-    border-radius: 4px;
 }
 
 .toolbar_icon:hover{
   opacity: 1;
-  border: 1px solid #000;
 
+}
+
+#toolbarborder {
+  border: none;
+  margin-bottom: 2px;
 }
