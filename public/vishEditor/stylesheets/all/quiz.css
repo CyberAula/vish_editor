@@ -924,8 +924,8 @@ height: 20%;
 }
 
 #stop_quiz_fancybox {
-    margin-left: 200px;
-    margin-top: 100px;
+    margin-left: 20%;
+    margin-top: 20%;
     position: absolute;
     text-align: center;
 }
@@ -934,14 +934,14 @@ height: 20%;
       background-color: white;
       position:fixed;
       width:40%;
-      height:35%;
+      height:23%;
       display:none;
       z-index:9999;
-      padding:20px;
-      border-radius: 21px 21px 21px 21px;
+      padding:3%;
+      border-radius: 20px;
 }
 .quiz_stop_session {
-    padding: 5px 10px;
+    padding: 2% 5%;
     display: inline;
     text-decoration: none;
     background: #FF005D repeat-x bottom;

@@ -1662,3 +1662,11 @@ span.mcChoiceSpan{
     position: absolute;
     top: 265px;
 }
+
+#menuButton {
+	border: none;
+}
+
+#toolbarborder {
+	border: none;
+}
