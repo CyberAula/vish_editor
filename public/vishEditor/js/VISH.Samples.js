@@ -746,64 +746,9 @@ VISH.Samples = (function(V,undefined){
 		]};
 		
 	 
-	 	var quizes_samples = {
-	 		"type": "presentation",
-	 		"id": 12313, 
-	 		"author":"",
-	 		"slides":[
-	 			{
-	 				"id":"article1",
-	 				"type":"quiz",
-	 				"quiz_id":"1112",
-	 				"template":"t11",
-	 				"elements":[
-	 					{
-	 						"id":"zone1",
-	 						"areaid":"header"
-	 					},
-	 					{	"id":"zone2",
-	 						"type":"mcquestion",
-	 						"areaid":"left",
-	 						"question":"¿Funcionara los Multiple Choice Quiz ?",
-	 						"options":["Si","Claro que si","Siempre","No"]
-	 					}
-	 				]
-	 			}
-	 		]
-	 	};
+	 	
 
-		var quizes_samples_2 = {
-			"type": "presentation",
-			"id":5555
-			,"author":"Víctor Hugo"
-			,"slides": [
-			
-			  { 
-			  	"id":"article1",
-			  	"quiz_id":"1112",
-			  "template":"t11",
-			  "elements":[
-			  		{
-			  			"id":"zone1"
-			  		,"areaid":"header"
-			  		},
-			  		{
-			  			"id":"zone2",
-			  			"type":"mcquestion",
-			  			"areaid":"left",
-			  			"question":"Which is the capital of Brazil",
-			  			"options":[
-			  			"Lima","Santiago","Río De Janeiro","Brasilia","Bogota"],
-			  			"quiz_simple_json" : {"type": "quiz_simple","id": 12313, "author":"","slides":[{"id":"article1","type":"quiz","template":"t11","elements":[{"id":"zone1","areaid":"header"},{	"id":"zone2","type":"mcquestion","areaid":"left","question":"¿Funcionara los Multiple Choice Quiz ?","options":["Si","Claro que si","Siempre","No"]}]}]}
-			  			
-			  		}
-		         ]
-		         
-		      } 
-		    ] 
-		};
-
-		var quizes_samples_3 = {
+		var quizes_samples = {
 			"id":12314,
 			"type":"presentation",
 			"author":"V. Hugo", 
@@ -872,9 +817,7 @@ VISH.Samples = (function(V,undefined){
 		samples_flashcard 	: samples_flashcard,
 		samples_game  		: samples_game,
 		samples_sync 		: samples_sync,
-		quizes_samples 		: quizes_samples,
-		quizes_samples_2 	: quizes_samples_2, 
-		quizes_samples_3 	: quizes_samples_3
+		quizes_samples 		: quizes_samples	
 	};
 
 })(VISH);

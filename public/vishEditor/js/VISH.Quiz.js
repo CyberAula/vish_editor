@@ -135,6 +135,7 @@ var _startStats = function() {
 
 
 var activatePolling = function (activate_boolean) {
+    console.log("activatePolling and boolean:" + activate_boolean);
   V.Debugging.log("activatePolling and boolean:" + activate_boolean);
   pollingActivated = activate_boolean;
 V.Debugging.log("pollingActivated is :" + pollingActivated);
@@ -187,6 +188,7 @@ var _getResults =  function(quiz_session_active_id) {
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
+      console.log("_onQuizSessionReceived quiz_session_id: " + quiz_session_id);
     V.Debugging.log("_onQuizSessionReceived quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;

@@ -543,7 +543,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		presentation.author = '';
 		presentation.slides = [];
-		presentation.contain_quiz = false;
+		
 		var slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!

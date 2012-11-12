@@ -11,7 +11,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	var postStartQuizSession = function(quizId, successCallback, failCallback){
 		console.log("postStartQuizSession and quizId : " + quizId);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			
+			console.log("vish case");
 			var send_type = 'POST';
 	       
 	        var params = {
@@ -38,6 +38,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
+
 			if(quizId==12) {
 				var quiz_session_id = "98988";
 			} else if (quizId==13) {
