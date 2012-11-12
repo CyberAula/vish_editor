@@ -7,12 +7,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
 		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
 	};	
-
-	 
 	////////////
 	// Tabs and fancybox
 	////////////
-
 	var onLoadTab = function (tab) {
 	};
 
@@ -49,14 +46,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 		switch (quiz_type) {
-
-
 			case "multiplechoice": 
-				
 				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").children().remove();
 				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").append(question);
 				var inputs = $(zone).find(".multiplechoice_text_in_zone"); //all inputs (less or equal than options received)
-				
 				for (var i = 0;  i <= options.length - 1; i++) {
 					$(inputs[i]).val(options[i]);
 				}
@@ -76,10 +69,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 			break;
 		}
-
-		
 	};
-
 
 	var _onKeyDown = function(event){
 		if(event.keyCode == 13) {
