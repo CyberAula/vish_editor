@@ -24,7 +24,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			}
 		});
 		
-		
 		//Upload content
 		var options = VISH.Editor.getOptions();
 		var tagList = $("#" + uploadDivId + " .tagList")
@@ -365,6 +364,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, area, style, zoomInStyle){	
+		
+		VISH.Debugging.log("Draw object")
+		VISH.Debugging.log(object)
 
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
@@ -385,7 +387,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
-
 				switch (objectInfo.type) {
 					case "image":
 						V.Editor.Image.drawImage(object);
@@ -393,23 +394,18 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case "swf":
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
-
 					case "pdf":
 						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
 						break;
-
 					case "youtube":
 						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
 						break;
-
 					case "HTML5":
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
 						break;
-
 					case "web":
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 						break;
-
 					default:
 						V.Debugging.log("Unrecognized object source type: " + objectInfo.type)
 						break;
@@ -434,14 +430,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 		//finally load the tools in the toolbar
 		VISH.Editor.Tools.loadToolsForZone(current_area);
-
 	}
 	
 	/**
 	 * param style: optional param with the style, used in editing presentation
 	 */
 	var drawObjectWithWrapper = function(wrapper, current_area, style, zoomInStyle){
-	 
 		var template = V.Editor.getTemplate(current_area);
 		var nextWrapperId = V.Utils.getId();
 		var idToDrag = "draggable" + nextWrapperId;

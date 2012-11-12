@@ -442,16 +442,6 @@ img {
 	height: 120px;
 }
 
-.theslider{
-	width: 750px;
-	height: 40px;
-	position: absolute;
-	top: 600px;
-	left: 75px;
-	z-index: 1080;
-	left: 75px;
-}
-
 #thumbcontent{
 	width: 638px;
 	height: 340px;

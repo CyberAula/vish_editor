@@ -1,7 +1,7 @@
 VISH.Editor.Tools = (function(V,$,undefined){
 	
 	var toolbarEventsLoaded = false;
-	var INCREASE_ZOOM = 1.2; //Constant to multiply or divide the actual size of the element
+	var INCREASE_SIZE = 1.2; //Constant to multiply or divide the actual size of the element
 
 
 	/*
@@ -12,7 +12,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 */
 
 	var init = function(){
-
 		cleanZoneTools();
 		cleanToolbar();
 
@@ -44,39 +43,35 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 
 	var loadToolsForZone = function(zone){
+
 		cleanZoneTools();
 		
-		var type = $(zone).attr("type");
+		var type = $(zone).clone().attr("type");
+
 		switch(type){
 			case "text":  
 				loadToolbarForElement(type);
 				break;
 			case "image":
-				_showSlider($(zone).find("img").attr("id"));
 				loadToolbarForElement(type);
 				break;
 			case "video":
-				_showSlider($(zone).find("video").attr("id"));
 				loadToolbarForElement(type);
 				break;
 			case "object":
-				_showSlider($(zone).find(".object_wrapper").attr("id"));
 				var object = $(zone).find(".object_wrapper").children()[0];
 				loadToolbarForObject(object);
 				break;
 			case "snapshot":
-				_showSlider($(zone).find(".snapshot_wrapper").attr("id"));
 				loadToolbarForElement("snapshot");
 				break;
 			case "quiz":
 				loadToolbarForElement("quiz");
 				break;
 			case undefined:
-
 				//Add menuselect button
 				$(zone).find(".menuselect_hide").show();
 				return;
-
 			default:
 				break;
 		}
@@ -89,7 +84,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var cleanZoneTools = function(zone){
 		$(".menuselect_hide").hide();
 		$(".delete_content").hide();
-		$(".theslider").hide();
 		_cleanElementToolbar();
 	}
 
@@ -215,48 +209,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$("#toolbar_element").find("img").hide();
 	}
 
-	var _showSlider = function(id){
-		if(id){
-			id = id.substring(9);
-			$("#sliderId" + id).show(); 
-		}
-	}
-	
-	
-
- //   /*
-	// * Slide actions
-	// */
-	// var moveSlide = function(object){
-	//  	var direction = $(object).attr("direction");
-	//  	var movement = null;
-	//  	var article = null;
-	//  	switch(direction){
-	//  		case "right":
-	//  			movement = "after";
-	//  			article = $("article.next");
-	//  			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0])+2;
-	//  			break;
-	//  		case "left":
-	//  			movement = "before";
-	//  			article = $("article.past");
-	//  			var slide_position = V.Slides.getNumberOfSlide($("article.current")[0]);
-	//  			break;
-	//  		default:
-	//  			return;
-	//  	}
-
-	//  	if((movement!=null)&&(article!=null)){
-	//  		V.Slides.moveSlideTo($("article.current")[0],article,movement);
-	// 		V.Editor.Utils.redrawSlides();
-	// 		V.Editor.Thumbnails.redrawThumbnails();
-	// 		setTimeout(function(){
-	// 				V.Editor.Thumbnails.selectThumbnail(slide_position);
-	// 			}, 200);
-	// 		V.Slides.goToSlide(slide_position);
-	// 	 }
-	//  }
-	
 
 
    /*
@@ -294,46 +246,55 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	
 
 	var _resize = function(action){
-		var object, objectInfo, zoom;
+		var object, objectInfo, resizeFactor;
 		var area = VISH.Editor.getCurrentArea();
-		var type = $(area).attr("type");    
+		var type = $(area).attr("type");
+
+		if(action=="+"){
+			resizeFactor = INCREASE_SIZE;
+		} else {
+			resizeFactor = 1/INCREASE_SIZE;
+		}
+
 		switch(type){
-			case "object":
 			case "snapshot":
+				var snapshot_wrapper = area.children(":first");
+				var proportion = $(snapshot_wrapper).height()/$(snapshot_wrapper).width();
+				var originalWidth = $(snapshot_wrapper).width();
+
+				//Change width
+				snapshot_wrapper.width(originalWidth*resizeFactor);
+				snapshot_wrapper.height(originalWidth*resizeFactor*proportion);
+
+				break;
+			case "object":
 				var parent = area.children(":first");
 				object = parent.children(":first");
 				objectInfo = VISH.Object.getObjectInfo(object);
 				
-					var newWidth, newHeight;
-					var aspectRatio = parent.width()/parent.height();
-					var originalHeight = object.height();
-					var originalWidth = object.width();
-					var parentoriginalHeight = parent.height();
-					var parentoriginalWidth = parent.width();
+				var newWidth, newHeight;
+				var aspectRatio = parent.width()/parent.height();
+				var originalHeight = object.height();
+				var originalWidth = object.width();
+				var parentoriginalHeight = parent.height();
+				var parentoriginalWidth = parent.width();
 
-					//Change width
-					if(action=="+"){
-						zoom = INCREASE_ZOOM;
-					} else {
-						zoom = 1/INCREASE_ZOOM;
-					}
-					$(parent).width(parentoriginalWidth*zoom);
-					$(parent).height(parentoriginalHeight*zoom);
+				//Change width
+				$(parent).width(parentoriginalWidth*resizeFactor);
+				$(parent).height(parentoriginalHeight*resizeFactor);
 
-					var styleZoom = V.Utils.getZoomFromStyle( $(object).attr("style"));
-
-					if(styleZoom!=1){
-						newWidth = newWidth/styleZoom;
-						newHeight = Math.round(newWidth/aspectRatio);
-						newWidth = Math.round(newWidth);
-					} else {
-						newHeight = parentoriginalHeight*zoom;
-						newWidth = parentoriginalWidth*zoom;
-					}			
-						
-					$(object).width(newWidth);
-					$(object).height(newHeight);
-				
+				var styleZoom = V.Utils.getZoomFromStyle($(object).attr("style"));
+				if(styleZoom!=1){
+					newWidth = newWidth/styleZoom;
+					newHeight = Math.round(newWidth/aspectRatio);
+					newWidth = Math.round(newWidth);
+				} else {
+					newHeight = parentoriginalHeight*resizeFactor;
+					newWidth = parentoriginalWidth*resizeFactor;
+				}	
+					
+				$(object).width(newWidth);
+				$(object).height(newHeight);
 				break;
 			case "image":
 				object = $(area).find("img");
@@ -342,13 +303,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				var originalWidth = object.width();
 
 				//Change width
-				if(action=="+"){
-					zoom = INCREASE_ZOOM;
-				} else {
-					zoom = 1/INCREASE_ZOOM;
-				}
-				object.width(originalWidth*zoom);
-				object.height(originalHeight*zoom);
+				object.width(originalWidth*resizeFactor);
+				object.height(originalHeight*resizeFactor);
 
 				break;
 			case "video":
@@ -358,13 +314,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				var originalWidth = object.width();
 
 				//Change width
-				if(action=="+"){
-					zoom = INCREASE_ZOOM;
-				} else {
-					zoom = 1/INCREASE_ZOOM;
-				}
-				object.width(originalWidth*zoom);
-				object.height(originalHeight*zoom);
+				object.width(originalWidth*resizeFactor);
+				object.height(originalHeight*resizeFactor);
 
 				break;
 			default:
@@ -378,7 +329,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var type = $(area).attr("type");    
 		switch(type){
 			case "object":
-			case "snapshot":
 				var parent = area.children(":first");
 				object = parent.children(":first");
 				objectInfo = VISH.Object.getObjectInfo(object);

@@ -1,22 +1,21 @@
 VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		
-	var contentToAdd = null;	
-	var urlDivId = "tab_object_snapshot_content";
+  var contentToAdd = null;	
+  var urlDivId = "tab_object_snapshot_content";
   var urlInputId = "object_snapshot_code";
 		
-	var init = function(){
-		var urlInput = $(urlDivId ).find("input");
+  var init = function(){
+    var urlInput = $(urlDivId ).find("input");
     $(urlInput).watermark('Paste website URL');
-		
-		//Load from URL
+
+    //Load from URL
     $("#" + urlDivId + " .previewButton").click(function(event) {
       if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
+        contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
         VISH.Editor.Object.drawPreview(urlDivId, contentToAdd);
       }
     });
-		
-	};
+  };
 
   
   var onLoadTab = function(tab){
@@ -108,7 +107,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $(iframeTag).attr('class', 'snapshot_content');
     $(iframeTag).attr('scrolling', 'no');
     $(iframeTag).attr('wmode', "opaque");
-	$(iframeTag).css('pointer-events', "none");
+	  $(iframeTag).css('pointer-events', "none");
 
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
@@ -129,7 +128,6 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 			 event.preventDefault();
     });
 		
-
     $("#" + idToDrag).draggable({
       cursor : "move",
 			disabled: false,
@@ -139,6 +137,8 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		  	}
 	    }
     });
+
+    VISH.Editor.Tools.loadToolsForZone(current_area);
   };
 	
 	var _isBorderClick = function(event,idToDrag){
@@ -171,7 +171,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		return false;
 	}
 	
-	 /*
+	/*
    * Resize object and its wrapper automatically
    */
   var _resizeWebIframe = function(id,width){
