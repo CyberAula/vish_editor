@@ -41,9 +41,10 @@ VISH.Quiz = (function(V,$,undefined){
    $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
-      'width': '90%',
+      'width': '100%',
       'height': '100%',
       'padding': 0,
+      "autoScale" : true,
       "onStart"  : function(data) {
        VISH.Utils.loadTab('tab_quiz_session');
       }

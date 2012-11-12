@@ -427,8 +427,7 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
 						$("#prompt_answer").val("false");
-						getCurrentArea().html("");					
-						$(".theslider").hide();	
+						getCurrentArea().html("");
 						getCurrentArea().removeAttr("type");
 						getCurrentArea().addClass("editable");
 					}
@@ -456,7 +455,6 @@ VISH.Editor = (function(V,$,undefined){
 				  //if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
 						$("#prompt_answer").val("false");
-						$(".theslider").hide();	
 						article_to_delete.remove();
 						VISH.Slides.onDeleteSlide();					
 						VISH.Editor.Utils.redrawSlides();						
@@ -470,7 +468,6 @@ VISH.Editor = (function(V,$,undefined){
 
 	/**
 	* function called when user clicks on template zone with class selectable
-	* we change the border to indicate this zone has been selected and show the slider if the type is an image
 	*/
 	var _onSelectableClicked = function(){
 		setCurrentArea($(this));	
@@ -555,7 +552,7 @@ VISH.Editor = (function(V,$,undefined){
 			//important show it (the browser does not know the height and width if it is hidden)
 			$(s).addClass("temp_shown");
 			$(s).find('div').each(function(i,div){
-				//to remove all the divs of the sliders, only consider the final boxes
+				
 				if($(div).attr("areaid") !== undefined){   
 
 					element.id 		= $(div).attr('id');
