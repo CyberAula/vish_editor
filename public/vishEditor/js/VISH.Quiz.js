@@ -177,6 +177,7 @@ var _getResults =  function(quiz_session_active_id) {
     var current_slide = V.Slides.getCurrentSlide();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
     $(header).find(".url_share > span > a").attr("href",url);
+    $(header).find(".url_share > span > a").text("");
     $(header).find(".url_share > span > a").append(url.toString());
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
     $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
