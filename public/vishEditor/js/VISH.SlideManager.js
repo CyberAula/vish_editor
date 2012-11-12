@@ -129,7 +129,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
 	 */
 	var toggleFullScreen = function () {
-
+		V.Debugging.log("toggleFullScreen detected");
 		if(VISH.Status.isSlaveMode()){
 			return;
 		}
