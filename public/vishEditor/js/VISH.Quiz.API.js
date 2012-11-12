@@ -9,9 +9,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Server responds with a quiz_session_id
 	*/
 	var postStartQuizSession = function(quizId, successCallback, failCallback){
-		console.log("postStartQuizSession and quizId : " + quizId);
 		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
-			console.log("vish case");
 			var send_type = 'POST';
 	       
 	        var params = {
@@ -66,8 +64,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			}
 			//DELETE 
 			var send_type = 'DELETE';
-	       
-	        V.Debugging.log("token is: " + V.User.getToken());
+
 	        //DELETE to http://server/quiz_session/X
 	          var params = {
 	     	  "id": quiz_session_id,

@@ -188,8 +188,6 @@ var _getResults =  function(quiz_session_active_id) {
 
 /* must construct the URL and add an QR code inside the quiz_session tab */
   var _onQuizSessionReceived = function(quiz_session_id){
-      console.log("_onQuizSessionReceived quiz_session_id: " + quiz_session_id);
-    V.Debugging.log("_onQuizSessionReceived quiz_session_id: " + quiz_session_id);
     var quizUrlForSession ="http://"+window.location.host.toString() +"/quiz_sessions/";
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
@@ -218,7 +216,6 @@ var _getResults =  function(quiz_session_active_id) {
 Show a popup with three buttons (Cancel, DOn't save & Save)
 */ 
  var onStopMcQuizButtonClicked = function () {
-       V.Debugging.log("onStopMcQuizButtonClicked");
     var id = $('a[name=modal_fancybox]').attr('href'); //TODO in different way
     //Get the screen height and width
     var maskHeight = $(document).height();
@@ -279,7 +276,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _stopAndDontSaveQuiz = function() {
-    V.Debugging.log("_stopAndDontSaveQuiz detected");
     var current_slide = VISH.Slides.getCurrentSlide();
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
     _hideStopQuizPopup();

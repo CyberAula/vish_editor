@@ -605,10 +605,13 @@ VISH.Editor = (function(V,$,undefined){
 									element.quiz_id = $(div).find(".quiz_id").val();
 								} 
 								element.quiztype = "multiplechoice";
-								element.options = [];  	
+								//element.options = [];  	
+								element.options = {};  	
+								element.options.choices = [];
 								$(div).find('.multiplechoice_text_in_zone').each(function(i, input_text){
 									if((input_text)&&(input_text.value != "")){
-										element.options.push(input_text.value);
+										//element.options.push(input_text.value);
+										element.options.choices.push(input_text.value);
 									}
 								});
 							}

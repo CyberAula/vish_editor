@@ -36,31 +36,26 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
-    var received = JSON.stringify(quiz_element);
-    V.Debugging.log("_renderMCQuestion : and quiz_element:  " + received);
-    console.log("_renderMCQuestion : and quiz_element:  " + received);
-
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
-      //ret += "<div class='mcquestion_header'></div>";
-      //ret += "<div class='mcquestion_body'><h2 class='question'>"+ quiz_element['question']+"</h2>";
       ret += "<div class='mcquestion_body'>";
       ret += "<div class='question'>"+ quiz_element['question']+"</div>";
       ret += "<form class='mcquestion_form' action='"+quiz_element['posturl']+"' method='post'>";
 
-      for(var i = 0; i<quiz_element['options'].length; i++){
+      for(var i = 0; i<quiz_element['options']['choices'].length; i++){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
         if(VISH.Quiz.getQuizMode()=="answer"){
-          ret += "<label class='mc_answer'><input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>"+next_index+") "+quiz_element['options'][i]+"</label>";
+          ret += "<label class='mc_answer'><input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>";
+          ret += next_index+") "+ quiz_element.options['choices'][i] + "</label>";
+
         } else {
-          ret += "<label class='mc_answer'>"+next_index+") "+quiz_element['options'][i]+"</label>";
+          ret += "<label class='mc_answer'>"+next_index+") "+quiz_element.options['choices'][i]+"</label>";
         }
         ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
         ret += "<label class='mcoption_label'></label>";
       }
       ret += "<input type='hidden' value='"+ zone +"' name='zone' />";
       ret += "<input type='hidden' value='"+quiz_element['quiz_id']+"' name='quizid' class='quizId' />";
-     
       ret += "<div class='mch_inputs_wrapper'>";
       ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
       ret += "<input type='button' class='quiz_session_options_button' value='Options'/>";
