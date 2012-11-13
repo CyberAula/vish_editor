@@ -159,7 +159,7 @@ var i18n =
 				"i.selectObject"		: "Seleccionar archivo swf para subir",
 				"i.selectSlide"			: "Seleccionando una slide",
 				"i.selectTheme"			: "Seleccionar tema",
-				"i.selectquiz"			: "Seleccionar Quiz,"
+				"i.selectquiz"			: "Seleccionar Quiz",
 				"i.Title"				: "Título",
 				"i.thisIsVishEditor"	: "¡Esto es el ViSH Editor!",
 				"i.thisIsToolsMenu"		: "Esto es el menú de herramientas",

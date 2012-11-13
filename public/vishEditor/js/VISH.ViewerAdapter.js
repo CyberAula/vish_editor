@@ -81,6 +81,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".fc_poi img").css("width", 50*increase + "px");
 		$(".fc_poi img").css("height", 50*increase + "px");
 		
+		//if fancybox is opened, resize it
+		if ($('#fancy_content:empty').length === 0)
+		{
+		    $('#fancybox-inner').width("80%");
+			$('#fancybox-wrap').width("80%");
+			$('#fancybox-inner').height("80%");
+			$('#fancybox-wrap').height("80%");	
+			
+			$('#fancybox-wrap').css("top", "10%");	
+			$('#fancybox-wrap').css("left", "10%");	
+		}
+
 		//Snapshot callbacks
 		VISH.SnapshotPlayer.aftersetupSize(increase);
 		
