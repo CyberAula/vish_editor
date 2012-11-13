@@ -189,18 +189,29 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
 		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
-		//textArea.addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 		//trying to add class for Nestor request
-		//$(current_area).find(".value_multiplechoice_question_in_zone").parent().find("div")[0].addClass("mcquestion_header");
-
 		$(current_area).find("."+ type + "_option_in_zone").each(function(index, option_element) {
-    		V.Debugging.log ("index: " + index );
     		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
     		$(option_element).attr("id", optionWysiwygId);
-    		//$(option_element).addClass("wysiwygInstance");
-    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
+    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
 		});
+		$(".initTextDiv").click(function(event){
+
+    			if(event.target.tagName=="FONT"){
+    		var font = $(event.target);
+    		var div =  $(event.target).parent();
+    	} else if(event.target.tagName=="DIV"){
+    		var div = $(event.target);
+    		var font = $(event.target).find("font");
+    	}
+    	if($(font).text()==="Write options here"){
+    			//Remove text
+    			$(font).text("");
+    			$(div).removeClass("initTextDiv");
+    			$(".multiplechoice_option_in_zone").trigger("click");
+    	}
+    });
 	};
 
 
