@@ -49,13 +49,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "multiplechoice": 
 				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").children().remove();
 				$(zone).find(".value_multiplechoice_question_in_zone").parent().find("div > div").append(question);
-				var inputs = $(zone).find(".multiplechoice_text_in_zone"); //all inputs (less or equal than options received)
+				var inputs = $(zone).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
 				for (var i = 0;  i <= options.length - 1; i++) {
 					$(inputs[i]).val(options[i]);
 				}
 				if(quiz_id) {
 					$(zone).find('input[name="quiz_id"]').val(quiz_id);
 				}
+				$(zone).find(".multiplechoice_option_in_zone").attr("rows", "1");
 				break;
 			case "open":
 
@@ -186,13 +187,27 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 		var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
-		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwig_zoneX 
+		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
-		textArea.addClass("wysiwygInstance");
-
+		//textArea.addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 		//trying to add class for Nestor request
-		$(current_area).find(".value_multiplechoice_question_in_zone").parent().find("div")[0].addClass("mcquestion_header");
+		//$(current_area).find(".value_multiplechoice_question_in_zone").parent().find("div")[0].addClass("mcquestion_header");
+
+		$(current_area).find("."+ type + "_option_in_zone").each(function(index, option_element) {
+    		V.Debugging.log ("index: " + index );
+    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
+    		$(option_element).attr("id", optionWysiwygId);
+    		$(option_element).addClass("wysiwygInstance");
+    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
+
+		});
+		//$($(current_area).find("."+type + "_option_in_zone").parent()[0]).find("div")[0].addClass("mcquestion_options")
+		$(current_area).find("."+type + "_option_in_zone").parent().each(function(index, element) {
+			$(element).find("div")[0].addClass("mcquestion_options");
+		});
+
+			
 	};
 
 

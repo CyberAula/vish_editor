@@ -40,22 +40,25 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_body'>";
-      ret += "<div class='question'>"+ quiz_element['question']+"</div>";
-     // ret += "<div class='nicEdit-mcquestion_header'>"+ quiz_element['question']+"</div>";
+     // ret += "<div class='question'>"+ quiz_element['question']+"</div>";
+      ret += "<div class='nicEdit-mcquestion_header question_in_viewer'>"+ quiz_element['question']+"</div>";
       ret += "<form class='mcquestion_form' action='"+quiz_element['posturl']+"' method='post'>";
-
+      ret += "<ul class='ul_mch_options_in_zone'>";  
       for(var i = 0; i<quiz_element['options']['choices'].length; i++){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
         if(VISH.Quiz.getQuizMode()=="answer"){
-          ret += "<label class='mc_answer'><input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>";
+        /*  ret += "<label class='mc_answer'><input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>";
           ret += next_index+") "+ quiz_element.options['choices'][i] + "</label>";
-
+        */
         } else {
-          ret += "<label class='mc_answer'><span>"+next_index+") </span>"+quiz_element.options['choices'][i]+"</label>";
-        }
+          ret += "<li class='li_mch_options_in_zone'>";
+          ret += "<span>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]+"</div>";
+          /*ret += "<label class='mc_answer'><span>"+next_index+") </span>"+quiz_element.options['choices'][i]+"</label>";
+        */}
         ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
         ret += "<label class='mcoption_label'></label>";
-      }
+      } 
+      ret += "</ul>";
       ret += "<input type='hidden' value='"+ zone +"' name='zone' />";
       ret += "<input type='hidden' value='"+quiz_element['quiz_id']+"' name='quiz_id' class='quizId' />";
       ret += "<div class='mch_inputs_wrapper'>";
