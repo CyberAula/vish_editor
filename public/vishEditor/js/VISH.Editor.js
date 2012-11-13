@@ -598,18 +598,16 @@ VISH.Editor = (function(V,$,undefined){
 						//added to try save quiz in vish
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
 						//multiplechoice quiz
-							if($(div).find(".multiplechoice_text_in_zone")) {
+							if($(div).find(".multiplechoice_option_in_zone")) {
 								element.quiz_id = "";
 								if ($(div).find("input[name=quiz_id]").val()!="") {
 									element.quiz_id = $(div).find("input[name=quiz_id]").val();
 								} 
 								element.quiztype = "multiplechoice";
-								//element.options = [];  	
 								element.options = {};  	
 								element.options.choices = [];
-								$(div).find('.multiplechoice_text_in_zone').each(function(i, input_text){
+								$(div).find('.multiplechoice_option_in_zone').each(function(i, input_text){
 									if((input_text)&&(input_text.value != "")){
-										//element.options.push(input_text.value);
 										element.options.choices.push(input_text.value);
 									}
 								});
