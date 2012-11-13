@@ -373,7 +373,7 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	/**
-	 * function to close all slides in the flashcard, in case one remains open (used for mashme tv before receiving a show slide)
+	 * function to close all slides in the flashcard, in case one remains open
 	 */
 	var closeAllSlides = function(){
 		$(".slides > article").hide();	

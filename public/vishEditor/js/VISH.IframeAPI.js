@@ -17,6 +17,7 @@ VISH.Constant.Event.onFlashcardPointClicked = "onFlashcardPointClicked";
 VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
+VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";
 //Constant added by IframeAPI addon
 VISH.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
 
@@ -330,6 +331,12 @@ VISH.IframeAPI = (function(V,undefined){
 		}
 	}
 
+	var allowExitWithoutConfirmation = function(destination){
+		var params = {};
+		var VEMessage = _createMessage(VISH.Constant.Event.allowExitWithoutConfirmation,params,null,destination);
+		sendMessage(VEMessage,destination);
+	}
+
 
 	///////////
 	//SUPPORT
@@ -355,6 +362,7 @@ VISH.IframeAPI = (function(V,undefined){
 			sendMessage			: sendMessage,
 			setSlave			: setSlave,
 			setMaster			: setMaster,
+			allowExitWithoutConfirmation : allowExitWithoutConfirmation,
 			goToSlide 			: goToSlide,
 			playVideo 			: playVideo,
 			pauseVideo 			: pauseVideo,

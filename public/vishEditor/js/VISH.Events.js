@@ -4,19 +4,10 @@ VISH.Events = (function(V,$,undefined){
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
 	var registeredEvents = [];
 
-	/**
-	 * method to detect if keys present, if touch screen present or mashme integration
-	 * and setup the events and interaction accordingly
-	 */
 	var init = function() {
-	  bindAllEventListeners();
-	  
 	  if(!V.Editing){
-	  		if(typeof V.Events.Mashme != "undefined"){
-	  			//wait for mashme hello message and if so init events
-	  			window.addEventListener("message", V.Events.Mashme.onMashmeHello, false);  
-	  		}
-	  	}
+	  	bindAllEventListeners();
+	  }
 	};
 
 	/* Register events */
@@ -202,55 +193,6 @@ VISH.Events = (function(V,$,undefined){
 	  		bindedEventListeners = false;
 		}
 	};
-/*
-	var isActiveQuizSessionBackward = function(event) {
-		V.Debugging.log("event: " + event);
-		//session started 
-		if(V.Quiz.getIsQuizSessionStarted()) {
-			VISH.Quiz.setIsWaitingBackwardOneSlide(true);
-			VISH.Quiz.onStopMcQuizButtonClicked();
-		} //old case (just slide backward)
-				else {
-			 V.Slides.backwardOneSlide();
-		}
-	};
-
-	var isActiveQuizSessionForward = function(event) {
-		V.Debugging.log("event id : " + event.id);
-		// session started
-		if(V.Quiz.getIsQuizSessionStarted()) {
-			VISH.Quiz.setIsWaitingForwardOneSlide(true);
-			VISH.Quiz.onStopMcQuizButtonClicked();
-		} //old case (just slide forward)
-		else {
-			 V.Slides.forwardOneSlide();
-		}
-	};
-*/	
-//TODO Ask Kike
-	/*var isActiveQuizSession = function(event) {
-		V.Debugging.log("event id : " + event.srcElement.id);
-		// session started
-		if(event.srcElement.id =="page-switcher-end") {
-			if(V.Quiz.getIsQuizSessionStarted()) {
-				VISH.Quiz.setIsWaitingForwardOneSlide(true);
-				VISH.Quiz.onStopMcQuizButtonClicked();
-			} //old case (just slide forward)
-			else {
-				 V.Slides.forwardOneSlide();
-			} 
-		} 
-		else if (event.srcElement.id =="page-switcher-start") {
-			if(V.Quiz.getIsQuizSessionStarted()) {
-				VISH.Quiz.setIsWaitingBackwardOneSlide(true);
-				VISH.Quiz.onStopMcQuizButtonClicked();
-			} //old case (just slide backward)
-			else {
-				V.Slides.backwardOneSlide();
-			}
-		}
-	};
-*/
 	
 	return {
 			init 		: init,

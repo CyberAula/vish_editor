@@ -1,6 +1,6 @@
 VISH.Constant = VISH.Constant || {};
 
-VISH.Constant.Edit = "Edit";
+VISH.Constant.Edit = "Editor";
 VISH.Constant.Viewer  = "Viewer";
 VISH.Constant.AnyMode  = "Both";
 
@@ -43,3 +43,4 @@ VISH.Constant.Event.onFlashcardPointClicked = "onFlashcardPointClicked";
 VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
+VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";

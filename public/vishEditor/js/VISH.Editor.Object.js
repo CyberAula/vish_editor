@@ -364,10 +364,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, area, style, zoomInStyle){	
-		
-		VISH.Debugging.log("Draw object")
-		VISH.Debugging.log(object)
-
 		if(!VISH.Police.validateObject(object)[0]){
 			return;
 		}

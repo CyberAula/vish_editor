@@ -48,7 +48,6 @@ js/VISH.Utils.canvas.js
 js/VISH.Utils.text.js
 js/VISH.Slides.js
 js/VISH.Events.js
-js/VISH.Events.Mashme.js
 js/VISH.Quiz.js
 js/VISH.Quiz.Renderer.js
 js/VISH.Quiz.API.js
