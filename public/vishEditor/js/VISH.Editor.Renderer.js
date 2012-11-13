@@ -57,9 +57,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			}
 			 else if(slide.elements[el].type === "quiz"){
-			 	//console.log("quiz element quiz id " +slide.elements[el].quiz_id );
 			 	var received = JSON.stringify(slide.elements[el]);
-   				console.log("element received from server:  " + received);
 				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, slide.elements[el].id);
 				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype,slide.elements[el].id , slide.elements[el].question, slide.elements[el].options['choices'], slide.elements[el].quiz_id);
 			}

@@ -598,7 +598,7 @@ VISH.Editor = (function(V,$,undefined){
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
-
+								element.quiz_id = "";
 								if ($(div).find("input[name=quiz_id]").val()!="") {
 									element.quiz_id = $(div).find("input[name=quiz_id]").val();
 								} 
@@ -649,22 +649,7 @@ VISH.Editor = (function(V,$,undefined){
 
 					element = {};
 				}
-				// TODO Construct the simple_quiz object 
-				/*if(slide.type=="quiz"){
-							
-					var quizSlide = $.extend(true, new Object(), slide);
-
-					//Apply presentation Wrapper
-					var quizPresentation = new Object();
-					quizPresentation.title = presentation.title;
-					quizPresentation.description = presentation.description;
-					quizPresentation.author = '';
-					quizPresentation.slides = [quizSlide];
-					quizPresentation.type = "quiz_simple";
-
-					slide.quiz_simple_json = quizPresentation;
-					VISH.Debugging.log(JSON.stringify(quizPresentation));  
-				} */
+			
 				
 			});
 			presentation.slides.push(slide);
@@ -675,7 +660,7 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 		  
 		// VISH.Debugging.log("Presentation saved:")
-		VISH.Debugging.log(JSON.stringify(presentation));      
+		VISH.Debugging.log(JSON.stringify(presentation));     
 		return savedPresentation; 
 	};
 	

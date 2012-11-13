@@ -136,14 +136,10 @@ var _startStats = function() {
 
 
 var activatePolling = function (activate_boolean) {
-    console.log("activatePolling and boolean:" + activate_boolean);
-  V.Debugging.log("activatePolling and boolean:" + activate_boolean);
   pollingActivated = activate_boolean;
-V.Debugging.log("pollingActivated is :" + pollingActivated);
   if(pollingActivated) {
     _updateBarsStats();
   }
-
     else {
       clearInterval(getResultsTimeOut);
     }
@@ -209,8 +205,7 @@ var _getResults =  function(quiz_session_active_id) {
     };
 
   var _OnQuizSessionReceivedError = function(error){
-     var received = JSON.stringify(error);
-     V.Debugging.log("_OnQuizSessionReceivedError:  " + received);
+     V.Debugging.log("_OnQuizSessionReceivedError:  " + JSON.stringify(error));
   };
 
 /*
@@ -272,8 +267,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
-    var received = JSON.stringify(error);
-    V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + received);
+    V.Debugging.log("_onQuizSessionCloseReceivedError, and value received is:  " + JSON.stringify(error));
   };
 
   var _stopAndDontSaveQuiz = function() {
@@ -323,19 +317,14 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _OnQuizVotingReceivedError = function(error){
-    var received = JSON.stringify(error);
-    V.Debugging.log("_OnQuizVotingReceivedError, and value received is:  " + received);
+    V.Debugging.log("_OnQuizVotingReceivedError, and value received is:  " + JSON.stringify(error));
   };
-
-
-
   /////////////////////////
   //// COMMON METHODS
   ////////////////////////
 
   var _onQuizSessionResultsReceivedError = function(error) {
-    var received = JSON.stringify(error);
-    V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
+    V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + JSON.stringify(error));
   };
  /* NOT USED
   * Data format 
