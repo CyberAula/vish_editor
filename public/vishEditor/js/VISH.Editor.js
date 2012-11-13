@@ -596,8 +596,9 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						//added to try save quiz in vish
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
-						//multiplechoice quiz
+						//element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".value_multiplechoice_question_in_zone"));
+						//multiplechoice quiz value_multiplechoice_question_in_zone
 							if($(div).find(".multiplechoice_option_in_zone")) {
 								element.quiz_id = "";
 								if ($(div).find("input[name=quiz_id]").val()!="") {
@@ -605,10 +606,12 @@ VISH.Editor = (function(V,$,undefined){
 								} 
 								element.quiztype = "multiplechoice";
 								element.options = {};  	
-								element.options.choices = [];
-								$(div).find('.multiplechoice_option_in_zone').each(function(i, input_text){
-									if((input_text)&&(input_text.value != "")){
-										element.options.choices.push(input_text.value);
+								element.options.choices = []; 
+								$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
+									V.Debugging.log("option text: " + option_text);
+									if((option_text)&&(option_text.value != '<font size="4" unselectable="on">Write options here</font>')&& option_text.value !=""){
+										    //V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(option_text));
+										element.options.choices.push(VISH.Editor.Text.changeFontPropertiesToSpan($(option_text)));
 									}
 								});
 							}

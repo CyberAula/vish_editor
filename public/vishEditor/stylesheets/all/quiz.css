@@ -108,7 +108,7 @@ height: 100%;
     padding: 0.5%;
 }
 
-.multiplechoice_option_in_zone { 
+.multiplechoice_option_in_zone, .nicEdit-mcquestion_options { 
     background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center transparent;
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;
@@ -960,3 +960,4 @@ height: 20%;
 .question_in_viewer {
     border: none !important;
 }
+
