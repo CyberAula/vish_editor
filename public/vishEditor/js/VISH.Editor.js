@@ -598,8 +598,9 @@ VISH.Editor = (function(V,$,undefined){
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
 						//multiplechoice quiz
 							if($(div).find(".multiplechoice_text_in_zone")) {
-								if ($(div).find(".quiz_id")) {
-									element.quiz_id = $(div).find(".quiz_id").val();
+
+								if ($(div).find("input[name=quiz_id]").val()!="") {
+									element.quiz_id = $(div).find("input[name=quiz_id]").val();
 								} 
 								element.quiztype = "multiplechoice";
 								//element.options = [];  	

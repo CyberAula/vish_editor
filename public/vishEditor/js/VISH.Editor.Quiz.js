@@ -3,9 +3,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
 
 	var init = function(){
-		$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
-		$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
-		$(document).on('keydown','.multiplechoice_text', _onKeyDown);
+	//	$(document).on('click','.add_quiz_option', _addMultipleChoiceOption);
+	//	$(document).on('click','.remove_quiz_option', _removeMultipleChoiceOption);
+		//$(document).on('keydown','.multiplechoice_text', _onKeyDown);
 	};	
 	////////////
 	// Tabs and fancybox
@@ -36,7 +36,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 
 	var drawQuiz = function(quiz_type, zone_id, question, options, quiz_id){
-		//var typeQuiz = $(".current").find(".value_multiplechoice_question").val(question);
+
 		var zone;
 		if(zone_id) {
 			zone = "#"+ zone_id;
@@ -70,7 +70,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 		}
 	};
-
+/*
 	var _onKeyDown = function(event){
 		if(event.keyCode == 13) {
 			 var target = event.target;
@@ -79,8 +79,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			}
 		}	
 	}
-
+*/
 	//myInput, myImg and optionText are used to add the options when editing a mc question.
+	/*
 	var _addMultipleChoiceOption = function(event, myInput, myImg, optionText){
 		var img, input;
 		var optionsLength = $(".current").find(".ul_mch_options > li").length;
@@ -122,8 +123,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(".current").find(".ul_mch_options").append(newMultipleChoice);
 		$(".current").find(".ul_mch_options > li").last().find("input").focus();
 	};
-
-	var _renderDummyMultipleChoice = function(text, addImage){
+*/
+/*	var _renderDummyMultipleChoice = function(text, addImage){
 		var li = $("<li class='li_mch_option'></li>");
 		$(li).append("<span class='mcChoiceSpan'>" + text + "</span>");
 		$(li).append("<input type='text' class='multiplechoice_text'></input>");
@@ -139,8 +140,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(a).append(addImg);
 		return a;
 	}
-
-	var _removeMultipleChoiceOption = function(id) {
+*/
+/*	var _removeMultipleChoiceOption = function(id) {
 		//removeMultipleChoiconLoadTabMChoiceQuizeOption trigger always from img click
 		var li = $(event.target).parent().parent();
 		$(li).remove();
@@ -158,7 +159,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$(lastLi).append(_renderAddImg());
 		}
 	};
-
+*/
 
 	var _addMultipleChoiceQuiz = function(area) {
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);

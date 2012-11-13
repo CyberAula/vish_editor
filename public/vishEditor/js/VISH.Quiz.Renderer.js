@@ -40,6 +40,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_body'>";
       ret += "<div class='question'>"+ quiz_element['question']+"</div>";
+     // ret += "<div class='nicEdit-mcquestion_header'>"+ quiz_element['question']+"</div>";
       ret += "<form class='mcquestion_form' action='"+quiz_element['posturl']+"' method='post'>";
 
       for(var i = 0; i<quiz_element['options']['choices'].length; i++){
@@ -49,7 +50,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
           ret += next_index+") "+ quiz_element.options['choices'][i] + "</label>";
 
         } else {
-          ret += "<label class='mc_answer'>"+next_index+") "+quiz_element.options['choices'][i]+"</label>";
+          ret += "<label class='mc_answer'><span>"+next_index+") </span>"+quiz_element.options['choices'][i]+"</label>";
         }
         ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
         ret += "<label class='mcoption_label'></label>";

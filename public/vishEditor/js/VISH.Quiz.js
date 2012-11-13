@@ -332,21 +332,11 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   /////////////////////////
   //// COMMON METHODS
   ////////////////////////
-//data = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
-  //var _onQuizSessionResultsReceived = function(data) {
-    //_showResults(data);  
-    //trying to use google chart 
-     // _displayResults(data.results);
-
-  //};
 
   var _onQuizSessionResultsReceivedError = function(error) {
     var received = JSON.stringify(error);
     V.Debugging.log("_onQuizSessionResultsReceivedError, and value received is:  " + received);
   };
-    
-
-
  /* NOT USED
   * Data format 
   */
