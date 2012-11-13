@@ -76,6 +76,7 @@ var i18n =
 				"i.walk72"			: "(Añadir Captura de página web)",
 				"i.walk73"			: "Añadir página web",
 				"i.walk74"			: "Añadir Captura de página web",
+				"i.walk75"			: "Esta zona te ofrece una variedad de Quizes para añadir a tu excursión. Solo tienes que hacer clic en la miniatura que más se ajuste a la información que quieras transmitir. Pulsa \"Cerrar\" para continuar.",
 				"i.link"			: "Añadir url",
 				"i.resize"			: "Redimensionar",
 				"i.flashcardbg"		: "Fondo de flashcard",
@@ -158,6 +159,7 @@ var i18n =
 				"i.selectObject"		: "Seleccionar archivo swf para subir",
 				"i.selectSlide"			: "Seleccionando una slide",
 				"i.selectTheme"			: "Seleccionar tema",
+				"i.selectquiz"			: "Seleccionar Quiz,"
 				"i.Title"				: "Título",
 				"i.thisIsVishEditor"	: "¡Esto es el ViSH Editor!",
 				"i.thisIsToolsMenu"		: "Esto es el menú de herramientas",

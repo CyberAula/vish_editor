@@ -41,8 +41,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		
-		//when page is cached, add presentation to localstorage
+		//when page is cached or updated, add presentation to localstorage
 		applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+		applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 
 		//first action will be to detect what kind of view we have, game, flashcard, presentation
 		if(presentation.type ==="game"){
