@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vish Editor: API Test</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+	<script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+	<script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+	<script>
+		getOptions();
+	</script>
+    <div style="width:910px;height:750px;margin:0 auto; display:block">
+        <iframe src="/vishEditor/edit.html" class="vishEditorIframe" style="border:0" width="910" height="750" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; id="presentation_iframe1" ></iframe>
+    </div>
+
+    <script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			VISH.IframeAPI.init({callback: onConnect});
+		};
+		function onConnect(origin){
+			console.log("Communication stablished with " + origin);
+			VISH.IframeAPI.allowExitWithoutConfirmation(origin);
+		}	
+	</script>
+
+
+</body>
+</html>

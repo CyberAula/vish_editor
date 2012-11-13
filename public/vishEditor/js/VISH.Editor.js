@@ -153,6 +153,9 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
 
+		V.Events.init();
+		V.Events.Notifier.init();
+
 		//Init Vish Editor Addons
 		if(options.addons){
 			VISH.Addons.init(options.addons);

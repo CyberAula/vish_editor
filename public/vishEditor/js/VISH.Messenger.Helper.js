@@ -116,6 +116,9 @@ VISH.Messenger.Helper = (function(V,undefined){
 					VISH.Status.setPreventDefaultMode(VEMessageObject.params.preventDefaults);
 				}
 				break;
+			case VISH.Constant.Event.allowExitWithoutConfirmation:
+					VISH.Editor.allowExitWithoutConfirmation();
+				break;
 			default:
 					VISH.Debugging.log("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
 				break;
