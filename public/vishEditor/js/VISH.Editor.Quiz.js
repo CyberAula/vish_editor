@@ -198,16 +198,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     		V.Debugging.log ("index: " + index );
     		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
     		$(option_element).attr("id", optionWysiwygId);
-    		$(option_element).addClass("wysiwygInstance");
+    		//$(option_element).addClass("wysiwygInstance");
     		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
-
 		});
-		//$($(current_area).find("."+type + "_option_in_zone").parent()[0]).find("div")[0].addClass("mcquestion_options")
-		$(current_area).find("."+type + "_option_in_zone").parent().each(function(index, element) {
-			$(element).find("div")[0].addClass("mcquestion_options");
-		});
-
-			
 	};
 
 
