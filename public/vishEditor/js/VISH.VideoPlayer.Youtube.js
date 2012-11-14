@@ -6,7 +6,7 @@ VISH.VideoPlayer.Youtube = (function(){
 
 	var loadYoutubeObject = function(element,value){
 		if(VISH.Status.getOnline()=== false){
-			$(value).html("<img src='"+VISH.ImagesPath+"/advert_new_grey_video2.png'/>");
+			$(value).html("<img src='"+VISH.ImagesPath+"advert_new_grey_video2.png'/>");
 			return;
 		}
 		var source = $(value).attr("source");
