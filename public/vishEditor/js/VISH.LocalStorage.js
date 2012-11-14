@@ -14,6 +14,7 @@ VISH.LocalStorage = (function(V,$,undefined){
 		 	}
 		 	//save the presentation, we save the full json in case we need info about the slides in the future
 		 	localStorage.setItem("presentation_"+presentation.id, JSON.stringify(presentation));
+		 	//save also its URL, because we have the object id but the URL is composed with the excursion id
 		 	localStorage.setItem("presentation_"+presentation.id+"_url", window.location.href);
 		 	if(presentation.avatar !== undefined){
 		 		_saveImage(presentation.avatar);
