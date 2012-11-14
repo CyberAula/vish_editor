@@ -205,10 +205,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     		var div = $(event.target);
     		var font = $(event.target).find("font");
     	}
-    	if($(font).text()==="Write options here"){
+    	if($(font).text()==="Write options here"){	
     			//Remove text
     			$(font).text("");
     			$(div).removeClass("initTextDiv");
+    			$(div).parent().text("  ");
     			$(".multiplechoice_option_in_zone").trigger("click");
     	}
     });
