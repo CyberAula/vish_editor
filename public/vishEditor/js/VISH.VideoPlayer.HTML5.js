@@ -21,7 +21,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
 
 				playTriggeredByUser = true;
 			}, false);
@@ -33,7 +33,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
 				
 				pauseTriggeredByUser = true;
 			}, false);
@@ -53,7 +53,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
 				
 				seekTriggeredByUser = true;
             }, false);

@@ -78,7 +78,7 @@ VISH.VideoPlayer.Youtube = (function(){
 				return;
 			}
 
-			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,triggeredByUser);
+			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,triggeredByUser);
 
 			_seekVideo(ytPlayer,currentTime,false);
 			if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
@@ -104,7 +104,7 @@ VISH.VideoPlayer.Youtube = (function(){
 				return;
 			}
 
-			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,triggeredByUser);
+			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,triggeredByUser);
 
 			if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
 				ytPlayer.pauseVideo();
@@ -136,7 +136,7 @@ VISH.VideoPlayer.Youtube = (function(){
 				return;
 			}
 
-			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
+			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
 			
 			video.seekTo(seekTime);
 		}

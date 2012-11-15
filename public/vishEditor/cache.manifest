@@ -53,7 +53,7 @@ js/VISH.Quiz.API.js
 js/VISH.Messenger.Helper.js
 js/VISH.Addons.js
 js/VISH.Addons.IframeMessenger.js
-js/VISH.Events.Notifier.js
+js/VISH.EventsNotifier.js
 js/VISH.LocalStorage.js
 configuration/configuration.js
 images/background1.png

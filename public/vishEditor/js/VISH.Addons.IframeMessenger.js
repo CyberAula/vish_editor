@@ -18,7 +18,7 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 	}
 
 	var _initListener = function(){
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onMessage,_onVishEditorMessage);
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onMessage,_onVishEditorMessage);
 		listenerInitialized = true;
 	}
 

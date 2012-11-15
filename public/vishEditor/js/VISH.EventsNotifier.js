@@ -1,4 +1,4 @@
-VISH.Events.Notifier = (function(V,$,undefined){
+VISH.EventsNotifier = (function(V,$,undefined){
 
 	var listeners;
 	// listeners['event'] = [callback1,callback2,...,callbackn];

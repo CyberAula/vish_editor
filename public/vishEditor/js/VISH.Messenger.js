@@ -3,27 +3,27 @@ VISH.Messenger = (function(V,undefined){
 	var init = function() {
 		//Events notified via VEMessage
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onGoToSlide, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onGoToSlide, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onGoToSlide,params);
 		});
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onPlayVideo, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onPlayVideo, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onPlayVideo,params);
 		});
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onPauseVideo, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onPauseVideo, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onPauseVideo,params);
 		});
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onSeekVideo, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onSeekVideo, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
 		});
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onFlashcardPointClicked, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onFlashcardPointClicked, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onFlashcardPointClicked,params);
 		});
 
-		VISH.Events.Notifier.registerCallback(VISH.Constant.Event.onFlashcardSlideClosed, function(params){ 
+		VISH.EventsNotifier.registerCallback(VISH.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			notifyEventByMessage(VISH.Constant.Event.onFlashcardSlideClosed,params);
 		});
 	};
@@ -34,7 +34,7 @@ VISH.Messenger = (function(V,undefined){
 			return;
 		}
 		var VEMessage = VISH.Messenger.Helper.createMessage(event,params);
-		VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onMessage,VEMessage,true);
+		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onMessage,VEMessage,true);
 	}
 
 	return {

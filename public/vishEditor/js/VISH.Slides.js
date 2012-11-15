@@ -295,7 +295,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var params = new Object();
 	params.slideNumber = no;
-	VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onGoToSlide,params,triggeredByUser);
+	VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onGoToSlide,params,triggeredByUser);
   };
   
 
@@ -345,7 +345,7 @@ VISH.Slides = (function(V,$,undefined){
 			//Notify
 			var params = new Object();
 			params.slideNumber = slide_id;
-			VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);
+			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);
 		}
 	};
 
@@ -369,7 +369,7 @@ VISH.Slides = (function(V,$,undefined){
 		//Notify
 		var params = new Object();
 		params.slideNumber = slide_id;
-		VISH.Events.Notifier.notifyEvent(VISH.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
+		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
 	};
 
 	/**

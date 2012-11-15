@@ -199,11 +199,36 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
 	};
     	
+    /*
+     * Return the slideNumbers of the current visible thumbnails
+     */
+    var getVisibleThumbnails = function(){
+    	var thumbnails = $("div.carrousel_element_single_row_slides").not(".draggable_arrow_div");
+    	var first = _getNumberOfThumbnail($(thumbnails[0]));
+    	var last = first;
+
+    	$(thumbnails).each(function(index,thumbnail){
+			var number = _getNumberOfThumbnail(thumbnail);
+			if(isNaN(number)){
+				return false;
+			} else {
+				last = number;
+			}
+    	});
+    	//Prevent not visible thumbnails to be selected, is:visible doesn't working!
+    	var last = Math.min(last,first+7); 
+    	return [first,last];
+    }
+
+    var _getNumberOfThumbnail = function(thumbnailDiv){
+    	return parseInt($(thumbnailDiv).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
+    }
   
 	return {
 		init              : init,
 		redrawThumbnails  : redrawThumbnails,
-		selectThumbnail	  : selectThumbnail
+		selectThumbnail	  : selectThumbnail,
+		getVisibleThumbnails	: getVisibleThumbnails
 	};
 
 }) (VISH, jQuery);
