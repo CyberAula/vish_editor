@@ -318,6 +318,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	}
 
 	var mustMoveCarrousel = function(direction){
+		if(!VISH.Slides.isSlideFocused()){
+			return false;
+		}
 		var visibleThumbnails = VISH.Editor.Thumbnails.getVisibleThumbnails();
 		switch(direction){
 			case "next":
