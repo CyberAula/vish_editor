@@ -317,13 +317,39 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		$("#" + carrouselDivId).trigger("insertItem", [element, posc]);
 	}
 
+	var mustMoveCarrousel = function(direction){
+		if(!VISH.Slides.isSlideFocused()){
+			return false;
+		}
+		var visibleThumbnails = VISH.Editor.Thumbnails.getVisibleThumbnails();
+		switch(direction){
+			case "next":
+				var last = visibleThumbnails[1];
+				var future = VISH.Slides.getCurrentSlideNumber()+1;
+				if(future>last){
+					return true;
+				}
+				break;
+			case "prev":
+				var first = visibleThumbnails[0];
+				var future = VISH.Slides.getCurrentSlideNumber()-1;
+				if(future < first){
+					return true;
+				}
+				break;
+			default:
+				return false;
+		}
+	}
+
 	return {
 		createCarrousel	  : createCarrousel,
 		cleanCarrousel    : cleanCarrousel,
 		goToElement       : goToElement,
 		advanceCarrousel  : advanceCarrousel,
 		backCarrousel     : backCarrousel,
-		insertElement	  : insertElement
+		insertElement	  : insertElement,
+		mustMoveCarrousel : mustMoveCarrousel
 	};
 
 }) (VISH, jQuery);

@@ -1846,12 +1846,15 @@ if (opts.responsive) {
 				$(document).bind(cf_e('keyup', conf, false, true, true), function(e) {
 					var k = e.keyCode;
 					if (k == opts.next.key)	{
-						e.preventDefault();
-						$cfs.trigger(cf_e('next', conf));
-					}
-					if (k == opts.prev.key) {
-						e.preventDefault();
-						$cfs.trigger(cf_e('prev', conf));
+							if((VISH)&&(VISH.Editor)&&(VISH.Editor.Carrousel.mustMoveCarrousel("next"))){
+								e.preventDefault();
+								$cfs.trigger(cf_e('next', conf));
+							}
+					} else if (k == opts.prev.key) {
+							if((VISH)&&(VISH.Editor)&&(VISH.Editor.Carrousel.mustMoveCarrousel("prev"))){
+								e.preventDefault();
+								$cfs.trigger(cf_e('prev', conf));
+							}
 					}
 				});
 			}

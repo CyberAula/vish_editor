@@ -370,10 +370,13 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					var hyperlink = $(area).attr("hyperlink");
 					if(hyperlink){
 						$(".tools_input_addUrl").val(hyperlink);
+						$(".removeUrlButton").show();
+					} else {
+						$(".removeUrlButton").hide();
 					}
-
 				},
-				'onClosed'			: function(){
+				'onClosed'	: function(){
+					$(".removeUrlButton").hide();
 				}
 			}
 		);
@@ -412,7 +415,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$.fancybox.close();
 	};
 
-	
+	var removeUrl = function(){
+		var area = VISH.Editor.getCurrentArea();
+		$(area).removeAttr("hyperlink");
+		$.fancybox.close();
+	}
   
 	return {
 		init							: init,
@@ -428,6 +435,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		changeFlashcardBackground		: changeFlashcardBackground,
 		addLink							: addLink,
 		addUrl 							: addUrl,
+		removeUrl 						: removeUrl,
 		resizeMore						: resizeMore,
 		resizeLess						: resizeLess,
 		zoomMore 						: zoomMore,

@@ -28,7 +28,7 @@ VISH.Status = (function(V,$,undefined){
 		            async: true,
 		            cache: false,
 		            error: function (req, status, ex) {
-		                console.log("Error: " + ex);
+		                VISH.Debugging.log("Error: " + ex);
 		                // We might not be technically "offline" if the error is not a timeout, but
 		                // otherwise we're getting some sort of error when we shouldn't, so we're
 		                // going to treat it as if we're offline.
@@ -267,11 +267,11 @@ VISH.Status = (function(V,$,undefined){
 	var setSlaveMode = function(slaveMode){
 		if(slaveMode!==isSlave){
 			if(slaveMode===true){
-				VISH.Events.unbindAllEventListeners();
+				VISH.Events.unbindViewerEventListeners();
 				VISH.VideoPlayer.HTML5.showControls(false);
 				isSlave=true;
 			} else {
-				VISH.Events.bindAllEventListeners();
+				VISH.Events.bindViewerEventListeners();
 				VISH.VideoPlayer.HTML5.showControls(true);
 				isSlave=false;
 			}

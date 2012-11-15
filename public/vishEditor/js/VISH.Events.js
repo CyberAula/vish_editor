@@ -6,7 +6,7 @@ VISH.Events = (function(V,$,undefined){
 
 	var init = function() {
 	  if(!V.Editing){
-	  	bindAllEventListeners();
+	  	bindViewerEventListeners();
 	  }
 	};
 
@@ -138,7 +138,7 @@ VISH.Events = (function(V,$,undefined){
    };
 
 
-   var bindAllEventListeners = function(){
+   var bindViewerEventListeners = function(){
    		if(!bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
@@ -153,7 +153,7 @@ VISH.Events = (function(V,$,undefined){
 	      		$(document).on('click', '#closeButton', function(){
 	      			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
 	      		});
-	 			 $(document).bind('touchstart', handleTouchStart); 
+	 			$(document).bind('touchstart', handleTouchStart); 
 	      	} else if(V.SlideManager.getPresentationType() === "flashcard"){
 				var presentation = V.SlideManager.getCurrentPresentation();
 				//and now we add the points of interest with their click events to show the slides
@@ -167,7 +167,7 @@ VISH.Events = (function(V,$,undefined){
 		bindedEventListeners = true;
    }
 
-	var unbindAllEventListeners = function(){
+	var unbindViewerEventListeners = function(){
 		if(bindedEventListeners){
 			if(V.SlideManager.getPresentationType() === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
@@ -196,8 +196,8 @@ VISH.Events = (function(V,$,undefined){
 	
 	return {
 			init 		: init,
-			bindAllEventListeners	: bindAllEventListeners,
-			unbindAllEventListeners	: unbindAllEventListeners
+			bindViewerEventListeners	: bindViewerEventListeners,
+			unbindViewerEventListeners	: unbindViewerEventListeners
 	};
 
 }) (VISH,jQuery);
