@@ -193,7 +193,8 @@ var i18n =
 				"i.draft"				: "Borrador",
 				"i.publish"				: "Publicar",
 				"i.wysiwyg.addurl"		: "Añadir enlace",
-				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado."
+				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado.",
+				"i.Remove"				: "Borrar"
 			},
 			
 		  "default" :
