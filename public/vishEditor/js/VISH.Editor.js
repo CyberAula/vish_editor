@@ -598,8 +598,7 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-						//added to try save quiz in vish
-						//element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance").parent().find("div > div"));
+						//VISH.Editor.Text.changeFontPropertiesToSpan(zone);
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".value_multiplechoice_question_in_zone"));
 						//multiplechoice quiz value_multiplechoice_question_in_zone
 							if($(div).find(".multiplechoice_option_in_zone")) {
@@ -611,13 +610,12 @@ VISH.Editor = (function(V,$,undefined){
 								element.options = {};  	
 								element.options.choices = []; 
 								$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-									var option = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 									if((option)&&(option != '<div class="initTextDiv vish-parent-font4" unselectable="on" style="font-weight: normal;"><span class="vish-font4 vish-fontHelvetica" style="color:undefined;undefined;">Write options here</span></div>')&& option !=""){
-										V.Debugging.log("before result:" + option_text);
-										result = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									
+										result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 										element.options.choices.push(VISH.Editor.Text.changeFontPropertiesToSpan($(option_text)));
-										V.Debugging.log("result:" + result);
-
+									
 									}
 								});
 							}
@@ -641,8 +639,6 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					//testing create simple_quiz 
-					//TODO ask Kike which info must go in quiz_simple_json
 					if(element.type=="quiz"){
 						var quizSlide = $.extend(true, new Object(), element);
 						//Apply presentation Wrapper

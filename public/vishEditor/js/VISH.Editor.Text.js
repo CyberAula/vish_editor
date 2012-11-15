@@ -88,23 +88,22 @@ VISH.Editor.Text = (function(V,$,undefined){
 	var changeFontPropertiesToSpan = function(zone){
 		//replace all font tags by span tags with a proper class
 		_replaceFontTag(zone);			
-		
-		//in webkit when copy and paste from the same editable area change <font size=7> to <span style="font-size: -webkit-xxx-large;" > and loses line-height
-		$(zone).find("span[style*='font-size']").each(function(index,elem){
-			var style = $(elem).attr("style");
-			$(elem).attr("style", style + ";line-height: 110%;");
-			
-		});
-		//if everthing is italic or everything is bold or everything is underlined, firefox adds it to the parent
-		if($(zone).css("font-style")!=="normal"){
-			$(zone).children(':first-child').css("font-style", $(zone).css("font-style"));
-		}
-		if($(zone).css("font-weight")!==400){
-			$(zone).children(':first-child').css("font-weight", $(zone).css("font-weight"));
-		}
-		if($(zone).css("text-decoration")!=="none"){
-			$(zone).children(':first-child').css("text-decoration", $(zone).css("text-decoration"));
-		}
+			//in webkit when copy and paste from the same editable area change <font size=7> to <span style="font-size: -webkit-xxx-large;" > and loses line-height
+			$(zone).find("span[style*='font-size']").each(function(index,elem){
+				var style = $(elem).attr("style");
+				$(elem).attr("style", style + ";line-height: 110%;");
+				
+			});
+			//if everthing is italic or everything is bold or everything is underlined, firefox adds it to the parent
+			if($(zone).css("font-style")!=="normal"){
+				$(zone).children(':first-child').css("font-style", $(zone).css("font-style"));
+			}
+			if($(zone).css("font-weight")!==400){
+				$(zone).children(':first-child').css("font-weight", $(zone).css("font-weight"));
+			}
+			if($(zone).css("text-decoration")!=="none"){
+				$(zone).children(':first-child').css("text-decoration", $(zone).css("text-decoration"));
+			}
 		return $(zone).html();
 	};
 	

@@ -197,22 +197,31 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
 		});
 		$(".initTextDiv").click(function(event){
-
-    			if(event.target.tagName=="FONT"){
-    		var font = $(event.target);
-    		var div =  $(event.target).parent();
-    	} else if(event.target.tagName=="DIV"){
-    		var div = $(event.target);
-    		var font = $(event.target).find("font");
-    	}
-    	if($(font).text()==="Write options here"){	
-    			//Remove text
-    			$(font).text("");
-    			$(div).removeClass("initTextDiv");
-    			$(div).parent().text("  ");
-    			$(".multiplechoice_option_in_zone").trigger("click");
-    	}
-    });
+    		if(event.target.tagName=="FONT"){
+    			var font = $(event.target);
+    			var div =  $(event.target).parent();
+    		} else if(event.target.tagName=="DIV"){
+    			var div = $(event.target);
+    			var font = $(event.target).find("font");
+    		}else if(event.target.tagName=="SPAN"){
+    			var div = $(event.target).parent();
+    			var font = $(event.target);
+    		}
+	    	if($(font).text()==="Write options here"){	
+	    			//Remove text
+	    		$(font).text("");
+	    		$(div).removeClass("initTextDiv");
+	    		//$(div).parent().text("  ");
+	    		$(".multiplechoice_option_in_zone").trigger("click");
+	    	}
+	    	else if($(font).text()==="Write question here"){	
+	    		//Remove text
+	    		$(font).text("");
+	    		$(div).removeClass("initTextDiv");
+	    		//$(div).parent().text("  ");
+	    		$(div).parent().trigger("click");
+	    	}
+    	});
 	};
 
 

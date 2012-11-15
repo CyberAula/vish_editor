@@ -34,7 +34,6 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     }
   };
 
-
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
       
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
