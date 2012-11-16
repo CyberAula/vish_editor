@@ -110,21 +110,20 @@ height: 100%;
 }
 
 .multiplechoice_option_in_zone { 
-    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center transparent;
+background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center transparent;
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;
     color: #000000;
+    float: left;
     font-family: Arial;
     font-size: 1em;
+    height: 21px;
     margin-left: 2%;
-    margin-top: 0.5%;
     outline: 0 none;
     padding: 1%;
     position: relative;
-    width: 79%;
-    height: 4%;
+    width: 85%;
     z-index: 1000;
-    float:left;
 }
 .multiplechoice_option_in_viewer {
     border: none !important;
@@ -950,14 +949,15 @@ height: 20%;
 }
 
 .value_multiplechoice_question_in_zone {
-    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center;
-    color: #000000;
+    background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px center transparent;
     border: 1px solid #666666 !important;
     border-radius: 20px 20px 20px 20px;
-    margin-left: 11%;
-    margin-top: 3%;
-    width: 81% !important;
+    color: #000000;
     height: 20%;
+    margin-left: 8%;
+    margin-top: 3%;
+    padding: 2%;
+    width: 78%;
 }
 
 .question_in_viewer {
