@@ -32,6 +32,10 @@ VISH.Constant.Video = {};
 VISH.Constant.Video.HTML5 = "HTML5";
 VISH.Constant.Video.Youtube = "Youtube";
 
+//Clipboard
+VISH.Constant.Clipboard = {};
+VISH.Constant.Clipboard.Slide = "slide"
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";

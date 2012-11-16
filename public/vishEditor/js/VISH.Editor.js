@@ -152,6 +152,7 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Quiz.init();
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
+		VISH.Editor.Clipboard.init();
 
 		VISH.Editor.Events.init();
 		VISH.EventsNotifier.init();
@@ -458,11 +459,8 @@ VISH.Editor = (function(V,$,undefined){
 				'onClosed'			: function(){
 				  //if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
-						$("#prompt_answer").val("false");
-						article_to_delete.remove();
-						VISH.Slides.onDeleteSlide();					
-						VISH.Editor.Utils.redrawSlides();						
-						VISH.Editor.Thumbnails.redrawThumbnails();			
+						$("#prompt_answer").val("false");	
+						VISH.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
 					}
 				}
 			}

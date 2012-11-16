@@ -444,6 +444,61 @@ VISH.Slides = (function(V,$,undefined){
 	 	_updateSlideEls();
 	 	
 	 }
+
+	 var copySlideWithNumber = function(slideNumber){
+	 	var slide = getSlideWithNumber(slideNumber);
+	 	if(slide===null){
+	 		return;
+	 	}
+	 	var newSlide = $(slide).clone();
+	 	copySlide(newSlide);
+	 }
+
+	 var copySlide = function(newSlide){
+
+	 	var currentSlide = getCurrentSlide();
+	 	if(currentSlide){
+	 		$(currentSlide).after(newSlide);
+	 	} else {
+	 		$("section#slides_panel").append(newSlide);
+	 	}
+
+	 	VISH.Editor.Utils.refreshDraggables(newSlide);
+
+	 	//Update slideEls
+	 	slideEls = document.querySelectorAll('section.slides > article');
+
+	 	//Update slides classes next and past.
+	 	//Current slide needs to be stablished before this call.
+	 	_updateSlideEls();
+
+	 	//Redraw thumbnails
+	 	VISH.Editor.Thumbnails.redrawThumbnails();
+
+	 	if(currentSlide){
+	 		goToSlide(getCurrentSlideNumber()+1);
+	 	} else {
+	 		goToSlide(1);
+	 	}
+	 }
+
+	 var removeSlide = function(slideNumber){
+	 	var slide = getSlideWithNumber(slideNumber);
+	 	if(slide===null){
+	 		return;
+	 	}
+	 	var removing_current_slide = false;
+	 	if(getCurrentSlide() === slide){
+	 		removing_current_slide = true;
+	 	}
+
+	 	$(slide).remove();
+	 	if(removing_current_slide){
+	 		setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	 	}
+		VISH.Editor.Utils.redrawSlides();					
+		VISH.Editor.Thumbnails.redrawThumbnails();
+	 }
 	
 	return {	
 			init          			: init,	
@@ -453,7 +508,6 @@ VISH.Slides = (function(V,$,undefined){
 			isCurrentFirstSlide		: isCurrentFirstSlide,
 			isCurrentLastSlide		: isCurrentLastSlide,
 			isSlideSelected 		: isSlideSelected,
-			onDeleteSlide			: onDeleteSlide,
 			getNumberOfSlide		: getNumberOfSlide,
 			getSlides 				: getSlides,
 			getSlideWithNumber		: getSlideWithNumber,
@@ -465,6 +519,8 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			isSlideFocused			: isSlideFocused,
 			moveSlideTo				: moveSlideTo,
+			copySlide				: copySlide,
+			removeSlide				: removeSlide,
 			showSlide				: showSlide
 	};
 
