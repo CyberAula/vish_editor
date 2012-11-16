@@ -46,7 +46,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
         if(VISH.Quiz.getQuizMode()=="answer"){
           ret += "<li class='li_mch_options_in_zone'>";
-          ret += "<input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input><span>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
+          ret += "<input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'/><span>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
           ret += "</li>"
         /*  ret += "<label class='mc_answer'><input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'</input>";
           ret += next_index+") "+ quiz_element.options['choices'][i] + "</label>";
