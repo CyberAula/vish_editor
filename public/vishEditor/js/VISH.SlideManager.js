@@ -13,7 +13,8 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var init = function(options, presentation){
 		VISH.Debugging.init(options);
-		VISH.Debugging.log("SlideManager.init with presentation: " + JSON.stringify(presentation));
+		VISH.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
+		VISH.Debugging.log(JSON.stringify(presentation));
 
 		VISH.Editing = false;
 
@@ -69,7 +70,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		var renderFull = (options["full"]===true)&&(!V.Status.getIsInIframe());
+		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 		
 		if(!renderFull){
 			if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {

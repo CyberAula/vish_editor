@@ -90,7 +90,10 @@ VISH.Debugging = (function(V,$,undefined){
 				log("VISH.Debugging Error: Specify presentationOptions");
 				return;
 			}
-			mypresentation = VISH.Editor.savePresentation();
+			mypresentation = VISH.Editor.getSavedPresentation();
+			if(mypresentation===null){
+				mypresentation = VISH.Editor.savePresentation();
+			}
 		} else {
 			log("You are already in Vish Viewer");
       		return;
@@ -106,8 +109,7 @@ VISH.Debugging = (function(V,$,undefined){
 	    VISH.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
 
-		log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
-
+		// VISH.Debugging.log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
 		VISH.SlideManager.init(presentationOptions, mypresentation);
 	}
 	
@@ -135,8 +137,7 @@ VISH.Debugging = (function(V,$,undefined){
 		VISH.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
 
-		VISH.Debugging.log("Init Vish Editor with presentation: " + JSON.stringify(mypresentation));
-		
+		// VISH.Debugging.log("Init Vish Editor with presentation: " + JSON.stringify(mypresentation));
 		VISH.Editor.init(presentationOptions, mypresentation);
 	}
 	

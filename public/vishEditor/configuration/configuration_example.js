@@ -76,7 +76,10 @@ var getOptions = function(){
 			//Testing Quizes
 			options["quiz_active_session_id"] = "29";
 
+			//Show full presentation when its outside an inframe 
 			options["full"] = false;
+			//Show full presentation, even its inside an iframe 
+			options["forcefull"] = false;
 
 			//Preview
 			options["preview"] = false;
