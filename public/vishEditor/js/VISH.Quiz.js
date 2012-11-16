@@ -137,13 +137,19 @@ var _startStats = function() {
 
 
 var activatePolling = function (activate_boolean) {
-  pollingActivated = activate_boolean;
-  if(pollingActivated) {
+
+  if( !pollingActivated && activate_boolean) { 
+     pollingActivated = activate_boolean;//true
     _updateBarsStats();
+    getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
   }
-    else {
-      clearInterval(getResultsTimeOut);
-    }
+  else if (pollingActivated&&activate_boolean) {//already activated 
+  //nothing
+
+  } else {
+    pollingActivated = activate_boolean; //false
+    clearInterval(getResultsTimeOut);
+  }
 
 };
 
@@ -168,7 +174,7 @@ var _updateBarsStats = function(data) {
     $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span").css('width','0%');
     //testing timeout
     _getResults();
-     getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
+     //getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
   }
 };
 /* function that calls to VISH API to receive voting's results  */
@@ -250,6 +256,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(current_slide).find("input." + startButtonClass).show();
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
+     pollingActivated = false;
     clearInterval(getResultsTimeOut);
     quizSessionStarted = false;
     if(isWaitingForwardOneSlide) {
@@ -283,6 +290,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
     V.Quiz.API.deleteQuizSession(quizSessionActiveId,_onQuizSessionCloseReceived,_onQuizSessionCloseReceivedError, quizName);
     clearInterval(getResultsTimeOut);
+
     quizSessionStarted = false;
         if(isWaitingForwardOneSlide) {
       V.Slides.forwardOneSlide();
@@ -366,7 +374,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var drawPieChart = function (data) {
     // Create the data table.
-     console.log("drawPieChart, and value received is:  " + JSON.stringify(data));
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
     data_for_chart.addColumn('number', 'Slices');

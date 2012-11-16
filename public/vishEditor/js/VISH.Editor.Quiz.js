@@ -52,7 +52,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				for (var i = 0;  i <= options.length - 1; i++) {
 					//$(inputs[i]).val(options[i]);
 					$(inputs[i]).children().remove();
-					$(inputs[i]).append(options[i]);
+					$(inputs[i]).append(options[i].container);
 				}
 				if(quiz_id) {
 					$(zone).find('input[name="quiz_id"]').val(quiz_id);

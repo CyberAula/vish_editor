@@ -779,7 +779,7 @@ VISH.Samples = (function(V,undefined){
 							"question":"What are <b> you  <u>talking</u> <i> <font size='7'> about </font> bla bla bla bla ... large textttttt </i></b> ?",
 							"quiztype":"multiplechoice",
 							"options":{
-								"choices": ["Something","Nothing","Everything","Option D"]
+								"choices": [{"value":"Something", "container":"Something"},{"value":"Nothing", "container":"Nothing"},{"value":"Everything", "container":"Everything"},{"value":"Option D", "container":"Option D"}]
 								}
 						},
 						{
@@ -803,7 +803,7 @@ VISH.Samples = (function(V,undefined){
 							"areaid":"center",
 							"question":"<i><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Second </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;undefined;\">question</span><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"> quiz quiz<b> quiz</b> ... ?</span></i>","quiztype":"multiplechoice",
 							"options":{
-								"choices": ["<b>aaa </b>... mucha a ","bbb ... <b> mucha b </b>","ccc ... mucha c"]
+								"choices": [{"value": "aaaaa... mucha a ", "container": "<b>aaa </b>... mucha a "},{ "value":"bbb ... mucha b ", "container":"bbb ... <b> mucha b </b>"}, {"value":"ccc ... mucha c", "container":"ccc ... mucha c"}]
 							}
 						},
 						{"id":"zone8","type":"image","areaid":"subheader","body":"http://farm3.staticflickr.com/2653/3950938406_8a2429bf14_m.jpg","style":"position: relative; width:68.18181818181819%; height:333.3333333333333%; top:-126.3157894736842%; left:14.242428866299717%;"
