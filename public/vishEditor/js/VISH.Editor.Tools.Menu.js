@@ -13,7 +13,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	*/
 
 	var init = function(){
-
 		$("#menu").hide();
 
 		if(!VISH.Status.getDevice().desktop){
@@ -34,7 +33,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			case "presentation":
 				$("ul.menu_option_main").find("a.menu_presentation").parent().show();
 
-				if(V.Editor.isPresentationStandard()){
+				if(VISH.Editor.isPresentationStandard(VISH.Editor.getPresentation())){
 					$("ul.menu_option_main").find("a.menu_standard_presentation").parent().show();
 				}
 

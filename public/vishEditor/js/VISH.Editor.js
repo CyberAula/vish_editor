@@ -517,6 +517,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		//now save the presentation
 		var presentation = {};
+		presentation.VEVersion = VISH.VERSION;
 		if(draftPresentation){
 			presentation.id = draftPresentation.id;
 		}else{
@@ -616,9 +617,6 @@ VISH.Editor = (function(V,$,undefined){
 									}
 								});
 							}
-							else {
-									V.Debugging.log("another kind of quiz detected");
-							} 
 						} 
 						
 					 else if(element.type === "snapshot"){
@@ -660,15 +658,13 @@ VISH.Editor = (function(V,$,undefined){
 
 		savedPresentation = presentation;  
 		  
-		// VISH.Debugging.log("Presentation saved:")
-		VISH.Debugging.log(JSON.stringify(presentation));     
+		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n")
+		VISH.Debugging.log(JSON.stringify(presentation));
 		return savedPresentation; 
 	};
 	
 
 	var afterSavePresentation = function(presentation, order){
-		VISH.Debugging.log("VISH.Configuration.getConfiguration()[mode]: " + VISH.Configuration.getConfiguration()["mode"]); 
-
 		switch(VISH.Configuration.getConfiguration()["mode"]){
 			case VISH.Constant.NOSERVER:
 				//Ignore order param for developping
@@ -691,13 +687,11 @@ VISH.Editor = (function(V,$,undefined){
 		        var draft = (order==="draft");
 		        
 		        //POST to http://server/excursions/
-		        var jsonPresentation = JSON.stringify(presentation);
-		    	VISH.Debugging.log(jsonPresentation);   
+		        var jsonPresentation = JSON.stringify(presentation);  
 		        var params = {
 		          "excursion[json]": jsonPresentation,
 		          "authenticity_token" : initOptions["token"],
 		          "draft": draft
-		          
 		        }
 		        
 		        $.ajax({
@@ -855,27 +849,32 @@ VISH.Editor = (function(V,$,undefined){
 	 * true when only contain standard slides.
 	 * false when contains other slide types like flashcards, games or virtual experiments.
 	 */
-	var isPresentationStandard = function(){
-		var type = getPresentationType();
-		if(type!="presentation"){
+	var isPresentationStandard = function(presentation){
+		if(presentation){
+			//Eval presentation
+			return _isThisPresentationStandard(presentation);
+		} else {
+			//Eval current presentation
+
+			if($("article[template]").length===0){
+				//Empty presentation, optimization for first call
+				return true;
+			}
+			return _isThisPresentationStandard(savePresentation());
+		}
+	}
+
+	var _isThisPresentationStandard = function(presentation){
+		if(presentation.type!="presentation"){
 			return false;
 		}
-
-		if($("article[template]").length===0){
-			//Empty presentation, optimization for first call
-			return true;
-		}
-
 		var isStandard = true;
-		presentation = savePresentation();
-
 		$.each(presentation.slides, function(index, slide) {
 			if((slide.type)&&(slide.type!="standard")){
 				isStandard = false;
-				return;
+				return false;
 			}
 		});
-
 		return isStandard;
 	}
 
