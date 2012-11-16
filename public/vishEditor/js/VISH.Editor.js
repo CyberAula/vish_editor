@@ -612,7 +612,11 @@ VISH.Editor = (function(V,$,undefined){
 									var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 									if((option)&&(option != '<div class="initTextDiv vish-parent-font4" style="font-weight: normal;"><span class="vish-font4 vish-fontHelvetica" style="color:undefined;undefined;">Write options here</span></div>')&& option !=""){
 										result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-										element.options.choices.push(VISH.Editor.Text.changeFontPropertiesToSpan($(option_text)));
+										var choice = new Object();
+										choice.value = $(option_text).text();
+										choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									//	element.options.choices.push(VISH.Editor.Text.changeFontPropertiesToSpan($(option_text)));
+										element.options.choices.push(choice);
 									}
 								});
 							}

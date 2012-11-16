@@ -333,9 +333,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
-
-    var received = JSON.stringify(data);
-    // console.log("_displayResults, and value received is:  " + received );
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values
@@ -369,6 +366,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var drawPieChart = function (data) {
     // Create the data table.
+     console.log("drawPieChart, and value received is:  " + JSON.stringify(data));
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
     data_for_chart.addColumn('number', 'Slices');
@@ -377,11 +375,12 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
       if((option in mcOptionsHash)){ // a --> 2 , b -->3
         var votes = data[option];
+
         data_for_chart.addRow([option, votes]);
       }
     }; 
 
-  var question = $(VISH.Slides.getCurrentSlide()).find(".question").text();
+  var question = $(VISH.Slides.getCurrentSlide()).find(".value_multiplechoice_question_in_zone").text();
         
   //TODO set values in percents for resizing 
   // Set chart options
