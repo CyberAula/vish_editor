@@ -70,7 +70,7 @@ VISH.SlideManager = (function(V,$,undefined){
       		V.ViewerAdapter.setupSize();      
     	});
 		
-		var renderFull = (options["full"]===true)&&(!V.Status.getIsInIframe());
+		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 		
 		if(!renderFull){
 			if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
