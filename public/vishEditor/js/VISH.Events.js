@@ -144,10 +144,10 @@ VISH.Events = (function(V,$,undefined){
 				$(document).bind('keydown', handleBodyKeyDown); 
 	      		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 	      		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-	      		_registerEvent("mobile_back_arrow");
-	      		$(document).on('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
-	      		_registerEvent("mobile_forward_arrow");
-	      		$(document).on('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);	
+	      		_registerEvent("back_arrow");
+	      		$(document).on('click', '#back_arrow', V.Slides.backwardOneSlide);
+	      		_registerEvent("forward_arrow");
+	      		$(document).on('click', '#forward_arrow', V.Slides.forwardOneSlide);	
 	      		_registerEvent("closeButton");
 	      		_registerEvent("closeButtonImg");
 	      		$(document).on('click', '#closeButton', function(){
@@ -173,10 +173,10 @@ VISH.Events = (function(V,$,undefined){
 				$(document).unbind('keydown', handleBodyKeyDown); 
 				$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-		  		_unregisterEvent("mobile_back_arrow");
-		  		$(document).off('click', '#mobile_back_arrow', V.Slides.backwardOneSlide);
-		  		_unregisterEvent("mobile_forward_arrow");
-		  		$(document).off('click', '#mobile_forward_arrow', V.Slides.forwardOneSlide);
+		  		_unregisterEvent("back_arrow");
+		  		$(document).off('click', '#back_arrow', V.Slides.backwardOneSlide);
+		  		_unregisterEvent("forward_arrow");
+		  		$(document).off('click', '#forward_arrow', V.Slides.forwardOneSlide);
 		  		_unregisterEvent("closeButton");
 		  		_unregisterEvent("closeButtonImg");
 		  		$(document).off('click', '#closeButton');

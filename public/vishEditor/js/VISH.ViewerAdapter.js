@@ -154,31 +154,35 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var decideIfPageSwitcher = function(){
 		//page switchers only for presentations
 		if(V.SlideManager.getPresentationType() === "presentation"){
+
+			if(V.Status.getDevice().desktop){
+				$("#back_arrow").html("");
+				$("#forward_arrow").html("");
+			}
+
+			if(VISH.Slides.isCurrentFirstSlide()){
+				$("#back_arrow").hide();
+			} else {
+				$("#back_arrow").show();
+			} 
+			if (VISH.Slides.isCurrentLastSlide()){
+				$("#forward_arrow").hide();		
+			} else {
+				$("#forward_arrow").show();
+			}
+
 			if(!page_is_fullscreen && !V.Status.getDevice().mobile){
 				if(VISH.Slides.isCurrentFirstSlide()){
 					$("#page-switcher-start").hide();				
 				} else {
 					$("#page-switcher-start").show();
-				}
-				
+				}  
 				if(VISH.Slides.isCurrentLastSlide()){
 					$("#page-switcher-end").hide();	
 				} else {
 					$("#page-switcher-end").show();
 				}
-			} else {
-				if(VISH.Slides.isCurrentFirstSlide()){
-					$("#mobile_back_arrow").hide();
-				} else {
-					$("#mobile_back_arrow").show();
-				}
-				
-				if(VISH.Slides.isCurrentLastSlide()){
-					$("#mobile_forward_arrow").hide();		
-				} else {
-					$("#mobile_forward_arrow").show();
-				}
-			}
+			}		
 		}
 	};
 	
