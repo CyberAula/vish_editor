@@ -12,7 +12,7 @@ VISH.Quiz = (function(V,$,undefined){
 
   var startButtonClass = "quiz_session_start_button";
   var optionsButtonClass = "quiz_session_options_button";
-  //var stopButtonClass = "mcquestion_stop_button";
+  var voteButtonClass = "quiz_send_vote_button";
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
   var tabQuizSessionContent = "tab_quiz_session_content";
@@ -59,8 +59,8 @@ VISH.Quiz = (function(V,$,undefined){
 
   var prepareQuiz = function(){
     if (quizMode=="answer") {
-      $("." + startButtonClass).show();
-      $("." + startButtonClass).val("Send");
+      $("." + startButtonClass).hide();
+      $("." + voteButtonClass).show();
     } else if(quizMode=="question") {
       // V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
       
@@ -305,7 +305,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   ////////////////////////
 
   var _loadAnswerEvents = function(){
-    $(document).on('click', "."+startButtonClass, _sendVote);
+    $(document).on('click', "."+voteButtonClass, _sendVote);
   };
 /*send the participant vote to the server & show gratefulness popup */
   var _sendVote = function (event) {
