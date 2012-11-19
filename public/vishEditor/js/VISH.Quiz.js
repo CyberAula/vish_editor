@@ -342,6 +342,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(id).css('top',  maskHeight/2-$(id).height()/2);
     $(id).css('left', maskWidth/2-$(id).width()/2);
     $(id).show();
+    $(VISH.Slides.getCurrentSlide()).find("."+ voteButtonClass).hide();
    // $(id).children().show();
     
  }
