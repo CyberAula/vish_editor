@@ -127,7 +127,10 @@ var _startStats = function() {
   }
   $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone"));
   $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone"));
-  $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form"));
+  var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
+  $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
+  $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
+
   $("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
   //add class to resize div inside fancybox 
   $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
