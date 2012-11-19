@@ -949,3 +949,23 @@ height: 20%;
     border: none !important;
 }
 
+.thanks_div {
+  background-color:#F8EFFB;
+  position:fixed;
+  z-index:9999;
+  padding:3%;
+  text-align: center;
+
+}
+.thanks_div > p {
+    padding: 10%;
+    background-color:white;
+    color: black;
+    z-index:99999;
+    border-radius: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    width: 50%;
+    height: 30%;
+
+}

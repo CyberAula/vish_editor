@@ -307,7 +307,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   var _loadAnswerEvents = function(){
     $(document).on('click', "."+startButtonClass, _sendVote);
   };
-
+/*send the participant vote to the server & show gratefulness popup */
   var _sendVote = function (event) {
 
     var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
@@ -315,6 +315,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
        V.Quiz.API.putQuizSession(answer, quizSessionActiveId, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
        $("."+startButtonClass).hide();
+
     }
   };
 
@@ -325,6 +326,26 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
+ var _onQuizSessionResultsReceived = function(data) {
+    V.Debugging.log("_onQuizSessionResultsReceived, and data is:  " +  JSON.stringify(data));
+       $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
+       $(".thanks_div").show();
+        var id = $('a[name=modal_window]').attr('href'); //TODO in different way
+        var maskHeight = $(document).height();
+        var maskWidth = $(window).width();
+       
+     //Mask_stop_quiz is used like background shadow
+     $('#thanks_div').css({'width':maskWidth,'height':maskHeight});
+    //transition effect     
+    $('#thanks_div').fadeTo("slow",0.6);  
+    //TODO ask Nestor how to set the popup position in the center 
+    $(id).css('top',  maskHeight/2-$(id).height()/2);
+    $(id).css('left', maskWidth/2-$(id).width()/2);
+    $(id).show();
+   // $(id).children().show();
+    
+ }
+ 
   var _OnQuizVotingReceivedError = function(error){
     V.Debugging.log("_OnQuizVotingReceivedError, and value received is:  " + JSON.stringify(error));
   };

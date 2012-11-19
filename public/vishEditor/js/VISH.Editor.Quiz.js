@@ -99,11 +99,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
 		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
+		$("#"+wysiwygId).addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
-		//trying to add class for Nestor request
+		
 		$(current_area).find("."+ type + "_option_in_zone").each(function(index, option_element) {
     		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
     		$(option_element).attr("id", optionWysiwygId);
+    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
     		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
 		});
 		$(".initTextDiv").click(function(event){
