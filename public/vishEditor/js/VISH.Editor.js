@@ -609,7 +609,7 @@ VISH.Editor = (function(V,$,undefined){
 								element.options.choices = []; 
 								$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
 									var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-									if((option)&&($(option_text).find("div > span").text() != 'Write options here')&& ($(option_text).find("div > span").text() !="")){
+									if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
 										result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 										var choice = new Object();
 										choice.value = $(option_text).text();

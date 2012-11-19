@@ -50,7 +50,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(zone).find(".value_multiplechoice_question_in_zone").append(question);
 				var inputs = $(zone).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
 				for (var i = 0;  i <= options.length - 1; i++) {
-					//$(inputs[i]).val(options[i]);
 					$(inputs[i]).children().remove();
 					$(inputs[i]).append(options[i].container);
 				}

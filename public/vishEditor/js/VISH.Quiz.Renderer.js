@@ -35,7 +35,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
-      
+      V.Debugging.log("_renderMcQuestion, and quiz choices received is:  " + JSON.stringify(quiz_element['options']['choices']));
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_body'>";
