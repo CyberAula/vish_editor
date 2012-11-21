@@ -32,8 +32,10 @@ VISH.Dummies = (function(VISH,undefined){
 		"<div class='multipleChoiceQuizContainer'><div class='value_multiplechoice_question_in_zone'><div class='initTextDiv'><font size='4'>Write question here</font></div></div><ul class='ul_mch_options_in_zone'></ul><input type='hidden' name='quiz_id'/></div></div>",
 		"<div class='trueFalseQuizContainer'><p> quiz dummy truefalse</p></div>"
 		];
-		quizOptionsDummies = ["", 
-		"<li class='li_mch_options_in_zone'><span></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png/></li>"];
+		quizOptionDummies = ["", 
+		"<li class='li_mch_options_in_zone'><span></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png' class='add_quiz_option_button'/></li>", 
+		""
+		];
 	}
 
 	/**
@@ -50,9 +52,9 @@ VISH.Dummies = (function(VISH,undefined){
 		return quizDummies[hashTypeQuiz[type_quiz]];
 
 	}
-		var getQuizOptionsDummy = function(type_quiz) {
+		var getQuizOptionDummy = function(type_quiz) {
 
-		return quizOptionsDummies[hashTypeQuiz[type_quiz]];
+		return quizOptionDummies[hashTypeQuiz[type_quiz]];
 
 	}
 	
@@ -88,7 +90,7 @@ VISH.Dummies = (function(VISH,undefined){
 		init				: init,
 		getDummy			: getDummy, 
 		getQuizDummy		: getQuizDummy, 
-		getQuizOptionsDummy :getQuizOptionsDummy
+		getQuizOptionDummy :getQuizOptionDummy
 
 	};
 

@@ -53,9 +53,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		switch (quiz_type) {
 			case "multiplechoice": 
 				
-				$(zone).find(".value_multiplechoice_question_in_zone").children().remove();
+				
 				
 				if (question) {	
+					$(zone).find(".value_multiplechoice_question_in_zone").children().remove();
 					$(zone).find(".value_multiplechoice_question_in_zone").append(question);
 				}	
 				if (options) {
@@ -64,7 +65,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 						$(inputs[i]).children().remove();
 						$(inputs[i]).append(options[i].container);
 					} 
-			}
+				}
 				if(quiz_id) {
 					$(zone).find('input[name="quiz_id"]').val(quiz_id);
 				}
@@ -88,7 +89,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var current_area;
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		if(area){
-			current_area = $(area);
+			current_area = area;
 		}
 		else {
 			//if no param 
@@ -100,12 +101,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
+		addOptionInQuiz('multiplechoice', current_area);
 		launchTextEditorInTextArea(current_area, "multiplechoice");
 
 	};
 
-	var addOptionInQuiz = function () {
-		V.Debugging.log(" addOptionInQuiz ");
+	var addOptionInQuiz = function (quiz_type, area) {
+		V.Debugging.log(" addOptionInQuiz and quiz_type value:"  + quiz_type);
+		var quiz_option = VISH.Dummies.getQuizOptionDummy(quiz_type);
+
+		var current_options = $(area).find(".li_mch_options_in_zone").size();
+
+		V.Debugging.log(" current_options:"  + current_options);
+		$(area).find(".ul_mch_options_in_zone").append(quiz_option);
+
 
 	};
 
