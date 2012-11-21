@@ -1712,6 +1712,7 @@ span.mcChoiceSpan{
 	border: none;
 }
 .add_quiz_option_button {
-display: inline-block;
-width: 7%;
+	display: inline-block;
+	width: 7%;
+	cursor: pointer;
 }

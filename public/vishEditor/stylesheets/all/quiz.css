@@ -107,7 +107,7 @@ background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px
     outline: 0 none;
     padding: 1%;
     position: relative;
-    width: 83%;
+    width: 80%;
     z-index: 1000;
 }
 .multiplechoice_option_in_viewer {

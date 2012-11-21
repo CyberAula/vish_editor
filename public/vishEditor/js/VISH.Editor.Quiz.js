@@ -4,6 +4,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 	
+		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
 	};	
 	////////////
 	// Tabs and fancybox
@@ -98,6 +99,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 		current_area.find(".menuselect_hide").remove();
 		current_area.attr('type','quiz');
+		current_area.attr('quiztype','multiplechoice');
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
@@ -107,15 +109,49 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var addOptionInQuiz = function (quiz_type, area) {
-		V.Debugging.log(" addOptionInQuiz and quiz_type value:"  + quiz_type);
-		var quiz_option = VISH.Dummies.getQuizOptionDummy(quiz_type);
+		V.Debugging.log(" addOptionInQuiz and quiz type value: " + quiz_type.toString());
+		var current_area;
+		var current_quiz_type;
+		if(area) {
+			current_area = area;
+		}
+		else {
+			current_area = V.Editor.getCurrentArea();
+		}
 
-		var current_options = $(area).find(".li_mch_options_in_zone").size();
+		if(typeof quiz_type =="string"){
+			V.Debugging.log("YES quiz type" );
+			current_quiz_type = quiz_type;
+		}
+		else if(typeof quiz_type == "object") { //when event comes from click or enter (not implemented)
+			V.Debugging.log("click add quiz option" );
+			current_quiz_type = $(current_area).attr("quiztype");
+		} 
+		else {
+			V.Debugging("another type ");
 
-		V.Debugging.log(" current_options:"  + current_options);
-		$(area).find(".ul_mch_options_in_zone").append(quiz_option);
+		}
+		
+		V.Debugging.log(" addOptionInQuiz and quiz_type value: " + current_quiz_type );
+		switch (current_quiz_type) {
 
+			case "multiplechoice":
+				
+				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
 
+				var current_options = $(current_area).find(".li_mch_options_in_zone").size();
+				V.Debugging.log(" current_options:"  + current_options);
+				//add option 
+				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
+				//add index letter
+				$(current_area).find(".li_mch_options_in_zone > span").text(choicesLetters[current_options]);
+				//add function to add icon
+				//$(area).find(".li_mch_options_in_zone > .add_quiz_option_button").attr();
+			break;
+
+			default:
+			break;
+		}
 	};
 
 
@@ -171,7 +207,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		init			 				: init, 
 		onLoadTab						: onLoadTab,
 		drawQuiz						: drawQuiz,
-		addQuiz							: addQuiz
+		addQuiz							: addQuiz, 
+		addOptionInQuiz					:addOptionInQuiz
 	};
 
 }) (VISH, jQuery);
