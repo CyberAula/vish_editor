@@ -132,7 +132,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 		}
 		
-		V.Debugging.log(" addOptionInQuiz and quiz_type value: " + current_quiz_type );
 		switch (current_quiz_type) {
 
 			case "multiplechoice":
@@ -144,9 +143,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
 				//add index letter
-				$(current_area).find(".li_mch_options_in_zone > span").text(choicesLetters[current_options]);
-				//add function to add icon
-				//$(area).find(".li_mch_options_in_zone > .add_quiz_option_button").attr();
+				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
+				
 			break;
 
 			default:
