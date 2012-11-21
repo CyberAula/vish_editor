@@ -250,7 +250,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
-
+		V.Debugging.log("presentation type: " + VISH.Editor.getPresentationType());
 		if(VISH.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),

@@ -438,8 +438,6 @@ span.mcChoiceSpan{
     by Enrique Barra
     css for quiz slide containing only question, name and answer
 */
-
-
 .question {
     border-radius: 0.4em 0.4em 0em 0em;
     color: #212121;
@@ -947,6 +945,7 @@ height: 20%;
 
 .question_in_viewer {
     border: none !important;
+    width: 86%;
 }
 
 .thanks_div {

@@ -598,7 +598,10 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						//VISH.Editor.Text.changeFontPropertiesToSpan(zone);
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".value_multiplechoice_question_in_zone"));
+						
+							var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
+							element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
+							//V.Debugging.log("quizQuestion: " + quizQuestion);
 						if($(div).find(".multiplechoice_option_in_zone")) {
 								element.quiz_id = "";
 								if ($(div).find("input[name=quiz_id]").val()!="") {

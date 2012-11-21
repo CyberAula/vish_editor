@@ -13,13 +13,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	//Function called from quiz fancybox
 	var addQuiz = function(quiz_type, area) {
+		var current_area;
+		if(area) {
+			current_area = area;
+		}
+		else {
+			current_area = VISH.Editor.getCurrentArea();
+		}
 		switch (quiz_type) {
 			case "open":
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
 			
-				_addMultipleChoiceQuiz(area);
+				_addMultipleChoiceQuiz(current_area);
 				//hide & show fancybox elements 
 				VISH.Utils.loadTab('tab_quizes'); 
 				 break;
@@ -47,12 +54,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "multiplechoice": 
 				
 				$(zone).find(".value_multiplechoice_question_in_zone").children().remove();
-				$(zone).find(".value_multiplechoice_question_in_zone").append(question);
-				var inputs = $(zone).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
-				for (var i = 0;  i <= options.length - 1; i++) {
-					$(inputs[i]).children().remove();
-					$(inputs[i]).append(options[i].container);
-				}
+				
+				if (question) {	
+					$(zone).find(".value_multiplechoice_question_in_zone").append(question);
+				}	
+				if (options) {
+					var inputs = $(zone).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
+					for (var i = 0;  i <= options.length - 1; i++) {
+						$(inputs[i]).children().remove();
+						$(inputs[i]).append(options[i].container);
+					} 
+			}
 				if(quiz_id) {
 					$(zone).find('input[name="quiz_id"]').val(quiz_id);
 				}
@@ -73,36 +85,45 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var _addMultipleChoiceQuiz = function(area) {
+		var current_area;
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		if(area){
-			var current_area = $("#"+area);
+			current_area = $(area);
 		}
 		else {
-			var current_area = VISH.Editor.getCurrentArea();
-			current_area.find(".menuselect_hide").remove();
+			//if no param 
+			current_area = VISH.Editor.getCurrentArea();
+			
 		}
-		
+		current_area.find(".menuselect_hide").remove();
 		current_area.attr('type','quiz');
+		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
 		launchTextEditorInTextArea(current_area, "multiplechoice");
+
+	};
+
+	var addOptionInQuiz = function () {
+		V.Debugging.log(" addOptionInQuiz ");
+
 	};
 
 
-	var launchTextEditorInTextArea = function(area, type){
+	var launchTextEditorInTextArea = function(area, type_quiz){
 		if (area) {
 			current_area = area;
 		} else {
 			current_area = V.Editor.getCurrentArea();
 		}
 
-		var textArea = $(current_area).find(".value_"+ type + "_question_in_zone");		
+		var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
 		$("#"+wysiwygId).addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 		
-		$(current_area).find("."+ type + "_option_in_zone").each(function(index, option_element) {
+		$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
     		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
     		$(option_element).attr("id", optionWysiwygId);
     		$("#"+optionWysiwygId).addClass("wysiwygInstance");
