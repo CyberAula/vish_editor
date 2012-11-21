@@ -7,6 +7,7 @@ VISH.Dummies = (function(VISH,undefined){
 	//the ids of each div are id='id_to_change' and will be replaced by the next id by the function _replaceIds(string)
 	var dummies = [];
 	var quizDummies = [];
+	var quizOptionsDummies = [];
 
 	var init = function(){
 		dummies = [
@@ -28,9 +29,11 @@ VISH.Dummies = (function(VISH,undefined){
 		];
 
 		quizDummies = ["<div class='openQuizContainer'><textarea class='value_open_question_in_zone'><div><font size="+4+">Write question here</font></div></textarea></div>", 
-		"<div class='multipleChoiceQuizContainer'><div class='value_multiplechoice_question_in_zone'><div class='initTextDiv'><font size='4'>Write question here</font></div></div><ul class='ul_mch_options_in_zone'><li class='li_mch_options_in_zone'><span>a)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li><li class='li_mch_options_in_zone'><span>b)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li><li class='li_mch_options_in_zone'><span>c)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li><li class='li_mch_options_in_zone'><span>d)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li><li class='li_mch_options_in_zone'><span>e)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li><li class='li_mch_options_in_zone'><span>f)</span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div></li></ul><input type='hidden' name='quiz_id'/></div></div>",
+		"<div class='multipleChoiceQuizContainer'><div class='value_multiplechoice_question_in_zone'><div class='initTextDiv'><font size='4'>Write question here</font></div></div><ul class='ul_mch_options_in_zone'></ul><input type='hidden' name='quiz_id'/></div></div>",
 		"<div class='trueFalseQuizContainer'><p> quiz dummy truefalse</p></div>"
 		];
+		quizOptionsDummies = ["", 
+		"<li class='li_mch_options_in_zone'><span></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png/></li>"];
 	}
 
 	/**
@@ -45,6 +48,11 @@ VISH.Dummies = (function(VISH,undefined){
 	var getQuizDummy = function(type_quiz, position) {
 
 		return quizDummies[hashTypeQuiz[type_quiz]];
+
+	}
+		var getQuizOptionsDummy = function(type_quiz) {
+
+		return quizOptionsDummies[hashTypeQuiz[type_quiz]];
 
 	}
 	
@@ -77,9 +85,10 @@ VISH.Dummies = (function(VISH,undefined){
 	
 	
 	return {
-		init			: init,
-		getDummy		: getDummy, 
-		getQuizDummy	: getQuizDummy
+		init				: init,
+		getDummy			: getDummy, 
+		getQuizDummy		: getQuizDummy, 
+		getQuizOptionsDummy :getQuizOptionsDummy
 
 	};
 
