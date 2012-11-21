@@ -35,7 +35,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
-      
+      V.Debugging.log("_renderMcQuestion, and quiz choices received is:  " + JSON.stringify(quiz_element['options']['choices']));
       var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_body'>";
@@ -64,6 +64,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "<input type='hidden' value='"+quiz_element['quiz_id']+"' name='quiz_id' class='quizId' />";
       ret += "<div class='mch_inputs_wrapper'>";
       ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
+      ret += "<input type='button' class='quiz_send_vote_button' value='Send'/>";
       ret += "<input type='button' class='quiz_session_options_button' value='Options'/>";
       ret += "</div>"; //close mch_input_wrapper
       ret += "</form>";
