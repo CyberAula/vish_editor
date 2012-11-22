@@ -885,6 +885,7 @@ height: 20%;
 }
 
 #stop_quiz_fancybox {
+    display: none;
     margin-left: 20%;
     margin-top: 20%;
     position: absolute;
