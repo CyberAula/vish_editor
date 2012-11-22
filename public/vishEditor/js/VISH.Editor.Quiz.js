@@ -2,10 +2,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var maxNumMultipleChoiceOptions = 6; // maximum input options 
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)'];
 
+	var addQuizOptionButtonClass = "add_quiz_option_button";
+	var deleteQuizOptionButtonClass = "delete_quiz_option_button";
+
 	var init = function(){
 	
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
-		$(document).on('click','.delete_quiz_option_button', _removeOptionInQuiz);
+		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 	};	
 	////////////
 	// Tabs and fancybox
@@ -146,21 +149,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 
 						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
-						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".delete_quiz_option_button").show();
+						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
 					
 				}
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
 				//last option (change add for delete icon)
-				if((current_options+1)===maxNumMultipleChoiceOptions) {
-
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find(".add_quiz_option_button").hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find(".delete_quiz_option_button").show();
-					
-					}
-				//add index letter
+				if((current_options+1)=== maxNumMultipleChoiceOptions) {
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
+				}
+				//add index letter and unique_id
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
-				
+				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
+				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 			break;
 
 			default:
@@ -168,8 +170,28 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	};
 
-	var _removeOptionInQuiz = function () {
- 		V.Debugging.log(" _removeOptionInQuiz ");
+	var _removeOptionInQuiz = function (event) {
+		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass.toString()){
+			V.Debugging.log(deleteQuizOptionButtonClass + " click detected" );
+			var current_area = V.Editor.getCurrentArea();
+			//remove li
+			$("#" +current_area.attr("id")).find("#"+ event.target.attributes["id"].value).parent().remove();
+			
+			//reassign index letters for remaining options & reassign id's
+			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
+				$(option_element).find("span").text(choicesLetters[index]);
+				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
+				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
+			});
+			//for the last: if delete icon hide it and show add icon
+			if ($(current_area).find(".li_mch_options_in_zone").size()===5) {
+				$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." +deleteQuizOptionButtonClass).hide();
+				$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass ).show();
+			}
+ 		} 
+ 		else {
+ 			V.Debugging.log("other event  handler");
+ 		}
 
 	};
 
