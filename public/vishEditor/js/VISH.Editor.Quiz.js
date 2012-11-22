@@ -108,7 +108,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
 		addOptionInQuiz('multiplechoice', current_area);
-		launchTextEditorInTextArea(current_area, "multiplechoice");
+		//launchTextEditorInTextArea(current_area, "multiplechoice");
 
 	};
 
@@ -123,7 +123,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			current_area = V.Editor.getCurrentArea();
 		}
 
-		if(typeof quiz_type =="string"){
+		if(typeof quiz_type =="string"){ //when add complete multiplechoice quiz
 			V.Debugging.log("YES quiz type" );
 			current_quiz_type = quiz_type;
 		}
@@ -143,11 +143,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size();
+				var option_number;
 				V.Debugging.log(" current_options:"  + current_options);
 				//remove add icon and insert remove icon 
 				if(current_options>0) {
-
-
+						option_number = current_options;
 						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
 						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
 					
@@ -159,10 +159,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
 				}
-				//add index letter and unique_id
+				//add index letter and unique_id 
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
+				//and call launchTextEditorInTextArea for zone
+				launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
 			break;
 
 			default:
@@ -171,7 +173,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var _removeOptionInQuiz = function (event) {
-		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass.toString()){
+		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
 			V.Debugging.log(deleteQuizOptionButtonClass + " click detected" );
 			var current_area = V.Editor.getCurrentArea();
 			//remove li
@@ -195,26 +197,37 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	};
 
-
-	var launchTextEditorInTextArea = function(area, type_quiz){
+//trying to do with div instead than zone (area)
+	var launchTextEditorInTextArea = function(area, type_quiz, option_number){
 		if (area) {
 			current_area = area;
 		} else {
 			current_area = V.Editor.getCurrentArea();
 		}
-
+		if (option_number!=undefined) {
+			V.Debugging.log("option number distinct of undefined");
+			//$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
+	    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
+	    		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
+	    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
+	    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+			/*$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
+	    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
+	    		$(option_element).attr("id", optionWysiwygId);
+	    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
+	    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+			}); */
+		} 
+		//no option number --> first
+		else {
+		V.Debugging.log("option number is undefined");
 		var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
 		$("#"+wysiwygId).addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
+		}
 		
-		$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
-    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
-    		$(option_element).attr("id", optionWysiwygId);
-    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
-		});
 		$(".initTextDiv").click(function(event){
     		if(event.target.tagName=="FONT"){
     			var font = $(event.target);
