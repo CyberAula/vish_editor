@@ -5,6 +5,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var init = function(){
 	
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
+		$(document).on('click','.remove_quiz_option_button', _removeOptionInQuiz);
 	};	
 	////////////
 	// Tabs and fancybox
@@ -140,6 +141,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size();
 				V.Debugging.log(" current_options:"  + current_options);
+				//remove add icon and insert remove icon 
+				if(current_options>0) {
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".delete_quiz_option_button").show();
+				}
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
 				//add index letter
@@ -150,6 +156,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			default:
 			break;
 		}
+	};
+
+	var _removeOptionInQuiz = function () {
+ 		V.Debugging.log(" _removeOptionInQuiz ");
+
 	};
 
 

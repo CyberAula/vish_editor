@@ -1713,6 +1713,11 @@ span.mcChoiceSpan{
 }
 .add_quiz_option_button {
 	display: inline-block;
-	width: 7%;
+	width: 6%;
+	cursor: pointer;
+}
+.delete_quiz_option_button {
+	display: none;
+	width: 5%;
 	cursor: pointer;
 }
