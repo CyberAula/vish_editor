@@ -143,11 +143,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				V.Debugging.log(" current_options:"  + current_options);
 				//remove add icon and insert remove icon 
 				if(current_options>0) {
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".delete_quiz_option_button").show();
+
+
+						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
+						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".delete_quiz_option_button").show();
+					
 				}
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
+				//last option (change add for delete icon)
+				if((current_options+1)===maxNumMultipleChoiceOptions) {
+
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find(".add_quiz_option_button").hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find(".delete_quiz_option_button").show();
+					
+					}
 				//add index letter
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				
