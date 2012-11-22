@@ -113,7 +113,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var addOptionInQuiz = function (quiz_type, area) {
-		V.Debugging.log(" addOptionInQuiz and quiz type value: " + quiz_type.toString());
 		var current_area;
 		var current_quiz_type;
 		if(area) {
@@ -124,11 +123,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 		if(typeof quiz_type =="string"){ //when add complete multiplechoice quiz
-			V.Debugging.log("YES quiz type" );
 			current_quiz_type = quiz_type;
 		}
 		else if(typeof quiz_type == "object") { //when event comes from click or enter (not implemented)
-			V.Debugging.log("click add quiz option" );
 			current_quiz_type = $(current_area).attr("quiztype");
 		} 
 		else {
@@ -144,7 +141,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size();
 				var option_number;
-				V.Debugging.log(" current_options:"  + current_options);
 				//remove add icon and insert remove icon 
 				if(current_options>0) {
 						option_number = current_options;
@@ -176,6 +172,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
 			var current_area = V.Editor.getCurrentArea();
 			//remove li
+			var option_number = (event.target.id).substring(27,28); 
+
 			$("#" +current_area.attr("id")).find("#"+ event.target.attributes["id"].value).parent().remove();
 			
 			//reassign index letters for remaining options & reassign id's
@@ -183,6 +181,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(option_element).find("span").text(choicesLetters[index]);
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
+				//reasign ids for remaining wysiwyg div's 
+				if(index>=option_number) {
+					V.Debugging.log("greather than" + option_number + " value: " + index);
+					launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
+				}
 			});
 			//for the last: if delete icon hide it and show add icon
 			if ($(current_area).find(".li_mch_options_in_zone").size()===(maxNumMultipleChoiceOptions-1)) {
@@ -204,27 +207,23 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			current_area = V.Editor.getCurrentArea();
 		}
 		if (option_number!=undefined) {
-			V.Debugging.log("option number distinct of undefined");
-			//$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
-	    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
+				var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
 	    		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
-	    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
-	    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
-			/*$(current_area).find("."+ type_quiz + "_option_in_zone").each(function(index, option_element) {
-	    		var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + index;
-	    		$(option_element).attr("id", optionWysiwygId);
-	    		$("#"+optionWysiwygId).addClass("wysiwygInstance");
-	    		V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
-			}); */
-		} 
-		//no option number --> first
+	    		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
+	   				$("#"+optionWysiwygId).addClass("wysiwygInstance");
+	    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+	    		}
+	    		} 
+		//no option number --> first so we add wysiwygInstance to the first option
 		else {
-		V.Debugging.log("option number is undefined");
 		var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 		var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 		textArea.attr("id", wysiwygId);
 		$("#"+wysiwygId).addClass("wysiwygInstance");
 		V.Editor.Text.getNicEditor().addInstance(wysiwygId);
+		launchTextEditorInTextArea(current_area, "multiplechoice", 0);
+
+
 		}
 		
 		$(".initTextDiv").click(function(event){
