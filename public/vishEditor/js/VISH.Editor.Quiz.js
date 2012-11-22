@@ -5,7 +5,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var init = function(){
 	
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
-		$(document).on('click','.remove_quiz_option_button', _removeOptionInQuiz);
+		$(document).on('click','.delete_quiz_option_button', _removeOptionInQuiz);
 	};	
 	////////////
 	// Tabs and fancybox
