@@ -13,8 +13,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var init = function(options, presentation){
 		VISH.Debugging.init(options);
-		VISH.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
-		VISH.Debugging.log(JSON.stringify(presentation));
 
 		VISH.Editing = false;
 
@@ -33,6 +31,9 @@ VISH.SlideManager = (function(V,$,undefined){
 			 	presentation = VISH.Debugging.getPresentationSamples();
 			}
 		}
+
+		VISH.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
+		VISH.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
 		
