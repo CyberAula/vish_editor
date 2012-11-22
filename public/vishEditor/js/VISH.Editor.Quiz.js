@@ -174,7 +174,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
-			V.Debugging.log(deleteQuizOptionButtonClass + " click detected" );
 			var current_area = V.Editor.getCurrentArea();
 			//remove li
 			$("#" +current_area.attr("id")).find("#"+ event.target.attributes["id"].value).parent().remove();
@@ -186,9 +185,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 			});
 			//for the last: if delete icon hide it and show add icon
-			if ($(current_area).find(".li_mch_options_in_zone").size()===5) {
-				$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." +deleteQuizOptionButtonClass).hide();
-				$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass ).show();
+			if ($(current_area).find(".li_mch_options_in_zone").size()===(maxNumMultipleChoiceOptions-1)) {
+				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." +deleteQuizOptionButtonClass).hide();
+				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." + addQuizOptionButtonClass).show();
 			}
  		} 
  		else {
