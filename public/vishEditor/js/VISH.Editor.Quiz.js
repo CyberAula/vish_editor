@@ -32,21 +32,30 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	//Function called from quiz fancybox
-	var addQuiz = function(quiz_type, area) {
+	var addQuiz = function(quiz_type, area, num_options) {
 		var current_area;
+		var current_num_options;
 		if(area) {
-			current_area = area;
+			current_area = $("#"+area);
 		}
 		else {
 			current_area = VISH.Editor.getCurrentArea();
 		}
+		if(num_options){
+			current_num_options = num_options;
+		}
+		else {
+			current_num_options = 0;
+
+		}
+
 		switch (quiz_type) {
 			case "open":
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
 			
-				_addMultipleChoiceQuiz(current_area);
+				_addMultipleChoiceQuiz(current_area, current_num_options);
 				//hide & show fancybox elements 
 				VISH.Utils.loadTab('tab_quizes'); 
 				 break;
@@ -105,8 +114,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	};
 
-	var _addMultipleChoiceQuiz = function(area) {
+	var _addMultipleChoiceQuiz = function(area, num_options) {
 		var current_area;
+		var current_num_options;
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		if(area){
 			current_area = area;
@@ -114,15 +124,24 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		else {
 			//if no param 
 			current_area = VISH.Editor.getCurrentArea();
-			
 		}
+		if (num_options) {
+		 	current_num_options = num_options;
+		}
+		else {
+			current_num_options = 0;
+		}
+
 		current_area.find(".menuselect_hide").remove();
 		current_area.attr('type','quiz');
 		current_area.attr('quiztype','multiplechoice');
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
-		addOptionInQuiz('multiplechoice', current_area);
+		
+		for (var i=0; i <= num_options ; i++) {
+			addOptionInQuiz('multiplechoice', current_area);
+		}
 		//launchTextEditorInTextArea(current_area, "multiplechoice");
 
 	};
