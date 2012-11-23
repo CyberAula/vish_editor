@@ -9,6 +9,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+		/*var myInput = $(document).find(".initTextDiv > font");
+		//$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).keydown(function(event) {
+				V.Debugging.log("enter key detected : " + event.keyCode);
+
+			if(event.keyCode == 13) {
+				
+				addOptionInQuiz('multiplechoice');
+				//VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
+				$(myInput).blur();
+			}
+		}); */
+
+
+
 	};	
 	////////////
 	// Tabs and fancybox
@@ -150,6 +165,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				}
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
+				//add key
+				$(current_area).find(".multiplechoice_option_in_zone:last").keydown(function(event) {
+					if(event.keyCode==13) {
+						$('#' + event.target.id).unbind('keydown');
+						event.preventDefault();
+						event.stopPropagation();
+				 		addOptionInQuiz('multiplechoice', current_area);
+					}
+				});
+
 				//last option (change add for delete icon)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
@@ -161,6 +186,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
+				$(current_area).find(".li_mch_options_in_zone:last").focus();
 			break;
 
 			default:
@@ -182,8 +208,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 				//reasign ids for remaining wysiwyg div's 
+				$(option_element).attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
+
 				if(index>=option_number) {
-					V.Debugging.log("greather than" + option_number + " value: " + index);
+			
 					launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
 				}
 			});
