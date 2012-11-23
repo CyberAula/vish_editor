@@ -167,6 +167,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
 				//add key
 				$(current_area).find(".multiplechoice_option_in_zone:last").keydown(function(event) {
+
 					if(event.keyCode==13) {
 						$('#' + event.target.id).unbind('keydown');
 						event.preventDefault();
@@ -175,18 +176,28 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					}
 				});
 
-				//last option (change add for delete icon)
-				if((current_options+1)=== maxNumMultipleChoiceOptions) {
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
-				}
+			
 				//add index letter and unique_id 
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
-				$(current_area).find(".li_mch_options_in_zone:last").focus();
+				
+				$(".li_mch_options_in_zone:last").focus();
+				$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options).focus();
+				if(current_options>0) {
+					//remove default text
+					$(current_area).find(".li_mch_options_in_zone > div :last").text("");
+				}
+					//last option (change add for delete icon and unbind keydown)
+				if((current_options+1)=== maxNumMultipleChoiceOptions) {
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
+					$('#' + "wysiwyg_"+ current_area.attr("id") + "_" + current_options).unbind('keydown');
+
+				}
+			
 			break;
 
 			default:
