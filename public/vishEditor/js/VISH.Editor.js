@@ -931,7 +931,8 @@ VISH.Editor = (function(V,$,undefined){
 		savePresentation 		: savePresentation,
 		afterSavePresentation  	: afterSavePresentation,
 		setPresentationType 	: setPresentationType,
-		allowExitWithoutConfirmation	: allowExitWithoutConfirmation
+		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
+		setCurrentArea			: setCurrentArea
 	};
 
 }) (VISH, jQuery);
