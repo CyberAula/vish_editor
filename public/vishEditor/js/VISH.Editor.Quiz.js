@@ -9,6 +9,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
 		/*var myInput = $(document).find(".initTextDiv > font");
 		//$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
@@ -113,6 +114,42 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 		}
 	};
+	//possible targets
+	var _clickOnQuizArea = function (event) {
+	//	V.Debugging.log("click on Quiz Area detected on class element: " + event.target.classList[0]);
+		switch (event.target.classList[0]) {
+
+			case "multipleChoiceQuizContainer":
+				V.Editor.setCurrentArea(event.target.parentElement.id);
+			break;
+			case "add_quiz_option_button":
+				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+			break;
+
+			case "multiplechoice_option_in_zone":
+				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+			break;
+
+			case "delete_quiz_option_button":
+				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+			break;
+
+			case "li_mch_options_in_zone":
+			V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.id);
+			break;
+
+
+			default:
+
+			break;
+
+
+
+		}
+
+		
+
+	};
 
 	var _addMultipleChoiceQuiz = function(area, num_options) {
 		var current_area;
@@ -147,6 +184,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var addOptionInQuiz = function (quiz_type, area) {
+		//V.Debugging.log("current area value: " + V.Editor.getCurrentArea());
 		var current_area;
 		var current_quiz_type;
 		if(area) {
