@@ -10,21 +10,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
-		/*var myInput = $(document).find(".initTextDiv > font");
-		//$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
-		$(myInput).keydown(function(event) {
-				V.Debugging.log("enter key detected : " + event.keyCode);
-
-			if(event.keyCode == 13) {
-				
-				addOptionInQuiz('multiplechoice');
-				//VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
-				$(myInput).blur();
-			}
-		}); */
-
-
-
+		
 	};	
 	////////////
 	// Tabs and fancybox
@@ -32,12 +18,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var onLoadTab = function (tab) {
 	};
 
-	//Function called from quiz fancybox
+	//Function called from quiz fancybox and Editor.Renderer
+	//area must be an DOM object 
 	var addQuiz = function(quiz_type, area, num_options) {
 		var current_area;
 		var current_num_options;
 		if(area) {
-			current_area = $("#"+area);
+		//	current_area = $("#"+area);
+			current_area = area;
 		}
 		else {
 			current_area = VISH.Editor.getCurrentArea();
@@ -70,14 +58,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
-	var drawQuiz = function(quiz_type, zone_id, question, options, quiz_id){
+	var drawQuiz = function(quiz_type, area, question, options, quiz_id){
 
-		var zone;
-		if(zone_id) {
-			zone = "#"+ zone_id;
+		var current_area;
+		if(area) {
+			current_area = area;
 		} else {
 
-			zone = ".current";
+			current_area = V.Editor.getCurrentArea();
 		}
 
 		switch (quiz_type) {
@@ -86,20 +74,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				
 				if (question) {	
-					$(zone).find(".value_multiplechoice_question_in_zone").children().remove();
-					$(zone).find(".value_multiplechoice_question_in_zone").append(question);
+					$(current_area).find(".value_multiplechoice_question_in_zone").children().remove();
+					$(current_area).find(".value_multiplechoice_question_in_zone").append(question);
 				}	
 				if (options) {
-					var inputs = $(zone).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
+					var inputs = $(current_area).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
 					for (var i = 0;  i <= options.length - 1; i++) {
 						$(inputs[i]).children().remove();
 						$(inputs[i]).append(options[i].container);
 					} 
 				}
 				if(quiz_id) {
-					$(zone).find('input[name="quiz_id"]').val(quiz_id);
+					$(current_area).find('input[name="quiz_id"]').val(quiz_id);
 				}
-				$(zone).find(".multiplechoice_option_in_zone").attr("rows", "1");
+				$(current_area).find(".multiplechoice_option_in_zone").attr("rows", "1");
 				break;
 			case "open":
 
@@ -120,7 +108,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		switch (event.target.classList[0]) {
 
 			case "multipleChoiceQuizContainer":
-				V.Editor.setCurrentArea(event.target.parentElement.id);
+				V.Editor.setCurrentArea($("#" +event.target.parentElement.id));
 			break;
 			case "add_quiz_option_button":
 				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
@@ -150,7 +138,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 
 	};
-
+	/* area type text */
 	var _addMultipleChoiceQuiz = function(area, num_options) {
 		var current_area;
 		var current_num_options;
@@ -169,7 +157,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			current_num_options = 0;
 		}
 
-		current_area.find(".menuselect_hide").remove();
+		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
 		current_area.attr('quiztype','multiplechoice');
 		//add the quizDummy (empty quiz) into the area (zone)
@@ -184,7 +172,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var addOptionInQuiz = function (quiz_type, area) {
-		//V.Debugging.log("current area value: " + V.Editor.getCurrentArea());
+
 		var current_area;
 		var current_quiz_type;
 		if(area) {
@@ -265,16 +253,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
 			//Trying to solve error 
-			V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+			V.Editor.setCurrentArea($("#" +(event.target.parentElement.parentElement.parentElement.parentElement.id)));
 			var current_area = V.Editor.getCurrentArea();
 			//Remove li
 			// TODO try to find index in different way
 			var option_number = (event.target.id).substring(27,28); 
-			$("#" +current_area).find("#"+ event.target.attributes["id"].value).parent().remove();
+			$(current_area).find("#"+ event.target.attributes["id"].value).parent().remove();
 			
 			//reassign index letters for remaining options & reassign id's
 			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
-				$(option_element).find("span").text(choicesLetters[index]);
+				$(option_element).find(">span:first-child").text(choicesLetters[index]);
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 				//reasign ids for remaining wysiwyg div's 
