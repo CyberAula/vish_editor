@@ -26,6 +26,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	    	}
 	    	break;
 	    case 17: //ctrl key
+	    	console.log("ctrl key");
 	    	ctrlDown = true;
 	    	break;	
 	    case 67: //cKey

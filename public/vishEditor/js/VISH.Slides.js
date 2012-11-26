@@ -316,12 +316,30 @@ VISH.Slides = (function(V,$,undefined){
 
 	/**
 	 * function to know if the slides have the focus or not
-	 * @return false if other element (right now only wysiwyg instances are checked) has the focus
+	 * Use to disable actions (like keyboard shortcuts) when the slide is not focused 
+	 * @return false if other element has the focus
 	 */
 	var isSlideFocused = function() {
+		//Wysiwyg is focused.
 		if($(".wysiwygInstance").is(":focus")){
 			return false;
 		}
+		
+		//Fancybox is showing
+		if($("#fancybox-content").is(":visible")){
+			return false;
+		}
+
+		//Generic input is focused
+		if($("input").is(":focus")){
+			return false;
+		}
+
+		//An area is focused
+		if(VISH.Editor.getCurrentArea()!==null){
+			return false;
+		}
+
 		return true;
 	};
 
