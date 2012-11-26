@@ -129,11 +129,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "multiplechoice_option_in_zone":
 				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
 			break;
-
-			case "delete_quiz_option_button":
+			//we can avoid this case because we setCurrentArea in _removeOptionInQuiz
+			/*case "delete_quiz_option_button":
 				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
 			break;
-
+			*/
 			case "li_mch_options_in_zone":
 			V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.id);
 			break;
@@ -264,11 +264,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
+			//Trying to solve error 
+			V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
 			var current_area = V.Editor.getCurrentArea();
-			//remove li
+			//Remove li
+			// TODO try to find index in different way
 			var option_number = (event.target.id).substring(27,28); 
-
-			$("#" +current_area.attr("id")).find("#"+ event.target.attributes["id"].value).parent().remove();
+			$("#" +current_area).find("#"+ event.target.attributes["id"].value).parent().remove();
 			
 			//reassign index letters for remaining options & reassign id's
 			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
