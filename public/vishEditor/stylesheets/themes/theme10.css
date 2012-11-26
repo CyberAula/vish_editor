@@ -10,9 +10,9 @@
 }
 
 .slides > article[template='t10'] > div.t10_center {
-	margin: 3% 0% 0% 4%;
-	width: 92%;
-	height: 84%;
+    height: 86%;
+    margin: 2% 0 0 3%;
+    width: 94%;
 }
 
 .slides > article > div.grey_background {
