@@ -473,7 +473,6 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on template zone with class selectable
 	*/
 	var _onSelectableClicked = function(event){
-		console.log("_onSelectableClicked");
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
@@ -618,33 +617,28 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type =="quiz") {
-						//VISH.Editor.Text.changeFontPropertiesToSpan(zone);
-						
-							var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-							element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
-							//V.Debugging.log("quizQuestion: " + quizQuestion);
+						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
-								element.quiz_id = "";
-								if ($(div).find("input[name=quiz_id]").val()!="") {
-									element.quiz_id = $(div).find("input[name=quiz_id]").val();
-								} 
-								element.quiztype = "multiplechoice";
-								element.options = {};  	
-								element.options.choices = []; 
-								$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-									var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-									if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
-										result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-										var choice = new Object();
-										choice.value = $(option_text).text();
-										choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
-										element.options.choices.push(choice);
-									}
-								});
-							}
-						} 
-						
-					 else if(element.type === "snapshot"){
+							element.quiz_id = "";
+							if ($(div).find("input[name=quiz_id]").val()!="") {
+								element.quiz_id = $(div).find("input[name=quiz_id]").val();
+							} 
+							element.quiztype = "multiplechoice";
+							element.options = {};  	
+							element.options.choices = []; 
+							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
+								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
+									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+									var choice = new Object();
+									choice.value = $(option_text).text();
+									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									element.options.choices.push(choice);
+								}
+							});
+						}
+					} else if(element.type === "snapshot"){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
