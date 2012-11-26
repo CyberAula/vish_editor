@@ -1596,6 +1596,8 @@ iframe.snapshot_content{
 	position: relative;
 	top: -45px;
 	left: 27px;
+	font-family: Helvetica;
+	font-size: 15px;
 }
 
 #flashcard_help_button{

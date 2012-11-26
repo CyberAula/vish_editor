@@ -112,6 +112,7 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 			$(document).on('click','.editable', _onEditableClicked);
 			$(document).on('click','.selectable', _onSelectableClicked);
+			$(document).on('click',':not(".selectable")', _onNoSelectableClicked);
 			
 			$(document).on('click','.delete_content', _onDeleteItemClicked);
 			$(document).on('click','.delete_slide', _onDeleteSlideClicked);
@@ -468,16 +469,36 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-	/**
-	* function called when user clicks on template zone with class selectable
+   /**
+	* Function called when user clicks on template zone with class selectable
 	*/
-	var _onSelectableClicked = function(){
+	var _onSelectableClicked = function(event){
+		console.log("_onSelectableClicked");
 		setCurrentArea($(this));	
 		_removeSelectableProperties($(this));
 		_addSelectableProperties($(this));
 		VISH.Editor.Tools.loadToolsForZone($(this));
+		event.stopPropagation();
+		event.preventDefault();
 	};
   
+  
+   /**
+	* Function called when user clicks on any element without class selectable
+	*/
+	var _onNoSelectableClicked = function(event){
+		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
+		if(!$(event.target).hasClass("noSelectableElement")){
+			if($("#fancybox-content").is(":visible")){
+				return;
+			}
+			if($(event.target).hasClass("toolbar_icon")){
+				return;
+			}
+		}
+		setCurrentArea(null);
+		VISH.Editor.Tools.cleanZoneTools();
+	};
 	
 	var _addSelectableProperties = function(zone){
 		//add selectable css

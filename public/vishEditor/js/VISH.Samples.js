@@ -45,7 +45,7 @@ VISH.Samples = (function(V,undefined){
           'id'     : '7335',
           'type'   : 'object',
           'areaid' : 'left',
-          'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swfaa" type="application/x-shockwave-flash"></embed>'
+          'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
         }]
         }, {
 			"id" : "articlearticle4",
