@@ -104,7 +104,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 	//possible targets
 	var _clickOnQuizArea = function (event) {
-	//	V.Debugging.log("click on Quiz Area detected on class element: " + event.target.classList[0]);
 		switch (event.target.classList[0]) {
 
 			case "multipleChoiceQuizContainer":
@@ -112,18 +111,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 			case "add_quiz_option_button":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
-
-				addOptionInQuiz('multiplechoice'); //, current_area, "add_button");
+				addOptionInQuiz('multiplechoice'); 
 			break;
 
 			case "multiplechoice_option_in_zone":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
 			break;
-			//we can avoid this case because we setCurrentArea in _removeOptionInQuiz
-			/*case "delete_quiz_option_button":
-				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
-			break;
-			*/
+			
 			case "li_mch_options_in_zone":
 			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
@@ -167,11 +161,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
 		var i=0;
-		//for (var i=0; i <= num_options ; i++) {
-		//called for n-1 elements
+		
 		if(current_num_options===0) { //empty quiz (new)
-
-			V.Debugging.log(" current options 0");
 			addOptionInQuiz('multiplechoice', current_area, "filling");
 			input = $(current_area).find(".multiplechoice_option_in_zone:last");
 	 		_addKeyDownListener(current_area, input);	
@@ -181,14 +172,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				addOptionInQuiz('multiplechoice', current_area, "filling");
 			//listener enterKey just for last option
 			 if(i===current_num_options) {
-			 	V.Debugging.log("i equal to num_options");
 			 	input = $(current_area).find(".multiplechoice_option_in_zone:last");
 			 	_addKeyDownListener(current_area, input);	
 			 }
 			} 
 		}
-	//launchTextEditorInTextArea(current_area, "multiplechoice");
-
 	};
 	/* called when click add icon and when press enter in last input option */
 	var addOptionInQuiz = function (quiz_type, area, event) {
@@ -292,7 +280,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var current_input = $(current_area).find(".multiplechoice_option_in_zone:last");
 		$(current_input).keydown(function(event) {
 			if(event.keyCode==13) {
-				V.Debugging.log("enter detected");
 				$('#' + event.target.id).unbind('keydown');
 				event.preventDefault();
 				event.stopPropagation();
@@ -347,16 +334,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		} else {
 			current_area = V.Editor.getCurrentArea();
 		}
-		V.Debugging.log("option number:" + option_number);
 		if (option_number!=undefined) {
-				var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
-	    		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
-	    		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
-	   				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-	   				V.Debugging.log("div id:" + optionWysiwygId);
-	    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
-	    		}
-	    		} 
+			var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
+    		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
+    		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
+   				$("#"+optionWysiwygId).addClass("wysiwygInstance");
+    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+    		}
+   		} 
 		//no option number --> first so we add wysiwygInstance to the first option
 		else {
 		var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
