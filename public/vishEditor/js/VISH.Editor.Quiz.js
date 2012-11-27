@@ -6,10 +6,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var deleteQuizOptionButtonClass = "delete_quiz_option_button";
 
 	var init = function(){
-	
-		$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
-		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
+		//$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
+		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+		;
 		
 	};	
 	////////////
@@ -108,14 +108,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		switch (event.target.classList[0]) {
 
 			case "multipleChoiceQuizContainer":
-				V.Editor.setCurrentArea($("#" +event.target.parentElement.id));
+				V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
 			break;
 			case "add_quiz_option_button":
-				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
+
+				addOptionInQuiz('multiplechoice'); //, current_area, "add_button");
 			break;
 
 			case "multiplechoice_option_in_zone":
-				V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.parentElement.id);
+				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
 			break;
 			//we can avoid this case because we setCurrentArea in _removeOptionInQuiz
 			/*case "delete_quiz_option_button":
@@ -123,7 +125,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 			*/
 			case "li_mch_options_in_zone":
-			V.Editor.setCurrentArea(event.target.parentElement.parentElement.parentElement.id);
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
 
 
@@ -138,7 +140,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		
 
 	};
-	/* area type text */
+	/* create an empty MCh quiz  
+	area type text, must add listener for the last one input option */
 	var _addMultipleChoiceQuiz = function(area, num_options) {
 		var current_area;
 		var current_num_options;
@@ -150,10 +153,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			//if no param 
 			current_area = VISH.Editor.getCurrentArea();
 		}
-		if (num_options) {
+		if (num_options) { //when editing a quiz
 		 	current_num_options = num_options;
 		}
-		else {
+		else { //new quiz
 			current_num_options = 0;
 		}
 
@@ -163,66 +166,93 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		V.Editor.addDeleteButton(current_area);
-		
-		for (var i=0; i <= num_options ; i++) {
-			addOptionInQuiz('multiplechoice', current_area);
+		var i=0;
+		//for (var i=0; i <= num_options ; i++) {
+		//called for n-1 elements
+		if(current_num_options===0) { //empty quiz (new)
+
+			V.Debugging.log(" current options 0");
+			addOptionInQuiz('multiplechoice', current_area, "filling");
+			input = $(current_area).find(".multiplechoice_option_in_zone:last");
+	 		_addKeyDownListener(current_area, input);	
 		}
-		//launchTextEditorInTextArea(current_area, "multiplechoice");
+		else { //load edit quiz (got options)
+			for (i=0; i <= current_num_options ; i++) {
+				addOptionInQuiz('multiplechoice', current_area, "filling");
+			//listener enterKey just for last option
+			 if(i===current_num_options) {
+			 	V.Debugging.log("i equal to num_options");
+			 	input = $(current_area).find(".multiplechoice_option_in_zone:last");
+			 	_addKeyDownListener(current_area, input);	
+			 }
+			} 
+		}
+	//launchTextEditorInTextArea(current_area, "multiplechoice");
 
 	};
-
-	var addOptionInQuiz = function (quiz_type, area) {
-
+	/* called when click add icon and when press enter in last input option */
+	var addOptionInQuiz = function (quiz_type, area, event) {
+		var setKeyDownListener = false;
 		var current_area;
 		var current_quiz_type;
+		
 		if(area) {
 			current_area = area;
 		}
 		else {
 			current_area = V.Editor.getCurrentArea();
 		}
-
-		if(typeof quiz_type =="string"){ //when add complete multiplechoice quiz
+		
+		if(typeof quiz_type =="string"){ //when add new and empty multiplechoice quiz
 			current_quiz_type = quiz_type;
+			
 		}
-		else if(typeof quiz_type == "object") { //when event comes from click or enter (not implemented)
+		else if(typeof quiz_type == "object") { //when event comes from click or enter 
 			current_quiz_type = $(current_area).attr("quiztype");
-		} 
+			} 
 		else {
 			V.Debugging("another type ");
+			}
+		if ((event==="enter")|| (event=="add_button")) {
+
+			setKeyDownListener = true;
+		}
+		else if (event==="filling") {
+			setKeyDownListener = false;
+		}
+		else {
+			setKeyDownListener = false;
 
 		}
+
 		
 		switch (current_quiz_type) {
 
 			case "multiplechoice":
-				
+				//remove listener to all
+				$('.' + "multiplechoice_option_in_zone").unbind('keydown');
 				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
-
-				var current_options = $(current_area).find(".li_mch_options_in_zone").size();
+				//as current_options as options in load quiz
+				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				var option_number;
-				//remove add icon and insert remove icon 
-				if(current_options>0) {
-						option_number = current_options;
-						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
-						$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
-					
-				}
+				var input;
+
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
-				//add key
-				$(current_area).find(".multiplechoice_option_in_zone:last").keydown(function(event) {
-
-					if(event.keyCode==13) {
-						$('#' + event.target.id).unbind('keydown');
-						event.preventDefault();
-						event.stopPropagation();
-				 		addOptionInQuiz('multiplechoice', current_area);
-					}
-				});
-
-			
-				//add index letter and unique_id 
+				//remove add icon and insert remove icon 
+				if(current_options>0) {
+					option_number = current_options;
+					//remove default text
+					$(current_area).find(".li_mch_options_in_zone > div :last").text("");
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
+				}
+								
+				input = $(current_area).find(".multiplechoice_option_in_zone:last");
+				//add key , just only for the last input option
+				if (setKeyDownListener) {
+				 	_addKeyDownListener(current_area, input);				
+				}//add index letter and unique_id 
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
@@ -231,11 +261,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				$(".li_mch_options_in_zone:last").focus();
 				$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options).focus();
-				if(current_options>0) {
-					//remove default text
-					$(current_area).find(".li_mch_options_in_zone > div :last").text("");
-				}
-					//last option (change add for delete icon and unbind keydown)
+			
+					//maximum option (change add for delete icon and unbind keydown)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
@@ -250,6 +277,33 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	};
 
+	var _addKeyDownListener = function(area, input) {
+		var current_area;
+		var current_input;
+		if(area) {
+			current_area = area;
+		}
+		else {current_area= V.Editor.getCurrentArea();}
+		 if(input) {
+		 	current_input = input;
+		 } else {
+		 	V.Debugging.log("no element id!!");
+		 }
+		var current_input = $(current_area).find(".multiplechoice_option_in_zone:last");
+		$(current_input).keydown(function(event) {
+			if(event.keyCode==13) {
+				V.Debugging.log("enter detected");
+				$('#' + event.target.id).unbind('keydown');
+				event.preventDefault();
+				event.stopPropagation();
+		 		addOptionInQuiz('multiplechoice', current_area, 'enter');
+
+		 		
+			}
+		});
+
+	};
+	
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
 			//Trying to solve error 
@@ -266,15 +320,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 				//reasign ids for remaining wysiwyg div's 
-				$(option_element).attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
+				$(option_element).find(".multiplechoice_option_in_zone").attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
 
 				if(index>=option_number) {
 			
 					launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
 				}
 			});
-			//for the last: if delete icon hide it and show add icon
+			//for the last: if delete icon hide it and show add icon and bind event  when press enter
 			if ($(current_area).find(".li_mch_options_in_zone").size()===(maxNumMultipleChoiceOptions-1)) {
+				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));
 				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." +deleteQuizOptionButtonClass).hide();
 				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." + addQuizOptionButtonClass).show();
 			}
@@ -292,11 +347,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		} else {
 			current_area = V.Editor.getCurrentArea();
 		}
+		V.Debugging.log("option number:" + option_number);
 		if (option_number!=undefined) {
 				var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
 	    		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
 	    		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
 	   				$("#"+optionWysiwygId).addClass("wysiwygInstance");
+	   				V.Debugging.log("div id:" + optionWysiwygId);
 	    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
 	    		}
 	    		} 
