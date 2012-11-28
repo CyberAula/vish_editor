@@ -218,7 +218,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 			case "multiplechoice":
 				//remove listener to all
-				$('.' + "multiplechoice_option_in_zone").unbind('keydown');
+		 		$('.' + "multiplechoice_option_in_zone").unbind('keydown');
 				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
 				//as current_options as options in load quiz
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
@@ -232,6 +232,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					option_number = current_options;
 					//remove default text
 					$(current_area).find(".li_mch_options_in_zone > div :last").text("");
+					$(".multiplechoice_option_in_zone :last").trigger("click");
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
 				}
@@ -247,8 +248,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
 				
-				$(".li_mch_options_in_zone:last").focus();
-				$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options).focus();
+				$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ) .focus();
 			
 					//maximum option (change add for delete icon and unbind keydown)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
