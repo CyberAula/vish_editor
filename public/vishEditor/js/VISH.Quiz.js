@@ -2,6 +2,7 @@ VISH.Quiz = (function(V,$,undefined){
   
   var quizMode;
   var quizSessionStarted = false; 
+
   var mcOptionsHash = new Array();
   mcOptionsHash['a'] = 0;
   mcOptionsHash['b'] = 1;
@@ -202,8 +203,11 @@ var _getResults =  function(quiz_session_active_id) {
     $(header).find(".url_share > span > a").attr("href",url);
     $(header).find(".url_share > span > a").text("");
     $(header).find(".url_share > span > a").append(url.toString());
-    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
-    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").qrcode(url.toString());
+    //$("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
+    $(".hidden_for_qr_quiz").qrcode({width: 512,height: 512, text: url.toString()});
+    var imageData = $(".hidden_for_qr_quiz > canvas")[0].toDataURL();
+    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container > img").attr("src", imageData);
+
 
      //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
@@ -490,3 +494,4 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     
 }) (VISH, jQuery);
 
+ 

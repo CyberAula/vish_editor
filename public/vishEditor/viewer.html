@@ -115,8 +115,9 @@
                     </div>
                 </div>
                 <div class='quiz_session_body'>
+                    <div class="hidden_for_qr_quiz" style="display:none"></div>
                     <div class='quiz_session_qrcode_container'>
-                   <canvas></canvas>
+                        <img class="qr_quiz_image" src=""/>
                     </div>
                     <div class='buttons_container'>
                          <img class='quiz_full_screen' src='/vishEditor/images/quiz/fullscreen_gofull.png' />
@@ -157,9 +158,8 @@
                 
          </div>       
     </div>
-    <!-- testing second fancybox over fancybox -->
-<!--<div style='display:none'> -->
-        <div id='stop_quiz_fancybox' class='outer_box' style='diplay:none;'>
+    <!-- second fancybox over fancybox -->
+      <div id='stop_quiz_fancybox' class='outer_box' style='diplay:none;'>
             <div id='stop_quiz_fancybox_content' class='window'>
                  <p class='stop_quiz_text'> Are you sure to stop the quiz?</p>
                 <input type='text' class='input_text_fancy quiz_saved_session_name' style='position:relative;'  />
@@ -168,7 +168,6 @@
                 <input type='button' class='quiz_stop_session quiz_stop_session_save' value='Save'/>
             </div>    
          </div>       
-    <!--</div> -->
     <div id='mask_stop_quiz' style='display:none;'></div>
 
     <div style="display:none" id="viewerpreview">Preview</div>
