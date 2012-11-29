@@ -224,19 +224,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				var option_number;
 				var input;
+				option_number = current_options;
 
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
-				//remove add icon and insert remove icon 
-				if(current_options>0) {
-					option_number = current_options;
-					//remove default text
-					$(current_area).find(".li_mch_options_in_zone > div :last").text("");
-					$(".multiplechoice_option_in_zone :last").trigger("click");
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
-				}
-								
+												
 				input = $(current_area).find(".multiplechoice_option_in_zone:last");
 				//add key , just only for the last input option
 				if (setKeyDownListener) {
@@ -248,14 +240,25 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
 				
-				$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ) .focus();
-			
-					//maximum option (change add for delete icon and unbind keydown)
+				//$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
+				
+				//maximum option (change add for delete icon and unbind keydown)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
 					$('#' + "wysiwyg_"+ current_area.attr("id") + "_" + current_options).unbind('keydown');
+				}
 
+				//remove add icon and insert remove icon 
+				if(current_options>0) {					
+					//remove default text
+					//$(current_area).find(".li_mch_options_in_zone > div :last").text("");
+					//$(current_area).find(".initTextDiv").removeClass("initTextDiv");
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
+					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
+					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
+					//$(current_area).find(".initTextDiv :last").focus();
+					$(current_area).find(".initTextDiv :last").trigger("click");
 				}
 			
 			break;
@@ -370,7 +373,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	    		$(font).text("");
 	    		$(div).removeClass("initTextDiv");
 	    		//$(div).parent().text("  ");
-	    		$(".multiplechoice_option_in_zone").trigger("click");
+	    		$(".multiplechoice_option_in_zone :last").trigger("click");
 	    	}
 	    	else if($(font).text()==="Write question here"){	
 	    		//Remove text
