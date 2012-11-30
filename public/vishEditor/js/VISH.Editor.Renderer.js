@@ -10,6 +10,13 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$('#presentation_description').val(presentation.description);
 		$('#presentation_avatar').val(presentation.avatar);
 
+		//also the pedagogical fields if any
+		$("#educational_level").val(presentation.educational_level);
+		$("#subject_tag").val(presentation.subject);
+		$("#language_tag").val(presentation.language);
+		$("#educational_objectives_tag").val(presentation.educational_objectives);
+		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
+
 		VISH.Themes.selectTheme(presentation.theme);	
 
 		slides = presentation.slides;
