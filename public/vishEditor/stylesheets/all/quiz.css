@@ -109,6 +109,7 @@ background: url("/vishEditor/images/background_text3.png") no-repeat scroll 46px
     padding: 1%;
     position: relative;
     width: 80%;
+    overflow: hidden;
     z-index: 1000;
 }
 .multiplechoice_option_in_viewer {
@@ -664,6 +665,11 @@ span.mcChoiceSpan{
     display: none;
 }
 
+.hidden_for_qr_quiz {
+    z-index: 999000;
+
+}
+
 .buttons_container {
     float: right;
     margin: 2%;
@@ -948,6 +954,7 @@ height: 20%;
     margin-top: 3%;
     padding: 2%;
     width: 78%;
+    overflow: hidden;
 }
 
 .question_in_viewer {

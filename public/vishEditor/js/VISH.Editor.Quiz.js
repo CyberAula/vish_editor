@@ -234,6 +234,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
 					$('#' + "wysiwyg_"+ current_area.attr("id") + "_" + current_options).unbind('keydown');
+					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +current_options);
 				}
 
 				//remove add icon and insert remove icon 
@@ -246,6 +247,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
 					//$(current_area).find(".initTextDiv :last").focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
+
 				}
 			
 			break;

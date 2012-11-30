@@ -48,7 +48,7 @@ VISH.Quiz = (function(V,$,undefined){
       'padding': 0,
       "autoScale" : true,
       "onStart"  : function(data) {
-       VISH.Utils.loadTab('tab_quiz_session');
+        VISH.Utils.loadTab('tab_quiz_session');
       }
     });
    
@@ -92,14 +92,14 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
-    $(document).on('click', '.quiz_full_screen', VISH.SlideManager.toggleFullScreen);
+    //$(document).on('click', '.quiz_full_screen', VISH.SlideManager.toggleFullScreen);
+    $(document).on('click', '.quiz_full_screen',_qrFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
    };
   /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
     if(V.User.isLogged()){
-      V.Debugging.log("User logged");
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
@@ -458,6 +458,16 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
       $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
     }
   };
+
+
+  var _qrFullScreen = function () {
+    if($.support.fullscreen){
+      $('#hidden_for_qr_quiz').fullScreen();
+      $('#hidden_for_qr_quiz').show();
+
+    }
+  };
+
 
   var getIsQuizSessionStarted = function() {
     return quizSessionStarted;
