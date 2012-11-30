@@ -654,9 +654,14 @@ span.mcChoiceSpan{
     display: inline-block;
 }
 
+.qr_quiz_image {
+    height: 60%;
+    width: 60%;
+
+}
+
 .qr_background {
     display: none;
-
 }
 
 .buttons_container {

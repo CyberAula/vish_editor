@@ -440,26 +440,20 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _hideQRCode = function () {
        //there is the QR Code
-    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas")) {
-      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").hide();
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > .qr_quiz_image")) {
+      $("#" +tabQuizSessionContent).find(".qr_quiz_image").hide();
+      $("#" +tabQuizSessionContent).find(".qr_background").show();
       $("#" +tabQuizSessionContent).find(".hide_qrcode").hide();
       $("#" +tabQuizSessionContent).find(".show_qrcode").show();
-   
-      if ($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").attr("src")) {
-
-        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").show();
-      }
-      else {
-        $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='/vishEditor/images/VISH_frontpage.png' />")
-      }
+    
     }
   };
 
   var _showQRCode = function () {
        //there is the QR Code
-    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img")) {
-      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > img").hide();
-      $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > canvas").show();
+    if($("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container > .qr_background")) {
+      $("#" +tabQuizSessionContent).find(".qr_background").hide();
+      $("#" +tabQuizSessionContent).find(".qr_quiz_image").show();
       $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
       $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
     }

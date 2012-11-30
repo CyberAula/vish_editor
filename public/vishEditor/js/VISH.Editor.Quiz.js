@@ -7,7 +7,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
-		//$(document).on('click','.add_quiz_option_button', addOptionInQuiz);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 		;
 		
@@ -126,12 +125,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			default:
 
 			break;
-
-
-
 		}
-
-		
 
 	};
 	/* create an empty MCh quiz  
