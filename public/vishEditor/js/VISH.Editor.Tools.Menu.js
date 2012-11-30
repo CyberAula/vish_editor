@@ -232,12 +232,39 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		draftPresentation.avatar = $('#presentation_avatar').val();
 		draftPresentation.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 
+		//now the pedagogical fields if any
+		draftPresentation.educational_level = $("#educational_level").val();
+		draftPresentation.subject = $("#subject_tag").val();
+		draftPresentation.language = $("#language_tag").val();
+		draftPresentation.educational_objectives = $("#educational_objectives_tag").val();
+		draftPresentation.adquired_competencies = $("#acquired_competencies_tag").val();
+
 		VISH.Editor.setPresentation(draftPresentation);
 
 		$('#presentation_details_error').hide();
 		$.fancybox.close();
 	};
 
+
+	/**
+	 * function called when the user clicks on the pedagogical options button
+	 */
+	 var onPedagogicalButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$("#presentation_details_fields").slideUp();
+	 	$("#pedagogical_options_fields").slideDown();
+
+	 };
+
+	 /**
+	 * function called when the user clicks on the done button in the pedagogical options panel
+	 */
+	 var onDonePedagogicalButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$("#pedagogical_options_fields").slideUp();
+	 	$("#presentation_details_fields").slideDown();
+	 	
+	 };
 
 	//////////////////
 	/// SAVE
@@ -419,6 +446,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		displaySettings					: displaySettings,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
+		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,
+		onDonePedagogicalButtonClicked 	: onDonePedagogicalButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,

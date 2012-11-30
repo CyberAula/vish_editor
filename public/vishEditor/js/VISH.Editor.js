@@ -106,8 +106,10 @@ VISH.Editor = (function(V,$,undefined){
 			eventsLoaded = true;
 				 
 			$(document).on('click', '#edit_presentation_details', VISH.Editor.Tools.Menu.onSettings); 
-			$(document).on('click','#save', VISH.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on('click', '#save', VISH.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on('click', '#pedagogical_clasification_button', VISH.Editor.Tools.Menu.onPedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', VISH.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
+			$(document).on('click', '#done_in_pedagogical', VISH.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
 
 			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 			$(document).on('click','.editable', _onEditableClicked);
@@ -119,7 +121,6 @@ VISH.Editor = (function(V,$,undefined){
 			//arrows in button panel
 			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
-			
 
 			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
 
@@ -560,6 +561,11 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.avatar = draftPresentation.avatar;
 			presentation.tags = draftPresentation.tags;
 			presentation.theme = draftPresentation.theme;
+			presentation.educational_level = draftPresentation.educational_level;
+			presentation.subject = draftPresentation.subject;
+			presentation.language = draftPresentation.language;
+			presentation.educational_objectives = draftPresentation.educational_objectives;
+			presentation.adquired_competencies = draftPresentation.adquired_competencies;
 		}
 		presentation.author = '';
 		presentation.slides = [];

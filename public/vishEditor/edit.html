@@ -294,8 +294,68 @@
 	          <input type="hidden" id="presentation_avatar" value="">
 	        </div>
         
+          <button id='pedagogical_clasification_button' submit='disable' class='button buttonpedagogical' i18n-key="i.pedagogicalClasification">Pedagogical Clasification</button>
           <button id='save_presentation_details' submit='disable' class='button buttonintro' i18n-key="i.continue">Continue</button>
           <p id="presentation_details_error" class="error_intro" style='display:none' i18n-key="i.enterTitle">Please, enter a title</p>
+        </div>
+
+        <div id="pedagogical_options_fields" style="display:none">
+          
+          <div id="pedagogical_first_row">
+	          <div id="educational_level_box">
+		          <label for="educational_level">
+		            <div id="educational_level_text" class="textintro1 textintromargin1"><span i18n-key="i.EducationalLevel">Educational Level</span></div>
+		          </label>
+		          <select id="educational_level" class="pedagogical_tab_element">
+				    <option value="unspecified">Unespecified</option>
+				    <option value="kindergarden">Kindergarden</option>
+				    <option value="primary">Primary</option>
+				    <option value="secundary">Secundary</option>
+				  </select>
+			  </div>
+
+	          <div id="subject_tag_box">		  
+		          <label for="subject_tag">
+		            <div id="subject_text" class="textintro1 textintromargin1"><span i18n-key="i.Subject">Subject</span></div>
+		          </label>
+		          <select id="subject_tag" class="pedagogical_tab_element">
+				    <option value="unspecified">Unespecified</option>
+				    <option value="biotechnology">Biotechnology</option>
+				    <option value="nanotechnology">Nanotechnology</option>
+				    <option value="mathematics">Mathematics</option>
+		   		    <option value="interdisciplinary">Interdisciplinary</option>
+				  </select>
+			  </div>
+
+			  <div id="language_tag_box">
+		          <label for="language_tag">
+		            <div id="language_text" class="textintro1 textintromargin1"><span i18n-key="i.language">Language</span></div>
+		          </label>
+				  <select id="language_tag" class="pedagogical_tab_element">
+				    <option value="unspecified">Unespecified</option>
+				    <option value="english">English</option>
+				    <option value="spanish">Spanish</option>
+				    <option value="german">German</option>
+				  </select>
+			  </div>
+		  </div>
+
+		  <div id="educational_objectives_tag_box" class="pedagogical_new_row">
+		    <label for="educational_objectives_tag">
+              <div class="textintro1 pedagogical_tab_element"><span i18n-key="i.Educational">Educational Objectives</span></div>
+            </label>
+            <textarea id='educational_objectives_tag' class="description1 formsizefancy4 pedagogical_tab_element" name="educational_objectives" placeholder="Describe the educational objectives of this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
+		  </div>
+          
+		  <div id="acquired_competencies_tag_box" class="pedagogical_new_row">
+	          <label for="acquired_competencies_tag ">
+	            <div class="textintro1 pedagogical_tab_element"><span i18n-key="i.Competencies">Acquired Competencies</span></div>
+	          </label>
+	          <textarea id='acquired_competencies_tag' class="description1 formsizefancy4 pedagogical_tab_element" name="acquired_competencies" placeholder="Describe the competencies that students will acquire with this excursion..." i18n-key="i.CompetenciesPlaceholder"></textarea>
+	      </div>
+
+	      <p id="based_on_lom" class="" i18n-key="i.basedOnLOM">*based on LOM standard</p>
+		  <button id='done_in_pedagogical' submit='disable' class='button buttonintro' i18n-key="i.done">Done</button>
         </div>
       </form>
     </div>  

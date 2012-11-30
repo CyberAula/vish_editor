@@ -60,7 +60,9 @@ var getOptions = function(){
 			//Possible action: "nothing" or "loadSamples".
 			developmentSettings.actionInit = "nothing";
 			//Select your samples
-			developmentSettings.samples = VISH.Samples.quizes_samples;
+			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
+				developmentSettings.samples = VISH.Samples.samples;
+			}
 
 			//Possible actions: "view", "edit", or "nothing".
 			developmentSettings.actionSave = "view";
@@ -109,7 +111,7 @@ var getOptions = function(){
 			options.addons.push(addon);
 		}
 		
-		if((window.console) && (window.console.log)){
+		if((typeof window != "undefined")&&(window.console) && (window.console.log)){
 			console.log("Vish Editor Configured Options")
 			console.log(options)
 		}
