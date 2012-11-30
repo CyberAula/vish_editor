@@ -128,8 +128,8 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     
     return ret;
   };
-  var setIsQuizInPreview = function (boolean) {
-     isQuizInPreview = boolean;
+  var setIsQuizInPreview = function (value) {
+     isQuizInPreview = value;
   };
 
   return {

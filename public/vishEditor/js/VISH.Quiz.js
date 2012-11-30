@@ -462,8 +462,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _qrFullScreen = function () {
     if($.support.fullscreen){
-      $('#hidden_for_qr_quiz').fullScreen();
-      $('#hidden_for_qr_quiz').show();
+      $('#qr_quiz_image_id').fullScreen();
+      //$('#qr_quiz_image_id').show();
 
     }
   };

@@ -217,11 +217,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
-
-				input = $(current_area).find(".multiplechoice_option_in_zone:last");
 				//add key , just only for the last input option
 				if (setKeyDownListener) {
-				 	_addKeyDownListener(current_area, input);				
+				 	_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
 				}//add index letter and unique_id 
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
@@ -240,12 +238,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//remove add icon and insert remove icon 
 				if(current_options>0) {					
 					//remove default text
-					//$(current_area).find(".li_mch_options_in_zone > div :last").text("");
-					//$(current_area).find(".initTextDiv").removeClass("initTextDiv");
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
 					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
-					//$(current_area).find(".initTextDiv :last").focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
 
 				}
