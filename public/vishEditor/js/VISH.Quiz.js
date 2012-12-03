@@ -44,11 +44,13 @@ VISH.Quiz = (function(V,$,undefined){
       'scrolling': 'no',
       'width': '90%',
       'height': '90%',
-      'margin': "10%",
+      'margin': '10%',
       'padding': 0,
       "autoScale" : true,
+
       "onStart"  : function(data) {
         VISH.Utils.loadTab('tab_quiz_session');
+        _enableFullScreenQRButton();
       }
     });
    
@@ -64,7 +66,6 @@ VISH.Quiz = (function(V,$,undefined){
       $("." + voteButtonClass).show();
     } else if(quizMode=="question") {
       // V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
-      
       if(!VISH.User.isLogged()){
         $("." + startButtonClass).hide();
       } else {
@@ -219,7 +220,7 @@ var _getResults =  function(quiz_session_active_id) {
     };
 
   var _OnQuizSessionReceivedError = function(error){
-     V.Debugging.log("_OnQuizSessionReceivedError:  " + JSON.stringify(error));
+    V.Debugging.log("_OnQuizSessionReceivedError:  " + JSON.stringify(error));
   };
 
 /*
@@ -456,6 +457,14 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
       $("#" +tabQuizSessionContent).find(".qr_quiz_image").show();
       $("#" +tabQuizSessionContent).find(".show_qrcode").hide();
       $("#" +tabQuizSessionContent).find(".hide_qrcode").show();
+    }
+  };
+  var _enableFullScreenQRButton = function() {
+    if($.support.fullscreen){
+      $('.quiz_full_screen').show();
+    }
+    else {
+      $('.quiz_full_screen').hide();
     }
   };
 
