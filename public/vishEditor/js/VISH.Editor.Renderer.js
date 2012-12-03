@@ -11,7 +11,12 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$('#presentation_avatar').val(presentation.avatar);
 
 		//also the pedagogical fields if any
-		$("#educational_level").val(presentation.educational_level);
+		if(presentation.educational_level){
+			$("#educational_level").val(presentation.educational_level);
+		}
+		else{
+			$("#educational_level").val("Other");
+		}
 		$("#subject_tag").val(presentation.subject);
 		$("#language_tag").val(presentation.language);
 		$("#educational_objectives_tag").val(presentation.educational_objectives);

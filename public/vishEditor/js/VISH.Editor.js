@@ -633,7 +633,6 @@ VISH.Editor = (function(V,$,undefined){
 							element.quiztype = "multiplechoice";
 							element.options = {};  	
 							element.options.choices = []; 
-						//	$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
 								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
