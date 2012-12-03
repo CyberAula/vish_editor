@@ -11,9 +11,9 @@ VISH.Samples = (function(V,undefined){
 		"tags": ["Samples","Test","Development"],
 		"author" : "",
 		"theme"	 : "theme1",
-		"educational_level" : "kindergarden",
-		"subject" : "mathematics",
-		"language" : "english",
+		"educational_level" : "Distance education",
+		"subject" : "Media Education",
+		"language" : "en",
 		"educational_objectives" : "bla bla bla 3",
 		"adquired_competencies" : "pupils will be smarter",
 		"slides" : [{
