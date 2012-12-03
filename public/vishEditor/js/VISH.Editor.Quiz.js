@@ -42,11 +42,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
-			
 				_addMultipleChoiceQuiz(current_area, current_num_options);
 				//hide & show fancybox elements 
 				VISH.Utils.loadTab('tab_quizes'); 
-				 break;
+				break;
 			case "truefalse":
 				// _addTrueFalseQuiz();
 			 	break;
@@ -101,7 +100,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 		}
 	};
-	//possible targets
+	//function to set currentArea when click in quiz elements 
 	var _clickOnQuizArea = function (event) {
 		switch (event.target.classList[0]) {
 
@@ -110,7 +109,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 			case "add_quiz_option_button":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
-				addOptionInQuiz('multiplechoice'); 
+				//TODO: try to pass event handler instead add_button string 
+				addOptionInQuiz('multiplechoice', V.Editor.getCurrentArea() , "add_button"); 
 			break;
 
 			case "multiplechoice_option_in_zone":
@@ -195,8 +195,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		else {
 			V.Debugging("another type ");
 			}
-		if ((event==="enter")|| (event=="add_button")) {
-
+		if (event==="enter") {
+			
+		}
+		else if(event==="add_button") {
 			setKeyDownListener = true;
 		}
 		else if (event==="filling") {
@@ -211,22 +213,27 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		switch (current_quiz_type) {
 
 			case "multiplechoice":
-				
+				//load dummy
 				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
-				//as current_options as options in load quiz
+				//as current_options as options in load quiz 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
-				//add key , just only for the last input option
+				//remove KeyDown listener if event add_botton
+				if(event==="add_button") {
+					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +(current_options-1));
+				}
+				//add key , just only for the last input option //&& ((current_options+1)!= maxNumMultipleChoiceOptions)
 				if (setKeyDownListener) {
 				 	_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
 				}//add index letter and unique_id 
+		
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", current_options);
-				
+			
 				//maximum option (change add for delete icon and unbind keydown)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
@@ -242,7 +249,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
 					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
-
 				}
 			
 			break;
