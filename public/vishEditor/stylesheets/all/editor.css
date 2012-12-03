@@ -12,10 +12,12 @@ img {
 }
 
 #presentation_details_fields {
+	top:-32px;
 	background: url(/vishEditor/images/excursiondetails_bg.png) no-repeat top;
 }
 
 #pedagogical_options_fields {
+	top:-32px;
 	background: url(/vishEditor/images/excursiondetails_bg.png) no-repeat top;
 	overflow: hidden;
 }
@@ -1008,7 +1010,6 @@ text-align: center;
 
 .textintromargin1 {
 	margin-left: 68px;
-	padding-top: 115px;
 }
 
 .textintromargin2 {
@@ -1078,11 +1079,6 @@ textarea {
 	background-position: 0px -240px;
 	cursor: pointer;
 }
-
-#presentation_details_fields{
-	position: relative;
-}
-
 
 /* Upload stylessheet */
 
@@ -1785,7 +1781,7 @@ span.mcChoiceSpan{
 }
 
 #done_in_pedagogical{
-	margin-top: -38px;
+	margin-top: -17px;
 }
 
 .pedagogical_select {
@@ -1806,15 +1802,34 @@ span.mcChoiceSpan{
 }
 
 #based_on_lom {
+	font-family: Arial;
+	font-weight: lighter;
+	font-size: 0.9em;
 	margin-left: 68px;
-	margin-top: 50px;
+	top: 100px;
+	color: #666;
 }
 
 .titlepresp {
+color: #B6B6B6;
+font-family: Arial;
+font-size: 2em;
+left: 9%;
+position: relative;
+padding-top: 3%;
+padding-bottom: 6%;
+margin: 0px;
+}
+
+.titlepresp2 {
     color: #B6B6B6;
     font-family: Arial;
     font-size: 2em;
-    left: 7%;
-    position: absolute;
-    top: -1.2%;
+    left: 9%;
+    position: relative;
+    margin-bottom: 5%;
+}
+
+.fixbottom {
+	margin-bottom: 32px;
 }
