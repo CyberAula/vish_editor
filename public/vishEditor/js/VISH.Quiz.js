@@ -23,8 +23,6 @@ VISH.Quiz = (function(V,$,undefined){
   var getResultsPeriod = 3000; //milliseconds
   var getResultsTimeOut; //must be global
 //variables to control slide forward and backward 
-  var isWaitingBackwardOneSlide = false; 
-  var isWaitingForwardOneSlide = false; 
   var pollingActivated = false;
 
 
@@ -460,7 +458,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     }
   };
   var _enableFullScreenQRButton = function() {
-    if($.support.fullscreen){
+    //TODO consider all kind of browsers 
+    if($(document).fullScreen){
       $('.quiz_full_screen').show();
     }
     else {
@@ -468,25 +467,51 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     }
   };
 
+  var _qrFullScreen = function (event) {
+    //TODO consider all kind of browsers 
+    if(event.target.classList[0]==="quiz_full_screen") {
+    V.Debugging.log("_qrFullScreen detected");
+     myDoc = parent.document;
+    var myElem = myDoc.getElementById('qr_quiz_fullscreen');
+    $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", ($("#tab_quiz_session_content").find(".qr_quiz_image").attr("src")));
+    $(myElem).show();
 
-  var _qrFullScreen = function () {
-    if($.support.fullscreen){
-      $('#qr_quiz_image_id').fullScreen();
-      //$('#qr_quiz_image_id').show();
+/*if (document.requestFullscreen) {
+     $(myElem)[0].requestFullscreen();
+}
+else if (document.mozRequestFullScreen) {
+    $(myElem)[0].mozRequestFullScreen();
+}
+else if (document.webkitRequestFullScreen) {
+  */  
+      $(myElem)[0].webkitRequestFullScreen();
+  //  }
+  }
+    else if (event.target.classList[0]==="quiz_cancel_full_screen") {
+    V.Debugging.log("_qrFullScreen detected");
 
+
+if (document.exitFullscreen) {
+     $(myElem)[0].exitFullscreen();
+}
+else if (document.mozCancelFullScreen) {
+     $(myElem)[0].mozCancelFullScreen();
+}
+else if (document.webkitCancelFullScreen) {
+      $(myElem)[0].webkitCancelFullScreen();
+
+    }
+
+  }
+ else {
+
+      V.Debugging.log("other target");
     }
   };
 
 
   var getIsQuizSessionStarted = function() {
     return quizSessionStarted;
-  };
-
-  var setIsWaitingForwardOneSlide = function (val) {
-    isWaitingForwardOneSlide = val; 
-  };
-  var setIsWaitingBackwardOneSlide = function (val) {
-    isWaitingBackwardOneSlide = val; 
   };
 
 
@@ -499,9 +524,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     drawPieChart                : drawPieChart, 
     getIsQuizSessionStarted     : getIsQuizSessionStarted, 
     onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
-    activatePolling             : activatePolling,
-    setIsWaitingForwardOneSlide : setIsWaitingForwardOneSlide, 
-    setIsWaitingBackwardOneSlide: setIsWaitingBackwardOneSlide
+    activatePolling             : activatePolling
+
 
   };
     

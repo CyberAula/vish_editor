@@ -196,7 +196,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			V.Debugging("another type ");
 			}
 		if (event==="enter") {
-			
+			setKeyDownListener = true;
 		}
 		else if(event==="add_button") {
 			setKeyDownListener = true;
