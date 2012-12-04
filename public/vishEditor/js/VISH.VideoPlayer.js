@@ -15,7 +15,8 @@ VISH.VideoPlayer = (function(){
 			return VISH.Constant.UNKNOWN;
 		} else if(video.tagName==="VIDEO"){
 			return VISH.Constant.Video.HTML5;
-		} else if(video.tagName==="OBJECT"){
+		} else if((video.tagName==="OBJECT")||(video.tagName==="IFRAME")){
+			//Iframe for HTML5 API, Object for deprecated Flash API
 			return VISH.Constant.Video.Youtube;
 		}
 		return VISH.Constant.UNKNOWN;
@@ -71,7 +72,7 @@ VISH.VideoPlayer = (function(){
 				return video.getDuration();
 				break;
 			case VISH.Constant.Video.Youtube:
-				return video.getDuration();
+				return youtubePlayers[video.id].getDuration();
 				break;
 			default:
 				break;
@@ -85,7 +86,7 @@ VISH.VideoPlayer = (function(){
 				return video.getCurrentTime();
 				break;
 			case VISH.Constant.Video.Youtube:
-				return video.getCurrentTime();
+				return youtubePlayers[video.id].getCurrentTime();
 				break;
 			default:
 				break;
