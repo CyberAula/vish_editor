@@ -7,9 +7,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
-		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
-		;
-		
+		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);		
 	};	
 	////////////
 	// Tabs and fancybox
@@ -100,6 +98,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 		}
 	};
+
+
 	//function to set currentArea when click in quiz elements 
 	var _clickOnQuizArea = function (event) {
 		switch (event.target.classList[0]) {
@@ -121,13 +121,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
 
-
 			default:
 
 			break;
 		}
-
 	};
+
+
+
 	/* create an empty MCh quiz  
 	area type text, must add listener for the last one input option */
 	var _addMultipleChoiceQuiz = function(area, num_options) {
@@ -155,21 +156,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		launchTextEditorInTextArea(current_area, "multiplechoice");
 		V.Editor.addDeleteButton(current_area);
 		var i=0;
-		
-		if(current_num_options===0) { //empty quiz (new)
-			addOptionInQuiz('multiplechoice', current_area, "filling");
-			input = $(current_area).find(".multiplechoice_option_in_zone:last");
-	 		_addKeyDownListener(current_area, input);	
-		}
-		else { //load edit quiz (got options)
-			for (i=0; i <= current_num_options ; i++) {
-				addOptionInQuiz('multiplechoice', current_area, "filling");
-			//listener enterKey just for last option
-			 if(i===current_num_options) {
-			 	input = $(current_area).find(".multiplechoice_option_in_zone:last");
-			 	_addKeyDownListener(current_area, input);	
-			 }
-			} 
+
+		for (i=0; i <= current_num_options ; i++) {
+			addOptionInQuiz('multiplechoice', current_area, "filling");				
 		}
 	};
 	/* called when click add icon and when press enter in last input option */
@@ -195,19 +184,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		else {
 			V.Debugging("another type ");
 			}
-		if (event==="enter") {
-			setKeyDownListener = true;
-		}
-		else if(event==="add_button") {
-			setKeyDownListener = true;
-		}
-		else if (event==="filling") {
-			setKeyDownListener = false;
-		}
-		else {
-			setKeyDownListener = false;
-
-		}
+		
 
 		
 		switch (current_quiz_type) {
@@ -224,9 +201,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +(current_options-1));
 				}
 				//add key , just only for the last input option //&& ((current_options+1)!= maxNumMultipleChoiceOptions)
-				if (setKeyDownListener) {
-				 	_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
-				}//add index letter and unique_id 
+				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
+				
+				//add index letter and unique_id 
 		
 				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
@@ -258,29 +235,36 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	};
 
+	/*method that manages the keyboard in the options to disable enter and to add a new option in the last option*/
 	var _addKeyDownListener = function(area, input) {
 		var current_area;
 		var current_input;
 		if(area) {
 			current_area = area;
 		}
-		else {current_area= V.Editor.getCurrentArea();}
+		else {
+			current_area= V.Editor.getCurrentArea();
+		}
+
 		 if(input) {
 		 	current_input = input;
 		 } else {
 		 	V.Debugging.log("no element id!!");
 		 }
-		var current_input = $(current_area).find(".multiplechoice_option_in_zone:last");
+		//var current_input = $(current_area).find(".multiplechoice_option_in_zone:last");
 		$(current_input).keydown(function(event) {
 			if(event.keyCode==13) {
-				_addKeydownEnterDisabled(event.target.id);
 				event.preventDefault();
 				event.stopPropagation();
-			 	addOptionInQuiz('multiplechoice', current_area, 'enter');
+				if($(current_input).attr("id") === $(current_area).find(".multiplechoice_option_in_zone:last").attr("id")){
+					addOptionInQuiz('multiplechoice', current_area, 'enter');
+				}
 			}
 		});
 
 	};
+
+
 /* function to unbind first keydown (enter -> new input) and then disable enter in options  */
 	var _addKeydownEnterDisabled = function (input_id) {
 		$("#" + input_id).unbind('keydown');
