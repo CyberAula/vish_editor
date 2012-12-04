@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Youtube API Example</title>
+</head>
+<body>
+
+ <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/customPlayer.css"/>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+ <div class="customPlayerContainer">   
+   <div id="player"></div>
+   <div class="customPlayerControls">
+    <div class="customPlayerPlay">
+    </div>
+   </div>
+   <div class="customPlayerProgressBar" hover="false" style="display:none">
+      <div class="progressBarElapsed">
+      </div>
+   </div>
+ </div>
+
+    
+    <script type="text/javascript">
+
+      var players = {};
+      function onYouTubeIframeAPIReady() {
+        console.log("onYouTubeIframeAPIReady");
+        var iframeId = 'player';
+        players[iframeId] = new YT.Player(iframeId, {
+          height: '356',
+          width: '425',
+          videoId: 'bT2yo3_R51o',
+          playerVars: { 'autoplay': 0, 'controls': 0, 'enablejsapi': 1, 'showinfo': 0, wmode: "opaque", 'rel': 0 },
+          events: {
+             'onReady': onPlayerReady,
+             'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        var iframe = event.target.getIframe();
+        var iframeId = iframe.id;
+        console.log("onPlayerReady Iframe id: " + iframeId);
+
+        //Testing
+        $(iframe).attr("customPlayerStatus","ready");
+        loadCustomPlayerControlEvents();
+
+        $(".customPlayerContainer").attr("style","width:425px ;height:356px");
+        $(iframe).attr("style","width:100%; height:100%;")
+        $(".customPlayerControls").attr("style","width: 100%; height:100%;")
+      }
+
+      function onPlayerStateChange(event) {
+        var state = event.data;
+        var iframeId = event.target.getIframe().id;
+
+        console.log("onPlayerStateChange Iframe id: " + iframeId);
+        console.log("state: " + state);
+      }
+
+      function onytplayerStateChange(playerId,newState) {
+        console.log("onytplayerStateChange");
+      }
+
+
+
+  $(document).ready(function(){
+     // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+      tag.src = "//www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  });
+
+
+
+
+  var loadCustomPlayerControlEvents = function(){
+
+    $(".customPlayerControls").click(function(e){
+      e.preventDefault();
+      var iframe = $(this).parent().find("iframe")[0];
+      onClickVideo(iframe);
+    });
+
+    $(".customPlayerProgressBar").hover(
+      function(event) {
+        //onMouseEnter
+        $(event.target).attr("hover",true);
+      },
+      function (event) {
+        //onMouseLeave
+        $(event.target).attr("hover",false);
+      }
+    );
+
+    $(".progressBarElapsed").hover(
+      function(event) {
+        //onMouseEnter
+        $(event.target).attr("hover",true);
+      },
+      function (event) {
+        //onMouseLeave
+        $(event.target).attr("hover",false);
+      }
+    );
+
+    $(".customPlayerControls").hover(
+      function(event) {
+        $(event.target).attr("hover",true);
+        var iframe = $(this).parent().find("iframe")[0];
+        if($(iframe).attr("customPlayerStatus")!=="ready"){
+          var progressBar = $(this).parent().find("div.customPlayerProgressBar");
+          $(progressBar).show();
+        }
+      },
+      function (event) {
+        $(event.target).attr("hover",false);
+        setTimeout(function(){
+          var customPlayerControls = $(event.target);
+          var progressBar = $(customPlayerControls).parent().find("div.customPlayerProgressBar");
+          var progressBarElapsed = $(customPlayerControls).parent().find("div.progressBarElapsed");
+          var customPlayerControlsHover = $(customPlayerControls).attr("hover")==="true";
+          var progressBarHover = ($(progressBar).attr("hover")==="true")||($(progressBarElapsed).attr("hover")==="true");
+           if((!customPlayerControlsHover)&&(!progressBarHover)){
+             $(progressBar).hide();
+          }
+        },300);
+      }
+    );
+
+    $(".customPlayerProgressBar").click(function(event){
+      onClickProgressBar(event);
+    });
+  }
+
+    var startProgressBar = function(iframe){
+      var progressBar = $(iframe).parent().find("div.progressBarElapsed");
+      var video = players[iframe.id];
+      setInterval(function(){
+        $(progressBar).width((video.getCurrentTime()/video.getDuration())*100+'%');
+      },400);
+    }
+
+    var onClickProgressBar = function(event){ 
+      if($(event.target).hasClass("customPlayerProgressBar")){
+        var progressBar =  event.target;
+        var elapsed = $(progressBar).find("div.progressBarElapsed")[0];
+      } else if($(event.target).hasClass("progressBarElapsed")){
+        var elapsed =  event.target;
+        var progressBar = $(elapsed).parent();
+      } else {
+        return;
+      }
+      var iframe = $(progressBar).parent().find("iframe")[0];
+      var video = players[iframe.id];
+      var ratio = (event.pageX-$(progressBar).offset().left)/$(progressBar).outerWidth();
+      $(elapsed).width(ratio*100+'%');
+      video.seekTo(Math.round(video.getDuration()*ratio), true);
+    }
+  
+
+  var onClickVideo = function(iframe){
+    var video = players[iframe.id];
+    console.log(video)
+    switch($(iframe).attr("customPlayerStatus")){
+      case "ready":
+        startProgressBar(iframe);
+      case "pause":
+        var customPlayerControlsButton = $(iframe).parent().find("div.customPlayerControls").find("div");
+        var progressBar = $(iframe).parent().find("div.customPlayerProgressBar");
+        $(customPlayerControlsButton).removeClass().addClass("customPlayerPause");
+        $(customPlayerControlsButton).hide();
+        $(iframe).attr("customPlayerStatus","playing");  
+        $(progressBar).show();
+        video.playVideo();
+        break;
+      case "playing":
+        var customPlayerControlsButton = $(iframe).parent().find("div.customPlayerControls").find("div");
+        $(customPlayerControlsButton).removeClass().addClass("customPlayerPlay");
+        $(customPlayerControlsButton).show();
+        $(iframe).attr("customPlayerStatus","pause");
+        video.pauseVideo();
+        break;
+      default:
+       break;
+    }
+  }
+
+  var onEndVideo = function(iframeId){
+    var iframe = $("#"+iframeId);
+    $(iframe).attr("customPlayerStatus","pause");
+    var customPlayerControlsButton = $(iframe).parent().find("div.customPlayerControls").find("div");
+    $(customPlayerControlsButton).removeClass().addClass("customPlayerReplay");
+    $(customPlayerControlsButton).show();
+  }
+
+  </script>
+
+
+
+
+    
+</body>
+</html>

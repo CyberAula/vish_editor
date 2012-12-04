@@ -90,9 +90,12 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 		
+
 	var _getYoutubeIdFromURL = function(url){	
-		var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9]+)/g
-		var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-z0-9Z]+)[&=.]*/g
+		var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9-]+)/g
+		var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-zZ0-9-]+)[&=.]*/g
+		var youtube_video_pattern_3 =/(https?:\/\/)?(www.youtube.com\/v\/)([aA-zZ0-9-]+)/g
+		var youtube_video_pattern_4 =/(https?:\/\/)?(www.youtube.com\/embed\/)([aA-zZ0-9-]+)/g
 		var id = null;
 
 		if(url.match(youtube_video_pattern_1)!=null){
@@ -106,6 +109,24 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		if(url.match(youtube_video_pattern_2)!=null){
 			var result = url.split("&")[0];
 			var result = youtube_video_pattern_2.exec(url)
+			if((result)&&(result[3])){
+				id = result[3];
+			}
+			return id;
+		}
+
+		if(url.match(youtube_video_pattern_3)!=null){
+			var result = url.split("&")[0];
+			var result = youtube_video_pattern_3.exec(url)
+			if((result)&&(result[3])){
+				id = result[3];
+			}
+			return id;
+		}
+
+		if(url.match(youtube_video_pattern_4)!=null){
+			var result = url.split("&")[0];
+			var result = youtube_video_pattern_4.exec(url)
 			if((result)&&(result[3])){
 				id = result[3];
 			}
