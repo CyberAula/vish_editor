@@ -596,7 +596,7 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type=="text"){
-						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
@@ -631,7 +631,7 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
+						element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
 							element.quiz_id = "";
 							if ($(div).find("input[name=quiz_id]").val()!="") {
@@ -642,12 +642,12 @@ VISH.Editor = (function(V,$,undefined){
 							element.options.choices = []; 
 						//	$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								var option = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
 								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
-									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+									result = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
 									var choice = new Object();
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									choice.container = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
 									element.options.choices.push(choice);
 								}
 							});

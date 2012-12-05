@@ -197,9 +197,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
 				//remove KeyDown listener if event add_botton
-				if(event==="add_button") {
+				/*if(event==="add_button") {
 					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +(current_options-1));
-				}
+				} */
 				//add key , just only for the last input option //&& ((current_options+1)!= maxNumMultipleChoiceOptions)
 				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
 				
@@ -326,17 +326,20 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     		$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+    			//V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
+    			V.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
-		//undefined option number , for question 
+		//question input
 		else {
 
 			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 			var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
-			V.Editor.Text.getNicEditor().addInstance(wysiwygId);
+			//V.Editor.Text.getNicEditor().addInstance(wysiwygId);
+			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
+			
 			//launchTextEditorInTextArea(current_area, "multiplechoice", 0);
 
 
