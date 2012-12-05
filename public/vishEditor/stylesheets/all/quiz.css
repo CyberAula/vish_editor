@@ -636,7 +636,7 @@ span.mcChoiceSpan{
 
 
 .resized_fancybox_for_stats {
-    width: 100%;
+    width: 90%;
 }
 
 .quiz_session_body{
@@ -653,9 +653,7 @@ span.mcChoiceSpan{
 }
 
 .qr_quiz_image {
-    height: 50%;
-    width: 60%;
-
+    width: 70%;
 }
 
 .qr_background {

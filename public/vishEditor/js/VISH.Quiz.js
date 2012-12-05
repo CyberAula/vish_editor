@@ -92,7 +92,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
     //$(document).on('click', '.quiz_full_screen', VISH.SlideManager.toggleFullScreen);
-    $(document).on('click', '.quiz_full_screen',_qrFullScreen);
+    $(document).on('click', '.quiz_full_screen',qrToggleFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
    };
@@ -467,44 +467,66 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     }
   };
 
-  var _qrFullScreen = function (event) {
+  var qrToggleFullScreen = function (event) {
     //TODO consider all kind of browsers 
-    if(event.target.classList[0]==="quiz_full_screen") {
-    V.Debugging.log("_qrFullScreen detected");
-     myDoc = parent.document;
+    myDoc = parent.document;
     var myElem = myDoc.getElementById('qr_quiz_fullscreen');
-    $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", ($("#tab_quiz_session_content").find(".qr_quiz_image").attr("src")));
-    $(myElem).show();
-
-/*if (document.requestFullscreen) {
-     $(myElem)[0].requestFullscreen();
-}
-else if (document.mozRequestFullScreen) {
-    $(myElem)[0].mozRequestFullScreen();
-}
-else if (document.webkitRequestFullScreen) {
-  */  
-      $(myElem)[0].webkitRequestFullScreen();
-  //  }
-  }
-    else if (event.target.classList[0]==="quiz_cancel_full_screen") {
-    V.Debugging.log("_qrFullScreen detected");
+        if(event.target.classList[0]==="quiz_full_screen") {
+      V.Debugging.log(" actvate qrFullScreen detected ");
+      $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", ($("#tab_quiz_session_content").find(".qr_quiz_image").attr("src")));
+      
+      //if (myDoc.requestFullscreen) {
+      if (myElem.requestFullscreen) {
+        $(myElem).show();
+        $(myElem)[0].requestFullscreen();
+      }
+      else if (myElem.mozRequestFullScreen) {
+       // $(myElem).show();
+        $(myElem)[0].mozRequestFullScreen();
 
 
-if (document.exitFullscreen) {
-     $(myElem)[0].exitFullscreen();
-}
-else if (document.mozCancelFullScreen) {
-     $(myElem)[0].mozCancelFullScreen();
-}
-else if (document.webkitCancelFullScreen) {
-      $(myElem)[0].webkitCancelFullScreen();
+        myDoc.addEventListener("mozfullscreenchange", function () {
+//fullscreenState.innerHTML = (document.mozFullScreen)? "" : "not ";
+ if($(myElem).css("display")==="none") {
+            $(myElem).show();
+        } else {
+            $(myElem).hide();
+        }
+}, false);
+      }
+      else if (myElem.webkitRequestFullScreen) {
+       // $(myElem)[0].fullScreen();
+          //$(myElem)[0].mozRequestFullScreen();
+        $(myElem)[0].webkitRequestFullScreen();           
+        //myDoc.addEventListener("webkitfullscreenchange", function() {
+          myDoc.addEventListener("webkitfullscreenchange", function() {
+        if($(myElem).css("display")==="none") {
+            $(myElem).show();
+        } else {
+            $(myElem).hide();
+        }
+
+        }, false);        
+     }
 
     }
-
-  }
+    else if (event.target.classList[0]==="quiz_cancel_full_screen") {
+      V.Debugging.log(" cancel qrFullScreen detected ");
+      myDoc = parent.document;
+      var myElem = myDoc.getElementById('qr_quiz_fullscreen');
+      $(myElem).hide();
+      if (document.exitFullscreen) {
+        $(myElem)[0].exitFullscreen();
+      }
+      else if (document.mozCancelFullScreen) {
+        $(myElem)[0].mozCancelFullScreen();
+      }
+      else if (document.webkitCancelFullScreen) {
+        $(myElem)[0].webkitCancelFullScreen();
+      }
+     
+    }
  else {
-
       V.Debugging.log("other target");
     }
   };
@@ -524,7 +546,8 @@ else if (document.webkitCancelFullScreen) {
     drawPieChart                : drawPieChart, 
     getIsQuizSessionStarted     : getIsQuizSessionStarted, 
     onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
-    activatePolling             : activatePolling
+    activatePolling             : activatePolling, 
+    qrToggleFullScreen          : qrToggleFullScreen
 
 
   };
