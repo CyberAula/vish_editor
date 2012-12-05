@@ -474,14 +474,17 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on template zone with class selectable
 	*/
 	var _onSelectableClicked = function(event){
-		setCurrentArea($(this));	
-		_removeSelectableProperties($(this));
-		_addSelectableProperties($(this));
-		VISH.Editor.Tools.loadToolsForZone($(this));
+		selectArea($(this));
 		event.stopPropagation();
 		event.preventDefault();
 	};
   
+  	var selectArea = function(area){
+  		setCurrentArea(area);	
+		_removeSelectableProperties(area);
+		_addSelectableProperties(area);
+		VISH.Editor.Tools.loadToolsForZone(area);
+  	}
   
    /**
 	* Function called when user clicks on any element without class selectable
@@ -495,7 +498,11 @@ VISH.Editor = (function(V,$,undefined){
 			if($(event.target).hasClass("toolbar_icon")){
 				return;
 			}
+			if($(event.target).hasClass("cke_icon")){
+				return;
+			}
 		}
+
 		setCurrentArea(null);
 		VISH.Editor.Tools.cleanZoneTools();
 	};
@@ -954,7 +961,8 @@ VISH.Editor = (function(V,$,undefined){
 		afterSavePresentation  	: afterSavePresentation,
 		setPresentationType 	: setPresentationType,
 		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
-		setCurrentArea			: setCurrentArea
+		setCurrentArea			: setCurrentArea,
+		selectArea				: selectArea
 	};
 
 }) (VISH, jQuery);

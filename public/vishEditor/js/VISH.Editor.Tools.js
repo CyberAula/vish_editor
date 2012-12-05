@@ -174,7 +174,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var loadToolbarForElement = function(type){
 		_cleanElementToolbar();
 		if(type=="text" || type=="quiz"){
-			_loadNiceEditorToolbar();
+			_loadTextToolbar();
 			return;
 		}
 		
@@ -183,9 +183,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$("#toolbar_element").find("img." + toolbarClass).show();
 	}
 
-	var _loadNiceEditorToolbar = function(){
+	var _loadTextToolbar = function(){
 		$("#toolbar_element").find("img").hide();
-		$(".nicEdit-panel").show();
+		$("#toolbar_text").show();
 	}
 
 	var loadToolbarForObject = function(object){
@@ -203,8 +203,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var _cleanElementToolbar = function(){
-		//NiceEditor Toolbar
-		$(".nicEdit-panel").hide();
+		//Wysiwyg Toolbar
+		$("#toolbar_text").hide();
 		//Generic Toolbars
 		$("#toolbar_element").find("img").hide();
 	}
