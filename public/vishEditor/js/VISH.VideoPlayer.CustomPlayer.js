@@ -12,17 +12,46 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		$(video).parent().append(customPlayerContainer);
 		$(video).remove();
 		$(customPlayerContainer).append(video);
-		$(customPlayerContainer).append($("<div class='customPlayerControls'><div class='customPlayerPlay'></div></div>"));
+		$(customPlayerContainer).append($("<div class='customPlayerControls'><div class='customPlayerButton customPlayerPlay'></div></div>"));
 		$(customPlayerContainer).append($("<div class='customPlayerProgressBar'><div class='progressBarElapsed'></div></div>"));
 		var customPlayerControls = $(customPlayerContainer).find("div.customPlayerControls");
 		$(customPlayerContainer).attr("style",$(video).attr("style"));
 		$(video).attr("style","width:98%; height:98%;")
 		$(customPlayerControls).attr("style","width: 100%; height:100%;")
+		_adjustPlayerControls(customPlayerControls);
+
 		//Initial status
 		$(video).attr("customPlayerStatus","ready");
 		if(loadEvents){
 			loadCustomPlayerControlEvents(video);
 		}
+	}
+
+	/*
+	 * Check that background-size param of player images is ok.
+	 * Videos with strange aspect ratios need a readjustement
+	 */
+	var _adjustPlayerControls = function(customPlayerControls){
+		var width = $(customPlayerControls).width();
+		var height = $(customPlayerControls).height();
+
+		var min_width = 70; //Minimum size for the player
+		var originalBackgroundSize = 0.5; //50%
+
+		var icon_width = originalBackgroundSize*width;
+		if(icon_width>height){
+			_applyBackgroundSize(customPlayerControls,height/width);
+		} else {
+			if(icon_width<min_width){
+				_applyBackgroundSize(customPlayerControls,Math.min(1,min_width/width));
+			} else {
+				_applyBackgroundSize(customPlayerControls,originalBackgroundSize);
+			}
+		}
+	}
+
+	var _applyBackgroundSize = function(customPlayerControls,bs){
+		$(customPlayerControls).find("div.customPlayerButton").css("background-size",bs*100+"%");
 	}
 
 	var loadCustomPlayerControlEvents = function(video) {
@@ -37,12 +66,12 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 
 	var _onClickCustomPlayerControls = function(event){
 		event.preventDefault();
-		var video = $(this).parent().find("object")[0];
+		var video = $(this).parent().children()[0];
 		onClickVideo(video);
 	}
 
 	var _onEnterCustomPlayer = function(event){
-		var video = $(event.target).parent().find("object")[0];
+		var video = $(event.target).parent().children()[0];
 		if($(video).attr("customPlayerStatus")!=="ready"){
 			var progressBar = $(video).parent().find("div.customPlayerProgressBar");
 			$(progressBar).show();
@@ -86,11 +115,14 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		event.preventDefault();
 		event.stopPropagation();
 
-		var video = $(progressBar).parent().find("object")[0];
+		var video = $(progressBar).parent().children()[0];
 		var ratio = (event.pageX-$(progressBar).offset().left)/$(progressBar).outerWidth();
-		if(!VISH.Status.isPreventDefaultMode()){
-			$(elapsed).width(ratio*100+'%');
-		}	
+
+		// Improve User Experience, disable progress bar blinds
+		// if(!VISH.Status.isPreventDefaultMode()){
+		// 	$(elapsed).width(ratio*100+'%');
+		// }
+
 		var seekToPos = Math.round(VISH.VideoPlayer.getDuration(video)*ratio);
 		VISH.VideoPlayer.seekVideo(video.id,seekToPos,true);
 	}
@@ -125,7 +157,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		_startProgressBar(video);
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
 		var progressBar = $(video).parent().find("div.customPlayerProgressBar");
-		$(customPlayerControlsButton).removeClass().addClass("customPlayerPause");
+		$(customPlayerControlsButton).removeClass().addClass("customPlayerButton customPlayerPause");
 		$(customPlayerControlsButton).hide();
 		$(video).attr("customPlayerStatus","playing");  
 		$(progressBar).show();
@@ -133,7 +165,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 
 	var onPauseVideo = function(video){
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
-		$(customPlayerControlsButton).removeClass().addClass("customPlayerPlay");
+		$(customPlayerControlsButton).removeClass().addClass("customPlayerButton customPlayerPlay");
 		$(customPlayerControlsButton).show();
 		$(video).attr("customPlayerStatus","pause");
 	}
@@ -142,18 +174,18 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 	var onEndVideo = function(video){
 		$(video).attr("customPlayerStatus","pause");
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
-		$(customPlayerControlsButton).removeClass().addClass("customPlayerReplay");
+		$(customPlayerControlsButton).removeClass().addClass("customPlayerButton customPlayerReplay");
 		$(customPlayerControlsButton).show();
 	}
 
 
 	return {
-		init : init,
-		addCustomPlayerControls : addCustomPlayerControls,
-		loadCustomPlayerControlEvents : loadCustomPlayerControlEvents,
-		onPlayVideo : onPlayVideo,
-		onPauseVideo : onPauseVideo,
-		onEndVideo 	: onEndVideo
+		init 							: init,
+		addCustomPlayerControls 		: addCustomPlayerControls,
+		loadCustomPlayerControlEvents 	: loadCustomPlayerControlEvents,
+		onPlayVideo 					: onPlayVideo,
+		onPauseVideo 					: onPauseVideo,
+		onEndVideo 						: onEndVideo
 	};
 
 })(VISH,jQuery);
