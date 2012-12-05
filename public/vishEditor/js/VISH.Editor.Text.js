@@ -16,9 +16,6 @@ VISH.Editor.Text = (function(V,$,undefined){
   * param area: optional param indicating the area to add the wysiwyg, used for editing presentations
   */
   var launchTextEditor = function(event, area, initial_text){
-  	// console.log("launchTextEditor");
-  	// console.log(event);
-  	// console.log(area);
   	init();
 
   	var current_area;
@@ -34,7 +31,6 @@ VISH.Editor.Text = (function(V,$,undefined){
     var wysiwygContainer = $("<div id='"+wysiwygContainerId+"'></div>")
     $(current_area).append(wysiwygContainer);
 
-
     var config = {};
 	config.toolbar = 'Basic';
 	config.toolbar_Basic =
@@ -48,13 +44,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 	];
 	config.sharedSpaces =
 	{
-		top : 'toolbar_element'
+		top : 'toolbar_text'
 	};
-
+	config.toolbarCanCollapse = false;
 	var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));
 	config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
-
-	var editor = CKEDITOR.appendTo( wysiwygContainerId, config, initial_text );
+	var ckeditor = CKEDITOR.appendTo( wysiwygContainerId, config, initial_text );
+	ckeditor.on('focus', function(event){
+		var area = $("div[type='text']").has(event.editor.container.$);
+		VISH.Editor.selectArea(area);
+	});
 
 	// add a button to delete the current text area   
     V.Editor.addDeleteButton(current_area); 
