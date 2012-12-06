@@ -203,9 +203,10 @@ var _getResults =  function(quiz_session_active_id) {
     $(header).find(".url_share > span > a").text("");
     $(header).find(".url_share > span > a").append(url.toString());
     //$("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
+    $(".hidden_for_qr_quiz > canvas").remove();
     $(".hidden_for_qr_quiz").qrcode({width: 512,height: 512, text: url.toString()});
     var imageData = $(".hidden_for_qr_quiz > canvas")[0].toDataURL();
-    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container > img").attr("src", imageData);
+    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container > .qr_quiz_image").attr("src", imageData);
 
 
      //Hide Start Button and show options button
@@ -214,8 +215,8 @@ var _getResults =  function(quiz_session_active_id) {
     quizSessionStarted = true;
    //put quiz_session_id value in the input hidden for stopping quiz session
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
-    $("#" +tabQuizSessionContent).find(".quiz_session_qrcode_container").append(" <img class='qr_background' src='"+VISH.ImagesPath +"qrcode_background.png' />")
-    
+
+    _showQRCode();
     _addToggleFullScreenListener();
 
     };
@@ -238,6 +239,8 @@ var _getResults =  function(quiz_session_active_id) {
         }
 
       }, false);
+
+
     } 
 
     else if (myElem.mozRequestFullScreen) {
@@ -501,9 +504,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
       V.Debugging.log(" actvate qrFullScreen detected ");
       $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", ($("#tab_quiz_session_content").find(".qr_quiz_image").attr("src")));
       
-      //if (myDoc.requestFullscreen) {
       if (myElem.requestFullscreen) {
-        $(myElem).show();
         $(myElem)[0].requestFullscreen();
       }
       else if (myElem.mozRequestFullScreen) {
