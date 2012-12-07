@@ -237,23 +237,17 @@ var _getResults =  function(quiz_session_active_id) {
         } else {
           $(myElem).hide();
         }
-
       }, false);
-
-
     } 
-
     else if (myElem.mozRequestFullScreen) {
-
-       myDoc.addEventListener("mozfullscreenchange", function () {
+      myDoc.addEventListener("mozfullscreenchange", function () {
           if($(myElem).css("display")==="none") {
               $(myElem).show();
           } else {
               $(myElem).hide();
           }
-        }, false);
-
-}
+      }, false);
+    }
     else {
 
       V.Debugging.log ("Other Browser does not support FUll Screen Mode");

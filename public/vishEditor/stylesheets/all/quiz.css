@@ -85,7 +85,8 @@ height: 100%;
     float: left;
 }
 
-.li_mch_options_in_zone > span{
+/*.li_mch_options_in_zone > span{ */
+.quiz_option_index {
     color: #000000;
     display: inline-block;
     font-size: 1.1em;

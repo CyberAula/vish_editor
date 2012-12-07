@@ -205,18 +205,18 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				//add index letter and unique_id 
 		
-				$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
-				$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
-				$(current_area).find(".li_mch_options_in_zone:last-child > ." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
+				//$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
+				$(current_area).find(".quiz_option_index:last").text(choicesLetters[current_options]);
+				//$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
+				$(current_area).find("." +deleteQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
+				$(current_area).find("." +addQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", current_options);
 			
-				//maximum option (change add for delete icon and unbind keydown)
+				//maximum option (change add for delete)
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + deleteQuizOptionButtonClass).show();
-					$('#' + "wysiwyg_"+ current_area.attr("id") + "_" + current_options).unbind('keydown');
-					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +current_options);
+
 				}
 
 				//remove add icon and insert remove icon 
@@ -256,7 +256,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			if(event.keyCode==13) {
 				event.preventDefault();
 				event.stopPropagation();
-				if($(current_input).attr("id") === $(current_area).find(".multiplechoice_option_in_zone:last").attr("id")){
+				
+				if($(current_input).attr("id") === $(current_area).find(".multiplechoice_option_in_zone:last").attr("id")&& $(current_area).find(".li_mch_options_in_zone").size()< maxNumMultipleChoiceOptions ){
 					addOptionInQuiz('multiplechoice', current_area, 'enter');
 				}
 			}
