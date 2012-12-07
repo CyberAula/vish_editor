@@ -474,14 +474,17 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on template zone with class selectable
 	*/
 	var _onSelectableClicked = function(event){
-		setCurrentArea($(this));	
-		_removeSelectableProperties($(this));
-		_addSelectableProperties($(this));
-		VISH.Editor.Tools.loadToolsForZone($(this));
+		selectArea($(this));
 		event.stopPropagation();
 		event.preventDefault();
 	};
   
+  	var selectArea = function(area){
+  		setCurrentArea(area);	
+		_removeSelectableProperties(area);
+		_addSelectableProperties(area);
+		VISH.Editor.Tools.loadToolsForZone(area);
+  	}
   
    /**
 	* Function called when user clicks on any element without class selectable
@@ -495,7 +498,11 @@ VISH.Editor = (function(V,$,undefined){
 			if($(event.target).hasClass("toolbar_icon")){
 				return;
 			}
+			if($(event.target).hasClass("cke_icon")){
+				return;
+			}
 		}
+
 		setCurrentArea(null);
 		VISH.Editor.Tools.cleanZoneTools();
 	};
@@ -589,7 +596,7 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type=="text"){
-						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
@@ -624,7 +631,7 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
+						element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
 							element.quiz_id = "";
 							if ($(div).find("input[name=quiz_id]").val()!="") {
@@ -634,12 +641,12 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};  	
 							element.options.choices = []; 
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								var option = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
 								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
-									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+									result = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
 									var choice = new Object();
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									choice.container = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
 									element.options.choices.push(choice);
 								}
 							});
@@ -953,7 +960,8 @@ VISH.Editor = (function(V,$,undefined){
 		afterSavePresentation  	: afterSavePresentation,
 		setPresentationType 	: setPresentationType,
 		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
-		setCurrentArea			: setCurrentArea
+		setCurrentArea			: setCurrentArea,
+		selectArea				: selectArea
 	};
 
 }) (VISH, jQuery);

@@ -152,12 +152,11 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 
 	var _renderYoutubeVideo = function(element,template,source){
-		var ytVideoId = VISH.Utils.getId();
+		var ytContainerId = VISH.Utils.getId();
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
 		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
-		source = source.replace("http://www.youtube.com/embed/","http://www.youtube.com/v/"); //Source fix
-		return "<div id='"+element['id']+"' class='objectelement youtubeelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + source + "' ytVideoId='" + ytVideoId + "'>" + "</div>";
+		return "<div id='"+element['id']+"' class='objectelement youtubeelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + source + "' ytContainerId='" + ytContainerId + "'>" + "</div>";
 	}
 	
 	/**

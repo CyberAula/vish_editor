@@ -636,7 +636,7 @@ span.mcChoiceSpan{
 
 
 .resized_fancybox_for_stats {
-    width: 100%;
+    width: 90%;
 }
 
 .quiz_session_body{
@@ -653,9 +653,7 @@ span.mcChoiceSpan{
 }
 
 .qr_quiz_image {
-    height: 60%;
-    width: 60%;
-
+    width: 70%;
 }
 
 .qr_background {
@@ -684,23 +682,23 @@ span.mcChoiceSpan{
 }
 /*TODO change class name to start button and remove anoothers styles above*/
 .quiz_session_start_button, .quiz_session_stop_button, .quiz_session_options_button, .quiz_send_vote_button {
-    background-color: #EEEEEE;
-    border: 1px solid #CBCBCB;
-    border-radius: 14px 14px 14px 14px;
-    bottom: 3%;
-    color: #3C3C3C;
-    cursor: pointer;
-    display: block;
-    float: right;
-    font-family: arial;
-    font-size: 1.2em;
-    font-weight: bold;
-    height: 8%;
-    margin-right: 4%;
-    margin-top: 0.5%;
-    position: absolute;
-    right: -1%;
-    text-align: center;
+background-color: #EEE;
+border: 1px solid #CBCBCB;
+border-radius: 14px 14px 14px 14px;
+bottom: 15%;
+color: #3C3C3C;
+cursor: pointer;
+display: block;
+float: right;
+font-family: arial;
+font-size: 1.2em;
+font-weight: bold;
+height: 8%;
+margin-right: 4%;
+margin-top: 0.5%;
+position: absolute;
+right: 9%;
+text-align: center;
 }
 .quiz_session_start_button {
 
@@ -976,5 +974,11 @@ height: 20%;
     font-weight: bold;
     width: 50%;
     height: 30%;
+
+}
+
+.quiz_cancel_full_screen {
+    height: 40px;
+    width:45px;
 
 }

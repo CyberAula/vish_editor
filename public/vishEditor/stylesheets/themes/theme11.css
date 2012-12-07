@@ -6,8 +6,8 @@
   	box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
   	moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 0);
   	webkit-box-shadow: 0 20px 0px rgba(0, 0, 0, 0);
-  	padding-top: 7%;
-  	padding-bottom: 8%;
+  	padding-top: 6%;
+  	padding-bottom: 7%;
   	padding-left: 7%;
   	padding-right: 7%;
 }
@@ -19,9 +19,28 @@
 
 
 .slides > article[template='t10'] > div.t10_center {
-  margin: 8% 0% 0% 6%;
-  width: 88%;
-  height: 83%;
+border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+float: left;
+height: 82%;
+left: 6%;
+padding-left: 3%;
+padding-top: 2%;
+top: 8%;
+overflow: hidden;
+position: absolute;
+width: 86%;
+-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+}
+
+.slides > article[template='t2'] > div.t2_left {
+top: 4%;
+left: 3%;
+height: 94%;
+width: 94%;
+overflow: hidden;
+position: relative;
 }
 
 .slides {
