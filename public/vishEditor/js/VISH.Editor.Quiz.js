@@ -176,7 +176,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 			 	//hide add incon and show remove one 
 				if(current_options>0) {					
-					$($(current_area).find(".add_quiz_option_button")[parseInt(current_options)-1]).hide();
+					$($(current_area).find("." + addQuizOptionButtonClass)[parseInt(current_options)-1]).hide();
 					$($(current_area).find("." +  deleteQuizOptionButtonClass)[parseInt(current_options)-1]).show();
 					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
@@ -234,7 +234,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 			//reassign index letters for remaining options & reassign id's
 			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
-				$(option_element).find(">span:first-child").text(choicesLetters[index]);
+				$(option_element).find(".quiz_option_index").text(choicesLetters[index]);
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 				//reasign ids for remaining wysiwyg div's 
@@ -248,8 +248,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			//for the last: if delete icon hide it and show add icon and bind event  when press enter
 			if ($(current_area).find(".li_mch_options_in_zone").size()===(maxNumMultipleChoiceOptions-1)) {
 				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));
-				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." +deleteQuizOptionButtonClass).hide();
-				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." + addQuizOptionButtonClass).show();
+				$($(current_area).find("." +deleteQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).hide();
+				$($(current_area).find("." + addQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).show();
 			}
  		} 
  		else {
@@ -260,11 +260,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 //trying to do with div instead than zone (area)
 	var launchTextEditorInTextArea = function(area, type_quiz, option_number){
-		if (area) {
-			current_area = area;
-		} else {
-			current_area = V.Editor.getCurrentArea();
-		}
+		var current_area = area; 
 		//for options
 		if (option_number!=undefined) {
 			var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
@@ -277,17 +273,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    		} 
 		//question input
 		else {
-
 			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 			var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
 			//V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
-			
-			//launchTextEditorInTextArea(current_area, "multiplechoice", 0);
-
-
 		}
 		
 		$(".initTextDiv").click(function(event){
