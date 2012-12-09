@@ -1,6 +1,7 @@
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
+	var focusedInstance = null;
 
 	var init = function(){
 		if(!initialized){
@@ -81,19 +82,31 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
 
-		if(initial_text){
-			ckeditor.setData(initial_text, function(){
-				//Resize: needed to fit content properly
-				//Acces current_area leads to errors, use myWidth and myHeight
-				ckeditor.resize(myWidth,myHeight);
-			});
-		}
+		ckeditor.on("instanceReady", function(){                    
+			if(initial_text){
+				ckeditor.setData(initial_text, function(){
+					//Resize: needed to fit content properly
+					//Acces current_area leads to errors, use myWidth and myHeight
+					ckeditor.resize(myWidth,myHeight);
+				});
+			}
+		});
 
 		//Catch the focus event
 		//TODO: Improve event cathing... currently is not triggered in all cases.
 		ckeditor.on('focus', function(event){
+			// VISH.Debugging.log("Focus");
+			focusedInstance = event.editor;
 			var area = $("div[type='text']").has(event.editor.container.$);
 			VISH.Editor.selectArea(area);
+		});
+
+		ckeditor.on('blur', function(event){
+			// VISH.Debugging.log("Blur");
+			if(focusedInstance === event.editor){
+				focusedInstance = null;
+			}
+			var area = $("div[type='text']").has(event.editor.container.$);
 		});
 
 		// Add a button to delete the current text area   
@@ -118,11 +131,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 		return CKEditorInstance;
 	}
 
+	var getCKEditorInstanceFocused = function(){
+		return focusedInstance;
+	}
+
 
 	return {
 		init              		: init,
 		launchTextEditor  		: launchTextEditor,
-		getCKEditorFromZone 	: getCKEditorFromZone
+		getCKEditorFromZone 	: getCKEditorFromZone,
+		getCKEditorInstanceFocused : getCKEditorInstanceFocused
 	};
 
 }) (VISH, jQuery);
