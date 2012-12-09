@@ -596,7 +596,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type=="text"){
-						element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						//NicEditor version
+						// element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						
+						//CKEditor version
+						var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
+						if(CKEditor!==null){
+							element.body = CKEditor.getData();
+						} else {
+							element.body = "";
+						}
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
