@@ -1120,6 +1120,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 	return {
 		full_samples  		: full_samples,
 		samples   	  		: samples,
+		samples_fc 			: samples_fc,
 		samples_flashcard 	: samples_flashcard,
 		samples_game  		: samples_game,
 		samples_sync 		: samples_sync,
