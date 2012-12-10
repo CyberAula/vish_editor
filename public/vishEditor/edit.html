@@ -289,10 +289,14 @@
           <label for="presentation_description">
             <div class="textintro1 textintromargin2"><span i18n-key="i.Description">Description</span></div>
           </label>
-          <textarea id='presentation_description' class="description1 formsizefancy4" name="presentation_description" placeholder="Describe the presentation in a few words..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
-          <div class="tagBoxIntro">
-            <ul id="tagindex" class="tagList"></ul>
-          </div>
+          <textarea id='presentation_description' class="description1 formsizefancy4" name="presentation_description" placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
+          
+          <div id="attachment_and_tag">
+	          <div class="tagBoxIntro">
+	            <ul id="tagindex" class="tagList"></ul>
+	          </div>
+	          
+      	  </div>
 	        <div id="thumbnails_in_presentation_details">
 	          <label for="presentation_avatar">
 	            <div class="textintro1 textintromargin3"><span i18n-key="i.Thumbnail">Thumbnail</span></div>
@@ -301,21 +305,21 @@
 	          <input type="hidden" id="presentation_avatar" value="">
 	        </div>
         
-          <button id='pedagogical_clasification_button' submit='disable' class='button buttonpedagogical' i18n-key="i.pedagogicalClasification">Pedagogical Classification</button>
+          <button id='pedagogical_clasification_button' submit='disable' class='button buttonpedagogical' i18n-key="i.pedagogicalClasification">Pedagogical Aspects</button>
           <button id='save_presentation_details' submit='disable' class='button buttonintro' i18n-key="i.continue">Continue</button>
           <p id="presentation_details_error" class="error_intro" style='display:none' i18n-key="i.enterTitle">Please, enter a title</p>
         </div>
 
         <div id="pedagogical_options_fields" style="display:none">
-                  	<div id="titlepres2">
-        		<p class="titlepresp2">Pedagogical Classification*</p>
+            <div id="titlepres2">
+        		<p class="titlepresp2">Pedagogical Aspects*</p>
         	</div>
-          <div id="pedagogical_first_row">
+          <div id="pedagogical_first_row" class="pedagogical_tab_element">
 	          <div id="educational_level_box">
 		          <label for="educational_level">
-		            <div id="educational_level_text" class="textintro1 textintromargin1"><span i18n-key="i.EducationalLevel">Educational Level</span></div>
+		            <div id="educational_level_text" class="textintro1 textmarginbottom"><span i18n-key="i.EducationalLevel">Educational Level</span></div>
 		          </label>
-		          <select id="educational_level" class="pedagogical_tab_element">
+		          <select id="educational_level" class="">
 				    <option value="Compulsory education">Compulsory education</option>
 				    <option value="Continuing education">Continuing education</option>
 				    <option value="Distance education">Distance education</option>
@@ -332,9 +336,9 @@
 
 	          <div id="subject_tag_box">		  
 		          <label for="subject_tag">
-		            <div id="subject_text" class="textintro1 textintromargin1"><span i18n-key="i.Subject">Subject</span></div>
+		            <div id="subject_text" class="textintro1 textmarginbottom"><span i18n-key="i.Subject">Subject</span></div>
 		          </label>
-		          <select id="subject_tag" class="pedagogical_tab_element">
+		          <select id="subject_tag" class="" multiple="multiple">
 				    <option value="Unspecified" selected="1">Unespecified</option>
 				    <option value="Art">Art</option>
 				    <option value="Astronomy">Astronomy</option>
@@ -379,9 +383,9 @@
 
 			  <div id="language_tag_box">
 		          <label for="language_tag">
-		            <div id="language_text" class="textintro1 textintromargin1"><span i18n-key="i.language">Language</span></div>
+		            <div id="language_text" class="textintro1 textmarginbottom"><span i18n-key="i.language">Language</span></div>
 		          </label>
-				  <select id="language_tag" class="pedagogical_tab_element">
+				  <select id="language_tag" class="">
       	              <option value="independent" selected="1">(Language independent)</option>
       	              <option value="de">Deutsch</option>
       	              <option value="en">English</option>
@@ -399,14 +403,14 @@
 		    <label for="educational_objectives_tag">
               <div class="textintro1 pedagogical_tab_element"><span i18n-key="i.Educational">Educational Objectives</span></div>
             </label>
-            <textarea id='educational_objectives_tag' class="description1 formsizefancy4 pedagogical_tab_element" name="educational_objectives" placeholder="Describe the educational objectives of this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
+            <textarea id='educational_objectives_tag' class="description1 formsizefancy4 pedagogical_tab_element" name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
 		  </div>
           
 		  <div id="acquired_competencies_tag_box" class="pedagogical_new_row">
 	          <label for="acquired_competencies_tag ">
-	            <div class="textintro1 pedagogical_tab_element"><span i18n-key="i.Competencies">Acquired Competencies</span></div>
+	            <div class="textintro1 pedagogical_tab_element"><span i18n-key="i.Competencies">Skills & competencies</span></div>
 	          </label>
-	          <textarea id='acquired_competencies_tag' class="description1 formsizefancy4 pedagogical_tab_element fixbottom" name="acquired_competencies" placeholder="Describe the competencies that students will acquire with this excursion..." i18n-key="i.CompetenciesPlaceholder"></textarea>
+	          <textarea id='acquired_competencies_tag' class="description1 formsizefancy4 pedagogical_tab_element fixbottom" name="acquired_competencies" placeholder="Skills & competencies that students will acquire and develop by using this excursion..." i18n-key="i.CompetenciesPlaceholder"></textarea>
 	      </div>
 
 	      <i id="based_on_lom" class="" i18n-key="i.basedOnLOM">*based on LOM standard</i>
@@ -415,6 +419,19 @@
       </form>
     </div>  
       
+      <!--
+	  <div class="attachmentIntro">
+      	<span id="attachmentIntroSpan" i18n-key="i.TeachingGuidelines">Teaching guidelines</span>
+      	<form  id="attachment_intro_file_input" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
+                  <input type="file" name="document[file]" class="upload_file_input">
+                  <input type="hidden" name="document[title]">
+                  <input type="hidden" name="document[description]">
+                  <input type="hidden" name="document[owner_id]">
+                  <input type="hidden" name="authenticity_token">					  
+                  <input id="upload_document_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
+        </form>
+      </div>
+      -->
       
     <!-- Thumbnails fancybox -->
 	<div style='display:none'>

@@ -168,6 +168,7 @@ var i18n =
 				"i.selectquiz"			: "Seleccionar Quiz",
 				"i.slidesmenu"		: "Este es el menu de slides",
 				"i.Subject"				: "Tema",
+				"i.TeachingGuidelines"  : "Orientaciones didácticas",
 				"i.Title"				: "Título",
 				"i.thisIsVishEditor"	: "¡Esto es el ViSH Editor!",
 				"i.thisIsToolsMenu"		: "Esto es el menú de herramientas",

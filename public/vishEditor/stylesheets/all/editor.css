@@ -1743,7 +1743,7 @@ span.mcChoiceSpan{
 #pedagogical_first_row {
 	width: 100%;
 	overflow: hidden;
-	padding-top: 45px;
+	padding-top: 20px;
 }
 
 .pedagogical_new_row{
@@ -1752,43 +1752,23 @@ span.mcChoiceSpan{
 
 #educational_level_box{
 	float: left;
-	width: 260px;
+	width: 210px;
 }
 
 #subject_tag_box{
 	float: left;
-	width: 260px;
+	width: 240px;
+	margin-left: 30px;
 }
 
 #language_tag_box{
 	float: left;
 	width: 260px;
-}
-
-#educational_objectives_tag_box{
-}
-
-#acquired_competencies_tag_box{
-}
-
-#educational_level {
-	margin-left: 68px;
-}
-
-#subject_tag{
-	margin-left: 68px;
-}
-
-#language_tag{
-	margin-left: 68px;
+	margin-left: 20px;
 }
 
 #done_in_pedagogical{
 	margin-top: -17px;
-}
-
-.pedagogical_select {
-	
 }
 
 #educational_objectives_tag{
@@ -1835,4 +1815,8 @@ margin: 0px;
 
 .fixbottom {
 	margin-bottom: 32px;
+}
+
+.textmarginbottom {
+	margin-bottom: 10px;
 }
