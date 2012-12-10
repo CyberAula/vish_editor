@@ -177,10 +177,6 @@ this can not be done with show() and hide() because then it remains with display
 /* Styles for slides */
 
 .slides > article {
-  font-family: helvetica, Arial, sans-serif;
-
-  color: rgb(102, 102, 102);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   /*Next three parameters will be changed by javascript depending on the window size, only in the viewer, in the editor the font size is relative
   font-size: 30px;
   line-height: 36px;

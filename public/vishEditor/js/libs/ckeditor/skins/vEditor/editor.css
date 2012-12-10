@@ -154,4 +154,18 @@ span.cke_skin_vEditor{
 	width:49px;
 }
 
-.cke_skin_vEditor .cke_browser_iequirks .cke_fontSize .cke_text{width:32px;}html .cke_skin_vEditor{visibility:inherit;}html.cke_skin_vEditor_container{visibility:visible;}
+.cke_skin_vEditor .cke_browser_iequirks .cke_fontSize .cke_text{width:32px;}
+
+html .cke_skin_vEditor{
+	visibility:inherit;
+	/*border: solid 1px black;*/
+	overflow: hidden;
+	/* in case API doesn´t respond, this seem to fix the size of the text area */
+	width: 100% !important; 
+	height: 100% !important;
+}
+
+html.cke_skin_vEditor_container{
+	visibility:visible;
+}
+

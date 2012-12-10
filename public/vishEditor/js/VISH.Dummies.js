@@ -33,7 +33,7 @@ VISH.Dummies = (function(VISH,undefined){
 		"<div class='trueFalseQuizContainer'><p> quiz dummy truefalse</p></div>"
 		];
 		quizOptionDummies = ["", 
-		"<li class='li_mch_options_in_zone'><span></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png' class='add_quiz_option_button'/><img src='"+VISH.ImagesPath+ "delete.png' class='delete_quiz_option_button'/></li>", 
+		"<li class='li_mch_options_in_zone'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png' class='add_quiz_option_button'/><img src='"+VISH.ImagesPath+ "delete.png' class='delete_quiz_option_button'/></li>", 
 		""
 		];
 	}

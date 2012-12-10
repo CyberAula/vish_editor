@@ -49,12 +49,12 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
         if(VISH.Quiz.getQuizMode()=="answer"){
           ret += "<li class='li_mch_options_in_zone'>";
-          ret += "<input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'/><span>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
+          ret += "<input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'/><span class='quiz_option_index'>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
           ret += "</li>"
         }
         else {
           ret += "<li class='li_mch_options_in_zone'>";
-          ret += "<span>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
+          ret += "<span class='quiz_option_index'>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
           ret += "</li>"
          }
         ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";

@@ -24,6 +24,7 @@ VISH.Quiz = (function(V,$,undefined){
   var getResultsTimeOut; //must be global
 //variables to control slide forward and backward 
   var pollingActivated = false;
+  var addedFullScreenListener = false; 
 
 
   var init = function(presentation){
@@ -217,8 +218,9 @@ var _getResults =  function(quiz_session_active_id) {
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
 
     _showQRCode();
-    _addToggleFullScreenListener();
-
+    if (addedFullScreenListener === false) {
+      _addToggleFullScreenListener();
+    }
     };
 
   var _OnQuizSessionReceivedError = function(error){
@@ -227,33 +229,36 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
+    addedFullScreenListener = true;
     myDoc = parent.document;
     var myElem = myDoc.getElementById('qr_quiz_fullscreen');
-    if (myElem.webkitRequestFullScreen) {
-      myDoc.addEventListener("webkitfullscreenchange", function() {
-        V.Debugging.log("display value: " + $(myElem).css("display"));
+     if (myElem.requestFullscreen) {
+    myDoc.addEventListener("fullscreenchange", function () {
         if($(myElem).css("display")==="none") {
           $(myElem).show();
         } else {
           $(myElem).hide();
         }
-
       }, false);
-
-
+     }
+     else if (myElem.webkitRequestFullScreen) {
+      myDoc.addEventListener("webkitfullscreenchange", function() {
+        if($(myElem).css("display")==="none") {
+          $(myElem).show();
+        } else {
+          $(myElem).hide();
+        }
+      }, false);
     } 
-
     else if (myElem.mozRequestFullScreen) {
-
-       myDoc.addEventListener("mozfullscreenchange", function () {
+      myDoc.addEventListener("mozfullscreenchange", function () {
           if($(myElem).css("display")==="none") {
               $(myElem).show();
           } else {
               $(myElem).hide();
           }
-        }, false);
-
-}
+      }, false);
+    }
     else {
 
       V.Debugging.log ("Other Browser does not support FUll Screen Mode");
@@ -488,7 +493,9 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
   var _enableFullScreenQRButton = function() {
     //TODO consider all kind of browsers 
-    if($(document).fullScreen){
+   // if($(document).fullScreen){ document . fullscreenEnabled
+    var myElem = parent.document.getElementById('qr_quiz_fullscreen');
+     if(myElem.fullscreenEnabled || myElem.mozRequestFullScreen || myElem.webkitRequestFullScreen){
       $('.quiz_full_screen').show();
     }
     else {
@@ -501,8 +508,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     myDoc = parent.document;
     var myElem = myDoc.getElementById('qr_quiz_fullscreen');
         if(event.target.classList[0]==="quiz_full_screen") {
-      V.Debugging.log(" actvate qrFullScreen detected ");
-      $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", ($("#tab_quiz_session_content").find(".qr_quiz_image").attr("src")));
+      var qr_image_src = $("#tab_quiz_session_content").find(".qr_quiz_image").attr("src");
+      $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", qr_image_src);
       
       if (myElem.requestFullscreen) {
         $(myElem)[0].requestFullscreen();
@@ -516,9 +523,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
     }
     else if (event.target.classList[0]==="quiz_cancel_full_screen") {
-      V.Debugging.log(" cancel qrFullScreen detected ");
-      myDoc = parent.document;
-      var myElem = myDoc.getElementById('qr_quiz_fullscreen');
       $(myElem).hide();
       if (document.exitFullscreen) {
         $(myElem)[0].exitFullscreen();
