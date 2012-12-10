@@ -16,7 +16,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		$(customPlayerContainer).append($("<div class='customPlayerProgressBar'><div class='progressBarElapsed'></div></div>"));
 		var customPlayerControls = $(customPlayerContainer).find("div.customPlayerControls");
 		$(customPlayerContainer).attr("style",$(video).attr("style"));
-		$(video).attr("style","width:98%; height:98%;")
+		$(video).attr("style","width:100%; height:100%;")
 		$(customPlayerControls).attr("style","width: 100%; height:100%;")
 		_adjustPlayerControls(customPlayerControls);
 

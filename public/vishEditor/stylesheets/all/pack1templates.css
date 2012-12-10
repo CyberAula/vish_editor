@@ -531,6 +531,11 @@
 	padding: none;
 }
 
+.t10_iframe{
+	border: none;
+	padding: none;
+}
+
 .t10_video{
 	width: 100%;
 	height: 100%;
