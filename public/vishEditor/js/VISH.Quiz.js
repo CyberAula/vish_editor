@@ -24,6 +24,7 @@ VISH.Quiz = (function(V,$,undefined){
   var getResultsTimeOut; //must be global
 //variables to control slide forward and backward 
   var pollingActivated = false;
+  var addedFullScreenListener = false; 
 
 
   var init = function(presentation){
@@ -217,8 +218,9 @@ var _getResults =  function(quiz_session_active_id) {
     $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value",quiz_session_id);
 
     _showQRCode();
-    _addToggleFullScreenListener();
-
+    if (addedFullScreenListener === false) {
+      _addToggleFullScreenListener();
+    }
     };
 
   var _OnQuizSessionReceivedError = function(error){
@@ -227,6 +229,7 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
+    addedFullScreenListener = true;
     myDoc = parent.document;
     var myElem = myDoc.getElementById('qr_quiz_fullscreen');
      if (myElem.requestFullscreen) {
