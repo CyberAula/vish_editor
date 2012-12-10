@@ -512,22 +512,41 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*/
 	var _onNoSelectableClicked = function(event){
+		
 		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
 		if(!$(event.target).hasClass("noSelectableElement")){
+
+			//No hide toolbar when we are working in a fancybox
 			if($("#fancybox-content").is(":visible")){
 				return;
 			}
-			if($(event.target).hasClass("toolbar_icon")){
-				return;
-			}
-			if($(event.target).hasClass("cke_icon")){
-				return;
-			}
+
+			//No hide toolbar for selectable childrens
 			if($(event.target).parent().hasClass("selectable")){
 				return;
 			}
+
+			//Enable toolbar actions
+			if (jQuery.contains($("#toolbar_wrapper")[0],event.target)){
+				return;
+			}
+
+			if(event.target.id==="toolbar_wrapper"){
+				return;
+			}
+
+			// if($(event.target).hasClass("toolbar_icon")){
+			// 	return;
+			// }
+			// if($(event.target).hasClass("cke_icon")){
+			// 	return;
+			// }
+			// if($(event.target).hasClass("cke_inline_label")){
+			// 	return;
+			// }
 		}
 
+		console.log(event.target)
 		setCurrentArea(null);
 		VISH.Editor.Tools.cleanZoneTools();
 	};

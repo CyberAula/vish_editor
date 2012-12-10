@@ -62,7 +62,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.removePlugins = 'elementspath';
 
 		//Fit the current area
-		config.width = $(current_area).width();
+		config.width = '100%';
 		//The height value defines the height of CKEditor editing area and can be given in pixels or em. Percent values are not supported. 
 		//http://docs.cksource.com/CKEditor_3.x/Howto/Editor_Size_On_The_Fly
 		config.height = $(current_area).height();
@@ -74,6 +74,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		//Apply vEditor skin
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));
+		// config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 		config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 
 		//Add ckeditor wysiwyg instance
@@ -85,6 +86,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		ckeditor.on("instanceReady", function(){                    
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
+					console.log("resize");
+					console.log($(current_area).width());
 					//Resize: needed to fit content properly
 					//Acces current_area leads to errors, use myWidth and myHeight
 					ckeditor.resize(myWidth,myHeight);
