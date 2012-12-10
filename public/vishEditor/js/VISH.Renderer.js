@@ -71,7 +71,6 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderText = function(element, template){
 		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
-		// return "<div id='"+element['id']+"' body='"+element['body']+"' class='"+template+"_"+element['areaid']+" "+template+"_text textelement'></div>";
 	};
 	
 	/**

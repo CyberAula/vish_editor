@@ -93,18 +93,6 @@ VISH.Samples = (function(V,undefined){
 					"style":"position: relative; width:99.9390243902439%; height:99.6774193548387%; top:2.225806451612903%; left:2.3536585365853657%;"
 				}
 			]
-		},
-		{
-			"id":"article_6",
-			"type":"standard",
-			"template":"t2",
-			"elements":[
-				{"id":"zone10",
-				"type":"text",
-				"areaid":"left",
-				"body":"<p>\n\t<span style=\"font-size:72px;\">Esto es una prueba para ver la renderizacion del CKEDITOR</span></p>\n"
-				}
-			]
 		}
 		]
 	};

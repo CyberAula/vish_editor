@@ -23,12 +23,7 @@ VISH.Presentation = (function(V,undefined){
 	 * Cover all the slides array to preload the flashcards content
 	 * Finally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run
 	 */
-	var _finishRenderer = function(){	
-		// //Add ckeditor instances
-		// $('.textelement').each(function(index,textElement){
-			
-		// });
-
+	var _finishRenderer = function(){
 		V.VideoPlayer.HTML5.setVideoEvents();
 		
 		V.SlideManager.addEnterLeaveEvents();
