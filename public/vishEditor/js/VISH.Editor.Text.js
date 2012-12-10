@@ -86,8 +86,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 		ckeditor.on("instanceReady", function(){                    
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
-					console.log("resize");
-					console.log($(current_area).width());
 					//Resize: needed to fit content properly
 					//Acces current_area leads to errors, use myWidth and myHeight
 					ckeditor.resize(myWidth,myHeight);

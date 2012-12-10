@@ -53,7 +53,8 @@ VISH.Renderer = (function(V,$,undefined){
 		if(V.SlideManager.getPresentationType() === "flashcard"){
 			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
 		}
-		//when render a simple_quiz for voting
+
+		//When render a simple_quiz for voting
 		if(slide.type=="quiz") {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
 			classes += "quiz";
@@ -62,8 +63,6 @@ VISH.Renderer = (function(V,$,undefined){
 		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
 
 		SLIDE_CONTAINER.append(article);
-
-
 	};
 
 
@@ -72,6 +71,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var _renderText = function(element, template){
 		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+		// return "<div id='"+element['id']+"' body='"+element['body']+"' class='"+template+"_"+element['areaid']+" "+template+"_text textelement'></div>";
 	};
 	
 	/**
