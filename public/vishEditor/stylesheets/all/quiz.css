@@ -80,11 +80,6 @@ height: 100%;
     margin-top: 1.5%;
     width: 94%;
 }
-
-.li_mch_options_in_zone > input  {
-    float: left;
-}
-
 /*.li_mch_options_in_zone > span{ */
 .quiz_option_index {
     color: #000000;
@@ -637,7 +632,7 @@ span.mcChoiceSpan{
 
 
 .resized_fancybox_for_stats {
-    width: 90%;
+    width: 94%;
 }
 
 .quiz_session_body{

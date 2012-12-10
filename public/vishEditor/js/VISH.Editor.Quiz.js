@@ -30,9 +30,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		if(num_options){
 			current_num_options = num_options;
 		}
-		else {
+		else { //new quiz no options
 			current_num_options = 0;
-
 		}
 
 		switch (quiz_type) {
@@ -60,15 +59,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		if(area) {
 			current_area = area;
 		} else {
-
 			current_area = V.Editor.getCurrentArea();
 		}
 
 		switch (quiz_type) {
 			case "multiplechoice": 
-				
-				
-				
 				if (question) {	
 					$(current_area).find(".value_multiplechoice_question_in_zone").children().remove();
 					$(current_area).find(".value_multiplechoice_question_in_zone").append(question);
@@ -109,8 +104,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 			case "add_quiz_option_button":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.id));
-				//TODO: try to pass event handler instead add_button string 
-				addOptionInQuiz('multiplechoice', V.Editor.getCurrentArea() , "add_button"); 
+				addOptionInQuiz('multiplechoice', V.Editor.getCurrentArea()); 
 			break;
 
 			case "multiplechoice_option_in_zone":
@@ -127,26 +121,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	};
 
-
-
 	/* create an empty MCh quiz  
 	area type text, must add listener for the last one input option */
 	var _addMultipleChoiceQuiz = function(area, num_options) {
-		var current_area;
-		var current_num_options;
-		if(area){
-			current_area = area;
-		}
-		else {
-			//if no param 
-			current_area = VISH.Editor.getCurrentArea();
-		}
-		if (num_options) { //when editing a quiz
-		 	current_num_options = num_options;
-		}
-		else { //new quiz
-			current_num_options = 0;
-		}
+		var current_area = area;
+		var current_num_options = num_options;
 		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
@@ -156,23 +135,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		launchTextEditorInTextArea(current_area, "multiplechoice");
 		V.Editor.addDeleteButton(current_area);
 		var i=0;
-
 		for (i=0; i <= current_num_options ; i++) {
-			addOptionInQuiz('multiplechoice', current_area, "filling");				
+			addOptionInQuiz('multiplechoice', current_area);				
 		}
 	};
+
 	/* called when click add icon and when press enter in last input option */
-	var addOptionInQuiz = function (quiz_type, area, event) {
+	var addOptionInQuiz = function (quiz_type, area) {
 		var setKeyDownListener = false;
-		var current_area;
+		var current_area = area;
 		var current_quiz_type;
-		
-		if(area) {
-			current_area = area;
-		}
-		else {
-			current_area = V.Editor.getCurrentArea();
-		}
 		
 		if(typeof quiz_type =="string"){ //when add new and empty multiplechoice quiz
 			current_quiz_type = quiz_type;
@@ -184,9 +156,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		else {
 			V.Debugging("another type ");
 			}
-		
-
-		
 		switch (current_quiz_type) {
 
 			case "multiplechoice":
@@ -196,38 +165,27 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				//add option 
 				$(current_area).find(".ul_mch_options_in_zone").append(quiz_option);
-				//remove KeyDown listener if event add_botton
-				/*if(event==="add_button") {
-					_addKeydownEnterDisabled("wysiwyg_"+ current_area.attr("id") + "_" +(current_options-1));
-				} */
-				//add key , just only for the last input option //&& ((current_options+1)!= maxNumMultipleChoiceOptions)
+				//add keyDown listener 
 				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
-				
 				//add index letter and unique_id 
-		
-				//$(current_area).find(".li_mch_options_in_zone:last-child > span").text(choicesLetters[current_options]);
 				$(current_area).find(".quiz_option_index:last").text(choicesLetters[current_options]);
-				//$(current_area).find(".li_mch_options_in_zone:last-child > ." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find("." +deleteQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
 				$(current_area).find("." +addQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
 				//and call launchTextEditorInTextArea for zone
 				launchTextEditorInTextArea(current_area, "multiplechoice", current_options);
 			
-				//maximum option (change add for delete)
-				if((current_options+1)=== maxNumMultipleChoiceOptions) {
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)]).find("." + addQuizOptionButtonClass).hide();
-
-				}
-
-				//remove add icon and insert remove icon 
+			 	//hide add incon and show remove one 
 				if(current_options>0) {					
-					//remove default text
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find(".add_quiz_option_button").hide();
-					$($(current_area).find(".li_mch_options_in_zone")[parseInt(current_options)-1]).find("." +  deleteQuizOptionButtonClass).show();
+					$($(current_area).find("." + addQuizOptionButtonClass)[parseInt(current_options)-1]).hide();
+					$($(current_area).find("." +  deleteQuizOptionButtonClass)[parseInt(current_options)-1]).show();
 					$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
 				}
-			
+				//maximum option (show delete instead add icon)
+				if((current_options+1)=== maxNumMultipleChoiceOptions) {
+					$($(current_area).find("." + addQuizOptionButtonClass)[parseInt(current_options)]).hide();
+					$($(current_area).find("." + deleteQuizOptionButtonClass)[parseInt(current_options)]).show();
+				}
 			break;
 
 			default:
@@ -237,28 +195,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	/*method that manages the keyboard in the options to disable enter and to add a new option in the last option*/
 	var _addKeyDownListener = function(area, input) {
-		var current_area;
-		var current_input;
-		if(area) {
-			current_area = area;
-		}
-		else {
-			current_area= V.Editor.getCurrentArea();
-		}
-
-		 if(input) {
-		 	current_input = input;
-		 } else {
-		 	V.Debugging.log("no element id!!");
-		 }
-		//var current_input = $(current_area).find(".multiplechoice_option_in_zone:last");
+		var current_area = area;
+		var current_input = input;
 		$(current_input).keydown(function(event) {
 			if(event.keyCode==13) {
 				event.preventDefault();
 				event.stopPropagation();
-				
 				if($(current_input).attr("id") === $(current_area).find(".multiplechoice_option_in_zone:last").attr("id")&& $(current_area).find(".li_mch_options_in_zone").size()< maxNumMultipleChoiceOptions ){
-					addOptionInQuiz('multiplechoice', current_area, 'enter');
+					addOptionInQuiz('multiplechoice', current_area);
 				}
 			}
 		});
@@ -266,7 +210,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
-/* function to unbind first keydown (enter -> new input) and then disable enter in options  */
+/* function to unbind first keydown (enter -> new input) and then disable enter in options  
 	var _addKeydownEnterDisabled = function (input_id) {
 		$("#" + input_id).unbind('keydown');
 		$("#" + input_id).keydown(function(event) {
@@ -276,7 +220,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			}
 		});
 
-	};
+	};*/
 	
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
@@ -290,7 +234,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			
 			//reassign index letters for remaining options & reassign id's
 			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
-				$(option_element).find(">span:first-child").text(choicesLetters[index]);
+				$(option_element).find(".quiz_option_index").text(choicesLetters[index]);
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
 				//reasign ids for remaining wysiwyg div's 
@@ -304,8 +248,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			//for the last: if delete icon hide it and show add icon and bind event  when press enter
 			if ($(current_area).find(".li_mch_options_in_zone").size()===(maxNumMultipleChoiceOptions-1)) {
 				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));
-				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." +deleteQuizOptionButtonClass).hide();
-				$($(current_area).find(".li_mch_options_in_zone")[maxNumMultipleChoiceOptions-2]).find("." + addQuizOptionButtonClass).show();
+				$($(current_area).find("." +deleteQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).hide();
+				$($(current_area).find("." + addQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).show();
 			}
  		} 
  		else {
@@ -316,11 +260,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 //trying to do with div instead than zone (area)
 	var launchTextEditorInTextArea = function(area, type_quiz, option_number){
-		if (area) {
-			current_area = area;
-		} else {
-			current_area = V.Editor.getCurrentArea();
-		}
+		var current_area = area; 
 		//for options
 		if (option_number!=undefined) {
 			var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
@@ -333,17 +273,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    		} 
 		//question input
 		else {
-
 			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 			var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
 			//V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
-			
-			//launchTextEditorInTextArea(current_area, "multiplechoice", 0);
-
-
 		}
 		
 		$(".initTextDiv").click(function(event){
