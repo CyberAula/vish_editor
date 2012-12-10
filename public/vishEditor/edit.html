@@ -11,7 +11,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/joyride-1.0.5.css">
   	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery.fancybox-1.3.4.css">
-	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery-ui-1.9.1.custom.min.css">
+	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery-ui-1.9.2.custom.css">
   	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/editor.css">
   	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/nicEditor.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/carrousel.css">
@@ -24,7 +24,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		
 	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
-	<script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.1.custom.min.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.touch-punch.0.2.2.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.carouFredSel-5.5.0.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
@@ -315,24 +315,15 @@
         		<p class="titlepresp2">Pedagogical Aspects*</p>
         	</div>
           <div id="pedagogical_first_row" class="pedagogical_tab_element">
-	          <div id="educational_level_box">
-		          <label for="educational_level">
-		            <div id="educational_level_text" class="textintro1 textmarginbottom"><span i18n-key="i.EducationalLevel">Educational Level</span></div>
-		          </label>
-		          <select id="educational_level" class="">
-				    <option value="Compulsory education">Compulsory education</option>
-				    <option value="Continuing education">Continuing education</option>
-				    <option value="Distance education">Distance education</option>
-				    <option value="Educational administration">Educational administration</option>
-				    <option value="Higher education">Higher education</option>
-				    <option value="Library">Library</option>
-				    <option value="Other" selected="1">Other</option>
-				    <option value="Pre-school">Pre-school</option>
-				    <option value="Professional development">Professional development</option>
-				    <option value="Special education">Special education</option>
-				    <option value="Vocational education">Vocational education</option>
-				  </select>
-			  </div>
+	         
+	         <div id="age_range_box">
+				    <label for="age_range">
+				    	<div id="age_range_text" class="textintro1 textmarginbottom"><span i18n-key="i.age_range">Age range:</span></div>
+				    </label>
+				    <input type="text" id="age_range" style="border: 0; color: #f6931f; font-weight: bold;" />
+	 
+				<div id="slider-range"></div>
+			</div>
 
 	          <div id="subject_tag_box">		  
 		          <label for="subject_tag">

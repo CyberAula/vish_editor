@@ -124,6 +124,17 @@ VISH.Editor = (function(V,$,undefined){
 
 			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
 
+			$("#slider-range").slider({
+	            range: true,
+	            min: 0,
+	            max: 30,
+	            values: [ 4, 20 ],
+	            slide: function( event, ui ) {
+	                $( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+	            }
+	        });
+	        $("#age_range").val("4 - 20");
+
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
@@ -141,6 +152,10 @@ VISH.Editor = (function(V,$,undefined){
 		if(presentation){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
 			$('.object_wrapper').hide();
+			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
+			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
+			$( "#slider-range" ).slider( "values", [start_range, end_range] );
+			$("#age_range").val(start_range + " - " + end_range);
 		}
 		
 		//Init submodules
@@ -593,7 +608,7 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.avatar = draftPresentation.avatar;
 			presentation.tags = draftPresentation.tags;
 			presentation.theme = draftPresentation.theme;
-			presentation.educational_level = draftPresentation.educational_level;
+			presentation.age_range = draftPresentation.age_range;
 			presentation.subject = draftPresentation.subject;
 			presentation.language = draftPresentation.language;
 			presentation.educational_objectives = draftPresentation.educational_objectives;
