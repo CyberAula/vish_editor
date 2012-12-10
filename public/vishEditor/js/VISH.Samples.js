@@ -81,7 +81,7 @@ VISH.Samples = (function(V,undefined){
 			}]
 		},
 		{
-			"id":"article__4",
+			"id":"article_5",
 			"type":"standard",
 			"template":"t2",
 			"elements":[

@@ -495,31 +495,9 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   	var selectArea = function(area){
-
-		if($(area).attr("type")!=="text"){
-			if(VISH.Editor.Text.getCKEditorInstanceFocused()!==null){
-				VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
-
-				// setTimeout(function(){
-				// 	VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
-				// },1000)
-
-				//Try to hide cursor...
-
-				// var htmlTag = $(VISH.Editor.getCurrentArea()).find($("iframe")).contents().children()[0];
-		 	// 	$(htmlTag).attr("contenteditable",false);
-		 	// 	setTimeout(function(){
-		 	// 		$(htmlTag).attr("contenteditable",true);
-		 	// 	},5000);
-
-		 		// window.getSelection().removeAllRanges();
-			}
-		}
-
   		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
-
 		VISH.Editor.Tools.loadToolsForZone(area);
   	}
   
@@ -527,22 +505,36 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*/
 	var _onNoSelectableClicked = function(event){
+		
 		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
 		if(!$(event.target).hasClass("noSelectableElement")){
+
+			//No hide toolbar when we are working in a fancybox
 			if($("#fancybox-content").is(":visible")){
 				return;
 			}
-			if($(event.target).hasClass("toolbar_icon")){
-				return;
-			}
-			if($(event.target).hasClass("cke_icon")){
-				return;
-			}
+
+			//No hide toolbar for selectable childrens
 			if($(event.target).parent().hasClass("selectable")){
+				return;
+			}
+
+			//Enable toolbar actions
+			if (jQuery.contains($("#toolbar_wrapper")[0],event.target)){
+				return;
+			}
+
+			if(event.target.id==="toolbar_wrapper"){
+				return;
+			}
+
+			//NiceEditor menu: font and size selection
+			if(event.target.tagName==="FONT"){
 				return;
 			}
 		}
 
+		// VISH.Debugging.log(event.target);
 		setCurrentArea(null);
 		VISH.Editor.Tools.cleanZoneTools();
 	};
@@ -637,19 +629,10 @@ VISH.Editor = (function(V,$,undefined){
 						 
 					if(element.type=="text"){
 						//NicEditor version
-						// element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
-						
-						//CKEditor version
-						var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
-						if(CKEditor!==null){
-							element.body = CKEditor.getData();
-						} else {
-							element.body = "";
-						}
+						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type=="image"){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
-						
 						if($(div).attr("hyperlink")){
 							element.hyperlink = $(div).attr("hyperlink");
 						}
@@ -680,7 +663,7 @@ VISH.Editor = (function(V,$,undefined){
 						}
 					} else if (element.type =="quiz") {
 						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-						element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
 							element.quiz_id = "";
 							if ($(div).find("input[name=quiz_id]").val()!="") {
@@ -690,12 +673,12 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};  	
 							element.options.choices = []; 
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
-									result = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
 									var choice = new Object();
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
+									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
 									element.options.choices.push(choice);
 								}
 							});
