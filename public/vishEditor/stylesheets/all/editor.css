@@ -1480,6 +1480,10 @@ textarea {
 	top:-29px;
 }
 	
+iframe {
+	width: 100%;
+	height: 100%;
+}
 	
 /** Slides bar **/
 
