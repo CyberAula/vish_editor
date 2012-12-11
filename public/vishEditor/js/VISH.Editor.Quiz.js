@@ -208,19 +208,6 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		});
 
 	};
-
-
-/* function to unbind first keydown (enter -> new input) and then disable enter in options  
-	var _addKeydownEnterDisabled = function (input_id) {
-		$("#" + input_id).unbind('keydown');
-		$("#" + input_id).keydown(function(event) {
-			if(event.keyCode==13) {
-				event.preventDefault();
-				event.stopPropagation();
-			}
-		});
-
-	};*/
 	
 	var _removeOptionInQuiz = function (event) {
 		if(event.target.attributes["class"].value=== deleteQuizOptionButtonClass){
@@ -237,7 +224,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(option_element).find(".quiz_option_index").text(choicesLetters[index]);
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
 				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
-				//reasign ids for remaining wysiwyg div's 
+				//reasign id's for remaining wysiwyg div's 
 				$(option_element).find(".multiplechoice_option_in_zone").attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
 
 				if(index>=option_number) {
