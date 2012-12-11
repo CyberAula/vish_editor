@@ -155,11 +155,11 @@ VISH.Events = (function(V,$,undefined){
  			$(document).bind('touchstart', handleTouchStart); 
 	      	
 	      	var presentation = V.SlideManager.getCurrentPresentation();
-	      	for(slide in presentation.slides){
-				if(slide.type === "flashcard"){
+	      	for(index in presentation.slides){
+				if(presentation.slides[index].type === "flashcard"){
 					//and now we add the points of interest with their click events to show the slides
-	  				for(index in slide.pois){
-	  					var poi = slide.pois[index];
+	  				for(ind in presentation.slides[index].pois){
+	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
 	      			$(document).on('click','.close_slide', _onFlashcardCloseSlideClicked);
@@ -184,11 +184,11 @@ VISH.Events = (function(V,$,undefined){
 	  		$(document).unbind('touchstart', handleTouchStart); 
   		
   			var presentation = V.SlideManager.getCurrentPresentation();
-	      	for(slide in presentation.slides){
-				if(slide.type === "flashcard"){
+	      	for(index in presentation.slides){
+				if(presentation.slides[index].type === "flashcard"){
 					//and now we add the points of interest with their click events to show the slides
-	  				for(index in slide.pois){
-	  					var poi = slide.pois[index];
+	  				for(ind in presentation.slides[index].pois){
+	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
 	      			$(document).off('click','.close_slide', _onFlashcardCloseSlideClicked);

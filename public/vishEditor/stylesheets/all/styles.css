@@ -540,3 +540,10 @@ button#closeButton {
   background: url(/vishEditor/images/animation_arrow.png);
 }
 
+.flashcard_slide_hidden{
+  display: none;
+}
+
+.flashcard_slide{
+  display: block;
+}

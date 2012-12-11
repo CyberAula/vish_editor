@@ -357,7 +357,8 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
 		if(slideEls.length >= slide_id-1){
-			$(slideEls[slide_id-1]).show();
+			$("#" + slide_id).show();
+
 			triggerEnterEvent(slide_id-1);
 
 			//Notify

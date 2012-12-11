@@ -31,13 +31,13 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderFlashcardSlide = function(slide){
 		var all_slides = "";
 		//the flashcard has its own slides
-		for(tmp_slide in slide.slides){
-			all_slides += _renderStandardSlide(tmp_slide, "<div class='close_slide_fc' id='close"+slide.id+"'></div>");
+		for(index in slide.slides){
+			all_slides += _renderStandardSlide(slide.slides[index], "flashcard_slide_hidden", "<div class='close_slide_fc' id='close"+slide.slides[index].id+"'></div>");
 		}
 
 		var div_for_slides_hidden = "<div class='hidden_slides_flashcard' >"+all_slides+"</div>";
 
-		var article = $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		var article = $("<article id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
 		
 		SLIDE_CONTAINER.append(article);
 		
@@ -55,7 +55,7 @@ VISH.Renderer = (function(V,$,undefined){
 
 
 	/*returns html for the slide*/
-	var _renderStandardSlide = function(slide, extra_buttons){
+	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
 		for(el in slide.elements){
@@ -92,7 +92,7 @@ VISH.Renderer = (function(V,$,undefined){
 			classes += "quiz";
 		}
 
-		return "<article class='"+classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
+		return "<article class='"+ extra_classes + classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
 

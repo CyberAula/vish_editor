@@ -455,7 +455,7 @@ VISH.Samples = (function(V,undefined){
 		"adquired_competencies" : "pupils will be smarter",
 		"slides" : [
 		{
-			"id"			: "vishillo",
+			"id"			: "27",
 			"type"			: "flashcard",
 			"background"	: "url(http://html.rincondelvago.com/000563580.png)",
 			"pois": [{"id": "poi1",
