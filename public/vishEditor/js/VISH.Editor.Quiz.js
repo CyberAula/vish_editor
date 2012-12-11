@@ -268,7 +268,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
     			//V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
-    			V.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
+    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
 		//question input
@@ -278,7 +278,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
 			//V.Editor.Text.getNicEditor().addInstance(wysiwygId);
-			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
+			VISH.Editor.Text.getNicEditor().addInstance(wysiwygId);
 		}
 		
 		$(".initTextDiv").click(function(event){
