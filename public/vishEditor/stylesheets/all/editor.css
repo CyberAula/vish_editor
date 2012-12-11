@@ -1820,3 +1820,9 @@ margin: 0px;
 .textmarginbottom {
 	margin-bottom: 10px;
 }
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: none; background: url(/vishEditor/images/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: url(/vishEditor/images/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-widget-header { border: 1px solid #e78f08; background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
