@@ -183,7 +183,6 @@ var _updateBarsStats = function(data) {
 };
 /* function that calls to VISH API to receive voting's results  */
 var _getResults =  function(quiz_session_active_id) {
-   //V.Debugging.log("_getResults and quiz_Session_active id" + quiz_session_active_id);
   if(quiz_session_active_id) {
     var quizSessionActiveId = quiz_session_active_id;
   }
@@ -200,15 +199,14 @@ var _getResults =  function(quiz_session_active_id) {
     var url = quizUrlForSession + quiz_session_id;
     var current_slide = V.Slides.getCurrentSlide();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
-    $(header).find(".url_share > span > a").attr("href",url);
-    $(header).find(".url_share > span > a").text("");
-    $(header).find(".url_share > span > a").append(url.toString());
-    //$("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container").children().remove();
+    $(header).find(".url_share_link").attr("href",url);
+    $(header).find(".url_share_link").text("");
+    $(header).find(".url_share_link").append(url.toString());
+    
     $(".hidden_for_qr_quiz > canvas").remove();
     $(".hidden_for_qr_quiz").qrcode({width: 512,height: 512, text: url.toString()});
     var imageData = $(".hidden_for_qr_quiz > canvas")[0].toDataURL();
-    $("#"+tabQuizSessionContent).find(".quiz_session_qrcode_container > .qr_quiz_image").attr("src", imageData);
-
+    $("#"+tabQuizSessionContent).find(".qr_quiz_image").attr("src", imageData);
 
      //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
@@ -367,7 +365,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
  var _onQuizSessionResultsReceived = function(data) {
-    V.Debugging.log("_onQuizSessionResultsReceived, and data is:  " +  JSON.stringify(data));
+      
+        //remove all radio inputs
        $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
        $(".thanks_div").show();
         var id = $('a[name=modal_window]').attr('href'); //TODO in different way
