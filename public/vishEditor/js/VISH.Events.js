@@ -162,7 +162,7 @@ VISH.Events = (function(V,$,undefined){
 	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
-	      			$(document).on('click','.close_slide', _onFlashcardCloseSlideClicked);
+	      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
       			}
   		    }
 		} 
@@ -191,7 +191,7 @@ VISH.Events = (function(V,$,undefined){
 	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
-	      			$(document).off('click','.close_slide', _onFlashcardCloseSlideClicked);
+	      			$(document).off('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
       			}
   		    }
 	  		bindedEventListeners = false;

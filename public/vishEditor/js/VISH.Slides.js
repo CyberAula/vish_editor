@@ -356,7 +356,6 @@ VISH.Slides = (function(V,$,undefined){
 	  		return;
   		}
 
-		if(slideEls.length >= slide_id-1){
 			$("#" + slide_id).show();
 
 			triggerEnterEvent(slide_id-1);
@@ -365,7 +364,7 @@ VISH.Slides = (function(V,$,undefined){
 			var params = new Object();
 			params.slideNumber = slide_id;
 			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);
-		}
+		
 	};
 
 	/**

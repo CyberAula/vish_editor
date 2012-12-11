@@ -92,7 +92,7 @@ VISH.Renderer = (function(V,$,undefined){
 			classes += "quiz";
 		}
 
-		return "<article class='"+ extra_classes + classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
+		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
 

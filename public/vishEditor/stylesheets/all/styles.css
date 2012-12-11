@@ -69,7 +69,7 @@ body {
   
 }
 
-.slides > article {
+.slides > article, .flashcard_slide_hidden {
   /*Next six parameters will be changed by javascript depending on the window size*/
   left: 50%;
   top: 50%;
@@ -106,15 +106,10 @@ body {
 
   background-size: 100% 100%;
   background-repeat:no-repeat;
-}
-
-
-/* Slides */
-
-.slides > article {
   display: none;
   z-index: 1075;
 }
+
 /*class used to show a slide to get width and height and after that remove the class
 this can not be done with show() and hide() because then it remains with display:none*/
 .slides > article.temp_shown {
@@ -179,18 +174,10 @@ this can not be done with show() and hide() because then it remains with display
 
 /* Styles for slides */
 
-.slides > article {
-
-}
-
-
-
 /*added by KIKE to put the flashcard in the full slide*/
 .slides > article.flashcard{
   padding: 0;
 }
-
-
 
 /* buttons next and previous */
 .page-switcher {
