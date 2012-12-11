@@ -17,10 +17,46 @@ VISH.Renderer = (function(V,$,undefined){
 	 * with the proper content for the slide
 	 */	
 	var renderSlide = function(slide){
+		var article = "";
+		if(slide.type === "flashcard"){
+			_renderFlashcardSlide(slide);
+		}
+		else{
+			article = _renderStandardSlide(slide);
+			SLIDE_CONTAINER.append($(article));
+		}
+	};
+
+
+	var _renderFlashcardSlide = function(slide){
+		var all_slides = "";
+		//the flashcard has its own slides
+		for(tmp_slide in slide.slides){
+			all_slides += _renderStandardSlide(tmp_slide, "<div class='close_slide' id='close"+slide.id+"'></div>");
+		}
+
+		var div_for_slides_hidden = "<div class='hidden_slides_flashcard' >"+all_slides+"</div>";
+
+		var article = $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		
+		SLIDE_CONTAINER.append(article);
+		
+		//finally add the background and pois
+		$("#"+ slide.id).css("background-image", slide.background);
+		//and now we add the points of interest with their click events to show the slides
+  		for(index in slide.pois){
+  			var poi = slide.pois[index];
+  			  			
+        	//V.Flashcard.Arrow.addArrow(poi, false);
+  		}
+      	//V.Flashcard.Arrow.init();
+	};
+
+
+	/*returns html for the slide*/
+	var _renderStandardSlide = function(slide, extra_buttons){
 		var content = "";
 		var classes = "";
-		var buttons = "";
-		var received = JSON.stringify(slide);
 		for(el in slide.elements){
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
@@ -39,9 +75,6 @@ VISH.Renderer = (function(V,$,undefined){
       		} else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
-			} else if(slide.elements[el].type === "flashcard"){
-				content = _renderFlashcard(slide.elements[el],slide.template);
-				classes += "flashcard";
 			} else if(slide.elements[el].type === "quiz"){
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				classes += "quiz";
@@ -50,9 +83,7 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		if(V.SlideManager.getPresentationType() === "flashcard"){
-			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
-		}
+		
 
 		//When render a simple_quiz for voting
 		if(slide.type=="quiz") {
@@ -60,9 +91,7 @@ VISH.Renderer = (function(V,$,undefined){
 			classes += "quiz";
 		}
 
-		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
-
-		SLIDE_CONTAINER.append(article);
+		return "<article class='"+classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
 

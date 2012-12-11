@@ -11,11 +11,16 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$('#presentation_avatar').val(presentation.avatar);
 
 		//also the pedagogical fields if any
-		if(presentation.educational_level){
-			$("#educational_level").val(presentation.educational_level);
+		
+		if(presentation.age_range){
+			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
+			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
+			$("#slider-range" ).slider( "values", [start_range, end_range] );
+			$("#age_range").val(start_range + " - " + end_range);
+			$("#age_range").val(presentation.age_range);
 		}
 		else{
-			$("#educational_level").val("Other");
+			$("#age_range").val("4 - 20");
 		}
 		$("#subject_tag").val(presentation.subject);
 		$("#language_tag").val(presentation.language);
@@ -26,7 +31,12 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
-				_renderSlide(slides[i], i, presentation.id);			
+				if(slides[i].type === "flashcard"){
+					_renderFlashcard(slides[i], i, presentation.id);
+				}
+				else{
+					_renderSlide(slides[i], i, presentation.id);			
+				}
 		}	
 	};
 	
@@ -79,6 +89,12 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("div.selectable:empty").addClass("editable");		
 	};
 	
+	/**
+	 * function to render one flashcard inside a presentation
+	 */
+	var _renderFlashcard = function(slide, position, presentation_id){
+		
+	};
 
 
 return {

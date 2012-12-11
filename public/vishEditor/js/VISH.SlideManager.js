@@ -52,9 +52,6 @@ VISH.SlideManager = (function(V,$,undefined){
 			setPresentationType("game");
 			VISH.ViewerAdapter.setupGame(presentation);	
 			VISH.Game.registerActions(presentation);		
-		} else if(presentation.type === "flashcard"){
-			setPresentationType("flashcard");
-			VISH.Flashcard.init(presentation);
 		}
 
 		//important that events are initialized after presentation type is proccessed

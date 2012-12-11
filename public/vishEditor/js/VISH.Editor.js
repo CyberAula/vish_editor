@@ -151,11 +151,7 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if(presentation){
 			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide();
-			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
-			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
-			$( "#slider-range" ).slider( "values", [start_range, end_range] );
-			$("#age_range").val(start_range + " - " + end_range);
+			$('.object_wrapper').hide();			
 		}
 		
 		//Init submodules
