@@ -12,8 +12,8 @@ VISH.Flashcard.Arrow = (function(V,$,undefined){
   };
 
   /*sync can be true if you want the arrows to be synchronized (moving at the same time and at the same position) or false if not*/
-  var addArrow = function(poi, sync){
-        var flashcard_div = $("#flashcard-background");
+  var addArrow = function(slide, poi, sync){
+        var flashcard_div = $("#"+ slide.id);
         var div_to_add = "<div class='fc_poi' id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
 
         flashcard_div.append(div_to_add);

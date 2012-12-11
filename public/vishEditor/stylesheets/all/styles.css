@@ -103,6 +103,9 @@ body {
   -ms-transition: -ms-transform .3s ease-out;
   -moz-transition: -moz-transform .3s ease-out;
   -webkit-transition: -webkit-transform .3s ease-out;
+
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
 }
 
 
@@ -515,3 +518,25 @@ button#closeButton {
   background: linear-gradient(to bottom,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
 }
+
+.close_slide_fc{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  cursor:pointer;
+  background: url(/vishEditor/images/delete_slide.png);
+  z-index: 10;
+}
+.close_slide_fc:hover{
+  background: url(/vishEditor/images/hover/delete_hover.png);
+}
+
+
+.fc_poi{
+  width: 50px;
+  height: 50px;
+  background: url(/vishEditor/images/animation_arrow.png);
+}
+

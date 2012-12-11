@@ -32,7 +32,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var all_slides = "";
 		//the flashcard has its own slides
 		for(tmp_slide in slide.slides){
-			all_slides += _renderStandardSlide(tmp_slide, "<div class='close_slide' id='close"+slide.id+"'></div>");
+			all_slides += _renderStandardSlide(tmp_slide, "<div class='close_slide_fc' id='close"+slide.id+"'></div>");
 		}
 
 		var div_for_slides_hidden = "<div class='hidden_slides_flashcard' >"+all_slides+"</div>";
@@ -43,13 +43,14 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		//finally add the background and pois
 		$("#"+ slide.id).css("background-image", slide.background);
+		
 		//and now we add the points of interest with their click events to show the slides
   		for(index in slide.pois){
   			var poi = slide.pois[index];
   			  			
-        	//V.Flashcard.Arrow.addArrow(poi, false);
+        	V.Flashcard.Arrow.addArrow(slide, poi, false);
   		}
-      	//V.Flashcard.Arrow.init();
+      	V.Flashcard.Arrow.init();
 	};
 
 

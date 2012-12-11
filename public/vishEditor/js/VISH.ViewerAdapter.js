@@ -52,17 +52,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//VISH.Debugging.log("finalW " + finalW);
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
-		$("#flashcard-background").css("height", finalH);
-		$("#flashcard-background").css("width", finalW);
-		$("#flashcard-background").css("background-size", "" + finalW + "px " + finalH + "px");
 
 		//margin-top and margin-left half of the height and width
 		var marginTop = finalH/2 + reserved_px_for_menubar/2;
 		var marginLeft = finalW/2;
 		$(".slides > article").css("margin-top", "-" + marginTop + "px");
 		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
-		$("#flashcard-background").css("margin-top", "-" + marginTop + "px");
-		$("#flashcard-background").css("margin-left", "-" + marginLeft + "px");
 		
 		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
 		//$(".viewbar").css("left", width/2 + "px");
