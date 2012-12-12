@@ -165,17 +165,8 @@ VISH.Slides = (function(V,$,undefined){
 	  if (!el) {
 	    return;
 	  }
-
-	  var onEnter = el.getAttribute('onslideenter');
-	  if (onEnter) {
-	    new Function(onEnter).call(el);
-	  }
-
-	  var evt = document.createEvent('Event');
-	  evt.initEvent('slideenter', true, true);
-	  evt.slideNumber = no + 1; // Make it readable
-
-	  el.dispatchEvent(evt);
+	  _triggerEnterEventById(el.id);
+	  
 	};
 
 	var triggerLeaveEvent = function(no) {
@@ -184,6 +175,28 @@ VISH.Slides = (function(V,$,undefined){
 	    return;
 	  }
 
+	  _triggerLeaveEventById(el.id);	  
+	};
+
+
+	var _triggerEnterEventById = function (slide_id) {
+	  var el = $("#" +slide_id)[0];
+
+	  var onEnter = el.getAttribute('onslideenter');
+	  if (onEnter) {
+	    new Function(onEnter).call(el);
+	  }
+
+	  var evt = document.createEvent('Event');
+	  evt.initEvent('slideenter', true, true);
+	  //evt.slideNumber = no + 1; // Make it readable
+
+	  el.dispatchEvent(evt);
+	};
+
+	var _triggerLeaveEventById = function(slide_id) {
+	  var el = $("#" + slide_id)[0];
+
 	  var onLeave = el.getAttribute('onslideleave');
 	  if (onLeave) {
 	    new Function(onLeave).call(el);
@@ -191,11 +204,10 @@ VISH.Slides = (function(V,$,undefined){
 
 	  var evt = document.createEvent('Event');
 	  evt.initEvent('slideleave', true, true);
-	  evt.slideNumber = no + 1; // Make it readable
+	  //evt.slideNumber = no + 1; // Make it readable
 	  
 	  el.dispatchEvent(evt);
 	};
-
 
 	/* Hash functions */
 
@@ -336,7 +348,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 
 		//An area is focused
-		if(VISH.Editor.getCurrentArea()!==null){
+		if(VISH.Editor && VISH.Editor.getCurrentArea()!==null){
 			return false;
 		}
 
@@ -346,7 +358,7 @@ VISH.Slides = (function(V,$,undefined){
 	/**
 	 * function to show one specific slide in the flashcard
 	 */
-	var showSlide = function(slide_id,triggeredByUser){
+	var showFlashcardSlide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -356,21 +368,20 @@ VISH.Slides = (function(V,$,undefined){
 	  		return;
   		}
 
-		if(slideEls.length >= slide_id-1){
-			$(slideEls[slide_id-1]).show();
-			triggerEnterEvent(slide_id-1);
+			$("#" + slide_id).show();
+			_triggerEnterEventById(slide_id);
 
 			//Notify
 			var params = new Object();
 			params.slideNumber = slide_id;
 			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);
-		}
+		
 	};
 
 	/**
 	 * function to close one specific slide in the flashcard
 	 */
-	var closeSlide = function(slide_id,triggeredByUser){
+	var closeFlashcardSlide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -382,7 +393,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		$("#"+slide_id).hide();
 		var slideNumber = $.inArray($("#"+slide_id)[0], slideEls);
-		triggerLeaveEvent(slideNumber);	
+		_triggerLeaveEventById(slide_id);	
 
 		//Notify
 		var params = new Object();
@@ -530,7 +541,7 @@ VISH.Slides = (function(V,$,undefined){
 			getSlides 				: getSlides,
 			getSlideWithNumber		: getSlideWithNumber,
 			backwardOneSlide		: backwardOneSlide,	
-			closeSlide				: closeSlide,
+			closeFlashcardSlide		: closeFlashcardSlide,
 			closeAllSlides			: closeAllSlides,
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
@@ -539,7 +550,7 @@ VISH.Slides = (function(V,$,undefined){
 			moveSlideTo				: moveSlideTo,
 			copySlide				: copySlide,
 			removeSlide				: removeSlide,
-			showSlide				: showSlide
+			showFlashcardSlide		: showFlashcardSlide
 	};
 
 }) (VISH,jQuery);

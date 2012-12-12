@@ -48,7 +48,6 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
-    <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.Arrow.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Messenger.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Messenger.Helper.js"></script>
@@ -80,7 +79,6 @@
 
     <section class="slides layout-regular template-default">
 	    <button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
-	    <div id="flashcard-background"></div>
     </section>
     
     <div id="viewbar" class="viewbar" style="display:none">   
@@ -122,8 +120,8 @@
                          <img class='qr_background' src='/vishEditor/images/qrcode_background.png' />
                     </div>
                     <div class='buttons_container'>
-                         <img class='quiz_full_screen' src='/vishEditor/images/quiz/fullscreen_gofull.png' />
-                         <img class='quiz_full_screen_back' src='/vishEditor/images/quiz/fullscreen_goback.png' />
+                         <img id="qr_quiz_fullscreen" class='quiz_full_screen' src='/vishEditor/images/quiz/fullscreen_gofull.png' />
+                         <img id="qr_quiz_fullscreen_close" class='quiz_full_screen_back' src='/vishEditor/images/quiz/fullscreen_goback.png' />
                          <img class='hide_qrcode' src='/vishEditor/images/quiz/hide_eye.png' />
                          <img class='show_qrcode' src='/vishEditor/images/quiz/eye.png' />
                     </div>

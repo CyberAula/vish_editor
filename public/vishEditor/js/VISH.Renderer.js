@@ -17,10 +17,54 @@ VISH.Renderer = (function(V,$,undefined){
 	 * with the proper content for the slide
 	 */	
 	var renderSlide = function(slide){
+		var article;
+
+		switch(slide.type){
+			case undefined:
+			case VISH.Constant.STANDARD:
+				article = _renderStandardSlide(slide);
+				break;
+			case VISH.Constant.FLASHCARD:
+				article = _renderFlashcardSlide(slide);
+				break;
+			case VISH.Constant.VTOUR:
+				break;
+			default:
+				article = null;
+				break;
+		}
+
+		if(article){
+			SLIDE_CONTAINER.append($(article));
+			_afterDrawSlide(slide);
+		}
+	};
+
+
+	var _renderFlashcardSlide = function(slide){
+		var all_slides = "";
+		//The flashcard has its own slides
+		for(index in slide.slides){
+			//Subslide id its a composition of parent id and its own id.
+			var subslide = slide.slides[index];
+			subslide.id = slide.id + "_" + subslide.id;
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+		}
+		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
+		return $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+	};
+
+
+	/*returns html for the slide*/
+	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
-		var buttons = "";
-		var received = JSON.stringify(slide);
+		if(!extra_classes){
+			var extra_classes = "";
+		}
+		if(!extra_buttons){
+			var extra_buttons = "";
+		}
 		for(el in slide.elements){
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
@@ -39,9 +83,6 @@ VISH.Renderer = (function(V,$,undefined){
       		} else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
-			} else if(slide.elements[el].type === "flashcard"){
-				content = _renderFlashcard(slide.elements[el],slide.template);
-				classes += "flashcard";
 			} else if(slide.elements[el].type === "quiz"){
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
 				classes += "quiz";
@@ -50,21 +91,36 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		if(V.SlideManager.getPresentationType() === "flashcard"){
-			buttons = "<div class='close_slide' id='close"+slide.id+"'></div>";
-		}
-
 		//When render a simple_quiz for voting
 		if(slide.type=="quiz") {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
 			classes += "quiz";
 		}
 
-		var article = $("<article class='"+classes+"' id='"+slide.id+"'>"+buttons+content+"</article>");
-
-		SLIDE_CONTAINER.append(article);
+		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
+	var _afterDrawSlide = function(slide){
+		switch(slide.type){
+			case undefined:
+			case VISH.Constant.STANDARD:
+				break;
+			case VISH.Constant.FLASHCARD:
+				//Add the background and pois
+				$("#"+ slide.id).css("background-image", slide.background);
+				
+				//And now we add the points of interest with their click events to show the slides
+		  		for(index in slide.pois){
+		  			var poi = slide.pois[index];	
+		        	V.Flashcard.addArrow(slide.id, poi, false);
+		  		}
+				break;
+			case VISH.Constant.VTOUR:
+				break;
+			default:
+				break;
+		}
+	}
 
 	/**
 	 * Function to render text inside an article (a slide)

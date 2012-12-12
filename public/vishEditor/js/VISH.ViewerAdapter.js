@@ -52,18 +52,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//VISH.Debugging.log("finalW " + finalW);
 		$(".slides > article").css("height", finalH);
 		$(".slides > article").css("width", finalW);
-		$("#flashcard-background").css("height", finalH);
-		$("#flashcard-background").css("width", finalW);
-		$("#flashcard-background").css("background-size", "" + finalW + "px " + finalH + "px");
+		$(".subslide").css("height", finalH);
+		$(".subslide").css("width", finalW);
 
 		//margin-top and margin-left half of the height and width
 		var marginTop = finalH/2 + reserved_px_for_menubar/2;
 		var marginLeft = finalW/2;
 		$(".slides > article").css("margin-top", "-" + marginTop + "px");
 		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
-		$("#flashcard-background").css("margin-top", "-" + marginTop + "px");
-		$("#flashcard-background").css("margin-left", "-" + marginLeft + "px");
 		
+		$(".subslide").css("margin-top", "-" + finalH/2 + "px");
+		$(".subslide").css("margin-left", "-" + marginLeft + "px");
+
 		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
 		//$(".viewbar").css("left", width/2 + "px");
 		//VISH.Debugging.log("viewbar a " + width/2 + "px");
@@ -76,6 +76,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		
 		$(".slides > article").css("font-size", font_size*increase + "px");
 		$(".slides > article").css("line-height", font_size*increase + "px");
+		$(".subslide").css("font-size", font_size*increase + "px");
+		$(".subslide").css("line-height", font_size*increase + "px");
 		
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");

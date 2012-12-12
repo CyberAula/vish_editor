@@ -1,27 +1,76 @@
 VISH.Flashcard = (function(V,$,undefined){
 
-	var init = function(presentation){
-		var fileref=document.createElement("link");
-  		fileref.setAttribute("rel", "stylesheet");
-  		fileref.setAttribute("type", "text/css");
-  		fileref.setAttribute("href", VISH.StylesheetsPath + "flashcard/flashcard.css");
-  		document.getElementsByTagName("body")[0].appendChild(fileref);
+  var flashcards;
+  // myFlashcard = flashcards['flashcardId'] has:
+  // myFlashcard.arrows = [arrow1,arrow2,...,arrow3];
+  // myFlashcard.timer = arrowTimer;
+  //Each arrow has id an position
 
-  		var flashcard_div = $("#flashcard-background");
-  		//first we set the flashcard background image
-  		flashcard_div.css("background-image", presentation.background.src);
+  //Arrow rendering information
+  //Arrow frames per second
+  var FPS = 25;
+  var TOTAL_FRAMES = 20;
+  var FRAME_WIDTH = 50; //in pixels
 
-  		//and now we add the points of interest with their click events to show the slides
-  		for(index in presentation.background.pois){
-  			var poi = presentation.background.pois[index];
-  			  			
-        V.Flashcard.Arrow.addArrow(poi, false);
-  		}
-      V.Flashcard.Arrow.init();
-	};
+  var init = function(presentation){
+    flashcards = new Array();
+  };
+
+  var startAnimation = function(slideId){
+    flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
+  }
+
+  var stopAnimation = function(slideId){
+    if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
+      clearTimeout(flashcards[slideId].timer);
+    }
+  }
+
+  /*  Sync can be true if you want the arrows to be synchronized 
+   *   (moving at the same time and at the same position) or false if not
+   */
+  var addArrow = function(slideId, poi, sync){
+    var flashcard_div = $("#"+ slideId);
+    var poiId = slideId + "_" + poi.id;
+    var div_to_add = "<div class='fc_poi' id='" + poiId + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
+    flashcard_div.append(div_to_add);
+
+    if(typeof flashcards[slideId] === "undefined"){
+      flashcards[slideId] = new Object();
+      flashcards[slideId].arrows = [];
+    }
+
+    //Add arrow
+    var arrow = new Object();
+    arrow.id = poi.id;
+    if(sync){
+        arrow.position = 0;
+    } else {
+         var rand_pos = Math.floor(Math.random()*TOTAL_FRAMES+1)*FRAME_WIDTH;  //position in pixels
+         arrow.position = rand_pos;
+    }
+    flashcards[slideId].arrows.push(arrow);
+  };
+
+  var animateArrows = function(slideId){
+    if((!slideId)||(typeof flashcards[slideId] == "undefined")){
+      return;
+    }
+
+    $(flashcards[slideId].arrows).each(function(index,value){
+      var new_pos = (value.position + FRAME_WIDTH)%(TOTAL_FRAMES*FRAME_WIDTH);
+      var arrow_dom_el = $("#"+slideId+"_"+value.id);
+      $(arrow_dom_el).css("background-position", new_pos + "px" + " 0px");
+      flashcards[slideId].arrows[index].position = new_pos;
+    });
+  };
 
 	return {
-		init		: init
-		
+		init		        : init,
+    addArrow        : addArrow,
+    startAnimation  : startAnimation,
+    stopAnimation   : stopAnimation,
+    animateArrows   : animateArrows
 	};
+
 }) (VISH, jQuery);
