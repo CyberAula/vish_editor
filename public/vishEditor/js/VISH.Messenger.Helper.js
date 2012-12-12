@@ -98,12 +98,12 @@ VISH.Messenger.Helper = (function(V,undefined){
 				break;
 			case VISH.Constant.Event.onFlashcardPointClicked:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						VISH.Slides.showSlide(VEMessageObject.params.slideNumber,false);
+						VISH.Slides.showFlashcardSlide(VEMessageObject.params.slideNumber,false);
 				}
 				break;
 			case VISH.Constant.Event.onFlashcardSlideClosed:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						VISH.Slides.closeSlide(VEMessageObject.params.slideNumber,false);
+						VISH.Slides.closeFlashcardSlide(VEMessageObject.params.slideNumber,false);
 				}
 				break;
 			case VISH.Constant.Event.onSetSlave:

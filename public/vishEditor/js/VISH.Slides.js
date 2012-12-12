@@ -359,7 +359,7 @@ VISH.Slides = (function(V,$,undefined){
 	/**
 	 * function to show one specific slide in the flashcard
 	 */
-	var showSlide = function(slide_id,triggeredByUser){
+	var showFlashcardSlide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -382,7 +382,7 @@ VISH.Slides = (function(V,$,undefined){
 	/**
 	 * function to close one specific slide in the flashcard
 	 */
-	var closeSlide = function(slide_id,triggeredByUser){
+	var closeFlashcardSlide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -542,7 +542,7 @@ VISH.Slides = (function(V,$,undefined){
 			getSlides 				: getSlides,
 			getSlideWithNumber		: getSlideWithNumber,
 			backwardOneSlide		: backwardOneSlide,	
-			closeSlide				: closeSlide,
+			closeFlashcardSlide		: closeFlashcardSlide,
 			closeAllSlides			: closeAllSlides,
 			forwardOneSlide			: forwardOneSlide,
 			goToSlide				: goToSlide,
@@ -551,7 +551,7 @@ VISH.Slides = (function(V,$,undefined){
 			moveSlideTo				: moveSlideTo,
 			copySlide				: copySlide,
 			removeSlide				: removeSlide,
-			showSlide				: showSlide
+			showFlashcardSlide		: showFlashcardSlide
 	};
 
 }) (VISH,jQuery);
