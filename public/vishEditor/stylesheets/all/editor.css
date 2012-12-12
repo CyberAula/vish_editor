@@ -1758,13 +1758,13 @@ span.mcChoiceSpan{
 #subject_tag_box{
 	float: left;
 	width: 240px;
-	margin-left: 30px;
+	margin-left: 40px;
 }
 
 #language_tag_box{
 	float: left;
 	width: 260px;
-	margin-left: 20px;
+	margin-left: 9px;
 }
 
 #done_in_pedagogical{
