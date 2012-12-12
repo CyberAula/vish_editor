@@ -228,8 +228,12 @@ var _getResults =  function(quiz_session_active_id) {
 
   var _addToggleFullScreenListener = function () {
     addedFullScreenListener = true;
-    myDoc = parent.document;
-    var myElem = myDoc.getElementById('qr_quiz_fullscreen');
+    if(V.Status.getIsInIframe()){
+      var myDoc = parent.document;
+    } else {
+      var myDoc = document;
+    }
+    var myElem = document.getElementById('qr_quiz_fullscreen');
      if (myElem.requestFullscreen) {
     myDoc.addEventListener("fullscreenchange", function () {
         if($(myElem).css("display")==="none") {
@@ -491,10 +495,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     }
   };
   var _enableFullScreenQRButton = function() {
-    //TODO consider all kind of browsers 
-   // if($(document).fullScreen){ document . fullscreenEnabled
-    var myElem = parent.document.getElementById('qr_quiz_fullscreen');
-     if(myElem.fullscreenEnabled || myElem.mozRequestFullScreen || myElem.webkitRequestFullScreen){
+    if ((V.Status.getDevice().features.fullscreen)){
       $('.quiz_full_screen').show();
     }
     else {
@@ -503,40 +504,31 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var qrToggleFullScreen = function (event) {
-    //TODO consider all kind of browsers 
-    myDoc = parent.document;
-    var myElem = myDoc.getElementById('qr_quiz_fullscreen');
-        if(event.target.classList[0]==="quiz_full_screen") {
-      var qr_image_src = $("#tab_quiz_session_content").find(".qr_quiz_image").attr("src");
-      $(myDoc).find(".qr_quiz_fullscreen_img").attr("src", qr_image_src);
-      
-      if (myElem.requestFullscreen) {
-        $(myElem)[0].requestFullscreen();
-      }
-      else if (myElem.mozRequestFullScreen) {
-        $(myElem)[0].mozRequestFullScreen();
-      }
-      else if (myElem.webkitRequestFullScreen) {
-        $(myElem)[0].webkitRequestFullScreen();      
-       }
 
+    if(V.Status.getIsInIframe()){
+      var myDoc = parent.document;
+    } else {
+      var myDoc = document;
     }
-    else if (event.target.classList[0]==="quiz_cancel_full_screen") {
-      $(myElem).hide();
-      if (document.exitFullscreen) {
-        $(myElem)[0].exitFullscreen();
-      }
-      else if (document.mozCancelFullScreen) {
-        $(myElem)[0].mozCancelFullScreen();
-      }
-      else if (document.webkitCancelFullScreen) {
-        $(myElem)[0].webkitCancelFullScreen();
-      }
-     
-    }
- else {
-      V.Debugging.log("other target");
-    }
+
+    var myElem = document.getElementById('qr_quiz_image_id');
+     if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
+        if (myDoc.documentElement.requestFullScreen) {
+          myElem.requestFullScreen();
+        } else if (myDoc.documentElement.mozRequestFullScreen) {
+          myElem.mozRequestFullScreen();
+        } else if (myDoc.documentElement.webkitRequestFullScreen) {
+          myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);           
+        }       
+    } else {
+        if (myDoc.cancelFullScreen) {
+          myDoc.cancelFullScreen();
+        } else if (myDoc.mozCancelFullScreen) {
+          myDoc.mozCancelFullScreen();
+        } else if (myDoc.webkitCancelFullScreen) {
+          myDoc.webkitCancelFullScreen();
+        }       
+    }      
   };
 
 
