@@ -180,7 +180,6 @@ VISH.Slides = (function(V,$,undefined){
 
 
 	var _triggerEnterEventById = function (slide_id) {
-	  
 	  var el = $("#" +slide_id)[0];
 
 	  var onEnter = el.getAttribute('onslideenter');
