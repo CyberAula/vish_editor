@@ -37,7 +37,7 @@ VISH.Renderer = (function(V,$,undefined){
 
 		var div_for_slides_hidden = "<div class='hidden_slides_flashcard' >"+all_slides+"</div>";
 
-		var article = $("<article id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		var article = $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
 		
 		SLIDE_CONTAINER.append(article);
 		

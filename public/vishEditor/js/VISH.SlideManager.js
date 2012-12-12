@@ -221,6 +221,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		},500);
 		
 		V.VideoPlayer.HTML5.playVideos(e.target);
+
+		if($(e.target).hasClass("flashcard_slide")){
+			$("#forward_arrow").css("top", "15%");
+		}
+
 	};
 
 	/**
@@ -234,6 +239,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.AppletPlayer.unloadApplet();
 		if($(e.target).hasClass('flashcard')){				
 			V.Mods.fc.player.clear();
+		}
+		if($(e.target).hasClass("flashcard_slide")){
+			$("#forward_arrow").css("top", "0%");
 		}
 	};
 

@@ -349,7 +349,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 
 		//An area is focused
-		if(VISH.Editor.getCurrentArea()!==null){
+		if(VISH.Editor && VISH.Editor.getCurrentArea()!==null){
 			return false;
 		}
 
