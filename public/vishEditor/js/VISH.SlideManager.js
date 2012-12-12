@@ -36,6 +36,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		VISH.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
+		setPresentationType(presentation.type);
 		
 		V.Quiz.init(presentation);
 		V.Slides.init();
@@ -48,11 +49,15 @@ VISH.SlideManager = (function(V,$,undefined){
 		applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 		applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 
-		//first action will be to detect what kind of view we have, game, flashcard, presentation
-		if(presentation.type ==="game"){
-			setPresentationType("game");
-			VISH.ViewerAdapter.setupGame(presentation);	
-			VISH.Game.registerActions(presentation);		
+		//Experimental initializers for new excursion types
+		switch(presentation.type){
+			case VISH.Constant.GAME:
+				VISH.ViewerAdapter.setupGame(presentation);	
+				VISH.Game.registerActions(presentation);
+				break;
+			case VISH.Constant.VTOUR:
+				VISH.VirtualTour.init();
+				break;
 		}
 
 		//important that events are initialized after presentation type is proccessed
@@ -298,6 +303,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	var setPresentationType = function(type){
+		if(!type){
+			type = VISH.Constant.STANDARD;
+		}
 		presentationType = type;
 	};
 

@@ -359,6 +359,8 @@ VISH.Slides = (function(V,$,undefined){
 	 * function to show one specific slide in the flashcard
 	 */
 	var showFlashcardSlide = function(slide_id,triggeredByUser){
+		console.log("showFlashcardSlide called with slide_id " + slide_id);
+
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){

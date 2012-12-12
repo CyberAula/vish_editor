@@ -158,13 +158,18 @@ VISH.Events = (function(V,$,undefined){
 	      	for(index in presentation.slides){
 	      		var slide = presentation.slides[index];
 
-				if(slide.type === "flashcard"){
-					//And now we add the points of interest with their click events to show the slides
-	  				for(ind in slide.pois){
-	  					var poi = slide.pois[ind];
-	  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
-	  				}
-	      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      			switch(slide.type){
+      				case VISH.Constant.FLASHCARD:
+	      				//Add the points of interest with their click events to show the slides
+		  				for(ind in slide.pois){
+		  					var poi = slide.pois[ind];
+		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+		  				}
+		      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					break;
+      				case VISH.Constant.VTOUR:
+      					$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					break;
       			}
   		    }
 		} 

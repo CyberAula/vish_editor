@@ -132,22 +132,22 @@ VISH.Samples = (function(V,undefined){
 	 				{	"id"		: "poi1",
 	 					"lat" 		: "40.245991504199026",
 	 				  	"long" 		: "-3.6474609375",
-	 				  	"slide_id"	: "1"
+	 				  	"slide_id"	: "article1"
 	 				},
 	 				{	"id"		: "poi2",
 	 				  	"lat" 		: "41.27780646738183",
 	 				  	"long" 		: "2.1533203125",
-	 				  	"slide_id"	: "2"
+	 				  	"slide_id"	: "article2"
 	 				},
 	 				{	"id"		: "poi3",
 	 				  	"lat" 		: "37.26530995561875",
 	 				  	"long" 		: "-5.9765625",
-	 				  	"slide_id"	: "3"
+	 				  	"slide_id"	: "article3"
 	 				},
 	 				{	"id"		: "poi4",
 	 				  	"lat" 		: "43.26120612479979",
 	 				  	"long" 		: "-5.9765625",
-	 				  	"slide_id"	: "4"
+	 				  	"slide_id"	: "article4"
 	 				},
 	 			],
 	 			"tours": [
@@ -183,7 +183,7 @@ VISH.Samples = (function(V,undefined){
 						}]
 					}, 
 					{
-						'id'       	:'vish5',
+						'id'       	:'article2',
 						'template' 	:'t2',
 						'elements'	: [
 							{
@@ -201,7 +201,7 @@ VISH.Samples = (function(V,undefined){
 			    		]
 			    	}, 
 			    	{
-						"id" : "articlearticle4",
+						"id" : "article3",
 						"template" : "t6",
 						"elements" : [
 							{
@@ -231,7 +231,7 @@ VISH.Samples = (function(V,undefined){
 						]
 					},
 					{
-						"id":"article_5",
+						"id":"article4",
 						"type":"standard",
 						"template":"t2",
 						"elements":[
@@ -1122,6 +1122,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 		samples_flashcard 	: samples_flashcard,
 		samples_game  		: samples_game,
 		samples_sync 		: samples_sync,
+		samples_vtour 		: samples_vtour,
 		quizes_samples 		: quizes_samples,
 		quizzes__samples2	: quizzes__samples2		
 	};

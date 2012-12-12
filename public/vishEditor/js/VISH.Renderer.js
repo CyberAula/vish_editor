@@ -28,6 +28,7 @@ VISH.Renderer = (function(V,$,undefined){
 				article = _renderFlashcardSlide(slide);
 				break;
 			case VISH.Constant.VTOUR:
+				article = _renderVirtualTourSlide(slide);
 				break;
 			default:
 				article = null;
@@ -41,21 +42,10 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 
 
-	var _renderFlashcardSlide = function(slide){
-		var all_slides = "";
-		//The flashcard has its own slides
-		for(index in slide.slides){
-			//Subslide id its a composition of parent id and its own id.
-			var subslide = slide.slides[index];
-			subslide.id = slide.id + "_" + subslide.id;
-			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
-		}
-		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
-	};
+	//////////
+	/// RENDERERS
+	//////////
 
-
-	/*returns html for the slide*/
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
@@ -100,6 +90,34 @@ VISH.Renderer = (function(V,$,undefined){
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
+	var _renderFlashcardSlide = function(slide){
+		var all_slides = "";
+		//The flashcard has its own slides
+		for(index in slide.slides){
+			//Subslide id its a composition of parent id and its own id.
+			var subslide = slide.slides[index];
+			subslide.id = slide.id + "_" + subslide.id;
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+		}
+		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
+		return $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+	};
+
+	var _renderVirtualTourSlide = function(slide){
+		var all_slides = "";
+		for(index in slide.slides){
+			var subslide = slide.slides[index];
+			subslide.id = slide.id + "_" + subslide.id;
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+		}
+		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
+		return $("<article class='virtualTour_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+	};
+
+
+	////////////
+	//After Render Slide Actions
+	////////////
 	var _afterDrawSlide = function(slide){
 		switch(slide.type){
 			case undefined:
@@ -116,6 +134,7 @@ VISH.Renderer = (function(V,$,undefined){
 		  		}
 				break;
 			case VISH.Constant.VTOUR:
+					VISH.VirtualTour.drawMap(slide);
 				break;
 			default:
 				break;
