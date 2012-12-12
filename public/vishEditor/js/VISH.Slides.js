@@ -165,17 +165,8 @@ VISH.Slides = (function(V,$,undefined){
 	  if (!el) {
 	    return;
 	  }
-
-	  var onEnter = el.getAttribute('onslideenter');
-	  if (onEnter) {
-	    new Function(onEnter).call(el);
-	  }
-
-	  var evt = document.createEvent('Event');
-	  evt.initEvent('slideenter', true, true);
-	  evt.slideNumber = no + 1; // Make it readable
-
-	  el.dispatchEvent(evt);
+	  _triggerEnterEventById(el.id);
+	  
 	};
 
 	var triggerLeaveEvent = function(no) {
@@ -184,6 +175,29 @@ VISH.Slides = (function(V,$,undefined){
 	    return;
 	  }
 
+	  _triggerLeaveEventById(el.id);	  
+	};
+
+
+	var _triggerEnterEventById = function (slide_id) {
+	  
+	  var el = $("#" +slide_id)[0];
+
+	  var onEnter = el.getAttribute('onslideenter');
+	  if (onEnter) {
+	    new Function(onEnter).call(el);
+	  }
+
+	  var evt = document.createEvent('Event');
+	  evt.initEvent('slideenter', true, true);
+	  //evt.slideNumber = no + 1; // Make it readable
+
+	  el.dispatchEvent(evt);
+	};
+
+	var _triggerLeaveEventById = function(slide_id) {
+	  var el = $("#" + slide_id)[0];
+
 	  var onLeave = el.getAttribute('onslideleave');
 	  if (onLeave) {
 	    new Function(onLeave).call(el);
@@ -191,11 +205,10 @@ VISH.Slides = (function(V,$,undefined){
 
 	  var evt = document.createEvent('Event');
 	  evt.initEvent('slideleave', true, true);
-	  evt.slideNumber = no + 1; // Make it readable
+	  //evt.slideNumber = no + 1; // Make it readable
 	  
 	  el.dispatchEvent(evt);
 	};
-
 
 	/* Hash functions */
 
@@ -357,8 +370,7 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
 			$("#" + slide_id).show();
-
-			triggerEnterEvent(slide_id-1);
+			_triggerEnterEventById(slide_id);
 
 			//Notify
 			var params = new Object();
@@ -382,7 +394,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		$("#"+slide_id).hide();
 		var slideNumber = $.inArray($("#"+slide_id)[0], slideEls);
-		triggerLeaveEvent(slideNumber);	
+		_triggerLeaveEventById(slide_id);	
 
 		//Notify
 		var params = new Object();

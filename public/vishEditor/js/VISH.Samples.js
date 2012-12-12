@@ -492,16 +492,21 @@ VISH.Samples = (function(V,undefined){
 			}]
 		}, {
 			'id'       :'2',
-			'template' :'t10',
-			'elements':[				
+			'template' :'t2',
+			'elements':[
+				{
+                    'id'     : '325',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Experimento virtual1'
+				},
 				{
           'id'     : '7335',
           'type'   : 'object',
-          'areaid' : 'center',
+          'areaid' : 'left',
           'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
-        }	
-			]
-		}, {
+        }]
+        }, {
 			"id" : "3",
 			"template" : "t6",
 			"elements" : [{

@@ -58,6 +58,12 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
+		if(!extra_classes){
+			var extra_classes = "";
+		}
+		if(!extra_buttons){
+			var extra_buttons = "";
+		}
 		for(el in slide.elements){
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
