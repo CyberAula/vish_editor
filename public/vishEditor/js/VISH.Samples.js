@@ -251,72 +251,401 @@ VISH.Samples = (function(V,undefined){
 
 
     var samples_vtour_toledo = {
-		//Basic Metadata
-		"id" 			: "1987",
-		"title" 		: "Toledo Virtual Tour",
-		"description" 	: "Virtual Tour example with Vish Editor",
-		"author" 		: "Aldo",
-		"avatar" 		: "/assets/logos/original/excursion-10.png",
-		"tags"			: ["Samples","Test","Development","Virtual Tour"],
-		//Pedagogical metadata
-		"age_range" 	: "4 - 14",
-		"subject" 		: "Media Education",
-		"educational_objectives" 	: "Amazing educational Virtual Tour",
-		"adquired_competencies" 	: "Pupils will be smarter",
-		//Vish Editor data
-		"type"			: "virtualTour",
-		"theme"	 		: "theme1",
-		"language" 		: "en",
-		"slides" : [
-			{
-				"id" 	: "article1",
-				"type"	: "virtualTour",
-				//Virtual Tour metadata
-				"map_service"	: "Google Maps",
-				"center"		: 
-					{
-						"lat": 		"39.858684807927226",
-						"long": 	"-4.024515151977539",
-					},
-				"zoom"			: 14,
-				"mapType" 		: "roadmap",
-				"width" 		: "100%",
-				"height" 		: "100%",
-	 			"pois": [
-	 				{	"id"		: "poi1",
-	 					"lat" 		: "39.858808",
-	 				  	"long" 		: "-4.020706",
-	 				  	"slide_id"	: "article1"
-	 				},
-	 				{	"id"		: "poi2",
-	 				  	"lat" 		: "39.85710791823466",
-	 				  	"long" 		: "-4.02348518371582",
-	 				  	"slide_id"	: "article2"
-	 				},
-	 				{	"id"		: "poi3",
-	 				  	"lat" 		: "39.86267518700749",
-	 				  	"long" 		: "-4.02498722076416",
-	 				  	"slide_id"	: "article3"
-	 				},
-	 				{	"id"		: "poi4",
-	 				  	"lat" 		: "39.85586400561856",
-	 				  	"long" 		: "-4.029305577278137",
-	 				  	"slide_id"	: "article4"
-	 				},
-	 			],
-	 			"tours": [
-	 				{
-	 					//Tour metadata
-	 					"id" 	: "tour1",
-	 					"path"	: [
-	 						"poi1","poi2","poi3"
-	 					]
-	 				}
-	 			],
-				"slides" : [{"id":"article1","type":"standard","template":"t7","elements":[{"id":"zone1","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"},{"id":"zone2","type":"image","areaid":"left","body":"http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg","style":"position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"},{"id":"zone3","type":"text","areaid":"center","body":"<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"},{"id":"zone4","areaid":"subheader"}]},{"id":"article2","type":"standard","template":"t7","elements":[{"id":"zone5","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"},{"id":"zone6","type":"text","areaid":"left","body":"<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"},{"id":"zone7","type":"image","areaid":"center","body":"http://www.sacred-destinations.com/spain/images/toledo/cathedral/westfront-c-paradox-350.jpg","style":"position: relative; width:114.54545454545455%; height:132.72727272727272%; top:-6.285717456371753%; left:-13.636363636363637%;"},{"id":"zone8","areaid":"subheader"}]},{"id":"article3","type":"standard","template":"t13","elements":[{"id":"zone9","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"},{"id":"zone10","type":"image","areaid":"circle","body":"http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg","style":"position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"},{"id":"zone11","type":"text","areaid":"left","body":"<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"},{"id":"zone12","areaid":"right"}]},{"id":"article4","type":"standard","template":"t5","elements":[{"id":"zone13","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"},{"id":"zone14","type":"text","areaid":"left","body":"<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"},{"id":"zone15","type":"image","areaid":"right","body":"http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg","style":"position: relative; width:50.74626865671642%; height:42.731277533039645%; top:16.483111948693903%; left:23.582089552238806%;"}]}]
-			}
-		]
-	};
+     //Basic Metadata
+     "id": "1987",
+     "title": "Toledo Virtual Tour",
+     "description": "Virtual Tour example with Vish Editor",
+     "author": "Aldo",
+     "avatar": "/assets/logos/original/excursion-10.png",
+     "tags": ["Samples", "Test", "Development", "Virtual Tour"],
+     //Pedagogical metadata
+     "age_range": "4 - 14",
+     "subject": "Media Education",
+     "educational_objectives": "Amazing educational Virtual Tour",
+     "adquired_competencies": "Pupils will be smarter",
+     //Vish Editor data
+     "type": "virtualTour",
+     "theme": "theme1",
+     "language": "en",
+     "slides": [{
+         "id": "article1",
+         "type": "virtualTour",
+         //Virtual Tour metadata
+         "map_service": "Google Maps",
+         "center": {
+             "lat": "39.858684807927226",
+             "long": "-4.024515151977539",
+         },
+         "zoom": 15,
+         "mapType": "roadmap",
+         "width": "100%",
+         "height": "100%",
+         "pois": [{
+             "id": "poi1",
+             "lat": "39.858808",
+             "long": "-4.020706",
+             "slide_id": "article1"
+         }, {
+             "id": "poi2",
+             "lat": "39.85710791823466",
+             "long": "-4.02348518371582",
+             "slide_id": "article2"
+         }, {
+             "id": "poi3",
+             "lat": "39.86267518700749",
+             "long": "-4.02498722076416",
+             "slide_id": "article3"
+         }, {
+             "id": "poi4",
+             "lat": "39.85586400561856",
+             "long": "-4.029305577278137",
+             "slide_id": "article4"
+         }, ],
+         "tours": [{
+             //Tour metadata
+             "id": "tour1",
+             "path": [
+                 "poi1", "poi2", "poi3"]
+         }],
+         "slides": [{
+             "id": "article1",
+             "type": "standard",
+             "template": "t7",
+             "elements": [{
+                 "id": "zone1",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"
+             }, {
+                 "id": "zone2",
+                 "type": "image",
+                 "areaid": "left",
+                 "body": "http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg",
+                 "style": "position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"
+             }, {
+                 "id": "zone3",
+                 "type": "text",
+                 "areaid": "center",
+                 "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"
+             }, {
+                 "id": "zone4",
+                 "areaid": "subheader"
+             }]
+         }, {
+             "id": "article2",
+             "type": "standard",
+             "template": "t7",
+             "elements": [{
+                 "id": "zone5",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"
+             }, {
+                 "id": "zone6",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"
+             }, {
+                 "id": "zone3",
+                 "type": "object",
+                 "areaid": "center",
+                 "body": "<iframe src=\"http://www.youtube.com/embed/TxbJY9SPC-A?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_1\" class=\"t7_object\" wmode=\"opaque\"></iframe>",
+                 "style": "position: relative; width:100%; height:85.45454545454545%; top:0%; left:0%;"
+             }, {
+                 "id": "zone8",
+                 "areaid": "subheader"
+             }]
+         }, {
+             "id": "article3",
+             "type": "standard",
+             "template": "t13",
+             "elements": [{
+                 "id": "zone9",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"
+             }, {
+                 "id": "zone10",
+                 "type": "image",
+                 "areaid": "circle",
+                 "body": "http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg",
+                 "style": "position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"
+             }, {
+                 "id": "zone11",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"
+             }, {
+                 "id": "zone12",
+                 "areaid": "right"
+             }]
+         }, {
+             "id": "article4",
+             "type": "standard",
+             "template": "t5",
+             "elements": [{
+                 "id": "zone13",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"
+             }, {
+                 "id": "zone14",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"
+             }, {
+                 "id": "zone15",
+                 "type": "image",
+                 "areaid": "right",
+                 "body": "http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg",
+                 "style": "position: relative; width:50.74626865671642%; height:42.731277533039645%; top:16.483111948693903%; left:23.582089552238806%;"
+             }]
+         }]
+     }]
+ };
+
+	var samples_full_tour = {
+    //Basic Metadata
+    "id": "1987",
+    "title": "Toledo Virtual Tour",
+    "description": "Virtual Tour example with Vish Editor",
+    "author": "Aldo",
+    "avatar": "/assets/logos/original/excursion-10.png",
+    "tags": ["Samples", "Test", "Development", "Virtual Tour"],
+    //Pedagogical metadata
+    "age_range": "4 - 14",
+    "subject": "Media Education",
+    "educational_objectives": "Amazing educational Virtual Tour",
+    "adquired_competencies": "Pupils will be smarter",
+    //Vish Editor data
+    "type": "virtualTour",
+    "theme": "theme1",
+    "language": "en",
+    "slides": [{
+        "id": "article__1",
+        "type": "standard",
+        "template": "t1",
+        "elements": [{
+            "id": "zone5",
+            "type": "image",
+            "areaid": "left",
+            "body": "http://hoteles4you.com/guias-viaje/wp-content/uploads/2011/04/Toledo.jpg",
+            "style": "position: relative; width:137.13080168776372%; height:81.05263157894737%; top:21.315791481419613%; left:0%;"
+        }, {
+            "id": "zone6",
+            "type": "text",
+            "areaid": "header",
+            "body": "<div class=\"initTextDiv vish-parent-font7 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font7 vish-fonttrebuchet\"><b><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#4a72b1;undefined;\">TOLEDO</span></b></span></div>"
+        }, {
+            "id": "zone7",
+            "type": "text",
+            "areaid": "subheader",
+            "body": "<div class=\"initTextDiv vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><i><span class=\"vish-fontundefined vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:#86858a;undefined;\">smart city guide</span></span></i></div>"
+        }]
+    }, {
+        "id": "article__1",
+        "type": "standard",
+        "template": "t11",
+        "elements": [{
+            "id": "zone8",
+            "type": "image",
+            "areaid": "center1",
+            "body": "http://www.habitsofmind.org/sites/default/files/helpful-tips-image-web-design-sydney.jpg",
+            "style": "position: relative; width:24.785100286532952%; height:104.8780487804878%; top:2.642273321384337%; left:-1.7191977077363896%;"
+        }, {
+            "id": "zone9",
+            "type": "text",
+            "areaid": "center2",
+            "body": "<div class=\"initTextDiv vish-parent-fontundefined\" style=\"font-weight: normal;\"><span class=\"vish-fontundefined vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b>Clothing/Shoes/Weather Gear:</b></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\"><span class=\"vish-fontundefined vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b><br></b></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\" style=\"font-weight: normal;\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 110%;\">Forget about wearing high heels in Toledo - the small cobblestone streets are very charming but slightly uneven, and as the entire portion of the city within the walls is built up on hill, you'll spend the entire day either going down or climbing up some more or less steep hills. And as there is no denying that this city is best seen on foot, if you want to make the most of your time there, I'd highly recommend bringing a pair of comfortable walking shoes.</span></span><br></div>"
+        }, {
+            "id": "zone10",
+            "type": "text",
+            "areaid": "center3",
+            "body": "<div class=\"initTextDiv vish-parent-font4\" style=\"font-weight: normal;\"><span class=\"vish-font4 vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b>Miscellaneous:&nbsp;</b></span></span></div><div class=\"initTextDiv vish-parent-font4\"><span class=\"vish-font4 vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><br></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\">Toledo must have been designed originally to confuse its enemies from successfully invading the City. There are a confusing series of streets with names of streets changing frequently.</span></span><br></div>"
+        }]
+    }, {
+         "id": "article1",
+         "type": "virtualTour",
+         //Virtual Tour metadata
+         "map_service": "Google Maps",
+         "center": {
+             "lat": "39.858684807927226",
+             "long": "-4.024515151977539",
+         },
+         "zoom": 15,
+         "mapType": "roadmap",
+         "width": "100%",
+         "height": "100%",
+         "pois": [{
+             "id": "poi1",
+             "lat": "39.858808",
+             "long": "-4.020706",
+             "slide_id": "article1"
+         }, {
+             "id": "poi2",
+             "lat": "39.85710791823466",
+             "long": "-4.02348518371582",
+             "slide_id": "article2"
+         }, {
+             "id": "poi3",
+             "lat": "39.86267518700749",
+             "long": "-4.02498722076416",
+             "slide_id": "article3"
+         }, {
+             "id": "poi4",
+             "lat": "39.85586400561856",
+             "long": "-4.029305577278137",
+             "slide_id": "article4"
+         }, ],
+         "tours": [{
+             //Tour metadata
+             "id": "tour1",
+             "path": [
+                 "poi1", "poi2", "poi3"]
+         }],
+         "slides": [{
+             "id": "article1",
+             "type": "standard",
+             "template": "t7",
+             "elements": [{
+                 "id": "zone1",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"
+             }, {
+                 "id": "zone2",
+                 "type": "image",
+                 "areaid": "left",
+                 "body": "http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg",
+                 "style": "position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"
+             }, {
+                 "id": "zone3",
+                 "type": "text",
+                 "areaid": "center",
+                 "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"
+             }, {
+                 "id": "zone4",
+                 "areaid": "subheader"
+             }]
+         }, {
+             "id": "article2",
+             "type": "standard",
+             "template": "t7",
+             "elements": [{
+                 "id": "zone5",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"
+             }, {
+                 "id": "zone6",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"
+             }, {
+                 "id": "zone3",
+                 "type": "object",
+                 "areaid": "center",
+                 "body": "<iframe src=\"http://www.youtube.com/embed/TxbJY9SPC-A?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_1\" class=\"t7_object\" wmode=\"opaque\"></iframe>",
+                 "style": "position: relative; width:100%; height:85.45454545454545%; top:0%; left:0%;"
+             }, {
+                 "id": "zone8",
+                 "areaid": "subheader"
+             }]
+         }, {
+             "id": "article3",
+             "type": "standard",
+             "template": "t13",
+             "elements": [{
+                 "id": "zone9",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"
+             }, {
+                 "id": "zone10",
+                 "type": "image",
+                 "areaid": "circle",
+                 "body": "http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg",
+                 "style": "position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"
+             }, {
+                 "id": "zone11",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"
+             }, {
+                 "id": "zone12",
+                 "areaid": "right"
+             }]
+         }, {
+             "id": "article4",
+             "type": "standard",
+             "template": "t5",
+             "elements": [{
+                 "id": "zone13",
+                 "type": "image",
+                 "areaid": "header",
+                 "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
+                 "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"
+             }, {
+                 "id": "zone14",
+                 "type": "text",
+                 "areaid": "left",
+                 "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"
+             }, {
+                 "id": "zone15",
+                 "type": "image",
+                 "areaid": "right",
+                 "body": "http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg",
+                 "style": "position: relative; width:50.74626865671642%; height:42.731277533039645%; top:16.483111948693903%; left:23.582089552238806%;"
+             }]
+         }]
+     },
+    {
+        "id": "article__2",
+        "type": "standard",
+        "template": "t14",
+        "elements": [{
+            "id": "zone11",
+            "type": "image",
+            "areaid": "circle1",
+            "body": "http://media-cdn.tripadvisor.com/media/photo-s/02/8b/b9/15/getlstd-property-photo.jpg",
+            "style": "position: relative; width:164.59627329192546%; height:133.78378378378378%; top:-1.5540509610562712%; left:-39.75155279503105%;"
+        }, {
+            "id": "zone12",
+            "type": "text",
+            "areaid": "right1",
+            "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div id=\"headingWrapper\" class=\"headerWrapPadding\" style=\"margin: 0px; padding: 0px; position: relative; z-index: 2; font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(44, 44, 44);\"><h1 property=\"v:name\" style=\"margin: 0px; padding: 0px; font-size: 2.5835em; line-height: 34px; color: rgb(0, 0, 0); display: inline; width: auto; word-wrap: break-word;\" id=\"HEADING\">Alqahira Rincon de Oriente</h1><div class=\"savesWrap\" style=\"margin: 0px; padding: 0px;\"><div id=\"default_3170073\" class=\"savesContainer headerListing\" style=\"margin: 0px; padding: 0px; position: absolute; right: -8px; top: 0px;\"><div class=\"savesHover savesHover-3170073\" style=\"margin: 0px 4px 0px 28px; padding: 0px; position: relative; float: right;\"><div class=\"saveOptions\" style=\"margin: 21px 0px 0px; padding: 10px; visibility: hidden; position: absolute; background-color: rgb(242, 246, 235); height: auto; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 175px; z-index: 301; line-height: 16px;\"><div class=\"contentDelete\" style=\"margin: 0px; padding: 0px; color: rgb(0, 102, 153); outline: none medium; cursor: pointer;\"></div><div class=\"allContent\" style=\"margin: 0px; padding: 0px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div></div></div></div><div id=\"SAVES_ALERT\" class=\"saveAlert\" style=\"margin: 0px; padding: 0px 0px 0px 14px; visibility: hidden; float: right; background-color: rgb(242, 246, 235); height: 69px; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 315px; position: absolute; z-index: 300;\"><div id=\"SAVES_ALERT_CONTENT\" style=\"margin: 0px; padding: 0px;\"><span class=\"saveAlertClose sprite-greenX\" style=\"background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 11px; height: 11px; display: inline-block; float: right; margin: 3px; cursor: pointer; background-position: 0% -4758px;\"></span><div class=\"allContent\" style=\"margin: 0px 17px 0px 0px; padding: 0px; position: absolute; bottom: 8px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div><div class=\"contentAdded\" style=\"margin: 10px 17px 0px 0px; padding: 0px; position: relative;\"></div></div></div></div></div><div class=\"wrap infoBox\" style=\"margin: 0px; padding: 0px; height: 40px; overflow: hidden; clear: left; color: rgb(44, 44, 44); font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);\"><address style=\"font-style: normal; display: inline; margin-right: 8px;\"><span rel=\"v:address\"><span class=\"format_address\" dir=\"ltr\"><span class=\"street-address\" property=\"v:street-address\">C/La Ciudad, N0 7 - Toledo</span>,&nbsp;<span class=\"locality\"><span property=\"v:postal-code\">45002</span>&nbsp;<span property=\"v:locality\">Toledo</span></span>,&nbsp;<span class=\"country-name\" property=\"v:country-name\">España</span></span></span></address><div class=\"odcHotel blDetails\" style=\"margin: 2px 0px 7px; padding: 0px; overflow: hidden; clear: both; float: none; height: 16px; line-height: 16px;\"><div class=\"fl notLast\" style=\"margin: 0px 15px 0px 0px; padding: 0px; float: left;\"><div class=\"sprite-greenPhone fl icnLink\" style=\"margin: 0px 5px 0px 0px; padding: 0px; background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 9px; height: 15px; float: left; overflow: hidden; background-position: 0% -4474px;\"></div><div class=\"fl\" style=\"margin: 0px; padding: 0px; float: left;\">925 673 260</div></div></div></div></div>"
+        }, {
+            "id": "zone13",
+            "type": "image",
+            "areaid": "circle2",
+            "body": "http://media-cdn.tripadvisor.com/media/photo-s/02/86/d0/12/filename-img-6037-jpg.jpg",
+            "style": "position: relative; width:137.26708074534162%; height:100%; top:-0.33783783783783783%; left:-2.484472049689441%;"
+        }, {
+            "id": "zone14",
+            "type": "text",
+            "areaid": "right2",
+            "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div id=\"headingWrapper\" class=\"headerWrapPadding\" style=\"margin: 0px; padding: 0px; position: relative; z-index: 2; color: rgb(44, 44, 44); font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);\"><h1 id=\"HEADING\" property=\"v:name\" style=\"margin: 0px; padding: 0px; font-size: 2.5835em; line-height: 34px; color: rgb(0, 0, 0); display: inline; width: auto; word-wrap: break-word;\">El Embrujo</h1><div class=\"savesWrap\" style=\"margin: 0px; padding: 0px;\"><div id=\"default_2384802\" class=\"savesContainer headerListing\" style=\"margin: 0px; padding: 0px; position: absolute; right: -8px; top: 0px;\"><div class=\"savesHover savesHover-2384802\" style=\"margin: 0px 4px 0px 28px; padding: 0px; position: relative; float: right;\"><div class=\"saveOptions\" style=\"margin: 21px 0px 0px; padding: 10px; visibility: hidden; position: absolute; background-color: rgb(242, 246, 235); height: auto; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 175px; z-index: 301; line-height: 16px;\"><div class=\"contentDelete\" style=\"margin: 0px; padding: 0px; color: rgb(0, 102, 153); outline: none medium; cursor: pointer;\"></div><div class=\"allContent\" style=\"margin: 0px; padding: 0px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div></div></div></div><div id=\"SAVES_ALERT\" class=\"saveAlert\" style=\"margin: 0px; padding: 0px 0px 0px 14px; visibility: hidden; float: right; background-color: rgb(242, 246, 235); height: 69px; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 315px; position: absolute; z-index: 300;\"><div id=\"SAVES_ALERT_CONTENT\" style=\"margin: 0px; padding: 0px;\"><span class=\"saveAlertClose sprite-greenX\" style=\"background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 11px; height: 11px; display: inline-block; float: right; margin: 3px; cursor: pointer; background-position: 0% -4758px;\"></span><div class=\"allContent\" style=\"margin: 0px 17px 0px 0px; padding: 0px; position: absolute; bottom: 8px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div><div class=\"contentAdded\" style=\"margin: 10px 17px 0px 0px; padding: 0px; position: relative;\"></div></div></div></div></div><div class=\"wrap infoBox\" style=\"margin: 0px; padding: 0px; height: 40px; overflow: hidden; clear: left; color: rgb(44, 44, 44); font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);\"><address style=\"font-style: normal; display: inline; margin-right: 8px;\"><span rel=\"v:address\"><span class=\"format_address\" dir=\"ltr\"><span class=\"street-address\" property=\"v:street-address\">Santa Leocadia, 6</span>,&nbsp;<span class=\"locality\"><span property=\"v:postal-code\">45002&nbsp;</span><span property=\"v:locality\">Toledo</span></span>,&nbsp;<span class=\"country-name\" property=\"v:country-name\">España</span></span></span></address><div class=\"odcHotel blDetails\" style=\"margin: 2px 0px 7px; padding: 0px; overflow: hidden; clear: both; float: none; height: 16px; line-height: 16px;\"><div class=\"fl notLast\" style=\"margin: 0px 15px 0px 0px; padding: 0px; float: left;\"><div class=\"sprite-greenPhone fl icnLink\" style=\"margin: 0px 5px 0px 0px; padding: 0px; background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 9px; height: 15px; float: left; overflow: hidden; background-position: 0% -4474px;\"></div><div class=\"fl\" style=\"margin: 0px; padding: 0px; float: left;\">925 210 706</div></div></div></div></div>"
+        }, {
+            "id": "zone15",
+            "type": "image",
+            "areaid": "circle3",
+            "body": "http://media-cdn.tripadvisor.com/media/photo-s/01/e8/73/e6/meson-de-la-orza.jpg",
+            "style": "position: relative; width:137.26708074534162%; height:110.8108108108108%; top:-7.0045058791701855%; left:-19.875776397515526%;"
+        }, {
+            "id": "zone16",
+            "type": "text",
+            "areaid": "right3",
+            "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div id=\"headingWrapper\" class=\"headerWrapPadding\" style=\"margin: 0px; padding: 0px; position: relative; z-index: 2; color: rgb(44, 44, 44); font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);\"><h1 id=\"HEADING\" property=\"v:name\" style=\"margin: 0px; padding: 0px; font-size: 2.5835em; line-height: 34px; color: rgb(0, 0, 0); display: inline; width: auto; word-wrap: break-word;\">Meson de la Orza</h1><div class=\"savesWrap\" style=\"margin: 0px; padding: 0px;\"><div id=\"default_1117085\" class=\"savesContainer headerListing\" style=\"margin: 0px; padding: 0px; position: absolute; right: -8px; top: 0px;\"><div class=\"savesHover savesHover-1117085\" style=\"margin: 0px 4px 0px 28px; padding: 0px; position: relative; float: right;\"><div class=\"saveOptions\" style=\"margin: 21px 0px 0px; padding: 10px; visibility: hidden; position: absolute; background-color: rgb(242, 246, 235); height: auto; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 175px; z-index: 301; line-height: 16px;\"><div class=\"contentDelete\" style=\"margin: 0px; padding: 0px; color: rgb(0, 102, 153); outline: none medium; cursor: pointer;\"></div><div class=\"allContent\" style=\"margin: 0px; padding: 0px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div></div></div></div><div id=\"SAVES_ALERT\" class=\"saveAlert\" style=\"margin: 0px; padding: 0px 0px 0px 14px; visibility: hidden; float: right; background-color: rgb(242, 246, 235); height: 69px; border-style: solid; border-color: rgb(98, 157, 42); border-width: 1px 2px 2px 1px; width: 315px; position: absolute; z-index: 300;\"><div id=\"SAVES_ALERT_CONTENT\" style=\"margin: 0px; padding: 0px;\"><span class=\"saveAlertClose sprite-greenX\" style=\"background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 11px; height: 11px; display: inline-block; float: right; margin: 3px; cursor: pointer; background-position: 0% -4758px;\"></span><div class=\"allContent\" style=\"margin: 0px 17px 0px 0px; padding: 0px; position: absolute; bottom: 8px;\"><a href=\"http://www.tripadvisor.es/Saves\" style=\"color: rgb(0, 102, 153); text-decoration: initial; outline: none;\"></a></div><div class=\"contentAdded\" style=\"margin: 10px 17px 0px 0px; padding: 0px; position: relative;\"></div></div></div></div></div><div class=\"wrap infoBox\" style=\"margin: 0px; padding: 0px; height: 40px; overflow: hidden; clear: left; color: rgb(44, 44, 44); font-family: Arial, Tahoma, 'Bitstream Vera Sans', sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);\"><address style=\"font-style: normal; display: inline; margin-right: 8px;\"><span rel=\"v:address\"><span class=\"format_address\" dir=\"ltr\"><span class=\"street-address\" property=\"v:street-address\">C/ Descalzos 5</span>,&nbsp;<span class=\"locality\"><span property=\"v:postal-code\">45002</span>&nbsp;<span property=\"v:locality\">Toledo</span></span>,&nbsp;<span class=\"country-name\" property=\"v:country-name\">España</span></span></span></address><div class=\"odcHotel blDetails\" style=\"margin: 2px 0px 7px; padding: 0px; overflow: hidden; clear: both; float: none; height: 16px; line-height: 16px;\"><div class=\"fl notLast\" style=\"margin: 0px 15px 0px 0px; padding: 0px; float: left;\"><div class=\"sprite-greenPhone fl icnLink\" style=\"margin: 0px 5px 0px 0px; padding: 0px; background-image: url(http://c1.tacdn.com/sprites/global_pack-v2764cf6911e3185e8882a4b1c0921e8d.png); width: 9px; height: 15px; float: left; overflow: hidden; background-position: 0% -4474px;\"></div><div class=\"fl\" style=\"margin: 0px; padding: 0px; float: left;\">+34 925 223 011</div></div></div></div></div>"
+        }]
+    }]
+};
 
 	var samples_fc = {
 		"id" 			: "",
@@ -1189,6 +1518,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 		samples   	  		: samples,
 		samples_fc 			: samples_fc,
 		samples_flashcard 	: samples_flashcard,
+		samples_full_tour	: samples_full_tour,
 		samples_game  		: samples_game,
 		samples_sync 		: samples_sync,
 		samples_vtour 		: samples_vtour,
