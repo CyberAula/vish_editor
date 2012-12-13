@@ -105,11 +105,21 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var unbindEditorEventListeners = function(){
 		if(bindedEventListeners){
-			if(V.SlideManager.getPresentationType() === "presentation"){
+			var presentation = V.Editor.getPresentation();
+			if(presentation.type === "presentation"){
 				$(document).unbind('keydown', handleBodyKeyDown); 
 				$(document).unbind('keyup', handleBodyKeyUp);   
-	  		}
-
+	  		}			
+	      	for(index in presentation.slides){
+				if(presentation.slides[index].type === "flashcard"){
+					//and now we add the points of interest with their click events to show the slides
+	  				for(ind in presentation.slides[index].pois){
+	  					var poi = presentation.slides[index].pois[ind];
+	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+	  				}
+	      			$(document).off('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      			}
+  		    }
 
 	  		bindedEventListeners = false;
 		}
