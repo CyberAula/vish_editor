@@ -207,6 +207,7 @@ var _getResults =  function(quiz_session_active_id) {
     $(".hidden_for_qr_quiz").qrcode({width: 512,height: 512, text: url.toString()});
     var imageData = $(".hidden_for_qr_quiz > canvas")[0].toDataURL();
     $("#"+tabQuizSessionContent).find(".qr_quiz_image").attr("src", imageData);
+   // $("#"+tabQuizSessionContent).find(".qr_quiz_image")..css('width', '70%');
 
      //Hide Start Button and show options button
     $(current_slide).find("input." + startButtonClass).hide();
@@ -236,7 +237,11 @@ var _getResults =  function(quiz_session_active_id) {
     var myElem = document.getElementById('qr_quiz_fullscreen');
      if (myElem.requestFullscreen) {
     myDoc.addEventListener("fullscreenchange", function () {
-        if($(myElem).css("display")==="none") {
+      V.Debugging.log("event listener detected");
+//if FullScreen mode: document.fullScreen-- remove full-screen class
+//else add full-screen class
+
+      if($(myElem).css("display")==="none") {
           $(myElem).show();
         } else {
           $(myElem).hide();
@@ -245,6 +250,15 @@ var _getResults =  function(quiz_session_active_id) {
      }
      else if (myElem.webkitRequestFullScreen) {
       myDoc.addEventListener("webkitfullscreenchange", function() {
+        V.Debugging.log("event listener detected");
+        if (document.webkitIsFullScreen) {
+          V.Debugging.log("fulscreen detected");
+          $(document.getElementById('qr_quiz_image_id')).addClass("full-screen");
+        }
+        else {
+          V.Debugging.log("no fulscreen detected");
+          $(document.getElementById('qr_quiz_image_id')).removeClass("full-screen");
+        }      
         if($(myElem).css("display")==="none") {
           $(myElem).show();
         } else {
@@ -254,8 +268,9 @@ var _getResults =  function(quiz_session_active_id) {
     } 
     else if (myElem.mozRequestFullScreen) {
       myDoc.addEventListener("mozfullscreenchange", function () {
-          if($(myElem).css("display")==="none") {
-              $(myElem).show();
+        V.Debugging.log("event listener detected");
+        if($(myElem).css("display")==="none") {
+            $(myElem).show();
           } else {
               $(myElem).hide();
           }
@@ -504,7 +519,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var qrToggleFullScreen = function (event) {
-
+    console.log("qrToggleFullScreen detected");
     if(V.Status.getIsInIframe()){
       var myDoc = parent.document;
     } else {
@@ -520,11 +535,11 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
           myElem.mozRequestFullScreen();
         } else if (myDoc.documentElement.webkitRequestFullScreen) {
-          
-          myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);           
-      
-        }       
+
+          myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT); 
+        }   
     } else {
+       
         if (myDoc.cancelFullScreen) {
           myDoc.cancelFullScreen();
         } else if (myDoc.mozCancelFullScreen) {
@@ -534,7 +549,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
         }       
     }      
   };
-
 
   var getIsQuizSessionStarted = function() {
     return quizSessionStarted;

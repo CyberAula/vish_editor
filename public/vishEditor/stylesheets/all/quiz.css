@@ -94,8 +94,6 @@ height: 100%;
 .mc_radio {
     float: left;
     display: inline-block;
-
-
 }
 
 .multiplechoice_option_in_zone { 
@@ -656,7 +654,7 @@ span.mcChoiceSpan{
 }
 
 .qr_quiz_image {
-    width: 70%;
+   width: 70%;
 }
 
 .qr_background {
@@ -977,11 +975,13 @@ height: 20%;
     font-weight: bold;
     width: 50%;
     height: 30%;
-
 }
 
 .quiz_cancel_full_screen {
     height: 40px;
     width:45px;
-
+}
+.full-screen {
+    width: 100%;
+    height: auto;
 }
