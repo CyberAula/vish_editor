@@ -23,11 +23,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 					margin_width = 0;
 			} else {
 				page_is_fullscreen = false;
-				if(V.SlideManager.getPresentationType() === "presentation"){
-					reserved_px_for_menubar = 40;
-				} else {
-					reserved_px_for_menubar = 0;
-				}				
+				reserved_px_for_menubar = 40;								
 				margin_height = 40;
 				margin_width = 30;
 			}
