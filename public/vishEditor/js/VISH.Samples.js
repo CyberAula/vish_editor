@@ -249,6 +249,75 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
+
+    var samples_vtour_toledo = {
+		//Basic Metadata
+		"id" 			: "1987",
+		"title" 		: "Toledo Virtual Tour",
+		"description" 	: "Virtual Tour example with Vish Editor",
+		"author" 		: "Aldo",
+		"avatar" 		: "/assets/logos/original/excursion-10.png",
+		"tags"			: ["Samples","Test","Development","Virtual Tour"],
+		//Pedagogical metadata
+		"age_range" 	: "4 - 14",
+		"subject" 		: "Media Education",
+		"educational_objectives" 	: "Amazing educational Virtual Tour",
+		"adquired_competencies" 	: "Pupils will be smarter",
+		//Vish Editor data
+		"type"			: "virtualTour",
+		"theme"	 		: "theme1",
+		"language" 		: "en",
+		"slides" : [
+			{
+				"id" 	: "article1",
+				"type"	: "virtualTour",
+				//Virtual Tour metadata
+				"map_service"	: "Google Maps",
+				"center"		: 
+					{
+						"lat": 		"39.858684807927226",
+						"long": 	"-4.024515151977539",
+					},
+				"zoom"			: 14,
+				"mapType" 		: "roadmap",
+				"width" 		: "100%",
+				"height" 		: "100%",
+	 			"pois": [
+	 				{	"id"		: "poi1",
+	 					"lat" 		: "39.858808",
+	 				  	"long" 		: "-4.020706",
+	 				  	"slide_id"	: "article1"
+	 				},
+	 				{	"id"		: "poi2",
+	 				  	"lat" 		: "39.85710791823466",
+	 				  	"long" 		: "-4.02348518371582",
+	 				  	"slide_id"	: "article2"
+	 				},
+	 				{	"id"		: "poi3",
+	 				  	"lat" 		: "39.86267518700749",
+	 				  	"long" 		: "-4.02498722076416",
+	 				  	"slide_id"	: "article3"
+	 				},
+	 				{	"id"		: "poi4",
+	 				  	"lat" 		: "39.85586400561856",
+	 				  	"long" 		: "-4.029305577278137",
+	 				  	"slide_id"	: "article4"
+	 				},
+	 			],
+	 			"tours": [
+	 				{
+	 					//Tour metadata
+	 					"id" 	: "tour1",
+	 					"path"	: [
+	 						"poi1","poi2","poi3"
+	 					]
+	 				}
+	 			],
+				"slides" : [{"id":"article1","type":"standard","template":"t7","elements":[{"id":"zone1","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"},{"id":"zone2","type":"image","areaid":"left","body":"http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg","style":"position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"},{"id":"zone3","type":"text","areaid":"center","body":"<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"},{"id":"zone4","areaid":"subheader"}]},{"id":"article2","type":"standard","template":"t7","elements":[{"id":"zone5","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"},{"id":"zone6","type":"text","areaid":"left","body":"<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"},{"id":"zone7","type":"image","areaid":"center","body":"http://www.sacred-destinations.com/spain/images/toledo/cathedral/westfront-c-paradox-350.jpg","style":"position: relative; width:114.54545454545455%; height:132.72727272727272%; top:-6.285717456371753%; left:-13.636363636363637%;"},{"id":"zone8","areaid":"subheader"}]},{"id":"article3","type":"standard","template":"t13","elements":[{"id":"zone9","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"},{"id":"zone10","type":"image","areaid":"circle","body":"http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg","style":"position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"},{"id":"zone11","type":"text","areaid":"left","body":"<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"},{"id":"zone12","areaid":"right"}]},{"id":"article4","type":"standard","template":"t5","elements":[{"id":"zone13","type":"image","areaid":"header","body":"http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif","style":"position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"},{"id":"zone14","type":"text","areaid":"left","body":"<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"},{"id":"zone15","type":"image","areaid":"right","body":"http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg","style":"position: relative; width:50.74626865671642%; height:42.731277533039645%; top:16.483111948693903%; left:23.582089552238806%;"}]}]
+			}
+		]
+	};
+
 	var samples_fc = {
 		"id" 			: "",
 		"title" 		: "Chess: The Art of Learning",
@@ -1123,6 +1192,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 		samples_game  		: samples_game,
 		samples_sync 		: samples_sync,
 		samples_vtour 		: samples_vtour,
+		samples_vtour_toledo : samples_vtour_toledo,
 		quizes_samples 		: quizes_samples,
 		quizzes__samples2	: quizzes__samples2		
 	};
