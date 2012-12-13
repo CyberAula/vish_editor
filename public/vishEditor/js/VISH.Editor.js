@@ -295,8 +295,8 @@ VISH.Editor = (function(V,$,undefined){
 	* function to add enter and leave events only for the VISH editor
 	*/
 	var _addEditorEnterLeaveEvents = function(){
-		$('.slides > article').live('slideenter',_onslideenterEditor);
-		$('.slides > article').live('slideleave',_onslideleaveEditor);
+		$('article').live('slideenter',_onslideenterEditor);
+		$('article').live('slideleave',_onslideleaveEditor);
 	};
   
 	/**
