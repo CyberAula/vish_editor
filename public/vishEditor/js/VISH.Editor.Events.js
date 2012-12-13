@@ -60,13 +60,45 @@ VISH.Editor.Events = (function(V,$,undefined){
 	  }
 	};
 
+	/**
+	 * function called when a poi is clicked
+	 */
+	 var _onFlashcardPoiClicked = function(event){
+    	V.Slides.showFlashcardSlide(event.data.slide_id,true);
+	 };
+
+
+   var _onFlashcardCloseSlideClicked = function(event){
+	    var close_slide = event.target.id.substring(5); //the id is close3
+	    V.Slides.closeFlashcardSlide(close_slide,true);
+   };
 
    var bindEditorEventListeners = function(){
    		if(!bindedEventListeners){
-			if(V.SlideManager.getPresentationType() === "presentation"){
+   			var presentation = V.Editor.getPresentation();
+			if(presentation.type === "presentation"){
 				$(document).bind('keydown', handleBodyKeyDown); 
 				$(document).bind('keyup', handleBodyKeyUp);   
 	      	}	
+
+	      	for(index in presentation.slides){
+	      		var slide = presentation.slides[index];
+
+      			switch(slide.type){
+      				case VISH.Constant.FLASHCARD:
+	      				//Add the points of interest with their click events to show the slides
+		  				for(ind in slide.pois){
+		  					var poi = slide.pois[ind];
+		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+		  				}
+		      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					break;
+      				case VISH.Constant.VTOUR:
+      					$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					break;
+      			}
+  		    }
+
 		} 
 		bindedEventListeners = true;
    }
@@ -77,6 +109,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 				$(document).unbind('keydown', handleBodyKeyDown); 
 				$(document).unbind('keyup', handleBodyKeyUp);   
 	  		}
+
+
 	  		bindedEventListeners = false;
 		}
 	};

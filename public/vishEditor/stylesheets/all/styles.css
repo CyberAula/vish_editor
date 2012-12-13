@@ -110,6 +110,10 @@ body {
   z-index: 1075;
 }
 
+.subslide{
+  margin-top: -300px;
+}
+
 /*class used to show a slide to get width and height and after that remove the class
 this can not be done with show() and hide() because then it remains with display:none*/
 .slides > article.temp_shown {

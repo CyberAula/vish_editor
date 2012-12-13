@@ -295,8 +295,8 @@ VISH.Editor = (function(V,$,undefined){
 	* function to add enter and leave events only for the VISH editor
 	*/
 	var _addEditorEnterLeaveEvents = function(){
-		$('article').live('slideenter',_onslideenterEditor);
-		$('article').live('slideleave',_onslideleaveEditor);
+		$('.slides > article').live('slideenter',_onslideenterEditor);
+		$('.slides > article').live('slideleave',_onslideleaveEditor);
 	};
   
 	/**
@@ -306,14 +306,20 @@ VISH.Editor = (function(V,$,undefined){
 		setTimeout(function(){
 			$(e.target).find('.object_wrapper').show();
 		},500);
+		if($(e.target).hasClass("flashcard_slide")){
+			V.Flashcard.startAnimation(e.target.id);
+		}
 	};
   
 	/**
 	* function called when leaving slide in editor, we have to hide the objects
 	*/
-	var _onslideleaveEditor = function(){
+	var _onslideleaveEditor = function(e){
 		//radical way
 		$('.object_wrapper').hide();
+		if($(e.target).hasClass("flashcard_slide")){
+			V.Flashcard.stopAnimation(e.target.id);
+		}
 	};
   
 

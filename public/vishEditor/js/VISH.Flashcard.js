@@ -20,13 +20,13 @@ VISH.Flashcard = (function(V,$,undefined){
 
   var startAnimation = function(slideId){
     flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
-  }
+  };
 
   var stopAnimation = function(slideId){
     if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
       clearTimeout(flashcards[slideId].timer);
     }
-  }
+  };
 
   /*  Sync can be true if you want the arrows to be synchronized 
    *   (moving at the same time and at the same position) or false if not
