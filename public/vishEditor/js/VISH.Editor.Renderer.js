@@ -20,7 +20,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			$("#age_range").val(presentation.age_range);
 		}
 		else{
-			$("#age_range").val("4 - 20");
+			$("#age_range").val(VISH.Constant.AGE_RANGE);
 		}
 		$("#subject_tag").val(presentation.subject);
 		$("#language_tag").val(presentation.language);
@@ -93,7 +93,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * function to render one flashcard inside a presentation
 	 */
 	var _renderFlashcard = function(slide, position, presentation_id){
-		
+		V.Flashcard.init();
+		V.Renderer.init();
+		V.Renderer.renderSlide(slide);
 	};
 
 

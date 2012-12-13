@@ -69,7 +69,7 @@ body {
   
 }
 
-.slides > article, .flashcard_slide_hidden {
+.slides > article, .subslide {
   /*Next six parameters will be changed by javascript depending on the window size*/
   left: 50%;
   top: 50%;
@@ -527,7 +527,7 @@ button#closeButton {
   background: url(/vishEditor/images/animation_arrow.png);
 }
 
-.flashcard_slide_hidden{
+.subslide{
   display: none;
 }
 

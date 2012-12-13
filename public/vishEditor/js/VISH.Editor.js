@@ -63,6 +63,18 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
+		//init age range slider, this has to be done BEFORE VISH.Editor.Renderer.init(presentation);
+		$("#slider-range").slider({
+	            range: true,
+	            min: 0,
+	            max: 30,
+	            values: [ 4, 20 ],
+	            slide: function( event, ui ) {
+	                $( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+	            }
+	    });
+	    $("#age_range").val(VISH.Constant.AGE_RANGE);
+
 		//If we have to edit
 		if(presentation){
 			initialPresentation = true;
@@ -123,17 +135,6 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 
 			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
-
-			$("#slider-range").slider({
-	            range: true,
-	            min: 0,
-	            max: 30,
-	            values: [ 4, 20 ],
-	            slide: function( event, ui ) {
-	                $( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-	            }
-	        });
-	        $("#age_range").val("4 - 20");
 
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
@@ -472,8 +473,11 @@ VISH.Editor = (function(V,$,undefined){
 				'onClosed'			: function(){
 				  //if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
-						$("#prompt_answer").val("false");	
-						VISH.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
+						$("#prompt_answer").val("false");
+						article_to_delete.remove();
+						VISH.Slides.onDeleteSlide();					
+						VISH.Editor.Utils.redrawSlides();						
+						VISH.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 			}
@@ -481,8 +485,9 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-   /**
-	* Function called when user clicks on template zone with class selectable
+
+	/**
+	* function called when user clicks on template zone with class selectable
 	*/
 	var _onSelectableClicked = function(event){
 		selectArea($(this));
@@ -583,13 +588,15 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			presentation.type = getPresentationType();
 		}
-		
+		/*
 		if(presentation.type==="flashcard"){
 			presentation.background = {};
 			presentation.background.src = $("#flashcard-background").css("background-image");
 			//save the pois
 			presentation.background.pois = VISH.Editor.Flashcard.savePois();
 		}
+		*/
+
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
 			presentation.description = draftPresentation.description;
