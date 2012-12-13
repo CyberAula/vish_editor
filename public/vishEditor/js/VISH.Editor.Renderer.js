@@ -93,7 +93,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * function to render one flashcard inside a presentation
 	 */
 	var _renderFlashcard = function(slide, position, presentation_id){
-		
+		V.Flashcard.init();
+		V.Renderer.init();
+		V.Renderer.renderSlide(slide);
 	};
 
 

@@ -100,7 +100,7 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		return $("<article class='flashcard_slide' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
 	};
 
 	var _renderVirtualTourSlide = function(slide){
@@ -111,7 +111,7 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='virtualTour_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		return $("<article class='virtualTour_slide' type='virtualTour' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
 	};
 
 

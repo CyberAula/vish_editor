@@ -13,7 +13,9 @@ VISH.Flashcard = (function(V,$,undefined){
   var FRAME_WIDTH = 50; //in pixels
 
   var init = function(presentation){
-    flashcards = new Array();
+    if(!flashcards){
+      flashcards = new Array();
+    }
   };
 
   var startAnimation = function(slideId){

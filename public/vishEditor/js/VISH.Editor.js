@@ -584,13 +584,15 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			presentation.type = getPresentationType();
 		}
-		
+		/*
 		if(presentation.type==="flashcard"){
 			presentation.background = {};
 			presentation.background.src = $("#flashcard-background").css("background-image");
 			//save the pois
 			presentation.background.pois = VISH.Editor.Flashcard.savePois();
 		}
+		*/
+
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
 			presentation.description = draftPresentation.description;
