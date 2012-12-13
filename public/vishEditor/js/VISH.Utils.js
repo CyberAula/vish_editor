@@ -241,6 +241,8 @@ var getZoomFromStyle = function(style){
 	 * also changes the help button to show the correct help
 	 */
 	var loadTab = function (tab_id){
+		V.Debugging.log("load tab and tab_id: " + tab_id);
+
 		// first remove the walkthrough if open
 		$('.joyride-close-tip').click();
 		//hide previous tab

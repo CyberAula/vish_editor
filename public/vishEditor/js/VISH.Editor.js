@@ -473,8 +473,11 @@ VISH.Editor = (function(V,$,undefined){
 				'onClosed'			: function(){
 				  //if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
-						$("#prompt_answer").val("false");	
-						VISH.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
+						$("#prompt_answer").val("false");
+						article_to_delete.remove();
+						VISH.Slides.onDeleteSlide();					
+						VISH.Editor.Utils.redrawSlides();						
+						VISH.Editor.Thumbnails.redrawThumbnails();			
 					}
 				}
 			}
@@ -482,8 +485,9 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-   /**
-	* Function called when user clicks on template zone with class selectable
+
+	/**
+	* function called when user clicks on template zone with class selectable
 	*/
 	var _onSelectableClicked = function(event){
 		selectArea($(this));
