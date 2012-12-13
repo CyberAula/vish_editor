@@ -237,7 +237,6 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("#forward_arrow").css("top", "15%");
 			V.Flashcard.startAnimation(e.target.id);
 		}
-
 	};
 
 	/**
@@ -248,10 +247,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	var _onslideleave = function(e){
 		V.VideoPlayer.HTML5.stopVideos(e.target);
 		V.ObjectPlayer.unloadObject();
-		V.AppletPlayer.unloadApplet();
-		if($(e.target).hasClass('flashcard')){				
-			V.Mods.fc.player.clear();
-		}
+		V.AppletPlayer.unloadApplet();		
 		if($(e.target).hasClass("flashcard_slide")){
 			$("#forward_arrow").css("top", "0%");
 			V.Flashcard.stopAnimation(e.target.id);
