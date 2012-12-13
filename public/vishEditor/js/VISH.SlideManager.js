@@ -36,22 +36,28 @@ VISH.SlideManager = (function(V,$,undefined){
 		VISH.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
+		setPresentationType(presentation.type);
 		
 		V.Quiz.init(presentation);
 		V.Slides.init();
 		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
+		V.Flashcard.init();
 		
 		//when page is cached or updated, add presentation to localstorage
 		applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 		applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
 
-		//first action will be to detect what kind of view we have, game, flashcard, presentation
-		if(presentation.type ==="game"){
-			setPresentationType("game");
-			VISH.ViewerAdapter.setupGame(presentation);	
-			VISH.Game.registerActions(presentation);		
+		//Experimental initializers for new excursion types
+		switch(presentation.type){
+			case VISH.Constant.GAME:
+				VISH.ViewerAdapter.setupGame(presentation);	
+				VISH.Game.registerActions(presentation);
+				break;
+			case VISH.Constant.VTOUR:
+				VISH.VirtualTour.init();
+				break;
 		}
 
 		//important that events are initialized after presentation type is proccessed
@@ -73,9 +79,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(!renderFull){
 			if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
 				if(V.Status.getIsInIframe()){
-					myDoc = parent.document;
+					var myDoc = parent.document;
 				} else {
-					myDoc = document;
+					var myDoc = document;
 				}
 				$(document).on('click', '#page-fullscreen', toggleFullScreen);
 				$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
@@ -133,7 +139,12 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(VISH.Status.isSlaveMode()){
 			return;
 		}
-		
+		if(V.Status.getIsInIframe()){
+			var myDoc = parent.document;
+		} else {
+			var myDoc = document;
+		}
+				
 		if(VISH.Status.getIsInIframe()){
 			var myElem = VISH.Status.getIframe();
 		} else {
@@ -216,14 +227,15 @@ VISH.SlideManager = (function(V,$,undefined){
 				V.AppletPlayer.loadApplet($(e.target));
 			}
 			else if($(e.target).hasClass('snapshot')){
-        V.SnapshotPlayer.loadSnapshot($(e.target));
-      }
+        		V.SnapshotPlayer.loadSnapshot($(e.target));
+      		}
 		},500);
 		
 		V.VideoPlayer.HTML5.playVideos(e.target);
 
 		if($(e.target).hasClass("flashcard_slide")){
 			$("#forward_arrow").css("top", "15%");
+			V.Flashcard.startAnimation(e.target.id);
 		}
 
 	};
@@ -242,6 +254,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		if($(e.target).hasClass("flashcard_slide")){
 			$("#forward_arrow").css("top", "0%");
+			V.Flashcard.stopAnimation(e.target.id);
 		}
 	};
 
@@ -290,6 +303,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	var setPresentationType = function(type){
+		if(!type){
+			type = VISH.Constant.STANDARD;
+		}
 		presentationType = type;
 	};
 

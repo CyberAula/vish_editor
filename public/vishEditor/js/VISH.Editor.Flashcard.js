@@ -53,7 +53,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 					$(event.target).css("position", "fixed");
 					$(event.target).css("top", (old_pos.top +30) + "px");
 					$(event.target).css("left", (old_pos.left -16) + "px");
-					
 				}
 				else{
 					$(event.target).attr("moved", "false");

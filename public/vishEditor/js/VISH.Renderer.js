@@ -17,44 +17,35 @@ VISH.Renderer = (function(V,$,undefined){
 	 * with the proper content for the slide
 	 */	
 	var renderSlide = function(slide){
-		var article = "";
-		if(slide.type === "flashcard"){
-			_renderFlashcardSlide(slide);
+		var article;
+
+		switch(slide.type){
+			case undefined:
+			case VISH.Constant.STANDARD:
+				article = _renderStandardSlide(slide);
+				break;
+			case VISH.Constant.FLASHCARD:
+				article = _renderFlashcardSlide(slide);
+				break;
+			case VISH.Constant.VTOUR:
+				article = _renderVirtualTourSlide(slide);
+				break;
+			default:
+				article = null;
+				break;
 		}
-		else{
-			article = _renderStandardSlide(slide);
+
+		if(article){
 			SLIDE_CONTAINER.append($(article));
+			_afterDrawSlide(slide);
 		}
 	};
 
 
-	var _renderFlashcardSlide = function(slide){
-		var all_slides = "";
-		//the flashcard has its own slides
-		for(index in slide.slides){
-			all_slides += _renderStandardSlide(slide.slides[index], "flashcard_slide_hidden", "<div class='close_slide_fc' id='close"+slide.slides[index].id+"'></div>");
-		}
+	//////////
+	/// RENDERERS
+	//////////
 
-		var div_for_slides_hidden = "<div class='hidden_slides_flashcard' >"+all_slides+"</div>";
-
-		var article = $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
-		
-		SLIDE_CONTAINER.append(article);
-		
-		//finally add the background and pois
-		$("#"+ slide.id).css("background-image", slide.background);
-		
-		//and now we add the points of interest with their click events to show the slides
-  		for(index in slide.pois){
-  			var poi = slide.pois[index];
-  			  			
-        	V.Flashcard.Arrow.addArrow(slide, poi, false);
-  		}
-      	V.Flashcard.Arrow.init();
-	};
-
-
-	/*returns html for the slide*/
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
@@ -90,8 +81,6 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		
-
 		//When render a simple_quiz for voting
 		if(slide.type=="quiz") {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
@@ -101,6 +90,56 @@ VISH.Renderer = (function(V,$,undefined){
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
+	var _renderFlashcardSlide = function(slide){
+		var all_slides = "";
+		//The flashcard has its own slides
+		for(index in slide.slides){
+			//Subslide id its a composition of parent id and its own id.
+			var subslide = slide.slides[index];
+			subslide.id = slide.id + "_" + subslide.id;
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+		}
+		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
+		return $("<article class='flashcard_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+	};
+
+	var _renderVirtualTourSlide = function(slide){
+		var all_slides = "";
+		for(index in slide.slides){
+			var subslide = slide.slides[index];
+			subslide.id = slide.id + "_" + subslide.id;
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+		}
+		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
+		return $("<article class='virtualTour_slide' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+	};
+
+
+	////////////
+	//After Render Slide Actions
+	////////////
+	var _afterDrawSlide = function(slide){
+		switch(slide.type){
+			case undefined:
+			case VISH.Constant.STANDARD:
+				break;
+			case VISH.Constant.FLASHCARD:
+				//Add the background and pois
+				$("#"+ slide.id).css("background-image", slide.background);
+				
+				//And now we add the points of interest with their click events to show the slides
+		  		for(index in slide.pois){
+		  			var poi = slide.pois[index];	
+		        	V.Flashcard.addArrow(slide.id, poi, false);
+		  		}
+				break;
+			case VISH.Constant.VTOUR:
+					VISH.VirtualTour.drawMap(slide);
+				break;
+			default:
+				break;
+		}
+	}
 
 	/**
 	 * Function to render text inside an article (a slide)
