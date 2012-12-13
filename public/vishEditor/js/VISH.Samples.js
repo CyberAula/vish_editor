@@ -10,7 +10,7 @@ VISH.Samples = (function(V,undefined){
 		"author" : "",
 		"theme"	 : "theme1",
 		"age_range" : "4 - 14",
-		"subject" : "Media Education",
+		"subject" : ["Art","Astronomy"],
 		"language" : "en",
 		"educational_objectives" : "bla bla bla 3",
 		"adquired_competencies" : "pupils will be smarter",

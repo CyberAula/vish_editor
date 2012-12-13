@@ -21,6 +21,9 @@ VISH.Constant.SMALL = "small";
 VISH.Constant.MEDIUM = "medium";
 VISH.Constant.LARGE = "large";
 
+//Defaults
+VISH.Constant.AGE_RANGE = "4 - 20";
+
 //Presentation and slide types
 VISH.Constant.PRESENTATION = "presentation";
 VISH.Constant.FLASHCARD = "flashcard";
