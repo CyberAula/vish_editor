@@ -168,6 +168,21 @@ VISH.Utils = (function(V,undefined){
 	 	 return path.replace("C:\\fakepath\\","");
 	 }
 
+
+	 /*
+	  * in the css we have url("image_path") and to use ir in an image src attribute we need to get the image_path
+	  * this function does that
+	  */
+	 var getSrcFromCSS = function(css){
+	 	if(css.indexOf("url") === 0){
+	 		return css.substring(4,css.length-1);
+	 	}
+	 	else{
+			return css;
+	 	}
+	 }
+
+
 var getZoomInStyle = function(zoom){
     var style = "";
     style = style + "-ms-transform: scale(" + zoom + "); ";
@@ -336,6 +351,7 @@ var getZoomFromStyle = function(style){
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
 		generateTable 			: generateTable,
+		getSrcFromCSS			: getSrcFromCSS,
 		loadDeviceCSS			: loadDeviceCSS,
 		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,

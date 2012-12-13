@@ -28,7 +28,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				break;
 			case VISH.Constant.FLASHCARD:
 					carrouselElements += 1;
-					carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + $(s).attr('avatar')+ "' />"));
+					carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.Utils.getSrcFromCSS($(s).attr('avatar'))+ "' />"));
 					carrouselImagesTitles.push(carrouselElements);
 				break;
 			case VISH.Constant.VTOUR:
