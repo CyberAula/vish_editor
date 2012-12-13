@@ -91,6 +91,13 @@ height: 100%;
     padding: 0.5%;
 }
 
+.mc_radio {
+    float: left;
+    display: inline-block;
+
+
+}
+
 .multiplechoice_option_in_zone { 
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;

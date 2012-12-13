@@ -514,11 +514,15 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     var myElem = document.getElementById('qr_quiz_image_id');
      if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
         if (myDoc.documentElement.requestFullScreen) {
+
           myElem.requestFullScreen();
         } else if (myDoc.documentElement.mozRequestFullScreen) {
+
           myElem.mozRequestFullScreen();
         } else if (myDoc.documentElement.webkitRequestFullScreen) {
+          
           myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);           
+      
         }       
     } else {
         if (myDoc.cancelFullScreen) {
