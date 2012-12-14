@@ -522,7 +522,11 @@ VISH.Slides = (function(V,$,undefined){
 
 	 	$(slide).remove();
 	 	if(removing_current_slide){
-	 		setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	 		if((getCurrentSlideNumber()===1)&&(getSlidesQuantity()>1)){
+				setCurrentSlideNumber(1);
+	 		} else {
+	 			setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	 		}
 	 	}
 		VISH.Editor.Utils.redrawSlides();					
 		VISH.Editor.Thumbnails.redrawThumbnails();
