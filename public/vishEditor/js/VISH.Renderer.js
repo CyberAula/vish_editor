@@ -103,7 +103,7 @@ VISH.Renderer = (function(V,$,undefined){
 			//Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
 			subslide.id = slide.id + "_" + subslide.id;
-			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
 		return $("<article class='"+ extra_classes + " flashcard_slide' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
@@ -114,7 +114,7 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
 			subslide.id = slide.id + "_" + subslide.id;
-			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
 		return $("<article class='"+ extra_classes + " virtualTour_slide' type='virtualTour' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");

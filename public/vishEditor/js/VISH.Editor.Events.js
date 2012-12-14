@@ -91,10 +91,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 		  					var poi = slide.pois[ind];
 		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
 		  				}
-		      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+		      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
       					break;
       				case VISH.Constant.VTOUR:
-      					$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
       					break;
       			}
   		    }
@@ -117,7 +117,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
-	      			$(document).off('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+	      			$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
       			}
   		    }
 

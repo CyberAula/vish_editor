@@ -43,80 +43,76 @@ VISH.Events = (function(V,$,undefined){
 	  }
 	};
 
+
 	/* Touch events */
 
-	/* method by KIKE to get the touches of an event
-	 * jquery does not pass the touches property in the event, and we get them from the event.originalEvent
+	/* Get the touches of an event
+	 * Jquery does not pass the touches property in the event, and we get them from the event.originalEvent
 	 */
 	var getTouches = function (event){
 		if(event.touches){
 			return event.touches;
-		}
-		else if(event.originalEvent.touches){
+		} else if(event.originalEvent.touches){
 			return event.originalEvent.touches;
-		}
-		else{
+		} else{
 			return null;
 		}
 	};
 
 
 	var handleTouchStart = function(event) {
-	  if(V.SlideManager.getPresentationType() === "presentation"){
-			  var touches = getTouches(event);
-			  if (touches.length === 1) {
-			    touchDX = 0;
-			    touchDY = 0;
+		var touches = getTouches(event);
+		if (touches.length === 1) {
+			touchDX = 0;
+			touchDY = 0;
 
-			    touchStartX = touches[0].pageX;
-			    touchStartY = touches[0].pageY;
+			touchStartX = touches[0].pageX;
+			touchStartY = touches[0].pageY;
 
-			    document.body.addEventListener('touchmove', handleTouchMove, true);
-			    document.body.addEventListener('touchend', handleTouchEnd, true);
-			    var zoom = document.documentElement.clientWidth / window.innerWidth;
+			document.body.addEventListener('touchmove', handleTouchMove, true);
+			document.body.addEventListener('touchend', handleTouchEnd, true);
+			var zoom = document.documentElement.clientWidth / window.innerWidth;
 
-			    var eventNotRegister = (registeredEvents.indexOf(event.target.id)==-1);
-			    if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && eventNotRegister){    	 
-			    	//this is because if not done, the browser can take control of the event and cancels it, 
-			    	//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
-			    	//and there will be no scroll below that zoom level
-			    	event.preventDefault(); 
-			    }
-			  }
+			var eventNotRegister = ((registeredEvents.indexOf(event.target.id)==-1)&&((registeredEvents.indexOf($(event.target).attr("class"))==-1)));
+
+			if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && eventNotRegister){ 
+			// alert("preventDefault"); 
+				//this is because if not done, the browser can take control of the event and cancels it, 
+				//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
+				//and there will be no scroll below that zoom level
+				event.preventDefault(); 
+			}
 		}
 	};
 
 	var handleTouchMove = function(event) {
-		if(V.SlideManager.getPresentationType() === "presentation"){
-		  var touches = getTouches(event);
-		  if (touches.length > 1) {
-		    cancelTouch();
-		  } else {
-		    touchDX = touches[0].pageX - touchStartX;
-		    touchDY = touches[0].pageY - touchStartY;
-		    var zoom = document.documentElement.clientWidth / window.innerWidth;	  	
-		  	if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL){
-		    	event.preventDefault();  //this is because if not done, the browser can take control of the event and cancels it, because it thinks that the touch is a scroll action
-		  	}
-		  }
-	    }
+		var touches = getTouches(event);
+		if (touches.length > 1) {
+			cancelTouch();
+		} else {
+			touchDX = touches[0].pageX - touchStartX;
+			touchDY = touches[0].pageY - touchStartY;
+			var zoom = document.documentElement.clientWidth / window.innerWidth;	  	
+			if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL){
+				//this is because if not done, the browser can take control of the event and cancels it, because it thinks that the touch is a scroll action
+				event.preventDefault();
+			}
+		}
 	};
 
-	var handleTouchEnd = function(event) {
-		if(V.SlideManager.getPresentationType() === "presentation"){
-		  var dx = Math.abs(touchDX);
-		  var dy = Math.abs(touchDY);
+	var handleTouchEnd = function(event) {	
+		var dx = Math.abs(touchDX);
+		var dy = Math.abs(touchDY);
 
-		  if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
-		    if (touchDX > 0) {
-		      V.Slides.backwardOneSlide();
-		    } else {
-		      V.Slides.forwardOneSlide();
-		    }
-		  }
-		  
-		  cancelTouch();
+		if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
+			if (touchDX > 0) {
+				V.Slides.backwardOneSlide();
+			} else {
+				V.Slides.forwardOneSlide();
+			}
 		}
+
+		cancelTouch();
 	};
 
 	var cancelTouch = function() {
@@ -143,10 +139,10 @@ VISH.Events = (function(V,$,undefined){
 			$(document).bind('keydown', handleBodyKeyDown); 
       		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
       		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-      		_registerEvent("back_arrow");
       		$(document).on('click', '#back_arrow', V.Slides.backwardOneSlide);
-      		_registerEvent("forward_arrow");
+      		_registerEvent("back_arrow");
       		$(document).on('click', '#forward_arrow', V.Slides.forwardOneSlide);	
+      		_registerEvent("forward_arrow");
       		_registerEvent("closeButton");
       		_registerEvent("closeButtonImg");
       		$(document).on('click', '#closeButton', function(){
@@ -164,11 +160,14 @@ VISH.Events = (function(V,$,undefined){
 		  				for(ind in slide.pois){
 		  					var poi = slide.pois[ind];
 		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+		  					_registerEvent(slide.id + "_" + poi.id);
 		  				}
-		      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+		      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+		      			_registerEvent("close_subslide");
       					break;
       				case VISH.Constant.VTOUR:
-      					$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+      					$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+      					_registerEvent("close_subslide");
       					break;
       			}
   		    }
@@ -231,7 +230,7 @@ VISH.Events = (function(V,$,undefined){
 	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
-	      			$(document).off('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+	      			$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
       			}
   		    }
 	  		bindedEventListeners = false;

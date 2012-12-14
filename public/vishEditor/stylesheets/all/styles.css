@@ -510,18 +510,23 @@ button#closeButton {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
 }
 
-.close_slide_fc{
+.close_subslide{
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: -11px;
+  right: -8px;
   width: 22px;
   height: 22px;
-  cursor:pointer;
-  background: url(/vishEditor/images/delete_slide.png);
-  z-index: 10;
+  background: transparent url('/vishEditor/images/delete_slide.png') no-repeat center;
+  background-size: 45%;
+  padding: 13px;
+  cursor: pointer;
+  z-index: 1103;
 }
-.close_slide_fc:hover{
-  background: url(/vishEditor/images/hover/delete_hover.png);
+
+.close_subslide:hover{
+  /*background: url(/vishEditor/images/hover/delete_hover.png);*/
+  background: transparent url('/vishEditor/images/hover/delete_hover.png') no-repeat center;
+  background-size: 45%;
 }
 
 
