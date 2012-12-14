@@ -172,9 +172,28 @@ VISH.Events = (function(V,$,undefined){
       					break;
       			}
   		    }
+
+  		    //when page is cached or updated, add presentation to localstorage
+  		    if(applicationCache){
+  		    	applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+				applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+  		    }
+
+    		if (!V.Status.getDevice().desktop){
+				bindMobileViewerEventListeners();
+			}
 		} 
 		bindedEventListeners = true;
    }
+
+	var bindMobileViewerEventListeners = function(){
+		window.addEventListener("load", function(){ hideAddressBar(); } );
+		window.addEventListener("orientationchange", hideAddressBar );
+
+		$(window).on('orientationchange',function(){
+			V.ViewerAdapter.setupSize();      
+		});
+	}
 
 	var unbindViewerEventListeners = function(){
 		if(bindedEventListeners){

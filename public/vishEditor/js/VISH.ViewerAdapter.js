@@ -1,6 +1,15 @@
 VISH.ViewerAdapter = (function(V,$,undefined){
 	var page_is_fullscreen = false; //it always init without fullscreen
 
+
+	/**
+	 * Initializer
+	 */
+	 var init = function(){
+	 	_initPager();
+	 	setupSize(false);
+	 }
+
 	/**
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
@@ -62,11 +71,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
 		
 		$(".subslide").css("margin-top", "-" + finalH/2 + "px");
-		$(".subslide").css("margin-left", "-" + marginLeft + "px");
-
-		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
-		//$(".viewbar").css("left", width/2 + "px");
-		//VISH.Debugging.log("viewbar a " + width/2 + "px");	
+		$(".subslide").css("margin-left", "-" + marginLeft + "px");	
 		
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
@@ -153,7 +158,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 
-	
+	var _initPager = function(){
+		if(VISH.Slides.getSlidesQuantity()>1){
+			$("#viewbar").show();
+			VISH.SlideManager.updateSlideCounter();
+		} else {
+			$("#viewbar").hide();
+		}		
+	}
+
+
 	/**
 	 * Function to hide/show the page-switchers buttons in the viewer
 	 * hide the left one if on first slide
@@ -161,13 +175,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(VISH.Slides.getSlidesQuantity()>1){
-			$("#viewbar").show();
-		} else {
-			$("#viewbar").hide();
-			return;
-		}
-
 		if(V.Status.getDevice().desktop){
 			$("#back_arrow").html("");
 			$("#forward_arrow").html("");
@@ -199,6 +206,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 	
 	return {
+		init 					: init,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		setupElements			: setupElements,
 		setupGame				: setupGame,
