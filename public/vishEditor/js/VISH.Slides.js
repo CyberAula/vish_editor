@@ -392,7 +392,6 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
 		$("#"+slide_id).hide();
-		var slideNumber = $.inArray($("#"+slide_id)[0], slideEls);
 		_triggerLeaveEventById(slide_id);	
 
 		//Notify
@@ -528,6 +527,10 @@ VISH.Slides = (function(V,$,undefined){
 		VISH.Editor.Utils.redrawSlides();					
 		VISH.Editor.Thumbnails.redrawThumbnails();
 	 }
+
+	 var getSlidesQuantity = function(){
+	 	return getSlides().length;
+	 }
 	
 	return {	
 			init          			: init,	
@@ -550,7 +553,8 @@ VISH.Slides = (function(V,$,undefined){
 			moveSlideTo				: moveSlideTo,
 			copySlide				: copySlide,
 			removeSlide				: removeSlide,
-			showFlashcardSlide		: showFlashcardSlide
+			showFlashcardSlide		: showFlashcardSlide,
+			getSlidesQuantity		: getSlidesQuantity
 	};
 
 }) (VISH,jQuery);
