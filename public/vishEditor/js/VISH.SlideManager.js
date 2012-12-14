@@ -235,7 +235,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var _onslideleave = function(e){
 		V.VideoPlayer.HTML5.stopVideos(e.target);
-		V.ObjectPlayer.unloadObject();
+		V.ObjectPlayer.unloadObject(e.target);
 		V.AppletPlayer.unloadApplet();		
 		if($(e.target).hasClass("flashcard_slide")){
 			$("#forward_arrow").css("top", "0%");

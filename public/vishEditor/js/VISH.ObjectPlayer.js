@@ -24,9 +24,8 @@ VISH.ObjectPlayer = (function(){
 	/**
 	 * Function to remove the flash objects from the slides
 	 */
-	var unloadObject= function(){
-		var element = $('.past, .next')
-		$.each(element.children('.objectelement'),function(index,value){
+	var unloadObject= function(element){		
+		$.each($(element).children('.objectelement'),function(index,value){
 			$(value).html("");
 		});
 	}
