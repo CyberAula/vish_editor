@@ -478,12 +478,9 @@ VISH.Editor = (function(V,$,undefined){
 				'padding' 			: 0,
 				'onClosed'			: function(){
 				  //if user has answered "yes"
-					if($("#prompt_answer").val() ==="true"){
-						$("#prompt_answer").val("false");
-						article_to_delete.remove();
-						VISH.Slides.onDeleteSlide();					
-						VISH.Editor.Utils.redrawSlides();						
-						VISH.Editor.Thumbnails.redrawThumbnails();			
+					if($("#prompt_answer").val() ==="true"){						
+						$("#prompt_answer").val("false");  
+            			VISH.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
 					}
 				}
 			}

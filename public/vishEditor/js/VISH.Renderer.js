@@ -16,19 +16,19 @@ VISH.Renderer = (function(V,$,undefined){
 	 * slides.html only have a section element and in this function we add an article element
 	 * with the proper content for the slide
 	 */	
-	var renderSlide = function(slide){
+	var renderSlide = function(slide, extra_classes, extra_buttons){
 		var article;
 
 		switch(slide.type){
 			case undefined:
 			case VISH.Constant.STANDARD:
-				article = _renderStandardSlide(slide);
+				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			case VISH.Constant.FLASHCARD:
-				article = _renderFlashcardSlide(slide);
+				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons);
 				break;
 			case VISH.Constant.VTOUR:
-				article = _renderVirtualTourSlide(slide);
+				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
 				break;
 			default:
 				article = null;
@@ -90,8 +90,14 @@ VISH.Renderer = (function(V,$,undefined){
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
-	var _renderFlashcardSlide = function(slide){
+	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons){
 		var all_slides = "";
+		if(!extra_classes){
+			var extra_classes = "";
+		}
+		if(!extra_buttons){
+			var extra_buttons = "";
+		}
 		//The flashcard has its own slides
 		for(index in slide.slides){
 			//Subslide id its a composition of parent id and its own id.
@@ -100,10 +106,10 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='flashcard_slide' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + " flashcard_slide' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
 	};
 
-	var _renderVirtualTourSlide = function(slide){
+	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons){
 		var all_slides = "";
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
@@ -111,7 +117,7 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_slide_fc' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='virtualTour_slide' type='virtualTour' id='"+slide.id+"'>"+div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + " virtualTour_slide' type='virtualTour' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
 	};
 
 
