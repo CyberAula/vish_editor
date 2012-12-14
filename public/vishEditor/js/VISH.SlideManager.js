@@ -257,26 +257,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};
-
-
-  /*
-   * added by KIKE to hide the address bar after loading
-   */
-  var hideAddressBar = function(){ 
-    	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
-        /*
-        if(document.body.style.height < window.outerHeight)
-        {
-            document.body.style.height = (window.outerHeight + 50) + 'px';
-            VISH.Debugging.log("height " + document.body.style.height);
-        }
-
-        setTimeout( function(){ 
-          VISH.Debugging.log("scroll");
-          window.scrollTo(0, 1); 
-          }, 50 );
-		*/
-  };
 	
 	var getCurrentPresentation = function(){
 		return current_presentation;
@@ -299,7 +279,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	: addEnterLeaveEvents,
-		hideAddressBar			: hideAddressBar,
 		toggleFullScreen 		: toggleFullScreen, 
 		getOptions				: getOptions,
 		updateSlideCounter		: updateSlideCounter,
