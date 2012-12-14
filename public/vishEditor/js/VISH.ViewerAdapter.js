@@ -1,6 +1,15 @@
 VISH.ViewerAdapter = (function(V,$,undefined){
 	var page_is_fullscreen = false; //it always init without fullscreen
 
+
+	/**
+	 * Initializer
+	 */
+	 var init = function(){
+	 	_initPager();
+	 	setupSize(false);
+	 }
+
 	/**
 	 * function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
@@ -23,7 +32,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 					margin_width = 0;
 			} else {
 				page_is_fullscreen = false;
-				reserved_px_for_menubar = 40;								
+				if(VISH.Slides.getSlidesQuantity()>1){
+					reserved_px_for_menubar = 40;
+				} else {
+					reserved_px_for_menubar = 0;
+				}							
 				margin_height = 40;
 				margin_width = 30;
 			}
@@ -58,12 +71,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
 		
 		$(".subslide").css("margin-top", "-" + finalH/2 + "px");
-		$(".subslide").css("margin-left", "-" + marginLeft + "px");
-
-		//viewbar, the bar with the arrows to pass slides, set left position to px, because if it is 50%, it moves when zoom in mobile
-		//$(".viewbar").css("left", width/2 + "px");
-		//VISH.Debugging.log("viewbar a " + width/2 + "px");
-		
+		$(".subslide").css("margin-left", "-" + marginLeft + "px");	
 		
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
@@ -102,31 +110,39 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var setupElements = function(){
 		//if page is fullscreen, it means we are exiting it
 		if(page_is_fullscreen){
-			//change icon
-		    $("#page-fullscreen").css("background-position", "0px 0px");
-		    $("#page-fullscreen").hover(function(){
-			    $("#page-fullscreen").css("background-position", "0px -40px");
-			  }, function() {
-			    $("#page-fullscreen").css("background-position", "0px 0px");
-			  });
-		    if(V.SlideManager.getPresentationType() === "presentation"){
-		    	$("#viewbar").show();
-		    	$(".vish_arrow").hide();
-		    }		    
+			_onLeaveFullScreen();
 		} else {
-			//change icon
-		    $("#page-fullscreen").css("background-position", "-45px 0px");
-		    $("#page-fullscreen").hover(function(){
-			    $("#page-fullscreen").css("background-position", "-45px -40px");
-			}, function() {
-			    $("#page-fullscreen").css("background-position", "-45px 0px");
-			});
-			if(V.SlideManager.getPresentationType() === "presentation"){
-				$("#viewbar").hide();
-				$(".vish_arrow").show();
-			}
+			_onEnterFullScreen();
 		}
 	};
+
+	var _onEnterFullScreen = function(){
+		$("#page-fullscreen").css("background-position", "-45px 0px");
+		$("#page-fullscreen").hover(function(){
+			$("#page-fullscreen").css("background-position", "-45px -40px");
+		}, function() {
+			$("#page-fullscreen").css("background-position", "-45px 0px");
+		});
+		if(VISH.Slides.getSlidesQuantity()>1){
+			$("#viewbar").show();
+		} else {
+			$("#viewbar").hide();
+		}
+	}
+
+	var _onLeaveFullScreen = function(){
+		$("#page-fullscreen").css("background-position", "0px 0px");
+		$("#page-fullscreen").hover(function(){
+			$("#page-fullscreen").css("background-position", "0px -40px");
+		}, function() {
+			$("#page-fullscreen").css("background-position", "0px 0px");
+		});
+		if(VISH.Slides.getSlidesQuantity()>1){
+			$("#viewbar").show();
+		} else {
+			$("#viewbar").hide();
+		}
+	}
 	
 	/**
 	* Method to add the src to the iframe, show it, hide the slides, and so on
@@ -142,49 +158,55 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 
-	
+	var _initPager = function(){
+		if(VISH.Slides.getSlidesQuantity()>1){
+			$("#viewbar").show();
+			VISH.SlideManager.updateSlideCounter();
+		} else {
+			$("#viewbar").hide();
+		}		
+	}
+
+
 	/**
-	 * function to hide/show the page-switchers buttons in the viewer
+	 * Function to hide/show the page-switchers buttons in the viewer
 	 * hide the left one if on first slide
 	 * hide the right one if on last slide
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		//page switchers only for presentations
-		if(V.SlideManager.getPresentationType() === "presentation"){
-
-			if(V.Status.getDevice().desktop){
-				$("#back_arrow").html("");
-				$("#forward_arrow").html("");
-			}
-
-			if(VISH.Slides.isCurrentFirstSlide()){
-				$("#back_arrow").hide();
-			} else {
-				$("#back_arrow").show();
-			} 
-			if (VISH.Slides.isCurrentLastSlide()){
-				$("#forward_arrow").hide();		
-			} else {
-				$("#forward_arrow").show();
-			}
-
-			if(!page_is_fullscreen && !V.Status.getDevice().mobile){
-				if(VISH.Slides.isCurrentFirstSlide()){
-					$("#page-switcher-start").hide();				
-				} else {
-					$("#page-switcher-start").show();
-				}  
-				if(VISH.Slides.isCurrentLastSlide()){
-					$("#page-switcher-end").hide();	
-				} else {
-					$("#page-switcher-end").show();
-				}
-			}		
+		if(V.Status.getDevice().desktop){
+			$("#back_arrow").html("");
+			$("#forward_arrow").html("");
 		}
+
+		if(VISH.Slides.isCurrentFirstSlide()){
+			$("#back_arrow").hide();
+		} else {
+			$("#back_arrow").show();
+		} 
+		if (VISH.Slides.isCurrentLastSlide()){
+			$("#forward_arrow").hide();		
+		} else {
+			$("#forward_arrow").show();
+		}
+
+		if(!page_is_fullscreen && !V.Status.getDevice().mobile){
+			if(VISH.Slides.isCurrentFirstSlide()){
+				$("#page-switcher-start").hide();				
+			} else {
+				$("#page-switcher-start").show();
+			}  
+			if(VISH.Slides.isCurrentLastSlide()){
+				$("#page-switcher-end").hide();	
+			} else {
+				$("#page-switcher-end").show();
+			}
+		}		
 	};
 	
 	return {
+		init 					: init,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		setupElements			: setupElements,
 		setupGame				: setupGame,

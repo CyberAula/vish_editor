@@ -45,10 +45,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 		V.Flashcard.init();
 		
-		//when page is cached or updated, add presentation to localstorage
-		applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-		applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-
 		//Experimental initializers for new excursion types
 		switch(presentation.type){
 			case VISH.Constant.GAME:
@@ -68,43 +64,17 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Themes.selectTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.ViewerAdapter.setupSize(false);
-		
-		$(window).on('orientationchange',function(){
-      		V.ViewerAdapter.setupSize();      
-    	});
-		
-		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
-		
-		if(!renderFull){
-			if ((V.Status.getDevice().features.fullscreen)&&(V.Status.getDevice().desktop)) {
-				if(V.Status.getIsInIframe()){
-					var myDoc = parent.document;
-				} else {
-					var myDoc = document;
-				}
-				$(document).on('click', '#page-fullscreen', toggleFullScreen);
-				$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
-		      		V.ViewerAdapter.setupElements();
-		      		//done with a timeout because it did not work well in ubuntu (in Kike's laptop)
-		      		setTimeout(function(){
-		      			V.ViewerAdapter.setupSize(true);
-		      			V.ViewerAdapter.decideIfPageSwitcher();
-		      		}, 400);    
-		    	});
-			}	else {
-			  	$("#page-fullscreen").hide();
-			}
+		V.ViewerAdapter.init();
+		V.Quiz.prepareQuiz(presentation);
+
+		//Init Vish Editor Addons
+		if(options.addons){
+			VISH.Addons.init(options.addons);
 		}
-		
-		if (V.Status.getDevice().desktop) {
-    		//show page counter (only for desktop, in mobile the slides are passed touching)
-    		$("#viewbar").show();
-    		updateSlideCounter();
-		} else {
-			window.addEventListener("load", function(){ hideAddressBar(); } );
-			window.addEventListener("orientationchange", hideAddressBar );		
-		}
+
+		///////////////////
+		//Interface changes
+		//////////////////
 
 		if((options)&&(options["preview"])){
 			$("div#viewerpreview").show();
@@ -114,28 +84,47 @@ VISH.SlideManager = (function(V,$,undefined){
 			$("button#closeButton").show();
 		}
 
-		V.Quiz.prepareQuiz(presentation);
 
-		//Init Vish Editor Addons
-		if(options.addons){
-			VISH.Addons.init(options.addons);
-		}
+		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 
-		if(renderFull){
+		if(!renderFull){
+			if (V.Status.getDevice().desktop) {
+				_enableFullScreen();
+			}	else {
+			  	$("#page-fullscreen").hide();
+			}
+		} else {
 			$("#page-fullscreen").hide();
 			V.ViewerAdapter.setupElements();
 			V.ViewerAdapter.setupSize(true);
 	      	V.ViewerAdapter.decideIfPageSwitcher();
 		}
-		
 	};
+
+
+	var _enableFullScreen = function(){
+		if((V.Status.getDevice().features.fullscreen)&&(V.Status.getIsInIframe())){
+			var myDoc = parent.document;
+		} else {
+			var myDoc = document;
+		}
+		$(document).on('click', '#page-fullscreen', toggleFullScreen);
+		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
+			V.ViewerAdapter.setupElements();
+			//Done with a timeout because it did not work well in ubuntu
+			setTimeout(function(){
+				V.ViewerAdapter.setupSize(true);
+				V.ViewerAdapter.decideIfPageSwitcher();
+			}, 400);    
+		});
+	}
+
 
 	/**
 	 * function to enter and exit fullscreen
 	 * the main difficulty here is to detect if we are in the iframe or in a full page outside the iframe
 	 */
 	var toggleFullScreen = function () {
-		V.Debugging.log("toggleFullScreen detected");
 		if(VISH.Status.isSlaveMode()){
 			return;
 		}
@@ -268,26 +257,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
 	};
-
-
-  /*
-   * added by KIKE to hide the address bar after loading
-   */
-  var hideAddressBar = function(){ 
-    	VISH.Debugging.log("TODO method hideAddressBar in slides.js");
-        /*
-        if(document.body.style.height < window.outerHeight)
-        {
-            document.body.style.height = (window.outerHeight + 50) + 'px';
-            VISH.Debugging.log("height " + document.body.style.height);
-        }
-
-        setTimeout( function(){ 
-          VISH.Debugging.log("scroll");
-          window.scrollTo(0, 1); 
-          }, 50 );
-		*/
-  };
 	
 	var getCurrentPresentation = function(){
 		return current_presentation;
@@ -310,7 +279,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		getStatus     			: getStatus,
 		updateStatus  			: updateStatus,
 		addEnterLeaveEvents  	: addEnterLeaveEvents,
-		hideAddressBar			: hideAddressBar,
 		toggleFullScreen 		: toggleFullScreen, 
 		getOptions				: getOptions,
 		updateSlideCounter		: updateSlideCounter,

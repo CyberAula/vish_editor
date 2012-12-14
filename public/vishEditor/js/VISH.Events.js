@@ -172,9 +172,42 @@ VISH.Events = (function(V,$,undefined){
       					break;
       			}
   		    }
+
+  		    //when page is cached or updated, add presentation to localstorage
+  		    if(applicationCache){
+  		    	applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+				applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+  		    }
+
+    		if (!V.Status.getDevice().desktop){
+				bindMobileViewerEventListeners();
+			}
 		} 
 		bindedEventListeners = true;
    }
+
+	var bindMobileViewerEventListeners = function(){
+		window.addEventListener("load", 				function(){ _hideAddressBar(); } );
+		window.addEventListener("orientationchange", 	function(){ _hideAddressBar(); } );
+		$(window).on('orientationchange',function(){
+			V.ViewerAdapter.setupSize();      
+		});
+	}
+
+	var _hideAddressBar = function(){ 
+		//TODO
+		/*
+		if(document.body.style.height < window.outerHeight) {
+			document.body.style.height = (window.outerHeight + 50) + 'px';
+			VISH.Debugging.log("height " + document.body.style.height);
+		}
+
+		setTimeout( function(){ 
+			VISH.Debugging.log("scroll");
+			window.scrollTo(0, 1); 
+		}, 50 );
+		*/
+	};
 
 	var unbindViewerEventListeners = function(){
 		if(bindedEventListeners){
