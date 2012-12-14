@@ -19,6 +19,13 @@ VISH.Renderer = (function(V,$,undefined){
 	var renderSlide = function(slide, extra_classes, extra_buttons){
 		var article;
 
+		if(!extra_classes){
+			var extra_classes = "";
+		}
+		if(!extra_buttons){
+			var extra_buttons = "";
+		}
+
 		switch(slide.type){
 			case undefined:
 			case VISH.Constant.STANDARD:
@@ -49,12 +56,6 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
-		if(!extra_classes){
-			var extra_classes = "";
-		}
-		if(!extra_buttons){
-			var extra_buttons = "";
-		}
 		for(el in slide.elements){
 			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
 				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
@@ -73,18 +74,18 @@ VISH.Renderer = (function(V,$,undefined){
       		} else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
-			} else if(slide.elements[el].type === "quiz"){
+			} else if(slide.elements[el].type === VISH.Constant.QUIZ){
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
-				classes += "quiz";
+				classes += VISH.Constant.QUIZ;
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
 
 		//When render a simple_quiz for voting
-		if(slide.type=="quiz") {
+		if(slide.type==VISH.Constant.QUIZ) {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
-			classes += "quiz";
+			classes += VISH.Constant.QUIZ;
 		}
 
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
@@ -92,12 +93,6 @@ VISH.Renderer = (function(V,$,undefined){
 
 	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons){
 		var all_slides = "";
-		if(!extra_classes){
-			var extra_classes = "";
-		}
-		if(!extra_buttons){
-			var extra_buttons = "";
-		}
 		//The flashcard has its own slides
 		for(index in slide.slides){
 			//Subslide id its a composition of parent id and its own id.
