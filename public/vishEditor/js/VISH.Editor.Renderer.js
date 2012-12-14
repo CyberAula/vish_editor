@@ -29,15 +29,20 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		VISH.Themes.selectTheme(presentation.theme);	
 
-		slides = presentation.slides;
-		for(var i=0;i<slides.length;i++){
-				if(slides[i].type === "flashcard"){
-					_renderFlashcard(slides[i], i, presentation.id);
-				}
-				else{
-					_renderSlide(slides[i], i, presentation.id);			
-				}
-		}	
+		if(presentation.type === V.Constant.FLASHCARD){
+			VISH.Editor.Flashcard.loadFlashcard(presentation);
+		}
+		else{
+			slides = presentation.slides;
+			for(var i=0;i<slides.length;i++){
+					if(slides[i].type === V.Constant.FLASHCARD){
+						_renderFlashcard(slides[i], i, presentation.id);
+					}
+					else{
+						_renderSlide(slides[i], i, presentation.id);			
+					}
+			}
+		}
 	};
 	
 		

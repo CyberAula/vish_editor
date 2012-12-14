@@ -11,7 +11,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$("#flashcard-background").show();
 		if(presentation){
 			//if we are editing an presentation
-			$("#flashcard-background").css("background-image", presentation.background.src);
+			$("#flashcard-background").css("background-image", presentation.slides[0].background);
 			$("#fc_change_bg_big").hide();
 		}
 

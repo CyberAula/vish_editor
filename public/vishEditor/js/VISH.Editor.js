@@ -81,10 +81,7 @@ VISH.Editor = (function(V,$,undefined){
 			setPresentation(presentation);
 			VISH.Editor.Renderer.init(presentation);
 			//remove focus from any zone
-			_removeSelectableProperties();
-			if(presentation.type === "flashcard"){
-				VISH.Editor.Flashcard.loadFlashcard(presentation);
-			}			
+			_removeSelectableProperties();					
 		}
 
 		
