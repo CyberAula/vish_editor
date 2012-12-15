@@ -13,6 +13,10 @@ VISH.Slides = (function(V,$,undefined){
 	var handleDomLoaded = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
 	  addFontStyle();
+	  if(V.SlideManager.getPresentationType() === V.Constant.FLASHCARD){
+	  	//this way updateSlides will add the class current and it will be shown
+	  	curSlideIndex = 0;
+	  }
 	  updateSlides(); 
 	  $('body').addClass('loaded');
 	};
@@ -522,7 +526,11 @@ VISH.Slides = (function(V,$,undefined){
 
 	 	$(slide).remove();
 	 	if(removing_current_slide){
-	 		setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	 		if((getCurrentSlideNumber()===1)&&(getSlidesQuantity()>1)){
+				setCurrentSlideNumber(1);
+	 		} else {
+	 			setCurrentSlideNumber(getCurrentSlideNumber()-1);
+	 		}
 	 	}
 		VISH.Editor.Utils.redrawSlides();					
 		VISH.Editor.Thumbnails.redrawThumbnails();

@@ -76,29 +76,29 @@ VISH.Editor.Events = (function(V,$,undefined){
    var bindEditorEventListeners = function(){
    		if(!bindedEventListeners){
    			var presentation = V.Editor.getPresentation();
-			if(presentation.type === "presentation"){
-				$(document).bind('keydown', handleBodyKeyDown); 
-				$(document).bind('keyup', handleBodyKeyUp);   
-	      	}	
 
-	      	for(index in presentation.slides){
-	      		var slide = presentation.slides[index];
+			$(document).bind('keydown', handleBodyKeyDown); 
+			$(document).bind('keyup', handleBodyKeyUp);   	
 
-      			switch(slide.type){
-      				case VISH.Constant.FLASHCARD:
-	      				//Add the points of interest with their click events to show the slides
-		  				for(ind in slide.pois){
-		  					var poi = slide.pois[ind];
-		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
-		  				}
-		      			$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
-      					break;
-      				case VISH.Constant.VTOUR:
-      					$(document).on('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
-      					break;
-      			}
-  		    }
+			if((VISH.Editing)&&(presentation)){
+				for(index in presentation.slides){
+		      		var slide = presentation.slides[index];
 
+	      			switch(slide.type){
+	      				case VISH.Constant.FLASHCARD:
+		      				//Add the points of interest with their click events to show the slides
+			  				for(ind in slide.pois){
+			  					var poi = slide.pois[ind];
+			  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+			  				}
+			      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+	      					break;
+	      				case VISH.Constant.VTOUR:
+	      					$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+	      					break;
+	      			}
+	  		    }
+			}
 		} 
 		bindedEventListeners = true;
    }
@@ -117,7 +117,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	  					var poi = presentation.slides[index].pois[ind];
 	  					$(document).off('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 	  				}
-	      			$(document).off('click','.close_slide_fc', _onFlashcardCloseSlideClicked);
+	      			$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
       			}
   		    }
 

@@ -10,11 +10,14 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//show flashcard background, should be an image with help by default
 		$("#flashcard-background").show();
 		if(presentation){
-			//if we are editing an presentation
+			//if we are editing a presentation
 			$("#flashcard-background").css("background-image", presentation.slides[0].background);
 			$("#fc_change_bg_big").hide();
+			$("#flashcard-background").attr("flashcard_id", presentation.slides[0].id);
 		}
-
+		else{
+			$("#flashcard-background").attr("flashcard_id", VISH.Constant.TEMP_FC_ID);
+		}
 		$("#flashcard-background").droppable();  //to accept the pois
 	};
 
@@ -73,8 +76,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 	var _applyStyleToPois = function(){
 		var presentation = V.Editor.getPresentation();
-		if(presentation && presentation.background && presentation.background.pois){
-			$.each(presentation.background.pois, function(index, val) { 
+		if(presentation && presentation.slides[0] && presentation.slides[0].pois){
+			$.each(presentation.slides[0].pois, function(index, val) { 
   				$("#" + val.id).css("position", "fixed");
   				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
   				$("#" + val.id).attr("moved", "true");

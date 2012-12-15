@@ -559,7 +559,7 @@ div.addUrlButtons{
 	height: 22px;
 	cursor:pointer;
 	background: url(/vishEditor/images/delete_slide.png);
-	z-index: 200000;
+	z-index: 1074;
 }
 
 .delete_slide:hover{

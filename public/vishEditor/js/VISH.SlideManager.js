@@ -88,7 +88,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 
 		if(!renderFull){
-			if (V.Status.getDevice().desktop) {
+			if (V.Status.getDevice().desktop && !options & !options["preview"]) {
 				_enableFullScreen();
 			}	else {
 			  	$("#page-fullscreen").hide();
@@ -235,7 +235,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var _onslideleave = function(e){
 		V.VideoPlayer.HTML5.stopVideos(e.target);
-		V.ObjectPlayer.unloadObject();
+		V.ObjectPlayer.unloadObject(e.target);
 		V.AppletPlayer.unloadApplet();		
 		if($(e.target).hasClass("flashcard_slide")){
 			$("#forward_arrow").css("top", "0%");

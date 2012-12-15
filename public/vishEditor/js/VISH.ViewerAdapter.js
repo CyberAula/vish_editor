@@ -159,12 +159,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 
 	var _initPager = function(){
-		if(VISH.Slides.getSlidesQuantity()>1){
-			$("#viewbar").show();
-			VISH.SlideManager.updateSlideCounter();
+		if(V.Status.getDevice().desktop){
+			$("#back_arrow").html("");
+			$("#forward_arrow").html("");
+
+			if(VISH.Slides.getSlidesQuantity()>1){
+				$("#viewbar").show();
+				VISH.SlideManager.updateSlideCounter();
+			} else {
+				$("#viewbar").hide();
+			}
+
 		} else {
 			$("#viewbar").hide();
-		}		
+		}
 	}
 
 
@@ -175,11 +183,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(V.Status.getDevice().desktop){
-			$("#back_arrow").html("");
-			$("#forward_arrow").html("");
-		}
-
 		if(VISH.Slides.isCurrentFirstSlide()){
 			$("#back_arrow").hide();
 		} else {
@@ -193,7 +196,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(!page_is_fullscreen && !V.Status.getDevice().mobile){
 			if(VISH.Slides.isCurrentFirstSlide()){
-				$("#page-switcher-start").hide();				
+				$("#page-switcher-start").hide();			
 			} else {
 				$("#page-switcher-start").show();
 			}  

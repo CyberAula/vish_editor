@@ -30,6 +30,11 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		VISH.Themes.selectTheme(presentation.theme);	
 
 		if(presentation.type === V.Constant.FLASHCARD){
+			slides = presentation.slides[0].slides;
+			for(var i=0;i<slides.length;i++){
+				_renderSlide(slides[i], i, presentation.id);
+			}
+
 			VISH.Editor.Flashcard.loadFlashcard(presentation);
 		}
 		else{

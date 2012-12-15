@@ -306,6 +306,26 @@ VISH.Editor = (function(V,$,undefined){
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
 		}
+		if($(e.target).hasClass("subslide")){
+			setTimeout(function(){
+				if($(e.target).hasClass('object')){
+					V.ObjectPlayer.loadObject($(e.target));
+				}
+				else if($(e.target).hasClass('applet')){
+					V.AppletPlayer.loadApplet($(e.target));
+				}
+				else if($(e.target).hasClass('snapshot')){
+	        		V.SnapshotPlayer.loadSnapshot($(e.target));
+	      		}
+			},500);
+			
+			V.VideoPlayer.HTML5.playVideos(e.target);
+
+			if($(e.target).hasClass("flashcard_slide")){
+				$("#forward_arrow").css("top", "15%");
+				V.Flashcard.startAnimation(e.target.id);
+			}
+		}
 	};
   
 	/**
@@ -316,6 +336,15 @@ VISH.Editor = (function(V,$,undefined){
 		$('.object_wrapper').hide();
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.stopAnimation(e.target.id);
+		}
+		if($(e.target).hasClass("subslide")){
+			V.VideoPlayer.HTML5.stopVideos(e.target);
+			V.ObjectPlayer.unloadObject(e.target);
+			V.AppletPlayer.unloadApplet();		
+			if($(e.target).hasClass("flashcard_slide")){
+				$("#forward_arrow").css("top", "0%");
+				V.Flashcard.stopAnimation(e.target.id);
+			}
 		}
 	};
   
@@ -588,14 +617,6 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			presentation.type = getPresentationType();
 		}
-		/*
-		if(presentation.type==="flashcard"){
-			presentation.background = {};
-			presentation.background.src = $("#flashcard-background").css("background-image");
-			//save the pois
-			presentation.background.pois = VISH.Editor.Flashcard.savePois();
-		}
-		*/
 
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
@@ -611,11 +632,35 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		presentation.author = '';
 		presentation.slides = [];
-		
+
 		var slide = {};
+		if(presentation.type==="flashcard"){
+			slide.id = $("#flashcard-background").attr("flashcard_id");
+			slide.type = "flashcard";
+			slide.background = $("#flashcard-background").css("background-image");
+			//save the pois
+			slide.pois = VISH.Editor.Flashcard.savePois();
+			slide.slides = [];
+			presentation.slides.push(slide);
+		}
+
+
+		slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
-			slide.type = "standard";
+			slide.type = $(s).attr('type');
+			if(slide.type === V.Constant.FLASHCARD){
+				//if it is a flashcard slide, it can't be modified in the editor, so we take it from slideEls
+				for(index in draftPresentation.slides){
+					if(draftPresentation.slides[index].id === slide.id){
+						slide = draftPresentation.slides[index];
+						break;
+					}
+				}
+				presentation.slides.push(slide);
+				slide = {};
+				return true; //equivalent to continue in an each loop
+			}
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
@@ -718,7 +763,15 @@ VISH.Editor = (function(V,$,undefined){
 			
 				
 			});
-			presentation.slides.push(slide);
+
+			if(presentation.type==="flashcard"){
+				//if it is flashcard we save the slide into the flashcard slides (the flashcard is the first slide by convention)
+				presentation.slides[0].slides.push(slide);
+			}
+			else{
+				presentation.slides.push(slide);
+			}
+			
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});
