@@ -132,6 +132,7 @@ var _startStats = function() {
   $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
   $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
   var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
+  options_form.find(".multiplechoice_option_in_viewer").addClass("option_in_stats");
   $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
   $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
 

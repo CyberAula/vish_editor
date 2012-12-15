@@ -119,6 +119,9 @@ height: 100%;
     text-align: left;
 
 }
+.option_in_stats {
+
+}
 
 
 /* True/False Question Quiz*/
@@ -881,10 +884,6 @@ height: 20%;
 
 }
 
-.quiz_in_satistics { /* for all quiz types */
-      text-align: center;  
-      margin: 3%;
-}
 #mask_stop_quiz {
       position:absolute;
       z-index:9000;
@@ -958,8 +957,8 @@ height: 20%;
 }
 
 .question_in_stats {
-    
-    
+
+
 }
 
 .thanks_div {
