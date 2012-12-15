@@ -648,7 +648,19 @@ VISH.Editor = (function(V,$,undefined){
 		slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
-			slide.type = "standard";
+			slide.type = $(s).attr('type');
+			if(slide.type === V.Constant.FLASHCARD){
+				//if it is a flashcard slide, it can't be modified in the editor, so we take it from slideEls
+				for(index in draftPresentation.slides){
+					if(draftPresentation.slides[index].id === slide.id){
+						slide = draftPresentation.slides[index];
+						break;
+					}
+				}
+				presentation.slides.push(slide);
+				slide = {};
+				return true; //equivalent to continue in an each loop
+			}
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
