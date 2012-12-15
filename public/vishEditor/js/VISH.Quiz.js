@@ -117,6 +117,7 @@ Load the question  options into the stats containers
  */
 
 var _startStats = function() {
+  var question;
   if($("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").contents()){ 
     $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").children().remove();
   }
@@ -126,13 +127,15 @@ var _startStats = function() {
   if($("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children()){ 
     $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children().remove();
   }
-  $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone"));
-  $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append($(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone"));
+  question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone");
+  question.addClass("question_in_stats");
+  $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
+  $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
   var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
   $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
   $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
 
-  $("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
+  //$("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
   //add class to resize div inside fancybox 
   $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
   $("#tab_quiz_stats_pie_content").addClass("resized_fancybox_for_stats");
