@@ -23,6 +23,8 @@ VISH.Constant.LARGE = "large";
 
 //Defaults
 VISH.Constant.AGE_RANGE = "4 - 20";
+//temporal id prefix, used before preview
+VISH.Constant.TEMP_FC_ID = "tempFlashcardId";
 
 //Presentation and slide types
 VISH.Constant.PRESENTATION = "presentation";

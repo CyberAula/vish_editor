@@ -88,7 +88,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 
 		if(!renderFull){
-			if (V.Status.getDevice().desktop) {
+			if (V.Status.getDevice().desktop && !options & !options["preview"]) {
 				_enableFullScreen();
 			}	else {
 			  	$("#page-fullscreen").hide();

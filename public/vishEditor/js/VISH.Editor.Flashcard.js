@@ -13,8 +13,11 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			//if we are editing a presentation
 			$("#flashcard-background").css("background-image", presentation.slides[0].background);
 			$("#fc_change_bg_big").hide();
+			$("#flashcard-background").attr("flashcard_id", presentation.slides[0].id);
 		}
-
+		else{
+			$("#flashcard-background").attr("flashcard_id", VISH.Constant.TEMP_FC_ID);
+		}
 		$("#flashcard-background").droppable();  //to accept the pois
 	};
 

@@ -13,6 +13,10 @@ VISH.Slides = (function(V,$,undefined){
 	var handleDomLoaded = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
 	  addFontStyle();
+	  if(V.SlideManager.getPresentationType() === V.Constant.FLASHCARD){
+	  	//this way updateSlides will add the class current and it will be shown
+	  	curSlideIndex = 0;
+	  }
 	  updateSlides(); 
 	  $('body').addClass('loaded');
 	};

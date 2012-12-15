@@ -617,14 +617,6 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			presentation.type = getPresentationType();
 		}
-		/*
-		if(presentation.type==="flashcard"){
-			presentation.background = {};
-			presentation.background.src = $("#flashcard-background").css("background-image");
-			//save the pois
-			presentation.background.pois = VISH.Editor.Flashcard.savePois();
-		}
-		*/
 
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
@@ -640,8 +632,20 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		presentation.author = '';
 		presentation.slides = [];
-		
+
 		var slide = {};
+		if(presentation.type==="flashcard"){
+			slide.id = $("#flashcard-background").attr("flashcard_id");
+			slide.type = "flashcard";
+			slide.background = $("#flashcard-background").css("background-image");
+			//save the pois
+			slide.pois = VISH.Editor.Flashcard.savePois();
+			slide.slides = [];
+			presentation.slides.push(slide);
+		}
+
+
+		slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = "standard";
@@ -747,7 +751,15 @@ VISH.Editor = (function(V,$,undefined){
 			
 				
 			});
-			presentation.slides.push(slide);
+
+			if(presentation.type==="flashcard"){
+				//if it is flashcard we save the slide into the flashcard slides (the flashcard is the first slide by convention)
+				presentation.slides[0].slides.push(slide);
+			}
+			else{
+				presentation.slides.push(slide);
+			}
+			
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});
