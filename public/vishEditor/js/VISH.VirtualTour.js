@@ -16,13 +16,13 @@ VISH.VirtualTour = (function(V,$,undefined){
     if(!vt.type===VISH.Constant.VTOUR){
       return;
     }
-
+    V.Debugging.log("drawMap : " +JSON.stringify(vt));
     //Include canvas
     var canvas_id = "canvas_" + vt.id;
     var canvas =  $("<div id='"+canvas_id+"' class='map_canvas' style='height:"+"100%"+"; width:"+"100%"+"'></div>");
     $("#"+vt.id).append(canvas);
 
-    var latlng = new google.maps.LatLng(vt.center.lat, vt.center.long);
+    var latlng = new google.maps.LatLng(vt.center.lat, vt.center.lon);
     var myOptions = {
       zoom: vt.zoom,
       center: latlng,
@@ -41,12 +41,12 @@ VISH.VirtualTour = (function(V,$,undefined){
       var myPoi = poi;
       poi.slide_id = vt.id + "_" + poi.slide_id;
       virtualTours[vt.id].pois[poi.id] = myPoi;
-      addMarkerToCoordinates(vt,poi.lat,poi.long,poi.id);
+      addMarkerToCoordinates(vt,poi.lat,poi.lon,poi.id);
     });
   }
 
-  var addMarkerToCoordinates = function(vt,lat,long,poi_id){
-    return addMarkerToPosition(vt,new google.maps.LatLng(lat,long),poi_id);
+  var addMarkerToCoordinates = function(vt,lat,lon,poi_id){
+    return addMarkerToPosition(vt,new google.maps.LatLng(lat,lon),poi_id);
   }
 
   var addMarkerToPosition = function(vt,myLatlng,poi_id){

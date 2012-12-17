@@ -122,7 +122,7 @@ VISH.Samples = (function(V,undefined){
 				"center"		: 
 					{
 						"lat": 		"41.23315032959268",
-						"long": 	"-366.3451357421875"
+						"lon": 	"-366.3451357421875"
 					},
 				"zoom"			: 5,
 				"mapType" 		: "roadmap",
@@ -131,22 +131,22 @@ VISH.Samples = (function(V,undefined){
 	 			"pois": [
 	 				{	"id"		: "poi1",
 	 					"lat" 		: "40.245991504199026",
-	 				  	"long" 		: "-3.6474609375",
+	 				  	"lon" 		: "-3.6474609375",
 	 				  	"slide_id"	: "article1"
 	 				},
 	 				{	"id"		: "poi2",
 	 				  	"lat" 		: "41.27780646738183",
-	 				  	"long" 		: "2.1533203125",
+	 				  	"lon" 		: "2.1533203125",
 	 				  	"slide_id"	: "article2"
 	 				},
 	 				{	"id"		: "poi3",
 	 				  	"lat" 		: "37.26530995561875",
-	 				  	"long" 		: "-5.9765625",
+	 				  	"lon" 		: "-5.9765625",
 	 				  	"slide_id"	: "article3"
 	 				},
 	 				{	"id"		: "poi4",
 	 				  	"lat" 		: "43.26120612479979",
-	 				  	"long" 		: "-5.9765625",
+	 				  	"lon" 		: "-5.9765625",
 	 				  	"slide_id"	: "article4"
 	 				}
 	 			],
@@ -274,7 +274,7 @@ VISH.Samples = (function(V,undefined){
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "long": "-4.024515151977539"
+             "lon": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
@@ -283,22 +283,22 @@ VISH.Samples = (function(V,undefined){
          "pois": [{
              "id": "poi1",
              "lat": "39.858808",
-             "long": "-4.020706",
+             "lon": "-4.020706",
              "slide_id": "article1"
          }, {
              "id": "poi2",
              "lat": "39.85710791823466",
-             "long": "-4.02348518371582",
+             "lon": "-4.02348518371582",
              "slide_id": "article2"
          }, {
              "id": "poi3",
              "lat": "39.86267518700749",
-             "long": "-4.02498722076416",
+             "lon": "-4.02498722076416",
              "slide_id": "article3"
          }, {
              "id": "poi4",
              "lat": "39.85586400561856",
-             "long": "-4.029305577278137",
+             "lon": "-4.029305577278137",
              "slide_id": "article4"
          } ],
          "tours": [{
@@ -474,7 +474,7 @@ VISH.Samples = (function(V,undefined){
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "long": "-4.024515151977539"
+             "lon": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
@@ -483,22 +483,22 @@ VISH.Samples = (function(V,undefined){
          "pois": [{
              "id": "poi1",
              "lat": "39.858808",
-             "long": "-4.020706",
+             "lon": "-4.020706",
              "slide_id": "article1"
          }, {
              "id": "poi2",
              "lat": "39.85710791823466",
-             "long": "-4.02348518371582",
+             "lon": "-4.02348518371582",
              "slide_id": "article2"
          }, {
              "id": "poi3",
              "lat": "39.86267518700749",
-             "long": "-4.02498722076416",
+             "lon": "-4.02498722076416",
              "slide_id": "article3"
          }, {
              "id": "poi4",
              "lat": "39.85586400561856",
-             "long": "-4.029305577278137",
+             "lon": "-4.029305577278137",
              "slide_id": "article4"
          } ],
          "tours": [{
