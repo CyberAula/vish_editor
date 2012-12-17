@@ -122,7 +122,7 @@ VISH.Samples = (function(V,undefined){
 				"center"		: 
 					{
 						"lat": 		"41.23315032959268",
-						"long": 	"-366.3451357421875",
+						"long": 	"-366.3451357421875"
 					},
 				"zoom"			: 5,
 				"mapType" 		: "roadmap",
@@ -148,7 +148,7 @@ VISH.Samples = (function(V,undefined){
 	 				  	"lat" 		: "43.26120612479979",
 	 				  	"long" 		: "-5.9765625",
 	 				  	"slide_id"	: "article4"
-	 				},
+	 				}
 	 			],
 	 			"tours": [
 	 				{
@@ -274,7 +274,7 @@ VISH.Samples = (function(V,undefined){
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "long": "-4.024515151977539",
+             "long": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
@@ -300,7 +300,7 @@ VISH.Samples = (function(V,undefined){
              "lat": "39.85586400561856",
              "long": "-4.029305577278137",
              "slide_id": "article4"
-         }, ],
+         } ],
          "tours": [{
              //Tour metadata
              "id": "tour1",
@@ -474,7 +474,7 @@ VISH.Samples = (function(V,undefined){
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "long": "-4.024515151977539",
+             "long": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
@@ -500,7 +500,7 @@ VISH.Samples = (function(V,undefined){
              "lat": "39.85586400561856",
              "long": "-4.029305577278137",
              "slide_id": "article4"
-         }, ],
+         } ],
          "tours": [{
              //Tour metadata
              "id": "tour1",
