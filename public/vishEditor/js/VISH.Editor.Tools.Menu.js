@@ -436,6 +436,15 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		VISH.Editor.Tools.init();
 	};
 
+	var insertFlashcard = function(){
+		$("#addSlideFancybox").trigger('click');
+		VISH.Utils.loadTab('tab_flashcards');
+	};
+
+	var insertSlide = function(){
+		$("#addSlideFancybox").trigger('click');
+		VISH.Utils.loadTab('tab_templates');
+	};
 
 
 
@@ -444,6 +453,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		disableMenu 					: disableMenu ,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
+		insertFlashcard					: insertFlashcard,
+		insertSlide						: insertSlide,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,

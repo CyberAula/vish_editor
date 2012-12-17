@@ -221,6 +221,11 @@ div.addUrlButtons{
 	margin-left: 430px;
 }
 
+.marginsfancy3 {
+	margin-top: 30px;
+	margin-left: 330px;
+}
+
 .input_text_fancy {
 	font-family:Helvetica;
 	font-size: 16px;
@@ -403,9 +408,9 @@ div.addUrlButtons{
 	margin: 0px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	width: 95%;
-	height: 90px;
+	-moz-border-radius: 10px;	
+	width: 638px;
+	height: 340px;
 }
 
 .templatethumb, .quizFancythumb {
@@ -465,11 +470,6 @@ div.addUrlButtons{
 .menu{
 	width: 100%;
 	height: 120px;
-}
-
-#thumbcontent{
-	width: 638px;
-	height: 340px;
 }
 
 #theme_fancybox{
@@ -1826,3 +1826,9 @@ margin: 0px;
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: url(/vishEditor/images/opcion.png) no-repeat; font-weight: normal; color: none; }
 .ui-widget-header { border: 1px solid #e78f08; background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
+
+.fc_repo_content {
+	width: 638px;
+	height: 230px;
+	position: absolute;
+}

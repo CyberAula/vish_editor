@@ -92,6 +92,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.Menu.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>	
@@ -190,25 +191,28 @@
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option" href="#" i18n-key="i.Import">Import</a>
+								<a class="menu_option menu_all" href="#" i18n-key="i.Insert">Insert</a>
 								<ul>
 									<li>
-										<a class="menu_option menu_action menu_all" i18n-key="i.File">File</a>
+										<a class="menu_option menu_action menu_all" action="insertSlide" i18n-key="i.NewSlide">New Slide</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_all" i18n-key="i.Presentation">Presentation</a>
+										<a style="display:none" class="menu_option menu_action menu_all" i18n-key="i.File">File</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation">Flashcard</a>
+										<a style="display:none" class="menu_option menu_action menu_all" i18n-key="i.Presentation">Presentation</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" i18n-key="i.Game">Game</a>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertFlashcard" i18n-key="i.Flashcard">Flashcard</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" i18n-key="i.vExperiment">Virtual Experiment</a>
+										<a style="display:none" class="menu_option menu_action menu_presentation menu_standard_presentation" i18n-key="i.Game">Game</a>
+									</li>
+									<li>
+										<a style="display:none" class="menu_option menu_action menu_presentation menu_standard_presentation" i18n-key="i.vExperiment">Virtual Experiment</a>
 									</li>
 								</ul>
-							</li>
+							</li>							
 							<li>
 								<a class="menu_option menu_all" i18n-key="i.ConvertTo">Convert to</a>
 								<ul>
@@ -216,7 +220,7 @@
 										<a class="menu_option menu_action menu_flashcard menu_game" action="switchToPresentation" i18n-key="i.Presentation">Presentation</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_standard_presentation menu_game" action="switchToFlashcard">Flashcard</a>
+										<a class="menu_option menu_action menu_standard_presentation menu_game" action="switchToFlashcard" i18n-key="i.Flashcard">Flashcard</a>
 									</li>
 									<li>
 										<a style="display:none" class="menu_option menu_action" action="switchToGame" i18n-key="i.Game">Game</a>
@@ -426,12 +430,15 @@
 			<div class='fancy_tabs' id='thumcontent_tabs'>
 				<ul>
 					<li>
-						<a href="#" onclick="VISH.Editor.loadFancyBox('templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a>
+						<a href="#" onclick="VISH.Utils.loadTab('tab_templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a>
+					</li>
+					<li>
+						<a href="#" onclick="VISH.Utils.loadTab('tab_flashcards_repo')" id="tab_flashcards_repo" class="fancy_tab tabbable" i18n-key="i.Flashcards">Flashcards</a>
 					</li>
 				</ul>
 			</div> 
 
-			<div id='tab_templates_content' class="fancy_tab_content" style='display:inline' > 
+			<div id='tab_templates_content' class="fancy_tab_content" style='display:none' > 
 				<img id='help_template_selection' src='/vishEditor/images/helptutorial_circle_blank.png'/>
 				<div class='templatethumb' template='1'>
 					<img src='/vishEditor/images/templatesthumbs/t1.png' />
@@ -479,6 +486,18 @@
 					<img src='/vishEditor/images/templatesthumbs/t15.png' />
 				</div>
 			</div>
+
+			<div id='tab_flashcards_repo_content' class="fancy_tab_content" style='display:none' > 
+			  <div class="fc_repo_content">
+	          		<img src="images/repositoryimg.png" class="imagelogotab"/>				  		  
+					<div class="search_container">
+					  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy3" > </input>
+					</div>
+						
+					<div id="tab_flashcards_repo_content_carrousel"></div>       		
+          		</div>	
+			</div>
+
 		</div>
 	</div>
 
@@ -743,7 +762,7 @@
         </div>            
 				<div id='tab_pic_repo_content' class="fancy_tab_content">
           <div class="box1 box1fancy2">
-	          <img src="images/repositoryimg.png" class="imagelogotab">				  		  
+	          <img src="images/repositoryimg.png" class="imagelogotab"/>				  		  
 						<div class="search_container">
 						  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
@@ -901,7 +920,7 @@
 				
 				<div id='tab_object_repo_content' class="fancy_tab_content">	
           <div class="box1 box1fancy2">
-	          <img src="images/repositoryimg.png" class="imagelogotab">				  
+	          <img src="images/repositoryimg.png" class="imagelogotab"/>				  
 						<div class="search_container">
 						  <input id="search_object" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
@@ -965,7 +984,7 @@
        </div>
 				<div id='tab_video_repo_content' class="fancy_tab_content">		
             <div class="box1 box1fancy2">	
-	            <img src="images/repositoryimg.png" class="imagelogotab">	  
+	            <img src="images/repositoryimg.png" class="imagelogotab"/>	  
 							<div class="search_container">
 							  <input id="search_video" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 							</div>
@@ -1042,7 +1061,7 @@
         
         <div id='tab_live_webcam_content' class="fancy_tab_content"> 
           <div class="box1 box1fancy2">
-            <img src="images/repositoryimg.png" class="imagelogotab">         
+            <img src="images/repositoryimg.png" class="imagelogotab"/>         
             <div class="search_container">
               <input id="search_webcam" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
             </div>

@@ -1,5 +1,10 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
+
+	var init = function(){
+		VISH.Editor.Flashcard.Repository.init();
+	};
+
 	var loadFlashcard = function(presentation){
 		//first action, set presentation type to "flashcard"
 		V.Editor.setPresentationType("flashcard");
@@ -119,6 +124,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	return {
+		init 				 : init,
 		hasChangedBackground : hasChangedBackground,
 		hasPoiInBackground	 : hasPoiInBackground,
 		loadFlashcard		 : loadFlashcard,

@@ -86,11 +86,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	      			switch(slide.type){
 	      				case VISH.Constant.FLASHCARD:
-		      				//Add the points of interest with their click events to show the slides
-			  				for(ind in slide.pois){
-			  					var poi = slide.pois[ind];
-			  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
-			  				}
+		      				bindEventsForFlashcard(slide);
+		      				
 			      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 	      					break;
 	      				case VISH.Constant.VTOUR:
@@ -101,7 +98,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 		} 
 		bindedEventListeners = true;
-   }
+   };
+
+   var bindEventsForFlashcard = function(slide){
+		//Add the points of interest with their click events to show the slides
+		for(ind in slide.pois){
+			var poi = slide.pois[ind];
+			$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+		}
+   };
 
 	var unbindEditorEventListeners = function(){
 		if(bindedEventListeners){
@@ -128,6 +133,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	return {
 			init 		: init,
 			bindEditorEventListeners	: bindEditorEventListeners,
+			bindEventsForFlashcard		: bindEventsForFlashcard,
 			unbindEditorEventListeners	: unbindEditorEventListeners
 	};
 

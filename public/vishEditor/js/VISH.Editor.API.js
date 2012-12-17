@@ -6,7 +6,42 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
 	
+
+ 
 	
+  /**
+   * function to call to VISH and request flashcards in json format
+   * The request is:
+   * GET /excursions/search.json?q=nano&type=flashcard
+   */
+  var requestFlashcards = function(text, successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = VISH.Samples.API.flashcardList;
+        successCallback(result);
+      }
+      return;
+    }
+             
+    _requestByType("flashcard", text, successCallback, failCallback);   
+  };
+  
+  /**
+   * function to call to VISH and request recommended flashcards
+   */
+  var requestRecomendedFlashcards = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+            var result =  VISH.Samples.API.flashcardList;
+            successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("flashcard", "", successCallback, failCallback);
+  };
+
+
 	/**
 	 * function to call to VISH and request videos in json format
 	 * The request is:
@@ -382,6 +417,8 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	return {
 		init					            : init,
+    requestFlashcards         : requestFlashcards,
+    requestRecomendedFlashcards : requestRecomendedFlashcards,
 		requestVideos             : requestVideos,
 		requestRecomendedVideos   : requestRecomendedVideos,
 		requestImages             : requestImages,

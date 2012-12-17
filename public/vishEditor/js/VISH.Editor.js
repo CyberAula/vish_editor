@@ -164,6 +164,7 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
 		VISH.Editor.Clipboard.init();
+		VISH.Editor.Flashcard.init();
 
 		VISH.Editor.Events.init();
 		VISH.EventsNotifier.init();
@@ -935,7 +936,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Load the initial fancybox
 	 */
 	var loadFancyBox = function(fancy) {
-		var fancyBoxes = {1: "templates", 2: "quizes"}	
+		var fancyBoxes = {1: "templates", 2: "flashcards"}	
 				
 		for( tab in fancyBoxes) {
 			$('#tab_'+fancyBoxes[tab]+'_content').hide();

@@ -273,6 +273,12 @@ var getZoomFromStyle = function(style){
 
         //Submodule callbacks	
 		switch (tab_id) {
+			//templates and flashcards
+			case "tab_templates":
+				break;
+			case "tab_flashcards_repo":
+				V.Editor.Flashcard.Repository.onLoadTab();
+				break;
 			//Image
 			case "tab_pic_from_url":
 				V.Editor.Image.onLoadTab("url");
