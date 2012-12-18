@@ -53,7 +53,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		VISH.Utils.loadDeviceCSS();
 
-		VISH.Dummies.init();
+		VISH.Editor.Dummies.init();
 		VISH.Slides.init();
 		VISH.User.init(options);
 
@@ -77,6 +77,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		//If we have to edit
 		if(presentation){
+			if(typeof presentation.VEVersion === "undefined"){
+				presentation.VEVersion = "0.1";
+			}
 			initialPresentation = true;
 			setPresentation(presentation);
 			VISH.Editor.Renderer.init(presentation);
@@ -361,7 +364,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : "";
-		var slide = VISH.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlides().length, theid, false);	
+		var slide = VISH.Editor.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlidesQuantity()+1);
 		VISH.Editor.Utils.addSlide(slide);
 		$.fancybox.close();
 		VISH.Editor.Utils.redrawSlides();		
@@ -677,6 +680,8 @@ VISH.Editor = (function(V,$,undefined){
 				if($(div).attr("areaid") !== undefined){   
 
 					element.id 		= $(div).attr('id');
+					// VISH.Debugging.log("element id");
+					// VISH.Debugging.log(element.id);
 					element.type 	= $(div).attr('type');
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 

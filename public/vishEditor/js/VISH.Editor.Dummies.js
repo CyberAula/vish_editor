@@ -1,13 +1,6 @@
-VISH.Dummies = (function(VISH,undefined){
-	//variable to add to the id when replacing id_to_change in the dummy
-	var nextDivId = 1;
-	var nextArticleId = 1;
-	var hashTypeQuiz = {"open":0,  "multiplechoice" : 1, "truefalse": 2 };
-	//array with the articles (slides) definition, one for each template
-	//the ids of each div are id='id_to_change' and will be replaced by the next id by the function _replaceIds(string)
+VISH.Editor.Dummies = (function(VISH,undefined){
+
 	var dummies = [];
-	var quizDummies = [];
-	var quizOptionsDummies = [];
 
 	var init = function(){
 		dummies = [
@@ -28,70 +21,69 @@ VISH.Dummies = (function(VISH,undefined){
 		"<article id='article_id_to_change' type='standard' template='t15' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+VISH.ImagesPath+"helptutorial_circle_blank.png'/><div id='div_id_to_change' 	areaid='left' 	 size='medium' class='t15_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' size='medium' class='t15_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' size='medium' class='t15_right editable grey_background selectable'></div><div id='div_id_to_change' areaid='center2' size='large' class='t15_center2 editable grey_background selectable'></div></article>"
 		];
 
-		quizDummies = ["<div class='openQuizContainer'><textarea class='value_open_question_in_zone'><div><font size="+4+">Write question here</font></div></textarea></div>", 
-		"<div class='multipleChoiceQuizContainer'><div class='value_multiplechoice_question_in_zone'><div class='initTextDiv'><font size='4'>Write question here</font></div></div><ul class='ul_mch_options_in_zone'></ul><input type='hidden' name='quiz_id'/></div></div>",
-		"<div class='trueFalseQuizContainer'><p> quiz dummy truefalse</p></div>"
-		];
-		quizOptionDummies = ["", 
-		"<li class='li_mch_options_in_zone'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'><div class='initTextDiv'><font size='4'>Write options here</font></div></div><img src='"+VISH.ImagesPath+ "add.png' class='add_quiz_option_button'/><img src='"+VISH.ImagesPath+ "delete.png' class='delete_quiz_option_button'/></li>", 
-		""
-		];
+		VISH.Editor.Quiz.Dummies.init();
+	}
+
+
+	/*
+	 * Function to get a new slide (in string format)
+	 */
+	var getDummy = function(template, slideNumber){
+		var dummy = dummies[parseInt(template,10)-1];
+		return _replaceIds(dummy, slideNumber);
+	};
+
+    /*
+	 *	Function to get a existing slide (in string format)
+	 */
+	var getScaffold = function(template, slideNumber, articleId, zoneIds){
+		var dummy = dummies[parseInt(template,10)-1];
+		return _replaceIds(dummy, slideNumber, articleId, zoneIds);
+	}
+
+	var getScaffoldForSlide = function(template, slideNumber, slide){
+		var zoneIds = [];
+		for(el in slide.elements){
+			zoneIds.push(slide.elements[el].id);
+		}
+		return getScaffold(template, slideNumber, slide.id, zoneIds);
 	}
 
 	/**
-	 * function to get the string for the new slide
-	 * param article_id: id of the article, used for editing presentations
+	 * Function to replace dummy ids
 	 */
-	var getDummy = function(template, position, presentation_id, existing_slide){
-			var dum = dummies[parseInt(template,10)-1];
-			return _replaceIds(dum, position, presentation_id, existing_slide);
+	var _replaceIds = function(dummy, slideNumber, articleId, zoneIds){
+		var newDummy = dummy;
+		var nextZoneId = 0;
+
+		while(newDummy.indexOf("div_id_to_change") != -1){
+			if(zoneIds){
+				var newZoneId = zoneIds[nextZoneId];
+				nextZoneId++;
+			} else {
+				var newZoneId = VISH.Utils.getId("zone");
+			}
+			newDummy = newDummy.replace("div_id_to_change", newZoneId);
+		}
+		if(newDummy.indexOf("article_id_to_change") != -1){
+			if(articleId){
+				var newArticleId = articleId;
+			} else {
+				var newArticleId = VISH.Utils.getId("article");
+			}
+			newDummy = newDummy.replace("article_id_to_change", newArticleId);				
+		}
+		while(newDummy.indexOf("slidenumber_to_change") != -1){
+			newDummy = newDummy.replace("slidenumber_to_change", slideNumber);
+		}
+		return newDummy;
 	};
 
-	var getQuizDummy = function(type_quiz, position) {
-
-		return quizDummies[hashTypeQuiz[type_quiz]];
-
-	}
-		var getQuizOptionDummy = function(type_quiz) {
-
-		return quizOptionDummies[hashTypeQuiz[type_quiz]];
-
-	}
-	
-	/**
-	 * Function to replace the text id_to_change by the next id
-	 * the added id will be "zone + nextId"
-	 * CAREFUL: if article_id is passed we remove "editable" class because we are editing an existing presentation
-	 */
-	var _replaceIds = function(string, position, presentation_id, existing_slide){
-		var newString = string;
-		// VISH.Debugging.log("article_id passed like parameter is: " + article_id);
-		while(newString.indexOf("div_id_to_change") != -1){
-			newString = newString.replace("div_id_to_change", "zone" + nextDivId);
-			nextDivId++;
-		}
-		while(newString.indexOf("article_id_to_change") != -1){			
-				if(!presentation_id){
-					presentation_id = "";
-				}
-				newString = newString.replace("article_id_to_change", "article_" + presentation_id + "_" + position);				
-		}
-		while(newString.indexOf("slidenumber_to_change") != -1){	
-				newString = newString.replace("slidenumber_to_change", position);
-		}
-		if(existing_slide){
-			newString = newString.replace(/editable /g,"");
-		}
-		return newString;
-	};
-	
-	
 	return {
 		init				: init,
-		getDummy			: getDummy, 
-		getQuizDummy		: getQuizDummy, 
-		getQuizOptionDummy :getQuizOptionDummy
-
+		getDummy			: getDummy,
+		getScaffold 		: getScaffold, 
+		getScaffoldForSlide : getScaffoldForSlide
 	};
 
 }) (VISH);

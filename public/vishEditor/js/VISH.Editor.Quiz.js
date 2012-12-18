@@ -7,8 +7,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
-		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);		
-	};	
+		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+	};
+
 	////////////
 	// Tabs and fancybox
 	////////////
@@ -126,7 +127,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var _addMultipleChoiceQuiz = function(area, num_options) {
 		var current_area = area;
 		var current_num_options = num_options;
-		var quiz = VISH.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
+		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
 		current_area.attr('quiztype','multiplechoice');
@@ -160,7 +161,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 			case "multiplechoice":
 				//load dummy
-				var quiz_option = VISH.Dummies.getQuizOptionDummy(current_quiz_type);
+				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
 				//as current_options as options in load quiz 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				//add option 

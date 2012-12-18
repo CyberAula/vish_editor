@@ -6,6 +6,9 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 */
 	var init = function(presentation){
+		p = presentation;
+		console.log(presentation)
+
 		$('#presentation_title').val(presentation.title);
 		$('#presentation_description').val(presentation.description);
 		$('#presentation_avatar').val(presentation.avatar);
@@ -18,8 +21,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			$("#slider-range" ).slider( "values", [start_range, end_range] );
 			$("#age_range").val(start_range + " - " + end_range);
 			$("#age_range").val(presentation.age_range);
-		}
-		else{
+		} else {
 			$("#age_range").val(VISH.Constant.AGE_RANGE);
 		}
 		$("#subject_tag").val(presentation.subject);
@@ -29,24 +31,28 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		VISH.Themes.selectTheme(presentation.theme);	
 
-		if(presentation.type === V.Constant.FLASHCARD){
-			slides = presentation.slides[0].slides;
-			for(var i=0;i<slides.length;i++){
-				_renderSlide(slides[i], i, presentation.id);
-			}
 
-			VISH.Editor.Flashcard.loadFlashcard(presentation);
-		}
-		else{
-			slides = presentation.slides;
-			for(var i=0;i<slides.length;i++){
-					if(slides[i].type === V.Constant.FLASHCARD){
-						_renderFlashcard(slides[i], i, presentation.id);
-					}
-					else{
-						_renderSlide(slides[i], i, presentation.id);			
-					}
-			}
+		switch(presentation.type){
+			case V.Constant.FLASHCARD:
+				slides = presentation.slides[0].slides;
+				for(var i=0;i<slides.length;i++){
+					_renderSlide(slides[i], i+1);
+				}
+				VISH.Editor.Flashcard.loadFlashcard(presentation);
+				break;
+			case V.Constant.VTOUR:
+				break;
+			case VISH.Constant.PRESENTATION:
+			default:
+				slides = presentation.slides;
+				for(var i=0;i<slides.length;i++){
+						if(slides[i].type === V.Constant.FLASHCARD){
+							_renderFlashcard(slides[i], i+1);
+						} else {
+							_renderSlide(slides[i], i+1);			
+						}
+				}
+				break;
 		}
 	};
 	
@@ -54,19 +60,30 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one slide in editor
 	 */
-	var _renderSlide = function(slide, position, presentation_id){
-		
+	var _renderSlide = function(slide, slideNumber){
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
-		var scaffold = V.Dummies.getDummy(template, position, presentation_id, true);  
-		
-		V.Editor.Utils.addSlide(scaffold);	
-		
+		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+
+		V.Editor.Utils.addSlide(scaffold);
 		V.Editor.Utils.redrawSlides();
 		V.Slides.lastSlide();  //important to get the browser to draw everything
-		
+
 		for(el in slide.elements){
-			var area = $("#article_" + presentation_id + "_" + position + " div[areaid='" + slide.elements[el].areaid +"']");
+			var areaId = slide.elements[el].id;
+			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");
+			
 			if(area.length === 0){
+				// VISH.Debugging.log("Error: area not founded (incorrect JSON)");
+				// VISH.Debugging.log("slide");
+				// VISH.Debugging.log(slide);
+				// VISH.Debugging.log("el");
+				// VISH.Debugging.log(slide.elements[el]);
+				// VISH.Debugging.log("area.id")
+				// VISH.Debugging.log(areaId)
+				// VISH.Debugging.log("div[areaid]")
+				// VISH.Debugging.log(slide.elements[el].areaid);
+				// VISH.Debugging.log("area to print")
+				// VISH.Debugging.log(area)
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
 
@@ -102,7 +119,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one flashcard inside a presentation
 	 */
-	var _renderFlashcard = function(slide, position, presentation_id){
+	var _renderFlashcard = function(slide, slideNumber){
 		V.Flashcard.init();
 		V.Renderer.init();
 		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");

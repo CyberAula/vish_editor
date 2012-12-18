@@ -6,11 +6,25 @@ VISH.Utils = (function(V,undefined){
 
    /**
 	* Return a unic id.
+	* full_id_prefix: Specify a prefix for the id, for example, article to get "article_x" ids.
 	*/
 	var domId = 0; 
-	var getId = function(){
+	var getId = function(full_id_prefix){
 		domId = domId +1;
-		return "unicID_" + domId;
+
+		if(typeof full_id_prefix !== "string"){
+			//Default prefix
+			full_id_prefix = "unicID";
+		}
+
+		var full_id = full_id_prefix + "_" + domId;
+
+		//Ensure that the id is unic.
+		if($("#"+full_id).length===0){
+			return full_id;
+		} else {
+			return getId(full_id_prefix);
+		}
 	};
 
 	var getOuterHTML = function(tag){
