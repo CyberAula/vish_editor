@@ -38,7 +38,7 @@ VISH.Editor.Dummies = (function(VISH,undefined){
 	 */
 	var getScaffold = function(template, slideNumber, articleId, zoneIds){
 		var dummy = dummies[parseInt(template,10)-1];
-		return _replaceIds(dummy, slideNumber, articleId, zoneIds);
+		return _removeEditable(_replaceIds(dummy, slideNumber, articleId, zoneIds));
 	}
 
 	var getScaffoldForSlide = function(template, slideNumber, slide){
@@ -78,6 +78,10 @@ VISH.Editor.Dummies = (function(VISH,undefined){
 		}
 		return newDummy;
 	};
+
+	var _removeEditable = function(dummy){
+		return dummy.replace(/editable /g,"");
+	}
 
 	return {
 		init				: init,
