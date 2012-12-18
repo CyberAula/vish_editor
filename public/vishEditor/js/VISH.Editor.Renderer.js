@@ -6,9 +6,6 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 */
 	var init = function(presentation){
-		p = presentation;
-		console.log(presentation)
-
 		$('#presentation_title').val(presentation.title);
 		$('#presentation_description').val(presentation.description);
 		$('#presentation_avatar').val(presentation.avatar);
@@ -29,8 +26,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("#educational_objectives_tag").val(presentation.educational_objectives);
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
-		VISH.Themes.selectTheme(presentation.theme);	
-
+		VISH.Themes.selectTheme(presentation.theme);
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
