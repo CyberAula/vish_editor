@@ -519,6 +519,7 @@ VISH.Slides = (function(V,$,undefined){
 	 	if(slide===null){
 	 		return;
 	 	}
+	 	var standardSlide = (slide.type===VISH.Constant.STANDARD);
 	 	var removing_current_slide = false;
 	 	if(getCurrentSlide() === slide){
 	 		removing_current_slide = true;
@@ -534,6 +535,9 @@ VISH.Slides = (function(V,$,undefined){
 	 	}
 		VISH.Editor.Utils.redrawSlides();					
 		VISH.Editor.Thumbnails.redrawThumbnails();
+		if(!standardSlide){
+			VISH.Editor.Tools.Menu.init();
+		}
 	 }
 
 	 var getSlidesQuantity = function(){

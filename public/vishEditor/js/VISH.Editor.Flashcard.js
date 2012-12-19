@@ -151,6 +151,9 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		return VISH.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
 	}
 
+	var hasFlascards = function(){
+		return $("section.slides > .flashcard_slide[type='flashcard']").length>0;
+	}
 
 	return {
 		init 				 	: init,
@@ -165,7 +168,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		removePois			 	: removePois,
 		savePois			 	: savePois,
 		switchToFlashcard	 	: switchToFlashcard,
-		onBackgroundSelected	: onBackgroundSelected
+		onBackgroundSelected	: onBackgroundSelected,
+		hasFlascards 			: hasFlascards
 	};
 
 }) (VISH, jQuery);

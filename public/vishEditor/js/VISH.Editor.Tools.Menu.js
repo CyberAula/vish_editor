@@ -30,21 +30,21 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("ul.menu_option_main").find("a.menu_all").parent().show();
 
 		switch(presentationType){
-			case "presentation":
+			case VISH.Constant.PRESENTATION:
 				$("ul.menu_option_main").find("a.menu_presentation").parent().show();
 
-				if(VISH.Editor.isPresentationStandard(VISH.Editor.getPresentation())){
+				if(VISH.Editor.isPresentationStandard()){
 					$("ul.menu_option_main").find("a.menu_standard_presentation").parent().show();
 				}
 
 				break;
-			case "flashcard":
+			case VISH.Constant.FLASHCARD:
 				$("ul.menu_option_main").find("a.menu_flashcard").parent().show();
 				break;
-			case "game":
+			case VISH.Constant.GAME:
 				$("ul.menu_option_main").find("a.menu_game").parent().show();
 				break;
-			case "quiz_simple":
+			case VISH.Constant.QUIZ_SIMPLE:
 				break;
 			default:
 				break;

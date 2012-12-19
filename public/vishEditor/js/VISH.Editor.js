@@ -984,22 +984,26 @@ VISH.Editor = (function(V,$,undefined){
 			return _isThisPresentationStandard(presentation);
 		} else {
 			//Eval current presentation
-
 			if($("article[template]").length===0){
-				//Empty presentation, optimization for first call
+				//Empty presentation
 				return true;
 			}
-			return _isThisPresentationStandard(savePresentation());
+			if(VISH.Editor.Flashcard.hasFlascards()){
+				return false;
+			}
+			return true;
 		}
+
+		return true;
 	}
 
 	var _isThisPresentationStandard = function(presentation){
-		if(presentation.type!="presentation"){
+		if(presentation.type!=="presentation"){
 			return false;
 		}
 		var isStandard = true;
 		$.each(presentation.slides, function(index, slide) {
-			if((slide.type)&&(slide.type!="standard")){
+			if((slide.type)&&(slide.type!=="standard")){
 				isStandard = false;
 				return false;
 			}
