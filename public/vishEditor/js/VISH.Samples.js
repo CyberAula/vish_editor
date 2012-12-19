@@ -227,22 +227,22 @@ VISH.Samples = (function(V,undefined){
 	 				{	"id"		: "article1_poi1",
 	 					"lat" 		: "40.245991504199026",
 	 				  	"lng" 		: "-3.6474609375",
-	 				  	"slide_id"	: "article1"
+	 				  	"slide_id"	: "article1_article1"
 	 				},
 	 				{	"id"		: "article1_poi2",
 	 				  	"lat" 		: "41.27780646738183",
 	 				  	"lng" 		: "2.1533203125",
-	 				  	"slide_id"	: "article2"
+	 				  	"slide_id"	: "article1_article2"
 	 				},
 	 				{	"id"		: "article1_poi3",
 	 				  	"lat" 		: "37.26530995561875",
 	 				  	"lng" 		: "-5.9765625",
-	 				  	"slide_id"	: "article3"
+	 				  	"slide_id"	: "article1_article3"
 	 				},
 	 				{	"id"		: "article1_poi4",
 	 				  	"lat" 		: "43.26120612479979",
 	 				  	"lng" 		: "-5.9765625",
-	 				  	"slide_id"	: "article4"
+	 				  	"slide_id"	: "article1_article4"
 	 				}
 	 			],
 	 			"tours": [
@@ -867,11 +867,11 @@ VISH.Samples = (function(V,undefined){
 		 				  "x" : "11",
 		 				  "y" : "4.5",
 		 				  "slide_id": "article3_article1"},
-		 				 {"id": "poi2",
+		 				 {"id": "article3_poi2",
 		 				  "x" : "47",
 		 				  "y" : "34",
 		 				  "slide_id": "article3_article2"},
-		 				 {"id": "poi3",
+		 				 {"id": "article3_poi3",
 		 				  "x" : "84",
 		 				  "y" : "81",
 		 				  "slide_id": "article3_article3"}],

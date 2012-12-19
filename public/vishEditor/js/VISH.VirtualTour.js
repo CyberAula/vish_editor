@@ -18,7 +18,7 @@ VISH.VirtualTour = (function(V,$,undefined){
     }
 
     V.Debugging.log("drawMap : " +JSON.stringify(vt));
-    
+
     //Include canvas
     var canvas_id = "canvas_" + vt.id;
     var canvas =  $("<div id='"+canvas_id+"' class='map_canvas' style='height:"+"100%"+"; width:"+"100%"+"'></div>");
@@ -40,9 +40,7 @@ VISH.VirtualTour = (function(V,$,undefined){
     virtualTours[vt.id].map = new google.maps.Map(document.getElementById(canvas_id), myOptions);
 
     $(vt.pois).each(function(index,poi){
-      var myPoi = poi;
-      poi.slide_id = vt.id + "_" + poi.slide_id;
-      virtualTours[vt.id].pois[poi.id] = myPoi;
+      virtualTours[vt.id].pois[poi.id] = poi;
       addMarkerToCoordinates(vt,poi.lat,poi.lng,poi.id);
     });
   }

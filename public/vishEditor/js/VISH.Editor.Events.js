@@ -104,7 +104,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 		//Add the points of interest with their click events to show the slides
 		for(ind in slide.pois){
 			var poi = slide.pois[ind];
-			$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
+			$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
 		}
    };
 
