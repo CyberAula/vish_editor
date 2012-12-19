@@ -85,19 +85,36 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event) {
 		var flashcardid = $(event.target).attr("flashcardid");
 		if(flashcardid){
-			var selectedFc = currentFlashcards[flashcardid];
+			var the_flashcard_excursion = currentFlashcards[flashcardid];
+			//we have the flashcard as is in the repository but we have to update its ids to the adequate ones
+			var selectedFc = _changeFlashcardIds(the_flashcard_excursion.slides[0]);		
+
 			V.Flashcard.init();
 			V.Renderer.init();
-			V.Renderer.renderSlide(selectedFc.slides[0], "", "<div class='delete_slide'></div>");
+			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
 			V.Editor.Utils.redrawSlides();
 			VISH.Editor.Thumbnails.redrawThumbnails();
-			V.Editor.Events.bindEventsForFlashcard(selectedFc.slides[0]);
+			V.Editor.Events.bindEventsForFlashcard(selectedFc);
 			V.Slides.lastSlide();  //important to get the browser to draw everything
 			$.fancybox.close();
 		}
 	};
 		
-
+	var _changeFlashcardIds = function(flashcard){
+		var hash_subslide_new_ids = {};
+		var old_id;
+		flashcard.id = V.Utils.getId("article");
+		for(var ind in flashcard.slides){			
+			old_id = flashcard.slides[ind].id;
+			flashcard.slides[ind].id = V.Utils.getId(flashcard.id + "_article");
+			hash_subslide_new_ids[old_id] = flashcard.slides[ind].id;
+		}
+		for(var num in flashcard.pois){	
+			flashcard.pois[num].id = V.Utils.getId(flashcard.id + "_poi");
+			flashcard.pois[num].slide_id = hash_subslide_new_ids[flashcard.pois[num].slide_id];
+		}
+		return flashcard;
+	};
 
 	return {
 		init 					    : init,
