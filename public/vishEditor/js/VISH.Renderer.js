@@ -129,7 +129,7 @@ VISH.Renderer = (function(V,$,undefined){
 				//And now we add the points of interest with their click events to show the slides
 		  		for(index in slide.pois){
 		  			var poi = slide.pois[index];
-		        	V.Flashcard.addArrow(slide.id, poi, false);
+		        	V.Flashcard.addArrow(slide.id, poi, true);
 		  		}
 				break;
 			case VISH.Constant.VTOUR:

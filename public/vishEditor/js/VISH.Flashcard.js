@@ -56,7 +56,7 @@ VISH.Flashcard = (function(V,$,undefined){
   };
 
   var animateArrows = function(slideId){
-    if((!slideId)||(typeof flashcards[slideId] == "undefined")){
+    if((!slideId)||(typeof flashcards[slideId] === "undefined")){
       return;
     }
 
