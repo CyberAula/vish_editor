@@ -18,6 +18,101 @@ VISH.Samples = (function(V,undefined){
 			"id" : "article1",
 			"template" : "t1",
 			"elements" : [{
+				"id" : "article1_zone1",
+				"type" : "image",
+				"areaid" : "left",
+				"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
+				"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
+			}, {
+				"id" : "article1_zone2",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "<div class=\"vish-parent-font3 vish-parent-font6\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-family: helvetica;\"><span style=\"font-weight: bold;\">Chess</span>: The Art of Learning</span></span><br></span></div>"
+			}, {
+				"id" : "article1_zone3",
+				"type" : "text",
+				"areaid" : "subheader",
+				"body" : "<div class=\"vish-parent-font3 vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></span><br></span></div>"
+			}]
+		}, {
+			'id'       :'article2',
+			'template' :'t3',
+			'elements':[
+				{
+                    'id'     : 'article2_zone1',
+					'type'   : 'text',
+					'areaid' : 'header',
+					'body'   : 'Experimento virtual1'
+				},
+				{
+					'id'     : 'article2_zone2',
+					'type'   : 'object',
+					'areaid' : 'left',
+					'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+        }]
+        }, {
+			"id" : "article3",
+			"template" : "t6",
+			"elements" : [{
+				"id" : "article3_zone1",
+				"type" : "text",
+				"areaid" : "header",
+				"body" : "<div class=\"vish-parent-font3 vish-parent-font6 vish-parent-font4\" style=\"font-weight: normal; \"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span></span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"> </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(32, 24, 21);\">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(113, 113, 117);\">Reproduction</span></span><br></span></div>"
+			}, {
+				"id" : "article3_zone2",
+				"type" : "image",
+				"areaid" : "left",
+				"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
+				"hyperlink" : "http://www.google.es",
+				"style" : "position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"
+			}, {
+				"id" : "article3_zone3",
+				"type" : "image",
+				"areaid" : "center",
+				"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
+				"style" : "position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"
+			}, {
+				"id" : "article3_zone4",
+				"type" : "text",
+				"areaid" : "right",
+				"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
+			}]
+		},
+		{
+			"id":"article4",
+			"type":"standard",
+			"template":"t2",
+			"elements":[
+				{
+					"id":"article4_zone1",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe src=\"http://www.youtube.com/embed/VAEp2gT-2a8?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_7\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"style":"position: relative; width:99.9390243902439%; height:99.6774193548387%; top:2.225806451612903%; left:2.3536585365853657%;"
+				}
+			]
+		}
+		]
+	};
+
+	var samplesv01 = {
+		"id" : "2",
+		"type": "presentation",
+		"title" : "Chess: The Art of Learning2",
+		"description" : "The Art of Learning, a journey in the pursuit of excellence.\nAmazing presentation with images, videos and 3d objects, generated by Vish Editor.",
+		"avatar" : "http://static.betazeta.com/www.veoverde.com/wp-content/uploads/2011/07/fotos-gatos.jpg",
+		"tags": ["Samples","Test","Development"],
+		"author" : "",
+		"theme"	 : "theme1",
+		"age_range" : "4 - 14",
+		"subject" : ["Art","Astronomy"],
+		"language" : "en",
+		"educational_objectives" : "bla bla bla 3",
+		"adquired_competencies" : "pupils will be smarter",
+		"slides" : [{
+			"id" : "article1",
+			"template" : "t1",
+			"elements" : [{
 				"id" : "zone1",
 				"type" : "image",
 				"areaid" : "left",
@@ -121,79 +216,79 @@ VISH.Samples = (function(V,undefined){
 				"map_service"	: "Google Maps",
 				"center"		: 
 					{
-						"lat": 		"41.23315032959268",
-						"lon": 	"-366.3451357421875"
+						"lat": 	"41.23315032959268",
+						"lng": 	"-366.3451357421875"
 					},
 				"zoom"			: 5,
 				"mapType" 		: "roadmap",
 				"width" 		: "100%",
 				"height" 		: "100%",
 	 			"pois": [
-	 				{	"id"		: "poi1",
+	 				{	"id"		: "article1_poi1",
 	 					"lat" 		: "40.245991504199026",
-	 				  	"lon" 		: "-3.6474609375",
+	 				  	"lng" 		: "-3.6474609375",
 	 				  	"slide_id"	: "article1"
 	 				},
-	 				{	"id"		: "poi2",
+	 				{	"id"		: "article1_poi2",
 	 				  	"lat" 		: "41.27780646738183",
-	 				  	"lon" 		: "2.1533203125",
+	 				  	"lng" 		: "2.1533203125",
 	 				  	"slide_id"	: "article2"
 	 				},
-	 				{	"id"		: "poi3",
+	 				{	"id"		: "article1_poi3",
 	 				  	"lat" 		: "37.26530995561875",
-	 				  	"lon" 		: "-5.9765625",
+	 				  	"lng" 		: "-5.9765625",
 	 				  	"slide_id"	: "article3"
 	 				},
-	 				{	"id"		: "poi4",
+	 				{	"id"		: "article1_poi4",
 	 				  	"lat" 		: "43.26120612479979",
-	 				  	"lon" 		: "-5.9765625",
+	 				  	"lng" 		: "-5.9765625",
 	 				  	"slide_id"	: "article4"
 	 				}
 	 			],
 	 			"tours": [
 	 				{
 	 					//Tour metadata
-	 					"id" 	: "tour1",
+	 					"id" 	: "article1_tour1",
 	 					"path"	: [
-	 						"poi1","poi2","poi3"
+	 						"article1_poi1","article1_poi2","article1_poi3"
 	 					]
 	 				}
 	 			],
 				"slides" : [
 					{
-						"id" 		: "article1",
+						"id" 		: "article1_article1",
 						"template" 	: "t1",
 						"elements" 	: [
 						{
-							"id" : "zone1",
+							"id" : "article1_article1_zone1",
 							"type" : "image",
 							"areaid" : "left",
 							"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 							"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 						}, {
-							"id" : "zone2",
+							"id" : "article1_article1_zone2",
 							"type" : "text",
 							"areaid" : "header",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font6\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-family: helvetica;\"><span style=\"font-weight: bold;\">Chess</span>: The Art of Learning</span></span><br></span></div>"
 						}, {
-							"id" : "zone3",
+							"id" : "article1_article1_zone3",
 							"type" : "text",
 							"areaid" : "subheader",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></span><br></span></div>"
 						}]
 					}, 
 					{
-						'id'       	:'article2',
+						'id'       	:'article1_article2',
 						'template' 	:'t2',
 						'elements'	: [
 							{
-			                    'id'     : '325',
+			                    'id'     : 'article1_article2_zone1',
 								'type'   : 'text',
 								'areaid' : 'header',
 								'body'   : 'Experimento virtual1'
 							},
 							{
-			          			'id'     : '7335',
+			          			'id'     : 'article1_article2_zone2',
 								'type'   : 'object',
 								'areaid' : 'left',
 								'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
@@ -201,29 +296,29 @@ VISH.Samples = (function(V,undefined){
 			    		]
 			    	}, 
 			    	{
-						"id" : "article3",
+						"id" : "article1_article3",
 						"template" : "t6",
 						"elements" : [
 							{
-								"id" : "zone6",
+								"id" : "article1_article3_zone1",
 								"type" : "text",
 								"areaid" : "header",
 								"body" : "<div class=\"vish-parent-font3 vish-parent-font6 vish-parent-font4\" style=\"font-weight: normal; \"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span></span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"> </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(32, 24, 21);\">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(113, 113, 117);\">Reproduction</span></span><br></span></div>"
 							}, {
-								"id" : "zone7",
+								"id" : "article1_article3_zone2",
 								"type" : "image",
 								"areaid" : "left",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"hyperlink" : "http://www.google.es",
 								"style" : "position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"
 							}, {
-								"id" : "zone8",
+								"id" : "article1_article3_zone3",
 								"type" : "image",
 								"areaid" : "center",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"style" : "position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"
 							}, {
-								"id" : "zone9",
+								"id" : "article1_article3_zone4",
 								"type" : "text",
 								"areaid" : "right",
 								"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
@@ -231,12 +326,12 @@ VISH.Samples = (function(V,undefined){
 						]
 					},
 					{
-						"id":"article4",
+						"id":"article1_article4",
 						"type":"standard",
 						"template":"t2",
 						"elements":[
 							{
-								"id":"zone11",
+								"id":"article1_article4_zone1",
 								"type":"object",
 								"areaid":"left",
 								"body":"<iframe src=\"http://www.youtube.com/embed/VAEp2gT-2a8?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_7\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
@@ -274,131 +369,131 @@ VISH.Samples = (function(V,undefined){
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "lon": "-4.024515151977539"
+             "lng": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
          "width": "100%",
          "height": "100%",
          "pois": [{
-             "id": "poi1",
+             "id": "article1_poi1",
              "lat": "39.858808",
-             "lon": "-4.020706",
-             "slide_id": "article1"
+             "lng": "-4.020706",
+             "slide_id": "article1_article1"
          }, {
-             "id": "poi2",
+             "id": "article1_poi2",
              "lat": "39.85710791823466",
-             "lon": "-4.02348518371582",
-             "slide_id": "article2"
+             "lng": "-4.02348518371582",
+             "slide_id": "article1_article2"
          }, {
-             "id": "poi3",
+             "id": "article1_poi3",
              "lat": "39.86267518700749",
-             "lon": "-4.02498722076416",
-             "slide_id": "article3"
+             "lng": "-4.02498722076416",
+             "slide_id": "article1_article3"
          }, {
              "id": "poi4",
              "lat": "39.85586400561856",
-             "lon": "-4.029305577278137",
-             "slide_id": "article4"
+             "lng": "-4.029305577278137",
+             "slide_id": "article1_article4"
          } ],
          "tours": [{
              //Tour metadata
-             "id": "tour1",
+             "id": "article1_tour1",
              "path": [
-                 "poi1", "poi2", "poi3"]
+                 "article1_poi1", "article1_poi2", "article1_poi3"]
          }],
          "slides": [{
-             "id": "article1",
+             "id": "article1_article1",
              "type": "standard",
              "template": "t7",
              "elements": [{
-                 "id": "zone1",
+                 "id": "article1_article1_zone1",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"
              }, {
-                 "id": "zone2",
+                 "id": "article1_article1_zone2",
                  "type": "image",
                  "areaid": "left",
                  "body": "http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg",
                  "style": "position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"
              }, {
-                 "id": "zone3",
+                 "id": "article1_article1_zone3",
                  "type": "text",
                  "areaid": "center",
                  "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"
              }, {
-                 "id": "zone4",
+                 "id": "article1_article1_zone4",
                  "areaid": "subheader"
              }]
          }, {
-             "id": "article2",
+             "id": "article1_article2",
              "type": "standard",
              "template": "t7",
              "elements": [{
-                 "id": "zone5",
+                 "id": "article1_article2_zone5",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"
              }, {
-                 "id": "zone6",
+                 "id": "article1_article2_zone6",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"
              }, {
-                 "id": "zone3",
+                 "id": "article1_article2_zone3",
                  "type": "object",
                  "areaid": "center",
                  "body": "<iframe src=\"http://www.youtube.com/embed/TxbJY9SPC-A?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_1\" class=\"t7_object\" wmode=\"opaque\"></iframe>",
                  "style": "position: relative; width:100%; height:85.45454545454545%; top:0%; left:0%;"
              }, {
-                 "id": "zone8",
+                 "id": "article1_article2_zone8",
                  "areaid": "subheader"
              }]
          }, {
-             "id": "article3",
+             "id": "article1_article3",
              "type": "standard",
              "template": "t13",
              "elements": [{
-                 "id": "zone9",
+                 "id": "article1_article3_zone9",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"
              }, {
-                 "id": "zone10",
+                 "id": "article1_article3_zone10",
                  "type": "image",
                  "areaid": "circle",
                  "body": "http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg",
                  "style": "position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"
              }, {
-                 "id": "zone11",
+                 "id": "article1_article3_zone11",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"
              }, {
-                 "id": "zone12",
+                 "id": "article1_article3_zone12",
                  "areaid": "right"
              }]
          }, {
-             "id": "article4",
+             "id": "article1_article4",
              "type": "standard",
              "template": "t5",
              "elements": [{
-                 "id": "zone13",
+                 "id": "article1_article4_zone13",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"
              }, {
-                 "id": "zone14",
+                 "id": "article1_article4_zone14",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"
              }, {
-                 "id": "zone15",
+                 "id": "article1_article4_zone15",
                  "type": "image",
                  "areaid": "right",
                  "body": "http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg",
@@ -426,179 +521,179 @@ VISH.Samples = (function(V,undefined){
     "theme": "theme1",
     "language": "en",
     "slides": [{
-        "id": "article__1",
+        "id": "article1",
         "type": "standard",
         "template": "t1",
         "elements": [{
-            "id": "zone5",
+            "id": "article1_zone5",
             "type": "image",
             "areaid": "left",
             "body": "http://hoteles4you.com/guias-viaje/wp-content/uploads/2011/04/Toledo.jpg",
             "style": "position: relative; width:137.13080168776372%; height:81.05263157894737%; top:21.315791481419613%; left:0%;"
         }, {
-            "id": "zone6",
+            "id": "article1_zone6",
             "type": "text",
             "areaid": "header",
             "body": "<div class=\"initTextDiv vish-parent-font7 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font7 vish-fonttrebuchet\"><b><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#4a72b1;undefined;\">TOLEDO</span></b></span></div>"
         }, {
-            "id": "zone7",
+            "id": "article1_zone7",
             "type": "text",
             "areaid": "subheader",
             "body": "<div class=\"initTextDiv vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><i><span class=\"vish-fontundefined vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:#86858a;undefined;\">smart city guide</span></span></i></div>"
         }]
     }, {
-        "id": "article__1",
+        "id": "article2",
         "type": "standard",
         "template": "t11",
         "elements": [{
-            "id": "zone8",
+            "id": "article2_zone8",
             "type": "image",
             "areaid": "center1",
             "body": "http://www.habitsofmind.org/sites/default/files/helpful-tips-image-web-design-sydney.jpg",
             "style": "position: relative; width:24.785100286532952%; height:104.8780487804878%; top:2.642273321384337%; left:-1.7191977077363896%;"
         }, {
-            "id": "zone9",
+            "id": "article2_zone9",
             "type": "text",
             "areaid": "center2",
             "body": "<div class=\"initTextDiv vish-parent-fontundefined\" style=\"font-weight: normal;\"><span class=\"vish-fontundefined vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b>Clothing/Shoes/Weather Gear:</b></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\"><span class=\"vish-fontundefined vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b><br></b></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\" style=\"font-weight: normal;\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 110%;\">Forget about wearing high heels in Toledo - the small cobblestone streets are very charming but slightly uneven, and as the entire portion of the city within the walls is built up on hill, you'll spend the entire day either going down or climbing up some more or less steep hills. And as there is no denying that this city is best seen on foot, if you want to make the most of your time there, I'd highly recommend bringing a pair of comfortable walking shoes.</span></span><br></div>"
         }, {
-            "id": "zone10",
+            "id": "article2_zone10",
             "type": "text",
             "areaid": "center3",
             "body": "<div class=\"initTextDiv vish-parent-font4\" style=\"font-weight: normal;\"><span class=\"vish-font4 vish-fonttrebuchet\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><b>Miscellaneous:&nbsp;</b></span></span></div><div class=\"initTextDiv vish-parent-font4\"><span class=\"vish-font4 vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\"><br></span></span></div><div class=\"initTextDiv vish-parent-fontundefined\"><span class=\"vish-fontundefined vish-fonttrebuchet\" style=\"color:undefined;undefined;\"><span style=\"color: rgb(62, 61, 61); line-height: 18px;\">Toledo must have been designed originally to confuse its enemies from successfully invading the City. There are a confusing series of streets with names of streets changing frequently.</span></span><br></div>"
         }]
     }, {
-         "id": "article1",
+         "id": "article3",
          "type": "virtualTour",
          //Virtual Tour metadata
          "map_service": "Google Maps",
          "center": {
              "lat": "39.858684807927226",
-             "lon": "-4.024515151977539"
+             "lng": "-4.024515151977539"
          },
          "zoom": 15,
          "mapType": "roadmap",
          "width": "100%",
          "height": "100%",
          "pois": [{
-             "id": "poi1",
+             "id": "article3_poi1",
              "lat": "39.858808",
-             "lon": "-4.020706",
-             "slide_id": "article1"
+             "lng": "-4.020706",
+             "slide_id": "article3_article1"
          }, {
-             "id": "poi2",
+             "id": "article3_poi2",
              "lat": "39.85710791823466",
-             "lon": "-4.02348518371582",
-             "slide_id": "article2"
+             "lng": "-4.02348518371582",
+             "slide_id": "article3_article2"
          }, {
-             "id": "poi3",
+             "id": "article3_poi3",
              "lat": "39.86267518700749",
-             "lon": "-4.02498722076416",
-             "slide_id": "article3"
+             "lng": "-4.02498722076416",
+             "slide_id": "article3_article3"
          }, {
-             "id": "poi4",
+             "id": "article3_poi4",
              "lat": "39.85586400561856",
-             "lon": "-4.029305577278137",
-             "slide_id": "article4"
+             "lng": "-4.029305577278137",
+             "slide_id": "article3_article4"
          } ],
          "tours": [{
              //Tour metadata
-             "id": "tour1",
+             "id": "article3_tour1",
              "path": [
                  "poi1", "poi2", "poi3"]
          }],
          "slides": [{
-             "id": "article1",
+             "id": "article3_article1",
              "type": "standard",
              "template": "t7",
              "elements": [{
-                 "id": "zone1",
+                 "id": "article3_article1_zone1",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-1.2893982808022924%;"
              }, {
-                 "id": "zone2",
+                 "id": "article3_article1_zone2",
                  "type": "image",
                  "areaid": "left",
                  "body": "http://farm1.staticflickr.com/122/284114887_5e4eca03fd_z.jpg",
                  "style": "position: relative; width:260.8695652173913%; height:96.98275862068965%; top:1.0775862068965518%; left:-53.91304347826087%;"
              }, {
-                 "id": "zone3",
+                 "id": "article3_article1_zone3",
                  "type": "text",
                  "areaid": "center",
                  "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Alcazar:&nbsp;</span></span></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This outstanding castle is one of Toledo's most emblematic monuments and was used as a fortress by Romans, Visigods, Arabs and Christians. King Alfonso VI built his residence here and some of Spain's most prestigious artists and architects intervened in the construction of the royal palace.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It was destroyed in the 18th century during the War of Succession, reconstructed only to be badly damaged a few years later in a fire and rebuilt yet again.&nbsp;</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The last time the palace was destroyed was during the outbreak of the Spanish Civil War and it was repaired when the War ended.</span></span><br></div></div>"
              }, {
-                 "id": "zone4",
+                 "id": "article3_article1_zone4",
                  "areaid": "subheader"
              }]
          }, {
-             "id": "article2",
+             "id": "article3_article2",
              "type": "standard",
              "template": "t7",
              "elements": [{
-                 "id": "zone5",
+                 "id": "article3_article2_zone5",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-9.433962264150944%; left:-0.4297994269340974%;"
              }, {
-                 "id": "zone6",
+                 "id": "article3_article2_zone6",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><span style=\"line-height: 110%;\"><b><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Cathedral of Toledo:</span></span></b></span></div><div class=\"vish-parent-font5 vish-parent-fontundefined\" style=\"font-weight: normal;\"><br></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Founded in the 1st Century by San Eugenio, the first Bishop of Toledo. It was changed into a mosque by the Arabs during Moorish occupation of Spain, and then converted back into a cathedral by Alfonso VI.&nbsp;</span></span></span></div><div style=\"font-weight: normal;\" class=\"vish-parent-fontundefined vish-parent-font4\"><span style=\"line-height: 110%;\"><span class=\"vish-fontundefined vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the 13th Century it was destroyed and the impressive Gothic building which can be seen today was built on the old cathedral's foundations.</span></span></span><br></div>"
              }, {
-                 "id": "zone3",
+                 "id": "article3_article2_zone3",
                  "type": "object",
                  "areaid": "center",
                  "body": "<iframe src=\"http://www.youtube.com/embed/TxbJY9SPC-A?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID_1\" class=\"t7_object\" wmode=\"opaque\"></iframe>",
                  "style": "position: relative; width:100%; height:85.45454545454545%; top:0%; left:0%;"
              }, {
-                 "id": "zone8",
+                 "id": "article3_article2_zone8",
                  "areaid": "subheader"
              }]
          }, {
-             "id": "article3",
+             "id": "article3_article3",
              "type": "standard",
              "template": "t13",
              "elements": [{
-                 "id": "zone9",
+                 "id": "article3_article3_zone9",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-7.547169811320755%; left:-0.5730659025787965%;"
              }, {
-                 "id": "zone10",
+                 "id": "article3_article3_zone10",
                  "type": "image",
                  "areaid": "circle",
                  "body": "http://farm7.staticflickr.com/6151/6182498256_8b0585790e_o.jpg",
                  "style": "position: relative; width:152.53731343283582%; height:128.2608695652174%; top:-11.102486841426874%; left:-26.26865671641791%;"
              }, {
-                 "id": "zone11",
+                 "id": "article3_article3_zone11",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"vish-parent-font4 vish-parent-font5 vish-parent-fontundefined\" style=\"text-align: right; font-weight: normal;\"><b><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Puerta Bisagra:&nbsp;</span></span></span></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><b><u><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></u></b></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The main entrance to the old City of Toledo.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">What appears to be one amazing stone gateway is infact two: the old gate which was built during the Moorish occupation of Toledo in the 6th and 7th centuries, and the new gate which extended the original and was built in the 16th century.&nbsp;</span></span></div><div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">This is the best way to start a visit to Toledo since there is ample car parking space on both sides of the Puerta and a very good Tourist Info just opposite on the other side of the main road.</span></span><br></div>"
              }, {
-                 "id": "zone12",
+                 "id": "article3_article3_zone12",
                  "areaid": "right"
              }]
          }, {
-             "id": "article4",
+             "id": "article3_article4",
              "type": "standard",
              "template": "t5",
              "elements": [{
-                 "id": "zone13",
+                 "id": "article3_article4_zone13",
                  "type": "image",
                  "areaid": "header",
                  "body": "http://www.toledo-turismo.com/turismo/img/logo_toledo_turismo_es.gif",
                  "style": "position: relative; width:59.45558739255014%; height:115.09433962264151%; top:-5.660377358490566%; left:0%;"
              }, {
-                 "id": "zone14",
+                 "id": "article3_article4_zone14",
                  "type": "text",
                  "areaid": "left",
                  "body": "<div class=\"initTextDiv\" style=\"font-weight: normal;\"><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">The Museo del Greco</span></span></div><div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\"><span class=\"vish-font6 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">Currently the only one in Spain dedicated to the painter and its fundamental purpose is to convey and help gain an understanding of the figure of El Greco as well as the influence his work and personality had on early 17th century Toledo.</span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\"><br></span></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\"><span class=\"vish-font4 vish-fontHelvetica\"><span class=\"vish-fontundefined vish-fontarial\" style=\"color:undefined;undefined;\">It also includes an evocation of the museum's past through the figure of the marquis of Vega-Inclán, the genuine promoter of the institution and indisputable leader of the recovery and promotion of El Greco's painting.</span></span></div></div>"
              }, {
-                 "id": "zone15",
+                 "id": "article3_article4_zone15",
                  "type": "image",
                  "areaid": "right",
                  "body": "http://en.museodelgreco.mcu.es/web/img/logo-museo-greco.jpg",
@@ -668,13 +763,13 @@ VISH.Samples = (function(V,undefined){
 				'template' :'t3',
 				'elements':[
 					{
-	                    'id'     : '325',
+	                    'id'     : 'article1_zone1',
 						'type'   : 'text',
 						'areaid' : 'header',
 						'body'   : 'Experimento virtual1'
 					},
 					{
-	          			'id'     : '7335',
+	          			'id'     : 'article1_zone2',
 	          			'type'   : 'object',
 	          			'areaid' : 'left',
 	          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
@@ -684,59 +779,59 @@ VISH.Samples = (function(V,undefined){
 				"id"			: "article2",
 				"type"			: "flashcard",
 				"background"	: "url(http://html.rincondelvago.com/000563580.png)",
-				"pois": [{"id": "poi1",
+				"pois": [{"id": "article2_poi1",
 		 				  "x" : "11",
 		 				  "y" : "4.5",
-		 				  "slide_id": "article1"},
-		 				 {"id": "poi2",
+		 				  "slide_id": "article2_article1"},
+		 				 {"id": "article2_poi2",
 		 				  "x" : "47",
 		 				  "y" : "34",
-		 				  "slide_id": "article2"},
-		 				 {"id": "poi3",
+		 				  "slide_id": "article2_article2"},
+		 				 {"id": "article2_poi3",
 		 				  "x" : "84",
 		 				  "y" : "81",
-		 				  "slide_id": "article3"}],
+		 				  "slide_id": "article2_article3"}],
 		 		"slides" : [{
-					"id" : "article1",
+					"id" : "article2_article1",
 					"template" : "t1",
 					"elements" : [
 							{
-								"id" : "zone1",
+								"id" : "article2_article1_zone1",
 								"type" : "image",
 								"areaid" : "left",
 								"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 								"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 							}, {
-								"id" : "zone2",
+								"id" : "article2_article1_zone2",
 								"type" : "text",
 								"areaid" : "header",
 								"body" : "<div class=\"vish-parent-font3 vish-parent-font6\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-family: helvetica;\"><span style=\"font-weight: bold;\">Chess</span>: The Art of Learning</span></span><br></span></div>"
 							}, {
-								"id" : "zone3",
+								"id" : "article2_article1_zone3",
 								"type" : "text",
 								"areaid" : "subheader",
 								"body" : "<div class=\"vish-parent-font3 vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></span><br></span></div>"
 							}
 						]
 					}, {
-						'id'       :'article2',
+						'id'       :'article2_article2',
 						'template' :'t2',
 						'elements':[
 							{
-			                    'id'     : '325',
+			                    'id'     : 'article2_article2_zone1',
 								'type'   : 'text',
 								'areaid' : 'header',
 								'body'   : 'Experimento virtual1'
 							},
 							{
-			          			'id'     : '7335',
+			          			'id'     : 'article2_article2_zone2',
 			          			'type'   : 'object',
 			          			'areaid' : 'left',
 			          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
 			        		}
 			        	]
 	        		}, {
-						"id" : "article3",
+						"id" : "article2_article3",
 						"template" : "t6",
 						"elements" : [{
 							"id" : "zone6",
@@ -744,19 +839,19 @@ VISH.Samples = (function(V,undefined){
 							"areaid" : "header",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font6 vish-parent-font4\" style=\"font-weight: normal; \"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span></span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"> </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(32, 24, 21);\">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(113, 113, 117);\">Reproduction</span></span><br></span></div>"
 						}, {
-								"id" : "zone7",
+								"id" : "article2_article3_zone7",
 								"type" : "image",
 								"areaid" : "left",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"style" : "position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"
 						}, {
-								"id" : "zone8",
+								"id" : "article2_article3_zone8",
 								"type" : "image",
 								"areaid" : "center",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"style" : "position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"
 						}, {
-								"id" : "zone9",
+								"id" : "article2_article3_zone9",
 								"type" : "text",
 								"areaid" : "right",
 								"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
@@ -768,78 +863,78 @@ VISH.Samples = (function(V,undefined){
 				"id"			: "article3",
 				"type"			: "flashcard",
 				"background"	: "url(http://html.rincondelvago.com/000563580.png)",
-				"pois": [{"id": "poi1",
+				"pois": [{"id": "article3_poi1",
 		 				  "x" : "11",
 		 				  "y" : "4.5",
-		 				  "slide_id": "article1"},
+		 				  "slide_id": "article3_article1"},
 		 				 {"id": "poi2",
 		 				  "x" : "47",
 		 				  "y" : "34",
-		 				  "slide_id": "article2"},
+		 				  "slide_id": "article3_article2"},
 		 				 {"id": "poi3",
 		 				  "x" : "84",
 		 				  "y" : "81",
-		 				  "slide_id": "article3"}],
+		 				  "slide_id": "article3_article3"}],
 		 		"slides" : [{
-					"id" : "article1",
+					"id" : "article3_article1",
 					"template" : "t1",
 					"elements" : [
 						{
-							"id" : "zone1",
+							"id" : "article3_article1_zone1",
 							"type" : "image",
 							"areaid" : "left",
 							"body" : "http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg",
 							"style" : "position: relative; width:97.82608695652173%; height:80.10752688172043%; top:0%; left:0%;"
 						}, {
-							"id" : "zone2",
+							"id" : "article3_article1_zone2",
 							"type" : "text",
 							"areaid" : "header",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font6\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-family: helvetica;\"><span style=\"font-weight: bold;\">Chess</span>: The Art of Learning</span></span><br></span></div>"
 						}, {
-							"id" : "zone3",
+							"id" : "article3_article1_zone3",
 							"type" : "text",
 							"areaid" : "subheader",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font3 vish-fontarial\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"font-style: italic; font-family: helvetica;\">by Aldo Gordillo&nbsp; </span></span><br></span></div>"
 						}]
 					}, {
-						'id'       :'article2',
+						'id'       :'article3_article2',
 						'template' :'t2',
 						'elements':[
 							{
-			                    'id'     : '325',
+			                    'id'     : 'article3_article2_zone1',
 								'type'   : 'text',
 								'areaid' : 'header',
 								'body'   : 'Experimento virtual1'
 							},
 							{
-			          			'id'     : '7335',
+			          			'id'     : 'article3_article2_zone1',
 			          			'type'   : 'object',
 			          			'areaid' : 'left',
 			          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
 			        		}
 			        	]
 	        		}, {
-						"id" : "article3",
+						"id" : "article3_article3",
 						"template" : "t6",
 						"elements" : [{
-							"id" : "zone6",
+							"id" : "article3_article3_zone6",
 							"type" : "text",
 							"areaid" : "header",
 							"body" : "<div class=\"vish-parent-font3 vish-parent-font6 vish-parent-font4\" style=\"font-weight: normal; \"><span class=\"vish-font3 vish-fontHelvetica\" style=\"\"><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(219, 150, 0);\">Iberian</span></span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"> </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(32, 24, 21);\">Lynx</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=\"vish-font4 vish-fontHelvetica\" style=\"undefined;\"><span style=\"color: rgb(113, 113, 117);\">Reproduction</span></span><br></span></div>"
 						}, {
-								"id" : "zone7",
+								"id" : "article3_article3_zone7",
 								"type" : "image",
 								"areaid" : "left",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"style" : "position: relative; width:380.95238095238096%; height:218.69565217391303%; top:-36.231884541718856%; left:-58.201090494791664%;"
 						}, {
-								"id" : "zone8",
+								"id" : "article3_article3_zone8",
 								"type" : "image",
 								"areaid" : "center",
 								"body" : "http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg",
 								"style" : "position: relative; width:357.14285714285717%; height:205.2173913043478%; top:-45.41062894074813%; left:-193.12174479166666%;"
 						}, {
-								"id" : "zone9",
+								"id" : "article3_article3_zone9",
 								"type" : "text",
 								"areaid" : "right",
 								"body" : "<div class=\"vish-parent-font2\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font2 vish-fontHelvetica\" style=\"\">During the mating season the female leaves her territory in search of a male. The typical gestation period is about two months; the cubs are born between March and September, with a peak of births in March and April. A litter consists of two or three (rarely one, four or five) kittens weighing between 200 and 250 grams (7.1 and 8.8 oz).The kittens become independent at seven to 10 months old, but remain with the mother until around 20 months old. Survival of the young depends heavily on the availability of prey species. In the wild, both males and females reach sexual maturity at one year old, though in practice they rarely breed until a territory becomes vacant; one female was known not to breed until five years old when its mother died.</span></div>"
@@ -852,19 +947,19 @@ VISH.Samples = (function(V,undefined){
 				'template' :'t5',
 				'elements':[
 					{
-	                    'id'     : '320',
+	                    'id'     : 'article4_zone1',
 						'type'   : 'text',
 						'areaid' : 'header',
 						'body'   : 'Sensores'
 					},
 					{
-	                    'id'     : '321',
+	                    'id'     : 'article4_zone2',
 						'type'   : 'text',
 						'areaid' : 'left',
 						'body'   : '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci nisl, euismod a posuere ac, commodo quis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec sollicitudin risus laoreet velit dapibus bibendum. Nullam cursus sollicitudin hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc ullamcorper tempor bibendum. Morbi gravida pretium leo, vitae scelerisque quam mattis eu. Sed hendrerit molestie magna, sit amet porttitor nulla facilisis in. Donec vel massa mauris, sit amet condimentum lacus.</p>'
 					},
 					{
-	                    'id'     : '322',
+	                    'id'     : 'article4_zone3',
 						'type'   : 'image',
 						'areaid' : 'right',
 						'body'   : 'http://www.satec.es/es-ES/NuestraActividad/CasosdeExito/PublishingImages/IMG%20Do%C3%B1ana/do%C3%B1ana_fig2.png'		
@@ -876,13 +971,13 @@ VISH.Samples = (function(V,undefined){
 				'template' :'t3',
 				'elements':[
 					{
-	                    'id'     : '323',
+	                    'id'     : 'article5_zone1',
 						'type'   : 'text',
 						'areaid' : 'header',
 						'body'   : 'Puesta de sol...'
 					},
 					{
-	                    'id'     : '324',
+	                    'id'     : 'article5_zone2',
 						'type'   : 'image',
 						'areaid' : 'left',
 						'body'   : 'http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg'		
@@ -1143,6 +1238,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 
 	return {
 		samples   	  		: samples,
+		samplesv01 			: samplesv01,
 		samples_fc 			: samples_fc,
 		samples_flashcard 	: samples_flashcard,
 		samples_full_tour	: samples_full_tour,

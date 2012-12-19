@@ -97,7 +97,6 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			//Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
-			subslide.id = slide.id + "_" + subslide.id;
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
@@ -108,7 +107,6 @@ VISH.Renderer = (function(V,$,undefined){
 		var all_slides = "";
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
-			subslide.id = slide.id + "_" + subslide.id;
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
