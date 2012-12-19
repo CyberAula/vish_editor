@@ -39,11 +39,12 @@ VISH.SlideManager = (function(V,$,undefined){
 		setPresentationType(presentation.type);
 		
 		V.Quiz.init(presentation);
+		V.Flashcard.init();
+		V.Renderer.init();
 		V.Slides.init();
 		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
-		V.Flashcard.init();
 		
 		//Experimental initializers for new excursion types
 		switch(presentation.type){

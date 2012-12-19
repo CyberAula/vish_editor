@@ -55,6 +55,9 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Utils.loadDeviceCSS();
 
 		VISH.Editor.Dummies.init();
+		VISH.Flashcard.init();
+		VISH.Editor.Flashcard.init();
+		VISH.Renderer.init();
 		VISH.Slides.init();
 		VISH.User.init(options);
 
@@ -168,7 +171,6 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
 		VISH.Editor.Clipboard.init();
-		VISH.Editor.Flashcard.init();
 
 		VISH.Editor.Events.init();
 		VISH.EventsNotifier.init();
@@ -658,24 +660,21 @@ VISH.Editor = (function(V,$,undefined){
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = $(s).attr('type');
+			
 			if(slide.type === V.Constant.FLASHCARD){
-				//if it is a flashcard slide, it can't be modified in the editor, so we take it from slideEls
-				for(index in draftPresentation.slides){
-					if(draftPresentation.slides[index].id === slide.id){
-						slide = draftPresentation.slides[index];
-						break;
-					}
-				}
-				presentation.slides.push(slide);
+				var fc = VISH.Editor.Flashcard.getFlashcard(slide.id);
+				presentation.slides.push(fc);
 				slide = {};
 				return true; //equivalent to continue in an each loop
 			}
+
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
 
 			//important show it (the browser does not know the height and width if it is hidden)
 			$(s).addClass("temp_shown");
+
 			$(s).find('div').each(function(i,div){
 				
 				if($(div).attr("areaid") !== undefined){   
@@ -781,6 +780,7 @@ VISH.Editor = (function(V,$,undefined){
 			} else {
 				presentation.slides.push(slide);
 			}
+
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});

@@ -202,20 +202,44 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 	}
 
+   /*
+	* Modify slide ids to nest in a parent slide.
+	*/
+	var prepareSlideToNest = function(parentId,slide){
+		if(typeof parentId !== "string"){
+			return slide;
+		}
+
+		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+			//Only one slide nested level are currently supported
+			//TODO: Make it recursive
+			return;
+		}
+
+		slide.id = VISH.Utils.getId(parentId + "_" + slide.id,true);
+		if(slide.elements){
+			$.each(slide.elements, function(index, element) {
+				slide.elements[index].id = VISH.Utils.getId(parentId + "_" + slide.elements[index].id,true);
+			});
+		}
+		return slide;
+	}
+
 
 	return {
-		getWidthFromStyle   : getWidthFromStyle,
-		getHeightFromStyle  : getHeightFromStyle,
+		getWidthFromStyle   	: getWidthFromStyle,
+		getHeightFromStyle  	: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
-		hideSlides			: hideSlides,
-		setStyleInPixels  : setStyleInPixels,		
-		addZoomToStyle  : addZoomToStyle,	
-		getStylesInPercentages : 	getStylesInPercentages,	
-		addSlide		    : addSlide,
-		redrawSlides	    : redrawSlides,
-		dimentionToDraw     : dimentionToDraw,
-		showSlides			: showSlides,
-		refreshDraggables	: refreshDraggables
+		hideSlides				: hideSlides,
+		setStyleInPixels  		: setStyleInPixels,		
+		addZoomToStyle  		: addZoomToStyle,	
+		getStylesInPercentages 	: 	getStylesInPercentages,	
+		addSlide		    	: addSlide,
+		redrawSlides	    	: redrawSlides,
+		dimentionToDraw     	: dimentionToDraw,
+		showSlides				: showSlides,
+		refreshDraggables		: refreshDraggables,
+		prepareSlideToNest		: prepareSlideToNest
 	};
 
 }) (VISH, jQuery);

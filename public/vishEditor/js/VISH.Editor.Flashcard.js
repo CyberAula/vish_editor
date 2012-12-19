@@ -4,10 +4,27 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	//Singleton: Only one flashcard can be edited in a Vish Editor instance.
 	var flashcardId;
 
+	//Var to store the JSON of the inserted flashcards
+	var myFlashcards;
+	// myFlashcard = myFlashcards['flashcardIdInMyPresentation']
+
 	var init = function(){
 		VISH.Editor.Flashcard.Repository.init();
 		flashcardId = null;
+		myFlashcards = new Array();
 	};
+
+	var addFlashcard = function(fc){
+		if(typeof myFlashcards !== "undefined"){
+			myFlashcards[fc.id] = fc;
+		}
+	}
+
+	var getFlashcard = function(id){
+		if(typeof myFlashcards !== "undefined"){
+			return myFlashcards[id];
+		}
+	}
 
 	var loadFlashcard = function(presentation){
 		//first action, set presentation type to "flashcard"
@@ -24,10 +41,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			$("#fc_change_bg_big").hide();
 			$("#flashcard-background").attr("flashcard_id", presentation.slides[0].id);
 		} else {
-			if(!flashcardId){
+			if(!getCurrentFlashcardId()){
 				flashcardId = VISH.Utils.getId("article");
 			}
-			$("#flashcard-background").attr("flashcard_id", flashcardId);
+			$("#flashcard-background").attr("flashcard_id", getCurrentFlashcardId());
 		}
 		$("#flashcard-background").droppable();  //to accept the pois
 	};
@@ -101,10 +118,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		var pois = [];
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
-			pois[index].id = VISH.Utils.getId(flashcardId+"_"+s.id,true);
+			pois[index].id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
 			pois[index].x = 100*($(s).offset().left - 55)/800; //to be relative to his parent, the flashcard-background
 			pois[index].y = 100*($(s).offset().top - 75)/600; //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = VISH.Utils.getId(flashcardId+"_"+$(s).attr('slide_id'),true);
+			pois[index].slide_id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
 		});
 		return pois;
 	};
@@ -112,7 +129,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	var removePois = function(){
 		$(".draggable_arrow_div").hide();
 	};
-
 
 	var hasPoiInBackground = function(){
 		return $(".draggable_arrow_div[moved='true']").length > 0;
@@ -132,27 +148,14 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	}
 
 	var prepareToNestInFlashcard = function(slide){
-		if(!flashcardId){
-			return slide;
-		}
-
-		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
-			//Only one slide nested level are currently supported
-			return;
-		}
-
-		slide.id = VISH.Utils.getId(flashcardId + "_" + slide.id,true);
-		if(slide.elements){
-			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = VISH.Utils.getId(flashcardId + "_" + slide.elements[index].id,true);
-			});
-		}
-
-		return slide;
+		return VISH.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
 	}
+
 
 	return {
 		init 				 	: init,
+		addFlashcard 			: addFlashcard,
+		getFlashcard 			: getFlashcard,
 		getCurrentFlashcardId 	: getCurrentFlashcardId,
 		prepareToNestInFlashcard : prepareToNestInFlashcard,
 		hasChangedBackground 	: hasChangedBackground,

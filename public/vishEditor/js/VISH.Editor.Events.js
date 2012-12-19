@@ -78,20 +78,17 @@ VISH.Editor.Events = (function(V,$,undefined){
    			var presentation = V.Editor.getPresentation();
 
 			$(document).bind('keydown', handleBodyKeyDown); 
-			$(document).bind('keyup', handleBodyKeyUp);   	
+			$(document).bind('keyup', handleBodyKeyUp);
+			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 
 			if((VISH.Editing)&&(presentation)){
 				for(index in presentation.slides){
 		      		var slide = presentation.slides[index];
-
 	      			switch(slide.type){
 	      				case VISH.Constant.FLASHCARD:
 		      				bindEventsForFlashcard(slide);
-		      				
-			      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 	      					break;
 	      				case VISH.Constant.VTOUR:
-	      					$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 	      					break;
 	      			}
 	  		    }

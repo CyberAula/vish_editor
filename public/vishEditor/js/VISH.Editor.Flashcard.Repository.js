@@ -1,11 +1,10 @@
 VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	
-	
 	var carrouselDivId = "tab_flashcards_repo_content_carrousel";
 	var previewDivId = "tab_flashcards_repo_content_preview";
 	var currentFlashcards = new Array();
 	var selectedFlashcard = null;
-	
+
 	var init = function() {
 		var myInput = $("#tab_flashcards_repo_content").find("input[type='search']");
 		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
@@ -87,10 +86,8 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		if(flashcardid){
 			var the_flashcard_excursion = currentFlashcards[flashcardid];
 			//we have the flashcard as is in the repository but we have to update its ids to the adequate ones
-			var selectedFc = _changeFlashcardIds(the_flashcard_excursion.slides[0]);		
-
-			V.Flashcard.init();
-			V.Renderer.init();
+			var selectedFc = _changeFlashcardIds(the_flashcard_excursion.slides[0]);
+			VISH.Editor.Flashcard.addFlashcard(selectedFc);
 			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
 			V.Editor.Utils.redrawSlides();
 			VISH.Editor.Thumbnails.redrawThumbnails();
