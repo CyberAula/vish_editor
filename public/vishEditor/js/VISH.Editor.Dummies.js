@@ -56,26 +56,28 @@ VISH.Editor.Dummies = (function(VISH,undefined){
 		var newDummy = dummy;
 		var nextZoneId = 0;
 
+		if(!articleId){
+			articleId = VISH.Utils.getId("article");
+		}
+
+		if(newDummy.indexOf("article_id_to_change") != -1){
+			newDummy = newDummy.replace("article_id_to_change", articleId);				
+		}
+		
+		while(newDummy.indexOf("slidenumber_to_change") != -1){
+			newDummy = newDummy.replace("slidenumber_to_change", slideNumber);
+		}
+
 		while(newDummy.indexOf("div_id_to_change") != -1){
 			if(zoneIds){
 				var newZoneId = zoneIds[nextZoneId];
 				nextZoneId++;
 			} else {
-				var newZoneId = VISH.Utils.getId("zone");
+				var newZoneId = VISH.Utils.getId(articleId + "_zone");
 			}
 			newDummy = newDummy.replace("div_id_to_change", newZoneId);
 		}
-		if(newDummy.indexOf("article_id_to_change") != -1){
-			if(articleId){
-				var newArticleId = articleId;
-			} else {
-				var newArticleId = VISH.Utils.getId("article");
-			}
-			newDummy = newDummy.replace("article_id_to_change", newArticleId);				
-		}
-		while(newDummy.indexOf("slidenumber_to_change") != -1){
-			newDummy = newDummy.replace("slidenumber_to_change", slideNumber);
-		}
+
 		return newDummy;
 	};
 

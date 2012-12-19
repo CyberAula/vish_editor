@@ -19,7 +19,9 @@ VISH.Flashcard = (function(V,$,undefined){
   };
 
   var startAnimation = function(slideId){
-    flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
+    if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")){
+      flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
+    }
   };
 
   var stopAnimation = function(slideId){

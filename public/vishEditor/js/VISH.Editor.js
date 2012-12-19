@@ -47,6 +47,7 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		VISH.Utils.init();
 		VISH.Status.init();
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
@@ -685,16 +686,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.type 	= $(div).attr('type');
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
-					if(element.type=="text"){
+					if(element.type==VISH.Constant.TEXT){
 						//NicEditor version
 						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
-					} else if(element.type=="image"){
+					} else if(element.type==VISH.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
 						if($(div).attr("hyperlink")){
 							element.hyperlink = $(div).attr("hyperlink");
 						}
-					} else if(element.type=="video"){
+					} else if(element.type==VISH.Constant.VIDEO){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
@@ -709,7 +710,7 @@ VISH.Editor = (function(V,$,undefined){
 						});
 						sources = '[' + sources + ']'
 						element.sources = sources;
-					} else if(element.type=="object"){
+					} else if(element.type===VISH.Constant.OBJECT){
 						var object = $(div).find(".object_wrapper").children()[0];
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
@@ -719,7 +720,7 @@ VISH.Editor = (function(V,$,undefined){
 						if(zoom!=1){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
-					} else if (element.type =="quiz") {
+					} else if (element.type === VISH.Constant.QUIZ) {
 						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
@@ -741,7 +742,7 @@ VISH.Editor = (function(V,$,undefined){
 								}
 							});
 						}
-					} else if(element.type === "snapshot"){
+					} else if(element.type === VISH.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
@@ -756,7 +757,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type=="quiz"){
+					if(element.type==VISH.Constant.QUIZ){
 						var quizSlide = $.extend(true, new Object(), element);
 						//Apply presentation Wrapper
 						var quizPresentation = new Object();
@@ -764,24 +765,22 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
 					    quizPresentation.slides = [quizSlide];
-						quizPresentation.type = "quiz_simple";
+						quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 
 					element = {};
 				}
 			
-				
 			});
 
-			if(presentation.type==="flashcard"){
+			if(presentation.type===VISH.Constant.FLASHCARD){
 				//if it is flashcard we save the slide into the flashcard slides (the flashcard is the first slide by convention)
+				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
-			}
-			else{
+			} else {
 				presentation.slides.push(slide);
 			}
-			
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});
@@ -970,7 +969,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(type){
 			draftPresentation.type = type;
 		} else {
-			draftPresentation.type = "presentation";
+			draftPresentation.type = VISH.Constant.PRESENTATION;
 		}
 	};
 

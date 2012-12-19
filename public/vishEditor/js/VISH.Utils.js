@@ -1,29 +1,47 @@
 VISH.Utils = (function(V,undefined){
 	
+	var domIds;
+	// myDomId = domIds['prefix'] returns a unicId for the specified prefix
+
 	var init = function(){
-		//Code here...
+		if(!domIds){
+			domIds = new Array();
+		}
 	}
 
    /**
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get "article_x" ids.
+	* Specify a separator for nested ids.
+	* justCheck: only check if the id is really unic, if dont generate a new id.
 	*/
-	var domId = 0; 
-	var getId = function(full_id_prefix){
-		domId = domId +1;
+	var getId = function(full_id_prefix,justCheck,separator){
 
-		if(typeof full_id_prefix !== "string"){
-			//Default prefix
-			full_id_prefix = "unicID";
+		if(!justCheck){
+			if(typeof full_id_prefix !== "string"){
+				//Default prefix
+				full_id_prefix = "unicID";
+			}
+
+			if(typeof separator !== "string"){
+				separator = "";
+			}
+
+			if(typeof domIds[full_id_prefix] === "undefined"){
+				domIds[full_id_prefix] = 0;
+			}
+			domIds[full_id_prefix] = domIds[full_id_prefix] + 1;
+			var full_id = full_id_prefix + separator + domIds[full_id_prefix];
+		} else {
+			var full_id = full_id_prefix;
+			full_id_prefix = full_id_prefix.replace(full_id_prefix[full_id_prefix.length-1],"");
 		}
-
-		var full_id = full_id_prefix + "_" + domId;
 
 		//Ensure that the id is unic.
 		if($("#"+full_id).length===0){
 			return full_id;
 		} else {
-			return getId(full_id_prefix);
+			return getId(full_id_prefix,false,separator);
 		}
 	};
 

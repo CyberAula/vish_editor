@@ -23,19 +23,23 @@ VISH.Constant.LARGE = "large";
 
 //Defaults
 VISH.Constant.AGE_RANGE = "4 - 20";
-//temporal id prefix, used before preview
-VISH.Constant.TEMP_FC_ID = "tempFlashcardId";
 
 //Presentation and slide types
 VISH.Constant.PRESENTATION = "presentation";
 VISH.Constant.FLASHCARD = "flashcard";
 VISH.Constant.GAME = "game";
 VISH.Constant.QUIZ = "quiz";
+VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
 VISH.Constant.VTOUR = "virtualTour";
 VISH.Constant.STANDARD = "standard";
 
 //Element types
 //TODO...
+VISH.Constant.IMAGE = "image";
+VISH.Constant.TEXT = "text";
+VISH.Constant.VIDEO = "video";
+VISH.Constant.OBJECT = "object";
+VISH.Constant.SNAPSHOT = "snapshot";
 
 VISH.Constant.THUMBNAIL = "thumbnail";
 VISH.Constant.NONE = "none";
