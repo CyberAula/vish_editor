@@ -100,6 +100,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		_initPreview();
 	}
 
+	var updateMenuAfterAddSlide = function(slideType){
+		switch(slideType){
+			case VISH.Constant.STANDARD:
+				break;
+			case VISH.Constant.FLASHCARD:
+			case VISH.Constant.VTOUR:
+				return init();
+				break;
+			default:
+				break;
+		}
+	}
+
 	var disableMenu = function(){
 		$("#menu").hide();
 		$("#menu").attr("id","menuDisabled");
@@ -450,6 +463,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	return {
 		init							: init,
+		updateMenuAfterAddSlide 		: updateMenuAfterAddSlide,
 		disableMenu 					: disableMenu ,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,

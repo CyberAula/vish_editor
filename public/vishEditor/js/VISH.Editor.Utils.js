@@ -36,14 +36,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}	
 	};
 
-
-   /**
-	* Function to add a new slide
-	*/
-	var addSlide = function(slide){
-		$('.slides').append(slide);
-	};
-
    /**
 	* Function to get width in pixels from a style attribute.
 	* If width attribute is given by percent, area (parent container) attribute is needed.
@@ -233,8 +225,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		hideSlides				: hideSlides,
 		setStyleInPixels  		: setStyleInPixels,		
 		addZoomToStyle  		: addZoomToStyle,	
-		getStylesInPercentages 	: 	getStylesInPercentages,	
-		addSlide		    	: addSlide,
+		getStylesInPercentages 	: 	getStylesInPercentages,
 		redrawSlides	    	: redrawSlides,
 		dimentionToDraw     	: dimentionToDraw,
 		showSlides				: showSlides,

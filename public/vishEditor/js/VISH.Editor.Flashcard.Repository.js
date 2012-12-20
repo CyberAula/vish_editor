@@ -95,6 +95,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			VISH.Editor.Thumbnails.redrawThumbnails();
 			V.Editor.Events.bindEventsForFlashcard(selectedFc);
 			V.Slides.lastSlide();  //important to get the browser to draw everything
+			VISH.Editor.Tools.Menu.updateMenuAfterAddSlide(VISH.Constant.FLASHCARD);
 			$.fancybox.close();
 		}
 	};

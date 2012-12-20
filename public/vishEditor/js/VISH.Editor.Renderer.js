@@ -60,7 +60,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
-		V.Editor.Utils.addSlide(scaffold);
+		V.Slides.addSlide(scaffold);
 		V.Editor.Utils.redrawSlides();
 		V.Slides.lastSlide();  //important to get the browser to draw everything
 
