@@ -776,6 +776,57 @@ VISH.Samples = (function(V,undefined){
 	        		}]
 	        }, 
 	        {
+				'id'       :'article31',
+				'template' :'t3',
+				'elements':[
+					{
+	                    'id'     : 'article31_zone1',
+						'type'   : 'text',
+						'areaid' : 'header',
+						'body'   : 'Experimento virtual1'
+					},
+					{
+	          			'id'     : 'article31_zone2',
+	          			'type'   : 'object',
+	          			'areaid' : 'left',
+	          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+	        		}]
+	        }, 
+	        {
+				'id'       :'article331',
+				'template' :'t3',
+				'elements':[
+					{
+	                    'id'     : 'article331_zone1',
+						'type'   : 'text',
+						'areaid' : 'header',
+						'body'   : 'Experimento virtual1'
+					},
+					{
+	          			'id'     : 'article331_zone2',
+	          			'type'   : 'object',
+	          			'areaid' : 'left',
+	          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+	        		}]
+	        }, 
+	        {
+				'id'       :'article4331',
+				'template' :'t3',
+				'elements':[
+					{
+	                    'id'     : 'article4331_zone1',
+						'type'   : 'text',
+						'areaid' : 'header',
+						'body'   : 'Experimento virtual1'
+					},
+					{
+	          			'id'     : 'article4331_zone2',
+	          			'type'   : 'object',
+	          			'areaid' : 'left',
+	          			'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+	        		}]
+	        }, 
+	        {
 				"id"			: "article2",
 				"type"			: "flashcard",
 				"background"	: "url(http://html.rincondelvago.com/000563580.png)",
