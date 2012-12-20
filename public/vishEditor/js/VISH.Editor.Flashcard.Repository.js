@@ -89,6 +89,8 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			var selectedFc = _changeFlashcardIds(the_flashcard_excursion.slides[0]);
 			VISH.Editor.Flashcard.addFlashcard(selectedFc);
 			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
+			//currentSlide number is next slide
+			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 			V.Editor.Utils.redrawSlides();
 			VISH.Editor.Thumbnails.redrawThumbnails();
 			V.Editor.Events.bindEventsForFlashcard(selectedFc);

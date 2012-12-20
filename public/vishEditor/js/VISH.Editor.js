@@ -370,6 +370,8 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = VISH.Editor.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlidesQuantity()+1);
 		VISH.Editor.Utils.addSlide(slide);
 		$.fancybox.close();
+		//currentSlide number is next slide
+		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 		VISH.Editor.Utils.redrawSlides();		
 		VISH.Editor.Thumbnails.redrawThumbnails();
 		setTimeout("VISH.Slides.lastSlide()", 300);	

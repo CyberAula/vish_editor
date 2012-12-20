@@ -21,12 +21,14 @@ VISH.Flashcard = (function(V,$,undefined){
   var startAnimation = function(slideId){
     if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")){
       flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
+      console.log("start");
     }
   };
 
   var stopAnimation = function(slideId){
     if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
       clearTimeout(flashcards[slideId].timer);
+      console.log("stop");
     }
   };
 

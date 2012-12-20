@@ -17,7 +17,7 @@ VISH.Slides = (function(V,$,undefined){
 	  	//this way updateSlides will add the class current and it will be shown
 	  	curSlideIndex = 0;
 	  }
-	  updateSlides(); 
+	  updateSlides(true); 
 	  $('body').addClass('loaded');
 	};
 
