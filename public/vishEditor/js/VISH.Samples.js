@@ -1038,6 +1038,163 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
+ 	var curiosity_flashcard = {
+    "id": "418",
+    "type": "flashcard",
+    "title": "Curiosity Flashcard",
+    "description": "A Flashcard about \"Curiosity\", the car-sized robotic rover exploring Gale Crater on Mars.",
+    "avatar": "/assets/logos/original/excursion-12.png",
+    "tags": ["Space", "science", "LifeSciences", "Mars"],
+    "author": "Néstor Toribio Ruiz",
+    "slides" : [
+        {
+            "id"            : "418",
+            "type"          : "flashcard",
+            "background"    : "url(\"http://blogs.vanguardia.com/tecnologiaviva/files/2012/08/Curiosity.jpg\")",
+            "pois": [{
+                "id": "poi1",
+                "x": 7,
+                "y": 3,
+                "slide_id": "1"
+            }, {
+                "id": "poi2",
+                "x": 12,
+                "y": 33,
+                "slide_id": "2"
+            }, {
+                "id": "poi3",
+                "x": 88,
+                "y": 61,
+                "slide_id": "3"
+            }, {
+                "id": "poi4",
+                "x": 39,
+                "y": 14,
+                "slide_id": "4"
+            }, {
+                "id": "poi5",
+                "x": 33,
+                "y": 65,
+                "slide_id": "5"
+            }, {
+                "id": "poi6",
+                "x": 44.375,
+                "y": 40.73333231608073,
+                "slide_id": "6"
+            }],
+            "slides" : [{
+        "id": "article__0",
+        "type": "standard",
+        "template": "t2",
+        "elements": [{
+            "id": "zone1",
+            "type": "object",
+            "areaid": "left",
+            "body": "<iframe unselectable=\"on\" wmode=\"opaque\" class=\"t2_object\" id=\"resizableunicID_1\" src=\"http://www.youtube.com/embed/waEiMKdNgGU?wmode=opaque\" frameborder=\"0\"></iframe>",
+            "style": "position: relative; width:100.01966666666667%; height:97.9021891891892%; top:0%; left:0%;"
+        }]
+    }, {
+        "id": "article__1",
+        "type": "standard",
+        "template": "t2",
+        "elements": [{
+            "id": "zone2",
+            "type": "object",
+            "areaid": "left",
+            "body": "<object unselectable=\"on\" wmode=\"opaque\" class=\"t2_object\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0\" id=\"resizableunicID_7\" name=\"_360_krpano_name_156391\" height=\"500\" width=\"700\"><param unselectable=\"on\" name=\"movie\" value=\"http://www.360cities.net/javascripts/krpano/krpano.swf\"><param unselectable=\"on\" name=\"quality\" value=\"autohigh\"><param unselectable=\"on\" name=\"allowScriptAccess\" value=\"always\"><param unselectable=\"on\" name=\"flashvars\" value=\"pano=http://www.360cities.net/krpano/external_embed/curiosity-rover-martian-solar-day-2.xml&amp;epd=http://www.360cities.net/data/embed/plugin_data/curiosity-rover-martian-solar-day-2\"><param unselectable=\"on\" name=\"allowFullScreen\" value=\"true\"><embed unselectable=\"on\" src=\"http://www.360cities.net/javascripts/krpano/krpano.swf\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" allowfullscreen=\"true\" allowscriptaccess=\"always\" quality=\"autohigh\" flashvars=\"pano=http://www.360cities.net/krpano/external_embed/curiosity-rover-martian-solar-day-2.xml&amp;epd=http://www.360cities.net/data/embed/plugin_data/curiosity-rover-martian-solar-day-2\" height=\"500\" width=\"700\"></object>",
+            "style": "position: relative; width:103.26450442477876%; height:3.693694980694981%; top:0%; left:0%;"
+        }]
+    }, {
+        "id": "article__2",
+        "type": "standard",
+        "template": "t4",
+        "elements": [{
+            "id": "zone5",
+            "type": "image",
+            "areaid": "header",
+            "body": "http://www.nasa.gov/images/content/351657main_curiosity_bn.jpg",
+            "style": "position: relative; width:100.29498525073747%; height:182.69230769230768%; top:-69.23076923076923%; left:-0.14749262536873156%;"
+        }, {
+            "id": "zone6",
+            "type": "image",
+            "areaid": "left",
+            "body": "http://www.nasa.gov/images/content/683195main_pia15695-full_full.jpg",
+            "style": "position: relative; width:103.2448377581121%; height:101.20845921450152%; top:-0.6042296072507553%; left:-1.9174041297935103%;"
+        }, {
+            "id": "zone7",
+            "type": "text",
+            "areaid": "right",
+            "body": "<div style=\"font-weight: 400;\" align=\"center\">The Chemistry and Camera (ChemCam) instrument on NASA's Mars rover \nCuriosity used its laser to examine side-by-side points in a target \npatch of soil, leaving the marks apparent in this before-and-after \ncomparison. <br> The two images were taken by ChemCam's Remote \nMicro-Imager from a distance of about 11.5 feet (3.5 meters). The \ndiameter of the circular field of view is about 3.1 inches (7.9 \ncentimeters). </div>"
+        }]
+    }, {
+        "id": "article__3",
+        "type": "standard",
+        "template": "t7",
+        "elements": [{
+            "id": "zone8",
+            "type": "image",
+            "areaid": "header",
+            "body": "http://www.nasa.gov/images/content/351657main_curiosity_bn.jpg",
+            "style": "position: relative; width:137.16814159292036%; height:250%; top:-94.23076923076923%; left:-23.746312684365783%;"
+        }, {
+            "id": "zone9",
+            "type": "text",
+            "areaid": "left",
+            "body": "<div style=\"font-weight: 400;\" class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">This image shows the Alpha Particle X-Ray Spectrometer (APXS) on NASA's \nCuriosity rover, with the Martian landscape in the background. The image\n was taken by Curiosity's Mast Camera on the 32nd Martian day, or sol, \nof operations on the surface (Sept. 7, 2012, PDT or Sept. 8, 2012, UTC).\n APXS can be seen in the middle of the picture.</span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">This image let researchers know that the APXS instrument had not become caked with dust during Curiosity's dusty landing. </span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">\n Scientists enhanced the color in this version to show the Martian scene\n as it would appear under the lighting conditions we have on Earth, \nwhich helps in analyzing the terrain. </span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span></div>"
+        }, {
+            "id": "zone10",
+            "type": "image",
+            "areaid": "center",
+            "body": "http://www.nasa.gov/images/content/686475main_pia16160-full_full.jpg",
+            "style": "position: relative; width:124.12177985948477%; height:105.55555555555556%; top:-1.0582010582010581%; left:-9.836065573770492%;"
+        }, {
+            "id": "zone11",
+            "type": "text",
+            "areaid": "subheader",
+            "body": "<div style=\"font-weight: 400;\"><i>Image credit: NASA/JPL-Caltech/MSSS</i></div>"
+        }]
+    }, {
+        "id": "article__4",
+        "type": "standard",
+        "template": "t9",
+        "elements": [{
+            "id": "zone12",
+            "type": "image",
+            "areaid": "header",
+            "body": "http://www.nasa.gov/images/content/351657main_curiosity_bn.jpg",
+            "style": "position: relative; width:176.99115044247787%; height:323.0769230769231%; top:-180.76923076923077%; left:-74.48377581120944%;"
+        }, {
+            "id": "zone13",
+            "type": "image",
+            "areaid": "left",
+            "body": "http://www.nasa.gov/images/content/685406main_pia16134-full_full.jpg",
+            "style": "position: relative; width:150%; height:203.3816425120773%; top:-50.24154589371981%; left:-31.666666666666668%;"
+        }, {
+            "id": "zone14",
+            "type": "text",
+            "areaid": "center",
+            "body": "<div style=\"font-weight: 400;\" class=\"vish-parent-font2\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">In the distance is the lower slope of Mount Sharp.</span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The camera is located in the turret of tools at the end of Curiosity's \nrobotic arm. The Sol 34 imaging by MAHLI was part of a week-long set of \nactivities for characterizing the movement of the arm in Mars \nconditions. </span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\">The main purpose of Curiosity's MAHLI camera is to acquire close-up, \nhigh-resolution views of rocks and soil at the rover's Gale Crater field\n site. The camera is capable of focusing on any target at distances of \nabout 0.8 inch (2.1 centimeters) to infinity, providing versatility for \nother uses, such as views of the rover itself from different angles. </span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span> </div>"
+        }, {
+            "id": "zone15",
+            "type": "image",
+            "areaid": "right",
+            "body": "http://www.nasa.gov/images/content/685666main_pia16137-full_full.jpg",
+            "style": "position: relative; width:119.04761904761905%; height:100%; top:-0.43859649122807015%; left:-7.619047619047619%;"
+        }]
+    }, {
+        "id": "article__5",
+        "type": "standard",
+        "template": "t2",
+        "elements": [{
+            "id": "zone16",
+            "type": "image",
+            "areaid": "left",
+            "body": "http://www.nasa.gov/images/content/684452main_Robinson-3-pia16145-full_full.jpg",
+            "style": "position: relative; width:100.29498525073747%; height:86.1003861003861%; top:7.335907335907336%; left:-0.4424778761061947%;"
+        }]
+    }]
+    }] 
+};
 
 	var samples_flashcard = {
 		"id" 			: "",
