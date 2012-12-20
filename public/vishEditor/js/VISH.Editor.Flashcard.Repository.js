@@ -42,7 +42,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	 */
 	var _onDataReceived = function(data) {
 		//Clean previous content
-		//VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 
 		//Clean previous Images
@@ -64,7 +64,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			carrouselImages.push(myImg);
 			currentFlashcards[fc.id] = fc;
 		});
-		//VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 	
 	var _onImagesLoaded = function(){
@@ -74,7 +74,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		options['callback'] = _onClickCarrouselElement;
 		options['rowItems'] = 4;
 		options['scrollItems'] = 4;
-		//VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
 	var _onAPIError = function() {

@@ -45,6 +45,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
+		V.Utils.init();
 		
 		//Experimental initializers for new excursion types
 		switch(presentation.type){
