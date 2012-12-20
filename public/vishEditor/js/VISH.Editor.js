@@ -224,7 +224,7 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		//template
-		$(document).on('click','#help_template_image', function(){			
+		$(document).on('click','.help_in_template', function(){			
 			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
 
