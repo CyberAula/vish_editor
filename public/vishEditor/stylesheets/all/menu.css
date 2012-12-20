@@ -200,3 +200,13 @@ html[xmlns] #menu {
 a.menu_option{
 	cursor: pointer !important;
 }
+
+.menu_item_enabled > a {
+
+}
+
+.menu_item_disabled > a {
+	color: white !important;
+	pointer-events: none !important;
+   	cursor: default !important;
+}
