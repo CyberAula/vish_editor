@@ -83,14 +83,17 @@ VISH.Events = (function(V,$,undefined){
 				//this is because if not done, the browser can take control of the event and cancels it, 
 				//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
 				//and there will be no scroll below that zoom level
-				event.preventDefault(); 
+				event.preventDefault();
 			} else {
 				//Fix for Iphone devices due to Click Delegation bug
 				//TODO: Apply fix only for safari
 				if(VISH.Status.getDevice().iPhone){
+					// alert(VISH.Utils.getOuterHTML(event.target));
 					if($(event.target).hasClass("fc_poi")){
 						var poiId = event.target.id;
 						_onFlashcardPoiClicked(poiId);
+					} else if($(event.target).hasClass("close_subslide")){
+						_onFlashcardCloseSlideClicked(event);
 					}
 				}
 			}
