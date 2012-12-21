@@ -59,7 +59,6 @@ VISH.Flashcard = (function(V,$,undefined){
     if((!slideId)||(typeof flashcards[slideId] === "undefined")){
       return;
     }
-
     $(flashcards[slideId].arrows).each(function(index,value){
       var new_pos = (value.position + FRAME_WIDTH)%(TOTAL_FRAMES*FRAME_WIDTH);
       var arrow_dom_el = $("#"+value.id);

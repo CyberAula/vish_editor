@@ -73,10 +73,13 @@ VISH.Events = (function(V,$,undefined){
 			document.body.addEventListener('touchend', handleTouchEnd, true);
 			var zoom = document.documentElement.clientWidth / window.innerWidth;
 
-			var eventNotRegister = ((registeredEvents.indexOf(event.target.id)==-1)&&((registeredEvents.indexOf($(event.target).attr("class"))==-1)));
+			//TODO: Consider all of the event.target classes
+			var firstClass = $(event.target).attr("class").split(" ")[0];
+			var eventNotRegister = ((registeredEvents.indexOf(event.target.id)==-1)&&((registeredEvents.indexOf(firstClass)==-1)));
 
 			if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && eventNotRegister){ 
-			// alert("preventDefault"); 
+				// alert("Prevent default")
+				// alert(firstClass);
 				//this is because if not done, the browser can take control of the event and cancels it, 
 				//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
 				//and there will be no scroll below that zoom level
@@ -151,6 +154,10 @@ VISH.Events = (function(V,$,undefined){
  			$(document).bind('touchstart', handleTouchStart); 
  			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
  			_registerEvent("close_subslide");
+
+ 			//Register events for custom video player
+ 			_registerEvent("customPlayerButton");
+ 			_registerEvent("customPlayerControls");
 	      	
 	      	var presentation = V.SlideManager.getCurrentPresentation();
 	      	for(index in presentation.slides){
