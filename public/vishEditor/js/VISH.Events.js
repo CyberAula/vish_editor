@@ -149,25 +149,22 @@ VISH.Events = (function(V,$,undefined){
       			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
       		});
  			$(document).bind('touchstart', handleTouchStart); 
+ 			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+ 			_registerEvent("close_subslide");
 	      	
 	      	var presentation = V.SlideManager.getCurrentPresentation();
 	      	for(index in presentation.slides){
 	      		var slide = presentation.slides[index];
-
       			switch(slide.type){
       				case VISH.Constant.FLASHCARD:
 	      				//Add the points of interest with their click events to show the slides
 		  				for(ind in slide.pois){
 		  					var poi = slide.pois[ind];
-		  					$(document).on('click', "#" + slide.id + "_" + poi.id,  { slide_id: slide.id + "_" + poi.slide_id}, _onFlashcardPoiClicked);
-		  					_registerEvent(slide.id + "_" + poi.id);
+		  					$(document).on('click', "#" + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+		  					_registerEvent(poi.id);
 		  				}
-		      			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
-		      			_registerEvent("close_subslide");
       					break;
       				case VISH.Constant.VTOUR:
-      					$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
-      					_registerEvent("close_subslide");
       					break;
       			}
   		    }

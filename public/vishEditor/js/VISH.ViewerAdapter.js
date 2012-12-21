@@ -1,7 +1,6 @@
 VISH.ViewerAdapter = (function(V,$,undefined){
 	var page_is_fullscreen = false; //it always init without fullscreen
 
-
 	/**
 	 * Initializer
 	 */
@@ -123,11 +122,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}, function() {
 			$("#page-fullscreen").css("background-position", "-45px 0px");
 		});
-		if(VISH.Slides.getSlidesQuantity()>1){
-			$("#viewbar").show();
-		} else {
-			$("#viewbar").hide();
-		}
+		_decideIfViewBarShow(true);
 	}
 
 	var _onLeaveFullScreen = function(){
@@ -137,8 +132,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}, function() {
 			$("#page-fullscreen").css("background-position", "0px 0px");
 		});
-		if(VISH.Slides.getSlidesQuantity()>1){
-			$("#viewbar").show();
+		_decideIfViewBarShow(false);
+	}
+
+	var _decideIfViewBarShow = function(fullScreen){
+		if(!fullScreen){
+			if(VISH.Slides.getSlidesQuantity()>1){
+				$("#viewbar").show();
+			} else {
+				$("#viewbar").hide();
+			}
 		} else {
 			$("#viewbar").hide();
 		}
@@ -169,7 +172,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#viewbar").hide();
 			}
-
 		} else {
 			$("#viewbar").hide();
 		}

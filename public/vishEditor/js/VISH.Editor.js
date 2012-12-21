@@ -47,6 +47,7 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		VISH.Utils.init();
 		VISH.Status.init();
 		if(!VISH.Utils.checkMiniumRequirements()){
 			return;
@@ -54,6 +55,9 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Utils.loadDeviceCSS();
 
 		VISH.Editor.Dummies.init();
+		VISH.Flashcard.init();
+		VISH.Editor.Flashcard.init();
+		VISH.Renderer.init();
 		VISH.Slides.init();
 		VISH.User.init(options);
 
@@ -167,7 +171,6 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Tools.init();
 		VISH.Editor.Filter.init();
 		VISH.Editor.Clipboard.init();
-		VISH.Editor.Flashcard.init();
 
 		VISH.Editor.Events.init();
 		VISH.EventsNotifier.init();
@@ -221,7 +224,7 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		//template
-		$(document).on('click','#help_template_image', function(){			
+		$(document).on('click','.help_in_template', function(){			
 			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
 
@@ -365,8 +368,10 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : "";
 		var slide = VISH.Editor.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlidesQuantity()+1);
-		VISH.Editor.Utils.addSlide(slide);
+		VISH.Slides.addSlide(slide);
 		$.fancybox.close();
+		//currentSlide number is next slide
+		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 		VISH.Editor.Utils.redrawSlides();		
 		VISH.Editor.Thumbnails.redrawThumbnails();
 		setTimeout("VISH.Slides.lastSlide()", 300);	
@@ -657,24 +662,21 @@ VISH.Editor = (function(V,$,undefined){
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
 			slide.type = $(s).attr('type');
+			
 			if(slide.type === V.Constant.FLASHCARD){
-				//if it is a flashcard slide, it can't be modified in the editor, so we take it from slideEls
-				for(index in draftPresentation.slides){
-					if(draftPresentation.slides[index].id === slide.id){
-						slide = draftPresentation.slides[index];
-						break;
-					}
-				}
-				presentation.slides.push(slide);
+				var fc = VISH.Editor.Flashcard.getFlashcard(slide.id);
+				presentation.slides.push(fc);
 				slide = {};
 				return true; //equivalent to continue in an each loop
 			}
+
 			slide.template = $(s).attr('template');
 			slide.elements = [];
 			var element = {};
 
 			//important show it (the browser does not know the height and width if it is hidden)
 			$(s).addClass("temp_shown");
+
 			$(s).find('div').each(function(i,div){
 				
 				if($(div).attr("areaid") !== undefined){   
@@ -685,16 +687,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.type 	= $(div).attr('type');
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
-					if(element.type=="text"){
+					if(element.type==VISH.Constant.TEXT){
 						//NicEditor version
 						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
-					} else if(element.type=="image"){
+					} else if(element.type==VISH.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
 						if($(div).attr("hyperlink")){
 							element.hyperlink = $(div).attr("hyperlink");
 						}
-					} else if(element.type=="video"){
+					} else if(element.type==VISH.Constant.VIDEO){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
@@ -709,7 +711,7 @@ VISH.Editor = (function(V,$,undefined){
 						});
 						sources = '[' + sources + ']'
 						element.sources = sources;
-					} else if(element.type=="object"){
+					} else if(element.type===VISH.Constant.OBJECT){
 						var object = $(div).find(".object_wrapper").children()[0];
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
@@ -719,7 +721,7 @@ VISH.Editor = (function(V,$,undefined){
 						if(zoom!=1){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
-					} else if (element.type =="quiz") {
+					} else if (element.type === VISH.Constant.QUIZ) {
 						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
 						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
 						if($(div).find(".multiplechoice_option_in_zone")) {
@@ -741,7 +743,7 @@ VISH.Editor = (function(V,$,undefined){
 								}
 							});
 						}
-					} else if(element.type === "snapshot"){
+					} else if(element.type === VISH.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
@@ -756,7 +758,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type=="quiz"){
+					if(element.type==VISH.Constant.QUIZ){
 						var quizSlide = $.extend(true, new Object(), element);
 						//Apply presentation Wrapper
 						var quizPresentation = new Object();
@@ -764,24 +766,23 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
 					    quizPresentation.slides = [quizSlide];
-						quizPresentation.type = "quiz_simple";
+						quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 
 					element = {};
 				}
 			
-				
 			});
 
-			if(presentation.type==="flashcard"){
+			if(presentation.type===VISH.Constant.FLASHCARD){
 				//if it is flashcard we save the slide into the flashcard slides (the flashcard is the first slide by convention)
+				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
-			}
-			else{
+			} else {
 				presentation.slides.push(slide);
 			}
-			
+
 			slide = {};
 			$(s).removeClass("temp_shown");						
 		});
@@ -970,7 +971,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(type){
 			draftPresentation.type = type;
 		} else {
-			draftPresentation.type = "presentation";
+			draftPresentation.type = VISH.Constant.PRESENTATION;
 		}
 	};
 
@@ -985,22 +986,26 @@ VISH.Editor = (function(V,$,undefined){
 			return _isThisPresentationStandard(presentation);
 		} else {
 			//Eval current presentation
-
 			if($("article[template]").length===0){
-				//Empty presentation, optimization for first call
+				//Empty presentation
 				return true;
 			}
-			return _isThisPresentationStandard(savePresentation());
+			if(VISH.Editor.Flashcard.hasFlascards()){
+				return false;
+			}
+			return true;
 		}
+
+		return true;
 	}
 
 	var _isThisPresentationStandard = function(presentation){
-		if(presentation.type!="presentation"){
+		if(presentation.type!=="presentation"){
 			return false;
 		}
 		var isStandard = true;
 		$.each(presentation.slides, function(index, slide) {
-			if((slide.type)&&(slide.type!="standard")){
+			if((slide.type)&&(slide.type!=="standard")){
 				isStandard = false;
 				return false;
 			}

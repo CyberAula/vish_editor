@@ -60,7 +60,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
-		V.Editor.Utils.addSlide(scaffold);
+		V.Slides.addSlide(scaffold);
 		V.Editor.Utils.redrawSlides();
 		V.Slides.lastSlide();  //important to get the browser to draw everything
 
@@ -69,17 +69,6 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");
 			
 			if(area.length === 0){
-				// VISH.Debugging.log("Error: area not founded (incorrect JSON)");
-				// VISH.Debugging.log("slide");
-				// VISH.Debugging.log(slide);
-				// VISH.Debugging.log("el");
-				// VISH.Debugging.log(slide.elements[el]);
-				// VISH.Debugging.log("area.id")
-				// VISH.Debugging.log(areaId)
-				// VISH.Debugging.log("div[areaid]")
-				// VISH.Debugging.log(slide.elements[el].areaid);
-				// VISH.Debugging.log("area to print")
-				// VISH.Debugging.log(area)
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
 
@@ -116,15 +105,13 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * function to render one flashcard inside a presentation
 	 */
 	var _renderFlashcard = function(slide, slideNumber){
-		V.Flashcard.init();
-		V.Renderer.init();
+		VISH.Editor.Flashcard.addFlashcard(slide);
 		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
 	};
 
 
-return {
-		init					: init
-
+	return {
+		init	: init
 	};
 
 }) (VISH, jQuery);

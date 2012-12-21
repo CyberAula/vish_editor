@@ -1,29 +1,47 @@
 VISH.Utils = (function(V,undefined){
 	
+	var domIds;
+	// myDomId = domIds['prefix'] returns a unicId for the specified prefix
+
 	var init = function(){
-		//Code here...
+		if(!domIds){
+			domIds = new Array();
+		}
 	}
 
    /**
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get "article_x" ids.
+	* Specify a separator for nested ids.
+	* justCheck: only check if the id is really unic, if dont generate a new id.
 	*/
-	var domId = 0; 
-	var getId = function(full_id_prefix){
-		domId = domId +1;
+	var getId = function(full_id_prefix,justCheck,separator){
 
-		if(typeof full_id_prefix !== "string"){
-			//Default prefix
-			full_id_prefix = "unicID";
+		if(!justCheck){
+			if(typeof full_id_prefix !== "string"){
+				//Default prefix
+				full_id_prefix = "unicID";
+			}
+
+			if(typeof separator !== "string"){
+				separator = "";
+			}
+
+			if(typeof domIds[full_id_prefix] === "undefined"){
+				domIds[full_id_prefix] = 0;
+			}
+			domIds[full_id_prefix] = domIds[full_id_prefix] + 1;
+			var full_id = full_id_prefix + separator + domIds[full_id_prefix];
+		} else {
+			var full_id = full_id_prefix;
+			full_id_prefix = full_id_prefix.replace(full_id_prefix[full_id_prefix.length-1],"");
 		}
-
-		var full_id = full_id_prefix + "_" + domId;
 
 		//Ensure that the id is unic.
 		if($("#"+full_id).length===0){
 			return full_id;
 		} else {
-			return getId(full_id_prefix);
+			return getId(full_id_prefix,false,separator);
 		}
 	};
 
@@ -160,58 +178,58 @@ VISH.Utils = (function(V,undefined){
 	    return tagsArray;
     }
 		
-		var getURLParameter = function(name){
-			return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);
-		}
+	var getURLParameter = function(name){
+		return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);
+	}
 		
-		//Help function to autocomplete user inputs.
-		//Add HTTP if is not present.
-		var autocompleteUrls = function(input){
-			var http_urls_pattern=/(^http(s)?:\/\/)/g
-			var objectInfo = VISH.Object.getObjectInfo();
-			
-			if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
-        return "http://" + input;
-      } else {
-				return input;
-			}
+	//Help function to autocomplete user inputs.
+	//Add HTTP if is not present.
+	var autocompleteUrls = function(input){
+		var http_urls_pattern=/(^http(s)?:\/\/)/g
+		var objectInfo = VISH.Object.getObjectInfo();
+
+		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
+			return "http://" + input;
+		} else {
+			return input;
 		}
+	}
 
 
-   var filterFilePath = function(path){
-	 	 return path.replace("C:\\fakepath\\","");
-	 }
+	var filterFilePath = function(path){
+		return path.replace("C:\\fakepath\\","");
+	}
 
 
-	 /*
-	  * in the css we have url("image_path") and to use ir in an image src attribute we need to get the image_path
-	  * this function does that
-	  */
-	 var getSrcFromCSS = function(css){
-	 	if(css.indexOf("url") === 0){
-	 		return css.substring(4,css.length-1);
-	 	}
-	 	else{
+	/*
+	* in the css we have url("image_path") and to use ir in an image src attribute we need to get the image_path
+	* this function does that
+	*/
+	var getSrcFromCSS = function(css){
+		if(css.indexOf("url") === 0){
+			return css.substring(4,css.length-1);
+		} else {
 			return css;
-	 	}
-	 }
+		}
+	}
 
 
-var getZoomInStyle = function(zoom){
-    var style = "";
-    style = style + "-ms-transform: scale(" + zoom + "); ";
+	var getZoomInStyle = function(zoom){
+		var style = "";
+		style = style + "-ms-transform: scale(" + zoom + "); ";
 		style = style + "-ms-transform-origin: 0 0; ";
-    style = style + "-moz-transform: scale(" + zoom + "); ";
+		style = style + "-moz-transform: scale(" + zoom + "); ";
 		style = style + "-moz-transform-origin: 0 0; ";
-    style = style + "-o-transform: scale(" + zoom + "); ";
+		style = style + "-o-transform: scale(" + zoom + "); ";
 		style = style + "-o-transform-origin: 0 0; ";
-    style = style + "-webkit-transform: scale(" + zoom + "); ";
+		style = style + "-webkit-transform: scale(" + zoom + "); ";
 		style = style + "-webkit-transform-origin: 0 0; ";
-    return style;
-   }
+		return style;
+	}
 
-var getZoomFromStyle = function(style){
-    
+
+	var getZoomFromStyle = function(style){
+
 		var zoom = 1; //Initial or default zoom
 		
 		if(!style){
@@ -225,41 +243,42 @@ var getZoomFromStyle = function(style){
 		var ie_zoom_pattern = /-ms-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 
 		
-    $.each(style.split(";"), function(index, property){
-			 
-	     if (property.match(moz_zoom_pattern) != null) {
-			 	//Mozilla Firefox
-		   	var result = moz_zoom_pattern.exec(property);
-		   	if (result[1]) {
-		   		zoom = parseFloat(result[1]);
-		   		return false;
-		   	}
-		   } else if (property.match(webkit_zoom_pattern)!=null) {
-			 	  //Google Chrome
-          var result = webkit_zoom_pattern.exec(property);
-          if(result[1]){
-            zoom = parseFloat(result[1]);
-            return false;
-          }
-	     } else if (property.match(opera_zoom_pattern)!=null) {
-			 	  //Opera
-          var result = opera_zoom_pattern.exec(property);
-          if(result[1]){
-            zoom = parseFloat(result[1]);
-            return false;
-          }
-			 } else if (property.match(ie_zoom_pattern)!=null) {
-			 	  //Iexplorer
-          var result = ie_zoom_pattern.exec(property);
-          if(result[1]){
-            zoom = parseFloat(result[1]);
-            return false;
-          }
-       }
-    });
+	    $.each(style.split(";"), function(index, property){
+				 
+		     if (property.match(moz_zoom_pattern) != null) {
+				 	//Mozilla Firefox
+			   	var result = moz_zoom_pattern.exec(property);
+			   	if (result[1]) {
+			   		zoom = parseFloat(result[1]);
+			   		return false;
+			   	}
+			   } else if (property.match(webkit_zoom_pattern)!=null) {
+				 	  //Google Chrome
+	          var result = webkit_zoom_pattern.exec(property);
+	          if(result[1]){
+	            zoom = parseFloat(result[1]);
+	            return false;
+	          }
+		     } else if (property.match(opera_zoom_pattern)!=null) {
+				 	  //Opera
+	          var result = opera_zoom_pattern.exec(property);
+	          if(result[1]){
+	            zoom = parseFloat(result[1]);
+	            return false;
+	          }
+				 } else if (property.match(ie_zoom_pattern)!=null) {
+				 	  //Iexplorer
+	          var result = ie_zoom_pattern.exec(property);
+	          if(result[1]){
+	            zoom = parseFloat(result[1]);
+	            return false;
+	          }
+	       }
+	    });
 		
     return zoom;
    };
+
 
    /////////////////////////
 	/// Fancy Box Functions
@@ -359,9 +378,6 @@ var getZoomFromStyle = function(style){
 				break;
 	  }
 	};
-
-
-
 
 
    return {

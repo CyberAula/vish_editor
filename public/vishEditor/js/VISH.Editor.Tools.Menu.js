@@ -26,78 +26,105 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		var presentationType = VISH.Editor.getPresentationType();
 
-		$("ul.menu_option_main").find("li").hide();
-		$("ul.menu_option_main").find("a.menu_all").parent().show();
+		_disableMenuItem($("ul.menu_option_main").find("li"));
+		_enableMenuItem($("ul.menu_option_main").find("a.menu_all").parent());
 
 		switch(presentationType){
-			case "presentation":
-				$("ul.menu_option_main").find("a.menu_presentation").parent().show();
-
-				if(VISH.Editor.isPresentationStandard(VISH.Editor.getPresentation())){
-					$("ul.menu_option_main").find("a.menu_standard_presentation").parent().show();
+			case VISH.Constant.PRESENTATION:
+				_enableMenuItem($("ul.menu_option_main").find("a.menu_presentation").parent());
+				if(VISH.Editor.isPresentationStandard()){
+					_enableMenuItem($("ul.menu_option_main").find("a.menu_standard_presentation").parent());
 				}
-
 				break;
-			case "flashcard":
-				$("ul.menu_option_main").find("a.menu_flashcard").parent().show();
+			case VISH.Constant.FLASHCARD:
+				_enableMenuItem($("ul.menu_option_main").find("a.menu_flashcard").parent());
 				break;
-			case "game":
-				$("ul.menu_option_main").find("a.menu_game").parent().show();
+			case VISH.Constant.GAME:
+				_enableMenuItem($("ul.menu_option_main").find("a.menu_game").parent());
 				break;
-			case "quiz_simple":
+			case VISH.Constant.QUIZ_SIMPLE:
 				break;
 			default:
 				break;
 		}
 
-		//Check for single elements and death menus
-		var menus = $("ul.menu_option_main").find("ul");
+		/////////////////////////////////////////////
+		// Check for single elements and death menus (For flexible-dynamic menus)
+		//////////////////////////////////////////////
 
-		$.each($(menus), function(index, menu) {
-			var lis = $(menu).find("li");
-			var visibleLis = 0;
-			var lastVisibleLi = null;
+		// var menus = $("ul.menu_option_main").find("ul");
 
-			$.each($(lis), function(index, li) {
-				if($(li).css("display")!="none"){
-					visibleLis = visibleLis+1;
-					lastVisibleLi = li;
-				}
-			});
+		// $.each($(menus), function(index, menu) {
+		// 	var lis = $(menu).find("li");
+		// 	var visibleLis = 0;
+		// 	var lastVisibleLi = null;
+
+		// 	$.each($(lis), function(index, li) {
+		// 		if($(li).css("display")!="none"){
+		// 			visibleLis = visibleLis+1;
+		// 			lastVisibleLi = li;
+		// 		}
+		// 	});
 			
-			if(visibleLis==0){
-				//No elements... hide li that contains ul.
-				var liContainer = $(menu).parent();
+		// 	if(visibleLis==0){
+		// 		//No elements... hide li that contains ul.
+		// 		var liContainer = $(menu).parent();
 				
-				if($(liContainer)[0].tagName=="LI"){
-					$(liContainer).hide();
-				}
+		// 		if($(liContainer)[0].tagName=="LI"){
+		// 			_disableMenuItem($(liContainer));
+		// 		}
 				
-			} else if(visibleLis==1){
-				//Add special class for single elements
-				$(lastVisibleLi).find("a").addClass("menu_single_element");
-			}
+		// 	} else if(visibleLis==1){
+		// 		//Add special class for single elements
+		// 		$(lastVisibleLi).find("a").addClass("menu_single_element");
+		// 	}
 
-			visibleLis = 0;
-		});
+		// 	visibleLis = 0;
+		// });
 
 		if(!menuEventsLoaded){
 			//Add listeners to menu buttons
 			$.each($("#menu a.menu_action"), function(index, menuButton) {
 				$(menuButton).on("click", function(event){
 					event.preventDefault();
+					if($(menuButton).parent().hasClass("menu_item_disabled")){
+						//Disabled button
+						return;
+					}
 					if(typeof VISH.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
 						VISH.Editor.Tools.Menu[$(menuButton).attr("action")](this);
 					}
 				});
 			});
 			menuEventsLoaded = true;
+			_initSettings();
+			_initPreview();
 		}
 
 		$("#menu").show();
+	}
 
-		_initSettings();
-		_initPreview();
+	var _enableMenuItem = function(items){
+		// $(items).show();
+		$(items).removeClass("menu_item_disabled").addClass("menu_item_enabled");
+	}
+
+	var _disableMenuItem = function(items){
+		// $(items).hide();
+		$(items).removeClass("menu_item_enabled").addClass("menu_item_disabled");
+	}
+
+	var updateMenuAfterAddSlide = function(slideType){
+		switch(slideType){
+			case VISH.Constant.STANDARD:
+				break;
+			case VISH.Constant.FLASHCARD:
+			case VISH.Constant.VTOUR:
+				return init();
+				break;
+			default:
+				break;
+		}
 	}
 
 	var disableMenu = function(){
@@ -450,6 +477,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	return {
 		init							: init,
+		updateMenuAfterAddSlide 		: updateMenuAfterAddSlide,
 		disableMenu 					: disableMenu ,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,

@@ -1,13 +1,34 @@
 VISH.Editor.Flashcard = (function(V,$,undefined){
 
+	//Point to current flashcard.
+	//Singleton: Only one flashcard can be edited in a Vish Editor instance.
+	var flashcardId;
+
+	//Var to store the JSON of the inserted flashcards
+	var myFlashcards;
+	// myFlashcard = myFlashcards['flashcardIdInMyPresentation']
 
 	var init = function(){
 		VISH.Editor.Flashcard.Repository.init();
+		flashcardId = null;
+		myFlashcards = new Array();
 	};
+
+	var addFlashcard = function(fc){
+		if(typeof myFlashcards !== "undefined"){
+			myFlashcards[fc.id] = fc;
+		}
+	}
+
+	var getFlashcard = function(id){
+		if(typeof myFlashcards !== "undefined"){
+			return myFlashcards[id];
+		}
+	}
 
 	var loadFlashcard = function(presentation){
 		//first action, set presentation type to "flashcard"
-		V.Editor.setPresentationType("flashcard");
+		V.Editor.setPresentationType(VISH.Constant.FLASHCARD);
 		
 		//hide slides
 		V.Editor.Utils.hideSlides();
@@ -19,9 +40,11 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			$("#flashcard-background").css("background-image", presentation.slides[0].background);
 			$("#fc_change_bg_big").hide();
 			$("#flashcard-background").attr("flashcard_id", presentation.slides[0].id);
-		}
-		else{
-			$("#flashcard-background").attr("flashcard_id", VISH.Constant.TEMP_FC_ID);
+		} else {
+			if(!getCurrentFlashcardId()){
+				flashcardId = VISH.Utils.getId("article");
+			}
+			$("#flashcard-background").attr("flashcard_id", getCurrentFlashcardId());
 		}
 		$("#flashcard-background").droppable();  //to accept the pois
 	};
@@ -32,7 +55,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
 		V.Editor.Thumbnails.redrawThumbnails();
-
 		VISH.Editor.Tools.init();
 	};
 
@@ -61,8 +83,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 					$(event.target).css("position", "fixed");
 					$(event.target).css("top", (old_pos.top +30) + "px");
 					$(event.target).css("left", (old_pos.left -16) + "px");
-				}
-				else{
+				} else {
 					$(event.target).attr("moved", "false");
 					//change to position relative so it moves with the carrusel
 					var old_pos = $(event.target).offset();
@@ -81,7 +102,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 	var _applyStyleToPois = function(){
 		var presentation = V.Editor.getPresentation();
-		if(presentation && presentation.slides[0] && presentation.slides[0].pois){
+		if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
 			$.each(presentation.slides[0].pois, function(index, val) { 
   				$("#" + val.id).css("position", "fixed");
   				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
@@ -91,16 +112,16 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	/*
-	 * returns an array of pois
+	 * Returns an array of pois
 	 */
 	var savePois = function(){
 		var pois = [];
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
-			pois[index].id = $(s).attr('id');
+			pois[index].id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
 			pois[index].x = 100*($(s).offset().left - 55)/800; //to be relative to his parent, the flashcard-background
 			pois[index].y = 100*($(s).offset().top - 75)/600; //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = $(s).attr('slide_id');
+			pois[index].slide_id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
 		});
 		return pois;
 	};
@@ -108,7 +129,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	var removePois = function(){
 		$(".draggable_arrow_div").hide();
 	};
-
 
 	var hasPoiInBackground = function(){
 		return $(".draggable_arrow_div[moved='true']").length > 0;
@@ -123,16 +143,33 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		}
 	};
 
+	var getCurrentFlashcardId = function(){
+		return flashcardId;
+	}
+
+	var prepareToNestInFlashcard = function(slide){
+		return VISH.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
+	}
+
+	var hasFlascards = function(){
+		return $("section.slides > .flashcard_slide[type='flashcard']").length>0;
+	}
+
 	return {
-		init 				 : init,
-		hasChangedBackground : hasChangedBackground,
-		hasPoiInBackground	 : hasPoiInBackground,
-		loadFlashcard		 : loadFlashcard,
-		redrawPois 			 : redrawPois,
-		removePois			 : removePois,
-		savePois			 : savePois,
-		switchToFlashcard	 : switchToFlashcard,
-		onBackgroundSelected	: onBackgroundSelected
+		init 				 	: init,
+		addFlashcard 			: addFlashcard,
+		getFlashcard 			: getFlashcard,
+		getCurrentFlashcardId 	: getCurrentFlashcardId,
+		prepareToNestInFlashcard : prepareToNestInFlashcard,
+		hasChangedBackground 	: hasChangedBackground,
+		hasPoiInBackground	 	: hasPoiInBackground,
+		loadFlashcard		 	: loadFlashcard,
+		redrawPois 			 	: redrawPois,
+		removePois			 	: removePois,
+		savePois			 	: savePois,
+		switchToFlashcard	 	: switchToFlashcard,
+		onBackgroundSelected	: onBackgroundSelected,
+		hasFlascards 			: hasFlascards
 	};
 
 }) (VISH, jQuery);

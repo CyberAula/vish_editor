@@ -17,7 +17,7 @@ VISH.Slides = (function(V,$,undefined){
 	  	//this way updateSlides will add the class current and it will be shown
 	  	curSlideIndex = 0;
 	  }
-	  updateSlides(); 
+	  updateSlides(true); 
 	  $('body').addClass('loaded');
 	};
 
@@ -514,31 +514,42 @@ VISH.Slides = (function(V,$,undefined){
 	 	}
 	 }
 
-	 var removeSlide = function(slideNumber){
-	 	var slide = getSlideWithNumber(slideNumber);
-	 	if(slide===null){
-	 		return;
-	 	}
-	 	var removing_current_slide = false;
-	 	if(getCurrentSlide() === slide){
-	 		removing_current_slide = true;
-	 	}
+   /**
+	* Function to add a new slide (a standard slide)
+	*/
+	var addSlide = function(slide){
+		$('.slides').append(slide);
+	};
 
-	 	$(slide).remove();
-	 	if(removing_current_slide){
-	 		if((getCurrentSlideNumber()===1)&&(getSlidesQuantity()>1)){
+	var removeSlide = function(slideNumber){
+		var slide = getSlideWithNumber(slideNumber);
+		if(slide===null){
+			return;
+		}
+		var standardSlide = (slide.type===VISH.Constant.STANDARD);
+		var removing_current_slide = false;
+		if(getCurrentSlide() === slide){
+			removing_current_slide = true;
+		}
+
+		$(slide).remove();
+		if(removing_current_slide){
+			if((getCurrentSlideNumber()===1)&&(getSlidesQuantity()>1)){
 				setCurrentSlideNumber(1);
-	 		} else {
-	 			setCurrentSlideNumber(getCurrentSlideNumber()-1);
-	 		}
-	 	}
+			} else {
+				setCurrentSlideNumber(getCurrentSlideNumber()-1);
+			}
+		}
 		VISH.Editor.Utils.redrawSlides();					
 		VISH.Editor.Thumbnails.redrawThumbnails();
-	 }
+		if(!standardSlide){
+			VISH.Editor.Tools.Menu.init();
+		}
+	}
 
-	 var getSlidesQuantity = function(){
-	 	return getSlides().length;
-	 }
+	var getSlidesQuantity = function(){
+		return getSlides().length;
+	}
 	
 	return {	
 			init          			: init,	
@@ -560,6 +571,7 @@ VISH.Slides = (function(V,$,undefined){
 			isSlideFocused			: isSlideFocused,
 			moveSlideTo				: moveSlideTo,
 			copySlide				: copySlide,
+			addSlide 				: addSlide,
 			removeSlide				: removeSlide,
 			showFlashcardSlide		: showFlashcardSlide,
 			getSlidesQuantity		: getSlidesQuantity

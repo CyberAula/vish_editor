@@ -19,7 +19,9 @@ VISH.Flashcard = (function(V,$,undefined){
   };
 
   var startAnimation = function(slideId){
-    flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );
+    if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")){
+      flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );      
+    }
   };
 
   var stopAnimation = function(slideId){
@@ -33,8 +35,7 @@ VISH.Flashcard = (function(V,$,undefined){
    */
   var addArrow = function(slideId, poi, sync){
     var flashcard_div = $("#"+ slideId);
-    var poiId = slideId + "_" + poi.id;
-    var div_to_add = "<div class='fc_poi' id='" + poiId + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
+    var div_to_add = "<div class='fc_poi' id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
     flashcard_div.append(div_to_add);
 
     if(typeof flashcards[slideId] === "undefined"){
@@ -55,13 +56,13 @@ VISH.Flashcard = (function(V,$,undefined){
   };
 
   var animateArrows = function(slideId){
-    if((!slideId)||(typeof flashcards[slideId] == "undefined")){
+    if((!slideId)||(typeof flashcards[slideId] === "undefined")){
       return;
     }
 
     $(flashcards[slideId].arrows).each(function(index,value){
       var new_pos = (value.position + FRAME_WIDTH)%(TOTAL_FRAMES*FRAME_WIDTH);
-      var arrow_dom_el = $("#"+slideId+"_"+value.id);
+      var arrow_dom_el = $("#"+value.id);
       $(arrow_dom_el).css("background-position", new_pos + "px" + " 0px");
       flashcards[slideId].arrows[index].position = new_pos;
     });
