@@ -28,8 +28,6 @@ VISH.Renderer = (function(V,$,undefined){
 
 		switch(slide.type){
 			case undefined:
-
-			break;
 			case VISH.Constant.STANDARD:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
