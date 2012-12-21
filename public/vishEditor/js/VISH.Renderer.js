@@ -28,6 +28,8 @@ VISH.Renderer = (function(V,$,undefined){
 
 		switch(slide.type){
 			case undefined:
+
+			break;
 			case VISH.Constant.STANDARD:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
@@ -36,6 +38,10 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 			case VISH.Constant.VTOUR:
 				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
+				break;
+			//TODO ask to Kike to do this in different way
+			case VISH.Constant.QUIZ:
+				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			default:
 				article = null;
