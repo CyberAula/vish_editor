@@ -217,6 +217,28 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return slide;
 	}
 
+	var undoNestedSlide = function(parentId,slide){
+		if(typeof parentId !== "string"){
+			return slide;
+		}
+
+		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+			//Only one slide nested level are currently supported
+			//TODO: Make it recursive
+			return;
+		}
+
+		slide.id = slide.id.replace(parentId+"_","");
+
+		if(slide.elements){
+			$.each(slide.elements, function(index, element) {
+				slide.elements[index].id = slide.elements[index].id.replace(parentId+"_","");
+			});
+		}
+
+		return slide;	
+	}
+
 
 	return {
 		getWidthFromStyle   	: getWidthFromStyle,
@@ -230,7 +252,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		dimentionToDraw     	: dimentionToDraw,
 		showSlides				: showSlides,
 		refreshDraggables		: refreshDraggables,
-		prepareSlideToNest		: prepareSlideToNest
+		prepareSlideToNest		: prepareSlideToNest,
+		undoNestedSlide 		: undoNestedSlide
 	};
 
 }) (VISH, jQuery);

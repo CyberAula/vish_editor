@@ -1196,6 +1196,10 @@ VISH.Samples = (function(V,undefined){
     }] 
 };
 
+
+	var samples_flashcard_new = {"VEVersion":"0.2","type":"flashcard","author":"","slides":[{"id":"article4","type":"flashcard","background":"url(http://farm9.staticflickr.com/8215/8258609986_a01a9824f9.jpg)","pois":[{"id":"article4_poi1","x":14.5,"y":55.166666666666664,"slide_id":"article4_article6"},{"id":"article4_poi2","x":45.625,"y":13.333333333333334,"slide_id":"article4_article2"},{"id":"article4_poi3","x":76.375,"y":40.166666666666664,"slide_id":"article4_article5"}],"slides":[{"id":"article4_article6","type":"standard","template":"t2","elements":[{"id":"article4_article6_zone1","type":"image","areaid":"left","body":"http://farm9.staticflickr.com/8353/8292749475_52c22f8e4d.jpg","style":"position: relative; width:123.78223495702005%; height:108.52272727272727%; top:-1.3257575757575757%; left:-5.730659025787966%;"}]},{"id":"article4_article2","type":"standard","template":"t12","elements":[{"id":"article4_article2_zone1","type":"text","areaid":"left1","body":"<div class=\"initTextDiv vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Insert text here</span></div>"},{"id":"article4_article2_zone2","type":"text","areaid":"right1","body":"<div class=\"initTextDiv vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Insert text here</span></div>"},{"id":"article4_article2_zone3","type":"text","areaid":"left2","body":"<div class=\"initTextDiv vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Insert text here</span></div>"},{"id":"article4_article2_zone4","type":"text","areaid":"right2","body":"<div class=\"initTextDiv vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Insert text here</span></div>"}]},{"id":"article4_article5","type":"standard","template":"t10","elements":[{"id":"article4_article5_zone1","type":"object","areaid":"center","body":"<iframe src=\"http://www.youtube.com/embed/iv1Z7bf4jXY?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID1\" class=\"t10_object\" wmode=\"opaque\" unselectable=\"on\"></iframe>","style":"position: relative; width:100%; height:99.66555183946488%; top:0%; left:0%;"}]}]}]}
+	
+
 	var samples_flashcard = {
 		"id" 			: "",
 		"title" 		: "Chess: The Art of Learning",
@@ -1449,6 +1453,7 @@ var quizzes__samples2 = {"VEVersion":"0.2","id":12314,"type":"presentation","aut
 		samplesv01 			: samplesv01,
 		samples_fc 			: samples_fc,
 		samples_flashcard 	: samples_flashcard,
+		samples_flashcard_new : samples_flashcard_new,
 		samples_full_tour	: samples_full_tour,
 		samples_game  		: samples_game,
 		samples_vtour 		: samples_vtour,

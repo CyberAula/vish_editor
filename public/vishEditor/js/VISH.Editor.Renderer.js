@@ -30,7 +30,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
-				slides = presentation.slides[0].slides;
+				var flashcard = VISH.Editor.Flashcard.undoNestedSlidesInFlashcard(presentation.slides[0]);
+				slides = flashcard.slides;
 				for(var i=0;i<slides.length;i++){
 					_renderSlide(slides[i], i+1);
 				}

@@ -39,7 +39,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			//if we are editing a presentation
 			$("#flashcard-background").css("background-image", presentation.slides[0].background);
 			$("#fc_change_bg_big").hide();
-			$("#flashcard-background").attr("flashcard_id", presentation.slides[0].id);
+			flashcardId = presentation.slides[0].id;
+			$("#flashcard-background").attr("flashcard_id", flashcardId);
 		} else {
 			if(!getCurrentFlashcardId()){
 				flashcardId = VISH.Utils.getId("article");
@@ -151,6 +152,27 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		return VISH.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
 	}
 
+	var undoNestedSlidesInFlashcard = function(fc){
+		fc.slides = _undoNestedSlides(fc.id,fc.slides);
+		fc.pois = _undoNestedPois(fc.id,fc.pois);
+		return fc;
+	}
+
+	var _undoNestedSlides = function(fcId,slides){
+		for(var j=0; j<slides.length; j++){
+			slides[j] = VISH.Editor.Utils.undoNestedSlide(fcId,slides[j]);
+		}
+		return slides;
+	}
+
+	var _undoNestedPois = function(fcId,pois){
+		for(var k=0; k<pois.length; k++){
+			pois[k].id = pois[k].id.replace(fcId+"_","");
+			pois[k].slide_id = pois[k].slide_id.replace(fcId+"_","");
+		}
+		return pois;
+	}
+
 	var hasFlascards = function(){
 		return $("section.slides > .flashcard_slide[type='flashcard']").length>0;
 	}
@@ -161,6 +183,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		getFlashcard 			: getFlashcard,
 		getCurrentFlashcardId 	: getCurrentFlashcardId,
 		prepareToNestInFlashcard : prepareToNestInFlashcard,
+		undoNestedSlidesInFlashcard : undoNestedSlidesInFlashcard,
 		hasChangedBackground 	: hasChangedBackground,
 		hasPoiInBackground	 	: hasPoiInBackground,
 		loadFlashcard		 	: loadFlashcard,
