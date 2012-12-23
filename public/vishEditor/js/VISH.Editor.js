@@ -765,8 +765,10 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.title = presentation.title;
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
+						//add quiz_simple type to slide in json to render answer
+						quizSlide.type = VISH.Constant.QUIZ_SIMPLE;
 					    quizPresentation.slides = [quizSlide];
-						quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
+					 	quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 

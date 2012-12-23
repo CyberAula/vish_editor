@@ -38,7 +38,7 @@ VISH.Renderer = (function(V,$,undefined){
 				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
 				break;
 			//TODO ask to Kike to do this in different way
-			case VISH.Constant.QUIZ:
+			case VISH.Constant.QUIZ_SIMPLE:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			default:
@@ -87,7 +87,8 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 
 		//When render a simple_quiz for voting
-		if(slide.type==VISH.Constant.QUIZ) {
+		//if(slide.type==VISH.Constant.QUIZ) {
+		if(slide.type==VISH.Constant.QUIZ_SIMPLE) {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
 			classes += VISH.Constant.QUIZ;
 		}
