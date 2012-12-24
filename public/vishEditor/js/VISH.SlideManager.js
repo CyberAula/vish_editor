@@ -213,11 +213,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		setTimeout(function(){
 			if($(e.target).hasClass('object')){
 				V.ObjectPlayer.loadObject($(e.target));
-			}
-			else if($(e.target).hasClass('applet')){
+			} else if($(e.target).hasClass('applet')){
 				V.AppletPlayer.loadApplet($(e.target));
-			}
-			else if($(e.target).hasClass('snapshot')){
+			} else if($(e.target).hasClass('snapshot')){
         		V.SnapshotPlayer.loadSnapshot($(e.target));
       		}
 		},500);

@@ -1372,7 +1372,7 @@ var nicImageButton = nicEditorAdvancedButton.extend({
 	submit : function(e) {
 		var src = this.inputs['src'].value;
 		if(src == "" || src == "http://") {
-			alert("You must enter a Image URL to insert");
+			// alert("You must enter a Image URL to insert");
 			return false;
 		}
 		this.removePane();

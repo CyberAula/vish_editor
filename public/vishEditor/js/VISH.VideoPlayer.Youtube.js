@@ -54,7 +54,7 @@ VISH.VideoPlayer.Youtube = (function(){
           height: '100%',
           width: '100%',
           videoId: youtubeVideoId,
-          playerVars: { 'autoplay': 0, 'controls': 0, 'enablejsapi': 1, 'showinfo': 0, wmode: "opaque", 'rel': 0 },
+          playerVars: { 'autoplay': 0, 'controls': 0, 'enablejsapi': 1, 'showinfo': 0, wmode: "transparent", 'rel': 0 },
           events: {
              'onReady': onPlayerReady,
              'onStateChange': onPlayerStateChange,
@@ -62,7 +62,14 @@ VISH.VideoPlayer.Youtube = (function(){
           }
         });
 
-        VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,false);
+        $("#"+iframeId).attr("wmode","transparent");
+
+        if(VISH.Status.getDevice().desktop){
+        	var loadEvents = false;
+        } else {
+        	var loadEvents = true;
+        }
+        VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,loadEvents);
 	}
 
 

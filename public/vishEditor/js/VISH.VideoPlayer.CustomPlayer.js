@@ -61,7 +61,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		$(customPlayerControls).bind('click', _onClickCustomPlayerControls);
 		$(customPlayerContainer).bind('mouseenter', _onEnterCustomPlayer);
 		$(customPlayerContainer).bind('mouseleave', _onLeaveCustomPlayer);
-		$(progressBar).bind('click', _onClickProgressBar); 
+		$(progressBar).bind('click', _onClickProgressBar);
   	}
 
 	var _onClickCustomPlayerControls = function(event){
