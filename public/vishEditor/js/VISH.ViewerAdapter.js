@@ -88,14 +88,19 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		
 		//if fancybox is opened, resize it
 		if ($('#fancy_content:empty').length === 0)
-		{
-		    $('#fancybox-inner').width("80%");
+		{	
+		   $('#fancybox-inner').width("80%");
 			$('#fancybox-wrap').width("80%");
+
+			$("#fancybox-content").width("80%");
+			$("#fancybox-content > div").width("100%");
 			$('#fancybox-inner').height("80%");
 			$('#fancybox-wrap').height("80%");	
 			
 			$('#fancybox-wrap').css("top", "10%");	
 			$('#fancybox-wrap').css("left", "10%");	
+			
+
 		}
 
 		//Snapshot callbacks

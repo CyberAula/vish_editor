@@ -651,9 +651,12 @@ span.mcChoiceSpan{
 }
 .quiz_session_qrcode_container {
     height: 100%;
-    padding-top: 9%;
+    padding-top: 3%; 
+    padding-left: 3%;
     padding-bottom: 1%;
     display: inline-block;
+    background-color: white;
+    float: left; 
 }
 
 .qr_quiz_image {
@@ -672,7 +675,7 @@ span.mcChoiceSpan{
 .buttons_container {
     float: right;
     margin: 2%;
-    padding-right: 5%;
+    padding-left: 5%;
     display: inline-block;
     width: 10%;
     height: 70%;
@@ -982,10 +985,25 @@ height: 20%;
 }
 
 .quiz_cancel_full_screen {
+    background-image: url("/vishEditor/images/fullscreen_all.png"); 
+    display: none;
     height: 40px;
     width:45px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    border: none;
+    background-color: transparent;
+    background-position: -45px 0px;
+    z-index: 2610000000000;
 }
+
+.quiz_cancel_full_screen:hover { 
+background-position: -45px -40px;
+}
+
 .full-screen {
-    width: 100%;
-    height: auto;
+   width: 100%;
+    height: auto; 
+    float: none;
 }

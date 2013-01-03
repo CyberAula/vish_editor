@@ -96,6 +96,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', '.quiz_full_screen',qrToggleFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
+    $(document).on('click', '.quiz_cancel_full_screen',qrToggleFullScreen);
    };
   /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
@@ -232,6 +233,8 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
+    //var qrImgID = "qr_quiz_image_id";
+    var qrImgID = "quiz_session_qrcode_container_id";
     addedFullScreenListener = true;
     if(V.Status.getIsInIframe()){
       var myDoc = parent.document;
@@ -243,10 +246,10 @@ var _getResults =  function(quiz_session_active_id) {
     myDoc.addEventListener("fullscreenchange", function () {
 //if FullScreen mode: document.fullScreen-- remove full-screen class
       if (document.fullScreen) {
-        $(document.getElementById('qr_quiz_image_id')).addClass("full-screen");
+        $(document.getElementById(qrImgID)).addClass("full-screen");
         }
       else {
-        $(document.getElementById('qr_quiz_image_id')).removeClass("full-screen");
+        $(document.getElementById(qrImgID)).removeClass("full-screen");
       }      
 
       if($(myElem).css("display")==="none") {
@@ -259,10 +262,12 @@ var _getResults =  function(quiz_session_active_id) {
      else if (myElem.webkitRequestFullScreen) {
       myDoc.addEventListener("webkitfullscreenchange", function() {
         if (document.webkitIsFullScreen) {
-          $(document.getElementById('qr_quiz_image_id')).addClass("full-screen");
+          $(document.getElementById(qrImgID)).addClass("full-screen");
+          $(".quiz_cancel_full_screen").show();
         }
         else {
-          $(document.getElementById('qr_quiz_image_id')).removeClass("full-screen");
+          $(document.getElementById(qrImgID)).removeClass("full-screen");
+          $(".quiz_cancel_full_screen").hide();
         }      
         if($(myElem).css("display")==="none") {
           $(myElem).show();
@@ -274,10 +279,12 @@ var _getResults =  function(quiz_session_active_id) {
     else if (myElem.mozRequestFullScreen) {
       myDoc.addEventListener("mozfullscreenchange", function () {
         if (document.mozFullScreen) {
-          $(document.getElementById('qr_quiz_image_id')).addClass("full-screen");
+          $(document.getElementById(qrImgID)).addClass("full-screen");
+          $(".quiz_cancel_full_screen").show();
         }
         else {
-          $(document.getElementById('qr_quiz_image_id')).removeClass("full-screen");
+          $(document.getElementById(qrImgID)).removeClass("full-screen");
+          $(".quiz_cancel_full_screen").hide();
         }   
         if($(myElem).css("display")==="none") {
             $(myElem).show();
@@ -529,13 +536,17 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var qrToggleFullScreen = function (event) {
+    V.Debugging.log("qrToggleFullScreen detected");
     if(V.Status.getIsInIframe()){
       var myDoc = parent.document;
     } else {
       var myDoc = document;
     }
-    var myElem = document.getElementById('qr_quiz_image_id');
+   // var myElem = document.getElementById('qr_quiz_image_id');
+       var myElem =  document.getElementById('quiz_session_qrcode_container_id');
      if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
+        V.Debugging.log("entra en if detected");
+
         if (myDoc.documentElement.requestFullScreen) {
 
           myElem.requestFullScreen();
@@ -547,12 +558,14 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
           myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT); 
         }   
     } else {
-       
+
+         V.Debugging.log("else detected");
         if (myDoc.cancelFullScreen) {
           myDoc.cancelFullScreen();
         } else if (myDoc.mozCancelFullScreen) {
           myDoc.mozCancelFullScreen();
-        } else if (myDoc.webkitCancelFullScreen) {
+        } else if (myDoc.documentElement.webkitCancelFullScreen) {
+        V.Debugging.log("webKitDetected");
           myDoc.webkitCancelFullScreen();
         }       
     }      
@@ -573,7 +586,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     getIsQuizSessionStarted     : getIsQuizSessionStarted, 
     onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
     activatePolling             : activatePolling, 
-    qrToggleFullScreen          : qrToggleFullScreen
+    qrToggleFullScreen          : qrToggleFullScreen, 
+    showQuizStats               : showQuizStats
 
 
   };
