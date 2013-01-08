@@ -1,6 +1,7 @@
 VISH.Editor.Clipboard = (function(V,$,undefined){
 
 	var stack;
+	var _lastTimestamp;
 
 	var init = function() {
 		stack = [null,null,null];
@@ -39,6 +40,15 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 	};
 
 	var paste = function() {
+		//Prevent massive copy
+		if(_lastTimestamp){
+			var elapsed = new Date().getTime() - _lastTimestamp;
+			if(elapsed < 500){
+				return;
+			}
+		}
+		_lastTimestamp = new Date().getTime();
+
 		//Select the stack
 		if(VISH.Status.getDevice().features.localStorage){
 			var storedStack = localStorage.getItem(VISH.Constant.Clipboard.LocalStorageStack);
