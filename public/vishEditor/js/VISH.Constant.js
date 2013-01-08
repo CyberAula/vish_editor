@@ -54,7 +54,8 @@ VISH.Constant.Video.Youtube = "Youtube";
 
 //Clipboard
 VISH.Constant.Clipboard = {};
-VISH.Constant.Clipboard.Slide = "slide"
+VISH.Constant.Clipboard.Slide = "slide";
+VISH.Constant.Clipboard.LocalStorageStack = "VishEditorClipboardStack";
 
 //Events
 VISH.Constant.Event = {};

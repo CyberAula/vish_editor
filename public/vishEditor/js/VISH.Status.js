@@ -76,6 +76,8 @@ VISH.Status = (function(V,$,undefined){
 		//Touchscreen detection
 		device.features.touchScreen = !!('ontouchstart' in window);
 
+		//LocalStorage detection
+		device.features.localStorage = (typeof(Storage)!=="undefined");
 
 		// V.Debugging.log("We are in iframe: " + getIsInIframe());		
 		// V.Debugging.log("Fullscreen supported: " + device.features.fullscreen);
@@ -83,7 +85,6 @@ VISH.Status = (function(V,$,undefined){
 	};
 	
 	var fillUserAgent = function(){
-
 		// Probe user agent string
 		device.pixelRatio = window.devicePixelRatio || 1;
 		device.viewport = {
