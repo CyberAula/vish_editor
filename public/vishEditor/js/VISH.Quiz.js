@@ -233,6 +233,7 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
+     
     //var qrImgID = "qr_quiz_image_id";
     var qrImgID = "quiz_session_qrcode_container_id";
     addedFullScreenListener = true;
@@ -537,15 +538,14 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var qrToggleFullScreen = function (event) {
     V.Debugging.log("qrToggleFullScreen detected");
-    if(V.Status.getIsInIframe()){
-      var myDoc = parent.document;
-    } else {
-      var myDoc = document;
-    }
-   // var myElem = document.getElementById('qr_quiz_image_id');
-       var myElem =  document.getElementById('quiz_session_qrcode_container_id');
+    
+    var myDoc = document;
+    
+    //var myElem = document.getElementById('qr_quiz_image_id');
+
+    var myElem =  document.getElementById('quiz_session_qrcode_container_id');
      if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
-        V.Debugging.log("entra en if detected");
+        V.Debugging.log("entra en if ");
 
         if (myDoc.documentElement.requestFullScreen) {
 
@@ -557,14 +557,15 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
           myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT); 
         }   
-    } else {
+    } 
+    else {
 
          V.Debugging.log("else detected");
         if (myDoc.cancelFullScreen) {
           myDoc.cancelFullScreen();
         } else if (myDoc.mozCancelFullScreen) {
           myDoc.mozCancelFullScreen();
-        } else if (myDoc.documentElement.webkitCancelFullScreen) {
+        } else if (myDoc.webkitCancelFullScreen) {
         V.Debugging.log("webKitDetected");
           myDoc.webkitCancelFullScreen();
         }       
