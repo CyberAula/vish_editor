@@ -143,7 +143,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 		
 		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
-						V.Debugging.log("enter in if");
 		    if (myDoc.documentElement.requestFullScreen) {
 		    	myElem.requestFullScreen();
 		    } else if (myDoc.documentElement.mozRequestFullScreen) {
@@ -152,7 +151,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		    	myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
 		    }		    
 		} else {
-			V.Debugging.log("enter in else");
 		    if (myDoc.cancelFullScreen) {
 		    	myDoc.cancelFullScreen();
 		    } else if (myDoc.mozCancelFullScreen) {
