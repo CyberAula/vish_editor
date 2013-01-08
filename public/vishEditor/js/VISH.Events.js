@@ -86,9 +86,7 @@ VISH.Events = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				//Fix for Iphone devices due to Click Delegation bug
-				//TODO: Apply fix only for safari
-				if(VISH.Status.getDevice().iPhone){
-					// alert(VISH.Utils.getOuterHTML(event.target));
+				if((VISH.Status.getDevice().iPhone)&&(VISH.Status.getDevice().browser.name===VISH.Constant.SAFARI)){
 					if($(event.target).hasClass("fc_poi")){
 						var poiId = event.target.id;
 						_onFlashcardPoiClicked(poiId);

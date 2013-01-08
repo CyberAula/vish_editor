@@ -199,6 +199,13 @@ VISH.Status = (function(V,$,undefined){
 			return;
 		}
 
+		version = _getSafariVersion();
+		if(version!=-1){
+			device.browser.name = VISH.Constant.SAFARI;
+			device.browser.version = version;
+			return;
+		}
+
 		//No browser founded
 		device.browser.name = VISH.Constant.UNKNOWN;
 		device.browser.name = -1;
@@ -239,6 +246,23 @@ VISH.Status = (function(V,$,undefined){
       }
       return rv;
     }
+
+	var _getSafariVersion = function() {
+		var rv = -1; //No Safari
+		if (navigator.appName === VISH.Constant.UA_NETSCAPE) {
+			var ua = navigator.userAgent;
+			if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1) {
+				var rv = -2; //Safari with unknown version
+
+				//Try to get Safari Version
+				var re = new RegExp(".* Version/([0-9.]+)");
+				if (re.exec(ua) != null){
+					rv = parseFloat(RegExp.$1);
+				}
+			}
+		}
+		return rv;
+	}
 	
 	var getIsInIframe = function(){
 		return isInIframe;
