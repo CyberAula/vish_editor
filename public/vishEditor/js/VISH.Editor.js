@@ -143,7 +143,7 @@ VISH.Editor = (function(V,$,undefined){
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
-			VISH.Editor.Utils.redrawSlides();
+			VISH.Editor.Slides.redrawSlides();
 			VISH.Editor.Thumbnails.redrawThumbnails();
 
 			//if click on begginers tutorial->launch it
@@ -368,11 +368,11 @@ VISH.Editor = (function(V,$,undefined){
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : "";
 		var slide = VISH.Editor.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlidesQuantity()+1);
-		VISH.Slides.addSlide(slide);
+		VISH.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		VISH.Editor.Utils.redrawSlides();		
+		VISH.Editor.Slides.redrawSlides();		
 		VISH.Editor.Thumbnails.redrawThumbnails();
 		setTimeout("VISH.Slides.lastSlide()", 300);	
 	};
@@ -519,7 +519,7 @@ VISH.Editor = (function(V,$,undefined){
 				  //if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){						
 						$("#prompt_answer").val("false");  
-            			VISH.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
+            			VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
 					}
 				}
 			}

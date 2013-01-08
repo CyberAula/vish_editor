@@ -91,7 +91,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
 			//currentSlide number is next slide
 			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-			V.Editor.Utils.redrawSlides();
+			V.Editor.Slides.redrawSlides();
 			VISH.Editor.Thumbnails.redrawThumbnails();
 			V.Editor.Events.bindEventsForFlashcard(selectedFc);
 			V.Slides.lastSlide();  //important to get the browser to draw everything

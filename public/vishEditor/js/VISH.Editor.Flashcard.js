@@ -31,7 +31,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		V.Editor.setPresentationType(VISH.Constant.FLASHCARD);
 		
 		//hide slides
-		V.Editor.Utils.hideSlides();
+		V.Editor.Slides.hideSlides();
 
 		//show flashcard background, should be an image with help by default
 		$("#flashcard-background").show();

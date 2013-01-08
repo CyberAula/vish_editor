@@ -25,22 +25,18 @@ VISH.Events = (function(V,$,undefined){
 
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
-	  switch (event.keyCode) {
-	    case 39: // right arrow	    
-	    case 40: // down arrow
-	      if(V.Slides.isSlideFocused()) {
-			    V.Slides.forwardOneSlide();
-			    event.preventDefault();
-	      }
-	      break;
-	    case 37: // left arrow
-	    case 38: // up arrow
-	    	if(V.Slides.isSlideFocused()) {
+		switch (event.keyCode) {
+			case 38: // up arrow
+			case 39: // right arrow	    
+				V.Slides.forwardOneSlide();
+				event.preventDefault();
+				break;
+			case 37: // left arrow
+			case 40: // down arrow
 				V.Slides.backwardOneSlide();
-	    		event.preventDefault();    		
-	    	}
-	    	break;	     
-	  }
+				event.preventDefault();    		
+				break;
+		}
 	};
 
 

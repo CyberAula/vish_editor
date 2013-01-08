@@ -140,7 +140,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					var slideDst= VISH.Slides.getSlideWithNumber(destPosition);
 
 					if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
-						VISH.Slides.moveSlideTo(slideOrg, slideDst, movement);
+						VISH.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
 
 						//Update params and counters
 						var carrouselVisibleElements = 8;

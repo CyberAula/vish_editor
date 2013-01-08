@@ -1,21 +1,5 @@
 VISH.Editor.Utils = (function(V,$,undefined){
 
-   /**
-	* Function to dispatch the event that redraws the slides
-	*/
-	var redrawSlides = function(){
-		$(document).trigger('OURDOMContentLoaded');
-	};
-    
-	var hideSlides = function(){
-		$(".slides > article").addClass("temp_hidden");
-	};
-
-	var showSlides = function(){
-		$(".slides > article").removeClass("temp_hidden");
-	};
-
-
 	/*
 	 * Function to draw elements in an area, try to fit in the drawable area 
 	 */
@@ -149,14 +133,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			}
 		});
 			
-	//  -moz-transform: scale(1.0);
-	//  -moz-transform-origin: 0 0;
-	//  -o-transform: scale(1.0);
-	//  -o-transform-origin: 0 0;
-	//  -webkit-transform: scale(1.0);
-	//  -webkit-transform-origin: 0 0;
-	//  -ms-transform: scale(1.0);
-	//  -ms-transform-origin: 0 0;
+		//  -moz-transform: scale(1.0);
+		//  -moz-transform-origin: 0 0;
+		//  -o-transform: scale(1.0);
+		//  -o-transform-origin: 0 0;
+		//  -webkit-transform: scale(1.0);
+		//  -webkit-transform-origin: 0 0;
+		//  -ms-transform: scale(1.0);
+		//  -ms-transform-origin: 0 0;
 			
 		if(zoom){
 			filterStyle = filterStyle + "-ms-transform: scale(" + zoom + "); ";
@@ -169,8 +153,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			filterStyle = filterStyle + "-webkit-transform-origin: 0 0; ";
 		}
 
-	    return filterStyle;
-   }
+		return filterStyle;
+	}
 	 
 	/**
 	 * function to get the styles in percentages
@@ -351,21 +335,18 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 	return {
-		getWidthFromStyle   	: getWidthFromStyle,
-		getHeightFromStyle  	: getHeightFromStyle,
+		getWidthFromStyle   		: getWidthFromStyle,
+		getHeightFromStyle  		: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
-		hideSlides				: hideSlides,
-		setStyleInPixels  		: setStyleInPixels,		
-		addZoomToStyle  		: addZoomToStyle,	
-		getStylesInPercentages 	: 	getStylesInPercentages,
-		redrawSlides	    	: redrawSlides,
-		dimentionToDraw     	: dimentionToDraw,
-		showSlides				: showSlides,
-		refreshDraggables		: refreshDraggables,
-		prepareSlideToNest		: prepareSlideToNest,
-		replaceIdsForSlide 		: replaceIdsForSlide,
-		replaceIdsForFlashcardJSON : replaceIdsForFlashcardJSON,
-		undoNestedSlide 		: undoNestedSlide
+		setStyleInPixels  			: setStyleInPixels,		
+		addZoomToStyle  			: addZoomToStyle,	
+		getStylesInPercentages 		: getStylesInPercentages,
+		dimentionToDraw     		: dimentionToDraw,
+		refreshDraggables			: refreshDraggables,
+		replaceIdsForSlide 			: replaceIdsForSlide,
+		replaceIdsForFlashcardJSON  : replaceIdsForFlashcardJSON,
+		prepareSlideToNest			: prepareSlideToNest,
+		undoNestedSlide 			: undoNestedSlide
 	};
 
 }) (VISH, jQuery);

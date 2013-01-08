@@ -82,7 +82,7 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 						}
 						VISH.Editor.Events.bindEventsForFlashcard(selectedFc);
 					}
-					VISH.Slides.copySlide(slideToCopy);
+					VISH.Editor.Slides.copySlide(slideToCopy);
 				}
 				break;
 			default:
