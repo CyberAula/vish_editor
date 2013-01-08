@@ -537,15 +537,10 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var qrToggleFullScreen = function (event) {
-    V.Debugging.log("qrToggleFullScreen detected");
-    
     var myDoc = document;
-    
     //var myElem = document.getElementById('qr_quiz_image_id');
-
     var myElem =  document.getElementById('quiz_session_qrcode_container_id');
      if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
-        V.Debugging.log("entra en if ");
 
         if (myDoc.documentElement.requestFullScreen) {
 
@@ -559,14 +554,11 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
         }   
     } 
     else {
-
-         V.Debugging.log("else detected");
         if (myDoc.cancelFullScreen) {
           myDoc.cancelFullScreen();
         } else if (myDoc.mozCancelFullScreen) {
           myDoc.mozCancelFullScreen();
         } else if (myDoc.webkitCancelFullScreen) {
-        V.Debugging.log("webKitDetected");
           myDoc.webkitCancelFullScreen();
         }       
     }      
