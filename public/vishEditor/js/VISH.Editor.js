@@ -649,7 +649,7 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = {};
 		if(presentation.type==="flashcard"){
 			slide.id = $("#flashcard-background").attr("flashcard_id");
-			slide.type = "flashcard";
+			slide.type = VISH.Constant.FLASHCARD;
 			slide.background = $("#flashcard-background").css("background-image");
 			//save the pois
 			slide.pois = VISH.Editor.Flashcard.savePois();

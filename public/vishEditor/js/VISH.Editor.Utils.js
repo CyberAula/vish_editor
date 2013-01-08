@@ -244,20 +244,56 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(slide).attr("id",slideId);
 
 		var slideType = VISH.Slides.getSlideType(slide);
-
 		switch(slideType){
 			case VISH.Constant.STANDARD:
-				slide = _replaceIdsForStandardSlide(slide);
+				slide = _replaceIdsForStandardSlide(slide,slideId);
 				break;
 			case VISH.Constant.FLASHCARD:
-				// slide = _replaceIdsForFlashcardSlide(slide);
-				return;
+				slide = _replaceIdsForFlashcardSlide(slide,slideId);
 				break;
 			default:
 				return;
 		}
 
 		return slide;
+	}
+
+	var _replaceIdsForStandardSlide = function(slide,slideId){
+		//Replace zone Ids
+		$(slide).children("div[id][areaid]").each(function(index, zone) {
+			zone = _replaceIdsForZone(zone,slideId);
+		});
+		return slide;
+	};
+
+	var _replaceIdsForFlashcardSlide = function(flashcard,flashcardId){
+		var pois = $(flashcard).find("div.fc_poi");
+		$(pois).each(function(index, poi) {
+			var poiId = V.Utils.getId(flashcardId + "_poi");
+			$(poi).attr("id",poiId);
+		});
+		
+		var subslides = $(flashcard).find(".subslides > article.subslide");
+
+		$(subslides).each(function(index, subSlide) {
+			subSlide = _replaceIdsForSubSlide(subSlide,flashcardId);
+		});
+
+		return flashcard;
+	};
+
+	var _replaceIdsForSubSlide = function(subSlide,parentId){
+		var slideId = V.Utils.getId(parentId + "_article");
+		$(subSlide).attr("id",slideId);
+
+		//Close button
+		$(subSlide).children(".close_subslide").attr("id","close" + slideId);
+
+		//Zones
+		var zones = $(subSlide).children("div[id]").not(".close_subslide");
+		$(zones).each(function(index, zone) {
+			zone = _replaceIdsForZone(zone,slideId);
+		});
 	}
 
 	var _replaceIdsForZone = function(zone,slideId){
@@ -287,37 +323,32 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 	}
 
-	var _replaceIdsForStandardSlide = function(slide){
-		//Replace zone Ids
-		$(slide).children("div[id][areaid]").each(function(index, zone) {
-			zone = _replaceIdsForZone(zone,slideId);
-		});
-		return slide;
+   /*
+	* Ensure that forceId is really unic in the DOM before call replaceIdsForFlashcardJSON.
+	* ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
+	*/
+	var replaceIdsForFlashcardJSON = function(flashcard,forceId){
+		var hash_subslide_new_ids = {};
+		var old_id;
+		var fc = jQuery.extend(true, {}, flashcard);
+
+		if(forceId){
+			fc.id = forceId;
+		} else {
+			fc.id = V.Utils.getId("article");
+		}
+
+		for(var ind in fc.slides){			
+			old_id = fc.slides[ind].id;
+			fc.slides[ind].id = V.Utils.getId(fc.id + "_article" + (parseInt(ind)+1),true);
+			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
+		}
+		for(var num in fc.pois){	
+			fc.pois[num].id = V.Utils.getId(fc.id + "_poi" + (parseInt(num)+1),true);
+			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
+		}
+		return fc;
 	};
-
-	var _replaceIdsForFlashcardSlide = function(flashcard){
-		VISH.Debugging.log("Copy flashcard");
-		VISH.Debugging.log(slide);
-		//TODO
-
-		return flashcard;
-	};
-
-	// var _changeFlashcardIds = function(flashcard){
-	// 	var hash_subslide_new_ids = {};
-	// 	var old_id;
-	// 	flashcard.id = V.Utils.getId("article");
-	// 	for(var ind in flashcard.slides){			
-	// 		old_id = flashcard.slides[ind].id;
-	// 		flashcard.slides[ind].id = V.Utils.getId(flashcard.id + "_article");
-	// 		hash_subslide_new_ids[old_id] = flashcard.slides[ind].id;
-	// 	}
-	// 	for(var num in flashcard.pois){	
-	// 		flashcard.pois[num].id = V.Utils.getId(flashcard.id + "_poi");
-	// 		flashcard.pois[num].slide_id = hash_subslide_new_ids[flashcard.pois[num].slide_id];
-	// 	}
-	// 	return flashcard;
-	// };
 
 	return {
 		getWidthFromStyle   	: getWidthFromStyle,
@@ -333,6 +364,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		refreshDraggables		: refreshDraggables,
 		prepareSlideToNest		: prepareSlideToNest,
 		replaceIdsForSlide 		: replaceIdsForSlide,
+		replaceIdsForFlashcardJSON : replaceIdsForFlashcardJSON,
 		undoNestedSlide 		: undoNestedSlide
 	};
 

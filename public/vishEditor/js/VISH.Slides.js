@@ -552,7 +552,7 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var getSlideType = function(slideEl){
-		if (slideEl.tagName==="ARTICLE"){
+		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
 			switch($(slideEl).attr("type")){
 				case undefined:
 				case VISH.Constant.STANDARD:

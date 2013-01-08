@@ -86,7 +86,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		if(flashcardid){
 			var the_flashcard_excursion = currentFlashcards[flashcardid];
 			//we have the flashcard as is in the repository but we have to update its ids to the adequate ones
-			var selectedFc = _changeFlashcardIds(the_flashcard_excursion.slides[0]);
+			var selectedFc = VISH.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion.slides[0]);
 			VISH.Editor.Flashcard.addFlashcard(selectedFc);
 			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
 			//currentSlide number is next slide
@@ -98,22 +98,6 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			VISH.Editor.Tools.Menu.updateMenuAfterAddSlide(VISH.Constant.FLASHCARD);
 			$.fancybox.close();
 		}
-	};
-		
-	var _changeFlashcardIds = function(flashcard){
-		var hash_subslide_new_ids = {};
-		var old_id;
-		flashcard.id = V.Utils.getId("article");
-		for(var ind in flashcard.slides){			
-			old_id = flashcard.slides[ind].id;
-			flashcard.slides[ind].id = V.Utils.getId(flashcard.id + "_article");
-			hash_subslide_new_ids[old_id] = flashcard.slides[ind].id;
-		}
-		for(var num in flashcard.pois){	
-			flashcard.pois[num].id = V.Utils.getId(flashcard.id + "_poi");
-			flashcard.pois[num].slide_id = hash_subslide_new_ids[flashcard.pois[num].slide_id];
-		}
-		return flashcard;
 	};
 
 	return {

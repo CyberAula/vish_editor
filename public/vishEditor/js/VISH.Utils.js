@@ -16,7 +16,6 @@ VISH.Utils = (function(V,undefined){
 	* justCheck: only check if the id is really unic, if dont generate a new id.
 	*/
 	var getId = function(full_id_prefix,justCheck,separator){
-
 		if(!justCheck){
 			if(typeof full_id_prefix !== "string"){
 				//Default prefix
