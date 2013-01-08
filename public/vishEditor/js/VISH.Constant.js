@@ -1,49 +1,53 @@
 VISH.Constant = VISH.Constant || {};
 
+//VE Edit Modes
 VISH.Constant.Edit = "Editor";
 VISH.Constant.Viewer  = "Viewer";
 VISH.Constant.AnyMode  = "Both";
 
+//VE Server Modes
+VISH.Constant.NOSERVER = "noserver";
+VISH.Constant.VISH = "vish";
+VISH.Constant.STANDALONE = "node";
+
+//User agents and browsers
 VISH.Constant.UA_IE = 'Microsoft Internet Explorer';
 VISH.Constant.UA_NETSCAPE = 'Netscape';
 
 VISH.Constant.IE = 'Internet Explorer';
 VISH.Constant.FIREFOX = 'Mozilla Firefox';
 VISH.Constant.CHROME = 'Google Chrome';
-VISH.Constant.UNKNOWN = 'Unknown';
 
-VISH.Constant.NOSERVER = "noserver";
-VISH.Constant.VISH = "vish";
-VISH.Constant.STANDALONE = "node";
 
+//Zone sizes
 VISH.Constant.EXTRA_SMALL = "extra-small";
 VISH.Constant.SMALL = "small";
 VISH.Constant.MEDIUM = "medium";
 VISH.Constant.LARGE = "large";
 
 //Defaults
+VISH.Constant.THUMBNAIL = "thumbnail";
+VISH.Constant.NONE = "none";
+VISH.Constant.UNKNOWN = 'Unknown';
 VISH.Constant.AGE_RANGE = "4 - 20";
 
 //Presentation and slide types
 VISH.Constant.PRESENTATION = "presentation";
-VISH.Constant.FLASHCARD = "flashcard";
-VISH.Constant.GAME = "game";
-VISH.Constant.QUIZ = "quiz";
-VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
-VISH.Constant.VTOUR = "virtualTour";
 VISH.Constant.STANDARD = "standard";
+VISH.Constant.FLASHCARD = "flashcard";
+VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
+VISH.Constant.GAME = "game";
+VISH.Constant.VTOUR = "virtualTour";
 
 //Element types
-//TODO...
 VISH.Constant.IMAGE = "image";
 VISH.Constant.TEXT = "text";
 VISH.Constant.VIDEO = "video";
 VISH.Constant.OBJECT = "object";
 VISH.Constant.SNAPSHOT = "snapshot";
+VISH.Constant.QUIZ = "quiz";
 
-VISH.Constant.THUMBNAIL = "thumbnail";
-VISH.Constant.NONE = "none";
-
+// Video
 VISH.Constant.Video = {};
 VISH.Constant.Video.HTML5 = "HTML5";
 VISH.Constant.Video.Youtube = "Youtube";

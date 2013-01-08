@@ -33,7 +33,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		VISH.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
-		console.log(JSON.stringify(presentation));
+		VISH.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
 		setPresentationType(presentation.type);

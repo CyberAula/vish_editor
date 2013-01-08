@@ -54,7 +54,7 @@ VISH.Editor.Text = (function(V,$,undefined){
  	getNicEditor();
     
     current_area.attr('type','text');
-    var wysiwygId = "wysiwyg_" + current_area.attr("id");
+    var wysiwygId = V.Utils.getId(current_area.attr("id") + "_" + "wysiwyg");
     var wysiwygWidth = current_area.width() - 10;
     var wysiwygHeight = current_area.height() - 10;
     current_area.html("<div class='wysiwygInstance' id="+wysiwygId+" style='width:"+wysiwygWidth+"px; height:"+wysiwygHeight+"px;'>"+initial_text+"</div>");

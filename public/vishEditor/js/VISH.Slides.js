@@ -550,6 +550,35 @@ VISH.Slides = (function(V,$,undefined){
 	var getSlidesQuantity = function(){
 		return getSlides().length;
 	}
+
+	var getSlideType = function(slideEl){
+		if (slideEl.tagName==="ARTICLE"){
+			switch($(slideEl).attr("type")){
+				case undefined:
+				case VISH.Constant.STANDARD:
+					return VISH.Constant.STANDARD;
+					break;
+				case VISH.Constant.FLASHCARD:
+					return VISH.Constant.FLASHCARD;
+					break;
+				case VISH.Constant.QUIZ_SIMPLE:
+					return VISH.Constant.QUIZ_SIMPLE;
+					break;
+				case VISH.Constant.GAME:
+					return VISH.Constant.GAME;
+					break;
+				case VISH.Constant.VTOUR:
+					return VISH.Constant.VTOUR;
+					break;
+				default:
+					return VISH.Constant.UNKNOWN;
+					break;
+			}
+		} else {
+			//slideEl is not a slide
+			return null;
+		}
+	}
 	
 	return {	
 			init          			: init,	
@@ -559,6 +588,7 @@ VISH.Slides = (function(V,$,undefined){
 			isCurrentFirstSlide		: isCurrentFirstSlide,
 			isCurrentLastSlide		: isCurrentLastSlide,
 			isSlideSelected 		: isSlideSelected,
+			getSlideType 			: getSlideType,
 			getNumberOfSlide		: getNumberOfSlide,
 			getSlides 				: getSlides,
 			getSlideWithNumber		: getSlideWithNumber,

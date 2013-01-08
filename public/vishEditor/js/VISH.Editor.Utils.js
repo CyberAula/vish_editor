@@ -239,6 +239,85 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return slide;	
 	}
 
+	var replaceIdsForSlide = function(slide){
+		var slideId = V.Utils.getId("article");
+		$(slide).attr("id",slideId);
+
+		var slideType = VISH.Slides.getSlideType(slide);
+
+		switch(slideType){
+			case VISH.Constant.STANDARD:
+				slide = _replaceIdsForStandardSlide(slide);
+				break;
+			case VISH.Constant.FLASHCARD:
+				// slide = _replaceIdsForFlashcardSlide(slide);
+				return;
+				break;
+			default:
+				return;
+		}
+
+		return slide;
+	}
+
+	var _replaceIdsForZone = function(zone,slideId){
+		var zoneId = V.Utils.getId(slideId + "_zone");
+		$(zone).attr("id",zoneId);
+
+		$(zone).find("[id]").each(function(index, el) {
+			el = _replaceIdsForEl(el,zoneId);
+		});
+
+		return zone;
+	}
+
+	var _replaceIdsForEl = function(el,zoneId){
+		var elName = _getNameOfEl(el);
+		var elId = V.Utils.getId(zoneId + "_" + elName);
+		$(el).attr("id",elId);
+		return el;
+	}
+
+	var _getNameOfEl = function(el){
+		var elName = $($(el).attr("id").split("_")).last()[0];
+		if (elName.length>1){
+			return elName.substring(0,elName.length-1);
+		} else {
+			return elName;
+		}
+	}
+
+	var _replaceIdsForStandardSlide = function(slide){
+		//Replace zone Ids
+		$(slide).children("div[id][areaid]").each(function(index, zone) {
+			zone = _replaceIdsForZone(zone,slideId);
+		});
+		return slide;
+	};
+
+	var _replaceIdsForFlashcardSlide = function(flashcard){
+		VISH.Debugging.log("Copy flashcard");
+		VISH.Debugging.log(slide);
+		//TODO
+
+		return flashcard;
+	};
+
+	// var _changeFlashcardIds = function(flashcard){
+	// 	var hash_subslide_new_ids = {};
+	// 	var old_id;
+	// 	flashcard.id = V.Utils.getId("article");
+	// 	for(var ind in flashcard.slides){			
+	// 		old_id = flashcard.slides[ind].id;
+	// 		flashcard.slides[ind].id = V.Utils.getId(flashcard.id + "_article");
+	// 		hash_subslide_new_ids[old_id] = flashcard.slides[ind].id;
+	// 	}
+	// 	for(var num in flashcard.pois){	
+	// 		flashcard.pois[num].id = V.Utils.getId(flashcard.id + "_poi");
+	// 		flashcard.pois[num].slide_id = hash_subslide_new_ids[flashcard.pois[num].slide_id];
+	// 	}
+	// 	return flashcard;
+	// };
 
 	return {
 		getWidthFromStyle   	: getWidthFromStyle,
@@ -253,6 +332,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		showSlides				: showSlides,
 		refreshDraggables		: refreshDraggables,
 		prepareSlideToNest		: prepareSlideToNest,
+		replaceIdsForSlide 		: replaceIdsForSlide,
 		undoNestedSlide 		: undoNestedSlide
 	};
 
