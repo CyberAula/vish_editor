@@ -634,7 +634,7 @@ span.mcChoiceSpan{
 }
 
 #tab_quiz_session_content {
-    background: url("/vishEditor/images/quiz_details.png") no-repeat scroll center top transparent;
+    background: url("/vishEditor/images/quiz/quiz_details.png") no-repeat scroll center top transparent;
     text-align: center;
 }
 
@@ -985,7 +985,7 @@ height: 20%;
 }
 
 .quiz_cancel_full_screen {
-    background-image: url("/vishEditor/images/fullscreen_all.png"); 
+    background-image: url("/vishEditor/images/icons/fullscreen_all.png"); 
     display: none;
     height: 40px;
     width:45px;

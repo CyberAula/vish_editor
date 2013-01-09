@@ -52,7 +52,7 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 
 
 	var renderContentFiltered = function(element,template){
-		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+VISH.ImagesPath+"advert_new_grey.png'/></div>";
+		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+VISH.ImagesPath+"adverts/advert_new_grey.png'/></div>";
 	}
 
 

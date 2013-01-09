@@ -7,7 +7,7 @@ js/VISH.Samples.js
 configuration/configuration.js
 
 FALLBACK:
-/ images/advert_new_grey.png
+/ images/adverts/advert_new_grey.png
 
 NETWORK:
 images/blank.png

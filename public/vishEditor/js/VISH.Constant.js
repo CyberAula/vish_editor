@@ -17,6 +17,7 @@ VISH.Constant.UA_NETSCAPE = 'Netscape';
 VISH.Constant.IE = 'Internet Explorer';
 VISH.Constant.FIREFOX = 'Mozilla Firefox';
 VISH.Constant.CHROME = 'Google Chrome';
+VISH.Constant.SAFARI = 'Safari';
 
 
 //Zone sizes
@@ -54,7 +55,8 @@ VISH.Constant.Video.Youtube = "Youtube";
 
 //Clipboard
 VISH.Constant.Clipboard = {};
-VISH.Constant.Clipboard.Slide = "slide"
+VISH.Constant.Clipboard.Slide = "slide";
+VISH.Constant.Clipboard.LocalStorageStack = "VishEditorClipboardStack";
 
 //Events
 VISH.Constant.Event = {};

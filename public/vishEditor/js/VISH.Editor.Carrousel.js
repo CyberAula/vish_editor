@@ -318,7 +318,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	}
 
 	var mustMoveCarrousel = function(direction){
-		if(!VISH.Slides.isSlideFocused()){
+		if(!VISH.Editor.Slides.isSlideFocused()){
 			return false;
 		}
 		var visibleThumbnails = VISH.Editor.Thumbnails.getVisibleThumbnails();

@@ -78,7 +78,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			carrouselImages.push(myImg); 
 		});
 			
-		VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 
 	var _onImagesLoaded = function(){

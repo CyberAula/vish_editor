@@ -1,4 +1,4 @@
-VISH.Utils.loader = (function(V,undefined){
+VISH.Utils.Loader = (function(V,undefined){
     
     var libVideos = {};
     var libImages = {};
@@ -116,7 +116,7 @@ VISH.Utils.loader = (function(V,undefined){
           var slideNumber = titleArray[imagesArray.indexOf(image)];
           var slideId = VISH.Slides.getSlideWithNumber(slideNumber).id;
           var poiId = "poi" + slideNumber;
-				  $("#" + carrouselDivId).append("<div><div class='draggable_arrow_div' slide_id='"+slideId+"' id='"+poiId+"'><img src='" + VISH.ImagesPath + "flashcard_button.png'  class='fc_draggable_arrow'/><p class='draggable_number'>"+slideNumber+"</p></div><p slidenumber='"+slideNumber+"' action='goToSlide'>"+slideNumber+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
+				  $("#" + carrouselDivId).append("<div><div class='draggable_arrow_div' slide_id='"+slideId+"' id='"+poiId+"'><img src='" + VISH.ImagesPath + "flashcard/flashcard_button.png'  class='fc_draggable_arrow'/><p class='draggable_number'>"+slideNumber+"</p></div><p slidenumber='"+slideNumber+"' action='goToSlide'>"+slideNumber+"</p>" + VISH.Utils.getOuterHTML(image) + "</div>");
 	     } else {
 	       $("#" + carrouselDivId).append('<div>' + VISH.Utils.getOuterHTML(image) + '</div>');
 	     }

@@ -92,7 +92,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
       currentObject[objectItem.id]=objectItem;
     });
 
-    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
+    VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
     
   }
 	

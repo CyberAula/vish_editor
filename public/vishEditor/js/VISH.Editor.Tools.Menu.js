@@ -453,10 +453,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		V.Editor.setPresentationType("presentation");
 		
-		//show slides
-		V.Editor.Utils.showSlides();
+		V.Editor.Slides.showSlides();
 
-		//show flashcard background, should be an image with help
 		$("#flashcard-background").hide();
 		
 		V.Editor.Thumbnails.redrawThumbnails();

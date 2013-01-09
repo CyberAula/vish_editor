@@ -25,22 +25,18 @@ VISH.Events = (function(V,$,undefined){
 
 	/* Event listeners */
 	var handleBodyKeyDown = function(event) {
-	  switch (event.keyCode) {
-	    case 39: // right arrow	    
-	    case 40: // down arrow
-	      if(V.Slides.isSlideFocused()) {
-			    V.Slides.forwardOneSlide();
-			    event.preventDefault();
-	      }
-	      break;
-	    case 37: // left arrow
-	    case 38: // up arrow
-	    	if(V.Slides.isSlideFocused()) {
+		switch (event.keyCode) {
+			case 38: // up arrow
+			case 39: // right arrow	    
+				V.Slides.forwardOneSlide();
+				event.preventDefault();
+				break;
+			case 37: // left arrow
+			case 40: // down arrow
 				V.Slides.backwardOneSlide();
-	    		event.preventDefault();    		
-	    	}
-	    	break;	     
-	  }
+				event.preventDefault();    		
+				break;
+		}
 	};
 
 
@@ -86,9 +82,7 @@ VISH.Events = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				//Fix for Iphone devices due to Click Delegation bug
-				//TODO: Apply fix only for safari
-				if(VISH.Status.getDevice().iPhone){
-					// alert(VISH.Utils.getOuterHTML(event.target));
+				if((VISH.Status.getDevice().iPhone)&&(VISH.Status.getDevice().browser.name===VISH.Constant.SAFARI)){
 					if($(event.target).hasClass("fc_poi")){
 						var poiId = event.target.id;
 						_onFlashcardPoiClicked(poiId);
