@@ -51,14 +51,14 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 
 		var content = "";
 
-		//the received data has an array called "flashcards", see VISH.Samples.API.imageList for an example
+		//the received data has an array called "flashcards", see VISH.Samples.API.flashcardList for an example
 		if((!data.flashcards)||(data.flashcards.length==0)){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
 			$("#" + carrouselDivId).show();
 			return;
 		} 
 		
-		//data.images is an array with the results
+		//data.flashcards is an array with the results
 		$.each(data.flashcards, function(index, fc) {
 			var myImg = $("<img flashcardid ='"+fc.id+"'' src=" + V.Utils.getSrcFromCSS(fc.slides[0].background) + " >")
 			carrouselImages.push(myImg);
@@ -74,6 +74,8 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		options['callback'] = _onClickCarrouselElement;
 		options['rowItems'] = 4;
 		options['scrollItems'] = 4;
+		options['width'] = 650;
+		options['styleClass'] = "flashcard_repository";
 		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
