@@ -236,8 +236,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("delete_option", index);
 				$(option_element).find("." +addQuizOptionButtonClass).attr("add_option", index);
-				//reasign id's for remaining wysiwyg div's 
-				$(option_element).find(".multiplechoice_option_in_zone").attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
+				//reasign id's for remaining wysiwyg div's (not Necessary)
+				//$(option_element).find(".multiplechoice_option_in_zone").attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
+
 
 				if(index>=option_number) {
 			
