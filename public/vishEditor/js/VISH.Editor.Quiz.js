@@ -170,9 +170,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				_addKeyDownListener(current_area, $(current_area).find(".multiplechoice_option_in_zone:last"));				
 				//add index letter and unique_id 
 				$(current_area).find(".quiz_option_index:last").text(choicesLetters[current_options]);
-				/*$(current_area).find("." +deleteQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_delete_option_button_"+  current_options + "_id");
-				$(current_area).find("." +addQuizOptionButtonClass + ":last").attr("id", current_area.attr("id") + "_add_option_button_"+  current_options + "_id");
-				*/
+		
 				$(current_area).find("." +deleteQuizOptionButtonClass + ":last").attr("delete_option", current_options);
 				$(current_area).find("." +addQuizOptionButtonClass + ":last").attr("add_option", current_options);
 				//and call launchTextEditorInTextArea for zone
@@ -182,7 +180,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				if(current_options>0) {					
 					$($(current_area).find("." + addQuizOptionButtonClass)[parseInt(current_options)-1]).hide();
 					$($(current_area).find("." +  deleteQuizOptionButtonClass)[parseInt(current_options)-1]).show();
-					//$("#wysiwyg_" + current_area.attr("id")  + "_" + current_options ).focus();
+
 					$($(current_area).find(".multiplechoice_option_in_zone")[current_options]).focus();
 					$(current_area).find(".initTextDiv :last").trigger("click");
 				}
@@ -220,26 +218,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			V.Editor.setCurrentArea($("#" +(event.target.parentElement.parentElement.parentElement.parentElement.id)));
 			var current_area = V.Editor.getCurrentArea();
 			//Remove li
-			// TODO try to find index in different way
-			//var option_number = (event.target.id).substring(27,28); 
 			var option_number = $(event.target).attr("delete_option"); 
 			VISH.Debugging.log("option number:" + option_number);
-			//$(current_area).find("#"+ event.target.attributes["id"].value).parent().remove();
 			$($(current_area).find(".li_mch_options_in_zone")[option_number]).remove();
 			
 			//reassign index letters for remaining options & reassign id's
 			$(current_area).find(".li_mch_options_in_zone").each(function(index, option_element) {
 				$(option_element).find(".quiz_option_index").text(choicesLetters[index]);
-				/*$(option_element).find("." +deleteQuizOptionButtonClass).attr("id", current_area.attr("id") + "_delete_option_button_"+  index + "_id");
-				$(option_element).find("." +addQuizOptionButtonClass).attr("id", current_area.attr("id") + "_add_option_button_"+  index + "_id");
-				*/
 				
 				$(option_element).find("." +deleteQuizOptionButtonClass).attr("delete_option", index);
 				$(option_element).find("." +addQuizOptionButtonClass).attr("add_option", index);
 				//reasign id's for remaining wysiwyg div's (not Necessary)
-				//$(option_element).find(".multiplechoice_option_in_zone").attr("id","wysiwyg_" + current_area.attr("id") + "_"+  index );
-
-
 				if(index>=option_number) {
 			
 					launchTextEditorInTextArea(current_area, "multiplechoice", option_number);
@@ -263,23 +252,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var current_area = area; 
 		//for options
 		if (option_number!=undefined) {
-			//var optionWysiwygId = "wysiwyg_" + current_area.attr("id") + "_" + option_number;
 			var  optionWysiwygId = V.Utils.getId();
 			V.Debugging.log("id got it: " + optionWysiwygId);
 			$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    			//V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);	
     			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
 		//question input
 		else {
 			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
-			var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
+			//var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
+			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
-			//V.Editor.Text.getNicEditor().addInstance(wysiwygId);
 			VISH.Editor.Text.getNicEditor().addInstance(wysiwygId);
 		}
 		
@@ -298,8 +285,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	    			//Remove text
 	    		$(font).text("");
 	    		$(div).removeClass("initTextDiv");
-	    		//$(div).parent().text("  ");
-	    		$(".multiplechoice_option_in_zone :last").trigger("click");
+	      		$(".multiplechoice_option_in_zone :last").trigger("click");
 	    	}
 	    	else if($(font).text()==="Write question here"){	
 	    		//Remove text
