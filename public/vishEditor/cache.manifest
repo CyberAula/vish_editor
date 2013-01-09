@@ -55,11 +55,11 @@ js/VISH.LocalStorage.js
 configuration/configuration.js
 images/background1.png
 images/background_text.png
-images/fullscreen_all.png
+images/icons/fullscreen_all.png
 images/viewbar.png
-images/helptutorial_circle_blank.png
-images/back_icon.png  
-images/flashcard_initial_background.jpg
+images/icons/helptutorial_circle_blank.png
+images/icons/back_icon.png  
+images/flashcard/flashcard_initial_background.jpg
 
 http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg
 http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg
@@ -68,7 +68,7 @@ http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italics
 contents/swf/virtualexperiment_1.swf
 
 FALLBACK:
-/ images/advert_new_grey.png
+/ images/adverts/advert_new_grey.png
 
 NETWORK:
 images/blank.png

@@ -131,7 +131,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		//Build new carrousel
 		var content = "";
 		var carrouselImages = [];
-		carrouselImages.push($("<img class='uploadThumbnail' src='" + VISH.ImagesPath + "addThumbnail.png'/>")[0]);
+		carrouselImages.push($("<img class='uploadThumbnail' src='" + VISH.ImagesPath + "icons/addThumbnail.png'/>")[0]);
 		$.each(avatars.pictures, function(i, item) {
 			var myImg = $("<img src="+item.src+" />");
 			carrouselImages.push($(myImg)[0]);
