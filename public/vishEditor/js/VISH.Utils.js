@@ -10,7 +10,7 @@ VISH.Utils = (function(V,undefined){
 	}
 
    /**
-	* Return a unic id.
+	* Return a unique id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get "article_x" ids.
 	* Specify a separator for nested ids.
 	* justCheck: only check if the id is really unic, if dont generate a new id.

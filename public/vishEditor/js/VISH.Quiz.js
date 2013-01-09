@@ -247,10 +247,12 @@ var _getResults =  function(quiz_session_active_id) {
     myDoc.addEventListener("fullscreenchange", function () {
 //if FullScreen mode: document.fullScreen-- remove full-screen class
       if (document.fullScreen) {
+        $(document.getElementById(qrImgID)).removeClass("quiz_session_qrcode_container");
         $(document.getElementById(qrImgID)).addClass("full-screen");
         }
       else {
         $(document.getElementById(qrImgID)).removeClass("full-screen");
+        $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
       }      
 
       if($(myElem).css("display")==="none") {
@@ -263,11 +265,13 @@ var _getResults =  function(quiz_session_active_id) {
      else if (myElem.webkitRequestFullScreen) {
       myDoc.addEventListener("webkitfullscreenchange", function() {
         if (document.webkitIsFullScreen) {
+          $(document.getElementById(qrImgID)).removeClass("quiz_session_qrcode_container");
           $(document.getElementById(qrImgID)).addClass("full-screen");
           $(".quiz_cancel_full_screen").show();
         }
         else {
           $(document.getElementById(qrImgID)).removeClass("full-screen");
+          $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
           $(".quiz_cancel_full_screen").hide();
         }      
         if($(myElem).css("display")==="none") {
@@ -280,11 +284,13 @@ var _getResults =  function(quiz_session_active_id) {
     else if (myElem.mozRequestFullScreen) {
       myDoc.addEventListener("mozfullscreenchange", function () {
         if (document.mozFullScreen) {
+          $(document.getElementById(qrImgID)).removeClass("quiz_session_qrcode_container");
           $(document.getElementById(qrImgID)).addClass("full-screen");
           $(".quiz_cancel_full_screen").show();
         }
         else {
           $(document.getElementById(qrImgID)).removeClass("full-screen");
+          $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
           $(".quiz_cancel_full_screen").hide();
         }   
         if($(myElem).css("display")==="none") {
