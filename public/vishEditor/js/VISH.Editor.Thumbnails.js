@@ -51,7 +51,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		}
 
-		VISH.Utils.loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
+		VISH.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 

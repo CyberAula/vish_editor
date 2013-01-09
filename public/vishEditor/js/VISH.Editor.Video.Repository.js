@@ -72,7 +72,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			}
 		});
 
-		VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 		
 	};
 	

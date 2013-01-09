@@ -64,7 +64,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			carrouselImages.push(myImg);
 			currentFlashcards[fc.id] = fc;
 		});
-		VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 	
 	var _onImagesLoaded = function(){

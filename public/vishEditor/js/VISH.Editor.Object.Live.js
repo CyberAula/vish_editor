@@ -97,7 +97,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
       currentObject[object.id]=object;
     });
 
-    VISH.Utils.loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
+    VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
     
   }
 	

@@ -148,7 +148,7 @@ width: 100%;
   top: 10px;
   height: 22px;
   width: 22px;
-  background-image:url(../../images/delete_slide.png);
+  background-image:url(../../images/delete.png);
 }
 .joyride-close-tip:hover {
   background-image: url(../../images/hover/delete_hover.png);
