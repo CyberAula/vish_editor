@@ -71,55 +71,13 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		//Init Vish Editor Addons
 		if(options.addons){
-			VISH.Addons.init(options.addons);
+			V.Addons.init(options.addons);
 		}
 
-		///////////////////
-		//Interface changes
-		//////////////////
-
-		if((options)&&(options["preview"])){
-			$("div#viewerpreview").show();
-		}
-
-		if((!V.Status.getDevice().desktop)&&(!VISH.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
-			$("button#closeButton").show();
-		}
-
-
-		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
-
-		if(!renderFull){
-			if (V.Status.getDevice().features.fullscreen && V.Status.getDevice().desktop && ((options)&&(!options["preview"]))) {
-				_enableFullScreen();
-			}	else {
-			  	$("#page-fullscreen").hide();
-			}
-		} else {
-			$("#page-fullscreen").hide();
-			V.ViewerAdapter.setupElements();
-			V.ViewerAdapter.setupSize(true);
-	      	V.ViewerAdapter.decideIfPageSwitcher();
-		}
+		V.ViewerAdapter.setupInterface(options);
 	};
 
-
-	var _enableFullScreen = function(){
-		if(V.Status.getIsInIframe()){
-			var myDoc = parent.document;
-		} else {
-			var myDoc = document;
-		}
-		$(document).on('click', '#page-fullscreen', toggleFullScreen);
-		$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
-			V.ViewerAdapter.setupElements();
-			//Done with a timeout because it did not work well in ubuntu
-			setTimeout(function(){
-				V.ViewerAdapter.setupSize(true);
-				V.ViewerAdapter.decideIfPageSwitcher();
-			}, 400);    
-		});
-	}
+	
 
 
 	/**
@@ -160,6 +118,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		    }		    
 		  }
 	};
+	
 	
 	
 	

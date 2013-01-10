@@ -78,6 +78,14 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
+	/*
+	 * function to send the parent to the specified URL, used for fullscreen
+	 */
+	var sendParentToURL = function(the_url){
+		console.log("parent to " +  the_url);
+		window.parent.location = the_url;
+	};
+
    /**
 	* Function to dinamically add a css
 	*/
@@ -319,7 +327,8 @@ VISH.Utils = (function(V,undefined){
 		checkMiniumRequirements : checkMiniumRequirements,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
-		loadTab 				: loadTab
+		loadTab 				: loadTab,
+		sendParentToURL			: sendParentToURL
    };
 
 }) (VISH);
