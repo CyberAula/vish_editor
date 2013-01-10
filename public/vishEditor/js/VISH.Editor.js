@@ -501,11 +501,27 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   /**
-   * function called when user delete a slide
+   * Function called when user delete a slide
    */
 	var _onDeleteSlideClicked = function(){
-		var article_to_delete = $(this).parent();
-		$("#image_template_prompt").attr("src", VISH.ImagesPath + "templatesthumbs/" + article_to_delete.attr("template") + ".png");
+		var article_to_delete = $(this).parent()[0];
+
+		var thumb;
+		switch(VISH.Slides.getSlideType(article_to_delete)){
+			case VISH.Constant.STANDARD:
+				thumb = VISH.ImagesPath + "templatesthumbs/" + $(article_to_delete).attr("template") + ".png"; 
+				break;
+			case VISH.Constant.FLASHCARD:
+				thumb = VISH.Utils.getSrcFromCSS($(article_to_delete).attr("avatar"));
+				// thumb = VISH.ImagesPath + "templatesthumbs/" + "flashcard_template.png";
+				break;
+			case VISH.Constant.VTOUR:
+			default:
+				thumb = VISH.ImagesPath + "templatesthumbs/" + "default.png";
+				break;
+		}
+
+		$("#image_template_prompt").attr("src", thumb);
 		$.fancybox(
 		$("#prompt_form").html(),
 			{
