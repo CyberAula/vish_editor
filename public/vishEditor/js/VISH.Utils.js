@@ -327,8 +327,6 @@ VISH.Utils = (function(V,undefined){
 		checkMiniumRequirements : checkMiniumRequirements,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
-		autocompleteUrls 		: autocompleteUrls,
-		filterFilePath 			: filterFilePath, 
 		loadTab 				: loadTab,
 		sendParentToURL			: sendParentToURL
    };
