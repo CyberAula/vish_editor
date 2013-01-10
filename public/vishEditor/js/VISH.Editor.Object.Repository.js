@@ -129,7 +129,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	  $(metadataArea).html("");
 	  if((renderedObject)&&(object)){
 	    $(objectArea).append(renderedObject);
-	    var table = VISH.Utils.generateTable(object.author,object.title,object.description);
+	    var table = VISH.Editor.Utils.generateTable(object.author,object.title,object.description);
 	    $(metadataArea).html(table);
 			$("#" + footId).find(".okButton").show();
 	  }

@@ -54,8 +54,6 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
-
-
 	var loadDeviceCSS = function(){
 		//Set device CSS
 		if(VISH.Status.getDevice().desktop){
@@ -87,36 +85,7 @@ VISH.Utils = (function(V,undefined){
 		$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + path + '" type="text/css" />');
 	};
 
-    var generateTable = function(author,title,description){
-        
-	    if(!author){
-	     author = "";
-	    }
-	    if(!title){
-	      title = "";
-	    }
-	    if(!description){
-	      description = "";
-	    }
-    
-      return "<table class=\"metadata\">"+
-         "<tr class=\"even\">" +
-           "<td class=\"title header_left\">" + VISH.Editor.I18n.getTrans("i.Author") + "</td>" + 
-           "<td class=\"title header_right\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
-         "</tr>" + 
-         "<tr class=\"odd\">" + 
-           "<td class=\"title\">" + VISH.Editor.I18n.getTrans("i.Title") + "</td>" + 
-           "<td class=\"info\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
-         "</tr>" + 
-         "<tr class=\"even\">" + 
-           "<td colspan=\"2\" class=\"title_description\">" + VISH.Editor.I18n.getTrans("i.Description") + "</td>" + 
-         "</tr>" + 
-         "<tr class=\"odd\">" + 
-           "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 
-         "</tr>" + 
-       "</table>";
-    }
-			
+		
 	//Check minium requirements to init vish editor
 	var checkMiniumRequirements = function(){
 		var browserRequirements = true;
@@ -163,45 +132,9 @@ VISH.Utils = (function(V,undefined){
 		return true;
 	}
 		
-    var convertToTagsArray = function(tags){
-	    var tagsArray = [];
-	    
-	    if((!tags)||(tags.length==0)){
-	      return tagsArray;
-	    }
-	    
-	    $.each(tags, function(index, tag) {
-	      tagsArray.push(tag.value)
-	    });
-	    
-	    return tagsArray;
-    }
-		
-	var getURLParameter = function(name){
-		return decodeURIComponent((location.search.match(RegExp("[?|&]"+name+'=(.+?)(&|$)'))||[,null])[1]);
-	}
-		
-	//Help function to autocomplete user inputs.
-	//Add HTTP if is not present.
-	var autocompleteUrls = function(input){
-		var http_urls_pattern=/(^http(s)?:\/\/)/g
-		var objectInfo = VISH.Object.getObjectInfo();
-
-		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
-			return "http://" + input;
-		} else {
-			return input;
-		}
-	}
-
-
-	var filterFilePath = function(path){
-		return path.replace("C:\\fakepath\\","");
-	}
-
 
 	/*
-	* in the css we have url("image_path") and to use ir in an image src attribute we need to get the image_path
+	* In the css we have url("image_path") and to use ir in an image src attribute we need to get the image_path
 	* this function does that
 	*/
 	var getSrcFromCSS = function(css){
@@ -211,7 +144,6 @@ VISH.Utils = (function(V,undefined){
 			return css;
 		}
 	}
-
 
 	var getZoomInStyle = function(zoom){
 		var style = "";
@@ -226,9 +158,7 @@ VISH.Utils = (function(V,undefined){
 		return style;
 	}
 
-
 	var getZoomFromStyle = function(style){
-
 		var zoom = 1; //Initial or default zoom
 		
 		if(!style){
@@ -383,17 +313,12 @@ VISH.Utils = (function(V,undefined){
 		init 					: init,
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
-		generateTable 			: generateTable,
 		getSrcFromCSS			: getSrcFromCSS,
 		loadDeviceCSS			: loadDeviceCSS,
 		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
-		convertToTagsArray 		: convertToTagsArray,
-		getURLParameter 		: getURLParameter,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
-		autocompleteUrls 		: autocompleteUrls,
-		filterFilePath 			: filterFilePath, 
 		loadTab 				: loadTab
    };
 
