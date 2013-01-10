@@ -214,6 +214,7 @@ this can not be done with show() and hide() because then it remains with display
 
 #page-switcher-end{
 	right: 0px;
+  cursor: pointer;
 }
 
 #page-switcher-start:hover{
@@ -222,6 +223,7 @@ this can not be done with show() and hide() because then it remains with display
 
 #page-switcher-start{
 	left: 0px;
+  cursor: pointer;
 }
 
 #page-switcher-end:hover{
@@ -381,6 +383,7 @@ this can not be done with show() and hide() because then it remains with display
   z-index: 2600;
   right: 0%;
   width: 6%;
+  bottom: 50px;
 }
 
 .vish_arrow{

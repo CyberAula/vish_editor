@@ -98,9 +98,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$('#fancybox-wrap').height("80%");	
 			
 			$('#fancybox-wrap').css("top", "10%");	
-			$('#fancybox-wrap').css("left", "10%");	
-			
-
+			$('#fancybox-wrap').css("left", "10%");
 		}
 
 		//Snapshot callbacks
@@ -110,6 +108,78 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		VISH.ObjectPlayer.aftersetupSize(increase);		
 	};
 
+
+	var setupInterface = function(options){
+		///////////////////
+		//Interface changes
+		//////////////////
+
+		if((options)&&(options["preview"])){
+			$("div#viewerpreview").show();
+		}
+
+		if((!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
+			$("button#closeButton").show();
+		}
+
+		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe()) || (options["forcefull"]===true));
+
+		if(!renderFull){
+			//we are not in fullscreen
+			if (V.Status.getDevice().desktop && ((options)&&(!options["preview"]))) {
+				_enableFullScreen(options);
+			}	else {
+			  	$("#page-fullscreen").hide();
+			}
+		} else{
+			if(options && options["exitFullscreen"]){
+	 			//we are in fullscreen "simulated", showing the .full version and we need a close fullscreen
+	 			$("#page-fullscreen").css("background-position", "-45px 0px");
+				$("#page-fullscreen").hover(function(){
+					$("#page-fullscreen").css("background-position", "-45px -40px");
+				}, function() {
+					$("#page-fullscreen").css("background-position", "-45px 0px");
+				});
+				$(document).on('click', '#page-fullscreen', function(){
+					window.location = options["exitFullscreen"];
+    			});
+			}else {
+				$("#page-fullscreen").hide();
+			}
+ 			setupElements();
+			setupSize(true);
+	      	decideIfPageSwitcher();
+		}
+	};
+
+	/*
+	 * This method enables the fullscreen button, it will change to fullscreen if that feature is present
+	 * and if not it is a link to the .full version
+	 */
+	var _enableFullScreen = function(options){
+		if(V.Status.getDevice().features.fullscreen){
+			//if we have fullscreen feature, use it
+			if(V.Status.getIsInIframe()){
+				var myDoc = parent.document;
+			} else {
+				var myDoc = document;
+			}
+			$(document).on('click', '#page-fullscreen', V.SlideManager.toggleFullScreen);
+			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
+				V.ViewerAdapter.setupElements();
+				//Done with a timeout because it did not work well in ubuntu
+				setTimeout(function(){
+					V.ViewerAdapter.setupSize(true);
+					V.ViewerAdapter.decideIfPageSwitcher();
+				}, 400);    
+			});
+		}
+		else if(V.Status.getIsInIframe() && options["fullscreen"]){
+			$(document).on('click', '#page-fullscreen', function(){
+				VISH.Utils.sendParentToURL(options["fullscreen"]);
+    		});
+		}
+	}
 
 	var setupElements = function(){
 		//if page is fullscreen, it means we are exiting it
@@ -220,6 +290,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		setupElements			: setupElements,
 		setupGame				: setupGame,
+		setupInterface			: setupInterface,
 		setupSize				: setupSize
 	};
 }) (VISH, jQuery);
