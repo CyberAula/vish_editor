@@ -33,6 +33,7 @@ VISH.VideoPlayer.Youtube = (function(){
 	}
 
 	var loadYoutubeObject = function(article,zone){
+
 		if(VISH.Status.getOnline()===false){
 			$(zone).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
@@ -64,11 +65,12 @@ VISH.VideoPlayer.Youtube = (function(){
 
         $("#"+iframeId).attr("wmode","transparent");
 
-        if(VISH.Status.getDevice().desktop){
-        	var loadEvents = false;
-        } else {
-        	var loadEvents = true;
-        }
+        // if(VISH.Status.getDevice().desktop){
+        // 	var loadEvents = false;
+        // } else {
+        // 	var loadEvents = true;
+        // }
+        var loadEvents = true;
         VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,loadEvents);
 	}
 
