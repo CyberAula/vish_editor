@@ -90,7 +90,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		var renderFull = ((options["full"]===true)&&(!V.Status.getIsInIframe())||(options["forcefull"]===true));
 
 		if(!renderFull){
-			if (V.Status.getDevice().desktop && ((options)&&(!options["preview"]))) {
+			if (V.Status.getDevice().features.fullscreen && V.Status.getDevice().desktop && ((options)&&(!options["preview"]))) {
 				_enableFullScreen();
 			}	else {
 			  	$("#page-fullscreen").hide();
@@ -105,7 +105,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 
 	var _enableFullScreen = function(){
-		if((V.Status.getDevice().features.fullscreen)&&(V.Status.getIsInIframe())){
+		if(V.Status.getIsInIframe()){
 			var myDoc = parent.document;
 		} else {
 			var myDoc = document;
