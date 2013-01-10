@@ -402,7 +402,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			}
 		});
 		if(url){
-			url = VISH.Utils.autocompleteUrls(url);
+			url = VISH.Editor.Utils.autocompleteUrls(url);
 
 			var area = VISH.Editor.getCurrentArea();
 			switch($(area).attr("type")){

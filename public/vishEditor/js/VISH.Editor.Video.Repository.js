@@ -106,7 +106,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(metadataArea).html("");
 		if((renderedVideo) && (video)) {
 			$(videoArea).append(renderedVideo);
-			var table = VISH.Utils.generateTable(video.author, video.title, video.description);
+			var table = VISH.Editor.Utils.generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
 			$(button).show();
 		}

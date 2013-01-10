@@ -19,7 +19,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
 			if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = VISH.Utils.autocompleteUrls($("#" + urlInputId).val());
+				contentToAdd = VISH.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
 				drawPreview(urlDivId, contentToAdd)    
 			}
 		});
@@ -31,7 +31,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     
 		$("#" + uploadDivId + " input[name='document[file]']").change(function () {
-			var filterFilePath = VISH.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
+			var filterFilePath = VISH.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
 			$("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
 			_resetUploadFields();
 			$(tagList).parent().show();
@@ -50,7 +50,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
 					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
 					$("#" + uploadDivId + " .documentsForm").attr("action", VISH.UploadObjectPath);
-					$("#" + uploadDivId + " input[name='tags']").val(VISH.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					$("#" + uploadDivId + " input[name='tags']").val(VISH.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					var tagList = $("#" + uploadDivId + " .tagList")
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();

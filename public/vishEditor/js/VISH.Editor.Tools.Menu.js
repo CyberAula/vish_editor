@@ -257,7 +257,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		draftPresentation.title = $('#presentation_title').val();
 		draftPresentation.description = $('#presentation_description').val();
 		draftPresentation.avatar = $('#presentation_avatar').val();
-		draftPresentation.tags = VISH.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+		draftPresentation.tags = VISH.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 
 		//now the pedagogical fields if any
 		draftPresentation.age_range = $("#age_range").val();

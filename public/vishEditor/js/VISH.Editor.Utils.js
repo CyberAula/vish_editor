@@ -178,6 +178,72 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 	}
 
+
+	/* Generate table for carrousels */
+	var generateTable = function(author,title,description){       
+		if(!author){
+			author = "";
+		}
+		if(!title){
+			title = "";
+		}
+		if(!description){
+			description = "";
+		}
+
+		return "<table class=\"metadata\">"+
+		 "<tr class=\"even\">" +
+		   "<td class=\"title header_left\">" + VISH.Editor.I18n.getTrans("i.Title") + "</td>" + 
+		   "<td class=\"title header_right\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
+		 "</tr>" + 
+		 "<tr class=\"odd\">" + 
+		   "<td class=\"title\">" + VISH.Editor.I18n.getTrans("i.Author") + "</td>" + 
+		   "<td class=\"info\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
+		 "</tr>" + 
+		 "<tr class=\"even\">" + 
+		   "<td colspan=\"2\" class=\"title_description\">" + VISH.Editor.I18n.getTrans("i.Description") + "</td>" + 
+		 "</tr>" + 
+		 "<tr class=\"odd\">" + 
+		   "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 
+		 "</tr>" + 
+		"</table>";
+	}
+
+
+	var convertToTagsArray = function(tags){
+		var tagsArray = [];
+
+		if((!tags)||(tags.length==0)){
+			return tagsArray;
+		}
+
+		$.each(tags, function(index, tag) {
+			tagsArray.push(tag.value)
+		});
+
+		return tagsArray;
+	}
+
+
+	//Help function to autocomplete user inputs.
+	//Add HTTP if is not present.
+	var autocompleteUrls = function(input){
+		var http_urls_pattern=/(^http(s)?:\/\/)/g
+		var objectInfo = VISH.Object.getObjectInfo();
+
+		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
+			return "http://" + input;
+		} else {
+			return input;
+		}
+	}
+
+
+	var filterFilePath = function(path){
+		return path.replace("C:\\fakepath\\","");
+	}
+
+
    /*
 	* Modify slide ids to nest in a parent slide.
 	*/
@@ -346,7 +412,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForFlashcardJSON  : replaceIdsForFlashcardJSON,
 		prepareSlideToNest			: prepareSlideToNest,
-		undoNestedSlide 			: undoNestedSlide
+		undoNestedSlide 			: undoNestedSlide,
+		generateTable 				: generateTable,
+		convertToTagsArray 			: convertToTagsArray,
+		autocompleteUrls 			: autocompleteUrls,
+		filterFilePath 				: filterFilePath
 	};
 
 }) (VISH, jQuery);
