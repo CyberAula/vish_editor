@@ -55,9 +55,6 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 	}
 
 	var loadCustomPlayerControlEvents = function(video) {
-
-		console.log("loadCustomPlayerControlEvents");
-
 		var customPlayerContainer = $(video).parent();
 		var customPlayerControls = $(customPlayerContainer).find("div.customPlayerControls");
 		var progressBar = $(customPlayerContainer).parent().find("div.customPlayerProgressBar");
