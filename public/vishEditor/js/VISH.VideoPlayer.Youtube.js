@@ -33,6 +33,7 @@ VISH.VideoPlayer.Youtube = (function(){
 	}
 
 	var loadYoutubeObject = function(article,zone){
+
 		if(VISH.Status.getOnline()===false){
 			$(zone).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
@@ -64,18 +65,16 @@ VISH.VideoPlayer.Youtube = (function(){
 
         $("#"+iframeId).attr("wmode","transparent");
 
-        if(VISH.Status.getDevice().desktop){
-        	var loadEvents = false;
-        } else {
-        	var loadEvents = true;
-        }
-        VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,loadEvents);
+        //In current version player control events are loaded in onPlayerReady event
+        VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,false);
 	}
 
 
 	var onPlayerReady = function(event) {
-	// var iframe = event.target.getIframe();
-	// var iframeId = iframe.id;
+		var iframe = event.target.getIframe();
+		// var iframeId = iframe.id;
+		// VISH.Debugging.log("onPlayerReady " + iframe.id);
+		VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 	}
 
 	var onPlayerStateChange = function(event) {
@@ -85,8 +84,8 @@ VISH.VideoPlayer.Youtube = (function(){
 
 		switch(newState){
 			case -1:
-				// VISH.Debugging.log(playerId + ": Not initialized");
-				VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+				// VISH.Debugging.log("Not initialized");
+				// VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 				break;
 			case 0:
 				// VISH.Debugging.log(playerId + ": Ended");

@@ -543,6 +543,10 @@ div.addUrlButtons{
 	text-align:left;
 }
 
+a#tab_pic_flikr > img {
+	max-width: 47px;
+}
+
 .delete_icon{
 	position: absolute;
 	bottom: 0px;
