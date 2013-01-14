@@ -280,18 +280,18 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article4_poi1",
-						"x":"88.875",
-						"y":"50.833333333333336",
+						"x":"88.88",
+						"y":"50.83",
 						"slide_id":"article4_article1"
 					},{
 						"id":"article4_poi2",
-						"x":45.5,
-						"y":2.5,
+						"x":"45.5",
+						"y":"2.5",
 						"slide_id":"article4_article3"
 					},{
 						"id":"article4_poi3",
-						"x":13.5,
-						"y":63.166666666666664,
+						"x":"13.5",
+						"y":"63.17",
 						"slide_id":"article4_article4"
 					}
 				],
@@ -428,18 +428,18 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article8_poi1",
-						"x":36.875,
-						"y":67.33333333333333,
+						"x":"36.9",
+						"y":"67.3",
 						"slide_id":"article8_article1"
 					},{
 						"id":"article8_poi2",
-						"x":55.375,
-						"y":68.16666666666667,
+						"x":"55.4",
+						"y":"68.16",
 						"slide_id":"article8_article2"
 					},{
 						"id":"article8_poi3",
-						"x":45.875,
-						"y":5.5,
+						"x":"45.875",
+						"y":"5.5",
 						"slide_id":"article8_article3"
 					}
 				],
@@ -569,18 +569,18 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article7_poi1",
-						"x":15.625,
-						"y":8.5,
+						"x":"15.63",
+						"y":"8.5",
 						"slide_id":"article7_article1"
 					},{
 						"id":"article7_poi2",
-						"x":77.75,
-						"y":11.5,
+						"x":"77.75",
+						"y":"11.5",
 						"slide_id":"article7_article2"
 					},{
 						"id":"article7_poi3",
-						"x":17.125,
-						"y":58.833333333333336,
+						"x":"17.125",
+						"y":"58.83",
 						"slide_id":"article7_article3"
 					}
 				],
