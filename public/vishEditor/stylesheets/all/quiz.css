@@ -647,11 +647,12 @@ span.mcChoiceSpan{
     display: inline-block;
    text-align: center; 
     width: 100%;
-    height: 70%;
+    height: 85%;
 }
 .quiz_session_qrcode_container {
-    text-align: center;
+
     height: 100%;
+    width: 60%;
     padding-top: 3%; 
     padding-left: 3%;
     padding-bottom: 1%;
@@ -677,8 +678,9 @@ span.mcChoiceSpan{
     margin: 2%;
     padding-left: 5%;
     display: inline-block;
-    width: 10%;
+    width: 7%;
     height: 70%;
+    top: 5%;
 }
 
 .quiz_session_inputs_container {
@@ -692,7 +694,7 @@ span.mcChoiceSpan{
 background-color: #EEE;
 border: 1px solid #CBCBCB;
 border-radius: 14px 14px 14px 14px;
-bottom: 15%;
+bottom: 10%; 
 color: #3C3C3C;
 cursor: pointer;
 display: block;
@@ -779,6 +781,10 @@ text-align: center;
 }
 
 .quiz_full_screen{
+    background-image: url("/vishEditor/images/icons/fullscreen_all.png"); 
+    background-position: -45px 0px;
+    width: 100px;
+    height: 50px;
     border: 1px solid #EEEEEE;
     border-radius: 10px 10px 10px 10px;
     cursor: pointer;
@@ -790,7 +796,14 @@ text-align: center;
     top: 25px;
     z-index: 10;
 }
-
+.quiz_full_screen:hover{
+    opacity: 1;
+    background-position: -45px 0px;
+    border: 1px solid #000000;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+}
 .quiz_full_screen_back{
     border: 1px solid #EEEEEE;
     border-radius: 10px 10px 10px 10px;
@@ -803,15 +816,6 @@ text-align: center;
     top: 25px;
     z-index: 10;
 }
-
-.quiz_full_screen:hover{
-    opacity: 1;
-    border: 1px solid #000000;
-    -moz-box-shadow: 10px 10px 5px #888;
-    -webkit-box-shadow: 10px 10px 5px #888;
-    box-shadow: 10px 10px 5px #888;
-}
-
 .quiz_full_screen_back:hover{
     opacity: 1;
     border: 1px solid #000000;
@@ -820,11 +824,6 @@ text-align: center;
     box-shadow: 10px 10px 5px #888;
 }
 
-
-#quiz_full_screen:over {
-  background-position:0px -41px;
-  cursor:pointer;
-}
 #hide_qrcode_button_id {
 display: block;
 width: 40%;
@@ -995,7 +994,7 @@ height: 20%;
     border: none;
     background-color: transparent;
     background-position: -45px 0px;
-    z-index: 2610000000000;
+    z-index: 100;
 }
 
 .quiz_cancel_full_screen:hover { 
