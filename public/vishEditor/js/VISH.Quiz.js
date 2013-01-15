@@ -75,8 +75,22 @@ VISH.Quiz = (function(V,$,undefined){
 
 
   var showQuizStats = function(){
+ 
     //open the fancybox
     $("a#addQuizSessionFancybox").trigger("click"); 
+
+     var myDoc;
+   if(V.Status.getIsInIframe()){
+       myDoc = parent.document;
+      
+    } else {
+       myDoc = document;
+      
+    }
+if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+         var myElem = document.getElementById('qr_quiz_fullscreen');
+            $(myElem).hide();
+      }
   };
 
 
@@ -92,12 +106,11 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
     $(document).on('click', ".quiz_stop_session_dont_save", _stopAndDontSaveQuiz);
-    //$(document).on('click', '.quiz_full_screen', VISH.SlideManager.toggleFullScreen);
     $(document).on('click', '.quiz_full_screen',qrToggleFullScreen);
     $(document).on('click', '.hide_qrcode', _hideQRCode);
     $(document).on('click', '.show_qrcode', _showQRCode);
     $(document).on('click', '.quiz_cancel_full_screen',qrToggleFullScreen);
-   };
+  };
   /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
     if(V.User.isLogged()){
@@ -106,8 +119,17 @@ VISH.Quiz = (function(V,$,undefined){
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
       //init the stats, empty
       _startStats();   
-     // _updateBarsStats(); //there will be call to V:Quiz.API.getQuizSessionResults
-      
+     // _updateBarsStats(); //there will be call if(V.Status.getIsInIframe()){
+   var MyDoc;
+   if(V.Status.getIsInIframe()){
+      myDoc = parent.document;
+    } else {
+      myDoc = document;
+    }
+if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+            var myElem = document.getElementById('qr_quiz_fullscreen');
+            $(myElem).hide();
+      }
     }
     else {
           V.Debugging.log("User not logged");
@@ -152,7 +174,7 @@ var activatePolling = function (activate_boolean) {
     _updateBarsStats();
     getResultsTimeOut = setInterval(_getResults, getResultsPeriod);  
   }
-  else if (pollingActivated&&activate_boolean) {//already activated 
+  else if (pollingActivated && activate_boolean) {//already activated 
   //nothing
 
   } else {
@@ -233,7 +255,7 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
-     
+     V.Debugging.log("toggle FS detected");
     //var qrImgID = "qr_quiz_image_id";
     var qrImgID = "quiz_session_qrcode_container_id";
     addedFullScreenListener = true;
@@ -255,30 +277,35 @@ var _getResults =  function(quiz_session_active_id) {
         $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
       }      
 
-      if($(myElem).css("display")==="none") {
+    /*  if($(myElem).css("display")==="none") {
           $(myElem).show();
         } else {
           $(myElem).hide();
-        }
+        } */
       }, false);
      }
      else if (myElem.webkitRequestFullScreen) {
       myDoc.addEventListener("webkitfullscreenchange", function() {
-        if (document.webkitIsFullScreen) {
-          $(document.getElementById(qrImgID)).removeClass("quiz_session_qrcode_container");
-          $(document.getElementById(qrImgID)).addClass("full-screen");
-          $(".quiz_cancel_full_screen").show();
+        //is in fullScreen        
+        if (document.webkitIsFullScreen) { 
+          if ($(document.getElementById(qrImgID)).hasClass("quiz_session_qrcode_container")) {
+              $(document.getElementById(qrImgID)).removeClass("quiz_session_qrcode_container");
+              $(document.getElementById(qrImgID)).addClass("full-screen");
+              $(".quiz_cancel_full_screen").show();
+          }
         }
         else {
-          $(document.getElementById(qrImgID)).removeClass("full-screen");
-          $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
-          $(".quiz_cancel_full_screen").hide();
+          if ($(document.getElementById(qrImgID)).hasClass("full-screen")) {
+            $(document.getElementById(qrImgID)).removeClass("full-screen");
+            $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
+            $(".quiz_cancel_full_screen").hide();
+          }
         }      
-        if($(myElem).css("display")==="none") {
+      /*  if($(myElem).css("display")==="none") {
           $(myElem).show();
         } else {
           $(myElem).hide();
-        }
+        } */
       }, false);
     } 
     else if (myElem.mozRequestFullScreen) {
@@ -293,11 +320,11 @@ var _getResults =  function(quiz_session_active_id) {
           $(document.getElementById(qrImgID)).addClass("quiz_session_qrcode_container");
           $(".quiz_cancel_full_screen").hide();
         }   
-        if($(myElem).css("display")==="none") {
+      /*  if($(myElem).css("display")==="none") {
             $(myElem).show();
           } else {
               $(myElem).hide();
-          }
+          } */
       }, false);
     }
     else {
