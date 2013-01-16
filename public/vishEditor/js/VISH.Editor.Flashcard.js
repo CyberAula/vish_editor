@@ -120,8 +120,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
 			pois[index].id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
-			pois[index].x = (100*($(s).offset().left - 55)/800).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].y = (100*($(s).offset().top - 75)/600).toString(); //to be relative to his parent, the flashcard-background
+			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
+			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
 			pois[index].slide_id = VISH.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
 		});
 		return pois;

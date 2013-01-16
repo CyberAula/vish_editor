@@ -61,7 +61,7 @@ var getOptions = function(){
 			developmentSettings.actionInit = "nothing";
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
-				developmentSettings.samples = VISH.Samples.samples;
+				developmentSettings.samples = VISH.Samples.fc_sample;
 			}
 
 			//Possible actions: "view", "edit", or "nothing".
