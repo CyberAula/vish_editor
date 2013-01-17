@@ -1,7 +1,7 @@
 VISH.Editor.Tools = (function(V,$,undefined){
 	
 	var toolbarEventsLoaded = false;
-	var INCREASE_SIZE = 1.2; //Constant to multiply or divide the actual size of the element
+	var INCREASE_SIZE = 1.05; //Constant to multiply or divide the actual size of the element
 
 
 	/*
