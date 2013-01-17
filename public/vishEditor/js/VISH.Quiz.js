@@ -87,13 +87,11 @@ VISH.Quiz = (function(V,$,undefined){
        myDoc = document;
       
     }
-if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
-         var myElem = document.getElementById('qr_quiz_fullscreen');
-            $(myElem).hide();
-      }
-  };
-
-
+  if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+    var myElem = $(document).find('.quiz_full_screen');
+    myElem.hide();
+  }
+};
   /////////////////////////
   //// QUIZ MODE: QUESTION
   ////////////////////////
@@ -126,15 +124,15 @@ if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
     } else {
       myDoc = document;
     }
-if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
-            var myElem = document.getElementById('qr_quiz_fullscreen');
-            $(myElem).hide();
-      }
+    if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+      var myElem = $(document).find('.quiz_full_screen');
+      myElem.hide();
     }
-    else {
-          V.Debugging.log("User not logged");
-    }
-  };
+  }
+  else {
+    V.Debugging.log("User not logged");
+  }
+};
 /*  
 Load the question  options into the stats containers
  */
@@ -255,8 +253,7 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
-     V.Debugging.log("toggle FS detected");
-    //var qrImgID = "qr_quiz_image_id";
+    V.Debugging.log("toggle FS detected");
     var qrImgID = "quiz_session_qrcode_container_id";
     addedFullScreenListener = true;
     if(V.Status.getIsInIframe()){
@@ -264,8 +261,8 @@ var _getResults =  function(quiz_session_active_id) {
     } else {
       var myDoc = document;
     }
-    var myElem = document.getElementById('qr_quiz_fullscreen');
-     if (myElem.requestFullscreen) {
+    var myElem = $(document).find(".quiz_full_screen")[0];
+    if (myElem.requestFullscreen) {
     myDoc.addEventListener("fullscreenchange", function () {
 //if FullScreen mode: document.fullScreen-- remove full-screen class
       if (document.fullScreen) {
