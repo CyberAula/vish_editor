@@ -99,6 +99,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			
 			$('#fancybox-wrap').css("top", "10%");	
 			$('#fancybox-wrap').css("left", "10%");
+			//if (fullscreen --> remove QR FS Button)
+			V.Quiz.testFullScreen();
 		}
 
 		//Snapshot callbacks

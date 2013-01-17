@@ -598,7 +598,22 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     return quizSessionStarted;
   };
 
+  var testFullScreen = function() {
+     var myDoc;
+   if(V.Status.getIsInIframe()){
+       myDoc = parent.document;
+      
+    }
+    else {
+      myDoc = document;
+    }
+  if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+    var myElem = $(document).find('.quiz_full_screen');
+    myElem.hide();
+  }
 
+
+  }
 
   return {
     init                        : init, 
@@ -610,7 +625,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     onStopMcQuizButtonClicked   : onStopMcQuizButtonClicked, 
     activatePolling             : activatePolling, 
     qrToggleFullScreen          : qrToggleFullScreen, 
-    showQuizStats               : showQuizStats
+    showQuizStats               : showQuizStats, 
+    testFullScreen              : testFullScreen
 
 
   };
