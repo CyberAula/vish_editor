@@ -78,7 +78,7 @@ VISH.Quiz = (function(V,$,undefined){
  
     //open the fancybox
     $("a#addQuizSessionFancybox").trigger("click"); 
-
+/*
      var myDoc;
    if(V.Status.getIsInIframe()){
        myDoc = parent.document;
@@ -91,6 +91,8 @@ VISH.Quiz = (function(V,$,undefined){
     var myElem = $(document).find('.quiz_full_screen');
     myElem.hide();
   }
+  */
+  testFullScreen();
 };
   /////////////////////////
   //// QUIZ MODE: QUESTION
@@ -118,7 +120,7 @@ VISH.Quiz = (function(V,$,undefined){
       //init the stats, empty
       _startStats();   
      // _updateBarsStats(); //there will be call if(V.Status.getIsInIframe()){
-   var MyDoc;
+   /*var MyDoc;
    if(V.Status.getIsInIframe()){
       myDoc = parent.document;
     } else {
@@ -128,6 +130,8 @@ VISH.Quiz = (function(V,$,undefined){
       var myElem = $(document).find('.quiz_full_screen');
       myElem.hide();
     }
+    */
+    testFullScreen();
   }
   else {
     V.Debugging.log("User not logged");
