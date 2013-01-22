@@ -463,7 +463,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var insertFlashcard = function(){
 		$("#addSlideFancybox").trigger('click');
-		VISH.Utils.loadTab('tab_flashcards');
+		VISH.Utils.loadTab('tab_flashcards_repo');
 	};
 
 	var insertSlide = function(){
