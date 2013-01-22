@@ -145,7 +145,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -243,7 +243,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -341,7 +341,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -439,7 +439,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -537,7 +537,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -635,7 +635,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -1019,7 +1019,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1535',
@@ -1047,35 +1047,35 @@ VISH.Samples.API = (function(V,undefined){
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1539',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1540',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1541',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1542',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1543',
@@ -1094,7 +1094,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1535',
@@ -1268,7 +1268,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1537',
@@ -1296,7 +1296,7 @@ VISH.Samples.API = (function(V,undefined){
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     }
     ];
 	 
@@ -1313,7 +1313,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1537',

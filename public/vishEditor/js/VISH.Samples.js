@@ -208,7 +208,7 @@ VISH.Samples = (function(V,undefined){
 					'id'     : '7335',
 					'type'   : 'object',
 					'areaid' : 'left',
-					'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+					'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
         }]
         }, {
 			"id" : "articlearticle4",
@@ -423,6 +423,23 @@ VISH.Samples = (function(V,undefined){
 					}
 				]
 			},{
+			'id'       :'article12',
+			'template' :'t3',
+			'elements':[
+					{
+	                    "id"     : "article12_zone1",
+						"type"   : "text",
+						"areaid" : "header",
+						"body"   : "Experimento virtual"
+					},
+					{
+						"id"     : "article12_zone2",
+						"type"   : "object",
+						"areaid" : "left",
+						"body"   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+	        		}
+        		]
+        	},{
 				"id":"article8",
 				"type":"flashcard",
 				"background":"url(http://vishub.org/pictures/317.png)",
