@@ -1,9 +1,7 @@
 VISH.Quiz.Renderer = (function(V,$,undefined){
-  var isQuizInPreview = false;
+  var isQuizInPreview= false;
 
   var init = function(){
-
-
   };
 
   ////////////////////
@@ -14,10 +12,6 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
    * Function to render a quiz inside an article (a slide)
    */
   var renderQuiz = function(quizType, quiz_element, zone_class, slide_id, zone){
-    if(isQuizInPreview) {
-      $('.quiz_session_start_button').unbind('click');
-    }
-
     switch(quizType){
       case "multiplechoice":
         return _renderMcQuestion(quiz_element, zone_class, slide_id, zone);
@@ -128,14 +122,11 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
     
     return ret;
   };
-  var setIsQuizInPreview = function (value) {
-     isQuizInPreview = value;
-  };
+ 
 
   return {
     init                              : init,
-    renderQuiz                        : renderQuiz, 
-    setIsQuizInPreview                : setIsQuizInPreview
+    renderQuiz                        : renderQuiz
 
   };
     

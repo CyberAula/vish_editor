@@ -78,20 +78,7 @@ VISH.Quiz = (function(V,$,undefined){
  
     //open the fancybox
     $("a#addQuizSessionFancybox").trigger("click"); 
-/*
-     var myDoc;
-   if(V.Status.getIsInIframe()){
-       myDoc = parent.document;
-      
-    } else {
-       myDoc = document;
-      
-    }
-  if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
-    var myElem = $(document).find('.quiz_full_screen');
-    myElem.hide();
-  }
-  */
+
   testFullScreen();
 };
   /////////////////////////
@@ -119,19 +106,7 @@ VISH.Quiz = (function(V,$,undefined){
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
       //init the stats, empty
       _startStats();   
-     // _updateBarsStats(); //there will be call if(V.Status.getIsInIframe()){
-   /*var MyDoc;
-   if(V.Status.getIsInIframe()){
-      myDoc = parent.document;
-    } else {
-      myDoc = document;
-    }
-    if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
-      var myElem = $(document).find('.quiz_full_screen');
-      myElem.hide();
-    }
-    */
-    testFullScreen();
+      testFullScreen();
   }
   else {
     V.Debugging.log("User not logged");
@@ -617,7 +592,16 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   }
 
 
-  }
+  };
+
+
+  /*
+   * Function to unbind the start quiz button events
+   * used in the preview functionality
+   */
+  var UnbindStartQuizEvents = function(){
+    $(document).off('click', "."+startButtonClass, startMcQuizButtonClicked);
+  };
 
   return {
     init                        : init, 
@@ -630,8 +614,8 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     activatePolling             : activatePolling, 
     qrToggleFullScreen          : qrToggleFullScreen, 
     showQuizStats               : showQuizStats, 
-    testFullScreen              : testFullScreen
-
+    testFullScreen              : testFullScreen,
+    UnbindStartQuizEvents       : UnbindStartQuizEvents
 
   };
     

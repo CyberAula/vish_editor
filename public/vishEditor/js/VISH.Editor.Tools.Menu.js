@@ -404,12 +404,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			'transitionOut'		: 'none',
 			'type'				: 'iframe',
 			'onStart'			: function(){
-				V.Quiz.Renderer.setIsQuizInPreview(true);
 				VISH.Editor.Preview.prepare(V.Slides.getCurrentSlideNumber());
 			},
 			'onClosed'			: function() {
-				V.Quiz.Renderer.setIsQuizInPreview(false);
-	    		V.Editor.Preview.setForcePresentation(false);
+				V.Editor.Preview.setForcePresentation(false);
 			}
 		});	
 	}

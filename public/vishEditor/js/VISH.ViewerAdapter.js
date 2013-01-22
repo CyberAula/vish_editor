@@ -99,7 +99,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			
 			$('#fancybox-wrap').css("top", "10%");	
 			$('#fancybox-wrap').css("left", "10%");
-			//if (fullscreen --> remove QR FS Button)
+			//TODO check if the excursion has quiz() (fullscreen --> remove QR FS Button)
 			V.Quiz.testFullScreen();
 		}
 
@@ -118,6 +118,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if((options)&&(options["preview"])){
 			$("div#viewerpreview").show();
+			V.Quiz.UnbindStartQuizEvents();
 		}
 
 		if((!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"])){
