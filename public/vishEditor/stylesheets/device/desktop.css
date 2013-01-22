@@ -4,17 +4,3 @@
 #menu li:hover > ul {
 	display: block;
 }
-
-#forward_arrow:hover{
-  	cursor: url(right-pointer.png),url(/vishEditor/images/cursor/right-pointer.png), default;
-  	color: transparent;
-	background: transparent;
-	filter: none;
-}
-
-#back_arrow:hover{
-	cursor: url(left-pointer.png),url(/vishEditor/images/cursor/left-pointer.png), default;
-	color: transparent;
-	background: transparent;
-	filter: none;
-}

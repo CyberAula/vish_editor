@@ -262,16 +262,26 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-		if(VISH.Slides.isCurrentFirstSlide()){
-			$("#back_arrow").hide();
-		} else {
-			$("#back_arrow").show();
-		} 
-		if (VISH.Slides.isCurrentLastSlide()){
-			$("#forward_arrow").hide();		
-		} else {
-			$("#forward_arrow").show();
+		if(VISH.Status.getDevice().desktop===false){
+			if (VISH.Slides.getCurrentSubSlide()!==null){
+				//Subslide active
+				$("#forward_arrow").hide();
+				$("#back_arrow").hide();
+			} else {
+				//No subslide
+				if(VISH.Slides.isCurrentFirstSlide()){
+					$("#back_arrow").hide();
+				} else {
+					$("#back_arrow").show();
+				} 
+				if (VISH.Slides.isCurrentLastSlide()){
+					$("#forward_arrow").hide();		
+				} else {
+					$("#forward_arrow").show();
+				}
+			}
 		}
+
 
 		if(!page_is_fullscreen && !V.Status.getDevice().mobile){
 			if(VISH.Slides.isCurrentFirstSlide()){
