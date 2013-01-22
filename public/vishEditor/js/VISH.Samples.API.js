@@ -15,18 +15,18 @@ VISH.Samples.API = (function(V,undefined){
           "pois":[
             {
               "id":"article4_poi1",
-              "x":36.875,
-              "y":67.33333333333333,
+              "x":"36.875",
+              "y":"67.33333333333333",
               "slide_id":"article4_article1"
             },{
               "id":"article4_poi2",
-              "x":55.375,
-              "y":68.16666666666667,
+              "x":"55.375",
+              "y":"68.16666666666667",
               "slide_id":"article4_article2"
             },{
               "id":"article4_poi3",
-              "x":45.875,
-              "y":5.5,
+              "x":"45.875",
+              "y":"5.5",
               "slide_id":"article4_article3"
             }
           ],
@@ -77,7 +77,7 @@ VISH.Samples.API = (function(V,undefined){
       ]
     },
     {
-      "id"      : "1115","VEVersion":"0.2","type":"flashcard","author":"","slides":[{"id":"article4","type":"flashcard","background":"url(http://www.exploringnature.org/graphics/endangered_species/endangered_animals200.jpg)","pois":[{"id":"article4_poi1","x":15.625,"y":8.5,"slide_id":"article4_article3"},{"id":"article4_poi2","x":77.75,"y":11.5,"slide_id":"article4_article1"},{"id":"article4_poi3","x":17.125,"y":58.833333333333336,"slide_id":"article4_article2"}],"slides":[{"id":"article4_article3","type":"standard","template":"t10","elements":[{"id":"article4_article3_zone1","type":"image","areaid":"center","body":"http://d30mmglg94tqnw.cloudfront.net/wp-content/plugins/magic-gallery/uploads/12/komodo-dragon_6771_600x450.jpg","style":"position: relative; width:49.62406015037594%; height:66.22073578595318%; top:15.719063545150501%; left:24.18546365914787%;"}]},{"id":"article4_article1","type":"standard","template":"t10","elements":[{"id":"article4_article1_zone1","type":"image","areaid":"center","body":"http://www.golden-gate-park.com/wp-content/uploads/2011/03/bison_bufflo_in_golden_gate_park.jpg","style":"position: relative; width:60.526315789473685%; height:67.3913043478261%; top:15.719063545150501%; left:20.17543859649123%;"}]},{"id":"article4_article2","type":"standard","template":"t10","elements":[{"id":"article4_article2_zone1","type":"image","areaid":"center","body":"http://wfiles.brothersoft.com/e/elephant_88059-1600x1200.jpg","style":"position: relative; width:115.91478696741855%; height:116.05351170568562%; top:-2.842809364548495%; left:-0.7518796992481203%;"}]}]}]
+      "id"      : "1115","VEVersion":"0.2","type":"flashcard","author":"","slides":[{"id":"article4","type":"flashcard","background":"url(http://www.exploringnature.org/graphics/endangered_species/endangered_animals200.jpg)","pois":[{"id":"article4_poi1","x":"15.625","y":"8.5","slide_id":"article4_article3"},{"id":"article4_poi2","x":"77.75","y":"11.5","slide_id":"article4_article1"},{"id":"article4_poi3","x":"17.125","y":"58.833333333333336","slide_id":"article4_article2"}],"slides":[{"id":"article4_article3","type":"standard","template":"t10","elements":[{"id":"article4_article3_zone1","type":"image","areaid":"center","body":"http://d30mmglg94tqnw.cloudfront.net/wp-content/plugins/magic-gallery/uploads/12/komodo-dragon_6771_600x450.jpg","style":"position: relative; width:49.62406015037594%; height:66.22073578595318%; top:15.719063545150501%; left:24.18546365914787%;"}]},{"id":"article4_article1","type":"standard","template":"t10","elements":[{"id":"article4_article1_zone1","type":"image","areaid":"center","body":"http://www.golden-gate-park.com/wp-content/uploads/2011/03/bison_bufflo_in_golden_gate_park.jpg","style":"position: relative; width:60.526315789473685%; height:67.3913043478261%; top:15.719063545150501%; left:20.17543859649123%;"}]},{"id":"article4_article2","type":"standard","template":"t10","elements":[{"id":"article4_article2_zone1","type":"image","areaid":"center","body":"http://wfiles.brothersoft.com/e/elephant_88059-1600x1200.jpg","style":"position: relative; width:115.91478696741855%; height:116.05351170568562%; top:-2.842809364548495%; left:-0.7518796992481203%;"}]}]}]
     },
     {
         "id"      : "111",
@@ -145,7 +145,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -243,7 +243,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -341,7 +341,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -439,7 +439,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -537,7 +537,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -635,7 +635,7 @@ VISH.Samples.API = (function(V,undefined){
               'id'     : '7335',
               'type'   : 'object',
               'areaid' : 'left',
-              'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+              'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
             }]
             }, {
           "id" : "3",
@@ -1019,7 +1019,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1535',
@@ -1047,35 +1047,35 @@ VISH.Samples.API = (function(V,undefined){
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1539',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1540',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1541',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1542',
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1543',
@@ -1094,7 +1094,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'content'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'content'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1535',
@@ -1268,7 +1268,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1537',
@@ -1296,7 +1296,7 @@ VISH.Samples.API = (function(V,undefined){
         'title'         :  'Profe Demo',
         'description'   :  'Flash Object Test 2',
         'author'        :  'FlashMan',
-        'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+        'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     }
     ];
 	 
@@ -1313,7 +1313,7 @@ VISH.Samples.API = (function(V,undefined){
       'title'         :  'Profe',
       'description'   :  'Flash Object Test',
       'author'        :  'FlashMan',
-      'object'       :  '<embed width="100%" height="100%" id="player_api" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+      'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
     },
     {
         'id'     : '1537',

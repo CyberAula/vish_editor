@@ -82,7 +82,6 @@ VISH.Utils = (function(V,undefined){
 	 * function to send the parent to the specified URL, used for fullscreen
 	 */
 	var sendParentToURL = function(the_url){
-		console.log("parent to " +  the_url);
 		window.parent.location = the_url;
 	};
 

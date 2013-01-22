@@ -208,7 +208,7 @@ VISH.Samples = (function(V,undefined){
 					'id'     : '7335',
 					'type'   : 'object',
 					'areaid' : 'left',
-					'body'   : '<embed width="99%" height="99%" src="contents/swf/virtualexperiment_1.swf" type="application/x-shockwave-flash"></embed>'
+					'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
         }]
         }, {
 			"id" : "articlearticle4",
@@ -380,8 +380,8 @@ VISH.Samples = (function(V,undefined){
 					{
 						"id":"article1_zone1",
 						"type":"image",
-						"areaid":
-						"left","body":"http://vishub.org/pictures/312.jpeg",
+						"areaid":"left",
+						"body":"http://vishub.org/pictures/312.jpeg",
 						"style":"position: relative; width:117.0886075949367%; height:109.47368421052632%; top:-4.7368421052631575%; left:-2.320675105485232%;"
 					},{
 						"id":"article1_zone2",
@@ -389,7 +389,8 @@ VISH.Samples = (function(V,undefined){
 						"areaid":"header",
 						"body":"<div class=\"initTextDiv vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><b><i><br></i></b></span></div><div class=\"initTextDiv vish-parent-font4\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><b><i><br></i></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><i>by <b><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#cb6120;undefined;\">Vish</span> Editor</b> Team<b>&nbsp;</b></i></span></div>"
 					},{
-						"id":"article1_zone3","areaid":"subheader"
+						"id":"article1_zone3",
+						"areaid":"subheader"
 					}
 				]
 			},{
@@ -422,6 +423,23 @@ VISH.Samples = (function(V,undefined){
 					}
 				]
 			},{
+			'id'       :'article12',
+			'template' :'t3',
+			'elements':[
+					{
+	                    "id"     : "article12_zone1",
+						"type"   : "text",
+						"areaid" : "header",
+						"body"   : "Experimento virtual"
+					},
+					{
+						"id"     : "article12_zone2",
+						"type"   : "object",
+						"areaid" : "left",
+						"body"   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+	        		}
+        		]
+        	},{
 				"id":"article8",
 				"type":"flashcard",
 				"background":"url(http://vishub.org/pictures/317.png)",

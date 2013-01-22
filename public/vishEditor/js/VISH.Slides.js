@@ -4,6 +4,7 @@ VISH.Slides = (function(V,$,undefined){
 	var slideEls;
 	var curSlideIndex;
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
+	var curSubSlideId = null;
 	
 	var init = function(){
 		_getcurSlideIndexFromHash();
@@ -112,6 +113,14 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getCurrentSlide = function(){
 		return slideEls[curSlideIndex];
+	}
+
+	var getCurrentSubSlide = function(){
+		if (curSubSlideId === null){
+			return null;
+		} else {
+			return $("#"+curSubSlideId);
+		}
 	}
 
 	var getCurrentSlideNumber = function(){
@@ -258,7 +267,7 @@ VISH.Slides = (function(V,$,undefined){
    /**
 	* function to go to next slide and change the thumbnails and focus 
 	*/
-	var forwardOneSlide = function(){
+	var forwardOneSlide = function(event){
 		goToSlide(curSlideIndex+2);
 	};
 
@@ -329,7 +338,7 @@ VISH.Slides = (function(V,$,undefined){
 	/**
 	 * function to show one specific slide in the flashcard
 	 */
-	var showFlashcardSlide = function(slide_id,triggeredByUser){
+	var openSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -339,6 +348,7 @@ VISH.Slides = (function(V,$,undefined){
 			return;
   		}
 
+  		_onOpenSubslide(slide_id);
 		$("#" + slide_id).show();
 		_triggerEnterEventById(slide_id);
 
@@ -352,7 +362,7 @@ VISH.Slides = (function(V,$,undefined){
 	/**
 	 * function to close one specific slide in the flashcard
 	 */
-	var closeFlashcardSlide = function(slide_id,triggeredByUser){
+	var closeSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
@@ -362,6 +372,7 @@ VISH.Slides = (function(V,$,undefined){
 			return;
   		}
 
+  		_onCloseSubslide(slide_id);
 		$("#"+slide_id).hide();
 		_triggerLeaveEventById(slide_id);	
 
@@ -370,6 +381,21 @@ VISH.Slides = (function(V,$,undefined){
 		params.slideNumber = slide_id;
 		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
 	};
+
+	var _onOpenSubslide = function(subSlideId){
+		curSubSlideId = subSlideId;
+		$("#closeButton").hide();
+		//Open subslide will call VISH.ViewerAdapter.decideIfPageSwitcher();
+	}
+
+	var _onCloseSubslide = function(){
+		curSubSlideId = null;
+		//Timeout to prevent undesired actions in Mobile Phones
+		setTimeout(function(){
+			$("#closeButton").show();
+			VISH.ViewerAdapter.decideIfPageSwitcher();
+		},800);
+	}
 
 	/**
 	 * Function to close all slides in the flashcard, in case one remains open
@@ -387,6 +413,7 @@ VISH.Slides = (function(V,$,undefined){
 			updateSlideEls			: updateSlideEls,
 	 		setCurrentSlideIndex	: setCurrentSlideIndex,
 			getCurrentSlide 		: getCurrentSlide,
+			getCurrentSubSlide 		: getCurrentSubSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
 			setCurrentSlideNumber	: setCurrentSlideNumber,
 			getSlideWithNumber		: getSlideWithNumber,
@@ -399,8 +426,8 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
-			showFlashcardSlide		: showFlashcardSlide,
-			closeFlashcardSlide		: closeFlashcardSlide,
+			openSubslide			: openSubslide,
+			closeSubslide			: closeSubslide,
 			closeAllSlides			: closeAllSlides
 	};
 

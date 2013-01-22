@@ -182,9 +182,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		V.VideoPlayer.HTML5.playVideos(e.target);
 
-		if($(e.target).hasClass("flashcard_slide") || $(e.target).hasClass("virtualTour_slide")){
-			$("#forward_arrow").css("top", "15%");			
-		}
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
 		}
@@ -199,9 +196,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.VideoPlayer.HTML5.stopVideos(e.target);
 		V.ObjectPlayer.unloadObject(e.target);
 		V.AppletPlayer.unloadApplet();		
-		if($(e.target).hasClass("flashcard_slide") || $(e.target).hasClass("virtualTour_slide")){
-			$("#forward_arrow").css("top", "0%");
-		}
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.stopAnimation(e.target.id);
 		}

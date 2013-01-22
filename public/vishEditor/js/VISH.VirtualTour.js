@@ -60,7 +60,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 
     google.maps.event.addListener(marker, 'click', function(event) {
       var poi = getPoi(vt,marker.poi_id);
-      V.Slides.showFlashcardSlide(poi.slide_id,true);
+      V.Slides.openSubslide(poi.slide_id,true);
     });
 
     return marker;

@@ -173,6 +173,10 @@ VISH.Status = (function(V,$,undefined){
 		 // alert("Visdevicel Viewport height: " + device.viewport.height);
 		 // alert("Layout Viewport width: " + document.documentElement.clientWidth);
 		 // alert("window.screen.availWidth: " + window.screen.availWidth);
+
+		 //Force mobile
+		 // device.desktop = false;
+		 // device.mobile = true;
 	};
 
 	var fillBrowser = function(){

@@ -114,13 +114,19 @@ VISH.Events = (function(V,$,undefined){
 		var dy = Math.abs(touchDY);
 
 		if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
+
+			//Close subslide if is open
+			var subslide = V.Slides.getCurrentSubSlide();
+			if(subslide!==null){
+				V.Slides.closeSubslide($(subslide).attr("id"));
+			}
+
 			if (touchDX > 0) {
 				V.Slides.backwardOneSlide();
 			} else {
 				V.Slides.forwardOneSlide();
 			}
 		}
-
 		cancelTouch();
 	};
 
@@ -143,14 +149,14 @@ VISH.Events = (function(V,$,undefined){
 	 	}
 	 	var poi = VISH.Flashcard.getPoiData(poiId);
 	 	if(poi!==null){
-	 		V.Slides.showFlashcardSlide(poi.slide_id,true);
+	 		V.Slides.openSubslide(poi.slide_id,true);
 	 	}
 	 };
 
 
    var _onFlashcardCloseSlideClicked = function(event){
-	    var close_slide = event.target.id.substring(5); //the id is close3
-	    V.Slides.closeFlashcardSlide(close_slide,true);
+	    var close_slide_id = event.target.id.substring(5); //the id is close3
+	    V.Slides.closeSubslide(close_slide_id,true);
    };
 
 
