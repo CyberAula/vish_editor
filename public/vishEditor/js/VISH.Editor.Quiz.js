@@ -45,7 +45,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				VISH.Utils.loadTab('tab_quizes'); 
 				break;
 			case "truefalse":
-				// _addTrueFalseQuiz();
+				 _addTrueFalseQuiz(current_area);
 			 	break;
 			default: 
 				break;
@@ -297,6 +297,22 @@ VISH.Editor.Quiz = (function(V,$,undefined){
     	});
 	};
 
+
+
+
+	var _addTrueFalseQuiz = function(area) {
+		var current_area = area;
+	
+		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("truefalse", V.Slides.getSlides().length);
+		current_area.find(".menuselect_hide").remove(); 
+		current_area.attr('type','quiz');
+		current_area.attr('quiztype','truefalse');
+		//add the quizDummy (empty quiz) into the area (zone)
+		current_area.append(quiz);
+		launchTextEditorInTextArea(current_area, "truefalse");
+		V.Editor.addDeleteButton(current_area);
+		
+	};
 
 	return {
 		init			 				: init, 
