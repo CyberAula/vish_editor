@@ -400,39 +400,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return fc;
 	};
 
-	var _loadObjectsInEditor = function(objects){
-		$.each(objects, function(index, object){
-			var htmlContent = $(object).attr("htmlContent");
-			if(typeof htmlContent !== "undefined"){
-				$(object).html(htmlContent);
-				$(object).removeAttr("htmlContent");
-			}
-		});
-	}
-
-	var _unloadObjectsInEditor = function(objects){
-		$.each(objects, function(index, object){
-			$(object).attr("htmlContent",$(object).html());
-			$(object).html("");
-		});
-	}
-
-	var loadObjectsInEditorSlide = function(slide){
-		_loadObjectsInEditor($(slide).find(".object_wrapper,.snapshot_wrapper"));
-	}
-
-	var unloadObjectsInEditorSlide = function(slide){
-		_unloadObjectsInEditor($(slide).find(".object_wrapper,.snapshot_wrapper"));
-	}
-
-	var loadAllObjects = function(){
-		_loadObjectsInEditor($(".object_wrapper,.snapshot_wrapper"));
-	}
-
-	var unloadAllObjects = function(){
-		_unloadObjectsInEditor($(".object_wrapper,.snapshot_wrapper"));
-	}
-
 	return {
 		getWidthFromStyle   		: getWidthFromStyle,
 		getHeightFromStyle  		: getHeightFromStyle,
@@ -449,11 +416,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		generateTable 				: generateTable,
 		convertToTagsArray 			: convertToTagsArray,
 		autocompleteUrls 			: autocompleteUrls,
-		filterFilePath 				: filterFilePath,
-		loadAllObjects 				: loadAllObjects,
-		unloadAllObjects			: unloadAllObjects,
-		loadObjectsInEditorSlide 	: loadObjectsInEditorSlide,
-		unloadObjectsInEditorSlide 	: unloadObjectsInEditorSlide
+		filterFilePath 				: filterFilePath
 	};
 
 }) (VISH, jQuery);

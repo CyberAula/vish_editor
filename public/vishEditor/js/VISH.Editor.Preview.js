@@ -14,11 +14,11 @@ VISH.Editor.Preview = (function(V,$,undefined){
 				if(presentation_preview === null){
 					_prepare();
 				}
-				VISH.Editor.Utils.unloadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+				VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 			},
 			'onClosed'			: function() {
 				presentation_preview = null;
-				VISH.Editor.Utils.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+				VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 			}
 		});	
 	}

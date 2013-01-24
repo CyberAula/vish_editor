@@ -330,7 +330,7 @@ VISH.Editor = (function(V,$,undefined){
 			
 			V.VideoPlayer.HTML5.playVideos(e.target);
 		} else {
-			VISH.Editor.Utils.loadObjectsInEditorSlide(e.target);
+			VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -349,7 +349,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.ObjectPlayer.unloadObject(e.target);
 			V.AppletPlayer.unloadApplet();
 		} else {
-			VISH.Editor.Utils.unloadObjectsInEditorSlide(e.target);
+			VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -623,7 +623,7 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var savePresentation = function(options){
 		//Load all objects
-		VISH.Editor.Utils.loadAllObjects();
+		VISH.Editor.Utils.Loader.loadAllObjects();
 
 		//Now save the presentation
 		var presentation = {};
@@ -803,9 +803,9 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 		  
 		//Unload all objects
-		VISH.Editor.Utils.unloadAllObjects();
+		VISH.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
-		VISH.Editor.Utils.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 
 		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n")
 		VISH.Debugging.log(JSON.stringify(presentation));
