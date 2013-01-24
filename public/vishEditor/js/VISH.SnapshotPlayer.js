@@ -1,8 +1,7 @@
 VISH.SnapshotPlayer = (function(){
 
     /**
-     * Function to add an object to the slide
-     * the object is in the wrapper attribute of the div
+     * Load web snapshots
      */
     var loadSnapshot = function(element){
         $.each(element.children('.snapshotelement'), function(index, value){
@@ -28,9 +27,9 @@ VISH.SnapshotPlayer = (function(){
     };
     
     /**
-     * Function to remove the flash objects from the slides
+     * Unload websnapshots
      */
-    var unloadSnapshot = function(){
+    var unloadSnapshot = function(element){
         var element = $('.past, .next')
         $.each(element.children('.snapshotelement'), function(index, value){
             $(value).html("");

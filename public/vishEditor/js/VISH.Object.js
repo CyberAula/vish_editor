@@ -85,7 +85,7 @@ VISH.Object = (function(V,$,undefined){
 		//Purge options
 		source = source.split('?')[0]
 
-		var extension = (source.split('.').pop()).toLowerCase();
+		var extension = getExtensionFromSrc(source);
 
 		if(imageFormats.indexOf(extension)!="-1"){
 			return "image";
@@ -110,9 +110,13 @@ VISH.Object = (function(V,$,undefined){
 		return extension;
 	}
 	
+	var getExtensionFromSrc = function(source){
+		return (source.split('.').pop()).toLowerCase();
+	}
 
 	return {
 		init							: init,
+		getExtensionFromSrc 			: getExtensionFromSrc,
 		getObjectInfo					: getObjectInfo
 	};
 

@@ -161,24 +161,28 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	/**
 	 * Private function that is called when we enter a slide
-	 * If we have a flash object or an applet we load it after 0,5 segs because
+	 * If we have a object (flash or applet) we load it after 0,5 segs because
 	 * if loaded in the first moment it appears outside the screen and do not move with the slide
 	 * If we have a flashcard init it
 	 */
 	var _onslideenter = function(e){
-		//hide/show page-switcher buttons if neccessary
+		var slide = e.target;
+
+		//Hide/show page-switcher buttons if neccessary
 		V.ViewerAdapter.decideIfPageSwitcher();
 		
-		var fcElem, slideId;
 		setTimeout(function(){
-			if($(e.target).hasClass('object')){
-				V.ObjectPlayer.loadObject($(e.target));
-			} else if($(e.target).hasClass('applet')){
-				V.AppletPlayer.loadApplet($(e.target));
-			} else if($(e.target).hasClass('snapshot')){
-        		V.SnapshotPlayer.loadSnapshot($(e.target));
-      		}
+			if($(slide).hasClass('object')){
+				V.ObjectPlayer.loadObject($(slide));
+			}
+			if($(e.target).hasClass('snapshot')){
+        		V.SnapshotPlayer.loadSnapshot($(slide));
+			}
 		},500);
+
+		// if(VISH.Status.getDevice().mobile){
+		// 	V.ImagePlayer.reloadGifs($(slide));
+		// }
 		
 		V.VideoPlayer.HTML5.playVideos(e.target);
 
@@ -189,13 +193,20 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	/**
 	 * Private function that is called when we leave the slide
-	 * we unload flash objects and applets (because they do not move when moving slides)
-	 * and we stop flashcards
+	 * Unload objects and stop flashcards
 	 */
 	var _onslideleave = function(e){
-		V.VideoPlayer.HTML5.stopVideos(e.target);
-		V.ObjectPlayer.unloadObject(e.target);
-		V.AppletPlayer.unloadApplet();		
+		var slide = e.target;
+
+		if($(slide).hasClass('object')){
+			V.ObjectPlayer.unloadObject($(slide));
+		}
+		if($(slide).hasClass('snapshot')){
+    		V.SnapshotPlayer.unloadSnapshot($(slide));
+  		}
+
+		V.VideoPlayer.HTML5.stopVideos(slide);
+
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.stopAnimation(e.target.id);
 		}

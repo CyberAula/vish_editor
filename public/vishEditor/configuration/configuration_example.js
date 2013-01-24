@@ -61,7 +61,12 @@ var getOptions = function(){
 			developmentSettings.actionInit = "nothing";
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
-				developmentSettings.samples = VISH.Samples.fc_sample;
+				developmentSettings.samples = VISH.Samples.basic_samples;
+				// developmentSettings.samples = VISH.Samples.samplesv01;
+				// developmentSettings.samples = VISH.Samples.fc_sample;
+				// developmentSettings.samples = VISH.Samples.full_samples;
+				// developmentSettings.samples = VISH.Samples.quizes_samples;
+				// developmentSettings.samples = VISH.Samples.quizzes__samples2;
 			}
 
 			//Possible actions: "view", "edit", or "nothing".
