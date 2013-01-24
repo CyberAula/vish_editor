@@ -624,6 +624,7 @@ VISH.Editor = (function(V,$,undefined){
 	var savePresentation = function(options){
 		//Load all objects
 		VISH.Editor.Utils.Loader.loadAllObjects();
+		$(".object_wrapper, .snapshot_wrapper").show();
 
 		//Now save the presentation
 		var presentation = {};
@@ -761,8 +762,19 @@ VISH.Editor = (function(V,$,undefined){
 						$(snapshotIframe).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
-						element.scrollTop = $(snapshotWrapper).scrollTop();
-						element.scrollLeft = $(snapshotWrapper).scrollLeft();
+						
+						//Save scrolls
+						var scrollTopAttr = $(snapshotWrapper).attr("scrollTop");
+						if(typeof scrollTopAttr !== "undefined"){
+							element.scrollTop = scrollTopAttr;
+							element.scrollLeft = $(snapshotWrapper).attr("scrollLeft");
+						} else {
+							//Fallback. Ideally never execute
+							//It only works for visible slides, otherwise returns 0,0
+							element.scrollTop = $(snapshotWrapper).scrollTop();
+							element.scrollLeft = $(snapshotWrapper).scrollLeft();
+						}
+						
 					} else if(typeof element.type == "undefined"){
 						//Empty element
 					}
@@ -808,8 +820,8 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 
 		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n")
-		VISH.Debugging.log(JSON.stringify(presentation));
-		return savedPresentation; 
+		// VISH.Debugging.log(JSON.stringify(presentation));
+		return savedPresentation;
 	};
 	
 

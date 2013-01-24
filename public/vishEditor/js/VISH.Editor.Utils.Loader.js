@@ -1,33 +1,11 @@
 VISH.Editor.Utils.Loader = (function(V,$,undefined){
 
-
 	var _loadObjectsInEditor = function(objects){
 		$.each(objects, function(index, object){
 			var htmlContent = $(object).attr("htmlContent");
 			if(typeof htmlContent !== "undefined"){
 				$(object).html(htmlContent);
 				$(object).removeAttr("htmlContent");
-			}
-		});
-	}
-
-	var _loadSnapshotsInEditor = function(snapshots){
-		$.each(snapshots, function(index, snapshot){
-			var htmlContent = $(snapshot).attr("htmlContent");
-			if(typeof htmlContent !== "undefined"){
-				$(snapshot).html(htmlContent);
-				$(snapshot).removeAttr("htmlContent");
-				//Restore Scrolls
-				var scrollTop = parseInt($(snapshot).attr("scrollTop"));
-				var scrollLeft = parseInt($(snapshot).attr("scrollLeft"));
-
-				setTimeout(function(){
-					$(snapshot).scrollTop(scrollTop);
-					$(snapshot).scrollLeft(scrollLeft);
-				},200);
-
-				$(snapshot).removeAttr("scrollTop");
-				$(snapshot).removeAttr("scrollLeft");
 			}
 		});
 	}
@@ -39,11 +17,32 @@ VISH.Editor.Utils.Loader = (function(V,$,undefined){
 		});
 	}
 
-	var _unloadSnapshotsInEditor = function(snapshots){
+	var _loadSnapshotsInEditor = function(snapshots){
 		$.each(snapshots, function(index, snapshot){
-			//Save scrolls
-			$(snapshot).attr("scrollTop",$(snapshot).scrollTop());
-			$(snapshot).attr("scrollLeft",$(snapshot).scrollLeft());
+			var htmlContent = $(snapshot).attr("htmlContent");
+			if(typeof htmlContent !== "undefined"){
+				$(snapshot).html(htmlContent);
+				$(snapshot).removeAttr("htmlContent");
+
+				//Restore Scrolls
+				var scrollTop = parseInt($(snapshot).attr("scrollTop"));
+				var scrollLeft = parseInt($(snapshot).attr("scrollLeft"));
+
+				$(snapshot).scrollTop(scrollTop);
+				$(snapshot).scrollLeft(scrollLeft);
+			}
+		});
+	}
+
+	var _unloadSnapshotsInEditor = function(snapshots,updateScrolls){
+		$.each(snapshots, function(index, snapshot){
+			//Scrolls only must been saved when the slide is visible
+			//Otherwise scrollTop/Left returns 0 and values ​​are corrupted
+			if(updateScrolls===true){
+				//Save scrolls
+				$(snapshot).attr("scrollTop",$(snapshot).scrollTop());
+				$(snapshot).attr("scrollLeft",$(snapshot).scrollLeft());
+			}
 
 			$(snapshot).attr("htmlContent",$(snapshot).html());
 			$(snapshot).html("");
@@ -57,7 +56,7 @@ VISH.Editor.Utils.Loader = (function(V,$,undefined){
 
 	var unloadObjectsInEditorSlide = function(slide){
 		_unloadObjectsInEditor($(slide).find(".object_wrapper"));
-		_unloadSnapshotsInEditor($(slide).find(".snapshot_wrapper"));
+		_unloadSnapshotsInEditor($(slide).find(".snapshot_wrapper"),true);
 	}
 
 	var loadAllObjects = function(){
@@ -71,10 +70,10 @@ VISH.Editor.Utils.Loader = (function(V,$,undefined){
 	}
 
 	return {
-		loadAllObjects 				: loadAllObjects,
-		unloadAllObjects			: unloadAllObjects,
 		loadObjectsInEditorSlide 	: loadObjectsInEditorSlide,
-		unloadObjectsInEditorSlide 	: unloadObjectsInEditorSlide
+		unloadObjectsInEditorSlide 	: unloadObjectsInEditorSlide,
+		loadAllObjects 				: loadAllObjects,
+		unloadAllObjects			: unloadAllObjects
 	};
 
 }) (VISH, jQuery);

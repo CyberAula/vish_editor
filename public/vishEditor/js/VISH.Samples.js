@@ -675,7 +675,7 @@ VISH.Samples = (function(V,undefined){
 						"id":"article13_zone1",
 						"type":"snapshot",
 						"areaid":"left",
-						"body":"<iframe src=\"http://www.juegoswf.com/arcade-estrategia-star_defense.html\" id=\"resizableunicID10\" class=\"snapshot_content\" scrolling=\"no\" wmode=\"transparent\"></iframe>",
+						"body":"<iframe src=\"http://en.wikipedia.org\" id=\"resizableunicID10\" class=\"snapshot_content\" scrolling=\"no\" wmode=\"transparent\"></iframe>",
 						"style":"position: relative; width:61.46131805157593%; height:61.17424242424242%; top:40.15151515151515%; left:-15.759312320916905%;",
 						"scrollTop":417,
 						"scrollLeft":129

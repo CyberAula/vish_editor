@@ -116,13 +116,16 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
       
     $(wrapperDiv).append(iframeTag);
 		
-		//Move scrools
+		//Move scrolls
     if(scrollTop){
       $('#' + idToDrag).scrollTop(scrollTop);
     }
     if(scrollLeft){
       $('#' + idToDrag).scrollLeft(scrollLeft);
     }
+    //Also write scroll params (used by Editor Loader)
+    $(wrapperDiv).attr('scrollTop',scrollTop);
+    $(wrapperDiv).attr('scrollLeft',scrollLeft);
 		
 		$('#' + idToDrag).bind('mousedown',function(event){
 			 event.preventDefault();
