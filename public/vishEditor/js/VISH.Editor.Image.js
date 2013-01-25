@@ -191,9 +191,6 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 	var _drawImageInArea = function(image_url, area, style, hyperlink){
 		var current_area;
-		var reference_width = 100; //Minimum image width
-		var image_width = 300; //default image width
-		var image_height = null;
 
 		if(area){
 			current_area = area;
@@ -203,7 +200,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 		if(style){
 			style = V.Editor.Utils.setStyleInPixels(style,current_area);
-			image_width = V.Editor.Utils.getWidthFromStyle(style,current_area);
+		} else {
+			var image_width = $(current_area).width(); //default image width
+			style = "width:"+image_width+"px;";
 		}
 
 		var template = VISH.Editor.getTemplate(); 
@@ -214,6 +213,12 @@ VISH.Editor.Image = (function(V,$,undefined){
 			current_area.attr('hyperlink',hyperlink);
 		}
 		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' draggable='true' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
+
+		//Adjust dimensions after drawing
+		var theImg = $("#"+idToDragAndResize);
+		if($(theImg).height()>$(current_area).height()){
+			$(theImg).height($(current_area).height());
+		}
 
 		V.Editor.addDeleteButton(current_area);
 		
