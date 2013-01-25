@@ -316,6 +316,44 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
+	var getFontSizeFromStyle = function(style){
+		if(!style){
+			return;
+		}
+
+		var font_style_pattern = /font-size:([0-9]+)px/g;
+		var ft = null;
+	    $.each(style.split(";"), function(index, property){
+		     if (property.match(font_style_pattern) != null) {
+			   	var result = font_style_pattern.exec(property);
+			   	if (result[1]) {
+			   		ft = parseFloat(result[1]);
+			   		return false;
+			   	}
+			 }
+		});
+		return ft;
+	}
+
+	var addFontSizeToStyle = function(style,fontSize){
+		if(typeof style !== "string"){
+			return null;
+		}
+
+		var filterStyle = "";
+		$.each(style.split(";"), function(index, property){
+			if (property.indexOf("font-size") === -1) {
+				filterStyle = filterStyle + property + "; ";
+			}
+		});
+				
+		if(fontSize){
+			filterStyle = filterStyle + "font-size:"+fontSize;
+		}
+
+		return filterStyle;
+	}
+
    return {
 		init 					: init,
 		getId					: getId,
@@ -324,6 +362,8 @@ VISH.Utils = (function(V,undefined){
 		loadDeviceCSS			: loadDeviceCSS,
 		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
+		addFontSizeToStyle 		: addFontSizeToStyle,
+		getFontSizeFromStyle 	: getFontSizeFromStyle,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
 		loadTab 				: loadTab,

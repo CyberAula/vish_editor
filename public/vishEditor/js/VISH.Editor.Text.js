@@ -136,12 +136,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 		return focusedInstance;
 	}
 
-
 	return {
-		init              		: init,
-		launchTextEditor  		: launchTextEditor,
-		getCKEditorFromZone 	: getCKEditorFromZone,
-		getCKEditorInstanceFocused : getCKEditorInstanceFocused
+		init              			: init,
+		launchTextEditor  			: launchTextEditor,
+		getCKEditorFromZone 		: getCKEditorFromZone,
+		getCKEditorInstanceFocused 	: getCKEditorInstanceFocused
 	};
 
 }) (VISH, jQuery);

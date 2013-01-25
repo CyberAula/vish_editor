@@ -552,20 +552,6 @@ VISH.Editor = (function(V,$,undefined){
 		if($(area).attr("type")!=="text"){
 			if(VISH.Editor.Text.getCKEditorInstanceFocused()!==null){
 				VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
-
-				// setTimeout(function(){
-				//   VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
-				// },1000)
-
-				//Try to hide cursor...	
-
-				// var htmlTag = $(VISH.Editor.getCurrentArea()).find($("iframe")).contents().children()[0];
-				//   $(htmlTag).attr("contenteditable",false);
-				//   setTimeout(function(){
-				//     $(htmlTag).attr("contenteditable",true);
-				//   },5000);
-
-				// window.getSelection().removeAllRanges();
 			}
 		}
 
@@ -598,16 +584,7 @@ VISH.Editor = (function(V,$,undefined){
 				return;
 			}
 
-			if($(event.target).hasClass("cke_icon")){
-        		return;	
-      		}
-
 			if(event.target.id==="toolbar_wrapper"){
-				return;
-			}
-
-			//NiceEditor menu: font and size selection
-			if(event.target.tagName==="FONT"){
 				return;
 			}
 		}

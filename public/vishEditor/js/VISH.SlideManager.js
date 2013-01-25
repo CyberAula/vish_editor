@@ -67,6 +67,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
 		V.ViewerAdapter.init();
+		V.Text.init();
 		V.Quiz.prepareQuiz(presentation);
 
 		//Init Vish Editor Addons

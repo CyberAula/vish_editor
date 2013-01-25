@@ -75,33 +75,29 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
 		var increase = finalH/600;
-		var font_size = V.Status.getDevice().mobile ? 15:16 ;
-		
-		$(".slides > article").css("font-size", font_size*increase + "px");
-		$(".slides > article").css("line-height", font_size*increase + "px");
-		$(".subslide").css("font-size", font_size*increase + "px");
-		$(".subslide").css("line-height", font_size*increase + "px");
 		
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");
 		$(".fc_poi img").css("height", 50*increase + "px");
 		
 		//if fancybox is opened, resize it
-		if ($('#fancy_content:empty').length === 0)
-		{	
-		   $('#fancybox-inner').width("80%");
+		if ($('#fancy_content:empty').length === 0){	
+			$('#fancybox-inner').width("80%");
 			$('#fancybox-wrap').width("80%");
 
 			$("#fancybox-content").width("80%");
 			$("#fancybox-content > div").width("100%");
 			$('#fancybox-inner').height("80%");
 			$('#fancybox-wrap').height("80%");	
-			
+
 			$('#fancybox-wrap').css("top", "10%");	
 			$('#fancybox-wrap').css("left", "10%");
 			//TODO check if the excursion has quiz() (fullscreen --> remove QR FS Button)
 			V.Quiz.testFullScreen();
 		}
+
+		// //Texts callbacks
+		VISH.Text.aftersetupSize(increase);
 
 		//Snapshot callbacks
 		VISH.SnapshotPlayer.aftersetupSize(increase);
