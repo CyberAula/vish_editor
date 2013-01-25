@@ -3,18 +3,10 @@ VISH.Text = (function(V,$,undefined){
 	//Convert <p><span> from px to ems
 	var init = function(){ 
 		$("article > div > p").each(function(index,p){
-
-			console.log("New p")
-			console.log(p)
-
 			if($(p).children().length === 0){
-				console.log("No children");
 				_setStyleInEm(p);
 				return;
 			}
-
-			console.log("Find span")
-
 			$(p).find("span").each(function(index,span){
 				if($(span).children().length !== 0){
 					$(span).removeAttr("style");
@@ -39,25 +31,17 @@ VISH.Text = (function(V,$,undefined){
 			fontSize = 12; //Default font-size
 		}
 
-
-
-
-		//Convert to em
+		//Convert to em (http://pxtoem.com/)
 		var em = (fontSize/16) + "em";
 		var newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
 		$(el).attr("style",newStyle);
 	}
 
 	var aftersetupSize = function(increase){
-		//Update Default Texts
-		console.log("Setup Text after an increase of " + increase);
-
+		//Update Text-base size
 		var reference_font_size = 16;
 		var texts = $("article");
 		$(texts).css("font-size", reference_font_size*increase + "px");
-		// $(texts).css("line-height", font_size*increase + "px");
-		// $(".subslide").css("font-size", font_size*increase + "px");
-		// $(".subslide").css("line-height", font_size*increase + "px");
 	}
 
     return {
