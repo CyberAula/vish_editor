@@ -548,6 +548,27 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   	var selectArea = function(area){
+	
+		if($(area).attr("type")!=="text"){
+			if(VISH.Editor.Text.getCKEditorInstanceFocused()!==null){
+				VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
+
+				// setTimeout(function(){
+				//   VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
+				// },1000)
+
+				//Try to hide cursor...	
+
+				// var htmlTag = $(VISH.Editor.getCurrentArea()).find($("iframe")).contents().children()[0];
+				//   $(htmlTag).attr("contenteditable",false);
+				//   setTimeout(function(){
+				//     $(htmlTag).attr("contenteditable",true);
+				//   },5000);
+
+				// window.getSelection().removeAllRanges();
+			}
+		}
+
   		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
@@ -576,6 +597,10 @@ VISH.Editor = (function(V,$,undefined){
 			if (jQuery.contains($("#toolbar_wrapper")[0],event.target)){
 				return;
 			}
+
+			if($(event.target).hasClass("cke_icon")){
+        		return;	
+      		}
 
 			if(event.target.id==="toolbar_wrapper"){
 				return;
@@ -700,7 +725,17 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type==VISH.Constant.TEXT){
-						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						//NicEditor version
+            			// element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+            			
+            			//CKEditor version	
+	           			var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
+	            		if(CKEditor!==null){
+	              			element.body = CKEditor.getData();
+	            		} else {
+	              			element.body = "";
+	            		}
+
 					} else if(element.type==VISH.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));

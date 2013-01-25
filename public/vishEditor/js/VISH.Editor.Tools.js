@@ -186,7 +186,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var _loadTextToolbar = function(){
 		$("#toolbar_element").find("img").hide();
 		$("#toolbar_text").show();
-		$(".nicEdit-panel").show();
+		// $(".nicEdit-panel").show();
+		$("#toolbar_text").show();
 	}
 
 	var loadToolbarForObject = function(object){
@@ -205,7 +206,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _cleanElementToolbar = function(){
 		//Wysiwyg Toolbar
-		$(".nicEdit-panel").hide();
+		// $(".nicEdit-panel").hide();
+		$("#toolbar_text").hide();
 		$("#toolbar_text").hide();
 		//Generic Toolbars
 		$("#toolbar_element").find("img").hide();
