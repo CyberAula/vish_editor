@@ -216,9 +216,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 		//Adjust dimensions after drawing
 		var theImg = $("#"+idToDragAndResize);
-		if($(theImg).height()>$(current_area).height()){
-			$(theImg).height($(current_area).height());
-		}
+		var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+		$(theImg).height(dimentionsToDraw.height);
+		$(theImg).width(dimentionsToDraw.width);
 
 		V.Editor.addDeleteButton(current_area);
 		
