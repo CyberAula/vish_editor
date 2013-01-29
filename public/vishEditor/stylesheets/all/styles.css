@@ -52,9 +52,11 @@ body {
   
   -webkit-font-smoothing: antialiased;
 }
+
 #my_game_iframe {
   display: none;
 }
+
 .slides {
 	background: url(/vishEditor/images/background1.png) no-repeat 300px, url(/vishEditor/images/background_text.jpg) repeat 300px;
 	background-position: center; 
@@ -179,7 +181,6 @@ this can not be done with show() and hide() because then it remains with display
 
 /* Styles for slides */
 
-/*added by KIKE to put the flashcard in the full slide*/
 .slides > article.flashcard{
   padding: 0;
 }
@@ -205,13 +206,10 @@ this can not be done with show() and hide() because then it remains with display
 .page-switcher:hover,
 .page-switcher:focus,
 .page-switcher.drag-target {
-  /*background-color: rgba(0,0,0, 0.06);  /* COLOR_NTP_TEXT */
 	outline: none;
 }
 
-/* remove outline */
-:focus {outline:none;}
-::-moz-focus-inner {border:0;}
+
 
 #page-switcher-end{
 	right: 0px;
@@ -276,6 +274,10 @@ this can not be done with show() and hide() because then it remains with display
 article {
   font-family: Arial, Verdana, sans-serif;
   font-size: 16px; /* text-base size */
+}
+
+article > div > p {
+  margin-top: 0px;
 }
 
 /* Style for Texts (NicEditor version) */
@@ -354,11 +356,11 @@ line-height: 1.2em;
 
 
 
-
-*:focus  /* To remove Chrome's orange outline related to focused objects */
-{  
-    outline: none;  
-}  
+/* remove outline */
+*:focus
+{  outline: none;  }  
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
 
 
 div.contentfiltered img {

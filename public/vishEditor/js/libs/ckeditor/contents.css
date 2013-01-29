@@ -26,5 +26,5 @@ ol,ul,dl
 
 .cke_show_borders {
 	overflow: hidden;
-/*	max-height: 100%;*/
+	margin-top: -10px;
 }

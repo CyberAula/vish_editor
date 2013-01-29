@@ -87,13 +87,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 			switch($(current_area).attr("size")){
 				case VISH.Constant.EXTRA_SMALL:
-					defaultFontSize = 10;
+					defaultFontSize = 18;
 					break;
 				case VISH.Constant.SMALL:
 					defaultFontSize = 18;
 					break;
 				case VISH.Constant.MEDIUM:
-					defaultFontSize = 20;
+					defaultFontSize = 26;
 					break;
 				case VISH.Constant.LARGE:
 					defaultFontSize = 36;

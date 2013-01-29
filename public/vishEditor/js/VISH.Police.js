@@ -23,17 +23,17 @@ VISH.Police = (function(V,$,undefined){
 			return [false,"Can't get Object info"];
 		}
 				
-	  if((!objectInfo.source)||(!objectInfo.type)){
-	 	  return [false,"Can't recognize object source"];
-	  }
+		if((!objectInfo.source)||(!objectInfo.type)){
+			return [false,"Can't recognize object source"];
+		}
 		
 		if(objectInfo.source.trim()==""){
-      return [false,"Object source is an empty string"];
-    }
+			return [false,"Object source is an empty string"];
+		}
 				
 //		if(objectInfo.source.match(valid_url_pattern)==null){
-//      return [false,"Not valid URL"];
-//    }
+//      	return [false,"Not valid URL"];
+//    	}
 		
 		
 		//Add more conditions here...
@@ -42,7 +42,7 @@ VISH.Police = (function(V,$,undefined){
 		//Broken links validation (Optional) 
 		if(typeof callback == "function"){
 			//Validation response sent in callback
-      _validateUrl(objectInfo.source,callback);
+			_validateUrl(objectInfo.source,callback);
 		}
 
 		return [true,"Validation Ok"];
@@ -50,36 +50,36 @@ VISH.Police = (function(V,$,undefined){
 	
   	
 	function _validateUrl(url,callback){
-    _checkUrl(url, function(status){
-      if(status === 404){
-         //HTTP 404: Not found
-         callback([false,"HTTP 404: Not found"]);
-      } else {
-        callback([true,"Validation Ok"]);
-      }
-    });
-  }
+		_checkUrl(url, function(status){
+			if(status === 404){
+				//HTTP 404: Not found
+				callback([false,"HTTP 404: Not found"]);
+			} else {
+				callback([true,"Validation Ok"]);
+			}
+		});
+	}
 	
 	function _checkUrl(url, cb){
-    jQuery.ajax({
-        url:      url,
-        dataType: 'text',
-        type:     'GET',
-        complete:  function(xhr){
-            if(typeof cb === 'function'){
-							cb.apply(this, [xhr.status]);
-						}  
-        }
-    });
-  }
+		jQuery.ajax({
+			url:      url,
+			dataType: 'text',
+			type:     'GET',
+			complete:  function(xhr){
+				if(typeof cb === 'function'){
+					cb.apply(this, [xhr.status]);
+				}  
+			}
+		});
+	}
 
-  var validateFileUpload = function(fileName){
+	var validateFileUpload = function(fileName){
 		if(!fileName){
 			return [false,"Name is null or undefined"];
 		}
 		if(fileName.trim()==""){
-      return [false,"Name is an empty string"];
-    }
+			return [false,"Name is an empty string"];
+		}
 		return [true,"Validation Ok"];
 	}
 	
