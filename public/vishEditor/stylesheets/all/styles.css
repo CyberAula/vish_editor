@@ -493,3 +493,37 @@ button#closeButton {
 .flashcard_slide{
   display: block;
 }
+
+
+/** Arrows **/
+
+.vish_arrow {
+  color: rgba(0, 0, 0, 0.5);
+  -webkit-transition: width 150ms, right 150ms, background-color 150ms;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  font-size: 40px;
+  max-width: 200px;
+  min-width: 40px;
+}
+
+#back_arrow, #forward_arrow{
+  padding-bottom: 0px;
+  z-index: 1100;
+  color: #CCC;
+  width: 6%;
+}
+
+#back_arrow{
+  left: 0%;
+}
+
+#forward_arrow{
+  right: 0%;
+}
