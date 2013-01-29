@@ -1,7 +1,6 @@
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
-	var focusedInstance = null;
 
 	var init = function(){
 		if(!initialized){
@@ -67,14 +66,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//http://docs.cksource.com/CKEditor_3.x/Howto/Editor_Size_On_The_Fly
 		config.height = $(current_area).height();
 
-		// Not usefull... in our case
-		// config.extraPlugins = 'autogrow';
-		// config.autoGrow_minHeight = $(current_area).height();
-		// config.autoGrow_maxHeight = $(current_area).height();
-
 		//Apply vEditor skin
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));
-		// config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 		config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 
 		//Add ckeditor wysiwyg instance
@@ -83,35 +76,36 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
 
-		ckeditor.on("instanceReady", function(){                    
+		if(!initial_text){
+			// initial_text = "Inser text here";
+		}
+
+		ckeditor.on("instanceReady", function(){
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
 					//Resize: needed to fit content properly
 					//Acces current_area leads to errors, use myWidth and myHeight
 					ckeditor.resize(myWidth,myHeight);
+					//Apply fix for a official CKEditor bug
+					_fixCKEDITORBug(ckeditor);
 				});
 			}
+			ckeditor.focus();
 		});
 
 		//Catch the focus event
 		//TODO: Improve event cathing... currently is not triggered in all cases.
 		ckeditor.on('focus', function(event){
-			// VISH.Debugging.log("Focus");
-			focusedInstance = event.editor;
 			var area = $("div[type='text']").has(event.editor.container.$);
 			VISH.Editor.selectArea(area);
 		});
 
 		ckeditor.on('blur', function(event){
-			// VISH.Debugging.log("Blur");
-			if(focusedInstance === event.editor){
-				focusedInstance = null;
-			}
 			var area = $("div[type='text']").has(event.editor.container.$);
 		});
 
-		// Add a button to delete the current text area   
-		V.Editor.addDeleteButton(current_area);
+		// Add a button to delete the current text area
+		V.Editor.addDeleteButton(current_area);		
 	};
 	
 
@@ -132,15 +126,22 @@ VISH.Editor.Text = (function(V,$,undefined){
 		return CKEditorInstance;
 	}
 
-	var getCKEditorInstanceFocused = function(){
-		return focusedInstance;
+	/*
+	 * Fix oficial WebKit bug: http://ckeditor.com/forums/CKEditor-3.x/Minimum-Editor-Width-Safari#comment-48574
+	 */
+	var _fixCKEDITORBug = function(editor){
+	    //webkit not redraw iframe correctly when editor's width is < 310px (300px iframe + 10px paddings)
+	    if (CKEDITOR.env.webkit) {
+	        var iframe = $(document.getElementById('cke_contents_' + editor.name)).find("iframe")[0];
+	        iframe.style.display = 'none';
+	        iframe.style.display = 'block';
+	    }
 	}
 
 	return {
 		init              			: init,
 		launchTextEditor  			: launchTextEditor,
-		getCKEditorFromZone 		: getCKEditorFromZone,
-		getCKEditorInstanceFocused 	: getCKEditorInstanceFocused
+		getCKEditorFromZone 		: getCKEditorFromZone
 	};
 
 }) (VISH, jQuery);

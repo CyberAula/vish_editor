@@ -548,13 +548,6 @@ VISH.Editor = (function(V,$,undefined){
 	};
   
   	var selectArea = function(area){
-	
-		if($(area).attr("type")!=="text"){
-			if(VISH.Editor.Text.getCKEditorInstanceFocused()!==null){
-				VISH.Editor.Text.getCKEditorInstanceFocused().focusManager.forceBlur();
-			}
-		}
-
   		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
