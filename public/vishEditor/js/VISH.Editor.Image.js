@@ -198,11 +198,12 @@ VISH.Editor.Image = (function(V,$,undefined){
 			current_area = VISH.Editor.getCurrentArea();
 		}
 
+		var newStyle;
 		if(style){
-			style = V.Editor.Utils.setStyleInPixels(style,current_area);
+			newStyle = V.Editor.Utils.setStyleInPixels(style,current_area);
 		} else {
 			var image_width = $(current_area).width(); //default image width
-			style = "width:"+image_width+"px;";
+			newStyle = "width:"+image_width+"px;";
 		}
 
 		var template = VISH.Editor.getTemplate(); 
@@ -212,13 +213,15 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(hyperlink){
 			current_area.attr('hyperlink',hyperlink);
 		}
-		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' draggable='true' title='Click to drag' src='"+image_url+"' style='"+style+"'/>");
+		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' draggable='true' title='Click to drag' src='"+image_url+"' style='"+newStyle+"'/>");
 
-		//Adjust dimensions after drawing
-		var theImg = $("#"+idToDragAndResize);
-		var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
-		$(theImg).height(dimentionsToDraw.height);
-		$(theImg).width(dimentionsToDraw.width);
+		if(!style){
+			//Adjust dimensions after drawing (Only after insert new images)
+			var theImg = $("#"+idToDragAndResize);
+			var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+			$(theImg).height(dimentionsToDraw.height);
+			$(theImg).width(dimentionsToDraw.width);
+		}
 
 		V.Editor.addDeleteButton(current_area);
 		

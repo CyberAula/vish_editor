@@ -281,6 +281,78 @@ article {
 /* Style for Texts (NicEditor version) */
 /* For old excursions */
 
+.vish-font1{
+  font-size: 0.65em;
+  line-height: 0.9em;  
+}
+    
+.vish-font2{   
+  font-size: 0.813em;   
+  line-height: 1.54em;
+}
+    
+.vish-font3{   
+  font-size: 1.01em;
+  line-height: 1.24em;
+}
+    
+.vish-font4{    
+  font-size: 1.125em;
+  line-height: 1.235em;    
+}
+     
+.vish-font5{
+  font-size: 1.500em;   
+  line-height: 1.32em; 
+}
+    
+.vish-font6{    
+ font-size: 2em;
+ line-height: 1.18em;
+}
+     
+.vish-font7{
+font-size: 3.000em; 
+line-height: 1.2em;  
+}
+    
+.vish-fontarial{  
+  font-family: "arial";   
+}
+    
+.vish-fontcomic{     
+  font-family: "comic sans ms";  
+}
+        
+.vish-fontcourier{ 
+  font-family: "Courier New";    
+}
+     
+.vish-fontgeorgia{    
+  font-family: "georgia";      
+}
+    
+.vish-fonthelvetica{  
+  font-family: "helvetica";     
+}
+   
+.vish-fontimpact{    
+  font-family: "impact";       
+}
+
+.vish-fonttimes{  
+  font-family: "times new roman";    
+}
+ 
+.vish-fonttrebuchet{
+  font-family: "trebuchet ms";      
+}
+    
+.vish-fontverdana{    
+  font-family: "verdana";      
+}
+
+
 
 
 *:focus  /* To remove Chrome's orange outline related to focused objects */
