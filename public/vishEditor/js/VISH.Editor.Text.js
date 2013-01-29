@@ -89,8 +89,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
 				});
+			} else {
+				ckeditor.focus();
 			}
-			ckeditor.focus();
 		});
 
 		//Catch the focus event
