@@ -98,7 +98,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			});
 			menuEventsLoaded = true;
 			_initSettings();
-			_initPreview();
+			VISH.Editor.Preview.init();
 		}
 
 		$("#menu").show();
@@ -377,7 +377,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 							$("#save_answer").val("cancel");	
 							var presentation = VISH.Editor.savePresentation();	
 							VISH.Editor.afterSavePresentation(presentation,response);			
-						}	else {
+						} else {
 							return false;
 						}
 					}
@@ -386,32 +386,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		  }
 	};
 
-
 	/////////////////////
 	/// PREVIEW
 	///////////////////////
 
 	var preview = function(){
-		$("img#preview_circle").trigger('click');
+		VISH.Editor.Preview.preview();
 	}
-
-	var _initPreview = function(){
-		$("img#preview_circle").fancybox({
-			'width'				: '8',
-			'height'			: '6',
-			'autoScale'     	: false,
-			'transitionIn'		: 'none',
-			'transitionOut'		: 'none',
-			'type'				: 'iframe',
-			'onStart'			: function(){
-				VISH.Editor.Preview.prepare(V.Slides.getCurrentSlideNumber());
-			},
-			'onClosed'			: function() {
-				V.Editor.Preview.setForcePresentation(false);
-			}
-		});	
-	}
-
 
 	/////////////////////
 	/// HELP

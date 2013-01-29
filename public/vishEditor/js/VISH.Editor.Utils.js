@@ -4,8 +4,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	 * Function to draw elements in an area, try to fit in the drawable area 
 	 */
 	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
-		var element_type;
-		var dimentions_for_drawing = {width:  350, height: 195};
+		var dimentions_for_drawing = {width:  w_content, height: h_content};
 		var aspect_ratio_zone = w_zone/h_zone;
 		var aspect_ratio_content = w_content/h_content;
 		

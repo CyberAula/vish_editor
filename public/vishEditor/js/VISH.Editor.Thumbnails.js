@@ -193,10 +193,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					);
 			  break;
 			case "goToSlide":
-				V.Slides.setCurrentSlideNumber($(event.target).attr("slideNumber"));
-			  	//we want to show the slide, not the flashcard
-			  	V.Editor.Preview.setForcePresentation(true);
-			  	$("img#preview_circle").trigger('click');
+			  	V.Editor.Preview.preview({forcePresentation: true, slideNumberToPreview: parseInt($(event.target).attr("slideNumber"))});
 			  break;
 			default:
 			  break;

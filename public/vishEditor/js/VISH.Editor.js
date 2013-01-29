@@ -155,8 +155,8 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		if(presentation){
-			//hide objects (the _onslideenterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide();			
+			//hide objects (the _onSlideEnterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide();		
 		}
 		
 		//Init submodules
@@ -299,20 +299,22 @@ VISH.Editor = (function(V,$,undefined){
 	* function to add enter and leave events only for the VISH editor
 	*/
 	var _addEditorEnterLeaveEvents = function(){
-		$('article').live('slideenter',_onslideenterEditor);
-		$('article').live('slideleave',_onslideleaveEditor);
+		$('article').live('slideenter',_onSlideEnterEditor);
+		$('article').live('slideleave',_onSlideLeaveEditor);
 	};
   
 	/**
 	* function called when entering slide in editor, we have to show the objects
 	*/
-	var _onslideenterEditor = function(e){
+	var _onSlideEnterEditor = function(e){
 		setTimeout(function(){
 			$(e.target).find('.object_wrapper').show();
 		},500);
+		
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
 		}
+
 		if($(e.target).hasClass("subslide")){
 			setTimeout(function(){
 				if($(e.target).hasClass('object')){
@@ -327,29 +329,27 @@ VISH.Editor = (function(V,$,undefined){
 			},500);
 			
 			V.VideoPlayer.HTML5.playVideos(e.target);
-
-			if($(e.target).hasClass("flashcard_slide")){
-				V.Flashcard.startAnimation(e.target.id);
-			}
+		} else {
+			VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
 		}
 	};
   
 	/**
-	* function called when leaving slide in editor, we have to hide the objects
+	* Function called when leaving slide in editor, we have to hide the objects
 	*/
-	var _onslideleaveEditor = function(e){
-		//radical way
+	var _onSlideLeaveEditor = function(e){
 		$('.object_wrapper').hide();
+		
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.stopAnimation(e.target.id);
 		}
+
 		if($(e.target).hasClass("subslide")){
 			V.VideoPlayer.HTML5.stopVideos(e.target);
 			V.ObjectPlayer.unloadObject(e.target);
-			V.AppletPlayer.unloadApplet();		
-			if($(e.target).hasClass("flashcard_slide")){
-				V.Flashcard.stopAnimation(e.target.id);
-			}
+			V.AppletPlayer.unloadApplet();
+		} else {
+			VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -618,15 +618,15 @@ VISH.Editor = (function(V,$,undefined){
 	/**
 	* function to save the presentation
 	* 
-	* forcePresentation is a boolean to indicate if we should force type to presentation, although we might be in flashcard
-	* It is used for preview in the flashcard
+	* options["forcePresentation"] is a boolean to indicate if we should force type to presentation
+	* For example, it is used for preview slides in a flashcard
 	*/
-	var savePresentation = function(forcePresentation){
-		//first of all show all objects that have been hidden because they are in previous and next slides
-		//so they are not saved with style hidden
-		$('.object_wrapper').show();
+	var savePresentation = function(options){
+		//Load all objects
+		VISH.Editor.Utils.Loader.loadAllObjects();
+		$(".object_wrapper, .snapshot_wrapper").show();
 
-		//now save the presentation
+		//Now save the presentation
 		var presentation = {};
 		presentation.VEVersion = VISH.VERSION;
 		if(draftPresentation){
@@ -635,7 +635,12 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.id = '';	
 		}
 
-		if(forcePresentation){
+		var saveForPreview = false;
+		if((options)&&(options["preview"]===true)){
+			saveForPreview = true;
+		}
+
+		if((saveForPreview)&&(options)&&(options["forcePresentation"])){
 			presentation.type = "presentation";
 		} else {
 			presentation.type = getPresentationType();
@@ -667,7 +672,6 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.slides.push(slide);
 		}
 
-
 		slide = {};
 		$('.slides > article').each(function(index,s){
 			slide.id = $(s).attr('id'); //TODO what if saved before!
@@ -692,13 +696,10 @@ VISH.Editor = (function(V,$,undefined){
 				if($(div).attr("areaid") !== undefined){   
 
 					element.id 		= $(div).attr('id');
-					// VISH.Debugging.log("element id");
-					// VISH.Debugging.log(element.id);
 					element.type 	= $(div).attr('type');
 					element.areaid 	= $(div).attr('areaid');	 				 
 						 
 					if(element.type==VISH.Constant.TEXT){
-						//NicEditor version
 						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 					} else if(element.type==VISH.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
@@ -722,7 +723,9 @@ VISH.Editor = (function(V,$,undefined){
 						sources = '[' + sources + ']'
 						element.sources = sources;
 					} else if(element.type===VISH.Constant.OBJECT){
-						var object = $(div).find(".object_wrapper").children()[0];
+						var wrapper = $(div).find(".object_wrapper")[0];
+						var object = $(wrapper).children()[0];
+
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(myObject);
@@ -759,12 +762,21 @@ VISH.Editor = (function(V,$,undefined){
 						$(snapshotIframe).removeAttr("style");
 						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
-						element.scrollTop = $(snapshotWrapper).scrollTop();
-						element.scrollLeft = $(snapshotWrapper).scrollLeft();
+						
+						//Save scrolls
+						var scrollTopAttr = $(snapshotWrapper).attr("scrollTop");
+						if(typeof scrollTopAttr !== "undefined"){
+							element.scrollTop = scrollTopAttr;
+							element.scrollLeft = $(snapshotWrapper).attr("scrollLeft");
+						} else {
+							//Fallback. Ideally never execute
+							//It only works for visible slides, otherwise returns 0,0
+							element.scrollTop = $(snapshotWrapper).scrollTop();
+							element.scrollLeft = $(snapshotWrapper).scrollLeft();
+						}
+						
 					} else if(typeof element.type == "undefined"){
-						//Empty element, we don't save as empty text because if we do that when we edit everything is text
-						//element.type = "empty";
-						// VISH.Debugging.log("Empty element");
+						//Empty element
 					}
 
 					slide.elements.push(element);
@@ -788,7 +800,8 @@ VISH.Editor = (function(V,$,undefined){
 			});
 
 			if(presentation.type===VISH.Constant.FLASHCARD){
-				//if it is flashcard we save the slide into the flashcard slides (the flashcard is the first slide by convention)
+				//If it is flashcard we save the slide into the flashcard slides 
+				//(the flashcard is the first slide by convention)
 				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
@@ -801,9 +814,14 @@ VISH.Editor = (function(V,$,undefined){
 
 		savedPresentation = presentation;  
 		  
+		//Unload all objects
+		VISH.Editor.Utils.Loader.unloadAllObjects();
+		//Reload current slide objects
+		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+
 		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n")
-		VISH.Debugging.log(JSON.stringify(presentation));
-		return savedPresentation; 
+		// VISH.Debugging.log(JSON.stringify(presentation));
+		return savedPresentation;
 	};
 	
 

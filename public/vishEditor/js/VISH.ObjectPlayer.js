@@ -4,10 +4,10 @@ VISH.ObjectPlayer = (function(){
 	 * Function to add an object to the slide
 	 * the object is in the wrapper attribute of the div
 	 */
-	var loadObject = function(element){
-		$.each(element.children('.objectelement'),function(index,value){
+	var loadObject = function(slide){
+		$.each(slide.children('.objectelement'),function(index,value){
 			if($(value).hasClass('youtubeelement')){
-				VISH.VideoPlayer.Youtube.loadYoutubeObject(element,value);
+				VISH.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
 				return;
 			}
 			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
@@ -24,8 +24,8 @@ VISH.ObjectPlayer = (function(){
 	/**
 	 * Function to remove the flash objects from the slides
 	 */
-	var unloadObject= function(element){		
-		$.each($(element).children('.objectelement'),function(index,value){
+	var unloadObject= function(slide){
+		$.each($(slide).children('.objectelement'),function(index,value){
 			$(value).html("");
 		});
 	}
