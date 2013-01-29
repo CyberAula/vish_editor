@@ -1,18 +1,46 @@
 VISH.Text = (function(V,$,undefined){
 
 	//Convert <p><span> from px to ems
-	var init = function(){ 
+	var init = function(){
 		$("article > div > p").each(function(index,p){
 			if($(p).children().length === 0){
 				_setStyleInEm(p);
 				return;
 			}
+
+			var oldStyle = null;
+			var newStyle = null;
+			var lastFontSizeCandidate = null;
+			var lastFontSize = null;
+
 			$(p).find("span").each(function(index,span){
-				if($(span).children().length !== 0){
-					$(span).removeAttr("style");
-					return;
+				oldStyle = $(span).attr("style");
+				lastFontSizeCandidate = parseInt(VISH.Utils.getFontSizeFromStyle(oldStyle));
+				if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
+					lastFontSize = lastFontSizeCandidate;
 				}
-				_setStyleInEm(span);
+
+				if($(span).children().length !== 0){
+					newStyle = VISH.Utils.removeFontSizeInStyle(oldStyle);
+					if((newStyle === null)||(newStyle === "; ")){
+						$(span).removeAttr("style");
+					} else {
+						$(span).attr("style",newStyle);
+					}
+				} else {
+				 	//Last SPAN
+					var fontSize;
+					if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
+						fontSize = lastFontSizeCandidate;
+					} else if(lastFontSize !== null){
+						fontSize = lastFontSize;
+					} else {
+						fontSize = 12; //Default font
+					}
+					var em = (fontSize/16) + "em";
+					newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
+					$(span).attr("style",newStyle);
+				}
 			});
 		});
 	}
@@ -27,7 +55,7 @@ VISH.Text = (function(V,$,undefined){
 			fontSize = VISH.Utils.getFontSizeFromStyle(oldStyle);
 		}
 
-		if(typeof fontSize !== "number"){
+		if((typeof fontSize !== "number")||(isNaN(fontSize))){
 			fontSize = 12; //Default font-size
 		}
 

@@ -276,8 +276,11 @@ this can not be done with show() and hide() because then it remains with display
 article {
   font-family: Arial, Verdana, sans-serif;
   font-size: 16px; /* text-base size */
-  /* line-height: 16px; */
 }
+
+/* Style for Texts (NicEditor version) */
+/* For old excursions */
+
 
 
 *:focus  /* To remove Chrome's orange outline related to focused objects */

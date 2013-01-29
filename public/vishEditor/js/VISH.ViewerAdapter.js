@@ -75,6 +75,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//finally font-size, line-height and letter-spacing of articles
 		//after this change the font sizes of the zones will be relative as they are in ems
 		var increase = finalH/600;
+		// var increaseW = finalW/800;
 		
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");

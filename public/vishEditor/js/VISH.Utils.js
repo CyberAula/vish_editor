@@ -321,7 +321,7 @@ VISH.Utils = (function(V,undefined){
 			return;
 		}
 
-		var font_style_pattern = /font-size:([0-9]+)px/g;
+		var font_style_pattern = /font-size:\s?([0-9]+)px/g;
 		var ft = null;
 	    $.each(style.split(";"), function(index, property){
 		     if (property.match(font_style_pattern) != null) {
@@ -342,14 +342,29 @@ VISH.Utils = (function(V,undefined){
 
 		var filterStyle = "";
 		$.each(style.split(";"), function(index, property){
-			if (property.indexOf("font-size") === -1) {
+			if ((property.indexOf("font-size") === -1)&&(property!=="")) {
 				filterStyle = filterStyle + property + "; ";
 			}
 		});
 				
 		if(fontSize){
-			filterStyle = filterStyle + "font-size:"+fontSize;
+			filterStyle = filterStyle + "font-size:"+fontSize+";";
 		}
+
+		return filterStyle;
+	}
+
+	var removeFontSizeInStyle = function(style){
+		if(typeof style !== "string"){
+			return null;
+		}
+
+		var filterStyle = "";
+		$.each(style.split(";"), function(index, property){
+			if ((property.indexOf("font-size") === -1)&&(property!=="")) {
+				filterStyle = filterStyle + property + "; ";
+			}
+		});
 
 		return filterStyle;
 	}
@@ -363,6 +378,7 @@ VISH.Utils = (function(V,undefined){
 		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
 		addFontSizeToStyle 		: addFontSizeToStyle,
+		removeFontSizeInStyle 	: removeFontSizeInStyle,
 		getFontSizeFromStyle 	: getFontSizeFromStyle,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
