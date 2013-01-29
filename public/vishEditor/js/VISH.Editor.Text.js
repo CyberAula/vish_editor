@@ -26,6 +26,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		}
 		current_area.attr('type','text');
 
+		var newInstance = !(typeof initial_text === "string");
+
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = VISH.Utils.getId();
 		var wysiwygContainer = $("<div id='"+wysiwygContainerId+"'></div>")
@@ -66,6 +68,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//http://docs.cksource.com/CKEditor_3.x/Howto/Editor_Size_On_The_Fly
 		config.height = $(current_area).height();
 
+		//Toolbar defaults
+		config.fontSize_defaultLabel = '12px';
+
 		//Apply vEditor skin
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));
 		config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
@@ -76,8 +81,33 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
 
-		if(!initial_text){
-			// initial_text = "Inser text here";
+		if(newInstance){
+			var defaultFontSize = 12;
+			var defaultAlignment = "left";
+
+			switch($(current_area).attr("size")){
+				case VISH.Constant.EXTRA_SMALL:
+					defaultFontSize = 10;
+					break;
+				case VISH.Constant.SMALL:
+					defaultFontSize = 18;
+					break;
+				case VISH.Constant.MEDIUM:
+					defaultFontSize = 20;
+					break;
+				case VISH.Constant.LARGE:
+					defaultFontSize = 36;
+					break;
+				default:
+					break;
+			}
+
+			var isCircleArea = $(current_area).attr("areaid").indexOf("circle")!==-1;
+			if(isCircleArea){
+				defaultAlignment = "center";
+			}
+
+			initial_text = "<p style='text-align:"+defaultAlignment+";'><span style='font-size:"+defaultFontSize+"px;'>&shy;</span></p>";
 		}
 
 		ckeditor.on("instanceReady", function(){
@@ -89,8 +119,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
 				});
-			} else {
-				ckeditor.focus();
+				if(newInstance){
+					ckeditor.focus();
+				}
 			}
 		});
 
