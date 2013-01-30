@@ -3,6 +3,13 @@ VISH.Editor.Preview = (function(V,$,undefined){
 	var presentation_preview = null;
 
 	var init = function(){
+		//Wait for loading...
+		setTimeout(function(){
+			_realInit();
+		},2000);
+	}
+
+	var _realInit = function(){
 		$("img#preview_circle").fancybox({
 			'width'				: 875,
 			'height'			: 656,
@@ -22,10 +29,10 @@ VISH.Editor.Preview = (function(V,$,undefined){
 				VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 			},
 			'onComplete': function() {
-      			$("#fancybox-wrap").css('top','60px');
-      			$("#fancybox-wrap").css('left','-2px');   			
-      		}
-		});	
+				$("#fancybox-wrap").css('top','60px');
+				$("#fancybox-wrap").css('left','-2px');   			
+			}
+		});
 	}
 
 	var preview = function(options){
