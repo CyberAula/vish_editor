@@ -271,10 +271,6 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 /* Style for Texts (CkEditor version) */
-body {
-  font-size: 12px;
-}
-
 article {
   font-family: Arial, Verdana, sans-serif;
   font-size: 12px; /* text-base size */
@@ -283,7 +279,7 @@ article {
 article > div > p {
   margin-top: 1em;
   margin-bottom: 1em;
-  font-size: 12px;
+  font-size: 1em;
 }
 
 

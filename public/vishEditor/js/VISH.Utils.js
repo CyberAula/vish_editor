@@ -167,53 +167,51 @@ VISH.Utils = (function(V,undefined){
 
 	var getZoomFromStyle = function(style){
 		var zoom = 1; //Initial or default zoom
-		
+
 		if(!style){
 			return zoom;
 		}
-		
+
 		//Patterns
 		var moz_zoom_pattern = /-moz-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 		var webkit_zoom_pattern = /-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 		var opera_zoom_pattern = /-o-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 		var ie_zoom_pattern = /-ms-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 
+		$.each(style.split(";"), function(index, property){
+			if (property.match(moz_zoom_pattern) != null) {
+				//Mozilla Firefox
+				var result = moz_zoom_pattern.exec(property);
+				if ((result!==null)&&(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(webkit_zoom_pattern)!=null) {
+				//Google Chrome
+				var result = webkit_zoom_pattern.exec(property);
+				if ((result!==null)&&(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(opera_zoom_pattern)!=null) {
+				//Opera
+				var result = opera_zoom_pattern.exec(property);
+				if ((result!==null)&&(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(ie_zoom_pattern)!=null) {
+				//Iexplorer
+				var result = ie_zoom_pattern.exec(property);
+				if ((result!==null)&&(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			}
+		});
 		
-	    $.each(style.split(";"), function(index, property){
-				 
-		     if (property.match(moz_zoom_pattern) != null) {
-				 	//Mozilla Firefox
-			   	var result = moz_zoom_pattern.exec(property);
-			   	if (result[1]) {
-			   		zoom = parseFloat(result[1]);
-			   		return false;
-			   	}
-			   } else if (property.match(webkit_zoom_pattern)!=null) {
-				 	  //Google Chrome
-	          var result = webkit_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-		     } else if (property.match(opera_zoom_pattern)!=null) {
-				 	  //Opera
-	          var result = opera_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-				 } else if (property.match(ie_zoom_pattern)!=null) {
-				 	  //Iexplorer
-	          var result = ie_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-	       }
-	    });
-		
-    return zoom;
-   };
+		return zoom;
+	};
 
 
    /////////////////////////
@@ -315,18 +313,18 @@ VISH.Utils = (function(V,undefined){
 	  }
 	};
 
-
+	
 	var getFontSizeFromStyle = function(style){
 		if(!style){
 			return;
 		}
-
-		var font_style_pattern = /font-size:\s?([0-9]+)px/g;
 		var ft = null;
 	    $.each(style.split(";"), function(index, property){
+	    	 //We need to redefine the var in each iteration (due to Android browser issues)
+	    	 var font_style_pattern = /font-size:\s?([0-9]+)px/g;
 		     if (property.match(font_style_pattern) != null) {
 			   	var result = font_style_pattern.exec(property);
-			   	if (result[1]) {
+			   	if ((result!==null)&&(result[1]!==null)) {
 			   		ft = parseFloat(result[1]);
 			   		return false;
 			   	}
