@@ -1,0 +1,3 @@
+# Install jsHint
+# sudo npm install jshint -g
+# jshint /pathToJsfile.js
