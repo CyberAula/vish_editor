@@ -35,9 +35,9 @@ VISH.Text = (function(V,$,undefined){
 					} else if(lastFontSize !== null){
 						fontSize = lastFontSize;
 					} else {
-						fontSize = 12; //Default font
+						fontSize = VISH.Constant.TextDefault; //Default font
 					}
-					var em = (fontSize/16) + "em";
+					var em = (fontSize/VISH.Constant.TextBase) + "em";
 					newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
 					$(span).attr("style",newStyle);
 				}
@@ -56,18 +56,18 @@ VISH.Text = (function(V,$,undefined){
 		}
 
 		if((typeof fontSize !== "number")||(isNaN(fontSize))){
-			fontSize = 12; //Default font-size
+			fontSize = VISH.Constant.TextDefault; //Default font-size
 		}
 
 		//Convert to em (http://pxtoem.com/)
-		var em = (fontSize/16) + "em";
+		var em = (fontSize/VISH.Constant.TextBase) + "em";
 		var newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
 		$(el).attr("style",newStyle);
 	}
 
 	var aftersetupSize = function(increase){
 		//Update Text-base size
-		var reference_font_size = 16;
+		var reference_font_size = VISH.Constant.TextBase;
 		var texts = $("article");
 		$(texts).css("font-size", reference_font_size*increase + "px");
 	}

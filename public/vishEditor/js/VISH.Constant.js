@@ -48,6 +48,10 @@ VISH.Constant.OBJECT = "object";
 VISH.Constant.SNAPSHOT = "snapshot";
 VISH.Constant.QUIZ = "quiz";
 
+//Text
+VISH.Constant.TextDefault = 12;
+VISH.Constant.TextBase = 12;
+
 // Video
 VISH.Constant.Video = {};
 VISH.Constant.Video.HTML5 = "HTML5";

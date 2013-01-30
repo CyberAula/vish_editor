@@ -126,7 +126,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		//Catch the focus event
-		//TODO: Improve event cathing... currently is not triggered in all cases.
 		ckeditor.on('focus', function(event){
 			var area = $("div[type='text']").has(event.editor.container.$);
 			VISH.Editor.selectArea(area);
@@ -158,6 +157,15 @@ VISH.Editor.Text = (function(V,$,undefined){
 		return CKEditorInstance;
 	}
 
+	var getCKEditorIframeContentFromZone = function(zone){
+		var editor = getCKEditorFromZone(zone);
+		if(!editor){
+			return null;
+		}
+		var iframe = $(document.getElementById('cke_contents_' + editor.name)).find("iframe")[0];
+		return $(iframe).contents()[0];
+	}
+
 	/*
 	 * Fix oficial WebKit bug: http://ckeditor.com/forums/CKEditor-3.x/Minimum-Editor-Width-Safari#comment-48574
 	 */
@@ -173,7 +181,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 	return {
 		init              			: init,
 		launchTextEditor  			: launchTextEditor,
-		getCKEditorFromZone 		: getCKEditorFromZone
+		getCKEditorFromZone 		: getCKEditorFromZone,
+		getCKEditorIframeContentFromZone : getCKEditorIframeContentFromZone
 	};
 
 }) (VISH, jQuery);
