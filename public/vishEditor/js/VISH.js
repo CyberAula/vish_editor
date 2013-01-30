@@ -1,8 +1,12 @@
+/**
+ * ViSH Editor & Viewer
+ * Vish Editor is a HTML5 application to create web presentations in a simple and friendly way.
+ * http://github.com/ging/vish_editor
+ *
+ * @module ViSH
+ */
 var VISH = VISH || {};
-
-VISH.Mods || (VISH.Mods = {});
 
 VISH.VERSION = '0.3';
 VISH.AUTHORS = 'GING';
-
-VISH.Editing = false;
+VISH.URL = "http://github.com/ging/vish_editor";

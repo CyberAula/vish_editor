@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>libs&#x2F;ckeditor&#x2F;lang&#x2F;fa.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: libs&#x2F;ckeditor&#x2F;lang&#x2F;fa.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+﻿&#x2F;*
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http:&#x2F;&#x2F;ckeditor.com&#x2F;license
+*&#x2F;
+
+&#x2F;*
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http:&#x2F;&#x2F;ckeditor.com&#x2F;license
+*&#x2F;
+
+&#x2F;**
+ * @fileOverview Defines the {@link CKEDITOR.lang} object for the
+ * Persian language.
+ *&#x2F;
+
+&#x2F;**#@+
+   @type String
+   @example
+*&#x2F;
+
+&#x2F;**
+ * Contains the dictionary of language entries.
+ * @namespace
+ *&#x2F;
+CKEDITOR.lang[&#x27;fa&#x27;] =
+{
+	&#x2F;**
+	 * The language reading direction. Possible values are &quot;rtl&quot; for
+	 * Right-To-Left languages (like Arabic) and &quot;ltr&quot; for Left-To-Right
+	 * languages (like English).
+	 * @default &#x27;ltr&#x27;
+	 *&#x2F;
+	dir : &#x27;rtl&#x27;,
+
+	&#x2F;*
+	 * Screenreader titles. Please note that screenreaders are not always capable
+	 * of reading non-English words. So be careful while translating it.
+	 *&#x2F;
+	editorTitle : &#x27;ویرایشگر متن غنی, %1&#x27;,
+	editorHelp : &#x27;کلید Alt+0 را برای راهنمایی بفشارید&#x27;,
+
+	&#x2F;&#x2F; ARIA descriptions.
+	toolbars	: &#x27;نوار ابزار&#x27;,
+	editor		: &#x27;ویرایشگر متن غنی&#x27;,
+
+	&#x2F;&#x2F; Toolbar buttons without dialogs.
+	source			: &#x27;منبع&#x27;,
+	newPage			: &#x27;برگهٴ تازه&#x27;,
+	save			: &#x27;ذخیره&#x27;,
+	preview			: &#x27;پیشنمایش&#x27;,
+	cut				: &#x27;برش&#x27;,
+	copy			: &#x27;کپی&#x27;,
+	paste			: &#x27;چسباندن&#x27;,
+	print			: &#x27;چاپ&#x27;,
+	underline		: &#x27;زیرخطدار&#x27;,
+	bold			: &#x27;درشت&#x27;,
+	italic			: &#x27;خمیده&#x27;,
+	selectAll		: &#x27;گزینش همه&#x27;,
+	removeFormat	: &#x27;برداشتن فرمت&#x27;,
+	strike			: &#x27;میانخط&#x27;,
+	subscript		: &#x27;زیرنویس&#x27;,
+	superscript		: &#x27;بالانویس&#x27;,
+	horizontalrule	: &#x27;گنجاندن خط افقی&#x27;,
+	pagebreak		: &#x27;گنجاندن شکستگی پایان برگه&#x27;,
+	pagebreakAlt		: &#x27;شکستن صفحه&#x27;,
+	unlink			: &#x27;برداشتن پیوند&#x27;,
+	undo			: &#x27;واچیدن&#x27;,
+	redo			: &#x27;بازچیدن&#x27;,
+
+	&#x2F;&#x2F; Common messages and labels.
+	common :
+	{
+		browseServer	: &#x27;فهرستنمایی سرور&#x27;,
+		url				: &#x27;URL&#x27;,
+		protocol		: &#x27;پروتکل&#x27;,
+		upload			: &#x27;انتقال به سرور&#x27;,
+		uploadSubmit	: &#x27;به سرور بفرست&#x27;,
+		image			: &#x27;تصویر&#x27;,
+		flash			: &#x27;فلش&#x27;,
+		form			: &#x27;فرم&#x27;,
+		checkbox		: &#x27;خانهٴ گزینهای&#x27;,
+		radio			: &#x27;دکمهٴ رادیویی&#x27;,
+		textField		: &#x27;فیلد متنی&#x27;,
+		textarea		: &#x27;ناحیهٴ متنی&#x27;,
+		hiddenField		: &#x27;فیلد پنهان&#x27;,
+		button			: &#x27;دکمه&#x27;,
+		select			: &#x27;فیلد چندگزینهای&#x27;,
+		imageButton		: &#x27;دکمهٴ تصویری&#x27;,
+		notSet			: &#x27;&lt;تعین نشده&gt;&#x27;,
+		id				: &#x27;شناسه&#x27;,
+		name			: &#x27;نام&#x27;,
+		langDir			: &#x27;جهتنمای زبان&#x27;,
+		langDirLtr		: &#x27;چپ به راست (LTR)&#x27;,
+		langDirRtl		: &#x27;راست به چپ (RTL)&#x27;,
+		langCode		: &#x27;کد زبان&#x27;,
+		longDescr		: &#x27;URL توصیف طولانی&#x27;,
+		cssClass		: &#x27;کلاسهای شیوهنامه(Stylesheet)&#x27;,
+		advisoryTitle	: &#x27;عنوان کمکی&#x27;,
+		cssStyle		: &#x27;شیوه(style)&#x27;,
+		ok				: &#x27;پذیرش&#x27;,
+		cancel			: &#x27;انصراف&#x27;,
+		close			: &#x27;بستن&#x27;,
+		preview			: &#x27;پیشنمایش&#x27;,
+		generalTab		: &#x27;عمومی&#x27;,
+		advancedTab		: &#x27;پیشرفته&#x27;,
+		validateNumberFailed : &#x27;این مقدار یک عدد نیست.&#x27;,
+		confirmNewPage	: &#x27;هر تغییر ایجاد شدهی ذخیره نشده از بین خواهد رفت. آیا اطمینان دارید که قصد بارگیری صفحه جدیدی را دارید؟&#x27;,
+		confirmCancel	: &#x27;برخی از گزینهها تغییر کردهاند. آیا واقعا قصد بستن این پنجره را دارید؟&#x27;,
+		options			: &#x27;گزینهها&#x27;,
+		target			: &#x27;مسیر&#x27;,
+		targetNew		: &#x27;پنجره جدید (_blank)&#x27;,
+		targetTop		: &#x27;بالاترین پنجره (_top)&#x27;,
+		targetSelf		: &#x27;همان پنجره (_self)&#x27;,
+		targetParent	: &#x27;پنجره والد (_parent)&#x27;,
+		langDirLTR		: &#x27;چپ به راست (LTR)&#x27;,
+		langDirRTL		: &#x27;راست به چپ (RTL)&#x27;,
+		styles			: &#x27;سبک&#x27;,
+		cssClasses		: &#x27;کلاسهای شیوهنامه&#x27;,
+		width			: &#x27;پهنا&#x27;,
+		height			: &#x27;درازا&#x27;,
+		align			: &#x27;چینش&#x27;,
+		alignLeft		: &#x27;چپ&#x27;,
+		alignRight		: &#x27;راست&#x27;,
+		alignCenter		: &#x27;وسط&#x27;,
+		alignTop		: &#x27;بالا&#x27;,
+		alignMiddle		: &#x27;وسط&#x27;,
+		alignBottom		: &#x27;پائین&#x27;,
+		invalidValue	: &#x27;Invalid value.&#x27;, &#x2F;&#x2F; MISSING
+		invalidHeight	: &#x27;ارتفاع باید یک عدد باشد.&#x27;,
+		invalidWidth	: &#x27;پهنا باید یک عدد باشد.&#x27;,
+		invalidCssLength	: &#x27;عدد تعیین شده برای فیلد &quot;%1&quot; باید یک عدد مثبت با یا بدون یک واحد اندازه گیری CSS معتبر باشد (px, %, in, cm, mm, em, ex, pt, or pc).&#x27;,
+		invalidHtmlLength	: &#x27;عدد تعیین شده برای فیلد &quot;%1&quot; باید یک عدد مثبت با یا بدون یک واحد اندازه گیری HTML معتبر باشد (px or %).&#x27;,
+		invalidInlineStyle	: &#x27;عدد تعیین شده برای سبک درونخطی(Inline Style) باید دارای یک یا چند چندتایی با شکلی شبیه &quot;name : value&quot; که باید با یک &quot;,&quot;(semi-colons) از هم جدا شوند.&#x27;,
+		cssLengthTooltip	: &#x27;یک عدد برای یک مقدار بر حسب پیکسل و یا یک عدد با یک واحد CSS معتبر وارد کنید (px, %, in, cm, mm, em, ex, pt, or pc).&#x27;,
+
+		&#x2F;&#x2F; Put the voice-only part of the label in the span.
+		unavailable		: &#x27;%1&lt;span class=&quot;cke_accessibility&quot;&gt;، غیر قابل دسترس&lt;&#x2F;span&gt;&#x27;
+	},
+
+	contextmenu :
+	{
+		options : &#x27;گزینههای منوی زمینه&#x27;
+	},
+
+	&#x2F;&#x2F; Special char dialog.
+	specialChar		:
+	{
+		toolbar		: &#x27;گنجاندن نویسهٴ ویژه&#x27;,
+		title		: &#x27;گزینش نویسهٴ ویژه&#x27;,
+		options : &#x27;گزینههای نویسههای ویژه&#x27;
+	},
+
+	&#x2F;&#x2F; Link dialog.
+	link :
+	{
+		toolbar		: &#x27;گنجاندن&#x2F;ویرایش پیوند&#x27;,
+		other 		: &#x27;&lt;سایر&gt;&#x27;,
+		menu		: &#x27;ویرایش پیوند&#x27;,
+		title		: &#x27;پیوند&#x27;,
+		info		: &#x27;اطلاعات پیوند&#x27;,
+		target		: &#x27;مقصد&#x27;,
+		upload		: &#x27;انتقال به سرور&#x27;,
+		advanced	: &#x27;پیشرفته&#x27;,
+		type		: &#x27;نوع پیوند&#x27;,
+		toUrl		: &#x27;URL&#x27;,
+		toAnchor	: &#x27;لنگر در همین صفحه&#x27;,
+		toEmail		: &#x27;پست الکترونیکی&#x27;,
+		targetFrame		: &#x27;&lt;فریم&gt;&#x27;,
+		targetPopup		: &#x27;&lt;پنجرهٴ پاپاپ&gt;&#x27;,
+		targetFrameName	: &#x27;نام فریم مقصد&#x27;,
+		targetPopupName	: &#x27;نام پنجرهٴ پاپاپ&#x27;,
+		popupFeatures	: &#x27;ویژگیهای پنجرهٴ پاپاپ&#x27;,
+		popupResizable	: &#x27;قابل تغییر اندازه&#x27;,
+		popupStatusBar	: &#x27;نوار وضعیت&#x27;,
+		popupLocationBar: &#x27;نوار موقعیت&#x27;,
+		popupToolbar	: &#x27;نوارابزار&#x27;,
+		popupMenuBar	: &#x27;نوار منو&#x27;,
+		popupFullScreen	: &#x27;تمامصفحه (IE)&#x27;,
+		popupScrollBars	: &#x27;میلههای پیمایش&#x27;,
+		popupDependent	: &#x27;وابسته (Netscape)&#x27;,
+		popupLeft		: &#x27;موقعیت چپ&#x27;,
+		popupTop		: &#x27;موقعیت بالا&#x27;,
+		id				: &#x27;شناسه&#x27;,
+		langDir			: &#x27;جهتنمای زبان&#x27;,
+		langDirLTR		: &#x27;چپ به راست (LTR)&#x27;,
+		langDirRTL		: &#x27;راست به چپ (RTL)&#x27;,
+		acccessKey		: &#x27;کلید دستیابی&#x27;,
+		name			: &#x27;نام&#x27;,
+		langCode			: &#x27;جهتنمای زبان&#x27;,
+		tabIndex			: &#x27;نمایهٴ دسترسی با برگه&#x27;,
+		advisoryTitle		: &#x27;عنوان کمکی&#x27;,
+		advisoryContentType	: &#x27;نوع محتوای کمکی&#x27;,
+		cssClasses		: &#x27;کلاسهای شیوهنامه(Stylesheet)&#x27;,
+		charset			: &#x27;نویسهگان منبع پیوند شده&#x27;,
+		styles			: &#x27;شیوه(style)&#x27;,
+		rel			: &#x27;وابستگی&#x27;,
+		selectAnchor		: &#x27;یک لنگر برگزینید&#x27;,
+		anchorName		: &#x27;با نام لنگر&#x27;,
+		anchorId			: &#x27;با شناسهٴ المان&#x27;,
+		emailAddress		: &#x27;نشانی پست الکترونیکی&#x27;,
+		emailSubject		: &#x27;موضوع پیام&#x27;,
+		emailBody		: &#x27;متن پیام&#x27;,
+		noAnchors		: &#x27;(در این سند لنگری دردسترس نیست)&#x27;,
+		noUrl			: &#x27;لطفا URL پیوند را بنویسید&#x27;,
+		noEmail			: &#x27;لطفا نشانی پست الکترونیکی را بنویسید&#x27;
+	},
+
+	&#x2F;&#x2F; Anchor dialog
+	anchor :
+	{
+		toolbar		: &#x27;گنجاندن&#x2F;ویرایش لنگر&#x27;,
+		menu		: &#x27;ویژگیهای لنگر&#x27;,
+		title		: &#x27;ویژگیهای لنگر&#x27;,
+		name		: &#x27;نام لنگر&#x27;,
+		errorName	: &#x27;لطفا نام لنگر را بنویسید&#x27;,
+		remove		: &#x27;حذف لنگر&#x27;
+	},
+
+	&#x2F;&#x2F; List style dialog
+	list:
+	{
+		numberedTitle		: &#x27;ویژگیهای فهرست شمارهدار&#x27;,
+		bulletedTitle		: &#x27;ویژگیهای فهرست گلولهدار&#x27;,
+		type				: &#x27;نوع&#x27;,
+		start				: &#x27;شروع&#x27;,
+		validateStartNumber				:&#x27;فهرست شماره شروع باید یک عدد صحیح باشد.&#x27;,
+		circle				: &#x27;دایره&#x27;,
+		disc				: &#x27;صفحه گرد&#x27;,
+		square				: &#x27;چهارگوش&#x27;,
+		none				: &#x27;هیچ&#x27;,
+		notset				: &#x27;&lt;تنظیم نشده&gt;&#x27;,
+		armenian			: &#x27;شمارهگذاری ارمنی&#x27;,
+		georgian			: &#x27;شمارهگذاری گریگورین (an, ban, gan, etc.)&#x27;,
+		lowerRoman			: &#x27;پانویس رومی (i, ii, iii, iv, v, etc.)&#x27;,
+		upperRoman			: &#x27;بالانویس رومی (I, II, III, IV, V, etc.)&#x27;,
+		lowerAlpha			: &#x27;پانویس الفبایی (a, b, c, d, e, etc.)&#x27;,
+		upperAlpha			: &#x27;بالانویس الفبایی (A, B, C, D, E, etc.)&#x27;,
+		lowerGreek			: &#x27;پانویس یونانی (alpha, beta, gamma, etc.)&#x27;,
+		decimal				: &#x27;دهدهی (1, 2, 3, etc.)&#x27;,
+		decimalLeadingZero	: &#x27;دهدهی همراه با صفر (01, 02, 03, etc.)&#x27;
+	},
+
+	&#x2F;&#x2F; Find And Replace Dialog
+	findAndReplace :
+	{
+		title				: &#x27;جستجو و جایگزینی&#x27;,
+		find				: &#x27;جستجو&#x27;,
+		replace				: &#x27;جایگزینی&#x27;,
+		findWhat			: &#x27;چه چیز را مییابید:&#x27;,
+		replaceWith			: &#x27;جایگزینی با:&#x27;,
+		notFoundMsg			: &#x27;متن موردنظر یافت نشد.&#x27;,
+		findOptions			: &#x27;گزینههای جستجو&#x27;,
+		matchCase			: &#x27;همسانی در بزرگی و کوچکی نویسهها&#x27;,
+		matchWord			: &#x27;همسانی با واژهٴ کامل&#x27;,
+		matchCyclic			: &#x27;همسانی با چرخه&#x27;,
+		replaceAll			: &#x27;جایگزینی همهٴ یافتهها&#x27;,
+		replaceSuccessMsg	: &#x27;%1 رخداد جایگزین شد.&#x27;
+	},
+
+	&#x2F;&#x2F; Table Dialog
+	table :
+	{
+		toolbar		: &#x27;جدول&#x27;,
+		title		: &#x27;ویژگیهای جدول&#x27;,
+		menu		: &#x27;ویژگیهای جدول&#x27;,
+		deleteTable	: &#x27;پاک کردن جدول&#x27;,
+		rows		: &#x27;سطرها&#x27;,
+		columns		: &#x27;ستونها&#x27;,
+		border		: &#x27;اندازهٴ لبه&#x27;,
+		widthPx		: &#x27;پیکسل&#x27;,
+		widthPc		: &#x27;درصد&#x27;,
+		widthUnit	: &#x27;واحد پهنا&#x27;,
+		cellSpace	: &#x27;فاصلهٴ میان سلولها&#x27;,
+		cellPad		: &#x27;فاصلهٴ پرشده در سلول&#x27;,
+		caption		: &#x27;عنوان&#x27;,
+		summary		: &#x27;خلاصه&#x27;,
+		headers		: &#x27;سرنویسها&#x27;,
+		headersNone		: &#x27;هیچ&#x27;,
+		headersColumn	: &#x27;اولین ستون&#x27;,
+		headersRow		: &#x27;اولین ردیف&#x27;,
+		headersBoth		: &#x27;هردو&#x27;,
+		invalidRows		: &#x27;تعداد ردیفها باید یک عدد بزرگتر از 0 باشد.&#x27;,
+		invalidCols		: &#x27;تعداد ستونها باید یک عدد بزرگتر از 0 باشد.&#x27;,
+		invalidBorder	: &#x27;مقدار اندازه خطوط باید یک عدد باشد.&#x27;,
+		invalidWidth	: &#x27;مقدار پهنای جدول باید یک عدد باشد.&#x27;,
+		invalidHeight	: &#x27;مقدار ارتفاع  جدول باید یک عدد باشد.&#x27;,
+		invalidCellSpacing	: &#x27;مقدار فاصلهگذاری سلول باید یک عدد باشد.&#x27;,
+		invalidCellPadding	: &#x27;بالشتک سلول باید یک عدد باشد.&#x27;,
+
+		cell :
+		{
+			menu			: &#x27;سلول&#x27;,
+			insertBefore	: &#x27;افزودن سلول قبل از&#x27;,
+			insertAfter		: &#x27;افزودن سلول بعد از&#x27;,
+			deleteCell		: &#x27;حذف سلولها&#x27;,
+			merge			: &#x27;ادغام سلولها&#x27;,
+			mergeRight		: &#x27;ادغام به راست&#x27;,
+			mergeDown		: &#x27;ادغام به پایین&#x27;,
+			splitHorizontal	: &#x27;جدا کردن افقی سلول&#x27;,
+			splitVertical	: &#x27;جدا کردن عمودی سلول&#x27;,
+			title			: &#x27;ویژگیهای سلول&#x27;,
+			cellType		: &#x27;نوع سلول&#x27;,
+			rowSpan			: &#x27;محدوده ردیفها&#x27;,
+			colSpan			: &#x27;محدوده ستونها&#x27;,
+			wordWrap		: &#x27;شکستن کلمه&#x27;,
+			hAlign			: &#x27;چینش افقی&#x27;,
+			vAlign			: &#x27;چینش عمودی&#x27;,
+			alignBaseline	: &#x27;خط مبنا&#x27;,
+			bgColor			: &#x27;رنگ زمینه&#x27;,
+			borderColor		: &#x27;رنگ خطوط&#x27;,
+			data			: &#x27;اطلاعات&#x27;,
+			header			: &#x27;سرنویس&#x27;,
+			yes				: &#x27;بله&#x27;,
+			no				: &#x27;خیر&#x27;,
+			invalidWidth	: &#x27;عرض سلول باید یک عدد باشد.&#x27;,
+			invalidHeight	: &#x27;ارتفاع سلول باید عدد باشد.&#x27;,
+			invalidRowSpan	: &#x27;مقدار محدوده ردیفها باید یک عدد باشد.&#x27;,
+			invalidColSpan	: &#x27;مقدار محدوده ستونها باید یک عدد باشد.&#x27;,
+			chooseColor		: &#x27;انتخاب&#x27;
+		},
+
+		row :
+		{
+			menu			: &#x27;سطر&#x27;,
+			insertBefore	: &#x27;افزودن سطر قبل از&#x27;,
+			insertAfter		: &#x27;افزودن سطر بعد از&#x27;,
+			deleteRow		: &#x27;حذف سطرها&#x27;
+		},
+
+		column :
+		{
+			menu			: &#x27;ستون&#x27;,
+			insertBefore	: &#x27;افزودن ستون قبل از&#x27;,
+			insertAfter		: &#x27;افزودن ستون بعد از&#x27;,
+			deleteColumn	: &#x27;حذف ستونها&#x27;
+		}
+	},
+
+	&#x2F;&#x2F; Button Dialog.
+	button :
+	{
+		title		: &#x27;ویژگیهای دکمه&#x27;,
+		text		: &#x27;متن (مقدار)&#x27;,
+		type		: &#x27;نوع&#x27;,
+		typeBtn		: &#x27;دکمه&#x27;,
+		typeSbm		: &#x27;ثبت&#x27;,
+		typeRst		: &#x27;بازنشانی (Reset)&#x27;
+	},
+
+	&#x2F;&#x2F; Checkbox and Radio Button Dialogs.
+	checkboxAndRadio :
+	{
+		checkboxTitle : &#x27;ویژگیهای خانهٴ گزینهای&#x27;,
+		radioTitle	: &#x27;ویژگیهای دکمهٴ رادیویی&#x27;,
+		value		: &#x27;مقدار&#x27;,
+		selected	: &#x27;برگزیده&#x27;
+	},
+
+	&#x2F;&#x2F; Form Dialog.
+	form :
+	{
+		title		: &#x27;ویژگیهای فرم&#x27;,
+		menu		: &#x27;ویژگیهای فرم&#x27;,
+		action		: &#x27;رویداد&#x27;,
+		method		: &#x27;متد&#x27;,
+		encoding	: &#x27;رمزنگاری&#x27;
+	},
+
+	&#x2F;&#x2F; Select Field Dialog.
+	select :
+	{
+		title		: &#x27;ویژگیهای فیلد چندگزینهای&#x27;,
+		selectInfo	: &#x27;اطلاعات&#x27;,
+		opAvail		: &#x27;گزینههای دردسترس&#x27;,
+		value		: &#x27;مقدار&#x27;,
+		size		: &#x27;اندازه&#x27;,
+		lines		: &#x27;خطوط&#x27;,
+		chkMulti	: &#x27;گزینش چندگانه فراهم باشد&#x27;,
+		opText		: &#x27;متن&#x27;,
+		opValue		: &#x27;مقدار&#x27;,
+		btnAdd		: &#x27;افزودن&#x27;,
+		btnModify	: &#x27;ویرایش&#x27;,
+		btnUp		: &#x27;بالا&#x27;,
+		btnDown		: &#x27;پائین&#x27;,
+		btnSetValue : &#x27;تنظیم به عنوان مقدار برگزیده&#x27;,
+		btnDelete	: &#x27;پاککردن&#x27;
+	},
+
+	&#x2F;&#x2F; Textarea Dialog.
+	textarea :
+	{
+		title		: &#x27;ویژگیهای ناحیهٴ متنی&#x27;,
+		cols		: &#x27;ستونها&#x27;,
+		rows		: &#x27;سطرها&#x27;
+	},
+
+	&#x2F;&#x2F; Text Field Dialog.
+	textfield :
+	{
+		title		: &#x27;ویژگیهای فیلد متنی&#x27;,
+		name		: &#x27;نام&#x27;,
+		value		: &#x27;مقدار&#x27;,
+		charWidth	: &#x27;پهنای نویسه&#x27;,
+		maxChars	: &#x27;بیشینهٴ نویسهها&#x27;,
+		type		: &#x27;نوع&#x27;,
+		typeText	: &#x27;متن&#x27;,
+		typePass	: &#x27;گذرواژه&#x27;
+	},
+
+	&#x2F;&#x2F; Hidden Field Dialog.
+	hidden :
+	{
+		title	: &#x27;ویژگیهای فیلد پنهان&#x27;,
+		name	: &#x27;نام&#x27;,
+		value	: &#x27;مقدار&#x27;
+	},
+
+	&#x2F;&#x2F; Image Dialog.
+	image :
+	{
+		title		: &#x27;ویژگیهای تصویر&#x27;,
+		titleButton	: &#x27;ویژگیهای دکمهٴ تصویری&#x27;,
+		menu		: &#x27;ویژگیهای تصویر&#x27;,
+		infoTab		: &#x27;اطلاعات تصویر&#x27;,
+		btnUpload	: &#x27;به سرور بفرست&#x27;,
+		upload		: &#x27;انتقال به سرور&#x27;,
+		alt			: &#x27;متن جایگزین&#x27;,
+		lockRatio	: &#x27;قفل کردن نسبت&#x27;,
+		resetSize	: &#x27;بازنشانی اندازه&#x27;,
+		border		: &#x27;لبه&#x27;,
+		hSpace		: &#x27;فاصلهٴ افقی&#x27;,
+		vSpace		: &#x27;فاصلهٴ عمودی&#x27;,
+		alertUrl	: &#x27;لطفا URL تصویر را بنویسید&#x27;,
+		linkTab		: &#x27;پیوند&#x27;,
+		button2Img	: &#x27;آیا مایلید از یک تصویر ساده روی دکمه تصویری انتخاب شده استفاده کنید؟&#x27;,
+		img2Button	: &#x27;آیا مایلید از یک دکمه تصویری روی تصویر انتخاب شده استفاده کنید؟&#x27;,
+		urlMissing	: &#x27;آدرس URL اصلی تصویر یافت نشد.&#x27;,
+		validateBorder	: &#x27;مقدار خطوط باید یک عدد باشد.&#x27;,
+		validateHSpace	: &#x27;مقدار فاصلهگذاری افقی باید یک عدد باشد.&#x27;,
+		validateVSpace	: &#x27;مقدار فاصلهگذاری عمودی باید یک عدد باشد.&#x27;
+	},
+
+	&#x2F;&#x2F; Flash Dialog
+	flash :
+	{
+		properties		: &#x27;ویژگیهای فلش&#x27;,
+		propertiesTab	: &#x27;ویژگیها&#x27;,
+		title			: &#x27;ویژگیهای فلش&#x27;,
+		chkPlay			: &#x27;آغاز خودکار&#x27;,
+		chkLoop			: &#x27;اجرای پیاپی&#x27;,
+		chkMenu			: &#x27;در دسترس بودن منوی فلش&#x27;,
+		chkFull			: &#x27;اجازه تمام صفحه&#x27;,
+ 		scale			: &#x27;مقیاس&#x27;,
+		scaleAll		: &#x27;نمایش همه&#x27;,
+		scaleNoBorder	: &#x27;بدون کران&#x27;,
+		scaleFit		: &#x27;جایگیری کامل&#x27;,
+		access			: &#x27;دسترسی به اسکریپت&#x27;,
+		accessAlways	: &#x27;همیشه&#x27;,
+		accessSameDomain: &#x27;همان دامنه&#x27;,
+		accessNever		: &#x27;هرگز&#x27;,
+		alignAbsBottom	: &#x27;پائین مطلق&#x27;,
+		alignAbsMiddle	: &#x27;وسط مطلق&#x27;,
+		alignBaseline	: &#x27;خط پایه&#x27;,
+		alignTextTop	: &#x27;متن بالا&#x27;,
+		quality			: &#x27;کیفیت&#x27;,
+		qualityBest		: &#x27;بهترین&#x27;,
+		qualityHigh		: &#x27;بالا&#x27;,
+		qualityAutoHigh	: &#x27;بالا - خودکار&#x27;,
+		qualityMedium	: &#x27;متوسط&#x27;,
+		qualityAutoLow	: &#x27;پایین - خودکار&#x27;,
+		qualityLow		: &#x27;پایین&#x27;,
+		windowModeWindow: &#x27;پنجره&#x27;,
+		windowModeOpaque: &#x27;مات&#x27;,
+		windowModeTransparent : &#x27;شفاف&#x27;,
+		windowMode		: &#x27;حالت پنجره&#x27;,
+		flashvars		: &#x27;مقادیر برای فلش&#x27;,
+		bgcolor			: &#x27;رنگ پسزمینه&#x27;,
+		hSpace			: &#x27;فاصلهٴ افقی&#x27;,
+		vSpace			: &#x27;فاصلهٴ عمودی&#x27;,
+		validateSrc		: &#x27;لطفا URL پیوند را بنویسید&#x27;,
+		validateHSpace	: &#x27;مقدار فاصلهگذاری افقی باید یک عدد باشد.&#x27;,
+		validateVSpace	: &#x27;مقدار فاصلهگذاری عمودی باید یک عدد باشد.&#x27;
+	},
+
+	&#x2F;&#x2F; Speller Pages Dialog
+	spellCheck :
+	{
+		toolbar			: &#x27;بررسی املا&#x27;,
+		title			: &#x27;بررسی املا&#x27;,
+		notAvailable	: &#x27;با عرض پوزش خدمات الان در دسترس نیستند.&#x27;,
+		errorLoading	: &#x27;خطا در بارگیری برنامه خدمات میزبان: %s.&#x27;,
+		notInDic		: &#x27;در واژه~نامه یافت نشد&#x27;,
+		changeTo		: &#x27;تغییر به&#x27;,
+		btnIgnore		: &#x27;چشمپوشی&#x27;,
+		btnIgnoreAll	: &#x27;چشمپوشی همه&#x27;,
+		btnReplace		: &#x27;جایگزینی&#x27;,
+		btnReplaceAll	: &#x27;جایگزینی همه&#x27;,
+		btnUndo			: &#x27;واچینش&#x27;,
+		noSuggestions	: &#x27;- پیشنهادی نیست -&#x27;,
+		progress		: &#x27;بررسی املا در حال انجام...&#x27;,
+		noMispell		: &#x27;بررسی املا انجام شد. هیچ غلط املائی یافت نشد&#x27;,
+		noChanges		: &#x27;بررسی املا انجام شد. هیچ واژهای تغییر نیافت&#x27;,
+		oneChange		: &#x27;بررسی املا انجام شد. یک واژه تغییر یافت&#x27;,
+		manyChanges		: &#x27;بررسی املا انجام شد. %1 واژه تغییر یافت&#x27;,
+		ieSpellDownload	: &#x27;بررسی کنندهٴ املا نصب نشده است. آیا میخواهید آن را هماکنون دریافت کنید؟&#x27;
+	},
+
+	smiley :
+	{
+		toolbar	: &#x27;خندانک&#x27;,
+		title	: &#x27;گنجاندن خندانک&#x27;,
+		options : &#x27;گزینههای خندانک&#x27;
+	},
+
+	elementsPath :
+	{
+		eleLabel : &#x27;مسیر عناصر&#x27;,
+		eleTitle : &#x27;%1 عنصر&#x27;
+	},
+
+	numberedlist	: &#x27;فهرست شمارهدار&#x27;,
+	bulletedlist	: &#x27;فهرست نقطهای&#x27;,
+	indent			: &#x27;افزایش تورفتگی&#x27;,
+	outdent			: &#x27;کاهش تورفتگی&#x27;,
+
+	justify :
+	{
+		left	: &#x27;چپچین&#x27;,
+		center	: &#x27;میانچین&#x27;,
+		right	: &#x27;راستچین&#x27;,
+		block	: &#x27;بلوکچین&#x27;
+	},
+
+	blockquote : &#x27;بلوک نقل قول&#x27;,
+
+	clipboard :
+	{
+		title		: &#x27;چسباندن&#x27;,
+		cutError	: &#x27;تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای برش را انجام دهد. لطفا با دکمههای صفحه کلید این کار را انجام دهید (Ctrl&#x2F;Cmd+X).&#x27;,
+		copyError	: &#x27;تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای کپی کردن را انجام دهد. لطفا با دکمههای صفحه کلید این کار را انجام دهید (Ctrl&#x2F;Cmd+C).&#x27;,
+		pasteMsg	: &#x27;لطفا متن را با کلیدهای (&lt;STRONG&gt;Ctrl&#x2F;Cmd+V&lt;&#x2F;STRONG&gt;) در این جعبهٴ متنی بچسبانید و &lt;STRONG&gt;پذیرش&lt;&#x2F;STRONG&gt; را بزنید.&#x27;,
+		securityMsg	: &#x27;به خاطر تنظیمات امنیتی مرورگر شما، ویرایشگر نمیتواند دسترسی مستقیم به دادههای clipboard داشته باشد. شما باید دوباره آنرا در این پنجره بچسبانید.&#x27;,
+		pasteArea	: &#x27;محل چسباندن&#x27;
+	},
+
+	pastefromword :
+	{
+		confirmCleanup	: &#x27;متنی که میخواهید بچسبانید به نظر میرسد که از Word کپی شده است. آیا میخواهید قبل از چسباندن آن را پاکسازی کنید؟&#x27;,
+		toolbar			: &#x27;چسباندن از Word&#x27;,
+		title			: &#x27;چسباندن از Word&#x27;,
+		error			: &#x27;به دلیل بروز خطای داخلی امکان پاکسازی اطلاعات بازنشانی شده وجود ندارد.&#x27;
+	},
+
+	pasteText :
+	{
+		button	: &#x27;چسباندن به عنوان متن ِساده&#x27;,
+		title	: &#x27;چسباندن به عنوان متن ِساده&#x27;
+	},
+
+	templates :
+	{
+		button			: &#x27;الگوها&#x27;,
+		title			: &#x27;الگوهای محتویات&#x27;,
+		options : &#x27;گزینههای الگو&#x27;,
+		insertOption	: &#x27;محتویات کنونی جایگزین شوند&#x27;,
+		selectPromptMsg	: &#x27;لطفا الگوی موردنظر را برای بازکردن در ویرایشگر برگزینید&lt;br&gt;(محتویات کنونی از دست خواهند رفت):&#x27;,
+		emptyListMsg	: &#x27;(الگوئی تعریف نشده است)&#x27;
+	},
+
+	showBlocks : &#x27;نمایش بلوکها&#x27;,
+
+	stylesCombo :
+	{
+		label		: &#x27;سبک&#x27;,
+		panelTitle	: &#x27;سبکهای قالببندی&#x27;,
+		panelTitle1	: &#x27;سبکهای بلوک&#x27;,
+		panelTitle2	: &#x27;سبکهای درونخطی&#x27;,
+		panelTitle3	: &#x27;سبکهای شیء&#x27;
+	},
+
+	format :
+	{
+		label		: &#x27;فرمت&#x27;,
+		panelTitle	: &#x27;فرمت&#x27;,
+
+		tag_p		: &#x27;نرمال&#x27;,
+		tag_pre		: &#x27;فرمت شده&#x27;,
+		tag_address	: &#x27;آدرس&#x27;,
+		tag_h1		: &#x27;سرنویس 1&#x27;,
+		tag_h2		: &#x27;سرنویس 2&#x27;,
+		tag_h3		: &#x27;سرنویس 3&#x27;,
+		tag_h4		: &#x27;سرنویس 4&#x27;,
+		tag_h5		: &#x27;سرنویس 5&#x27;,
+		tag_h6		: &#x27;سرنویس 6&#x27;,
+		tag_div		: &#x27;بند&#x27;
+	},
+
+	div :
+	{
+		title				: &#x27;ایجاد یک محل DIV&#x27;,
+		toolbar				: &#x27;ایجاد یک محل DIV&#x27;,
+		cssClassInputLabel	: &#x27;کلاسهای شیوهنامه&#x27;,
+		styleSelectLabel	: &#x27;سبک&#x27;,
+		IdInputLabel		: &#x27;شناسه&#x27;,
+		languageCodeInputLabel	: &#x27; کد زبان&#x27;,
+		inlineStyleInputLabel	: &#x27;سبک درونخطی(Inline Style)&#x27;,
+		advisoryTitleInputLabel	: &#x27;عنوان مشاوره&#x27;,
+		langDirLabel		: &#x27;جهت نوشتاری زبان&#x27;,
+		langDirLTRLabel		: &#x27;چپ به راست (LTR)&#x27;,
+		langDirRTLLabel		: &#x27;راست به چپ (RTL)&#x27;,
+		edit				: &#x27;ویرایش Div&#x27;,
+		remove				: &#x27;حذف Div&#x27;
+  	},
+
+	iframe :
+	{
+		title		: &#x27;ویژگیهای IFrame&#x27;,
+		toolbar		: &#x27;IFrame&#x27;,
+		noUrl		: &#x27;لطفا مسیر URL iframe را درج کنید&#x27;,
+		scrolling	: &#x27;نمایش خطکشها&#x27;,
+		border		: &#x27;نمایش خطوط frame&#x27;
+	},
+
+	font :
+	{
+		label		: &#x27;قلم&#x27;,
+		voiceLabel	: &#x27;قلم&#x27;,
+		panelTitle	: &#x27;قلم&#x27;
+	},
+
+	fontSize :
+	{
+		label		: &#x27;اندازه&#x27;,
+		voiceLabel	: &#x27;اندازه قلم&#x27;,
+		panelTitle	: &#x27;اندازه&#x27;
+	},
+
+	colorButton :
+	{
+		textColorTitle	: &#x27;رنگ متن&#x27;,
+		bgColorTitle	: &#x27;رنگ پسزمینه&#x27;,
+		panelTitle		: &#x27;رنگها&#x27;,
+		auto			: &#x27;خودکار&#x27;,
+		more			: &#x27;رنگهای بیشتر...&#x27;
+	},
+
+	colors :
+	{
+		&#x27;000&#x27; : &#x27;سیاه&#x27;,
+		&#x27;800000&#x27; : &#x27;خرمایی&#x27;,
+		&#x27;8B4513&#x27; : &#x27;قهوهای شکلاتی&#x27;,
+		&#x27;2F4F4F&#x27; : &#x27;ارغوانی مایل به خاکستری&#x27;,
+		&#x27;008080&#x27; : &#x27;آبی مایل به خاکستری&#x27;,
+		&#x27;000080&#x27; : &#x27;آبی سیر&#x27;,
+		&#x27;4B0082&#x27; : &#x27;نیلی&#x27;,
+		&#x27;696969&#x27; : &#x27;خاکستری تیره&#x27;,
+		&#x27;B22222&#x27; : &#x27;آتش آجری&#x27;,
+		&#x27;A52A2A&#x27; : &#x27;قهوهای&#x27;,
+		&#x27;DAA520&#x27; : &#x27;میلهی طلایی&#x27;,
+		&#x27;006400&#x27; : &#x27;سبز تیره&#x27;,
+		&#x27;40E0D0&#x27; : &#x27;فیروزهای&#x27;,
+		&#x27;0000CD&#x27; : &#x27;آبی روشن&#x27;,
+		&#x27;800080&#x27; : &#x27;ارغوانی&#x27;,
+		&#x27;808080&#x27; : &#x27;خاکستری&#x27;,
+		&#x27;F00&#x27; : &#x27;قرمز&#x27;,
+		&#x27;FF8C00&#x27; : &#x27;نارنجی پررنگ&#x27;,
+		&#x27;FFD700&#x27; : &#x27;طلایی&#x27;,
+		&#x27;008000&#x27; : &#x27;سبز&#x27;,
+		&#x27;0FF&#x27; : &#x27;آبی مایل به سبز&#x27;,
+		&#x27;00F&#x27; : &#x27;آبی&#x27;,
+		&#x27;EE82EE&#x27; : &#x27;بنفش&#x27;,
+		&#x27;A9A9A9&#x27; : &#x27;خاکستری مات&#x27;,
+		&#x27;FFA07A&#x27; : &#x27;صورتی کدر روشن&#x27;,
+		&#x27;FFA500&#x27; : &#x27;نارنجی&#x27;,
+		&#x27;FFFF00&#x27; : &#x27;زرد&#x27;,
+		&#x27;00FF00&#x27; : &#x27;فسفری&#x27;,
+		&#x27;AFEEEE&#x27; : &#x27;فیروزهای رنگ پریده&#x27;,
+		&#x27;ADD8E6&#x27; : &#x27;آبی کمرنگ&#x27;,
+		&#x27;DDA0DD&#x27; : &#x27;آلویی&#x27;,
+		&#x27;D3D3D3&#x27; : &#x27;خاکستری روشن&#x27;,
+		&#x27;FFF0F5&#x27; : &#x27;بنفش کمرنگ&#x27;,
+		&#x27;FAEBD7&#x27; : &#x27;عتیقه سفید&#x27;,
+		&#x27;FFFFE0&#x27; : &#x27;زرد روشن&#x27;,
+		&#x27;F0FFF0&#x27; : &#x27;عسلی&#x27;,
+		&#x27;F0FFFF&#x27; : &#x27;لاجوردی&#x27;,
+		&#x27;F0F8FF&#x27; : &#x27;آبی براق&#x27;,
+		&#x27;E6E6FA&#x27; : &#x27;بنفش کمرنگ&#x27;,
+		&#x27;FFF&#x27; : &#x27;سفید&#x27;
+	},
+
+	scayt :
+	{
+		title			: &#x27;بررسی املای تایپ شما&#x27;,
+		opera_title		: &#x27;توسط اپرا پشتیبانی نمیشود&#x27;,
+		enable			: &#x27;فعالسازی SCAYT&#x27;,
+		disable			: &#x27;غیرفعالسازی SCAYT&#x27;,
+		about			: &#x27;درباره SCAYT&#x27;,
+		toggle			: &#x27;ضامن SCAYT&#x27;,
+		options			: &#x27;گزینهها&#x27;,
+		langs			: &#x27;زبانها&#x27;,
+		moreSuggestions	: &#x27;پیشنهادهای بیشتر&#x27;,
+		ignore			: &#x27;عبور کردن&#x27;,
+		ignoreAll		: &#x27;عبور کردن از همه&#x27;,
+		addWord			: &#x27;افزودن Word&#x27;,
+		emptyDic		: &#x27;نام دیکشنری نباید خالی باشد.&#x27;,
+
+		optionsTab		: &#x27;گزینهها&#x27;,
+		allCaps			: &#x27;نادیده گرفتن همه کلاه-واژهها&#x27;,
+		ignoreDomainNames : &#x27;عبور از نامهای دامنه&#x27;,
+		mixedCase		: &#x27;عبور از کلماتی مرکب از حروف بزرگ و کوچک&#x27;,
+		mixedWithDigits	: &#x27;عبور از کلمات به همراه عدد&#x27;,
+
+		languagesTab	: &#x27;زبانها&#x27;,
+
+		dictionariesTab	: &#x27;دیکشنریها&#x27;,
+		dic_field_name	: &#x27;نام دیکشنری&#x27;,
+		dic_create		: &#x27;ایجاد&#x27;,
+		dic_restore		: &#x27;بازیافت&#x27;,
+		dic_delete		: &#x27;حذف&#x27;,
+		dic_rename		: &#x27;تغییر نام&#x27;,
+		dic_info		: &#x27;در ابتدا دیکشنری کاربر در کوکی ذخیره میشود. با این حال، کوکیها در اندازه محدود شدهاند. وقتی که دیکشنری کاربری بزرگ میشود و به نقطهای که نمیتواند در کوکی ذخیره شود، پس از آن دیکشنری ممکن است بر روی سرور ما ذخیره شود. برای ذخیره دیکشنری شخصی شما بر روی سرور ما، باید یک نام برای دیکشنری خود مشخص نمایید. اگر شما قبلا یک دیکشنری روی سرور ما ذخیره کردهاید، لطفا نام آنرا درج و روی دکمه بازیافت کلیک نمایید.&#x27;,
+
+		aboutTab		: &#x27;درباره&#x27;
+	},
+
+	about :
+	{
+		title		: &#x27;درباره CKEditor&#x27;,
+		dlgTitle	: &#x27;درباره CKEditor&#x27;,
+		help	: &#x27;بررسی $1 برای راهنمایی.&#x27;,
+		userGuide : &#x27;راهنمای کاربران CKEditor&#x27;,
+		moreInfo	: &#x27;برای کسب اطلاعات مجوز لطفا به وب سایت ما مراجعه کنید:&#x27;,
+		copy		: &#x27;حق نشر &amp;copy; $1. کلیه حقوق محفوظ است.&#x27;
+	},
+
+	maximize : &#x27;حداکثر کردن&#x27;,
+	minimize : &#x27;حداقل کردن&#x27;,
+
+	fakeobjects :
+	{
+		anchor		: &#x27;لنگر&#x27;,
+		flash		: &#x27;انیمشن فلش&#x27;,
+		iframe		: &#x27;IFrame&#x27;,
+		hiddenfield	: &#x27;فیلد پنهان&#x27;,
+		unknown		: &#x27;شیء ناشناخته&#x27;
+	},
+
+	resize : &#x27;کشیدن برای تغییر اندازه&#x27;,
+
+	colordialog :
+	{
+		title		: &#x27;انتخاب رنگ&#x27;,
+		options	:	&#x27;گزینههای رنگ&#x27;,
+		highlight	: &#x27;متمایز&#x27;,
+		selected	: &#x27;رنگ انتخاب شده&#x27;,
+		clear		: &#x27;پاک کردن&#x27;
+	},
+
+	toolbarCollapse	: &#x27;بستن نوار ابزار&#x27;,
+	toolbarExpand	: &#x27;بازکردن نوار ابزار&#x27;,
+
+	toolbarGroups :
+	{
+		document : &#x27;سند&#x27;,
+		clipboard : &#x27;حافظه موقت&#x2F;برگشت&#x27;,
+		editing : &#x27;در حال ویرایش&#x27;,
+		forms : &#x27;فرمها&#x27;,
+		basicstyles : &#x27;شیوههای پایه&#x27;,
+		paragraph : &#x27;بند&#x27;,
+		links : &#x27;پیوندها&#x27;,
+		insert : &#x27;ورود&#x27;,
+		styles : &#x27;شیوهها&#x27;,
+		colors : &#x27;رنگها&#x27;,
+		tools : &#x27;ابزارها&#x27;
+	},
+
+	bidi :
+	{
+		ltr : &#x27;نوشتار متن از چپ به راست&#x27;,
+		rtl : &#x27;نوشتار متن از راست به چپ&#x27;
+	},
+
+	docprops :
+	{
+		label : &#x27;ویژگیهای سند&#x27;,
+		title : &#x27;ویژگیهای سند&#x27;,
+		design : &#x27;طراحی&#x27;,
+		meta : &#x27;فراداده&#x27;,
+		chooseColor : &#x27;انتخاب&#x27;,
+		other : &#x27;&lt;سایر&gt;&#x27;,
+		docTitle :	&#x27;عنوان صفحه&#x27;,
+		charset : 	&#x27;رمزگذاری نویسهگان&#x27;,
+		charsetOther : &#x27;رمزگذاری نویسهگان دیگر&#x27;,
+		charsetASCII : &#x27;ASCII&#x27;,
+		charsetCE : &#x27;اروپای مرکزی&#x27;,
+		charsetCT : &#x27;چینی رسمی (Big5)&#x27;,
+		charsetCR : &#x27;سیریلیک&#x27;,
+		charsetGR : &#x27;یونانی&#x27;,
+		charsetJP : &#x27;ژاپنی&#x27;,
+		charsetKR : &#x27;کرهای&#x27;,
+		charsetTR : &#x27;ترکی&#x27;,
+		charsetUN : &#x27;یونیکُد (UTF-8)&#x27;,
+		charsetWE : &#x27;اروپای غربی&#x27;,
+		docType : &#x27;عنوان نوع سند&#x27;,
+		docTypeOther : &#x27;عنوان نوع سند دیگر&#x27;,
+		xhtmlDec : &#x27;شامل تعاریف XHTML&#x27;,
+		bgColor : &#x27;رنگ پسزمینه&#x27;,
+		bgImage : &#x27;URL تصویر پسزمینه&#x27;,
+		bgFixed : &#x27;پسزمینهٴ پیمایش ناپذیر&#x27;,
+		txtColor : &#x27;رنگ متن&#x27;,
+		margin : &#x27;حاشیههای صفحه&#x27;,
+		marginTop : &#x27;بالا&#x27;,
+		marginLeft : &#x27;چپ&#x27;,
+		marginRight : &#x27;راست&#x27;,
+		marginBottom : &#x27;پایین&#x27;,
+		metaKeywords : &#x27;کلیدواژگان نمایهگذاری سند (با کاما جدا شوند)&#x27;,
+		metaDescription : &#x27;توصیف سند&#x27;,
+		metaAuthor : &#x27;نویسنده&#x27;,
+		metaCopyright : &#x27;حق انتشار&#x27;,
+		previewHtml : &#x27;&lt;p&gt;این یک &lt;strong&gt;متن نمونه&lt;&#x2F;strong&gt; است. شما در حال استفاده از &lt;a href=&quot;javascript:void(0)&quot;&gt;CKEditor&lt;&#x2F;a&gt; هستید.&lt;&#x2F;p&gt;&#x27;
+	}
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

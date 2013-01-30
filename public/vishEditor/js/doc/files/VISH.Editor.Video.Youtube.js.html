@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Editor.Video.Youtube.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Editor.Video.Youtube.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+VISH.Editor.Video.Youtube = (function(V,$,undefined){
+	
+	var carrouselDivId = &quot;tab_video_youtube_content_carrousel&quot;;
+	var previewDivId = &quot;tab_video_youtube_content_preview&quot;;
+	var queryMaxMaxNumberYoutubeVideo= 20; &#x2F;&#x2F;maximum video query for youtube API&#x27;s (999 max)
+	var currentVideos = new Array(); &#x2F;&#x2F;to videoID param
+	var selectedVideo = null;
+	
+	var init = function(){
+		var myInput = $(&quot;#tab_video_youtube_content&quot;).find(&quot;input[type=&#x27;search&#x27;]&quot;);
+		$(myInput).watermark(VISH.Editor.I18n.getTrans(&quot;i.SearchContent&quot;));
+		$(myInput).keydown(function(event) {
+			if(event.keyCode == 13) {
+				VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
+				$(myInput).blur();
+			}
+		});
+	};
+
+	
+	var onLoadTab = function(){
+		&#x2F;&#x2F;Clean previous content
+		$(&quot;#tab_video_youtube_content&quot;).find(&quot;input[type=&#x27;search&#x27;]&quot;).val(&quot;&quot;);
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$(&quot;#&quot; + carrouselDivId).hide();
+		_cleanVideoPreview();
+	};
+
+	
+    &#x2F;*
+	 Request videos to Youtube API
+	 *&#x2F;	
+	var requestYoutubeData = function(text){
+		var url_youtube = &quot;http:&#x2F;&#x2F;gdata.youtube.com&#x2F;feeds&#x2F;api&#x2F;videos?q=&quot;+text+&quot;&amp;alt=json-in-script&amp;callback=?&amp;max-results=&quot;+queryMaxMaxNumberYoutubeVideo+&quot;&amp;start-index=1&quot;;	 
+		jQuery.getJSON(url_youtube,function (data) {
+			_onDataReceived(data);
+		});
+	};
+
+	var _onDataReceived = function(data) {
+		&#x2F;&#x2F;Clean previous content
+		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$(&quot;#&quot; + carrouselDivId).hide();
+		&#x2F;&#x2F;clean previous preview if any
+		_cleanVideoPreview();
+
+		&#x2F;&#x2F;Clean previous videos
+		currentVideos = new Array();
+
+		&#x2F;&#x2F;Clean carrousel images
+		var carrouselImages = [];
+
+		var content = &quot;&quot;;
+
+		if((!data.feed)||(data.feed.length==0)||(!data.feed.entry)){
+			$(&quot;#&quot; + carrouselDivId).html(&quot;&lt;p class=&#x27;carrouselNoResults&#x27;&gt; No results found &lt;&#x2F;p&gt;&quot;);
+			$(&quot;#&quot; + carrouselDivId).show();
+			return
+		} 
+
+		$.each(data.feed.entry, function(i, item) {
+			var video = item[&#x27;id&#x27;][&#x27;$t&#x27;];
+			var title = item[&#x27;title&#x27;][&#x27;$t&#x27;]; &#x2F;&#x2F;not used yet
+			var author = item.author[0].name.$t;
+			var subtitle = item.media$group.media$description.$t;
+
+			video=video.replace(&#x27;http:&#x2F;&#x2F;gdata.youtube.com&#x2F;feeds&#x2F;api&#x2F;videos&#x2F;&#x27;, &#x27;http:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=&#x27;); &#x2F;&#x2F;replacement of link
+			var videoID = video.replace(&#x27;http:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=&#x27;, &#x27;&#x27;); &#x2F;&#x2F;removing link and getting the video ID
+			&#x2F;&#x2F;url&#x27;s video thumbnail 
+			currentVideos[videoID] = new Object();
+			currentVideos[videoID].id = videoID;
+			currentVideos[videoID].title = title;
+			currentVideos[videoID].author = author;
+			currentVideos[videoID].subtitle = subtitle;
+
+			var image_url = &quot;http:&#x2F;&#x2F;img.youtube.com&#x2F;vi&#x2F;&quot;+videoID+&quot;&#x2F;0.jpg&quot; 
+			var myImg = $(&quot;&lt;img videoID=&quot;+videoID+&quot; src=&quot;+image_url+&quot; &#x2F;&gt;&quot;)
+			carrouselImages.push(myImg); 
+		});
+			
+		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+	};
+
+	var _onImagesLoaded = function(){
+		$(&quot;#&quot; + carrouselDivId).show();
+		var options = new Array();
+		options[&#x27;rows&#x27;] = 1;
+		options[&#x27;callback&#x27;] = VISH.Editor.Video.Youtube.onClickCarrouselElement;
+		options[&#x27;rowItems&#x27;] = 5;
+		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+	}
+	
+	var addSelectedVideo = function() {
+		if(selectedVideo != null) {
+			VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo.id));
+			$.fancybox.close();
+		}
+	};
+
+
+	&#x2F;** 
+	* Funcion to show a preview youtube video and select to embed into the zone
+	* video_id    
+	*&#x2F;
+	var onClickCarrouselElement = function(event) {
+		var videoId = $(event.target).attr(&quot;videoID&quot;);
+		var renderedPreviewVideo = _generatePreviewWrapper(videoId);
+		_renderVideoPreview(renderedPreviewVideo, currentVideos[videoId]);
+		selectedVideo = currentVideos[videoId];
+	};
+
+  
+	var _renderVideoPreview = function(renderedIframe, video) {
+		var videoArea = $(&quot;#&quot; + previewDivId).find(&quot;#tab_video_youtube_content_preview_video&quot;);
+		var metadataArea = $(&quot;#&quot; + previewDivId).find(&quot;#tab_video_youtube_content_preview_metadata&quot;);
+		var button = $(&quot;#&quot; + previewDivId).find(&quot;.okButton&quot;);
+		$(videoArea).html(&quot;&quot;);
+		$(metadataArea).html(&quot;&quot;);
+		if((renderedIframe) &amp;&amp; (video)) {
+			$(videoArea).append(renderedIframe);
+			var table = VISH.Editor.Utils.generateTable(video.author, video.title, video.description);
+			$(metadataArea).html(table);
+			$(button).show();
+		}
+	};
+  
+  
+	var _cleanVideoPreview = function() {
+		var videoArea = $(&quot;#&quot; + previewDivId).find(&quot;#tab_video_youtube_content_preview_video&quot;);
+		var metadataArea = $(&quot;#&quot; + previewDivId).find(&quot;#tab_video_youtube_content_preview_metadata&quot;);
+		var button = $(&quot;#&quot; + previewDivId).find(&quot;.okButton&quot;);
+		$(videoArea).html(&quot;&quot;);
+		$(metadataArea).html(&quot;&quot;);
+		$(button).hide();
+	};
+
+ 
+	var _generateWrapper = function (videoId) {
+		var video_embedded = &quot;http:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;&quot;+videoId;
+		current_area=  VISH.Editor.getCurrentArea();
+		var width_height = VISH.Editor.Utils.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
+		var wrapper = &quot;&lt;iframe src=&#x27;&quot;+video_embedded+&quot;?wmode=opaque&#x27; frameborder=&#x27;0&#x27; style=&#x27;width:&quot;+width_height.width+ &quot;px; height:&quot;+ width_height.height+ &quot;px;&#x27;&gt;&lt;&#x2F;iframe&gt;&quot;;
+		return wrapper;
+	}
+ 
+	var generateWrapperForYoutubeVideoUrl = function (url){
+		var videoId = VISH.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		if(videoId!=null){
+			return _generateWrapper(videoId);
+		} else {
+			return &quot;Youtube Video ID can&#x27;t be founded.&quot;
+		}
+	}
+ 
+	var _generatePreviewWrapper = function (videoId) {
+		var video_embedded = &quot;http:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;&quot;+videoId;
+		var wrapper = &#x27;&lt;iframe class=&quot;objectPreview&quot; type=&quot;text&#x2F;html&quot; src=&quot;&#x27;+video_embedded+&#x27;?wmode=opaque&quot; frameborder=&quot;0&quot;&gt;&lt;&#x2F;iframe&gt;&#x27;;
+		return wrapper;
+	}
+ 
+	var generatePreviewWrapperForYoutubeVideoUrl = function (url){
+		var videoId = VISH.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		if(videoId!=null){
+			return _generatePreviewWrapper(videoId);
+		} else {
+			return &quot;&lt;p class=&#x27;objectPreview&#x27;&gt;Youtube Video ID can&#x27;t be founded.&lt;&#x2F;p&gt;&quot;
+		}
+	}
+
+  return {
+		init		  								: init,
+		onLoadTab	  								: onLoadTab,
+		onClickCarrouselElement 					: onClickCarrouselElement, 
+		requestYoutubeData 							: requestYoutubeData,
+		addSelectedVideo							: addSelectedVideo,
+		generateWrapperForYoutubeVideoUrl 			: generateWrapperForYoutubeVideoUrl,
+		generatePreviewWrapperForYoutubeVideoUrl 	: generatePreviewWrapperForYoutubeVideoUrl
+  };
+
+}) (VISH, jQuery);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,3 +1,8 @@
+/**
+ * ViSH Editor
+ * @namespace VISH
+ * @class Editor
+ */
 VISH.Editor = (function(V,$,undefined){
 	
 	//boolean to indicate if we are editing a previous presentation.
@@ -26,17 +31,20 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	/**
-	 * VISH editor initializer
-	 * Adds the listeners to the click events in the different images and buttons
-	 * Call submodule initializers
-	 * options is a hash with params and options received from the server
-	 * presentation is the presentation to edit (in not present, a new presentation is created)
+	 * VISH Editor initializer.
+	 * Adds the listeners to the click events in the different images and buttons.
+	 * Call submodule initializers.
+	 *
+	 * @param {hashTable} options Hash with params and options received from the server.
+	 * @param {JSONObject} presentation Presentation to edit (if not present, a new presentation is created).
+	 *
+	 * @method init
 	 */
 	var init = function(options, presentation){
-		VISH.Debugging.init(options);
-
-		//first set VISH.Editing to true
 		VISH.Editing = true;
+
+		VISH.Debugging.init(options);
+		
 		if(options){
 			initOptions = options;
 			if((options["configuration"])&&(VISH.Configuration)){

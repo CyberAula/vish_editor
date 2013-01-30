@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>libs&#x2F;ckeditor&#x2F;lang&#x2F;ku.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: libs&#x2F;ckeditor&#x2F;lang&#x2F;ku.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+﻿&#x2F;*
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http:&#x2F;&#x2F;ckeditor.com&#x2F;license
+*&#x2F;
+
+&#x2F;*
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http:&#x2F;&#x2F;ckeditor.com&#x2F;license
+*&#x2F;
+
+&#x2F;**
+* @fileOverview
+*&#x2F;
+
+&#x2F;**#@+
+   @type String
+   @example
+*&#x2F;
+
+&#x2F;**
+ * Contains the dictionary of language entries.
+ * @namespace
+ *&#x2F;
+CKEDITOR.lang[&#x27;ku&#x27;] =
+{
+	&#x2F;**
+	 * The language reading direction. Possible values are &quot;rtl&quot; for
+	 * Right-To-Left languages (like Arabic) and &quot;ltr&quot; for Left-To-Right
+	 * languages (like English).
+	 * @default &#x27;ltr&#x27;
+	 *&#x2F;
+	dir : &#x27;rtl&#x27;,
+
+	&#x2F;*
+	 * Screenreader titles. Please note that screenreaders are not always capable
+	 * of reading non-English words. So be careful while translating it.
+	 *&#x2F;
+	editorTitle : &#x27;ده‌سکاریکه‌ری ناونیشان&#x27;,
+	editorHelp : &#x27;کلیکی ALT له‌گه‌ڵ 0 بکه‌ بۆ یارمه‌تی&#x27;,
+
+	&#x2F;&#x2F; ARIA descriptions.
+	toolbars	: &#x27;تووڵاەرازی دەسکاریکەر&#x27;,
+	editor		: &#x27;سەرنووسەی دەقی بەپیت&#x27;,
+
+	&#x2F;&#x2F; Toolbar buttons without dialogs.
+	source			: &#x27;سەرچاوە&#x27;,
+	newPage			: &#x27;پەڕەیەکی نوێ&#x27;,
+	save			: &#x27;پاشکەوتکردن&#x27;,
+	preview			: &#x27;پێشبینین&#x27;,
+	cut				: &#x27;بڕین&#x27;,
+	copy			: &#x27;لەبەرگرنتەوه&#x27;,
+	paste			: &#x27;لکاندن&#x27;,
+	print			: &#x27;چاپکردن&#x27;,
+	underline		: &#x27;ژێرهێڵ&#x27;,
+	bold			: &#x27;قەڵەو&#x27;,
+	italic			: &#x27;لار&#x27;,
+	selectAll		: &#x27;نیشانکردنی هەمووی&#x27;,
+	removeFormat	: &#x27;لابردنی داڕشتەکە&#x27;,
+	strike			: &#x27;لێدان&#x27;,
+	subscript		: &#x27;ژێرنووس&#x27;,
+	superscript		: &#x27;سەرنووس&#x27;,
+	horizontalrule	: &#x27;دانانی هێلی ئاسۆیی&#x27;,
+	pagebreak		: &#x27;دانانی پشووی پەڕە بۆ چاپکردن&#x27;,
+	pagebreakAlt		: &#x27;پشووی پەڕە&#x27;,
+	unlink			: &#x27;لابردنی بەستەر&#x27;,
+	undo			: &#x27;پووچکردنەوه&#x27;,
+	redo			: &#x27;هەڵگەڕاندنەوه&#x27;,
+
+	&#x2F;&#x2F; Common messages and labels.
+	common :
+	{
+		browseServer	: &#x27;هێنانی ڕاژە&#x27;,
+		url				: &#x27;ناونیشانی بەستەر&#x27;,
+		protocol		: &#x27;پڕۆتۆکۆڵ&#x27;,
+		upload			: &#x27;بارکردن&#x27;,
+		uploadSubmit	: &#x27;ناردنی بۆ ڕاژە&#x27;,
+		image			: &#x27;وێنە&#x27;,
+		flash			: &#x27;فلاش&#x27;,
+		form			: &#x27;داڕشتە&#x27;,
+		checkbox		: &#x27;خانەی نیشانکردن&#x27;,
+		radio			: &#x27;جێگرەوەی دوگمە&#x27;,
+		textField		: &#x27;خانەی دەق&#x27;,
+		textarea		: &#x27;ڕووبەری دەق&#x27;,
+		hiddenField		: &#x27;شاردنەوی خانە&#x27;,
+		button			: &#x27;دوگمە&#x27;,
+		select			: &#x27;هەڵبژاردەی خانە&#x27;,
+		imageButton		: &#x27;دوگمەی وێنە&#x27;,
+		notSet			: &#x27;&lt;هیچ دانەدراوە&gt;&#x27;,
+		id				: &#x27;ناسنامە&#x27;,
+		name			: &#x27;ناو&#x27;,
+		langDir			: &#x27;ئاراستەی زمان&#x27;,
+		langDirLtr		: &#x27;چەپ بۆ ڕاست (LTR)&#x27;,
+		langDirRtl		: &#x27;ڕاست بۆ چەپ (RTL)&#x27;,
+		langCode		: &#x27;هێمای زمان&#x27;,
+		longDescr		: &#x27;پێناسەی درێژی بەستەر&#x27;,
+		cssClass		: &#x27;شێوازی چینی په‌ڕە&#x27;,
+		advisoryTitle	: &#x27;ڕاوێژکاری سەردێڕ&#x27;,
+		cssStyle		: &#x27;شێواز&#x27;,
+		ok				: &#x27;باشە&#x27;,
+		cancel			: &#x27;هەڵوەشاندن&#x27;,
+		close			: &#x27;داخستن&#x27;,
+		preview			: &#x27;پێشبینین&#x27;,
+		generalTab		: &#x27;گشتی&#x27;,
+		advancedTab		: &#x27;په‌ره‌سه‌ندوو&#x27;,
+		validateNumberFailed : &#x27;ئەم نرخە ژمارە نیه، تکایە نرخێکی ژمارە بنووسە.&#x27;,
+		confirmNewPage	: &#x27;سەرجەم گۆڕانکاریەکان و پێکهاتەکانی ناوەووە لەدەست دەدەی گەر بێتوو پاشکەوتی نەکەی یەکەم جار، تۆ هەر دڵنیایی لەکردنەوەی پەنجەرەکی نوێ؟&#x27;,
+		confirmCancel	: &#x27;هەندێك هەڵبژاردە گۆڕدراوە. تۆ دڵنیایی له‌داخستنی ئەم دیالۆگە؟&#x27;,
+		options			: &#x27;هەڵبژاردە&#x27;,
+		target			: &#x27;ئامانج&#x27;,
+		targetNew		: &#x27;پەنجەرەیه‌کی نوێ (_blank)&#x27;,
+		targetTop		: &#x27;لووتکەی پەنجەرە (_top)&#x27;,
+		targetSelf		: &#x27;لەهەمان پەنجەرە (_self)&#x27;,
+		targetParent	: &#x27;پەنجەرەی باوان (_parent)&#x27;,
+		langDirLTR		: &#x27;چەپ بۆ ڕاست (LTR)&#x27;,
+		langDirRTL		: &#x27;ڕاست بۆ چەپ (RTL)&#x27;,
+		styles			: &#x27;شێواز&#x27;,
+		cssClasses		: &#x27;شێوازی چینی پەڕە&#x27;,
+		width			: &#x27;پانی&#x27;,
+		height			: &#x27;درێژی&#x27;,
+		align			: &#x27;ڕێککەرەوە&#x27;,
+		alignLeft		: &#x27;چەپ&#x27;,
+		alignRight		: &#x27;ڕاست&#x27;,
+		alignCenter		: &#x27;ناوەڕاست&#x27;,
+		alignTop		: &#x27;سەرەوە&#x27;,
+		alignMiddle		: &#x27;ناوەند&#x27;,
+		alignBottom		: &#x27;ژێرەوە&#x27;,
+		invalidValue	: &#x27;نرخێکی نادرووست.&#x27;,
+		invalidHeight	: &#x27;درێژی دەبێت ژمارە بێت.&#x27;,
+		invalidWidth	: &#x27;پانی دەبێت ژمارە بێت.&#x27;,
+		invalidCssLength	: &#x27;ئەم نرخەی دراوە بۆ خانەی &quot;%1&quot; دەبێت ژمارەکی درووست بێت یان بێ ناونیشانی ئامرازی (px, %, in, cm, mm, em, ex, pt, یان pc).&#x27;,
+		invalidHtmlLength	: &#x27;ئەم نرخەی دراوە بۆ خانەی &quot;%1&quot; دەبێت ژمارەکی درووست بێت یان بێ ناونیشانی ئامرازی HTML (px یان %).&#x27;,
+		invalidInlineStyle	: &#x27;دانه‌ی نرخی شێوازی ناوهێڵ ده‌بێت پێکهاتبێت له‌یه‌ك یان زیاتری داڕشته‌ &quot;ناو : نرخ&quot;, جیاکردنه‌وه‌ی به‌فاریزه‌وخاڵ&#x27;,
+		cssLengthTooltip	: &#x27;ژماره‌یه‌ك بنووسه‌ بۆ نرخی piksel یان ئامرازێکی درووستی CSS (px, %, in, cm, mm, em, ex, pt, یان pc).&#x27;,
+
+		&#x2F;&#x2F; Put the voice-only part of the label in the span.
+		unavailable		: &#x27;%1&lt;span class=&quot;cke_accessibility&quot;&gt;, ئامادە نیە&lt;&#x2F;span&gt;&#x27;
+	},
+
+	contextmenu :
+	{
+		options : &#x27;هەڵبژاردەی لیستەی کلیکی دەستی ڕاست&#x27;
+	},
+
+	&#x2F;&#x2F; Special char dialog.
+	specialChar		:
+	{
+		toolbar		: &#x27;دانانەی نووسەی تایبەتی&#x27;,
+		title		: &#x27;هەڵبژاردنی نووسەی تایبەتی&#x27;,
+		options : &#x27;هەڵبژاردەی نووسەی تایبەتی&#x27;
+	},
+
+	&#x2F;&#x2F; Link dialog.
+	link :
+	{
+		toolbar		: &#x27;دانان&#x2F;ڕێکخستنی بەستەر&#x27;,
+		other 		: &#x27;&lt;هیتر&gt;&#x27;,
+		menu		: &#x27;چاکسازی بەستەر&#x27;,
+		title		: &#x27;بەستەر&#x27;,
+		info		: &#x27;زانیاری بەستەر&#x27;,
+		target		: &#x27;ئامانج&#x27;,
+		upload		: &#x27;بارکردن&#x27;,
+		advanced	: &#x27;پێشکه‌وتوو&#x27;,
+		type		: &#x27;جۆری به‌سته‌ر&#x27;,
+		toUrl		: &#x27;ناونیشانی به‌سته‌ر&#x27;,
+		toAnchor	: &#x27;به‌سته‌ر بۆ له‌نگه‌ر له‌ ده‌ق&#x27;,
+		toEmail		: &#x27;ئیمه‌یل&#x27;,
+		targetFrame		: &#x27;&lt;چووارچێوه&gt;&#x27;,
+		targetPopup		: &#x27;&lt;په‌نجه‌ره‌ی سه‌رهه‌ڵده‌ر&gt;&#x27;,
+		targetFrameName	: &#x27;ناوی ئامانجی چووارچێوه&#x27;,
+		targetPopupName	: &#x27;ناوی په‌نجه‌ره‌ی سه‌رهه‌ڵده‌ر&#x27;,
+		popupFeatures	: &#x27;خاسیه‌تی په‌نجه‌ره‌ی سه‌رهه‌ڵده‌ر&#x27;,
+		popupResizable	: &#x27;توانای گۆڕینی قه‌باره‌&#x27;,
+		popupStatusBar	: &#x27;هێڵی دۆخ&#x27;,
+		popupLocationBar: &#x27;هێڵی ناونیشانی به‌سته‌ر&#x27;,
+		popupToolbar	: &#x27;هێڵی تووڵامراز&#x27;,
+		popupMenuBar	: &#x27;هێڵی لیسته&#x27;,
+		popupFullScreen	: &#x27;پڕ به‌پڕی شاشه‌ (IE)&#x27;,
+		popupScrollBars	: &#x27;هێڵی هاتووچۆپێکردن&#x27;,
+		popupDependent	: &#x27;پێوه‌به‌ستراو (Netscape)&#x27;,
+		popupLeft		: &#x27;جێگای چه‌پ&#x27;,
+		popupTop		: &#x27;جێگای سه‌ره‌وه‌&#x27;,
+		id				: &#x27;ناسنامه&#x27;,
+		langDir			: &#x27;ئاراسته‌ی زمان&#x27;,
+		langDirLTR		: &#x27;چه‌پ بۆ ڕاست (LTR)&#x27;,
+		langDirRTL		: &#x27;ڕاست بۆ چه‌پ (RTL)&#x27;,
+		acccessKey		: &#x27;کلیلی ده‌ستپێگه‌یشتن&#x27;,
+		name			: &#x27;ناو&#x27;,
+		langCode			: &#x27;هێمای زمان&#x27;,
+		tabIndex			: &#x27;بازده‌ری تابی  ئیندێکس&#x27;,
+		advisoryTitle		: &#x27;ڕاوێژکاری سه‌ردێڕ&#x27;,
+		advisoryContentType	: &#x27;جۆری ناوه‌ڕۆکی ڕاویژکار&#x27;,
+		cssClasses		: &#x27;شێوازی چینی په‌ڕه‌&#x27;,
+		charset			: &#x27;بەستەری سەرچاوەی نووسه&#x27;,
+		styles			: &#x27;شێواز&#x27;,
+		rel			: &#x27;په‌یوه‌ندی (rel)&#x27;,
+		selectAnchor		: &#x27;هه‌ڵبژاردنی له‌نگه‌رێك&#x27;,
+		anchorName		: &#x27;به‌پێی ناوی له‌نگه‌ر&#x27;,
+		anchorId			: &#x27;به‌پێی ناسنامه‌ی توخم&#x27;,
+		emailAddress		: &#x27;ناونیشانی ئیمه‌یل&#x27;,
+		emailSubject		: &#x27;بابه‌تی نامه&#x27;,
+		emailBody		: &#x27;ناوه‌ڕۆکی نامه&#x27;,
+		noAnchors		: &#x27;(هیچ جۆرێکی له‌نگه‌ر ئاماده‌ نیه له‌م په‌ڕه‌یه)&#x27;,
+		noUrl			: &#x27;تکایه‌ ناونیشانی به‌سته‌ر بنووسه&#x27;,
+		noEmail			: &#x27;تکایه‌ ناونیشانی ئیمه‌یل بنووسه&#x27;
+	},
+
+	&#x2F;&#x2F; Anchor dialog
+	anchor :
+	{
+		toolbar		: &#x27;دانان&#x2F;چاکسازی له‌نگه‌ر&#x27;,
+		menu		: &#x27;چاکسازی له‌نگه‌ر&#x27;,
+		title		: &#x27;خاسیه‌تی له‌نگه‌ر&#x27;,
+		name		: &#x27;ناوی له‌نگه‌ر&#x27;,
+		errorName	: &#x27;تکایه‌ ناوی له‌نگه‌ر بنووسه&#x27;,
+		remove		: &#x27;لابردنی له‌نگه‌ر&#x27;
+	},
+
+	&#x2F;&#x2F; List style dialog
+	list:
+	{
+		numberedTitle		: &#x27;خاسیه‌تی لیستی ژماره‌یی&#x27;,
+		bulletedTitle		: &#x27;خاسیه‌تی لیستی خاڵی&#x27;,
+		type				: &#x27;جۆر&#x27;,
+		start				: &#x27;ده‌ستپێکردن&#x27;,
+		validateStartNumber				:&#x27;ده‌ستپێکه‌ری لیستی ژماره‌یی ده‌بێت ته‌نها ژماره‌ بێت.&#x27;,
+		circle				: &#x27;بازنه&#x27;,
+		disc				: &#x27;په‌پکه&#x27;,
+		square				: &#x27;چووراگۆشه&#x27;,
+		none				: &#x27;هیچ&#x27;,
+		notset				: &#x27;&lt;دانه‌ندراوه&gt;&#x27;,
+		armenian			: &#x27;ئاراسته‌ی ژماره‌ی ئه‌رمه‌نی&#x27;,
+		georgian			: &#x27;ئاراسته‌ی ژماره‌ی جۆڕجی (an, ban, gan, وه‌هیتر.)&#x27;,
+		lowerRoman			: &#x27;ژماره‌ی ڕۆمی بچووك (i, ii, iii, iv, v, وه‌هیتر.)&#x27;,
+		upperRoman			: &#x27;ژماره‌ی ڕۆمی گه‌وره (I, II, III, IV, V, وه‌هیتر.)&#x27;,
+		lowerAlpha			: &#x27;ئه‌لفابێی بچووك (a, b, c, d, e, وه‌هیتر.)&#x27;,
+		upperAlpha			: &#x27;ئه‌لفابێی گه‌وره‌ (A, B, C, D, E, وه‌هیتر.)&#x27;,
+		lowerGreek			: &#x27;یۆنانی بچووك (alpha, beta, gamma, وه‌هیتر.)&#x27;,
+		decimal				: &#x27;ژماره (1, 2, 3, وه‌هیتر.)&#x27;,
+		decimalLeadingZero	: &#x27;ژماره‌ سفڕی له‌پێشه‌وه (01, 02, 03, وه‌هیتر.)&#x27;
+	},
+
+	&#x2F;&#x2F; Find And Replace Dialog
+	findAndReplace :
+	{
+		title				: &#x27;گه‌ڕان وه‌ له‌بریدانان&#x27;,
+		find				: &#x27;گه‌ڕان&#x27;,
+		replace				: &#x27;له‌بریدانان&#x27;,
+		findWhat			: &#x27;گه‌ڕان به‌دووای:&#x27;,
+		replaceWith			: &#x27;له‌بریدانان به‌:&#x27;,
+		notFoundMsg			: &#x27;هیچ ده‌قه‌ گه‌ڕانێك نه‌دۆزراوه.&#x27;,
+		findOptions			: &#x27;هه‌ڵبژارده‌کانی گه‌ڕان&#x27;,
+		matchCase			: &#x27;جیاکردنه‌وه‌ له‌نێوان پیتی گه‌وره‌و بچووك&#x27;,
+		matchWord			: &#x27;ته‌نها هه‌موو وشه‌که‌&#x27;,
+		matchCyclic			: &#x27;گه‌ڕان له‌هه‌موو په‌ڕه‌که&#x27;,
+		replaceAll			: &#x27;له‌بریدانانی هه‌مووی&#x27;,
+		replaceSuccessMsg	: &#x27; پێشهاته(ی) له‌بری دانرا. %1&#x27;
+	},
+
+	&#x2F;&#x2F; Table Dialog
+	table :
+	{
+		toolbar		: &#x27;خشته&#x27;,
+		title		: &#x27;خاسیه‌تی خشته&#x27;,
+		menu		: &#x27;خاسیه‌تی خشته&#x27;,
+		deleteTable	: &#x27;سڕینه‌وه‌ی خشته&#x27;,
+		rows		: &#x27;ڕیز&#x27;,
+		columns		: &#x27;ستوونه‌کان&#x27;,
+		border		: &#x27;گه‌وره‌یی په‌راوێز&#x27;,
+		widthPx		: &#x27;وێنه‌خاڵ - پیکسل&#x27;,
+		widthPc		: &#x27;له‌سه‌دا&#x27;,
+		widthUnit	: &#x27;پانی یه‌که‌&#x27;,
+		cellSpace	: &#x27;بۆشایی خانه&#x27;,
+		cellPad		: &#x27;بۆشایی ناوپۆش&#x27;,
+		caption		: &#x27;سه‌ردێڕ&#x27;,
+		summary		: &#x27;کورته&#x27;,
+		headers		: &#x27;سه‌رپه‌ڕه‌&#x27;,
+		headersNone		: &#x27;هیچ&#x27;,
+		headersColumn	: &#x27;یه‌که‌م ئه‌ستوون&#x27;,
+		headersRow		: &#x27;یه‌که‌م ڕیز&#x27;,
+		headersBoth		: &#x27;هه‌ردووك&#x27;,
+		invalidRows		: &#x27;ژماره‌ی ڕیز ده‌بێت گه‌وره‌تر بێت له‌ژماره‌ی 0.&#x27;,
+		invalidCols		: &#x27;ژماره‌ی ئه‌ستوونی ده‌بێت گه‌وره‌تر بێت له‌ژماره‌ی 0.&#x27;,
+		invalidBorder	: &#x27;ژماره‌ی په‌راوێز ده‌بێت ته‌نها ژماره‌ بێت.&#x27;,
+		invalidWidth	: &#x27;پانی خشته‌ ده‌بێت ته‌نها ژماره‌ بێت.&#x27;,
+		invalidHeight	: &#x27;درێژی خشته ده‌بێت ته‌نها ژماره‌ بێت.&#x27;,
+		invalidCellSpacing	: &#x27;بۆشایی خانه‌ ده‌بێت ژماره‌کی درووست بێت.&#x27;,
+		invalidCellPadding	: &#x27;ناوپۆشی خانه‌ ده‌بێت ژماره‌کی درووست بێت.&#x27;,
+
+		cell :
+		{
+			menu			: &#x27;خانه&#x27;,
+			insertBefore	: &#x27;دانانی خانه‌ له‌پێش&#x27;,
+			insertAfter		: &#x27;دانانی خانه له‌پاش&#x27;,
+			deleteCell		: &#x27;سڕینه‌وه‌ی خانه&#x27;,
+			merge			: &#x27;تێکه‌ڵکردنی خانه&#x27;,
+			mergeRight		: &#x27;تێکه‌ڵکردنی له‌گه‌ڵ ڕاست&#x27;,
+			mergeDown		: &#x27;تێکه‌ڵکردنی له‌گه‌ڵ خواره‌وه&#x27;,
+			splitHorizontal	: &#x27;دابه‌شکردنی خانه‌ی ئاسۆیی&#x27;,
+			splitVertical	: &#x27;دابه‌شکردنی خانه‌ی ئه‌ستونی&#x27;,
+			title			: &#x27;خاسیه‌تی خانه&#x27;,
+			cellType		: &#x27;جۆری خانه&#x27;,
+			rowSpan			: &#x27;ماوه‌ی نێوان ڕیز&#x27;,
+			colSpan			: &#x27;بستی ئه‌ستونی&#x27;,
+			wordWrap		: &#x27;پێچانه‌وه‌ی وشه&#x27;,
+			hAlign			: &#x27;ڕیزکردنی ئاسۆیی&#x27;,
+			vAlign			: &#x27;ڕیزکردنی ئه‌ستونی&#x27;,
+			alignBaseline	: &#x27;هێڵه‌بنه‌ڕه‌ت&#x27;,
+			bgColor			: &#x27;ڕه‌نگی پاشبنه‌ما&#x27;,
+			borderColor		: &#x27;ڕه‌نگی په‌راوێز&#x27;,
+			data			: &#x27;داتا&#x27;,
+			header			: &#x27;سه‌رپه‌ڕه‌&#x27;,
+			yes				: &#x27;به‌ڵێ&#x27;,
+			no				: &#x27;نه‌خێر&#x27;,
+			invalidWidth	: &#x27;پانی خانه‌ ده‌بێت به‌ته‌واوی ژماره‌ بێت.&#x27;,
+			invalidHeight	: &#x27;درێژی خانه‌ به‌ته‌واوی ده‌بێت ژماره‌ بێت.&#x27;,
+			invalidRowSpan	: &#x27;ماوه‌ی نێوان ڕیز به‌ته‌واوی ده‌بێت ژماره‌ بێت.&#x27;,
+			invalidColSpan	: &#x27;ماوه‌ی نێوان ئه‌ستونی به‌ته‌واوی ده‌بێت ژماره‌ بێت.&#x27;,
+			chooseColor		: &#x27;هه‌ڵبژاردن&#x27;
+		},
+
+		row :
+		{
+			menu			: &#x27;ڕیز&#x27;,
+			insertBefore	: &#x27;دانانی ڕیز له‌پێش&#x27;,
+			insertAfter		: &#x27;دانانی ڕیز له‌پاش&#x27;,
+			deleteRow		: &#x27;سڕینه‌وه‌ی ڕیز&#x27;
+		},
+
+		column :
+		{
+			menu			: &#x27;ئه‌ستون&#x27;,
+			insertBefore	: &#x27;دانانی ئه‌ستون له‌پێش&#x27;,
+			insertAfter		: &#x27;دانانی ئه‌ستوون له‌پاش&#x27;,
+			deleteColumn	: &#x27;سڕینه‌وه‌ی ئه‌ستوون&#x27;
+		}
+	},
+
+	&#x2F;&#x2F; Button Dialog.
+	button :
+	{
+		title		: &#x27;خاسیه‌تی دوگمه&#x27;,
+		text		: &#x27;(نرخی) ده‌ق&#x27;,
+		type		: &#x27;جۆر&#x27;,
+		typeBtn		: &#x27;دوگمه‌&#x27;,
+		typeSbm		: &#x27;ناردن&#x27;,
+		typeRst		: &#x27;ڕێکخستنه‌وه&#x27;
+	},
+
+	&#x2F;&#x2F; Checkbox and Radio Button Dialogs.
+	checkboxAndRadio :
+	{
+		checkboxTitle : &#x27;خاسیه‌تی چووارگۆشی پشکنین&#x27;,
+		radioTitle	: &#x27;خاسیه‌تی جێگره‌وه‌ی دوگمه&#x27;,
+		value		: &#x27;نرخ&#x27;,
+		selected	: &#x27;هه‌ڵبژاردرا&#x27;
+	},
+
+	&#x2F;&#x2F; Form Dialog.
+	form :
+	{
+		title		: &#x27;خاسیه‌تی داڕشته&#x27;,
+		menu		: &#x27;خاسیه‌تی داڕشته&#x27;,
+		action		: &#x27;کردار&#x27;,
+		method		: &#x27;ڕێگه&#x27;,
+		encoding	: &#x27;به‌کۆدکه‌ر&#x27;
+	},
+
+	&#x2F;&#x2F; Select Field Dialog.
+	select :
+	{
+		title		: &#x27;هه‌ڵبژارده‌ی خاسیه‌تی خانه&#x27;,
+		selectInfo	: &#x27;زانیاری&#x27;,
+		opAvail		: &#x27;هه‌ڵبژارده‌ی هه‌بوو&#x27;,
+		value		: &#x27;نرخ&#x27;,
+		size		: &#x27;گه‌وره‌یی&#x27;,
+		lines		: &#x27;هێڵه‌کان&#x27;,
+		chkMulti	: &#x27;ڕێدان به‌فره‌ هه‌ڵبژارده&#x27;,
+		opText		: &#x27;ده‌ق&#x27;,
+		opValue		: &#x27;نرخ&#x27;,
+		btnAdd		: &#x27;زیادکردن&#x27;,
+		btnModify	: &#x27;گۆڕانکاری&#x27;,
+		btnUp		: &#x27;سه‌ره‌وه&#x27;,
+		btnDown		: &#x27;خواره‌وه&#x27;,
+		btnSetValue : &#x27;دابنێ وه‌ك نرخێکی هه‌ڵبژێردراو&#x27;,
+		btnDelete	: &#x27;سڕینه‌وه&#x27;
+	},
+
+	&#x2F;&#x2F; Textarea Dialog.
+	textarea :
+	{
+		title		: &#x27;خاسیه‌تی ڕووبه‌ری ده‌ق&#x27;,
+		cols		: &#x27;ئه‌ستونیه‌کان&#x27;,
+		rows		: &#x27;ڕیزه‌کان&#x27;
+	},
+
+	&#x2F;&#x2F; Text Field Dialog.
+	textfield :
+	{
+		title		: &#x27;خاسیه‌تی خانه‌ی ده‌ق&#x27;,
+		name		: &#x27;ناو&#x27;,
+		value		: &#x27;نرخ&#x27;,
+		charWidth	: &#x27;پانی نووسه&#x27;,
+		maxChars	: &#x27;ئه‌وپه‌ڕی نووسه&#x27;,
+		type		: &#x27;جۆر&#x27;,
+		typeText	: &#x27;ده‌ق&#x27;,
+		typePass	: &#x27;پێپه‌ڕه‌وشه&#x27;
+	},
+
+	&#x2F;&#x2F; Hidden Field Dialog.
+	hidden :
+	{
+		title	: &#x27;خاسیه‌تی خانه‌ی شاردراوه&#x27;,
+		name	: &#x27;ناو&#x27;,
+		value	: &#x27;نرخ&#x27;
+	},
+
+	&#x2F;&#x2F; Image Dialog.
+	image :
+	{
+		title		: &#x27;خاسیه‌تی وێنه&#x27;,
+		titleButton	: &#x27;خاسیه‌تی دوگمه‌ی وێنه&#x27;,
+		menu		: &#x27;خاسیه‌تی وێنه&#x27;,
+		infoTab		: &#x27;زانیاری وێنه&#x27;,
+		btnUpload	: &#x27;ناردنی بۆ ڕاژه&#x27;,
+		upload		: &#x27;بارکردن&#x27;,
+		alt			: &#x27;جێگره‌وه‌ی ده‌ق&#x27;,
+		lockRatio	: &#x27;داخستنی ڕێژه&#x27;,
+		resetSize	: &#x27;ڕێکخستنه‌وه‌ی قه‌باره&#x27;,
+		border		: &#x27;په‌راوێز&#x27;,
+		hSpace		: &#x27;بۆشایی ئاسۆیی&#x27;,
+		vSpace		: &#x27;بۆشایی ئه‌ستونی&#x27;,
+		alertUrl	: &#x27;تکایه‌ ناونیشانی به‌سته‌ری وێنه‌ بنووسه&#x27;,
+		linkTab		: &#x27;به‌سته‌ر&#x27;,
+		button2Img	: &#x27;تۆ ده‌ته‌وێت دوگمه‌ی وێنه‌ی دیاریکراو بگۆڕیت بۆ وێنه‌کی ئاسایی؟&#x27;,
+		img2Button	: &#x27;تۆ ده‌ته‌وێت وێنه‌ی دیاریکراو بگۆڕیت بۆ دوگمه‌ی وێنه؟&#x27;,
+		urlMissing	: &#x27;سه‌رچاوه‌ی به‌سته‌ری وێنه‌ بزره&#x27;,
+		validateBorder	: &#x27;په‌راوێز ده‌بێت به‌ته‌واوی ته‌نها ژماره‌ بێت.&#x27;,
+		validateHSpace	: &#x27;بۆشایی ئاسۆیی ده‌بێت به‌ته‌واوی ته‌نها ژماره‌ بێت.&#x27;,
+		validateVSpace	: &#x27;بۆشایی ئه‌ستونی ده‌بێت به‌ته‌واوی ته‌نها ژماره‌ بێت.&#x27;
+	},
+
+	&#x2F;&#x2F; Flash Dialog
+	flash :
+	{
+		properties		: &#x27;خاسیه‌تی فلاش&#x27;,
+		propertiesTab	: &#x27;خاسیه‌ت&#x27;,
+		title			: &#x27;خاسیه‌تی فلاش&#x27;,
+		chkPlay			: &#x27;پێکردنی یان لێدانی خۆکار&#x27;,
+		chkLoop			: &#x27;گرێ&#x27;,
+		chkMenu			: &#x27;چالاککردنی لیسته‌ی فلاش&#x27;,
+		chkFull			: &#x27;ڕێپێدان به‌ پڕ به‌پڕی شاشه&#x27;,
+ 		scale			: &#x27;پێوانه&#x27;,
+		scaleAll		: &#x27;نیشاندانی هه‌موو&#x27;,
+		scaleNoBorder	: &#x27;بێ په‌راوێز&#x27;,
+		scaleFit		: &#x27;به‌وردی بگونجێت&#x27;,
+		access			: &#x27;ده‌ستپێگه‌یشتنی نووسراو&#x27;,
+		accessAlways	: &#x27;هه‌میشه&#x27;,
+		accessSameDomain: &#x27;هه‌مان دۆمه‌ین&#x27;,
+		accessNever		: &#x27;هه‌رگیز&#x27;,
+		alignAbsBottom	: &#x27;له‌ ژێره‌وه&#x27;,
+		alignAbsMiddle	: &#x27;له‌ناوه‌ند&#x27;,
+		alignBaseline	: &#x27;هێڵەبنەڕەت&#x27;,
+		alignTextTop	: &#x27;ده‌ق له‌سه‌ره‌وه&#x27;,
+		quality			: &#x27;جۆرایه‌تی&#x27;,
+		qualityBest		: &#x27;باشترین&#x27;,
+		qualityHigh		: &#x27;به‌رزی&#x27;,
+		qualityAutoHigh	: &#x27;به‌رزی خۆکار&#x27;,
+		qualityMedium	: &#x27;مامناوه‌ند&#x27;,
+		qualityAutoLow	: &#x27;نزمی خۆکار&#x27;,
+		qualityLow		: &#x27;نزم&#x27;,
+		windowModeWindow: &#x27;په‌نجه‌ره&#x27;,
+		windowModeOpaque: &#x27;ناڕوون&#x27;,
+		windowModeTransparent : &#x27;ڕۆشن&#x27;,
+		windowMode		: &#x27;شێوازی په‌نجه‌ره&#x27;,
+		flashvars		: &#x27;گۆڕاوه‌کان بۆ فلاش&#x27;,
+		bgcolor			: &#x27;ڕه‌نگی پاشبنه‌ما&#x27;,
+		hSpace			: &#x27;بۆشایی ئاسۆیی&#x27;,
+		vSpace			: &#x27;بۆشایی ئه‌ستونی&#x27;,
+		validateSrc		: &#x27;ناونیشانی به‌سته‌ر نابێت خاڵی بێت&#x27;,
+		validateHSpace	: &#x27;بۆشایی ئاسۆیی ده‌بێت ژماره‌ بێت.&#x27;,
+		validateVSpace	: &#x27;بۆشایی ئه‌ستونی ده‌بێت ژماره‌ بێت.&#x27;
+	},
+
+	&#x2F;&#x2F; Speller Pages Dialog
+	spellCheck :
+	{
+		toolbar			: &#x27;پشکنینی ڕێنووس&#x27;,
+		title			: &#x27;پشکنینی ڕێنووس&#x27;,
+		notAvailable	: &#x27;ببووره‌، له‌مکاته‌دا ڕاژه‌که له‌به‌رده‌ستا نیه.&#x27;,
+		errorLoading	: &#x27;هه‌ڵه‌ له‌هێنانی داخوازینامه‌ی خانه‌خۆێی ڕاژه: %s.&#x27;,
+		notInDic		: &#x27;له‌فه‌رهه‌نگ دانیه&#x27;,
+		changeTo		: &#x27;گۆڕینی بۆ&#x27;,
+		btnIgnore		: &#x27;پشتگوێ کردن&#x27;,
+		btnIgnoreAll	: &#x27;پشتگوێکردنی هه‌مووی&#x27;,
+		btnReplace		: &#x27;له‌بریدانن&#x27;,
+		btnReplaceAll	: &#x27;له‌بریدانانی هه‌مووی&#x27;,
+		btnUndo			: &#x27;پووچکردنه‌وه&#x27;,
+		noSuggestions	: &#x27;- هیچ پێشنیارێك -&#x27;,
+		progress		: &#x27;پشکنینی ڕێنووس له‌به‌رده‌وامبوون دایه...&#x27;,
+		noMispell		: &#x27;پشکنینی ڕێنووس کۆتای هات: هیچ هه‌ڵه‌یه‌کی ڕێنووس نه‌دۆزراوه&#x27;,
+		noChanges		: &#x27;پشکنینی ڕێنووس کۆتای هات: هیچ وشه‌یه‌ك نۆگۆڕدرا&#x27;,
+		oneChange		: &#x27;پشکنینی ڕێنووس کۆتای هات: یه‌ك وشه گۆڕدرا&#x27;,
+		manyChanges		: &#x27;پشکنینی ڕێنووس کۆتای هات: له‌سه‌دا %1 ی وشه‌کان گۆڕدرا&#x27;,
+		ieSpellDownload	: &#x27;پشکنینی ڕێنووس دانه‌مزراوه. ده‌ته‌وێت ئێستا دایبگریت?&#x27;
+	},
+
+	smiley :
+	{
+		toolbar	: &#x27;زه‌رده‌خه‌نه&#x27;,
+		title	: &#x27;دانانی زه‌رده‌خه‌نه‌یه‌ك&#x27;,
+		options : &#x27;هه‌ڵبژارده‌ی زه‌رده‌خه‌نه&#x27;
+	},
+
+	elementsPath :
+	{
+		eleLabel : &#x27;ڕێڕه‌وی توخمه‌کان&#x27;,
+		eleTitle : &#x27;%1 توخم&#x27;
+	},
+
+	numberedlist	: &#x27;دانان&#x2F;لابردنی ژمارەی لیست&#x27;,
+	bulletedlist	: &#x27;دانان&#x2F;لابردنی خاڵی لیست&#x27;,
+	indent			: &#x27;زیادکردنی بۆشایی&#x27;,
+	outdent			: &#x27;کەمکردنەوەی بۆشایی&#x27;,
+
+	justify :
+	{
+		left	: &#x27;به‌هێڵ کردنی چه‌پ&#x27;,
+		center	: &#x27;ناوه‌ڕاست&#x27;,
+		right	: &#x27;به‌هێڵ کردنی ڕاست&#x27;,
+		block	: &#x27;هاوستوونی&#x27;
+	},
+
+	blockquote : &#x27;بەربەستکردنی وتەی وەرگیراو&#x27;,
+
+	clipboard :
+	{
+		title		: &#x27;لکاندن&#x27;,
+		cutError	: &#x27;پارێزی وێبگەڕەکەت ڕێگه‌نادات بە سەرنووسەکە له‌بڕینی خۆکار. تکایە لەبری ئەمە ئەم فەرمانە بەکاربهێنە بەداگرتنی کلیلی (Ctrl&#x2F;Cmd+X).&#x27;,
+		copyError	: &#x27;پارێزی وێبگەڕەکەت ڕێگه‌نادات بەسەرنووسەکە لە لکاندنی دەقی خۆکار. تکایە لەبری ئەمە ئەم فەرمانە بەکاربهێنە بەداگرتنی کلیلی (Ctrl&#x2F;Cmd+C).&#x27;,
+		pasteMsg	: &#x27;تکایه‌ بیلکێنه‌ له‌ناوه‌وه‌ی ئه‌م سنوقه له‌ڕێی ته‌خته‌کلیله‌که‌ت به‌باکارهێنانی کلیلی (&lt;STRONG&gt;Ctrl&#x2F;Cmd+V&lt;&#x2F;STRONG&gt;) دووای کلیکی باشه‌ بکه.&#x27;,
+		securityMsg	: &#x27;به‌هۆی شێوه‌پێدانی پارێزی وێبگه‌ڕه‌که‌ت، سه‌رنووسه‌که‌ ناتوانێت ده‌ستبگه‌یه‌نێت به‌هه‌ڵگیراوه‌که ڕاسته‌وخۆ. بۆیه‌ پێویسته دووباره‌ بیلکێنیت له‌م په‌نجه‌ره‌یه‌.&#x27;,
+		pasteArea	: &#x27;ناوچه‌ی لکاندن&#x27;
+	},
+
+	pastefromword :
+	{
+		confirmCleanup	: &#x27;ئه‌م ده‌قه‌ی به‌ته‌مای بیلکێنی پێده‌چێت له‌ word هێنرابێت. ده‌ته‌وێت پاکی بکه‌یوه‌ پێش ئه‌وه‌ی بیلکێنی؟&#x27;,
+		toolbar			: &#x27;لکاندنی له‌ڕێی Word&#x27;,
+		title			: &#x27;لکاندنی له‌لایه‌ن Word&#x27;,
+		error			: &#x27;هیچ ڕێگه‌یه‌ك نه‌بوو له‌لکاندنی ده‌قه‌که‌ به‌هۆی هه‌ڵه‌کی ناوه‌خۆیی&#x27;
+	},
+
+	pasteText :
+	{
+		button	: &#x27;لکاندنی وه‌ك ده‌قی ڕوون&#x27;,
+		title	: &#x27;لکاندنی وه‌ك ده‌قی ڕوون&#x27;
+	},
+
+	templates :
+	{
+		button			: &#x27;ڕووکار&#x27;,
+		title			: &#x27;پێکهاته‌ی ڕووکار&#x27;,
+		options : &#x27;هه‌ڵبژارده‌کانی ڕووکار&#x27;,
+		insertOption	: &#x27;له‌شوێن دانانی ئه‌م پێکهاتانه‌ی ئێستا&#x27;,
+		selectPromptMsg	: &#x27;ڕووکارێك هه‌ڵبژێره‌ بۆ کردنه‌وه‌ی له‌ سه‌رنووسه‌ر:&#x27;,
+		emptyListMsg	: &#x27;(هیچ ڕووکارێك دیارینه‌کراوه)&#x27;
+	},
+
+	showBlocks : &#x27;نیشاندانی بەربەستەکان&#x27;,
+
+	stylesCombo :
+	{
+		label		: &#x27;شێواز&#x27;,
+		panelTitle	: &#x27;شێوازی ڕازاندنه‌وه&#x27;,
+		panelTitle1	: &#x27;شێوازی خشت&#x27;,
+		panelTitle2	: &#x27;شێوازی ناوهێڵ&#x27;,
+		panelTitle3	: &#x27;شێوازی به‌رکار&#x27;
+	},
+
+	format :
+	{
+		label		: &#x27;ڕازاندنه‌وه&#x27;,
+		panelTitle	: &#x27;به‌شی ڕازاندنه‌وه‌&#x27;,
+
+		tag_p		: &#x27;ئاسایی&#x27;,
+		tag_pre		: &#x27;شێوازکراو&#x27;,
+		tag_address	: &#x27;ناونیشان&#x27;,
+		tag_h1		: &#x27;سه‌رنووسه‌ی ١&#x27;,
+		tag_h2		: &#x27;سه‌رنووسه‌ی ٢&#x27;,
+		tag_h3		: &#x27;سه‌رنووسه‌ی ٣&#x27;,
+		tag_h4		: &#x27;سه‌رنووسه‌ی ٤&#x27;,
+		tag_h5		: &#x27;سه‌رنووسه‌ی ٥&#x27;,
+		tag_h6		: &#x27;سه‌رنووسه‌ی ٦&#x27;,
+		tag_div		: &#x27;(DIV)-ی ئاسایی&#x27;
+	},
+
+	div :
+	{
+		title				: &#x27;دانانی له‌خۆگری Div&#x27;,
+		toolbar				: &#x27;دانانی له‌خۆگری Div&#x27;,
+		cssClassInputLabel	: &#x27;شێوازی چینی په‌ڕه&#x27;,
+		styleSelectLabel	: &#x27;شێواز&#x27;,
+		IdInputLabel		: &#x27;ناسنامه&#x27;,
+		languageCodeInputLabel	: &#x27;هێمای زمان&#x27;,
+		inlineStyleInputLabel	: &#x27;شێوازی ناوهێڵ&#x27;,
+		advisoryTitleInputLabel	: &#x27;سه‌ردێڕ&#x27;,
+		langDirLabel		: &#x27;ئاراسته‌ی زمان&#x27;,
+		langDirLTRLabel		: &#x27;چه‌پ بۆ ڕاست (LTR)&#x27;,
+		langDirRTLLabel		: &#x27;ڕاست بۆ چه‌پ (RTL)&#x27;,
+		edit				: &#x27;چاکسازی Div&#x27;,
+		remove				: &#x27;لابردنی Div&#x27;
+  	},
+
+	iframe :
+	{
+		title		: &#x27;دیالۆگی چووارچێوه&#x27;,
+		toolbar		: &#x27;چووارچێوه&#x27;,
+		noUrl		: &#x27;تکایه‌ ناونیشانی به‌سته‌ر بنووسه‌ بۆ چووارچێوه‌&#x27;,
+		scrolling	: &#x27;چالاککردنی هاتووچۆپێکردن&#x27;,
+		border		: &#x27;نیشاندانی لاکێشه‌ به‌چووارده‌وری چووارچێوه&#x27;
+	},
+
+	font :
+	{
+		label		: &#x27;فۆنت&#x27;,
+		voiceLabel	: &#x27;فۆنت&#x27;,
+		panelTitle	: &#x27;ناوی فۆنت&#x27;
+	},
+
+	fontSize :
+	{
+		label		: &#x27;گه‌وره‌یی&#x27;,
+		voiceLabel	: &#x27;گه‌وره‌یی فۆنت&#x27;,
+		panelTitle	: &#x27;گه‌وره‌یی فۆنت&#x27;
+	},
+
+	colorButton :
+	{
+		textColorTitle	: &#x27;ڕه‌نگی ده‌ق&#x27;,
+		bgColorTitle	: &#x27;ڕه‌نگی پاشبنه‌ما&#x27;,
+		panelTitle		: &#x27;ڕه‌نگه‌کان&#x27;,
+		auto			: &#x27;خۆکار&#x27;,
+		more			: &#x27;ڕه‌نگی زیاتر...&#x27;
+	},
+
+	colors :
+	{
+		&#x27;000&#x27; : &#x27;ڕه‌ش&#x27;,
+		&#x27;800000&#x27; : &#x27;سۆرو ماڕوونی&#x27;,
+		&#x27;8B4513&#x27; : &#x27;ماڕوونی&#x27;,
+		&#x27;2F4F4F&#x27; : &#x27;سه‌وزی تاریك&#x27;,
+		&#x27;008080&#x27; : &#x27;سه‌وزو شین&#x27;,
+		&#x27;000080&#x27; : &#x27;شینی تۆخ&#x27;,
+		&#x27;4B0082&#x27; : &#x27;مۆری تۆخ&#x27;,
+		&#x27;696969&#x27; : &#x27;ڕه‌ساسی تۆخ&#x27;,
+		&#x27;B22222&#x27; : &#x27;سۆری تۆخ&#x27;,
+		&#x27;A52A2A&#x27; : &#x27;قاوه‌یی&#x27;,
+		&#x27;DAA520&#x27; : &#x27;قاوه‌یی بریسکه‌دار&#x27;,
+		&#x27;006400&#x27; : &#x27;سه‌وزی تۆخ&#x27;,
+		&#x27;40E0D0&#x27; : &#x27;شینی ناتۆخی بریسکه‌دار&#x27;,
+		&#x27;0000CD&#x27; : &#x27;شینی مامناوه‌ند&#x27;,
+		&#x27;800080&#x27; : &#x27;په‌مبه‌یی&#x27;,
+		&#x27;808080&#x27; : &#x27;ڕه‌ساسی&#x27;,
+		&#x27;F00&#x27; : &#x27;سۆر&#x27;,
+		&#x27;FF8C00&#x27; : &#x27;ناره‌نجی تۆخ&#x27;,
+		&#x27;FFD700&#x27; : &#x27;زه‌رد&#x27;,
+		&#x27;008000&#x27; : &#x27;سه‌وز&#x27;,
+		&#x27;0FF&#x27; : &#x27;شینی ئاسمانی&#x27;,
+		&#x27;00F&#x27; : &#x27;شین&#x27;,
+		&#x27;EE82EE&#x27; : &#x27;په‌مه‌یی&#x27;,
+		&#x27;A9A9A9&#x27; : &#x27;ڕه‌ساسی ناتۆخ&#x27;,
+		&#x27;FFA07A&#x27; : &#x27;ناره‌نجی ناتۆخ&#x27;,
+		&#x27;FFA500&#x27; : &#x27;ناره‌نجی&#x27;,
+		&#x27;FFFF00&#x27; : &#x27;زه‌رد&#x27;,
+		&#x27;00FF00&#x27; : &#x27;سه‌وز&#x27;,
+		&#x27;AFEEEE&#x27; : &#x27;شینی ناتۆخ&#x27;,
+		&#x27;ADD8E6&#x27; : &#x27;شینی زۆر ناتۆخ&#x27;,
+		&#x27;DDA0DD&#x27; : &#x27;په‌مه‌یی ناتۆخ&#x27;,
+		&#x27;D3D3D3&#x27; : &#x27;ڕه‌ساسی بریسکه‌دار&#x27;,
+		&#x27;FFF0F5&#x27; : &#x27;جه‌رگی زۆر ناتۆخ&#x27;,
+		&#x27;FAEBD7&#x27; : &#x27;جه‌رگی ناتۆخ&#x27;,
+		&#x27;FFFFE0&#x27; : &#x27;سپی ناتۆخ&#x27;,
+		&#x27;F0FFF0&#x27; : &#x27;هه‌نگوینی ناتۆخ&#x27;,
+		&#x27;F0FFFF&#x27; : &#x27;شینێکی زۆر ناتۆخ&#x27;,
+		&#x27;F0F8FF&#x27; : &#x27;شینێکی ئاسمانی زۆر ناتۆخ&#x27;,
+		&#x27;E6E6FA&#x27; : &#x27;شیری&#x27;,
+		&#x27;FFF&#x27; : &#x27;سپی&#x27;
+	},
+
+	scayt :
+	{
+		title			: &#x27;پشکنینی نووسه‌ له‌کاتی نووسین&#x27;,
+		opera_title		: &#x27;پشتیوانی نه‌کراوه له‌لایه‌ن Opera&#x27;,
+		enable			: &#x27;چالاککردنی SCAYT&#x27;,
+		disable			: &#x27;ناچالاککردنی SCAYT&#x27;,
+		about			: &#x27;ده‌رباره‌ی SCAYT&#x27;,
+		toggle			: &#x27;گۆڕینی SCAYT&#x27;,
+		options			: &#x27;هه‌ڵبژارده&#x27;,
+		langs			: &#x27;زمانه‌کان&#x27;,
+		moreSuggestions	: &#x27;پێشنیاری زیاتر&#x27;,
+		ignore			: &#x27;پشتگوێخستن&#x27;,
+		ignoreAll		: &#x27;پشتگوێخستنی هه‌مووی&#x27;,
+		addWord			: &#x27;زیادکردنی ووشه&#x27;,
+		emptyDic		: &#x27;ناوی فه‌رهه‌نگ نابێت خاڵی بێت.&#x27;,
+
+		optionsTab		: &#x27;هه‌ڵبژارده&#x27;,
+		allCaps			: &#x27;پشتگوێخستنی وشانه‌ی پێکهاتووه له‌پیتی گه‌وره‌&#x27;,
+		ignoreDomainNames : &#x27;پشتگوێخستنی دۆمه‌ین&#x27;,
+		mixedCase		: &#x27;پشتگوێخستنی وشانه‌ی پێکهاتووه له‌پیتی گه‌وره‌و بچووك&#x27;,
+		mixedWithDigits	: &#x27;پشتگوێخستنی وشانه‌ی پێکهاتووه له‌ژماره&#x27;,
+
+		languagesTab	: &#x27;زمانه‌کان&#x27;,
+
+		dictionariesTab	: &#x27;فه‌رهه‌نگه‌کان&#x27;,
+		dic_field_name	: &#x27;ناوی فه‌رهه‌نگ&#x27;,
+		dic_create		: &#x27;درووستکردن&#x27;,
+		dic_restore		: &#x27;گه‌ڕاندنه‌وه&#x27;,
+		dic_delete		: &#x27;سڕینه‌وه&#x27;,
+		dic_rename		: &#x27;گۆڕینی ناو&#x27;,
+		dic_info		: &#x27;له‌بنچینه‌دا فه‌رهه‌نگی به‌کارهێنه‌ر کۆگاکردن کراوه‌ له‌ شه‌کرۆکه Cookie, هه‌رچۆنێك بێت شه‌کۆرکه سنووردار کراوه له‌ قه‌باره کۆگاکردن.کاتێك فه‌رهه‌نگی به‌کارهێنه‌ر گه‌یشته‌ ئه‌م خاڵه‌ی که‌ناتوانرێت زیاتر کۆگاکردن بکرێت له‌ شه‌کرۆکه‌، ئه‌وسا فه‌رهه‌نگه‌که‌ پێویسته‌ کۆگابکرێت له‌ ڕاژه‌که‌ی ئێمه‌.‌ بۆ کۆگاکردنی زانیاری تایبه‌تی فه‌رهه‌نگه‌که‌ له‌ ڕاژه‌که‌ی ئێمه, پێویسته‌ ناوێك هه‌ڵبژێریت بۆ فه‌رهه‌نگه‌که‌. گه‌ر تۆ فه‌رهه‌نگێکی کۆگاکراوت هه‌یه‌, تکایه‌ ناوی فه‌رهه‌نگه‌که‌ بنووسه‌ وه‌ کلیکی دوگمه‌ی گه‌ڕاندنه‌وه‌ بکه.&#x27;,
+
+		aboutTab		: &#x27;ده‌رباره‌ی&#x27;
+	},
+
+	about :
+	{
+		title		: &#x27;ده‌رباره‌ی CKEditor&#x27;,
+		dlgTitle	: &#x27;ده‌رباره‌ی CKEditor&#x27;,
+		help	: &#x27;سه‌یری $1 بکه‌ بۆ یارمه‌تی.&#x27;,
+		userGuide : &#x27;ڕێپیشانده‌ری CKEditors&#x27;,
+		moreInfo	: &#x27;بۆ زانیاری زیاتری مۆڵه‌ت, تکایه‌ سه‌ردانی ماڵپه‌ڕه‌که‌مان بکه:&#x27;,
+		copy		: &#x27;مافی له‌به‌رگرتنه‌وه‌ی &amp;copy; $1. گشتی پارێزراوه.&#x27;
+	},
+
+	maximize : &#x27;ئەوپه‌ڕی گەورەیی&#x27;,
+	minimize : &#x27;ئەوپەڕی بچووکی&#x27;,
+
+	fakeobjects :
+	{
+		anchor		: &#x27;له‌نگه‌ر&#x27;,
+		flash		: &#x27;فلاش&#x27;,
+		iframe		: &#x27;له‌چوارچێوه&#x27;,
+		hiddenfield	: &#x27;شاردنه‌وه‌ی خانه&#x27;,
+		unknown		: &#x27;به‌رکارێکی نه‌ناسراو&#x27;
+	},
+
+	resize : &#x27;ڕابکێشە بۆ گۆڕینی قەبارەکەی&#x27;,
+
+	colordialog :
+	{
+		title		: &#x27;هه‌ڵبژاردنی ڕه‌نگ&#x27;,
+		options	:	&#x27;هه‌ڵبژارده‌ی ڕه‌نگه‌کان&#x27;,
+		highlight	: &#x27;نیشانکردن&#x27;,
+		selected	: &#x27;هه‌ڵبژاردرا&#x27;,
+		clear		: &#x27;پاککردنه‌وه&#x27;
+	},
+
+	toolbarCollapse	: &#x27;شاردنەوی هێڵی تووڵامراز&#x27;,
+	toolbarExpand	: &#x27;نیشاندانی هێڵی تووڵامراز&#x27;,
+
+	toolbarGroups :
+	{
+		document : &#x27;په‌ڕه&#x27;,
+		clipboard : &#x27;بڕین&#x2F;پووچکردنه‌وه&#x27;,
+		editing : &#x27;چاکسازی&#x27;,
+		forms : &#x27;داڕشته&#x27;,
+		basicstyles : &#x27;شێوازی بنچینه‌یی&#x27;,
+		paragraph : &#x27;بڕگه&#x27;,
+		links : &#x27;به‌سته‌ر&#x27;,
+		insert : &#x27;خستنه‌ ناو&#x27;,
+		styles : &#x27;شێواز&#x27;,
+		colors : &#x27;ڕه‌نگه‌کان&#x27;,
+		tools : &#x27;ئامرازه‌کان&#x27;
+	},
+
+	bidi :
+	{
+		ltr : &#x27;ئاراسته‌ی نووسه‌ له‌چه‌پ بۆ ڕاست&#x27;,
+		rtl : &#x27;ئاراسته‌ی نووسه‌ له‌ڕاست بۆ چه‌پ&#x27;
+	},
+
+	docprops :
+	{
+		label : &#x27;خاسییه‌تی په‌ڕه&#x27;,
+		title : &#x27;خاسییه‌تی په‌ڕه&#x27;,
+		design : &#x27;شێوه‌کار&#x27;,
+		meta : &#x27;زانیاری مێتا&#x27;,
+		chooseColor : &#x27;‌هه‌ڵبژێره&#x27;,
+		other : &#x27;هیتر...&#x27;,
+		docTitle :	&#x27;سه‌ردێڕی په‌ڕه&#x27;,
+		charset : 	&#x27;ده‌سته‌ی نووسه‌ی به‌کۆده‌که‌ر&#x27;,
+		charsetOther : &#x27;ده‌سته‌ی نووسه‌ی به‌کۆده‌که‌ری تر&#x27;,
+		charsetASCII : &#x27;ASCII&#x27;,
+		charsetCE : &#x27;ناوه‌ڕاست ئه‌وروپا&#x27;,
+		charsetCT : &#x27;چینی(Big5)&#x27;,
+		charsetCR : &#x27;سیریلیك&#x27;,
+		charsetGR : &#x27;یۆنانی&#x27;,
+		charsetJP : &#x27;ژاپۆن&#x27;,
+		charsetKR : &#x27;کۆریا&#x27;,
+		charsetTR : &#x27;تورکیا&#x27;,
+		charsetUN : &#x27;Unicode (UTF-8)&#x27;,
+		charsetWE : &#x27;ڕۆژئاوای ئه‌وروپا&#x27;,
+		docType : &#x27;سه‌رپه‌ڕه‌ی جۆری په‌ڕه&#x27;,
+		docTypeOther : &#x27;سه‌رپه‌ڕه‌ی جۆری په‌ڕه‌ی تر&#x27;,
+		xhtmlDec : &#x27;به‌یاننامه‌کانی XHTML له‌گه‌ڵدابێت&#x27;,
+		bgColor : &#x27;ڕه‌نگی پاشبنه‌ما&#x27;,
+		bgImage : &#x27;ناونیشانی به‌سته‌ری وێنه‌ی پاشبنه‌ما&#x27;,
+		bgFixed : &#x27;بێ هاتووچوپێکردنی (چه‌سپاو) پاشبنه‌مای وێنه&#x27;,
+		txtColor : &#x27;ڕه‌نگی ده‌ق&#x27;,
+		margin : &#x27;ته‌نیشت په‌ڕه‌&#x27;,
+		marginTop : &#x27;سه‌ره‌وه&#x27;,
+		marginLeft : &#x27;چه‌پ&#x27;,
+		marginRight : &#x27;ڕاست&#x27;,
+		marginBottom : &#x27;ژێره‌وه&#x27;,
+		metaKeywords : &#x27;به‌ڵگه‌نامه‌ی وشه‌ی کاریگه‌ر(به‌ کۆما لێکیان جیابکه‌وه)&#x27;,
+		metaDescription : &#x27;پێناسه‌ی لاپه‌ڕه&#x27;,
+		metaAuthor : &#x27;نووسه‌ر&#x27;,
+		metaCopyright : &#x27;مافی بڵاوکردنه‌وه‌ی&#x27;,
+		previewHtml : &#x27;&lt;p&gt;ئه‌مه‌ وه‌ك نموونه‌ی &lt;strong&gt;ده‌قه&lt;&#x2F;strong&gt;. تۆ به‌کارده‌هێنیت &lt;a href=&quot;javascript:void(0)&quot;&gt;CKEditor&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;&#x27;
+	}
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

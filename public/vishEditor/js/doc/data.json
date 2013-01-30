@@ -1,0 +1,1901 @@
+{
+    "project": {},
+    "files": {
+        "libs/ckeditor/lang/fa.js": {
+            "name": "libs/ckeditor/lang/fa.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "libs/ckeditor/lang/ku.js": {
+            "name": "libs/ckeditor/lang/ku.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "libs/jquery.form.js": {
+            "name": "libs/jquery.form.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "libs/nicEdit.js": {
+            "name": "libs/nicEdit.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.AppletPlayer.js": {
+            "name": "VISH.AppletPlayer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.API.js": {
+            "name": "VISH.Editor.API.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.AvatarPicker.js": {
+            "name": "VISH.Editor.AvatarPicker.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Dummies.js": {
+            "name": "VISH.Editor.Dummies.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Events.js": {
+            "name": "VISH.Editor.Events.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.I18n.js": {
+            "name": "VISH.Editor.I18n.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Image.js": {
+            "name": "VISH.Editor.Image.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Object.Snapshot.js": {
+            "name": "VISH.Editor.Object.Snapshot.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Object.js": {
+            "name": "VISH.Editor.Object.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Renderer.js": {
+            "name": "VISH.Editor.Renderer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Slides.js": {
+            "name": "VISH.Editor.Slides.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Text.NiceEditor.js": {
+            "name": "VISH.Editor.Text.NiceEditor.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Text.js": {
+            "name": "VISH.Editor.Text.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Thumbnails.js": {
+            "name": "VISH.Editor.Thumbnails.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Tools.Menu.js": {
+            "name": "VISH.Editor.Tools.Menu.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Tour.js": {
+            "name": "VISH.Editor.Tour.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Utils.js": {
+            "name": "VISH.Editor.Utils.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Video.HTML5.js": {
+            "name": "VISH.Editor.Video.HTML5.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Video.Vimeo.js": {
+            "name": "VISH.Editor.Video.Vimeo.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.Video.Youtube.js": {
+            "name": "VISH.Editor.Video.Youtube.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Editor.js": {
+            "name": "VISH.Editor.js",
+            "modules": {},
+            "classes": {
+                "VISH.Editor": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "VISH": 1
+            }
+        },
+        "VISH.Events.js": {
+            "name": "VISH.Events.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.ImagePlayer.js": {
+            "name": "VISH.ImagePlayer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Object.js": {
+            "name": "VISH.Object.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.ObjectPlayer.js": {
+            "name": "VISH.ObjectPlayer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Presentation.js": {
+            "name": "VISH.Presentation.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Quiz.API.js": {
+            "name": "VISH.Quiz.API.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Quiz.Renderer.js": {
+            "name": "VISH.Quiz.Renderer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Renderer.js": {
+            "name": "VISH.Renderer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.SlideManager.js": {
+            "name": "VISH.SlideManager.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Slides.js": {
+            "name": "VISH.Slides.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.SnapshotPlayer.js": {
+            "name": "VISH.SnapshotPlayer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Utils.js": {
+            "name": "VISH.Utils.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.VideoPlayer.HTML5.js": {
+            "name": "VISH.VideoPlayer.HTML5.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.VideoPlayer.Youtube.js": {
+            "name": "VISH.VideoPlayer.Youtube.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.ViewerAdapter.js": {
+            "name": "VISH.ViewerAdapter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.js": {
+            "name": "VISH.js",
+            "modules": {
+                "ViSH": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "ViSH": {
+            "name": "ViSH",
+            "submodules": {},
+            "classes": {
+                "VISH.Editor": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "VISH.Editor.js",
+            "line": 1,
+            "description": "ViSH Editor & Viewer\nVish Editor is a HTML5 application to create web presentations in a simple and friendly way.\nhttp://github.com/ging/vish_editor"
+        }
+    },
+    "classes": {
+        "VISH.Editor": {
+            "name": "VISH.Editor",
+            "shortname": "VISH.Editor",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ViSH",
+            "namespace": "VISH",
+            "file": "VISH.Editor.js",
+            "line": 1,
+            "description": "ViSH Editor"
+        }
+    },
+    "classitems": [
+        {
+            "file": "libs/ckeditor/lang/fa.js",
+            "line": 11,
+            "fileoverview": "Defines the {@link CKEDITOR.lang} object for the\nPersian language.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/fa.js",
+            "line": 16,
+            "type": "String",
+            "example": [
+                ""
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/fa.js",
+            "line": 21,
+            "description": "Contains the dictionary of language entries.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/fa.js",
+            "line": 27,
+            "description": "The language reading direction. Possible values are \"rtl\" for\nRight-To-Left languages (like Arabic) and \"ltr\" for Left-To-Right\nlanguages (like English).",
+            "default": "'ltr'",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/ku.js",
+            "line": 11,
+            "fileoverview": "",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/ku.js",
+            "line": 15,
+            "type": "String",
+            "example": [
+                ""
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/ku.js",
+            "line": 20,
+            "description": "Contains the dictionary of language entries.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/ckeditor/lang/ku.js",
+            "line": 26,
+            "description": "The language reading direction. Possible values are \"rtl\" for\nRight-To-Left languages (like Arabic) and \"ltr\" for Left-To-Right\nlanguages (like English).",
+            "default": "'ltr'",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 53,
+            "description": "Feature detection",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 60,
+            "description": "ajaxSubmit() provides a mechanism for immediately submitting\nan HTML form using AJAX.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 664,
+            "description": "ajaxForm() provides a mechanism for fully automating form submission.\n\nThe advantages of using this method instead of ajaxSubmit() are:\n\n1: This method will include coordinates for <input type=\"image\" /> elements (if the element\n   is used to submit the form).\n2. This method will include the submit element's name/value data (for the element that was\n   used to submit the form).\n3. This method binds the submit() method to the form for you.\n\nThe options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely\npasses the options argument along after properly binding events for submit elements and\nthe form itself.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 759,
+            "description": "formToArray() gathers form element data into an array of objects that can\nbe passed to any of the following ajax functions: $.get, $.post, or load.\nEach object in the array has both a 'name' and 'value' property.  An example of\nan array for a simple login form might be:\n\n[ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]\n\nIt is this array that is passed to pre-submit callback functions provided to the\najaxSubmit() and ajaxForm() methods.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 840,
+            "description": "Serializes form data into a 'submittable' string. This method will return a string\nin the format: name1=value1&amp;name2=value2",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 849,
+            "description": "Serializes all field elements in the jQuery object into a query string.\nThis method will return a string in the format: name1=value1&amp;name2=value2",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 874,
+            "description": "Returns the value(s) of the element in the matched set.  For example, consider the following form:\n\n <form><fieldset>\n     <input name=\"A\" type=\"text\" />\n     <input name=\"A\" type=\"text\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B1\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B2\"/>\n     <input name=\"C\" type=\"radio\" value=\"C1\" />\n     <input name=\"C\" type=\"radio\" value=\"C2\" />\n </fieldset></form>\n\n var v = $(':text').fieldValue();\n // if no values are entered into the text inputs\n v == ['','']\n // if values entered into the text inputs are 'foo' and 'bar'\n v == ['foo','bar']\n\n var v = $(':checkbox').fieldValue();\n // if neither checkbox is checked\n v === undefined\n // if both checkboxes are checked\n v == ['B1', 'B2']\n\n var v = $(':radio').fieldValue();\n // if neither radio is checked\n v === undefined\n // if first radio is checked\n v == ['C1']\n\nThe successful argument controls whether or not the field element must be 'successful'\n(per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).\nThe default value of the successful argument is true.  If this value is false the value(s)\nfor each element is returned.\n\nNote: This method *always* returns an array.  If no valid value can be determined the\n   array will be empty, otherwise it will contain one or more values.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 927,
+            "description": "Returns the value of the field element.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 969,
+            "description": "Clears the form data.  Takes the following actions on the form's input fields:\n - input text fields will have their 'value' property set to the empty string\n - select elements will have their 'selectedIndex' property set to -1\n - checkbox and radio inputs will have their 'checked' property set to false\n - inputs of type submit, button, reset, and hidden will *not* be effected\n - button elements will *not* be effected",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 983,
+            "description": "Clears the selected form elements.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 1011,
+            "description": "Resets the form data.  Causes all form elements to be reset to their original value.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 1024,
+            "description": "Enables or disables any matching elements.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.form.js",
+            "line": 1036,
+            "description": "Checks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/nicEdit.js",
+            "line": 268,
+            "description": "Reinit niceEditor config after is loaded.\nAdd icons path.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.AppletPlayer.js",
+            "line": 3,
+            "description": "Function to add an applet element to the slide\nthe applet is inside the archive, width, height and params attributes of the div",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.AppletPlayer.js",
+            "line": 15,
+            "description": "Function to remove the applets of the presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 1,
+            "description": "Provide an API with Global Excursions (VISH)",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 12,
+            "description": "function to call to VISH and request flashcards in json format\nThe request is:\nGET /excursions/search.json?q=nano&type=flashcard",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 29,
+            "description": "function to call to VISH and request recommended flashcards",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 45,
+            "description": "function to call to VISH and request videos in json format\nThe request is:\nGET /search.json?type=video&q=text",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 76,
+            "description": "function to call to VISH and request recommended videos",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 93,
+            "description": "function to call to VISH and request flash objects in json format\nThe request is:\nGET /search.json?type=flash&q=text",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 124,
+            "description": "function to call to VISH and request recommended flash objects",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 142,
+            "description": "function to call to VISH and request videos in json format\nThe request is:\nGET /search.json?type=picture&q=text",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 171,
+            "description": "function to call to VISH and request recommended videos",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 189,
+            "description": "function to call to VISH and request live objects in json format\nThe request is:\nGET /search.json?live=1&q=",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 220,
+            "description": "function to call to VISH and request recommended lives objects",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 237,
+            "description": "function to call to VISH and request objects in json format\nThe request is:\nGET /search.json?object=1&q=",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 268,
+            "description": "function to call to VISH and request recommended lives objects",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 284,
+            "description": "generic function to call VISH and request by query and type\nThe request is:\nGET /search.json?type=type&q=query",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 316,
+            "description": "Specific function to call VISH and request lives\nThe request is:\nGET /resources/search.json?live=1&q=",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 341,
+            "description": "function to call to VISH and request tags",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.API.js",
+            "line": 386,
+            "description": "Function to get the available avatars from the server, they should be at /excursion_thumbnails.json",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.AvatarPicker.js",
+            "line": 61,
+            "description": "Callback function to select an avatar",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.AvatarPicker.js",
+            "line": 81,
+            "description": "Function to select a random avatar, it will be chosen between the first and the max (to be in the first carrousel page)",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.AvatarPicker.js",
+            "line": 90,
+            "description": "Function to select a specific DEFAULT avatar.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.AvatarPicker.js",
+            "line": 108,
+            "description": "Function to select a specific avatar identified by its url.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Dummies.js",
+            "line": 52,
+            "description": "Function to replace dummy ids",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Events.js",
+            "line": 63,
+            "description": "function called when a poi is clicked",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.I18n.js",
+            "line": 7,
+            "description": "Function to do the language translation\nIf this function is called there should be defined an i18n array with the translations",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.I18n.js",
+            "line": 149,
+            "description": "Function to translate a text",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Image.js",
+            "line": 181,
+            "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Object.Snapshot.js",
+            "line": 76,
+            "description": "Param style: optional param with the style, used in editing presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Object.js",
+            "line": 361,
+            "description": "Returns a object prepared to draw.   * \nparam area: optional param indicating the area to add the object, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Object.js",
+            "line": 431,
+            "description": "param style: optional param with the style, used in editing presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Renderer.js",
+            "line": 5,
+            "description": "Function to initialize the renderer",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Renderer.js",
+            "line": 57,
+            "description": "function to render one slide in editor",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Renderer.js",
+            "line": 104,
+            "description": "function to render one flashcard inside a presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Slides.js",
+            "line": 11,
+            "description": "Function to dispatch the event that redraws the slides",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Slides.js",
+            "line": 19,
+            "description": "function to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
+            "return": {
+                "description": "false if other element has the focus"
+            },
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.NiceEditor.js",
+            "line": 23,
+            "description": "function called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.NiceEditor.js",
+            "line": 85,
+            "description": "function to change from font tag attributes to span",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.NiceEditor.js",
+            "line": 110,
+            "description": "function to replace the font tag with a span, it is called recursively because in firefox it nests font tags",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.NiceEditor.js",
+            "line": 170,
+            "description": "hack for firefox that nest font tags",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.NiceEditor.js",
+            "line": 182,
+            "description": "hack for firefox that nest font tags\nelement is a font tag with more font tags inside",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Text.js",
+            "line": 13,
+            "description": "Function called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Thumbnails.js",
+            "line": 204,
+            "description": "function to select the thumbnail",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tools.Menu.js",
+            "line": 6,
+            "description": "Menu item classes:\nmenu_all : Always visible\nmenu_standard_presentation: \tVisible for standard presentations\nmenu_presentation: \t\t\tVisible for presentations\nmenu_flaschard: \t\t\t\tVisible for flashcards\nmenu_game: \t\t\t\t\tVisible for games",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tools.Menu.js",
+            "line": 237,
+            "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tools.Menu.js",
+            "line": 276,
+            "description": "function called when the user clicks on the pedagogical options button",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tools.Menu.js",
+            "line": 286,
+            "description": "function called when the user clicks on the done button in the pedagogical options panel",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tools.Menu.js",
+            "line": 300,
+            "description": "function called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls SlideManager with the generated json",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Tour.js",
+            "line": 3,
+            "description": "function to start a walkme tour witht he help \"ol\" id given\ntipLocation can be 'top' or 'bottom' in relation to parent element",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Utils.js",
+            "line": 22,
+            "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Utils.js",
+            "line": 30,
+            "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Utils.js",
+            "line": 39,
+            "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Utils.js",
+            "line": 158,
+            "description": "function to get the styles in percentages",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Video.HTML5.js",
+            "line": 15,
+            "description": "Returns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Video.Vimeo.js",
+            "line": 77,
+            "description": "Funcion to show a preview video and select to embed into the zone\nvideo_id",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Video.Youtube.js",
+            "line": 101,
+            "description": "Funcion to show a preview youtube video and select to embed into the zone\nvideo_id",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 33,
+            "description": "VISH Editor initializer.\nAdds the listeners to the click events in the different images and buttons.\nCall submodule initializers.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Hash with params and options received from the server.",
+                    "type": "HashTable"
+                },
+                {
+                    "name": "presentation",
+                    "description": "Presentation to edit (if not present, a new presentation is created).",
+                    "type": "JSONObject"
+                }
+            ],
+            "itemtype": "method",
+            "name": "init",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 203,
+            "description": "Function to add a delete button to the element",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 217,
+            "description": "function to add the events to the help buttons to launch joy ride bubbles",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 306,
+            "description": "function to add enter and leave events only for the VISH editor",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 314,
+            "description": "function called when entering slide in editor, we have to show the objects",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 345,
+            "description": "Function called when leaving slide in editor, we have to hide the objects",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 366,
+            "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 382,
+            "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 477,
+            "description": "function called when user clicks on the delete icon of the zone",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 505,
+            "description": "Function called when user delete a slide",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 549,
+            "description": "function called when user clicks on template zone with class selectable",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 565,
+            "description": "Function called when user clicks on any element without class selectable",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 621,
+            "description": "function to save the presentation\n\noptions[\"forcePresentation\"] is a boolean to indicate if we should force type to presentation\nFor example, it is used for preview slides in a flashcard",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 921,
+            "description": "Function to move the slides left one item",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 928,
+            "description": "Function to move the slides right one item",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Editor.js",
+            "line": 940,
+            "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
+            "class": "VISH.Editor",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Events.js",
+            "line": 138,
+            "description": "function called when a poi is clicked\n'event' can be a delegate click event or a number",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ImagePlayer.js",
+            "line": 3,
+            "description": "Function to reload a gifs in the slide for Mobile devices",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Object.js",
+            "line": 65,
+            "description": "Patterns",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ObjectPlayer.js",
+            "line": 3,
+            "description": "Function to add an object to the slide\nthe object is in the wrapper attribute of the div",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ObjectPlayer.js",
+            "line": 24,
+            "description": "Function to remove the flash objects from the slides",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Presentation.js",
+            "line": 4,
+            "description": "Function to initialize the presentation\nInitialize renderer and call it to render each slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Presentation.js",
+            "line": 21,
+            "description": "Private function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)\nCover all the slides array to preload the flashcards content\nFinally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Quiz.API.js",
+            "line": 52,
+            "description": "DELETE /quiz_sessions/X => close quiz => show results\nfunction calls VISH server for closing a voting",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Quiz.API.js",
+            "line": 100,
+            "description": "PUT /quiz_sessions/X => vote => redirect to show\nused for students when send a vote",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Quiz.API.js",
+            "line": 143,
+            "description": "GET /quiz_sessions/X => render vote or results page \ncould be called for a teacher who stop a voting and is redirected to the quiz_session_id\n\t or for a student who has the shared quiz URL for voting.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Quiz.Renderer.js",
+            "line": 11,
+            "description": "Function to render a quiz inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Quiz.Renderer.js",
+            "line": 88,
+            "description": "Function to render a True False Question choice question form inside an article (a slide)\nTODO Include in the VISH.Quiz?? ... think and ask Kike about it",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 6,
+            "description": "Function to initialize the renderer\nOnly gets the section element from the html page",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 15,
+            "description": "slides.html only have a section element and in this function we add an article element\nwith the proper content for the slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 148,
+            "description": "Function to render text inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 155,
+            "description": "Function to render empty inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 162,
+            "description": "Function to render an image inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 180,
+            "description": "Function to render a video inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 214,
+            "description": "Function to render an object inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 240,
+            "description": "Function to render an snapshot inside an article (a slide)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 251,
+            "description": "Function to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the params inside the div",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Renderer.js",
+            "line": 260,
+            "description": "Function to render a flashcard inside an article (a slide)\nwe only add canvas inside the div element\nthe flashcard will be drawn inside the canvas element",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 10,
+            "description": "Function to initialize the SlideManager, saves the slides object and init the presentation with it\noptions is a hash with params and options from the server.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 84,
+            "description": "function to enter and exit fullscreen\nthe main difficulty here is to detect if we are in the iframe or in a full page outside the iframe",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 127,
+            "description": "function to add enter and leave events\nit is called with live() because in the editor we need to add this event for articles now and in the future as the user is adding articles on the fly",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 136,
+            "description": "function to get the status of the slide, used for flashcards that have a status (showing photo, showing video frame)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 150,
+            "description": "Function to update the status of a slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 163,
+            "description": "Private function that is called when we enter a slide\nIf we have a object (flash or applet) we load it after 0,5 segs because\nif loaded in the first moment it appears outside the screen and do not move with the slide\nIf we have a flashcard init it",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 195,
+            "description": "Private function that is called when we leave the slide\nUnload objects and stop flashcards",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SlideManager.js",
+            "line": 218,
+            "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 267,
+            "description": "function to go to next slide and change the thumbnails and focus",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 274,
+            "description": "function to go to previous slide and change the thumbnails and focus",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 282,
+            "description": "go to the slide when clicking the thumbnail",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 330,
+            "description": "Go to the last slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 338,
+            "description": "function to show one specific slide in the flashcard",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 362,
+            "description": "function to close one specific slide in the flashcard",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Slides.js",
+            "line": 404,
+            "description": "Function to close all slides in the flashcard, in case one remains open",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SnapshotPlayer.js",
+            "line": 3,
+            "description": "Load web snapshots",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SnapshotPlayer.js",
+            "line": 29,
+            "description": "Unload websnapshots",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Utils.js",
+            "line": 12,
+            "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if dont generate a new id.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Utils.js",
+            "line": 88,
+            "description": "Function to dinamically add a css",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.Utils.js",
+            "line": 223,
+            "description": "function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.HTML5.js",
+            "line": 69,
+            "description": "Function to start all videos of a slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.HTML5.js",
+            "line": 92,
+            "description": "Function to stop all videos of a slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.HTML5.js",
+            "line": 106,
+            "description": "Function to start a specific video",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.HTML5.js",
+            "line": 122,
+            "description": "Function to pause a specific video",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.HTML5.js",
+            "line": 138,
+            "description": "Function to seek a specific video",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.Youtube.js",
+            "line": 146,
+            "description": "Function to pause a specific video",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.VideoPlayer.Youtube.js",
+            "line": 173,
+            "description": "Function to pause a specific video",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ViewerAdapter.js",
+            "line": 4,
+            "description": "Initializer",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ViewerAdapter.js",
+            "line": 12,
+            "description": "function to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ViewerAdapter.js",
+            "line": 225,
+            "description": "Method to add the src to the iframe, show it, hide the slides, and so on",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.ViewerAdapter.js",
+            "line": 256,
+            "description": "Function to hide/show the page-switchers buttons in the viewer\nhide the left one if on first slide\nhide the right one if on last slide\nshow both otherwise",
+            "class": "",
+            "namespace": "VISH"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: fileoverview",
+            "line": " libs/ckeditor/lang/fa.js:11"
+        },
+        {
+            "message": "unknown tag: fileoverview",
+            "line": " libs/ckeditor/lang/ku.js:11"
+        },
+        {
+            "message": "Missing item type",
+            "line": " libs/ckeditor/lang/fa.js:11"
+        },
+        {
+            "message": "Missing item type",
+            "line": " libs/ckeditor/lang/fa.js:16"
+        },
+        {
+            "message": "Missing item type\nContains the dictionary of language entries.",
+            "line": " libs/ckeditor/lang/fa.js:21"
+        },
+        {
+            "message": "Missing item type\nThe language reading direction. Possible values are \"rtl\" for\nRight-To-Left languages (like Arabic) and \"ltr\" for Left-To-Right\nlanguages (like English).",
+            "line": " libs/ckeditor/lang/fa.js:27"
+        },
+        {
+            "message": "Missing item type",
+            "line": " libs/ckeditor/lang/ku.js:11"
+        },
+        {
+            "message": "Missing item type",
+            "line": " libs/ckeditor/lang/ku.js:15"
+        },
+        {
+            "message": "Missing item type\nContains the dictionary of language entries.",
+            "line": " libs/ckeditor/lang/ku.js:20"
+        },
+        {
+            "message": "Missing item type\nThe language reading direction. Possible values are \"rtl\" for\nRight-To-Left languages (like Arabic) and \"ltr\" for Left-To-Right\nlanguages (like English).",
+            "line": " libs/ckeditor/lang/ku.js:26"
+        },
+        {
+            "message": "Missing item type\nFeature detection",
+            "line": " libs/jquery.form.js:53"
+        },
+        {
+            "message": "Missing item type\najaxSubmit() provides a mechanism for immediately submitting\nan HTML form using AJAX.",
+            "line": " libs/jquery.form.js:60"
+        },
+        {
+            "message": "Missing item type\najaxForm() provides a mechanism for fully automating form submission.\n\nThe advantages of using this method instead of ajaxSubmit() are:\n\n1: This method will include coordinates for <input type=\"image\" /> elements (if the element\n   is used to submit the form).\n2. This method will include the submit element's name/value data (for the element that was\n   used to submit the form).\n3. This method binds the submit() method to the form for you.\n\nThe options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely\npasses the options argument along after properly binding events for submit elements and\nthe form itself.",
+            "line": " libs/jquery.form.js:664"
+        },
+        {
+            "message": "Missing item type\nformToArray() gathers form element data into an array of objects that can\nbe passed to any of the following ajax functions: $.get, $.post, or load.\nEach object in the array has both a 'name' and 'value' property.  An example of\nan array for a simple login form might be:\n\n[ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]\n\nIt is this array that is passed to pre-submit callback functions provided to the\najaxSubmit() and ajaxForm() methods.",
+            "line": " libs/jquery.form.js:759"
+        },
+        {
+            "message": "Missing item type\nSerializes form data into a 'submittable' string. This method will return a string\nin the format: name1=value1&amp;name2=value2",
+            "line": " libs/jquery.form.js:840"
+        },
+        {
+            "message": "Missing item type\nSerializes all field elements in the jQuery object into a query string.\nThis method will return a string in the format: name1=value1&amp;name2=value2",
+            "line": " libs/jquery.form.js:849"
+        },
+        {
+            "message": "Missing item type\nReturns the value(s) of the element in the matched set.  For example, consider the following form:\n\n <form><fieldset>\n     <input name=\"A\" type=\"text\" />\n     <input name=\"A\" type=\"text\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B1\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B2\"/>\n     <input name=\"C\" type=\"radio\" value=\"C1\" />\n     <input name=\"C\" type=\"radio\" value=\"C2\" />\n </fieldset></form>\n\n var v = $(':text').fieldValue();\n // if no values are entered into the text inputs\n v == ['','']\n // if values entered into the text inputs are 'foo' and 'bar'\n v == ['foo','bar']\n\n var v = $(':checkbox').fieldValue();\n // if neither checkbox is checked\n v === undefined\n // if both checkboxes are checked\n v == ['B1', 'B2']\n\n var v = $(':radio').fieldValue();\n // if neither radio is checked\n v === undefined\n // if first radio is checked\n v == ['C1']\n\nThe successful argument controls whether or not the field element must be 'successful'\n(per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).\nThe default value of the successful argument is true.  If this value is false the value(s)\nfor each element is returned.\n\nNote: This method *always* returns an array.  If no valid value can be determined the\n   array will be empty, otherwise it will contain one or more values.",
+            "line": " libs/jquery.form.js:874"
+        },
+        {
+            "message": "Missing item type\nReturns the value of the field element.",
+            "line": " libs/jquery.form.js:927"
+        },
+        {
+            "message": "Missing item type\nClears the form data.  Takes the following actions on the form's input fields:\n - input text fields will have their 'value' property set to the empty string\n - select elements will have their 'selectedIndex' property set to -1\n - checkbox and radio inputs will have their 'checked' property set to false\n - inputs of type submit, button, reset, and hidden will *not* be effected\n - button elements will *not* be effected",
+            "line": " libs/jquery.form.js:969"
+        },
+        {
+            "message": "Missing item type\nClears the selected form elements.",
+            "line": " libs/jquery.form.js:983"
+        },
+        {
+            "message": "Missing item type\nResets the form data.  Causes all form elements to be reset to their original value.",
+            "line": " libs/jquery.form.js:1011"
+        },
+        {
+            "message": "Missing item type\nEnables or disables any matching elements.",
+            "line": " libs/jquery.form.js:1024"
+        },
+        {
+            "message": "Missing item type\nChecks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
+            "line": " libs/jquery.form.js:1036"
+        },
+        {
+            "message": "Missing item type\nReinit niceEditor config after is loaded.\nAdd icons path.",
+            "line": " libs/nicEdit.js:268"
+        },
+        {
+            "message": "Missing item type\nFunction to add an applet element to the slide\nthe applet is inside the archive, width, height and params attributes of the div",
+            "line": " VISH.AppletPlayer.js:3"
+        },
+        {
+            "message": "Missing item type\nFunction to remove the applets of the presentation",
+            "line": " VISH.AppletPlayer.js:15"
+        },
+        {
+            "message": "Missing item type\nProvide an API with Global Excursions (VISH)",
+            "line": " VISH.Editor.API.js:1"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request flashcards in json format\nThe request is:\nGET /excursions/search.json?q=nano&type=flashcard",
+            "line": " VISH.Editor.API.js:12"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended flashcards",
+            "line": " VISH.Editor.API.js:29"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request videos in json format\nThe request is:\nGET /search.json?type=video&q=text",
+            "line": " VISH.Editor.API.js:45"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended videos",
+            "line": " VISH.Editor.API.js:76"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request flash objects in json format\nThe request is:\nGET /search.json?type=flash&q=text",
+            "line": " VISH.Editor.API.js:93"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended flash objects",
+            "line": " VISH.Editor.API.js:124"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request videos in json format\nThe request is:\nGET /search.json?type=picture&q=text",
+            "line": " VISH.Editor.API.js:142"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended videos",
+            "line": " VISH.Editor.API.js:171"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request live objects in json format\nThe request is:\nGET /search.json?live=1&q=",
+            "line": " VISH.Editor.API.js:189"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended lives objects",
+            "line": " VISH.Editor.API.js:220"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request objects in json format\nThe request is:\nGET /search.json?object=1&q=",
+            "line": " VISH.Editor.API.js:237"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request recommended lives objects",
+            "line": " VISH.Editor.API.js:268"
+        },
+        {
+            "message": "Missing item type\ngeneric function to call VISH and request by query and type\nThe request is:\nGET /search.json?type=type&q=query",
+            "line": " VISH.Editor.API.js:284"
+        },
+        {
+            "message": "Missing item type\nSpecific function to call VISH and request lives\nThe request is:\nGET /resources/search.json?live=1&q=",
+            "line": " VISH.Editor.API.js:316"
+        },
+        {
+            "message": "Missing item type\nfunction to call to VISH and request tags",
+            "line": " VISH.Editor.API.js:341"
+        },
+        {
+            "message": "Missing item type\nFunction to get the available avatars from the server, they should be at /excursion_thumbnails.json",
+            "line": " VISH.Editor.API.js:386"
+        },
+        {
+            "message": "Missing item type\nCallback function to select an avatar",
+            "line": " VISH.Editor.AvatarPicker.js:61"
+        },
+        {
+            "message": "Missing item type\nFunction to select a random avatar, it will be chosen between the first and the max (to be in the first carrousel page)",
+            "line": " VISH.Editor.AvatarPicker.js:81"
+        },
+        {
+            "message": "Missing item type\nFunction to select a specific DEFAULT avatar.",
+            "line": " VISH.Editor.AvatarPicker.js:90"
+        },
+        {
+            "message": "Missing item type\nFunction to select a specific avatar identified by its url.",
+            "line": " VISH.Editor.AvatarPicker.js:108"
+        },
+        {
+            "message": "Missing item type\nFunction to replace dummy ids",
+            "line": " VISH.Editor.Dummies.js:52"
+        },
+        {
+            "message": "Missing item type\nfunction called when a poi is clicked",
+            "line": " VISH.Editor.Events.js:63"
+        },
+        {
+            "message": "Missing item type\nFunction to do the language translation\nIf this function is called there should be defined an i18n array with the translations",
+            "line": " VISH.Editor.I18n.js:7"
+        },
+        {
+            "message": "Missing item type\nFunction to translate a text",
+            "line": " VISH.Editor.I18n.js:149"
+        },
+        {
+            "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "line": " VISH.Editor.Image.js:181"
+        },
+        {
+            "message": "Missing item type\nParam style: optional param with the style, used in editing presentation",
+            "line": " VISH.Editor.Object.Snapshot.js:76"
+        },
+        {
+            "message": "Missing item type\nReturns a object prepared to draw.   * \nparam area: optional param indicating the area to add the object, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "line": " VISH.Editor.Object.js:361"
+        },
+        {
+            "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
+            "line": " VISH.Editor.Object.js:431"
+        },
+        {
+            "message": "Missing item type\nFunction to initialize the renderer",
+            "line": " VISH.Editor.Renderer.js:5"
+        },
+        {
+            "message": "Missing item type\nfunction to render one slide in editor",
+            "line": " VISH.Editor.Renderer.js:57"
+        },
+        {
+            "message": "Missing item type\nfunction to render one flashcard inside a presentation",
+            "line": " VISH.Editor.Renderer.js:104"
+        },
+        {
+            "message": "Missing item type\nFunction to dispatch the event that redraws the slides",
+            "line": " VISH.Editor.Slides.js:11"
+        },
+        {
+            "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
+            "line": " VISH.Editor.Slides.js:19"
+        },
+        {
+            "message": "Missing item type\nfunction called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
+            "line": " VISH.Editor.Text.NiceEditor.js:23"
+        },
+        {
+            "message": "Missing item type\nfunction to change from font tag attributes to span",
+            "line": " VISH.Editor.Text.NiceEditor.js:85"
+        },
+        {
+            "message": "Missing item type\nfunction to replace the font tag with a span, it is called recursively because in firefox it nests font tags",
+            "line": " VISH.Editor.Text.NiceEditor.js:110"
+        },
+        {
+            "message": "Missing item type\nhack for firefox that nest font tags",
+            "line": " VISH.Editor.Text.NiceEditor.js:170"
+        },
+        {
+            "message": "Missing item type\nhack for firefox that nest font tags\nelement is a font tag with more font tags inside",
+            "line": " VISH.Editor.Text.NiceEditor.js:182"
+        },
+        {
+            "message": "Missing item type\nFunction called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
+            "line": " VISH.Editor.Text.js:13"
+        },
+        {
+            "message": "Missing item type\nfunction to select the thumbnail",
+            "line": " VISH.Editor.Thumbnails.js:204"
+        },
+        {
+            "message": "Missing item type\nMenu item classes:\nmenu_all : Always visible\nmenu_standard_presentation: \tVisible for standard presentations\nmenu_presentation: \t\t\tVisible for presentations\nmenu_flaschard: \t\t\t\tVisible for flashcards\nmenu_game: \t\t\t\t\tVisible for games",
+            "line": " VISH.Editor.Tools.Menu.js:6"
+        },
+        {
+            "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
+            "line": " VISH.Editor.Tools.Menu.js:237"
+        },
+        {
+            "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
+            "line": " VISH.Editor.Tools.Menu.js:276"
+        },
+        {
+            "message": "Missing item type\nfunction called when the user clicks on the done button in the pedagogical options panel",
+            "line": " VISH.Editor.Tools.Menu.js:286"
+        },
+        {
+            "message": "Missing item type\nfunction called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls SlideManager with the generated json",
+            "line": " VISH.Editor.Tools.Menu.js:300"
+        },
+        {
+            "message": "Missing item type\nfunction to start a walkme tour witht he help \"ol\" id given\ntipLocation can be 'top' or 'bottom' in relation to parent element",
+            "line": " VISH.Editor.Tour.js:3"
+        },
+        {
+            "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
+            "line": " VISH.Editor.Utils.js:22"
+        },
+        {
+            "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
+            "line": " VISH.Editor.Utils.js:30"
+        },
+        {
+            "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
+            "line": " VISH.Editor.Utils.js:39"
+        },
+        {
+            "message": "Missing item type\nfunction to get the styles in percentages",
+            "line": " VISH.Editor.Utils.js:158"
+        },
+        {
+            "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
+            "line": " VISH.Editor.Video.HTML5.js:15"
+        },
+        {
+            "message": "Missing item type\nFuncion to show a preview video and select to embed into the zone\nvideo_id",
+            "line": " VISH.Editor.Video.Vimeo.js:77"
+        },
+        {
+            "message": "Missing item type\nFuncion to show a preview youtube video and select to embed into the zone\nvideo_id",
+            "line": " VISH.Editor.Video.Youtube.js:101"
+        },
+        {
+            "message": "Missing item type\nFunction to add a delete button to the element",
+            "line": " VISH.Editor.js:203"
+        },
+        {
+            "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
+            "line": " VISH.Editor.js:217"
+        },
+        {
+            "message": "Missing item type\nfunction to add enter and leave events only for the VISH editor",
+            "line": " VISH.Editor.js:306"
+        },
+        {
+            "message": "Missing item type\nfunction called when entering slide in editor, we have to show the objects",
+            "line": " VISH.Editor.js:314"
+        },
+        {
+            "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
+            "line": " VISH.Editor.js:345"
+        },
+        {
+            "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
+            "line": " VISH.Editor.js:366"
+        },
+        {
+            "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
+            "line": " VISH.Editor.js:382"
+        },
+        {
+            "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
+            "line": " VISH.Editor.js:477"
+        },
+        {
+            "message": "Missing item type\nFunction called when user delete a slide",
+            "line": " VISH.Editor.js:505"
+        },
+        {
+            "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
+            "line": " VISH.Editor.js:549"
+        },
+        {
+            "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
+            "line": " VISH.Editor.js:565"
+        },
+        {
+            "message": "Missing item type\nfunction to save the presentation\n\noptions[\"forcePresentation\"] is a boolean to indicate if we should force type to presentation\nFor example, it is used for preview slides in a flashcard",
+            "line": " VISH.Editor.js:621"
+        },
+        {
+            "message": "Missing item type\nFunction to move the slides left one item",
+            "line": " VISH.Editor.js:921"
+        },
+        {
+            "message": "Missing item type\nFunction to move the slides right one item",
+            "line": " VISH.Editor.js:928"
+        },
+        {
+            "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
+            "line": " VISH.Editor.js:940"
+        },
+        {
+            "message": "Missing item type\nfunction called when a poi is clicked\n'event' can be a delegate click event or a number",
+            "line": " VISH.Events.js:138"
+        },
+        {
+            "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",
+            "line": " VISH.ImagePlayer.js:3"
+        },
+        {
+            "message": "Missing item type\nPatterns",
+            "line": " VISH.Object.js:65"
+        },
+        {
+            "message": "Missing item type\nFunction to add an object to the slide\nthe object is in the wrapper attribute of the div",
+            "line": " VISH.ObjectPlayer.js:3"
+        },
+        {
+            "message": "Missing item type\nFunction to remove the flash objects from the slides",
+            "line": " VISH.ObjectPlayer.js:24"
+        },
+        {
+            "message": "Missing item type\nFunction to initialize the presentation\nInitialize renderer and call it to render each slide",
+            "line": " VISH.Presentation.js:4"
+        },
+        {
+            "message": "Missing item type\nPrivate function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)\nCover all the slides array to preload the flashcards content\nFinally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run",
+            "line": " VISH.Presentation.js:21"
+        },
+        {
+            "message": "Missing item type\nDELETE /quiz_sessions/X => close quiz => show results\nfunction calls VISH server for closing a voting",
+            "line": " VISH.Quiz.API.js:52"
+        },
+        {
+            "message": "Missing item type\nPUT /quiz_sessions/X => vote => redirect to show\nused for students when send a vote",
+            "line": " VISH.Quiz.API.js:100"
+        },
+        {
+            "message": "Missing item type\nGET /quiz_sessions/X => render vote or results page \ncould be called for a teacher who stop a voting and is redirected to the quiz_session_id\n\t or for a student who has the shared quiz URL for voting.",
+            "line": " VISH.Quiz.API.js:143"
+        },
+        {
+            "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
+            "line": " VISH.Quiz.Renderer.js:11"
+        },
+        {
+            "message": "Missing item type\nFunction to render a True False Question choice question form inside an article (a slide)\nTODO Include in the VISH.Quiz?? ... think and ask Kike about it",
+            "line": " VISH.Quiz.Renderer.js:88"
+        },
+        {
+            "message": "Missing item type\nFunction to initialize the renderer\nOnly gets the section element from the html page",
+            "line": " VISH.Renderer.js:6"
+        },
+        {
+            "message": "Missing item type\nslides.html only have a section element and in this function we add an article element\nwith the proper content for the slide",
+            "line": " VISH.Renderer.js:15"
+        },
+        {
+            "message": "Missing item type\nFunction to render text inside an article (a slide)",
+            "line": " VISH.Renderer.js:148"
+        },
+        {
+            "message": "Missing item type\nFunction to render empty inside an article (a slide)",
+            "line": " VISH.Renderer.js:155"
+        },
+        {
+            "message": "Missing item type\nFunction to render an image inside an article (a slide)",
+            "line": " VISH.Renderer.js:162"
+        },
+        {
+            "message": "Missing item type\nFunction to render a video inside an article (a slide)",
+            "line": " VISH.Renderer.js:180"
+        },
+        {
+            "message": "Missing item type\nFunction to render an object inside an article (a slide)",
+            "line": " VISH.Renderer.js:214"
+        },
+        {
+            "message": "Missing item type\nFunction to render an snapshot inside an article (a slide)",
+            "line": " VISH.Renderer.js:240"
+        },
+        {
+            "message": "Missing item type\nFunction to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the params inside the div",
+            "line": " VISH.Renderer.js:251"
+        },
+        {
+            "message": "Missing item type\nFunction to render a flashcard inside an article (a slide)\nwe only add canvas inside the div element\nthe flashcard will be drawn inside the canvas element",
+            "line": " VISH.Renderer.js:260"
+        },
+        {
+            "message": "Missing item type\nFunction to initialize the SlideManager, saves the slides object and init the presentation with it\noptions is a hash with params and options from the server.",
+            "line": " VISH.SlideManager.js:10"
+        },
+        {
+            "message": "Missing item type\nfunction to enter and exit fullscreen\nthe main difficulty here is to detect if we are in the iframe or in a full page outside the iframe",
+            "line": " VISH.SlideManager.js:84"
+        },
+        {
+            "message": "Missing item type\nfunction to add enter and leave events\nit is called with live() because in the editor we need to add this event for articles now and in the future as the user is adding articles on the fly",
+            "line": " VISH.SlideManager.js:127"
+        },
+        {
+            "message": "Missing item type\nfunction to get the status of the slide, used for flashcards that have a status (showing photo, showing video frame)",
+            "line": " VISH.SlideManager.js:136"
+        },
+        {
+            "message": "Missing item type\nFunction to update the status of a slide",
+            "line": " VISH.SlideManager.js:150"
+        },
+        {
+            "message": "Missing item type\nPrivate function that is called when we enter a slide\nIf we have a object (flash or applet) we load it after 0,5 segs because\nif loaded in the first moment it appears outside the screen and do not move with the slide\nIf we have a flashcard init it",
+            "line": " VISH.SlideManager.js:163"
+        },
+        {
+            "message": "Missing item type\nPrivate function that is called when we leave the slide\nUnload objects and stop flashcards",
+            "line": " VISH.SlideManager.js:195"
+        },
+        {
+            "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
+            "line": " VISH.SlideManager.js:218"
+        },
+        {
+            "message": "Missing item type\nfunction to go to next slide and change the thumbnails and focus",
+            "line": " VISH.Slides.js:267"
+        },
+        {
+            "message": "Missing item type\nfunction to go to previous slide and change the thumbnails and focus",
+            "line": " VISH.Slides.js:274"
+        },
+        {
+            "message": "Missing item type\ngo to the slide when clicking the thumbnail",
+            "line": " VISH.Slides.js:282"
+        },
+        {
+            "message": "Missing item type\nGo to the last slide",
+            "line": " VISH.Slides.js:330"
+        },
+        {
+            "message": "Missing item type\nfunction to show one specific slide in the flashcard",
+            "line": " VISH.Slides.js:338"
+        },
+        {
+            "message": "Missing item type\nfunction to close one specific slide in the flashcard",
+            "line": " VISH.Slides.js:362"
+        },
+        {
+            "message": "Missing item type\nFunction to close all slides in the flashcard, in case one remains open",
+            "line": " VISH.Slides.js:404"
+        },
+        {
+            "message": "Missing item type\nLoad web snapshots",
+            "line": " VISH.SnapshotPlayer.js:3"
+        },
+        {
+            "message": "Missing item type\nUnload websnapshots",
+            "line": " VISH.SnapshotPlayer.js:29"
+        },
+        {
+            "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if dont generate a new id.",
+            "line": " VISH.Utils.js:12"
+        },
+        {
+            "message": "Missing item type\nFunction to dinamically add a css",
+            "line": " VISH.Utils.js:88"
+        },
+        {
+            "message": "Missing item type\nfunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
+            "line": " VISH.Utils.js:223"
+        },
+        {
+            "message": "Missing item type\nFunction to start all videos of a slide",
+            "line": " VISH.VideoPlayer.HTML5.js:69"
+        },
+        {
+            "message": "Missing item type\nFunction to stop all videos of a slide",
+            "line": " VISH.VideoPlayer.HTML5.js:92"
+        },
+        {
+            "message": "Missing item type\nFunction to start a specific video",
+            "line": " VISH.VideoPlayer.HTML5.js:106"
+        },
+        {
+            "message": "Missing item type\nFunction to pause a specific video",
+            "line": " VISH.VideoPlayer.HTML5.js:122"
+        },
+        {
+            "message": "Missing item type\nFunction to seek a specific video",
+            "line": " VISH.VideoPlayer.HTML5.js:138"
+        },
+        {
+            "message": "Missing item type\nFunction to pause a specific video",
+            "line": " VISH.VideoPlayer.Youtube.js:146"
+        },
+        {
+            "message": "Missing item type\nFunction to pause a specific video",
+            "line": " VISH.VideoPlayer.Youtube.js:173"
+        },
+        {
+            "message": "Missing item type\nInitializer",
+            "line": " VISH.ViewerAdapter.js:4"
+        },
+        {
+            "message": "Missing item type\nfunction to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
+            "line": " VISH.ViewerAdapter.js:12"
+        },
+        {
+            "message": "Missing item type\nMethod to add the src to the iframe, show it, hide the slides, and so on",
+            "line": " VISH.ViewerAdapter.js:225"
+        },
+        {
+            "message": "Missing item type\nFunction to hide/show the page-switchers buttons in the viewer\nhide the left one if on first slide\nhide the right one if on last slide\nshow both otherwise",
+            "line": " VISH.ViewerAdapter.js:256"
+        }
+    ]
+}

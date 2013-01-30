@@ -12,9 +12,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		VISH.Debugging.init(options);
-
 		VISH.Editing = false;
+		
+		VISH.Debugging.init(options);
 
 		if(options){
 			initOptions = options;
