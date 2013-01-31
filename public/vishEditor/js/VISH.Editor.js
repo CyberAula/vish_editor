@@ -23,7 +23,7 @@ VISH.Editor = (function(V,$,undefined){
 	//drafPresentation uses:
 	//* Store the presentation we are previewing
 	//* Used when changing from presentation to flashcard
-	//* Used when editing an presentation
+	//* Used when editing a presentation
 	var draftPresentation = null;
 
 	//savedPresentation uses:

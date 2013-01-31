@@ -76,7 +76,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 
 		//Add ckeditor wysiwyg instance
-		var ckeditor = CKEDITOR.appendTo( wysiwygContainerId, config);
+		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
 
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
