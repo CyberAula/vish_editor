@@ -186,6 +186,20 @@ height: 100%;
     width: 100%;
 }
 
+.truefalse_question_th {
+
+    width: 60%;
+}
+
+
+ .truefalse_question_true_th, .truefalse_question_false_th{
+    width: 10%;
+ }
+ .truefalse_question_buttons_th{
+
+
+ }
+ 
 .value_truefalse_question_in_zone {
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
@@ -202,10 +216,14 @@ height: 100%;
     display: inline-block;
 }
 
+
 .checkbox_truefalse {
     width: 100%;
     display: inline-block;
 }
+
+
+
 
 .td_add_button{
 	width: 5%;

@@ -7,6 +7,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
+		$(document).on('click', '.' + 'trueFalseQuizContainer', _clickOnQuizArea);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 	};
 
@@ -99,7 +100,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//function to set currentArea when click in quiz elements 
 	var _clickOnQuizArea = function (event) {
 		switch (event.target.classList[0]) {
-
+			//MultipleChoice cases
 			case "multipleChoiceQuizContainer":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
 			break;
@@ -115,6 +116,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "li_mch_options_in_zone":
 			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
+			//True/False cases
+			case "add_truefalse_quiz_button":
+				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
+				addOptionInQuiz('truefalse', V.Editor.getCurrentArea()); 
+			break;
+
 
 			default:
 
@@ -190,6 +197,12 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$($(current_area).find("." + deleteQuizOptionButtonClass)[parseInt(current_options)]).show();
 				}
 			break;
+			case "truefalse":
+				//load dummy
+				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
+				current_area.find(".truefalse_quiz_table").append(option);
+				launchTextEditorInTextArea(current_area, "truefalse");
+			break;
 
 			default:
 			break;
@@ -262,7 +275,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    		} 
 		//question input
 		else {
-			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
+			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone:last");		
 			//var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
