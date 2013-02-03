@@ -302,13 +302,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var _addTrueFalseQuiz = function(area) {
 		var current_area = area;
-	
+		//just the Quiz body or structure
 		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("truefalse", V.Slides.getSlides().length);
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
 		current_area.attr('quiztype','truefalse');
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
+		//now add the question 
+		option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy("truefalse");
+		current_area.find(".truefalse_quiz_table").append(option);
 		launchTextEditorInTextArea(current_area, "truefalse");
 		V.Editor.addDeleteButton(current_area);
 		

@@ -121,11 +121,13 @@ height: 100%;
 }
 .option_in_stats {
 
+
+
 }
 
 
 /* True/False Question Quiz*/
-
+/*
 .header_truefalse_question {
 	background: none repeat scroll 0 0 #F9F9F9;
     border-radius: 4px 4px 0 0;
@@ -179,6 +181,10 @@ height: 100%;
 	text-align:left;
 	width: 75%;
 }
+*/
+.trueFalseQuizContainer {
+    width: 100%;
+}
 
 .value_truefalse_question_in_zone {
 	background: none no-repeat scroll 5px 50% transparent;
@@ -193,6 +199,12 @@ height: 100%;
     position: relative;
     z-index: 1000;
     width: 80%;
+    display: inline-block;
+}
+
+.checkbox_truefalse {
+    width: 100%;
+    display: inline-block;
 }
 
 .td_add_button{
