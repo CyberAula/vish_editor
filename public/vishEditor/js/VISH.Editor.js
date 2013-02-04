@@ -587,8 +587,12 @@ VISH.Editor = (function(V,$,undefined){
 			if (jQuery.contains($("#toolbar_wrapper")[0],event.target)){
 				return;
 			}
-
 			if(event.target.id==="toolbar_wrapper"){
+				return;
+			}
+
+			//No hide toolbar when we are working in a wysiwyg fancybox
+			if (($(".cke_dialog")[0])&&(jQuery.contains($(".cke_dialog")[0],event.target))){
 				return;
 			}
 		}
