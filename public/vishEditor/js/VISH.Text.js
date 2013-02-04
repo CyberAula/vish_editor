@@ -2,46 +2,104 @@ VISH.Text = (function(V,$,undefined){
 
 	//Convert <p><span> from px to ems
 	var init = function(){
-		$("article > div > p").each(function(index,p){
+		$("article > div.VEtextArea > p").each(function(index,p){
 			if($(p).children().length === 0){
 				_setStyleInEm(p);
 				return;
 			}
+			_adaptSpans($(p).find("span"));
+		});
 
-			var oldStyle = null;
-			var newStyle = null;
-			var lastFontSizeCandidate = null;
-			var lastFontSize = null;
+		//Make Tables responsive
+		$("article > div.VEtextArea > table").each(function(index,table){
+			//Table text
+			_adaptSpans($(table).find("caption").find("span"));
+			$(table).find("td").each(function(index,td){
+				_adaptSpans($(td).find("span"));
+				_adaptFonts($(td).find("font"));
+			});
+			//Table dimensions
+			var tableOrgStyle = $(table).attr("style");
+			if(tableOrgStyle){
+				var tableAreaStyle = $(table).parent().parent().attr("style");
+				var tableStyle = "";
 
-			$(p).find("span").each(function(index,span){
-				oldStyle = $(span).attr("style");
-				lastFontSizeCandidate = parseInt(VISH.Utils.getFontSizeFromStyle(oldStyle));
-				if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
-					lastFontSize = lastFontSizeCandidate;
+				var tableWidth = VISH.Utils.getWidthFromStyle(tableOrgStyle);
+				if(tableWidth){
+					var parentWidth = VISH.Utils.getWidthFromStyle(tableAreaStyle);
+					var percentWidth = tableWidth*100/parentWidth;
+					tableStyle += "width:"+percentWidth+"%;";
 				}
+				var tableHeight = VISH.Utils.getHeightFromStyle(tableOrgStyle);
+				if(tableHeight){
+					var parentHeight = VISH.Utils.getHeightFromStyle(tableAreaStyle);
+					var percentHeight = tableHeight*100/parentHeight;
+					tableStyle += "height:"+percentHeight+"%;";
+				}
+				if(tableStyle!==""){
+					$(table).attr("style",tableStyle);
+				}
+			}
+		});
+	}
 
-				if($(span).find("span").length !== 0) {
-					newStyle = VISH.Utils.removeFontSizeInStyle(oldStyle);
-					if((newStyle === null)||(newStyle === "; ")){
-						$(span).removeAttr("style");
-					} else {
-						$(span).attr("style",newStyle);
-					}
+	var _adaptSpans = function(spans){
+		var oldStyle = null;
+		var newStyle = null;
+		var lastFontSizeCandidate = null;
+		var lastFontSize = null;
+
+		$(spans).each(function(index,span){
+			oldStyle = $(span).attr("style");
+			lastFontSizeCandidate = parseInt(VISH.Utils.getFontSizeFromStyle(oldStyle));
+			if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
+				lastFontSize = lastFontSizeCandidate;
+			}
+
+			if($(span).find("span").length !== 0) {
+				newStyle = VISH.Utils.removeFontSizeInStyle(oldStyle);
+				if((newStyle === null)||(newStyle === "; ")){
+					$(span).removeAttr("style");
 				} else {
-				 	//Last SPAN
-					var fontSize;
-					if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
-						fontSize = lastFontSizeCandidate;
-					} else if(lastFontSize !== null){
-						fontSize = lastFontSize;
-					} else {
-						fontSize = VISH.Constant.TextDefault; //Default font
-					}
-					var em = (fontSize/VISH.Constant.TextBase) + "em";
-					newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
 					$(span).attr("style",newStyle);
 				}
-			});
+			} else {
+			 	//Last SPAN
+				var fontSize;
+				if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
+					fontSize = lastFontSizeCandidate;
+				} else if(lastFontSize !== null){
+					fontSize = lastFontSize;
+				} else {
+					fontSize = VISH.Constant.TextDefault; //Default font
+				}
+				var em = (fontSize/VISH.Constant.TextBase) + "em";
+				newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
+				$(span).attr("style",newStyle);
+			}
+		});
+	}
+
+	var _adaptFonts = function(fonts){
+		$(fonts).each(function(index,font){
+			//Get font size in px
+			var fSize = $(font).attr("size");
+			if(!fSize){
+				return;
+			}
+			var fontSize = parseInt(fSize);
+			if (isNaN(fontSize)){
+				return;
+			}
+			$(font).hide();
+
+			//Convert to em
+			var pxfontSize = _font_to_px(fontSize);
+			var em = (pxfontSize/VISH.Constant.TextBase) + "em";
+			var span = $("<span style='font-size:"+em+"'></span>");
+			$(span).html($(font).html());
+			$(font).parent().prepend(span);
+			$(font).remove();
 		});
 	}
 
@@ -111,6 +169,41 @@ VISH.Text = (function(V,$,undefined){
 
 	var _isInRange = function(number, min, max){
 		return number > min && number < max;
+	}
+
+	/* Convert <font size="x"> tags to <span style="font-size:y px"> tags
+	 * Where 'x' is fz and 'y' is px.
+	 * Is not exactly, because this conversion depends of the browser.
+	 * Anyway, is a good aproximation.
+	 * Ideally, Wysiwyg should not generate <font> tags since they are deprecated in HTMl5.
+	 * Neverthless, sometimes, it does.
+	 */
+	var _font_to_px = function(fz){
+		switch(fz){
+			case 7:
+				return 48;
+				break;
+			case 6:
+				return 32;
+				break;
+			case 5:
+				return 24;
+				break;
+			case 4:
+				return 18;
+				break;
+			case 3:
+				return 16;
+				break;
+			case 2:
+				return 14;
+				break;
+			case 1:
+				return 12;
+				break;
+			default:
+				break;
+		}
 	}
 
     return {

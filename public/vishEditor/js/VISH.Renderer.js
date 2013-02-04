@@ -149,7 +149,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render text inside an article (a slide)
 	 */
 	var _renderText = function(element, template){
-		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+		return "<div id='"+element['id']+"' class='VEtextArea "+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
 	};
 	
 	/**
