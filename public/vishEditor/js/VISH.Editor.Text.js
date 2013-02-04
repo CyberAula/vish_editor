@@ -1,4 +1,3 @@
-var global;
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
@@ -22,6 +21,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 					//Remove LinkType
                     dialogDefinition.getContents('info').remove("linkType");
+                    //Remove unusefull protocols
+                    var protocols = dialogDefinition.getContents('info').get("protocol").items;
+                    protocols.splice(3,1);
+					protocols.splice(2,1);
 
 					//Remove advanced options
 					dialogDefinition.removeContents('advanced');
@@ -46,7 +49,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 					alignment.default = "center";
 					//Remove self-headers
 					info.remove("selHeaders");
-					global = dialogDefinition.getContents('info');
 				}
 			});
 			initialized=true;
