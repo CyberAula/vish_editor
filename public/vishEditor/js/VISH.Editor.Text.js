@@ -5,6 +5,38 @@ VISH.Editor.Text = (function(V,$,undefined){
 	var init = function(){
 		if(!initialized){
 			$(document).on('click','.textthumb', launchTextEditor);
+
+			CKEDITOR.on( 'dialogDefinition', function(ev){
+				// Take the dialog name and its definition from the event data.
+				var dialogName = ev.data.name;
+				var dialogDefinition = ev.data.definition;
+
+				if ( dialogName == 'link' ) {
+					//Customize main window
+
+					// Remove unused link type options
+					// var linkType = dialogDefinition.getContents('info').get("linkType");
+					// linkType.items.splice(2,1);
+					// linkType.items.splice(1,1);
+
+					//Remove LinkType
+                    dialogDefinition.getContents('info').remove("linkType");
+
+					//Remove advanced options
+					dialogDefinition.removeContents('advanced');
+					
+					//Customize target window
+					var targetTab = dialogDefinition.getContents('target');
+					var targetField = targetTab.get('linkTargetType');
+					targetField['default'] ='_blank';
+                    targetField.items.splice(6,1);
+                    targetField.items.splice(4,1);
+                    targetField.items.splice(1,1);
+                    targetField.items.splice(0,1);
+                    // dialogDefinition.removeContents( 'target' ); //To remove targets
+				}
+			});
+
 			initialized=true;
 		}
 	}
@@ -61,6 +93,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.resize_enabled = false;
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
+
+		//Add links settings
+		// config.DefaultLinkTarget = '_blank';
+
 
 		//Fit the current area
 		config.width = '100%';
