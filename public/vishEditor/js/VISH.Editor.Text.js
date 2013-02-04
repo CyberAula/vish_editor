@@ -21,7 +21,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 					//Remove LinkType
                     dialogDefinition.getContents('info').remove("linkType");
-                    //Remove unusefull protocols
+                    //Remove unuseful protocols
                     var protocols = dialogDefinition.getContents('info').get("protocol").items;
                     protocols.splice(3,1);
 					protocols.splice(2,1);
@@ -107,10 +107,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.resize_enabled = false;
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
-
-		//Add links settings
-		// config.DefaultLinkTarget = '_blank';
-
+		//Enable table resize
+		config.extraPlugins = 'tableresize';
 
 		//Fit the current area
 		config.width = '100%';
