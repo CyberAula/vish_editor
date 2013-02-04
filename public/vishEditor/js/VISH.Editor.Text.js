@@ -1,3 +1,4 @@
+var global;
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
@@ -11,7 +12,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 				var dialogName = ev.data.name;
 				var dialogDefinition = ev.data.definition;
 
-				if ( dialogName == 'link' ) {
+				if (dialogName == 'link') {
 					//Customize main window
 
 					// Remove unused link type options
@@ -34,9 +35,20 @@ VISH.Editor.Text = (function(V,$,undefined){
                     targetField.items.splice(1,1);
                     targetField.items.splice(0,1);
                     // dialogDefinition.removeContents( 'target' ); //To remove targets
+				} 
+
+				if (dialogName == 'table') {
+					dialogDefinition.removeContents('advanced');
+					var info = dialogDefinition.getContents('info');
+					//Set center as default alignment
+					var alignment = info.get("cmbAlign");
+					alignment.items.splice(0,1);
+					alignment.default = "center";
+					//Remove self-headers
+					info.remove("selHeaders");
+					global = dialogDefinition.getContents('info');
 				}
 			});
-
 			initialized=true;
 		}
 	}
