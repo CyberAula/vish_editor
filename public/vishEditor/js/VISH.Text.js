@@ -20,7 +20,7 @@ VISH.Text = (function(V,$,undefined){
 					lastFontSize = lastFontSizeCandidate;
 				}
 
-				if($(span).children().length !== 0){
+				if($(span).find("span").length !== 0) {
 					newStyle = VISH.Utils.removeFontSizeInStyle(oldStyle);
 					if((newStyle === null)||(newStyle === "; ")){
 						$(span).removeAttr("style");
