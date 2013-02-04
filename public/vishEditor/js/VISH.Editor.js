@@ -592,9 +592,17 @@ VISH.Editor = (function(V,$,undefined){
 			}
 
 			//No hide toolbar when we are working in a wysiwyg fancybox
-			if (($(".cke_dialog")[0])&&(jQuery.contains($(".cke_dialog")[0],event.target))){
+			var isWysiwygFancyboxEnabled = false;
+			$(".cke_dialog").each(function(index,cke_dialog){
+				if((cke_dialog)&&(jQuery.contains(cke_dialog,event.target))){
+					isWysiwygFancyboxEnabled = true;
+					return false;
+				}
+			});
+			if(isWysiwygFancyboxEnabled){
 				return;
 			}
+
 		}
 
 		// VISH.Debugging.log(event.target);
