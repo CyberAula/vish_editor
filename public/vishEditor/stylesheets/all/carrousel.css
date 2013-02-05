@@ -355,6 +355,11 @@ a.next_single_row_slides {
 
 /* CSS for Flashcard repository carrousel */
 
+
+div.carrousel_element_single_row_flashcard_repository > img.carrousel_element_single_row_flashcard_repository{
+  margin-left: -22px !important;
+}
+
 div.image_carousel_single_row_flashcard_repository {
   padding: 85px 0 0px 0px;
   width: 650px;
@@ -362,7 +367,7 @@ div.image_carousel_single_row_flashcard_repository {
 
 div.carrousel_element_single_row_flashcard_repository{
   width: 100px;
-  height: 90px;
+  height: 100px;
   max-width: 150px;
   max-height: 150px;
   float: left;
@@ -375,7 +380,6 @@ img.carrousel_element_single_row_flashcard_repository{
   max-width: 150px;
   max-height: 150px;
   margin-left: -21px;
-  margin-top: 15px;
 }
 
 a.prev_single_row_flashcard_repository, a.next_single_row_flashcard_repository {
