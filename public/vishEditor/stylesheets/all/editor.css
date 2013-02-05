@@ -1746,11 +1746,11 @@ span.mcChoiceSpan{
 
 
 .add_truefalse_quiz_button, .delete_truefalse_quiz_button{
-	width: 25%;
+	
 	cursor: pointer;
 }
 .add_truefalse_quiz_button {
-
+width: 25%;
 }
 .delete_truefalse_quiz_button{
 	display: none;

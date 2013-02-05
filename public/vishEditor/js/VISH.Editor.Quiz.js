@@ -11,6 +11,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
 		$(document).on('click', '.' + 'trueFalseQuizContainer', _clickOnQuizArea);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+		$(document).on('click','.'+ deleteTrueFalseQuizOptionButtonClass, _removeOptionInQuiz);
 	};
 
 	////////////
@@ -43,12 +44,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
-				_addMultipleChoiceQuiz(current_area, current_num_options);
+				_addMultipleChoiceQuiz(current_area, current_num_options, quiz_type);
 				//hide & show fancybox elements 
 				VISH.Utils.loadTab('tab_quizes'); 
 				break;
 			case "truefalse":
-				 _addTrueFalseQuiz(current_area);
+				//we use the same function because we are trying to do this asap
+				_addMultipleChoiceQuiz(current_area, current_num_options, quiz_type);
+				//with this funcition enable multiple true false question in a slide
+				// _addTrueFalseQuiz(current_area);
 			 	break;
 			default: 
 				break;
@@ -123,8 +127,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
 				addOptionInQuiz('truefalse', V.Editor.getCurrentArea()); 
 			break;
-
-
+			case "delete_truefalse_quiz_button":
+				V.Debugging.log("click on area detected");
+				
+			break;
 			default:
 
 			break;
@@ -133,21 +139,39 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	/* create an empty MCh quiz  
 	area type text, must add listener for the last one input option */
-	var _addMultipleChoiceQuiz = function(area, num_options) {
+	var _addMultipleChoiceQuiz = function(area, num_options, quiz_type) {
 		var current_area = area;
 		var current_num_options = num_options;
-		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
+		var quiztype = quiz_type;
+		
+		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy(quiztype, V.Slides.getSlides().length);
+		current_area.append(quiz);
+		//launchTextEditorInTextArea(current_area, "multiplechoice");
+		
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
-		current_area.attr('quiztype','multiplechoice');
-		//add the quizDummy (empty quiz) into the area (zone)
-		current_area.append(quiz);
-		launchTextEditorInTextArea(current_area, "multiplechoice");
-		V.Editor.addDeleteButton(current_area);
-		var i=0;
-		for (i=0; i <= current_num_options ; i++) {
-			addOptionInQuiz('multiplechoice', current_area);				
+		if(quiztype=="multiplechoice"){
+
+			current_area.attr('quiztype','multiplechoice');
+			//add the quizDummy (empty quiz) into the area (zone)
+			
+			if(num_options) {
+				var i=0;
+				for (i=0; i <= current_num_options ; i++) {
+					addOptionInQuiz('multiplechoice', current_area);				
+				}
+			}
 		}
+		//we add true false like a particular case of multiple choice quiz
+		else if (quiztype==="truefalse") {
+
+
+			current_area.attr('quiztype','truefalse');
+			var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(quiztype);
+			$(current_area).find(".truefalse_options_in_zone").append(quiz_option);
+		}
+		launchTextEditorInTextArea(current_area, quiztype);
+		V.Editor.addDeleteButton(current_area);
 	};
 
 	/* called when click add icon and when press enter in last input option */
@@ -266,6 +290,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$($(current_area).find("." + addQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).show();
 			}
  		} 
+
+		if(event.target.attributes["class"].value=== deleteTrueFalseQuizOptionButtonClass){
+			V.Debugging.log("remove true false question detected");
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
+			$(event.target.parentElement.parentElement).remove();
+
+		}
  		else {
  			V.Debugging.log("other event  handler");
  		}
@@ -287,7 +318,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
    		} 
 		//question input
 		else {
-			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone:last");		
+			var textArea = $(current_area).find(".value_"+ type_quiz + "_question_in_zone");		
 			//var wysiwygId = "wysiwyg_" + current_area.attr("id"); //wysiwyg_zoneX 
 			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
@@ -341,6 +372,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		V.Editor.addDeleteButton(current_area);
 		
 	};
+	
+
 
 	return {
 		init			 				: init, 

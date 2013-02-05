@@ -55,8 +55,8 @@
 }
 
 .openQuizContainer {
-width: 100%;
-height: 100%;
+    width: 100%;
+    height: 100%;
 
 }
 
@@ -80,7 +80,7 @@ height: 100%;
     margin-top: 1.5%;
     width: 94%;
 }
-/*.li_mch_options_in_zone > span{ */
+
 .quiz_option_index {
     color: #000000;
     display: inline-block;
@@ -126,62 +126,6 @@ height: 100%;
 }
 
 
-/* True/False Question Quiz*/
-/*
-.header_truefalse_question {
-	background: none repeat scroll 0 0 #F9F9F9;
-    border-radius: 4px 4px 0 0;
-    color: #FF005D;
-    display: block;
-    font-family: Helvetica;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0.5em 1.5em;
-    text-decoration: none;	
-}
-
-.truefalse_quiz_table {
-	width: 650px;
-	border-collapse: collapse;
-	text-align:center;
-}
-
-.truefalse_quiz_table tr:nth-of-type(even) {
-	background-color:#F3F3F3;
-}
-
-.truefalse_quiz_table tr:nth-of-type(odd) {
-	background-color: #DDD;
-}
-
-
-.truefalse_quiz_table td th {
-	border:none;
-}
-
-.truefalse_quiz_table th {
-	background-color: #000;
-	color:#fff;
-	border-left:5%;
-}
-
-.truefalse_quiz_table td {
-	color:#000;
-}
-
-.td_true {
-	width: 10%;
-}
-
-.td_false{
-	width: 10%;
-}
-
-.td_truefalse_question{
-	text-align:left;
-	width: 75%;
-}
-*/
 .trueFalseQuizContainer {
     width: 100%;
 }
@@ -200,7 +144,7 @@ height: 100%;
 
  }
  
-.value_truefalse_question_in_zone {
+/*.value_truefalse_question_in_zone {
 	background: none no-repeat scroll 5px 50% transparent;
     border: 1px solid #9B999D;
     border-radius: 10px 10px 10px 10px;
@@ -214,7 +158,7 @@ height: 100%;
     z-index: 1000;
     width: 80%;
     display: inline-block;
-}
+} */
 
 
 .checkbox_truefalse {
@@ -222,6 +166,34 @@ height: 100%;
     display: inline-block;
 }
 
+.truefalse_options_in_zone {
+    padding: 2%;
+    margin: 1%;
+}
+
+
+.truefalse_titles {
+    height: 15%;
+    text-align: center;
+}
+.truefalse_titles_true, .truefalse_titles_false {
+    width: 50%;
+    display: inline-block;
+}
+ 
+.truefalse_answers, .truefalse_options {
+    height: 15%;
+    text-align: center;
+}
+.truefalse_answer_radio_true, .truefalse_answer_radio_false {
+    width: 48%;
+}
+/*.truefalse_answer_radio {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+
+} */
 
 
 
@@ -972,7 +944,7 @@ height: 20%;
     color: #CCC;
 }
 
-.value_multiplechoice_question_in_zone {
+.value_multiplechoice_question_in_zone, .value_truefalse_question_in_zone {
     border: 1px solid #666666 !important;
     border-radius: 20px 20px 20px 20px;
     color: #000000;
