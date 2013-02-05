@@ -4,6 +4,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var addQuizOptionButtonClass = "add_quiz_option_button";
 	var deleteQuizOptionButtonClass = "delete_quiz_option_button";
+	var addTrueFalseQuizOptionButtonClass = "add_truefalse_quiz_button";
+	var deleteTrueFalseQuizOptionButtonClass = "delete_truefalse_quiz_button";
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
@@ -200,8 +202,18 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "truefalse":
 				//load dummy
 				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
-				current_area.find(".truefalse_quiz_table").append(option);
+				var current_questions = $(current_area).find(".value_truefalse_question_in_zone").size(); 
+				V.Debugging.log("current options: " + current_questions);
+				current_area.find(".truefalse_quiz_table").append(quiz_option);
 				launchTextEditorInTextArea(current_area, "truefalse");
+				//hide add incon and show remove one 
+				if(current_questions>0) {					
+					$($(current_area).find("." + addTrueFalseQuizOptionButtonClass)[parseInt(current_questions)-1]).hide();
+					$($(current_area).find("." +  deleteTrueFalseQuizOptionButtonClass)[parseInt(current_questions)-1]).show();
+
+					$($(current_area).find(".value_truefalse_question_in_zone")[current_questions]).focus();
+					// $(current_area).find(".initTextDiv :last").trigger("click");
+				}
 			break;
 
 			default:
