@@ -123,6 +123,16 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
 			//True/False cases
+			case "trueFalseQuizContainer":
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
+			break;
+
+			case "value_truefalse_question_in_zone":
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.id));
+			break;			
+
+
+			//for multiple T/F in one slide
 			case "add_truefalse_quiz_button":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
 				addOptionInQuiz('truefalse', V.Editor.getCurrentArea()); 
@@ -154,8 +164,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 			current_area.attr('quiztype','multiplechoice');
 			//add the quizDummy (empty quiz) into the area (zone)
-			
-			if(num_options) {
+			V.Debugging.log("num options value: " + current_num_options);
+			if(current_num_options>=0) {
 				var i=0;
 				for (i=0; i <= current_num_options ; i++) {
 					addOptionInQuiz('multiplechoice', current_area);				
