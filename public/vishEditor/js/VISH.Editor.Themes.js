@@ -76,7 +76,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 	var getCurrentTheme = function(){
 		var themeId;
 		var draftPresentation = VISH.Editor.getPresentation();
-		if(draftPresentation){
+		if((draftPresentation)&&(draftPresentation.theme)){
 			themeId = draftPresentation.theme;
 		} else {
 			themeId = VISH.Constant.Themes.Default;

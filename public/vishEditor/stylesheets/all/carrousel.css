@@ -216,17 +216,21 @@ div.pagination_single_row_title {
 /* CSS for Thumbnails Carrousel */
 
 div.image_carousel_single_row_thumbnails {
-    padding: 10px 0 0px 0px;
-		margin-left: 25px;
+  padding: 10px 0 0px 0px;
+	margin-left: 25px;
+}
+
+div.image_carousel_single_row_thumbnails > div.caroufredsel_wrapper {
+  margin-left: 30px !important;
 }
 
 div.carrousel_element_single_row_thumbnails{
   width: 100px;
-  height: 90px;
+  height: 100px;
   max-width: 150px;
   max-height: 150px;
   float: left;
-  margin-left: 35px;
+  margin-left: 27px;
   border-radius: 20px;
 }
 
@@ -245,19 +249,11 @@ img.carrousel_element_single_row_thumbnails{
 }
 
 img.carrousel_element_single_row_thumbnails:hover{
-  max-width: 150px;
-  max-height: 150px;
-  margin-left: -27px;
-  margin-top: -2px;
-  border: none;
   opacity: 0.8;
   cursor: pointer;
   -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
   -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
   box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
 }
 
 a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
@@ -269,8 +265,8 @@ a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
 }
 
 div.pagination_single_row_thumbnails{
-	margin-top: 18px;
-	margin-bottom: 10px;
+	margin-top: 15px;
+	margin-bottom: 25px;
 }
 
 

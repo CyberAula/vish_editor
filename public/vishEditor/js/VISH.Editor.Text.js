@@ -38,7 +38,7 @@ VISH.Editor.Text = (function(V,$,undefined){
                     targetField.items.splice(1,1);
                     targetField.items.splice(0,1);
                     // dialogDefinition.removeContents( 'target' ); //To remove targets
-				} 
+				}
 
 				if (dialogName == 'table') {
 					dialogDefinition.removeContents('advanced');
@@ -46,7 +46,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 					//Set center as default alignment
 					var alignment = info.get("cmbAlign");
 					alignment.items.splice(0,1);
-					alignment.default = "center";
+					//Keep ["default"] to prevent Google closure compiler errors
+					alignment["default"] = "center";
 					//Remove self-headers
 					info.remove("selHeaders");
 				}
