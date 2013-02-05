@@ -323,6 +323,13 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return fc;
 	};
 
+	var cleanTextAreas = function(slide){
+		$(slide).find("div[type='text']").each(function(index,textArea){
+			$(textArea).html("");
+		});
+		return slide;
+	}
+
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
 		addZoomToStyle  			: addZoomToStyle,	
@@ -336,7 +343,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		generateTable 				: generateTable,
 		convertToTagsArray 			: convertToTagsArray,
 		autocompleteUrls 			: autocompleteUrls,
-		filterFilePath 				: filterFilePath
+		filterFilePath 				: filterFilePath,
+		cleanTextAreas 				: cleanTextAreas
 	};
 
 }) (VISH, jQuery);
