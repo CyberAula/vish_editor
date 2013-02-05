@@ -133,6 +133,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			var defaultFontSize = 12;
 			var defaultAlignment = "left";
 
+			//Font size depends of the area size
 			switch($(current_area).attr("size")){
 				case VISH.Constant.EXTRA_SMALL:
 					defaultFontSize = 18;
@@ -150,12 +151,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 					break;
 			}
 
+			//Alignment depends of the area type
 			var isCircleArea = $(current_area).attr("areaid").indexOf("circle")!==-1;
 			if(isCircleArea){
 				defaultAlignment = "center";
 			}
 
-			initial_text = "<p style='text-align:"+defaultAlignment+";'><span style='font-size:"+defaultFontSize+"px;'>&shy;</span></p>";
+			//Color depends of the current theme
+			var initialTextColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
+
+			initial_text = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+initialTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>&shy;</span></span></p>";
 		}
 
 		ckeditor.on("instanceReady", function(){
@@ -226,11 +231,23 @@ VISH.Editor.Text = (function(V,$,undefined){
 	    }
 	}
 
+	var refreshAutoColors = function(){
+		var currentColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+			 var iframe = $($(document.getElementById('cke_contents_' + CKinstance.name)).find("iframe")[0]).contents()[0];
+			 var spans = $(iframe).find("span[autocolor][style]");
+			 jQuery.each(spans, function(name, span) {
+			 	$(span).attr("style",currentColor+";");
+			 });
+		});
+	}
+
 	return {
-		init              			: init,
-		launchTextEditor  			: launchTextEditor,
-		getCKEditorFromZone 		: getCKEditorFromZone,
-		getCKEditorIframeContentFromZone : getCKEditorIframeContentFromZone
+		init								: init,
+		launchTextEditor					: launchTextEditor,
+		getCKEditorFromZone					: getCKEditorFromZone,
+		getCKEditorIframeContentFromZone	: getCKEditorIframeContentFromZone,
+		refreshAutoColors					: refreshAutoColors
 	};
 
 }) (VISH, jQuery);

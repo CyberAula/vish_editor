@@ -63,6 +63,7 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Utils.loadDeviceCSS();
 
 		VISH.Editor.Dummies.init();
+		VISH.Editor.Themes.init();
 		VISH.Flashcard.init();
 		VISH.Editor.Flashcard.init();
 		VISH.Renderer.init();

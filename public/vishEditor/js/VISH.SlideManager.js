@@ -63,7 +63,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.EventsNotifier.init();
 	  	V.VideoPlayer.init();
 
-		V.Themes.selectTheme(presentation.theme);
+		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
 		V.ViewerAdapter.init();

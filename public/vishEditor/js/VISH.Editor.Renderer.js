@@ -26,7 +26,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("#educational_objectives_tag").val(presentation.educational_objectives);
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
-		VISH.Themes.selectTheme(presentation.theme);
+		VISH.Editor.Themes.selectTheme(presentation.theme);
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:

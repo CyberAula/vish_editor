@@ -62,6 +62,10 @@ VISH.Constant.Clipboard = {};
 VISH.Constant.Clipboard.Slide = "slide";
 VISH.Constant.Clipboard.LocalStorageStack = "VishEditorClipboardStack";
 
+//Themes
+VISH.Constant.Themes = {};
+VISH.Constant.Themes.Default = "theme1";
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
