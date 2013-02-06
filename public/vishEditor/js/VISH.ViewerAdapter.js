@@ -49,6 +49,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		enter_fs_button = (enter_fs_button && (V.Status.getDevice().desktop));
 		exit_fs_button = (exit_fs_button && (V.Status.getDevice().desktop));
 
+		//Close button just for mobiles (disable in tablets)
+		close_button = (close_button && (V.Status.getDevice().mobile));
+
 		page_is_fullscreen = false;
 		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
@@ -177,7 +180,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				$("#page-fullscreen").hide();
 			}
 		}
-		setupSize(render_full);
+		_setupSize(render_full);
 	};
 
 
@@ -185,7 +188,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * Function to adapt the slides to the screen size, in case the editor is shown in another iframe
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
 	 */
-	var setupSize = function(fullscreen){
+	var _setupSize = function(fullscreen){
 		var reserved_px_for_menubar; //we don´t show the menubar
 		var margin_height;
 		var margin_width;
@@ -292,7 +295,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
 				//Done with a timeout because it did not work well in ubuntu
 				setTimeout(function(){
-					setupSize(!page_is_fullscreen);
+					_setupSize(!page_is_fullscreen);
 				}, 400);
 			});
 		} else if(enter_fs_button){
