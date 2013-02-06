@@ -106,17 +106,22 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
           ret += "<div class='truefalse_titles_false'>False</div>";
         ret += "</div>";
 
- if(VISH.Quiz.getQuizMode()=="answer"){     
+ if(VISH.Quiz.getQuizMode()=="answer"){  //just radio inputs to respond   
     ret+= "<div class='truefalse_answers answer_mode'>";
     ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
     ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";
     ret += "</div>";
 
     }
-  else {
-    ret+= "<div class='truefalse_answers'>";
-    ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
-    ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";
+  else { //teacher view.  button to enable answers view or not (default view not show)
+
+    ret+= "<div class='truefalse_answers teacher_mode'>";
+    ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true' disabled='disabled'/>";
+    ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false' disabled='disabled'/>";
+    ret += "</div>";
+    ret += "<div class='showhide_answer_button_container'>";
+    ret += "<input type='button' class='show_answers_button' value='Show Answer'/>";
+    ret += "<input type='button' class='hide_answers_button' value='Hide Answer'/>";
     ret += "</div>";
 
 
@@ -129,7 +134,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
       ret += "<input type='button' class='quiz_send_vote_button' value='Send'/>";
       ret += "<input type='button' class='quiz_session_options_button' value='Options'/>";
-    //  ret += "</div>"; //close mch_input_wrapper
+       ret += "</div>"; //close mch_input_wrapper
       ret += "</form>";
       ret += "</div>";//close mcquestion_body
       ret += "</div>";//close mcquestion_container
