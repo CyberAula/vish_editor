@@ -827,7 +827,7 @@ VISH.Samples = (function(V,undefined){
 				"type":"quiz",
 				"areaid":"center",
 				"question":"<div class=\"vish-parent-fontundefined vish-parent-font4 vish-parent-font6\" unselectable=\"on\" style=\"font-weight: normal;\"><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#cb6120;undefined;\"><b>The picture</b></span><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#cb6120;undefined;\"> </span><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">is a desert from </span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Perú</span><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">?</span><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>",
-				"quiz_id":"15",
+				"quiz_id":"14",
 				"quiztype":"truefalse",
 				"options":
 				{"choices":

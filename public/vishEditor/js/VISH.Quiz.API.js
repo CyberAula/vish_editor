@@ -42,6 +42,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 			} else if (quizId==13) {
 				var quiz_session_id = "98955";
 			}
+			 else if (quizId==14) {
+				var quiz_session_id = "98977";
+			}
 			if(typeof successCallback=="function"){
 				successCallback(quiz_session_id);
 			}
