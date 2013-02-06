@@ -773,16 +773,24 @@ VISH.Editor = (function(V,$,undefined){
 							element.quiztype = "truefalse";
 							element.options = {};  	
 							element.options.choices = []; 
-							/* $(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
-									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-									var choice = new Object();
-									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
-									element.options.choices.push(choice);
-								}
-							}); */
+							$(div).find('.truefalse_answers > form > input').each(function(i, option_text){
+							 	V.Debugging.log("option text:" + option_text);
+								//var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								var choice = new Object();
+								choice.value = $(option_text).attr("value");
+								choice.container= $(option_text).attr("value");
+								//choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+								element.options.choices.push(choice);
+						}); 
+							//add the correct answer 
+
+							V.Debugging.log("value: " + $(div).find('input[name=truefalse]:checked').val()); //each(function(i, option_text)   //{
+								
+
+								 element.options.answer = $(div).find('input[name=truefalse]:checked').val();
+
+								//}
+
 						}
 						else if($(div).attr("quiztype")== "open") {
 							V.Debugging.log("open detected");

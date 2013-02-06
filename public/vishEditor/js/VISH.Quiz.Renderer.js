@@ -107,7 +107,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         ret += "</div>";
 
  if(VISH.Quiz.getQuizMode()=="answer"){     
-    ret+= "<div class='truefalse_answers'>";
+    ret+= "<div class='truefalse_answers answer_mode'>";
     ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
     ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";
     ret += "</div>";
