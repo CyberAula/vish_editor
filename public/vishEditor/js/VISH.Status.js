@@ -105,10 +105,14 @@ VISH.Status = (function(V,$,undefined){
 		device.appleTablet = device.iPad;
 
 		//Android devices
+		device.androidPhone = false;
+		device.androidTablet = false;
 		device.android = /android/i.test(navigator.userAgent);
+
 		if(device.android){
-			device.androidPhone = false;
-			device.androidTablet = false;
+
+			// There are phones that don't include "mobile" in the UA string, and tablets that do.
+			// However, if UA contains tablet, it's a tablet.
 
 			//First intent: Look for Tablet in userAgent
 			if(/tablet/i.test(navigator.userAgent)){
@@ -116,20 +120,31 @@ VISH.Status = (function(V,$,undefined){
 			} else {
 				//Second intent: Check screen size
 
-				//We will consider android tablets devices with a screen that are at least 960dp x 720dp
+				//We will consider android tablets devices with a screen that are at least 960dp x 720dp (in landscape)
 				//Taken from: http://developer.android.com/guide/practices/screens_support.html
-				var maxWidth = 1024 * 1.5;
-				var maxHeight = 720 * 1.5;
+				// var maxWidth = 960 * device.pixelRatio;
+				var maxHeight = 720 * device.pixelRatio;
+
+				//Viewport bug: window.screen.availWidth returns always 800 
+				//We only use window.screen.availWidth to detect if the mobile is in landscape position
+
+				//Another viewport bug: window.screen.availHeight returns incorrect values on portrait position
+				//Change the official thresholds could partially fix the bug.
+				maxWidth = 1024 * device.pixelRatio;
+
+				// alert(window.screen.availHeight);
 
 				var landscape = window.screen.availWidth > window.screen.availHeight;
 				if(landscape){
-					if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
+					// if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
+					if((window.screen.availHeight)>=maxHeight){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
 					}
 				} else {
-					if((window.screen.availHeight>=maxWidth)&&(window.screen.availWidth)>=maxHeight){
+					// if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
+					if((window.screen.availHeight)>=maxWidth){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
@@ -137,9 +152,6 @@ VISH.Status = (function(V,$,undefined){
 				}
 			}
 
-		} else {
-			device.androidPhone = false;
-			device.androidTablet = false;
 		}
 
 		//Phones and Tablets
@@ -177,6 +189,14 @@ VISH.Status = (function(V,$,undefined){
 		 //Force mobile
 		 // device.desktop = false;
 		 // device.mobile = true;
+
+		 // if(device.mobile){
+		 // 	alert("mobile");
+		 // } else if(device.tablet){
+		 // 	alert("tablet");
+		 // } else if(device.desktop){
+		 // 	alert("desktop");
+		 // }
 	};
 
 	var fillBrowser = function(){

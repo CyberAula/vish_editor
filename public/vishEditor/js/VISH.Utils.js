@@ -239,12 +239,15 @@ VISH.Utils = (function(V,undefined){
 		var dimensions = [];
 		var width=null;
 		var height=null;
-		var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
-		var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
-		var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
-		var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
 
 		$.each(style.split(";"), function(index, property){
+
+			//We need to redefine the var in each iteration (due to Android browser issues)
+			var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
+			var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
+			var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
+			var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
+
 			//Look for property starting by width
 			if(property.indexOf("width") !== -1){
 
