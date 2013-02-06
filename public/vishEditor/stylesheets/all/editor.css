@@ -1745,17 +1745,6 @@ span.mcChoiceSpan{
 }
 
 
-.add_truefalse_quiz_button, .delete_truefalse_quiz_button{
-	
-	cursor: pointer;
-}
-.add_truefalse_quiz_button {
-width: 25%;
-}
-.delete_truefalse_quiz_button{
-	display: none;
-
-}
 
 #pedagogical_first_row {
 	width: 100%;

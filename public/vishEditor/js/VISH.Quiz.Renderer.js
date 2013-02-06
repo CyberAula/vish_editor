@@ -17,14 +17,13 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         return _renderMcQuestion(quiz_element, zone_class, slide_id, zone);
 
         break;
-   /*   case "mcquestion":
-        return _renderMcQuestion(element, zone_class, slide);
-        break; */
+
       case "openQuestion":
         return _renderOpenquestion(element, template);
         break;
-      case "truefalsequestion":
-        return _renderTrueFalseQuestion(element, template);
+      case "truefalse":
+        return _renderTrueFalseQuestion(quiz_element, zone_class, slide_id, zone);
+
         break;
       default:
         break;
@@ -90,35 +89,52 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
    * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
    */
   
-  var _renderTrueFalseQuestion = function(element, template){
-    var next_num=0;
-    var answers = new Array();
-    var ret = "<div id='"+element['id']+"' class='truefalse_question'>";
-    
+  var _renderTrueFalseQuestion = function(quiz_element, zone_class, slide_id, zone){
+
+    var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class +" quiz'>";
     ret += "<div class='truefalse_question_container'>";
-    ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
-    ret+= "<table id='truefalse_quiz_table_1' class='truefalse_quiz_table'><tr><th>True</th><th>False</th><th> Question </th></tr>";
-     
-    for(var i = 0; i<element['questions'].length; i++){
-      //saving correct answers 
-      answers[i] =element['questions'][i]['answer'];
-      ret +="<tr id='tr_question_"+(i+1)+"'>";
-      ret +="<td id='td_true_"+(i+1)+"' class='td_true'>";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='true' /></td>";
-      ret += "<td id='td_false_"+(i+1)+"' class='td_false' >";
-      ret += "<input type='radio' name='tf_radio_"+(i+1)+"' value='false'/></td>";
-      ret += "<td id='td_question_"+(i+1)+"' class='true_false_question_txt'><label>"+element['questions'][i]['text_question']+"?</label></td>";
-      ret += "</tr>";
-    }
-    
-    ret += "</table>";
-    ret += "<input type='button' class='tfquestion_button' value='Send'/>";
-    ret += "</form>";
+ 
+    //ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
+    ret+= "<div class='value_truefalse_question_in_zone question_in_viewer'>";
+    ret += quiz_element['question'];
     ret += "</div>";
+    ret += "<div class='truefalse_options_in_zone'> ";
+    ret += "<form class='truefalse_form' action='"+quiz_element['posturl']+"' method='post'>";
+    ret += "<div class='truefalse_options'>";
+       ret += "<div class='truefalse_titles'>";
+          ret += "<div class='truefalse_titles_true'>True</div>";
+          ret += "<div class='truefalse_titles_false'>False</div>";
+        ret += "</div>";
+
+ if(VISH.Quiz.getQuizMode()=="answer"){     
+    ret+= "<div class='truefalse_answers'>";
+    ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
+    ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";
+    ret += "</div>";
+
+    }
+  else {
+    ret+= "<div class='truefalse_answers'>";
+    ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
+    ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";
+    ret += "</div>";
+
+
+  }
+
+      ret += "</div>";
+      //ret += "<input type='hidden' value='"+ zone +"' name='zone' />";
+      ret += "<input type='hidden' value='"+quiz_element['quiz_id']+"' name='quiz_id' class='quizId' />";
+      ret += "<div class='mch_inputs_wrapper'>";
+      ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
+      ret += "<input type='button' class='quiz_send_vote_button' value='Send'/>";
+      ret += "<input type='button' class='quiz_session_options_button' value='Options'/>";
+    //  ret += "</div>"; //close mch_input_wrapper
+      ret += "</form>";
+      ret += "</div>";//close mcquestion_body
+      ret += "</div>";//close mcquestion_container
+       ret += "</div>"; //close zoneclass quiz
     
-    trueFalseAnswers = answers;
-    asnswers = [];
-    VISH.Debugging.log("JSON object answer is: " +trueFalseAnswers);
     
     return ret;
   };
