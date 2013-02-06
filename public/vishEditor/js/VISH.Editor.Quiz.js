@@ -323,7 +323,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
+    			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
 		//question input
@@ -333,7 +333,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
-			VISH.Editor.Text.getNicEditor().addInstance(wysiwygId);
+			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
 		}
 		
 		$(".initTextDiv").click(function(event){
