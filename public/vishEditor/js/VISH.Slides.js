@@ -390,11 +390,15 @@ VISH.Slides = (function(V,$,undefined){
 
 	var _onCloseSubslide = function(){
 		curSubSlideId = null;
-		//Timeout to prevent undesired actions in Mobile Phones
-		setTimeout(function(){
-			$("#closeButton").show();
+		if(VISH.Status.getDevice().mobile){
+			//Timeout to prevent undesired actions in Mobile Phones
+			setTimeout(function(){
+				$("#closeButton").show();
+				VISH.ViewerAdapter.decideIfPageSwitcher();
+			},800);
+		} else {
 			VISH.ViewerAdapter.decideIfPageSwitcher();
-		},800);
+		}
 	}
 
 	/**

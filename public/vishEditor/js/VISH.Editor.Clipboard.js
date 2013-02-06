@@ -17,6 +17,15 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 					var slideType = VISH.Slides.getSlideType(element);
 					switch(slideType){
 						case VISH.Constant.STANDARD:
+							//Store WYSIWYG values
+							params.textAreas = {};
+							$(element).find("div[type='text']").each(function(index,textArea){
+								var areaId = $(textArea).attr("areaid");
+								var ckEditor = VISH.Editor.Text.getCKEditorFromZone(textArea);
+								if((areaId)&&(ckEditor!==null)){
+									params.textAreas[areaId] = ckEditor.getData();
+								}
+							});
 							break;
 						case VISH.Constant.FLASHCARD:
 							params.flashcardExcursionJSON = jQuery.extend(true, {}, VISH.Editor.Flashcard.getFlashcard(element.id));
@@ -72,28 +81,56 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 
 		switch(myStack[1]){
 			case VISH.Constant.Clipboard.Slide:
-				var slideToCopy = VISH.Editor.Utils.replaceIdsForSlide($(myStack[0]).clone()[0]);
-				if(typeof slideToCopy != "undefined"){
-					if(VISH.Slides.getSlideType(slideToCopy) === VISH.Constant.FLASHCARD){
-						var flashcardId = $(slideToCopy).attr("id");
+			    //Clean text areas
+			    var slideToCopy = $(myStack[0]).clone()[0];
+			    slideToCopy = VISH.Editor.Utils.cleanTextAreas(slideToCopy);
+				slideToCopy = VISH.Editor.Utils.replaceIdsForSlide(slideToCopy);
+				var newId = $(slideToCopy).attr("id");
 
-						if((!myStack[2])||(!myStack[2].flashcardExcursionJSON)){
-							//We need flashcard excursion JSON to copy a flashcard!
-							return;
-						}
-
-						var the_flashcard_excursion = myStack[2].flashcardExcursionJSON;
-						var selectedFc = VISH.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion,flashcardId);
-						VISH.Editor.Flashcard.addFlashcard(selectedFc);
-						//And now we add the points of interest with their click events to show the slides
-						for(index in selectedFc.pois){
-							var poi = selectedFc.pois[index];
-							V.Flashcard.addArrow(selectedFc.id, poi, true);
-						}
-						VISH.Editor.Events.bindEventsForFlashcard(selectedFc);
-					}
-					VISH.Editor.Slides.copySlide(slideToCopy);
+				if(typeof slideToCopy == "undefined"){
+					return;
 				}
+
+				var slideToCopyType = VISH.Slides.getSlideType(slideToCopy);
+
+				//Pre-copy actions
+				if(slideToCopyType === VISH.Constant.FLASHCARD){
+					var flashcardId = $(slideToCopy).attr("id");
+
+					if((!myStack[2])||(!myStack[2].flashcardExcursionJSON)){
+						//We need flashcard excursion JSON to copy a flashcard!
+						return;
+					}
+
+					var the_flashcard_excursion = myStack[2].flashcardExcursionJSON;
+					var selectedFc = VISH.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion,flashcardId);
+					VISH.Editor.Flashcard.addFlashcard(selectedFc);
+					//And now we add the points of interest with their click events to show the slides
+					for(index in selectedFc.pois){
+						var poi = selectedFc.pois[index];
+						V.Flashcard.addArrow(selectedFc.id, poi, true);
+					}
+					VISH.Editor.Events.bindEventsForFlashcard(selectedFc);
+				}
+				
+				//Copy Slide
+				VISH.Editor.Slides.copySlide(slideToCopy);
+
+				//Post-copy actions
+				if(slideToCopyType === VISH.Constant.STANDARD){
+					if((myStack[2])&&(myStack[2].textAreas)){
+						//Restore text areas
+						var slideCopied = $("#"+newId);
+						$(slideCopied).find("div[type='text']").each(function(index,textArea){
+							var areaId = $(textArea).attr("areaid");
+							if((areaId)&&(myStack[2].textAreas[areaId])){
+								var data = myStack[2].textAreas[areaId];
+								V.Editor.Text.launchTextEditor({}, $(textArea), data);
+							}
+						});
+					}
+				}
+				
 				break;
 			default:
 				break;

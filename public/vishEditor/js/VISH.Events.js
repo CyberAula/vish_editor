@@ -200,10 +200,10 @@ VISH.Events = (function(V,$,undefined){
   		    }
 
   		    //when page is cached or updated, add presentation to localstorage
-  		    if(applicationCache){
-  		    	applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-				applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-  		    }
+  		    //if(applicationCache){
+  		    //	applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+			///	applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
+  		    //}
 
     		if (!V.Status.getDevice().desktop){
 				bindMobileViewerEventListeners();
@@ -216,7 +216,7 @@ VISH.Events = (function(V,$,undefined){
 		window.addEventListener("load", 				function(){ _hideAddressBar(); } );
 		window.addEventListener("orientationchange", 	function(){ _hideAddressBar(); } );
 		$(window).on('orientationchange',function(){
-			V.ViewerAdapter.setupSize();      
+			V.ViewerAdapter.updateInterface();
 		});
 	}
 

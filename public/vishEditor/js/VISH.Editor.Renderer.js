@@ -26,14 +26,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("#educational_objectives_tag").val(presentation.educational_objectives);
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
-		VISH.Themes.selectTheme(presentation.theme);
+		VISH.Editor.Themes.selectTheme(presentation.theme);
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
 				var flashcard = VISH.Editor.Flashcard.undoNestedSlidesInFlashcard(presentation.slides[0]);
-				slides = flashcard.slides;
-				for(var i=0;i<slides.length;i++){
-					_renderSlide(slides[i], i+1);
+				if((flashcard)&&(flashcard.slides)){
+					slides = flashcard.slides;
+					var sL = slides.length;
+					for(var i=0;i<sL;i++){
+						_renderSlide(slides[i], i+1);
+					}
 				}
 				VISH.Editor.Flashcard.loadFlashcard(presentation);
 				break;

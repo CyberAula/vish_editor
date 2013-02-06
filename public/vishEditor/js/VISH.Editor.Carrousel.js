@@ -15,7 +15,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		var styleClass = "";
 		var titleClass = "";
 		var callback = null;
-		var width = 750;
+		var width = 650;
 		var startAtLastElement = false;
 		var pagination = true;
 		var sortable = false;
@@ -206,7 +206,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			items           : scrollItems,
 			fx              : "scroll",
 			duration        : 1000,
-			pauseDuration   : 2000                
+			timeoutDuration : 2000                
 			},
 			items : {
 			  visible    : {
@@ -233,7 +233,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		    items           : scrollItems,
 		    //fx              : "scroll",
 		    duration        : 1000,
-		    pauseDuration   : 2000                
+		    timeoutDuration : 2000                
 		  },
 		  items       : {
 		    visible    : {

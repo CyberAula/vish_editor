@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Quiz.API.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Quiz.API.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+VISH.Quiz.API = (function(V,$,undefined){
+	
+	var init = function(){
+		
+	};
+	
+   &#x2F;*
+	* Request new quiz session
+	* Server responds with a quiz_session_id
+	*&#x2F;
+	var postStartQuizSession = function(quizId, successCallback, failCallback){
+		if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+			var send_type = &#x27;POST&#x27;;
+	       
+	        var params = {
+	          &quot;quiz_id&quot;: quizId,
+	          &quot;authenticity_token&quot; : V.User.getToken()
+	        }
+
+			$.ajax({
+				type    : send_type,
+				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x27;,
+				data    : params,
+				success : function(data) {
+					var quiz_session_id = data;
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(quiz_session_id);
+					}
+				},
+				error: function(error){
+					failCallback(error);
+				}
+			});
+
+	         return null;
+
+		} else if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+			V.Debugging.log(&quot;No server case&quot;);
+
+			if(quizId==12) {
+				var quiz_session_id = &quot;98988&quot;;
+			} else if (quizId==13) {
+				var quiz_session_id = &quot;98955&quot;;
+			}
+			if(typeof successCallback==&quot;function&quot;){
+				successCallback(quiz_session_id);
+			}
+		}
+
+	};
+
+	&#x2F;**
+  * DELETE &#x2F;quiz_sessions&#x2F;X =&gt; close quiz =&gt; show results
+	 * function calls VISH server for closing a voting
+	 *&#x2F;
+	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
+	if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+		var quizName;
+			if(quiz_name) {
+				quizName = quiz_name;
+			} else {
+				quizName = &quot;&quot;;
+
+			}
+			&#x2F;&#x2F;DELETE 
+			var send_type = &#x27;DELETE&#x27;;
+
+	        &#x2F;&#x2F;DELETE to http:&#x2F;&#x2F;server&#x2F;quiz_session&#x2F;X
+	          var params = {
+	     	  &quot;id&quot;: quiz_session_id,
+	          &quot;authenticity_token&quot; : V.User.getToken(), 
+	          &quot;name&quot; : quizName
+	        }
+	        $.ajax({
+	          type    : send_type,
+	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quiz_session_id,
+	          data    : params,
+	          success : function(data) {
+		      	var results = data;
+	            if(typeof successCallback==&quot;function&quot;){
+	            	successCallback(results);
+	            }
+	          },
+	          error: function(error){
+	          	failCallback(error);
+	          }
+            });
+
+	        return null;
+} else if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+			V.Debugging.log(&quot;No server case&quot;);
+			var results = {&quot;quiz_session_id&quot;:19,&quot;quiz_id&quot;:3,&quot;results&quot;:{&quot;b&quot;:4,&quot;a&quot;:2,&quot;c&quot;:1, &quot;d&quot;:1}};
+			if(typeof successCallback==&quot;function&quot;){
+				successCallback(results);
+			}
+		}
+
+  };
+	
+	&#x2F;**
+	 * PUT &#x2F;quiz_sessions&#x2F;X =&gt; vote =&gt; redirect to show
+     * used for students when send a vote 
+	 *&#x2F;
+	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
+		if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+		&#x2F;&#x2F;POST 
+			var send_type = &#x27;PUT&#x27;;
+	       
+	        V.Debugging.log(&quot;token is: &quot; + V.User.getToken());
+	        var params = {
+	      	  &quot;id&quot;: quiz_active_session_id,
+	     	  &quot;option&quot;:answer_selected,
+	          &quot;authenticity_token&quot; : V.User.getToken()
+	        }
+
+	        $.ajax({
+	          type    : send_type,
+	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quiz_active_session_id,
+	          data    : params,
+	          success : function(data) {
+	            var results = data;
+	            if(typeof successCallback==&quot;function&quot;){
+	            	successCallback(results);
+	            }
+	          },
+	          error: function(error){
+	          	failCallback(error);
+	          }
+
+             });
+
+	         return null;
+	} else if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+			V.Debugging.log(&quot;No server case&quot;);
+			var quiz_session_id = &quot;123&quot;;
+			if(typeof successCallback==&quot;function&quot;){
+				successCallback(quiz_session_id);
+			}
+		}
+	
+
+   };
+ 	&#x2F;**
+	 * GET &#x2F;quiz_sessions&#x2F;X =&gt; render vote or results page 
+	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
+	 or for a student who has the shared quiz URL for voting.
+
+	  *&#x2F;
+	var getQuizSessionResults = function (quiz_active_session_id, successCallback, failCallback) {
+
+		if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+
+			&#x2F;&#x2F;GET
+			var send_type = &#x27;GET&#x27;;
+	        var params = {
+	        	&quot;id&quot;: quiz_active_session_id, 
+	        	&quot;authenticity_token&quot; : V.User.getToken()  
+	        }
+
+	        $.ajax({
+	          type    : send_type,
+	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quiz_active_session_id + &#x27;&#x2F;results.json&#x27;,
+	          data    : params,
+	          success : function(data) {
+               	var results = data;
+	            if(typeof successCallback==&quot;function&quot;){
+	            	successCallback(results);
+	            }
+	            		          },
+	          error: function(error){
+	          	failCallback(error);
+	          }
+	          
+             });
+
+	         return null;
+		} else if(VISH.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+			V.Debugging.log(&quot;No server case: and quiz session get results: &quot; + quiz_active_session_id);
+			if(quiz_active_session_id==98988){
+				var results = {&quot;quiz_session_id&quot;:98988,&quot;quiz_id&quot;:12,&quot;results&quot;:{&quot;b&quot;:4,&quot;a&quot;:2,&quot;c&quot;:1, &quot;d&quot;:1}};
+			} else if (quiz_active_session_id==98955) {
+				var results = {&quot;quiz_session_id&quot;:98955,&quot;quiz_id&quot;:13,&quot;results&quot;:{&quot;b&quot;:8,&quot;a&quot;:4,&quot;c&quot;:4}};
+
+			}
+			if(typeof successCallback==&quot;function&quot;){
+				successCallback(results);
+			}
+		}
+
+	};
+
+
+
+	
+	return {
+		init					            : init, 
+		postStartQuizSession				: postStartQuizSession, 
+		deleteQuizSession					: deleteQuizSession, 
+		putQuizSession						: putQuizSession, 
+		getQuizSessionResults				: getQuizSessionResults
+
+		
+	};
+
+}) (VISH, jQuery);
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

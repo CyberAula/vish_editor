@@ -1,3 +1,8 @@
+/**
+ * ViSH Editor
+ * @namespace VISH
+ * @class Editor
+ */
 VISH.Editor = (function(V,$,undefined){
 	
 	//boolean to indicate if we are editing a previous presentation.
@@ -18,7 +23,7 @@ VISH.Editor = (function(V,$,undefined){
 	//drafPresentation uses:
 	//* Store the presentation we are previewing
 	//* Used when changing from presentation to flashcard
-	//* Used when editing an presentation
+	//* Used when editing a presentation
 	var draftPresentation = null;
 
 	//savedPresentation uses:
@@ -26,21 +31,24 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	/**
-	 * VISH editor initializer
-	 * Adds the listeners to the click events in the different images and buttons
-	 * Call submodule initializers
-	 * options is a hash with params and options received from the server
-	 * presentation is the presentation to edit (in not present, a new presentation is created)
+	 * VISH Editor initializer.
+	 * Adds the listeners to the click events in the different images and buttons.
+	 * Call submodule initializers.
+	 *
+	 * @param {hashTable} options Hash with params and options received from the server.
+	 * @param {JSONObject} presentation Presentation to edit (if not present, a new presentation is created).
+	 *
+	 * @method init
 	 */
 	var init = function(options, presentation){
-		VISH.Debugging.init(options);
-
-		//first set VISH.Editing to true
 		VISH.Editing = true;
+
+		VISH.Debugging.init(options);
+		
 		if(options){
 			initOptions = options;
-			if((options["configuration"])&&(VISH.Configuration)){
-				VISH.Configuration.init(options["configuration"]);
+			if((options.configuration)&&(VISH.Configuration)){
+				VISH.Configuration.init(options.configuration);
 				VISH.Configuration.applyConfiguration();
 			}
 		} else {
@@ -55,6 +63,7 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.Utils.loadDeviceCSS();
 
 		VISH.Editor.Dummies.init();
+		VISH.Editor.Themes.init();
 		VISH.Flashcard.init();
 		VISH.Editor.Flashcard.init();
 		VISH.Renderer.init();
@@ -62,22 +71,22 @@ VISH.Editor = (function(V,$,undefined){
 		VISH.User.init(options);
 
 		if(VISH.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
-			 	presentation = VISH.Debugging.getPresentationSamples();
+			if ((options.configuration.mode=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+				presentation = VISH.Debugging.getPresentationSamples();
 			}
 		}
 
 		//init age range slider, this has to be done BEFORE VISH.Editor.Renderer.init(presentation);
 		$("#slider-range").slider({
-	            range: true,
-	            min: 0,
-	            max: 30,
-	            values: [ 4, 20 ],
-	            slide: function( event, ui ) {
-	                $( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-	            }
-	    });
-	    $("#age_range").val(VISH.Constant.AGE_RANGE);
+			range: true,
+			min: 0,
+			max: 30,
+			values: [ 4, 20 ],
+			slide: function( event, ui ) {
+				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+			}
+		});
+		$("#age_range").val(VISH.Constant.AGE_RANGE);
 
 		//If we have to edit
 		if(presentation){
@@ -160,7 +169,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		//Init submodules
-		VISH.Editor.I18n.init(options["lang"]);
+		VISH.Editor.I18n.init(options.lang);
 		VISH.Editor.Text.init();
 		VISH.Editor.Image.init();
 		VISH.Editor.Video.init();
@@ -209,7 +218,7 @@ VISH.Editor = (function(V,$,undefined){
 	/**
 	* function to add the events to the help buttons to launch joy ride bubbles
 	*/
- 	var _addTutorialEvents = function(){
+	var _addTutorialEvents = function(){
 		$(document).on('click','#start_tutorial', function(){
 			VISH.Editor.Tour.startTourWithId('initial_screen_help', 'top');
 		});
@@ -324,8 +333,8 @@ VISH.Editor = (function(V,$,undefined){
 					V.AppletPlayer.loadApplet($(e.target));
 				}
 				else if($(e.target).hasClass('snapshot')){
-	        		V.SnapshotPlayer.loadSnapshot($(e.target));
-	      		}
+					V.SnapshotPlayer.loadSnapshot($(e.target));
+				}
 			},500);
 			
 			V.VideoPlayer.HTML5.playVideos(e.target);
@@ -368,7 +377,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 		VISH.Editor.Slides.redrawSlides();		
 		VISH.Editor.Thumbnails.redrawThumbnails();
-		setTimeout("VISH.Slides.lastSlide()", 300);	
+		setTimeout(function(){
+			VISH.Slides.lastSlide();
+		}, 300);	
 	};
 
 	/**
@@ -471,16 +482,16 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var _onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-		$("#image_template_prompt").attr("src", VISH.ImagesPath + getCurrentArea().attr("type") + ".png");
+		$("#image_template_prompt").attr("src", VISH.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png");
 		$.fancybox(
 			$("#prompt_form").html(),
 			{
 				'autoDimensions'	: false,
 				'scrolling': 'no',
-				'width'         	: 350,
-				'height'        	: 150,
+				'width'				: 350,
+				'height'			: 150,
 				'showCloseButton'	: false,
-				'padding' 			: 0,
+				'padding'			: 0,
 				'onClosed'			: function(){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
@@ -510,6 +521,7 @@ VISH.Editor = (function(V,$,undefined){
 				// thumb = VISH.ImagesPath + "templatesthumbs/" + "flashcard_template.png";
 				break;
 			case VISH.Constant.VTOUR:
+				break;
 			default:
 				thumb = VISH.ImagesPath + "templatesthumbs/" + "default.png";
 				break;
@@ -520,16 +532,16 @@ VISH.Editor = (function(V,$,undefined){
 		$("#prompt_form").html(),
 			{
 				'autoDimensions'	: false,
-				'width'         	: 350,
+				'width'				: 350,
 				'scrolling': 'no',
-				'height'        	: 150,
+				'height'			: 150,
 				'showCloseButton'	: false,
-				'padding' 			: 0,
+				'padding'			: 0,
 				'onClosed'			: function(){
-				  //if user has answered "yes"
+					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){						
-						$("#prompt_answer").val("false");  
-            			VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
+						$("#prompt_answer").val("false");
+						VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
 					}
 				}
 			}
@@ -546,13 +558,13 @@ VISH.Editor = (function(V,$,undefined){
 		event.stopPropagation();
 		event.preventDefault();
 	};
-  
-  	var selectArea = function(area){
-  		setCurrentArea(area);	
+
+	var selectArea = function(area){
+		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
 		VISH.Editor.Tools.loadToolsForZone(area);
-  	}
+	};
   
    /**
 	* Function called when user clicks on any element without class selectable
@@ -576,15 +588,22 @@ VISH.Editor = (function(V,$,undefined){
 			if (jQuery.contains($("#toolbar_wrapper")[0],event.target)){
 				return;
 			}
-
 			if(event.target.id==="toolbar_wrapper"){
 				return;
 			}
 
-			//NiceEditor menu: font and size selection
-			if(event.target.tagName==="FONT"){
+			//No hide toolbar when we are working in a wysiwyg fancybox
+			var isWysiwygFancyboxEnabled = false;
+			$(".cke_dialog").each(function(index,cke_dialog){
+				if((cke_dialog)&&(jQuery.contains(cke_dialog,event.target))){
+					isWysiwygFancyboxEnabled = true;
+					return false;
+				}
+			});
+			if(isWysiwygFancyboxEnabled){
 				return;
 			}
+
 		}
 
 		// VISH.Debugging.log(event.target);
@@ -600,7 +619,6 @@ VISH.Editor = (function(V,$,undefined){
 		$(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
 		$(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
 		$(zone).css("outline", "0");
-		$(zone).css("outline", "thin dotted \9");
 	};
 	
 	var _removeSelectableProperties = function(zone){
@@ -636,11 +654,11 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		var saveForPreview = false;
-		if((options)&&(options["preview"]===true)){
+		if((options)&&(options.preview===true)){
 			saveForPreview = true;
 		}
 
-		if((saveForPreview)&&(options)&&(options["forcePresentation"])){
+		if((saveForPreview)&&(options)&&(options.forcePresentation)){
 			presentation.type = "presentation";
 		} else {
 			presentation.type = getPresentationType();
@@ -695,12 +713,22 @@ VISH.Editor = (function(V,$,undefined){
 				
 				if($(div).attr("areaid") !== undefined){   
 
-					element.id 		= $(div).attr('id');
-					element.type 	= $(div).attr('type');
-					element.areaid 	= $(div).attr('areaid');	 				 
+					element.id		=	$(div).attr('id');
+					element.type	=	$(div).attr('type');
+					element.areaid	=	$(div).attr('areaid');					 
 						 
 					if(element.type==VISH.Constant.TEXT){
-						element.body   = VISH.Editor.Text.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						//NicEditor version
+						// element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+
+						//CKEditor version	
+						var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
+						if(CKEditor!==null){
+							element.body = CKEditor.getData();
+						} else {
+							element.body = "";
+						}
+
 					} else if(element.type==VISH.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
@@ -714,13 +742,13 @@ VISH.Editor = (function(V,$,undefined){
 						//Sources
 						var sources= '';				
 						$(video).find('source').each(function(index, source) {
-							if(index!=0){
+							if(index!==0){
 								sources = sources + ',';
 							}
-							var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':''
-							sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}'
+							var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':'';
+							sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}';
 						});
-						sources = '[' + sources + ']'
+						sources = '[' + sources + ']';
 						element.sources = sources;
 					} else if(element.type===VISH.Constant.OBJECT){
 						var wrapper = $(div).find(".object_wrapper")[0];
@@ -742,17 +770,17 @@ VISH.Editor = (function(V,$,undefined){
 							element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
 						
 							element.quiz_id = "";
-							if ($(div).find("input[name=quiz_id]").val()!="") {
+							if ($(div).find("input[name=quiz_id]").val()!=="") {
 								element.quiz_id = $(div).find("input[name=quiz_id]").val();
 							} 
 							element.quiztype = "multiplechoice";
-							element.options = {};  	
+							element.options = {};
 							element.options.choices = []; 
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
 								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-								if((option)&&($(option_text).text() != 'Write options here')&& ($(option_text).text() !="")){
+								if((option)&&($(option_text).text() !== 'Write options here')&& ($(option_text).text() !=="")){
 									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-									var choice = new Object();
+									var choice = {};
 									choice.value = $(option_text).text();
 									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
 									element.options.choices.push(choice);
@@ -821,16 +849,16 @@ VISH.Editor = (function(V,$,undefined){
 
 					slide.elements.push(element);
 					if(element.type==VISH.Constant.QUIZ){
-						var quizSlide = $.extend(true, new Object(), element);
+						var quizSlide = $.extend(true, {}, element);
 						//Apply presentation Wrapper
-						var quizPresentation = new Object();
+						var quizPresentation = {};
 						quizPresentation.title = presentation.title;
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
 						//add quiz_simple type to slide in json to render answer
 						quizSlide.type = VISH.Constant.QUIZ_SIMPLE;
-					    quizPresentation.slides = [quizSlide];
-					 	quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
+						quizPresentation.slides = [quizSlide];
+						quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 
@@ -853,20 +881,20 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		savedPresentation = presentation;  
-		  
+
 		//Unload all objects
 		VISH.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
 		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 
-		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n")
+		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n");
 		// VISH.Debugging.log(JSON.stringify(presentation));
 		return savedPresentation;
 	};
 	
 
 	var afterSavePresentation = function(presentation, order){
-		switch(VISH.Configuration.getConfiguration()["mode"]){
+		switch(VISH.Configuration.getConfiguration().mode){
 			case VISH.Constant.NOSERVER:
 				//Ignore order param for developping
 				if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
@@ -879,38 +907,38 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 			case VISH.Constant.VISH:
 				var send_type;
-		        if(initialPresentation){
-		          send_type = 'PUT'; //if we are editing
-		        } else {  
-		          send_type = 'POST'; //if it is a new
-		        } 
+				if(initialPresentation){
+					send_type = 'PUT'; //if we are editing
+				} else {  
+					send_type = 'POST'; //if it is a new
+				} 
 
-		        var draft = (order==="draft");
-		        
-		        //POST to http://server/excursions/
-		        var jsonPresentation = JSON.stringify(presentation);  
-		        var params = {
-		          "excursion[json]": jsonPresentation,
-		          "authenticity_token" : initOptions["token"],
-		          "draft": draft
-		        }
-		        
-		        $.ajax({
-		          type    : send_type,
-		          url     : VISH.UploadPresentationPath,
-		          data    : params,
-		          success : function(data) {
-		          	  allowExitWithoutConfirmation();
-		          	  window.top.location.href = data.url;
-		          }     
-		        });
+				var draft = (order==="draft");
+
+				//POST to http://server/excursions/
+				var jsonPresentation = JSON.stringify(presentation);  
+				var params = {
+					"excursion[json]": jsonPresentation,
+					"authenticity_token" : initOptions.token,
+					"draft": draft
+				};
+
+				$.ajax({
+					type    : send_type,
+					url     : VISH.UploadPresentationPath,
+					data    : params,
+					success : function(data) {
+						allowExitWithoutConfirmation();
+						window.top.location.href = data.url;
+					}     
+				});
 				break;
 			case VISH.Constant.STANDALONE:
 				//Order is always save, ignore order param
 				uploadPresentationWithNode(presentation);
 				break;
 		}
-	}
+	};
 	
 
 	var uploadPresentationWithNode = function(presentation){
@@ -923,13 +951,13 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			send_type = 'POST'; //if it is a new
 		} 
-	       
+
 		//POST to /server/presentation/
 		var jsonPresentation = JSON.stringify(presentation);   
 		var params = {
 			"presentation[json]": jsonPresentation
-		}
-		   
+		};
+
 		$.ajax({
 			type    : send_type,
 			url     : url,
@@ -975,26 +1003,26 @@ VISH.Editor = (function(V,$,undefined){
 			return getCurrentArea().parent().attr('template');
 		}
 		return null;
-	}
+	};
 	
 	var getCurrentArea = function() {
 		if(currentZone){
 			return currentZone;
 		}
 		return null;
-	}
+	};
 	
 	var setCurrentArea = function(area){
 		currentZone = area;
-	}
+	};
 
 	var getPresentation = function() {
 		return draftPresentation;
-	}
+	};
 
 	var setPresentation = function(presentation) {
 		draftPresentation = presentation;
-	}
+	};
 
 	var getSavedPresentation = function() {
 		if(savedPresentation){
@@ -1002,27 +1030,27 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	var hasInitialPresentation = function(){
 		return initialPresentation;
-	}
+	};
 	
 	/*
 	 * Load the initial fancybox
 	 */
 	var loadFancyBox = function(fancy) {
-		var fancyBoxes = {1: "templates", 2: "flashcards"}	
+		var fancyBoxes = {1: "templates", 2: "flashcards"};
 				
-		for( tab in fancyBoxes) {
+		for( var tab in fancyBoxes) {
 			$('#tab_'+fancyBoxes[tab]+'_content').hide();
 			$('#tab_'+fancyBoxes[tab]).attr("class", "");
 			$('#tab_'+fancyBoxes[tab]).attr("class", "fancy_tab");
-		} 
+		}
 		//just show the fancybox selected 
 		$('#tab_'+fancy+'_content').show();
 		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
-	}
+	};
 
 	/*
 	 * type can be "presentation", "flashcard" or "game"
@@ -1036,7 +1064,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var setPresentationType  = function(type){
 		if(!draftPresentation){
-			draftPresentation = new Object();
+			draftPresentation = {};
 		}
 		if(type){
 			draftPresentation.type = type;
@@ -1067,7 +1095,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
 
 	var _isThisPresentationStandard = function(presentation){
 		if(presentation.type!=="presentation"){
@@ -1081,7 +1109,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		return isStandard;
-	}
+	};
 
 	/*
 	 * Returns if the server has checked the presentation has a draft.
@@ -1089,8 +1117,8 @@ VISH.Editor = (function(V,$,undefined){
 	var isPresentationDraft = function(){
 		if(initialPresentation){
 			//Look for options["draft"]
-			if((initOptions["draft"])&&(typeof initOptions["draft"] === "boolean")){
-				return initOptions["draft"];
+			if((initOptions.draft)&&(typeof initOptions.draft === "boolean")){
+				return initOptions.draft;
 			} else {
 				//Server must indicate explicity that this presentation is a draft with the "draft" option.
 				return false;
@@ -1099,40 +1127,40 @@ VISH.Editor = (function(V,$,undefined){
 			//New presentation created, draft by default.
 			return true;
 		}
-	}
+	};
 
 
 	var exitConfirmation = function(){
-		if((VISH.Configuration.getConfiguration()["mode"]===VISH.Constant.VISH)&&(confirmOnExit)){
+		if((VISH.Configuration.getConfiguration().mode===VISH.Constant.VISH)&&(confirmOnExit)){
 			return VISH.Editor.I18n.getTrans("i.exitConfirmation");
 		} else {
-			return
+			return;
 		}
-	}
+	};
 
 	var allowExitWithoutConfirmation = function(){
 		confirmOnExit = false;
-	}
+	};
 
 
 	return {
-		init 					: init,
-		addDeleteButton 		: addDeleteButton,
-		getTemplate 			: getTemplate,
-		getCurrentArea 			: getCurrentArea,
+		init					: init,
+		addDeleteButton			: addDeleteButton,
+		getTemplate				: getTemplate,
+		getCurrentArea			: getCurrentArea,
 		getPresentationType		: getPresentationType,
-		getOptions 				: getOptions, 
-		loadFancyBox 			: loadFancyBox,
-		getPresentation 		: getPresentation,
-		setPresentation 		: setPresentation,
-		isPresentationStandard 	: isPresentationStandard,
+		getOptions				: getOptions, 
+		loadFancyBox			: loadFancyBox,
+		getPresentation			: getPresentation,
+		setPresentation			: setPresentation,
+		isPresentationStandard	: isPresentationStandard,
 		isPresentationDraft		: isPresentationDraft,
-		getSavedPresentation 	: getSavedPresentation,
+		getSavedPresentation	: getSavedPresentation,
 		hasInitialPresentation	: hasInitialPresentation,
-		savePresentation 		: savePresentation,
-		afterSavePresentation  	: afterSavePresentation,
-		setPresentationType 	: setPresentationType,
-		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
+		savePresentation		: savePresentation,
+		afterSavePresentation	: afterSavePresentation,
+		setPresentationType		: setPresentationType,
+		allowExitWithoutConfirmation	:allowExitWithoutConfirmation, 
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea
 	};

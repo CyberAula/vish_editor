@@ -12,9 +12,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		VISH.Debugging.init(options);
-
 		VISH.Editing = false;
+		
+		VISH.Debugging.init(options);
 
 		if(options){
 			initOptions = options;
@@ -38,11 +38,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
 		
+		V.Status.init();
 		V.Quiz.init(presentation);
 		V.Flashcard.init();
 		V.Renderer.init();
 		V.Slides.init();
-		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		V.Utils.init();
@@ -63,10 +63,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.EventsNotifier.init();
 	  	V.VideoPlayer.init();
 
-		V.Themes.selectTheme(presentation.theme);
+		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.ViewerAdapter.init();
 		V.Quiz.prepareQuiz(presentation);
 
 		//Init Vish Editor Addons
@@ -74,7 +73,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
-		V.ViewerAdapter.setupInterface(options);
+		V.ViewerAdapter.init(options); //Also init texts
 	};
 
 	

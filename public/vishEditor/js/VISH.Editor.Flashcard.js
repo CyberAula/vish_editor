@@ -159,16 +159,22 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	}
 
 	var _undoNestedSlides = function(fcId,slides){
-		for(var j=0; j<slides.length; j++){
-			slides[j] = VISH.Editor.Utils.undoNestedSlide(fcId,slides[j]);
+		if(slides){
+			var sl = slides.length;
+			for(var j=0; j<sl; j++){
+				slides[j] = VISH.Editor.Utils.undoNestedSlide(fcId,slides[j]);
+			}
 		}
 		return slides;
 	}
 
 	var _undoNestedPois = function(fcId,pois){
-		for(var k=0; k<pois.length; k++){
-			pois[k].id = pois[k].id.replace(fcId+"_","");
-			pois[k].slide_id = pois[k].slide_id.replace(fcId+"_","");
+		if(pois){
+			var lp = pois.length;
+			for(var k=0; k<lp; k++){
+				pois[k].id = pois[k].id.replace(fcId+"_","");
+				pois[k].slide_id = pois[k].slide_id.replace(fcId+"_","");
+			}
 		}
 		return pois;
 	}

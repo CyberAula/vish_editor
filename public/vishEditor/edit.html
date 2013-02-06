@@ -24,7 +24,7 @@
 	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.ui.touch-punch.0.2.2.min.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/libs/jquery.carouFredSel-5.5.0.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/libs/jquery.carouFredSel-6.2.0-packed.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/jquery.form.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/tagit.js"></script>
@@ -36,7 +36,9 @@
 	<script type="text/javascript" src="/vishEditor/js/libs/modernizr.mq.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/modernizr.foundation.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/ckeditor/ckeditor.js"></script>
 
+	<script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Constant.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
@@ -99,13 +101,15 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
-	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>	
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>	
 	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.LocalStorage.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Text.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
@@ -562,7 +566,7 @@
 	  	<input type="hidden" id="prompt_answer" value="false"></input>
 	  	<div id='prompt_form'>	  		
 	  		<img id="image_template_prompt" class="delete_img" src="/vishEditor/images/templatesthumbs/default.png"/>
-	  		<img id="delimg" class="delimg" src="/vishEditor/images/icons/delete_border.png">
+	  		<img id="delimg" class="delimg" src="/vishEditor/images/icons/ve_delete_border.png">
 	  		<span i18n-key="i.sure" class="deltext">are you sure?</span>
 	  		<div class="buttons_together">
 	  			<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="prompt_button button button220" i18n-key="i.delete">delete</a>
@@ -795,47 +799,47 @@
 	    <div id="theme_fancybox" class="theme_fancybox_class">
 	    	<img id="help_themes_selection" src="/vishEditor/images/icons/helptutorial_circle.png"/>
 	    	<div id='select_theme1'>
-		      <img src='/vishEditor/images/themes/theme1/select.png' class="templathumb quizFancythumb" onclick="VISH.Themes.selectTheme('theme1')"/>
+		      <img src='/vishEditor/images/themes/theme1/select.png' class="templathumb quizFancythumb" onclick="VISH.Editor.Themes.selectTheme('theme1')"/>
 	      </div>
 	      <div id='select_theme2'>
-		      <img src='/vishEditor/images/themes/theme2/select.png' class="templathumb quizFancythumb " onclick="VISH.Themes.selectTheme('theme2')"/>
+		      <img src='/vishEditor/images/themes/theme2/select.png' class="templathumb quizFancythumb " onclick="VISH.Editor.Themes.selectTheme('theme2')"/>
 	      </div>
 	      <div id='select_theme3'>
 		      <img src='/vishEditor/images/themes/theme3/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme3')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme3')"/>
 	      </div>
 	      <div id='select_theme4'>
 		      <img src='/vishEditor/images/themes/theme4/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme4')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme4')"/>
 	      </div>
 	      <div id='select_theme5'>
 		      <img src='/vishEditor/images/themes/theme5/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme5')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme5')"/>
 	      </div>
 	      <div id='select_theme6'>
 		      <img src='/vishEditor/images/themes/theme6/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme6')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme6')"/>
 	      </div>
 	      <div id='select_theme7'>
 		      <img src='/vishEditor/images/themes/theme7/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme7')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme7')"/>
 	      </div>
 	      <div id='select_theme8'>
 		      <img src='/vishEditor/images/themes/theme8/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme8')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme8')"/>
 	      </div>
 	      <div id='select_theme9'>
 		      <img src='/vishEditor/images/themes/theme9/select.png' class="templathumb quizFancythumb" 
-		      onclick="VISH.Themes.selectTheme('theme9')"/>
+		      onclick="VISH.Editor.Themes.selectTheme('theme9')"/>
 	      </div>
 	      <div id='select_theme10'>
-		      <img src='/vishEditor/images/themes/theme10/select.png' class="templathumb quizFancythumb" onclick="VISH.Themes.selectTheme('theme10')"/>
+		      <img src='/vishEditor/images/themes/theme10/select.png' class="templathumb quizFancythumb" onclick="VISH.Editor.Themes.selectTheme('theme10')"/>
 	      </div>
 	      <div id='select_theme11'>
-		      <img src='/vishEditor/images/themes/theme11/select.png' class="templathumb quizFancythumb" onclick="VISH.Themes.selectTheme('theme11')"/>
+		      <img src='/vishEditor/images/themes/theme11/select.png' class="templathumb quizFancythumb" onclick="VISH.Editor.Themes.selectTheme('theme11')"/>
 	      </div>
 	      <div id='select_theme12'>
-		      <img src='/vishEditor/images/themes/theme12/select.gif' class="templathumb quizFancythumb" onclick="VISH.Themes.selectTheme('theme12')"/>
+		      <img src='/vishEditor/images/themes/theme12/select.gif' class="templathumb quizFancythumb" onclick="VISH.Editor.Themes.selectTheme('theme12')"/>
 	      </div>
 	    </div>
 	</div>
@@ -932,7 +936,7 @@
 							<div id="tab_object_repo_content_preview_object" class="content_preview_data"></div>
 							<div id="tab_object_repo_content_preview_metadata" class="content_preview_metadata"></div>
 							<div id="tab_object_repo_content_preview_foot" class="content_preview_foot">
-								<button i18n-key="i.Add" type="button" class="okButton" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
+								<button i18n-key="i.Add" type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
 							</div>
 						</div>				
 				  </div>
@@ -998,7 +1002,7 @@
 								</div>
 								<div id="tab_video_repo_content_preview_metadata" class="content_preview_metadata"></div>
 								<div id="tab_video_repo_content_preview_foot" class="content_preview_foot">
-									<button type="button" class="okButton" onclick="VISH.Editor.Video.Repository.addSelectedVideo()">Add</button>
+									<button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Video.Repository.addSelectedVideo()">Add</button>
 								</div>
 							</div>
             </div>
@@ -1019,7 +1023,7 @@
 						</div>
 						<div id="tab_video_youtube_content_preview_metadata" class="content_preview_metadata"></div>
 						<div id="tab_video_youtube_content_preview_foot" class="content_preview_foot">
-							<button type="button" class="okButton" onclick="VISH.Editor.Video.Youtube.addSelectedVideo()">Add</button>
+							<button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Video.Youtube.addSelectedVideo()">Add</button>
 						</div>
 					</div>
 					
@@ -1040,7 +1044,7 @@
 						</div>
 						<div id="tab_video_vimeo_content_preview_metadata" class="content_preview_metadata"></div>
 						<div id="tab_video_vimeo_content_preview_foot" class="content_preview_foot">
-							<button type="button" class="okButton" onclick="VISH.Editor.Video.vimeo.addSelectedVideo()">Add</button>
+							<button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Video.vimeo.addSelectedVideo()">Add</button>
 						</div>
 					</div>
 					
@@ -1073,7 +1077,7 @@
               <div id="tab_live_webcam_content_preview_live" class="content_preview_data"></div>
               <div id="tab_live_webcam_content_preview_metadata" class="content_preview_metadata"></div>
               <div id="tab_live_webcam_content_preview_foot" class="content_preview_foot">
-                <button type="button" class="okButton" onclick="VISH.Editor.Object.Live.addSelectedObject()">Add</button>
+                <button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Live.addSelectedObject()">Add</button>
               </div>
             </div>        
           </div>
@@ -1262,7 +1266,7 @@
 				</li>
 				<li>
 					<h1 i18n-key="i.closeOrDelete">Close or Delete</h1>
-					<img id="delimagetut" src="/vishEditor/images/icons/delete.png"/>
+					<img id="delimagetut" src="/vishEditor/images/icons/ve_delete.png"/>
 				</li>
 			</ul>
 		</p>

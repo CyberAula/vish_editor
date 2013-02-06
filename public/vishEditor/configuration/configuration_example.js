@@ -95,6 +95,10 @@ var getOptions = function(){
 			//If comeBackUrl not exists, back button will be hidden
         	options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
+        	//to show the fullscreen if the feature is not present
+        	options["fullscreen"] = "http://localhost/vishEditor/viewer.html";
+        	options["exitFullscreen"] = "http://localhost/vishEditor/framed_viewer.html";
+
         	//Draft presentations
         	options["draft"] = false;
 

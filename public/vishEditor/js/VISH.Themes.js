@@ -1,22 +1,8 @@
 VISH.Themes = (function(V,$,undefined){
 
-	var selectTheme = function(theme){
-		_loadTheme(theme);
-		if(V.Editing){
-			//save it in the draftPresentation
-			var draftPresentation = VISH.Editor.getPresentation();
-			if(!draftPresentation){
-				draftPresentation = {};
-			}
-			draftPresentation.theme = theme;
-			VISH.Editor.setPresentation(draftPresentation);
-			$.fancybox.close();
-		}		
-	};
-
-	var _loadTheme = function(theme){
+	var loadTheme = function(theme){
 		if(!theme){
-			theme = "theme1";  //Default theme
+			theme = VISH.Constant.Themes.Default;
 		}
 		_unloadAllThemes();
 		V.Utils.loadCSS("themes/" + theme + ".css");
@@ -35,7 +21,7 @@ VISH.Themes = (function(V,$,undefined){
 	}
 
 	return {
-		selectTheme			: selectTheme
+		loadTheme	: loadTheme
 	};
 
 }) (VISH, jQuery);

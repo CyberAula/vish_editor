@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Editor.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Editor.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * ViSH Editor
+ * @namespace VISH
+ * @class Editor
+ *&#x2F;
+VISH.Editor = (function(V,$,undefined){
+	
+	&#x2F;&#x2F;boolean to indicate if we are editing a previous presentation.
+	var initialPresentation = false;
+
+	&#x2F;&#x2F;Store the initialOptions
+	var initOptions;
+
+	&#x2F;&#x2F;Pointer to the currentZone
+	var currentZone;
+
+	&#x2F;&#x2F;Prevent to load events multiple times.
+	var eventsLoaded = false;
+
+	&#x2F;&#x2F;Confirm on exit
+	var confirmOnExit;
+	
+	&#x2F;&#x2F;drafPresentation uses:
+	&#x2F;&#x2F;* Store the presentation we are previewing
+	&#x2F;&#x2F;* Used when changing from presentation to flashcard
+	&#x2F;&#x2F;* Used when editing an presentation
+	var draftPresentation = null;
+
+	&#x2F;&#x2F;savedPresentation uses:
+	var savedPresentation = null;
+
+
+	&#x2F;**
+	 * VISH Editor initializer.
+	 * Adds the listeners to the click events in the different images and buttons.
+	 * Call submodule initializers.
+	 *
+	 * @param {hashTable} options Hash with params and options received from the server.
+	 * @param {JSONObject} presentation Presentation to edit (if not present, a new presentation is created).
+	 *
+	 * @method init
+	 *&#x2F;
+	var init = function(options, presentation){
+		VISH.Editing = true;
+
+		VISH.Debugging.init(options);
+		
+		if(options){
+			initOptions = options;
+			if((options[&quot;configuration&quot;])&amp;&amp;(VISH.Configuration)){
+				VISH.Configuration.init(options[&quot;configuration&quot;]);
+				VISH.Configuration.applyConfiguration();
+			}
+		} else {
+			initOptions = {};
+		}
+		
+		VISH.Utils.init();
+		VISH.Status.init();
+		if(!VISH.Utils.checkMiniumRequirements()){
+			return;
+		}
+		VISH.Utils.loadDeviceCSS();
+
+		VISH.Editor.Dummies.init();
+		VISH.Flashcard.init();
+		VISH.Editor.Flashcard.init();
+		VISH.Renderer.init();
+		VISH.Slides.init();
+		VISH.User.init(options);
+
+		if(VISH.Debugging.isDevelopping()){
+			if ((options[&quot;configuration&quot;][&quot;mode&quot;]==&quot;noserver&quot;)&amp;&amp;(VISH.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
+			 	presentation = VISH.Debugging.getPresentationSamples();
+			}
+		}
+
+		&#x2F;&#x2F;init age range slider, this has to be done BEFORE VISH.Editor.Renderer.init(presentation);
+		$(&quot;#slider-range&quot;).slider({
+	            range: true,
+	            min: 0,
+	            max: 30,
+	            values: [ 4, 20 ],
+	            slide: function( event, ui ) {
+	                $( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
+	            }
+	    });
+	    $(&quot;#age_range&quot;).val(VISH.Constant.AGE_RANGE);
+
+		&#x2F;&#x2F;If we have to edit
+		if(presentation){
+			if(typeof presentation.VEVersion === &quot;undefined&quot;){
+				presentation.VEVersion = &quot;0.1&quot;;
+			}
+			initialPresentation = true;
+			setPresentation(presentation);
+			VISH.Editor.Renderer.init(presentation);
+			&#x2F;&#x2F;remove focus from any zone
+			_removeSelectableProperties();					
+		}
+
+		
+		&#x2F;&#x2F; fancybox to create a new slide		
+		$(&quot;a#addSlideFancybox&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;width&#x27;: 640,
+			&#x27;height&#x27;: 350,
+			&#x27;padding&#x27;: 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				VISH.Utils.loadTab(&#x27;tab_templates&#x27;);
+			}
+		});
+
+		&#x2F;&#x2F; fancybox to create a new quiz		
+		$(&quot;a#addQuizFancybox&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;width&#x27;: 385,
+			&#x27;height&#x27;: 340,
+			&#x27;padding&#x27;: 0,
+			&quot;onStart&quot;  : function(data) {
+				VISH.Utils.loadTab(&#x27;tab_quizes&#x27;);
+			}
+		});
+	
+		if(!eventsLoaded){
+			eventsLoaded = true;
+				 
+			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, VISH.Editor.Tools.Menu.onSettings); 
+			$(document).on(&#x27;click&#x27;, &#x27;#save&#x27;, VISH.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, VISH.Editor.Tools.Menu.onPedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, VISH.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, VISH.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+
+			$(document).on(&#x27;click&#x27;,&#x27;.templatethumb&#x27;, _onTemplateThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, _onEditableClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.selectable&#x27;, _onSelectableClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;)&#x27;, _onNoSelectableClicked);
+			
+			$(document).on(&#x27;click&#x27;,&#x27;.delete_content&#x27;, _onDeleteItemClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.delete_slide&#x27;, _onDeleteSlideClicked);
+			&#x2F;&#x2F;arrows in button panel
+			$(document).on(&#x27;click&#x27;,&#x27;#arrow_left_div&#x27;, _onArrowLeftClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;#arrow_right_div&#x27;, _onArrowRightClicked);
+
+			$(document).on(&quot;click&quot;, &quot;#fc_change_bg_big&quot;, V.Editor.Tools.changeFlashcardBackground);
+
+			&#x2F;&#x2F;used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
+			_addEditorEnterLeaveEvents();
+
+			VISH.Editor.Slides.redrawSlides();
+			VISH.Editor.Thumbnails.redrawThumbnails();
+
+			&#x2F;&#x2F;if click on begginers tutorial-&gt;launch it
+			_addTutorialEvents();
+
+			&#x2F;&#x2F;onbeforeunload event
+			window.onbeforeunload = exitConfirmation;
+			confirmOnExit = true;
+		}
+		
+		if(presentation){
+			&#x2F;&#x2F;hide objects (the _onSlideEnterEditor event will show the objects in the current slide)
+			$(&#x27;.object_wrapper&#x27;).hide();		
+		}
+		
+		&#x2F;&#x2F;Init submodules
+		VISH.Editor.I18n.init(options[&quot;lang&quot;]);
+		VISH.Editor.Text.init();
+		VISH.Editor.Image.init();
+		VISH.Editor.Video.init();
+		VISH.Editor.Object.init();
+		VISH.Editor.Thumbnails.init();
+		VISH.Editor.AvatarPicker.init();
+		VISH.Editor.Quiz.init();
+		VISH.Editor.Tools.init();
+		VISH.Editor.Filter.init();
+		VISH.Editor.Clipboard.init();
+
+		VISH.Editor.Events.init();
+		VISH.EventsNotifier.init();
+
+		&#x2F;&#x2F;Init Vish Editor Addons
+		if(options.addons){
+			VISH.Addons.init(options.addons);
+		}
+	};
+	
+	
+	
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F;&#x2F; Helpers 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	var getOptions = function(){
+		return initOptions;
+	};	
+	
+
+	&#x2F;**
+	* Function to add a delete button to the element
+	*&#x2F;
+	var addDeleteButton = function(element){
+		element.append(&quot;&lt;div class=&#x27;delete_content&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+	};
+  
+
+	
+
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F;&#x2F;    Events
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	
+	&#x2F;**
+	* function to add the events to the help buttons to launch joy ride bubbles
+	*&#x2F;
+ 	var _addTutorialEvents = function(){
+		$(document).on(&#x27;click&#x27;,&#x27;#start_tutorial&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;initial_screen_help&#x27;, &#x27;top&#x27;);
+		});
+
+		$(document).on(&#x27;click&#x27;,&#x27;#help_right&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;flashcard
+		$(document).on(&#x27;click&#x27;,&#x27;#help_flashcard&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;template
+		$(document).on(&#x27;click&#x27;,&#x27;.help_in_template&#x27;, function(){			
+			VISH.Editor.Tour.startTourWithId(&#x27;template_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;Quiz
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizes_help&#x27;, function(){			
+			VISH.Editor.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;themes
+		$(document).on(&#x27;click&#x27;,&#x27;#help_themes_selection&#x27;, function(){			
+			VISH.Editor.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F;template selection fancybox	
+		$(document).on(&#x27;click&#x27;,&#x27;#help_template_selection&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;help_template_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+		
+		&#x2F;&#x2F;image fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});	
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_upload_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;upload_picture_form_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_repo_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_picture_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_flikr_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F;object fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});	
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_web_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_web_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_upload_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;upload_object_form_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_snapshot_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		
+		&#x2F;&#x2F;video fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;video_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});	
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_repo_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_video_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_youtube_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_youtube_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_vimeo_help&#x27;, function(){
+			VISH.Editor.Tour.startTourWithId(&#x27;search_vimeo_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F; live fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_webcam_help&#x27;, function(){
+				VISH.Editor.Tour.startTourWithId(&#x27;tab_live_webcam_id&#x27;, &#x27;bottom&#x27;);
+		});	
+	};
+  
+	&#x2F;**
+	* function to add enter and leave events only for the VISH editor
+	*&#x2F;
+	var _addEditorEnterLeaveEvents = function(){
+		$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;,_onSlideEnterEditor);
+		$(&#x27;article&#x27;).live(&#x27;slideleave&#x27;,_onSlideLeaveEditor);
+	};
+  
+	&#x2F;**
+	* function called when entering slide in editor, we have to show the objects
+	*&#x2F;
+	var _onSlideEnterEditor = function(e){
+		setTimeout(function(){
+			$(e.target).find(&#x27;.object_wrapper&#x27;).show();
+		},500);
+		
+		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
+			V.Flashcard.startAnimation(e.target.id);
+		}
+
+		if($(e.target).hasClass(&quot;subslide&quot;)){
+			setTimeout(function(){
+				if($(e.target).hasClass(&#x27;object&#x27;)){
+					V.ObjectPlayer.loadObject($(e.target));
+				}
+				else if($(e.target).hasClass(&#x27;applet&#x27;)){
+					V.AppletPlayer.loadApplet($(e.target));
+				}
+				else if($(e.target).hasClass(&#x27;snapshot&#x27;)){
+	        		V.SnapshotPlayer.loadSnapshot($(e.target));
+	      		}
+			},500);
+			
+			V.VideoPlayer.HTML5.playVideos(e.target);
+		} else {
+			VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
+		}
+	};
+  
+	&#x2F;**
+	* Function called when leaving slide in editor, we have to hide the objects
+	*&#x2F;
+	var _onSlideLeaveEditor = function(e){
+		$(&#x27;.object_wrapper&#x27;).hide();
+		
+		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
+			V.Flashcard.stopAnimation(e.target.id);
+		}
+
+		if($(e.target).hasClass(&quot;subslide&quot;)){
+			V.VideoPlayer.HTML5.stopVideos(e.target);
+			V.ObjectPlayer.unloadObject(e.target);
+			V.AppletPlayer.unloadApplet();
+		} else {
+			VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
+		}
+	};
+  
+
+
+	&#x2F;**
+	 * function called when user clicks on template
+	 * Includes a new slide following the template selected
+	 *&#x2F;
+	var _onTemplateThumbClicked = function(event){
+		var theid = draftPresentation ? draftPresentation.id : &quot;&quot;;
+		var slide = VISH.Editor.Dummies.getDummy($(this).attr(&#x27;template&#x27;), VISH.Slides.getSlidesQuantity()+1);
+		VISH.Editor.Slides.addSlide(slide);
+		$.fancybox.close();
+		&#x2F;&#x2F;currentSlide number is next slide
+		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+		VISH.Editor.Slides.redrawSlides();		
+		VISH.Editor.Thumbnails.redrawThumbnails();
+		setTimeout(&quot;VISH.Slides.lastSlide()&quot;, 300);	
+	};
+
+	&#x2F;**
+	 * Function called when user clicks on an editable element
+	 * Event launched when an editable element belonging to the slide is clicked
+	 *&#x2F;
+	var _onEditableClicked = function(event){
+		&#x2F;&#x2F;first remove the &quot;editable&quot; class because we are going to add clickable icons there and we don´t want it to be editable any more
+		$(this).removeClass(&quot;editable&quot;);
+		setCurrentArea($(this));
+				
+		&#x2F;&#x2F;need to clone it, because we need to show it many times, not only the first one
+		&#x2F;&#x2F;so we need to remove its id		
+		var content = $(&quot;#menuselect&quot;).clone().attr(&#x27;id&#x27;,&#x27;current_menu&#x27;);
+
+		$(content).find(&quot;a&quot;).css(&quot;display&quot;,&quot;none&quot;);
+		$(content).find(&quot;a.all&quot;).css(&quot;display&quot;,&quot;inline&quot;);
+
+		switch($(this).attr(&quot;size&quot;)){
+			case VISH.Constant.EXTRA_SMALL:
+				$(content).find(&quot;a.small&quot;).css(&quot;display&quot;,&quot;inline&quot;);
+				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_extra_small&quot;);
+				break;
+			case VISH.Constant.SMALL:
+				$(content).find(&quot;a.small&quot;).css(&quot;display&quot;,&quot;inline&quot;);
+				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_small&quot;);
+				break;
+			case VISH.Constant.MEDIUM:
+				$(content).find(&quot;a.medium&quot;).css(&quot;display&quot;,&quot;inline&quot;);
+				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_medium&quot;);
+				break;
+			case VISH.Constant.LARGE:
+				$(content).find(&quot;a.large&quot;).css(&quot;display&quot;,&quot;inline&quot;);
+				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_large&quot;);
+				break;
+		}
+
+		$(this).html(content);
+
+		$(&quot;a.addpicture&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				&#x2F;&#x2F;re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
+				VISH.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+			}
+		});
+		$(&quot;a.addobject&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;height&#x27;: 600,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				VISH.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
+			}
+		});
+		$(&quot;a.addvideo&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				VISH.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
+			}
+		});
+		$(&quot;a.addLive&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				VISH.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
+			}
+		});
+
+		$(&quot;a.addQuiz&quot;).click(function(event){
+			$(&quot;a#addQuizFancybox&quot;).trigger(&quot;click&quot;);
+		});
+
+	}; 
+
+
+	&#x2F;**
+	* function called when user clicks on the delete icon of the zone
+	*&#x2F;
+	var _onDeleteItemClicked = function(){
+		setCurrentArea($(this).parent());
+		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, VISH.ImagesPath + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;);
+		$.fancybox(
+			$(&quot;#prompt_form&quot;).html(),
+			{
+				&#x27;autoDimensions&#x27;	: false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;width&#x27;         	: 350,
+				&#x27;height&#x27;        	: 150,
+				&#x27;showCloseButton&#x27;	: false,
+				&#x27;padding&#x27; 			: 0,
+				&#x27;onClosed&#x27;			: function(){
+					&#x2F;&#x2F;if user has answered &quot;yes&quot;
+					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){
+						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
+						getCurrentArea().html(&quot;&quot;);
+						getCurrentArea().removeAttr(&quot;type&quot;);
+						getCurrentArea().addClass(&quot;editable&quot;);
+					}
+				}
+			}
+		);
+	};
+  
+  &#x2F;**
+   * Function called when user delete a slide
+   *&#x2F;
+	var _onDeleteSlideClicked = function(){
+		var article_to_delete = $(this).parent()[0];
+
+		var thumb;
+		switch(VISH.Slides.getSlideType(article_to_delete)){
+			case VISH.Constant.STANDARD:
+				thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + $(article_to_delete).attr(&quot;template&quot;) + &quot;.png&quot;; 
+				break;
+			case VISH.Constant.FLASHCARD:
+				thumb = VISH.Utils.getSrcFromCSS($(article_to_delete).attr(&quot;avatar&quot;));
+				&#x2F;&#x2F; thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;flashcard_template.png&quot;;
+				break;
+			case VISH.Constant.VTOUR:
+			default:
+				thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;default.png&quot;;
+				break;
+		}
+
+		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, thumb);
+		$.fancybox(
+		$(&quot;#prompt_form&quot;).html(),
+			{
+				&#x27;autoDimensions&#x27;	: false,
+				&#x27;width&#x27;         	: 350,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;        	: 150,
+				&#x27;showCloseButton&#x27;	: false,
+				&#x27;padding&#x27; 			: 0,
+				&#x27;onClosed&#x27;			: function(){
+				  &#x2F;&#x2F;if user has answered &quot;yes&quot;
+					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){						
+						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);  
+            			VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
+					}
+				}
+			}
+		);
+	};
+
+
+
+	&#x2F;**
+	* function called when user clicks on template zone with class selectable
+	*&#x2F;
+	var _onSelectableClicked = function(event){
+		selectArea($(this));
+		event.stopPropagation();
+		event.preventDefault();
+	};
+  
+  	var selectArea = function(area){
+  		setCurrentArea(area);	
+		_removeSelectableProperties(area);
+		_addSelectableProperties(area);
+		VISH.Editor.Tools.loadToolsForZone(area);
+  	}
+  
+   &#x2F;**
+	* Function called when user clicks on any element without class selectable
+	*&#x2F;
+	var _onNoSelectableClicked = function(event){
+		
+		&#x2F;&#x2F;Add class &#x27;noSelectableElement&#x27; to a element to call _onNoSelectableClicked without restrictions
+		if(!$(event.target).hasClass(&quot;noSelectableElement&quot;)){
+
+			&#x2F;&#x2F;No hide toolbar when we are working in a fancybox
+			if($(&quot;#fancybox-content&quot;).is(&quot;:visible&quot;)){
+				return;
+			}
+
+			&#x2F;&#x2F;No hide toolbar for selectable childrens
+			if($(event.target).parent().hasClass(&quot;selectable&quot;)){
+				return;
+			}
+
+			&#x2F;&#x2F;Enable toolbar actions
+			if (jQuery.contains($(&quot;#toolbar_wrapper&quot;)[0],event.target)){
+				return;
+			}
+
+			if(event.target.id===&quot;toolbar_wrapper&quot;){
+				return;
+			}
+		}
+
+		&#x2F;&#x2F; VISH.Debugging.log(event.target);
+		setCurrentArea(null);
+		VISH.Editor.Tools.cleanZoneTools();
+	};
+	
+	var _addSelectableProperties = function(zone){
+		&#x2F;&#x2F;add selectable css
+		$(zone).css(&quot;cursor&quot;, &quot;auto&quot;);
+		$(zone).css(&quot;border-color&quot;, &quot;rgb(255, 2, 94)&quot;);
+		$(zone).css(&quot;-webkit-box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
+		$(zone).css(&quot;-moz-box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
+		$(zone).css(&quot;box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
+		$(zone).css(&quot;outline&quot;, &quot;0&quot;);
+		$(zone).css(&quot;outline&quot;, &quot;thin dotted \9&quot;);
+	};
+	
+	var _removeSelectableProperties = function(zone){
+		&#x2F;&#x2F;Remove selectable css
+		$(&quot;.selectable&quot;).css(&quot;border-color&quot;, &quot;none&quot;);
+		$(&quot;.selectable&quot;).css(&quot;-webkit-box-shadow&quot;, &quot;none&quot;);
+		$(&quot;.selectable&quot;).css(&quot;-moz-box-shadow&quot;, &quot;none&quot;);
+		$(&quot;.selectable&quot;).css(&quot;box-shadow&quot;, &quot;none&quot;);
+		$(&quot;.selectable&quot;).css(&quot;outline&quot;, &quot;0&quot;);
+		$(&quot;.selectable&quot;).css(&quot;cursor&quot;, &quot;pointer&quot;);
+	};
+
+	
+	
+	&#x2F;**
+	* function to save the presentation
+	* 
+	* options[&quot;forcePresentation&quot;] is a boolean to indicate if we should force type to presentation
+	* For example, it is used for preview slides in a flashcard
+	*&#x2F;
+	var savePresentation = function(options){
+		&#x2F;&#x2F;Load all objects
+		VISH.Editor.Utils.Loader.loadAllObjects();
+		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
+
+		&#x2F;&#x2F;Now save the presentation
+		var presentation = {};
+		presentation.VEVersion = VISH.VERSION;
+		if(draftPresentation){
+			presentation.id = draftPresentation.id;
+		}else{
+			presentation.id = &#x27;&#x27;;	
+		}
+
+		var saveForPreview = false;
+		if((options)&amp;&amp;(options[&quot;preview&quot;]===true)){
+			saveForPreview = true;
+		}
+
+		if((saveForPreview)&amp;&amp;(options)&amp;&amp;(options[&quot;forcePresentation&quot;])){
+			presentation.type = &quot;presentation&quot;;
+		} else {
+			presentation.type = getPresentationType();
+		}
+
+		if(draftPresentation){
+			presentation.title = draftPresentation.title;
+			presentation.description = draftPresentation.description;
+			presentation.avatar = draftPresentation.avatar;
+			presentation.tags = draftPresentation.tags;
+			presentation.theme = draftPresentation.theme;
+			presentation.age_range = draftPresentation.age_range;
+			presentation.subject = draftPresentation.subject;
+			presentation.language = draftPresentation.language;
+			presentation.educational_objectives = draftPresentation.educational_objectives;
+			presentation.adquired_competencies = draftPresentation.adquired_competencies;
+		}
+		presentation.author = &#x27;&#x27;;
+		presentation.slides = [];
+
+		var slide = {};
+		if(presentation.type===&quot;flashcard&quot;){
+			slide.id = $(&quot;#flashcard-background&quot;).attr(&quot;flashcard_id&quot;);
+			slide.type = VISH.Constant.FLASHCARD;
+			slide.background = $(&quot;#flashcard-background&quot;).css(&quot;background-image&quot;);
+			&#x2F;&#x2F;save the pois
+			slide.pois = VISH.Editor.Flashcard.savePois();
+			slide.slides = [];
+			presentation.slides.push(slide);
+		}
+
+		slide = {};
+		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
+			slide.id = $(s).attr(&#x27;id&#x27;); &#x2F;&#x2F;TODO what if saved before!
+			slide.type = $(s).attr(&#x27;type&#x27;);
+			
+			if(slide.type === V.Constant.FLASHCARD){
+				var fc = VISH.Editor.Flashcard.getFlashcard(slide.id);
+				presentation.slides.push(fc);
+				slide = {};
+				return true; &#x2F;&#x2F;equivalent to continue in an each loop
+			}
+
+			slide.template = $(s).attr(&#x27;template&#x27;);
+			slide.elements = [];
+			var element = {};
+
+			&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
+			$(s).addClass(&quot;temp_shown&quot;);
+
+			$(s).find(&#x27;div&#x27;).each(function(i,div){
+				
+				if($(div).attr(&quot;areaid&quot;) !== undefined){   
+
+					element.id 		= $(div).attr(&#x27;id&#x27;);
+					element.type 	= $(div).attr(&#x27;type&#x27;);
+					element.areaid 	= $(div).attr(&#x27;areaid&#x27;);	 				 
+						 
+					if(element.type==VISH.Constant.TEXT){
+						&#x2F;&#x2F;NicEditor version
+            			&#x2F;&#x2F; element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(&quot;.wysiwygInstance&quot;));
+            			
+            			&#x2F;&#x2F;CKEditor version	
+	           			var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
+	            		if(CKEditor!==null){
+	              			element.body = CKEditor.getData();
+	            		} else {
+	              			element.body = &quot;&quot;;
+	            		}
+
+					} else if(element.type==VISH.Constant.IMAGE){
+						element.body   = $(div).find(&#x27;img&#x27;).attr(&#x27;src&#x27;);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
+						if($(div).attr(&quot;hyperlink&quot;)){
+							element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
+						}
+					} else if(element.type==VISH.Constant.VIDEO){
+						var video = $(div).find(&quot;video&quot;);
+						element.poster = $(video).attr(&quot;poster&quot;);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
+						&#x2F;&#x2F;Sources
+						var sources= &#x27;&#x27;;				
+						$(video).find(&#x27;source&#x27;).each(function(index, source) {
+							if(index!=0){
+								sources = sources + &#x27;,&#x27;;
+							}
+							var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;
+							sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;
+						});
+						sources = &#x27;[&#x27; + sources + &#x27;]&#x27;
+						element.sources = sources;
+					} else if(element.type===VISH.Constant.OBJECT){
+						var wrapper = $(div).find(&quot;.object_wrapper&quot;)[0];
+						var object = $(wrapper).children()[0];
+
+						var myObject = $(object).clone();
+						$(myObject).removeAttr(&quot;style&quot;);
+						element.body   = VISH.Utils.getOuterHTML(myObject);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+						var zoom = VISH.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
+						if(zoom!=1){
+							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
+						}
+					} else if (element.type === VISH.Constant.QUIZ) {
+						var	quizQuestion = $(div).find(&quot;.value_multiplechoice_question_in_zone&quot;);
+						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
+						if($(div).find(&quot;.multiplechoice_option_in_zone&quot;)) {
+							element.quiz_id = &quot;&quot;;
+							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!=&quot;&quot;) {
+								element.quiz_id = $(div).find(&quot;input[name=quiz_id]&quot;).val();
+							} 
+							element.quiztype = &quot;multiplechoice&quot;;
+							element.options = {};  	
+							element.options.choices = []; 
+							$(div).find(&#x27;.multiplechoice_option_in_zone&#x27;).each(function(i, option_text){
+								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								if((option)&amp;&amp;($(option_text).text() != &#x27;Write options here&#x27;)&amp;&amp; ($(option_text).text() !=&quot;&quot;)){
+									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+									var choice = new Object();
+									choice.value = $(option_text).text();
+									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									element.options.choices.push(choice);
+								}
+							});
+						}
+					} else if(element.type === VISH.Constant.SNAPSHOT){
+						var snapshotWrapper = $(div).find(&quot;.snapshot_wrapper&quot;);
+						var snapshotIframe = $(snapshotWrapper).children()[0];
+						$(snapshotIframe).removeAttr(&quot;style&quot;);
+						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
+						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+						
+						&#x2F;&#x2F;Save scrolls
+						var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
+						if(typeof scrollTopAttr !== &quot;undefined&quot;){
+							element.scrollTop = scrollTopAttr;
+							element.scrollLeft = $(snapshotWrapper).attr(&quot;scrollLeft&quot;);
+						} else {
+							&#x2F;&#x2F;Fallback. Ideally never execute
+							&#x2F;&#x2F;It only works for visible slides, otherwise returns 0,0
+							element.scrollTop = $(snapshotWrapper).scrollTop();
+							element.scrollLeft = $(snapshotWrapper).scrollLeft();
+						}
+						
+					} else if(typeof element.type == &quot;undefined&quot;){
+						&#x2F;&#x2F;Empty element
+					}
+
+					slide.elements.push(element);
+					if(element.type==VISH.Constant.QUIZ){
+						var quizSlide = $.extend(true, new Object(), element);
+						&#x2F;&#x2F;Apply presentation Wrapper
+						var quizPresentation = new Object();
+						quizPresentation.title = presentation.title;
+						quizPresentation.description = presentation.description;
+						quizPresentation.author = &#x27;&#x27;;
+						&#x2F;&#x2F;add quiz_simple type to slide in json to render answer
+						quizSlide.type = VISH.Constant.QUIZ_SIMPLE;
+					    quizPresentation.slides = [quizSlide];
+					 	quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
+						element.quiz_simple_json = quizPresentation;
+					}
+
+					element = {};
+				}
+			
+			});
+
+			if(presentation.type===VISH.Constant.FLASHCARD){
+				&#x2F;&#x2F;If it is flashcard we save the slide into the flashcard slides 
+				&#x2F;&#x2F;(the flashcard is the first slide by convention)
+				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
+				presentation.slides[0].slides.push(slide);
+			} else {
+				presentation.slides.push(slide);
+			}
+
+			slide = {};
+			$(s).removeClass(&quot;temp_shown&quot;);						
+		});
+
+		savedPresentation = presentation;  
+		  
+		&#x2F;&#x2F;Unload all objects
+		VISH.Editor.Utils.Loader.unloadAllObjects();
+		&#x2F;&#x2F;Reload current slide objects
+		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+
+		VISH.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;)
+		&#x2F;&#x2F; VISH.Debugging.log(JSON.stringify(presentation));
+		return savedPresentation;
+	};
+	
+
+	var afterSavePresentation = function(presentation, order){
+		switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
+			case VISH.Constant.NOSERVER:
+				&#x2F;&#x2F;Ignore order param for developping
+				if((VISH.Debugging)&amp;&amp;(VISH.Debugging.isDevelopping())){
+					if(VISH.Debugging.getActionSave()==&quot;view&quot;){
+						VISH.Debugging.initVishViewer();
+					} else if (VISH.Debugging.getActionSave()==&quot;edit&quot;) {
+						VISH.Debugging.initVishEditor();
+					}
+				}
+				break;
+			case VISH.Constant.VISH:
+				var send_type;
+		        if(initialPresentation){
+		          send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
+		        } else {  
+		          send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
+		        } 
+
+		        var draft = (order===&quot;draft&quot;);
+		        
+		        &#x2F;&#x2F;POST to http:&#x2F;&#x2F;server&#x2F;excursions&#x2F;
+		        var jsonPresentation = JSON.stringify(presentation);  
+		        var params = {
+		          &quot;excursion[json]&quot;: jsonPresentation,
+		          &quot;authenticity_token&quot; : initOptions[&quot;token&quot;],
+		          &quot;draft&quot;: draft
+		        }
+		        
+		        $.ajax({
+		          type    : send_type,
+		          url     : VISH.UploadPresentationPath,
+		          data    : params,
+		          success : function(data) {
+		          	  allowExitWithoutConfirmation();
+		          	  window.top.location.href = data.url;
+		          }     
+		        });
+				break;
+			case VISH.Constant.STANDALONE:
+				&#x2F;&#x2F;Order is always save, ignore order param
+				uploadPresentationWithNode(presentation);
+				break;
+		}
+	}
+	
+
+	var uploadPresentationWithNode = function(presentation){
+		var send_type;
+		var url = VISH.UploadPresentationPath;
+
+		if(draftPresentation){
+			send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
+			url = url + draftPresentation.id;
+		} else {
+			send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
+		} 
+	       
+		&#x2F;&#x2F;POST to &#x2F;server&#x2F;presentation&#x2F;
+		var jsonPresentation = JSON.stringify(presentation);   
+		var params = {
+			&quot;presentation[json]&quot;: jsonPresentation
+		}
+		   
+		$.ajax({
+			type    : send_type,
+			url     : url,
+			data    : params,
+			success : function(data) {
+				&#x2F;&#x2F;Redirect
+				allowExitWithoutConfirmation();
+				window.top.location.href = data.url;
+			}
+		});
+	};
+
+
+
+	
+	&#x2F;**
+	 * Function to move the slides left one item
+	 *&#x2F;
+	var _onArrowLeftClicked = function(){
+		VISH.Slides.backwardOneSlide();
+	};
+	
+	&#x2F;**
+	 * Function to move the slides right one item
+	 *&#x2F;
+	var _onArrowRightClicked = function(){
+		VISH.Slides.forwardOneSlide();
+	};
+	
+	
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F;&#x2F;    Getters
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	&#x2F;**
+	 * function to get the template of the slide of current_el
+	 * param area: optional param indicating the area to get the template, used for editing presentations
+	 *&#x2F;
+	var getTemplate = function(area) {
+		if(area){
+			return area.parent().attr(&#x27;template&#x27;);
+		}	else if(getCurrentArea()){
+			return getCurrentArea().parent().attr(&#x27;template&#x27;);
+		}
+		return null;
+	}
+	
+	var getCurrentArea = function() {
+		if(currentZone){
+			return currentZone;
+		}
+		return null;
+	}
+	
+	var setCurrentArea = function(area){
+		currentZone = area;
+	}
+
+	var getPresentation = function() {
+		return draftPresentation;
+	}
+
+	var setPresentation = function(presentation) {
+		draftPresentation = presentation;
+	}
+
+	var getSavedPresentation = function() {
+		if(savedPresentation){
+			return savedPresentation;
+		} else {
+			return null;
+		}
+	}
+
+	var hasInitialPresentation = function(){
+		return initialPresentation;
+	}
+	
+	&#x2F;*
+	 * Load the initial fancybox
+	 *&#x2F;
+	var loadFancyBox = function(fancy) {
+		var fancyBoxes = {1: &quot;templates&quot;, 2: &quot;flashcards&quot;}	
+				
+		for( tab in fancyBoxes) {
+			$(&#x27;#tab_&#x27;+fancyBoxes[tab]+&#x27;_content&#x27;).hide();
+			$(&#x27;#tab_&#x27;+fancyBoxes[tab]).attr(&quot;class&quot;, &quot;&quot;);
+			$(&#x27;#tab_&#x27;+fancyBoxes[tab]).attr(&quot;class&quot;, &quot;fancy_tab&quot;);
+		} 
+		&#x2F;&#x2F;just show the fancybox selected 
+		$(&#x27;#tab_&#x27;+fancy+&#x27;_content&#x27;).show();
+		$(&#x27;#tab_&#x27;+fancy).attr(&quot;class&quot;, &quot;fancy_tab fancy_selected&quot;);
+	}
+
+	&#x2F;*
+	 * type can be &quot;presentation&quot;, &quot;flashcard&quot; or &quot;game&quot;
+	 *&#x2F;
+	var getPresentationType = function(){
+		if((!draftPresentation)||(!draftPresentation.type)){
+			return &quot;presentation&quot;;
+		}
+		return draftPresentation.type;
+	};
+
+	var setPresentationType  = function(type){
+		if(!draftPresentation){
+			draftPresentation = new Object();
+		}
+		if(type){
+			draftPresentation.type = type;
+		} else {
+			draftPresentation.type = VISH.Constant.PRESENTATION;
+		}
+	};
+
+	&#x2F;*
+	 * Check if a presentation is standard.
+	 * true when only contain standard slides.
+	 * false when contains other slide types like flashcards, games or virtual experiments.
+	 *&#x2F;
+	var isPresentationStandard = function(presentation){
+		if(presentation){
+			&#x2F;&#x2F;Eval presentation
+			return _isThisPresentationStandard(presentation);
+		} else {
+			&#x2F;&#x2F;Eval current presentation
+			if($(&quot;article[template]&quot;).length===0){
+				&#x2F;&#x2F;Empty presentation
+				return true;
+			}
+			if(VISH.Editor.Flashcard.hasFlascards()){
+				return false;
+			}
+			return true;
+		}
+
+		return true;
+	}
+
+	var _isThisPresentationStandard = function(presentation){
+		if(presentation.type!==&quot;presentation&quot;){
+			return false;
+		}
+		var isStandard = true;
+		$.each(presentation.slides, function(index, slide) {
+			if((slide.type)&amp;&amp;(slide.type!==&quot;standard&quot;)){
+				isStandard = false;
+				return false;
+			}
+		});
+		return isStandard;
+	}
+
+	&#x2F;*
+	 * Returns if the server has checked the presentation has a draft.
+	 *&#x2F;
+	var isPresentationDraft = function(){
+		if(initialPresentation){
+			&#x2F;&#x2F;Look for options[&quot;draft&quot;]
+			if((initOptions[&quot;draft&quot;])&amp;&amp;(typeof initOptions[&quot;draft&quot;] === &quot;boolean&quot;)){
+				return initOptions[&quot;draft&quot;];
+			} else {
+				&#x2F;&#x2F;Server must indicate explicity that this presentation is a draft with the &quot;draft&quot; option.
+				return false;
+			}
+		} else {
+			&#x2F;&#x2F;New presentation created, draft by default.
+			return true;
+		}
+	}
+
+
+	var exitConfirmation = function(){
+		if((VISH.Configuration.getConfiguration()[&quot;mode&quot;]===VISH.Constant.VISH)&amp;&amp;(confirmOnExit)){
+			return VISH.Editor.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+		} else {
+			return
+		}
+	}
+
+	var allowExitWithoutConfirmation = function(){
+		confirmOnExit = false;
+	}
+
+
+	return {
+		init 					: init,
+		addDeleteButton 		: addDeleteButton,
+		getTemplate 			: getTemplate,
+		getCurrentArea 			: getCurrentArea,
+		getPresentationType		: getPresentationType,
+		getOptions 				: getOptions, 
+		loadFancyBox 			: loadFancyBox,
+		getPresentation 		: getPresentation,
+		setPresentation 		: setPresentation,
+		isPresentationStandard 	: isPresentationStandard,
+		isPresentationDraft		: isPresentationDraft,
+		getSavedPresentation 	: getSavedPresentation,
+		hasInitialPresentation	: hasInitialPresentation,
+		savePresentation 		: savePresentation,
+		afterSavePresentation  	: afterSavePresentation,
+		setPresentationType 	: setPresentationType,
+		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
+		setCurrentArea			: setCurrentArea,
+		selectArea				: selectArea
+	};
+
+}) (VISH, jQuery);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

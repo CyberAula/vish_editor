@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Editor.API.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Editor.API.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ &#x2F;**
+  * Provide an API with Global Excursions (VISH)
+  *&#x2F;
+
+VISH.Editor.API = (function(V,$,undefined){
+	
+	var init = function(){}
+	
+
+ 
+	
+  &#x2F;**
+   * function to call to VISH and request flashcards in json format
+   * The request is:
+   * GET &#x2F;excursions&#x2F;search.json?q=nano&amp;type=flashcard
+   *&#x2F;
+  var requestFlashcards = function(text, successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = VISH.Samples.API.flashcardList;
+        successCallback(result);
+      }
+      return;
+    }
+             
+    _requestByType(&quot;flashcard&quot;, text, successCallback, failCallback);   
+  };
+  
+  &#x2F;**
+   * function to call to VISH and request recommended flashcards
+   *&#x2F;
+  var requestRecomendedFlashcards = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+            var result =  VISH.Samples.API.flashcardList;
+            successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType(&quot;flashcard&quot;, &quot;&quot;, successCallback, failCallback);
+  };
+
+
+	&#x2F;**
+	 * function to call to VISH and request videos in json format
+	 * The request is:
+	 * GET &#x2F;search.json?type=video&amp;q=text
+	 *&#x2F;
+	var requestVideos = function(text, successCallback, failCallback){
+		
+		if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = jQuery.extend({}, VISH.Samples.API.videoList);
+
+        switch(text){
+          case &quot;dummy&quot;:
+            result[&#x27;videos&#x27;] = VISH.Samples.API.videoListDummy[&#x27;videos&#x27;];
+            break;
+          case &quot;little&quot;:
+            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoListLittle[&#x27;videos&#x27;]);
+            break;
+          default:
+            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList[&#x27;videos&#x27;]);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+		
+		_requestByType(&quot;video&quot;, text, successCallback, failCallback);		
+	};
+	
+	
+	&#x2F;**
+	 * function to call to VISH and request recommended videos
+	 *&#x2F;
+	var requestRecomendedVideos = function(successCallback, failCallback){
+		if (VISH.Debugging.isDevelopping()) {
+	      if(typeof successCallback == &quot;function&quot;){
+	            var result = VISH.Samples.API.videoList;
+	            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList[&#x27;videos&#x27;]);
+	            successCallback(result);
+	      }
+        return;
+    }
+		
+    _requestByType(&quot;video&quot;, &quot;&quot;, successCallback, failCallback);
+  };
+	
+	
+	&#x2F;**
+	 * function to call to VISH and request flash objects in json format
+	 * The request is:
+	 * GET &#x2F;search.json?type=flash&amp;q=text
+	 *&#x2F;
+	var requestFlashes = function(text, successCallback, failCallback){
+		
+		if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = jQuery.extend({}, VISH.Samples.API.flashList);
+
+        switch(text){
+          case &quot;dummy&quot;:
+            result[&#x27;flashes&#x27;] = VISH.Samples.API.flashListDummy[&#x27;flashes&#x27;];
+            break;
+          case &quot;little&quot;:
+            result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashListLittle[&#x27;flashes&#x27;]);
+            break;
+          default:
+            result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList[&#x27;flashes&#x27;]);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+		
+		_requestByType(&quot;swfs&quot;, text, successCallback, failCallback);	
+	};
+	
+	
+	&#x2F;**
+	 * function to call to VISH and request recommended flash objects
+	 *&#x2F;
+	var requestRecomendedFlashes = function(successCallback, failCallback){
+		if (VISH.Debugging.isDevelopping()) {
+			if(typeof successCallback == &quot;function&quot;){
+				var result = VISH.Samples.API.flashList;
+				result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList[&#x27;flashes&#x27;]);
+        successCallback(result);
+      }
+			return;
+	  }
+	  else{
+        	_requestByType(&quot;swfs&quot;, &quot;&quot;, successCallback, failCallback);
+        }
+   };
+    
+		
+  &#x2F;**
+	 * function to call to VISH and request videos in json format
+	 * The request is:
+	 * GET &#x2F;search.json?type=picture&amp;q=text
+	 *&#x2F;
+	var requestImages = function(text, successCallback, failCallback){
+		if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+				var result = jQuery.extend({}, VISH.Samples.API.imageList);
+
+			  switch(text){
+					case &quot;dummy&quot;:
+	          result[&#x27;pictures&#x27;] = VISH.Samples.API.imageListDummy[&#x27;pictures&#x27;];
+					  break;
+					case &quot;little&quot;:
+	          result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageListLittle[&#x27;pictures&#x27;]);
+					  break;
+					default:
+	          result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList[&#x27;pictures&#x27;]);
+				}
+            
+        successCallback(result);
+      }
+      return;
+    }
+		 		     
+    _requestByType(&quot;picture&quot;, text, successCallback, failCallback);		
+	};
+	
+	&#x2F;**
+	 * function to call to VISH and request recommended videos
+	 *&#x2F;
+	var requestRecomendedImages = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+            var result = VISH.Samples.API.imageList;
+            result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList[&#x27;pictures&#x27;]);
+            successCallback(result);
+      }
+      return;
+    }
+		
+    _requestByType(&quot;picture&quot;, &quot;&quot;, successCallback, failCallback);
+  };
+    
+		
+		  
+  &#x2F;**
+   * function to call to VISH and request live objects in json format
+   * The request is:
+   * GET &#x2F;search.json?live=1&amp;q=
+   *&#x2F;
+  var requestLives = function(text, successCallback, failCallback){
+    
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+
+        switch(text){
+          case &quot;dummy&quot;:
+            result = VISH.Samples.API.liveListDummy;
+            break;
+          case &quot;little&quot;:
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
+            break;
+          default:
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType(&quot;live&quot;, text, successCallback, failCallback);  
+  };
+  
+  
+  &#x2F;**
+   * function to call to VISH and request recommended lives objects
+   *&#x2F;
+  var requestRecomendedLives = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+        successCallback(result);
+      }
+			return;
+    }
+		
+		_requestByType(&quot;live&quot;, &quot;&quot;, successCallback, failCallback);
+   };
+		
+		
+		      
+  &#x2F;**
+   * function to call to VISH and request objects in json format
+   * The request is:
+   * GET &#x2F;search.json?object=1&amp;q=
+   *&#x2F;
+  var requestObjects = function(text, successCallback, failCallback){
+    
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = jQuery.extend({}, VISH.Samples.API.objectList);
+
+        switch(text){
+          case &quot;dummy&quot;:
+            result = VISH.Samples.API.objectListDummy;
+            break;
+          case &quot;little&quot;:
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectListLittle);
+            break;
+          default:
+            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+        }
+            
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType(&quot;object&quot;, text, successCallback, failCallback);  
+  };
+  
+  
+  &#x2F;**
+   * function to call to VISH and request recommended lives objects
+   *&#x2F;
+  var requestRecomendedObjects = function(successCallback, failCallback){
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+        successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType(&quot;object&quot;, &quot;&quot;, successCallback, failCallback);
+   };
+		
+		
+    &#x2F;**
+     * generic function to call VISH and request by query and type
+     * The request is:
+	 * GET &#x2F;search.json?type=type&amp;q=query
+     *&#x2F;    
+  var _requestByType = function(type, query, successCallback, failCallback){
+		
+		if((type==&quot;live&quot;)||(type==&quot;object&quot;)){
+			_requestResourceType(type,query, successCallback, failCallback);
+			return;
+		}
+		
+  	$.ajax({
+              type: &quot;GET&quot;,
+              url: &quot;&#x2F;search.json?type=&quot;+ type +&quot;&amp;q=&quot;+ query,
+              &#x2F;&#x2F;url: &quot;&#x2F;tmp.json&quot;,
+              dataType:&quot;html&quot;,
+              success:function(response){
+                  if(typeof successCallback == &quot;function&quot;){
+                  	var resp = JSON.parse(response);
+    					      successCallback(resp);
+  				        }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == &quot;function&quot;){
+                  	failCallback();
+                  }
+              }
+     });	
+  };
+	
+	
+  &#x2F;**
+   * Specific function to call VISH and request lives
+   * The request is:
+   * GET &#x2F;resources&#x2F;search.json?live=1&amp;q=
+   *&#x2F;    
+  var _requestResourceType = function(type, query, successCallback, failCallback){
+    $.ajax({
+              type: &quot;GET&quot;,
+              url: &quot;&#x2F;resources&#x2F;search.json?&quot; + type + &quot;=1&amp;q=&quot;+ query,
+              dataType:&quot;html&quot;,
+              success:function(response){
+                  if(typeof successCallback == &quot;function&quot;){
+                    var resp = JSON.parse(response);
+                    successCallback(resp);
+                  }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == &quot;function&quot;){
+                    failCallback();
+                  }
+              }
+     });  
+  };
+	
+	
+	&#x2F;**
+   * function to call to VISH and request tags
+   *&#x2F;
+	var tags;
+	
+  var requestTags = function(successCallback, failCallback){
+		
+		if((tags)&amp;&amp;(typeof successCallback == &quot;function&quot;)){
+			successCallback(tags);
+			return;
+		}
+		
+    if (VISH.Debugging.isDevelopping()) {
+      if(typeof successCallback == &quot;function&quot;){
+            tags = VISH.Samples.API.tagsList[&#x27;tags&#x27;];
+            successCallback(VISH.Samples.API.tagsList[&#x27;tags&#x27;]);
+      }
+      return;
+    }
+		
+    $.ajax({
+        type: &quot;GET&quot;,
+        url: &quot;&#x2F;tags.json?mode=popular&amp;limit=100&quot;,
+        dataType:&quot;html&quot;,
+        success:function(response){
+            if(typeof successCallback == &quot;function&quot;){
+              var tagsJSON = JSON.parse(response);
+							tags = [];
+              if(tagsJSON.length&gt;0){								 
+		             $.each(tagsJSON, function(index, tagJSON) {
+		               tags.push(tagJSON.value)
+		             });
+		          }
+              successCallback(tags);
+            }
+        },
+        error:function (xhr, ajaxOptions, thrownError){
+            if(typeof failCallback == &quot;function&quot;){
+              failCallback();
+            }
+        }
+    });
+  };
+	
+	
+	&#x2F;**
+   * Function to get the available avatars from the server, they should be at &#x2F;excursion_thumbnails.json
+   *&#x2F;
+	var requestThumbnails = function(successCallback, failCallback){
+
+      if (VISH.Debugging.isDevelopping()) {
+        if(typeof successCallback == &quot;function&quot;){
+              successCallback(VISH.Samples.API.thumbnailsList);
+        }
+        return;
+      }
+
+
+      $.ajax({
+	      async: false,
+	      type: &#x27;GET&#x27;,
+	      url: &#x27;&#x2F;excursion_thumbnails.json&#x27;,
+	      dataType: &#x27;json&#x27;,
+	      success: function(data) {
+            if(typeof successCallback == &quot;function&quot;){
+              successCallback(data);
+            }
+	      },
+	      error: function(xhr, ajaxOptions, thrownError){
+	          if(typeof failCallback == &quot;function&quot;){
+              failCallback(xhr, ajaxOptions, thrownError);
+            }
+	      }
+      });
+  }
+	
+	
+	return {
+		init					            : init,
+    requestFlashcards         : requestFlashcards,
+    requestRecomendedFlashcards : requestRecomendedFlashcards,
+		requestVideos             : requestVideos,
+		requestRecomendedVideos   : requestRecomendedVideos,
+		requestImages             : requestImages,
+		requestRecomendedImages   : requestRecomendedImages,
+		requestFlashes			      : requestFlashes,
+		requestRecomendedFlashes  : requestRecomendedFlashes,
+		requestObjects            : requestObjects,
+    requestRecomendedObjects  : requestRecomendedObjects,
+		requestLives              : requestLives,
+		requestRecomendedLives    : requestRecomendedLives,
+		requestTags               : requestTags,
+		requestThumbnails         : requestThumbnails
+	};
+
+}) (VISH, jQuery);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>
