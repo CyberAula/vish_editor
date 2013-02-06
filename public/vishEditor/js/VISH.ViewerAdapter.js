@@ -49,6 +49,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		enter_fs_button = (enter_fs_button && (V.Status.getDevice().desktop));
 		exit_fs_button = (exit_fs_button && (V.Status.getDevice().desktop));
 
+		//Close button just for mobiles (disable in tablets)
+		close_button = (close_button && (V.Status.getDevice().mobile));
+
 		page_is_fullscreen = false;
 		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
