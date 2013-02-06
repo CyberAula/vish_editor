@@ -216,7 +216,7 @@ VISH.Events = (function(V,$,undefined){
 		window.addEventListener("load", 				function(){ _hideAddressBar(); } );
 		window.addEventListener("orientationchange", 	function(){ _hideAddressBar(); } );
 		$(window).on('orientationchange',function(){
-			V.ViewerAdapter.setupSize();      
+			V.ViewerAdapter.updateInterface();
 		});
 	}
 
