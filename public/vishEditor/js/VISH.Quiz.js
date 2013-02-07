@@ -13,6 +13,8 @@ VISH.Quiz = (function(V,$,undefined){
 
   var startButtonClass = "quiz_session_start_button";
   var optionsButtonClass = "quiz_session_options_button";
+  var showAnswerButtonClass = "show_answers_button";
+   var hideAnswerButtonClass = "hide_answers_button";
   var voteButtonClass = "quiz_send_vote_button";
   var stopSessionButtonClass = "quiz_session_stop_button";
   var statisticsButtonClass = "mch_statistics_icon";
@@ -89,6 +91,8 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', "."+startButtonClass, startMcQuizButtonClicked);
     $(document).on('click', "."+stopSessionButtonClass, onStopMcQuizButtonClicked);
     $(document).on('click', "."+ optionsButtonClass, showQuizStats);
+    $(document).on('click', "."+ showAnswerButtonClass, toggleShowAnswers);
+    $(document).on('click', "."+ hideAnswerButtonClass, toggleShowAnswers);
     $(document).on('click', "#mask_stop_quiz", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_cancel", _hideStopQuizPopup);
     $(document).on('click', ".quiz_stop_session_save", _stopAndSaveQuiz);
@@ -602,6 +606,22 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   var UnbindStartQuizEvents = function(){
     $(document).off('click', "."+startButtonClass, startMcQuizButtonClicked);
   };
+
+  var toggleShowAnswers = function(event) {
+    var current_slide = VISH.Slides.getCurrentSlide();  
+    if(event.target.classList[0]==showAnswerButtonClass) {
+     
+      $(current_slide).find(".truefalse_answers > input").show();
+      $(current_slide).find(".show_answers_button").hide();
+      $(current_slide).find(".hide_answers_button").show();
+    } else if (event.target.classList[0]==hideAnswerButtonClass) {
+      $(current_slide).find(".truefalse_answers > input").hide();
+      $(current_slide).find(".hide_answers_button").hide();
+      $(current_slide).find(".show_answers_button").show();
+      
+    }
+  };
+
 
   return {
     init                        : init, 

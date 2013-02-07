@@ -4,10 +4,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	var addQuizOptionButtonClass = "add_quiz_option_button";
 	var deleteQuizOptionButtonClass = "delete_quiz_option_button";
+	var addTrueFalseQuizOptionButtonClass = "add_truefalse_quiz_button";
+	var deleteTrueFalseQuizOptionButtonClass = "delete_truefalse_quiz_button";
 
 	var init = function(){
 		$(document).on('click', '.' + 'multipleChoiceQuizContainer', _clickOnQuizArea);
+		$(document).on('click', '.' + 'trueFalseQuizContainer', _clickOnQuizArea);
 		$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
+		$(document).on('click','.'+ deleteTrueFalseQuizOptionButtonClass, _removeOptionInQuiz);
 	};
 
 	////////////
@@ -40,12 +44,15 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				// _addOpenQuiz();
 				 break;
 			case "multiplechoice":
-				_addMultipleChoiceQuiz(current_area, current_num_options);
+				_addMultipleChoiceQuiz(current_area, current_num_options, quiz_type);
 				//hide & show fancybox elements 
 				VISH.Utils.loadTab('tab_quizes'); 
 				break;
 			case "truefalse":
-				// _addTrueFalseQuiz();
+				//we use the same function because we are trying to do this asap
+				_addMultipleChoiceQuiz(current_area, current_num_options, quiz_type);
+				//with this funcition enable multiple true false question in a slide
+				// _addTrueFalseQuiz(current_area);
 			 	break;
 			default: 
 				break;
@@ -99,7 +106,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//function to set currentArea when click in quiz elements 
 	var _clickOnQuizArea = function (event) {
 		switch (event.target.classList[0]) {
-
+			//MultipleChoice cases
 			case "multipleChoiceQuizContainer":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
 			break;
@@ -115,7 +122,25 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "li_mch_options_in_zone":
 			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.id));
 			break;
+			//True/False cases
+			case "trueFalseQuizContainer":
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
+			break;
 
+			case "value_truefalse_question_in_zone":
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.id));
+			break;			
+
+
+			//for multiple T/F in one slide
+			case "add_truefalse_quiz_button":
+				V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
+				addOptionInQuiz('truefalse', V.Editor.getCurrentArea()); 
+			break;
+			case "delete_truefalse_quiz_button":
+				V.Debugging.log("click on area detected");
+				
+			break;
 			default:
 
 			break;
@@ -124,21 +149,39 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 	/* create an empty MCh quiz  
 	area type text, must add listener for the last one input option */
-	var _addMultipleChoiceQuiz = function(area, num_options) {
+	var _addMultipleChoiceQuiz = function(area, num_options, quiz_type) {
 		var current_area = area;
 		var current_num_options = num_options;
-		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("multiplechoice", V.Slides.getSlides().length);
+		var quiztype = quiz_type;
+		
+		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy(quiztype, V.Slides.getSlides().length);
+		current_area.append(quiz);
+		//launchTextEditorInTextArea(current_area, "multiplechoice");
+		
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
-		current_area.attr('quiztype','multiplechoice');
-		//add the quizDummy (empty quiz) into the area (zone)
-		current_area.append(quiz);
-		launchTextEditorInTextArea(current_area, "multiplechoice");
-		V.Editor.addDeleteButton(current_area);
-		var i=0;
-		for (i=0; i <= current_num_options ; i++) {
-			addOptionInQuiz('multiplechoice', current_area);				
+		if(quiztype=="multiplechoice"){
+
+			current_area.attr('quiztype','multiplechoice');
+			//add the quizDummy (empty quiz) into the area (zone)
+			V.Debugging.log("num options value: " + current_num_options);
+			if(current_num_options>=0) {
+				var i=0;
+				for (i=0; i <= current_num_options ; i++) {
+					addOptionInQuiz('multiplechoice', current_area);				
+				}
+			}
 		}
+		//we add true false like a particular case of multiple choice quiz
+		else if (quiztype==="truefalse") {
+
+
+			current_area.attr('quiztype','truefalse');
+			var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(quiztype);
+			$(current_area).find(".truefalse_options_in_zone").append(quiz_option);
+		}
+		launchTextEditorInTextArea(current_area, quiztype);
+		V.Editor.addDeleteButton(current_area);
 	};
 
 	/* called when click add icon and when press enter in last input option */
@@ -188,6 +231,22 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				if((current_options+1)=== maxNumMultipleChoiceOptions) {
 					$($(current_area).find("." + addQuizOptionButtonClass)[parseInt(current_options)]).hide();
 					$($(current_area).find("." + deleteQuizOptionButtonClass)[parseInt(current_options)]).show();
+				}
+			break;
+			case "truefalse":
+				//load dummy
+				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
+				var current_questions = $(current_area).find(".value_truefalse_question_in_zone").size(); 
+				V.Debugging.log("current options: " + current_questions);
+				current_area.find(".truefalse_quiz_table").append(quiz_option);
+				launchTextEditorInTextArea(current_area, "truefalse");
+				//hide add incon and show remove one 
+				if(current_questions>0) {					
+					$($(current_area).find("." + addTrueFalseQuizOptionButtonClass)[parseInt(current_questions)-1]).hide();
+					$($(current_area).find("." +  deleteTrueFalseQuizOptionButtonClass)[parseInt(current_questions)-1]).show();
+
+					$($(current_area).find(".value_truefalse_question_in_zone")[current_questions]).focus();
+					// $(current_area).find(".initTextDiv :last").trigger("click");
 				}
 			break;
 
@@ -241,6 +300,13 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$($(current_area).find("." + addQuizOptionButtonClass)[maxNumMultipleChoiceOptions-2]).show();
 			}
  		} 
+
+		if(event.target.attributes["class"].value=== deleteTrueFalseQuizOptionButtonClass){
+			V.Debugging.log("remove true false question detected");
+			V.Editor.setCurrentArea($("#" + event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id));
+			$(event.target.parentElement.parentElement).remove();
+
+		}
  		else {
  			V.Debugging.log("other event  handler");
  		}
@@ -257,7 +323,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    			V.Editor.Text.getNicEditor().addInstance(optionWysiwygId);
+    			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
 		//question input
@@ -267,7 +333,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
-			VISH.Editor.Text.getNicEditor().addInstance(wysiwygId);
+			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
 		}
 		
 		$(".initTextDiv").click(function(event){
@@ -296,6 +362,27 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	    	}
     	});
 	};
+
+
+
+
+	var _addTrueFalseQuiz = function(area) {
+		var current_area = area;
+		//just the Quiz body or structure
+		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("truefalse", V.Slides.getSlides().length);
+		current_area.find(".menuselect_hide").remove(); 
+		current_area.attr('type','quiz');
+		current_area.attr('quiztype','truefalse');
+		//add the quizDummy (empty quiz) into the area (zone)
+		current_area.append(quiz);
+		//now add the question 
+		option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy("truefalse");
+		current_area.find(".truefalse_quiz_table").append(option);
+		launchTextEditorInTextArea(current_area, "truefalse");
+		V.Editor.addDeleteButton(current_area);
+		
+	};
+	
 
 
 	return {

@@ -763,9 +763,17 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type === VISH.Constant.QUIZ) {
-						var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
-						if($(div).find(".multiplechoice_option_in_zone")) {
+						
+						//if($(div).find(".multiplechoice_option_in_zone")) {
+						if  ($(div).attr("quiztype")== "multiplechoice") {
+							var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
+							element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							/*var CKEditor = VISH.Editor.Text.getCKEditorFromZone(quizQuestion);
+							if(CKEditor!==null){
+								element.question = CKEditor.getData();
+						} else {
+							element.question = "";
+						} */
 							element.quiz_id = "";
 							if ($(div).find("input[name=quiz_id]").val()!=="") {
 								element.quiz_id = $(div).find("input[name=quiz_id]").val();
@@ -774,16 +782,54 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};
 							element.options.choices = []; 
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+								var option = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+								//var option = VISH.Editor.Text.getCKEditorFromZone(option_text);
 								if((option)&&($(option_text).text() !== 'Write options here')&& ($(option_text).text() !=="")){
-									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
+									result = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+									//result = VISH.Editor.Text.getCKEditorFromZone(option_text);
 									var choice = {};
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									choice.container = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
+									//choice.container = VISH.Editor.Text.getCKEditorFromZone(option_text);
 									element.options.choices.push(choice);
 								}
 							});
 						}
+						//true false quiz type
+						else if($(div).attr("quiztype")== "truefalse") {
+							V.Debugging.log("true false detected");
+							
+							var	quizQuestion = $(div).find(".value_truefalse_question_in_zone");
+							element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							//element.question = VISH.Editor.Text.getCKEditorFromZone($(quizQuestion));
+							element.quiz_id = "";
+							if ($(div).find("input[name=quiz_id]").val()!="") {
+								element.quiz_id = $(div).find("input[name=quiz_id]").val();
+							} 
+							element.quiztype = "truefalse";
+							element.options = {};  	
+							element.options.choices = []; 
+							$(div).find('.truefalse_answers > form > input').each(function(i, option_text){
+							 	V.Debugging.log("option text:" + option_text);
+								var choice = new Object();
+								choice.value = $(option_text).attr("value");
+								choice.container= $(option_text).attr("value");
+								element.options.choices.push(choice);
+						}); 
+							//add the correct answer 
+
+							V.Debugging.log("value: " + $(div).find('input[name=truefalse]:checked').val()); //each(function(i, option_text)   //{
+								
+
+								 element.options.answer = $(div).find('input[name=truefalse]:checked').val();
+
+								//}
+
+						}
+						else if($(div).attr("quiztype")== "open") {
+							V.Debugging.log("open detected");
+						}
+
 					} else if(element.type === VISH.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];

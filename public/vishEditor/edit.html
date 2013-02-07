@@ -85,6 +85,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.PDF.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Snapshot.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.NiceEditor.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/libs/nicEdit.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.API.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Thumbnails.js"></script>
@@ -110,6 +111,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Text.js"></script>
+
 	<script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.js"></script>
@@ -528,8 +530,8 @@
 				<div class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.addQuiz("multiplechoice");' />
 				</div>
-				<div style="display:none" class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' />
+				<div class='quizFancythumb'>
+					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.addQuiz("truefalse");' />
 				</div>
 			</div>
 		</div>
