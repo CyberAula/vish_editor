@@ -38,11 +38,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
 		
+		V.Status.init();
 		V.Quiz.init(presentation);
 		V.Flashcard.init();
 		V.Renderer.init();
 		V.Slides.init();
-		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		V.Utils.init();
@@ -66,8 +66,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.ViewerAdapter.init();
-		V.Text.init();
 		V.Quiz.prepareQuiz(presentation);
 
 		//Init Vish Editor Addons
@@ -75,7 +73,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
-		V.ViewerAdapter.setupInterface(options);
+		V.ViewerAdapter.init(options); //Also init texts
 	};
 
 	

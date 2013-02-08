@@ -168,7 +168,7 @@ VISH.Text = (function(V,$,undefined){
 	}
 
 	var _isInRange = function(number, min, max){
-		return number > min && number < max;
+		return number > min && number <= max;
 	}
 
 	/* Convert <font size="x"> tags to <span style="font-size:y px"> tags
