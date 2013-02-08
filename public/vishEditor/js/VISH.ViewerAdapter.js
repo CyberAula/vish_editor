@@ -33,7 +33,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				render_full = ((options["full"]===true)&&(!V.Status.getIsInIframe()) || (options["forcefull"]===true));
 			}
 			if(typeof options["preview"] === "boolean"){
-				is_preview = true;
+				is_preview = options["preview"];
 			}
 			close_button = (!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
 			
