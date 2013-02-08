@@ -6,6 +6,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	var isIphoneAndSafari = false;
 	var PM_TOUCH_SENSITIVITY = 50;
 	var PM_TOUCH_DESVIATION = 50;
+	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2;
 
 	//Own vars
 	var bindedEventListeners = false;
@@ -78,18 +79,21 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		touchStartY = 0;
 		touchCX = 0; //current x
 		touchCY = 0; //current y
+		touchesLength = 0;
 	}
 
 	var handleTouchMove = function(event) {
-		
 		var touches = _getTouches(event);
 		if(touches.length===1){
 			touchCX = touches[0].pageX;
 			touchCY = touches[0].pageY;
 			
-			//Prevent default movement
-			//TODO, Add zoom dependence
-			event.preventDefault();
+			//Only allow zoom movement
+			var zoom = document.documentElement.clientWidth / window.innerWidth;
+			if (zoom <= MINIMUM_ZOOM_TO_ENABLE_SCROLL){
+				event.preventDefault();
+				return;
+			}
 		}
 	};
 
@@ -102,6 +106,14 @@ VISH.Events.Mobile = (function(V,$,undefined){
 			var move_slide = ((absTouchDX > PM_TOUCH_SENSITIVITY)&&(absTouchDY < PM_TOUCH_DESVIATION));
 
 			if(move_slide){
+				event.preventDefault();
+
+				//Avoid move slide on zoom
+				var zoom = document.documentElement.clientWidth / window.innerWidth;
+				if (zoom > MINIMUM_ZOOM_TO_ENABLE_SCROLL){
+					return;
+				}
+
 				//Close subslide if is open
 				var subslide = V.Slides.getCurrentSubSlide();
 				if(subslide!==null){
@@ -113,7 +125,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 				} else {
 					V.Slides.forwardOneSlide();
 				}
-				event.preventDefault();
+				
 			} else {
 				//Simple click
 
@@ -135,7 +147,6 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var handleTouchCancel = function(){
-		alert("cancel");
 	}
 
 
