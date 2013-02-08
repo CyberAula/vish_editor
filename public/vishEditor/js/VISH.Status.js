@@ -186,7 +186,7 @@ VISH.Status = (function(V,$,undefined){
 		 // alert("Layout Viewport width: " + document.documentElement.clientWidth);
 		 // alert("window.screen.availWidth: " + window.screen.availWidth);
 
-		 //Force mobile
+		 // Force mobile
 		 // device.desktop = false;
 		 // device.mobile = true;
 
