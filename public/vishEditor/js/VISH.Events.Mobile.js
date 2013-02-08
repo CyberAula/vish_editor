@@ -140,6 +140,16 @@ VISH.Events.Mobile = (function(V,$,undefined){
 						_onFlashcardCloseSlideClicked(event);
 					}
 				}
+
+				
+				// var id = event.target.id;
+				// if(id==="page-switcher-end"){
+				// 	event.preventDefault();
+				// 	V.Slides.backwardOneSlide();
+				// } else if(id==="page-switcher-start"){
+				// 	event.preventDefault();
+				// 	V.Slides.forwardOneSlide();
+				// }
 			}
 		}
 
