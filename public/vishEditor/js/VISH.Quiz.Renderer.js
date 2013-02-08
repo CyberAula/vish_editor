@@ -32,7 +32,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
       V.Debugging.log("_renderMcQuestion, and quiz choices received is:  " + JSON.stringify(quiz_element['options']['choices']));
-      var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz'>";
+      var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class + " quiz' quiztype='multiplechoice'>";
       ret += "<div class='mcquestion_container'>";
       ret += "<div class='mcquestion_body'>";
       ret += "<div class='value_multiplechoice_question_in_zone question_in_viewer'>"+ quiz_element['question']+"</div>";
@@ -91,7 +91,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   
   var _renderTrueFalseQuestion = function(quiz_element, zone_class, slide_id, zone){
 
-    var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class +" quiz'>";
+    var ret = "<div id='"+quiz_element['id']+"' class='"+ zone_class +" quiz' quiztype='truefalse'>";
     ret += "<div class='truefalse_question_container'>";
  
     //ret += "<form class='truefalse_question_form' action='"+element['posturl']+"' method='post'>";
