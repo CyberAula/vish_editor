@@ -97,6 +97,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				$(current_area).find(".value_truefalse_question_in_zone").append(question);
 
 				$(current_area).find(".truefalse_answers > form > input[value='"+ options['answer'] +"']")[0].checked= true;
+				if(quiz_id) {
+					$(current_area).find('input[name="quiz_id"]').val(quiz_id);
+				}
 			break;
 
 			default: 

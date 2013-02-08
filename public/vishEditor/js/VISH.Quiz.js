@@ -106,10 +106,11 @@ VISH.Quiz = (function(V,$,undefined){
   var startMcQuizButtonClicked = function () {
     if(V.User.isLogged()){
       var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
+      var quiztype= $(VISH.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
       //init the stats, empty
-      _startStats();   
+      _startStats(quiztype);   
       testFullScreen();
   }
   else {
@@ -117,10 +118,13 @@ VISH.Quiz = (function(V,$,undefined){
   }
 };
 /*  
-Load the question  options into the stats containers
+Load the question options into the stats containers
+params @quiz_type allows to select the type of content to be shown in stats
  */
 
-var _startStats = function() {
+var _startStats = function(quiz_type) {
+
+  // TODO 
   var question;
   if($("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").contents()){ 
     $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").children().remove();
