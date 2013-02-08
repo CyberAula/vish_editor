@@ -218,9 +218,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(!style){
 			//Adjust dimensions after drawing (Only after insert new images)
 			var theImg = $("#"+idToDragAndResize);
-			var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
-			$(theImg).height(dimentionsToDraw.height);
-			$(theImg).width(dimentionsToDraw.width);
+			$(theImg).load(function(){
+				var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+				$(theImg).width(dimentionsToDraw.width);
+				//Prevent incorrect height detections
+				if(dimentionsToDraw.height>0){
+					$(theImg).height(dimentionsToDraw.height);
+				}
+			});
 		}
 
 		V.Editor.addDeleteButton(current_area);
