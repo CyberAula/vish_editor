@@ -66,8 +66,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		render_full = (render_full || (V.Status.getDevice().mobile));
 
 		//Enter and exit fullscreen buttons disable on mobiles
-		enter_fs_button = (enter_fs_button && (!V.Status.getDevice().mobile));
-		exit_fs_button = (exit_fs_button && (!V.Status.getDevice().mobile));
+		fs_button = (fs_button && (!V.Status.getDevice().mobile));
 
 		//Close button just for mobiles (disable in tablets)
 		close_button = (close_button && (V.Status.getDevice().mobile));

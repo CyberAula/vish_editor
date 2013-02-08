@@ -1,29 +1,129 @@
 VISH.Events = (function(V,$,undefined){
+
+	//Dependencies
+	var eMobile;
+
+	//Own vars
 	var bindedEventListeners = false;
-	var PM_TOUCH_SENSITIVITY = 200; //initially this was 15
-	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2; 
-	var registeredEvents = [];
+	var mobile;
+
 
 	var init = function() {
-	  if(!V.Editing){
-	  	bindViewerEventListeners();
-	  }
-	};
-
-	/* Register events */
-	var _registerEvent = function(eventTargetId){
-		if(registeredEvents.indexOf(eventTargetId)==-1){
-			registeredEvents.push(eventTargetId);
+		mobile = (!V.Status.getDevice().desktop);
+		eMobile = VISH.Events.Mobile;
+		if(!V.Editing){
+			eMobile.init();
+			bindViewerEventListeners();
 		}
 	};
 
-	var _unregisterEvent = function(eventTargetId){
-		if(registeredEvents.indexOf(eventTargetId)!=-1){
-			registeredEvents.splice(registeredEvents.indexOf(eventTargetId), 1);
+	var bindViewerEventListeners = function(){
+		if(bindedEventListeners){
+			return;
+		} else {
+			bindedEventListeners = true;
 		}
+
+		$(document).bind('keydown', handleBodyKeyDown); 
+
+		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+
+		$(document).on('click', '#back_arrow', V.Slides.backwardOneSlide);
+		$(document).on('click', '#forward_arrow', V.Slides.forwardOneSlide);	
+
+		$(document).on('click', '#closeButton', function(){
+			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+		});
+
+		$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+
+		var presentation = V.SlideManager.getCurrentPresentation();
+		for(index in presentation.slides){
+			var slide = presentation.slides[index];
+			switch(slide.type){
+				case VISH.Constant.FLASHCARD:
+					//Add the points of interest with their click events to show the slides
+					for(ind in slide.pois){
+						var poi = slide.pois[ind];
+						$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
+					}
+					break;
+				case VISH.Constant.VTOUR:
+					break;
+			}
+		}
+
+		//when page is cached or updated, add presentation to localstorage
+		if(typeof applicationCache !== "undefined"){
+			applicationCache.addEventListener('cached', function() {
+				VISH.LocalStorage.addPresentation(presentation);
+			}, false);
+			applicationCache.addEventListener('updateready', function() {
+				VISH.LocalStorage.addPresentation(presentation);
+			}, false);
+		}
+
+		if (mobile){
+			eMobile.bindViewerMobileEventListeners();
+		}
+	}
+
+	var unbindViewerEventListeners = function(){
+		if(!bindedEventListeners){
+			return;
+		} else {
+			bindedEventListeners = false;
+		}
+
+		$(document).unbind('keydown', handleBodyKeyDown); 
+
+		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
+		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+
+		$(document).off('click', '#back_arrow', V.Slides.backwardOneSlide);
+		$(document).off('click', '#forward_arrow', V.Slides.forwardOneSlide);
+
+		$(document).off('click', '#closeButton');
+
+		$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
+
+		var presentation = V.SlideManager.getCurrentPresentation();
+		for(index in presentation.slides){
+			var slide = presentation.slides[index];
+			switch(slide.type){
+				case VISH.Constant.FLASHCARD:
+					//Add the points of interest with their click events to show the slides
+					for(ind in slide.pois){
+						var poi = slide.pois[ind];
+						$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
+					}
+					break;
+				case VISH.Constant.VTOUR:
+					break;
+			}
+		}
+
+		if(typeof applicationCache !== "undefined"){
+			applicationCache.removeEventListener('cached', function() {
+				VISH.LocalStorage.addPresentation(presentation);
+			}, false);
+			applicationCache.removeEventListener('updateready', function() {
+				VISH.LocalStorage.addPresentation(presentation);
+			}, false);
+		}
+
+		if (mobile){
+			eMobile.unbindViewerMobileEventListeners();
+		}
+
 	};
 
-	/* Event listeners */
+
+	/////////////////
+	// Keyboard events
+	//////////////////
+
 	var handleBodyKeyDown = function(event) {
 		switch (event.keyCode) {
 			case 38: // up arrow
@@ -40,258 +140,31 @@ VISH.Events = (function(V,$,undefined){
 	};
 
 
-	/* Touch events */
-
-	/* Get the touches of an event
-	 * Jquery does not pass the touches property in the event, and we get them from the event.originalEvent
-	 */
-	var getTouches = function (event){
-		if(event.touches){
-			return event.touches;
-		} else if(event.originalEvent.touches){
-			return event.originalEvent.touches;
-		} else{
-			return null;
-		}
-	};
-
-
-	var handleTouchStart = function(event) {
-		var touches = getTouches(event);
-		if (touches.length === 1) {
-			touchDX = 0;
-			touchDY = 0;
-
-			touchStartX = touches[0].pageX;
-			touchStartY = touches[0].pageY;
-
-			document.body.addEventListener('touchmove', handleTouchMove, true);
-			document.body.addEventListener('touchend', handleTouchEnd, true);
-			var zoom = document.documentElement.clientWidth / window.innerWidth;
-
-			//TODO: Consider all of the event.target classes
-			var firstClass = $(event.target).attr("class").split(" ")[0];
-			var eventNotRegister = ((registeredEvents.indexOf(event.target.id)==-1)&&((registeredEvents.indexOf(firstClass)==-1)));
-
-			if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL && eventNotRegister){
-				// alert("Prevent default")
-				// alert(VISH.Utils.getOuterHTML(event.target));
-				//this is because if not done, the browser can take control of the event and cancels it, 
-				//because it thinks that the touch is a scroll action, so we prevent default if the zoom is lower than 1.5, 
-				//and there will be no scroll below that zoom level
-				event.preventDefault();
-			} else {
-				//Fix for Iphone devices due to Click Delegation bug
-				if((VISH.Status.getDevice().iPhone)&&(VISH.Status.getDevice().browser.name===VISH.Constant.SAFARI)){
-					if($(event.target).hasClass("fc_poi")){
-						var poiId = event.target.id;
-						_onFlashcardPoiClicked(poiId);
-					} else if($(event.target).hasClass("close_subslide")){
-						_onFlashcardCloseSlideClicked(event);
-					}
-				}
-			}
-		}
-	};
-
-	var handleTouchMove = function(event) {
-		var touches = getTouches(event);
-		if (touches.length > 1) {
-			cancelTouch();
-		} else {
-			touchDX = touches[0].pageX - touchStartX;
-			touchDY = touches[0].pageY - touchStartY;
-			var zoom = document.documentElement.clientWidth / window.innerWidth;	  	
-			if(zoom < MINIMUM_ZOOM_TO_ENABLE_SCROLL){
-				//this is because if not done, the browser can take control of the event and cancels it, because it thinks that the touch is a scroll action
-				event.preventDefault();
-			}
-		}
-	};
-
-	var handleTouchEnd = function(event) {	
-		var dx = Math.abs(touchDX);
-		var dy = Math.abs(touchDY);
-
-		if ((dx > PM_TOUCH_SENSITIVITY) && (dy < (dx * 2 / 3))) {
-
-			//Close subslide if is open
-			var subslide = V.Slides.getCurrentSubSlide();
-			if(subslide!==null){
-				V.Slides.closeSubslide($(subslide).attr("id"));
-			}
-
-			if (touchDX > 0) {
-				V.Slides.backwardOneSlide();
-			} else {
-				V.Slides.forwardOneSlide();
-			}
-		}
-		cancelTouch();
-	};
-
-	var cancelTouch = function() {
-	  document.body.removeEventListener('touchmove', handleTouchMove, true);
-	  document.body.removeEventListener('touchend', handleTouchEnd, true); 
-	};
+	/////////////////
+	// Flashcard events
+	//////////////////
 
 	/**
-	 * function called when a poi is clicked
+	 * Function called when a poi is clicked
 	 * 'event' can be a delegate click event or a number
 	 */
-	 var _onFlashcardPoiClicked = function(event){
-	 	if(typeof event === "string"){
-	 		var poiId = event;
-	 	} else if(typeof event === "object"){
-	 		var poiId = event.data.poi_id;
-	 	} else {
-	 		return;
-	 	}
-	 	var poi = VISH.Flashcard.getPoiData(poiId);
-	 	if(poi!==null){
-	 		V.Slides.openSubslide(poi.slide_id,true);
-	 	}
-	 };
-
-
-   var _onFlashcardCloseSlideClicked = function(event){
-	    var close_slide_id = event.target.id.substring(5); //the id is close3
-	    V.Slides.closeSubslide(close_slide_id,true);
-   };
-
-
-   var bindViewerEventListeners = function(){
-   		if(!bindedEventListeners){
-			$(document).bind('keydown', handleBodyKeyDown); 
-
-			$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-			_registerEvent("page-switcher-start");
-			$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-			_registerEvent("page-switcher-end");
-
-      		$(document).on('click', '#back_arrow', V.Slides.backwardOneSlide);
-      		_registerEvent("back_arrow");
-      		$(document).on('click', '#forward_arrow', V.Slides.forwardOneSlide);	
-      		_registerEvent("forward_arrow");
-
-      		_registerEvent("closeButton");
-      		_registerEvent("closeButtonImg");
-      		$(document).on('click', '#closeButton', function(){
-      			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
-      		});
-
-			$(document).bind('touchstart', handleTouchStart);
-
-			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
-			_registerEvent("close_subslide");
-
-			//Register events for custom video player
-			_registerEvent("customPlayerButton");
-			_registerEvent("customPlayerControls");
-
-			//Enable fullscreen for tablets
-			_registerEvent("page-fullscreen");
-
-			var presentation = V.SlideManager.getCurrentPresentation();
-			for(index in presentation.slides){
-				var slide = presentation.slides[index];
-				switch(slide.type){
-					case VISH.Constant.FLASHCARD:
-						//Add the points of interest with their click events to show the slides
-						for(ind in slide.pois){
-							var poi = slide.pois[ind];
-							$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
-							_registerEvent(poi.id);
-						}
-						break;
-					case VISH.Constant.VTOUR:
-						break;
-				}
-			}
-
-  		    //when page is cached or updated, add presentation to localstorage
-  		    //if(applicationCache){
-  		    //	applicationCache.addEventListener('cached', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-			///	applicationCache.addEventListener('updateready', function() {VISH.LocalStorage.addPresentation(presentation);}, false);
-  		    //}
-
-    		if (!V.Status.getDevice().desktop){
-				bindMobileViewerEventListeners();
-			}
-		} 
-		bindedEventListeners = true;
-   }
-
-	var bindMobileViewerEventListeners = function(){
-		window.addEventListener("load",  function(){ _hideAddressBar(); } );
-		$(window).on('orientationchange',function(){
-			_hideAddressBar();
-			V.ViewerAdapter.updateInterface();
-		});
-	}
-
-	var _hideAddressBar = function(){
-		//TODO
-		/*
-		if(document.body.style.height < window.outerHeight) {
-			document.body.style.height = (window.outerHeight + 50) + 'px';
-			VISH.Debugging.log("height " + document.body.style.height);
+	var _onFlashcardPoiClicked = function(event){
+		if(typeof event === "string"){
+			var poiId = event;
+		} else if(typeof event === "object"){
+			var poiId = event.data.poi_id;
+		} else {
+			return;
 		}
-
-		setTimeout( function(){ 
-			VISH.Debugging.log("scroll");
-			window.scrollTo(0, 1); 
-		}, 50 );
-		*/
+		var poi = VISH.Flashcard.getPoiData(poiId);
+		if(poi!==null){
+			V.Slides.openSubslide(poi.slide_id,true);
+		}
 	};
 
-	var unbindViewerEventListeners = function(){
-		if(bindedEventListeners){
-			$(document).unbind('keydown', handleBodyKeyDown); 
-			
-			_unregisterEvent("page-switcher-start");
-			$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-			_unregisterEvent("page-switcher-end");
-	  		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
-
-	  		_unregisterEvent("back_arrow");
-	  		$(document).off('click', '#back_arrow', V.Slides.backwardOneSlide);
-	  		_unregisterEvent("forward_arrow");
-	  		$(document).off('click', '#forward_arrow', V.Slides.forwardOneSlide);
-	  		
-	  		_unregisterEvent("closeButton");
-	  		_unregisterEvent("closeButtonImg");
-	  		$(document).off('click', '#closeButton');
-
-			$(document).unbind('touchstart', handleTouchStart);
-
-			$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
-			_unregisterEvent("close_subslide");
-
-			_unregisterEvent("customPlayerButton");
-			_unregisterEvent("customPlayerControls");
-
-			_unregisterEvent("page-fullscreen");
-
-			var presentation = V.SlideManager.getCurrentPresentation();
-			for(index in presentation.slides){
-				var slide = presentation.slides[index];
-				switch(slide.type){
-					case VISH.Constant.FLASHCARD:
-						//Add the points of interest with their click events to show the slides
-						for(ind in slide.pois){
-							var poi = slide.pois[ind];
-							$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
-							_unregisterEvent(poi.id);
-						}
-						break;
-					case VISH.Constant.VTOUR:
-						break;
-				}
-			}
-
-	  		bindedEventListeners = false;
-		}
+	var _onFlashcardCloseSlideClicked = function(event){
+		var close_slide_id = event.target.id.substring(5); //the id is close3
+		V.Slides.closeSubslide(close_slide_id,true);
 	};
 	
 	return {
