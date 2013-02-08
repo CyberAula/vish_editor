@@ -78,9 +78,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				}	
 				if (options) {
 					var inputs = $(current_area).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
-					for (var i = 0;  i <= options.length - 1; i++) {
+					for (var i = 0;  i <= options['choices'].length - 1; i++) {
 						$(inputs[i]).children().remove();
-						$(inputs[i]).append(options[i].container);
+						$(inputs[i]).append(options['choices'][i].container);
 					} 
 				}
 				if(quiz_id) {
@@ -93,7 +93,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 
 			case "truefalse":
+				$(current_area).find(".value_truefalse_question_in_zone").children().remove();
+				$(current_area).find(".value_truefalse_question_in_zone").append(question);
 
+				$(current_area).find(".truefalse_answers > form > input[value='"+ options['answer'] +"']")[0].checked= true;
 			break;
 
 			default: 

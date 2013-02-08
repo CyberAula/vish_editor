@@ -96,7 +96,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === "quiz"){
 			 	var received = JSON.stringify(slide.elements[el]);
 				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, $("#"+slide.elements[el].id), slide.elements[el].options.choices.length);
-				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $("#"+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options['choices'], slide.elements[el].quiz_id);
+				//V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $("#"+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options['choices'], slide.elements[el].quiz_id);
+			V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $("#"+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options, slide.elements[el].quiz_id);
 			}
 		}
 	
