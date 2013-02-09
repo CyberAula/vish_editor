@@ -126,6 +126,9 @@ var _startStats = function(quiz_type) {
 
   // TODO 
   var question;
+
+
+
   if($("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").contents()){ 
     $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").children().remove();
   }
@@ -135,15 +138,27 @@ var _startStats = function(quiz_type) {
   if($("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children()){ 
     $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").children().remove();
   }
-  question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone");
-  question.addClass("question_in_stats");
-  $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
-  $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
-  var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
-  options_form.find(".multiplechoice_option_in_viewer").addClass("option_in_stats");
-  $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
-  $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
 
+  if(quiz_type=="multiplechoice") {
+    question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone");
+    //question.addClass("question_in_stats");
+    //$("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
+    //$("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
+    var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
+    options_form.find(".multiplechoice_option_in_viewer").addClass("option_in_stats");
+    $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
+    $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
+  }
+  if(quiz_type=="truefalse") {
+  //this case only two options (true & false)
+  question = $(VISH.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".value_truefalse_question_in_zone");
+
+  }
+    question.addClass("question_in_stats");
+    $("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
+    $("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
+
+   
   //$("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
   //add class to resize div inside fancybox 
   $("#tab_quiz_stats_bars_content").addClass("resized_fancybox_for_stats");
