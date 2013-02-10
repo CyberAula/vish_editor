@@ -150,7 +150,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "</div>";
       //ret += "<input type='hidden' value='"+ zone +"' name='zone' />";
       ret += "<input type='hidden' value='"+quiz_element['quiz_id']+"' name='quiz_id' class='quizId' />";
-      ret += "<div class='mch_inputs_wrapper'>";
+      ret += "<div class='truefalse_inputs_wrapper'>";
       ret += "<a href='#start_quiz_fancybox' class='quiz_session_start_link' id='launchQuizFancybox'><input type='button' class='quiz_session_start_button' value='Start Quiz'/></a>";
       ret += "<input type='button' class='quiz_send_vote_button' value='Send'/>";
       ret += "<input type='button' class='quiz_session_options_button' value='Options'/>";

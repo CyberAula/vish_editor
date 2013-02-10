@@ -152,7 +152,7 @@ var _startStats = function(quiz_type) {
   //this case only two options (true & false)
   question = $(VISH.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".value_truefalse_question_in_zone");
   var options_form = $(VISH.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".truefalse_options_container");
-
+  //options_form.find(".truefalse_options_container").css("display", "block");
 
   }
     question.addClass("question_in_stats");
@@ -161,8 +161,11 @@ var _startStats = function(quiz_type) {
 
    
    options_form.find(".multiplechoice_option_in_viewer").addClass("option_in_stats");
+
     $("#"+tabQuizStatsBarsContentId).find(".quiz_options_container").append(options_form);
+    $("#"+tabQuizStatsBarsContentId).find(".truefalse_options_container").css("display", "block");
     $("#"+tabQuizStatsBarsContentId).find(".mch_inputs_wrapper").remove();
+
     
   //$("#"+tabQuizStatsBarsContentId).find("div.mcquestion_body").addClass("quiz_in_satistics");
   //add class to resize div inside fancybox 
@@ -197,7 +200,7 @@ params:
  */
 
 var _updateBarsStats = function(data) {
-   /* called from  */
+   /* called from  activatePolling()*/
   if(data) {
     V.Debugging.log("_updateBarsStats with  data: " +JSON.stringify(data));
   } 
@@ -388,7 +391,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
          V.Debugging.log("_onQuizSessionCloseReceived");
 //    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
-        //V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _showResults, _onQuizSessionResultsReceivedError);
   };
 
   var _onQuizSessionCloseReceivedError = function(error){
@@ -421,8 +423,17 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 /*send the participant vote to the server & show gratefulness popup */
   var _sendVote = function (event) {
+    var answer;
+    if(event.target.parentElement.classList[0]=="mch_inputs_wrapper") {
 
-    var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
+      var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
+    }  
+    else if(event.target.parentElement.classList[0]=="truefalse_inputs_wrapper") {
+
+      var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='truefalse']:checked'").val();
+    }
+ console.log("_answer value:  " + answer);
+
     if(typeof answer !== "undefined") {
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
        V.Quiz.API.putQuizSession(answer, quizSessionActiveId, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
@@ -433,20 +444,21 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _onQuizVotingSuccessReceived = function(data){ 
     var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
-    V.Debugging.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
 
+    console.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
+    console.log("_OnQuizzVotingSuccessReceived, and value received is:  " + JSON.stringify(data));
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
  var _onQuizSessionResultsReceived = function(data) {
-      
-        //remove all radio inputs
-       $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
-       $(".thanks_div").show();
-        var id = $('a[name=modal_window]').attr('href'); //TODO in different way
-        var maskHeight = $(document).height();
-        var maskWidth = $(window).width();
-       
+    console.log("_onQuizSessionResultsReceived, and value received is:  " + JSON.stringify(data));  
+      //remove all radio inputs
+     $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
+     $(".thanks_div").show();
+      var id = $('a[name=modal_window]').attr('href'); //TODO in different way
+      var maskHeight = $(document).height();
+      var maskWidth = $(window).width();
+     
      //Mask_stop_quiz is used like background shadow
      $('#thanks_div').css({'width':maskWidth,'height':maskHeight});
     //transition effect     
@@ -476,6 +488,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
+       console.log("_showResults, and value received is:  " + JSON.stringify(data));
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values

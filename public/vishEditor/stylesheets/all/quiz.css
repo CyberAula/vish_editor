@@ -97,7 +97,7 @@
 }
 
 .truefalse_options_container {
-
+    display: none;
 }
 .truefalse_options_container > li {
     list-style: none;
@@ -206,7 +206,7 @@
 
 }
 .option_in_stats {
-
+    display: block;
 
 
 }
