@@ -114,17 +114,31 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
     }
   else { //Teacher view.  button to enable answers view or not (default view not show)
-     ret+= "<div class='truefalse_answers teacher_mode'>";
-     if( quiz_element['options']['answer']=="true") {
-       ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true' disabled='disabled' checked/>";
-       ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false' disabled='disabled'/>";
+    
+    ret+= "<div class='truefalse_answers teacher_mode'>";
+    if( quiz_element['options']['answer']=="true") {
+      ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true' disabled='disabled' checked/>";
+      ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false' disabled='disabled'/>";
     }
     else if ( quiz_element['options']['answer']==="false") {
       ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true' disabled='disabled'/>";
       ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false' disabled='disabled' checked/>";
-    
     }
-  ret += "</div>";
+    ret += "</div>";
+    ret += "<div class='truefalse_options_container'>";
+    ret += "<li class='truefalse_options_in_zone'>";
+    ret += "<div class='truefalse_titles_true'>True</div>";
+    ret += "</li>";
+    ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
+    ret += "<label class='mcoption_label'></label>";
+    ret += "<li class='truefalse_options_in_zone'>";
+    ret += "<div class='truefalse_titles_false'>False</div>";
+    ret += "</li>";
+    //ret += "</div>";    
+    ret += "<div class='mc_meter'><span style='width:0%' >&nbsp;</span></div>";
+    ret += "<label class='mcoption_label'></label>";
+    ret += "</div>";
+ 
     ret += "<div class='showhide_answer_button_container'>";
     ret += "<input type='button' class='show_answers_button' value='Show Answer'/>";
     ret += "<input type='button' class='hide_answers_button' value='Hide Answer'/>";

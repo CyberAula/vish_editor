@@ -96,6 +96,12 @@
     margin: 1%;
 }
 
+.truefalse_options_container {
+
+}
+.truefalse_options_container > li {
+    list-style: none;
+}
 
 .truefalse_titles {
     height: 15%;
