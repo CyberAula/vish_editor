@@ -37,7 +37,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 			close_button = (!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
 			
-			enter_fs_button = ((V.Status.getIsInIframe())&&(options["fullscreen"]));
+			enter_fs_button = (typeof options["fullscreen"] !== "undefined");
 			if(enter_fs_button){
 				enter_fs_url = options["fullscreen"];
 			}
@@ -47,7 +47,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				exit_fs_url = options["exitFullscreen"];
 			}
 
-			fs_button = (((V.Status.getDevice().features.fullscreen)||((enter_fs_button)&&(exit_fs_button)))&&(!is_preview));
+			fs_button = ((((V.Status.getDevice().features.fullscreen)&&(V.Status.getIsInIframe()))||((!V.Status.getDevice().features.fullscreen)&&(enter_fs_button)&&(exit_fs_button)))&&(!is_preview));
 
 		} else {
 			render_full = false;
@@ -86,15 +86,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#forward_arrow").html("");
 		}
 
-		if(render_full){
-			$("#viewbar").hide();
-		} else {
-			if(!isOneSlide){
-				$("#viewbar").show();
-				VISH.SlideManager.updateSlideCounter();
-			} else {
+		if(!isOneSlide){
+			if(render_full){
 				$("#viewbar").hide();
+			} else {
+				$("#viewbar").show();
 			}
+			VISH.SlideManager.updateSlideCounter();
+		} else {
+			$("#viewbar").hide();
 		}
 
 		if(is_preview){
