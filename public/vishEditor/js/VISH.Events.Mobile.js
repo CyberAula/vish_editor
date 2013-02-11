@@ -186,10 +186,10 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		if($(event.target).hasClass("fc_poi")){
 			event.preventDefault();
 			var poiId = event.target.id;
-			_onFlashcardPoiClicked(poiId);
+			V.Events.onFlashcardPoiClicked(poiId);
 		} else if($(event.target).hasClass("close_subslide")){
 			event.preventDefault();
-			_onFlashcardCloseSlideClicked(event);
+			V.Events.onFlashcardCloseSlideClicked(event);
 		}
 		return true;
 	}
