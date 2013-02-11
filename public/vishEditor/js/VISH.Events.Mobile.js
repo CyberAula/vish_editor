@@ -75,10 +75,10 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _resetTouchVars = function(){
-		touchStartX = 0;
-		touchStartY = 0;
-		touchCX = 0; //current x
-		touchCY = 0; //current y
+		touchStartX = -1;
+		touchStartY = -1;
+		touchCX = -1; //current x
+		touchCY = -1; //current y
 		touchesLength = 0;
 	}
 
@@ -104,6 +104,9 @@ VISH.Events.Mobile = (function(V,$,undefined){
 			var absTouchDX = Math.abs(touchDX);
 			var absTouchDY = Math.abs(touchDY);
 			var move_slide = ((absTouchDX > PM_TOUCH_SENSITIVITY)&&(absTouchDY < PM_TOUCH_DESVIATION));
+
+			//Prevent no handleTouchMove touchs
+			move_slide = move_slide && (touchCX!==-1);
 
 			if(move_slide){
 				event.preventDefault();

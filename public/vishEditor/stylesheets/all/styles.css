@@ -429,8 +429,11 @@ div#viewerpreview {
 
 
 img#closeButtonImg{
-  max-width: 50px;
-  max-height: 50px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  max-width: 100px;
+  max-height: 100px;
   min-width: 30px;
   min-height: 30px;
   width: 100%;
@@ -441,14 +444,9 @@ button#closeButton {
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 100%;
+  width: 8%;
   height: 100%;
-  max-width: 80px;
-  max-height: 80px;
-  padding-top: 10px;
-  padding-right: 15px;
-  padding-bottom: 10px;
-  padding-left: 15px;
+  max-height: 100px;
   background-color: transparent;
   z-index: 2620;
   cursor: pointer;

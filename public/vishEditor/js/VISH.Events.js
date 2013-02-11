@@ -29,11 +29,17 @@ VISH.Events = (function(V,$,undefined){
 		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
 		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
 
-		$(document).on('click', '#back_arrow', V.Slides.backwardOneSlide);
-		$(document).on('click', '#forward_arrow', V.Slides.forwardOneSlide);	
-
-		$(document).on('click', '#closeButton', function(){
+		$(document).on('click', '#closeButton', function(event){
+			event.stopPropagation();
+			event.preventDefault();
 			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+		});
+
+		$(document).on('click', '#back_arrow', function(event){
+			V.Slides.backwardOneSlide();
+		});
+		$(document).on('click', '#forward_arrow', function(event){
+			V.Slides.forwardOneSlide();
 		});
 
 		$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
