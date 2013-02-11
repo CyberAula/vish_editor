@@ -18,22 +18,22 @@ VISH.Text = (function(V,$,undefined){
 				_adaptSpans($(td).find("span"));
 				_adaptFonts($(td).find("font"));
 			});
+
 			//Table dimensions
 			var tableOrgStyle = $(table).attr("style");
 			if(tableOrgStyle){
-				var tableAreaStyle = $(table).parent().parent().attr("style");
 				var tableStyle = "";
 
+				//Original Height: 600, Original width: 800
+				//Make table width and height relative (%)
 				var tableWidth = VISH.Utils.getWidthFromStyle(tableOrgStyle);
 				if(tableWidth){
-					var parentWidth = VISH.Utils.getWidthFromStyle(tableAreaStyle);
-					var percentWidth = tableWidth*100/parentWidth;
+					var percentWidth = (tableWidth*100)/800;
 					tableStyle += "width:"+percentWidth+"%;";
 				}
 				var tableHeight = VISH.Utils.getHeightFromStyle(tableOrgStyle);
 				if(tableHeight){
-					var parentHeight = VISH.Utils.getHeightFromStyle(tableAreaStyle);
-					var percentHeight = tableHeight*100/parentHeight;
+					var percentHeight = (tableHeight*100)/600;
 					tableStyle += "height:"+percentHeight+"%;";
 				}
 				if(tableStyle!==""){

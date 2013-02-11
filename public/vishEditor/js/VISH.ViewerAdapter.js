@@ -113,13 +113,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#page-fullscreen").hide();
 		}
 
-		//Update interface and init texts
-		updateInterface();
-		V.Text.init();
+		var delay = 0;
+		if(!V.Status.getDevice().desktop){
+			//Extra delay to wait for viewport load
+			delay = 200;
+		}
+		setTimeout(function(){
+			//Update interface and init texts
+			updateInterface();
+			V.Text.init();
+		},delay);
 	}
 
 	//////////////
-	//
+	// VIEWPORT
 	//////////////
 
 	var setViewport = function(viewportContent){
