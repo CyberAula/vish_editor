@@ -88,6 +88,9 @@ var getOptions = function(){
 			//Show full presentation, even its inside an iframe 
 			options["forcefull"] = false;
 
+			//Indicate that the presentation is embeded (in another domain)
+			options["embed"] = false;
+
 			//Preview
 			options["preview"] = false;
 
