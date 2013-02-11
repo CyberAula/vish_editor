@@ -95,7 +95,7 @@ VISH.Status = (function(V,$,undefined){
 			width: window.screen.availWidth * device.pixelRatio,
 			height: window.screen.availHeight * device.pixelRatio
 		};
-		
+
 		//Apple devices
 		device.iPhone = /iPhone/i.test(navigator.userAgent);
 		device.iPhone4 = (device.iPhone && device.pixelRatio == 2);
@@ -122,29 +122,18 @@ VISH.Status = (function(V,$,undefined){
 
 				//We will consider android tablets devices with a screen that are at least 960dp x 720dp (in landscape)
 				//Taken from: http://developer.android.com/guide/practices/screens_support.html
-				// var maxWidth = 960 * device.pixelRatio;
+				var maxWidth = 960 * device.pixelRatio;
 				var maxHeight = 720 * device.pixelRatio;
-
-				//Viewport bug: window.screen.availWidth returns always 800 
-				//We only use window.screen.availWidth to detect if the mobile is in landscape position
-
-				//Another viewport bug: window.screen.availHeight returns incorrect values on portrait position
-				//Change the official thresholds could partially fix the bug.
-				maxWidth = 1024 * device.pixelRatio;
-
-				// alert(window.screen.availHeight);
 
 				var landscape = window.screen.availWidth > window.screen.availHeight;
 				if(landscape){
-					// if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
-					if((window.screen.availHeight)>=maxHeight){
+					if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
 					}
 				} else {
-					// if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
-					if((window.screen.availHeight)>=maxWidth){
+					if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
 						device.androidTablet = true;
 					} else {
 						device.androidPhone = true;
