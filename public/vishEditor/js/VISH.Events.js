@@ -26,8 +26,12 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).bind('keydown', handleBodyKeyDown); 
 
-		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+		$(document).on('click', '#page-switcher-start', function(){
+			V.Slides.backwardOneSlide();
+		});
+		$(document).on('click', '#page-switcher-end', function(){
+			V.Slides.forwardOneSlide();
+		});
 
 		$(document).on('click', '#closeButton', function(event){
 			event.stopPropagation();
