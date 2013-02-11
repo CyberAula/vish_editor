@@ -432,7 +432,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
       var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='truefalse']:checked'").val();
     }
- console.log("_answer value:  " + answer);
+    V.Debugging.log("_answer value:  " + answer);
 
     if(typeof answer !== "undefined") {
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
@@ -444,14 +444,12 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _onQuizVotingSuccessReceived = function(data){ 
     var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
-
-    console.log("_onQuizVotingSuccessReceived, and quizSessionActiveId is:  " + quizSessionActiveId);
-    console.log("_OnQuizzVotingSuccessReceived, and value received is:  " + JSON.stringify(data));
+    
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
  var _onQuizSessionResultsReceived = function(data) {
-    console.log("_onQuizSessionResultsReceived, and value received is:  " + JSON.stringify(data));  
+    V.Debugging.log("_onQuizSessionResultsReceived, and value received is:  " + JSON.stringify(data));  
       //remove all radio inputs
      $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
      $(".thanks_div").show();
@@ -488,7 +486,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
-       console.log("_showResults, and value received is:  " + JSON.stringify(data));
+   V.Debugging.log("_showResults, and value received is:  " + JSON.stringify(data));
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values
