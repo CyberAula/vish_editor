@@ -104,12 +104,18 @@ VISH.Status = (function(V,$,undefined){
 		device.applePhone = device.iPhone || device.iPhone4;
 		device.appleTablet = device.iPad;
 
+		if(device.iOS){
+			V.ViewerAdapter.setViewportForIphone();
+		}
+
 		//Android devices
 		device.androidPhone = false;
 		device.androidTablet = false;
 		device.android = /android/i.test(navigator.userAgent);
 
 		if(device.android){
+			//Apply viewport
+			V.ViewerAdapter.setViewportForAndroid();
 
 			// There are phones that don't include "mobile" in the UA string, and tablets that do.
 			// However, if UA contains tablet, it's a tablet.

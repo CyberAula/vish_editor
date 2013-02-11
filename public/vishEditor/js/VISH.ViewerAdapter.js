@@ -114,11 +114,25 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Update interface and init texts
-
 		updateInterface();
 		V.Text.init();
 	}
 
+	//////////////
+	//
+	//////////////
+
+	var setViewport = function(viewportContent){
+		$("head").prepend('<meta name="viewport" content="'+viewportContent+'"/>');
+	}
+
+	var setViewportForAndroid = function(){
+		setViewport("width=device-width,height=device-height,user-scalable=yes");
+	}
+
+	var setViewportForIphone = function(){
+		setViewport("user-scalable=yes");
+	}
 
 	///////////////
 	// PAGER
@@ -377,6 +391,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	return {
 		init 					: init,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
-		updateInterface 		: updateInterface
+		updateInterface 		: updateInterface,
+		setViewport 			: setViewport,
+		setViewportForAndroid 	: setViewportForAndroid,
+		setViewportForIphone	: setViewportForIphone
 	};
+
 }) (VISH, jQuery);
