@@ -71,22 +71,29 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
+			embed = false;
 		}
 
 		//////////////
 		//Restrictions
 		/////////////
 
+		//Mobiles
+
 		//Mobile always in full
 		render_full = (render_full || (V.Status.getDevice().mobile));
 
-		//Enter and exit fullscreen buttons disable on mobiles
-		fs_button = (fs_button && (!V.Status.getDevice().mobile));
-
+		if(!embed){
+			//Enter and exit fullscreen buttons disable on mobiles when is not an embed
+			fs_button = (fs_button && (!V.Status.getDevice().mobile));
+		} else {
+			//Exit fullscreen buttons disable on mobiles (use close button instead)
+			exit_fs_button = (exit_fs_button && (!V.Status.getDevice().mobile));
+		}
+		
 		//Close button just for mobiles (disable in tablets)
 		close_button = (close_button && (V.Status.getDevice().mobile));
 
-		// page_is_fullscreen = false;
 		page_is_fullscreen = render_full;
 		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
