@@ -73,7 +73,14 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
-		V.ViewerAdapter.init(options); //Also init texts
+		var delay = 0;
+		if(!V.Status.getDevice().desktop){
+			//Extra delay to wait for status load (viewport,etc)
+			delay = 200;
+		}
+		setTimeout(function(){
+			V.ViewerAdapter.init(options); //Also init texts
+		},delay);
 	};
 
 	

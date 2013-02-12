@@ -136,16 +136,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#page-fullscreen").hide();
 		}
 
-		var delay = 0;
-		if(!V.Status.getDevice().desktop){
-			//Extra delay to wait for viewport load
-			delay = 200;
-		}
-		setTimeout(function(){
-			//Update interface and init texts
-			updateInterface();
-			V.Text.init();
-		},delay);
+		//Update interface and init texts
+		updateInterface();
+		V.Text.init();
 	}
 
 	//////////////
@@ -367,7 +360,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 							window.location = exit_fs_url;
 					} else if(V.Status.getDevice().features.history){
 						//Use feature history if its allowed
-						history.back();
+						// history.back(); //Not works in Safari
+						history.go(-1);
 					}
 				});
 			} else if((!fullscreen)&&(enter_fs_button)){

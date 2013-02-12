@@ -79,7 +79,7 @@ VISH.Status = (function(V,$,undefined){
 		device.features.localStorage = (typeof(Storage)!=="undefined");
 
 		//Session management
-		device.features.history = (typeof history === "object")&&(typeof history.back === "function");
+		device.features.history = (typeof history === "object")&&(typeof history.back === "function")&&(typeof history.go === "function");
 
 		// V.Debugging.log("We are in iframe: " + getIsInIframe());		
 		// V.Debugging.log("Fullscreen supported: " + device.features.fullscreen);
