@@ -267,7 +267,6 @@ var _getResults =  function(quiz_session_active_id) {
 
 
   var _addToggleFullScreenListener = function () {
-    V.Debugging.log("toggle FS detected");
     var qrImgID = "quiz_session_qrcode_container_id";
     addedFullScreenListener = true;
     if(V.Status.getIsInIframe()){
@@ -436,8 +435,6 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
       var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='truefalse']:checked'").val();
     }
-    V.Debugging.log("_answer value:  " + answer);
-
     if(typeof answer !== "undefined") {
        var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
        V.Quiz.API.putQuizSession(answer, quizSessionActiveId, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
@@ -448,12 +445,10 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _onQuizVotingSuccessReceived = function(data){ 
     var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
-    
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
  var _onQuizSessionResultsReceived = function(data) {
-    V.Debugging.log("_onQuizSessionResultsReceived, and value received is:  " + JSON.stringify(data));  
       //remove all radio inputs
      $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
      $(".thanks_div").show();
@@ -543,23 +538,18 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 
   var drawPieChart = function (data) {
-    console.log(" drawPieChart data : " + JSON.stringify(data));
     // Create the data table.
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
     data_for_chart.addColumn('number', 'Slices');
 
     for (option in data) {
-
-      if((option in mcOptionsHash)){ // a --> 2 , b -->3
+ if((option in mcOptionsHash || option in tfOptionsHash)){ //a --> 2 , b -->3 or true ->3 , false ->2
         var votes = data[option];
-
         data_for_chart.addRow([option, votes]);
       }
     }; 
-
   var question = $(VISH.Slides.getCurrentSlide()).find(".value_multiplechoice_question_in_zone").text();
-        
   //TODO set values in percents for resizing 
   // Set chart options
     var options = {'title':'',
