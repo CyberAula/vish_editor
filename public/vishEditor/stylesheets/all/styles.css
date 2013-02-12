@@ -235,7 +235,7 @@ this can not be done with show() and hide() because then it remains with display
   background-repeat: no-repeat;
   height: 40px;
   width: 45px;
-  position: fixed;
+  position: absolute;
   right: 0;
   bottom: 0;
   text-align: center;
@@ -266,7 +266,7 @@ this can not be done with show() and hide() because then it remains with display
     left: 50%;
     margin-left: -200px;
     opacity: 1.0;
-    position: fixed;
+    position: absolute;
     text-align: center;
     width: 430px;
 }

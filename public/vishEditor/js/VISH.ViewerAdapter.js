@@ -4,6 +4,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var is_preview;
 	var close_button;
 	var fs_button;
+	var can_use_nativeFs;
+	var embed;
 
 	//Fullscreen fallbacks
 	var enter_fs_button;
@@ -28,26 +30,38 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Init vars
 		if(options){
-			//Decide if we must render the presentation in fullscreen
+			//Decide if we must render the presentation in fullscreen mode
 			if(typeof render_full !== "boolean"){
 				render_full = ((options["full"]===true)&&(!V.Status.getIsInIframe()) || (options["forcefull"]===true));
 			}
 			if(typeof options["preview"] === "boolean"){
 				is_preview = options["preview"];
 			}
+			if(typeof options["embed"] === "boolean"){
+				embed = options["embed"];
+			} else {
+				embed = false;
+			}
+
 			close_button = (!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
 			
-			enter_fs_button = ((V.Status.getIsInIframe())&&(options["fullscreen"]));
+			//Embed elements can use native fullscreen
+			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&&(!embed);
+
+			enter_fs_button = (typeof options["fullscreen"] !== "undefined")&&(!can_use_nativeFs);
 			if(enter_fs_button){
 				enter_fs_url = options["fullscreen"];
 			}
 
-			exit_fs_button = (typeof options["exitFullscreen"] !== "undefined");
+			exit_fs_button = (typeof options["exitFullscreen"] !== "undefined")&&(!can_use_nativeFs);
 			if(exit_fs_button){
 				exit_fs_url = options["exitFullscreen"];
 			}
 
-			fs_button = (((V.Status.getDevice().features.fullscreen)||((enter_fs_button)&&(exit_fs_button)))&&(!is_preview));
+			fs_button = ((can_use_nativeFs)&&(V.Status.getIsInIframe()))||((enter_fs_button)&&(exit_fs_button));
+
+			//No fs for preview
+			fs_button = fs_button && (!is_preview);
 
 		} else {
 			render_full = false;
@@ -56,22 +70,30 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			enter_fs_button = false;
 			exit_fs_button = false;
 			fs_button = false;
+			can_use_nativeFs = false;
+			embed = false;
 		}
 
 		//////////////
 		//Restrictions
 		/////////////
 
+		//Mobiles
+
 		//Mobile always in full
 		render_full = (render_full || (V.Status.getDevice().mobile));
 
-		//Enter and exit fullscreen buttons disable on mobiles
-		fs_button = (fs_button && (!V.Status.getDevice().mobile));
-
+		if(!embed){
+			//Enter and exit fullscreen buttons disable on mobiles when is not an embed
+			fs_button = (fs_button && (!V.Status.getDevice().mobile));
+		} else {
+			//Exit fullscreen buttons disable on mobiles (use close button instead)
+			exit_fs_button = (exit_fs_button && (!V.Status.getDevice().mobile));
+		}
+		
 		//Close button just for mobiles (disable in tablets)
 		close_button = (close_button && (V.Status.getDevice().mobile));
 
-		// page_is_fullscreen = false;
 		page_is_fullscreen = render_full;
 		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
@@ -86,15 +108,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#forward_arrow").html("");
 		}
 
-		if(render_full){
-			$("#viewbar").hide();
-		} else {
-			if(!isOneSlide){
-				$("#viewbar").show();
-				VISH.SlideManager.updateSlideCounter();
-			} else {
+		if(!isOneSlide){
+			if(render_full){
 				$("#viewbar").hide();
+			} else {
+				$("#viewbar").show();
 			}
+			VISH.SlideManager.updateSlideCounter();
+		} else {
+			$("#viewbar").hide();
 		}
 
 		if(is_preview){
@@ -313,7 +335,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * and if not it is a link to the .full version
 	 */
 	var _enableFullScreen = function(fullscreen){
-		if(V.Status.getDevice().features.fullscreen){
+		if(can_use_nativeFs){
 			//if we have fullscreen feature, use it
 
 			if(V.Status.getIsInIframe()){
@@ -342,7 +364,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				});
 			} else if((!fullscreen)&&(enter_fs_button)){
 				$(document).on('click', '#page-fullscreen', function(){
-					VISH.Utils.sendParentToURL(enter_fs_url);
+					VISH.Utils.sendParentToURL(enter_fs_url+"?orgUrl="+window.parent.location.href);
 				});
 			}
 		}

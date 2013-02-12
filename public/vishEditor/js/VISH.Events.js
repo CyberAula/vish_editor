@@ -26,8 +26,12 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).bind('keydown', handleBodyKeyDown); 
 
-		$(document).on('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-		$(document).on('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+		$(document).on('click', '#page-switcher-start', function(){
+			V.Slides.backwardOneSlide();
+		});
+		$(document).on('click', '#page-switcher-end', function(){
+			V.Slides.forwardOneSlide();
+		});
 
 		$(document).on('click', '#closeButton', function(event){
 			event.stopPropagation();
@@ -42,7 +46,7 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 
-		$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
+		$(document).on('click','.close_subslide', onFlashcardCloseSlideClicked);
 
 		var presentation = V.SlideManager.getCurrentPresentation();
 		for(index in presentation.slides){
@@ -52,7 +56,7 @@ VISH.Events = (function(V,$,undefined){
 					//Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
-						$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
+						$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
 					}
 					break;
 				case VISH.Constant.VTOUR:
@@ -92,7 +96,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off('click', '#closeButton');
 
-		$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
+		$(document).off('click','.close_subslide', onFlashcardCloseSlideClicked);
 
 		var presentation = V.SlideManager.getCurrentPresentation();
 		for(index in presentation.slides){
@@ -102,7 +106,7 @@ VISH.Events = (function(V,$,undefined){
 					//Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
-						$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, _onFlashcardPoiClicked);
+						$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
 					}
 					break;
 				case VISH.Constant.VTOUR:
@@ -154,7 +158,7 @@ VISH.Events = (function(V,$,undefined){
 	 * Function called when a poi is clicked
 	 * 'event' can be a delegate click event or a number
 	 */
-	var _onFlashcardPoiClicked = function(event){
+	var onFlashcardPoiClicked = function(event){
 		if(typeof event === "string"){
 			var poiId = event;
 		} else if(typeof event === "object"){
@@ -168,15 +172,17 @@ VISH.Events = (function(V,$,undefined){
 		}
 	};
 
-	var _onFlashcardCloseSlideClicked = function(event){
+	var onFlashcardCloseSlideClicked = function(event){
 		var close_slide_id = event.target.id.substring(5); //the id is close3
 		V.Slides.closeSubslide(close_slide_id,true);
 	};
 	
 	return {
-			init 						: init,
-			bindViewerEventListeners	: bindViewerEventListeners,
-			unbindViewerEventListeners	: unbindViewerEventListeners
+			init 							: init,
+			bindViewerEventListeners		: bindViewerEventListeners,
+			unbindViewerEventListeners		: unbindViewerEventListeners,
+			onFlashcardPoiClicked 			: onFlashcardPoiClicked,
+			onFlashcardCloseSlideClicked 	: onFlashcardCloseSlideClicked
 	};
 
 }) (VISH,jQuery);

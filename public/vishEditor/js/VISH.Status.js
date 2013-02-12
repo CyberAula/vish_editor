@@ -183,7 +183,8 @@ VISH.Status = (function(V,$,undefined){
 
 		 // Force mobile
 		 // device.desktop = false;
-		 // device.mobile = true;
+		 // device.mobile = false;
+		 // device.tablet = true;
 
 		 // if(device.mobile){
 		 // 	alert("mobile");
