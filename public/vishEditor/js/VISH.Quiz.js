@@ -11,6 +11,10 @@ VISH.Quiz = (function(V,$,undefined){
   mcOptionsHash['e'] = 4;
   mcOptionsHash['f'] = 5;
 
+  var tfOptionsHash = new Array();
+  tfOptionsHash['true'] = 0;
+  tfOptionsHash['false'] = 1; 
+
   var startButtonClass = "quiz_session_start_button";
   var optionsButtonClass = "quiz_session_options_button";
   var showAnswerButtonClass = "show_answers_button";
@@ -486,32 +490,48 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
-   V.Debugging.log("_showResults, and value received is:  " + JSON.stringify(data));
+    console.log("_showResults, and value received is:  " + JSON.stringify(data));
+    var quiz_type = $(VISH.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
+    console.log("quiztype: " + quiz_type);
+    var index ;
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
     //Reset values
      var totalVotes =0;
       for (option in data.results) {
+       if(quiz_type=="multiplechoice"){
         if((option in mcOptionsHash)){
           var votes = data.results[option];
           totalVotes  += votes;
-        } 
-
+        }
+       }
+       else if (quiz_type=="truefalse")  {
+        if((option in tfOptionsHash)){
+          var votes = data.results[option];
+          totalVotes  += votes;
+        }
+      }
+   console.log("totalVotes: " + totalVotes);
       }
       if(totalVotes>0){
-         for (option in data.results) {
-          if((option in mcOptionsHash)){
-            var index = mcOptionsHash[option];
-            var votes = data.results[option];
-            var percent= (votes/totalVotes)*100;
-            var percentString = (percent).toString()  + "%";
-            var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
-            if(typeof $("#"+tabQuizStatsBarsContentId).find(".mc_meter")[index] != "undefined"){
-             $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
-             $($("#"+tabQuizStatsBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
-             $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
+        for (option in data.results) {
+          if((option in mcOptionsHash || option in tfOptionsHash)){
+            if(quiz_type=="multiplechoice") {
+             index = mcOptionsHash[option];
             }
-          }
+            else if (quiz_type="truefalse") {
+               index = tfOptionsHash[option];  
+            }
+              var votes = data.results[option];
+              var percent= (votes/totalVotes)*100;
+              var percentString = (percent).toString()  + "%";
+              var roundedNumber = Math.round(percent*Math.pow(10,2))/Math.pow(10,2);
+              if(typeof $("#"+tabQuizStatsBarsContentId).find(".mc_meter")[index] != "undefined"){
+               $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
+               $($("#"+tabQuizStatsBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
+               $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
+              }
+            }
         }
       }
     google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
