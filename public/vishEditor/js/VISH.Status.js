@@ -52,8 +52,7 @@ VISH.Status = (function(V,$,undefined){
 	
 	var fillFeatures = function(){
 		//To see if we are inside an iframe
-		setIsInIframe((window.location != window.parent.location) ? true : false);
-		// V.Debugging.log("We are in iframe: " + getIsInIframe());		
+		setIsInIframe((window.location != window.parent.location) ? true : false);	
 		
 		//Fullscreen support
 		var elem = document.getElementById("page-fullscreen");
@@ -78,6 +77,9 @@ VISH.Status = (function(V,$,undefined){
 
 		//LocalStorage detection
 		device.features.localStorage = (typeof(Storage)!=="undefined");
+
+		//Session management
+		device.features.history = (typeof history === "object")&&(typeof history.back === "function");
 
 		// V.Debugging.log("We are in iframe: " + getIsInIframe());		
 		// V.Debugging.log("Fullscreen supported: " + device.features.fullscreen);
@@ -181,9 +183,9 @@ VISH.Status = (function(V,$,undefined){
 		 // alert("Layout Viewport width: " + document.documentElement.clientWidth);
 		 // alert("window.screen.availWidth: " + window.screen.availWidth);
 
-		 // Force mobile
+		 // Force mobile or tablet
 		 // device.desktop = false;
-		 // device.mobile = false;
+		 // device.mobile = true;
 		 // device.tablet = true;
 
 		 // if(device.mobile){

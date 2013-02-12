@@ -53,15 +53,17 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				enter_fs_url = options["fullscreen"];
 			}
 
-			exit_fs_button = (typeof options["exitFullscreen"] !== "undefined")&&(!can_use_nativeFs);
+			exit_fs_button = ((typeof options["exitFullscreen"] !== "undefined")||((V.Status.getDevice().features.history)&&(embed)))&&(!can_use_nativeFs);
 			if(exit_fs_button){
 				exit_fs_url = options["exitFullscreen"];
 			}
 
+			//Full screen buttons
 			fs_button = ((can_use_nativeFs)&&(V.Status.getIsInIframe()))||((enter_fs_button)&&(exit_fs_button));
-
 			//No fs for preview
 			fs_button = fs_button && (!is_preview);
+
+			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
 		} else {
 			render_full = false;
@@ -79,22 +81,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		/////////////
 
 		//Mobiles
+		if(V.Status.getDevice().mobile){
+			//Mobile always in full
+			render_full = true;
+			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
-		//Mobile always in full
-		render_full = (render_full || (V.Status.getDevice().mobile));
-
-		if(!embed){
-			//Enter and exit fullscreen buttons disable on mobiles when is not an embed
-			fs_button = (fs_button && (!V.Status.getDevice().mobile));
-		} else {
-			//Exit fullscreen buttons disable on mobiles (use close button instead)
-			exit_fs_button = (exit_fs_button && (!V.Status.getDevice().mobile));
+			if(page_is_fullscreen){
+				fs_button = false;
+			} else {
+				close_button = false;
+			}
 		}
 		
 		//Close button just for mobiles (disable in tablets)
 		close_button = (close_button && (V.Status.getDevice().mobile));
 
-		page_is_fullscreen = render_full;
 		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
 
@@ -130,7 +131,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Init fullscreen
 		if(fs_button){
-			_enableFullScreen(render_full);
+			_enableFullScreen(page_is_fullscreen);
 		} else {
 			$("#page-fullscreen").hide();
 		}
@@ -195,7 +196,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		// Pager
-		if(!page_is_fullscreen){
+		if(!render_full){
 			if(VISH.Slides.isCurrentFirstSlide()){
 				$("#page-switcher-start").hide();			
 			} else {
@@ -232,7 +233,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	///////////
 
 	var updateInterface = function(){
-		_setupSize(page_is_fullscreen);
+		_setupSize(render_full);
 	};
 
 
@@ -347,7 +348,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
 				//Done with a timeout because it did not work well in ubuntu
 				setTimeout(function(){
-					_setupSize(!page_is_fullscreen);
+					page_is_fullscreen = !page_is_fullscreen;
+					_setupSize(page_is_fullscreen);
 				}, 400);
 			});
 		} else {
@@ -360,11 +362,22 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 					$("#page-fullscreen").css("background-position", "-45px 0px");
 				});
 				$(document).on('click', '#page-fullscreen', function(){
-					window.location = exit_fs_url;
+					//Try fallback first
+					if((exit_fs_url)&&(!embed)){
+							window.location = exit_fs_url;
+					} else if(V.Status.getDevice().features.history){
+						//Use feature history if its allowed
+						history.back();
+					}
 				});
 			} else if((!fullscreen)&&(enter_fs_button)){
 				$(document).on('click', '#page-fullscreen', function(){
-					VISH.Utils.sendParentToURL(enter_fs_url+"?orgUrl="+window.parent.location.href);
+					if(typeof window.parent.location.href !== "undefined"){
+						VISH.Utils.sendParentToURL(enter_fs_url+"?orgUrl="+window.parent.location.href);
+					} else {
+						//In embed mode, we dont have access to window.parent properties (like window.parent.location)
+						VISH.Utils.sendParentToURL(enter_fs_url+"?embed=true");
+					}
 				});
 			}
 		}
@@ -374,7 +387,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		if(typeof fullscreen === "undefined"){
 			fullscreen = page_is_fullscreen;
 		}
-		page_is_fullscreen = fullscreen;
 		if(fullscreen){
 			_onEnterFullScreen();
 		} else {
@@ -402,19 +414,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_decideIfViewBarShow(false);
 	}
 
-
-	// /**
-	// * Method to add the src to the iframe, show it, hide the slides, and so on
-	// */
-	// var setupGame = function(presentation){
-	// 	$("#my_game_iframe").attr("src", presentation.game.src);
-	// 	//load file game.css dinamically
-	// 	var fileref=document.createElement("link");
- //  		fileref.setAttribute("rel", "stylesheet");
- //  		fileref.setAttribute("type", "text/css");
- //  		fileref.setAttribute("href", "stylesheets/game/game.css");
- //  		document.getElementsByTagName("body")[0].appendChild(fileref);
-	// };
+	var isFullScreen = function(){
+		return page_is_fullscreen;
+	}
 
 	
 	return {
@@ -423,7 +425,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		updateInterface 		: updateInterface,
 		setViewport 			: setViewport,
 		setViewportForAndroid 	: setViewportForAndroid,
-		setViewportForIphone	: setViewportForIphone
+		setViewportForIphone	: setViewportForIphone,
+		isFullScreen 			: isFullScreen
 	};
 
 }) (VISH, jQuery);

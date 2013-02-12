@@ -632,20 +632,18 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var testFullScreen = function() {
-     var myDoc;
-   if(V.Status.getIsInIframe()){
-       myDoc = parent.document;
+  //    var myDoc;
+  //  if(V.Status.getIsInIframe()){
+  //      myDoc = parent.document;
       
-    }
-    else {
-      myDoc = document;
-    }
-  if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
-    var myElem = $(document).find('.quiz_full_screen');
-    myElem.hide();
-  }
-
-
+  //   }
+  //   else {
+  //     myDoc = document;
+  //   }
+  // if ( myDoc.fullScreen || myDoc.mozFullScreen || myDoc.webkitIsFullScreen) {
+  //   var myElem = $(document).find('.quiz_full_screen');
+  //   myElem.hide();
+  // }
   };
 
 
