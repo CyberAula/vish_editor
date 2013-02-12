@@ -490,9 +490,9 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
-    console.log("_showResults, and value received is:  " + JSON.stringify(data));
+    
     var quiz_type = $(VISH.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
-    console.log("quiztype: " + quiz_type);
+   
     var index ;
     var maxWidth = 70;
     //var scaleFactor = maxWidth/100;
@@ -511,7 +511,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
           totalVotes  += votes;
         }
       }
-   console.log("totalVotes: " + totalVotes);
+  
       }
       if(totalVotes>0){
         for (option in data.results) {
@@ -529,7 +529,11 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
               if(typeof $("#"+tabQuizStatsBarsContentId).find(".mc_meter")[index] != "undefined"){
                $("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index].style.width = percentString;
                $($("#"+tabQuizStatsBarsContentId).find(".mcoption_label")[index]).text(roundedNumber+"%");
-               $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option );
+              if(quiz_type=="multiplechoice") {
+                $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("mcoption_" +option);
+               } else if (quiz_type="truefalse") {
+                 $($("#"+tabQuizStatsBarsContentId).find(".mc_meter > span")[index]).addClass("tfoption_" +option);
+               }
               }
             }
         }
@@ -539,6 +543,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
 
   var drawPieChart = function (data) {
+    console.log(" drawPieChart data : " + JSON.stringify(data));
     // Create the data table.
     var data_for_chart = new google.visualization.DataTable();
     data_for_chart.addColumn('string', 'Question');
