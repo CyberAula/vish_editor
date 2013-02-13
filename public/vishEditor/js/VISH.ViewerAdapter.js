@@ -132,6 +132,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Init fullscreen
 		if(fs_button){
 			_enableFullScreen(page_is_fullscreen);
+			$("#page-fullscreen").show();
 		} else {
 			$("#page-fullscreen").hide();
 		}
@@ -139,22 +140,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Update interface and init texts
 		updateInterface();
 		V.Text.init();
-	}
-
-	//////////////
-	// VIEWPORT
-	//////////////
-
-	var setViewport = function(viewportContent){
-		$("head").prepend('<meta name="viewport" content="'+viewportContent+'"/>');
-	}
-
-	var setViewportForAndroid = function(){
-		setViewport("width=device-width,height=device-height,user-scalable=yes");
-	}
-
-	var setViewportForIphone = function(){
-		setViewport("user-scalable=yes");
 	}
 
 	///////////////
@@ -417,9 +402,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		init 					: init,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		updateInterface 		: updateInterface,
-		setViewport 			: setViewport,
-		setViewportForAndroid 	: setViewportForAndroid,
-		setViewportForIphone	: setViewportForIphone,
 		isFullScreen 			: isFullScreen
 	};
 

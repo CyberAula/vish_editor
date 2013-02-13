@@ -8,7 +8,7 @@ VISH.SnapshotPlayer = (function(){
             var wrapper_class = "snapshot_wrapper" + "_viewer";
             var content_class = "snapshot_content" + "_viewer";
             var content = $(value).attr("objectWrapper");
-            if(VISH.Status.getOnline()=== false){
+            if(VISH.Status.isOnline()=== false){
               $(value).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_iframe.png'/>");
               return;
             }

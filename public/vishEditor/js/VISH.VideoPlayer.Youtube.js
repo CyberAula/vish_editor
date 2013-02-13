@@ -34,7 +34,7 @@ VISH.VideoPlayer.Youtube = (function(){
 
 	var loadYoutubeObject = function(article,zone){
 
-		if(VISH.Status.getOnline()===false){
+		if(VISH.Status.isOnline()===false){
 			$(zone).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
 		}

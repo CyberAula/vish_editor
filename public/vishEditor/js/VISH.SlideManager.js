@@ -38,7 +38,13 @@ VISH.SlideManager = (function(V,$,undefined){
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
 		
-		V.Status.init();
+		V.Status.init(function(){
+			//Status loading finishes
+			_initAferStatusLoaded(options,presentation);
+		});
+	};
+
+	var _initAferStatusLoaded = function(options,presentation){
 		V.Quiz.init(presentation);
 		V.Flashcard.init();
 		V.Renderer.init();
@@ -73,17 +79,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
-		var delay = 0;
-		if(!V.Status.getDevice().desktop){
-			//Extra delay to wait for status load (viewport,etc)
-			delay = 200;
-		}
-		setTimeout(function(){
-			V.ViewerAdapter.init(options); //Also init texts
-		},delay);
-	};
-
-	
+		V.ViewerAdapter.init(options); //Also init texts
+	}
 
 
 	/**

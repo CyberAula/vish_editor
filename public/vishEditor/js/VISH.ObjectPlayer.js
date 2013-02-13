@@ -10,7 +10,7 @@ VISH.ObjectPlayer = (function(){
 				VISH.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
 				return;
 			}
-			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.getOnline()=== false){
+			if($(value).attr("objectWrapper").match("^<iframe")!==null && VISH.Status.isOnline()=== false){
 				$(value).html("<img src='"+VISH.ImagesPath+"/adverts/advert_new_grey_iframe.png'/>");
 				return;
 			}
