@@ -140,7 +140,7 @@ VISH.Status.Device = (function(V,$,undefined){
 		 // Force mobile or tablet
 		 // device.desktop = false;
 		 // device.mobile = true;
-		 // device.tablet = true;
+		 // device.tablet = false;
 
 		 // if(device.mobile){
 		 // 	alert("mobile");
