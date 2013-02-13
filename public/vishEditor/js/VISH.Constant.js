@@ -18,6 +18,7 @@ VISH.Constant.IE = 'Internet Explorer';
 VISH.Constant.FIREFOX = 'Mozilla Firefox';
 VISH.Constant.CHROME = 'Google Chrome';
 VISH.Constant.SAFARI = 'Safari';
+VISH.Constant.ANDROID_BROWSER = 'Android Browser';
 
 
 //Zone sizes

@@ -43,7 +43,11 @@ VISH.Status.Device = (function(V,$,undefined){
 		if((device.iOS)&&(device.browser.name===V.Constant.SAFARI)){
 			_setViewportForIphone(callback);
 		} else if(device.android){
-			_setViewportForAndroid(callback);
+			if(device.browser.name===V.Constant.CHROME){
+				_setViewportForChromeForAndroid(callback);
+			} else if(device.browser.name===VISH.Constant.ANDROID_BROWSER){
+				_setViewportForAndroidBrowser(callback);
+			}
 		} else {
 			if(typeof callback === "function"){
 				callback();
@@ -81,7 +85,13 @@ VISH.Status.Device = (function(V,$,undefined){
 		},WAITING_TIME_FOR_VIEWPORT_LOAD);
 	}
 
-	var _setViewportForAndroid = function(callback){
+	var _setViewportForAndroidBrowser = function(callback){
+		//We cant specify width=device-width due to a iframe loading bug.
+		//It can't be solved
+		_setViewport("user-scalable=yes",callback);
+	}
+
+	var _setViewportForChromeForAndroid = function(callback){
 		_setViewport("width=device-width,height=device-height,user-scalable=yes",callback);
 	}
 
@@ -110,18 +120,43 @@ VISH.Status.Device = (function(V,$,undefined){
 				var maxWidth = 960 * device.pixelRatio;
 				var maxHeight = 720 * device.pixelRatio;
 
-				var landscape = window.screen.availWidth > window.screen.availHeight;
-				if(landscape){
-					if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
-						device.androidTablet = true;
+				if(device.browser.name===V.Constant.ANDROID_BROWSER){
+					//Fix Viewport bug
+					//With android browser the width can't be specified in the viewport.
+					//So, width in portrait and width in landscape are unreliable values.
+			
+					//Overwrite maxWidth
+					maxWidth = 1101 * device.pixelRatio;
+
+					var landscape = window.screen.availWidth > window.screen.availHeight;
+					if(landscape){
+						if(window.screen.availHeight>=maxHeight){
+							device.androidTablet = true;
+						} else {
+							device.androidPhone = true;
+						}
 					} else {
-						device.androidPhone = true;
+						if(window.screen.availHeight>=maxWidth){
+							device.androidTablet = true;
+						} else {
+							device.androidPhone = true;
+						}
 					}
 				} else {
-					if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
-						device.androidTablet = true;
+					// Reliable detection (just for Chrome for Android)
+					var landscape = window.screen.availWidth > window.screen.availHeight;
+					if(landscape){
+						if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
+							device.androidTablet = true;
+						} else {
+							device.androidPhone = true;
+						}
 					} else {
-						device.androidPhone = true;
+						if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
+							device.androidTablet = true;
+						} else {
+							device.androidPhone = true;
+						}
 					}
 				}
 			}

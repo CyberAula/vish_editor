@@ -6,6 +6,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 	var fillBrowser = function(){
 		var browser = {};
 		var version;
+		var android;
 
 		version = _getInternetExplorerVersion();
 		if(version!=-1){
@@ -21,6 +22,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 			return browser;
 		}
 
+		//Google Chrome and Chrome for android
 		version = _getGoogleChromeVersion();
 		if(version!=-1){
 			browser.name = VISH.Constant.CHROME;
@@ -28,16 +30,30 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 			return browser;
 		}
 
+		//Look for Safari and Android Native browser
+		//They have the same user agent type
+		android = /android/i.test(navigator.userAgent);
+
 		version = _getSafariVersion();
 		if(version!=-1){
-			browser.name = VISH.Constant.SAFARI;
+			if(android){
+				browser.name = VISH.Constant.ANDROID_BROWSER;
+			} else {
+				browser.name = VISH.Constant.SAFARI;
+			}
 			browser.version = version;
 			return browser;
 		}
 
 		//No browser founded
 		browser.name = V.Constant.UNKNOWN;
-		browser.name = -1;
+		browser.version = -1;
+
+		//We assume native android browser by default
+		if(android){
+			browser.name = VISH.Constant.ANDROID_BROWSER;
+		}
+
 		return browser;
 	}
 
@@ -81,7 +97,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 		var rv = -1; //No Safari
 		if (navigator.appName === VISH.Constant.UA_NETSCAPE) {
 			var ua = navigator.userAgent;
-			if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1) {
+			if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1 && ua.indexOf("crmo")==-1) {
 				var rv = -2; //Safari with unknown version
 
 				//Try to get Safari Version
