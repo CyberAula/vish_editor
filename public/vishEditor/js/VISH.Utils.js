@@ -9,6 +9,17 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
+	/*
+	 *
+	 */
+	var getOptions = function(){
+		if(V.Editing){
+			return V.Editor.getOptions();
+		} else {
+			return V.SlideManager.getOptions();
+		}
+	}
+
    /**
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get "article_x" ids.
@@ -450,6 +461,7 @@ VISH.Utils = (function(V,undefined){
 
    return {
 		init 					: init,
+		getOptions 				: getOptions,
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,

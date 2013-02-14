@@ -20,11 +20,17 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	//Make init idempotent
 	var initialized = false;
 
+	//Prevent updateInterface with same params (Make Vish Viewer more efficient)
+	var _lastWidth;
+	var _lastHeight;
+
 
 	var init = function(options){
 		if(initialized){
 			return;
 		} else {
+			_lastWidth = -1;
+			_lastHeight = -1;
 			initialized = true;
 		}
 
@@ -208,6 +214,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	///////////
 
 	var updateInterface = function(){
+		var cWidth = $(window).width();
+		var cHeight = $(window).height();
+		if((cWidth===_lastWidth)&&(cHeight===_lastHeight)){
+			return;
+		}
+		_lastWidth = cWidth;
+		_lastHeight = cHeight;
 		_setupSize(render_full);
 	};
 
@@ -237,8 +250,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			margin_width = 30;
 		}
 		
-		var height = $(window).height() - reserved_px_for_menubar; //the height to use is the window height - 40px that is the menubar height
-		var width = $(window).width();
+		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - 40px that is the menubar height
+		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
 

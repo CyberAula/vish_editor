@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')
+	</script>
+</head>
+<body>
+<script>
+	var getOuterHTML = function(tag){
+		if (typeof($(tag)[0].outerHTML)=='undefined'){
+			return $(tag).clone().wrap('<div></div>').parent().html();
+		} else {
+			return $(tag)[0].outerHTML;
+		}
+	}
+
+	$(document).ready(function(){
+		localStorage.clear();
+	});
+
+</script>
+<div>
+<div id="iContainer"class="iContainer" style="position: relative; width:300px; height:300px; top:10%; left:0%;">
+</div>
+</div>
+</body>
+</html>

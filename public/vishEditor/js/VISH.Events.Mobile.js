@@ -48,7 +48,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		window.addEventListener("load",  function(){ _hideAddressBar(); } );
 		$(window).on('orientationchange',function(){
 			_hideAddressBar();
-			V.ViewerAdapter.updateInterface();
+			$(window).trigger('resize'); //Will call V.ViewerAdapter.updateInterface();
 		});
 
 		document.body.addEventListener('touchmove', handleTouchMove, true);
@@ -67,7 +67,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		window.removeEventListener("load",  function(){ _hideAddressBar(); } );
 		$(window).off('orientationchange',function(){
 			_hideAddressBar();
-			V.ViewerAdapter.updateInterface();
+			window.onresize(); //Will call V.ViewerAdapter.updateInterface();
 		});
 
 		document.body.removeEventListener('touchmove', handleTouchMove, true);

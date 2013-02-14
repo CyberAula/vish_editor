@@ -55,8 +55,16 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		// V.Storage.setTestingMode(true);
+		
 		V.Utils.init();
-		V.Status.init();
+		V.Status.init(function(){
+			//Status loading finishes
+			_initAferStatusLoaded(options,presentation);
+		});
+	}
+
+	var _initAferStatusLoaded = function(options,presentation){
 		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}

@@ -12,9 +12,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		VISH.Editing = false;
+		Editing = false;
 		
-		VISH.Debugging.init(options);
+		V.Debugging.init(options);
 
 		if(options){
 			initOptions = options;
@@ -22,18 +22,18 @@ VISH.SlideManager = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
-		if((options)&&(options["configuration"])&&(VISH.Configuration)){
-			VISH.Configuration.init(options["configuration"]);
+		if((options)&&(options["configuration"])&&(V.Configuration)){
+			V.Configuration.init(options["configuration"]);
 		}
 
-		if(VISH.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]=="noserver")&&(!presentation)&&(VISH.Debugging.getPresentationSamples()!=null)) {
-			 	presentation = VISH.Debugging.getPresentationSamples();
+		if(V.Debugging.isDevelopping()){
+			if ((options["configuration"]["mode"]=="noserver")&&(!presentation)&&(V.Debugging.getPresentationSamples()!=null)) {
+			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}
 
-		VISH.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
-		VISH.Debugging.log(JSON.stringify(presentation));
+		V.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
+		V.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
@@ -58,12 +58,12 @@ VISH.SlideManager = (function(V,$,undefined){
 		
 		//Experimental initializers for new excursion types
 		switch(presentation.type){
-			case VISH.Constant.GAME:
-				VISH.ViewerAdapter.setupGame(presentation);	
-				VISH.Game.registerActions(presentation);
+			case V.Constant.GAME:
+				V.ViewerAdapter.setupGame(presentation);	
+				V.Game.registerActions(presentation);
 				break;
-			case VISH.Constant.VTOUR:
-				VISH.VirtualTour.init();
+			case V.Constant.VTOUR:
+				V.VirtualTour.init();
 				break;
 		}
 
@@ -92,7 +92,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var toggleFullScreen = function () {
 
-		if(VISH.Status.isSlaveMode()){
+		if(V.Status.isSlaveMode()){
 			return;
 		}
 		if(V.Status.getIsInIframe()){
@@ -101,8 +101,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			var myDoc = document;
 		}
 				
-		if(VISH.Status.getIsInIframe()){
-			var myElem = VISH.Status.getIframe();
+		if(V.Status.getIsInIframe()){
+			var myElem = V.Status.getIframe();
 		} else {
 			var myElem = myDoc.getElementById('presentation_iframe');
 		}
@@ -186,7 +186,7 @@ VISH.SlideManager = (function(V,$,undefined){
 			}
 		},500);
 
-		// if(VISH.Status.getDevice().mobile){
+		// if(V.Status.getDevice().mobile){
 		// 	V.ImagePlayer.reloadGifs($(slide));
 		// }
 		
@@ -226,7 +226,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var updateSlideCounter = function(){
 		var number_of_slides = V.Slides.getSlides().length;
-		var slide_number = VISH.Slides.getCurrentSlideNumber();
+		var slide_number = V.Slides.getCurrentSlideNumber();
 		if(number_of_slides===0){
 			slide_number=0;
 		}
@@ -244,7 +244,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	var setPresentationType = function(type){
 		if(!type){
-			type = VISH.Constant.STANDARD;
+			type = V.Constant.STANDARD;
 		}
 		presentationType = type;
 	};

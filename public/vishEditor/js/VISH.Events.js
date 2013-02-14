@@ -80,6 +80,26 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
+		//Load onresize event
+		//Prevent multiple consecutively calls
+		var multipleOnResize = undefined;
+		window.onresize = function(){
+			if(typeof multipleOnResize === "undefined"){
+				multipleOnResize = false;
+				setTimeout(function(){
+					if(!multipleOnResize){
+						multipleOnResize = undefined;
+						V.ViewerAdapter.updateInterface();
+					} else {
+						multipleOnResize = undefined;
+						window.onresize();
+					}
+				},600);
+			} else {
+				multipleOnResize = true;
+			}
+		};
+
 		if (mobile){
 			eMobile.bindViewerMobileEventListeners();
 		}

@@ -32,7 +32,7 @@ VISH.Status = (function(V,$,undefined){
 	* Use to see if we are in embed mode
 	*/
 	var _checkEmbed = function(){
-		_isEmbed = (V.SlideManager.getOptions()["embed"]===true);
+		_isEmbed = (V.Utils.getOptions()["embed"]===true);
 	}
 
 	/*
