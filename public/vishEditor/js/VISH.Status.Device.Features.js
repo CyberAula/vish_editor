@@ -28,7 +28,7 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		features.touchScreen = !!('ontouchstart' in window);
 
 		//LocalStorage detection
-		features.localStorage = (typeof(Storage)!=="undefined");
+		features.localStorage = V.Storage.checkLocalStorageSupport();
 
 		//Session management
 		features.history = (typeof history === "object")&&(typeof history.back === "function")&&(typeof history.go === "function");

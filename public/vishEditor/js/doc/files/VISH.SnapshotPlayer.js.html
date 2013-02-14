@@ -98,7 +98,7 @@ VISH.SnapshotPlayer = (function(){
             var wrapper_class = &quot;snapshot_wrapper&quot; + &quot;_viewer&quot;;
             var content_class = &quot;snapshot_content&quot; + &quot;_viewer&quot;;
             var content = $(value).attr(&quot;objectWrapper&quot;);
-            if(VISH.Status.getOnline()=== false){
+            if(VISH.Status.isOnline()=== false){
               $(value).html(&quot;&lt;img src=&#x27;&quot;+VISH.ImagesPath+&quot;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
               return;
             }

@@ -1,6 +1,7 @@
 VISH.Status = (function(V,$,undefined){
 	var _device;
 	var _isInIframe;
+	var _isEmbed;
 	var _isOnline;
 	var _isSlave;
 	var _isPreventDefault;
@@ -11,6 +12,7 @@ VISH.Status = (function(V,$,undefined){
 			_device = returnedDevice;
 
 			_checkIframe();
+			_checkEmbed();
 			_checkOnline();
 
 			if(typeof callback === "function"){
@@ -24,6 +26,13 @@ VISH.Status = (function(V,$,undefined){
 	*/
 	var _checkIframe = function(){
 		_isInIframe = ((window.location != window.parent.location) ? true : false);
+	}
+
+   /*
+	* Use to see if we are in embed mode
+	*/
+	var _checkEmbed = function(){
+		_isEmbed = (V.SlideManager.getOptions()["embed"]===true);
 	}
 
 	/*
@@ -69,6 +78,10 @@ VISH.Status = (function(V,$,undefined){
 
 	var getDevice = function(){
 		return _device;
+	};
+
+	var getIsEmbed = function(){
+		return _isEmbed;
 	};
 
 	var getIsInIframe = function(){
@@ -129,10 +142,11 @@ VISH.Status = (function(V,$,undefined){
 
 
 	return {
-		init            		: init,
+		init					: init,
 		getDevice				: getDevice,
+		getIsEmbed				: getIsEmbed,
 		getIsInIframe			: getIsInIframe,
-		getIframe   			: getIframe,
+		getIframe				: getIframe,
 		isOnline 				: isOnline,
 		isSlaveMode 			: isSlaveMode,
 		setSlaveMode			: setSlaveMode,

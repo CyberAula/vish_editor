@@ -95,6 +95,53 @@ VISH.Editor.Text = (function(V,$,undefined){
 	var init = function(){
 		if(!initialized){
 			$(document).on(&#x27;click&#x27;,&#x27;.textthumb&#x27;, launchTextEditor);
+
+			CKEDITOR.on( &#x27;dialogDefinition&#x27;, function(ev){
+				&#x2F;&#x2F; Take the dialog name and its definition from the event data.
+				var dialogName = ev.data.name;
+				var dialogDefinition = ev.data.definition;
+
+				if (dialogName == &#x27;link&#x27;) {
+					&#x2F;&#x2F;Customize main window
+
+					&#x2F;&#x2F; Remove unused link type options
+					&#x2F;&#x2F; var linkType = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;linkType&quot;);
+					&#x2F;&#x2F; linkType.items.splice(2,1);
+					&#x2F;&#x2F; linkType.items.splice(1,1);
+
+					&#x2F;&#x2F;Remove LinkType
+                    dialogDefinition.getContents(&#x27;info&#x27;).remove(&quot;linkType&quot;);
+                    &#x2F;&#x2F;Remove unuseful protocols
+                    var protocols = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;protocol&quot;).items;
+                    protocols.splice(3,1);
+					protocols.splice(2,1);
+
+					&#x2F;&#x2F;Remove advanced options
+					dialogDefinition.removeContents(&#x27;advanced&#x27;);
+					
+					&#x2F;&#x2F;Customize target window
+					var targetTab = dialogDefinition.getContents(&#x27;target&#x27;);
+					var targetField = targetTab.get(&#x27;linkTargetType&#x27;);
+					targetField[&#x27;default&#x27;] =&#x27;_blank&#x27;;
+                    targetField.items.splice(6,1);
+                    targetField.items.splice(4,1);
+                    targetField.items.splice(1,1);
+                    targetField.items.splice(0,1);
+                    &#x2F;&#x2F; dialogDefinition.removeContents( &#x27;target&#x27; ); &#x2F;&#x2F;To remove targets
+				}
+
+				if (dialogName == &#x27;table&#x27;) {
+					dialogDefinition.removeContents(&#x27;advanced&#x27;);
+					var info = dialogDefinition.getContents(&#x27;info&#x27;);
+					&#x2F;&#x2F;Set center as default alignment
+					var alignment = info.get(&quot;cmbAlign&quot;);
+					alignment.items.splice(0,1);
+					&#x2F;&#x2F;Keep [&quot;default&quot;] to prevent Google closure compiler errors
+					alignment[&quot;default&quot;] = &quot;center&quot;;
+					&#x2F;&#x2F;Remove self-headers
+					info.remove(&quot;selHeaders&quot;);
+				}
+			});
 			initialized=true;
 		}
 	}
@@ -151,6 +198,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.resize_enabled = false;
 		&#x2F;&#x2F;Disable bottom tags
 		config.removePlugins = &#x27;elementspath&#x27;;
+		&#x2F;&#x2F;Enable table resize
+		config.extraPlugins = &#x27;tableresize&#x27;;
 
 		&#x2F;&#x2F;Fit the current area
 		config.width = &#x27;100%&#x27;;
@@ -166,7 +215,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.skin = &#x27;vEditor,&#x27; + ckeditorBasePath + &#x27;editor&#x2F;skins&#x2F;vEditor&#x2F;&#x27;;
 
 		&#x2F;&#x2F;Add ckeditor wysiwyg instance
-		var ckeditor = CKEDITOR.appendTo( wysiwygContainerId, config);
+		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
 
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
@@ -175,6 +224,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			var defaultFontSize = 12;
 			var defaultAlignment = &quot;left&quot;;
 
+			&#x2F;&#x2F;Font size depends of the area size
 			switch($(current_area).attr(&quot;size&quot;)){
 				case VISH.Constant.EXTRA_SMALL:
 					defaultFontSize = 18;
@@ -192,12 +242,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 					break;
 			}
 
+			&#x2F;&#x2F;Alignment depends of the area type
 			var isCircleArea = $(current_area).attr(&quot;areaid&quot;).indexOf(&quot;circle&quot;)!==-1;
 			if(isCircleArea){
 				defaultAlignment = &quot;center&quot;;
 			}
 
-			initial_text = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&amp;shy;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
+			&#x2F;&#x2F;Color depends of the current theme
+			var initialTextColor = &quot;color:#&quot; + V.Editor.Themes.getCurrentTheme().color;
+
+			initial_text = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span autoColor=&#x27;true&#x27; style=&#x27;&quot;+initialTextColor+&quot;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&amp;shy;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
 		}
 
 		ckeditor.on(&quot;instanceReady&quot;, function(){
@@ -216,7 +270,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		&#x2F;&#x2F;Catch the focus event
-		&#x2F;&#x2F;TODO: Improve event cathing... currently is not triggered in all cases.
 		ckeditor.on(&#x27;focus&#x27;, function(event){
 			var area = $(&quot;div[type=&#x27;text&#x27;]&quot;).has(event.editor.container.$);
 			VISH.Editor.selectArea(area);
@@ -248,6 +301,15 @@ VISH.Editor.Text = (function(V,$,undefined){
 		return CKEditorInstance;
 	}
 
+	var getCKEditorIframeContentFromZone = function(zone){
+		var editor = getCKEditorFromZone(zone);
+		if(!editor){
+			return null;
+		}
+		var iframe = $(document.getElementById(&#x27;cke_contents_&#x27; + editor.name)).find(&quot;iframe&quot;)[0];
+		return $(iframe).contents()[0];
+	}
+
 	&#x2F;*
 	 * Fix oficial WebKit bug: http:&#x2F;&#x2F;ckeditor.com&#x2F;forums&#x2F;CKEditor-3.x&#x2F;Minimum-Editor-Width-Safari#comment-48574
 	 *&#x2F;
@@ -260,10 +322,23 @@ VISH.Editor.Text = (function(V,$,undefined){
 	    }
 	}
 
+	var refreshAutoColors = function(){
+		var currentColor = &quot;color:#&quot; + V.Editor.Themes.getCurrentTheme().color;
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+			 var iframe = $($(document.getElementById(&#x27;cke_contents_&#x27; + CKinstance.name)).find(&quot;iframe&quot;)[0]).contents()[0];
+			 var spans = $(iframe).find(&quot;span[autocolor][style]&quot;);
+			 jQuery.each(spans, function(name, span) {
+			 	$(span).attr(&quot;style&quot;,currentColor+&quot;;&quot;);
+			 });
+		});
+	}
+
 	return {
-		init              			: init,
-		launchTextEditor  			: launchTextEditor,
-		getCKEditorFromZone 		: getCKEditorFromZone
+		init								: init,
+		launchTextEditor					: launchTextEditor,
+		getCKEditorFromZone					: getCKEditorFromZone,
+		getCKEditorIframeContentFromZone	: getCKEditorIframeContentFromZone,
+		refreshAutoColors					: refreshAutoColors
 	};
 
 }) (VISH, jQuery);

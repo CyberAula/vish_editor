@@ -88,7 +88,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-VISH.ObjectPlayer = (function(){
+VISH.ObjectPlayer = (function(V,$,undefined){
 	
 	&#x2F;**
 	 * Function to add an object to the slide
@@ -97,16 +97,16 @@ VISH.ObjectPlayer = (function(){
 	var loadObject = function(slide){
 		$.each(slide.children(&#x27;.objectelement&#x27;),function(index,value){
 			if($(value).hasClass(&#x27;youtubeelement&#x27;)){
-				VISH.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
+				V.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
 				return;
 			}
-			if($(value).attr(&quot;objectWrapper&quot;).match(&quot;^&lt;iframe&quot;)!==null &amp;&amp; VISH.Status.getOnline()=== false){
-				$(value).html(&quot;&lt;img src=&#x27;&quot;+VISH.ImagesPath+&quot;&#x2F;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
+			if($(value).attr(&quot;objectWrapper&quot;).match(&quot;^&lt;iframe&quot;)!==null &amp;&amp; V.Status.isOnline()=== false){
+				$(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;&#x2F;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
 				return;
 			}
 			var object = $($(value).attr(&quot;objectWrapper&quot;));
 			$(object).attr(&quot;style&quot;,$(value).attr(&quot;zoomInStyle&quot;));
-			$(value).html(&quot;&lt;div style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + VISH.Utils.getOuterHTML(object) + &quot;&lt;&#x2F;div&gt;&quot;);
+			$(value).html(&quot;&lt;div style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(object) + &quot;&lt;&#x2F;div&gt;&quot;);
 			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
 		});
 	};
@@ -129,9 +129,13 @@ VISH.ObjectPlayer = (function(){
 	
 	var adjustDimensionsAfterZoom = function(objectWithZoom){
 		var parent = $(objectWithZoom).parent();
-		var zoom = VISH.Utils.getZoomFromStyle($(objectWithZoom).attr(&quot;style&quot;));
-		$(objectWithZoom).height($(parent).height()&#x2F;zoom)
-		$(objectWithZoom).width($(parent).width()&#x2F;zoom)
+		var parentHeight = $(parent).height();
+		var parentWidth = $(parent).width();
+		var zoom = V.Utils.getZoomFromStyle($(objectWithZoom).attr(&quot;style&quot;));
+		var percentHeight = (parentHeight&#x2F;zoom)&#x2F;parentHeight*100;
+		var percentWidth = (parentWidth&#x2F;zoom)&#x2F;parentWidth*100;
+		$(objectWithZoom).height(percentHeight+&quot;%&quot;);
+		$(objectWithZoom).width(percentWidth+&quot;%&quot;);
 	}
 
 	return {

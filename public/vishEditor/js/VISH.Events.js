@@ -36,7 +36,13 @@ VISH.Events = (function(V,$,undefined){
 		$(document).on('click', '#closeButton', function(event){
 			event.stopPropagation();
 			event.preventDefault();
-			window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+			var comeBackUrl = V.SlideManager.getOptions()["comeBackUrl"];
+			if(comeBackUrl){
+				window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+			} else if((V.Status.getIsEmbed())&&(V.Status.getDevice().features.history)){
+				//Go back
+				history.back();
+			}
 		});
 
 		$(document).on('click', '#back_arrow', function(event){
@@ -52,14 +58,14 @@ VISH.Events = (function(V,$,undefined){
 		for(index in presentation.slides){
 			var slide = presentation.slides[index];
 			switch(slide.type){
-				case VISH.Constant.FLASHCARD:
+				case V.Constant.FLASHCARD:
 					//Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
 						$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
 					}
 					break;
-				case VISH.Constant.VTOUR:
+				case V.Constant.VTOUR:
 					break;
 			}
 		}
@@ -67,10 +73,10 @@ VISH.Events = (function(V,$,undefined){
 		//when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== "undefined"){
 			applicationCache.addEventListener('cached', function() {
-				VISH.LocalStorage.addPresentation(presentation);
+				V.Storage.addPresentation(presentation);
 			}, false);
 			applicationCache.addEventListener('updateready', function() {
-				VISH.LocalStorage.addPresentation(presentation);
+				V.Storage.addPresentation(presentation);
 			}, false);
 		}
 
@@ -102,24 +108,24 @@ VISH.Events = (function(V,$,undefined){
 		for(index in presentation.slides){
 			var slide = presentation.slides[index];
 			switch(slide.type){
-				case VISH.Constant.FLASHCARD:
+				case V.Constant.FLASHCARD:
 					//Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
 						$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
 					}
 					break;
-				case VISH.Constant.VTOUR:
+				case V.Constant.VTOUR:
 					break;
 			}
 		}
 
 		if(typeof applicationCache !== "undefined"){
 			applicationCache.removeEventListener('cached', function() {
-				VISH.LocalStorage.addPresentation(presentation);
+				V.Storage.addPresentation(presentation);
 			}, false);
 			applicationCache.removeEventListener('updateready', function() {
-				VISH.LocalStorage.addPresentation(presentation);
+				V.Storage.addPresentation(presentation);
 			}, false);
 		}
 
@@ -166,7 +172,7 @@ VISH.Events = (function(V,$,undefined){
 		} else {
 			return;
 		}
-		var poi = VISH.Flashcard.getPoiData(poiId);
+		var poi = V.Flashcard.getPoiData(poiId);
 		if(poi!==null){
 			V.Slides.openSubslide(poi.slide_id,true);
 		}

@@ -7,6 +7,21 @@ VISH.Status.Device = (function(V,$,undefined){
 	};
 
 	var _fillDevice = function(callback){
+		//Look device in the cache
+		var storedDevice = V.Storage.get(V.Constant.Storage.Device);
+		if(typeof storedDevice !== "undefined"){
+			device = storedDevice;
+			_loadViewportForDevice(device,function(){
+				_fillScreen(device); //Update screen	
+				if(typeof callback === "function"){
+					callback(device);
+				}
+			});
+			return;
+		}
+
+		//No device in the cache
+		//Categorize it
 		var device = {};
 		device.browser = {};
 		device.features = {};
@@ -18,10 +33,50 @@ VISH.Status.Device = (function(V,$,undefined){
 			_fillUserAgentAfterViewport(device);
 			_fillScreen(device);
 			device.features = V.Status.Device.Features.fillFeatures();
+
+			//Store device
+			V.Storage.add(VISH.Constant.Storage.Device,device,false);
+
+			//Fix for Android Browsers
+			if((device.android)&&(device.browser.name===VISH.Constant.ANDROID_BROWSER)){
+				if(device.hasTestingViewport===true){
+					//We need to reload the page with the real viewport
+					_reloadOnAndroidTestingViewport(callback,device);
+					return;
+				}
+			}
+
 			if(typeof callback === "function"){
 				callback(device);
 			}
 		});
+	}
+
+	var _reloadOnAndroidTestingViewport = function(callback,device){
+		var attempts = 0;
+		var maxAttempts = 3;
+
+		//Ensure that the device has been stored
+		var initialDevice = V.Storage.get(V.Constant.Storage.Device);
+		if(typeof storedDevice !== "undefined"){	
+			location.reload(true);
+			return;
+		}
+
+		//Wait with a timer
+		var waitTimer = setInterval(function(){
+			var storedDevice = V.Storage.get(V.Constant.Storage.Device);
+			if(typeof storedDevice !== "undefined"){
+				clearInterval(waitTimer);
+				location.reload(true);
+			} else {
+				attempts++;
+				if(attempts>=maxAttempts){
+					clearInterval(waitTimer);
+					callback(device);
+				}
+			}
+		},1000);
 	}
 
 	var _fillUserAgentBeforeViewport = function(device){
@@ -45,8 +100,27 @@ VISH.Status.Device = (function(V,$,undefined){
 		} else if(device.android){
 			if(device.browser.name===V.Constant.CHROME){
 				_setViewportForChromeForAndroid(callback);
-			} else if(device.browser.name===VISH.Constant.ANDROID_BROWSER){
-				_setViewportForAndroidBrowser(callback);
+			} else if(device.browser.name===V.Constant.ANDROID_BROWSER){
+				/*
+				 * Some magic to fix android browser bug
+				 * 1. If no device information, load "testing" viewport to get and store it
+				 * Then, page will be reloaded with device information stored.
+				 * 2. If device information exists, load "real"/"functional" viewport.
+				 *
+				 * We need to do this, because with "real" viewport we can't access to screen dimensions
+				 * in a reliable way in order to differenciate between android smartphones and tablets.
+				 * Also, "testing" viewport is not valid because Android browser has a crucial bug related to iframe loading.
+				 * Changing the viewport "on fly" not work in all devices. So, we need to reload the page.
+				 * Since LocalStorage is supported in all Android Browsers, this is a cross-device solution.
+				 * http://caniuse.com/namevalue-storage
+				 */
+				var storedDevice = V.Storage.get(V.Constant.Storage.Device);
+				if(typeof storedDevice === "undefined"){
+					device.hasTestingViewport = true; //Indicate that the viewport is only for testing
+					_setTestingViewportForAndroidBrowser(callback);
+				} else {
+					_setViewportForAndroidBrowser(callback);
+				}
 			}
 		} else {
 			if(typeof callback === "function"){
@@ -91,6 +165,10 @@ VISH.Status.Device = (function(V,$,undefined){
 		_setViewport("user-scalable=yes",callback);
 	}
 
+	var _setTestingViewportForAndroidBrowser = function(callback){
+		_setViewport("width=device-width,height=device-height,user-scalable=yes",callback);
+	}
+
 	var _setViewportForChromeForAndroid = function(callback){
 		_setViewport("width=device-width,height=device-height,user-scalable=yes",callback);
 	}
@@ -120,45 +198,22 @@ VISH.Status.Device = (function(V,$,undefined){
 				var maxWidth = 960 * device.pixelRatio;
 				var maxHeight = 720 * device.pixelRatio;
 
-				if(device.browser.name===V.Constant.ANDROID_BROWSER){
-					//Fix Viewport bug
-					//With android browser the width can't be specified in the viewport.
-					//So, width in portrait and width in landscape are unreliable values.
-			
-					//Overwrite maxWidth
-					maxWidth = 1101 * device.pixelRatio;
-
-					var landscape = window.screen.availWidth > window.screen.availHeight;
-					if(landscape){
-						if(window.screen.availHeight>=maxHeight){
-							device.androidTablet = true;
-						} else {
-							device.androidPhone = true;
-						}
+				// Reliable detection (just for Chrome for Android)
+				var landscape = window.screen.availWidth > window.screen.availHeight;
+				if(landscape){
+					if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
+						device.androidTablet = true;
 					} else {
-						if(window.screen.availHeight>=maxWidth){
-							device.androidTablet = true;
-						} else {
-							device.androidPhone = true;
-						}
+						device.androidPhone = true;
 					}
 				} else {
-					// Reliable detection (just for Chrome for Android)
-					var landscape = window.screen.availWidth > window.screen.availHeight;
-					if(landscape){
-						if((window.screen.availWidth>=maxWidth)&&(window.screen.availHeight)>=maxHeight){
-							device.androidTablet = true;
-						} else {
-							device.androidPhone = true;
-						}
+					if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
+						device.androidTablet = true;
 					} else {
-						if((window.screen.availWidth>=maxHeight)&&(window.screen.availHeight)>=maxWidth){
-							device.androidTablet = true;
-						} else {
-							device.androidPhone = true;
-						}
+						device.androidPhone = true;
 					}
 				}
+				
 			}
 		}
 

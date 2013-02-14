@@ -124,7 +124,7 @@ VISH.VideoPlayer.Youtube = (function(){
 
 	var loadYoutubeObject = function(article,zone){
 
-		if(VISH.Status.getOnline()===false){
+		if(VISH.Status.isOnline()===false){
 			$(zone).html(&quot;&lt;img src=&#x27;&quot;+VISH.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
 			return;
 		}

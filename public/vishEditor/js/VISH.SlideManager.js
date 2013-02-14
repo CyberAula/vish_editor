@@ -37,7 +37,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
-		
+
 		V.Status.init(function(){
 			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);
@@ -51,6 +51,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Slides.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
+		V.Storage.init();
 		V.Utils.init();
 		
 		//Experimental initializers for new excursion types

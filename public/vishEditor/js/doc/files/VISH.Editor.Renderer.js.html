@@ -116,14 +116,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$(&quot;#educational_objectives_tag&quot;).val(presentation.educational_objectives);
 		$(&quot;#acquired_competencies_tag&quot;).val(presentation.adquired_competencies);
 
-		VISH.Themes.selectTheme(presentation.theme);
+		VISH.Editor.Themes.selectTheme(presentation.theme);
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
 				var flashcard = VISH.Editor.Flashcard.undoNestedSlidesInFlashcard(presentation.slides[0]);
-				slides = flashcard.slides;
-				for(var i=0;i&lt;slides.length;i++){
-					_renderSlide(slides[i], i+1);
+				if((flashcard)&amp;&amp;(flashcard.slides)){
+					slides = flashcard.slides;
+					var sL = slides.length;
+					for(var i=0;i&lt;sL;i++){
+						_renderSlide(slides[i], i+1);
+					}
 				}
 				VISH.Editor.Flashcard.loadFlashcard(presentation);
 				break;
@@ -183,7 +186,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === &quot;quiz&quot;){
 			 	var received = JSON.stringify(slide.elements[el]);
 				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id), slide.elements[el].options.choices.length);
-				V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options[&#x27;choices&#x27;], slide.elements[el].quiz_id);
+				&#x2F;&#x2F;V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options[&#x27;choices&#x27;], slide.elements[el].quiz_id);
+			V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options, slide.elements[el].quiz_id);
 			}
 		}
 	

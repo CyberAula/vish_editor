@@ -79,3 +79,7 @@ VISH.Constant.Event.onFlashcardSlideClosed = "onFlashcardSlideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";
+
+//Storage
+VISH.Constant.Storage = {};
+VISH.Constant.Storage.Device = "Device";

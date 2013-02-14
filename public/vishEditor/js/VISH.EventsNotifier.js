@@ -13,8 +13,8 @@ VISH.EventsNotifier = (function(V,$,undefined){
 		} else {
 			listeners[listenedEvent] = [];
 			listeners[listenedEvent].push(callback);
-			if(listenedEvent==VISH.Constant.Event.onMessage){
-				VISH.Messenger.init();
+			if(listenedEvent==V.Constant.Event.onMessage){
+				V.Messenger.init();
 			}
 		}
 	}

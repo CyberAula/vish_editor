@@ -41,42 +41,42 @@ VISH.Editor = (function(V,$,undefined){
 	 * @method init
 	 */
 	var init = function(options, presentation){
-		VISH.Editing = true;
+		V.Editing = true;
 
-		VISH.Debugging.init(options);
+		V.Debugging.init(options);
 		
 		if(options){
 			initOptions = options;
-			if((options.configuration)&&(VISH.Configuration)){
-				VISH.Configuration.init(options.configuration);
-				VISH.Configuration.applyConfiguration();
+			if((options.configuration)&&(V.Configuration)){
+				V.Configuration.init(options.configuration);
+				V.Configuration.applyConfiguration();
 			}
 		} else {
 			initOptions = {};
 		}
 		
-		VISH.Utils.init();
-		VISH.Status.init();
-		if(!VISH.Utils.checkMiniumRequirements()){
+		V.Utils.init();
+		V.Status.init();
+		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}
-		VISH.Utils.loadDeviceCSS();
+		V.Utils.loadDeviceCSS();
 
-		VISH.Editor.Dummies.init();
-		VISH.Editor.Themes.init();
-		VISH.Flashcard.init();
-		VISH.Editor.Flashcard.init();
-		VISH.Renderer.init();
-		VISH.Slides.init();
-		VISH.User.init(options);
+		V.Editor.Dummies.init();
+		V.Editor.Themes.init();
+		V.Flashcard.init();
+		V.Editor.Flashcard.init();
+		V.Renderer.init();
+		V.Slides.init();
+		V.User.init(options);
 
-		if(VISH.Debugging.isDevelopping()){
-			if ((options.configuration.mode=="noserver")&&(VISH.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
-				presentation = VISH.Debugging.getPresentationSamples();
+		if(V.Debugging.isDevelopping()){
+			if ((options.configuration.mode=="noserver")&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+				presentation = V.Debugging.getPresentationSamples();
 			}
 		}
 
-		//init age range slider, this has to be done BEFORE VISH.Editor.Renderer.init(presentation);
+		//init age range slider, this has to be done BEFORE V.Editor.Renderer.init(presentation);
 		$("#slider-range").slider({
 			range: true,
 			min: 0,
@@ -86,7 +86,7 @@ VISH.Editor = (function(V,$,undefined){
 				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 			}
 		});
-		$("#age_range").val(VISH.Constant.AGE_RANGE);
+		$("#age_range").val(V.Constant.AGE_RANGE);
 
 		//If we have to edit
 		if(presentation){
@@ -95,7 +95,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			initialPresentation = true;
 			setPresentation(presentation);
-			VISH.Editor.Renderer.init(presentation);
+			V.Editor.Renderer.init(presentation);
 			//remove focus from any zone
 			_removeSelectableProperties();					
 		}
@@ -111,7 +111,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Utils.loadTab('tab_templates');
+				V.Utils.loadTab('tab_templates');
 			}
 		});
 
@@ -123,18 +123,18 @@ VISH.Editor = (function(V,$,undefined){
 			'height': 340,
 			'padding': 0,
 			"onStart"  : function(data) {
-				VISH.Utils.loadTab('tab_quizes');
+				V.Utils.loadTab('tab_quizes');
 			}
 		});
 	
 		if(!eventsLoaded){
 			eventsLoaded = true;
 				 
-			$(document).on('click', '#edit_presentation_details', VISH.Editor.Tools.Menu.onSettings); 
-			$(document).on('click', '#save', VISH.Editor.Tools.Menu.onSaveButtonClicked);
-			$(document).on('click', '#pedagogical_clasification_button', VISH.Editor.Tools.Menu.onPedagogicalButtonClicked);
-			$(document).on('click', '#save_presentation_details', VISH.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
-			$(document).on('click', '#done_in_pedagogical', VISH.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
+			$(document).on('click', '#save', V.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
+			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
+			$(document).on('click', '#done_in_pedagogical', V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
 
 			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
 			$(document).on('click','.editable', _onEditableClicked);
@@ -152,8 +152,8 @@ VISH.Editor = (function(V,$,undefined){
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
-			VISH.Editor.Slides.redrawSlides();
-			VISH.Editor.Thumbnails.redrawThumbnails();
+			V.Editor.Slides.redrawSlides();
+			V.Editor.Thumbnails.redrawThumbnails();
 
 			//if click on begginers tutorial->launch it
 			_addTutorialEvents();
@@ -169,24 +169,25 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		//Init submodules
-		VISH.Editor.I18n.init(options.lang);
-		VISH.Editor.Text.init();
-		VISH.Editor.Image.init();
-		VISH.Editor.Video.init();
-		VISH.Editor.Object.init();
-		VISH.Editor.Thumbnails.init();
-		VISH.Editor.AvatarPicker.init();
-		VISH.Editor.Quiz.init();
-		VISH.Editor.Tools.init();
-		VISH.Editor.Filter.init();
-		VISH.Editor.Clipboard.init();
+		V.Editor.I18n.init(options.lang);
+		V.Editor.Text.init();
+		V.Editor.Image.init();
+		V.Editor.Video.init();
+		V.Editor.Object.init();
+		V.Editor.Thumbnails.init();
+		V.Editor.AvatarPicker.init();
+		V.Editor.Quiz.init();
+		V.Editor.Tools.init();
+		V.Editor.Filter.init();
+		V.Storage.init();
+		V.Editor.Clipboard.init();
 
-		VISH.Editor.Events.init();
-		VISH.EventsNotifier.init();
+		V.Editor.Events.init();
+		V.EventsNotifier.init();
 
 		//Init Vish Editor Addons
 		if(options.addons){
-			VISH.Addons.init(options.addons);
+			V.Addons.init(options.addons);
 		}
 	};
 	
@@ -220,87 +221,87 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var _addTutorialEvents = function(){
 		$(document).on('click','#start_tutorial', function(){
-			VISH.Editor.Tour.startTourWithId('initial_screen_help', 'top');
+			V.Editor.Tour.startTourWithId('initial_screen_help', 'top');
 		});
 
 		$(document).on('click','#help_right', function(){
-			VISH.Editor.Tour.startTourWithId('menubar_help', 'top');
+			V.Editor.Tour.startTourWithId('menubar_help', 'top');
 		});
 
 		//flashcard
 		$(document).on('click','#help_flashcard', function(){
-			VISH.Editor.Tour.startTourWithId('fc_help', 'top');
+			V.Editor.Tour.startTourWithId('fc_help', 'top');
 		});
 
 		//template
 		$(document).on('click','.help_in_template', function(){			
-			VISH.Editor.Tour.startTourWithId('template_help', 'bottom');
+			V.Editor.Tour.startTourWithId('template_help', 'bottom');
 		});
 
 		//Quiz
 		$(document).on('click','#tab_quizes_help', function(){			
-			VISH.Editor.Tour.startTourWithId('quiz_help', 'bottom');
+			V.Editor.Tour.startTourWithId('quiz_help', 'bottom');
 		});
 
 		//themes
 		$(document).on('click','#help_themes_selection', function(){			
-			VISH.Editor.Tour.startTourWithId('themes_help', 'bottom');
+			V.Editor.Tour.startTourWithId('themes_help', 'bottom');
 		});
 		
 		//template selection fancybox	
 		$(document).on('click','#help_template_selection', function(){
-			VISH.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
+			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
 		});	
 		
 		//image fancybox, one help button in each tab
 		$(document).on('click','#tab_pic_from_url_help', function(){
-			VISH.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
+			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_pic_upload_help', function(){
-			VISH.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
+			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
 		});
 		$(document).on('click','#tab_pic_repo_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
+			V.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
 		});
 		$(document).on('click','#tab_pic_flikr_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
+			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
 		
 		//object fancybox, one help button in each tab
 		$(document).on('click','#tab_object_from_url_help', function(){
-			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
+			V.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_object_from_web_help', function(){
-			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
+			V.Editor.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
 		});
 		$(document).on('click','#tab_object_upload_help', function(){
-			VISH.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
+			V.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_object_help', 'bottom');
+			V.Editor.Tour.startTourWithId('search_object_help', 'bottom');
 		});
 		$(document).on('click','#tab_object_snapshot_help', function(){
-			VISH.Editor.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
+			V.Editor.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
 		});
 
 		
 		//video fancybox, one help button in each tab
 		$(document).on('click','#tab_video_from_url_help', function(){
-			VISH.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_video_repo_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_video_help', 'top');
+			V.Editor.Tour.startTourWithId('search_video_help', 'top');
 		});
 		$(document).on('click','#tab_video_youtube_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
+			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
 		});
 		$(document).on('click','#tab_video_vimeo_help', function(){
-			VISH.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
+			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
 		});
 		
 		// live fancybox, one help button in each tab
 		$(document).on('click','#tab_live_webcam_help', function(){
-				VISH.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+				V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
 		});	
 	};
   
@@ -339,7 +340,7 @@ VISH.Editor = (function(V,$,undefined){
 			
 			V.VideoPlayer.HTML5.playVideos(e.target);
 		} else {
-			VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
+			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -358,7 +359,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.ObjectPlayer.unloadObject(e.target);
 			V.AppletPlayer.unloadApplet();
 		} else {
-			VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
+			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -370,15 +371,15 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : "";
-		var slide = VISH.Editor.Dummies.getDummy($(this).attr('template'), VISH.Slides.getSlidesQuantity()+1);
-		VISH.Editor.Slides.addSlide(slide);
+		var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+		V.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		VISH.Editor.Slides.redrawSlides();		
-		VISH.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Slides.redrawSlides();		
+		V.Editor.Thumbnails.redrawThumbnails();
 		setTimeout(function(){
-			VISH.Slides.lastSlide();
+			V.Slides.lastSlide();
 		}, 300);	
 	};
 
@@ -399,19 +400,19 @@ VISH.Editor = (function(V,$,undefined){
 		$(content).find("a.all").css("display","inline");
 
 		switch($(this).attr("size")){
-			case VISH.Constant.EXTRA_SMALL:
+			case V.Constant.EXTRA_SMALL:
 				$(content).find("a.small").css("display","inline");
 				$(content).find("a > div").addClass("thumb_extra_small");
 				break;
-			case VISH.Constant.SMALL:
+			case V.Constant.SMALL:
 				$(content).find("a.small").css("display","inline");
 				$(content).find("a > div").addClass("thumb_small");
 				break;
-			case VISH.Constant.MEDIUM:
+			case V.Constant.MEDIUM:
 				$(content).find("a.medium").css("display","inline");
 				$(content).find("a > div").addClass("thumb_medium");
 				break;
-			case VISH.Constant.LARGE:
+			case V.Constant.LARGE:
 				$(content).find("a.large").css("display","inline");
 				$(content).find("a > div").addClass("thumb_large");
 				break;
@@ -429,8 +430,8 @@ VISH.Editor = (function(V,$,undefined){
 				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
-				VISH.Utils.loadTab('tab_pic_from_url');
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				V.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 		$("a.addobject").fancybox({
@@ -442,7 +443,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Utils.loadTab('tab_object_from_url');
+				V.Utils.loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -454,7 +455,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Utils.loadTab('tab_video_from_url');
+				V.Utils.loadTab('tab_video_from_url');
 			}
 		});
 		$("a.addLive").fancybox({
@@ -466,7 +467,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				VISH.Utils.loadTab('tab_live_webcam');
+				V.Utils.loadTab('tab_live_webcam');
 			}
 		});
 
@@ -482,7 +483,7 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var _onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-		$("#image_template_prompt").attr("src", VISH.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png");
+		$("#image_template_prompt").attr("src", V.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png");
 		$.fancybox(
 			$("#prompt_form").html(),
 			{
@@ -512,18 +513,18 @@ VISH.Editor = (function(V,$,undefined){
 		var article_to_delete = $(this).parent()[0];
 
 		var thumb;
-		switch(VISH.Slides.getSlideType(article_to_delete)){
-			case VISH.Constant.STANDARD:
-				thumb = VISH.ImagesPath + "templatesthumbs/" + $(article_to_delete).attr("template") + ".png"; 
+		switch(V.Slides.getSlideType(article_to_delete)){
+			case V.Constant.STANDARD:
+				thumb = V.ImagesPath + "templatesthumbs/" + $(article_to_delete).attr("template") + ".png"; 
 				break;
-			case VISH.Constant.FLASHCARD:
-				thumb = VISH.Utils.getSrcFromCSS($(article_to_delete).attr("avatar"));
-				// thumb = VISH.ImagesPath + "templatesthumbs/" + "flashcard_template.png";
+			case V.Constant.FLASHCARD:
+				thumb = V.Utils.getSrcFromCSS($(article_to_delete).attr("avatar"));
+				// thumb = V.ImagesPath + "templatesthumbs/" + "flashcard_template.png";
 				break;
-			case VISH.Constant.VTOUR:
+			case V.Constant.VTOUR:
 				break;
 			default:
-				thumb = VISH.ImagesPath + "templatesthumbs/" + "default.png";
+				thumb = V.ImagesPath + "templatesthumbs/" + "default.png";
 				break;
 		}
 
@@ -541,7 +542,7 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){						
 						$("#prompt_answer").val("false");
-						VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
+						V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 					}
 				}
 			}
@@ -563,7 +564,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
-		VISH.Editor.Tools.loadToolsForZone(area);
+		V.Editor.Tools.loadToolsForZone(area);
 	};
   
    /**
@@ -606,9 +607,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		}
 
-		// VISH.Debugging.log(event.target);
+		// V.Debugging.log(event.target);
 		setCurrentArea(null);
-		VISH.Editor.Tools.cleanZoneTools();
+		V.Editor.Tools.cleanZoneTools();
 	};
 	
 	var _addSelectableProperties = function(zone){
@@ -641,12 +642,12 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var savePresentation = function(options){
 		//Load all objects
-		VISH.Editor.Utils.Loader.loadAllObjects();
+		V.Editor.Utils.Loader.loadAllObjects();
 		$(".object_wrapper, .snapshot_wrapper").show();
 
 		//Now save the presentation
 		var presentation = {};
-		presentation.VEVersion = VISH.VERSION;
+		presentation.VEVersion = V.VERSION;
 		if(draftPresentation){
 			presentation.id = draftPresentation.id;
 		}else{
@@ -682,10 +683,10 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = {};
 		if(presentation.type==="flashcard"){
 			slide.id = $("#flashcard-background").attr("flashcard_id");
-			slide.type = VISH.Constant.FLASHCARD;
+			slide.type = V.Constant.FLASHCARD;
 			slide.background = $("#flashcard-background").css("background-image");
 			//save the pois
-			slide.pois = VISH.Editor.Flashcard.savePois();
+			slide.pois = V.Editor.Flashcard.savePois();
 			slide.slides = [];
 			presentation.slides.push(slide);
 		}
@@ -696,7 +697,7 @@ VISH.Editor = (function(V,$,undefined){
 			slide.type = $(s).attr('type');
 			
 			if(slide.type === V.Constant.FLASHCARD){
-				var fc = VISH.Editor.Flashcard.getFlashcard(slide.id);
+				var fc = V.Editor.Flashcard.getFlashcard(slide.id);
 				presentation.slides.push(fc);
 				slide = {};
 				return true; //equivalent to continue in an each loop
@@ -717,28 +718,28 @@ VISH.Editor = (function(V,$,undefined){
 					element.type	=	$(div).attr('type');
 					element.areaid	=	$(div).attr('areaid');					 
 						 
-					if(element.type==VISH.Constant.TEXT){
+					if(element.type==V.Constant.TEXT){
 						//NicEditor version
-						// element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
+						// element.body   = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
 
 						//CKEditor version	
-						var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
+						var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
 						if(CKEditor!==null){
 							element.body = CKEditor.getData();
 						} else {
 							element.body = "";
 						}
 
-					} else if(element.type==VISH.Constant.IMAGE){
+					} else if(element.type==V.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
 						if($(div).attr("hyperlink")){
 							element.hyperlink = $(div).attr("hyperlink");
 						}
-					} else if(element.type==VISH.Constant.VIDEO){
+					} else if(element.type==V.Constant.VIDEO){
 						var video = $(div).find("video");
 						element.poster = $(video).attr("poster");
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
 						//Sources
 						var sources= '';				
 						$(video).find('source').each(function(index, source) {
@@ -750,25 +751,25 @@ VISH.Editor = (function(V,$,undefined){
 						});
 						sources = '[' + sources + ']';
 						element.sources = sources;
-					} else if(element.type===VISH.Constant.OBJECT){
+					} else if(element.type===V.Constant.OBJECT){
 						var wrapper = $(div).find(".object_wrapper")[0];
 						var object = $(wrapper).children()[0];
 
 						var myObject = $(object).clone();
 						$(myObject).removeAttr("style");
-						element.body   = VISH.Utils.getOuterHTML(myObject);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
-						var zoom = VISH.Utils.getZoomFromStyle($(object).attr("style"));
+						element.body   = V.Utils.getOuterHTML(myObject);
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+						var zoom = V.Utils.getZoomFromStyle($(object).attr("style"));
 						if(zoom!=1){
-							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
+							element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 						}
-					} else if (element.type === VISH.Constant.QUIZ) {
+					} else if (element.type === V.Constant.QUIZ) {
 						
 						//if($(div).find(".multiplechoice_option_in_zone")) {
 						if  ($(div).attr("quiztype")== "multiplechoice") {
 							var	quizQuestion = $(div).find(".value_multiplechoice_question_in_zone");
-							element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
-							/*var CKEditor = VISH.Editor.Text.getCKEditorFromZone(quizQuestion);
+							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							/*var CKEditor = V.Editor.Text.getCKEditorFromZone(quizQuestion);
 							if(CKEditor!==null){
 								element.question = CKEditor.getData();
 						} else {
@@ -782,15 +783,15 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};
 							element.options.choices = []; 
 							$(div).find('.multiplechoice_option_in_zone').each(function(i, option_text){
-								var option = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
-								//var option = VISH.Editor.Text.getCKEditorFromZone(option_text);
+								var option = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+								//var option = V.Editor.Text.getCKEditorFromZone(option_text);
 								if((option)&&($(option_text).text() !== 'Write options here')&& ($(option_text).text() !=="")){
-									result = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
-									//result = VISH.Editor.Text.getCKEditorFromZone(option_text);
+									result = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+									//result = V.Editor.Text.getCKEditorFromZone(option_text);
 									var choice = {};
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
-									//choice.container = VISH.Editor.Text.getCKEditorFromZone(option_text);
+									choice.container = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
+									//choice.container = V.Editor.Text.getCKEditorFromZone(option_text);
 									element.options.choices.push(choice);
 								}
 							});
@@ -800,8 +801,8 @@ VISH.Editor = (function(V,$,undefined){
 							V.Debugging.log("true false detected");
 							
 							var	quizQuestion = $(div).find(".value_truefalse_question_in_zone");
-							element.question = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
-							//element.question = VISH.Editor.Text.getCKEditorFromZone($(quizQuestion));
+							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							//element.question = V.Editor.Text.getCKEditorFromZone($(quizQuestion));
 							element.quiz_id = "";
 							if ($(div).find("input[name=quiz_id]").val()!="") {
 								element.quiz_id = $(div).find("input[name=quiz_id]").val();
@@ -830,12 +831,12 @@ VISH.Editor = (function(V,$,undefined){
 							V.Debugging.log("open detected");
 						}
 
-					} else if(element.type === VISH.Constant.SNAPSHOT){
+					} else if(element.type === V.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr("style");
-						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+						element.body   = V.Utils.getOuterHTML(snapshotIframe);
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
 						
 						//Save scrolls
 						var scrollTopAttr = $(snapshotWrapper).attr("scrollTop");
@@ -854,7 +855,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type==VISH.Constant.QUIZ){
+					if(element.type==V.Constant.QUIZ){
 						var quizSlide = $.extend(true, {}, element);
 						//Apply presentation Wrapper
 						var quizPresentation = {};
@@ -862,9 +863,9 @@ VISH.Editor = (function(V,$,undefined){
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = '';
 						//add quiz_simple type to slide in json to render answer
-						quizSlide.type = VISH.Constant.QUIZ_SIMPLE;
+						quizSlide.type = V.Constant.QUIZ_SIMPLE;
 						quizPresentation.slides = [quizSlide];
-						quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
+						quizPresentation.type = V.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 
@@ -873,10 +874,10 @@ VISH.Editor = (function(V,$,undefined){
 			
 			});
 
-			if(presentation.type===VISH.Constant.FLASHCARD){
+			if(presentation.type===V.Constant.FLASHCARD){
 				//If it is flashcard we save the slide into the flashcard slides 
 				//(the flashcard is the first slide by convention)
-				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
+				slide = V.Editor.Flashcard.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
 				presentation.slides.push(slide);
@@ -889,29 +890,29 @@ VISH.Editor = (function(V,$,undefined){
 		savedPresentation = presentation;  
 
 		//Unload all objects
-		VISH.Editor.Utils.Loader.unloadAllObjects();
+		V.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
-		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
-		VISH.Debugging.log("\n\nVish Editor save the following presentation:\n");
-		// VISH.Debugging.log(JSON.stringify(presentation));
+		V.Debugging.log("\n\nVish Editor save the following presentation:\n");
+		// V.Debugging.log(JSON.stringify(presentation));
 		return savedPresentation;
 	};
 	
 
 	var afterSavePresentation = function(presentation, order){
-		switch(VISH.Configuration.getConfiguration().mode){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration().mode){
+			case V.Constant.NOSERVER:
 				//Ignore order param for developping
-				if((VISH.Debugging)&&(VISH.Debugging.isDevelopping())){
-					if(VISH.Debugging.getActionSave()=="view"){
-						VISH.Debugging.initVishViewer();
-					} else if (VISH.Debugging.getActionSave()=="edit") {
-						VISH.Debugging.initVishEditor();
+				if((V.Debugging)&&(V.Debugging.isDevelopping())){
+					if(V.Debugging.getActionSave()=="view"){
+						V.Debugging.initVishViewer();
+					} else if (V.Debugging.getActionSave()=="edit") {
+						V.Debugging.initVishEditor();
 					}
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				var send_type;
 				if(initialPresentation){
 					send_type = 'PUT'; //if we are editing
@@ -931,7 +932,7 @@ VISH.Editor = (function(V,$,undefined){
 
 				$.ajax({
 					type    : send_type,
-					url     : VISH.UploadPresentationPath,
+					url     : V.UploadPresentationPath,
 					data    : params,
 					success : function(data) {
 						allowExitWithoutConfirmation();
@@ -939,7 +940,7 @@ VISH.Editor = (function(V,$,undefined){
 					}     
 				});
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				//Order is always save, ignore order param
 				uploadPresentationWithNode(presentation);
 				break;
@@ -949,7 +950,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var uploadPresentationWithNode = function(presentation){
 		var send_type;
-		var url = VISH.UploadPresentationPath;
+		var url = V.UploadPresentationPath;
 
 		if(draftPresentation){
 			send_type = 'PUT'; //if we are editing
@@ -983,14 +984,14 @@ VISH.Editor = (function(V,$,undefined){
 	 * Function to move the slides left one item
 	 */
 	var _onArrowLeftClicked = function(){
-		VISH.Slides.backwardOneSlide();
+		V.Slides.backwardOneSlide();
 	};
 	
 	/**
 	 * Function to move the slides right one item
 	 */
 	var _onArrowRightClicked = function(){
-		VISH.Slides.forwardOneSlide();
+		V.Slides.forwardOneSlide();
 	};
 	
 	
@@ -1075,7 +1076,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(type){
 			draftPresentation.type = type;
 		} else {
-			draftPresentation.type = VISH.Constant.PRESENTATION;
+			draftPresentation.type = V.Constant.PRESENTATION;
 		}
 	};
 
@@ -1094,7 +1095,7 @@ VISH.Editor = (function(V,$,undefined){
 				//Empty presentation
 				return true;
 			}
-			if(VISH.Editor.Flashcard.hasFlascards()){
+			if(V.Editor.Flashcard.hasFlascards()){
 				return false;
 			}
 			return true;
@@ -1137,8 +1138,8 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	var exitConfirmation = function(){
-		if((VISH.Configuration.getConfiguration().mode===VISH.Constant.VISH)&&(confirmOnExit)){
-			return VISH.Editor.I18n.getTrans("i.exitConfirmation");
+		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&&(confirmOnExit)){
+			return V.Editor.I18n.getTrans("i.exitConfirmation");
 		} else {
 			return;
 		}

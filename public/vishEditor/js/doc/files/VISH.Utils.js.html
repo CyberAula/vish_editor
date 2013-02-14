@@ -257,53 +257,131 @@ VISH.Utils = (function(V,undefined){
 
 	var getZoomFromStyle = function(style){
 		var zoom = 1; &#x2F;&#x2F;Initial or default zoom
-		
+
 		if(!style){
 			return zoom;
 		}
-		
+
 		&#x2F;&#x2F;Patterns
 		var moz_zoom_pattern = &#x2F;-moz-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
 		var webkit_zoom_pattern = &#x2F;-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
 		var opera_zoom_pattern = &#x2F;-o-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
 		var ie_zoom_pattern = &#x2F;-ms-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
 
+		$.each(style.split(&quot;;&quot;), function(index, property){
+			if (property.match(moz_zoom_pattern) != null) {
+				&#x2F;&#x2F;Mozilla Firefox
+				var result = moz_zoom_pattern.exec(property);
+				if ((result!==null)&amp;&amp;(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(webkit_zoom_pattern)!=null) {
+				&#x2F;&#x2F;Google Chrome
+				var result = webkit_zoom_pattern.exec(property);
+				if ((result!==null)&amp;&amp;(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(opera_zoom_pattern)!=null) {
+				&#x2F;&#x2F;Opera
+				var result = opera_zoom_pattern.exec(property);
+				if ((result!==null)&amp;&amp;(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			} else if (property.match(ie_zoom_pattern)!=null) {
+				&#x2F;&#x2F;Iexplorer
+				var result = ie_zoom_pattern.exec(property);
+				if ((result!==null)&amp;&amp;(result[1])) {
+					zoom = parseFloat(result[1]);
+					return false;
+				}
+			}
+		});
 		
-	    $.each(style.split(&quot;;&quot;), function(index, property){
-				 
-		     if (property.match(moz_zoom_pattern) != null) {
-				 	&#x2F;&#x2F;Mozilla Firefox
-			   	var result = moz_zoom_pattern.exec(property);
-			   	if (result[1]) {
-			   		zoom = parseFloat(result[1]);
-			   		return false;
-			   	}
-			   } else if (property.match(webkit_zoom_pattern)!=null) {
-				 	  &#x2F;&#x2F;Google Chrome
-	          var result = webkit_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-		     } else if (property.match(opera_zoom_pattern)!=null) {
-				 	  &#x2F;&#x2F;Opera
-	          var result = opera_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-				 } else if (property.match(ie_zoom_pattern)!=null) {
-				 	  &#x2F;&#x2F;Iexplorer
-	          var result = ie_zoom_pattern.exec(property);
-	          if(result[1]){
-	            zoom = parseFloat(result[1]);
-	            return false;
-	          }
-	       }
-	    });
-		
-    return zoom;
-   };
+		return zoom;
+	};
+
+
+   &#x2F;**
+	* Function to get width in pixels from a style attribute.
+	* If width attribute is given by percent, area (parent container) attribute is needed.
+	*&#x2F;
+	var getWidthFromStyle = function(style,area){
+		return getPixelDimensionsFromStyle(style,area)[0];
+	};
+	
+   &#x2F;**
+	* Function to get width in pixels from a style attribute.
+	* If width attribute is given by percent, area (parent container) attribute is needed.
+	*&#x2F;
+	var getHeightFromStyle = function(style,area){
+		return getPixelDimensionsFromStyle(style,area)[1];
+	};
+	
+
+	&#x2F;**
+	* Function to get width and height in pixels from a style attribute.
+	* If widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.
+	*&#x2F;
+	var getPixelDimensionsFromStyle = function(style,area){
+		var dimensions = [];
+		var width=null;
+		var height=null;
+
+		$.each(style.split(&quot;;&quot;), function(index, property){
+
+			&#x2F;&#x2F;We need to redefine the var in each iteration (due to Android browser issues)
+			var width_percent_pattern = &#x2F;width:\s?([0-9]+(\.[0-9]+)?)%&#x2F;g
+			var width_px_pattern = &#x2F;width:\s?([0-9]+(\.?[0-9]+)?)px&#x2F;g
+			var height_percent_pattern = &#x2F;height:\s?([0-9]+(\.[0-9]+)?)%&#x2F;g
+			var height_px_pattern = &#x2F;height:\s?([0-9]+(\.?[0-9]+)?)px&#x2F;g
+
+			&#x2F;&#x2F;Look for property starting by width
+			if(property.indexOf(&quot;width&quot;) !== -1){
+
+				if(property.match(width_px_pattern)){
+					&#x2F;&#x2F;Width defined in px.
+					var result = width_px_pattern.exec(property);
+					if(result[1]){
+						width = result[1];
+					}
+				} else if(property.match(width_percent_pattern)){
+					&#x2F;&#x2F;Width defined in %.
+					var result = width_percent_pattern.exec(property);
+					if(result[1]){
+						var percent = result[1];
+						if(area){
+							width = $(area).width()*percent&#x2F;100;
+						}
+					}
+				}
+			} else  if(property.indexOf(&quot;height&quot;) !== -1){
+
+				if(property.match(height_px_pattern)){
+					&#x2F;&#x2F;height defined in px.
+					var result = height_px_pattern.exec(property);
+					if(result[1]){
+						height = result[1];
+					}
+				} else if(property.match(height_percent_pattern)){
+					&#x2F;&#x2F;Width defined in %.
+					var result = height_percent_pattern.exec(property);
+					if(result[1]){
+						var percent = result[1];
+						if(area){
+							height = $(area).height()*percent&#x2F;100;
+						}
+					}
+				}
+			}
+		});
+
+		dimensions.push(width);
+		dimensions.push(height);
+		return dimensions;
+	};
 
 
    &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -405,18 +483,18 @@ VISH.Utils = (function(V,undefined){
 	  }
 	};
 
-
+	
 	var getFontSizeFromStyle = function(style){
 		if(!style){
 			return;
 		}
-
-		var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
 		var ft = null;
 	    $.each(style.split(&quot;;&quot;), function(index, property){
+	    	 &#x2F;&#x2F;We need to redefine the var in each iteration (due to Android browser issues)
+	    	 var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
 		     if (property.match(font_style_pattern) != null) {
 			   	var result = font_style_pattern.exec(property);
-			   	if (result[1]) {
+			   	if ((result!==null)&amp;&amp;(result[1]!==null)) {
 			   		ft = parseFloat(result[1]);
 			   		return false;
 			   	}
@@ -459,6 +537,7 @@ VISH.Utils = (function(V,undefined){
 		return filterStyle;
 	}
 
+
    return {
 		init 					: init,
 		getId					: getId,
@@ -472,6 +551,9 @@ VISH.Utils = (function(V,undefined){
 		getFontSizeFromStyle 	: getFontSizeFromStyle,
 		getZoomFromStyle 		: getZoomFromStyle,
 		getZoomInStyle    		: getZoomInStyle,
+		getWidthFromStyle   	: getWidthFromStyle,
+		getHeightFromStyle  	: getHeightFromStyle,
+		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		loadTab 				: loadTab,
 		sendParentToURL			: sendParentToURL
    };

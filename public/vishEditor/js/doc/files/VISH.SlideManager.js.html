@@ -128,13 +128,20 @@ VISH.SlideManager = (function(V,$,undefined){
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
 		
+		V.Status.init(function(){
+			&#x2F;&#x2F;Status loading finishes
+			_initAferStatusLoaded(options,presentation);
+		});
+	};
+
+	var _initAferStatusLoaded = function(options,presentation){
 		V.Quiz.init(presentation);
 		V.Flashcard.init();
 		V.Renderer.init();
 		V.Slides.init();
-		V.Status.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
+		V.Storage.init();
 		V.Utils.init();
 		
 		&#x2F;&#x2F;Experimental initializers for new excursion types
@@ -153,11 +160,9 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.EventsNotifier.init();
 	  	V.VideoPlayer.init();
 
-		V.Themes.selectTheme(presentation.theme);
+		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.ViewerAdapter.init();
-		V.Text.init();
 		V.Quiz.prepareQuiz(presentation);
 
 		&#x2F;&#x2F;Init Vish Editor Addons
@@ -165,10 +170,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
-		V.ViewerAdapter.setupInterface(options);
-	};
-
-	
+		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
+	}
 
 
 	&#x2F;**

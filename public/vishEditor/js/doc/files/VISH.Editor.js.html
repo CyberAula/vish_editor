@@ -113,7 +113,7 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;drafPresentation uses:
 	&#x2F;&#x2F;* Store the presentation we are previewing
 	&#x2F;&#x2F;* Used when changing from presentation to flashcard
-	&#x2F;&#x2F;* Used when editing an presentation
+	&#x2F;&#x2F;* Used when editing a presentation
 	var draftPresentation = null;
 
 	&#x2F;&#x2F;savedPresentation uses:
@@ -131,51 +131,52 @@ VISH.Editor = (function(V,$,undefined){
 	 * @method init
 	 *&#x2F;
 	var init = function(options, presentation){
-		VISH.Editing = true;
+		V.Editing = true;
 
-		VISH.Debugging.init(options);
+		V.Debugging.init(options);
 		
 		if(options){
 			initOptions = options;
-			if((options[&quot;configuration&quot;])&amp;&amp;(VISH.Configuration)){
-				VISH.Configuration.init(options[&quot;configuration&quot;]);
-				VISH.Configuration.applyConfiguration();
+			if((options.configuration)&amp;&amp;(V.Configuration)){
+				V.Configuration.init(options.configuration);
+				V.Configuration.applyConfiguration();
 			}
 		} else {
 			initOptions = {};
 		}
 		
-		VISH.Utils.init();
-		VISH.Status.init();
-		if(!VISH.Utils.checkMiniumRequirements()){
+		V.Utils.init();
+		V.Status.init();
+		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}
-		VISH.Utils.loadDeviceCSS();
+		V.Utils.loadDeviceCSS();
 
-		VISH.Editor.Dummies.init();
-		VISH.Flashcard.init();
-		VISH.Editor.Flashcard.init();
-		VISH.Renderer.init();
-		VISH.Slides.init();
-		VISH.User.init(options);
+		V.Editor.Dummies.init();
+		V.Editor.Themes.init();
+		V.Flashcard.init();
+		V.Editor.Flashcard.init();
+		V.Renderer.init();
+		V.Slides.init();
+		V.User.init(options);
 
-		if(VISH.Debugging.isDevelopping()){
-			if ((options[&quot;configuration&quot;][&quot;mode&quot;]==&quot;noserver&quot;)&amp;&amp;(VISH.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
-			 	presentation = VISH.Debugging.getPresentationSamples();
+		if(V.Debugging.isDevelopping()){
+			if ((options.configuration.mode==&quot;noserver&quot;)&amp;&amp;(V.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
+				presentation = V.Debugging.getPresentationSamples();
 			}
 		}
 
-		&#x2F;&#x2F;init age range slider, this has to be done BEFORE VISH.Editor.Renderer.init(presentation);
+		&#x2F;&#x2F;init age range slider, this has to be done BEFORE V.Editor.Renderer.init(presentation);
 		$(&quot;#slider-range&quot;).slider({
-	            range: true,
-	            min: 0,
-	            max: 30,
-	            values: [ 4, 20 ],
-	            slide: function( event, ui ) {
-	                $( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
-	            }
-	    });
-	    $(&quot;#age_range&quot;).val(VISH.Constant.AGE_RANGE);
+			range: true,
+			min: 0,
+			max: 30,
+			values: [ 4, 20 ],
+			slide: function( event, ui ) {
+				$( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
+			}
+		});
+		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
 
 		&#x2F;&#x2F;If we have to edit
 		if(presentation){
@@ -184,7 +185,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			initialPresentation = true;
 			setPresentation(presentation);
-			VISH.Editor.Renderer.init(presentation);
+			V.Editor.Renderer.init(presentation);
 			&#x2F;&#x2F;remove focus from any zone
 			_removeSelectableProperties();					
 		}
@@ -200,7 +201,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				VISH.Utils.loadTab(&#x27;tab_templates&#x27;);
+				V.Utils.loadTab(&#x27;tab_templates&#x27;);
 			}
 		});
 
@@ -212,18 +213,18 @@ VISH.Editor = (function(V,$,undefined){
 			&#x27;height&#x27;: 340,
 			&#x27;padding&#x27;: 0,
 			&quot;onStart&quot;  : function(data) {
-				VISH.Utils.loadTab(&#x27;tab_quizes&#x27;);
+				V.Utils.loadTab(&#x27;tab_quizes&#x27;);
 			}
 		});
 	
 		if(!eventsLoaded){
 			eventsLoaded = true;
 				 
-			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, VISH.Editor.Tools.Menu.onSettings); 
-			$(document).on(&#x27;click&#x27;, &#x27;#save&#x27;, VISH.Editor.Tools.Menu.onSaveButtonClicked);
-			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, VISH.Editor.Tools.Menu.onPedagogicalButtonClicked);
-			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, VISH.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
-			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, VISH.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, V.Editor.Tools.Menu.onSettings); 
+			$(document).on(&#x27;click&#x27;, &#x27;#save&#x27;, V.Editor.Tools.Menu.onSaveButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Tools.Menu.onPedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
 
 			$(document).on(&#x27;click&#x27;,&#x27;.templatethumb&#x27;, _onTemplateThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, _onEditableClicked);
@@ -241,8 +242,8 @@ VISH.Editor = (function(V,$,undefined){
 			&#x2F;&#x2F;used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
 
-			VISH.Editor.Slides.redrawSlides();
-			VISH.Editor.Thumbnails.redrawThumbnails();
+			V.Editor.Slides.redrawSlides();
+			V.Editor.Thumbnails.redrawThumbnails();
 
 			&#x2F;&#x2F;if click on begginers tutorial-&gt;launch it
 			_addTutorialEvents();
@@ -258,24 +259,25 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		&#x2F;&#x2F;Init submodules
-		VISH.Editor.I18n.init(options[&quot;lang&quot;]);
-		VISH.Editor.Text.init();
-		VISH.Editor.Image.init();
-		VISH.Editor.Video.init();
-		VISH.Editor.Object.init();
-		VISH.Editor.Thumbnails.init();
-		VISH.Editor.AvatarPicker.init();
-		VISH.Editor.Quiz.init();
-		VISH.Editor.Tools.init();
-		VISH.Editor.Filter.init();
-		VISH.Editor.Clipboard.init();
+		V.Editor.I18n.init(options.lang);
+		V.Editor.Text.init();
+		V.Editor.Image.init();
+		V.Editor.Video.init();
+		V.Editor.Object.init();
+		V.Editor.Thumbnails.init();
+		V.Editor.AvatarPicker.init();
+		V.Editor.Quiz.init();
+		V.Editor.Tools.init();
+		V.Editor.Filter.init();
+		V.Storage.init();
+		V.Editor.Clipboard.init();
 
-		VISH.Editor.Events.init();
-		VISH.EventsNotifier.init();
+		V.Editor.Events.init();
+		V.EventsNotifier.init();
 
 		&#x2F;&#x2F;Init Vish Editor Addons
 		if(options.addons){
-			VISH.Addons.init(options.addons);
+			V.Addons.init(options.addons);
 		}
 	};
 	
@@ -307,89 +309,89 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;**
 	* function to add the events to the help buttons to launch joy ride bubbles
 	*&#x2F;
- 	var _addTutorialEvents = function(){
+	var _addTutorialEvents = function(){
 		$(document).on(&#x27;click&#x27;,&#x27;#start_tutorial&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;initial_screen_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;initial_screen_help&#x27;, &#x27;top&#x27;);
 		});
 
 		$(document).on(&#x27;click&#x27;,&#x27;#help_right&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;flashcard
 		$(document).on(&#x27;click&#x27;,&#x27;#help_flashcard&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;template
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_template&#x27;, function(){			
-			VISH.Editor.Tour.startTourWithId(&#x27;template_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;template_help&#x27;, &#x27;bottom&#x27;);
 		});
 
 		&#x2F;&#x2F;Quiz
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizes_help&#x27;, function(){			
-			VISH.Editor.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
 		});
 
 		&#x2F;&#x2F;themes
 		$(document).on(&#x27;click&#x27;,&#x27;#help_themes_selection&#x27;, function(){			
-			VISH.Editor.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
 		});
 		
 		&#x2F;&#x2F;template selection fancybox	
 		$(document).on(&#x27;click&#x27;,&#x27;#help_template_selection&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;help_template_selection_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;help_template_selection_help&#x27;, &#x27;bottom&#x27;);
 		});	
 		
 		&#x2F;&#x2F;image fancybox, one help button in each tab
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_upload_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;upload_picture_form_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;upload_picture_form_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_repo_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_picture_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_picture_help&#x27;, &#x27;bottom&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_flikr_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
 		
 		&#x2F;&#x2F;object fancybox, one help button in each tab
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_web_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_web_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_web_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_upload_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;upload_object_form_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;upload_object_form_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_snapshot_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
 		});
 
 		
 		&#x2F;&#x2F;video fancybox, one help button in each tab
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;video_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;video_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_repo_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_video_help&#x27;, &#x27;top&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_video_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_youtube_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_youtube_fancy_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_youtube_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_vimeo_help&#x27;, function(){
-			VISH.Editor.Tour.startTourWithId(&#x27;search_vimeo_fancy_help&#x27;, &#x27;bottom&#x27;);
+			V.Editor.Tour.startTourWithId(&#x27;search_vimeo_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
 		
 		&#x2F;&#x2F; live fancybox, one help button in each tab
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_webcam_help&#x27;, function(){
-				VISH.Editor.Tour.startTourWithId(&#x27;tab_live_webcam_id&#x27;, &#x27;bottom&#x27;);
+				V.Editor.Tour.startTourWithId(&#x27;tab_live_webcam_id&#x27;, &#x27;bottom&#x27;);
 		});	
 	};
   
@@ -422,13 +424,13 @@ VISH.Editor = (function(V,$,undefined){
 					V.AppletPlayer.loadApplet($(e.target));
 				}
 				else if($(e.target).hasClass(&#x27;snapshot&#x27;)){
-	        		V.SnapshotPlayer.loadSnapshot($(e.target));
-	      		}
+					V.SnapshotPlayer.loadSnapshot($(e.target));
+				}
 			},500);
 			
 			V.VideoPlayer.HTML5.playVideos(e.target);
 		} else {
-			VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
+			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -447,7 +449,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.ObjectPlayer.unloadObject(e.target);
 			V.AppletPlayer.unloadApplet();
 		} else {
-			VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
+			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
 		}
 	};
   
@@ -459,14 +461,16 @@ VISH.Editor = (function(V,$,undefined){
 	 *&#x2F;
 	var _onTemplateThumbClicked = function(event){
 		var theid = draftPresentation ? draftPresentation.id : &quot;&quot;;
-		var slide = VISH.Editor.Dummies.getDummy($(this).attr(&#x27;template&#x27;), VISH.Slides.getSlidesQuantity()+1);
-		VISH.Editor.Slides.addSlide(slide);
+		var slide = V.Editor.Dummies.getDummy($(this).attr(&#x27;template&#x27;), V.Slides.getSlidesQuantity()+1);
+		V.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
 		&#x2F;&#x2F;currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		VISH.Editor.Slides.redrawSlides();		
-		VISH.Editor.Thumbnails.redrawThumbnails();
-		setTimeout(&quot;VISH.Slides.lastSlide()&quot;, 300);	
+		V.Editor.Slides.redrawSlides();		
+		V.Editor.Thumbnails.redrawThumbnails();
+		setTimeout(function(){
+			V.Slides.lastSlide();
+		}, 300);	
 	};
 
 	&#x2F;**
@@ -486,19 +490,19 @@ VISH.Editor = (function(V,$,undefined){
 		$(content).find(&quot;a.all&quot;).css(&quot;display&quot;,&quot;inline&quot;);
 
 		switch($(this).attr(&quot;size&quot;)){
-			case VISH.Constant.EXTRA_SMALL:
+			case V.Constant.EXTRA_SMALL:
 				$(content).find(&quot;a.small&quot;).css(&quot;display&quot;,&quot;inline&quot;);
 				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_extra_small&quot;);
 				break;
-			case VISH.Constant.SMALL:
+			case V.Constant.SMALL:
 				$(content).find(&quot;a.small&quot;).css(&quot;display&quot;,&quot;inline&quot;);
 				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_small&quot;);
 				break;
-			case VISH.Constant.MEDIUM:
+			case V.Constant.MEDIUM:
 				$(content).find(&quot;a.medium&quot;).css(&quot;display&quot;,&quot;inline&quot;);
 				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_medium&quot;);
 				break;
-			case VISH.Constant.LARGE:
+			case V.Constant.LARGE:
 				$(content).find(&quot;a.large&quot;).css(&quot;display&quot;,&quot;inline&quot;);
 				$(content).find(&quot;a &gt; div&quot;).addClass(&quot;thumb_large&quot;);
 				break;
@@ -516,8 +520,8 @@ VISH.Editor = (function(V,$,undefined){
 				&#x2F;&#x2F;re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
-				VISH.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				V.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addobject&quot;).fancybox({
@@ -529,7 +533,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				VISH.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
+				V.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addvideo&quot;).fancybox({
@@ -541,7 +545,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				VISH.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
+				V.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addLive&quot;).fancybox({
@@ -553,7 +557,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				VISH.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
+				V.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
 			}
 		});
 
@@ -569,16 +573,16 @@ VISH.Editor = (function(V,$,undefined){
 	*&#x2F;
 	var _onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, VISH.ImagesPath + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;);
+		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, V.ImagesPath + &quot;zonethumbs&#x2F;&quot; + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;);
 		$.fancybox(
 			$(&quot;#prompt_form&quot;).html(),
 			{
 				&#x27;autoDimensions&#x27;	: false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;         	: 350,
-				&#x27;height&#x27;        	: 150,
+				&#x27;width&#x27;				: 350,
+				&#x27;height&#x27;			: 150,
 				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27; 			: 0,
+				&#x27;padding&#x27;			: 0,
 				&#x27;onClosed&#x27;			: function(){
 					&#x2F;&#x2F;if user has answered &quot;yes&quot;
 					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){
@@ -599,17 +603,18 @@ VISH.Editor = (function(V,$,undefined){
 		var article_to_delete = $(this).parent()[0];
 
 		var thumb;
-		switch(VISH.Slides.getSlideType(article_to_delete)){
-			case VISH.Constant.STANDARD:
-				thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + $(article_to_delete).attr(&quot;template&quot;) + &quot;.png&quot;; 
+		switch(V.Slides.getSlideType(article_to_delete)){
+			case V.Constant.STANDARD:
+				thumb = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + $(article_to_delete).attr(&quot;template&quot;) + &quot;.png&quot;; 
 				break;
-			case VISH.Constant.FLASHCARD:
-				thumb = VISH.Utils.getSrcFromCSS($(article_to_delete).attr(&quot;avatar&quot;));
-				&#x2F;&#x2F; thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;flashcard_template.png&quot;;
+			case V.Constant.FLASHCARD:
+				thumb = V.Utils.getSrcFromCSS($(article_to_delete).attr(&quot;avatar&quot;));
+				&#x2F;&#x2F; thumb = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;flashcard_template.png&quot;;
 				break;
-			case VISH.Constant.VTOUR:
+			case V.Constant.VTOUR:
+				break;
 			default:
-				thumb = VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;default.png&quot;;
+				thumb = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;default.png&quot;;
 				break;
 		}
 
@@ -618,16 +623,16 @@ VISH.Editor = (function(V,$,undefined){
 		$(&quot;#prompt_form&quot;).html(),
 			{
 				&#x27;autoDimensions&#x27;	: false,
-				&#x27;width&#x27;         	: 350,
+				&#x27;width&#x27;				: 350,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;height&#x27;        	: 150,
+				&#x27;height&#x27;			: 150,
 				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27; 			: 0,
+				&#x27;padding&#x27;			: 0,
 				&#x27;onClosed&#x27;			: function(){
-				  &#x2F;&#x2F;if user has answered &quot;yes&quot;
+					&#x2F;&#x2F;if user has answered &quot;yes&quot;
 					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){						
-						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);  
-            			VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());		
+						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
+						V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 					}
 				}
 			}
@@ -644,13 +649,13 @@ VISH.Editor = (function(V,$,undefined){
 		event.stopPropagation();
 		event.preventDefault();
 	};
-  
-  	var selectArea = function(area){
-  		setCurrentArea(area);	
+
+	var selectArea = function(area){
+		setCurrentArea(area);	
 		_removeSelectableProperties(area);
 		_addSelectableProperties(area);
-		VISH.Editor.Tools.loadToolsForZone(area);
-  	}
+		V.Editor.Tools.loadToolsForZone(area);
+	};
   
    &#x2F;**
 	* Function called when user clicks on any element without class selectable
@@ -674,15 +679,27 @@ VISH.Editor = (function(V,$,undefined){
 			if (jQuery.contains($(&quot;#toolbar_wrapper&quot;)[0],event.target)){
 				return;
 			}
-
 			if(event.target.id===&quot;toolbar_wrapper&quot;){
 				return;
 			}
+
+			&#x2F;&#x2F;No hide toolbar when we are working in a wysiwyg fancybox
+			var isWysiwygFancyboxEnabled = false;
+			$(&quot;.cke_dialog&quot;).each(function(index,cke_dialog){
+				if((cke_dialog)&amp;&amp;(jQuery.contains(cke_dialog,event.target))){
+					isWysiwygFancyboxEnabled = true;
+					return false;
+				}
+			});
+			if(isWysiwygFancyboxEnabled){
+				return;
+			}
+
 		}
 
-		&#x2F;&#x2F; VISH.Debugging.log(event.target);
+		&#x2F;&#x2F; V.Debugging.log(event.target);
 		setCurrentArea(null);
-		VISH.Editor.Tools.cleanZoneTools();
+		V.Editor.Tools.cleanZoneTools();
 	};
 	
 	var _addSelectableProperties = function(zone){
@@ -693,7 +710,6 @@ VISH.Editor = (function(V,$,undefined){
 		$(zone).css(&quot;-moz-box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
 		$(zone).css(&quot;box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
 		$(zone).css(&quot;outline&quot;, &quot;0&quot;);
-		$(zone).css(&quot;outline&quot;, &quot;thin dotted \9&quot;);
 	};
 	
 	var _removeSelectableProperties = function(zone){
@@ -716,12 +732,12 @@ VISH.Editor = (function(V,$,undefined){
 	*&#x2F;
 	var savePresentation = function(options){
 		&#x2F;&#x2F;Load all objects
-		VISH.Editor.Utils.Loader.loadAllObjects();
+		V.Editor.Utils.Loader.loadAllObjects();
 		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
 
 		&#x2F;&#x2F;Now save the presentation
 		var presentation = {};
-		presentation.VEVersion = VISH.VERSION;
+		presentation.VEVersion = V.VERSION;
 		if(draftPresentation){
 			presentation.id = draftPresentation.id;
 		}else{
@@ -729,11 +745,11 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		var saveForPreview = false;
-		if((options)&amp;&amp;(options[&quot;preview&quot;]===true)){
+		if((options)&amp;&amp;(options.preview===true)){
 			saveForPreview = true;
 		}
 
-		if((saveForPreview)&amp;&amp;(options)&amp;&amp;(options[&quot;forcePresentation&quot;])){
+		if((saveForPreview)&amp;&amp;(options)&amp;&amp;(options.forcePresentation)){
 			presentation.type = &quot;presentation&quot;;
 		} else {
 			presentation.type = getPresentationType();
@@ -757,10 +773,10 @@ VISH.Editor = (function(V,$,undefined){
 		var slide = {};
 		if(presentation.type===&quot;flashcard&quot;){
 			slide.id = $(&quot;#flashcard-background&quot;).attr(&quot;flashcard_id&quot;);
-			slide.type = VISH.Constant.FLASHCARD;
+			slide.type = V.Constant.FLASHCARD;
 			slide.background = $(&quot;#flashcard-background&quot;).css(&quot;background-image&quot;);
 			&#x2F;&#x2F;save the pois
-			slide.pois = VISH.Editor.Flashcard.savePois();
+			slide.pois = V.Editor.Flashcard.savePois();
 			slide.slides = [];
 			presentation.slides.push(slide);
 		}
@@ -771,7 +787,7 @@ VISH.Editor = (function(V,$,undefined){
 			slide.type = $(s).attr(&#x27;type&#x27;);
 			
 			if(slide.type === V.Constant.FLASHCARD){
-				var fc = VISH.Editor.Flashcard.getFlashcard(slide.id);
+				var fc = V.Editor.Flashcard.getFlashcard(slide.id);
 				presentation.slides.push(fc);
 				slide = {};
 				return true; &#x2F;&#x2F;equivalent to continue in an each loop
@@ -788,83 +804,129 @@ VISH.Editor = (function(V,$,undefined){
 				
 				if($(div).attr(&quot;areaid&quot;) !== undefined){   
 
-					element.id 		= $(div).attr(&#x27;id&#x27;);
-					element.type 	= $(div).attr(&#x27;type&#x27;);
-					element.areaid 	= $(div).attr(&#x27;areaid&#x27;);	 				 
+					element.id		=	$(div).attr(&#x27;id&#x27;);
+					element.type	=	$(div).attr(&#x27;type&#x27;);
+					element.areaid	=	$(div).attr(&#x27;areaid&#x27;);					 
 						 
-					if(element.type==VISH.Constant.TEXT){
+					if(element.type==V.Constant.TEXT){
 						&#x2F;&#x2F;NicEditor version
-            			&#x2F;&#x2F; element.body   = VISH.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(&quot;.wysiwygInstance&quot;));
-            			
-            			&#x2F;&#x2F;CKEditor version	
-	           			var CKEditor = VISH.Editor.Text.getCKEditorFromZone(div);
-	            		if(CKEditor!==null){
-	              			element.body = CKEditor.getData();
-	            		} else {
-	              			element.body = &quot;&quot;;
-	            		}
+						&#x2F;&#x2F; element.body   = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(&quot;.wysiwygInstance&quot;));
 
-					} else if(element.type==VISH.Constant.IMAGE){
+						&#x2F;&#x2F;CKEditor version	
+						var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
+						if(CKEditor!==null){
+							element.body = CKEditor.getData();
+						} else {
+							element.body = &quot;&quot;;
+						}
+
+					} else if(element.type==V.Constant.IMAGE){
 						element.body   = $(div).find(&#x27;img&#x27;).attr(&#x27;src&#x27;);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
 						if($(div).attr(&quot;hyperlink&quot;)){
 							element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
 						}
-					} else if(element.type==VISH.Constant.VIDEO){
+					} else if(element.type==V.Constant.VIDEO){
 						var video = $(div).find(&quot;video&quot;);
 						element.poster = $(video).attr(&quot;poster&quot;);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(video));
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
 						&#x2F;&#x2F;Sources
 						var sources= &#x27;&#x27;;				
 						$(video).find(&#x27;source&#x27;).each(function(index, source) {
-							if(index!=0){
+							if(index!==0){
 								sources = sources + &#x27;,&#x27;;
 							}
-							var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;
-							sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;
+							var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
+							sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
 						});
-						sources = &#x27;[&#x27; + sources + &#x27;]&#x27;
+						sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
 						element.sources = sources;
-					} else if(element.type===VISH.Constant.OBJECT){
+					} else if(element.type===V.Constant.OBJECT){
 						var wrapper = $(div).find(&quot;.object_wrapper&quot;)[0];
 						var object = $(wrapper).children()[0];
 
 						var myObject = $(object).clone();
 						$(myObject).removeAttr(&quot;style&quot;);
-						element.body   = VISH.Utils.getOuterHTML(myObject);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
-						var zoom = VISH.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
+						element.body   = V.Utils.getOuterHTML(myObject);
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+						var zoom = V.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
 						if(zoom!=1){
-							element.zoomInStyle = VISH.Utils.getZoomInStyle(zoom);
+							element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 						}
-					} else if (element.type === VISH.Constant.QUIZ) {
-						var	quizQuestion = $(div).find(&quot;.value_multiplechoice_question_in_zone&quot;);
-						element.question = VISH.Editor.Text.changeFontPropertiesToSpan($(quizQuestion));
-						if($(div).find(&quot;.multiplechoice_option_in_zone&quot;)) {
+					} else if (element.type === V.Constant.QUIZ) {
+						
+						&#x2F;&#x2F;if($(div).find(&quot;.multiplechoice_option_in_zone&quot;)) {
+						if  ($(div).attr(&quot;quiztype&quot;)== &quot;multiplechoice&quot;) {
+							var	quizQuestion = $(div).find(&quot;.value_multiplechoice_question_in_zone&quot;);
+							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							&#x2F;*var CKEditor = V.Editor.Text.getCKEditorFromZone(quizQuestion);
+							if(CKEditor!==null){
+								element.question = CKEditor.getData();
+						} else {
+							element.question = &quot;&quot;;
+						} *&#x2F;
 							element.quiz_id = &quot;&quot;;
-							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!=&quot;&quot;) {
+							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!==&quot;&quot;) {
 								element.quiz_id = $(div).find(&quot;input[name=quiz_id]&quot;).val();
 							} 
 							element.quiztype = &quot;multiplechoice&quot;;
-							element.options = {};  	
+							element.options = {};
 							element.options.choices = []; 
 							$(div).find(&#x27;.multiplechoice_option_in_zone&#x27;).each(function(i, option_text){
-								var option = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-								if((option)&amp;&amp;($(option_text).text() != &#x27;Write options here&#x27;)&amp;&amp; ($(option_text).text() !=&quot;&quot;)){
-									result = VISH.Editor.Text.changeFontPropertiesToSpan(option_text);
-									var choice = new Object();
+								var option = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+								&#x2F;&#x2F;var option = V.Editor.Text.getCKEditorFromZone(option_text);
+								if((option)&amp;&amp;($(option_text).text() !== &#x27;Write options here&#x27;)&amp;&amp; ($(option_text).text() !==&quot;&quot;)){
+									result = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
+									&#x2F;&#x2F;result = V.Editor.Text.getCKEditorFromZone(option_text);
+									var choice = {};
 									choice.value = $(option_text).text();
-									choice.container = VISH.Editor.Text.changeFontPropertiesToSpan($(option_text));
+									choice.container = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
+									&#x2F;&#x2F;choice.container = V.Editor.Text.getCKEditorFromZone(option_text);
 									element.options.choices.push(choice);
 								}
 							});
 						}
-					} else if(element.type === VISH.Constant.SNAPSHOT){
+						&#x2F;&#x2F;true false quiz type
+						else if($(div).attr(&quot;quiztype&quot;)== &quot;truefalse&quot;) {
+							V.Debugging.log(&quot;true false detected&quot;);
+							
+							var	quizQuestion = $(div).find(&quot;.value_truefalse_question_in_zone&quot;);
+							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
+							&#x2F;&#x2F;element.question = V.Editor.Text.getCKEditorFromZone($(quizQuestion));
+							element.quiz_id = &quot;&quot;;
+							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!=&quot;&quot;) {
+								element.quiz_id = $(div).find(&quot;input[name=quiz_id]&quot;).val();
+							} 
+							element.quiztype = &quot;truefalse&quot;;
+							element.options = {};  	
+							element.options.choices = []; 
+							$(div).find(&#x27;.truefalse_answers &gt; form &gt; input&#x27;).each(function(i, option_text){
+							 	V.Debugging.log(&quot;option text:&quot; + option_text);
+								var choice = new Object();
+								choice.value = $(option_text).attr(&quot;value&quot;);
+								choice.container= $(option_text).attr(&quot;value&quot;);
+								element.options.choices.push(choice);
+						}); 
+							&#x2F;&#x2F;add the correct answer 
+
+							V.Debugging.log(&quot;value: &quot; + $(div).find(&#x27;input[name=truefalse]:checked&#x27;).val()); &#x2F;&#x2F;each(function(i, option_text)   &#x2F;&#x2F;{
+								
+
+								 element.options.answer = $(div).find(&#x27;input[name=truefalse]:checked&#x27;).val();
+
+								&#x2F;&#x2F;}
+
+						}
+						else if($(div).attr(&quot;quiztype&quot;)== &quot;open&quot;) {
+							V.Debugging.log(&quot;open detected&quot;);
+						}
+
+					} else if(element.type === V.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(&quot;.snapshot_wrapper&quot;);
 						var snapshotIframe = $(snapshotWrapper).children()[0];
 						$(snapshotIframe).removeAttr(&quot;style&quot;);
-						element.body   = VISH.Utils.getOuterHTML(snapshotIframe);
-						element.style  = VISH.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+						element.body   = V.Utils.getOuterHTML(snapshotIframe);
+						element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
 						
 						&#x2F;&#x2F;Save scrolls
 						var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
@@ -883,17 +945,17 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type==VISH.Constant.QUIZ){
-						var quizSlide = $.extend(true, new Object(), element);
+					if(element.type==V.Constant.QUIZ){
+						var quizSlide = $.extend(true, {}, element);
 						&#x2F;&#x2F;Apply presentation Wrapper
-						var quizPresentation = new Object();
+						var quizPresentation = {};
 						quizPresentation.title = presentation.title;
 						quizPresentation.description = presentation.description;
 						quizPresentation.author = &#x27;&#x27;;
 						&#x2F;&#x2F;add quiz_simple type to slide in json to render answer
-						quizSlide.type = VISH.Constant.QUIZ_SIMPLE;
-					    quizPresentation.slides = [quizSlide];
-					 	quizPresentation.type = VISH.Constant.QUIZ_SIMPLE;
+						quizSlide.type = V.Constant.QUIZ_SIMPLE;
+						quizPresentation.slides = [quizSlide];
+						quizPresentation.type = V.Constant.QUIZ_SIMPLE;
 						element.quiz_simple_json = quizPresentation;
 					}
 
@@ -902,10 +964,10 @@ VISH.Editor = (function(V,$,undefined){
 			
 			});
 
-			if(presentation.type===VISH.Constant.FLASHCARD){
+			if(presentation.type===V.Constant.FLASHCARD){
 				&#x2F;&#x2F;If it is flashcard we save the slide into the flashcard slides 
 				&#x2F;&#x2F;(the flashcard is the first slide by convention)
-				slide = VISH.Editor.Flashcard.prepareToNestInFlashcard(slide);
+				slide = V.Editor.Flashcard.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
 				presentation.slides.push(slide);
@@ -916,69 +978,69 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		savedPresentation = presentation;  
-		  
-		&#x2F;&#x2F;Unload all objects
-		VISH.Editor.Utils.Loader.unloadAllObjects();
-		&#x2F;&#x2F;Reload current slide objects
-		VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
 
-		VISH.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;)
-		&#x2F;&#x2F; VISH.Debugging.log(JSON.stringify(presentation));
+		&#x2F;&#x2F;Unload all objects
+		V.Editor.Utils.Loader.unloadAllObjects();
+		&#x2F;&#x2F;Reload current slide objects
+		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		V.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;);
+		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
 		return savedPresentation;
 	};
 	
 
 	var afterSavePresentation = function(presentation, order){
-		switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration().mode){
+			case V.Constant.NOSERVER:
 				&#x2F;&#x2F;Ignore order param for developping
-				if((VISH.Debugging)&amp;&amp;(VISH.Debugging.isDevelopping())){
-					if(VISH.Debugging.getActionSave()==&quot;view&quot;){
-						VISH.Debugging.initVishViewer();
-					} else if (VISH.Debugging.getActionSave()==&quot;edit&quot;) {
-						VISH.Debugging.initVishEditor();
+				if((V.Debugging)&amp;&amp;(V.Debugging.isDevelopping())){
+					if(V.Debugging.getActionSave()==&quot;view&quot;){
+						V.Debugging.initVishViewer();
+					} else if (V.Debugging.getActionSave()==&quot;edit&quot;) {
+						V.Debugging.initVishEditor();
 					}
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				var send_type;
-		        if(initialPresentation){
-		          send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
-		        } else {  
-		          send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
-		        } 
+				if(initialPresentation){
+					send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
+				} else {  
+					send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
+				} 
 
-		        var draft = (order===&quot;draft&quot;);
-		        
-		        &#x2F;&#x2F;POST to http:&#x2F;&#x2F;server&#x2F;excursions&#x2F;
-		        var jsonPresentation = JSON.stringify(presentation);  
-		        var params = {
-		          &quot;excursion[json]&quot;: jsonPresentation,
-		          &quot;authenticity_token&quot; : initOptions[&quot;token&quot;],
-		          &quot;draft&quot;: draft
-		        }
-		        
-		        $.ajax({
-		          type    : send_type,
-		          url     : VISH.UploadPresentationPath,
-		          data    : params,
-		          success : function(data) {
-		          	  allowExitWithoutConfirmation();
-		          	  window.top.location.href = data.url;
-		          }     
-		        });
+				var draft = (order===&quot;draft&quot;);
+
+				&#x2F;&#x2F;POST to http:&#x2F;&#x2F;server&#x2F;excursions&#x2F;
+				var jsonPresentation = JSON.stringify(presentation);  
+				var params = {
+					&quot;excursion[json]&quot;: jsonPresentation,
+					&quot;authenticity_token&quot; : initOptions.token,
+					&quot;draft&quot;: draft
+				};
+
+				$.ajax({
+					type    : send_type,
+					url     : V.UploadPresentationPath,
+					data    : params,
+					success : function(data) {
+						allowExitWithoutConfirmation();
+						window.top.location.href = data.url;
+					}     
+				});
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				&#x2F;&#x2F;Order is always save, ignore order param
 				uploadPresentationWithNode(presentation);
 				break;
 		}
-	}
+	};
 	
 
 	var uploadPresentationWithNode = function(presentation){
 		var send_type;
-		var url = VISH.UploadPresentationPath;
+		var url = V.UploadPresentationPath;
 
 		if(draftPresentation){
 			send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
@@ -986,13 +1048,13 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
 		} 
-	       
+
 		&#x2F;&#x2F;POST to &#x2F;server&#x2F;presentation&#x2F;
 		var jsonPresentation = JSON.stringify(presentation);   
 		var params = {
 			&quot;presentation[json]&quot;: jsonPresentation
-		}
-		   
+		};
+
 		$.ajax({
 			type    : send_type,
 			url     : url,
@@ -1012,14 +1074,14 @@ VISH.Editor = (function(V,$,undefined){
 	 * Function to move the slides left one item
 	 *&#x2F;
 	var _onArrowLeftClicked = function(){
-		VISH.Slides.backwardOneSlide();
+		V.Slides.backwardOneSlide();
 	};
 	
 	&#x2F;**
 	 * Function to move the slides right one item
 	 *&#x2F;
 	var _onArrowRightClicked = function(){
-		VISH.Slides.forwardOneSlide();
+		V.Slides.forwardOneSlide();
 	};
 	
 	
@@ -1038,26 +1100,26 @@ VISH.Editor = (function(V,$,undefined){
 			return getCurrentArea().parent().attr(&#x27;template&#x27;);
 		}
 		return null;
-	}
+	};
 	
 	var getCurrentArea = function() {
 		if(currentZone){
 			return currentZone;
 		}
 		return null;
-	}
+	};
 	
 	var setCurrentArea = function(area){
 		currentZone = area;
-	}
+	};
 
 	var getPresentation = function() {
 		return draftPresentation;
-	}
+	};
 
 	var setPresentation = function(presentation) {
 		draftPresentation = presentation;
-	}
+	};
 
 	var getSavedPresentation = function() {
 		if(savedPresentation){
@@ -1065,27 +1127,27 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			return null;
 		}
-	}
+	};
 
 	var hasInitialPresentation = function(){
 		return initialPresentation;
-	}
+	};
 	
 	&#x2F;*
 	 * Load the initial fancybox
 	 *&#x2F;
 	var loadFancyBox = function(fancy) {
-		var fancyBoxes = {1: &quot;templates&quot;, 2: &quot;flashcards&quot;}	
+		var fancyBoxes = {1: &quot;templates&quot;, 2: &quot;flashcards&quot;};
 				
-		for( tab in fancyBoxes) {
+		for( var tab in fancyBoxes) {
 			$(&#x27;#tab_&#x27;+fancyBoxes[tab]+&#x27;_content&#x27;).hide();
 			$(&#x27;#tab_&#x27;+fancyBoxes[tab]).attr(&quot;class&quot;, &quot;&quot;);
 			$(&#x27;#tab_&#x27;+fancyBoxes[tab]).attr(&quot;class&quot;, &quot;fancy_tab&quot;);
-		} 
+		}
 		&#x2F;&#x2F;just show the fancybox selected 
 		$(&#x27;#tab_&#x27;+fancy+&#x27;_content&#x27;).show();
 		$(&#x27;#tab_&#x27;+fancy).attr(&quot;class&quot;, &quot;fancy_tab fancy_selected&quot;);
-	}
+	};
 
 	&#x2F;*
 	 * type can be &quot;presentation&quot;, &quot;flashcard&quot; or &quot;game&quot;
@@ -1099,12 +1161,12 @@ VISH.Editor = (function(V,$,undefined){
 
 	var setPresentationType  = function(type){
 		if(!draftPresentation){
-			draftPresentation = new Object();
+			draftPresentation = {};
 		}
 		if(type){
 			draftPresentation.type = type;
 		} else {
-			draftPresentation.type = VISH.Constant.PRESENTATION;
+			draftPresentation.type = V.Constant.PRESENTATION;
 		}
 	};
 
@@ -1123,14 +1185,14 @@ VISH.Editor = (function(V,$,undefined){
 				&#x2F;&#x2F;Empty presentation
 				return true;
 			}
-			if(VISH.Editor.Flashcard.hasFlascards()){
+			if(V.Editor.Flashcard.hasFlascards()){
 				return false;
 			}
 			return true;
 		}
 
 		return true;
-	}
+	};
 
 	var _isThisPresentationStandard = function(presentation){
 		if(presentation.type!==&quot;presentation&quot;){
@@ -1144,7 +1206,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		return isStandard;
-	}
+	};
 
 	&#x2F;*
 	 * Returns if the server has checked the presentation has a draft.
@@ -1152,8 +1214,8 @@ VISH.Editor = (function(V,$,undefined){
 	var isPresentationDraft = function(){
 		if(initialPresentation){
 			&#x2F;&#x2F;Look for options[&quot;draft&quot;]
-			if((initOptions[&quot;draft&quot;])&amp;&amp;(typeof initOptions[&quot;draft&quot;] === &quot;boolean&quot;)){
-				return initOptions[&quot;draft&quot;];
+			if((initOptions.draft)&amp;&amp;(typeof initOptions.draft === &quot;boolean&quot;)){
+				return initOptions.draft;
 			} else {
 				&#x2F;&#x2F;Server must indicate explicity that this presentation is a draft with the &quot;draft&quot; option.
 				return false;
@@ -1162,40 +1224,40 @@ VISH.Editor = (function(V,$,undefined){
 			&#x2F;&#x2F;New presentation created, draft by default.
 			return true;
 		}
-	}
+	};
 
 
 	var exitConfirmation = function(){
-		if((VISH.Configuration.getConfiguration()[&quot;mode&quot;]===VISH.Constant.VISH)&amp;&amp;(confirmOnExit)){
-			return VISH.Editor.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&amp;&amp;(confirmOnExit)){
+			return V.Editor.I18n.getTrans(&quot;i.exitConfirmation&quot;);
 		} else {
-			return
+			return;
 		}
-	}
+	};
 
 	var allowExitWithoutConfirmation = function(){
 		confirmOnExit = false;
-	}
+	};
 
 
 	return {
-		init 					: init,
-		addDeleteButton 		: addDeleteButton,
-		getTemplate 			: getTemplate,
-		getCurrentArea 			: getCurrentArea,
+		init					: init,
+		addDeleteButton			: addDeleteButton,
+		getTemplate				: getTemplate,
+		getCurrentArea			: getCurrentArea,
 		getPresentationType		: getPresentationType,
-		getOptions 				: getOptions, 
-		loadFancyBox 			: loadFancyBox,
-		getPresentation 		: getPresentation,
-		setPresentation 		: setPresentation,
-		isPresentationStandard 	: isPresentationStandard,
+		getOptions				: getOptions, 
+		loadFancyBox			: loadFancyBox,
+		getPresentation			: getPresentation,
+		setPresentation			: setPresentation,
+		isPresentationStandard	: isPresentationStandard,
 		isPresentationDraft		: isPresentationDraft,
-		getSavedPresentation 	: getSavedPresentation,
+		getSavedPresentation	: getSavedPresentation,
 		hasInitialPresentation	: hasInitialPresentation,
-		savePresentation 		: savePresentation,
-		afterSavePresentation  	: afterSavePresentation,
-		setPresentationType 	: setPresentationType,
-		allowExitWithoutConfirmation	: allowExitWithoutConfirmation, 
+		savePresentation		: savePresentation,
+		afterSavePresentation	: afterSavePresentation,
+		setPresentationType		: setPresentationType,
+		allowExitWithoutConfirmation	:allowExitWithoutConfirmation, 
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea
 	};

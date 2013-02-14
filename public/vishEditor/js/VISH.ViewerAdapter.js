@@ -43,7 +43,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				embed = false;
 			}
 
-			close_button = (!V.Status.getDevice().desktop)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
+			close_button = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&((options["comeBackUrl"])||(V.Status.getDevice().features.history));
 			
 			//Embed elements can use native fullscreen
 			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&&(!embed);
@@ -92,12 +92,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				close_button = false;
 			}
 		}
-		
-		//Close button just for mobiles (disable in tablets)
-		close_button = (close_button && (V.Status.getDevice().mobile));
 
-		isOneSlide = (!(VISH.Slides.getSlidesQuantity()>1));
 
+		isOneSlide = (!(V.Slides.getSlidesQuantity()>1));
 
 		////////////////
 		//Init interface
@@ -115,7 +112,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#viewbar").show();
 			}
-			VISH.SlideManager.updateSlideCounter();
+			V.SlideManager.updateSlideCounter();
 		} else {
 			$("#viewbar").hide();
 		}
@@ -155,18 +152,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var decideIfPageSwitcher = function(){
 
 		// ViewBar
-		if (VISH.Slides.getCurrentSubSlide()!==null){
+		if (V.Slides.getCurrentSubSlide()!==null){
 			//Subslide active
 			$("#forward_arrow").hide();
 			$("#back_arrow").hide();
 		} else {
 			//No subslide
-			if(VISH.Slides.isCurrentFirstSlide()){
+			if(V.Slides.isCurrentFirstSlide()){
 				$("#back_arrow").hide();
 			} else {
 				$("#back_arrow").show();
 			} 
-			if (VISH.Slides.isCurrentLastSlide()){
+			if (V.Slides.isCurrentLastSlide()){
 				$("#forward_arrow").hide();		
 			} else {
 				$("#forward_arrow").show();
@@ -175,12 +172,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		// Pager
 		if(!render_full){
-			if(VISH.Slides.isCurrentFirstSlide()){
+			if(V.Slides.isCurrentFirstSlide()){
 				$("#page-switcher-start").hide();			
 			} else {
 				$("#page-switcher-start").show();
 			}
-			if(VISH.Slides.isCurrentLastSlide()){
+			if(V.Slides.isCurrentLastSlide()){
 				$("#page-switcher-end").hide();
 			} else {
 				$("#page-switcher-end").show();
@@ -295,13 +292,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher();
 
 		//Texts callbacks
-		VISH.Text.aftersetupSize(increase);
+		V.Text.aftersetupSize(increase);
 
 		//Snapshot callbacks
-		VISH.SnapshotPlayer.aftersetupSize(increase);
+		V.SnapshotPlayer.aftersetupSize(increase);
 		
 		//Object callbacks
-		VISH.ObjectPlayer.aftersetupSize(increase);
+		V.ObjectPlayer.aftersetupSize(increase);
 	};
 
 
@@ -345,17 +342,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 							window.location = exit_fs_url;
 					} else if(V.Status.getDevice().features.history){
 						//Use feature history if its allowed
-						// history.back(); //Not works in Safari
-						history.go(-1);
+						history.back();
 					}
 				});
 			} else if((!fullscreen)&&(enter_fs_button)){
 				$(document).on('click', '#page-fullscreen', function(){
 					if(typeof window.parent.location.href !== "undefined"){
-						VISH.Utils.sendParentToURL(enter_fs_url+"?orgUrl="+window.parent.location.href);
+						V.Utils.sendParentToURL(enter_fs_url+"?orgUrl="+window.parent.location.href);
 					} else {
 						//In embed mode, we dont have access to window.parent properties (like window.parent.location)
-						VISH.Utils.sendParentToURL(enter_fs_url+"?embed=true");
+						V.Utils.sendParentToURL(enter_fs_url+"?embed=true");
 					}
 				});
 			}

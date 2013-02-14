@@ -107,14 +107,13 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
         return _renderMcQuestion(quiz_element, zone_class, slide_id, zone);
 
         break;
-   &#x2F;*   case &quot;mcquestion&quot;:
-        return _renderMcQuestion(element, zone_class, slide);
-        break; *&#x2F;
+
       case &quot;openQuestion&quot;:
         return _renderOpenquestion(element, template);
         break;
-      case &quot;truefalsequestion&quot;:
-        return _renderTrueFalseQuestion(element, template);
+      case &quot;truefalse&quot;:
+        return _renderTrueFalseQuestion(quiz_element, zone_class, slide_id, zone);
+
         break;
       default:
         break;
@@ -123,7 +122,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   var _renderMcQuestion = function(quiz_element, zone_class, slide_id, zone){ 
       V.Debugging.log(&quot;_renderMcQuestion, and quiz choices received is:  &quot; + JSON.stringify(quiz_element[&#x27;options&#x27;][&#x27;choices&#x27;]));
-      var ret = &quot;&lt;div id=&#x27;&quot;+quiz_element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+ zone_class + &quot; quiz&#x27;&gt;&quot;;
+      var ret = &quot;&lt;div id=&#x27;&quot;+quiz_element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+ zone_class + &quot; quiz&#x27; quiztype=&#x27;multiplechoice&#x27;&gt;&quot;;
       ret += &quot;&lt;div class=&#x27;mcquestion_container&#x27;&gt;&quot;;
       ret += &quot;&lt;div class=&#x27;mcquestion_body&#x27;&gt;&quot;;
       ret += &quot;&lt;div class=&#x27;value_multiplechoice_question_in_zone question_in_viewer&#x27;&gt;&quot;+ quiz_element[&#x27;question&#x27;]+&quot;&lt;&#x2F;div&gt;&quot;;
@@ -180,35 +179,77 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
    * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
    *&#x2F;
   
-  var _renderTrueFalseQuestion = function(element, template){
-    var next_num=0;
-    var answers = new Array();
-    var ret = &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;truefalse_question&#x27;&gt;&quot;;
-    
+  var _renderTrueFalseQuestion = function(quiz_element, zone_class, slide_id, zone){
+
+    var ret = &quot;&lt;div id=&#x27;&quot;+quiz_element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+ zone_class +&quot; quiz&#x27; quiztype=&#x27;truefalse&#x27;&gt;&quot;;
     ret += &quot;&lt;div class=&#x27;truefalse_question_container&#x27;&gt;&quot;;
-    ret += &quot;&lt;form class=&#x27;truefalse_question_form&#x27; action=&#x27;&quot;+element[&#x27;posturl&#x27;]+&quot;&#x27; method=&#x27;post&#x27;&gt;&quot;;
-    ret+= &quot;&lt;table id=&#x27;truefalse_quiz_table_1&#x27; class=&#x27;truefalse_quiz_table&#x27;&gt;&lt;tr&gt;&lt;th&gt;True&lt;&#x2F;th&gt;&lt;th&gt;False&lt;&#x2F;th&gt;&lt;th&gt; Question &lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&quot;;
-     
-    for(var i = 0; i&lt;element[&#x27;questions&#x27;].length; i++){
-      &#x2F;&#x2F;saving correct answers 
-      answers[i] =element[&#x27;questions&#x27;][i][&#x27;answer&#x27;];
-      ret +=&quot;&lt;tr id=&#x27;tr_question_&quot;+(i+1)+&quot;&#x27;&gt;&quot;;
-      ret +=&quot;&lt;td id=&#x27;td_true_&quot;+(i+1)+&quot;&#x27; class=&#x27;td_true&#x27;&gt;&quot;;
-      ret += &quot;&lt;input type=&#x27;radio&#x27; name=&#x27;tf_radio_&quot;+(i+1)+&quot;&#x27; value=&#x27;true&#x27; &#x2F;&gt;&lt;&#x2F;td&gt;&quot;;
-      ret += &quot;&lt;td id=&#x27;td_false_&quot;+(i+1)+&quot;&#x27; class=&#x27;td_false&#x27; &gt;&quot;;
-      ret += &quot;&lt;input type=&#x27;radio&#x27; name=&#x27;tf_radio_&quot;+(i+1)+&quot;&#x27; value=&#x27;false&#x27;&#x2F;&gt;&lt;&#x2F;td&gt;&quot;;
-      ret += &quot;&lt;td id=&#x27;td_question_&quot;+(i+1)+&quot;&#x27; class=&#x27;true_false_question_txt&#x27;&gt;&lt;label&gt;&quot;+element[&#x27;questions&#x27;][i][&#x27;text_question&#x27;]+&quot;?&lt;&#x2F;label&gt;&lt;&#x2F;td&gt;&quot;;
-      ret += &quot;&lt;&#x2F;tr&gt;&quot;;
-    }
-    
-    ret += &quot;&lt;&#x2F;table&gt;&quot;;
-    ret += &quot;&lt;input type=&#x27;button&#x27; class=&#x27;tfquestion_button&#x27; value=&#x27;Send&#x27;&#x2F;&gt;&quot;;
-    ret += &quot;&lt;&#x2F;form&gt;&quot;;
+ 
+    &#x2F;&#x2F;ret += &quot;&lt;form class=&#x27;truefalse_question_form&#x27; action=&#x27;&quot;+element[&#x27;posturl&#x27;]+&quot;&#x27; method=&#x27;post&#x27;&gt;&quot;;
+    ret+= &quot;&lt;div class=&#x27;value_truefalse_question_in_zone question_in_viewer&#x27;&gt;&quot;;
+    ret += quiz_element[&#x27;question&#x27;];
     ret += &quot;&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;truefalse_options_in_zone&#x27;&gt; &quot;;
+    ret += &quot;&lt;form class=&#x27;truefalse_form&#x27; action=&#x27;&quot;+quiz_element[&#x27;posturl&#x27;]+&quot;&#x27; method=&#x27;post&#x27;&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;truefalse_options&#x27;&gt;&quot;;
+       ret += &quot;&lt;div class=&#x27;truefalse_titles&#x27;&gt;&quot;;
+          ret += &quot;&lt;div class=&#x27;truefalse_titles_true&#x27;&gt;True&lt;&#x2F;div&gt;&quot;;
+          ret += &quot;&lt;div class=&#x27;truefalse_titles_false&#x27;&gt;False&lt;&#x2F;div&gt;&quot;;
+        ret += &quot;&lt;&#x2F;div&gt;&quot;;
+
+ if(VISH.Quiz.getQuizMode()==&quot;answer&quot;){  &#x2F;&#x2F;Just radio inputs to respond   
+    ret+= &quot;&lt;div class=&#x27;truefalse_answers answer_mode&#x27;&gt;&quot;;
+    ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_true&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;true&#x27;&#x2F;&gt;&quot;;
+    ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_false&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;false&#x27;&#x2F;&gt;&quot;;
+    ret += &quot;&lt;&#x2F;div&gt;&quot;;
+
+    }
+  else { &#x2F;&#x2F;Teacher view.  button to enable answers view or not (default view not show)
     
-    trueFalseAnswers = answers;
-    asnswers = [];
-    VISH.Debugging.log(&quot;JSON object answer is: &quot; +trueFalseAnswers);
+    ret+= &quot;&lt;div class=&#x27;truefalse_answers teacher_mode&#x27;&gt;&quot;;
+    if( quiz_element[&#x27;options&#x27;][&#x27;answer&#x27;]==&quot;true&quot;) {
+      ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_true&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;true&#x27; disabled=&#x27;disabled&#x27; checked&#x2F;&gt;&quot;;
+      ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_false&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;false&#x27; disabled=&#x27;disabled&#x27;&#x2F;&gt;&quot;;
+    }
+    else if ( quiz_element[&#x27;options&#x27;][&#x27;answer&#x27;]===&quot;false&quot;) {
+      ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_true&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;true&#x27; disabled=&#x27;disabled&#x27;&#x2F;&gt;&quot;;
+      ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_false&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;false&#x27; disabled=&#x27;disabled&#x27; checked&#x2F;&gt;&quot;;
+    }
+    ret += &quot;&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;truefalse_options_container&#x27;&gt;&quot;;
+    ret += &quot;&lt;li class=&#x27;truefalse_options_in_zone&#x27;&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;truefalse_titles_true&#x27;&gt;True&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;&#x2F;li&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;mc_meter&#x27;&gt;&lt;span style=&#x27;width:0%&#x27; &gt;&amp;nbsp;&lt;&#x2F;span&gt;&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;label class=&#x27;mcoption_label&#x27;&gt;&lt;&#x2F;label&gt;&quot;;
+    ret += &quot;&lt;li class=&#x27;truefalse_options_in_zone&#x27;&gt;&quot;;
+    ret += &quot;&lt;div class=&#x27;truefalse_titles_false&#x27;&gt;False&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;&#x2F;li&gt;&quot;;
+    &#x2F;&#x2F;ret += &quot;&lt;&#x2F;div&gt;&quot;;    
+    ret += &quot;&lt;div class=&#x27;mc_meter&#x27;&gt;&lt;span style=&#x27;width:0%&#x27; &gt;&amp;nbsp;&lt;&#x2F;span&gt;&lt;&#x2F;div&gt;&quot;;
+    ret += &quot;&lt;label class=&#x27;mcoption_label&#x27;&gt;&lt;&#x2F;label&gt;&quot;;
+    ret += &quot;&lt;&#x2F;div&gt;&quot;;
+ 
+    ret += &quot;&lt;div class=&#x27;showhide_answer_button_container&#x27;&gt;&quot;;
+    ret += &quot;&lt;input type=&#x27;button&#x27; class=&#x27;show_answers_button&#x27; value=&#x27;Show Answer&#x27;&#x2F;&gt;&quot;;
+    ret += &quot;&lt;input type=&#x27;button&#x27; class=&#x27;hide_answers_button&#x27; value=&#x27;Hide Answer&#x27;&#x2F;&gt;&quot;;
+    ret += &quot;&lt;&#x2F;div&gt;&quot;;
+
+
+  }
+
+      ret += &quot;&lt;&#x2F;div&gt;&quot;;
+      &#x2F;&#x2F;ret += &quot;&lt;input type=&#x27;hidden&#x27; value=&#x27;&quot;+ zone +&quot;&#x27; name=&#x27;zone&#x27; &#x2F;&gt;&quot;;
+      ret += &quot;&lt;input type=&#x27;hidden&#x27; value=&#x27;&quot;+quiz_element[&#x27;quiz_id&#x27;]+&quot;&#x27; name=&#x27;quiz_id&#x27; class=&#x27;quizId&#x27; &#x2F;&gt;&quot;;
+      ret += &quot;&lt;div class=&#x27;truefalse_inputs_wrapper&#x27;&gt;&quot;;
+      ret += &quot;&lt;a href=&#x27;#start_quiz_fancybox&#x27; class=&#x27;quiz_session_start_link&#x27; id=&#x27;launchQuizFancybox&#x27;&gt;&lt;input type=&#x27;button&#x27; class=&#x27;quiz_session_start_button&#x27; value=&#x27;Start Quiz&#x27;&#x2F;&gt;&lt;&#x2F;a&gt;&quot;;
+      ret += &quot;&lt;input type=&#x27;button&#x27; class=&#x27;quiz_send_vote_button&#x27; value=&#x27;Send&#x27;&#x2F;&gt;&quot;;
+      ret += &quot;&lt;input type=&#x27;button&#x27; class=&#x27;quiz_session_options_button&#x27; value=&#x27;Options&#x27;&#x2F;&gt;&quot;;
+       ret += &quot;&lt;&#x2F;div&gt;&quot;; &#x2F;&#x2F;close mch_input_wrapper
+      ret += &quot;&lt;&#x2F;form&gt;&quot;;
+      ret += &quot;&lt;&#x2F;div&gt;&quot;;&#x2F;&#x2F;close mcquestion_body
+      ret += &quot;&lt;&#x2F;div&gt;&quot;;&#x2F;&#x2F;close mcquestion_container
+       ret += &quot;&lt;&#x2F;div&gt;&quot;; &#x2F;&#x2F;close zoneclass quiz
+    
     
     return ret;
   };
