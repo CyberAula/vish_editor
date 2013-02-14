@@ -337,6 +337,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				//Done with a timeout because it did not work well in ubuntu
 				setTimeout(function(){
 					page_is_fullscreen = !page_is_fullscreen;
+					render_full = page_is_fullscreen;
 					_setupSize(page_is_fullscreen);
 				}, 400);
 			});
