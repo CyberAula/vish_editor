@@ -43,7 +43,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				embed = false;
 			}
 
-			close_button = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&((options["comeBackUrl"])||(V.Status.getDevice().features.history));
+			close_button = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&((options["comeBackUrl"])||((V.Status.getDevice().features.history)&&(embed)));
 			
 			//Embed elements can use native fullscreen
 			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&&(!embed);
