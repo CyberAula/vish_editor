@@ -95,7 +95,6 @@ VISH.Status.Device = (function(V,$,undefined){
 	}
 
 	var _loadViewportForDevice = function(device,callback){
-		alert(device.desktop);
 		if((device.iOS)&&(device.browser.name===V.Constant.SAFARI)){
 			_setViewportForIphone(callback);
 		} else if(device.android){
@@ -115,7 +114,7 @@ VISH.Status.Device = (function(V,$,undefined){
 				 * Since LocalStorage is supported in all Android Browsers, this is a cross-device solution.
 				 * http://caniuse.com/namevalue-storage
 				 */
-				 
+
 				 //device.desktop===undefined means that isn't a stored device
 				if(typeof device.desktop === "undefined"){
 					device.hasTestingViewport = true; //Indicate that the viewport is only for testing
