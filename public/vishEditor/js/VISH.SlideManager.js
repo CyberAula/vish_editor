@@ -27,7 +27,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		if(V.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]=="noserver")&&(!presentation)&&(V.Debugging.getPresentationSamples()!=null)) {
+			if ((options["configuration"]["mode"]===VISH.Constant.NOSERVER)&&(!presentation)&&(V.Debugging.getPresentationSamples()!==null)) {
 			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}

@@ -96,6 +96,51 @@ VISH.Utils = (function(V,undefined){
 		window.parent.location = the_url;
 	};
 
+	var addParamToUrl = function(url,paramName,paramValue){
+		if((typeof url !== "string")||(typeof paramName !== "string")||(typeof paramValue !== "string")){
+			return url;
+		}
+		//Remove hash
+		var splitHash = url.split("#");
+		url = splitHash[0];
+
+		var param = paramName+"="+paramValue;
+		if (url.indexOf('?') > -1){
+			url += '&'+param ;
+		}else{
+			url += '?'+param ;
+		}
+
+		//Add hash (if present)
+		if(splitHash.length>1){
+			url = url + "#" + splitHash[1];
+		}
+		
+		return url;
+	}
+
+	var getParamsFromUrl = function(url){
+		var params = {};
+		if(typeof url !== "string"){
+			return params;
+		}
+		var split = url.split("?");
+		if(split.length<=1){
+			return params;
+		} else {
+			//Remove hash if present
+			var urlParams = split[1].split("#")[0].split("&");
+			for(var i=0; i<urlParams.length; i++){
+				var resultSplit = urlParams[i].split("=");
+				if(resultSplit.length===2){
+					//key-value pairs
+					params[resultSplit[0]] = resultSplit[1];
+				}
+			}
+			return params;
+		}
+	}
+
    /**
 	* Function to dinamically add a css
 	*/
@@ -477,7 +522,9 @@ VISH.Utils = (function(V,undefined){
 		getHeightFromStyle  	: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		loadTab 				: loadTab,
-		sendParentToURL			: sendParentToURL
+		sendParentToURL			: sendParentToURL,
+		addParamToUrl			: addParamToUrl,
+		getParamsFromUrl		: getParamsFromUrl
    };
 
 }) (VISH);

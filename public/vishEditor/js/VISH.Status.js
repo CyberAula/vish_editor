@@ -7,12 +7,13 @@ VISH.Status = (function(V,$,undefined){
 	var _isPreventDefault;
 	
 	var init = function(callback){
+		_checkIframe();
+		_checkEmbed();
+
 		VISH.Status.Device.init(function(returnedDevice){
 			//Device and its viewport loaded
 			_device = returnedDevice;
 
-			_checkIframe();
-			_checkEmbed();
 			_checkOnline();
 
 			if(typeof callback === "function"){
