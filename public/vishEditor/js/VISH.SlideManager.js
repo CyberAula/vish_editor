@@ -83,6 +83,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); //Also init texts
+
+		if(!V.Status.getIsAnotherDomain()){
+			//Try to win focus
+			window.focus();
+		}
 	}
 
 
@@ -173,28 +178,34 @@ VISH.SlideManager = (function(V,$,undefined){
 	 */
 	var _onslideenter = function(e){
 		var slide = e.target;
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 
 		//Hide/show page-switcher buttons if neccessary
 		V.ViewerAdapter.decideIfPageSwitcher();
 		
 		setTimeout(function(){
+			if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
+				//Prevent objects to load when the slide isn't focused
+				return;
+			}
 			if($(slide).hasClass('object')){
 				V.ObjectPlayer.loadObject($(slide));
 			}
 			if($(e.target).hasClass('snapshot')){
         		V.SnapshotPlayer.loadSnapshot($(slide));
 			}
+
+			// if(V.Status.getDevice().mobile){
+			// 	V.ImagePlayer.reloadGifs($(slide));
+			// }
+			
+			V.VideoPlayer.HTML5.playVideos(e.target);
+
+			if($(e.target).hasClass("flashcard_slide")){
+				V.Flashcard.startAnimation(e.target.id);
+			}
+
 		},500);
-
-		// if(V.Status.getDevice().mobile){
-		// 	V.ImagePlayer.reloadGifs($(slide));
-		// }
-		
-		V.VideoPlayer.HTML5.playVideos(e.target);
-
-		if($(e.target).hasClass("flashcard_slide")){
-			V.Flashcard.startAnimation(e.target.id);
-		}
 	};
 
 	/**

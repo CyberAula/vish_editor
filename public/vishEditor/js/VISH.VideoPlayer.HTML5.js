@@ -74,7 +74,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 		$.each(currentVideos, function(index, video) {
 			
 			if ($(video).attr("wasplayingonslideleave")=="true"){
-			  video.play()
+			  video.play();
 			} else if ($(video).attr("wasplayingonslideleave")=="false"){
 				//Do nothing
 			} else if (typeof $(video).attr("wasplayingonslideleave") == "undefined"){
@@ -82,7 +82,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 				
 				//Check autoplayonsliddenter attr
 				if ($(video).attr("autoplayonslideenter")=="true"){
-					video.play()
+					video.play();
 				}
 			}
 		});

@@ -93,8 +93,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 	      			}
 	  		    }
 			}
+
+			//Allow keyboard events with the first click
+			$(window.document).on('click', function(){
+				window.focus();
+			});
+
+	  		bindedEventListeners = true;
 		} 
-		bindedEventListeners = true;
    };
 
    var bindEventsForFlashcard = function(slide){
@@ -109,8 +115,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			var presentation = V.Editor.getPresentation();
 			if(presentation.type === "presentation"){
-				$(document).unbind('keydown', handleBodyKeyDown); 
-				$(document).unbind('keyup', handleBodyKeyUp);   
+				$(document).unbind('keydown', handleBodyKeyDown);
+				$(document).unbind('keyup', handleBodyKeyUp);
 	  		}			
 	      	for(index in presentation.slides){
 				if(presentation.slides[index].type === "flashcard"){
@@ -122,6 +128,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 	      			$(document).off('click','.close_subslide', _onFlashcardCloseSlideClicked);
       			}
   		    }
+
+			$(window.document).off('click', function(){
+				window.focus();
+			});
 
 	  		bindedEventListeners = false;
 		}

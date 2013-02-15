@@ -167,10 +167,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		switch($(event.target).attr("action")){
 			case "plus":
 				$("#addSlideFancybox").trigger('click');
-			  break;
+				break;
 			case "goToSlide":
-			  VISH.Slides.goToSlide($(event.target).attr("slideNumber"));
-			  break;
+				V.Slides.goToSlide($(event.target).attr("slideNumber"));
+				break;
 			default:
 			  break;
 		}

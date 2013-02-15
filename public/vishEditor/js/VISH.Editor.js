@@ -202,6 +202,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		//Try to win focus
+		window.focus();
 	};
 	
 	
