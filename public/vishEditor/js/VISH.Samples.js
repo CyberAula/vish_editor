@@ -436,7 +436,8 @@ VISH.Samples = (function(V,undefined){
 						"id"     : "article12_zone2",
 						"type"   : "object",
 						"areaid" : "left",
-						"body"   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+	        			"body"	 : "<embed width=\"99%\" height=\"99%\" src=\"examples/contents/swf/virtualexperiment.swf\" type=\"application/x-shockwave-flash\" id=\"resizableunicID8\" class=\"t3_object\" wmode=\"opaque\">",
+	        			"style"  : "position: relative; width:100%; height:100%; top:0%; left:0%;"
 	        		}
         		]
         	},{
