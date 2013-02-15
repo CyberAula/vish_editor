@@ -12,7 +12,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 */
 	var init = function(options, presentation){
-		Editing = false;
+		V.Editing = false;
 		
 		V.Debugging.init(options);
 
@@ -27,7 +27,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		if(V.Debugging.isDevelopping()){
-			if ((options["configuration"]["mode"]===VISH.Constant.NOSERVER)&&(!presentation)&&(V.Debugging.getPresentationSamples()!==null)) {
+			if ((options["configuration"]["mode"]===V.Constant.NOSERVER)&&(!presentation)&&(V.Debugging.getPresentationSamples()!==null)) {
 			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}

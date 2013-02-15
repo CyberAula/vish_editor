@@ -85,14 +85,14 @@ VISH.Debugging = (function(V,$,undefined){
 	var initVishViewer = function(){
 		var mypresentation = null;
 		
-		if(VISH.Editing){
+		if(V.Editing){
 			if(!presentationOptions){
 				log("VISH.Debugging Error: Specify presentationOptions");
 				return;
 			}
-			mypresentation = VISH.Editor.getSavedPresentation();
+			mypresentation = V.Editor.getSavedPresentation();
 			if(mypresentation===null){
-				mypresentation = VISH.Editor.savePresentation();
+				mypresentation = V.Editor.savePresentation();
 			}
 		} else {
 			log("You are already in Vish Viewer");
@@ -105,19 +105,18 @@ VISH.Debugging = (function(V,$,undefined){
 	    $('#menubar_helpsection2').hide();
 	    $('#joyride_help_button').hide();
 	    $('#preview_circle').hide();
-	    VISH.Editor.Tools.cleanZoneTools();
-	    VISH.Editor.Tools.disableToolbar();
+	    V.Editor.Tools.cleanZoneTools();
+	    V.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
 
-		// VISH.Debugging.log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
-		VISH.SlideManager.init(presentationOptions, mypresentation);
+		// V.Debugging.log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
+		V.SlideManager.init(presentationOptions, mypresentation);
 	}
 	
 	var initVishEditor = function(){
-		
 		var mypresentation = null;
 		
-		if(VISH.Editing){
+		if(V.Editing){
 			log("You are already in Vish Editor");
 			return;
 		} else {
@@ -125,7 +124,7 @@ VISH.Debugging = (function(V,$,undefined){
 				log("VISH.Debugging Error: Specify presentationOptions");
 				return;
 			}
-			mypresentation = VISH.Editor.getSavedPresentation();
+			mypresentation = V.Editor.getSavedPresentation();
 		}
 		
 		$('article').remove();
@@ -134,11 +133,11 @@ VISH.Debugging = (function(V,$,undefined){
 		$('#menubar_helpsection2').show();
 		$('#joyride_help_button').show();
 		$('#preview_circle').show();
-		VISH.Editor.Tools.enableToolbar();
+		V.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
 
-		// VISH.Debugging.log("Init Vish Editor with presentation: " + JSON.stringify(mypresentation));
-		VISH.Editor.init(presentationOptions, mypresentation);
+		// log("Init Vish Editor with presentation: " + JSON.stringify(mypresentation));
+		V.Editor.init(presentationOptions, mypresentation);
 	}
 	
 	return {
