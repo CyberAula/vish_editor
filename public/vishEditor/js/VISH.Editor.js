@@ -197,6 +197,11 @@ VISH.Editor = (function(V,$,undefined){
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
+
+		//Unload all objects
+		V.Editor.Utils.Loader.unloadAllObjects();
+		//Reload current slide objects
+		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 	};
 	
 	
