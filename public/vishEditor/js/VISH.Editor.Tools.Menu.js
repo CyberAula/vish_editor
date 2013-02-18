@@ -1,9 +1,49 @@
 VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
-	var menuEventsLoaded = false;
+	var _initialized = false;
+	var _hoverMenu = false;
+
+	/*
+	 * Init singleton
+	 * Perform actions that must be executed only once
+	 */
+	var _init = function(){
+		if(!_initialized){
+			if(!V.Status.getDevice().desktop){
+				if(V.Status.getDevice().tablet){
+					V.Editor.MenuTablet.init();
+				} else {
+					disableMenu();
+					return;
+				}
+			} else {
+				_hoverMenu = true;
+			}
+
+			//Add listeners to menu buttons
+			$.each($("#menu a.menu_action"), function(index, menuButton) {
+				$(menuButton).on("click", function(event){
+					event.preventDefault();
+					if($(menuButton).parent().hasClass("menu_item_disabled")){
+						//Disabled button
+						return;
+					}
+					if(typeof V.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
+						V.Editor.Tools.Menu[$(menuButton).attr("action")](this);
+						_hideMenuAfterAction();
+					}
+				});
+			});
+			_initSettings();
+
+			_initialized = true;
+		}
+	}
 
 
    /**
+    * Called every time that menu needs to be updated
+    *
 	* Menu item classes:
 	* menu_all : Always visible
 	* menu_standard_presentation: 	Visible for standard presentations
@@ -11,18 +51,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* menu_flaschard: 				Visible for flashcards
 	* menu_game: 					Visible for games
 	*/
-
 	var init = function(){
-		$("#menu").hide();
+		_init();
 
-		if(!V.Status.getDevice().desktop){
-			if(V.Status.getDevice().tablet){
-				V.Editor.MenuTablet.init();
-			} else {
-				disableMenu();
-				return;
-			}
-		}
+		$("#menu").hide();
 
 		var presentationType = V.Editor.getPresentationType();
 
@@ -82,25 +114,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		// 	visibleLis = 0;
 		// });
 
-		if(!menuEventsLoaded){
-			//Add listeners to menu buttons
-			$.each($("#menu a.menu_action"), function(index, menuButton) {
-				$(menuButton).on("click", function(event){
-					event.preventDefault();
-					if($(menuButton).parent().hasClass("menu_item_disabled")){
-						//Disabled button
-						return;
-					}
-					if(typeof V.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
-						V.Editor.Tools.Menu[$(menuButton).attr("action")](this);
-					}
-				});
-			});
-			menuEventsLoaded = true;
-			_initSettings();
-			V.Editor.Preview.init();
-		}
-
 		$("#menu").show();
 	}
 
@@ -142,11 +155,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/// SETTINGS
 	///////////////////////
 
-	var initializedSettings = false;
-
 	var _initSettings = function(){
-
-		if ((V.Configuration.getConfiguration()["presentationSettings"]) && (!V.Editor.hasInitialPresentation()) && !initializedSettings){
+		if ((V.Configuration.getConfiguration()["presentationSettings"]) && (!V.Editor.hasInitialPresentation())){
 			$("a#edit_presentation_details").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
@@ -158,7 +168,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				'showCloseButton': false
 			});
 			displaySettings();
-			initializedSettings = true;
 		} else {
 			$("a#edit_presentation_details").fancybox({
 				'autoDimensions' : false,
@@ -450,7 +459,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Utils.loadTab('tab_templates');
 	};
 
-
+	var _hideMenuAfterAction = function(){
+		if(_hoverMenu){
+			$("#menu").hide();
+			setTimeout(function(){
+				$("#menu").show();
+			},50);
+		}
+	}
 
 	return {
 		init							: init,

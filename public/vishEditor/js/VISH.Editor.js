@@ -185,6 +185,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
+		V.Editor.Preview.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();
