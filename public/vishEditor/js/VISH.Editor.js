@@ -29,6 +29,9 @@ VISH.Editor = (function(V,$,undefined){
 	//savedPresentation uses:
 	var savedPresentation = null;
 
+	//Mode
+	var editorMode;
+
 
 	/**
 	 * VISH Editor initializer.
@@ -1048,6 +1051,14 @@ VISH.Editor = (function(V,$,undefined){
 		draftPresentation = presentation;
 	};
 
+	var setMode = function(mode){
+		editorMode = mode;
+	}
+
+	var getMode = function(){
+		return editorMode;
+	}
+
 	var getSavedPresentation = function() {
 		if(savedPresentation){
 			return savedPresentation;
@@ -1186,7 +1197,9 @@ VISH.Editor = (function(V,$,undefined){
 		setPresentationType		: setPresentationType,
 		allowExitWithoutConfirmation	:allowExitWithoutConfirmation, 
 		setCurrentArea			: setCurrentArea,
-		selectArea				: selectArea
+		selectArea				: selectArea,
+		setMode 				: setMode,
+		getMode 				: getMode
 	};
 
 }) (VISH, jQuery);

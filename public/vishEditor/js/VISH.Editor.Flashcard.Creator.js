@@ -3,6 +3,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	//Point to current flashcard.
 	//Singleton: Only one flashcard can be edited in a Vish Editor instance.
 	var flashcardId;
+	//Point to the current pois
+	var currentPois = undefined;
 
 	var init = function(){
 		flashcardId = null;
@@ -24,6 +26,15 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails();
 		V.Editor.Tools.init();
 	};
+
+	/*
+	 * Method to call before leave the flashcard mode
+	 * Store the current pois.
+	 */
+	var onLeaveFlashcardMode = function(){
+		currentPois = _getCurrentPois();
+		$("#flashcard-background").hide();
+	}
 
 	/*
 	 * Load a flashcard in the creator mode
@@ -104,18 +115,28 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	};
 
 	var _applyStyleToPois = function(){
-		var presentation = V.Editor.getPresentation();
-		if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
-			$.each(presentation.slides[0].pois, function(index, val) { 
-  				$("#" + val.id).css("position", "fixed");
-  				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
-  				$("#" + val.id).attr("moved", "true");
+		if(typeof currentPois === "undefined"){
+			//We are loading a flascard, get the pois from the flashcard
+			var presentation = V.Editor.getPresentation();
+			if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
+				currentPois = presentation.slides[0].pois;
+			} else {
+				return;
+			}
+		}
+
+		if(typeof currentPois !== "undefined"){
+			$.each(currentPois, function(index, val) { 
+				$("#" + val.id).css("position", "fixed");
+				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
+				$("#" + val.id).attr("moved", "true");
 			});
 		}
 	};
 
 	/*
-	 * Returns an array of pois
+	 * Returns the array of pois to be stored in the JSON
+	 * Pois are nested!
 	 */
 	var getPois = function(){
 		var pois = [];
@@ -125,6 +146,22 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
 			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
 			pois[index].slide_id = V.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
+		});
+		return pois;
+	};
+
+	/*
+	 * Return the current array of pois, without nesting.
+	 * The id matches the id of the DOM element.
+	 */
+	var _getCurrentPois = function(){
+		var pois = [];
+		$(".draggable_arrow_div[moved='true']").each(function(index,s){
+			pois[index]= {};
+			pois[index].id = s.id;
+			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
+			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
+			pois[index].slide_id = $(s).attr('slide_id');
 		});
 		return pois;
 	};
@@ -218,6 +255,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		init 				 		: init,
 		getCurrentFlashcardId		: getCurrentFlashcardId,
 		switchToFlashcard	 		: switchToFlashcard,
+		onLeaveFlashcardMode 		: onLeaveFlashcardMode,
 		loadFlashcard		 		: loadFlashcard,
 		onBackgroundSelected		: onBackgroundSelected,
 		redrawPois 			 		: redrawPois,

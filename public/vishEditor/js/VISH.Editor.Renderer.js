@@ -30,6 +30,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
+				V.Editor.setMode(V.Constant.FLASHCARD);
 				var flashcard = V.Editor.Flashcard.Creator.undoNestedSlidesInFlashcard(presentation.slides[0]);
 				if((flashcard)&&(flashcard.slides)){
 					slides = flashcard.slides;
@@ -41,9 +42,11 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				V.Editor.Flashcard.Creator.loadFlashcard(presentation);
 				break;
 			case V.Constant.VTOUR:
+				V.Editor.setMode(V.Constant.VTOUR);
 				break;
 			case V.Constant.PRESENTATION:
 			default:
+				V.Editor.setMode(V.Constant.PRESENTATION);
 				slides = presentation.slides;
 				for(var i=0;i<slides.length;i++){
 						if(slides[i].type === V.Constant.FLASHCARD){
