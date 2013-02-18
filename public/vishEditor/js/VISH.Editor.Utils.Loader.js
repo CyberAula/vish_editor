@@ -12,8 +12,11 @@ VISH.Editor.Utils.Loader = (function(V,$,undefined){
 
 	var _unloadObjectsInEditor = function(objects){
 		$.each(objects, function(index, object){
-			$(object).attr("htmlContent",$(object).html());
-			$(object).html("");
+			var htmlContent = $(object).html();
+			if((typeof htmlContent !== "undefined")&&(htmlContent!=="")){
+				$(object).attr("htmlContent",$(object).html());
+				$(object).html("");
+			}
 		});
 	}
 
