@@ -532,6 +532,11 @@ VISH.Editor = (function(V,$,undefined){
 	var _onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent()[0];
 
+		if(getMode()===V.Constant.FLASHCARD){
+			$(article_to_delete).hide();
+			return;
+		}
+
 		var thumb;
 		switch(V.Slides.getSlideType(article_to_delete)){
 			case V.Constant.STANDARD:

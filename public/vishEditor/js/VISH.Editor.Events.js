@@ -64,7 +64,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 	 * function called when a poi is clicked
 	 */
 	 var _onFlashcardPoiClicked = function(event){
-    	V.Slides.openSubslide(event.data.slide_id,true);
+	 	if(V.Editor.getMode()===V.Constant.PRESENTATION){
+	 		V.Slides.openSubslide(event.data.slide_id,true);
+	 	}
 	 };
 
 
