@@ -30,7 +30,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			current_area = area;
 		}
 		else {
-			current_area = VISH.Editor.getCurrentArea();
+			current_area = V.Editor.getCurrentArea();
 		}
 		if(num_options){
 			current_num_options = num_options;
@@ -46,7 +46,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			case "multiplechoice":
 				_addMultipleChoiceQuiz(current_area, current_num_options, quiz_type);
 				//hide & show fancybox elements 
-				VISH.Utils.loadTab('tab_quizes'); 
+				V.Utils.loadTab('tab_quizes'); 
 				break;
 			case "truefalse":
 				//we use the same function because we are trying to do this asap
@@ -160,7 +160,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var current_num_options = num_options;
 		var quiztype = quiz_type;
 		
-		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy(quiztype, V.Slides.getSlides().length);
+		var quiz = V.Editor.Quiz.Dummies.getQuizDummy(quiztype, V.Slides.getSlides().length);
 		current_area.append(quiz);
 		//launchTextEditorInTextArea(current_area, "multiplechoice");
 		
@@ -183,7 +183,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 
 			current_area.attr('quiztype','truefalse');
-			var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(quiztype);
+			var quiz_option = V.Editor.Quiz.Dummies.getQuizOptionDummy(quiztype);
 			$(current_area).find(".truefalse_options_in_zone").append(quiz_option);
 		}
 		launchTextEditorInTextArea(current_area, quiztype);
@@ -210,7 +210,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 			case "multiplechoice":
 				//load dummy
-				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
+				var quiz_option = V.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
 				//as current_options as options in load quiz 
 				var current_options = $(current_area).find(".li_mch_options_in_zone").size(); 
 				//add option 
@@ -241,7 +241,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			break;
 			case "truefalse":
 				//load dummy
-				var quiz_option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
+				var quiz_option = V.Editor.Quiz.Dummies.getQuizOptionDummy(current_quiz_type);
 				var current_questions = $(current_area).find(".value_truefalse_question_in_zone").size(); 
 				V.Debugging.log("current options: " + current_questions);
 				current_area.find(".truefalse_quiz_table").append(quiz_option);
@@ -284,7 +284,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			var current_area = V.Editor.getCurrentArea();
 			//Remove li
 			var option_number = $(event.target).attr("delete_option"); 
-			VISH.Debugging.log("option number:" + option_number);
+			V.Debugging.log("option number:" + option_number);
 			$($(current_area).find(".li_mch_options_in_zone")[option_number]).remove();
 			
 			//reassign index letters for remaining options & reassign id's
@@ -329,7 +329,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			$($(current_area).find("."+ type_quiz + "_option_in_zone")[option_number]).attr("id", optionWysiwygId);
     		if($($(current_area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
    				$("#"+optionWysiwygId).addClass("wysiwygInstance");
-    			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
+    			V.Editor.Text.NiceEditor.getNicEditor().addInstance(optionWysiwygId);
     		}
    		} 
 		//question input
@@ -339,7 +339,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			var wysiwygId = V.Utils.getId();
 			textArea.attr("id", wysiwygId);
 			$("#"+wysiwygId).addClass("wysiwygInstance");
-			VISH.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
+			V.Editor.Text.NiceEditor.getNicEditor().addInstance(wysiwygId);
 		}
 		
 		$(".initTextDiv").click(function(event){
@@ -375,14 +375,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var _addTrueFalseQuiz = function(area) {
 		var current_area = area;
 		//just the Quiz body or structure
-		var quiz = VISH.Editor.Quiz.Dummies.getQuizDummy("truefalse", V.Slides.getSlides().length);
+		var quiz = V.Editor.Quiz.Dummies.getQuizDummy("truefalse", V.Slides.getSlides().length);
 		current_area.find(".menuselect_hide").remove(); 
 		current_area.attr('type','quiz');
 		current_area.attr('quiztype','truefalse');
 		//add the quizDummy (empty quiz) into the area (zone)
 		current_area.append(quiz);
 		//now add the question 
-		option = VISH.Editor.Quiz.Dummies.getQuizOptionDummy("truefalse");
+		option = V.Editor.Quiz.Dummies.getQuizOptionDummy("truefalse");
 		current_area.find(".truefalse_quiz_table").append(option);
 		launchTextEditorInTextArea(current_area, "truefalse");
 		V.Editor.addDeleteButton(current_area);

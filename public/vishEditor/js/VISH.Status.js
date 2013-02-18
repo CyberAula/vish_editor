@@ -12,7 +12,7 @@ VISH.Status = (function(V,$,undefined){
 		_checkEmbed();
 		_checkDomain();
 
-		VISH.Status.Device.init(function(returnedDevice){
+		V.Status.Device.init(function(returnedDevice){
 			//Device and its viewport loaded
 			_device = returnedDevice;
 
@@ -62,7 +62,7 @@ VISH.Status = (function(V,$,undefined){
 		            async: true,
 		            cache: false,
 		            error: function (req, status, ex) {
-		                VISH.Debugging.log("Error: " + ex);
+		                V.Debugging.log("Error: " + ex);
 		                // We might not be technically "offline" if the error is not a timeout, but
 		                // otherwise we're getting some sort of error when we shouldn't, so we're
 		                // going to treat it as if we're offline.
@@ -75,7 +75,7 @@ VISH.Status = (function(V,$,undefined){
 		            },
 		            timeout: 5000,
 		            type: "GET",
-		            url: VISH.ImagesPath+"blank.gif"
+		            url: V.ImagesPath+"blank.gif"
 		        });
 		    //}
 		    //else {
@@ -127,12 +127,12 @@ VISH.Status = (function(V,$,undefined){
 	var setSlaveMode = function(slaveMode){
 		if(slaveMode!==_isSlave){
 			if(slaveMode===true){
-				VISH.Events.unbindViewerEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(false);
+				V.Events.unbindViewerEventListeners();
+				V.VideoPlayer.HTML5.showControls(false);
 				_isSlave=true;
 			} else {
-				VISH.Events.bindViewerEventListeners();
-				VISH.VideoPlayer.HTML5.showControls(true);
+				V.Events.bindViewerEventListeners();
+				V.VideoPlayer.HTML5.showControls(true);
 				_isSlave=false;
 			}
 		}

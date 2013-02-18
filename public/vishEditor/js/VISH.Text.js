@@ -26,12 +26,12 @@ VISH.Text = (function(V,$,undefined){
 
 				//Original Height: 600, Original width: 800
 				//Make table width and height relative (%)
-				var tableWidth = VISH.Utils.getWidthFromStyle(tableOrgStyle);
+				var tableWidth = V.Utils.getWidthFromStyle(tableOrgStyle);
 				if(tableWidth){
 					var percentWidth = (tableWidth*100)/800;
 					tableStyle += "width:"+percentWidth+"%;";
 				}
-				var tableHeight = VISH.Utils.getHeightFromStyle(tableOrgStyle);
+				var tableHeight = V.Utils.getHeightFromStyle(tableOrgStyle);
 				if(tableHeight){
 					var percentHeight = (tableHeight*100)/600;
 					tableStyle += "height:"+percentHeight+"%;";
@@ -51,13 +51,13 @@ VISH.Text = (function(V,$,undefined){
 
 		$(spans).each(function(index,span){
 			oldStyle = $(span).attr("style");
-			lastFontSizeCandidate = parseInt(VISH.Utils.getFontSizeFromStyle(oldStyle));
+			lastFontSizeCandidate = parseInt(V.Utils.getFontSizeFromStyle(oldStyle));
 			if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
 				lastFontSize = lastFontSizeCandidate;
 			}
 
 			if($(span).find("span").length !== 0) {
-				newStyle = VISH.Utils.removeFontSizeInStyle(oldStyle);
+				newStyle = V.Utils.removeFontSizeInStyle(oldStyle);
 				if((newStyle === null)||(newStyle === "; ")){
 					$(span).removeAttr("style");
 				} else {
@@ -71,10 +71,10 @@ VISH.Text = (function(V,$,undefined){
 				} else if(lastFontSize !== null){
 					fontSize = lastFontSize;
 				} else {
-					fontSize = VISH.Constant.TextDefault; //Default font
+					fontSize = V.Constant.TextDefault; //Default font
 				}
-				var em = (fontSize/VISH.Constant.TextBase) + "em";
-				newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
+				var em = (fontSize/V.Constant.TextBase) + "em";
+				newStyle = V.Utils.addFontSizeToStyle(oldStyle,em);
 				$(span).attr("style",newStyle);
 			}
 		});
@@ -95,7 +95,7 @@ VISH.Text = (function(V,$,undefined){
 
 			//Convert to em
 			var pxfontSize = _font_to_px(fontSize);
-			var em = (pxfontSize/VISH.Constant.TextBase) + "em";
+			var em = (pxfontSize/V.Constant.TextBase) + "em";
 			var span = $("<span style='font-size:"+em+"'></span>");
 			$(span).html($(font).html());
 			$(font).parent().prepend(span);
@@ -110,16 +110,16 @@ VISH.Text = (function(V,$,undefined){
 		if(typeof oldStyle !== "string"){
 			oldStyle = "";
 		} else {
-			fontSize = VISH.Utils.getFontSizeFromStyle(oldStyle);
+			fontSize = V.Utils.getFontSizeFromStyle(oldStyle);
 		}
 
 		if((typeof fontSize !== "number")||(isNaN(fontSize))){
-			fontSize = VISH.Constant.TextDefault; //Default font-size
+			fontSize = V.Constant.TextDefault; //Default font-size
 		}
 
 		//Convert to em (http://pxtoem.com/)
-		var em = (fontSize/VISH.Constant.TextBase) + "em";
-		var newStyle = VISH.Utils.addFontSizeToStyle(oldStyle,em);
+		var em = (fontSize/V.Constant.TextBase) + "em";
+		var newStyle = V.Utils.addFontSizeToStyle(oldStyle,em);
 		$(el).attr("style",newStyle);
 	}
 
@@ -128,7 +128,7 @@ VISH.Text = (function(V,$,undefined){
      */
 	var aftersetupSize = function(increase){
 		increase = increase*_correctionFactor(increase);
-		var reference_font_size = VISH.Constant.TextBase;
+		var reference_font_size = V.Constant.TextBase;
 		var texts = $("article");
 		$(texts).css("font-size", reference_font_size*increase + "px");
 	}

@@ -35,10 +35,10 @@ VISH.Status.Device = (function(V,$,undefined){
 			device.features = V.Status.Device.Features.fillFeatures();
 
 			//Store device
-			V.Storage.add(VISH.Constant.Storage.Device,device,false);
+			V.Storage.add(V.Constant.Storage.Device,device,false);
 
 			//Fix for Android Browsers
-			if((device.android)&&(device.browser.name===VISH.Constant.ANDROID_BROWSER)){
+			if((device.android)&&(device.browser.name===V.Constant.ANDROID_BROWSER)){
 				if(device.hasTestingViewport===true){
 					//We need to reload the page with the real viewport
 					_reloadOnAndroidTestingViewport(callback,device);
@@ -252,7 +252,7 @@ VISH.Status.Device = (function(V,$,undefined){
 
 		 //Force Android with Android Native Browser
 		 // device.android = true;
-		 // device.browser.name = VISH.Constant.ANDROID_BROWSER;
+		 // device.browser.name = V.Constant.ANDROID_BROWSER;
 
 		 // if(device.mobile){
 		 // 	alert("mobile");

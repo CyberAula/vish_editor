@@ -1,21 +1,21 @@
 /*
  * Filter VISH Editor functionality based on status: device, browser, etc.
  * Disable no cross-browser features in the corresponding browsers.
- * Attention! Rendering Filter is managed by VISH.Renderer.Filter.
+ * Attention! Rendering Filter is managed by V.Renderer.Filter.
  */
 
 VISH.Editor.Filter = (function(V,$,undefined){
 
 	var init  = function(){
-		var device = VISH.Status.getDevice();
+		var device = V.Status.getDevice();
 		var browser = device.browser;
 
 		switch(browser.name){
-			case VISH.Constant.IE:
+			case V.Constant.IE:
 				//Disable websnapshot in Internet Explorer
 				$("#tab_object_snapshot").hide();
 				break;
-			case VISH.Constant.UNKNOWN:
+			case V.Constant.UNKNOWN:
 				//Disable websnapshot in Unknown browsers
 				$("#tab_object_snapshot").hide();
 				break;

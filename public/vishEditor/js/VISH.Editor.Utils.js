@@ -28,7 +28,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			}
 		});
 		
-		var dimensions = VISH.Utils.getPixelDimensionsFromStyle(style,area);
+		var dimensions = V.Utils.getPixelDimensionsFromStyle(style,area);
 
 		if((dimensions)&&(dimensions[0])){
 			filterStyle = filterStyle + "width: " + dimensions[0] + "px; ";
@@ -116,15 +116,15 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		return "<table class=\"metadata\">"+
 		 "<tr class=\"even\">" +
-		   "<td class=\"title header_left\">" + VISH.Editor.I18n.getTrans("i.Title") + "</td>" + 
+		   "<td class=\"title header_left\">" + V.Editor.I18n.getTrans("i.Title") + "</td>" + 
 		   "<td class=\"title header_right\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
 		 "</tr>" + 
 		 "<tr class=\"odd\">" + 
-		   "<td class=\"title\">" + VISH.Editor.I18n.getTrans("i.Author") + "</td>" + 
+		   "<td class=\"title\">" + V.Editor.I18n.getTrans("i.Author") + "</td>" + 
 		   "<td class=\"info\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
 		 "</tr>" + 
 		 "<tr class=\"even\">" + 
-		   "<td colspan=\"2\" class=\"title_description\">" + VISH.Editor.I18n.getTrans("i.Description") + "</td>" + 
+		   "<td colspan=\"2\" class=\"title_description\">" + V.Editor.I18n.getTrans("i.Description") + "</td>" + 
 		 "</tr>" + 
 		 "<tr class=\"odd\">" + 
 		   "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 
@@ -152,7 +152,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	//Add HTTP if is not present.
 	var autocompleteUrls = function(input){
 		var http_urls_pattern=/(^http(s)?:\/\/)/g
-		var objectInfo = VISH.Object.getObjectInfo();
+		var objectInfo = V.Object.getObjectInfo();
 
 		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
 			return "http://" + input;
@@ -175,16 +175,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return slide;
 		}
 
-		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
 			//Only one slide nested level are currently supported
 			//TODO: Make it recursive
 			return;
 		}
 
-		slide.id = VISH.Utils.getId(parentId + "_" + slide.id,true);
+		slide.id = V.Utils.getId(parentId + "_" + slide.id,true);
 		if(slide.elements){
 			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = VISH.Utils.getId(parentId + "_" + slide.elements[index].id,true);
+				slide.elements[index].id = V.Utils.getId(parentId + "_" + slide.elements[index].id,true);
 			});
 		}
 		return slide;
@@ -195,7 +195,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return slide;
 		}
 
-		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
 			//Only one slide nested level are currently supported
 			//TODO: Make it recursive
 			return;
@@ -216,12 +216,12 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		var slideId = V.Utils.getId("article");
 		$(slide).attr("id",slideId);
 
-		var slideType = VISH.Slides.getSlideType(slide);
+		var slideType = V.Slides.getSlideType(slide);
 		switch(slideType){
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 				slide = _replaceIdsForStandardSlide(slide,slideId);
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 				slide = _replaceIdsForFlashcardSlide(slide,slideId);
 				break;
 			default:

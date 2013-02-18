@@ -7,7 +7,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 
 	var init = function() {
 		var myInput = $("#tab_flashcards_repo_content").find("input[type='search']");
-		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());
@@ -27,14 +27,14 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		VISH.Editor.API.requestRecomendedFlashcards(_onDataReceived, _onAPIError);
+		V.Editor.API.requestRecomendedFlashcards(_onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
-		VISH.Editor.API.requestFlashcards(text, _onDataReceived, _onAPIError);
+		V.Editor.API.requestFlashcards(text, _onDataReceived, _onAPIError);
 	};
 	
 	/*
@@ -42,7 +42,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	 */
 	var _onDataReceived = function(data) {
 		//Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 
 		//Clean previous Images
@@ -51,7 +51,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 
 		var content = "";
 
-		//the received data has an array called "flashcards", see VISH.Samples.API.flashcardList for an example
+		//the received data has an array called "flashcards", see V.Samples.API.flashcardList for an example
 		if((!data.flashcards)||(data.flashcards.length==0)){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
 			$("#" + carrouselDivId).show();
@@ -64,7 +64,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			carrouselImages.push(myImg);
 			currentFlashcards[fc.id] = fc;
 		});
-		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 	
 	var _onImagesLoaded = function(){
@@ -76,11 +76,11 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		options['scrollItems'] = 4;
 		options['width'] = 650;
 		options['styleClass'] = "flashcard_repository";
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
 	var _onAPIError = function() {
-		VISH.Debugging.log("API error");
+		V.Debugging.log("API error");
 	};
 	
 	var _onClickCarrouselElement = function(event) {
@@ -88,16 +88,16 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		if(flashcardid){
 			var the_flashcard_excursion = currentFlashcards[flashcardid];
 			//we have the flashcard as is in the repository but we have to update its ids to the adequate ones
-			var selectedFc = VISH.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion.slides[0]);
-			VISH.Editor.Flashcard.addFlashcard(selectedFc);
+			var selectedFc = V.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion.slides[0]);
+			V.Editor.Flashcard.addFlashcard(selectedFc);
 			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
 			//currentSlide number is next slide
 			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 			V.Editor.Slides.redrawSlides();
-			VISH.Editor.Thumbnails.redrawThumbnails();
+			V.Editor.Thumbnails.redrawThumbnails();
 			V.Editor.Events.bindEventsForFlashcard(selectedFc);
 			V.Slides.lastSlide();  //important to get the browser to draw everything
-			VISH.Editor.Tools.Menu.updateMenuAfterAddSlide(VISH.Constant.FLASHCARD);
+			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
 			$.fancybox.close();
 		}
 	};

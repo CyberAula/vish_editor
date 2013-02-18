@@ -10,9 +10,9 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
-			if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = VISH.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-				VISH.Editor.Object.drawPreview(urlDivId, contentToAdd);  
+			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
+				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
+				V.Editor.Object.drawPreview(urlDivId, contentToAdd);  
 			}
 		});
 	};	
@@ -20,12 +20,12 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
   
 	var onLoadTab = function(tab){
 		contentToAdd = null;
-		VISH.Editor.Object.resetPreview(urlDivId);
+		V.Editor.Object.resetPreview(urlDivId);
 		$("#" + urlInputId).val("");
 	}
 	
 	var drawPreviewElement = function(){
-		VISH.Editor.Object.drawPreviewObject(contentToAdd);
+		V.Editor.Object.drawPreviewObject(contentToAdd);
 	}
 	
 	var generateWrapperForWeb = function(url){

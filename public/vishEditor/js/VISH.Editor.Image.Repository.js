@@ -8,7 +8,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	
 	var init = function() {
 		var myInput = $("#tab_pic_repo_content").find("input[type='search']");
-		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());
@@ -28,14 +28,14 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		VISH.Editor.API.requestRecomendedImages(_onDataReceived, _onAPIError);
+		V.Editor.API.requestRecomendedImages(_onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
-		VISH.Editor.API.requestImages(text, _onDataReceived, _onAPIError);
+		V.Editor.API.requestImages(text, _onDataReceived, _onAPIError);
 	};
 	
 	/*
@@ -43,7 +43,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	 */
 	var _onDataReceived = function(data) {
 		//Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 
 		//Clean previous Images
@@ -52,7 +52,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 
 		var content = "";
 
-		//the received data has an array called "pictures", see VISH.Samples.API.imageList for an example
+		//the received data has an array called "pictures", see V.Samples.API.imageList for an example
 		if((!data.pictures)||(data.pictures.length==0)){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
 			$("#" + carrouselDivId).show();
@@ -65,7 +65,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 			carrouselImages.push(myImg);
 			currentImages[image.id] = image;
 		});
-		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 	
 	var _onImagesLoaded = function(){
@@ -75,11 +75,11 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		options['callback'] = _onClickCarrouselElement;
 		options['rowItems'] = 4;
 		options['scrollItems'] = 4;
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
 	var _onAPIError = function() {
-		VISH.Debugging.log("API error");
+		V.Debugging.log("API error");
 	};
 	
 	var _onClickCarrouselElement = function(event) {

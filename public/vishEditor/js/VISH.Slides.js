@@ -29,7 +29,7 @@ VISH.Slides = (function(V,$,undefined){
 	  if (slideNo) {
 	    curSlideIndex = slideNo - 1;
 	  } else {
-	  	if(VISH.Editing){
+	  	if(V.Editing){
 	  		curSlideIndex = -1; //Start in 0 (no slides)
 	  	} else {
 	  		curSlideIndex = 0; //Start in 1 (first slide)
@@ -167,23 +167,23 @@ VISH.Slides = (function(V,$,undefined){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
 			switch($(slideEl).attr("type")){
 				case undefined:
-				case VISH.Constant.STANDARD:
-					return VISH.Constant.STANDARD;
+				case V.Constant.STANDARD:
+					return V.Constant.STANDARD;
 					break;
-				case VISH.Constant.FLASHCARD:
-					return VISH.Constant.FLASHCARD;
+				case V.Constant.FLASHCARD:
+					return V.Constant.FLASHCARD;
 					break;
-				case VISH.Constant.QUIZ_SIMPLE:
-					return VISH.Constant.QUIZ_SIMPLE;
+				case V.Constant.QUIZ_SIMPLE:
+					return V.Constant.QUIZ_SIMPLE;
 					break;
-				case VISH.Constant.GAME:
-					return VISH.Constant.GAME;
+				case V.Constant.GAME:
+					return V.Constant.GAME;
 					break;
-				case VISH.Constant.VTOUR:
-					return VISH.Constant.VTOUR;
+				case V.Constant.VTOUR:
+					return V.Constant.VTOUR;
 					break;
 				default:
-					return VISH.Constant.UNKNOWN;
+					return V.Constant.UNKNOWN;
 					break;
 			}
 		} else {
@@ -290,10 +290,10 @@ VISH.Slides = (function(V,$,undefined){
 
 		triggeredByUser = !(triggeredByUser===false);
 
-		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
+		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
 			var params = new Object();
 			params.slideNumber = no;
-			VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onGoToSlide,params);
+			V.Messenger.notifyEventByMessage(V.Constant.Event.onGoToSlide,params);
 			return;
 		}
 
@@ -309,11 +309,11 @@ VISH.Slides = (function(V,$,undefined){
 			}
 		}
 
-		if(VISH.Editing){
+		if(V.Editing){
 			//first deselect zone if anyone was selected
 			$(".selectable").css("border-style", "none");
 
-			VISH.Editor.Tools.cleanZoneTools();
+			V.Editor.Tools.cleanZoneTools();
 
 			//finally add a background color to thumbnail of the selected slide
 			V.Editor.Thumbnails.selectThumbnail(no);   	
@@ -324,7 +324,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		var params = new Object();
 		params.slideNumber = no;
-		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onGoToSlide,params,triggeredByUser);
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onGoToSlide,params,triggeredByUser);
 	};
   
    /**
@@ -341,10 +341,10 @@ VISH.Slides = (function(V,$,undefined){
 	var openSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
-		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
+		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
 			var params = new Object();
 			params.slideNumber = slide_id;
-			VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onFlashcardPointClicked,params);
+			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardPointClicked,params);
 			return;
   		}
 
@@ -355,7 +355,7 @@ VISH.Slides = (function(V,$,undefined){
 		//Notify
 		var params = new Object();
 		params.slideNumber = slide_id;
-		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);	
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);	
 	};
 
 
@@ -365,10 +365,10 @@ VISH.Slides = (function(V,$,undefined){
 	var closeSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
 
-		if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())&&(VISH.Messenger)){
+		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
 			var params = new Object();
 			params.slideNumber = slide_id;
-			VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onFlashcardSlideClosed,params);
+			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
 			return;
   		}
 
@@ -379,25 +379,25 @@ VISH.Slides = (function(V,$,undefined){
 		//Notify
 		var params = new Object();
 		params.slideNumber = slide_id;
-		VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
 	};
 
 	var _onOpenSubslide = function(subSlideId){
 		curSubSlideId = subSlideId;
 		$("#closeButton").hide();
-		//Open subslide will call VISH.ViewerAdapter.decideIfPageSwitcher();
+		//Open subslide will call V.ViewerAdapter.decideIfPageSwitcher();
 	}
 
 	var _onCloseSubslide = function(){
 		curSubSlideId = null;
-		if(VISH.Status.getDevice().mobile){
+		if(V.Status.getDevice().mobile){
 			//Timeout to prevent undesired actions in Mobile Phones
 			setTimeout(function(){
 				$("#closeButton").show();
-				VISH.ViewerAdapter.decideIfPageSwitcher();
+				V.ViewerAdapter.decideIfPageSwitcher();
 			},800);
 		} else {
-			VISH.ViewerAdapter.decideIfPageSwitcher();
+			V.ViewerAdapter.decideIfPageSwitcher();
 		}
 	}
 

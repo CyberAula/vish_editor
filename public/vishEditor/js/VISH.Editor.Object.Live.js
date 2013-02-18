@@ -8,7 +8,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   
   var init = function(){
     var myInput = $("#tab_live_webcam_content").find("input[type='search']");
-	  $(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+	  $(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 	  $(myInput).keydown(function(event) {
 	    if(event.keyCode == 13) {
         _requestData($(myInput).val());
@@ -35,14 +35,14 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
-    VISH.Editor.API.requestRecomendedLives(_onDataReceived, _onAPIError);
+    V.Editor.API.requestRecomendedLives(_onDataReceived, _onAPIError);
   }
 	
   /*
    * Request data to the server.
    */
   var _requestData = function(text){
-    VISH.Editor.API.requestLives(text, _onDataReceived, _onAPIError);
+    V.Editor.API.requestLives(text, _onDataReceived, _onAPIError);
   }
 	
   /*
@@ -51,7 +51,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   var _onDataReceived = function(data){
 		
     //Clean previous content
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 		_cleanObjectPreview();
   
@@ -69,25 +69,25 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
     } 
 		
     $.each(data, function(index, object) {
-      var objectInfo = VISH.Object.getObjectInfo(object.fulltext)
+      var objectInfo = V.Object.getObjectInfo(object.fulltext)
       var imageSource = null;
       
       switch (objectInfo.type){
         case "swf":
-          imageSource = VISH.ImagesPath + "carrousel/swf.png"
+          imageSource = V.ImagesPath + "carrousel/swf.png"
 	      break;
 	    case "youtube":
-	        imageSource = VISH.ImagesPath + "carrousel/youtube.png"
+	        imageSource = V.ImagesPath + "carrousel/youtube.png"
 	      break;
 	    case "web":
 	      if(objectInfo.wrapper=="IFRAME"){
-	        imageSource = VISH.ImagesPath + "carrousel/iframe.png"
+	        imageSource = V.ImagesPath + "carrousel/iframe.png"
 	      } else {
-	    	  imageSource = VISH.ImagesPath + "carrousel/object.png"
+	    	  imageSource = V.ImagesPath + "carrousel/object.png"
 	      }
 	      break;
 	    default:
-	      imageSource = VISH.ImagesPath + "carrousel/object.png"
+	      imageSource = V.ImagesPath + "carrousel/object.png"
 	      break;
       }
 			
@@ -97,7 +97,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
       currentObject[object.id]=object;
     });
 
-    VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
+    V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles);
     
   }
 	
@@ -109,18 +109,18 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
     options['callback'] = _onClickCarrouselElement;
     options['rowItems'] = 5;
     options['styleClass'] = "title";
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+    V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
   var _onAPIError = function(){
-	    VISH.Debugging.log("Error")
+	    V.Debugging.log("Error")
   }
 	 
   
   var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
 		if (typeof objectId != "undefined") {
-			var renderedObject = VISH.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext)
+			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].fulltext)
       _renderObjectPreview(renderedObject,currentObject[objectId]);
       selectedObject = currentObject[objectId];
 	  }
@@ -134,7 +134,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	  $(metadataArea).html("");
 	  if((renderedObject)&&(object)){
 	    $(objectArea).append(renderedObject);
-	    var table = VISH.Editor.Utils.generateTable(object.author,object.title,object.description);
+	    var table = V.Editor.Utils.generateTable(object.author,object.title,object.description);
 	    $(metadataArea).html(table);
 			$("#" + footId).find(".okButton").show();
 	  }
@@ -151,7 +151,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
   
   var addSelectedObject = function(){
     if(selectedObject!=null){
-      VISH.Editor.Object.drawObject(selectedObject.fulltext);
+      V.Editor.Object.drawObject(selectedObject.fulltext);
       $.fancybox.close();
     }
   }

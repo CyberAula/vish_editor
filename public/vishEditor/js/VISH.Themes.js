@@ -2,14 +2,14 @@ VISH.Themes = (function(V,$,undefined){
 
 	var loadTheme = function(theme){
 		if(!theme){
-			theme = VISH.Constant.Themes.Default;
+			theme = V.Constant.Themes.Default;
 		}
 		_unloadAllThemes();
 		V.Utils.loadCSS("themes/" + theme + ".css");
 	}
 
 	var _unloadAllThemes = function(){
-		var theme_pattern = "(^" + VISH.StylesheetsPath + "themes/)";
+		var theme_pattern = "(^" + V.StylesheetsPath + "themes/)";
 		$("head").find("link[type='text/css']").each(function(index, link) {
 			var href = $(link).attr("href");
 			if(href){

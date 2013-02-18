@@ -7,31 +7,31 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 	var init = function(){
 
-		VISH.Editor.Object.Repository.init();
-		VISH.Editor.Object.Live.init();
-		VISH.Editor.Object.Web.init();
-		VISH.Editor.Object.PDF.init();
-		VISH.Editor.Object.Snapshot.init();
+		V.Editor.Object.Repository.init();
+		V.Editor.Object.Live.init();
+		V.Editor.Object.Web.init();
+		V.Editor.Object.PDF.init();
+		V.Editor.Object.Snapshot.init();
 		
 		var urlInput = $(urlDivId ).find("input");
 		$(urlInput).watermark('Paste SWF file URL');
 		
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
-			if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = VISH.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
+			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
+				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
 				drawPreview(urlDivId, contentToAdd)    
 			}
 		});
 		
 		//Upload content
-		var options = VISH.Editor.getOptions();
+		var options = V.Editor.getOptions();
 		var tagList = $("#" + uploadDivId + " .tagList")
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
     
 		$("#" + uploadDivId + " input[name='document[file]']").change(function () {
-			var filterFilePath = VISH.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
+			var filterFilePath = V.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
 			$("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
 			_resetUploadFields();
 			$(tagList).parent().show();
@@ -41,16 +41,16 @@ VISH.Editor.Object = (function(V,$,undefined){
 		
 		
 		$("#" + uploadDivId + " #upload_document_submit").click(function(event) {
-			if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
+			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = "Uploaded by " + VISH.User.getName() + " via Vish Editor"
+					var description = "Uploaded by " + V.User.getName() + " via Vish Editor"
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
-					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
-					$("#" + uploadDivId + " .documentsForm").attr("action", VISH.UploadObjectPath);
-					$("#" + uploadDivId + " input[name='tags']").val(VISH.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					$("#" + uploadDivId + " input[name='document[owner_id]']").val(V.User.getId());
+					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
+					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadObjectPath);
+					$("#" + uploadDivId + " input[name='tags']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					var tagList = $("#" + uploadDivId + " .tagList")
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
@@ -71,14 +71,14 @@ VISH.Editor.Object = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				switch(VISH.Configuration.getConfiguration()["mode"]){
-					case VISH.Constant.NOSERVER:
+				switch(V.Configuration.getConfiguration()["mode"]){
+					case V.Constant.NOSERVER:
 						processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
 					break;
-					case VISH.Constant.VISH:
+					case V.Constant.VISH:
 						processResponse(xhr.responseText);
 					break;
-					case VISH.Constant.STANDALONE:
+					case V.Constant.STANDALONE:
 						processResponse(xhr.responseText);
 					break;
 				}
@@ -87,8 +87,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			error: function(error){
-				VISH.Debugging.log("Upload error");
-				VISH.Debugging.log(error);
+				V.Debugging.log("Upload error");
+				V.Debugging.log(error);
 			}
 		});	
 	}
@@ -119,7 +119,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$("#" + uploadDivId + " input[name='document[file]']").val(""); 
 		_resetUploadFields();
 			
-		VISH.Editor.API.requestTags(_onTagsReceived)
+		V.Editor.API.requestTags(_onTagsReceived)
 	}
 	
 	var _resetUploadFields = function(){
@@ -150,7 +150,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			// });
 
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
-			watermarkAllowMessage: VISH.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: VISH.Editor.I18n.getTrans("i.limitReached")});
+			watermarkAllowMessage: V.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.Editor.I18n.getTrans("i.limitReached")});
 		}
 	}
 	
@@ -159,7 +159,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		try  {
 			var jsonResponse = JSON.parse(response)
 			if(jsonResponse.src){
-				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
+				if (V.Police.validateObject(jsonResponse.src)[0]) {
 				  drawPreview(uploadDivId,jsonResponse.src)
 				  contentToAdd = jsonResponse.src
 				}
@@ -289,7 +289,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	///////////////////////////////////////
 	
 	var renderObjectPreview = function(object){
-		var objectInfo = VISH.Object.getObjectInfo(object);
+		var objectInfo = V.Object.getObjectInfo(object);
 
 		switch (objectInfo.wrapper) {
 			case null:
@@ -304,23 +304,23 @@ VISH.Editor.Object = (function(V,$,undefined){
 						break;
 
 					case "pdf":
-						return VISH.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
+						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
 						break;
 					  
 					case "youtube":
-						return VISH.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
+						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 
 					case "HTML5":
-						return VISH.Editor.Video.HTML5.renderVideoFromSources([object]);
+						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
 						break;
 						
 					case "web":
-						return VISH.Editor.Object.Web.generatePreviewWrapperForWeb(object);
+						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
 						break;
 
 					default:
-						VISH.Debugging.log("Unrecognized object source type")
+						V.Debugging.log("Unrecognized object source type")
 						break;
 				}
 				break;
@@ -338,7 +338,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			default:
-				VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
 				break;
 		}
 	}
@@ -364,7 +364,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, area, style, zoomInStyle){	
-		if(!VISH.Police.validateObject(object)[0]){
+		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
 
@@ -373,13 +373,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(area){
 			current_area = area;
 		} else {
-			current_area = VISH.Editor.getCurrentArea();
+			current_area = V.Editor.getCurrentArea();
 		}
 		if(style){
 			object_style = style;
 		}
 		
-		var objectInfo = VISH.Object.getObjectInfo(object);
+		var objectInfo = V.Object.getObjectInfo(object);
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
@@ -421,11 +421,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			default:
-				VISH.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
 				break;
 		}
 		//finally load the tools in the toolbar
-		VISH.Editor.Tools.loadToolsForZone(current_area);
+		V.Editor.Tools.loadToolsForZone(current_area);
 	}
 	
 	/**
@@ -454,7 +454,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);
 
-		VISH.Editor.addDeleteButton($(current_area));
+		V.Editor.addDeleteButton($(current_area));
 			
 		$(wrapperDiv).append(wrapperTag);
 		
@@ -465,11 +465,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 		_adjustWrapperOfObject(idToResize, current_area);
 
 		//Add toolbar
-		VISH.Editor.Tools.loadToolbarForObject(wrapper);
+		V.Editor.Tools.loadToolbarForObject(wrapper);
 
 		if(zoomInStyle){
 			$(wrapperTag).attr('style', zoomInStyle);
-			VISH.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
+			V.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
 		}
 	
 	};

@@ -16,7 +16,7 @@ VISH.Editor.Tour = (function(V,$,undefined){
 		$(window).joyride({
 			 'tipLocation'		: loc,
 			 'tipContent'		: '#' + helpid,
-			 'postRideCallback' : VISH.Editor.Tour.clear	 
+			 'postRideCallback' : V.Editor.Tour.clear	 
 		});
 	};
 	

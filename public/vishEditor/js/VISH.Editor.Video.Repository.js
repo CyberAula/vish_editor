@@ -7,7 +7,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	var init = function() {
 		var myInput = $("#tab_video_repo_content").find("input[type='search']");
-		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());
@@ -28,14 +28,14 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		VISH.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError);
+		V.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
-		VISH.Editor.API.requestVideos(text, _onDataReceived, _onAPIError);
+		V.Editor.API.requestVideos(text, _onDataReceived, _onAPIError);
 	};
 	
 	/*
@@ -43,7 +43,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 */
 	var _onDataReceived = function(data) {
 		//Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 		
 		//clean previous preview if any
@@ -72,7 +72,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			}
 		});
 
-		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 		
 	};
 	
@@ -83,17 +83,17 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
     options['rows'] = 1;
     options['callback'] = _onClickCarrouselElement;
     options['rowItems'] = 5;
-    VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+    V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
 	
 	var _onAPIError = function() {
-		//VISH.Debugging.log("API error");
+		//V.Debugging.log("API error");
 	};
 	
 	var _onClickCarrouselElement = function(event) {
 		var videoId = $(event.target).attr("videoid");
-		var renderedVideo = VISH.Renderer.renderVideo(currentVideos[videoId], "preview");
+		var renderedVideo = V.Renderer.renderVideo(currentVideos[videoId], "preview");
 		_renderVideoPreview(renderedVideo, currentVideos[videoId]);
 		selectedVideo = currentVideos[videoId];
 	};
@@ -106,7 +106,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(metadataArea).html("");
 		if((renderedVideo) && (video)) {
 			$(videoArea).append(renderedVideo);
-			var table = VISH.Editor.Utils.generateTable(video.author, video.title, video.description);
+			var table = V.Editor.Utils.generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
 			$(button).show();
 		}
@@ -133,7 +133,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			$.each(sources, function(index, source) {
 				sourcesArray.push([source.src, source.type]);
 			});
-			VISH.Editor.Video.HTML5.drawVideo(sourcesArray, options);
+			V.Editor.Video.HTML5.drawVideo(sourcesArray, options);
 			$.fancybox.close();
 		}
 	};

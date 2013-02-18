@@ -42,8 +42,8 @@ VISH.Quiz = (function(V,$,undefined){
         _loadEvents();
     }
 
-    VISH.Quiz.Renderer.init();
-    VISH.Quiz.API.init();
+    V.Quiz.Renderer.init();
+    V.Quiz.API.init();
    $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
@@ -54,7 +54,7 @@ VISH.Quiz = (function(V,$,undefined){
       "autoScale" : true,
 
       "onStart"  : function(data) {
-        VISH.Utils.loadTab('tab_quiz_session');
+        V.Utils.loadTab('tab_quiz_session');
         _enableFullScreenQRButton();
       }
     });
@@ -70,8 +70,8 @@ VISH.Quiz = (function(V,$,undefined){
       $("." + startButtonClass).hide();
       $("." + voteButtonClass).show();
     } else if(quizMode=="question") {
-      // V.Debugging.log("VISH.User.isLogged(): " + VISH.User.isLogged());
-      if(!VISH.User.isLogged()){
+      // V.Debugging.log("V.User.isLogged(): " + V.User.isLogged());
+      if(!V.User.isLogged()){
         $("." + startButtonClass).hide();
       } else {
         $("." + startButtonClass).show();
@@ -109,8 +109,8 @@ VISH.Quiz = (function(V,$,undefined){
   /* Chek if user is logged in and call VISH's API for starting a voting) */
   var startMcQuizButtonClicked = function () {
     if(V.User.isLogged()){
-      var quizId = $(VISH.Slides.getCurrentSlide()).find(".quizId").val();
-      var quiztype= $(VISH.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
+      var quizId = $(V.Slides.getCurrentSlide()).find(".quizId").val();
+      var quiztype= $(V.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
       $("a#addQuizSessionFancybox").trigger("click");
       V.Quiz.API.postStartQuizSession(quizId,_onQuizSessionReceived,_OnQuizSessionReceivedError);
       //init the stats, empty
@@ -144,18 +144,18 @@ var _startStats = function(quiz_type) {
   }
 
   if(quiz_type=="multiplechoice") {
-    question = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone");
+    question = $(V.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".value_multiplechoice_question_in_zone");
     //question.addClass("question_in_stats");
     //$("#"+tabQuizStatsBarsContentId).find(".quiz_question_container").append(question.clone());
     //$("#"+tabQuizStatsPieContentId).find(".quiz_question_container").append(question.clone());
-    var options_form = $(VISH.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
+    var options_form = $(V.Slides.getCurrentSlide()).find("div.mcquestion_body").clone().find(".mcquestion_form");
  
     
   }
   if(quiz_type=="truefalse") {
   //this case only two options (true & false)
-  question = $(VISH.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".value_truefalse_question_in_zone");
-  var options_form = $(VISH.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".truefalse_options_container");
+  question = $(V.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".value_truefalse_question_in_zone");
+  var options_form = $(V.Slides.getCurrentSlide()).find("div.truefalse_question_container").clone().find(".truefalse_options_container");
   //options_form.find(".truefalse_options_container").css("display", "block");
 
   }
@@ -369,7 +369,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 /*Called when press save button in the stop quiz session popup*/
   var _stopAndSaveQuiz = function() { 
-    var current_slide = VISH.Slides.getCurrentSlide();
+    var current_slide = V.Slides.getCurrentSlide();
     quizName = $("#stop_quiz_fancybox").find(".quiz_saved_session_name").val();
     var header = $("#"+tabQuizSessionContent).find(".quiz_session_header");
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
@@ -392,7 +392,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 
   var _onQuizSessionCloseReceived = function(results){
          V.Debugging.log("_onQuizSessionCloseReceived");
-//    var quizSessionActiveId =  $(VISH.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
+//    var quizSessionActiveId =  $(V.Slides.getCurrentSlide()).find("div.multiplechoicequestion").attr("quizSessionId");
     var quizSessionActiveId = $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
   };
 
@@ -401,7 +401,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _stopAndDontSaveQuiz = function() {
-    var current_slide = VISH.Slides.getCurrentSlide();
+    var current_slide = V.Slides.getCurrentSlide();
     var quizSessionActiveId =  $("#" + tabQuizSessionContent).find("input.quiz_session_id").attr("value");
     _hideStopQuizPopup();
     $.fancybox.close();
@@ -429,14 +429,14 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     var answer;
     if(event.target.parentElement.classList[0]=="mch_inputs_wrapper") {
 
-      var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
+      var answer = $(V.Slides.getCurrentSlide()).find("input:radio[name='mc_radio']:checked'").val();
     }  
     else if(event.target.parentElement.classList[0]=="truefalse_inputs_wrapper") {
 
-      var answer = $(VISH.Slides.getCurrentSlide()).find("input:radio[name='truefalse']:checked'").val();
+      var answer = $(V.Slides.getCurrentSlide()).find("input:radio[name='truefalse']:checked'").val();
     }
     if(typeof answer !== "undefined") {
-       var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
+       var quizSessionActiveId = V.SlideManager.getOptions()["quiz_active_session_id"];
        V.Quiz.API.putQuizSession(answer, quizSessionActiveId, _onQuizVotingSuccessReceived, _OnQuizVotingReceivedError);
        $("."+startButtonClass).hide();
 
@@ -444,13 +444,13 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var _onQuizVotingSuccessReceived = function(data){ 
-    var quizSessionActiveId = VISH.SlideManager.getOptions()["quiz_active_session_id"];
+    var quizSessionActiveId = V.SlideManager.getOptions()["quiz_active_session_id"];
     V.Quiz.API.getQuizSessionResults(quizSessionActiveId, _onQuizSessionResultsReceived, _onQuizSessionResultsReceivedError);
   };
 
  var _onQuizSessionResultsReceived = function(data) {
       //remove all radio inputs
-     $(VISH.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
+     $(V.Slides.getCurrentSlide()).find(".li_mch_options_in_zone > input").remove();
      $(".thanks_div").show();
       var id = $('a[name=modal_window]').attr('href'); //TODO in different way
       var maskHeight = $(document).height();
@@ -464,7 +464,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
     $(id).css('top',  maskHeight/2-$(id).height()/2);
     $(id).css('left', maskWidth/2-$(id).width()/2);
     $(id).show();
-    $(VISH.Slides.getCurrentSlide()).find("."+ voteButtonClass).hide();
+    $(V.Slides.getCurrentSlide()).find("."+ voteButtonClass).hide();
    // $(id).children().show();
     
  }
@@ -486,7 +486,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
 /*must update bar stats and draw an google Chart image (with data values)*/ 
   var _showResults = function (data) {
     
-    var quiz_type = $(VISH.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
+    var quiz_type = $(V.Slides.getCurrentSlide()).find(".quiz").attr("quiztype");
    
     var index ;
     var maxWidth = 70;
@@ -533,7 +533,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
             }
         }
       }
-    google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : VISH.Quiz.drawPieChart(data.results)});
+    google.load('visualization', '1.0', {'packages':['corechart']}, {"callback" : V.Quiz.drawPieChart(data.results)});
   };
 
 
@@ -549,7 +549,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
         data_for_chart.addRow([option, votes]);
       }
     }; 
-  var question = $(VISH.Slides.getCurrentSlide()).find(".value_multiplechoice_question_in_zone").text();
+  var question = $(V.Slides.getCurrentSlide()).find(".value_multiplechoice_question_in_zone").text();
   //TODO set values in percents for resizing 
   // Set chart options
     var options = {'title':'',
@@ -656,7 +656,7 @@ Show a popup with three buttons (Cancel, DOn't save & Save)
   };
 
   var toggleShowAnswers = function(event) {
-    var current_slide = VISH.Slides.getCurrentSlide();  
+    var current_slide = V.Slides.getCurrentSlide();  
     if(event.target.classList[0]==showAnswerButtonClass) {
      
       $(current_slide).find(".truefalse_answers > input").show();

@@ -5,7 +5,7 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 	}
 
 	var allowElement = function(element){
-		var device = VISH.Status.getDevice();
+		var device = V.Status.getDevice();
 
 		if(device.desktop){
 
@@ -25,7 +25,7 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 
 			switch(element.type){
 				case "object":
-					var objectInfo = VISH.Object.getObjectInfo(element.body);
+					var objectInfo = V.Object.getObjectInfo(element.body);
 					if(objectInfo.type=="swf"){
 						//Disable flash
 						return false;
@@ -52,7 +52,7 @@ VISH.Renderer.Filter = (function(V,$,undefined){
 
 
 	var renderContentFiltered = function(element,template){
-		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+VISH.ImagesPath+"adverts/advert_new_grey.png'/></div>";
+		return "<div id='"+element['id']+"' class='contentfiltered "+template+"_"+element['areaid']+"'><img class='"+template+"_image' src='"+V.ImagesPath+"adverts/advert_new_grey.png'/></div>";
 	}
 
 

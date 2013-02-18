@@ -36,19 +36,19 @@ VISH.Editor.Text.NiceEditor = (function(V,$,undefined){
 
   		var fontSize;
   		switch($(current_area).attr("size")){
-  			case VISH.Constant.SMALL:
+  			case V.Constant.SMALL:
   				fontSize = 4;
   				break;
-  			case VISH.Constant.MEDIUM:
+  			case V.Constant.MEDIUM:
   				fontSize = 5;
   				break;
-  			case VISH.Constant.LARGE:
+  			case V.Constant.LARGE:
   				fontSize = 7;
   				break;
   			default:
   				break;
   		}
-  		initial_text = "<div class='initTextDiv'><font size='" + fontSize + "''>" + VISH.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
+  		initial_text = "<div class='initTextDiv'><font size='" + fontSize + "''>" + V.Editor.I18n.getTrans("i.WysiwygInit") + "</font></div>";
   	}
 
  	getNicEditor();
@@ -72,7 +72,7 @@ VISH.Editor.Text.NiceEditor = (function(V,$,undefined){
     		var div = $(event.target);
     		var font = $(event.target).find("font");
     	}
-    	if($(font).text()===VISH.Editor.I18n.getTrans("i.WysiwygInit")){
+    	if($(font).text()===V.Editor.I18n.getTrans("i.WysiwygInit")){
     			//Remove text
     			$(font).text("");
     			$(div).removeClass("initTextDiv");

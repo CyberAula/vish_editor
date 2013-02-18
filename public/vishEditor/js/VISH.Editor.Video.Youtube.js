@@ -8,10 +8,10 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	
 	var init = function(){
 		var myInput = $("#tab_video_youtube_content").find("input[type='search']");
-		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-				VISH.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
+				V.Editor.Video.Youtube.requestYoutubeData($(myInput).val());
 				$(myInput).blur();
 			}
 		});
@@ -21,7 +21,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	var onLoadTab = function(){
 		//Clean previous content
 		$("#tab_video_youtube_content").find("input[type='search']").val("");
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 		_cleanVideoPreview();
 	};
@@ -39,7 +39,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 	var _onDataReceived = function(data) {
 		//Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
 		//clean previous preview if any
 		_cleanVideoPreview();
@@ -78,21 +78,21 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			carrouselImages.push(myImg); 
 		});
 			
-		VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
 
 	var _onImagesLoaded = function(){
 		$("#" + carrouselDivId).show();
 		var options = new Array();
 		options['rows'] = 1;
-		options['callback'] = VISH.Editor.Video.Youtube.onClickCarrouselElement;
+		options['callback'] = V.Editor.Video.Youtube.onClickCarrouselElement;
 		options['rowItems'] = 5;
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
 	var addSelectedVideo = function() {
 		if(selectedVideo != null) {
-			VISH.Editor.Object.drawObject(_generateWrapper(selectedVideo.id));
+			V.Editor.Object.drawObject(_generateWrapper(selectedVideo.id));
 			$.fancybox.close();
 		}
 	};
@@ -118,7 +118,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedIframe) && (video)) {
 			$(videoArea).append(renderedIframe);
-			var table = VISH.Editor.Utils.generateTable(video.author, video.title, video.description);
+			var table = V.Editor.Utils.generateTable(video.author, video.title, video.description);
 			$(metadataArea).html(table);
 			$(button).show();
 		}
@@ -137,14 +137,14 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
  
 	var _generateWrapper = function (videoId) {
 		var video_embedded = "http://www.youtube.com/embed/"+videoId;
-		current_area=  VISH.Editor.getCurrentArea();
-		var width_height = VISH.Editor.Utils.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
+		current_area=  V.Editor.getCurrentArea();
+		var width_height = V.Editor.Utils.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
 		var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
 		return wrapper;
 	}
  
 	var generateWrapperForYoutubeVideoUrl = function (url){
-		var videoId = VISH.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
 		if(videoId!=null){
 			return _generateWrapper(videoId);
 		} else {
@@ -159,7 +159,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	}
  
 	var generatePreviewWrapperForYoutubeVideoUrl = function (url){
-		var videoId = VISH.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
 		if(videoId!=null){
 			return _generatePreviewWrapper(videoId);
 		} else {

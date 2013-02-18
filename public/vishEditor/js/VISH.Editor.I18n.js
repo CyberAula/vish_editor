@@ -12,18 +12,18 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		// var initTime = new Date().getTime();
 
 		//Set default translation
-		switch(VISH.Configuration.getConfiguration()["mode"]){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration()["mode"]){
+			case V.Constant.NOSERVER:
 				if (typeof(i18n["vish"]["default"])!=='undefined'){
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				if (typeof(i18n["vish"]["default"])!=='undefined'){
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				if (typeof(i18n["standalone"]["default"])!=='undefined'){
 					defaultTranslations = i18n["standalone"]["default"];
 				}
@@ -37,20 +37,20 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			return;
 		}
 		
-		switch(VISH.Configuration.getConfiguration()["mode"]){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration()["mode"]){
+			case V.Constant.NOSERVER:
 				//Load Vish translation
 				if (typeof(i18n["vish"][language])!=='undefined'){
 					translations = i18n["vish"][language];
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				if (typeof(i18n["vish"][language])!=='undefined'){
 					translations = i18n["vish"][language];
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				if (typeof(i18n["standalone"][language])!=='undefined'){
 					translations = i18n["standalone"][language];
 					defaultTranslations = i18n["standalone"]["default"];
@@ -89,7 +89,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		_translateTutorialImage();
 
 		// var duration = new Date().getTime() - initTime;
-		// VISH.Debugging.log("Internationalization took " + duration + " ms.");
+		// V.Debugging.log("Internationalization took " + duration + " ms.");
 	};
 		
 	var _translateInput = function(input,translation){
@@ -142,7 +142,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
 			});
 			//replace contentusetut image
-			$("#contentusetut").attr("src", VISH.ImagesPath + "contentuse_"+language+".png");
+			$("#contentusetut").attr("src", V.ImagesPath + "contentuse_"+language+".png");
   		}
 	}
 
@@ -153,13 +153,13 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		if (typeof(translations)!== 'undefined' && translations[s]) {
 			return translations[s];
 		}
-		// VISH.Debugging.log("Text without translation: " + s);
+		// V.Debugging.log("Text without translation: " + s);
 
 		//Search in default language
 		if (typeof(defaultTranslations)!== 'undefined' && defaultTranslations[s]) {
 			return defaultTranslations[s];
 		}
-		// VISH.Debugging.log("Text without default translation: " + s);
+		// V.Debugging.log("Text without default translation: " + s);
 
 		//Don't return s if s is a key. //DEPRECATED
 		var key_pattern =/^i\./g;

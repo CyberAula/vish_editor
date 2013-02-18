@@ -14,11 +14,11 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {						
-				V.Editor.Image.setAddContentMode(VISH.Constant.THUMBNAIL);
+				V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
 				V.Utils.loadTab('tab_pic_from_url');
 			},
 			"onClosed" : function(data){
-				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
 			}
 		});
 	};	
@@ -30,20 +30,20 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 
 		if(avatars===null){
 			$("#" + thumbnailsDetailsId).hide();
-			VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
+			V.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
 		} else {
 			_selectAvatarInCarrousel(selectedAvatar);
 		}
 	}  
 
 	var onCustomThumbnailSelected = function(thumbnail_url){
-		VISH.Editor.Tools.Menu.displaySettings(); //Hide previous fancybox
+		V.Editor.Tools.Menu.displaySettings(); //Hide previous fancybox
 		_addCustomThumbnail(thumbnail_url);
 	}
 
 	var _addCustomThumbnail = function(thumbnail_url){
 		var element = $("<div class='carrousel_element_single_row_thumbnails'><img class='carrousel_element_single_row_thumbnails carrousel_last_added_element' src='" + thumbnail_url + "'/></div>")[0];
-		VISH.Editor.Carrousel.insertElement(carrouselDivId,element,1);
+		V.Editor.Carrousel.insertElement(carrouselDivId,element,1);
 
 		var element = $(".carrousel_last_added_element");
 
@@ -52,7 +52,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			_onAvatarSelected(event);
 		});
 
-		VISH.Editor.Carrousel.goToElement(carrouselDivId,$(element)[0]);
+		V.Editor.Carrousel.goToElement(carrouselDivId,$(element)[0]);
 
 		$(element).trigger('click');
 		$(element).removeClass("carrousel_last_added_element");
@@ -99,7 +99,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			$.each(avatarImages, function(i, image) {
 				if($(image).attr("src").split("/").pop() === avatarName){
 					$(image).addClass("selectedThumbnail");
-					VISH.Editor.Carrousel.goToElement(carrouselDivId,$(image));
+					V.Editor.Carrousel.goToElement(carrouselDivId,$(image));
 				}
 			});	
 		}
@@ -115,7 +115,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			$.each(avatarImages, function(i, image) {
 				if($(image).attr("src") === avatar){
 					$(image).addClass("selectedThumbnail");
-					VISH.Editor.Carrousel.goToElement(carrouselDivId,$(image));
+					V.Editor.Carrousel.goToElement(carrouselDivId,$(image));
 				}
 			});		
 		}
@@ -126,25 +126,25 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		avatars = data;
 
 		//Clean previous carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 
 		//Build new carrousel
 		var content = "";
 		var carrouselImages = [];
-		carrouselImages.push($("<img class='uploadThumbnail' src='" + VISH.ImagesPath + "icons/addThumbnail.png'/>")[0]);
+		carrouselImages.push($("<img class='uploadThumbnail' src='" + V.ImagesPath + "icons/addThumbnail.png'/>")[0]);
 		$.each(avatars.pictures, function(i, item) {
 			var myImg = $("<img src="+item.src+" />");
 			carrouselImages.push($(myImg)[0]);
 		});
 
-		VISH.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId);
 	}
 	
 	var _onThumbnailsError = function(xhr, ajaxOptions, thrownError){
-		VISH.Debugging.log("_onThumbnailsError");
-		VISH.Debugging.log("status returned by server:" + xhr.status);
-		VISH.Debugging.log("Error in client: " + thrownError);  
-		VISH.Debugging.log("ERROR!" + thrownError);
+		V.Debugging.log("_onThumbnailsError");
+		V.Debugging.log("status returned by server:" + xhr.status);
+		V.Debugging.log("Error in client: " + thrownError);  
+		V.Debugging.log("ERROR!" + thrownError);
 	}
 	
 	var _onImagesLoaded = function(){
@@ -156,7 +156,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		options['rowItems'] = 5;
 		options['styleClass'] = "thumbnails";
 
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
 		$(".buttonintro").addClass("buttonintro_extramargin");
 		$(".buttonpedagogical").addClass("buttonpedagogical_extramargin");
@@ -184,7 +184,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			return false;
 		}
 		
-		var pathPattern = "(^" + VISH.ImagesPath + ")";
+		var pathPattern = "(^" + V.ImagesPath + ")";
 		return avatar.match(pathPattern)!==null;
 	}
   

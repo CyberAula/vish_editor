@@ -31,8 +31,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 	    case 67: //cKey
 			if(V.Editor.Slides.isSlideFocused()) {
 				if(ctrlDown){
-					if(VISH.Slides.getCurrentSlideNumber()){
-						VISH.Editor.Clipboard.copy(VISH.Slides.getCurrentSlide(),VISH.Constant.Clipboard.Slide);
+					if(V.Slides.getCurrentSlideNumber()){
+						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
 					}
 				}
 			}
@@ -40,13 +40,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	    case 86: //vKey
 		    if(V.Editor.Slides.isSlideFocused()) {
 			    if(ctrlDown){
-			    	VISH.Editor.Clipboard.paste();
+			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
 		case 46: //Supr key
 			if(V.Editor.Slides.isSlideFocused()) {
-				VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
+				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 			}
 			break;	
 	  }
@@ -81,14 +81,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).bind('keyup', handleBodyKeyUp);
 			$(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 
-			if((VISH.Editing)&&(presentation)){
+			if((V.Editing)&&(presentation)){
 				for(index in presentation.slides){
 		      		var slide = presentation.slides[index];
 	      			switch(slide.type){
-	      				case VISH.Constant.FLASHCARD:
+	      				case V.Constant.FLASHCARD:
 		      				bindEventsForFlashcard(slide);
 	      					break;
-	      				case VISH.Constant.VTOUR:
+	      				case V.Constant.VTOUR:
 	      					break;
 	      			}
 	  		    }

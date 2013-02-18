@@ -38,7 +38,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		//An area is focused
-		if(VISH.Editor && VISH.Editor.getCurrentArea()!==null){
+		if(V.Editor && V.Editor.getCurrentArea()!==null){
 			return false;
 		}
 
@@ -78,7 +78,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		var article_reference = reference_slide;
 
 		var moving_current_slide = false;
-		if(VISH.Slides.getCurrentSlide() === article_to_move){
+		if(V.Slides.getCurrentSlide() === article_to_move){
 			moving_current_slide = true;
 		}
 
@@ -88,29 +88,29 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		} else if(movement=="before") {
 			$(article_reference).before(article_to_move);
 		} else {
-			VISH.Debugging.log("VISH.Slides: Error. Movement not defined... !");
+			V.Debugging.log("V.Slides: Error. Movement not defined... !");
 			return;
 		}
 
 		//Refresh Draggable Objects
-		VISH.Editor.Utils.refreshDraggables(article_to_move);
+		V.Editor.Utils.refreshDraggables(article_to_move);
 
 		//Update slideEls
-		VISH.Slides.setSlides(document.querySelectorAll('section.slides > article'));
+		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
 
 		if(moving_current_slide){
 			//Update currentSlide
-			VISH.Slides.setCurrentSlideIndex(VISH.Slides.getNumberOfSlide(article_to_move));
+			V.Slides.setCurrentSlideIndex(V.Slides.getNumberOfSlide(article_to_move));
 		}
 
 		//Update slides classes next and past.
 		//Current slide needs to be stablished before this call.
-		VISH.Slides.updateSlideEls();
+		V.Slides.updateSlideEls();
 		
 	}
 
 	var copySlideWithNumber = function(slideNumber){
-		var slide = VISH.Slides.getSlideWithNumber(slideNumber);
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
@@ -119,29 +119,29 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var copySlide = function(newSlide){
-		var currentSlide = VISH.Slides.getCurrentSlide();
+		var currentSlide = V.Slides.getCurrentSlide();
 		if(currentSlide){
 			$(currentSlide).after(newSlide);
 		} else {
 			$("section#slides_panel").append(newSlide);
 		}
 		
-		VISH.Editor.Utils.refreshDraggables(newSlide);
+		V.Editor.Utils.refreshDraggables(newSlide);
 		
 		//Update slideEls
-		VISH.Slides.setSlides(document.querySelectorAll('section.slides > article'));
+		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
 
 		//Update slides classes next and past.
 		//Current slide needs to be stablished before this call.
-		VISH.Slides.updateSlideEls();
+		V.Slides.updateSlideEls();
 
 		//Redraw thumbnails
-		VISH.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails();
 
 		if(currentSlide){
-			VISH.Slides.goToSlide(VISH.Slides.getCurrentSlideNumber()+1);
+			V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
 		} else {
-			VISH.Slides.goToSlide(1);
+			V.Slides.goToSlide(1);
 		}
 	}
 
@@ -150,28 +150,28 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	};
 
 	var removeSlide = function(slideNumber){
-		var slide = VISH.Slides.getSlideWithNumber(slideNumber);
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
-		var standardSlide = (slide.type===VISH.Constant.STANDARD);
+		var standardSlide = (slide.type===V.Constant.STANDARD);
 		var removing_current_slide = false;
-		if(VISH.Slides.getCurrentSlide() === slide){
+		if(V.Slides.getCurrentSlide() === slide){
 			removing_current_slide = true;
 		}
 
 		$(slide).remove();
 		if(removing_current_slide){
-			if((VISH.Slides.getCurrentSlideNumber()===1)&&(VISH.Slides.getSlidesQuantity()>1)){
-				VISH.Slides.setCurrentSlideNumber(1);
+			if((V.Slides.getCurrentSlideNumber()===1)&&(V.Slides.getSlidesQuantity()>1)){
+				V.Slides.setCurrentSlideNumber(1);
 			} else {
-				VISH.Slides.setCurrentSlideNumber(VISH.Slides.getCurrentSlideNumber()-1);
+				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
 		redrawSlides();					
-		VISH.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails();
 		if(!standardSlide){
-			VISH.Editor.Tools.Menu.init();
+			V.Editor.Tools.Menu.init();
 		}
 	}
 

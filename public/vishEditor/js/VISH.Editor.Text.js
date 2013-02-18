@@ -76,7 +76,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var newInstance = !(typeof initial_text === "string");
 
 		//Create the wysiwyg container and add to the area
-		var wysiwygContainerId = VISH.Utils.getId();
+		var wysiwygContainerId = V.Utils.getId();
 		var wysiwygContainer = $("<div id='"+wysiwygContainerId+"'></div>")
 		$(wysiwygContainer).attr('style','width: 100%; height: 100%');
 		$(current_area).append(wysiwygContainer);
@@ -136,16 +136,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 			//Font size depends of the area size
 			switch($(current_area).attr("size")){
-				case VISH.Constant.EXTRA_SMALL:
+				case V.Constant.EXTRA_SMALL:
 					defaultFontSize = 18;
 					break;
-				case VISH.Constant.SMALL:
+				case V.Constant.SMALL:
 					defaultFontSize = 18;
 					break;
-				case VISH.Constant.MEDIUM:
+				case V.Constant.MEDIUM:
 					defaultFontSize = 26;
 					break;
-				case VISH.Constant.LARGE:
+				case V.Constant.LARGE:
 					defaultFontSize = 36;
 					break;
 				default:
@@ -182,7 +182,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//Catch the focus event
 		ckeditor.on('focus', function(event){
 			var area = $("div[type='text']").has(event.editor.container.$);
-			VISH.Editor.selectArea(area);
+			V.Editor.selectArea(area);
 		});
 
 		ckeditor.on('blur', function(event){

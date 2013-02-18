@@ -702,7 +702,7 @@ VISH.Editor = (function(V,$,undefined){
 			slide.type = V.Constant.FLASHCARD;
 			slide.background = $("#flashcard-background").css("background-image");
 			//save the pois
-			slide.pois = V.Editor.Flashcard.savePois();
+			slide.pois = V.Editor.Flashcard.Creator.getPois();
 			slide.slides = [];
 			presentation.slides.push(slide);
 		}
@@ -893,7 +893,7 @@ VISH.Editor = (function(V,$,undefined){
 			if(presentation.type===V.Constant.FLASHCARD){
 				//If it is flashcard we save the slide into the flashcard slides 
 				//(the flashcard is the first slide by convention)
-				slide = V.Editor.Flashcard.prepareToNestInFlashcard(slide);
+				slide = V.Editor.Flashcard.Creator.prepareToNestInFlashcard(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
 				presentation.slides.push(slide);

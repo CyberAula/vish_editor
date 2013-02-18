@@ -19,18 +19,18 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			$("#age_range").val(start_range + " - " + end_range);
 			$("#age_range").val(presentation.age_range);
 		} else {
-			$("#age_range").val(VISH.Constant.AGE_RANGE);
+			$("#age_range").val(V.Constant.AGE_RANGE);
 		}
 		$("#subject_tag").val(presentation.subject);
 		$("#language_tag").val(presentation.language);
 		$("#educational_objectives_tag").val(presentation.educational_objectives);
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
-		VISH.Editor.Themes.selectTheme(presentation.theme);
+		V.Editor.Themes.selectTheme(presentation.theme);
 
 		switch(presentation.type){
 			case V.Constant.FLASHCARD:
-				var flashcard = VISH.Editor.Flashcard.undoNestedSlidesInFlashcard(presentation.slides[0]);
+				var flashcard = V.Editor.Flashcard.Creator.undoNestedSlidesInFlashcard(presentation.slides[0]);
 				if((flashcard)&&(flashcard.slides)){
 					slides = flashcard.slides;
 					var sL = slides.length;
@@ -38,11 +38,11 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 						_renderSlide(slides[i], i+1);
 					}
 				}
-				VISH.Editor.Flashcard.loadFlashcard(presentation);
+				V.Editor.Flashcard.Creator.loadFlashcard(presentation);
 				break;
 			case V.Constant.VTOUR:
 				break;
-			case VISH.Constant.PRESENTATION:
+			case V.Constant.PRESENTATION:
 			default:
 				slides = presentation.slides;
 				for(var i=0;i<slides.length;i++){
@@ -109,7 +109,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * function to render one flashcard inside a presentation
 	 */
 	var _renderFlashcard = function(slide, slideNumber){
-		VISH.Editor.Flashcard.addFlashcard(slide);
+		V.Editor.Flashcard.addFlashcard(slide);
 		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
 	};
 

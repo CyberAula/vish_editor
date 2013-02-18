@@ -5,7 +5,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
   ////////////////////
-  //renderer methods called from VISH.Renderer
+  //renderer methods called from V.Renderer
   ///////////////////
 
   /**
@@ -40,7 +40,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += "<ul class='ul_mch_options_in_zone'>";  
       for(var i = 0; i<quiz_element['options']['choices'].length; i++){
         var next_index = String.fromCharCode("a".charCodeAt(0) + (i));
-        if(VISH.Quiz.getQuizMode()=="answer"){
+        if(V.Quiz.getQuizMode()=="answer"){
           ret += "<li class='li_mch_options_in_zone'>";
           ret += "<input class='mc_radio' type='radio' name='mc_radio' value='"+next_index+"'/><span class='quiz_option_index'>"+next_index+")</span><div class='multiplechoice_option_in_zone multiplechoice_option_in_viewer'>"+quiz_element.options['choices'][i]['container']+"</div>";
           ret += "</li>"
@@ -86,7 +86,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   /**
    * Function to render a True False Question choice question form inside an article (a slide)
-   * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
+   * TODO Include in the V.Quiz?? ... think and ask Kike about it 
    */
   
   var _renderTrueFalseQuestion = function(quiz_element, zone_class, slide_id, zone){
@@ -106,7 +106,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
           ret += "<div class='truefalse_titles_false'>False</div>";
         ret += "</div>";
 
- if(VISH.Quiz.getQuizMode()=="answer"){  //Just radio inputs to respond   
+ if(V.Quiz.getQuizMode()=="answer"){  //Just radio inputs to respond   
     ret+= "<div class='truefalse_answers answer_mode'>";
     ret += "<input class='truefalse_answer_radio_true' type='radio' name='truefalse' value='true'/>";
     ret += "<input class='truefalse_answer_radio_false' type='radio' name='truefalse' value='false'/>";

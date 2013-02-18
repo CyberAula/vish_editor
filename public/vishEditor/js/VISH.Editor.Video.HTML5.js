@@ -8,7 +8,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   }
 	
 	var _getVideoType = function(url){
-		var source = (VISH.Object.getObjectInfo(url)).source;
+		var source = (V.Object.getObjectInfo(url)).source;
     return "video/" + source.split('.').pop();
 	}
 
@@ -25,11 +25,11 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	if(area){
   		current_area = area;
   	}	else {
-  		current_area = VISH.Editor.getCurrentArea();
+  		current_area = V.Editor.getCurrentArea();
   	}
   	
     //Default options
-	  var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
+	  var posterUrl = V.ImagesPath + "example_poster_image.jpg";
 	  var autoplay = false;
 		
 	  //Replace defeault options if options hash is defined
@@ -42,9 +42,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	    }
 		}
 		
-    var template = VISH.Editor.getTemplate(area);
+    var template = V.Editor.getTemplate(area);
 
-    var nextVideoId = VISH.Utils.getId();
+    var nextVideoId = V.Utils.getId();
     var idToDragAndResize = "draggable" + nextVideoId;
     current_area.attr('type','video');
     
@@ -77,15 +77,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $(current_area).html("");
     $(current_area).append(videoTag)
     
-    VISH.Editor.addDeleteButton($(current_area));
+    V.Editor.addDeleteButton($(current_area));
 
     $("#" + idToDragAndResize).draggable({cursor: "move"});
 
-    VISH.Editor.Tools.loadToolsForZone(current_area);
+    V.Editor.Tools.loadToolsForZone(current_area);
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = VISH.ImagesPath + "example_poster_image.jpg";
+    var posterUrl = V.ImagesPath + "example_poster_image.jpg";
     var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
        rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";

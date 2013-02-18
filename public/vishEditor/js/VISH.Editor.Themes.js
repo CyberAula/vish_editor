@@ -60,26 +60,26 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		V.Themes.loadTheme(theme);
 
 		//Save it in the draftPresentation
-		var draftPresentation = VISH.Editor.getPresentation();
+		var draftPresentation = V.Editor.getPresentation();
 		if(!draftPresentation){
 			draftPresentation = {};
 		}
 		draftPresentation.theme = theme;
-		VISH.Editor.setPresentation(draftPresentation);
+		V.Editor.setPresentation(draftPresentation);
 
 		//Refresh colors
-		VISH.Editor.Text.refreshAutoColors();
+		V.Editor.Text.refreshAutoColors();
 		
 		$.fancybox.close();
 	};
 
 	var getCurrentTheme = function(){
 		var themeId;
-		var draftPresentation = VISH.Editor.getPresentation();
+		var draftPresentation = V.Editor.getPresentation();
 		if((draftPresentation)&&(draftPresentation.theme)){
 			themeId = draftPresentation.theme;
 		} else {
-			themeId = VISH.Constant.Themes.Default;
+			themeId = V.Constant.Themes.Default;
 		}
 		return themes[themeId];
 	}

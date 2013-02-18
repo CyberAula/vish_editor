@@ -8,18 +8,18 @@ VISH.SnapshotPlayer = (function(){
             var wrapper_class = "snapshot_wrapper" + "_viewer";
             var content_class = "snapshot_content" + "_viewer";
             var content = $(value).attr("objectWrapper");
-            if(VISH.Status.isOnline()=== false){
-              $(value).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_iframe.png'/>");
+            if(V.Status.isOnline()=== false){
+              $(value).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_iframe.png'/>");
               return;
             }
-            var iframe = $(VISH.Utils.getOuterHTML($(content)));
+            var iframe = $(V.Utils.getOuterHTML($(content)));
 						$(iframe).removeClass();
             $(iframe).addClass(content_class);
             var scrollTop = $(value).attr("scrollTop");
             var scrollLeft = $(value).attr("scrollLeft");
-            $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + VISH.Utils.getOuterHTML(iframe) + "</div>");
+            $(value).html("<div class='" + wrapper_class + "' style='" + $(value).attr("objectStyle") + "'>" + V.Utils.getOuterHTML(iframe) + "</div>");
 						if($(value).attr("zoom")){
-							$(value).find("." + content_class).attr("style",VISH.Utils.getZoomInStyle($(value).attr("zoom")));
+							$(value).find("." + content_class).attr("style",V.Utils.getZoomInStyle($(value).attr("zoom")));
 						}
 						$(value).find("." + wrapper_class).scrollTop(scrollTop);
             $(value).find("." + wrapper_class).scrollLeft(scrollLeft);
@@ -45,7 +45,7 @@ VISH.SnapshotPlayer = (function(){
 					var iframe_wrapper = $(iframe).parent();
 					
 					$(area).attr("zoom",increase);
-          $(iframe).attr("style",VISH.Utils.getZoomInStyle(increase));
+          $(iframe).attr("style",V.Utils.getZoomInStyle(increase));
 					
           var scrollLeft = $(area).attr("scrollLeftOrigin");
           var newScrollLeft = scrollLeft * increase;

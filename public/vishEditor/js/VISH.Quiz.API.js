@@ -9,7 +9,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Server responds with a quiz_session_id
 	*/
 	var postStartQuizSession = function(quizId, successCallback, failCallback){
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 			var send_type = 'POST';
 	       
 	        var params = {
@@ -34,7 +34,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	         return null;
 
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
 
 			if(quizId==12) {
@@ -57,7 +57,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 * function calls VISH server for closing a voting
 	 */
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
-	if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+	if(V.Configuration.getConfiguration()["mode"]=="vish"){
 		var quizName;
 			if(quiz_name) {
 				quizName = quiz_name;
@@ -90,7 +90,7 @@ VISH.Quiz.API = (function(V,$,undefined){
             });
 
 	        return null;
-} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
 			var results = {"quiz_session_id":19,"quiz_id":3,"results":{"b":4,"a":2,"c":1, "d":1}};
 			if(typeof successCallback=="function"){
@@ -105,7 +105,7 @@ VISH.Quiz.API = (function(V,$,undefined){
      * used for students when send a vote 
 	 */
 	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 		//POST 
 			var send_type = 'PUT';
 	       
@@ -133,7 +133,7 @@ VISH.Quiz.API = (function(V,$,undefined){
              });
 
 	         return null;
-	} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+	} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case");
 			var quiz_session_id = "123";
 			if(typeof successCallback=="function"){
@@ -151,7 +151,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	  */
 	var getQuizSessionResults = function (quiz_active_session_id, successCallback, failCallback) {
 
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 
 			//GET
 			var send_type = 'GET';
@@ -177,7 +177,7 @@ VISH.Quiz.API = (function(V,$,undefined){
              });
 
 	         return null;
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			V.Debugging.log("No server case: and quiz session get results: " + quiz_active_session_id);
 			if(quiz_active_session_id==98988){
 				var results = {"quiz_session_id":98988,"quiz_id":12,"results":{"b":4,"a":2,"c":1, "d":1}};

@@ -19,8 +19,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			//Add listeners to toolbar buttons
 			$.each($("img.toolbar_icon"), function(index, toolbarButton) {
 				$(toolbarButton).on("click", function(event){
-					if(typeof VISH.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
-						VISH.Editor.Tools[$(toolbarButton).attr("action")](this);
+					if(typeof V.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
+						V.Editor.Tools[$(toolbarButton).attr("action")](this);
 					}
 				});
 			});
@@ -33,7 +33,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 		loadPresentationToolbar();
 
-		VISH.Editor.Tools.Menu.init();
+		V.Editor.Tools.Menu.init();
 	}
 	 
 
@@ -110,14 +110,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
    /*
 	* Menu Toolbar and Menu itself
 	*/
-	//Enable and disable menu methods in VISH.Editor.Tools.Menu.js
+	//Enable and disable menu methods in V.Editor.Tools.Menu.js
 
 
    /*
 	* Presentation Toolbar
 	*/
 	var loadPresentationToolbar = function(){
-		var presentationType = VISH.Editor.getPresentationType();
+		var presentationType = V.Editor.getPresentationType();
 		switch(presentationType){
 			case "presentation":			
 				$("#hidden_button_to_launch_theme_fancybox").fancybox({
@@ -137,11 +137,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					'height': 600,
 					'padding' : 0,
 					"onStart"  : function(data) {						
-						V.Editor.Image.setAddContentMode(VISH.Constant.FLASHCARD);
+						V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
 						V.Utils.loadTab('tab_pic_from_url');
 					},
 					"onClosed"  : function(data) {				
-						V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
+						V.Editor.Image.setAddContentMode(V.Constant.NONE);
 					}
 				});
 				$("#toolbar_presentation").find("img.toolbar_flashcard").show();
@@ -191,7 +191,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var loadToolbarForObject = function(object){
-		var objectInfo = VISH.Object.getObjectInfo(object);
+		var objectInfo = V.Object.getObjectInfo(object);
 
 		switch(objectInfo.type){
 			case "web":
@@ -251,7 +251,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _resize = function(action){
 		var object, objectInfo, resizeFactor;
-		var area = VISH.Editor.getCurrentArea();
+		var area = V.Editor.getCurrentArea();
 		var type = $(area).attr("type");
 
 		if(action=="+"){
@@ -274,7 +274,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			case "object":
 				var parent = area.children(":first");
 				object = parent.children(":first");
-				objectInfo = VISH.Object.getObjectInfo(object);
+				objectInfo = V.Object.getObjectInfo(object);
 				
 				var newWidth, newHeight;
 				var aspectRatio = parent.width()/parent.height();
@@ -329,16 +329,16 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _changeZoom = function(action){
 		var object, objectInfo, zoom;
-		var area = VISH.Editor.getCurrentArea();
+		var area = V.Editor.getCurrentArea();
 		var type = $(area).attr("type");    
 		switch(type){
 			case "object":
 				var parent = area.children(":first");
 				object = parent.children(":first");
-				objectInfo = VISH.Object.getObjectInfo(object);
+				objectInfo = V.Object.getObjectInfo(object);
 				if(objectInfo.type==="web"){
 					var iframe = $(area).find("iframe");
-					zoom = VISH.Utils.getZoomFromStyle($(iframe).attr("style"));
+					zoom = V.Utils.getZoomFromStyle($(iframe).attr("style"));
 
 					if(action=="+"){
 						zoom = zoom + 0.1;
@@ -346,10 +346,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 						zoom = zoom - 0.1;
 					}
 
-					$(iframe).attr("style",VISH.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
+					$(iframe).attr("style",V.Editor.Utils.addZoomToStyle($(iframe).attr("style"),zoom));
 
 					//Resize object to fix in its wrapper
-					VISH.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
+					V.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
 				}				
 				break;
 			default:
@@ -370,7 +370,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				'onStart'			: function(){
 				},
 				'onComplete'		: function(){
-					var area = VISH.Editor.getCurrentArea();
+					var area = V.Editor.getCurrentArea();
 					var hyperlink = $(area).attr("hyperlink");
 					if(hyperlink){
 						$(".tools_input_addUrl").val(hyperlink);
@@ -404,9 +404,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			}
 		});
 		if(url){
-			url = VISH.Editor.Utils.autocompleteUrls(url);
+			url = V.Editor.Utils.autocompleteUrls(url);
 
-			var area = VISH.Editor.getCurrentArea();
+			var area = V.Editor.getCurrentArea();
 			switch($(area).attr("type")){
 				case "image":
 					$(area).attr("hyperlink",url);
@@ -420,7 +420,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var removeUrl = function(){
-		var area = VISH.Editor.getCurrentArea();
+		var area = V.Editor.getCurrentArea();
 		$(area).removeAttr("hyperlink");
 		$.fancybox.close();
 	}

@@ -8,11 +8,11 @@ VISH.Configuration = (function(V,$,undefined){
 	};
 
 	var _initPaths = function(){
-		VISH.ImagesPath = configuration["ImagesPath"];
-		VISH.StylesheetsPath = configuration["StylesheetsPath"];
-		VISH.UploadImagePath = configuration["uploadImagePath"];
-		VISH.UploadObjectPath = configuration["uploadObjectPath"];
-		VISH.UploadPresentationPath = configuration["uploadPresentationPath"];
+		V.ImagesPath = configuration["ImagesPath"];
+		V.StylesheetsPath = configuration["StylesheetsPath"];
+		V.UploadImagePath = configuration["uploadImagePath"];
+		V.UploadObjectPath = configuration["uploadObjectPath"];
+		V.UploadPresentationPath = configuration["uploadPresentationPath"];
 	};
 	
 	var applyConfiguration = function(){
@@ -54,7 +54,7 @@ VISH.Configuration = (function(V,$,undefined){
 			$("#tab_pic_flikr").css("display","none");
 		}
 
-	    //    VISH.Debugging.log("Configuration completed")
+	    //    V.Debugging.log("Configuration completed")
 	};
 	
 	var getConfiguration = function(){

@@ -2,10 +2,10 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	
 	
 	var drawFlashObjectWithSource = function(src){
-	  var current_area = VISH.Editor.getCurrentArea();
-	  var template = VISH.Editor.getTemplate();
+	  var current_area = V.Editor.getCurrentArea();
+	  var template = V.Editor.getTemplate();
 
-	  var nextFlashId = VISH.Utils.getId();
+	  var nextFlashId = V.Utils.getId();
 	  var idToDrag = "draggable" + nextFlashId;
 	  var idToResize = "resizable" + nextFlashId;
 	  current_area.attr('type','object');
@@ -25,7 +25,7 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  $(current_area).html("");
 	  $(current_area).append(embedDiv);
 	  	    
-	  VISH.Editor.addDeleteButton($(current_area));
+	  V.Editor.addDeleteButton($(current_area));
 	  
 	  $("#" + idToDrag).draggable({cursor: "move"});
 	}

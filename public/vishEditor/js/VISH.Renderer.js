@@ -9,7 +9,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 */
 	var init  = function(){
 		SLIDE_CONTAINER = $('.slides');
-		VISH.Renderer.Filter.init();
+		V.Renderer.Filter.init();
 	}
 
 	/**
@@ -28,17 +28,17 @@ VISH.Renderer = (function(V,$,undefined){
 
 		switch(slide.type){
 			case undefined:
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons);
 				break;
-			case VISH.Constant.VTOUR:
+			case V.Constant.VTOUR:
 				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
 				break;
 			//TODO ask to Kike to do this in different way
-			case VISH.Constant.QUIZ_SIMPLE:
+			case V.Constant.QUIZ_SIMPLE:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			default:
@@ -61,8 +61,8 @@ VISH.Renderer = (function(V,$,undefined){
 		var content = "";
 		var classes = "";
 		for(el in slide.elements){
-			if(!VISH.Renderer.Filter.allowElement(slide.elements[el])){
-				content += VISH.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
+			if(!V.Renderer.Filter.allowElement(slide.elements[el])){
+				content += V.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "text"){
 				content += _renderText(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === "image"){
@@ -78,19 +78,19 @@ VISH.Renderer = (function(V,$,undefined){
       		} else if(slide.elements[el].type === "applet"){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
-			} else if(slide.elements[el].type === VISH.Constant.QUIZ){
+			} else if(slide.elements[el].type === V.Constant.QUIZ){
 				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
-				classes += VISH.Constant.QUIZ;
+				classes += V.Constant.QUIZ;
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
 			}
 		}
 
 		//When render a simple_quiz for voting
-		//if(slide.type==VISH.Constant.QUIZ) {
-		if(slide.type==VISH.Constant.QUIZ_SIMPLE) {
+		//if(slide.type==V.Constant.QUIZ) {
+		if(slide.type==V.Constant.QUIZ_SIMPLE) {
 			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
-			classes += VISH.Constant.QUIZ;
+			classes += V.Constant.QUIZ;
 		}
 
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
@@ -125,9 +125,9 @@ VISH.Renderer = (function(V,$,undefined){
 	var _afterDrawSlide = function(slide){
 		switch(slide.type){
 			case undefined:
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 				//Add the background and pois
 				$("#"+ slide.id).css("background-image", slide.background);
 				
@@ -137,8 +137,8 @@ VISH.Renderer = (function(V,$,undefined){
 		        	V.Flashcard.addArrow(slide.id, poi, true);
 		  		}
 				break;
-			case VISH.Constant.VTOUR:
-					VISH.VirtualTour.drawMap(slide);
+			case V.Constant.VTOUR:
+					V.VirtualTour.drawMap(slide);
 				break;
 			default:
 				break;
@@ -174,7 +174,7 @@ VISH.Renderer = (function(V,$,undefined){
 			$(div).append(img);
 		}
 		
-		return VISH.Utils.getOuterHTML(div);
+		return V.Utils.getOuterHTML(div);
 	};
 	
 	/**
@@ -188,7 +188,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
 		var loop=(element['loop'])?"loop='loop' ":"";
 		var sources = element['sources'];
-		var videoId = VISH.Utils.getId();
+		var videoId = V.Utils.getId();
 
 		if(typeof sources == "string"){
 			sources = JSON.parse(sources)
@@ -215,7 +215,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an object inside an article (a slide)
 	 */
 	var _renderObject = function(element, template){
-		var objectInfo = VISH.Object.getObjectInfo(element.body);
+		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case "youtube":
 				return _renderYoutubeVideo(element,template,objectInfo.source);
@@ -230,7 +230,7 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 
 	var _renderYoutubeVideo = function(element,template,source){
-		var ytContainerId = VISH.Utils.getId();
+		var ytContainerId = V.Utils.getId();
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
 		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
@@ -251,7 +251,7 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render an applet inside an article (a slide)
 	 * the applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div
-	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF (see VISH.SlideManager._onslideenter) and it will add the params inside the div
+	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF (see V.SlideManager._onslideenter) and it will add the params inside the div
 	 */
 	var _renderApplet = function(element, template){
 		return "<div id='"+element['id']+"' class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";

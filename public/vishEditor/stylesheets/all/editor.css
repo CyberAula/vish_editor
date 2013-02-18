@@ -842,6 +842,7 @@ table.metadata td div.height_wrapper_description{
 .text_in_fancybox{
 	margin-left: 22px;
 	margin-top: 22px;
+	margin-bottom: 10px;
 }
 
 #button_accept_when_fail{
@@ -1837,4 +1838,16 @@ margin: 0px;
 	width: 638px;
 	height: 230px;
 	position: absolute;
+}
+
+img#help_flashcard{
+	cursor: pointer;
+}
+
+img#message2img{
+	padding-right: 10px;
+}
+
+img#message3img{
+	padding-right: 10px;
 }

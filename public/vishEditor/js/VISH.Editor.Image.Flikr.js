@@ -6,10 +6,10 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	//add events to inputs
 	var init = function(){
 		var myInput = $("#tab_pic_flikr_content").find("input[type='search']");
-		$(myInput).watermark(VISH.Editor.I18n.getTrans("i.SearchContent"));
+		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-		        	VISH.Editor.Image.Flikr.listImages($(myInput).val());
+		        	V.Editor.Image.Flikr.listImages($(myInput).val());
 		          	$(myInput).blur();
 			}
 		});
@@ -19,7 +19,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	//function that is called when tab loads
 	var onLoadTab = function(){
 		//clean carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
 		$("#" + carrouselDivId).hide();
 
 		//clean search field
@@ -28,7 +28,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 
 	var listImages = function(text){
 		//clean carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
 		$("#" + carrouselDivId).hide();
 
 		var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
@@ -47,7 +47,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 				var myImg = $("<img id=img_flkr" + i + " src=" + item.media.m.replace(/_m/i, "") + " imageFlikrId=" + i + "/>")
 				carrouselImages.push(myImg);
 			});
-			VISH.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+			V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 		});
 	};
 
@@ -61,10 +61,10 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		$("#" + carrouselDivId).show();
 		var options = new Array();
 		options['rows'] = 2;
-		options['callback'] = VISH.Editor.Image.Flikr.addImage;
+		options['callback'] = V.Editor.Image.Flikr.addImage;
 		options['rowItems'] = 4;
 		options['scrollItems'] = 4;
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
 	return {

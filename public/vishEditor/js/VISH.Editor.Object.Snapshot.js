@@ -10,9 +10,9 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 
     //Load from URL
     $("#" + urlDivId + " .previewButton").click(function(event) {
-      if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-        contentToAdd = VISH.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-        VISH.Editor.Object.drawPreview(urlDivId, contentToAdd);
+      if(V.Police.validateObject($("#" + urlInputId).val())[0]){
+        contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
+        V.Editor.Object.drawPreview(urlDivId, contentToAdd);
       }
     });
   };
@@ -20,7 +20,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
   
   var onLoadTab = function(tab){
 		contentToAdd = null;
-    VISH.Editor.Object.resetPreview(urlDivId);
+    V.Editor.Object.resetPreview(urlDivId);
     $("#" + urlInputId).val("");
   }
 	
@@ -34,7 +34,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	
 	var _validateSnapShot = function(object){	
-		var objectInfo = VISH.Object.getObjectInfo(object);
+		var objectInfo = V.Object.getObjectInfo(object);
 		
     switch (objectInfo.wrapper) {
       case null:
@@ -65,7 +65,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	
 	var _wrapperSnapShot = function(content){
-		var objectInfo = VISH.Object.getObjectInfo(content);
+		var objectInfo = V.Object.getObjectInfo(content);
 		if(objectInfo.wrapper===null){
 			return "<iframe src='" + content + "'></iframe>";
 		} else {
@@ -83,7 +83,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     if(area){
       current_area = area;
     } else {
-      current_area = VISH.Editor.getCurrentArea();
+      current_area = V.Editor.getCurrentArea();
     }
     if(style){
         object_style = style;
@@ -112,7 +112,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
     $(current_area).html("");
     $(current_area).append(wrapperDiv);
 
-    VISH.Editor.addDeleteButton($(current_area));
+    V.Editor.addDeleteButton($(current_area));
       
     $(wrapperDiv).append(iframeTag);
 		
@@ -141,7 +141,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	    }
     });
 
-    VISH.Editor.Tools.loadToolsForZone(current_area);
+    V.Editor.Tools.loadToolsForZone(current_area);
   };
 	
 	var _isBorderClick = function(event,idToDrag){

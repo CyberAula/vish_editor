@@ -55,7 +55,7 @@ VISH.Object = (function(V,$,undefined){
 			case "IFRAME": 
 				return $(object).attr("src");
 			default:
-				VISH.Debugging.log("Unrecognized object wrapper: " + wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + wrapper)
 				return null;
 			break;
 		}

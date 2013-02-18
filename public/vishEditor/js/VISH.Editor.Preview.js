@@ -22,11 +22,11 @@ VISH.Editor.Preview = (function(V,$,undefined){
 				if(presentation_preview === null){
 					_prepare();
 				}
-				VISH.Editor.Utils.Loader.unloadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+				V.Editor.Utils.Loader.unloadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 			},
 			'onClosed'			: function() {
 				presentation_preview = null;
-				VISH.Editor.Utils.Loader.loadObjectsInEditorSlide(VISH.Slides.getCurrentSlide());
+				V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 			},
 			'onComplete': function() {
 				$("#fancybox-wrap").css('top','60px');
@@ -63,11 +63,11 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			forcePresentation =  options["forcePresentation"];
 		}
 
-		if(VISH.Configuration.getConfiguration()["mode"]=="vish"){
+		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 			$("#preview_circle").attr("href",  "/excursions/preview#" + slideNumberToPreview);
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			$("#preview_circle").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
-		} else if(VISH.Configuration.getConfiguration()["mode"]=="node"){
+		} else if(V.Configuration.getConfiguration()["mode"]=="node"){
 			//Code here
 		}
 			

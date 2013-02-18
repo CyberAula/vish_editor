@@ -10,7 +10,7 @@ VISH.Events = (function(V,$,undefined){
 
 	var init = function() {
 		mobile = (!V.Status.getDevice().desktop);
-		eMobile = VISH.Events.Mobile;
+		eMobile = V.Events.Mobile;
 		if(!V.Editing){
 			eMobile.init();
 			bindViewerEventListeners();

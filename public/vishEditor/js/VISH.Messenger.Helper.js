@@ -24,8 +24,8 @@ VISH.Messenger.Helper = (function(V,undefined){
 
 	var createMessage = function(VEevent,params,origin,destination){
 		if(!origin){
-			if(VISH.Status.getIsInIframe()){
-				origin = VISH.Status.getIframe().id;
+			if(V.Status.getIsInIframe()){
+				origin = V.Status.getIframe().id;
 			}
 		}
 		var VEMessage = new message(VEevent,params,origin,destination);
@@ -48,8 +48,8 @@ VISH.Messenger.Helper = (function(V,undefined){
 			if(!VEMessageObject.VEevent){
 				return false;
 			}
-			if((VISH.Status.getIsInIframe())&&(params)&&(params.allowSelfMessages===false)){
-				if(VEMessageObject.origin===VISH.Status.getIframe().id){
+			if((V.Status.getIsInIframe())&&(params)&&(params.allowSelfMessages===false)){
+				if(VEMessageObject.origin===V.Status.getIframe().id){
 					return false;
 				}
 			}
@@ -67,60 +67,60 @@ VISH.Messenger.Helper = (function(V,undefined){
 	var processVEMessage = function(VEMessage){
 		var VEMessageObject = JSON.parse(VEMessage);
 		switch(VEMessageObject.VEevent){
-			case VISH.Constant.Event.onGoToSlide:
+			case V.Constant.Event.onGoToSlide:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 				}
 				break;
-			case VISH.Constant.Event.onPlayVideo:
+			case V.Constant.Event.onPlayVideo:
 				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
-						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
-							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						VISH.VideoPlayer.playVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.VideoPlayer.playVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
-			case VISH.Constant.Event.onPauseVideo:
+			case V.Constant.Event.onPauseVideo:
 				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
-						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
-							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						VISH.VideoPlayer.pauseVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.VideoPlayer.pauseVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
-			case VISH.Constant.Event.onSeekVideo:
+			case V.Constant.Event.onSeekVideo:
 				if((VEMessageObject.params)&&(VEMessageObject.params.videoId)){
-						if((VEMessageObject.params.slideNumber)&&(VISH.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
-							VISH.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
+						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
+							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						VISH.VideoPlayer.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.VideoPlayer.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
-			case VISH.Constant.Event.onFlashcardPointClicked:
+			case V.Constant.Event.onFlashcardPointClicked:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						VISH.Slides.openSubslide(VEMessageObject.params.slideNumber,false);
+						V.Slides.openSubslide(VEMessageObject.params.slideNumber,false);
 				}
 				break;
-			case VISH.Constant.Event.onFlashcardSlideClosed:
+			case V.Constant.Event.onFlashcardSlideClosed:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						VISH.Slides.closeSubslide(VEMessageObject.params.slideNumber,false);
+						V.Slides.closeSubslide(VEMessageObject.params.slideNumber,false);
 				}
 				break;
-			case VISH.Constant.Event.onSetSlave:
+			case V.Constant.Event.onSetSlave:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.slave != "undefined")){
-					VISH.Status.setSlaveMode(VEMessageObject.params.slave);
+					V.Status.setSlaveMode(VEMessageObject.params.slave);
 				}
 				break;	
-			case VISH.Constant.Event.onPreventDefault:
+			case V.Constant.Event.onPreventDefault:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.preventDefaults != "undefined")){
-					VISH.Status.setPreventDefaultMode(VEMessageObject.params.preventDefaults);
+					V.Status.setPreventDefaultMode(VEMessageObject.params.preventDefaults);
 				}
 				break;
-			case VISH.Constant.Event.allowExitWithoutConfirmation:
-					VISH.Editor.allowExitWithoutConfirmation();
+			case V.Constant.Event.allowExitWithoutConfirmation:
+					V.Editor.allowExitWithoutConfirmation();
 				break;
 			default:
-					VISH.Debugging.log("VISH.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
+					V.Debugging.log("V.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);
 				break;
 		}
 	}
