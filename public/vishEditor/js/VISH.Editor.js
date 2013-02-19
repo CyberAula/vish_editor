@@ -77,6 +77,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.Editor.Flashcard.init();
+		V.Editor.VirtualTour.init();
 		V.Renderer.init();
 		V.Slides.init();
 		V.User.init(options);

@@ -83,3 +83,8 @@ VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation
 //Storage
 VISH.Constant.Storage = {};
 VISH.Constant.Storage.Device = "Device";
+
+//VirtualTour
+VISH.Constant.VTour = {};
+VISH.Constant.VTour.DEFAULT_MAP = "roadmap";
+VISH.Constant.VTour.ROADMAP = "roadmap";

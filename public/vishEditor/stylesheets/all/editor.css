@@ -1888,4 +1888,11 @@ img#message3img{
 #vtour_help_button{
 	position: absolute;
 	right: 0px;
+	z-index: 2;
+	top: 27px;
+}
+
+#vt_canvas{
+	width: 100%;
+	height: 100%;
 }

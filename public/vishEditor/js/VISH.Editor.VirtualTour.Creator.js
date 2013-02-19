@@ -6,9 +6,15 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	//Point to the current pois
 	var currentPois = undefined;
 
+	//Map vars
+	var canvas;
+	var map;
+	var overlay;
+
+
 	var init = function(){
-		V.Debugging.log("Init VTour");
 		virtualTourId = null;
+		canvas = $("#vt_canvas");
 	};
 
 	var getCurrentVirtualTourId = function(){
@@ -16,11 +22,10 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	}
 
 	/*
-	 * Switch to Virtual TOur creator in order to allow the creation of a 
+	 * Switch to Virtual Tour creator in order to allow the creation of a 
 	 * new virtual tour using the current slides
 	 */
 	var onLoadMode = function(){
-		V.Debugging.log("onLoad VTour");
 		loadVirtualTour();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
@@ -63,46 +68,90 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			}
 			$("#vtour-background").attr("VirtualTour_id", getCurrentVirtualTourId());
 		}
-		$("#vtour-background").droppable();  //to accept the pois
+		_loadMap(presentation);
 	};
 
+	var _loadMap = function(vt){
+		if(!vt){
+			//Default values
+			vt = {};
+			vt.center = {"lat":34,"long":2};
+			vt.zoom = 2;
+			vt.mapType = V.Constant.VTour.DEFAULT_MAP;
+		}
+		var latlng = new google.maps.LatLng(vt.center.lat, vt.center.long);
+		var myOptions = {
+			zoom: vt.zoom,
+			center: latlng,
+			mapTypeId: vt.mapType
+		};
+		map = new google.maps.Map($(canvas)[0], myOptions);
+		overlay = new google.maps.OverlayView();
+		overlay.draw = function() {};
+		overlay.setMap(map);
+	}
 
 	/*
 	 * Redraw the pois of the vt
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var redrawPois = function(){
-		// //Show draggable items
-		// $(".draggable_arrow_div").show();
+
+		$(canvas).droppable({
+			accept: function(event, ui){
+				return true;
+			},
+			drop: function(event, ui) {
+
+			}
+		});
+
+		//Show draggable items
+		$(".draggable_arrow_div").show();
 		// //Apply them the style to get the previous position
 		// _applyStyleToPois();
 
-		// $(".draggable_arrow_div").draggable({
-		// 	revert: "invalid",   //poi will return to original position if not dropped on the background
-		// 	stop: function(event, ui) { 
-		// 		//change the moved attribute of the poi, and change it to position absolute
-		// 		//check if inside background
-		// 		if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
-		// 			$(event.target).attr("moved", "true");
-		// 			//change to position absolute
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "fixed");
-		// 			$(event.target).css("top", (old_pos.top +30) + "px");
-		// 			$(event.target).css("left", (old_pos.left -16) + "px");
-		// 		} else {
-		// 			$(event.target).attr("moved", "false");
-		// 			//change to position relative so it moves with the carrousel
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "relative");
-		// 			$(event.target).css("top", "auto");
-		// 			$(event.target).css("left", "auto");
-		// 		}
-		// 	}
-		// });
-		// $(".carrousel_element_single_row_slides").droppable();
-		// $(".image_carousel").css("overflow", "visible");
-		// $("#menubar").css("z-index", "1075");
-		// $(".draggable_arrow_div").css("z-index", "1075");
+		var reverted = false;
+		$(".draggable_arrow_div").draggable({
+			// revert: "invalid", //Go to original position on non-droppable elements
+			//This function simulates the "invalid value" functionality, but keeps 
+			//the returned value in the 'reverted' var
+			revert: function(dropped){
+				reverted = !dropped;
+				return reverted;
+			},
+			stop: function( event, ui ) {
+				if(reverted){
+					return;
+				}
+				//Compensate div dimensions
+				var pageX = event.pageX - 55;
+				var pageY = event.pageY - 30;
+				var point = new google.maps.Point(pageX,pageY);
+				var position = overlay.getProjection().fromContainerPixelToLatLng(point);
+				if(_isPositionInViewport(position)){
+					var marker = _addMarkerToPosition(position);
+					$(event.target).hide();
+				} else {
+					//Not in map viewport
+					//Trigger revert event...
+					$(event.target).animate({ top: 0, left: 0 }, 'slow');
+				}
+			}
+		});
+
+		google.maps.event.addListener(map, 'click', function(event) {
+			if(event){
+				var lat = event.latLng.lat();
+				var lng = event.latLng.lng();
+				_addMarkerToCoordinates(lat,lng);
+			}
+		});
+
+		$(".carrousel_element_single_row_slides").droppable();
+		$(".image_carousel").css("overflow", "visible");
+		$("#menubar").css("z-index", "1075");
+		$(".draggable_arrow_div").css("z-index", "1075");
 	};
 
 	var _applyStyleToPois = function(){
@@ -124,6 +173,35 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		// 	});
 		// }
 	};
+
+	///////////////////
+	/// MAP Utils
+	//////////////////
+
+	var _addMarkerToCoordinates = function(lat,long){
+		return _addMarkerToPosition(new google.maps.LatLng(lat,long));
+	}
+
+	var _addMarkerToPosition = function(myLatlng,id){
+		var marker = new google.maps.Marker({
+			position: myLatlng, 
+			map: map,
+			draggable: true,
+			id: id,
+			title:"("+myLatlng.lat()+","+myLatlng.lng()+")"
+		});
+
+		google.maps.event.addListener(marker, 'click', function(event) {
+			V.Debugging.log("Click on marker with id: ");
+			V.Debugging.log(marker.id);
+		});
+
+		return marker;
+	}
+
+	var _isPositionInViewport = function(position) {
+		return map.getBounds().contains(position);
+	}
 
 	/*
 	 * Returns the array of pois to be stored in the JSON

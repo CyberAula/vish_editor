@@ -31,6 +31,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					carrouselImagesTitles.push(carrouselElements);
 				break;
 			case V.Constant.VTOUR:
+				//TODO... ¿put a generic img?
 				break;
 			default:
 				break;
@@ -79,10 +80,16 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options['startAtLastElement'] = true;
 		options['pagination'] = false;
 
-		if(presentationType === V.Constant.FLASHCARD){
+		if(presentationType === V.Constant.PRESENTATION){
+			options['callback'] = _onClickCarrouselElement;
+		} else if(presentationType === V.Constant.FLASHCARD){
 			options['callback'] = V.Editor.Flashcard.Creator.onClickCarrouselElement;
 			options['afterCreateCarruselFunction'] = V.Editor.Flashcard.Creator.redrawPois;
-		} else{
+		} else if(presentationType === V.Constant.VTOUR){
+			options['callback'] = V.Editor.VirtualTour.Creator.onClickCarrouselElement;
+			options['afterCreateCarruselFunction'] = V.Editor.VirtualTour.Creator.redrawPois;
+		} else {
+			//Generic
 			options['callback'] = _onClickCarrouselElement;
 		}
 
@@ -96,7 +103,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 			//Add sortable
 			var firstCarrouselNumber;
-			$( "#" + carrouselDivId).sortable({ 
+			$( "#" + carrouselDivId).sortable({
 				items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
 				change: function(event, ui) {
 					//Do nothing
