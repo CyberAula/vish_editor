@@ -10,7 +10,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		virtualTourId = null;
 	};
 
-	var getCurrentVirtualTour = function(){
+	var getCurrentVirtualTourId = function(){
 		return virtualTourId;
 	}
 
@@ -53,13 +53,13 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			//If we are editing an existing vt
 			var virtualTour = presentation.slides[0];
 			virtualTourId = virtualTour.id;
-			$("#vtour-background").attr("virtualTour_id", virtualTourId);
+			$("#vtour-background").attr("VirtualTour_id", virtualTourId);
 		} else {
 			//Create new vt
 			if(!getCurrentVirtualTourId()){
 				virtualTourId = V.Utils.getId("article");
 			}
-			$("#vtour-background").attr("virtualTour_id", getCurrentVirtualTourId());
+			$("#vtour-background").attr("VirtualTour_id", getCurrentVirtualTourId());
 		}
 		$("#vtour-background").droppable();  //to accept the pois
 	};
@@ -70,42 +70,42 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var redrawPois = function(){
-		//Show draggable items
-		$(".draggable_arrow_div").show();
-		//Apply them the style to get the previous position
-		_applyStyleToPois();
+		// //Show draggable items
+		// $(".draggable_arrow_div").show();
+		// //Apply them the style to get the previous position
+		// _applyStyleToPois();
 
-		$(".draggable_arrow_div").draggable({
-			revert: "invalid",   //poi will return to original position if not dropped on the background
-			stop: function(event, ui) { 
-				//change the moved attribute of the poi, and change it to position absolute
-				//check if inside background
-				if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
-					$(event.target).attr("moved", "true");
-					//change to position absolute
-					var old_pos = $(event.target).offset();
-					$(event.target).css("position", "fixed");
-					$(event.target).css("top", (old_pos.top +30) + "px");
-					$(event.target).css("left", (old_pos.left -16) + "px");
-				} else {
-					$(event.target).attr("moved", "false");
-					//change to position relative so it moves with the carrousel
-					var old_pos = $(event.target).offset();
-					$(event.target).css("position", "relative");
-					$(event.target).css("top", "auto");
-					$(event.target).css("left", "auto");
-				}
-			}
-		});
-		$(".carrousel_element_single_row_slides").droppable();
-		$(".image_carousel").css("overflow", "visible");
-		$("#menubar").css("z-index", "1075");
-		$(".draggable_arrow_div").css("z-index", "1075");
+		// $(".draggable_arrow_div").draggable({
+		// 	revert: "invalid",   //poi will return to original position if not dropped on the background
+		// 	stop: function(event, ui) { 
+		// 		//change the moved attribute of the poi, and change it to position absolute
+		// 		//check if inside background
+		// 		if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
+		// 			$(event.target).attr("moved", "true");
+		// 			//change to position absolute
+		// 			var old_pos = $(event.target).offset();
+		// 			$(event.target).css("position", "fixed");
+		// 			$(event.target).css("top", (old_pos.top +30) + "px");
+		// 			$(event.target).css("left", (old_pos.left -16) + "px");
+		// 		} else {
+		// 			$(event.target).attr("moved", "false");
+		// 			//change to position relative so it moves with the carrousel
+		// 			var old_pos = $(event.target).offset();
+		// 			$(event.target).css("position", "relative");
+		// 			$(event.target).css("top", "auto");
+		// 			$(event.target).css("left", "auto");
+		// 		}
+		// 	}
+		// });
+		// $(".carrousel_element_single_row_slides").droppable();
+		// $(".image_carousel").css("overflow", "visible");
+		// $("#menubar").css("z-index", "1075");
+		// $(".draggable_arrow_div").css("z-index", "1075");
 	};
 
 	var _applyStyleToPois = function(){
 		if(typeof currentPois === "undefined"){
-			//We are loading a flascard, get the pois from the flashcard
+			//We are loading a virtual tour, get the pois from the vt
 			var presentation = V.Editor.getPresentation();
 			if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
 				currentPois = presentation.slides[0].pois;
@@ -114,13 +114,13 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			}
 		}
 
-		if(typeof currentPois !== "undefined"){
-			$.each(currentPois, function(index, val) { 
-				$("#" + val.id).css("position", "fixed");
-				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
-				$("#" + val.id).attr("moved", "true");
-			});
-		}
+		// if(typeof currentPois !== "undefined"){
+		// 	$.each(currentPois, function(index, val) { 
+		// 		$("#" + val.id).css("position", "fixed");
+		// 		$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
+		// 		$("#" + val.id).attr("moved", "true");
+		// 	});
+		// }
 	};
 
 	/*
@@ -128,15 +128,15 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * Pois are nested!
 	 */
 	var getPois = function(){
-		var pois = [];
-		$(".draggable_arrow_div[moved='true']").each(function(index,s){
-			pois[index]= {};
-			pois[index].id = V.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
-			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = V.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
-		});
-		return pois;
+		// var pois = [];
+		// $(".draggable_arrow_div[moved='true']").each(function(index,s){
+		// 	pois[index]= {};
+		// 	pois[index].id = V.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
+		// 	pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
+		// 	pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
+		// 	pois[index].slide_id = V.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
+		// });
+		// return pois;
 	};
 
 	/*
@@ -144,31 +144,23 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * The id matches the id of the DOM element.
 	 */
 	var _getCurrentPois = function(){
-		var pois = [];
-		$(".draggable_arrow_div[moved='true']").each(function(index,s){
-			pois[index]= {};
-			pois[index].id = s.id;
-			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = $(s).attr('slide_id');
-		});
-		return pois;
+		// var pois = [];
+		// $(".draggable_arrow_div[moved='true']").each(function(index,s){
+		// 	pois[index]= {};
+		// 	pois[index].id = s.id;
+		// 	pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
+		// 	pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
+		// 	pois[index].slide_id = $(s).attr('slide_id');
+		// });
+		// return pois;
 	};
 
 	var hidePois = function(){
 		$(".draggable_arrow_div").hide();
 	};
 
-	var hasPoiInBackground = function(){
-		return $(".draggable_arrow_div[moved='true']").length > 0;
-	};
+	var hasPoiInMap = function(){
 
-	var hasChangedBackground = function(){
-		if($("#flashcard-background").css("background-image").indexOf("flashcard_initial_background.jpg") != -1){
-			return false;
-		}else{
-			return true;
-		}
 	};
 
 	/*
@@ -204,14 +196,14 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Prepare slide to nest into a flashcard
+	 * Prepare slide to nest
 	 */
 	var prepareToNestInFlashcard = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
+		return V.Editor.Utils.prepareSlideToNest(virtualTourId,slide);
 	}
 
 	/*
-	 * Revert the nest of the slides into a flashcard
+	 * Revert the nest of the slides
 	 */
 	var undoNestedSlidesInFlashcard = function(fc){
 		fc.slides = _undoNestedSlides(fc.id,fc.slides);
@@ -250,8 +242,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
 		hidePois			 		: hidePois,
-		hasChangedBackground 		: hasChangedBackground,
-		hasPoiInBackground	 		: hasPoiInBackground,
+		hasPoiInMap	 				: hasPoiInMap,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		prepareToNestInFlashcard 	: prepareToNestInFlashcard,
 		undoNestedSlidesInFlashcard : undoNestedSlidesInFlashcard
