@@ -1851,3 +1851,41 @@ img#message2img{
 img#message3img{
 	padding-right: 10px;
 }
+
+/*
+ * Virtual Tour styles
+ */
+
+ #vtour-background{
+	display:none;
+	z-index: 1050;
+	width: 800px;
+	height: 600px;
+	background-size: 800px 600px;
+	margin-top: -327px;
+	margin-left: -400px;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+	background-image: url(/vishEditor/images/flashcard/flashcard_initial_background.jpg);
+	background-repeat:no-repeat;
+	/*background-attachment:fixed;*/
+	background-position:center center;
+	
+	border-radius: 20px;
+	webkit-border-radius: 20px;
+	moz-border-radius: 20px;
+	border: 1px solid #CCCCCC;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+}
+
+#help_vtour{
+	cursor: pointer;
+}
+
+#vtour_help_button{
+	position: absolute;
+	right: 0px;
+}

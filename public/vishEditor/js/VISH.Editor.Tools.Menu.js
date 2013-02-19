@@ -74,6 +74,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			case V.Constant.GAME:
 				_enableMenuItem($("ul.menu_option_main").find("a.menu_game").parent());
 				break;
+			case V.Constant.VTOUR:
+				_enableMenuItem($("ul.menu_option_main").find("a.menu_vtour").parent());
+				break;	
 			case V.Constant.QUIZ_SIMPLE:
 				break;
 			default:
@@ -413,8 +416,20 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 
 	/////////////////////
-	/// CONVERSION
+	/// Modes
 	///////////////////////
+
+	var switchToPresentation = function(){
+		_beforeChangeMode();
+		V.Editor.setMode(V.Constant.PRESENTATION);
+
+		var presentation = V.Editor.savePresentation();
+		V.Editor.setPresentation(presentation);
+		V.Editor.setPresentationType("presentation");
+		V.Editor.Slides.showSlides();
+		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Tools.init();
+	};
 
 	var switchToFlashcard = function(){
 		_beforeChangeMode();
@@ -433,30 +448,25 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				}
 			);
 		} else {
-			V.Editor.Flashcard.Creator.switchToFlashcard();
+			V.Editor.Flashcard.Creator.onLoadMode();
 		}
 	};
 
-	var switchToPresentation = function(){
+	var switchToVirtualTour = function(){
 		_beforeChangeMode();
-		V.Editor.setMode(V.Constant.PRESENTATION);
-
-		var presentation = V.Editor.savePresentation();
-		V.Editor.setPresentation(presentation);
-		V.Editor.setPresentationType("presentation");
-		V.Editor.Slides.showSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
-		V.Editor.Tools.init();
-	};
+		V.Editor.setMode(V.Constant.VTOUR);
+		V.Editor.VirtualTour.Creator.onLoadMode();
+	}
 
 	var _beforeChangeMode = function(){
 		switch(V.Editor.getMode()){
 			case V.Constant.PRESENTATION:
 				break;
 			case V.Constant.FLASHCARD:
-					V.Editor.Flashcard.Creator.onLeaveFlashcardMode();
+					V.Editor.Flashcard.Creator.onLeaveMode();
 				break;
 			case V.Constant.VTOUR:
+					V.Editor.VirtualTour.Creator.onLeaveMode();
 				break;
 			default:
 				break;
@@ -497,8 +507,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
+		switchToPresentation			: switchToPresentation,
 		switchToFlashcard				: switchToFlashcard,
-		switchToPresentation			: switchToPresentation
+		switchToVirtualTour 			: switchToVirtualTour
 	};
 
 }) (VISH, jQuery);

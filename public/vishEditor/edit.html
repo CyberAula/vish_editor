@@ -237,13 +237,16 @@
 								<a class="menu_option menu_all" i18n-key="i.ConvertTo">Convert to</a>
 								<ul>
 									<li>
-										<a class="menu_option menu_action menu_flashcard menu_game" action="switchToPresentation" i18n-key="i.Presentation">Presentation</a>
+										<a class="menu_option menu_action menu_flashcard menu_game menu_vtour" action="switchToPresentation" i18n-key="i.Presentation">Presentation</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_standard_presentation menu_game" action="switchToFlashcard" i18n-key="i.Flashcard">Flashcard</a>
+										<a class="menu_option menu_action menu_standard_presentation menu_game menu_vtour" action="switchToFlashcard" i18n-key="i.Flashcard">Flashcard</a>
 									</li>
 									<li>
 										<a style="display:none" class="menu_option menu_action" action="switchToGame" i18n-key="i.Game">Game</a>
+									</li>
+									<li>
+										<a class="menu_option menu_action menu_standard_presentation menu_flashcard menu_game" action="switchToVirtualTour" i18n-key="i.VirtualTour">Virtual Tour</a>
 									</li>
 								</ul>
 							</li>
@@ -1196,23 +1199,41 @@
 
 		<!--help for flashcard -->
 		<ol id="fc_help" class="joyRideTipContent">
-		    <li data-id="change_background_fc" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
-		 <h2>Flashcards</h2>
-		 <p i18n-key="i.walk56">A flashcard, is an application that will help you represent your excursion as an infographic, using an image to represent the concept of the excursion and mark zones of the image for the user to interact with them in order to see the pages of the excursion.</p>
-		 <p i18n-key="i.walk57">First, use these icons to add a background to the slide.</p>
-		 <img class="imagetutflash" src="/vishEditor/images/tutorial/icons_flashcard_tut.png"/>
-		 <p i18n-key="i.walk58">You can add images by:</p>
-		 <ul>
-		  <li><h1 i18n-key="i.Url">Url</h1></li><img class="imagetutflash2" src="/vishEditor/images/tutorial/icons_flashcard_tut3.png"/>
-		  <li><h1 i18n-key="i.OwnImages">Upload your own images</h1></li>
-		  <li><h1 i18n-key="i.SearchImagesVish">From the vish repository</h1></li>
-		  <li><h1 i18n-key="i.SearchImagesFlickr">From Flickr</h1></li>
-		</ul>
-		 <p i18n-key="i.walk59">Once, you finish this step, you can "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the flashcard background image to mark the zones that you want the user to interact with.</p>
-		 <img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
-		<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/icons/preview_circle.png"/></p>
-		<p i18n-key="i.walk61">If you save your presentation as a flashcard, it will be shown on the Vish web page as a flashcard, but you can always edit your excursion back and save it as a presentation.</p>
-		</li>
+			<li data-id="change_background_fc" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+				<h2>Flashcards</h2>
+				<p i18n-key="i.walk56">
+					A flashcard, is an application that will help you represent your excursion as an infographic, using an image to represent the concept of the excursion and mark zones of the image for the user to interact with them in order to see the pages of the excursion.
+				</p>
+				<p i18n-key="i.walk57">First, use these icons to add a background to the slide.</p>
+				<img class="imagetutflash" src="/vishEditor/images/tutorial/icons_flashcard_tut.png"/>
+				<p i18n-key="i.walk58">You can add images by:</p>
+				<ul>
+					<li>
+						<h1 i18n-key="i.Url">Url</h1>
+					</li>
+					<img class="imagetutflash2" src="/vishEditor/images/tutorial/icons_flashcard_tut3.png"/>
+					<li><h1 i18n-key="i.OwnImages">Upload your own images</h1></li>
+					<li><h1 i18n-key="i.SearchImagesVish">From the vish repository</h1></li>
+					<li><h1 i18n-key="i.SearchImagesFlickr">From Flickr</h1></li>
+				</ul>
+				<p i18n-key="i.walk59">Once, you finish this step, you can "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the flashcard background image to mark the zones that you want the user to interact with.</p>
+				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
+				<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/icons/preview_circle.png"/></p>
+				<p i18n-key="i.walk61">If you save your presentation as a flashcard, it will be shown on the Vish web page as a flashcard, but you can always edit your excursion back and save it as a presentation.</p>
+			</li>
+		</ol>
+
+		<!--help for vtours -->
+		<ol id="vt_help" class="joyRideTipContent">
+			<li data-id="change_background_fc" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+				<h2>Virtual Tours</h2>
+				<p i18n-key="i.walk56">
+					A virtual tour is a represententation of your excursion as a map.
+				</p>
+				<p i18n-key="i.walk59">Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>
+				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
+				<p><span i18n-key="i.walk60">You can click on the "preview button" to show the resulting virtual tour before you save it.</span><img src="/vishEditor/images/icons/preview_circle.png"/></p>
+			</li>
 		</ol>
 
 		<!--help for themes-->

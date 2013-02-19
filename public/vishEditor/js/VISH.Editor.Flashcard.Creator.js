@@ -18,7 +18,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * Switch to Flashcard creator in order to allow the creation of a new flashcard
 	 * using the current slides
 	 */
-	var switchToFlashcard = function(){
+	var onLoadMode = function(){
 		loadFlashcard();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
@@ -31,7 +31,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * Method to call before leave the flashcard mode
 	 * Store the current pois.
 	 */
-	var onLeaveFlashcardMode = function(){
+	var onLeaveMode = function(){
 		currentPois = _getCurrentPois();
 		$("#flashcard-background").hide();
 	}
@@ -254,8 +254,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	return {
 		init 				 		: init,
 		getCurrentFlashcardId		: getCurrentFlashcardId,
-		switchToFlashcard	 		: switchToFlashcard,
-		onLeaveFlashcardMode 		: onLeaveFlashcardMode,
+		onLoadMode			 		: onLoadMode,
+		onLeaveMode 				: onLeaveMode,
 		loadFlashcard		 		: loadFlashcard,
 		onBackgroundSelected		: onBackgroundSelected,
 		redrawPois 			 		: redrawPois,

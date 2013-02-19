@@ -7,6 +7,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var currentPois = undefined;
 
 	var init = function(){
+		V.Debugging.log("Init VTour");
 		virtualTourId = null;
 	};
 
@@ -18,7 +19,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * Switch to Virtual TOur creator in order to allow the creation of a 
 	 * new virtual tour using the current slides
 	 */
-	var switchToFlashcard = function(){
+	var onLoadMode = function(){
+		V.Debugging.log("onLoad VTour");
 		loadVirtualTour();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
@@ -31,7 +33,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * Method to call before leave the virtual tour mode
 	 * Store the current pois.
 	 */
-	var onLeaveVirtualTourMode = function(){
+	var onLeaveMode = function(){
 		currentPois = _getCurrentPois();
 		$("#vtour-background").hide();
 	}
@@ -234,11 +236,10 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	return {
 		init 				 		: init,
-		getCurrentFlashcardId		: getCurrentFlashcardId,
-		switchToFlashcard	 		: switchToFlashcard,
-		onLeaveFlashcardMode 		: onLeaveFlashcardMode,
-		loadFlashcard		 		: loadFlashcard,
-		onBackgroundSelected		: onBackgroundSelected,
+		getCurrentVirtualTourId		: getCurrentVirtualTourId,
+		onLoadMode			 		: onLoadMode,
+		onLeaveMode 				: onLeaveMode,
+		loadVirtualTour		 		: loadVirtualTour,
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
 		hidePois			 		: hidePois,

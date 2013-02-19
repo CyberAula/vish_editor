@@ -253,6 +253,11 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('fc_help', 'top');
 		});
 
+		//vtour
+		$(document).on('click','#help_vtour', function(){
+			V.Editor.Tour.startTourWithId('vt_help', 'top');
+		});
+
 		//template
 		$(document).on('click','.help_in_template', function(){			
 			V.Editor.Tour.startTourWithId('template_help', 'bottom');
