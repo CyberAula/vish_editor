@@ -1,9 +1,9 @@
-VISH.VideoPlayer = (function(){
+VISH.VideoPlayer = (function(V,$,undefined){
 	
 	var init = function(){
-		VISH.VideoPlayer.CustomPlayer.init();
-		VISH.VideoPlayer.HTML5.init();
-		VISH.VideoPlayer.Youtube.init();
+		V.VideoPlayer.CustomPlayer.init();
+		V.VideoPlayer.HTML5.init();
+		V.VideoPlayer.Youtube.init();
 	}
 
 	var getTypeVideoWithId = function(videoId){
@@ -12,23 +12,23 @@ VISH.VideoPlayer = (function(){
 
 	var getTypeVideo = function(video){
 		if(!video){
-			return VISH.Constant.UNKNOWN;
+			return V.Constant.UNKNOWN;
 		} else if(video.tagName==="VIDEO"){
-			return VISH.Constant.Video.HTML5;
+			return V.Constant.Video.HTML5;
 		} else if((video.tagName==="OBJECT")||(video.tagName==="IFRAME")){
 			//Iframe for HTML5 API, Object for deprecated Flash API
-			return VISH.Constant.Video.Youtube;
+			return V.Constant.Video.Youtube;
 		}
-		return VISH.Constant.UNKNOWN;
+		return V.Constant.UNKNOWN;
 	}
 
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
-			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.playVideo(videoId,currentTime,triggeredByUser);
+			case V.Constant.Video.HTML5:
+				V.VideoPlayer.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
-			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser);
+			case V.Constant.Video.Youtube:
+				V.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
@@ -37,11 +37,11 @@ VISH.VideoPlayer = (function(){
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
-			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
+			case V.Constant.Video.HTML5:
+				V.VideoPlayer.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
-			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
+			case V.Constant.Video.Youtube:
+				V.VideoPlayer.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
@@ -50,11 +50,11 @@ VISH.VideoPlayer = (function(){
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
-			case VISH.Constant.Video.HTML5:
-				VISH.VideoPlayer.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
+			case V.Constant.Video.HTML5:
+				V.VideoPlayer.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
-			case VISH.Constant.Video.Youtube:
-				VISH.VideoPlayer.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
+			case V.Constant.Video.Youtube:
+				V.VideoPlayer.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			default:
 				break;
@@ -68,10 +68,10 @@ VISH.VideoPlayer = (function(){
 
 	var getDuration = function(video){
 		switch(getTypeVideo(video)){
-			case VISH.Constant.Video.HTML5:
+			case V.Constant.Video.HTML5:
 				return video.getDuration();
 				break;
-			case VISH.Constant.Video.Youtube:
+			case V.Constant.Video.Youtube:
 				return youtubePlayers[video.id].getDuration();
 				break;
 			default:
@@ -82,10 +82,10 @@ VISH.VideoPlayer = (function(){
 
 	var getCurrentTime = function(video){
 		switch(getTypeVideo(video)){
-			case VISH.Constant.Video.HTML5:
+			case V.Constant.Video.HTML5:
 				return video.getCurrentTime();
 				break;
-			case VISH.Constant.Video.Youtube:
+			case V.Constant.Video.Youtube:
 				return youtubePlayers[video.id].getCurrentTime();
 				break;
 			default:

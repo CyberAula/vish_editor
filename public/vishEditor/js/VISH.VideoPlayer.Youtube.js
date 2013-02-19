@@ -19,7 +19,7 @@ YT.PlayerState.CUED = 5;
 function onYouTubeIframeAPIReady() { }
 
 
-VISH.VideoPlayer.Youtube = (function(){
+VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 
 	var init = function(){
 	}
@@ -34,8 +34,8 @@ VISH.VideoPlayer.Youtube = (function(){
 
 	var loadYoutubeObject = function(article,zone){
 
-		if(VISH.Status.isOnline()===false){
-			$(zone).html("<img src='"+VISH.ImagesPath+"adverts/advert_new_grey_video.png'/>");
+		if(V.Status.isOnline()===false){
+			$(zone).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
 		}
 
@@ -66,15 +66,15 @@ VISH.VideoPlayer.Youtube = (function(){
         $("#"+iframeId).attr("wmode","transparent");
 
         //In current version player control events are loaded in onPlayerReady event
-        VISH.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,false);
+        V.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,false);
 	}
 
 
 	var onPlayerReady = function(event) {
 		var iframe = event.target.getIframe();
 		// var iframeId = iframe.id;
-		// VISH.Debugging.log("onPlayerReady " + iframe.id);
-		VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+		// V.Debugging.log("onPlayerReady " + iframe.id);
+		V.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 	}
 
 	var onPlayerStateChange = function(event) {
@@ -84,38 +84,38 @@ VISH.VideoPlayer.Youtube = (function(){
 
 		switch(newState){
 			case -1:
-				// VISH.Debugging.log("Not initialized");
-				// VISH.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+				// V.Debugging.log("Not initialized");
+				// V.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 				break;
 			case 0:
-				// VISH.Debugging.log(playerId + ": Ended");
-				VISH.VideoPlayer.CustomPlayer.onEndVideo(iframe);
+				// V.Debugging.log(playerId + ": Ended");
+				V.VideoPlayer.CustomPlayer.onEndVideo(iframe);
 				break;
 			case 1:
-				// VISH.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
-				VISH.VideoPlayer.CustomPlayer.onPlayVideo(iframe);
+				// V.Debugging.log(playerId + ": Reproducing at " + $("#"+playerId)[0].getCurrentTime());
+				V.VideoPlayer.CustomPlayer.onPlayVideo(iframe);
 				break;
 			case 2:
-				// VISH.Debugging.log(playerId + ": Pause at " + $("#"+playerId)[0].getCurrentTime());
-				VISH.VideoPlayer.CustomPlayer.onPauseVideo(iframe);
+				// V.Debugging.log(playerId + ": Pause at " + $("#"+playerId)[0].getCurrentTime());
+				V.VideoPlayer.CustomPlayer.onPauseVideo(iframe);
 				break;
 			case 3:
-				// VISH.Debugging.log(playerId + ": Buffer Store");
+				// V.Debugging.log(playerId + ": Buffer Store");
 				break;
 			case 4:
 				break;
 			case 5:
-				// VISH.Debugging.log(playerId + ": Video Tail Store");
+				// V.Debugging.log(playerId + ": Video Tail Store");
 				break;
 			default:
-				// VISH.Debugging.log(playerId + ": Unknown state: " + newState);
+				// V.Debugging.log(playerId + ": Unknown state: " + newState);
 				break;
 		}
 	}
 
 
 	var onPlayerError = function(event) {
-		VISH.Debugging.log("onPlayerError with error type " + event.data);
+		V.Debugging.log("onPlayerError with error type " + event.data);
 	}
 
 	var playVideo = function(iframeId,currentTime,triggeredByUser){
@@ -127,14 +127,14 @@ VISH.VideoPlayer.Youtube = (function(){
 			var params = new Object();
 			params.videoId = iframeId;
 			params.currentTime = ytPlayer.getCurrentTime();
-			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+			params.slideNumber = V.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
-				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPlayVideo,params);
+			if((triggeredByUser)&&(V.Status.isPreventDefaultMode())){
+				V.Messenger.notifyEventByMessage(V.Constant.Event.onPlayVideo,params);
 				return;
 			}
 
-			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,triggeredByUser);
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,triggeredByUser);
 
 			_seekVideo(ytPlayer,iframeId,currentTime,false);
 			if(ytPlayer.getPlayerState()!==YT.PlayerState.PLAYING){
@@ -154,14 +154,14 @@ VISH.VideoPlayer.Youtube = (function(){
 			var params = new Object();
 			params.videoId = iframeId;
 			params.currentTime = ytPlayer.getCurrentTime();
-			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+			params.slideNumber = V.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
-				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onPauseVideo,params);
+			if((triggeredByUser)&&(V.Status.isPreventDefaultMode())){
+				V.Messenger.notifyEventByMessage(V.Constant.Event.onPauseVideo,params);
 				return;
 			}
 
-			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,triggeredByUser);
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,triggeredByUser);
 
 			if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING){
 				ytPlayer.pauseVideo();
@@ -186,14 +186,14 @@ VISH.VideoPlayer.Youtube = (function(){
 			var params = new Object();
 			params.videoId = iframeId;
 			params.currentTime = seekTime;
-			params.slideNumber = VISH.Slides.getCurrentSlideNumber();
+			params.slideNumber = V.Slides.getCurrentSlideNumber();
 
-			if((triggeredByUser)&&(VISH.Status.isPreventDefaultMode())){
-				VISH.Messenger.notifyEventByMessage(VISH.Constant.Event.onSeekVideo,params);
+			if((triggeredByUser)&&(V.Status.isPreventDefaultMode())){
+				V.Messenger.notifyEventByMessage(V.Constant.Event.onSeekVideo,params);
 				return;
 			}
 
-			VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,triggeredByUser);
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,triggeredByUser);
 			
 			ytPlayer.seekTo(seekTime);
 		}

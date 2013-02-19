@@ -1,4 +1,4 @@
-VISH.SnapshotPlayer = (function(){
+VISH.SnapshotPlayer = (function(V,$,undefined){
 
     /**
      * Load web snapshots

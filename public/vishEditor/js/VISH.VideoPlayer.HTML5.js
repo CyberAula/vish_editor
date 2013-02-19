@@ -1,4 +1,4 @@
-VISH.VideoPlayer.HTML5 = (function(){
+VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		
 	//Is the event trigger by the user or via code?
 	var playTriggeredByUser = true;
@@ -14,46 +14,46 @@ VISH.VideoPlayer.HTML5 = (function(){
 		var videos = $("video")
 		$.each(videos, function(index, video) {
 			video.addEventListener('play', function () {
-				// VISH.Debugging.log("Play at " + video.currentTime);
+				// V.Debugging.log("Play at " + video.currentTime);
 
 				var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
 
 				playTriggeredByUser = true;
 			}, false);
 			video.addEventListener('pause', function () {
-				// VISH.Debugging.log("Pause " + video.currentTime);
+				// V.Debugging.log("Pause " + video.currentTime);
 
 				var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
 				
 				pauseTriggeredByUser = true;
 			}, false);
 			video.addEventListener('ended', function () {
-				// VISH.Debugging.log("Ended " + video.currentTime)
+				// V.Debugging.log("Ended " + video.currentTime)
 			}, false);
 
 			video.addEventListener("error", function(err) {
-                // VISH.Debugging.log("Video error: " + err)
+                // V.Debugging.log("Video error: " + err)
             }, false);
 
 			video.addEventListener("seeked", function(err) {
-                // VISH.Debugging.log("Seek at " + video.currentTime)
+                // V.Debugging.log("Seek at " + video.currentTime)
 
                 var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
 				
 				seekTriggeredByUser = true;
             }, false);

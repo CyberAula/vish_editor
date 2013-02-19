@@ -1,4 +1,4 @@
-VISH.VideoPlayer.CustomPlayer = (function(){
+VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 
 	var progressBarTimer;
 
@@ -87,7 +87,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		var progressBar = $(video).parent().find("div.progressBarElapsed");
 		var timer = progressBarTimer = setInterval(function(){
 			try {
-				var ratio = (VISH.VideoPlayer.getCurrentTime(video)/VISH.VideoPlayer.getDuration(video))*100;
+				var ratio = (V.VideoPlayer.getCurrentTime(video)/V.VideoPlayer.getDuration(video))*100;
 				$(progressBar).width(ratio+'%');
 				if(ratio===100){
 					clearTimeout(timer);
@@ -99,7 +99,7 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 	}
 
 	var _onClickProgressBar = function(event){ 
-		if(VISH.Status.isSlaveMode()){
+		if(V.Status.isSlaveMode()){
 			return;
 		}
 		
@@ -119,32 +119,32 @@ VISH.VideoPlayer.CustomPlayer = (function(){
 		var ratio = (event.pageX-$(progressBar).offset().left)/$(progressBar).outerWidth();
 
 		// Improve User Experience, disable progress bar blinds
-		// if(!VISH.Status.isPreventDefaultMode()){
+		// if(!V.Status.isPreventDefaultMode()){
 		// 	$(elapsed).width(ratio*100+'%');
 		// }
 
-		var seekToPos = Math.round(VISH.VideoPlayer.getDuration(video)*ratio);
-		VISH.VideoPlayer.seekVideo(video.id,seekToPos,true);
+		var seekToPos = Math.round(V.VideoPlayer.getDuration(video)*ratio);
+		V.VideoPlayer.seekVideo(video.id,seekToPos,true);
 	}
   
 
 	var onClickVideo = function(video){
-		if(VISH.Status.isSlaveMode()){
+		if(V.Status.isSlaveMode()){
 			return;
 		}
 		switch($(video).attr("customPlayerStatus")){
 			case "ready":
 			case "pause":
-				if(!VISH.Status.isPreventDefaultMode()){
+				if(!V.Status.isPreventDefaultMode()){
 					onPlayVideo(video);
 				}
-				VISH.VideoPlayer.playVideo(video.id,null,true);
+				V.VideoPlayer.playVideo(video.id,null,true);
 				break;
 			case "playing":
-				if(!VISH.Status.isPreventDefaultMode()){
+				if(!V.Status.isPreventDefaultMode()){
 					onPauseVideo(video);
 				}
-				VISH.VideoPlayer.pauseVideo(video.id,null,true);
+				V.VideoPlayer.pauseVideo(video.id,null,true);
 				break;
 			default:
 				break;

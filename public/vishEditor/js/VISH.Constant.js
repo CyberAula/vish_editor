@@ -39,7 +39,7 @@ VISH.Constant.STANDARD = "standard";
 VISH.Constant.FLASHCARD = "flashcard";
 VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
 VISH.Constant.GAME = "game";
-VISH.Constant.VTOUR = "virtualTour";
+VISH.Constant.VTOUR = "VirtualTour";
 
 //Element types
 VISH.Constant.IMAGE = "image";
