@@ -43,6 +43,15 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				break;
 			case V.Constant.VTOUR:
 				V.Editor.setMode(V.Constant.VTOUR);
+				var vTour = V.Editor.Flashcard.Creator.undoNestedSlidesInFlashcard(presentation.slides[0]);
+				if((vTour)&&(vTour.slides)){
+					slides = vTour.slides;
+					var sL = slides.length;
+					for(var i=0;i<sL;i++){
+						_renderSlide(slides[i], i+1);
+					}
+				}
+				V.Editor.VirtualTour.Creator.loadVirtualTour(presentation);
 				break;
 			case V.Constant.PRESENTATION:
 			default:

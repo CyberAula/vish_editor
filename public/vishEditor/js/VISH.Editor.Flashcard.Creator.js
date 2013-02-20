@@ -10,10 +10,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		flashcardId = null;
 	};
 
-	var getCurrentFlashcardId = function(){
-		return flashcardId;
-	}
-
 	/*
 	 * Switch to Flashcard creator in order to allow the creation of a new flashcard
 	 * using the current slides
@@ -58,10 +54,10 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 			$("#fc_change_bg_big").hide();
 		} else {
 			//Create new flashcard
-			if(!getCurrentFlashcardId()){
+			if(!flashcardId){
 				flashcardId = V.Utils.getId("article");
 			}
-			$("#flashcard-background").attr("flashcard_id", getCurrentFlashcardId());
+			$("#flashcard-background").attr("flashcard_id", flashcardId);
 		}
 		$("#flashcard-background").droppable();  //to accept the pois
 	};
@@ -142,10 +138,10 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		var pois = [];
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
-			pois[index].id = V.Utils.getId(getCurrentFlashcardId()+"_"+s.id,true);
+			pois[index].id = V.Utils.getId(flashcardId+"_"+s.id,true);
 			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
 			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = V.Utils.getId(getCurrentFlashcardId()+"_"+$(s).attr('slide_id'),true);
+			pois[index].slide_id = V.Utils.getId(flashcardId+"_"+$(s).attr('slide_id'),true);
 		});
 		return pois;
 	};
@@ -218,7 +214,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * Prepare slide to nest into a flashcard
 	 */
 	var prepareToNestInFlashcard = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(getCurrentFlashcardId(),slide);
+		return V.Editor.Utils.prepareSlideToNest(flashcardId,slide);
 	}
 
 	/*
@@ -253,7 +249,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	return {
 		init 				 		: init,
-		getCurrentFlashcardId		: getCurrentFlashcardId,
 		onLoadMode			 		: onLoadMode,
 		onLeaveMode 				: onLeaveMode,
 		loadFlashcard		 		: loadFlashcard,
