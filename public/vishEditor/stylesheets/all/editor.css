@@ -1896,3 +1896,20 @@ img#message3img{
 	width: 100%;
 	height: 100%;
 }
+
+span.poi_label{
+	font-size: 17px;
+	position: relative; 
+	left: -6px; 
+	top: -33px;
+	white-space: nowrap; 
+	border: none;
+	padding: 2px; 
+	background-color: transparent;
+	font-family: Helvetica;
+}
+
+div.poi_label_container{
+	position: absolute; 
+	display: none;
+}

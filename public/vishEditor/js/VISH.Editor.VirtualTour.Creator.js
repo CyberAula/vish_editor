@@ -10,6 +10,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var canvas;
 	var map;
 	var overlay;
+	var pinImage;
 
 
 	var init = function(){
@@ -68,7 +69,11 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			}
 			$("#vtour-background").attr("VirtualTour_id", getCurrentVirtualTourId());
 		}
-		_loadMap(presentation);
+
+		//Prevent multiple maps creation
+		if(typeof map == "undefined"){
+			_loadMap(presentation);
+		}
 	};
 
 	var _loadMap = function(vt){
@@ -89,6 +94,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		overlay = new google.maps.OverlayView();
 		overlay.draw = function() {};
 		overlay.setMap(map);
+		_loadLabel();
 	}
 
 	/*
@@ -102,14 +108,14 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 				return true;
 			},
 			drop: function(event, ui) {
-
 			}
 		});
 
 		//Show draggable items
 		$(".draggable_arrow_div").show();
-		// //Apply them the style to get the previous position
-		// _applyStyleToPois();
+
+		// Draw previous pois
+		_restorePois();
 
 		var reverted = false;
 		$(".draggable_arrow_div").draggable({
@@ -130,7 +136,9 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 				var point = new google.maps.Point(pageX,pageY);
 				var position = overlay.getProjection().fromContainerPixelToLatLng(point);
 				if(_isPositionInViewport(position)){
-					var marker = _addMarkerToPosition(position);
+					var poi_id = $(event.target).attr("id");
+					var slide_id = $(event.target).attr("slide_id");
+					var marker = _addMarkerToPosition(position,poi_id,slide_id);
 					$(event.target).hide();
 				} else {
 					//Not in map viewport
@@ -140,21 +148,12 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			}
 		});
 
-		google.maps.event.addListener(map, 'click', function(event) {
-			if(event){
-				var lat = event.latLng.lat();
-				var lng = event.latLng.lng();
-				_addMarkerToCoordinates(lat,lng);
-			}
-		});
-
 		$(".carrousel_element_single_row_slides").droppable();
-		$(".image_carousel").css("overflow", "visible");
 		$("#menubar").css("z-index", "1075");
 		$(".draggable_arrow_div").css("z-index", "1075");
 	};
 
-	var _applyStyleToPois = function(){
+	var _restorePois = function(){
 		if(typeof currentPois === "undefined"){
 			//We are loading a virtual tour, get the pois from the vt
 			var presentation = V.Editor.getPresentation();
@@ -165,6 +164,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			}
 		}
 
+		//TODO
+
 		// if(typeof currentPois !== "undefined"){
 		// 	$.each(currentPois, function(index, val) { 
 		// 		$("#" + val.id).css("position", "fixed");
@@ -174,26 +175,83 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		// }
 	};
 
+
 	///////////////////
 	/// MAP Utils
 	//////////////////
 
-	var _addMarkerToCoordinates = function(lat,long){
-		return _addMarkerToPosition(new google.maps.LatLng(lat,long));
+	var _addMarkerToCoordinates = function(lat,long,poi_id,slide_id){
+		return _addMarkerToPosition(new google.maps.LatLng(lat,long),poi_id,slide_id);
 	}
 
-	var _addMarkerToPosition = function(myLatlng,id){
+	var _addMarkerToPosition = function(myLatlng,poi_id,slide_id){
+		// Create label
+		var label = new Label({
+			map: map
+		});
+
+		var slideNumber;
+		var slideNumberPattern = /([0-9]+)/g;
+		var regexResult = slideNumberPattern.exec(poi_id);
+		if((regexResult!==null)&&(regexResult[0])){
+			slideNumber = regexResult[0];
+		}
+
+		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+slideNumber+"|FF776B|0000FF",
+        new google.maps.Size(25, 40),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
+
 		var marker = new google.maps.Marker({
 			position: myLatlng, 
 			map: map,
 			draggable: true,
-			id: id,
+			icon: pinImage,
+			poi_id: poi_id,
+			slide_id: slide_id,
+			label : label,
 			title:"("+myLatlng.lat()+","+myLatlng.lng()+")"
 		});
 
+		//Set label properties
+		if(slideNumber){
+			label.bindTo('position', marker, 'position');
+			// In the current version we use a dinamyc image instead of a label to indicate slideNumber
+			// label.set('text', slideNumber);
+		}
+
 		google.maps.event.addListener(marker, 'click', function(event) {
-			V.Debugging.log("Click on marker with id: ");
-			V.Debugging.log(marker.id);
+			//Change position to the marker
+			var point = overlay.getProjection().fromLatLngToContainerPixel(marker.position);
+
+			var arrow = $("#"+marker.poi_id);
+
+			//We need to show the arrow to properly get the offset
+			$(arrow).show();
+
+			//Current Left Offset
+			var currentLeftOffset = $(arrow).offset().left;
+			//Calculate original offset
+			$(arrow).css('left',0);
+			var originalLeftOffset = $(arrow).offset().left;
+			
+			var top = point.y - 650;
+			var left = point.x  - originalLeftOffset + 25;
+			$(arrow).css('top',top);
+			$(arrow).css('left',left);
+
+			$("#"+marker.poi_id).animate({ top: 0, left: 0 }, 'slow');
+			marker.setMap(null);
+			if(marker.label){
+				marker.label.onRemove();
+			};
+		});
+
+		google.maps.event.addListener(marker, 'dclick', function(event) {
+			V.Debugging.log("Doble Click on marker with poi.id: ");
+			V.Debugging.log(marker.poi_id);
+			V.Debugging.log("And slide.id: ");
+			V.Debugging.log(marker.slide_id);
 		});
 
 		return marker;
@@ -202,6 +260,88 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var _isPositionInViewport = function(position) {
 		return map.getBounds().contains(position);
 	}
+
+
+	//////////////////
+	// LABELS (based on Marc Ridey solution)
+	// http://blog.mridey.com/2009/09/label-overlay-example-for-google-maps.html
+	/////////////////
+
+	/*
+	 * Label Constructor
+	 */
+	function Label(opt_options) {
+		// Initialization
+		this.setValues(opt_options);
+
+		// Label specific
+		var span = this.span_ = document.createElement('span');
+		$(span).addClass("poi_label");
+		span.id = "hello";
+
+		var div = this.div_ = document.createElement('div');
+		$(div).addClass("poi_label_container");
+		div.appendChild(span);
+	};
+
+	/*
+	 * Label Init
+	 */
+	var labelsInit = false;
+
+	function _loadLabel(){
+		if(labelsInit){
+			return;
+		}
+
+		Label.prototype = new google.maps.OverlayView;
+
+		Label.prototype.onAdd = function() {
+			// var pane = this.getPanes().overlayLayer;
+			var pane = this.getPanes().overlayImage;
+			pane.appendChild(this.div_);
+
+			// Ensures the label is redrawn if the text or position is changed.
+			var me = this;
+			this.listeners_ = [
+				google.maps.event.addListener(this, 'position_changed',
+					function() { me.draw(); }),
+				google.maps.event.addListener(this, 'text_changed',
+					function() { me.draw(); })
+			];
+		};
+
+		Label.prototype.onRemove = function() {
+			this.div_.parentNode.removeChild(this.div_);
+
+			// Label is removed from the map, stop updating its position/text.
+			for (var i = 0, I = this.listeners_.length; i < I; ++i) {
+				google.maps.event.removeListener(this.listeners_[i]);
+			}
+		};
+
+		Label.prototype.draw = function() {
+			var projection = this.getProjection();
+			var position = projection.fromLatLngToDivPixel(this.get('position'));
+
+			var div = this.div_;
+			div.style.left = position.x + 'px';
+			div.style.top = position.y + 'px';
+			div.style.display = 'block';
+			div.style.zIndex = "2000";
+
+			if(typeof this.get('text') != "undefined"){
+				this.span_.innerHTML = this.get('text').toString();
+			}
+		};
+
+		labelsInit = true;
+	}
+
+
+	///////////
+	// More Utils
+	///////////
 
 	/*
 	 * Returns the array of pois to be stored in the JSON
