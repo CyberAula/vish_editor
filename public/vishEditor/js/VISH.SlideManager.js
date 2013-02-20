@@ -55,7 +55,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 		V.Storage.init();
 		V.Utils.init();
-		
+
 		//Experimental initializers for new excursion types
 		switch(presentation.type){
 			case V.Constant.GAME:

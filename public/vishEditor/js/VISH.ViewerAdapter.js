@@ -280,7 +280,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".subslide").css("margin-left", "-" + marginLeft + "px");	
 		
 		var increase = finalH/600;
-		// var increaseW = finalW/800;
+		var increaseW = finalW/800;
 		
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");
@@ -305,13 +305,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher();
 
 		//Texts callbacks
-		V.Text.aftersetupSize(increase);
+		V.Text.aftersetupSize(increase,increaseW);
 
 		//Snapshot callbacks
-		V.SnapshotPlayer.aftersetupSize(increase);
+		V.SnapshotPlayer.aftersetupSize(increase,increaseW);
 		
 		//Object callbacks
-		V.ObjectPlayer.aftersetupSize(increase);
+		V.ObjectPlayer.aftersetupSize(increase,increaseW);
+
+		//Maps callbacks
+		V.VirtualTour.aftersetupSize(increase,increaseW);
 	};
 
 
