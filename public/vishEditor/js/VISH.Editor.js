@@ -672,6 +672,10 @@ VISH.Editor = (function(V,$,undefined){
 	* For example, it is used for preview slides in a flashcard
 	*/
 	var savePresentation = function(options){
+
+		console.log("savePresentation");
+		console.log(options)
+
 		//Load all objects
 		V.Editor.Utils.Loader.loadAllObjects();
 		$(".object_wrapper, .snapshot_wrapper").show();
@@ -712,14 +716,17 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		if(presentation.type==="flashcard"){
-			slide.id = $("#flashcard-background").attr("flashcard_id");
-			slide.type = V.Constant.FLASHCARD;
-			slide.background = $("#flashcard-background").css("background-image");
-			//save the pois
-			slide.pois = V.Editor.Flashcard.Creator.getPois();
-			slide.slides = [];
-			presentation.slides.push(slide);
+		switch(presentation.type){
+			case V.Constant.FLASHCARD:
+				slide = V.Editor.Flashcard.Creator.getSlideHeader();
+				presentation.slides.push(slide);
+				break;
+			case V.Constant.VTOUR:
+				slide = V.Editor.VirtualTour.Creator.getSlideHeader();
+				presentation.slides.push(slide);
+				break;
+			default:
+				break;
 		}
 
 		slide = {};
@@ -909,6 +916,9 @@ VISH.Editor = (function(V,$,undefined){
 				//If it is flashcard we save the slide into the flashcard slides 
 				//(the flashcard is the first slide by convention)
 				slide = V.Editor.Flashcard.Creator.prepareToNestInFlashcard(slide);
+				presentation.slides[0].slides.push(slide);
+			} else if(presentation.type===V.Constant.VTOUR){
+				slide = V.Editor.VirtualTour.Creator.prepareToNestInVirtualTour(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
 				presentation.slides.push(slide);

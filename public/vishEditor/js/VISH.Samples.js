@@ -374,6 +374,7 @@ VISH.Samples = (function(V,undefined){
 		"type"			: "VirtualTour",
 		"theme"	 		: "theme1",
 		"language" 		: "en",
+		"VEVersion"		: "0.4",
 		"slides" : [
 			{
 				"id" 	: "article5",
@@ -1014,7 +1015,6 @@ VISH.Samples = (function(V,undefined){
 		quizes_truefalse_sample :quizes_truefalse_sample,
 		magnetic_gifs		: magnetic_gifs,
 		new_wysiwyg 		: new_wysiwyg
-
 	};
 
 })(VISH);

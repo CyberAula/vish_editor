@@ -1,3 +1,5 @@
+	var map;
+
 VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	//Point to current virtual tour (vt).
@@ -10,7 +12,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	//Map vars
 	var canvas;
-	var map;
+
 	var overlay;
 
 
@@ -246,10 +248,10 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		});
 
 		google.maps.event.addListener(marker, 'dclick', function(event) {
-			V.Debugging.log("Doble Click on marker with poi.id: ");
-			V.Debugging.log(marker.poi_id);
-			V.Debugging.log("And slide.id: ");
-			V.Debugging.log(marker.slide_id);
+			// V.Debugging.log("Doble Click on marker with poi.id: ");
+			// V.Debugging.log(marker.poi_id);
+			// V.Debugging.log("And slide.id: ");
+			// V.Debugging.log(marker.slide_id);
 		});
 
 		//Hide the poi arrow after add the marker
@@ -406,7 +408,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	};
 
 	var hasPoiInMap = function(){
-
+		return _getCurrentPois().length>0;
 	};
 
 	/*
@@ -415,7 +417,6 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var onClickCarrouselElement = function(event){
 		switch($(event.target).attr("action")){
 			case "plus":
-				V.Debugging.log("Show message warning that we are changing to presentation and change");
 					$.fancybox(
 						$("#message2_form").html(),
 						{
@@ -442,41 +443,38 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Prepare slide to nest
+	 * Used for VISH.Editor module to save the flashcard in a JSON file
 	 */
-	var prepareToNestInFlashcard = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(virtualTourId,slide);
+	var getSlideHeader = function(){
+		var slide = {};
+		slide.id = virtualTourId;
+		slide.type = VISH.Constant.VTOUR;
+		var center = map.getCenter();
+		slide.center = { lat: center.lat(), lng: center.lng() };
+		slide.zoom = map.getZoom();
+		slide.mapType = _getMapType(map);
+		slide.width = "100%";
+		slide.height = "100%";
+		slide.pois = getPois();
+		slide.slides = [];
+		return slide;
+	}
+
+	var _getMapType = function(map){
+		if((map)&&(map.mapTypeId)){
+			return map.mapTypeId;
+		} else {
+			return V.Constant.VTour.DEFAULT_MAP;
+		}
 	}
 
 	/*
-	 * Revert the nest of the slides
+	 * Prepare slide to nest
 	 */
-	var undoNestedSlidesInFlashcard = function(fc){
-		fc.slides = _undoNestedSlides(fc.id,fc.slides);
-		fc.pois = _undoNestedPois(fc.id,fc.pois);
-		return fc;
+	var prepareToNestInVirtualTour = function(slide){
+		return V.Editor.Utils.prepareSlideToNest(virtualTourId,slide);
 	}
 
-	var _undoNestedSlides = function(fcId,slides){
-		if(slides){
-			var sl = slides.length;
-			for(var j=0; j<sl; j++){
-				slides[j] = V.Editor.Utils.undoNestedSlide(fcId,slides[j]);
-			}
-		}
-		return slides;
-	}
-
-	var _undoNestedPois = function(fcId,pois){
-		if(pois){
-			var lp = pois.length;
-			for(var k=0; k<lp; k++){
-				pois[k].id = pois[k].id.replace(fcId+"_","");
-				pois[k].slide_id = pois[k].slide_id.replace(fcId+"_","");
-			}
-		}
-		return pois;
-	}
 
 	return {
 		init 				 		: init,
@@ -488,8 +486,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		hidePois			 		: hidePois,
 		hasPoiInMap	 				: hasPoiInMap,
 		onClickCarrouselElement 	: onClickCarrouselElement,
-		prepareToNestInFlashcard 	: prepareToNestInFlashcard,
-		undoNestedSlidesInFlashcard : undoNestedSlidesInFlashcard
+		getSlideHeader				: getSlideHeader,
+		prepareToNestInVirtualTour	: prepareToNestInVirtualTour
 	};
 
 }) (VISH, jQuery);

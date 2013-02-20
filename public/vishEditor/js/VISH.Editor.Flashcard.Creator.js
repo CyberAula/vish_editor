@@ -211,6 +211,20 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
+	 * Used for VISH.Editor module to save the flashcard in a JSON file
+	 */
+	var getSlideHeader = function(){
+		var slide = {};
+		slide.id = flashcardId;
+		slide.type = V.Constant.FLASHCARD;
+		slide.background = $("#flashcard-background").css("background-image");
+		slide.pois = getPois();
+		slide.slides = [];
+		return slide;
+	}
+
+
+	/*
 	 * Prepare slide to nest into a flashcard
 	 */
 	var prepareToNestInFlashcard = function(slide){
@@ -259,6 +273,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		hasChangedBackground 		: hasChangedBackground,
 		hasPoiInBackground	 		: hasPoiInBackground,
 		onClickCarrouselElement 	: onClickCarrouselElement,
+		getSlideHeader				: getSlideHeader,
 		prepareToNestInFlashcard 	: prepareToNestInFlashcard,
 		undoNestedSlidesInFlashcard : undoNestedSlidesInFlashcard
 	};

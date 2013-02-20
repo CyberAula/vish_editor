@@ -316,7 +316,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
-		V.Debugging.log("presentation type: " + V.Editor.getPresentationType());
 		if(V.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
@@ -329,7 +328,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(V.Editor.getPresentationType() === "flashcard" && !V.Editor.Flashcard.Creator.hasPoiInBackground()){
+		} else if(V.Editor.getPresentationType() === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasPoiInBackground()){
 			$.fancybox(
 				$("#message3_form").html(),
 				{
@@ -341,7 +340,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(V.Editor.getPresentationType() === "flashcard" && !V.Editor.Flashcard.Creator.hasChangedBackground()){
+		} else if(V.Editor.getPresentationType() === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasChangedBackground()){
 			$.fancybox(
 				$("#message4_form").html(),
 				{
@@ -353,7 +352,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-
 		} else {  
 
 			switch(V.Configuration.getConfiguration()["mode"]){

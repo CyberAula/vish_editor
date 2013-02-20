@@ -498,6 +498,10 @@ button#closeButton {
   display: block;
 }
 
+.virtualTour_slide{
+  display: block !important;
+}
+
 /** Arrows **/
 
 .vish_arrow {
