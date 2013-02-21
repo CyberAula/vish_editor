@@ -316,6 +316,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
+		var presType = V.Editor.getPresentationType();
 		if(V.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message1_form").html(),
@@ -328,7 +329,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(V.Editor.getPresentationType() === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasPoiInBackground()){
+		} else if(presType === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasPoiInBackground()){
 			$.fancybox(
 				$("#message3_form").html(),
 				{
@@ -340,7 +341,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else if(V.Editor.getPresentationType() === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasChangedBackground()){
+		} else if(presType === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasChangedBackground()){
 			$.fancybox(
 				$("#message4_form").html(),
 				{
@@ -352,7 +353,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					'padding' 			: 5		
 				}
 			);
-		} else {  
+		} else if(presType === V.Constant.VTOUR && !V.Editor.VirtualTour.Creator.hasPoiInMap()){
+			$.fancybox(
+				$("#message6_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
+					'width'         	: 350,
+					'height'        	: 250,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+				}
+			);
+		} else {
 
 			switch(V.Configuration.getConfiguration()["mode"]){
 				case V.Constant.NOSERVER:
@@ -430,9 +443,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var switchToFlashcard = function(){
-		_beforeChangeMode();
-		V.Editor.setMode(V.Constant.FLASHCARD);
-
 		if(V.Slides.getSlides().length === 0){
 			$.fancybox(
 				$("#message5_form").html(),
@@ -446,14 +456,30 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				}
 			);
 		} else {
+			_beforeChangeMode();
+			V.Editor.setMode(V.Constant.FLASHCARD);
 			V.Editor.Flashcard.Creator.onLoadMode();
 		}
 	};
 
 	var switchToVirtualTour = function(){
-		_beforeChangeMode();
-		V.Editor.setMode(V.Constant.VTOUR);
-		V.Editor.VirtualTour.Creator.onLoadMode();
+		if(V.Slides.getSlides().length === 0){
+			$.fancybox(
+				$("#message5_form").html(),
+				{
+					'autoDimensions'	: false,
+					'scrolling': 'no',
+					'width'         	: 450,
+					'height'        	: 220,
+					'showCloseButton'	: false,
+					'padding' 			: 5		
+				}
+			);
+		} else {
+			_beforeChangeMode();
+			V.Editor.setMode(V.Constant.VTOUR);
+			V.Editor.VirtualTour.Creator.onLoadMode();
+		}
 	}
 
 	var _beforeChangeMode = function(){

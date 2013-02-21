@@ -13,17 +13,43 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var map;
 	var overlay;
 
+	//Geocoder
+	var geocoder;
+
 	//Internal
+	var initialized = false;
 	var single_click;
 	var click_timer;
 
 
 	var init = function(){
+		if(initialized){
+			return;
+		}
 		virtualTourId = null;
 		markers = {};
 		canvas = $("#vt_canvas");
 		clickTimer = null;
 		single_click = false;
+		_loadVTourCreatorEvents();
+		initialized = true;
+	};
+
+	var _loadVTourCreatorEvents = function(){
+		$("#vt_search_input").on('keydown', function(event){
+			switch (event.keyCode) {
+				case 13: //Enter
+					event.preventDefault();
+					_onSearchAddress();
+					break;	
+				default:
+					break;
+			};
+		}); 
+		$("#vt_search_button").on('click', function(event){
+			event.preventDefault();
+			_onSearchAddress();
+		});
 	};
 
 	/*
@@ -106,6 +132,14 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		overlay.draw = function() {};
 		overlay.setMap(map);
 		_loadLabel();
+
+		//Load geocoder
+		geocoder = new google.maps.Geocoder();
+
+		//Map events
+		google.maps.event.addListener(map, 'click', function() {
+			$("#vt_search_input").blur();
+		});
 	}
 
 	/*
@@ -386,6 +420,43 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 
 	///////////
+	// Find Addresses
+	///////////
+
+	var _onSearchAddress = function(){
+		var text = $("#vt_search_input").val();
+		if((typeof text == "string")&&(text!="")){
+			_getAddressForText(text,function(address){
+				if(address){
+					map.setCenter(address);
+					$("#vt_search_input").val("");
+					$("#vt_search_input").attr("placeholder","Search places");
+				} else {
+					$("#vt_search_input").val("");
+					$("#vt_search_input").attr("placeholder","No results");
+				}
+			});
+		};
+	};
+
+	var _getAddressForText = function(addressText,callback) {
+		geocoder.geocode( { 'address': addressText}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				var addrLocation = results[0].geometry.location;
+				if(typeof callback === "function"){
+					callback(addrLocation);
+				}
+			} else {
+				// V.Debugging.log('Geocode was not successful for the following reason: ' + status);
+				if(typeof callback === "function"){
+					callback(null);
+				}
+			}
+		});
+	};
+
+
+	///////////
 	// More Utils
 	///////////
 
@@ -403,7 +474,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			poi.id = V.Utils.getId(virtualTourId+"_"+marker.poi_id,true);
 			poi.slide_id = V.Utils.getId(virtualTourId+"_"+marker.slide_id,true);
 			pois.push(poi);
-		}
+		};
 		return pois;
 	};
 
@@ -421,12 +492,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			poi.id = marker.poi_id;
 			poi.slide_id = marker.slide_id;
 			pois.push(poi);
-		}
+		};
 		return pois;
-	};
-
-	var hidePois = function(){
-		$(".draggable_arrow_div").hide();
 	};
 
 	var hasPoiInMap = function(){
@@ -505,7 +572,6 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		loadVirtualTour		 		: loadVirtualTour,
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
-		hidePois			 		: hidePois,
 		hasPoiInMap	 				: hasPoiInMap,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		getSlideHeader				: getSlideHeader,

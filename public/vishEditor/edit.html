@@ -150,9 +150,14 @@
 		<div id="fc_change_bg_big" class="change_bg_button_class"></div>
     </div>
     <div id="vtour-background" style="display:none">
-		<div id="vtour_help_button"><img id="help_vtour" src="/vishEditor/images/icons/helptutorial_circle.png"/>
+		<div id="vtour_help_button"><img id="help_vtour" src="/vishEditor/images/icons/helptutorial_circle.png"/></div>
+		<div id="vt_canvas"></div>
+		<div id="vt_search">
+			<input id="vt_search_input" placeholder="Search places"></input>
+			<button id="vt_search_button">
+				<img id="vt_search_button_img" src="/vishEditor/images/vtour/gsearch.png"/>
+			</button>
 		</div>
-		 <div id="vt_canvas"></div>
     </div>
     <div id="menubarbg" class="menubarcolor"></div>
     <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
@@ -676,7 +681,7 @@
 	  	<div id='message2_form'>
 	  		<div class="text_in_fancybox">
 	  			<img id="message2img" src="/vishEditor/images/zonethumbs/content_fail.png">
-	  			<span class="deltext">Transform the flashcard to standard presentation to add a new slide.</span>
+	  			<span class="deltext">Transform to standard presentation to add a new slide.</span>
 	  		</div> 		
 	  		<div id="button_accept_when_fail">
 	  			<a href="#" i18n-key="i.accept" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
@@ -715,13 +720,26 @@
       <div id='message5_form'>
         <div class="text_in_fancybox">
           <img id="message5img" src="/vishEditor/images/zonethumbs/content_fail.png">
-          <span class="deltext">Please create at least one slide before changing to flashcard mode.</span>
+          <span class="deltext">Please create at least one slide before changing mode.</span>
         </div>    
         <div id="button_accept_when_fail">
           <a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
         </div>
       </div>
     </div>
+
+      <!-- PROMPT WHEN TRY TO SAVE AND THERE IS NO POIS IN THE Virtual Tour-->
+	  <div style='display:none'>
+	  	<div id='message6_form'>
+	  		<div class="text_in_fancybox">
+	  			<img id="message3img" src="/vishEditor/images/zonethumbs/content_fail.png">
+	  			<span class="deltext">Please drag and drop at least one point of interest in the map.</span>
+	  		</div> 		
+	  		<div id="button_accept_when_fail">
+	  			<a href="#" onclick="$.fancybox.close();" class="prompt_button buttonfail">accept</a>
+	  		</div>
+	  	</div>
+	  </div>
   
   	<!-- IMAGE -->
   	  <a id="hidden_button_to_launch_picture_fancybox_for_flashcard" href="#picture_fancybox" style="display:none" i18n-key="i.changeBackground">Change background</a>
