@@ -1,5 +1,3 @@
-	var map;
-
 VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	//Point to current virtual tour (vt).
@@ -12,14 +10,20 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	//Map vars
 	var canvas;
-
+	var map;
 	var overlay;
+
+	//Internal
+	var single_click;
+	var click_timer;
 
 
 	var init = function(){
 		virtualTourId = null;
 		markers = {};
 		canvas = $("#vt_canvas");
+		clickTimer = null;
+		single_click = false;
 	};
 
 	/*
@@ -225,45 +229,62 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		}
 
 		google.maps.event.addListener(marker, 'click', function(event) {
-			//Change position to the marker
-			var point = overlay.getProjection().fromLatLngToContainerPixel(marker.position);
+			// Allow doble click event
 
-			var arrow = $("#"+marker.poi_id);
+			// if(single_click){
+			// 	return;
+			// }
+			// single_click = true;
+			// click_timer = setTimeout(function(){
+			// 	single_click = false;
+			// 	_onClick(marker);
+			// }, 200);
 
-			//We need to show the arrow to properly get the offset
-			$(arrow).show();
-
-			//Current Left Offset
-			var currentLeftOffset = $(arrow).offset().left;
-			//Calculate original offset
-			$(arrow).css('left',0);
-			var originalLeftOffset = $(arrow).offset().left;
-			
-			var top = point.y - 650;
-			var left = point.x  - originalLeftOffset + 25;
-			$(arrow).css('top',top);
-			$(arrow).css('left',left);
-
-			$("#"+marker.poi_id).animate({ top: 0, left: 0 }, 'slow');
-			_removeMarker(marker);
+			_onClick(marker);
 		});
 
-		google.maps.event.addListener(marker, 'dclick', function(event) {
-			// V.Debugging.log("Doble Click on marker with poi.id: ");
-			// V.Debugging.log(marker.poi_id);
-			// V.Debugging.log("And slide.id: ");
-			// V.Debugging.log(marker.slide_id);
-		});
+		// google.maps.event.addListener(marker, 'dblclick', function(event) {
+		// 	if(!single_click){
+		// 		return;
+		// 	}
+		// 	clearTimeout(click_timer);
+		// 	single_click = false;
+		// 	_onDoubleClick(marker);
+		// });
 
 		//Hide the poi arrow after add the marker
 		$("#"+poi_id).hide();
-
-
 
 		//Store the marker
 		markers[poi_id] = marker;
 
 		return marker;
+	}
+
+	var _onClick = function(marker){
+		var point = overlay.getProjection().fromLatLngToContainerPixel(marker.position);
+
+		var arrow = $("#"+marker.poi_id);
+
+		//We need to show the arrow to properly get the offset
+		$(arrow).show();
+
+		//Current Left Offset
+		var currentLeftOffset = $(arrow).offset().left;
+		//Calculate original offset
+		$(arrow).css('left',0);
+		var originalLeftOffset = $(arrow).offset().left;
+		
+		var top = point.y - 650;
+		var left = point.x  - originalLeftOffset + 25;
+		$(arrow).css('top',top);
+		$(arrow).css('left',left);
+
+		$("#"+marker.poi_id).animate({ top: 0, left: 0 }, 'slow');
+		_removeMarker(marker);
+	}
+
+	var _onDoubleClick = function(marker){
 	}
 
 	var _removeAllMarkers = function(){
