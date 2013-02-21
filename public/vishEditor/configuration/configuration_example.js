@@ -108,6 +108,8 @@ var getOptions = function(){
 			//And a default landguage
 			options["lang"] = "en";
 
+			//URL to get the recommendations to show in the last slide
+			options["urlToGetRecommendations"] = "http://sabina.dit.upm.es:3000/recommendations"
 
 			//Addons Configuration
 			options.addons = [];

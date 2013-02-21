@@ -49,6 +49,7 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Status.Device.Features.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.ViewerAdapter.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Text.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Recommendations.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Game.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.VirtualTour.js"></script>
@@ -87,6 +88,16 @@
 	    <button id="page-switcher-end" class="page-switcher" tabindex="2" >></button>
     </div>
     
+    <!-- Hidden link to open fancybox to display recommendations in the end -->
+    <a id="addSlideFancybox" href="#recommendations" style="display: none;"></a>
+
+    <!-- Thumbnails fancybox -->
+    <div style='display:none'>
+        <div id='recommendations'>
+            hola hola
+        </div>
+    </div>
+
     <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
 
     <!-- Hidden link to open fancybox when start a quiz session inside a slide  -->

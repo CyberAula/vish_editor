@@ -7,6 +7,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var can_use_nativeFs;
 	var embed;
 
+	var display_recommendations;
+
 	//Fullscreen fallbacks
 	var enter_fs_button;
 	var enter_fs_url;
@@ -71,6 +73,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
+			//recommendations slide in the end
+			if(typeof options["urlToGetRecommendations"] == "string"){
+				display_recommendations = true;
+			} else {
+				display_recommendations = false;
+			}
+
 		} else {
 			render_full = false;
 			is_preview = false;
@@ -80,6 +89,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			fs_button = false;
 			can_use_nativeFs = false;
 			embed = false;
+			display_recommendations = false;
 		}
 
 		//////////////

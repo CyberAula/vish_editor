@@ -39,6 +39,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		setPresentationType(presentation.type);
 
 		// V.Storage.setTestingMode(true);
+		V.Recommendations.init(options);
 
 		V.Status.init(function(){
 			//Status loading finishes
@@ -205,8 +206,11 @@ VISH.SlideManager = (function(V,$,undefined){
 				V.Flashcard.startAnimation(e.target.id);
 			}
 
-		},500);
-	};
+
+			if(_isRecommendationMoment()){
+				V.Recommendations.generateFancybox();
+			}
+	};	
 
 	/**
 	 * Private function that is called when we leave the slide
@@ -229,8 +233,22 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 	};
 
-	
+	/**
+	 * function to check if this is the penultimate Slide (or the only one) and call to get the recommendations
+	 */
+	var _isRecommendationMoment = function(){
+		var number_of_slides = V.Slides.getSlides().length;
+		var slide_number = V.Slides.getCurrentSlideNumber();
 
+		if(number_of_slides===1 || slide_number===(number_of_slides-1)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+	
+	
 	/**
 	 * function to update the number that indicates what slide is diplayed
 	 * with this format: 1/12 2/12
@@ -241,9 +259,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(number_of_slides===0){
 			slide_number=0;
 		}
-		$("#slide-counter").html(slide_number + "/" + number_of_slides);	
+		$("#slide-counter").html(slide_number + "/" + number_of_slides);
 	};
 	
+
 	var getCurrentPresentation = function(){
 		return current_presentation;
 	};
