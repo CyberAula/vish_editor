@@ -94,6 +94,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		var myOptions = {
 			zoom: vt.zoom,
 			center: latlng,
+			streetViewControl: false,
 			mapTypeId: vt.mapType
 		};
 		map = new google.maps.Map($(canvas)[0], myOptions);
@@ -200,7 +201,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			slideNumber = regexResult[0];
 		}
 
-		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+slideNumber+"|FF776B|0000FF",
+		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+slideNumber+"|FF776B|000000",
         new google.maps.Size(25, 40),
         new google.maps.Point(0,0),
         new google.maps.Point(10, 34));
