@@ -1954,3 +1954,11 @@ div.poi_label_container{
 #vt_search_button_img{
 
 }
+
+/*
+ * A class of the Google Maps API Autocomplete class
+ */
+.pac-container{
+	z-index: 2000 !important;
+	font-family: Helvetica;
+}

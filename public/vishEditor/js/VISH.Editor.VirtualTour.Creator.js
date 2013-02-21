@@ -136,10 +136,22 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		//Load geocoder
 		geocoder = new google.maps.Geocoder();
 
+		//Autocomplete
+		var input = document.getElementById('vt_search_input');
+		// var options = {
+		// 	types: ['(cities)']
+		// };
+		autocomplete = new google.maps.places.Autocomplete(input);
+
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			// V.Debugging.log("place_changed");
+		});
+
 		//Map events
 		google.maps.event.addListener(map, 'click', function() {
 			$("#vt_search_input").blur();
 		});
+
 	}
 
 	/*
