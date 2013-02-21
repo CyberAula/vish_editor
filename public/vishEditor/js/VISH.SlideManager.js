@@ -195,21 +195,21 @@ VISH.SlideManager = (function(V,$,undefined){
 			if($(e.target).hasClass('snapshot')){
         		V.SnapshotPlayer.loadSnapshot($(slide));
 			}
+		},500);
 
-			// if(V.Status.getDevice().mobile){
-			// 	V.ImagePlayer.reloadGifs($(slide));
-			// }
-			
-			V.VideoPlayer.HTML5.playVideos(e.target);
+		// if(V.Status.getDevice().mobile){
+		// 	V.ImagePlayer.reloadGifs($(slide));
+		// }
+		
+		V.VideoPlayer.HTML5.playVideos(e.target);
 
-			if($(e.target).hasClass("flashcard_slide")){
-				V.Flashcard.startAnimation(e.target.id);
-			}
+		if($(e.target).hasClass("flashcard_slide")){
+			V.Flashcard.startAnimation(e.target.id);
+		}
 
-
-			if(_isRecommendationMoment()){
-				V.Recommendations.generateFancybox();
-			}
+		if(_isRecommendationMoment()){
+			V.Recommendations.generateFancybox();
+		}
 	};	
 
 	/**
