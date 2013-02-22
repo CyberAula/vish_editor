@@ -275,7 +275,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			poi_id: poi_id,
 			slide_id: slide_id,
 			label : label,
-			title:"("+myLatlng.lat()+","+myLatlng.lng()+")"
+			title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
 		});
 
 		//Set label properties
@@ -449,9 +449,10 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var _onSearchAddress = function(){
 		var text = $("#vt_search_input").val();
 		if((typeof text == "string")&&(text!="")){
-			_getAddressForText(text,function(address){
-				if(address){
-					map.setCenter(address);
+			_getAddressForText(text,function(location){
+				if(location){
+					map.setCenter(location.address);
+					map.fitBounds(location.bounds);
 					$("#vt_search_input").val("");
 					$("#vt_search_input").attr("placeholder","Search places");
 				} else {
@@ -466,8 +467,13 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		geocoder.geocode( { 'address': addressText}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var addrLocation = results[0].geometry.location;
+				var bounds = results[0].geometry.bounds;
+				var location = {
+					address: addrLocation,
+					bounds: bounds
+				};
 				if(typeof callback === "function"){
-					callback(addrLocation);
+					callback(location);
 				}
 			} else {
 				// V.Debugging.log('Geocode was not successful for the following reason: ' + status);

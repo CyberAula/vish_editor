@@ -76,7 +76,7 @@ VISH.VirtualTour = (function(V,$,undefined){
       map: virtualTours[vt.id].map,
       draggable: false,
       poi_id: poi_id,
-      title:"("+myLatlng.lat()+","+myLatlng.lng()+")"
+      title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
     });
 
     google.maps.event.addListener(marker, 'click', function(event) {
