@@ -316,98 +316,82 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
-		var presType = V.Editor.getPresentationType();
-		if(V.Slides.getSlides().length === 0){
-			$.fancybox(
-				$("#message1_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 350,
-					'height'        	: 200,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else if(presType === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasPoiInBackground()){
-			$.fancybox(
-				$("#message3_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 350,
-					'height'        	: 250,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else if(presType === V.Constant.FLASHCARD && !V.Editor.Flashcard.Creator.hasChangedBackground()){
-			$.fancybox(
-				$("#message4_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 350,
-					'height'        	: 250,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else if(presType === V.Constant.VTOUR && !V.Editor.VirtualTour.Creator.hasPoiInMap()){
-			$.fancybox(
-				$("#message6_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 350,
-					'height'        	: 250,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else {
+		var slidesetModule = V.Editor.Slideset.getModule(V.Editor.getPresentationType());
+		var isSlideset = (slidesetModule!==null);
 
-			switch(V.Configuration.getConfiguration()["mode"]){
-				case V.Constant.NOSERVER:
-					$("a[save-option-id='save']").hide();
-					break;
-				case V.Constant.VISH:
-					if(V.Editor.isPresentationDraft()){
-						$("a[save-option-id='save']").hide();
-					} else {
-						$("a[save-option-id='draft']").hide();
-						$("a[save-option-id='publish']").hide();
-					}
-					break;
-				case V.Constant.STANDALONE:
-					$("a[save-option-id='publish']").hide();
-					$("a[save-option-id='draft']").hide();
-					break;
+		if(isSlideset){
+			var validate = slidesetModule.validateOnSave();
+			if(typeof validate === "string"){
+				_showDialog(validate);
+				return;
 			}
+		}
 
-			$.fancybox(
-				$("#save_form").html(),
-				{
-					'autoDimensions'	: false,
-					'width'         	: 350,
-					'scrolling': 'no',
-					'height'        	: 150,
-					'showCloseButton'	: false,
-					'padding' 			: 0,
-					'onClosed'			: function(){
-						var response = $("#save_answer").val();
-						if(response !=="cancel"){
-							$("#save_answer").val("cancel");	
-							var presentation = V.Editor.savePresentation();	
-							V.Editor.afterSavePresentation(presentation,response);			
-						} else {
-							return false;
-						}
+		if(V.Slides.getSlides().length === 0){
+			_showDialog("message1_form");
+			return;
+		} 
+	
+		switch(V.Configuration.getConfiguration()["mode"]){
+			case V.Constant.NOSERVER:
+				$("a[save-option-id='save']").hide();
+				break;
+			case V.Constant.VISH:
+				if(V.Editor.isPresentationDraft()){
+					$("a[save-option-id='save']").hide();
+				} else {
+					$("a[save-option-id='draft']").hide();
+					$("a[save-option-id='publish']").hide();
+				}
+				break;
+			case V.Constant.STANDALONE:
+				$("a[save-option-id='publish']").hide();
+				$("a[save-option-id='draft']").hide();
+				break;
+		}
+
+		$.fancybox(
+			$("#save_form").html(),
+			{
+				'autoDimensions'	: false,
+				'width'         	: 350,
+				'scrolling': 'no',
+				'height'        	: 150,
+				'showCloseButton'	: false,
+				'padding' 			: 0,
+				'onClosed'			: function(){
+					var response = $("#save_answer").val();
+					if(response !=="cancel"){
+						$("#save_answer").val("cancel");	
+						var presentation = V.Editor.savePresentation();	
+						V.Editor.afterSavePresentation(presentation,response);			
+					} else {
+						return false;
 					}
 				}
-			);
-		  }
+			}
+		);  
 	};
+
+	/*
+	 * Helper to show validation dialogs
+	 */
+	var _showDialog = function(id){
+		if($("#"+id).length===0){
+			return;
+		}
+		$.fancybox(
+			$("#"+id).html(),
+			{
+				'autoDimensions'	: false,
+				'scrolling': 'no',
+				'width'         	: 350,
+				'height'        	: 200,
+				'showCloseButton'	: false,
+				'padding' 			: 5		
+			}
+		);
+	}
 
 	/////////////////////
 	/// PREVIEW

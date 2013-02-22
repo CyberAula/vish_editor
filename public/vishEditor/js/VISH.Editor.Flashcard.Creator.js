@@ -6,16 +6,24 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	//Point to the current pois
 	var currentPois = undefined;
 
+	//Internal
+	var trustOrgPois = false;
+
+
 	var init = function(){
 		flashcardId = null;
 	};
+
+	var getId = function(){
+		return flashcardId;
+	}
 
 	/*
 	 * Switch to Flashcard creator in order to allow the creation of a new flashcard
 	 * using the current slides
 	 */
 	var onLoadMode = function(){
-		loadFlashcard();
+		loadSlideset();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
@@ -37,7 +45,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * @presentation must be undefined for new flashcard, or a previous flashcard
 	 * (presentation[type='flashcard']) if we are editing an existing flashcard
 	 */
-	var loadFlashcard = function(presentation){
+	var loadSlideset = function(presentation){
 		V.Editor.setPresentationType(V.Constant.FLASHCARD);
 		
 		V.Editor.Slides.hideSlides();
@@ -52,6 +60,9 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 			$("#flashcard-background").attr("flashcard_id", flashcardId);
 			$("#flashcard-background").css("background-image", flashcard.background);
 			$("#fc_change_bg_big").hide();
+			//When we load a flashcard, we can trust in the json pois
+			//Otherwise, this pois may be belong to another slideset (e.g virtual tour)
+			trustOrgPois = true;
 		} else {
 			//Create new flashcard
 			if(!flashcardId){
@@ -111,8 +122,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	};
 
 	var _applyStyleToPois = function(){
-		if(typeof currentPois === "undefined"){
-			//We are loading a flascard, get the pois from the flashcard
+		if((typeof currentPois === "undefined")&&(trustOrgPois)){
+			//We are loading a flascard, get the pois from the json
 			var presentation = V.Editor.getPresentation();
 			if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
 				currentPois = presentation.slides[0].pois;
@@ -207,6 +218,25 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 
 	////////////////////
+	// Validate
+	////////////////////
+
+	/*
+	 * OnValidationError: Return the id of the form to be show
+	 * OnValidationSuccess:Return true
+	 */
+	var validateOnSave = function(){
+		if(!hasPoiInBackground()){
+			return "message3_form";
+		}
+		if(!hasChangedBackground()){
+			return "message4_form";
+		}
+		return true;
+	}
+
+
+	////////////////////
 	// JSON Manipulation
 	////////////////////
 
@@ -223,49 +253,12 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		return slide;
 	}
 
-
-	/*
-	 * Prepare slide to nest into a flashcard
-	 */
-	var prepareToNestInFlashcard = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(flashcardId,slide);
-	}
-
-	/*
-	 * Revert the nest of the slides into a flashcard
-	 */
-	var undoNestedSlidesInFlashcard = function(fc){
-		fc.slides = _undoNestedSlides(fc.id,fc.slides);
-		fc.pois = _undoNestedPois(fc.id,fc.pois);
-		return fc;
-	}
-
-	var _undoNestedSlides = function(fcId,slides){
-		if(slides){
-			var sl = slides.length;
-			for(var j=0; j<sl; j++){
-				slides[j] = V.Editor.Utils.undoNestedSlide(fcId,slides[j]);
-			}
-		}
-		return slides;
-	}
-
-	var _undoNestedPois = function(fcId,pois){
-		if(pois){
-			var lp = pois.length;
-			for(var k=0; k<lp; k++){
-				pois[k].id = pois[k].id.replace(fcId+"_","");
-				pois[k].slide_id = pois[k].slide_id.replace(fcId+"_","");
-			}
-		}
-		return pois;
-	}
-
 	return {
 		init 				 		: init,
+		getId						: getId,
 		onLoadMode			 		: onLoadMode,
 		onLeaveMode 				: onLeaveMode,
-		loadFlashcard		 		: loadFlashcard,
+		loadSlideset		 		: loadSlideset,
 		onBackgroundSelected		: onBackgroundSelected,
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
@@ -274,8 +267,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		hasPoiInBackground	 		: hasPoiInBackground,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		getSlideHeader				: getSlideHeader,
-		prepareToNestInFlashcard 	: prepareToNestInFlashcard,
-		undoNestedSlidesInFlashcard : undoNestedSlidesInFlashcard
+		validateOnSave				: validateOnSave
 	};
 
 }) (VISH, jQuery);

@@ -20,6 +20,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var initialized = false;
 	var single_click;
 	var click_timer;
+	var trustOrgPois = false;
 
 
 	var init = function(){
@@ -58,7 +59,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * new virtual tour using the current slides
 	 */
 	var onLoadMode = function(){
-		loadVirtualTour();
+		loadSlideset();
 		//change thumbnail onclick event (preview slide instead of go to edit it)
 		//it will change itself depending on presentationType, also remove drag and drop to order slides
 		//also a _redrawPois functions is passed to show the pois, do them draggables, etc
@@ -80,7 +81,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * @presentation must be undefined for new virtual tour, or a previous vt
 	 * (presentation[type='VirtualTour']) if we are editing an existing vt
 	 */
-	var loadVirtualTour = function(presentation){
+	var loadSlideset = function(presentation){
 		var virtualTour;
 
 		V.Editor.setPresentationType(V.Constant.VTOUR);
@@ -95,6 +96,9 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			virtualTour = presentation.slides[0];
 			virtualTourId = virtualTour.id;
 			$("#vtour-background").attr("VirtualTour_id", virtualTourId);
+			//When we load a virtual tour, we can trust in the json pois
+			//Otherwise, this pois may be belong to another slideset (e.g flashcard)
+			trustOrgPois = true;
 		} else {
 			//Create new vt
 			if(!virtualTourId){
@@ -217,8 +221,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	};
 
 	var _restorePois = function(){
-		if(typeof currentPois === "undefined"){
-			//We are loading a virtual tour, get the pois from the vt
+		if((typeof currentPois === "undefined")&&(trustOrgPois)){
+			//We are loading a virtual tour, get the pois from the json
 			var presentation = V.Editor.getPresentation();
 			if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
 				currentPois = presentation.slides[0].pois;
@@ -547,6 +551,22 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 
 	////////////////////
+	// Validate
+	////////////////////
+
+	/*
+	 * OnValidationError: Return the id of the form to be show
+	 * OnValidationSuccess:Return true
+	 */
+	var validateOnSave = function(){
+		if(!hasPoiInMap()){
+			return "message6_form";
+		}
+		return true;
+	}
+
+
+	////////////////////
 	// JSON Manipulation
 	////////////////////
 
@@ -583,18 +603,22 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		return V.Editor.Utils.prepareSlideToNest(virtualTourId,slide);
 	}
 
+	var getId = function(){
+		return virtualTourId;
+	}
 
 	return {
 		init 				 		: init,
 		onLoadMode			 		: onLoadMode,
 		onLeaveMode 				: onLeaveMode,
-		loadVirtualTour		 		: loadVirtualTour,
+		loadSlideset		 		: loadSlideset,
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
 		hasPoiInMap	 				: hasPoiInMap,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		getSlideHeader				: getSlideHeader,
-		prepareToNestInVirtualTour	: prepareToNestInVirtualTour
+		getId 						: getId,
+		validateOnSave				: validateOnSave
 	};
 
 }) (VISH, jQuery);

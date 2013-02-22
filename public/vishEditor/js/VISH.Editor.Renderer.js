@@ -27,48 +27,34 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
 		V.Editor.Themes.selectTheme(presentation.theme);
+		V.Editor.setMode(presentation.type);
 
-		switch(presentation.type){
-			case V.Constant.FLASHCARD:
-				V.Editor.setMode(V.Constant.FLASHCARD);
-				var flashcard = V.Editor.Flashcard.Creator.undoNestedSlidesInFlashcard(presentation.slides[0]);
-				if((flashcard)&&(flashcard.slides)){
-					slides = flashcard.slides;
-					var sL = slides.length;
-					for(var i=0;i<sL;i++){
-						_renderSlide(slides[i], i+1);
-					}
+		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var isSlideset = (slidesetModule!==null);
+
+		if(isSlideset){
+			var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
+			if((slideset)&&(slideset.slides)){
+				slides = slideset.slides;
+				var sL = slides.length;
+				for(var i=0;i<sL;i++){
+					_renderSlide(slides[i], i+1);
 				}
-				V.Editor.Flashcard.Creator.loadFlashcard(presentation);
-				break;
-			case V.Constant.VTOUR:
-				V.Editor.setMode(V.Constant.VTOUR);
-				var vTour = V.Editor.Flashcard.Creator.undoNestedSlidesInFlashcard(presentation.slides[0]);
-				if((vTour)&&(vTour.slides)){
-					slides = vTour.slides;
-					var sL = slides.length;
-					for(var i=0;i<sL;i++){
-						_renderSlide(slides[i], i+1);
-					}
+			}
+			slidesetModule.loadSlideset(presentation);
+		} else {
+			//Presentation
+			slides = presentation.slides;
+			for(var i=0;i<slides.length;i++){
+				if(slides[i].type === V.Constant.FLASHCARD){
+					_renderFlashcard(slides[i], i+1);
+				} else {
+					_renderSlide(slides[i], i+1);			
 				}
-				V.Editor.VirtualTour.Creator.loadVirtualTour(presentation);
-				break;
-			case V.Constant.PRESENTATION:
-			default:
-				V.Editor.setMode(V.Constant.PRESENTATION);
-				slides = presentation.slides;
-				for(var i=0;i<slides.length;i++){
-						if(slides[i].type === V.Constant.FLASHCARD){
-							_renderFlashcard(slides[i], i+1);
-						} else {
-							_renderSlide(slides[i], i+1);			
-						}
-				}
-				break;
+			}
 		}
 	};
 	
-		
 	/**
 	 * function to render one slide in editor
 	 */

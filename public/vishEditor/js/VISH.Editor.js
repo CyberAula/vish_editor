@@ -76,6 +76,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Dummies.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
+		V.Editor.Slideset.init();
 		V.Editor.Flashcard.init();
 		V.Editor.VirtualTour.init();
 		V.Renderer.init();
@@ -712,22 +713,16 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		switch(presentation.type){
-			case V.Constant.FLASHCARD:
-				slide = V.Editor.Flashcard.Creator.getSlideHeader();
-				presentation.slides.push(slide);
-				break;
-			case V.Constant.VTOUR:
-				slide = V.Editor.VirtualTour.Creator.getSlideHeader();
-				presentation.slides.push(slide);
-				break;
-			default:
-				break;
+		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var isSlideset = (slidesetModule!==null);
+		if(isSlideset){
+			slide = slidesetModule.getSlideHeader();
+			presentation.slides.push(slide);
 		}
 
 		slide = {};
 		$('.slides > article').each(function(index,s){
-			slide.id = $(s).attr('id'); //TODO what if saved before!
+			slide.id = $(s).attr('id');
 			slide.type = $(s).attr('type');
 			
 			if(slide.type === V.Constant.FLASHCARD){
@@ -900,15 +895,14 @@ VISH.Editor = (function(V,$,undefined){
 			
 			});
 
-			if(presentation.type===V.Constant.FLASHCARD){
-				//If it is flashcard we save the slide into the flashcard slides 
-				//(the flashcard is the first slide by convention)
-				slide = V.Editor.Flashcard.Creator.prepareToNestInFlashcard(slide);
-				presentation.slides[0].slides.push(slide);
-			} else if(presentation.type===V.Constant.VTOUR){
-				slide = V.Editor.VirtualTour.Creator.prepareToNestInVirtualTour(slide);
+			if(isSlideset){
+				//If it is a slideset (e.g flashcard or virtual tour) we save 
+				//the slide into the slideset slides array
+				//(the slideset itself is the first slide by convention)
+				slide = V.Editor.Slideset.prepareToNest(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
+				//Presentation
 				presentation.slides.push(slide);
 			}
 
