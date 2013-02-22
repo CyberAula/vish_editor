@@ -110,11 +110,17 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	&#x2F;&#x2F;Make init idempotent
 	var initialized = false;
 
+	&#x2F;&#x2F;Prevent updateInterface with same params (Make Vish Viewer more efficient)
+	var _lastWidth;
+	var _lastHeight;
+
 
 	var init = function(options){
 		if(initialized){
 			return;
 		} else {
+			_lastWidth = -1;
+			_lastHeight = -1;
 			initialized = true;
 		}
 
@@ -133,7 +139,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				embed = false;
 			}
 
-			close_button = (!V.Status.getDevice().desktop)&amp;&amp;(!V.Status.getIsInIframe())&amp;&amp;(options[&quot;comeBackUrl&quot;]);
+			close_button = (V.Status.getDevice().mobile)&amp;&amp;(!V.Status.getIsInIframe())&amp;&amp;((options[&quot;comeBackUrl&quot;])||((V.Status.getDevice().features.history)&amp;&amp;(embed)));
 			
 			&#x2F;&#x2F;Embed elements can use native fullscreen
 			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&amp;&amp;(!embed);
@@ -182,12 +188,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				close_button = false;
 			}
 		}
-		
-		&#x2F;&#x2F;Close button just for mobiles (disable in tablets)
-		close_button = (close_button &amp;&amp; (V.Status.getDevice().mobile));
 
-		isOneSlide = (!(VISH.Slides.getSlidesQuantity()&gt;1));
 
+		isOneSlide = (!(V.Slides.getSlidesQuantity()&gt;1));
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Init interface
@@ -205,7 +208,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$(&quot;#viewbar&quot;).show();
 			}
-			VISH.SlideManager.updateSlideCounter();
+			V.SlideManager.updateSlideCounter();
 		} else {
 			$(&quot;#viewbar&quot;).hide();
 		}
@@ -245,18 +248,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var decideIfPageSwitcher = function(){
 
 		&#x2F;&#x2F; ViewBar
-		if (VISH.Slides.getCurrentSubSlide()!==null){
+		if (V.Slides.getCurrentSubSlide()!==null){
 			&#x2F;&#x2F;Subslide active
 			$(&quot;#forward_arrow&quot;).hide();
 			$(&quot;#back_arrow&quot;).hide();
 		} else {
 			&#x2F;&#x2F;No subslide
-			if(VISH.Slides.isCurrentFirstSlide()){
+			if(V.Slides.isCurrentFirstSlide()){
 				$(&quot;#back_arrow&quot;).hide();
 			} else {
 				$(&quot;#back_arrow&quot;).show();
 			} 
-			if (VISH.Slides.isCurrentLastSlide()){
+			if (V.Slides.isCurrentLastSlide()){
 				$(&quot;#forward_arrow&quot;).hide();		
 			} else {
 				$(&quot;#forward_arrow&quot;).show();
@@ -265,12 +268,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F; Pager
 		if(!render_full){
-			if(VISH.Slides.isCurrentFirstSlide()){
+			if(V.Slides.isCurrentFirstSlide()){
 				$(&quot;#page-switcher-start&quot;).hide();			
 			} else {
 				$(&quot;#page-switcher-start&quot;).show();
 			}
-			if(VISH.Slides.isCurrentLastSlide()){
+			if(V.Slides.isCurrentLastSlide()){
 				$(&quot;#page-switcher-end&quot;).hide();
 			} else {
 				$(&quot;#page-switcher-end&quot;).show();
@@ -301,6 +304,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	var updateInterface = function(){
+		var cWidth = $(window).width();
+		var cHeight = $(window).height();
+		if((cWidth===_lastWidth)&amp;&amp;(cHeight===_lastHeight)){
+			return;
+		}
+		_lastWidth = cWidth;
+		_lastHeight = cHeight;
 		_setupSize(render_full);
 	};
 
@@ -330,8 +340,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			margin_width = 30;
 		}
 		
-		var height = $(window).height() - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - 40px that is the menubar height
-		var width = $(window).width();
+		var height = _lastHeight - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - 40px that is the menubar height
+		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
 
@@ -360,7 +370,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(&quot;.subslide&quot;).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);	
 		
 		var increase = finalH&#x2F;600;
-		&#x2F;&#x2F; var increaseW = finalW&#x2F;800;
+		var increaseW = finalW&#x2F;800;
 		
 		&#x2F;&#x2F;and now the arrows have to be increased or decreased
 		$(&quot;.fc_poi img&quot;).css(&quot;width&quot;, 50*increase + &quot;px&quot;);
@@ -385,13 +395,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher();
 
 		&#x2F;&#x2F;Texts callbacks
-		VISH.Text.aftersetupSize(increase);
+		V.Text.aftersetupSize(increase,increaseW);
 
 		&#x2F;&#x2F;Snapshot callbacks
-		VISH.SnapshotPlayer.aftersetupSize(increase);
+		V.SnapshotPlayer.aftersetupSize(increase,increaseW);
 		
 		&#x2F;&#x2F;Object callbacks
-		VISH.ObjectPlayer.aftersetupSize(increase);
+		V.ObjectPlayer.aftersetupSize(increase,increaseW);
+
+		&#x2F;&#x2F;Maps callbacks
+		V.VirtualTour.aftersetupSize(increase,increaseW);
 	};
 
 
@@ -417,6 +430,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				&#x2F;&#x2F;Done with a timeout because it did not work well in ubuntu
 				setTimeout(function(){
 					page_is_fullscreen = !page_is_fullscreen;
+					render_full = page_is_fullscreen;
 					_setupSize(page_is_fullscreen);
 				}, 400);
 			});
@@ -435,17 +449,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 							window.location = exit_fs_url;
 					} else if(V.Status.getDevice().features.history){
 						&#x2F;&#x2F;Use feature history if its allowed
-						&#x2F;&#x2F; history.back(); &#x2F;&#x2F;Not works in Safari
-						history.go(-1);
+						history.back();
 					}
 				});
 			} else if((!fullscreen)&amp;&amp;(enter_fs_button)){
 				$(document).on(&#x27;click&#x27;, &#x27;#page-fullscreen&#x27;, function(){
 					if(typeof window.parent.location.href !== &quot;undefined&quot;){
-						VISH.Utils.sendParentToURL(enter_fs_url+&quot;?orgUrl=&quot;+window.parent.location.href);
+						V.Utils.sendParentToURL(enter_fs_url+&quot;?orgUrl=&quot;+window.parent.location.href);
 					} else {
 						&#x2F;&#x2F;In embed mode, we dont have access to window.parent properties (like window.parent.location)
-						VISH.Utils.sendParentToURL(enter_fs_url+&quot;?embed=true&quot;);
+						V.Utils.sendParentToURL(enter_fs_url+&quot;?embed=true&quot;);
 					}
 				});
 			}

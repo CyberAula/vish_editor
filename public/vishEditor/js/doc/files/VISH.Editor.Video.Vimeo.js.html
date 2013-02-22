@@ -98,10 +98,10 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	
 	var init = function(){
 		var myInput = $(&quot;#tab_video_vimeo_content&quot;).find(&quot;input[type=&#x27;search&#x27;]&quot;);
-	  $(myInput).watermark(VISH.Editor.I18n.getTrans(&quot;i.SearchContent&quot;));
+	  $(myInput).watermark(V.Editor.I18n.getTrans(&quot;i.SearchContent&quot;));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
-		        	VISH.Editor.Video.Vimeo.requestVimeoData($(myInput).val());
+		        	V.Editor.Video.Vimeo.requestVimeoData($(myInput).val());
 		          	$(myInput).blur();
 			}
 		});
@@ -111,7 +111,7 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	var onLoadTab = function(){
 		&#x2F;&#x2F;Clean previous content
 		$(&quot;#tab_video_vimeo_content&quot;).find(&quot;input[type=&#x27;search&#x27;]&quot;).val(&quot;&quot;);
-    VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
     $(&quot;#&quot; + carrouselDivId).hide();
 		_cleanVideoPreview();
 	};
@@ -121,13 +121,13 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	 Request videos to Vimeo API
 	 *&#x2F;	
 	var requestVimeoData = function(text){
-		VISH.Debugging.log(&quot;enter in requestVimeoData and text&#x27;s value is:&quot; + text);
+		V.Debugging.log(&quot;enter in requestVimeoData and text&#x27;s value is:&quot; + text);
 		&#x2F;&#x2F;GET&amp;http%3A%2F%2Fvimeo.com%2Fapi%2Frest%2Fv2&amp;format%3Djson%26full_response%3D1%26method%3Dvimeo.videos.search%26oauth_consumer_key%3Dc1f5add1d34817a6775d10b3f6821268%26oauth_nonce%3D641560c0dca7dbb0d8fcc2d677a6b585%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1340633834%26oauth_version%3D1.0%26page%3D1%26per_page%3D20%26query%3Dcasa%26user_id%3D72da4651e040f6060def0d531cab7abab4ff5801
 		&#x2F;&#x2F;var api_key=&quot;72da4651e040f6060def0d531cab7abab4ff5801&quot;;
 		
 	&#x2F;&#x2F;	var url_vimeo= &quot;http:&#x2F;&#x2F;vimeo.com&#x2F;api&#x2F;rest&#x2F;v2?api_key=&quot;+api_key+&quot;&amp;format=jsonp&amp;full_response=1&amp;method=vimeo.videos.search&amp;page=1&amp;per_page=20&amp;query=&quot;+text+&quot;&amp;sort=relevant&quot;;
 		&#x2F;&#x2F;we have to create the URL using the Vimeo&#x27;s API and the term to search is the parameter &#x27;text&#x27;
-		VISH.Debugging.log(&quot;url_vimeo is :&quot; + url_vimeo);
+		V.Debugging.log(&quot;url_vimeo is :&quot; + url_vimeo);
 		
 		jQuery.getJSON(url_vimeo,function (data) {
 			
@@ -140,7 +140,7 @@ VISH.Editor.Video.Vimeo = (function(V,$,undefined){
 	};
 
 	var _onDataReceived = function(data) {
-		VISH.Debugging.log(&quot;enter in _onDataReceived and data value is: &quot;+ data);
+		V.Debugging.log(&quot;enter in _onDataReceived and data value is: &quot;+ data);
 		
 		
 	};

@@ -67,23 +67,23 @@ VISH.Utils = (function(V,undefined){
 
 	var loadDeviceCSS = function(){
 		//Set device CSS
-		if(VISH.Status.getDevice().desktop){
+		if(V.Status.getDevice().desktop){
 			loadCSS("device/desktop.css");
-		} else if(VISH.Status.getDevice().mobile){
+		} else if(V.Status.getDevice().mobile){
 			loadCSS("device/mobile.css");
-		} else if(VISH.Status.getDevice().tablet){
+		} else if(V.Status.getDevice().tablet){
 			loadCSS("device/tablet.css");
 		}
 
 		//Set browser CSS
-		switch(VISH.Status.getDevice().browser.name){
-			case VISH.Constant.FIREFOX:
+		switch(V.Status.getDevice().browser.name){
+			case V.Constant.FIREFOX:
 				loadCSS("browser/firefox.css");
 				break;
-			case VISH.Constant.IE:
+			case V.Constant.IE:
 				loadCSS("browser/ie.css");
 				break;
-			case VISH.Constant.CHROME:
+			case V.Constant.CHROME:
 				loadCSS("browser/chrome.css");
 				break;
 		}
@@ -145,18 +145,18 @@ VISH.Utils = (function(V,undefined){
 	* Function to dinamically add a css
 	*/
 	var loadCSS = function(path){
-		$("head").append('<link rel="stylesheet" href="' + VISH.StylesheetsPath + path + '" type="text/css" />');
+		$("head").append('<link rel="stylesheet" href="' + V.StylesheetsPath + path + '" type="text/css" />');
 	};
 
 		
 	//Check minium requirements to init vish editor
 	var checkMiniumRequirements = function(){
 		var browserRequirements = true;
-		var device = VISH.Status.getDevice();
+		var device = V.Status.getDevice();
 
 		switch(device.browser.name){
-			case VISH.Constant.IE:
-				if(VISH.Editing){
+			case V.Constant.IE:
+				if(V.Editing){
 					if(device.browser.version < 9){
 						browserRequirements = false;
 					}
@@ -166,9 +166,9 @@ VISH.Utils = (function(V,undefined){
 					}
 				}
 				break;
-			case VISH.Constant.FIREFOX:
+			case V.Constant.FIREFOX:
 				break;
-			case VISH.Constant.CHROME:
+			case V.Constant.CHROME:
 				break;
 			default:
 				//Allow...
@@ -397,51 +397,51 @@ VISH.Utils = (function(V,undefined){
 				break;
 			//Video
 			case "tab_video_from_url":
-				VISH.Editor.Video.onLoadTab();
+				V.Editor.Video.onLoadTab();
 				break;
 			case "tab_video_repo":
-				VISH.Editor.Video.Repository.onLoadTab();
+				V.Editor.Video.Repository.onLoadTab();
 				break;
 			case "tab_video_youtube":
-				VISH.Editor.Video.Youtube.onLoadTab();
+				V.Editor.Video.Youtube.onLoadTab();
 				break;
 			case "tab_video_vimeo":
-				VISH.Editor.Video.Vimeo.onLoadTab();
+				V.Editor.Video.Vimeo.onLoadTab();
 				break;
 				
 			//Objects
 			case "tab_object_from_url":
-				VISH.Editor.Object.onLoadTab("url");
+				V.Editor.Object.onLoadTab("url");
 				break;
 			case "tab_object_from_web":
-				VISH.Editor.Object.Web.onLoadTab();
+				V.Editor.Object.Web.onLoadTab();
 				break;
 			case "tab_object_snapshot":
-				VISH.Editor.Object.Snapshot.onLoadTab();
+				V.Editor.Object.Snapshot.onLoadTab();
 				break;
 			case "tab_object_upload":
-				VISH.Editor.Object.onLoadTab("upload");
+				V.Editor.Object.onLoadTab("upload");
 				break;
 			case "tab_object_repo":
-				VISH.Editor.Object.Repository.onLoadTab();
+				V.Editor.Object.Repository.onLoadTab();
 				break;
 				
 			//Live
 			case "tab_live_webcam":
-				VISH.Editor.Object.Live.onLoadTab("webcam");
+				V.Editor.Object.Live.onLoadTab("webcam");
 				break;
 			case "tab_live_micro":
-				VISH.Editor.Object.Live.onLoadTab("micro");
+				V.Editor.Object.Live.onLoadTab("micro");
 				break;
 			//quizzes
 			case "tab_quiz_session":
-				VISH.Quiz.activatePolling(false);
+				V.Quiz.activatePolling(false);
 				break;
 			case "tab_quiz_stats_bars":
-				VISH.Quiz.activatePolling(true);
+				V.Quiz.activatePolling(true);
 				break;
 			case "tab_quiz_stats_pie":
-				VISH.Quiz.activatePolling(true);
+				V.Quiz.activatePolling(true);
 				break;
  			//Default
 			default:

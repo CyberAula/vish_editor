@@ -121,8 +121,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 	    case 67: &#x2F;&#x2F;cKey
 			if(V.Editor.Slides.isSlideFocused()) {
 				if(ctrlDown){
-					if(VISH.Slides.getCurrentSlideNumber()){
-						VISH.Editor.Clipboard.copy(VISH.Slides.getCurrentSlide(),VISH.Constant.Clipboard.Slide);
+					if(V.Slides.getCurrentSlideNumber()){
+						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
 					}
 				}
 			}
@@ -130,13 +130,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	    case 86: &#x2F;&#x2F;vKey
 		    if(V.Editor.Slides.isSlideFocused()) {
 			    if(ctrlDown){
-			    	VISH.Editor.Clipboard.paste();
+			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
 		case 46: &#x2F;&#x2F;Supr key
 			if(V.Editor.Slides.isSlideFocused()) {
-				VISH.Editor.Slides.removeSlide(VISH.Slides.getCurrentSlideNumber());
+				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 			}
 			break;	
 	  }
@@ -154,7 +154,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 	 * function called when a poi is clicked
 	 *&#x2F;
 	 var _onFlashcardPoiClicked = function(event){
-    	V.Slides.openSubslide(event.data.slide_id,true);
+	 	if(V.Editor.getMode()===V.Constant.PRESENTATION){
+	 		V.Slides.openSubslide(event.data.slide_id,true);
+	 	}
 	 };
 
 
@@ -171,20 +173,26 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
 			$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
 
-			if((VISH.Editing)&amp;&amp;(presentation)){
+			if((V.Editing)&amp;&amp;(presentation)){
 				for(index in presentation.slides){
 		      		var slide = presentation.slides[index];
 	      			switch(slide.type){
-	      				case VISH.Constant.FLASHCARD:
+	      				case V.Constant.FLASHCARD:
 		      				bindEventsForFlashcard(slide);
 	      					break;
-	      				case VISH.Constant.VTOUR:
+	      				case V.Constant.VTOUR:
 	      					break;
 	      			}
 	  		    }
 			}
+
+			&#x2F;&#x2F;Allow keyboard events with the first click
+			$(window.document).on(&#x27;click&#x27;, function(){
+				window.focus();
+			});
+
+	  		bindedEventListeners = true;
 		} 
-		bindedEventListeners = true;
    };
 
    var bindEventsForFlashcard = function(slide){
@@ -199,8 +207,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		if(bindedEventListeners){
 			var presentation = V.Editor.getPresentation();
 			if(presentation.type === &quot;presentation&quot;){
-				$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown); 
-				$(document).unbind(&#x27;keyup&#x27;, handleBodyKeyUp);   
+				$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown);
+				$(document).unbind(&#x27;keyup&#x27;, handleBodyKeyUp);
 	  		}			
 	      	for(index in presentation.slides){
 				if(presentation.slides[index].type === &quot;flashcard&quot;){
@@ -212,6 +220,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 	      			$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
       			}
   		    }
+
+			$(window.document).off(&#x27;click&#x27;, function(){
+				window.focus();
+			});
 
 	  		bindedEventListeners = false;
 		}

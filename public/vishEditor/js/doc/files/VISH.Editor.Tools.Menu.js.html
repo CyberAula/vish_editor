@@ -90,10 +90,50 @@
     <pre class="code prettyprint linenums">
 VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
-	var menuEventsLoaded = false;
+	var _initialized = false;
+	var _hoverMenu = false;
+
+	&#x2F;*
+	 * Init singleton
+	 * Perform actions that must be executed only once
+	 *&#x2F;
+	var _init = function(){
+		if(!_initialized){
+			if(!V.Status.getDevice().desktop){
+				if(V.Status.getDevice().tablet){
+					V.Editor.MenuTablet.init();
+				} else {
+					disableMenu();
+					return;
+				}
+			} else {
+				_hoverMenu = true;
+			}
+
+			&#x2F;&#x2F;Add listeners to menu buttons
+			$.each($(&quot;#menu a.menu_action&quot;), function(index, menuButton) {
+				$(menuButton).on(&quot;click&quot;, function(event){
+					event.preventDefault();
+					if($(menuButton).parent().hasClass(&quot;menu_item_disabled&quot;)){
+						&#x2F;&#x2F;Disabled button
+						return;
+					}
+					if(typeof V.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)] == &quot;function&quot;){
+						V.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)](this);
+						_hideMenuAfterAction();
+					}
+				});
+			});
+			_initSettings();
+
+			_initialized = true;
+		}
+	}
 
 
    &#x2F;**
+    * Called every time that menu needs to be updated
+    *
 	* Menu item classes:
 	* menu_all : Always visible
 	* menu_standard_presentation: 	Visible for standard presentations
@@ -101,38 +141,33 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* menu_flaschard: 				Visible for flashcards
 	* menu_game: 					Visible for games
 	*&#x2F;
-
 	var init = function(){
+		_init();
+
 		$(&quot;#menu&quot;).hide();
 
-		if(!VISH.Status.getDevice().desktop){
-			if(VISH.Status.getDevice().tablet){
-				VISH.Editor.MenuTablet.init();
-			} else {
-				disableMenu();
-				return;
-			}
-		}
-
-		var presentationType = VISH.Editor.getPresentationType();
+		var presentationType = V.Editor.getPresentationType();
 
 		_disableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;li&quot;));
 		_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_all&quot;).parent());
 
 		switch(presentationType){
-			case VISH.Constant.PRESENTATION:
+			case V.Constant.PRESENTATION:
 				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_presentation&quot;).parent());
-				if(VISH.Editor.isPresentationStandard()){
+				if(V.Editor.isPresentationStandard()){
 					_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_standard_presentation&quot;).parent());
 				}
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_flashcard&quot;).parent());
 				break;
-			case VISH.Constant.GAME:
+			case V.Constant.GAME:
 				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_game&quot;).parent());
 				break;
-			case VISH.Constant.QUIZ_SIMPLE:
+			case V.Constant.VTOUR:
+				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_vtour&quot;).parent());
+				break;	
+			case V.Constant.QUIZ_SIMPLE:
 				break;
 			default:
 				break;
@@ -172,25 +207,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		&#x2F;&#x2F; 	visibleLis = 0;
 		&#x2F;&#x2F; });
 
-		if(!menuEventsLoaded){
-			&#x2F;&#x2F;Add listeners to menu buttons
-			$.each($(&quot;#menu a.menu_action&quot;), function(index, menuButton) {
-				$(menuButton).on(&quot;click&quot;, function(event){
-					event.preventDefault();
-					if($(menuButton).parent().hasClass(&quot;menu_item_disabled&quot;)){
-						&#x2F;&#x2F;Disabled button
-						return;
-					}
-					if(typeof VISH.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)] == &quot;function&quot;){
-						VISH.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)](this);
-					}
-				});
-			});
-			menuEventsLoaded = true;
-			_initSettings();
-			VISH.Editor.Preview.init();
-		}
-
 		$(&quot;#menu&quot;).show();
 	}
 
@@ -206,10 +222,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var updateMenuAfterAddSlide = function(slideType){
 		switch(slideType){
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 				break;
-			case VISH.Constant.FLASHCARD:
-			case VISH.Constant.VTOUR:
+			case V.Constant.FLASHCARD:
+			case V.Constant.VTOUR:
 				return init();
 				break;
 			default:
@@ -232,11 +248,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F; SETTINGS
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
-	var initializedSettings = false;
-
 	var _initSettings = function(){
-
-		if ((VISH.Configuration.getConfiguration()[&quot;presentationSettings&quot;]) &amp;&amp; (!VISH.Editor.hasInitialPresentation()) &amp;&amp; !initializedSettings){
+		if ((V.Configuration.getConfiguration()[&quot;presentationSettings&quot;]) &amp;&amp; (!V.Editor.hasInitialPresentation())){
 			$(&quot;a#edit_presentation_details&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -248,7 +261,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				&#x27;showCloseButton&#x27;: false
 			});
 			displaySettings();
-			initializedSettings = true;
 		} else {
 			$(&quot;a#edit_presentation_details&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
@@ -286,20 +298,20 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			});
 		}
 
-		if((VISH.Configuration.getConfiguration()[&quot;presentationTags&quot;])&amp;&amp;(firstSettingsCall)){
-			VISH.Editor.API.requestTags(_onInitialTagsReceived);
-			var draftPresentation = VISH.Editor.getPresentation();
+		if((V.Configuration.getConfiguration()[&quot;presentationTags&quot;])&amp;&amp;(firstSettingsCall)){
+			V.Editor.API.requestTags(_onInitialTagsReceived);
+			var draftPresentation = V.Editor.getPresentation();
 			if(draftPresentation &amp;&amp; draftPresentation.avatar){
-				VISH.Editor.AvatarPicker.onLoadPresentationDetails(draftPresentation.avatar);
+				V.Editor.AvatarPicker.onLoadPresentationDetails(draftPresentation.avatar);
 			} else {
-				VISH.Editor.AvatarPicker.onLoadPresentationDetails(null);
+				V.Editor.AvatarPicker.onLoadPresentationDetails(null);
 			}
 		}
 	}
 
 	var _onInitialTagsReceived = function(data){
 		var tagList = $(&quot;.tagBoxIntro .tagList&quot;);
-		var draftPresentation = VISH.Editor.getPresentation();
+		var draftPresentation = V.Editor.getPresentation();
 
 		if ($(tagList).children().length == 0){
 			if(!draftPresentation){
@@ -319,7 +331,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				}
 			}
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: VISH.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: VISH.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
+			watermarkAllowMessage: V.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
 	}
 
@@ -338,7 +350,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			return false;
 		}
 		
-		var draftPresentation = VISH.Editor.getPresentation();
+		var draftPresentation = V.Editor.getPresentation();
 
 		if(!draftPresentation){
 			draftPresentation = {};
@@ -347,7 +359,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		draftPresentation.title = $(&#x27;#presentation_title&#x27;).val();
 		draftPresentation.description = $(&#x27;#presentation_description&#x27;).val();
 		draftPresentation.avatar = $(&#x27;#presentation_avatar&#x27;).val();
-		draftPresentation.tags = VISH.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
+		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
 
 		&#x2F;&#x2F;now the pedagogical fields if any
 		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
@@ -356,7 +368,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		draftPresentation.educational_objectives = $(&quot;#educational_objectives_tag&quot;).val();
 		draftPresentation.adquired_competencies = $(&quot;#acquired_competencies_tag&quot;).val();
 
-		VISH.Editor.setPresentation(draftPresentation);
+		V.Editor.setPresentation(draftPresentation);
 
 		$(&#x27;#presentation_details_error&#x27;).hide();
 		$.fancybox.close();
@@ -394,94 +406,89 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*&#x2F;
 	var onSaveButtonClicked = function(){
-		V.Debugging.log(&quot;presentation type: &quot; + VISH.Editor.getPresentationType());
-		if(VISH.Slides.getSlides().length === 0){
-			$.fancybox(
-				$(&quot;#message1_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;width&#x27;         	: 350,
-					&#x27;height&#x27;        	: 200,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 5		
-				}
-			);
-		} else if(VISH.Editor.getPresentationType() === &quot;flashcard&quot; &amp;&amp; !VISH.Editor.Flashcard.hasPoiInBackground()){
-			$.fancybox(
-				$(&quot;#message3_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;width&#x27;         	: 350,
-					&#x27;height&#x27;        	: 250,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 5		
-				}
-			);
-		} else if(VISH.Editor.getPresentationType() === &quot;flashcard&quot; &amp;&amp; !VISH.Editor.Flashcard.hasChangedBackground()){
-			$.fancybox(
-				$(&quot;#message4_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;width&#x27;         	: 350,
-					&#x27;height&#x27;        	: 250,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 5		
-				}
-			);
+		var slidesetModule = V.Editor.Slideset.getModule(V.Editor.getPresentationType());
+		var isSlideset = (slidesetModule!==null);
 
-		} else {  
-
-			switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
-				case VISH.Constant.NOSERVER:
-					$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
-					break;
-				case VISH.Constant.VISH:
-					if(VISH.Editor.isPresentationDraft()){
-						$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
-					} else {
-						$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
-						$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
-					}
-					break;
-				case VISH.Constant.STANDALONE:
-					$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
-					$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
-					break;
+		if(isSlideset){
+			var validate = slidesetModule.validateOnSave();
+			if(typeof validate === &quot;string&quot;){
+				_showDialog(validate);
+				return;
 			}
+		}
 
-			$.fancybox(
-				$(&quot;#save_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;width&#x27;         	: 350,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;height&#x27;        	: 150,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 0,
-					&#x27;onClosed&#x27;			: function(){
-						var response = $(&quot;#save_answer&quot;).val();
-						if(response !==&quot;cancel&quot;){
-							$(&quot;#save_answer&quot;).val(&quot;cancel&quot;);	
-							var presentation = VISH.Editor.savePresentation();	
-							VISH.Editor.afterSavePresentation(presentation,response);			
-						} else {
-							return false;
-						}
+		if(V.Slides.getSlides().length === 0){
+			_showDialog(&quot;message1_form&quot;);
+			return;
+		} 
+	
+		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+			case V.Constant.NOSERVER:
+				$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
+				break;
+			case V.Constant.VISH:
+				if(V.Editor.isPresentationDraft()){
+					$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
+				} else {
+					$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
+					$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
+				}
+				break;
+			case V.Constant.STANDALONE:
+				$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
+				$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
+				break;
+		}
+
+		$.fancybox(
+			$(&quot;#save_form&quot;).html(),
+			{
+				&#x27;autoDimensions&#x27;	: false,
+				&#x27;width&#x27;         	: 350,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;        	: 150,
+				&#x27;showCloseButton&#x27;	: false,
+				&#x27;padding&#x27; 			: 0,
+				&#x27;onClosed&#x27;			: function(){
+					var response = $(&quot;#save_answer&quot;).val();
+					if(response !==&quot;cancel&quot;){
+						$(&quot;#save_answer&quot;).val(&quot;cancel&quot;);	
+						var presentation = V.Editor.savePresentation();	
+						V.Editor.afterSavePresentation(presentation,response);			
+					} else {
+						return false;
 					}
 				}
-			);
-		  }
+			}
+		);  
 	};
+
+	&#x2F;*
+	 * Helper to show validation dialogs
+	 *&#x2F;
+	var _showDialog = function(id){
+		if($(&quot;#&quot;+id).length===0){
+			return;
+		}
+		$.fancybox(
+			$(&quot;#&quot;+id).html(),
+			{
+				&#x27;autoDimensions&#x27;	: false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;width&#x27;         	: 350,
+				&#x27;height&#x27;        	: 200,
+				&#x27;showCloseButton&#x27;	: false,
+				&#x27;padding&#x27; 			: 5		
+			}
+		);
+	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; PREVIEW
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	var preview = function(){
-		VISH.Editor.Preview.preview();
+		V.Editor.Preview.preview();
 	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -494,10 +501,22 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; CONVERSION
+	&#x2F;&#x2F;&#x2F; Modes
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
-	var switchToFlashcard = function(){		
+	var switchToPresentation = function(){
+		_beforeChangeMode();
+		V.Editor.setMode(V.Constant.PRESENTATION);
+
+		var presentation = V.Editor.savePresentation();
+		V.Editor.setPresentation(presentation);
+		V.Editor.setPresentationType(&quot;presentation&quot;);
+		V.Editor.Slides.showSlides();
+		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Tools.init();
+	};
+
+	var switchToFlashcard = function(){
 		if(V.Slides.getSlides().length === 0){
 			$.fancybox(
 				$(&quot;#message5_form&quot;).html(),
@@ -510,37 +529,66 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					&#x27;padding&#x27; 			: 5		
 				}
 			);
-		}
-		else{
-			V.Editor.Flashcard.switchToFlashcard();
+		} else {
+			_beforeChangeMode();
+			V.Editor.setMode(V.Constant.FLASHCARD);
+			V.Editor.Flashcard.Creator.onLoadMode();
 		}
 	};
 
-	var switchToPresentation = function(){
-		var presentation = V.Editor.savePresentation();
-		V.Editor.setPresentation(presentation);
+	var switchToVirtualTour = function(){
+		if(V.Slides.getSlides().length === 0){
+			$.fancybox(
+				$(&quot;#message5_form&quot;).html(),
+				{
+					&#x27;autoDimensions&#x27;	: false,
+					&#x27;scrolling&#x27;: &#x27;no&#x27;,
+					&#x27;width&#x27;         	: 450,
+					&#x27;height&#x27;        	: 220,
+					&#x27;showCloseButton&#x27;	: false,
+					&#x27;padding&#x27; 			: 5		
+				}
+			);
+		} else {
+			_beforeChangeMode();
+			V.Editor.setMode(V.Constant.VTOUR);
+			V.Editor.VirtualTour.Creator.onLoadMode();
+		}
+	}
 
-		V.Editor.setPresentationType(&quot;presentation&quot;);
-		
-		V.Editor.Slides.showSlides();
-
-		$(&quot;#flashcard-background&quot;).hide();
-		
-		V.Editor.Thumbnails.redrawThumbnails();
-		VISH.Editor.Tools.init();
-	};
+	var _beforeChangeMode = function(){
+		switch(V.Editor.getMode()){
+			case V.Constant.PRESENTATION:
+				break;
+			case V.Constant.FLASHCARD:
+					V.Editor.Flashcard.Creator.onLeaveMode();
+				break;
+			case V.Constant.VTOUR:
+					V.Editor.VirtualTour.Creator.onLeaveMode();
+				break;
+			default:
+				break;
+		}
+	}
 
 	var insertFlashcard = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		VISH.Utils.loadTab(&#x27;tab_flashcards_repo&#x27;);
+		V.Utils.loadTab(&#x27;tab_flashcards_repo&#x27;);
 	};
 
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		VISH.Utils.loadTab(&#x27;tab_templates&#x27;);
+		V.Utils.loadTab(&#x27;tab_templates&#x27;);
 	};
 
-
+	var _hideMenuAfterAction = function(){
+		if(_hoverMenu){
+			$(&quot;#menu&quot;).hide();
+			setTimeout(function(){
+				$(&quot;#menu&quot;).show();
+			},50);
+		}
+	}
 
 	return {
 		init							: init,
@@ -557,8 +605,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
+		switchToPresentation			: switchToPresentation,
 		switchToFlashcard				: switchToFlashcard,
-		switchToPresentation			: switchToPresentation
+		switchToVirtualTour 			: switchToVirtualTour
 	};
 
 }) (VISH, jQuery);

@@ -98,7 +98,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   }
 	
 	var _getVideoType = function(url){
-		var source = (VISH.Object.getObjectInfo(url)).source;
+		var source = (V.Object.getObjectInfo(url)).source;
     return &quot;video&#x2F;&quot; + source.split(&#x27;.&#x27;).pop();
 	}
 
@@ -115,11 +115,11 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	if(area){
   		current_area = area;
   	}	else {
-  		current_area = VISH.Editor.getCurrentArea();
+  		current_area = V.Editor.getCurrentArea();
   	}
   	
     &#x2F;&#x2F;Default options
-	  var posterUrl = VISH.ImagesPath + &quot;example_poster_image.jpg&quot;;
+	  var posterUrl = V.ImagesPath + &quot;example_poster_image.jpg&quot;;
 	  var autoplay = false;
 		
 	  &#x2F;&#x2F;Replace defeault options if options hash is defined
@@ -132,9 +132,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	    }
 		}
 		
-    var template = VISH.Editor.getTemplate(area);
+    var template = V.Editor.getTemplate(area);
 
-    var nextVideoId = VISH.Utils.getId();
+    var nextVideoId = V.Utils.getId();
     var idToDragAndResize = &quot;draggable&quot; + nextVideoId;
     current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
     
@@ -167,15 +167,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
     $(current_area).html(&quot;&quot;);
     $(current_area).append(videoTag)
     
-    VISH.Editor.addDeleteButton($(current_area));
+    V.Editor.addDeleteButton($(current_area));
 
     $(&quot;#&quot; + idToDragAndResize).draggable({cursor: &quot;move&quot;});
 
-    VISH.Editor.Tools.loadToolsForZone(current_area);
+    V.Editor.Tools.loadToolsForZone(current_area);
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = VISH.ImagesPath + &quot;example_poster_image.jpg&quot;;
+    var posterUrl = V.ImagesPath + &quot;example_poster_image.jpg&quot;;
     var rendered = &quot;&lt;video class=&#x27;objectPreview&#x27; preload=&#x27;metadata&#x27; controls=&#x27;controls&#x27; poster=&#x27;&quot; + posterUrl + &quot;&#x27; &gt;&quot;;
 		$.each(sources, function(index, source) {
        rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source + &quot;&#x27; &quot; + _getVideoType(source) + &quot;&gt;&quot;;

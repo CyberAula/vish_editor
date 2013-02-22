@@ -20,7 +20,7 @@ VISH.VirtualTour = (function(V,$,undefined){
   */
   var drawMap = function(vt){
     //VT must be a slide of Virtual tour type
-    if(vt.type!==VISH.Constant.VTOUR){
+    if(vt.type!==V.Constant.VTOUR){
       return;
     }
 

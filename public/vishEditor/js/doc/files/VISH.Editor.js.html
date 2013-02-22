@@ -119,6 +119,9 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;savedPresentation uses:
 	var savedPresentation = null;
 
+	&#x2F;&#x2F;Mode
+	var editorMode;
+
 
 	&#x2F;**
 	 * VISH Editor initializer.
@@ -145,8 +148,16 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
+		&#x2F;&#x2F; V.Storage.setTestingMode(true);
+		
 		V.Utils.init();
-		V.Status.init();
+		V.Status.init(function(){
+			&#x2F;&#x2F;Status loading finishes
+			_initAferStatusLoaded(options,presentation);
+		});
+	}
+
+	var _initAferStatusLoaded = function(options,presentation){
 		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}
@@ -155,7 +166,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Dummies.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
+		V.Editor.Slideset.init();
 		V.Editor.Flashcard.init();
+		V.Editor.VirtualTour.init();
 		V.Renderer.init();
 		V.Slides.init();
 		V.User.init(options);
@@ -267,6 +280,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
+		V.Editor.Preview.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();
@@ -279,6 +293,14 @@ VISH.Editor = (function(V,$,undefined){
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
+
+		&#x2F;&#x2F;Unload all objects
+		V.Editor.Utils.Loader.unloadAllObjects();
+		&#x2F;&#x2F;Reload current slide objects
+		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		&#x2F;&#x2F;Try to win focus
+		window.focus();
 	};
 	
 	
@@ -321,6 +343,11 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F;flashcard
 		$(document).on(&#x27;click&#x27;,&#x27;#help_flashcard&#x27;, function(){
 			V.Editor.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;vtour
+		$(document).on(&#x27;click&#x27;,&#x27;#help_vtour&#x27;, function(){
+			V.Editor.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;template
@@ -602,6 +629,11 @@ VISH.Editor = (function(V,$,undefined){
 	var _onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent()[0];
 
+		if(getMode()===V.Constant.FLASHCARD){
+			$(article_to_delete).hide();
+			return;
+		}
+
 		var thumb;
 		switch(V.Slides.getSlideType(article_to_delete)){
 			case V.Constant.STANDARD:
@@ -771,19 +803,16 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		if(presentation.type===&quot;flashcard&quot;){
-			slide.id = $(&quot;#flashcard-background&quot;).attr(&quot;flashcard_id&quot;);
-			slide.type = V.Constant.FLASHCARD;
-			slide.background = $(&quot;#flashcard-background&quot;).css(&quot;background-image&quot;);
-			&#x2F;&#x2F;save the pois
-			slide.pois = V.Editor.Flashcard.savePois();
-			slide.slides = [];
+		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var isSlideset = (slidesetModule!==null);
+		if(isSlideset){
+			slide = slidesetModule.getSlideHeader();
 			presentation.slides.push(slide);
 		}
 
 		slide = {};
 		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
-			slide.id = $(s).attr(&#x27;id&#x27;); &#x2F;&#x2F;TODO what if saved before!
+			slide.id = $(s).attr(&#x27;id&#x27;);
 			slide.type = $(s).attr(&#x27;type&#x27;);
 			
 			if(slide.type === V.Constant.FLASHCARD){
@@ -888,8 +917,6 @@ VISH.Editor = (function(V,$,undefined){
 						}
 						&#x2F;&#x2F;true false quiz type
 						else if($(div).attr(&quot;quiztype&quot;)== &quot;truefalse&quot;) {
-							V.Debugging.log(&quot;true false detected&quot;);
-							
 							var	quizQuestion = $(div).find(&quot;.value_truefalse_question_in_zone&quot;);
 							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
 							&#x2F;&#x2F;element.question = V.Editor.Text.getCKEditorFromZone($(quizQuestion));
@@ -901,24 +928,18 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};  	
 							element.options.choices = []; 
 							$(div).find(&#x27;.truefalse_answers &gt; form &gt; input&#x27;).each(function(i, option_text){
-							 	V.Debugging.log(&quot;option text:&quot; + option_text);
 								var choice = new Object();
 								choice.value = $(option_text).attr(&quot;value&quot;);
 								choice.container= $(option_text).attr(&quot;value&quot;);
 								element.options.choices.push(choice);
 						}); 
 							&#x2F;&#x2F;add the correct answer 
-
-							V.Debugging.log(&quot;value: &quot; + $(div).find(&#x27;input[name=truefalse]:checked&#x27;).val()); &#x2F;&#x2F;each(function(i, option_text)   &#x2F;&#x2F;{
-								
-
 								 element.options.answer = $(div).find(&#x27;input[name=truefalse]:checked&#x27;).val();
 
 								&#x2F;&#x2F;}
 
 						}
 						else if($(div).attr(&quot;quiztype&quot;)== &quot;open&quot;) {
-							V.Debugging.log(&quot;open detected&quot;);
 						}
 
 					} else if(element.type === V.Constant.SNAPSHOT){
@@ -964,12 +985,14 @@ VISH.Editor = (function(V,$,undefined){
 			
 			});
 
-			if(presentation.type===V.Constant.FLASHCARD){
-				&#x2F;&#x2F;If it is flashcard we save the slide into the flashcard slides 
-				&#x2F;&#x2F;(the flashcard is the first slide by convention)
-				slide = V.Editor.Flashcard.prepareToNestInFlashcard(slide);
+			if(isSlideset){
+				&#x2F;&#x2F;If it is a slideset (e.g flashcard or virtual tour) we save 
+				&#x2F;&#x2F;the slide into the slideset slides array
+				&#x2F;&#x2F;(the slideset itself is the first slide by convention)
+				slide = V.Editor.Slideset.prepareToNest(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
+				&#x2F;&#x2F;Presentation
 				presentation.slides.push(slide);
 			}
 
@@ -1121,6 +1144,14 @@ VISH.Editor = (function(V,$,undefined){
 		draftPresentation = presentation;
 	};
 
+	var setMode = function(mode){
+		editorMode = mode;
+	}
+
+	var getMode = function(){
+		return editorMode;
+	}
+
 	var getSavedPresentation = function() {
 		if(savedPresentation){
 			return savedPresentation;
@@ -1259,7 +1290,9 @@ VISH.Editor = (function(V,$,undefined){
 		setPresentationType		: setPresentationType,
 		allowExitWithoutConfirmation	:allowExitWithoutConfirmation, 
 		setCurrentArea			: setCurrentArea,
-		selectArea				: selectArea
+		selectArea				: selectArea,
+		setMode 				: setMode,
+		getMode 				: getMode
 	};
 
 }) (VISH, jQuery);

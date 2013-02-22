@@ -95,7 +95,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
   };
 
   &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-  &#x2F;&#x2F;renderer methods called from VISH.Renderer
+  &#x2F;&#x2F;renderer methods called from V.Renderer
   &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
   &#x2F;**
@@ -130,7 +130,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
       ret += &quot;&lt;ul class=&#x27;ul_mch_options_in_zone&#x27;&gt;&quot;;  
       for(var i = 0; i&lt;quiz_element[&#x27;options&#x27;][&#x27;choices&#x27;].length; i++){
         var next_index = String.fromCharCode(&quot;a&quot;.charCodeAt(0) + (i));
-        if(VISH.Quiz.getQuizMode()==&quot;answer&quot;){
+        if(V.Quiz.getQuizMode()==&quot;answer&quot;){
           ret += &quot;&lt;li class=&#x27;li_mch_options_in_zone&#x27;&gt;&quot;;
           ret += &quot;&lt;input class=&#x27;mc_radio&#x27; type=&#x27;radio&#x27; name=&#x27;mc_radio&#x27; value=&#x27;&quot;+next_index+&quot;&#x27;&#x2F;&gt;&lt;span class=&#x27;quiz_option_index&#x27;&gt;&quot;+next_index+&quot;)&lt;&#x2F;span&gt;&lt;div class=&#x27;multiplechoice_option_in_zone multiplechoice_option_in_viewer&#x27;&gt;&quot;+quiz_element.options[&#x27;choices&#x27;][i][&#x27;container&#x27;]+&quot;&lt;&#x2F;div&gt;&quot;;
           ret += &quot;&lt;&#x2F;li&gt;&quot;
@@ -176,7 +176,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
 
   &#x2F;**
    * Function to render a True False Question choice question form inside an article (a slide)
-   * TODO Include in the VISH.Quiz?? ... think and ask Kike about it 
+   * TODO Include in the V.Quiz?? ... think and ask Kike about it 
    *&#x2F;
   
   var _renderTrueFalseQuestion = function(quiz_element, zone_class, slide_id, zone){
@@ -196,7 +196,7 @@ VISH.Quiz.Renderer = (function(V,$,undefined){
           ret += &quot;&lt;div class=&#x27;truefalse_titles_false&#x27;&gt;False&lt;&#x2F;div&gt;&quot;;
         ret += &quot;&lt;&#x2F;div&gt;&quot;;
 
- if(VISH.Quiz.getQuizMode()==&quot;answer&quot;){  &#x2F;&#x2F;Just radio inputs to respond   
+ if(V.Quiz.getQuizMode()==&quot;answer&quot;){  &#x2F;&#x2F;Just radio inputs to respond   
     ret+= &quot;&lt;div class=&#x27;truefalse_answers answer_mode&#x27;&gt;&quot;;
     ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_true&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;true&#x27;&#x2F;&gt;&quot;;
     ret += &quot;&lt;input class=&#x27;truefalse_answer_radio_false&#x27; type=&#x27;radio&#x27; name=&#x27;truefalse&#x27; value=&#x27;false&#x27;&#x2F;&gt;&quot;;

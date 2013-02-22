@@ -102,18 +102,18 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		&#x2F;&#x2F; var initTime = new Date().getTime();
 
 		&#x2F;&#x2F;Set default translation
-		switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+			case V.Constant.NOSERVER:
 				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				if (typeof(i18n[&quot;standalone&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
 				}
@@ -127,20 +127,20 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			return;
 		}
 		
-		switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
-			case VISH.Constant.NOSERVER:
+		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+			case V.Constant.NOSERVER:
 				&#x2F;&#x2F;Load Vish translation
 				if (typeof(i18n[&quot;vish&quot;][language])!==&#x27;undefined&#x27;){
 					translations = i18n[&quot;vish&quot;][language];
 				}
 				break;
-			case VISH.Constant.VISH:
+			case V.Constant.VISH:
 				if (typeof(i18n[&quot;vish&quot;][language])!==&#x27;undefined&#x27;){
 					translations = i18n[&quot;vish&quot;][language];
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
-			case VISH.Constant.STANDALONE:
+			case V.Constant.STANDALONE:
 				if (typeof(i18n[&quot;standalone&quot;][language])!==&#x27;undefined&#x27;){
 					translations = i18n[&quot;standalone&quot;][language];
 					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
@@ -179,7 +179,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		_translateTutorialImage();
 
 		&#x2F;&#x2F; var duration = new Date().getTime() - initTime;
-		&#x2F;&#x2F; VISH.Debugging.log(&quot;Internationalization took &quot; + duration + &quot; ms.&quot;);
+		&#x2F;&#x2F; V.Debugging.log(&quot;Internationalization took &quot; + duration + &quot; ms.&quot;);
 	};
 		
 	var _translateInput = function(input,translation){
@@ -232,7 +232,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			    $(&quot;#start_tutorial&quot;).css(&quot;background-position&quot;, &quot;0px -&quot; + normal_pos + &quot;px&quot;);
 			});
 			&#x2F;&#x2F;replace contentusetut image
-			$(&quot;#contentusetut&quot;).attr(&quot;src&quot;, VISH.ImagesPath + &quot;contentuse_&quot;+language+&quot;.png&quot;);
+			$(&quot;#contentusetut&quot;).attr(&quot;src&quot;, V.ImagesPath + &quot;contentuse_&quot;+language+&quot;.png&quot;);
   		}
 	}
 
@@ -243,13 +243,13 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		if (typeof(translations)!== &#x27;undefined&#x27; &amp;&amp; translations[s]) {
 			return translations[s];
 		}
-		&#x2F;&#x2F; VISH.Debugging.log(&quot;Text without translation: &quot; + s);
+		&#x2F;&#x2F; V.Debugging.log(&quot;Text without translation: &quot; + s);
 
 		&#x2F;&#x2F;Search in default language
 		if (typeof(defaultTranslations)!== &#x27;undefined&#x27; &amp;&amp; defaultTranslations[s]) {
 			return defaultTranslations[s];
 		}
-		&#x2F;&#x2F; VISH.Debugging.log(&quot;Text without default translation: &quot; + s);
+		&#x2F;&#x2F; V.Debugging.log(&quot;Text without default translation: &quot; + s);
 
 		&#x2F;&#x2F;Don&#x27;t return s if s is a key. &#x2F;&#x2F;DEPRECATED
 		var key_pattern =&#x2F;^i\.&#x2F;g;

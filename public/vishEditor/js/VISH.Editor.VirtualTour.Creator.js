@@ -571,12 +571,12 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Used for VISH.Editor module to save the flashcard in a JSON file
+	 * Used for V.Editor module to save the flashcard in a JSON file
 	 */
 	var getSlideHeader = function(){
 		var slide = {};
 		slide.id = virtualTourId;
-		slide.type = VISH.Constant.VTOUR;
+		slide.type = V.Constant.VTOUR;
 		var center = map.getCenter();
 		slide.center = { lat: center.lat().toString(), lng: center.lng().toString() };
 		slide.zoom = map.getZoom().toString();

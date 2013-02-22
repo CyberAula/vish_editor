@@ -102,9 +102,9 @@ VISH.SlideManager = (function(V,$,undefined){
 	 * options is a hash with params and options from the server.
 	 *&#x2F;
 	var init = function(options, presentation){
-		VISH.Editing = false;
+		V.Editing = false;
 		
-		VISH.Debugging.init(options);
+		V.Debugging.init(options);
 
 		if(options){
 			initOptions = options;
@@ -112,22 +112,24 @@ VISH.SlideManager = (function(V,$,undefined){
 			initOptions = {};
 		}
 		
-		if((options)&amp;&amp;(options[&quot;configuration&quot;])&amp;&amp;(VISH.Configuration)){
-			VISH.Configuration.init(options[&quot;configuration&quot;]);
+		if((options)&amp;&amp;(options[&quot;configuration&quot;])&amp;&amp;(V.Configuration)){
+			V.Configuration.init(options[&quot;configuration&quot;]);
 		}
 
-		if(VISH.Debugging.isDevelopping()){
-			if ((options[&quot;configuration&quot;][&quot;mode&quot;]==&quot;noserver&quot;)&amp;&amp;(!presentation)&amp;&amp;(VISH.Debugging.getPresentationSamples()!=null)) {
-			 	presentation = VISH.Debugging.getPresentationSamples();
+		if(V.Debugging.isDevelopping()){
+			if ((options[&quot;configuration&quot;][&quot;mode&quot;]===V.Constant.NOSERVER)&amp;&amp;(!presentation)&amp;&amp;(V.Debugging.getPresentationSamples()!==null)) {
+			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}
 
-		VISH.Debugging.log(&quot;\n\nSlideManager.init with presentation:\n&quot;); 
-		VISH.Debugging.log(JSON.stringify(presentation));
+		V.Debugging.log(&quot;\n\nSlideManager.init with presentation:\n&quot;); 
+		V.Debugging.log(JSON.stringify(presentation));
 
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
-		
+
+		&#x2F;&#x2F; V.Storage.setTestingMode(true);
+
 		V.Status.init(function(){
 			&#x2F;&#x2F;Status loading finishes
 			_initAferStatusLoaded(options,presentation);
@@ -143,15 +145,15 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 		V.Storage.init();
 		V.Utils.init();
-		
+
 		&#x2F;&#x2F;Experimental initializers for new excursion types
 		switch(presentation.type){
-			case VISH.Constant.GAME:
-				VISH.ViewerAdapter.setupGame(presentation);	
-				VISH.Game.registerActions(presentation);
+			case V.Constant.GAME:
+				V.ViewerAdapter.setupGame(presentation);	
+				V.Game.registerActions(presentation);
 				break;
-			case VISH.Constant.VTOUR:
-				VISH.VirtualTour.init();
+			case V.Constant.VTOUR:
+				V.VirtualTour.init();
 				break;
 		}
 
@@ -171,6 +173,11 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
+
+		if(!V.Status.getIsAnotherDomain()){
+			&#x2F;&#x2F;Try to win focus
+			window.focus();
+		}
 	}
 
 
@@ -180,7 +187,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 *&#x2F;
 	var toggleFullScreen = function () {
 
-		if(VISH.Status.isSlaveMode()){
+		if(V.Status.isSlaveMode()){
 			return;
 		}
 		if(V.Status.getIsInIframe()){
@@ -189,8 +196,8 @@ VISH.SlideManager = (function(V,$,undefined){
 			var myDoc = document;
 		}
 				
-		if(VISH.Status.getIsInIframe()){
-			var myElem = VISH.Status.getIframe();
+		if(V.Status.getIsInIframe()){
+			var myElem = V.Status.getIframe();
 		} else {
 			var myElem = myDoc.getElementById(&#x27;presentation_iframe&#x27;);
 		}
@@ -261,28 +268,34 @@ VISH.SlideManager = (function(V,$,undefined){
 	 *&#x2F;
 	var _onslideenter = function(e){
 		var slide = e.target;
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 
 		&#x2F;&#x2F;Hide&#x2F;show page-switcher buttons if neccessary
 		V.ViewerAdapter.decideIfPageSwitcher();
 		
 		setTimeout(function(){
+			if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
+				&#x2F;&#x2F;Prevent objects to load when the slide isn&#x27;t focused
+				return;
+			}
 			if($(slide).hasClass(&#x27;object&#x27;)){
 				V.ObjectPlayer.loadObject($(slide));
 			}
 			if($(e.target).hasClass(&#x27;snapshot&#x27;)){
         		V.SnapshotPlayer.loadSnapshot($(slide));
 			}
+
+			&#x2F;&#x2F; if(V.Status.getDevice().mobile){
+			&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
+			&#x2F;&#x2F; }
+			
+			V.VideoPlayer.HTML5.playVideos(e.target);
+
+			if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
+				V.Flashcard.startAnimation(e.target.id);
+			}
+
 		},500);
-
-		&#x2F;&#x2F; if(VISH.Status.getDevice().mobile){
-		&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
-		&#x2F;&#x2F; }
-		
-		V.VideoPlayer.HTML5.playVideos(e.target);
-
-		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
-			V.Flashcard.startAnimation(e.target.id);
-		}
 	};
 
 	&#x2F;**
@@ -314,7 +327,7 @@ VISH.SlideManager = (function(V,$,undefined){
 	 *&#x2F;
 	var updateSlideCounter = function(){
 		var number_of_slides = V.Slides.getSlides().length;
-		var slide_number = VISH.Slides.getCurrentSlideNumber();
+		var slide_number = V.Slides.getCurrentSlideNumber();
 		if(number_of_slides===0){
 			slide_number=0;
 		}
@@ -332,7 +345,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	var setPresentationType = function(type){
 		if(!type){
-			type = VISH.Constant.STANDARD;
+			type = V.Constant.STANDARD;
 		}
 		presentationType = type;
 	};

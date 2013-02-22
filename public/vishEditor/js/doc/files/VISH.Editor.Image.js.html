@@ -91,31 +91,31 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
-	var contentAddMode = VISH.Constant.NONE;
+	var contentAddMode = V.Constant.NONE;
 	var uploadDivId = &quot;tab_pic_upload_content&quot;;
 	var urlDivId = &quot;tab_pic_from_url_content&quot;;
 	var urlInputId = &quot;picture_url&quot;;
 	
 	var init = function(){
-		VISH.Editor.Image.Flikr.init();
-		VISH.Editor.Image.Repository.init();
+		V.Editor.Image.Flikr.init();
+		V.Editor.Image.Repository.init();
 
 		&#x2F;&#x2F;Load from URL
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
-			if(VISH.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
-				contentToAdd = VISH.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
-				VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
+			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
+				contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
+				V.Editor.Object.drawPreview(urlDivId, contentToAdd)
 			}
 		});
 
 		&#x2F;&#x2F;Upload content
-		var options = VISH.Editor.getOptions();
+		var options = V.Editor.getOptions();
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;)
 		var bar = $(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar&quot;);
 		var percent = $(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_percent&quot;);
 
 		$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).change(function () {
-			var filterFilePath = VISH.Editor.Utils.filterFilePath($(&quot;#&quot; + uploadDivId + &quot; input:file&quot;).val());
+			var filterFilePath = V.Editor.Utils.filterFilePath($(&quot;#&quot; + uploadDivId + &quot; input:file&quot;).val());
 			$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[title]&#x27;]&quot;).val(filterFilePath);
 			_resetUploadFields();
 			$(tagList).parent().show();
@@ -124,16 +124,16 @@ VISH.Editor.Image = (function(V,$,undefined){
 		});
 
 		$(&quot;#&quot; + uploadDivId + &quot; #upload_document_submit&quot;).click(function(event) {
-			if(!VISH.Police.validateFileUpload($(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val())[0]){
+			if(!V.Police.validateFileUpload($(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val())[0]){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = &quot;Uploaded by &quot; + VISH.User.getName() + &quot; via Vish Editor&quot;;
+					var description = &quot;Uploaded by &quot; + V.User.getName() + &quot; via Vish Editor&quot;;
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[description]&#x27;]&quot;).val(description);
-					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(VISH.User.getId());
-					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(VISH.User.getToken());
-					$(&quot;#&quot; + uploadDivId + &quot; .documentsForm&quot;).attr(&quot;action&quot;, VISH.UploadImagePath);
-					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;tags&#x27;]&quot;).val(VISH.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
+					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(V.User.getId());
+					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(V.User.getToken());
+					$(&quot;#&quot; + uploadDivId + &quot; .documentsForm&quot;).attr(&quot;action&quot;, V.UploadImagePath);
+					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;tags&#x27;]&quot;).val(V.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
 					var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
 					$(tagList).parent().hide();
 					$(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_wrapper&quot;).show();
@@ -153,14 +153,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				switch(VISH.Configuration.getConfiguration()[&quot;mode&quot;]){
-					case VISH.Constant.NOSERVER:
+				switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+					case V.Constant.NOSERVER:
 						processResponse(&quot;{\&quot;src\&quot;:\&quot;&#x2F;vishEditor&#x2F;images&#x2F;excursion_thumbnails&#x2F;excursion-01.png\&quot;}&quot;);
 					break;
-					case VISH.Constant.VISH:
+					case V.Constant.VISH:
 						processResponse(xhr.responseText);
 					break;
-					case VISH.Constant.STANDALONE:
+					case V.Constant.STANDALONE:
 						processResponse(xhr.responseText);
 					break;
 				}
@@ -169,8 +169,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			error: function(error){
-				VISH.Debugging.log(&quot;Upload error&quot;);
-				VISH.Debugging.log(error);
+				V.Debugging.log(&quot;Upload error&quot;);
+				V.Debugging.log(error);
 			}
 		});	
 	};
@@ -186,7 +186,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var _onLoadURLTab = function(){
 		contentToAdd = null;
-		VISH.Editor.Object.resetPreview(urlDivId);
+		V.Editor.Object.resetPreview(urlDivId);
 		$(&quot;#&quot; + urlInputId).val(&quot;&quot;);
 	}
 	
@@ -201,7 +201,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val(&quot;&quot;);	
 		_resetUploadFields();
 
-		VISH.Editor.API.requestTags(_onTagsReceived)
+		V.Editor.API.requestTags(_onTagsReceived)
 	}
 	
 	var _resetUploadFields = function(){
@@ -210,7 +210,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 		bar.width(&#x27;0%&#x27;);
 		percent.html(&#x27;0%&#x27;);
-		VISH.Editor.Object.resetPreview(uploadDivId)
+		V.Editor.Object.resetPreview(uploadDivId)
 
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;)
 		if($(tagList)[0].children.length!==0){
@@ -231,7 +231,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			&#x2F;&#x2F; });
 
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
-			watermarkAllowMessage: VISH.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: VISH.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
+			watermarkAllowMessage: V.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
 	}
 	
@@ -240,8 +240,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		try  {
 			var jsonResponse = JSON.parse(response)
 			if(jsonResponse.src){
-				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-					VISH.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
+				if (V.Police.validateObject(jsonResponse.src)[0]) {
+					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
 					contentToAdd = jsonResponse.src
 				}
 			}
@@ -255,17 +255,17 @@ VISH.Editor.Image = (function(V,$,undefined){
 			contentToAdd = content;
 		}
 		switch(contentAddMode){
-			case VISH.Constant.FLASHCARD:
-				VISH.Editor.Flashcard.onBackgroundSelected(contentToAdd);
+			case V.Constant.FLASHCARD:
+				V.Editor.Flashcard.Creator.onBackgroundSelected(contentToAdd);
 				break;
-			case VISH.Constant.THUMBNAIL:
-				VISH.Editor.AvatarPicker.onCustomThumbnailSelected(contentToAdd);
+			case V.Constant.THUMBNAIL:
+				V.Editor.AvatarPicker.onCustomThumbnailSelected(contentToAdd);
 				break;
 			default:
-				VISH.Editor.Object.drawPreviewObject(contentToAdd);
+				V.Editor.Object.drawPreviewObject(contentToAdd);
 		}
 		&#x2F;&#x2F;Reset contentAddMode
-		contentAddMode = VISH.Constant.NONE;
+		contentAddMode = V.Constant.NONE;
 	}
 	
    &#x2F;**
@@ -285,7 +285,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(area){
 			current_area = area;
 		}	else {
-			current_area = VISH.Editor.getCurrentArea();
+			current_area = V.Editor.getCurrentArea();
 		}
 
 		var newStyle;
@@ -296,8 +296,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 			newStyle = &quot;width:&quot;+image_width+&quot;px;&quot;;
 		}
 
-		var template = VISH.Editor.getTemplate(); 
-		var nextImageId = VISH.Utils.getId();
+		var template = V.Editor.getTemplate(); 
+		var nextImageId = V.Utils.getId();
 		var idToDragAndResize = &quot;draggable&quot; + nextImageId;
 		current_area.attr(&#x27;type&#x27;,&#x27;image&#x27;);
 		if(hyperlink){
@@ -309,7 +309,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			&#x2F;&#x2F;Adjust dimensions after drawing (Only after insert new images)
 			var theImg = $(&quot;#&quot;+idToDragAndResize);
 			$(theImg).load(function(){
-				var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+				var dimentionsToDraw = V.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
 				$(theImg).width(dimentionsToDraw.width);
 				&#x2F;&#x2F;Prevent incorrect height detections
 				if(dimentionsToDraw.height&gt;0){

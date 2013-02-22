@@ -109,44 +109,42 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			$(&quot;#age_range&quot;).val(start_range + &quot; - &quot; + end_range);
 			$(&quot;#age_range&quot;).val(presentation.age_range);
 		} else {
-			$(&quot;#age_range&quot;).val(VISH.Constant.AGE_RANGE);
+			$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
 		}
 		$(&quot;#subject_tag&quot;).val(presentation.subject);
 		$(&quot;#language_tag&quot;).val(presentation.language);
 		$(&quot;#educational_objectives_tag&quot;).val(presentation.educational_objectives);
 		$(&quot;#acquired_competencies_tag&quot;).val(presentation.adquired_competencies);
 
-		VISH.Editor.Themes.selectTheme(presentation.theme);
+		V.Editor.Themes.selectTheme(presentation.theme);
+		V.Editor.setMode(presentation.type);
 
-		switch(presentation.type){
-			case V.Constant.FLASHCARD:
-				var flashcard = VISH.Editor.Flashcard.undoNestedSlidesInFlashcard(presentation.slides[0]);
-				if((flashcard)&amp;&amp;(flashcard.slides)){
-					slides = flashcard.slides;
-					var sL = slides.length;
-					for(var i=0;i&lt;sL;i++){
-						_renderSlide(slides[i], i+1);
-					}
+		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var isSlideset = (slidesetModule!==null);
+
+		if(isSlideset){
+			var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
+			if((slideset)&amp;&amp;(slideset.slides)){
+				slides = slideset.slides;
+				var sL = slides.length;
+				for(var i=0;i&lt;sL;i++){
+					_renderSlide(slides[i], i+1);
 				}
-				VISH.Editor.Flashcard.loadFlashcard(presentation);
-				break;
-			case V.Constant.VTOUR:
-				break;
-			case VISH.Constant.PRESENTATION:
-			default:
-				slides = presentation.slides;
-				for(var i=0;i&lt;slides.length;i++){
-						if(slides[i].type === V.Constant.FLASHCARD){
-							_renderFlashcard(slides[i], i+1);
-						} else {
-							_renderSlide(slides[i], i+1);			
-						}
+			}
+			slidesetModule.loadSlideset(presentation);
+		} else {
+			&#x2F;&#x2F;Presentation
+			slides = presentation.slides;
+			for(var i=0;i&lt;slides.length;i++){
+				if(slides[i].type === V.Constant.FLASHCARD){
+					_renderFlashcard(slides[i], i+1);
+				} else {
+					_renderSlide(slides[i], i+1);			
 				}
-				break;
+			}
 		}
 	};
 	
-		
 	&#x2F;**
 	 * function to render one slide in editor
 	 *&#x2F;
@@ -199,7 +197,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * function to render one flashcard inside a presentation
 	 *&#x2F;
 	var _renderFlashcard = function(slide, slideNumber){
-		VISH.Editor.Flashcard.addFlashcard(slide);
+		V.Editor.Flashcard.addFlashcard(slide);
 		V.Renderer.renderSlide(slide, &quot;&quot;, &quot;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 	};
 

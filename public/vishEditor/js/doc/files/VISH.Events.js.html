@@ -100,7 +100,7 @@ VISH.Events = (function(V,$,undefined){
 
 	var init = function() {
 		mobile = (!V.Status.getDevice().desktop);
-		eMobile = VISH.Events.Mobile;
+		eMobile = V.Events.Mobile;
 		if(!V.Editing){
 			eMobile.init();
 			bindViewerEventListeners();
@@ -126,7 +126,13 @@ VISH.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;, &#x27;#closeButton&#x27;, function(event){
 			event.stopPropagation();
 			event.preventDefault();
-			window.top.location.href = V.SlideManager.getOptions()[&quot;comeBackUrl&quot;];
+			var comeBackUrl = V.SlideManager.getOptions()[&quot;comeBackUrl&quot;];
+			if(comeBackUrl){
+				window.top.location.href = V.SlideManager.getOptions()[&quot;comeBackUrl&quot;];
+			} else if((V.Status.getIsEmbed())&amp;&amp;(V.Status.getDevice().features.history)){
+				&#x2F;&#x2F;Go back
+				history.back();
+			}
 		});
 
 		$(document).on(&#x27;click&#x27;, &#x27;#back_arrow&#x27;, function(event){
@@ -163,6 +169,26 @@ VISH.Events = (function(V,$,undefined){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
+
+		&#x2F;&#x2F;Load onresize event
+		&#x2F;&#x2F;Prevent multiple consecutively calls
+		var multipleOnResize = undefined;
+		window.onresize = function(){
+			if(typeof multipleOnResize === &quot;undefined&quot;){
+				multipleOnResize = false;
+				setTimeout(function(){
+					if(!multipleOnResize){
+						multipleOnResize = undefined;
+						V.ViewerAdapter.updateInterface();
+					} else {
+						multipleOnResize = undefined;
+						window.onresize();
+					}
+				},600);
+			} else {
+				multipleOnResize = true;
+			}
+		};
 
 		if (mobile){
 			eMobile.bindViewerMobileEventListeners();

@@ -97,9 +97,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	 
 	 
 	var redrawThumbnails = function(){
-
 		&#x2F;&#x2F;Clean previous content
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$(&quot;#&quot; + carrouselDivId).hide();
 
 		&#x2F;&#x2F;Generate carrousel images
@@ -110,18 +109,19 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
           switch($(s).attr(&#x27;type&#x27;)){
 			case undefined:
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 					var template = $(s).attr(&#x27;template&#x27;);
 					carrouselElements += 1;
-					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + VISH.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&#x27; &#x2F;&gt;&quot;));
+					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&#x27; &#x2F;&gt;&quot;));
 					carrouselImagesTitles.push(carrouselElements);
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 					carrouselElements += 1;
 					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.Utils.getSrcFromCSS($(s).attr(&#x27;avatar&#x27;))+ &quot;&#x27; &#x2F;&gt;&quot;));
 					carrouselImagesTitles.push(carrouselElements);
 				break;
-			case VISH.Constant.VTOUR:
+			case V.Constant.VTOUR:
+				&#x2F;&#x2F;TODO... ¿put a generic img?
 				break;
 			default:
 				break;
@@ -129,30 +129,32 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     	});
 		
 		&#x2F;&#x2F;Add plus button
-		carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton add_slide_button&#x27; action=&#x27;plus&#x27; id=&#x27;addslidebutton&#x27; src=&#x27;&quot; + VISH.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&#x27; &#x2F;&gt;&quot;));
+		carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton add_slide_button&#x27; action=&#x27;plus&#x27; id=&#x27;addslidebutton&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&#x27; &#x2F;&gt;&quot;));
 		carrouselElements += 1;
 
 		if(carrouselElements&lt;8){
 			&#x2F;&#x2F;Fill with default
 			var i;
 			for(i=0+carrouselElements;i&lt;8;i++){
-				carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton empty_slide_button&#x27; action=&#x27;default&#x27; src=&#x27;&quot; + VISH.ImagesPath + &quot;templatesthumbs&#x2F;default.png&#x27; &#x2F;&gt;&quot;));
+				carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton empty_slide_button&#x27; action=&#x27;default&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;default.png&#x27; &#x2F;&gt;&quot;));
 				carrouselElements += 1;
 			}
 		}
 
-		VISH.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
+		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 
-	var _onImagesLoaded = function(){	
+	var _onImagesLoaded = function(){
+		var presentationType = V.Editor.getPresentationType();
+
 		&#x2F;&#x2F;Add button events
 		$(&quot;.add_slide_button&quot;).hover(
 			function () {
-				$(this).attr(&quot;src&quot;, VISH.ImagesPath + &quot;hover&#x2F;add_slide.png&quot;);
+				$(this).attr(&quot;src&quot;, V.ImagesPath + &quot;hover&#x2F;add_slide.png&quot;);
 			},
 			function () {
-				$(this).attr(&quot;src&quot;, VISH.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&quot;);
+				$(this).attr(&quot;src&quot;, V.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&quot;);
 			}
 		);
 		
@@ -161,14 +163,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		var options = new Array();
 		options[&#x27;rows&#x27;] = 1;
-
-		if(V.Editor.getPresentationType() === VISH.Constant.FLASHCARD){
-			options[&#x27;callback&#x27;] = _onClickCarrouselElementInFlashcard;
-			options[&#x27;afterCreateCarruselFunction&#x27;] = VISH.Editor.Flashcard.redrawPois;
-		} else{
-			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
-		}
-
 		options[&#x27;rowItems&#x27;] = 8;
 		options[&#x27;scrollItems&#x27;] = 1;
 		options[&#x27;styleClass&#x27;] = &quot;slides&quot;;
@@ -176,18 +170,30 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options[&#x27;startAtLastElement&#x27;] = true;
 		options[&#x27;pagination&#x27;] = false;
 
+		if(presentationType === V.Constant.PRESENTATION){
+			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
+		} else if(presentationType === V.Constant.FLASHCARD){
+			options[&#x27;callback&#x27;] = V.Editor.Flashcard.Creator.onClickCarrouselElement;
+			options[&#x27;afterCreateCarruselFunction&#x27;] = V.Editor.Flashcard.Creator.redrawPois;
+		} else if(presentationType === V.Constant.VTOUR){
+			options[&#x27;callback&#x27;] = V.Editor.VirtualTour.Creator.onClickCarrouselElement;
+			options[&#x27;afterCreateCarruselFunction&#x27;] = V.Editor.VirtualTour.Creator.redrawPois;
+		} else {
+			&#x2F;&#x2F;Generic
+			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
+		}
+
+		&#x2F;&#x2F;Create carrousel
 		$(&quot;#&quot; + carrouselDivId).show();
-
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-		if(VISH.Slides.getCurrentSlideNumber()&gt;0){
-			selectThumbnail(VISH.Slides.getCurrentSlideNumber());
-		}	
-
-		if(V.Editor.getPresentationType() === VISH.Constant.PRESENTATION){
-
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		
+		if(presentationType === V.Constant.PRESENTATION){
+			if(V.Slides.getCurrentSlideNumber()&gt;0){
+				selectThumbnail(V.Slides.getCurrentSlideNumber());
+			}
 			&#x2F;&#x2F;Add sortable
 			var firstCarrouselNumber;
-			$( &quot;#&quot; + carrouselDivId).sortable({ 
+			$( &quot;#&quot; + carrouselDivId).sortable({
 				items: &#x27;div.carrousel_element_single_row_slides:has(img[action=&quot;goToSlide&quot;])&#x27;,
 				change: function(event, ui) {
 					&#x2F;&#x2F;Do nothing
@@ -226,11 +232,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 						return;
 					}
 
-					var slideOrg = VISH.Slides.getSlideWithNumber(orgPosition);
-					var slideDst= VISH.Slides.getSlideWithNumber(destPosition);
+					var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
+					var slideDst= V.Slides.getSlideWithNumber(destPosition);
 
 					if((slideOrg!=null)&amp;&amp;(slideDst!=null)&amp;&amp;(movement!=null)){
-						VISH.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
+						V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
 
 						&#x2F;&#x2F;Update params and counters
 						var carrouselVisibleElements = 8;
@@ -257,39 +263,14 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		switch($(event.target).attr(&quot;action&quot;)){
 			case &quot;plus&quot;:
 				$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-			  break;
+				break;
 			case &quot;goToSlide&quot;:
-			  VISH.Slides.goToSlide($(event.target).attr(&quot;slideNumber&quot;));
-			  break;
+				V.Slides.goToSlide($(event.target).attr(&quot;slideNumber&quot;));
+				break;
 			default:
 			  break;
 		}
 	}
-
-	var _onClickCarrouselElementInFlashcard = function(event){
-		switch($(event.target).attr(&quot;action&quot;)){
-			case &quot;plus&quot;:
-				V.Debugging.log(&quot;Show message warning that we are changing to presentation and change&quot;);
-					$.fancybox(
-						$(&quot;#message2_form&quot;).html(),
-						{
-							&#x27;autoDimensions&#x27;	: false,
-							&#x27;scrolling&#x27;			: &#x27;no&#x27;,
-							&#x27;width&#x27;         	: 550,
-							&#x27;height&#x27;        	: 200,
-							&#x27;showCloseButton&#x27;	: false,
-							&#x27;padding&#x27; 			: 5		
-						}
-					);
-			  break;
-			case &quot;goToSlide&quot;:
-			  	V.Editor.Preview.preview({forcePresentation: true, slideNumberToPreview: parseInt($(event.target).attr(&quot;slideNumber&quot;))});
-			  break;
-			default:
-			  break;
-		}
-	}
-	
 
 	&#x2F;**
 	* function to select the thumbnail

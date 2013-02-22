@@ -99,6 +99,17 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
+	&#x2F;*
+	 *
+	 *&#x2F;
+	var getOptions = function(){
+		if(V.Editing){
+			return V.Editor.getOptions();
+		} else {
+			return V.SlideManager.getOptions();
+		}
+	}
+
    &#x2F;**
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get &quot;article_x&quot; ids.
@@ -146,23 +157,23 @@ VISH.Utils = (function(V,undefined){
 
 	var loadDeviceCSS = function(){
 		&#x2F;&#x2F;Set device CSS
-		if(VISH.Status.getDevice().desktop){
+		if(V.Status.getDevice().desktop){
 			loadCSS(&quot;device&#x2F;desktop.css&quot;);
-		} else if(VISH.Status.getDevice().mobile){
+		} else if(V.Status.getDevice().mobile){
 			loadCSS(&quot;device&#x2F;mobile.css&quot;);
-		} else if(VISH.Status.getDevice().tablet){
+		} else if(V.Status.getDevice().tablet){
 			loadCSS(&quot;device&#x2F;tablet.css&quot;);
 		}
 
 		&#x2F;&#x2F;Set browser CSS
-		switch(VISH.Status.getDevice().browser.name){
-			case VISH.Constant.FIREFOX:
+		switch(V.Status.getDevice().browser.name){
+			case V.Constant.FIREFOX:
 				loadCSS(&quot;browser&#x2F;firefox.css&quot;);
 				break;
-			case VISH.Constant.IE:
+			case V.Constant.IE:
 				loadCSS(&quot;browser&#x2F;ie.css&quot;);
 				break;
-			case VISH.Constant.CHROME:
+			case V.Constant.CHROME:
 				loadCSS(&quot;browser&#x2F;chrome.css&quot;);
 				break;
 		}
@@ -175,22 +186,67 @@ VISH.Utils = (function(V,undefined){
 		window.parent.location = the_url;
 	};
 
+	var addParamToUrl = function(url,paramName,paramValue){
+		if((typeof url !== &quot;string&quot;)||(typeof paramName !== &quot;string&quot;)||(typeof paramValue !== &quot;string&quot;)){
+			return url;
+		}
+		&#x2F;&#x2F;Remove hash
+		var splitHash = url.split(&quot;#&quot;);
+		url = splitHash[0];
+
+		var param = paramName+&quot;=&quot;+paramValue;
+		if (url.indexOf(&#x27;?&#x27;) &gt; -1){
+			url += &#x27;&amp;&#x27;+param ;
+		}else{
+			url += &#x27;?&#x27;+param ;
+		}
+
+		&#x2F;&#x2F;Add hash (if present)
+		if(splitHash.length&gt;1){
+			url = url + &quot;#&quot; + splitHash[1];
+		}
+		
+		return url;
+	}
+
+	var getParamsFromUrl = function(url){
+		var params = {};
+		if(typeof url !== &quot;string&quot;){
+			return params;
+		}
+		var split = url.split(&quot;?&quot;);
+		if(split.length&lt;=1){
+			return params;
+		} else {
+			&#x2F;&#x2F;Remove hash if present
+			var urlParams = split[1].split(&quot;#&quot;)[0].split(&quot;&amp;&quot;);
+			for(var i=0; i&lt;urlParams.length; i++){
+				var resultSplit = urlParams[i].split(&quot;=&quot;);
+				if(resultSplit.length===2){
+					&#x2F;&#x2F;key-value pairs
+					params[resultSplit[0]] = resultSplit[1];
+				}
+			}
+			return params;
+		}
+	}
+
    &#x2F;**
 	* Function to dinamically add a css
 	*&#x2F;
 	var loadCSS = function(path){
-		$(&quot;head&quot;).append(&#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;&#x27; + VISH.StylesheetsPath + path + &#x27;&quot; type=&quot;text&#x2F;css&quot; &#x2F;&gt;&#x27;);
+		$(&quot;head&quot;).append(&#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;&#x27; + V.StylesheetsPath + path + &#x27;&quot; type=&quot;text&#x2F;css&quot; &#x2F;&gt;&#x27;);
 	};
 
 		
 	&#x2F;&#x2F;Check minium requirements to init vish editor
 	var checkMiniumRequirements = function(){
 		var browserRequirements = true;
-		var device = VISH.Status.getDevice();
+		var device = V.Status.getDevice();
 
 		switch(device.browser.name){
-			case VISH.Constant.IE:
-				if(VISH.Editing){
+			case V.Constant.IE:
+				if(V.Editing){
 					if(device.browser.version &lt; 9){
 						browserRequirements = false;
 					}
@@ -200,9 +256,9 @@ VISH.Utils = (function(V,undefined){
 					}
 				}
 				break;
-			case VISH.Constant.FIREFOX:
+			case V.Constant.FIREFOX:
 				break;
-			case VISH.Constant.CHROME:
+			case V.Constant.CHROME:
 				break;
 			default:
 				&#x2F;&#x2F;Allow...
@@ -431,51 +487,51 @@ VISH.Utils = (function(V,undefined){
 				break;
 			&#x2F;&#x2F;Video
 			case &quot;tab_video_from_url&quot;:
-				VISH.Editor.Video.onLoadTab();
+				V.Editor.Video.onLoadTab();
 				break;
 			case &quot;tab_video_repo&quot;:
-				VISH.Editor.Video.Repository.onLoadTab();
+				V.Editor.Video.Repository.onLoadTab();
 				break;
 			case &quot;tab_video_youtube&quot;:
-				VISH.Editor.Video.Youtube.onLoadTab();
+				V.Editor.Video.Youtube.onLoadTab();
 				break;
 			case &quot;tab_video_vimeo&quot;:
-				VISH.Editor.Video.Vimeo.onLoadTab();
+				V.Editor.Video.Vimeo.onLoadTab();
 				break;
 				
 			&#x2F;&#x2F;Objects
 			case &quot;tab_object_from_url&quot;:
-				VISH.Editor.Object.onLoadTab(&quot;url&quot;);
+				V.Editor.Object.onLoadTab(&quot;url&quot;);
 				break;
 			case &quot;tab_object_from_web&quot;:
-				VISH.Editor.Object.Web.onLoadTab();
+				V.Editor.Object.Web.onLoadTab();
 				break;
 			case &quot;tab_object_snapshot&quot;:
-				VISH.Editor.Object.Snapshot.onLoadTab();
+				V.Editor.Object.Snapshot.onLoadTab();
 				break;
 			case &quot;tab_object_upload&quot;:
-				VISH.Editor.Object.onLoadTab(&quot;upload&quot;);
+				V.Editor.Object.onLoadTab(&quot;upload&quot;);
 				break;
 			case &quot;tab_object_repo&quot;:
-				VISH.Editor.Object.Repository.onLoadTab();
+				V.Editor.Object.Repository.onLoadTab();
 				break;
 				
 			&#x2F;&#x2F;Live
 			case &quot;tab_live_webcam&quot;:
-				VISH.Editor.Object.Live.onLoadTab(&quot;webcam&quot;);
+				V.Editor.Object.Live.onLoadTab(&quot;webcam&quot;);
 				break;
 			case &quot;tab_live_micro&quot;:
-				VISH.Editor.Object.Live.onLoadTab(&quot;micro&quot;);
+				V.Editor.Object.Live.onLoadTab(&quot;micro&quot;);
 				break;
 			&#x2F;&#x2F;quizzes
 			case &quot;tab_quiz_session&quot;:
-				VISH.Quiz.activatePolling(false);
+				V.Quiz.activatePolling(false);
 				break;
 			case &quot;tab_quiz_stats_bars&quot;:
-				VISH.Quiz.activatePolling(true);
+				V.Quiz.activatePolling(true);
 				break;
 			case &quot;tab_quiz_stats_pie&quot;:
-				VISH.Quiz.activatePolling(true);
+				V.Quiz.activatePolling(true);
 				break;
  			&#x2F;&#x2F;Default
 			default:
@@ -540,6 +596,7 @@ VISH.Utils = (function(V,undefined){
 
    return {
 		init 					: init,
+		getOptions 				: getOptions,
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,
@@ -555,7 +612,9 @@ VISH.Utils = (function(V,undefined){
 		getHeightFromStyle  	: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		loadTab 				: loadTab,
-		sendParentToURL			: sendParentToURL
+		sendParentToURL			: sendParentToURL,
+		addParamToUrl			: addParamToUrl,
+		getParamsFromUrl		: getParamsFromUrl
    };
 
 }) (VISH);
