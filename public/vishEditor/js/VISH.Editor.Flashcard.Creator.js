@@ -135,7 +135,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		if(typeof currentPois !== "undefined"){
 			$.each(currentPois, function(index, val) { 
 				$("#" + val.id).css("position", "fixed");
-				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 75, left: 800*parseInt(val.x)/100 + 55});
+				$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 38, left: 800*parseInt(val.x)/100 + 48});
 				$("#" + val.id).attr("moved", "true");
 			});
 		}
@@ -195,7 +195,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	var onClickCarrouselElement = function(event){
 		switch($(event.target).attr("action")){
 			case "plus":
-				V.Debugging.log("Show message warning that we are changing to presentation and change");
 					$.fancybox(
 						$("#message2_form").html(),
 						{
