@@ -1962,3 +1962,12 @@ div.poi_label_container{
 	z-index: 2000 !important;
 	font-family: Helvetica;
 }
+
+.pac-container:after {
+/*  content: "Powered by Google  ";
+  font-size: 10px;*/
+}
+
+.pac-container > .pac-item {
+	padding: 4px 4px;
+}

@@ -40,7 +40,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			switch (event.keyCode) {
 				case 13: //Enter
 					event.preventDefault();
-					_onSearchAddress();
+					//_onSearchAddress launched by the autocomplete 'place_changed' event
+					// _onSearchAddress();
 					break;	
 				default:
 					break;
@@ -138,13 +139,19 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 		//Autocomplete
 		var input = document.getElementById('vt_search_input');
-		// var options = {
-		// 	types: ['(cities)']
-		// };
-		autocomplete = new google.maps.places.Autocomplete(input);
+		var options = {
+			//Four types are supported: 
+			// 'establishment' for businesses, 
+			// 'geocode' for addresses, 
+			// '(regions)' for administrative regions 
+			// and '(cities)' for localities. If nothing is specified, all types are returned.
+			// types: ["geocode"]
+		};
+
+		autocomplete = new google.maps.places.Autocomplete(input,options);
 
 		google.maps.event.addListener(autocomplete, 'place_changed', function() {
-			// V.Debugging.log("place_changed");
+			_onSearchAddress();
 		});
 
 		//Map events
@@ -551,8 +558,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		slide.id = virtualTourId;
 		slide.type = VISH.Constant.VTOUR;
 		var center = map.getCenter();
-		slide.center = { lat: center.lat(), lng: center.lng() };
-		slide.zoom = map.getZoom();
+		slide.center = { lat: center.lat().toString(), lng: center.lng().toString() };
+		slide.zoom = map.getZoom().toString();
 		slide.mapType = _getMapType(map);
 		slide.width = "100%";
 		slide.height = "100%";

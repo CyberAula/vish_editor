@@ -31,7 +31,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 
     var latlng = new google.maps.LatLng(vt.center.lat, vt.center.lng);
     var myOptions = {
-      zoom: vt.zoom,
+      zoom: parseInt(vt.zoom),
       center: latlng,
       mapTypeId: vt.mapType
     };
