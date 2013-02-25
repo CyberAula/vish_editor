@@ -8,6 +8,9 @@ VISH.VirtualTour = (function(V,$,undefined){
   // myVT.pois
   // myVT.paths
 
+  //Loading GoogleMaps library asynchronously
+  var gMlLoaded = false;
+
   //Keep last increase param to manage resizing
   var lastIncrease;
 
@@ -19,6 +22,15 @@ VISH.VirtualTour = (function(V,$,undefined){
   * Vt is a slide of VirtualTour type
   */
   var drawMap = function(vt){
+
+    if(!gMlLoaded){
+      V.Utils.Loader.loadGoogleLibrary("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places",function(){
+        gMlLoaded = true;
+        drawMap(vt);
+      });
+      return;
+    }
+
     //VT must be a slide of Virtual tour type
     if(vt.type!==V.Constant.VTOUR){
       return;
