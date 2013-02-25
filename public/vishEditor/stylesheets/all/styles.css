@@ -534,3 +534,13 @@ button#closeButton {
 #forward_arrow{
   right: 0%;
 }
+
+/* Watermark */
+
+#embedWatermark{
+  position: absolute;
+  top: -5px;
+  left: -8px;
+  opacity: 0.6;
+  z-index: 2000;
+}

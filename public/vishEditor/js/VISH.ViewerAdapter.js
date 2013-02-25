@@ -128,6 +128,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			V.Quiz.UnbindStartQuizEvents();
 		}
 
+		if((embed)&&(V.Status.getIsInIframe())){
+			$("#embedWatermarkWrapper").show();
+		}
+
 		if(close_button){
 			$("button#closeButton").show();
 		}
