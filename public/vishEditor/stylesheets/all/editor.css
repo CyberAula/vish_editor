@@ -9,6 +9,7 @@ img {
 	bottom:0px;
 	left: 0px;	
 	margin-top: 50px;
+	z-index: 1075;
 }
 
 #presentation_details_fields {
@@ -1609,14 +1610,19 @@ iframe.snapshot_content{
 	cursor: pointer;
 }
 
+div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
+	z-index: 1075;
+}
+
 .draggable_arrow_div img.fc_draggable_arrow{
 	background-color: transparent;
 }
 
 .draggable_number{
 	position: relative;
+	text-align: center;
 	top: -45px;
-	left: 27px;
+	left: 0px;
 	font-family: Helvetica;
 	font-size: 15px;
 }

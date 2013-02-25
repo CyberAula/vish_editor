@@ -33,6 +33,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		clickTimer = null;
 		single_click = false;
 		_loadVTourCreatorEvents();
+
 		initialized = true;
 	};
 
@@ -52,6 +53,10 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			event.preventDefault();
 			_onSearchAddress();
 		});
+	};
+
+	var getId = function(){
+		return virtualTourId;
 	};
 
 	/*
@@ -216,8 +221,6 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		});
 
 		$(".carrousel_element_single_row_slides").droppable();
-		$("#menubar").css("z-index", "1075");
-		$(".draggable_arrow_div").css("z-index", "1075");
 	};
 
 	var _restorePois = function(){
@@ -380,7 +383,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		// Label specific
 		var span = this.span_ = document.createElement('span');
 		$(span).addClass("poi_label");
-		span.id = "hello";
+		// span.id = "testingLabels";
 
 		var div = this.div_ = document.createElement('div');
 		$(div).addClass("poi_label_container");
@@ -400,7 +403,6 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		Label.prototype = new google.maps.OverlayView;
 
 		Label.prototype.onAdd = function() {
-			// var pane = this.getPanes().overlayLayer;
 			var pane = this.getPanes().overlayImage;
 			pane.appendChild(this.div_);
 
@@ -465,7 +467,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 	var _getAddressForText = function(addressText,callback) {
 		geocoder.geocode( { 'address': addressText}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
+			if (status === google.maps.GeocoderStatus.OK) {
 				var addrLocation = results[0].geometry.location;
 				var bounds = results[0].geometry.bounds;
 				var location = {
@@ -525,7 +527,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		return pois;
 	};
 
-	var hasPoiInMap = function(){
+	var _hasPoiInMap = function(){
 		return _getCurrentPois().length>0;
 	};
 
@@ -561,11 +563,11 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * OnValidationError: Return the id of the form to be show
-	 * OnValidationSuccess:Return true
+	 * OnValidationError: 	Return the id of the form to be show
+	 * OnValidationSuccess: Return true
 	 */
 	var validateOnSave = function(){
-		if(!hasPoiInMap()){
+		if(!_hasPoiInMap()){
 			return "message6_form";
 		}
 		return true;
@@ -577,7 +579,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Used for V.Editor module to save the flashcard in a JSON file
+	 * Used by V.Editor module to save the flashcard in a JSON file
 	 */
 	var getSlideHeader = function(){
 		var slide = {};
@@ -602,28 +604,17 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		}
 	}
 
-	/*
-	 * Prepare slide to nest
-	 */
-	var prepareToNestInVirtualTour = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(virtualTourId,slide);
-	}
-
-	var getId = function(){
-		return virtualTourId;
-	}
 
 	return {
-		init 				 		: init,
-		onLoadMode			 		: onLoadMode,
-		onLeaveMode 				: onLeaveMode,
-		loadSlideset		 		: loadSlideset,
-		redrawPois 			 		: redrawPois,
-		getPois			 			: getPois,
-		hasPoiInMap	 				: hasPoiInMap,
+		init 						: init,
+		getId 						: getId,
+		onLoadMode					: onLoadMode,
+		onLeaveMode					: onLeaveMode,
+		loadSlideset				: loadSlideset,
+		redrawPois					: redrawPois,
+		getPois						: getPois,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		getSlideHeader				: getSlideHeader,
-		getId 						: getId,
 		validateOnSave				: validateOnSave
 	};
 

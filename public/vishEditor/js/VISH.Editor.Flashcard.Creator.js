@@ -116,9 +116,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 			}
 		});
 		$(".carrousel_element_single_row_slides").droppable();
-		$(".image_carousel").css("overflow", "visible");
-		$("#menubar").css("z-index", "1075");
-		$(".draggable_arrow_div").css("z-index", "1075");
 	};
 
 	var _applyStyleToPois = function(){
@@ -173,15 +170,15 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		return pois;
 	};
 
-	var hidePois = function(){
+	var _hidePois = function(){
 		$(".draggable_arrow_div").hide();
 	};
 
-	var hasPoiInBackground = function(){
+	var _hasPoiInBackground = function(){
 		return $(".draggable_arrow_div[moved='true']").length > 0;
 	};
 
-	var hasChangedBackground = function(){
+	var _hasChangedBackground = function(){
 		if($("#flashcard-background").css("background-image").indexOf("flashcard_initial_background.jpg") != -1){
 			return false;
 		}else{
@@ -225,10 +222,10 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * OnValidationSuccess:Return true
 	 */
 	var validateOnSave = function(){
-		if(!hasPoiInBackground()){
+		if(!_hasPoiInBackground()){
 			return "message3_form";
 		}
-		if(!hasChangedBackground()){
+		if(!_hasChangedBackground()){
 			return "message4_form";
 		}
 		return true;
@@ -261,9 +258,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		onBackgroundSelected		: onBackgroundSelected,
 		redrawPois 			 		: redrawPois,
 		getPois			 			: getPois,
-		hidePois			 		: hidePois,
-		hasChangedBackground 		: hasChangedBackground,
-		hasPoiInBackground	 		: hasPoiInBackground,
 		onClickCarrouselElement 	: onClickCarrouselElement,
 		getSlideHeader				: getSlideHeader,
 		validateOnSave				: validateOnSave
