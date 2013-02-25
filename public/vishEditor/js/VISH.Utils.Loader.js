@@ -1,5 +1,6 @@
 VISH.Utils.Loader = (function(V,undefined){
     
+    var _loadGoogleLibraryCallback = undefined;
     var libVideos = {};
     var libImages = {};
     
@@ -123,13 +124,67 @@ VISH.Utils.Loader = (function(V,undefined){
      });
 	 }
 
+    /*
+     * Load a script asynchronously
+     */
+    var loadScript = function(scriptSrc,callback){
+      if((typeof scriptSrc !== "string")||(typeof callback !== "function")){
+        return;
+      }
+     
+      var head = document.getElementsByTagName('head')[0];
+      if(head) {
+        var script = document.createElement('script');
+        script.setAttribute('src',scriptSrc);
+        script.setAttribute('type','text/javascript');
+
+        var loadFunction = function(){
+          if((this.readyState == 'complete')||(this.readyState == 'loaded')){
+            callback();
+          }
+        };
+
+        //calling a function after the js is loaded (IE)
+        script.onreadystatechange = loadFunction;
+
+        //calling a function after the js is loaded (Firefox)
+        script.onload = callback;
+
+        head.appendChild(script);
+      }
+    }
+
+    var loadGoogleLibrary = function(scriptSrc,callback){
+      if(typeof callback === "function"){
+        _loadGoogleLibraryCallback = callback;
+      } else {
+        return;
+      }
+      var fullScriptSrc = scriptSrc + "&callback=VISH.Utils.Loader.onGoogleLibraryLoaded";
+      loadScript(fullScriptSrc,function(){
+        // We should wait for onGoogleLibraryLoaded callback.
+        // We can not use this callback, because the loaded script would load more scripts internally
+        // So, despite the script is loaded, the full library may be not
+      });
+    }
+
+    var onGoogleLibraryLoaded = function(){
+      if(typeof _loadGoogleLibraryCallback === "function"){
+        _loadGoogleLibraryCallback();
+      }
+      _loadGoogleLibraryCallback = undefined;
+    }
+
     return {
             getImage              : getImage,
             getVideo              : getVideo,
             loadImage             : loadImage,
             loadVideo             : loadVideo,
-						loadImagesOnCarrousel : loadImagesOnCarrousel,
-						loadImagesOnCarrouselOrder : loadImagesOnCarrouselOrder
+  					loadImagesOnCarrousel : loadImagesOnCarrousel,
+  					loadImagesOnCarrouselOrder : loadImagesOnCarrouselOrder,
+            loadScript            : loadScript,
+            loadGoogleLibrary     : loadGoogleLibrary,
+            onGoogleLibraryLoaded : onGoogleLibraryLoaded
     };
 
 }) (VISH);

@@ -21,6 +21,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	var single_click;
 	var click_timer;
 	var trustOrgPois = false;
+	//Loading GoogleMaps library asynchronously
+	var gMlLoaded = false;
 
 
 	var init = function(){
@@ -122,6 +124,14 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	};
 
 	var _loadMap = function(vt){
+		if(!gMlLoaded){
+			V.Utils.Loader.loadGoogleLibrary("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places",function(){
+				gMlLoaded = true;
+				_loadMap(vt);
+			});
+			return;
+		}
+		
 		if(!vt){
 			//Default values
 			vt = {};
