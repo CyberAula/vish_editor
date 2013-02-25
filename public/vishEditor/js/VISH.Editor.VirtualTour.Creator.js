@@ -248,8 +248,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	/// MAP Utils
 	//////////////////
 
-	var _addMarkerToCoordinates = function(lat,long,poi_id,slide_id){
-		return _addMarkerToPosition(new google.maps.LatLng(lat,long),poi_id,slide_id);
+	var _addMarkerToCoordinates = function(lat,lng,poi_id,slide_id){
+		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),poi_id,slide_id);
 	}
 
 	var _addMarkerToPosition = function(myLatlng,poi_id,slide_id){
@@ -319,7 +319,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		markers[poi_id] = marker;
 
 		return marker;
-	}
+	};
 
 	var _onClick = function(marker){
 		var point = overlay.getProjection().fromLatLngToContainerPixel(marker.position);
@@ -342,16 +342,16 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 		$("#"+marker.poi_id).animate({ top: 0, left: 0 }, 'slow');
 		_removeMarker(marker);
-	}
+	};
 
 	var _onDoubleClick = function(marker){
-	}
+	};
 
 	var _removeAllMarkers = function(){
 		for(var key in markers){
 			_removeMarker(markers[key]);
 		}
-	}
+	};
 
 	var _removeMarker = function(marker){
 		marker.setMap(null);
@@ -361,11 +361,11 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		if(typeof markers[marker.poi_id] !== "undefined"){
 			delete markers[marker.poi_id];
 		}
-	}
+	};
 
 	var _isPositionInViewport = function(position) {
 		return map.getBounds().contains(position);
-	}
+	};
 
 
 	//////////////////
@@ -441,7 +441,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		};
 
 		labelsInit = true;
-	}
+	};
 
 
 	///////////
@@ -555,7 +555,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			default:
 			  break;
 		}
-	 }
+	 };
 
 
 	////////////////////
@@ -571,7 +571,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			return "message6_form";
 		}
 		return true;
-	}
+	};
 
 
 	////////////////////
@@ -594,7 +594,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		slide.pois = getPois();
 		slide.slides = [];
 		return slide;
-	}
+	};
 
 	var _getMapType = function(map){
 		if((map)&&(map.mapTypeId)){
@@ -602,7 +602,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 		} else {
 			return V.Constant.VTour.DEFAULT_MAP;
 		}
-	}
+	};
 
 
 	return {

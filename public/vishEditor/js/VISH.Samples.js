@@ -383,8 +383,8 @@ VISH.Samples = (function(V,undefined){
 				"map_service"	: "Google Maps",
 				"center"		: 
 					{
-						"lat": 		"41.23",
-						"lng": 	"-366.3",
+						"lat": 	"41.23",
+						"lng": 	"-366.3"
 					},
 				"zoom"			: 5,
 				"mapType" 		: "roadmap",
@@ -410,7 +410,7 @@ VISH.Samples = (function(V,undefined){
 	 				  	"lat" 		: "43.26",
 	 				  	"lng" 		: "-5.97",
 	 				  	"slide_id"	: "article5_article4"
-	 				},
+	 				}
 	 			],
 	 			"tours": [
 	 				{
