@@ -393,7 +393,7 @@ VISH.Slides = (function(V,$,undefined){
 		if(V.Status.getDevice().mobile){
 			//Timeout to prevent undesired actions in Mobile Phones
 			setTimeout(function(){
-				$("#closeButton").show();
+				V.ViewerAdapter.decideIfCloseButton();
 				V.ViewerAdapter.decideIfPageSwitcher();
 			},800);
 		} else {

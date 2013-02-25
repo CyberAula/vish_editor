@@ -218,6 +218,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			V.Quiz.UnbindStartQuizEvents();
 		}
 
+		if((embed)&amp;&amp;(V.Status.getIsInIframe())){
+			$(&quot;#embedWatermarkWrapper&quot;).show();
+		}
+
 		if(close_button){
 			$(&quot;button#closeButton&quot;).show();
 		}
@@ -500,12 +504,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		return page_is_fullscreen;
 	}
 
+	&#x2F;*
+	 * Show close button if is appropiate
+	 *&#x2F;
+	var decideIfCloseButton = function(){
+		if(close_button){
+			$(&quot;#closeButton&quot;).show();
+		}
+	}
 	
 	return {
 		init 					: init,
-		decideIfPageSwitcher	: decideIfPageSwitcher,
 		updateInterface 		: updateInterface,
-		isFullScreen 			: isFullScreen
+		isFullScreen 			: isFullScreen,
+		decideIfPageSwitcher	: decideIfPageSwitcher,
+		decideIfCloseButton		: decideIfCloseButton
 	};
 
 }) (VISH, jQuery);

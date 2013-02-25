@@ -414,12 +414,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		return page_is_fullscreen;
 	}
 
+	/*
+	 * Show close button if is appropiate
+	 */
+	var decideIfCloseButton = function(){
+		if(close_button){
+			$("#closeButton").show();
+		}
+	}
 	
 	return {
 		init 					: init,
-		decideIfPageSwitcher	: decideIfPageSwitcher,
 		updateInterface 		: updateInterface,
-		isFullScreen 			: isFullScreen
+		isFullScreen 			: isFullScreen,
+		decideIfPageSwitcher	: decideIfPageSwitcher,
+		decideIfCloseButton		: decideIfCloseButton
 	};
 
 }) (VISH, jQuery);

@@ -1280,14 +1280,14 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 152,
+            "line": 156,
             "description": "Function to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide\nshow both otherwise",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 228,
+            "line": 232,
             "description": "Function to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
             "class": "",
             "namespace": "VISH"
@@ -1872,11 +1872,11 @@
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide\nshow both otherwise",
-            "line": " VISH.ViewerAdapter.js:152"
+            "line": " VISH.ViewerAdapter.js:156"
         },
         {
             "message": "Missing item type\nFunction to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
-            "line": " VISH.ViewerAdapter.js:228"
+            "line": " VISH.ViewerAdapter.js:232"
         }
     ]
 }
