@@ -132,7 +132,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 
 		var latlng = new google.maps.LatLng(vt.center.lat, vt.center.lng);
 		var myOptions = {
-			zoom: vt.zoom,
+			zoom: parseInt(vt.zoom),
 			center: latlng,
 			streetViewControl: false,
 			mapTypeId: vt.mapType

@@ -131,11 +131,11 @@ VISH.VirtualTour = (function(V,$,undefined){
     return virtualTours;
   }
 
-	return {
-		init		      : init,
-    drawMap       : drawMap,
-    aftersetupSize : aftersetupSize,
+  return {
+    init		        : init,
+    drawMap         : drawMap,
+    aftersetupSize  : aftersetupSize,
     getVirtualTours : getVirtualTours
-	};
+  };
 
 }) (VISH, jQuery);

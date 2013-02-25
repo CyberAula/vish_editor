@@ -19,7 +19,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Type: slide or presentation type
 	 */
 	var isSlideset = function(type){
-		return getSlideset(type)!==null;
+		return V.Slides.isSlideset(type);
 	}
 
 	/*
