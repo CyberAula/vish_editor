@@ -88,7 +88,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-VISH.SnapshotPlayer = (function(){
+VISH.SnapshotPlayer = (function(V,$,undefined){
 
     &#x2F;**
      * Load web snapshots
@@ -98,18 +98,18 @@ VISH.SnapshotPlayer = (function(){
             var wrapper_class = &quot;snapshot_wrapper&quot; + &quot;_viewer&quot;;
             var content_class = &quot;snapshot_content&quot; + &quot;_viewer&quot;;
             var content = $(value).attr(&quot;objectWrapper&quot;);
-            if(VISH.Status.isOnline()=== false){
-              $(value).html(&quot;&lt;img src=&#x27;&quot;+VISH.ImagesPath+&quot;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
+            if(V.Status.isOnline()=== false){
+              $(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
               return;
             }
-            var iframe = $(VISH.Utils.getOuterHTML($(content)));
+            var iframe = $(V.Utils.getOuterHTML($(content)));
 						$(iframe).removeClass();
             $(iframe).addClass(content_class);
             var scrollTop = $(value).attr(&quot;scrollTop&quot;);
             var scrollLeft = $(value).attr(&quot;scrollLeft&quot;);
-            $(value).html(&quot;&lt;div class=&#x27;&quot; + wrapper_class + &quot;&#x27; style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + VISH.Utils.getOuterHTML(iframe) + &quot;&lt;&#x2F;div&gt;&quot;);
+            $(value).html(&quot;&lt;div class=&#x27;&quot; + wrapper_class + &quot;&#x27; style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(iframe) + &quot;&lt;&#x2F;div&gt;&quot;);
 						if($(value).attr(&quot;zoom&quot;)){
-							$(value).find(&quot;.&quot; + content_class).attr(&quot;style&quot;,VISH.Utils.getZoomInStyle($(value).attr(&quot;zoom&quot;)));
+							$(value).find(&quot;.&quot; + content_class).attr(&quot;style&quot;,V.Utils.getZoomInStyle($(value).attr(&quot;zoom&quot;)));
 						}
 						$(value).find(&quot;.&quot; + wrapper_class).scrollTop(scrollTop);
             $(value).find(&quot;.&quot; + wrapper_class).scrollLeft(scrollLeft);
@@ -135,7 +135,7 @@ VISH.SnapshotPlayer = (function(){
 					var iframe_wrapper = $(iframe).parent();
 					
 					$(area).attr(&quot;zoom&quot;,increase);
-          $(iframe).attr(&quot;style&quot;,VISH.Utils.getZoomInStyle(increase));
+          $(iframe).attr(&quot;style&quot;,V.Utils.getZoomInStyle(increase));
 					
           var scrollLeft = $(area).attr(&quot;scrollLeftOrigin&quot;);
           var newScrollLeft = scrollLeft * increase;

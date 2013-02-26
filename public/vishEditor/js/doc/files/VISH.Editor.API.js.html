@@ -96,18 +96,15 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
 	
-
- 
-	
   &#x2F;**
    * function to call to VISH and request flashcards in json format
    * The request is:
    * GET &#x2F;excursions&#x2F;search.json?q=nano&amp;type=flashcard
    *&#x2F;
   var requestFlashcards = function(text, successCallback, failCallback){
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = VISH.Samples.API.flashcardList;
+        var result = V.Samples.API.flashcardList;
         successCallback(result);
       }
       return;
@@ -120,9 +117,9 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended flashcards
    *&#x2F;
   var requestRecomendedFlashcards = function(successCallback, failCallback){
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-            var result =  VISH.Samples.API.flashcardList;
+            var result =  V.Samples.API.flashcardList;
             successCallback(result);
       }
       return;
@@ -139,19 +136,19 @@ VISH.Editor.API = (function(V,$,undefined){
 	 *&#x2F;
 	var requestVideos = function(text, successCallback, failCallback){
 		
-		if (VISH.Debugging.isDevelopping()) {
+		if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = jQuery.extend({}, VISH.Samples.API.videoList);
+        var result = jQuery.extend({}, V.Samples.API.videoList);
 
         switch(text){
           case &quot;dummy&quot;:
-            result[&#x27;videos&#x27;] = VISH.Samples.API.videoListDummy[&#x27;videos&#x27;];
+            result[&#x27;videos&#x27;] = V.Samples.API.videoListDummy[&#x27;videos&#x27;];
             break;
           case &quot;little&quot;:
-            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoListLittle[&#x27;videos&#x27;]);
+            result[&#x27;videos&#x27;] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle[&#x27;videos&#x27;]);
             break;
           default:
-            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList[&#x27;videos&#x27;]);
+            result[&#x27;videos&#x27;] = V.Debugging.shuffleJson(V.Samples.API.videoList[&#x27;videos&#x27;]);
         }
             
         successCallback(result);
@@ -167,10 +164,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended videos
 	 *&#x2F;
 	var requestRecomendedVideos = function(successCallback, failCallback){
-		if (VISH.Debugging.isDevelopping()) {
+		if (V.Debugging.isDevelopping()) {
 	      if(typeof successCallback == &quot;function&quot;){
-	            var result = VISH.Samples.API.videoList;
-	            result[&#x27;videos&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.videoList[&#x27;videos&#x27;]);
+	            var result = V.Samples.API.videoList;
+	            result[&#x27;videos&#x27;] = V.Debugging.shuffleJson(V.Samples.API.videoList[&#x27;videos&#x27;]);
 	            successCallback(result);
 	      }
         return;
@@ -187,19 +184,19 @@ VISH.Editor.API = (function(V,$,undefined){
 	 *&#x2F;
 	var requestFlashes = function(text, successCallback, failCallback){
 		
-		if (VISH.Debugging.isDevelopping()) {
+		if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = jQuery.extend({}, VISH.Samples.API.flashList);
+        var result = jQuery.extend({}, V.Samples.API.flashList);
 
         switch(text){
           case &quot;dummy&quot;:
-            result[&#x27;flashes&#x27;] = VISH.Samples.API.flashListDummy[&#x27;flashes&#x27;];
+            result[&#x27;flashes&#x27;] = V.Samples.API.flashListDummy[&#x27;flashes&#x27;];
             break;
           case &quot;little&quot;:
-            result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashListLittle[&#x27;flashes&#x27;]);
+            result[&#x27;flashes&#x27;] = V.Debugging.shuffleJson(V.Samples.API.flashListLittle[&#x27;flashes&#x27;]);
             break;
           default:
-            result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList[&#x27;flashes&#x27;]);
+            result[&#x27;flashes&#x27;] = V.Debugging.shuffleJson(V.Samples.API.flashList[&#x27;flashes&#x27;]);
         }
             
         successCallback(result);
@@ -215,10 +212,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended flash objects
 	 *&#x2F;
 	var requestRecomendedFlashes = function(successCallback, failCallback){
-		if (VISH.Debugging.isDevelopping()) {
+		if (V.Debugging.isDevelopping()) {
 			if(typeof successCallback == &quot;function&quot;){
-				var result = VISH.Samples.API.flashList;
-				result[&#x27;flashes&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.flashList[&#x27;flashes&#x27;]);
+				var result = V.Samples.API.flashList;
+				result[&#x27;flashes&#x27;] = V.Debugging.shuffleJson(V.Samples.API.flashList[&#x27;flashes&#x27;]);
         successCallback(result);
       }
 			return;
@@ -235,19 +232,19 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET &#x2F;search.json?type=picture&amp;q=text
 	 *&#x2F;
 	var requestImages = function(text, successCallback, failCallback){
-		if (VISH.Debugging.isDevelopping()) {
+		if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-				var result = jQuery.extend({}, VISH.Samples.API.imageList);
+				var result = jQuery.extend({}, V.Samples.API.imageList);
 
 			  switch(text){
 					case &quot;dummy&quot;:
-	          result[&#x27;pictures&#x27;] = VISH.Samples.API.imageListDummy[&#x27;pictures&#x27;];
+	          result[&#x27;pictures&#x27;] = V.Samples.API.imageListDummy[&#x27;pictures&#x27;];
 					  break;
 					case &quot;little&quot;:
-	          result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageListLittle[&#x27;pictures&#x27;]);
+	          result[&#x27;pictures&#x27;] = V.Debugging.shuffleJson(V.Samples.API.imageListLittle[&#x27;pictures&#x27;]);
 					  break;
 					default:
-	          result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList[&#x27;pictures&#x27;]);
+	          result[&#x27;pictures&#x27;] = V.Debugging.shuffleJson(V.Samples.API.imageList[&#x27;pictures&#x27;]);
 				}
             
         successCallback(result);
@@ -262,10 +259,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended videos
 	 *&#x2F;
 	var requestRecomendedImages = function(successCallback, failCallback){
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-            var result = VISH.Samples.API.imageList;
-            result[&#x27;pictures&#x27;] = VISH.Debugging.shuffleJson(VISH.Samples.API.imageList[&#x27;pictures&#x27;]);
+            var result = V.Samples.API.imageList;
+            result[&#x27;pictures&#x27;] = V.Debugging.shuffleJson(V.Samples.API.imageList[&#x27;pictures&#x27;]);
             successCallback(result);
       }
       return;
@@ -283,19 +280,19 @@ VISH.Editor.API = (function(V,$,undefined){
    *&#x2F;
   var requestLives = function(text, successCallback, failCallback){
     
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = jQuery.extend({}, VISH.Samples.API.liveList);
+        var result = jQuery.extend({}, V.Samples.API.liveList);
 
         switch(text){
           case &quot;dummy&quot;:
-            result = VISH.Samples.API.liveListDummy;
+            result = V.Samples.API.liveListDummy;
             break;
           case &quot;little&quot;:
-            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveListLittle);
+            result = V.Debugging.shuffleJson(V.Samples.API.liveListLittle);
             break;
           default:
-            result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+            result = V.Debugging.shuffleJson(V.Samples.API.liveList);
         }
             
         successCallback(result);
@@ -311,9 +308,9 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended lives objects
    *&#x2F;
   var requestRecomendedLives = function(successCallback, failCallback){
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.liveList);
+        var result = V.Debugging.shuffleJson(V.Samples.API.liveList);
         successCallback(result);
       }
 			return;
@@ -331,19 +328,19 @@ VISH.Editor.API = (function(V,$,undefined){
    *&#x2F;
   var requestObjects = function(text, successCallback, failCallback){
     
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = jQuery.extend({}, VISH.Samples.API.objectList);
+        var result = jQuery.extend({}, V.Samples.API.objectList);
 
         switch(text){
           case &quot;dummy&quot;:
-            result = VISH.Samples.API.objectListDummy;
+            result = V.Samples.API.objectListDummy;
             break;
           case &quot;little&quot;:
-            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectListLittle);
+            result = V.Debugging.shuffleJson(V.Samples.API.objectListLittle);
             break;
           default:
-            result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+            result = V.Debugging.shuffleJson(V.Samples.API.objectList);
         }
             
         successCallback(result);
@@ -359,9 +356,9 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended lives objects
    *&#x2F;
   var requestRecomendedObjects = function(successCallback, failCallback){
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-        var result = VISH.Debugging.shuffleJson(VISH.Samples.API.objectList);
+        var result = V.Debugging.shuffleJson(V.Samples.API.objectList);
         successCallback(result);
       }
       return;
@@ -440,10 +437,10 @@ VISH.Editor.API = (function(V,$,undefined){
 			return;
 		}
 		
-    if (VISH.Debugging.isDevelopping()) {
+    if (V.Debugging.isDevelopping()) {
       if(typeof successCallback == &quot;function&quot;){
-            tags = VISH.Samples.API.tagsList[&#x27;tags&#x27;];
-            successCallback(VISH.Samples.API.tagsList[&#x27;tags&#x27;]);
+            tags = V.Samples.API.tagsList[&#x27;tags&#x27;];
+            successCallback(V.Samples.API.tagsList[&#x27;tags&#x27;]);
       }
       return;
     }
@@ -478,9 +475,9 @@ VISH.Editor.API = (function(V,$,undefined){
    *&#x2F;
 	var requestThumbnails = function(successCallback, failCallback){
 
-      if (VISH.Debugging.isDevelopping()) {
+      if (V.Debugging.isDevelopping()) {
         if(typeof successCallback == &quot;function&quot;){
-              successCallback(VISH.Samples.API.thumbnailsList);
+              successCallback(V.Samples.API.thumbnailsList);
         }
         return;
       }

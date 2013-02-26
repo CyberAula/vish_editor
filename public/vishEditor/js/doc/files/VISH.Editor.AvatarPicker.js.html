@@ -104,11 +104,11 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			&#x27;height&#x27;: 600,
 			&#x27;padding&#x27; : 0,
 			&quot;onStart&quot;  : function(data) {						
-				V.Editor.Image.setAddContentMode(VISH.Constant.THUMBNAIL);
+				V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
 				V.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
 			},
 			&quot;onClosed&quot; : function(data){
-				V.Editor.Image.setAddContentMode(VISH.Constant.NONE);
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
 			}
 		});
 	};	
@@ -120,20 +120,20 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 
 		if(avatars===null){
 			$(&quot;#&quot; + thumbnailsDetailsId).hide();
-			VISH.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
+			V.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
 		} else {
 			_selectAvatarInCarrousel(selectedAvatar);
 		}
 	}  
 
 	var onCustomThumbnailSelected = function(thumbnail_url){
-		VISH.Editor.Tools.Menu.displaySettings(); &#x2F;&#x2F;Hide previous fancybox
+		V.Editor.Tools.Menu.displaySettings(); &#x2F;&#x2F;Hide previous fancybox
 		_addCustomThumbnail(thumbnail_url);
 	}
 
 	var _addCustomThumbnail = function(thumbnail_url){
 		var element = $(&quot;&lt;div class=&#x27;carrousel_element_single_row_thumbnails&#x27;&gt;&lt;img class=&#x27;carrousel_element_single_row_thumbnails carrousel_last_added_element&#x27; src=&#x27;&quot; + thumbnail_url + &quot;&#x27;&#x2F;&gt;&lt;&#x2F;div&gt;&quot;)[0];
-		VISH.Editor.Carrousel.insertElement(carrouselDivId,element,1);
+		V.Editor.Carrousel.insertElement(carrouselDivId,element,1);
 
 		var element = $(&quot;.carrousel_last_added_element&quot;);
 
@@ -142,7 +142,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			_onAvatarSelected(event);
 		});
 
-		VISH.Editor.Carrousel.goToElement(carrouselDivId,$(element)[0]);
+		V.Editor.Carrousel.goToElement(carrouselDivId,$(element)[0]);
 
 		$(element).trigger(&#x27;click&#x27;);
 		$(element).removeClass(&quot;carrousel_last_added_element&quot;);
@@ -189,7 +189,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			$.each(avatarImages, function(i, image) {
 				if($(image).attr(&quot;src&quot;).split(&quot;&#x2F;&quot;).pop() === avatarName){
 					$(image).addClass(&quot;selectedThumbnail&quot;);
-					VISH.Editor.Carrousel.goToElement(carrouselDivId,$(image));
+					V.Editor.Carrousel.goToElement(carrouselDivId,$(image));
 				}
 			});	
 		}
@@ -205,7 +205,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			$.each(avatarImages, function(i, image) {
 				if($(image).attr(&quot;src&quot;) === avatar){
 					$(image).addClass(&quot;selectedThumbnail&quot;);
-					VISH.Editor.Carrousel.goToElement(carrouselDivId,$(image));
+					V.Editor.Carrousel.goToElement(carrouselDivId,$(image));
 				}
 			});		
 		}
@@ -216,25 +216,25 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		avatars = data;
 
 		&#x2F;&#x2F;Clean previous carrousel
-		VISH.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 
 		&#x2F;&#x2F;Build new carrousel
 		var content = &quot;&quot;;
 		var carrouselImages = [];
-		carrouselImages.push($(&quot;&lt;img class=&#x27;uploadThumbnail&#x27; src=&#x27;&quot; + VISH.ImagesPath + &quot;icons&#x2F;addThumbnail.png&#x27;&#x2F;&gt;&quot;)[0]);
+		carrouselImages.push($(&quot;&lt;img class=&#x27;uploadThumbnail&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;icons&#x2F;addThumbnail.png&#x27;&#x2F;&gt;&quot;)[0]);
 		$.each(avatars.pictures, function(i, item) {
 			var myImg = $(&quot;&lt;img src=&quot;+item.src+&quot; &#x2F;&gt;&quot;);
 			carrouselImages.push($(myImg)[0]);
 		});
 
-		VISH.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId);
+		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId);
 	}
 	
 	var _onThumbnailsError = function(xhr, ajaxOptions, thrownError){
-		VISH.Debugging.log(&quot;_onThumbnailsError&quot;);
-		VISH.Debugging.log(&quot;status returned by server:&quot; + xhr.status);
-		VISH.Debugging.log(&quot;Error in client: &quot; + thrownError);  
-		VISH.Debugging.log(&quot;ERROR!&quot; + thrownError);
+		V.Debugging.log(&quot;_onThumbnailsError&quot;);
+		V.Debugging.log(&quot;status returned by server:&quot; + xhr.status);
+		V.Debugging.log(&quot;Error in client: &quot; + thrownError);  
+		V.Debugging.log(&quot;ERROR!&quot; + thrownError);
 	}
 	
 	var _onImagesLoaded = function(){
@@ -246,7 +246,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		options[&#x27;rowItems&#x27;] = 5;
 		options[&#x27;styleClass&#x27;] = &quot;thumbnails&quot;;
 
-		VISH.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
 		$(&quot;.buttonintro&quot;).addClass(&quot;buttonintro_extramargin&quot;);
 		$(&quot;.buttonpedagogical&quot;).addClass(&quot;buttonpedagogical_extramargin&quot;);
@@ -274,7 +274,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			return false;
 		}
 		
-		var pathPattern = &quot;(^&quot; + VISH.ImagesPath + &quot;)&quot;;
+		var pathPattern = &quot;(^&quot; + V.ImagesPath + &quot;)&quot;;
 		return avatar.match(pathPattern)!==null;
 	}
   

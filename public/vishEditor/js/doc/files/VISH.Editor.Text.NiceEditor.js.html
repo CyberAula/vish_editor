@@ -126,19 +126,19 @@ VISH.Editor.Text.NiceEditor = (function(V,$,undefined){
 
   		var fontSize;
   		switch($(current_area).attr(&quot;size&quot;)){
-  			case VISH.Constant.SMALL:
+  			case V.Constant.SMALL:
   				fontSize = 4;
   				break;
-  			case VISH.Constant.MEDIUM:
+  			case V.Constant.MEDIUM:
   				fontSize = 5;
   				break;
-  			case VISH.Constant.LARGE:
+  			case V.Constant.LARGE:
   				fontSize = 7;
   				break;
   			default:
   				break;
   		}
-  		initial_text = &quot;&lt;div class=&#x27;initTextDiv&#x27;&gt;&lt;font size=&#x27;&quot; + fontSize + &quot;&#x27;&#x27;&gt;&quot; + VISH.Editor.I18n.getTrans(&quot;i.WysiwygInit&quot;) + &quot;&lt;&#x2F;font&gt;&lt;&#x2F;div&gt;&quot;;
+  		initial_text = &quot;&lt;div class=&#x27;initTextDiv&#x27;&gt;&lt;font size=&#x27;&quot; + fontSize + &quot;&#x27;&#x27;&gt;&quot; + V.Editor.I18n.getTrans(&quot;i.WysiwygInit&quot;) + &quot;&lt;&#x2F;font&gt;&lt;&#x2F;div&gt;&quot;;
   	}
 
  	getNicEditor();
@@ -162,7 +162,7 @@ VISH.Editor.Text.NiceEditor = (function(V,$,undefined){
     		var div = $(event.target);
     		var font = $(event.target).find(&quot;font&quot;);
     	}
-    	if($(font).text()===VISH.Editor.I18n.getTrans(&quot;i.WysiwygInit&quot;)){
+    	if($(font).text()===V.Editor.I18n.getTrans(&quot;i.WysiwygInit&quot;)){
     			&#x2F;&#x2F;Remove text
     			$(font).text(&quot;&quot;);
     			$(div).removeClass(&quot;initTextDiv&quot;);

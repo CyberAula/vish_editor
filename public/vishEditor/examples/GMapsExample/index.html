@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px }
-  #map_canvas { height: 80% }
+
 </style>
-<link rel="stylesheet" type="text/css" href="style.css"/>
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-<script type="text/javascript" src="samples.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript">
@@ -18,56 +13,41 @@
   var map;
 
   function initialize() {
-    VT = samples_vtour.slides[0];
-    var latlng = new google.maps.LatLng(VT.center.lat, VT.center.long);
-    var myOptions = {
-      zoom: VT.zoom,
-      center: latlng,
-      mapTypeId: VT.mapType
-    };
+    var input = document.getElementById('searchTextField');
+    var autocomplete = new google.maps.places.Autocomplete(input);
 
-    $("#map_canvas").height(VT.height);
-    $("#map_canvas").width(VT.width);
-    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      input.className = '';
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // Inform the user that the place was not found and return.
+        input.className = 'notfound';
+        return;
+      }
 
-    $(VT.pois).each(function(index,poi){
-      pois[poi.id] = poi;
-      addMarkerToCoordinates(poi.lat,poi.long,poi.id);
-    });
-  }
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
 
-  var addMarkerToCoordinates = function(lat,long,id){
-    return addMarkerToPosition(new google.maps.LatLng(lat,long),id);
-  }
+      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
 
-  var addMarkerToPosition = function(myLatlng,id){
-    var marker = new google.maps.Marker({
-      position: myLatlng, 
-      map: map,
-      draggable: false,
-      id: id,
-      title:"("+myLatlng.lat()+","+myLatlng.lng()+")"
     });
 
-    google.maps.event.addListener(marker, 'click', function(event) {
-      console.log("Click on marker with id: ");
-      var poi = getPoi(marker.id);
-      alert("Show slide with id: " + poi.slide_id);
-    });
-
-    return marker;
+    setupClickListener('changetype-geocode', ['geocode']);
   }
 
-  var getPoi = function(poiId){
-    return pois[poiId];
-  }
 
 
 </script>
 </head>
 <body onload="initialize()">
-  <div id="slide_container" style="width:600px;height:400px">
-    <div id="map_canvas"></div>
-  </div>
+<input id="searchTextField" type="text" size="50">
 </body>
 </html>

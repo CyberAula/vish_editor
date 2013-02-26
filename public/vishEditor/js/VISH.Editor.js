@@ -76,7 +76,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Dummies.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
+		V.Editor.Slideset.init();
 		V.Editor.Flashcard.init();
+		V.Editor.VirtualTour.init();
 		V.Renderer.init();
 		V.Slides.init();
 		V.User.init(options);
@@ -251,6 +253,11 @@ VISH.Editor = (function(V,$,undefined){
 		//flashcard
 		$(document).on('click','#help_flashcard', function(){
 			V.Editor.Tour.startTourWithId('fc_help', 'top');
+		});
+
+		//vtour
+		$(document).on('click','#help_vtour', function(){
+			V.Editor.Tour.startTourWithId('vt_help', 'top');
 		});
 
 		//template
@@ -706,19 +713,16 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		if(presentation.type==="flashcard"){
-			slide.id = $("#flashcard-background").attr("flashcard_id");
-			slide.type = V.Constant.FLASHCARD;
-			slide.background = $("#flashcard-background").css("background-image");
-			//save the pois
-			slide.pois = V.Editor.Flashcard.Creator.getPois();
-			slide.slides = [];
+		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var isSlideset = (slidesetModule!==null);
+		if(isSlideset){
+			slide = slidesetModule.getSlideHeader();
 			presentation.slides.push(slide);
 		}
 
 		slide = {};
 		$('.slides > article').each(function(index,s){
-			slide.id = $(s).attr('id'); //TODO what if saved before!
+			slide.id = $(s).attr('id');
 			slide.type = $(s).attr('type');
 			
 			if(slide.type === V.Constant.FLASHCARD){
@@ -823,8 +827,6 @@ VISH.Editor = (function(V,$,undefined){
 						}
 						//true false quiz type
 						else if($(div).attr("quiztype")== "truefalse") {
-							V.Debugging.log("true false detected");
-							
 							var	quizQuestion = $(div).find(".value_truefalse_question_in_zone");
 							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
 							//element.question = V.Editor.Text.getCKEditorFromZone($(quizQuestion));
@@ -836,24 +838,18 @@ VISH.Editor = (function(V,$,undefined){
 							element.options = {};  	
 							element.options.choices = []; 
 							$(div).find('.truefalse_answers > form > input').each(function(i, option_text){
-							 	V.Debugging.log("option text:" + option_text);
 								var choice = new Object();
 								choice.value = $(option_text).attr("value");
 								choice.container= $(option_text).attr("value");
 								element.options.choices.push(choice);
 						}); 
 							//add the correct answer 
-
-							V.Debugging.log("value: " + $(div).find('input[name=truefalse]:checked').val()); //each(function(i, option_text)   //{
-								
-
 								 element.options.answer = $(div).find('input[name=truefalse]:checked').val();
 
 								//}
 
 						}
 						else if($(div).attr("quiztype")== "open") {
-							V.Debugging.log("open detected");
 						}
 
 					} else if(element.type === V.Constant.SNAPSHOT){
@@ -899,12 +895,14 @@ VISH.Editor = (function(V,$,undefined){
 			
 			});
 
-			if(presentation.type===V.Constant.FLASHCARD){
-				//If it is flashcard we save the slide into the flashcard slides 
-				//(the flashcard is the first slide by convention)
-				slide = V.Editor.Flashcard.Creator.prepareToNestInFlashcard(slide);
+			if(isSlideset){
+				//If it is a slideset (e.g flashcard or virtual tour) we save 
+				//the slide into the slideset slides array
+				//(the slideset itself is the first slide by convention)
+				slide = V.Editor.Slideset.prepareToNest(slide);
 				presentation.slides[0].slides.push(slide);
 			} else {
+				//Presentation
 				presentation.slides.push(slide);
 			}
 

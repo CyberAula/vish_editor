@@ -88,7 +88,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-VISH.VideoPlayer.HTML5 = (function(){
+VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		
 	&#x2F;&#x2F;Is the event trigger by the user or via code?
 	var playTriggeredByUser = true;
@@ -104,46 +104,46 @@ VISH.VideoPlayer.HTML5 = (function(){
 		var videos = $(&quot;video&quot;)
 		$.each(videos, function(index, video) {
 			video.addEventListener(&#x27;play&#x27;, function () {
-				&#x2F;&#x2F; VISH.Debugging.log(&quot;Play at &quot; + video.currentTime);
+				&#x2F;&#x2F; V.Debugging.log(&quot;Play at &quot; + video.currentTime);
 
 				var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
 
 				playTriggeredByUser = true;
 			}, false);
 			video.addEventListener(&#x27;pause&#x27;, function () {
-				&#x2F;&#x2F; VISH.Debugging.log(&quot;Pause &quot; + video.currentTime);
+				&#x2F;&#x2F; V.Debugging.log(&quot;Pause &quot; + video.currentTime);
 
 				var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
 				
 				pauseTriggeredByUser = true;
 			}, false);
 			video.addEventListener(&#x27;ended&#x27;, function () {
-				&#x2F;&#x2F; VISH.Debugging.log(&quot;Ended &quot; + video.currentTime)
+				&#x2F;&#x2F; V.Debugging.log(&quot;Ended &quot; + video.currentTime)
 			}, false);
 
 			video.addEventListener(&quot;error&quot;, function(err) {
-                &#x2F;&#x2F; VISH.Debugging.log(&quot;Video error: &quot; + err)
+                &#x2F;&#x2F; V.Debugging.log(&quot;Video error: &quot; + err)
             }, false);
 
 			video.addEventListener(&quot;seeked&quot;, function(err) {
-                &#x2F;&#x2F; VISH.Debugging.log(&quot;Seek at &quot; + video.currentTime)
+                &#x2F;&#x2F; V.Debugging.log(&quot;Seek at &quot; + video.currentTime)
 
                 var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
-				params.slideNumber = VISH.Slides.getCurrentSlideNumber();
-				VISH.EventsNotifier.notifyEvent(VISH.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				params.slideNumber = V.Slides.getCurrentSlideNumber();
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
 				
 				seekTriggeredByUser = true;
             }, false);
@@ -164,7 +164,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 		$.each(currentVideos, function(index, video) {
 			
 			if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;true&quot;){
-			  video.play()
+			  video.play();
 			} else if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;false&quot;){
 				&#x2F;&#x2F;Do nothing
 			} else if (typeof $(video).attr(&quot;wasplayingonslideleave&quot;) == &quot;undefined&quot;){
@@ -172,7 +172,7 @@ VISH.VideoPlayer.HTML5 = (function(){
 				
 				&#x2F;&#x2F;Check autoplayonsliddenter attr
 				if ($(video).attr(&quot;autoplayonslideenter&quot;)==&quot;true&quot;){
-					video.play()
+					video.play();
 				}
 			}
 		});

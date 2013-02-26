@@ -194,6 +194,7 @@ var i18n =
 				"i.embedWebsites"		: "embeber web",
 				"i.html5App"			: "Aplicación HTML5",
 				"i.Game"				: "Juego",
+				"i.VirtualTour"			: "Virtual Tour",
 				"i.vExperiment"			: "Experimento virtual",
 				"i.changeBackground"	: "Cambiar fondo",
 				"i.Microscopes"			: "Microscopios",

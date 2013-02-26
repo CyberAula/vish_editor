@@ -1,31 +1,31 @@
 VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
-	var contentAddMode = VISH.Constant.NONE;
+	var contentAddMode = V.Constant.NONE;
 	var uploadDivId = "tab_pic_upload_content";
 	var urlDivId = "tab_pic_from_url_content";
 	var urlInputId = "picture_url";
 	
 	var init = function(){
-		VISH.Editor.Image.Flikr.init();
-		VISH.Editor.Image.Repository.init();
+		V.Editor.Image.Flikr.init();
+		V.Editor.Image.Repository.init();
 
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
-			if(VISH.Police.validateObject($("#" + urlInputId).val())[0]){
-				contentToAdd = VISH.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-				VISH.Editor.Object.drawPreview(urlDivId, contentToAdd)
+			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
+				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
+				V.Editor.Object.drawPreview(urlDivId, contentToAdd)
 			}
 		});
 
 		//Upload content
-		var options = VISH.Editor.getOptions();
+		var options = V.Editor.getOptions();
 		var tagList = $("#" + uploadDivId + " .tagList")
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
 
 		$("#" + uploadDivId + " input[name='document[file]']").change(function () {
-			var filterFilePath = VISH.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
+			var filterFilePath = V.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
 			$("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
 			_resetUploadFields();
 			$(tagList).parent().show();
@@ -34,16 +34,16 @@ VISH.Editor.Image = (function(V,$,undefined){
 		});
 
 		$("#" + uploadDivId + " #upload_document_submit").click(function(event) {
-			if(!VISH.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
+			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = "Uploaded by " + VISH.User.getName() + " via Vish Editor";
+					var description = "Uploaded by " + V.User.getName() + " via Vish Editor";
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
-					$("#" + uploadDivId + " input[name='document[owner_id]']").val(VISH.User.getId());
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(VISH.User.getToken());
-					$("#" + uploadDivId + " .documentsForm").attr("action", VISH.UploadImagePath);
-					$("#" + uploadDivId + " input[name='tags']").val(VISH.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					$("#" + uploadDivId + " input[name='document[owner_id]']").val(V.User.getId());
+					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
+					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadImagePath);
+					$("#" + uploadDivId + " input[name='tags']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					var tagList = $("#" + uploadDivId + " .tagList");
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
@@ -63,14 +63,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				switch(VISH.Configuration.getConfiguration()["mode"]){
-					case VISH.Constant.NOSERVER:
+				switch(V.Configuration.getConfiguration()["mode"]){
+					case V.Constant.NOSERVER:
 						processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
 					break;
-					case VISH.Constant.VISH:
+					case V.Constant.VISH:
 						processResponse(xhr.responseText);
 					break;
-					case VISH.Constant.STANDALONE:
+					case V.Constant.STANDALONE:
 						processResponse(xhr.responseText);
 					break;
 				}
@@ -79,8 +79,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			error: function(error){
-				VISH.Debugging.log("Upload error");
-				VISH.Debugging.log(error);
+				V.Debugging.log("Upload error");
+				V.Debugging.log(error);
 			}
 		});	
 	};
@@ -96,7 +96,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var _onLoadURLTab = function(){
 		contentToAdd = null;
-		VISH.Editor.Object.resetPreview(urlDivId);
+		V.Editor.Object.resetPreview(urlDivId);
 		$("#" + urlInputId).val("");
 	}
 	
@@ -111,7 +111,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		$("#" + uploadDivId + " input[name='document[file]']").val("");	
 		_resetUploadFields();
 
-		VISH.Editor.API.requestTags(_onTagsReceived)
+		V.Editor.API.requestTags(_onTagsReceived)
 	}
 	
 	var _resetUploadFields = function(){
@@ -120,7 +120,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 		bar.width('0%');
 		percent.html('0%');
-		VISH.Editor.Object.resetPreview(uploadDivId)
+		V.Editor.Object.resetPreview(uploadDivId)
 
 		var tagList = $("#" + uploadDivId + " .tagList")
 		if($(tagList)[0].children.length!==0){
@@ -141,7 +141,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			// });
 
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
-			watermarkAllowMessage: VISH.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: VISH.Editor.I18n.getTrans("i.limitReached")});
+			watermarkAllowMessage: V.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.Editor.I18n.getTrans("i.limitReached")});
 		}
 	}
 	
@@ -150,8 +150,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		try  {
 			var jsonResponse = JSON.parse(response)
 			if(jsonResponse.src){
-				if (VISH.Police.validateObject(jsonResponse.src)[0]) {
-					VISH.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
+				if (V.Police.validateObject(jsonResponse.src)[0]) {
+					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
 					contentToAdd = jsonResponse.src
 				}
 			}
@@ -165,17 +165,17 @@ VISH.Editor.Image = (function(V,$,undefined){
 			contentToAdd = content;
 		}
 		switch(contentAddMode){
-			case VISH.Constant.FLASHCARD:
-				VISH.Editor.Flashcard.Creator.onBackgroundSelected(contentToAdd);
+			case V.Constant.FLASHCARD:
+				V.Editor.Flashcard.Creator.onBackgroundSelected(contentToAdd);
 				break;
-			case VISH.Constant.THUMBNAIL:
-				VISH.Editor.AvatarPicker.onCustomThumbnailSelected(contentToAdd);
+			case V.Constant.THUMBNAIL:
+				V.Editor.AvatarPicker.onCustomThumbnailSelected(contentToAdd);
 				break;
 			default:
-				VISH.Editor.Object.drawPreviewObject(contentToAdd);
+				V.Editor.Object.drawPreviewObject(contentToAdd);
 		}
 		//Reset contentAddMode
-		contentAddMode = VISH.Constant.NONE;
+		contentAddMode = V.Constant.NONE;
 	}
 	
    /**
@@ -195,7 +195,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(area){
 			current_area = area;
 		}	else {
-			current_area = VISH.Editor.getCurrentArea();
+			current_area = V.Editor.getCurrentArea();
 		}
 
 		var newStyle;
@@ -206,8 +206,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 			newStyle = "width:"+image_width+"px;";
 		}
 
-		var template = VISH.Editor.getTemplate(); 
-		var nextImageId = VISH.Utils.getId();
+		var template = V.Editor.getTemplate(); 
+		var nextImageId = V.Utils.getId();
 		var idToDragAndResize = "draggable" + nextImageId;
 		current_area.attr('type','image');
 		if(hyperlink){
@@ -219,7 +219,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			//Adjust dimensions after drawing (Only after insert new images)
 			var theImg = $("#"+idToDragAndResize);
 			$(theImg).load(function(){
-				var dimentionsToDraw = VISH.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+				var dimentionsToDraw = V.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
 				$(theImg).width(dimentionsToDraw.width);
 				//Prevent incorrect height detections
 				if(dimentionsToDraw.height>0){

@@ -96,7 +96,7 @@ VISH.ImagePlayer = (function(){
 	var reloadGifs = function(slide){
 		var imgs = $(slide).find(&quot;img&quot;);
 		$.each(imgs,function(index,img){
-			var ext = VISH.Object.getExtensionFromSrc($(img).attr(&quot;src&quot;));
+			var ext = V.Object.getExtensionFromSrc($(img).attr(&quot;src&quot;));
 			if(ext === &quot;gif&quot;){
 				&#x2F;&#x2F;Reload
 				$(img).attr(&quot;src&quot;,$(img).attr(&quot;src&quot;));

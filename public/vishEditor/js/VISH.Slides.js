@@ -16,7 +16,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var handleDomLoaded = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
-	  if(V.SlideManager.getPresentationType() === V.Constant.FLASHCARD){
+	  if(isSlideset(V.SlideManager.getPresentationType())){
 	  	//this way updateSlides will add the class current and it will be shown
 	  	curSlideIndex = 0;
 	  }
@@ -398,7 +398,7 @@ VISH.Slides = (function(V,$,undefined){
 		if(V.Status.getDevice().mobile){
 			//Timeout to prevent undesired actions in Mobile Phones
 			setTimeout(function(){
-				$("#closeButton").show();
+				V.ViewerAdapter.decideIfCloseButton();
 				V.ViewerAdapter.decideIfPageSwitcher();
 			},800);
 		} else {
@@ -413,6 +413,16 @@ VISH.Slides = (function(V,$,undefined){
 		$(".slides > article").hide();	
 	};
 
+
+	var isSlideset = function(type){
+		switch(type){
+			case V.Constant.FLASHCARD:
+			case V.Constant.VTOUR:
+				return true;
+			default:
+				return false;
+		}
+	}
 
 	return {	
 			init          			: init,
@@ -437,7 +447,8 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			closeAllSlides			: closeAllSlides
+			closeAllSlides			: closeAllSlides,
+			isSlideset				: isSlideset
 	};
 
 }) (VISH,jQuery);

@@ -118,7 +118,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			}
 		});
 		
-		var dimensions = VISH.Utils.getPixelDimensionsFromStyle(style,area);
+		var dimensions = V.Utils.getPixelDimensionsFromStyle(style,area);
 
 		if((dimensions)&amp;&amp;(dimensions[0])){
 			filterStyle = filterStyle + &quot;width: &quot; + dimensions[0] + &quot;px; &quot;;
@@ -206,15 +206,15 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		return &quot;&lt;table class=\&quot;metadata\&quot;&gt;&quot;+
 		 &quot;&lt;tr class=\&quot;even\&quot;&gt;&quot; +
-		   &quot;&lt;td class=\&quot;title header_left\&quot;&gt;&quot; + VISH.Editor.I18n.getTrans(&quot;i.Title&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
+		   &quot;&lt;td class=\&quot;title header_left\&quot;&gt;&quot; + V.Editor.I18n.getTrans(&quot;i.Title&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
 		   &quot;&lt;td class=\&quot;title header_right\&quot;&gt;&lt;div class=\&quot;height_wrapper\&quot;&gt;&quot; + title + &quot;&lt;&#x2F;div&gt;&lt;&#x2F;td&gt;&quot; + 
 		 &quot;&lt;&#x2F;tr&gt;&quot; + 
 		 &quot;&lt;tr class=\&quot;odd\&quot;&gt;&quot; + 
-		   &quot;&lt;td class=\&quot;title\&quot;&gt;&quot; + VISH.Editor.I18n.getTrans(&quot;i.Author&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
+		   &quot;&lt;td class=\&quot;title\&quot;&gt;&quot; + V.Editor.I18n.getTrans(&quot;i.Author&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
 		   &quot;&lt;td class=\&quot;info\&quot;&gt;&lt;div class=\&quot;height_wrapper\&quot;&gt;&quot; + author + &quot;&lt;&#x2F;div&gt;&lt;&#x2F;td&gt;&quot; + 
 		 &quot;&lt;&#x2F;tr&gt;&quot; + 
 		 &quot;&lt;tr class=\&quot;even\&quot;&gt;&quot; + 
-		   &quot;&lt;td colspan=\&quot;2\&quot; class=\&quot;title_description\&quot;&gt;&quot; + VISH.Editor.I18n.getTrans(&quot;i.Description&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
+		   &quot;&lt;td colspan=\&quot;2\&quot; class=\&quot;title_description\&quot;&gt;&quot; + V.Editor.I18n.getTrans(&quot;i.Description&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
 		 &quot;&lt;&#x2F;tr&gt;&quot; + 
 		 &quot;&lt;tr class=\&quot;odd\&quot;&gt;&quot; + 
 		   &quot;&lt;td colspan=\&quot;2\&quot; class=\&quot;info_description\&quot;&gt;&lt;div class=\&quot;height_wrapper_description\&quot;&gt;&quot; + description + &quot;&lt;&#x2F;div&gt;&lt;&#x2F;td&gt;&quot; + 
@@ -242,7 +242,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	&#x2F;&#x2F;Add HTTP if is not present.
 	var autocompleteUrls = function(input){
 		var http_urls_pattern=&#x2F;(^http(s)?:\&#x2F;\&#x2F;)&#x2F;g
-		var objectInfo = VISH.Object.getObjectInfo();
+		var objectInfo = V.Object.getObjectInfo();
 
 		if((objectInfo.wrapper==null)&amp;&amp;(input.match(http_urls_pattern)==null)){
 			return &quot;http:&#x2F;&#x2F;&quot; + input;
@@ -265,16 +265,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return slide;
 		}
 
-		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
 			&#x2F;&#x2F;Only one slide nested level are currently supported
 			&#x2F;&#x2F;TODO: Make it recursive
 			return;
 		}
 
-		slide.id = VISH.Utils.getId(parentId + &quot;_&quot; + slide.id,true);
+		slide.id = V.Utils.getId(parentId + &quot;_&quot; + slide.id,true);
 		if(slide.elements){
 			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = VISH.Utils.getId(parentId + &quot;_&quot; + slide.elements[index].id,true);
+				slide.elements[index].id = V.Utils.getId(parentId + &quot;_&quot; + slide.elements[index].id,true);
 			});
 		}
 		return slide;
@@ -285,7 +285,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return slide;
 		}
 
-		if((slide.type===VISH.Constant.FLASHCARD)||(slide.type===VISH.Constant.VTOUR)){
+		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
 			&#x2F;&#x2F;Only one slide nested level are currently supported
 			&#x2F;&#x2F;TODO: Make it recursive
 			return;
@@ -306,12 +306,12 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		var slideId = V.Utils.getId(&quot;article&quot;);
 		$(slide).attr(&quot;id&quot;,slideId);
 
-		var slideType = VISH.Slides.getSlideType(slide);
+		var slideType = V.Slides.getSlideType(slide);
 		switch(slideType){
-			case VISH.Constant.STANDARD:
+			case V.Constant.STANDARD:
 				slide = _replaceIdsForStandardSlide(slide,slideId);
 				break;
-			case VISH.Constant.FLASHCARD:
+			case V.Constant.FLASHCARD:
 				slide = _replaceIdsForFlashcardSlide(slide,slideId);
 				break;
 			default:

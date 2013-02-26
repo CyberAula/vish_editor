@@ -119,7 +119,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var loadPresentationToolbar = function(){
 		var presentationType = V.Editor.getPresentationType();
 		switch(presentationType){
-			case "presentation":			
+			case V.Constant.PRESENTATION:			
 				$("#hidden_button_to_launch_theme_fancybox").fancybox({
 					'autoDimensions' : false,
 					'width': 600,
@@ -129,7 +129,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				});
 				$("#toolbar_presentation").find("img.toolbar_presentation").show();
 				break;
-			case "flashcard":
+			case V.Constant.FLASHCARD:
 				$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
 					'autoDimensions' : false,
 					'width': 800,
@@ -146,14 +146,17 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				});
 				$("#toolbar_presentation").find("img.toolbar_flashcard").show();
 				break;
-			case "game":
+			case V.Constant.GAME:
 				$("#toolbar_presentation").find("img.toolbar_game").show();
 				break;
-			case "quiz_simple":
+			case V.Constant.QUIZ_SIMPLE:
 				//Toolbar has no sense here...
 				disableToolbar();
 				//Also add new slides has no sense...
 				$("#menubarCarrousel").hide();
+				break;
+			case V.Constant.VTOUR:
+				$("#toolbar_presentation").find("img.toolbar_vtour").show();
 				break;
 			default:
 				//Unknown presentation type

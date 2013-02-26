@@ -128,7 +128,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;An area is focused
-		if(VISH.Editor &amp;&amp; VISH.Editor.getCurrentArea()!==null){
+		if(V.Editor &amp;&amp; V.Editor.getCurrentArea()!==null){
 			return false;
 		}
 
@@ -168,7 +168,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		var article_reference = reference_slide;
 
 		var moving_current_slide = false;
-		if(VISH.Slides.getCurrentSlide() === article_to_move){
+		if(V.Slides.getCurrentSlide() === article_to_move){
 			moving_current_slide = true;
 		}
 
@@ -178,29 +178,29 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		} else if(movement==&quot;before&quot;) {
 			$(article_reference).before(article_to_move);
 		} else {
-			VISH.Debugging.log(&quot;VISH.Slides: Error. Movement not defined... !&quot;);
+			V.Debugging.log(&quot;V.Slides: Error. Movement not defined... !&quot;);
 			return;
 		}
 
 		&#x2F;&#x2F;Refresh Draggable Objects
-		VISH.Editor.Utils.refreshDraggables(article_to_move);
+		V.Editor.Utils.refreshDraggables(article_to_move);
 
 		&#x2F;&#x2F;Update slideEls
-		VISH.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
+		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
 
 		if(moving_current_slide){
 			&#x2F;&#x2F;Update currentSlide
-			VISH.Slides.setCurrentSlideIndex(VISH.Slides.getNumberOfSlide(article_to_move));
+			V.Slides.setCurrentSlideIndex(V.Slides.getNumberOfSlide(article_to_move));
 		}
 
 		&#x2F;&#x2F;Update slides classes next and past.
 		&#x2F;&#x2F;Current slide needs to be stablished before this call.
-		VISH.Slides.updateSlideEls();
+		V.Slides.updateSlideEls();
 		
 	}
 
 	var copySlideWithNumber = function(slideNumber){
-		var slide = VISH.Slides.getSlideWithNumber(slideNumber);
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
@@ -209,29 +209,29 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var copySlide = function(newSlide){
-		var currentSlide = VISH.Slides.getCurrentSlide();
+		var currentSlide = V.Slides.getCurrentSlide();
 		if(currentSlide){
 			$(currentSlide).after(newSlide);
 		} else {
 			$(&quot;section#slides_panel&quot;).append(newSlide);
 		}
 		
-		VISH.Editor.Utils.refreshDraggables(newSlide);
+		V.Editor.Utils.refreshDraggables(newSlide);
 		
 		&#x2F;&#x2F;Update slideEls
-		VISH.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
+		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
 
 		&#x2F;&#x2F;Update slides classes next and past.
 		&#x2F;&#x2F;Current slide needs to be stablished before this call.
-		VISH.Slides.updateSlideEls();
+		V.Slides.updateSlideEls();
 
 		&#x2F;&#x2F;Redraw thumbnails
-		VISH.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails();
 
 		if(currentSlide){
-			VISH.Slides.goToSlide(VISH.Slides.getCurrentSlideNumber()+1);
+			V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
 		} else {
-			VISH.Slides.goToSlide(1);
+			V.Slides.goToSlide(1);
 		}
 	}
 
@@ -240,28 +240,28 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	};
 
 	var removeSlide = function(slideNumber){
-		var slide = VISH.Slides.getSlideWithNumber(slideNumber);
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
-		var standardSlide = (slide.type===VISH.Constant.STANDARD);
+		var standardSlide = (slide.type===V.Constant.STANDARD);
 		var removing_current_slide = false;
-		if(VISH.Slides.getCurrentSlide() === slide){
+		if(V.Slides.getCurrentSlide() === slide){
 			removing_current_slide = true;
 		}
 
 		$(slide).remove();
 		if(removing_current_slide){
-			if((VISH.Slides.getCurrentSlideNumber()===1)&amp;&amp;(VISH.Slides.getSlidesQuantity()&gt;1)){
-				VISH.Slides.setCurrentSlideNumber(1);
+			if((V.Slides.getCurrentSlideNumber()===1)&amp;&amp;(V.Slides.getSlidesQuantity()&gt;1)){
+				V.Slides.setCurrentSlideNumber(1);
 			} else {
-				VISH.Slides.setCurrentSlideNumber(VISH.Slides.getCurrentSlideNumber()-1);
+				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
 		redrawSlides();					
-		VISH.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails();
 		if(!standardSlide){
-			VISH.Editor.Tools.Menu.init();
+			V.Editor.Tools.Menu.init();
 		}
 	}
 
