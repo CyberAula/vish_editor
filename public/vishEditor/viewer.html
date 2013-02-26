@@ -25,6 +25,7 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Constant.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Samples.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Samples.API.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.User.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Storage.js"></script>
@@ -89,12 +90,20 @@
     </div>
     
     <!-- Hidden link to open fancybox to display recommendations in the end -->
-    <a id="addSlideFancybox" href="#recommendations" style="display: none;"></a>
+    <a id="fancyRec" href="#fancy_recommendations" style="display: none;"></a>
 
     <!-- Thumbnails fancybox -->
     <div style='display:none'>
-        <div id='recommendations'>
-            hola hola
+        <div id='fancy_recommendations'>
+            <div class="rec-first-row">
+                <span class="textintro1" i18n-key="i.evaluateTitle">Want to contribute evaluating the excursion?</span>
+                <button id='evaluate_excursion' submit='disable' class='button' i18n-key="i.evaluate">Evaluate</button>
+            </div>
+            <div class="rec-second-row">
+                <span class="textintro1" i18n-key="i.recommendationsTitle">Recommended excursions for you:</span>
+                <div class="rec-grid">
+                </div>
+            </div>
         </div>
     </div>
 

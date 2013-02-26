@@ -268,7 +268,12 @@ VISH.Slides = (function(V,$,undefined){
 	* function to go to next slide and change the thumbnails and focus 
 	*/
 	var forwardOneSlide = function(event){
-		goToSlide(curSlideIndex+2);
+		if(isCurrentLastSlide() && V.Status.getDevice().desktop){
+			VISH.Recommendations.showFancybox();
+		}
+		else{
+			goToSlide(curSlideIndex+2);
+		}		
 	};
 
    /**

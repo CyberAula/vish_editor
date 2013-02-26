@@ -39,8 +39,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		setPresentationType(presentation.type);
 
 		// V.Storage.setTestingMode(true);
-		V.Recommendations.init(options);
-
+		
 		V.Status.init(function(){
 			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);
@@ -56,6 +55,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.User.init(options);
 		V.Storage.init();
 		V.Utils.init();
+		V.Recommendations.init(options);
 		
 		//Experimental initializers for new excursion types
 		switch(presentation.type){

@@ -162,7 +162,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	/**
 	 * Function to hide/show the page-switchers buttons
 	 * hide the left one if on first slide
-	 * hide the right one if on last slide
+	 * hide the right one if on last slide -> always show it, it will show the recommendations if on last slide
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
@@ -170,7 +170,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		// ViewBar
 		if (V.Slides.getCurrentSubSlide()!==null){
 			//Subslide active
-			$("#forward_arrow").hide();
+			//$("#forward_arrow").hide();
 			$("#back_arrow").hide();
 		} else {
 			//No subslide
@@ -179,11 +179,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#back_arrow").show();
 			} 
-			if (V.Slides.isCurrentLastSlide()){
-				$("#forward_arrow").hide();		
-			} else {
-				$("#forward_arrow").show();
-			}
+			//if (V.Slides.isCurrentLastSlide()){
+			//	$("#forward_arrow").hide();		
+			//} else {
+			//	$("#forward_arrow").show();
+			//}
+			$("#forward_arrow").show();
 		}
 
 		// Pager
@@ -193,11 +194,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#page-switcher-start").show();
 			}
-			if(V.Slides.isCurrentLastSlide()){
-				$("#page-switcher-end").hide();
-			} else {
-				$("#page-switcher-end").show();
-			}
+			//if(V.Slides.isCurrentLastSlide()){
+			//	$("#page-switcher-end").hide();
+			//} else {
+			//	$("#page-switcher-end").show();
+			//}
+			$("#page-switcher-end").show();
 		}
 	};
 
@@ -297,20 +299,26 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".fc_poi img").css("height", 50*increase + "px");
 		
 		//if fancybox is opened, resize it
-		if ($('#fancy_content:empty').length === 0){	
-			$('#fancybox-inner').width("80%");
-			$('#fancybox-wrap').width("80%");
+		
+		if ($('#fancybox-content:empty').length === 0){
+			$('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
+			$('#fancybox-wrap').height($(".current").height()+70);	//+70 because it is the padding
+			$('#fancybox-wrap').css("top", $(".current").offset().top + "px");	
+			$('#fancybox-wrap').css("left", $(".current").offset().left + "px");
 
-			$("#fancybox-content").width("80%");
-			$("#fancybox-content > div").width("100%");
-			$('#fancybox-inner').height("80%");
-			$('#fancybox-wrap').height("80%");	
-
-			$('#fancybox-wrap').css("top", "10%");	
-			$('#fancybox-wrap').css("left", "10%");
+			setTimeout(function () {
+				$('#fancybox-wrap').height($(".current").height()+70);	//+70 because it is the padding
+				$("#fancybox-content").width("100%");
+				$("#fancybox-content").height("100%");
+				$("#fancybox-content > div").width("100%");
+				$("#fancybox-content > div").height("100%"); 
+			}, 300);
+			
+		
 			//TODO check if the excursion has quiz() (fullscreen --> remove QR FS Button)
 			V.Quiz.testFullScreen();
 		}
+		
 
 		decideIfPageSwitcher();
 
