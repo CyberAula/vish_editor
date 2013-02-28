@@ -16,7 +16,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(options && options["urlToGetRecommendations"]){
 			url_to_get_recommendations = options["urlToGetRecommendations"];			
 		}
-		generated = false;
+		generated = true;
 
 		//redimetion of fancybox is done in ViewerAdapter (line 300 aprox)
 		$("#fancyRec").fancybox({
@@ -29,11 +29,11 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'padding': 0,
 		      'overlayOpacity': 0,
 		      'onComplete'  : function(data) {
-		      		//$("#fancybox-outer").css("background", "transparent");
+		      		$("#fancybox-outer").css("background", "transparent");
 		      		$("#fancybox-wrap").css("margin-top", "0px");
 		      },
 		      'onClosed' : function(data) {
-		      		//$("#fancybox-outer").css("background", "white");
+		      		$("#fancybox-outer").css("background", "white");
 		      		$("#fancybox-wrap").css("margin-top", "-14px");
 		      }
 
@@ -54,7 +54,7 @@ VISH.Recommendations = (function(V,$,undefined){
 					quantity: 9
 				};
 				$.ajax({
-					type    : "GET",
+					type    : "POST",
 					url     : url_to_get_recommendations,
 					data    : params_to_send,
 					success : function(data) {
