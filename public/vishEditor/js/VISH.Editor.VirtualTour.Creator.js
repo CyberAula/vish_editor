@@ -185,7 +185,6 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var redrawPois = function(){
-
 		$(canvas).droppable({
 			accept: function(event, ui){
 				return true;
@@ -234,6 +233,14 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 	};
 
 	var _restorePois = function(){
+		if(!gMlLoaded){
+			//Wait for loading GMapsLibrary
+			setTimeout(function(){
+				_restorePois();
+			}, 1000 );
+			return;
+		}
+
 		if((typeof currentPois === "undefined")&&(trustOrgPois)){
 			//We are loading a virtual tour, get the pois from the json
 			var presentation = V.Editor.getPresentation();
