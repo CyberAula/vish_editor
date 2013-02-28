@@ -90,10 +90,12 @@ VISH.Utils = (function(V,undefined){
 	}
 
 	/*
-	 * function to send the parent to the specified URL, used for fullscreen
+	 * Function to send the parent to the specified URL, used for fullscreen
+	 * We may be nested in more than one iframes
+	 * So, we need to use window.top instead of window.parent
 	 */
 	var sendParentToURL = function(the_url){
-		window.parent.location = the_url;
+		window.top.location = the_url;
 	};
 
 	var addParamToUrl = function(url,paramName,paramValue){

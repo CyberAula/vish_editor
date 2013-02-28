@@ -71,6 +71,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for preview
 			fs_button = fs_button && (!is_preview);
 
+			//Force fs buttons disabling
+			if(options["disablefullscreen"] === true){
+				fs_button = false;
+			}
+
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
 			//recommendations slide in the end
