@@ -188,12 +188,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#back_arrow").show();
 			} 
-			//if (V.Slides.isCurrentLastSlide()){
-			//	$("#forward_arrow").hide();		
-			//} else {
-			//	$("#forward_arrow").show();
-			//}
-			$("#forward_arrow").show();
+			if (V.Slides.isCurrentLastSlide()){
+				$("#forward_arrow").hide();		
+			} else {
+				$("#forward_arrow").show();
+			}
+			//$("#forward_arrow").show();
 		}
 
 		// Pager
@@ -203,12 +203,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#page-switcher-start").show();
 			}
-			//if(V.Slides.isCurrentLastSlide()){
-			//	$("#page-switcher-end").hide();
-			//} else {
-			//	$("#page-switcher-end").show();
-			//}
-			$("#page-switcher-end").show();
+			if(V.Slides.isCurrentLastSlide()){
+				$("#page-switcher-end").hide();
+			} else {
+				$("#page-switcher-end").show();
+			}
+			//$("#page-switcher-end").show();
 		}
 	};
 
