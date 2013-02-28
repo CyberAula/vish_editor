@@ -1947,7 +1947,7 @@ div.poi_label_container{
 
 #vt_search_button{
 	position: absolute;
-	background: #4d90fe !important
+	background: #4d90fe !important;
 	background-color: #3079ed !important;
 	background-image: -webkit-linear-gradient(top, #4d90fe,#4787ed) !important;
 	left: 495px;
