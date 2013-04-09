@@ -62,7 +62,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 	* Allows users to include text content in the slide using a WYSIWYG editor
 	* param area: optional param indicating the area to add the wysiwyg, used for editing presentations
 	*/
-	var launchTextEditor = function(event, area, initial_text){
+	var launchTextEditor = function(event, area, initial_text, options){
 		init();
 
 		var current_area;
@@ -71,9 +71,14 @@ VISH.Editor.Text = (function(V,$,undefined){
 		} else {
 			current_area = $(this).parents(".selectable");
 		}
-		current_area.attr('type','text');
 
-		var newInstance = !(typeof initial_text === "string");
+		//current_area can also be a 'textArea' of a quiz.
+		var isTemplateArea = ($(current_area).attr("areaid")!==undefined);
+		if(isTemplateArea){
+			current_area.attr('type','text');
+		}
+
+		var newInstance = !(typeof initial_text === "string")||((options)&&(options.forceNew));
 
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
@@ -109,7 +114,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
 		//Enable table resize
-		config.extraPlugins = 'tableresize';
+		config.extraPlugins = 'tableresize,autogrow';
+
+		if((options)&&(options.autogrow)){
+			config.autoGrow_onStartup = true;
+			config.autoGrow_minHeight = 0;
+			config.autoGrow_maxHeight = 800;
+		}
 
 		//Fit the current area
 		config.width = '100%';
@@ -153,15 +164,32 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 
 			//Alignment depends of the area type
-			var isCircleArea = $(current_area).attr("areaid").indexOf("circle")!==-1;
-			if(isCircleArea){
-				defaultAlignment = "center";
+			var areaId = $(current_area).attr("areaid");
+			if(areaId){
+				var isCircleArea = $(current_area).attr("areaid").indexOf("circle")!==-1;
+				if(isCircleArea){
+					defaultAlignment = "center";
+				}
 			}
 
 			//Color depends of the current theme
 			var initialTextColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
 
-			initial_text = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+initialTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>&shy;</span></span></p>";
+
+			//We can also specify initial_texts style in the options param
+			//This options override defaults
+			if(options){
+				//Font size
+				if(typeof options.fontSize == "number"){
+					defaultFontSize = options.fontSize;
+				}
+			}
+
+			if((isTemplateArea)||(typeof initial_text != "string")){
+				initial_text = "&shy";
+			}
+
+			initial_text = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+initialTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>"+initial_text+"</span></span></p>";
 		}
 
 		ckeditor.on("instanceReady", function(){
@@ -174,7 +202,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					_fixCKEDITORBug(ckeditor);
 				});
 				if(newInstance){
-					ckeditor.focus();
+					if((isTemplateArea)||((options)&&(options.focus))){
+						ckeditor.focus();
+					}
 				}
 			}
 		});
@@ -189,8 +219,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 			var area = $("div[type='text']").has(event.editor.container.$);
 		});
 
-		// Add a button to delete the current text area
-		V.Editor.addDeleteButton(current_area);		
+		if(isTemplateArea){
+			// Add a button to delete the current text area
+			V.Editor.addDeleteButton(current_area);	
+		}
 	};
 	
 

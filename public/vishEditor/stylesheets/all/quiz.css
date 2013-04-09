@@ -165,7 +165,7 @@
 .li_mch_options_in_zone {
     display: inline-block;
     margin-left: 2%;
-    margin-top: 1.5%;
+    margin-top: 5px;
     width: 94%;
 }
 
@@ -191,10 +191,9 @@
     float: left;
     font-family: Arial;
     font-size: 1em;
-    height: 21px;
+    /*height: 32px;*/
     margin-left: 2%;
     outline: 0 none;
-    padding: 1%;
     position: relative;
     width: 80%;
     overflow: hidden;
@@ -958,13 +957,11 @@ height: 20%;
 
 .value_multiplechoice_question_in_zone, .value_truefalse_question_in_zone {
     border: 1px solid #666666 !important;
-    border-radius: 20px 20px 20px 20px;
     color: #000000;
-    height: 20%;
+    min-height: 15%;
     margin-left: 8%;
-    margin-top: 3%;
-    padding: 2%;
-    width: 78%;
+    margin-top: 10px;
+    width: 85%;
     overflow: hidden;
 }
 

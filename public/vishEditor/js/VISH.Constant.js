@@ -49,6 +49,12 @@ VISH.Constant.OBJECT = "object";
 VISH.Constant.SNAPSHOT = "snapshot";
 VISH.Constant.QUIZ = "quiz";
 
+//Subtypes
+VISH.Constant.QZ_TYPE = {};
+VISH.Constant.QZ_TYPE.OPEN = "open";
+VISH.Constant.QZ_TYPE.MCHOICE = "multiplechoice";
+VISH.Constant.QZ_TYPE.TF = "truefalse";
+
 //Text
 VISH.Constant.TextDefault = 12;
 VISH.Constant.TextBase = 12;

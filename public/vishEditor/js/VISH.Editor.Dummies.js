@@ -21,7 +21,6 @@ VISH.Editor.Dummies = (function(V,undefined){
 		"<article id='article_id_to_change' type='standard' template='t15' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_template' id='help_template_image' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div id='div_id_to_change' 	areaid='left' 	 size='medium' class='t15_left editable grey_background selectable'></div><div id='div_id_to_change' areaid='center' size='medium' class='t15_center editable grey_background selectable'></div><div id='div_id_to_change' areaid='right' size='medium' class='t15_right editable grey_background selectable'></div><div id='div_id_to_change' areaid='center2' size='large' class='t15_center2 editable grey_background selectable'></div></article>"
 		];
 
-		V.Editor.Quiz.Dummies.init();
 	}
 
 
