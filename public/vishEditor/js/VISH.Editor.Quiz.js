@@ -23,19 +23,19 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	//Function called from quiz fancybox and Editor.Renderer
 	//area must be an DOM object 
 	var addQuiz = function(quiz_type, area, num_options) {
+
+		console.log("addQuiz");
+		
 		var current_area;
 		var current_num_options;
 		if(area) {
-		//	current_area = $("#"+area);
 			current_area = area;
-		}
-		else {
+		} else {
 			current_area = V.Editor.getCurrentArea();
 		}
 		if(num_options){
 			current_num_options = num_options;
-		}
-		else { //new quiz no options
+		} else { //new quiz no options
 			current_num_options = 0;
 		}
 
