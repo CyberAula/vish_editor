@@ -73,12 +73,12 @@ VISH.Editor.Text = (function(V,$,undefined){
 		}
 
 		//current_area can also be a 'textArea' of a quiz.
+		var isQuiz = $("div[type='quiz']").has(current_area).length>0;
 		var isTemplateArea = ($(current_area).attr("areaid")!==undefined);
+		
 		if(isTemplateArea){
 			current_area.attr('type','text');
 		}
-
-		var newInstance = !(typeof initial_text === "string")||((options)&&(options.forceNew));
 
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
@@ -117,8 +117,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.extraPlugins = 'tableresize,autogrow';
 
 		if((options)&&(options.autogrow)){
-			config.autoGrow_onStartup = true;
-			config.autoGrow_minHeight = 0;
+			config.autoGrow_minHeight = 34;
 			config.autoGrow_maxHeight = 800;
 		}
 
@@ -140,6 +139,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
+
+
+		var newInstance = !(typeof initial_text === "string")||((options)&&(options.forceNew));
 
 		if(newInstance){
 			var defaultFontSize = 12;
@@ -174,7 +176,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 			//Color depends of the current theme
 			var initialTextColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
-
+			var blankTextColor = initialTextColor; //For placeholders
 
 			//We can also specify initial_texts style in the options param
 			//This options override defaults
@@ -183,13 +185,19 @@ VISH.Editor.Text = (function(V,$,undefined){
 				if(typeof options.fontSize == "number"){
 					defaultFontSize = options.fontSize;
 				}
+
+				//Placeholder
+				if(options.placeholder === true){
+					initialTextColor = "color:#ccc";
+				}
 			}
 
-			if((isTemplateArea)||(typeof initial_text != "string")){
+			if((isTemplateArea)||(typeof initial_text != "string")||(initial_text==="")){
 				initial_text = "&shy";
 			}
 
 			initial_text = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+initialTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>"+initial_text+"</span></span></p>";
+			initial_text_blank = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+blankTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>"+"&shy"+"</span></span></p>";
 		}
 
 		ckeditor.on("instanceReady", function(){
@@ -211,12 +219,23 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		//Catch the focus event
 		ckeditor.on('focus', function(event){
-			var area = $("div[type='text']").has(event.editor.container.$);
+			if((options)&&(options.placeholder===true)){
+				var a = $(initial_text).text().replace(/\s+/g,'');
+				var b = $(event.editor.getData()).text().replace(/\s+/g,'');
+				if(a==b){
+					setTimeout(function(){
+						event.editor.setData(initial_text_blank);
+						event.editor.focus();
+					},20);
+				}
+			}
+
+			var area = getZoneForCKContainer(event.editor.container.$);
 			V.Editor.selectArea(area);
 		});
 
 		ckeditor.on('blur', function(event){
-			var area = $("div[type='text']").has(event.editor.container.$);
+			//Code here
 		});
 
 		if(isTemplateArea){
@@ -234,13 +253,23 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var CKEditorInstance = null;
 
 		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
-			var CKzone = $(CKinstance.container.$).parent().parent();
+			// var CKzone = $(CKinstance.container.$).parent().parent();
+			var CKzone = getZoneForCKContainer(CKinstance.container.$);
 			if($(CKzone).attr("id")===$(zone).attr("id")){
 				CKEditorInstance = CKinstance;
 				return;
 			}
 		});
 		return CKEditorInstance;
+	}
+
+	var getZoneForCKContainer = function(container){
+		var area;
+		area = $("div[type='text']").has(container);
+		if(area.length===0){
+			area = $("div[type='quiz']").has(container);
+		}
+		return area;
 	}
 
 	var getCKEditorIframeContentFromZone = function(zone){

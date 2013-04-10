@@ -94,3 +94,6 @@ VISH.Constant.Storage.Device = "Device";
 VISH.Constant.VTour = {};
 VISH.Constant.VTour.DEFAULT_MAP = "roadmap";
 VISH.Constant.VTour.ROADMAP = "roadmap";
+
+//Keys
+VISH.Constant.INTRO = 13;
