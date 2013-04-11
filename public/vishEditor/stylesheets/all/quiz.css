@@ -1,33 +1,15 @@
 
-/* Multiple Choice */
-
-.add_quiz_option_button {
-    display: inline-block;
-    width: 6%;
-    cursor: pointer;
-    margin-left: 12px;
-}
-
-.delete_quiz_option_button {
-    visibility: hidden;
-    width: 4%;
-    cursor: pointer;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-    float: left;
-    margin-top: 14px;
-}
+/* Multiple Choice (Editor) */
 
 .mcContainer {
     width: 100%;
     height: 100%;
 }
 
-
-.participant_answer {
-    display: none;
+.mc_option_wrapper{
+    display: block;
+    position:relative;
 }
-
 
 .ul_mch_options_in_zone {
     padding: 0%;
@@ -51,11 +33,6 @@
     padding: 0%;
 }
 
-.mc_radio {
-    float: left;
-    display: inline-block;
-}
-
 .multiplechoice_option_in_zone { 
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;
@@ -71,6 +48,44 @@
     overflow: hidden;
     z-index: 1000;
 }
+
+table.MCchecks{
+    height: 52px;
+    max-height: 52px;
+    width: 14%;
+    display: inline-block;
+    text-align: center;
+}
+
+table.MCchecks > td {
+    height: 100%;
+    width: 50%;
+}
+
+table.MCchecks > td > img {
+    margin-top: 5px;
+}
+
+img.mcCheckbox{
+    width: 90%;
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.delete_quiz_option_button {
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.add_quiz_option_button {
+    display: inline-block;
+    width: 6%;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+/* Multiple Choice (Viewer...) */
+
 .multiplechoice_option_in_viewer {
     border: none !important;
     display:inline-block;
@@ -82,32 +97,14 @@
     display: block;
 }
 
-span.mcChoiceSpan{
-    margin-right: 3px;
-}
-
-table.MCchecks{
-    height: 52px;
-    width: 7%;
+.mc_radio {
+    float: left;
     display: inline-block;
-    text-align: center;
 }
 
-table.MCchecks > td {
-    height: 100%;
-    width: 50%;
+.participant_answer {
+    display: none;
 }
-
-table.MCchecks > td:odd {
-    background: blue;
-}
-
-img.mcCheckbox{
-    max-width: 90%;
-    max-height: 90%;
-    margin-top: 5%;
-}
-
 
 /**
  Templates

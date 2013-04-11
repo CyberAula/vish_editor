@@ -5,29 +5,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	/*
-	 * Add a new Quiz
-	 */ 
-	var addQuiz = function(quiz_type, area, num_options) {
-		var current_area;
-		var current_num_options;
-		if(area) {
-			current_area = area;
-		} else {
-			current_area = V.Editor.getCurrentArea();
-		}
-		if(num_options){
-			current_num_options = num_options;
-		} else { //new quiz no options
-			current_num_options = 0;
-		}
-		if(!_getQuizModule(quiz_type)){
-			return;
-		}
-
-		_getQuizModule(quiz_type).add(current_area, current_num_options, quiz_type);
-		$.fancybox.close();
-	};
-
+	 * Quiz modules
+	 */
 	var _getQuizModule = function(quiz_type){
 		switch (quiz_type) {
 			case VISH.Constant.QZ_TYPE.OPEN:
@@ -43,12 +22,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 	}
 
-
-	//TO BE REWRITE
-	//TO BE REWRITE
-	//TO BE REWRITE
-	var drawQuiz = function(quiz_type, area, question, options, quiz_id){
-
+	/*
+	 * Add a new Quiz
+	 */ 
+	var add = function(quizType,area) {
 		var current_area;
 		if(area) {
 			current_area = area;
@@ -56,43 +33,85 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			current_area = V.Editor.getCurrentArea();
 		}
 
-		switch (quiz_type) {
-			case "multiplechoice": 
-				if (question) {	
-					$(current_area).find(".value_multiplechoice_question_in_zone").children().remove();
-					$(current_area).find(".value_multiplechoice_question_in_zone").append(question);
-				}	
-				if (options) {
-					var inputs = $(current_area).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
-					for (var i = 0;  i <= options['choices'].length - 1; i++) {
-						$(inputs[i]).children().remove();
-						$(inputs[i]).append(options['choices'][i].container);
-					} 
-				}
-				if(quiz_id) {
-					$(current_area).find('input[name="quiz_id"]').val(quiz_id);
-				}
-				$(current_area).find(".multiplechoice_option_in_zone").attr("rows", "1");
-				break;
-			case "open":
-
-			break;
-
-			case "truefalse":
-				$(current_area).find(".value_truefalse_question_in_zone").children().remove();
-				$(current_area).find(".value_truefalse_question_in_zone").append(question);
-
-				$(current_area).find(".truefalse_answers > form > input[value='"+ options['answer'] +"']")[0].checked= true;
-				if(quiz_id) {
-					$(current_area).find('input[name="quiz_id"]').val(quiz_id);
-				}
-			break;
-
-			default: 
-
-			break;
+		if(_getQuizModule(quizType)){
+			_getQuizModule(quizType).add(current_area);
 		}
+		
+		$.fancybox.close();
 	};
+
+	/*
+	 * return quiz in JSON
+	 */
+	var save = function(area){
+		var current_area;
+		if(area) {
+			current_area = area;
+		} else {
+			current_area = V.Editor.getCurrentArea();
+		}
+
+		var quizType = $(area).attr("quiztype");
+		if(_getQuizModule(quizType)){
+			return _getQuizModule(quizType).save(current_area);
+		}
+	}
+
+	var draw = function(slide){
+		if(_getQuizModule(slide.quiztype)){
+			_getQuizModule(slide.quiztype).draw(slide);
+		}
+	}
+
+	//TO BE REWRITE
+	//TO BE REWRITE
+	//TO BE REWRITE
+	// var draw = function(quiz_type, area, question, options, quiz_id){
+
+	// 	var current_area;
+	// 	if(area) {
+	// 		current_area = area;
+	// 	} else {
+	// 		current_area = V.Editor.getCurrentArea();
+	// 	}
+
+	// 	switch (quiz_type) {
+	// 		case "multiplechoice": 
+	// 			if (question) {	
+	// 				$(current_area).find(".value_multiplechoice_question_in_zone").children().remove();
+	// 				$(current_area).find(".value_multiplechoice_question_in_zone").append(question);
+	// 			}	
+	// 			if (options) {
+	// 				var inputs = $(current_area).find(".multiplechoice_option_in_zone"); //all inputs (less or equal than options received)
+	// 				for (var i = 0;  i <= options['choices'].length - 1; i++) {
+	// 					$(inputs[i]).children().remove();
+	// 					$(inputs[i]).append(options['choices'][i].container);
+	// 				} 
+	// 			}
+	// 			if(quiz_id) {
+	// 				$(current_area).find('input[name="quiz_id"]').val(quiz_id);
+	// 			}
+	// 			$(current_area).find(".multiplechoice_option_in_zone").attr("rows", "1");
+	// 			break;
+	// 		case "open":
+
+	// 		break;
+
+	// 		case "truefalse":
+	// 			$(current_area).find(".value_truefalse_question_in_zone").children().remove();
+	// 			$(current_area).find(".value_truefalse_question_in_zone").append(question);
+
+	// 			$(current_area).find(".truefalse_answers > form > input[value='"+ options['answer'] +"']")[0].checked= true;
+	// 			if(quiz_id) {
+	// 				$(current_area).find('input[name="quiz_id"]').val(quiz_id);
+	// 			}
+	// 		break;
+
+	// 		default: 
+
+	// 		break;
+	// 	}
+	// };
 
 
 	// //function to set currentArea when click in quiz elements 
@@ -375,9 +394,10 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 
 	return {
-		init			 				: init, 
-		addQuiz							: addQuiz, 
-		drawQuiz						: drawQuiz
+		init			: init, 
+		add				: add,
+		save			: save,
+		draw			: draw
 	};
 
 }) (VISH, jQuery);

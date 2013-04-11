@@ -841,7 +841,54 @@ VISH.Samples = (function(V,undefined){
 		]
 	}
 
-	var quizes_samples = {
+	var quiz_samples = {
+		"VEVersion":"0.4",
+		"id":"",
+		"type":"presentation",
+		"author":"",
+		"slides":[
+			{
+				"id":"article2",
+				"type":"standard",
+				"template":"t2",
+				"elements":[
+					{
+						"id":"article2_zone1",
+						"type":"quiz",
+						"areaid":"left",
+						"quiztype":"multiplechoice",
+						"selfA":true,
+						"question":{
+							"value":"​­What is the oldest ancient weapon?",
+							"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;What is the oldest ancient weapon?</span></span></p>\n"
+						},
+						"choices":[
+							{
+								"value":"​Fu­",
+								"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">Fu&shy;</span></span></p>\n",
+								"answer":false
+							},{
+								"value":"​­Bow",
+								"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Bow</span></span></p>\n",
+								"answer":true
+							},{
+								"value":"­Chu Ko Nuh",
+								"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Chu Ko Nuh</span></span></p>\n",
+								"answer":false
+							},{
+								"value":"​­War Galley",
+								"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;War Galley</span></span></p>\n",
+								"answer":false
+							}
+						],
+						"quiz_simple_json":{"author":"","slides":[{"id":"article2_zone1","type":"quiz_simple","areaid":"left","quiztype":"multiplechoice","selfA":true,"question":{"value":"​­What is the oldest ancient weapon?","wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;What is the oldest ancient weapon?</span></span></p>\n"},"choices":[{"value":"​Fu­","wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">Fu&shy;</span></span></p>\n","answer":false},{"value":"​­Bow","wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Bow</span></span></p>\n","answer":true},{"value":"­Chu Ko Nuh","wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Chu Ko Nuh</span></span></p>\n","answer":false},{"value":"​­War Galley","wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;War Galley</span></span></p>\n","answer":false}]}],"type":"quiz_simple"}
+					}
+				]
+			}
+		]
+	}
+
+	var quiz_samples_old = {
 		"id": 12314,
 		"type":"presentation",
 		"author":"V. Hugo", 
@@ -906,7 +953,7 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
- 	var quizes_samples2 = {
+ 	var quiz_samples_old2 = {
  		"VEVersion":"0.2",
  		"id":12314,
  		"type":"presentation",
@@ -1010,8 +1057,9 @@ VISH.Samples = (function(V,undefined){
 		fc_sample			: fc_sample,
 		samples_vtour		: samples_vtour,
 		full_samples		: full_samples,
-		quizes_samples		: quizes_samples,
-		quizes_samples2		: quizes_samples2,
+		quiz_samples		: quiz_samples,
+		quiz_samples_old	: quiz_samples_old,
+		quiz_samples_old2	: quiz_samples_old2,
 		quizes_truefalse_sample :quizes_truefalse_sample,
 		magnetic_gifs		: magnetic_gifs,
 		new_wysiwyg 		: new_wysiwyg

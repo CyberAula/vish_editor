@@ -41,7 +41,6 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	var _onCheckboxClick = function(event){
 		var imagePathRoot = V.ImagesPath+ "quiz/checkbox";
 		var check = $(event.target).attr("check");
-		console.log("check vale " + check);
 		switch(check){
 			case "true":
 				$(event.target).attr("check","none");
@@ -57,17 +56,6 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 				break;
 		}
 	}
-
-
-	var drawQuiz = function(quiz_type, area, question, options, quiz_id){
-		// if(current_num_options>=0) {
-		// 	var i=0;
-		// 	for (i=0; i <= current_num_options ; i++) {
-		// 		addOptionInQuiz(area);				
-		// 	}
-		// }
-	};
-
 
 	/*
 	 * Create an empty MC Quiz
@@ -87,12 +75,11 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	}
 
 	var _getOptionDummy = function(){
-		return quizOptionDummies = "<li class='li_mch_options_in_zone'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'></div><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/><table class='MCchecks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+mcCheckbox+"' check='none'/></td></tr></table></li>";
+		return quizOptionDummies = "<li class='li_mch_options_in_zone'><div class='mc_option_wrapper'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'></div><table class='MCchecks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+mcCheckbox+"' check='none'/></td></tr></table></div></li>";
 	}
 
-
 	/*
-	 * addOptionInQuiz called from click event
+	 * AddOptionInQuiz called from click event
 	 */
 	var _addOptionInQuiz = function (event) {
 		var area = $("#" + event.target.parentElement.parentElement.id);
@@ -114,12 +101,10 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 
 
 	var _removeOptionInQuiz = function (event) {
-		var area = $("#" +(event.target.parentElement.parentElement.parentElement.parentElement.id));
+		var area = $("div[type='quiz']").has(event.target);
 		V.Editor.setCurrentArea(area);
-
-		var liToRemove = $(event.target).parent();
+		var liToRemove = $("li.li_mch_options_in_zone").has(event.target);
 		$(liToRemove).remove();
-		
 		_refreshChoicesIndexs(area);
 	};
 
@@ -139,32 +124,94 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	}
 
 	var launchTextEditorForQuestion = function(area){
-		var textArea = $(area).find(".value_"+ VISH.Constant.QZ_TYPE.MCHOICE + "_question_in_zone");		
-		var wysiwygId = V.Utils.getId();
-		textArea.attr("id", wysiwygId);
-		$(textArea).addClass("wysiwygInstance");
+		var textArea = $(area).find(".value_multiplechoice_question_in_zone");
 		V.Editor.Text.launchTextEditor({}, textArea, "", {quiz: true, forceNew: true, fontSize: 38, focus: true, autogrow: true});
 	}
 
 	var launchTextEditorForOptions = function(area,option_number){
 		var first = (option_number===0);
-		var  optionWysiwygId = V.Utils.getId();
-		var textArea = $($(area).find("."+ VISH.Constant.QZ_TYPE.MCHOICE + "_option_in_zone")[option_number]);
-		textArea.attr("id", optionWysiwygId);
-		if($($(area).find(".li_mch_options_in_zone")[option_number]).find(".wysiwygInstance").val() ===undefined) {
-			$("#"+optionWysiwygId).addClass("wysiwygInstance");
-			if(first){
-				V.Editor.Text.launchTextEditor({}, textArea, "Write options here", {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
-			} else {
-				V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 24, autogrow: true, focus: true});
-			}
+		var textArea = $(area).find(".multiplechoice_option_in_zone")[option_number];
+		if(first){
+			V.Editor.Text.launchTextEditor({}, textArea, "Write options here", {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
+		} else {
+			V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 24, autogrow: true, focus: true});
 		}
 	}
 
+	/*
+	 * Generate JSON
+	 */
+	 var save = function(area){
+	 	var textArea = $(area).find(".value_multiplechoice_question_in_zone");
+	 	var quiz = {};
+	 	quiz.quizType = VISH.Constant.QZ_TYPE.MCHOICE;
+	 	// Self-assessment (Autoevaluación)
+	 	quiz.selfA = false; //false by default
+
+	 	var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".value_multiplechoice_question_in_zone"));
+	 	quiz.question = {};
+	 	quiz.question.value = questionInstance.getPlainText();
+	 	quiz.question.wysiwygValue = questionInstance.getData();
+	 	
+	 	quiz.choices = [];
+
+	 	var nChoices = $(area).find(".li_mch_options_in_zone").size();
+	 	var optionTextAreas = $(area).find(".multiplechoice_option_in_zone");
+
+	 	for(var i=0; i<nChoices; i++){
+	 		var textArea = optionTextAreas[i];
+	 		var optionInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
+	 		var choice = {};
+	 		choice.value = optionInstance.getPlainText();
+	 		choice.wysiwygValue = optionInstance.getData();
+	 		if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
+	 			choice.answer = true;
+	 			quiz.selfA = true;
+	 		} else {
+	 			choice.answer = "?";
+	 		}
+	 		quiz.choices.push(choice);
+	 	}
+
+	 	if(quiz.selfA){
+		 	$(quiz.choices).each(function(index,choice){
+		 		if(choice.answer !== true){
+		 			choice.answer = false;
+		 		}
+		 	});
+	 	}
+
+	 	return quiz;
+	 }
+
+	/*
+	 * Render the quiz in the editor
+	 * slide is the area and contains all the required parameters
+	 */
+	var draw = function(slide){
+		console.log("Draw MC!");
+		
+		//Add empty question
+		console.log(slide.question)
+
+		//Add empty choices
+		console.log(slide.choices);
+
+		//Fill Question
+
+		//Fill choices
+
+		//Check selfA
+		//Fill checks if selfA
+		console.log(slide.selfA);
+	};
+
+
 	return {
-		init			 				: init, 
-		add								: add,
-		drawQuiz						: drawQuiz
+		init			: init, 
+		add				: add,
+		save			: save,
+		draw			: draw
 	};
 
 }) (VISH, jQuery);

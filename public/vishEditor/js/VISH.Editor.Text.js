@@ -238,6 +238,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 			//Code here
 		});
 
+		//Exnteds CKEditor functionality
+
+		ckeditor.getPlainText = _getPlainText;
+
 		if(isTemplateArea){
 			// Add a button to delete the current text area
 			V.Editor.addDeleteButton(current_area);	
@@ -253,8 +257,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var CKEditorInstance = null;
 
 		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
-			// var CKzone = $(CKinstance.container.$).parent().parent();
 			var CKzone = getZoneForCKContainer(CKinstance.container.$);
+
 			if($(CKzone).attr("id")===$(zone).attr("id")){
 				CKEditorInstance = CKinstance;
 				return;
@@ -279,6 +283,33 @@ VISH.Editor.Text = (function(V,$,undefined){
 		}
 		var iframe = $(document.getElementById('cke_contents_' + editor.name)).find("iframe")[0];
 		return $(iframe).contents()[0];
+	}
+
+
+	var getCKEditorFromTextArea = function(textArea){
+		if((!textArea)||(typeof CKEDITOR === 'undefined')||(typeof CKEDITOR.instances === 'undefined')){
+			return null;
+		}
+
+		if(!$(textArea).hasClass(".cke_skin_vEditor")){
+			textArea = $(textArea).find(".cke_skin_vEditor");
+			if(textArea.length>0){
+				textArea = textArea[0];
+			}
+		}
+		
+		var CKEditorInstance = null;
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+			if(textArea===CKinstance.container.$){
+				CKEditorInstance = CKinstance;
+				return;
+			}
+		});
+		return CKEditorInstance;
+	}
+
+	var _getPlainText = function(){
+		return $(this.getSnapshot()).text();
 	}
 
 	/*
@@ -309,6 +340,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		launchTextEditor					: launchTextEditor,
 		getCKEditorFromZone					: getCKEditorFromZone,
 		getCKEditorIframeContentFromZone	: getCKEditorIframeContentFromZone,
+		getCKEditorFromTextArea				: getCKEditorFromTextArea,
 		refreshAutoColors					: refreshAutoColors
 	};
 
