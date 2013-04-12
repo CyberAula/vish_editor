@@ -800,7 +800,7 @@ VISH.Editor = (function(V,$,undefined){
 						element.choices = quizJSON.choices;
 						if(quizJSON.extras){
 							element.extras = quizJSON.extras;
-						} 
+						}
 					} else if(element.type === V.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];

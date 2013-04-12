@@ -92,7 +92,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === "snapshot"){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			} else if(slide.elements[el].type === "quiz"){
-				V.Editor.Quiz.draw(slide.elements[el]);
+				V.Editor.Quiz.draw(area,slide.elements[el]);
 			}
 		}
 	

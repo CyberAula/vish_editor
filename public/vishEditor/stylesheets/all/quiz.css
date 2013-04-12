@@ -66,18 +66,18 @@ table.MCchecks > td > img {
     margin-top: 5px;
 }
 
-img.mcCheckbox{
+img.mcCheckbox, img.tfCheckbox{
     width: 90%;
     max-height: 32px;
     max-width: 32px;
 }
 
-.delete_quiz_option_button {
+.delete_quiz_option_button, .delete_quiz_option_button_tf {
     cursor: pointer;
     visibility: hidden;
 }
 
-.add_quiz_option_button {
+.add_quiz_option_button, .add_quiz_option_button_tf {
     display: inline-block;
     width: 6%;
     cursor: pointer;

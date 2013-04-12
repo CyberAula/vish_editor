@@ -1,11 +1,12 @@
 /*
- * Multiple Choice Quiz Module
+ * Ture/False Quiz Module, based on MC module
+ * Closure: inherit is not possible, rewrite
  */
-VISH.Editor.Quiz.MC = (function(V,$,undefined){
+VISH.Editor.Quiz.TF = (function(V,$,undefined){
 	var choicesLetters = ['a)','b)','c)','d)','e)','f)','g)','h)','i)','j)','k)','l)','m)','n)','o)','p)','q)','r)','s)'];
-	var addQuizOptionButtonClass = "add_quiz_option_button";
-	var deleteQuizOptionButtonClass = "delete_quiz_option_button";
-	var mcCheckbox = "mcCheckbox";
+	var addQuizOptionButtonClass = "add_quiz_option_button_tf";
+	var deleteQuizOptionButtonClass = "delete_quiz_option_button_tf";
+	var tfCheckbox = "tfCheckbox";
 	var initialized = false;
 
 	var init = function(){
@@ -13,7 +14,7 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 			$(document).on('click', '.' + 'mcContainer', _clickOnQuizArea);
 			$(document).on('click','.'+ addQuizOptionButtonClass, _clickToAddOptionInQuiz);
 			$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
-			$(document).on('click','.'+ mcCheckbox, _onCheckboxClick);
+			$(document).on('click','.'+ tfCheckbox, _onCheckboxClick);
 			initialized = true;
 		}
 	};
@@ -42,16 +43,28 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 */
 	var _onCheckboxClick = function(event){
 		var check = $(event.target).attr("check");
-		switch(check){
+		var column = $(event.target).attr("column");
+
+		switch(column){
 			case "true":
-				V.Editor.Quiz.updateCheckbox(event.target,"none");
+				if(check==="true"){
+					V.Editor.Quiz.updateCheckbox(event.target,"none");
+				} else {
+					var falseColumnCheckbox = $("tr").has(event.target).find(".tfCheckbox[column='false']");
+					V.Editor.Quiz.updateCheckbox(falseColumnCheckbox,"none");
+					V.Editor.Quiz.updateCheckbox(event.target,"true");
+				}
 				break;
 			case "false":
-				//Not false in MC, just switch between true and none
+				if(check==="false"){
+					V.Editor.Quiz.updateCheckbox(event.target,"none");
+				} else {
+					var trueColumnCheckbox = $("tr").has(event.target).find(".tfCheckbox[column='true']");
+					V.Editor.Quiz.updateCheckbox(trueColumnCheckbox,"none");
+					V.Editor.Quiz.updateCheckbox(event.target,"false");
+				}
 				break;
-			case "none":
 			default:
-				V.Editor.Quiz.updateCheckbox(event.target,"true");
 				break;
 		}
 	}
@@ -63,18 +76,18 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		area.append(_getDummy());
 		area.find(".menuselect_hide").remove(); 
 		area.attr('type','quiz');
-		area.attr('quiztype', V.Constant.QZ_TYPE.MCHOICE);
+		area.attr('quiztype', V.Constant.QZ_TYPE.TF);
 		_launchTextEditorForQuestion(area);
 		_addOptionInQuiz(area);
 		V.Editor.addDeleteButton(area);
 	};
 
 	var _getDummy = function(){
-		return "<div class='mcContainer'><div class='value_multiplechoice_question_in_zone'></div><ul class='ul_mch_options_in_zone'></ul><img src='"+V.ImagesPath+ "icons/add.png' class='"+addQuizOptionButtonClass+"'/><input type='hidden' name='quiz_id'/></div></div>";
+		return "<div class='tfContainer'><div class='value_multiplechoice_question_in_zone'></div><ul class='ul_mch_options_in_zone'></ul><img src='"+V.ImagesPath+ "icons/add.png' class='"+addQuizOptionButtonClass+"'/><input type='hidden' name='quiz_id'/></div></div>";
 	}
 
 	var _getOptionDummy = function(){
-		return "<li class='li_mch_options_in_zone'><div class='mc_option_wrapper'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'></div><table class='MCchecks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+mcCheckbox+"' check='none'/></td></tr></table></div></li>";
+		return "<li class='li_mch_options_in_zone'><div class='mc_option_wrapper'><span class='quiz_option_index'></span><div class='multiplechoice_option_in_zone'></div><table class='MCchecks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+tfCheckbox+"' column='true' check='none'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+tfCheckbox+"' column='false' check='none'/></td></tr></table></div></li>";
 	}
 
 	/*
@@ -92,8 +105,10 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		var quiz_option = $(quiz_option).attr("nChoice",(nChoices+1));
 		$(area).find(".ul_mch_options_in_zone").append(quiz_option);
 		_refreshChoicesIndexs(area);
-		if(check){
+		if(check==="true"){
 			V.Editor.Quiz.updateCheckbox($(quiz_option).find("td > img")[1],check);
+		} else if(check==="false"){
+			V.Editor.Quiz.updateCheckbox($(quiz_option).find("td > img")[2],check);
 		}
 		_launchTextEditorForOptions(area, nChoices,value);
 		if(nChoices>0) {
@@ -153,7 +168,7 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 var save = function(area){
 	 	var textArea = $(area).find(".value_multiplechoice_question_in_zone");
 	 	var quiz = {};
-	 	quiz.quizType = VISH.Constant.QZ_TYPE.MCHOICE;
+	 	quiz.quizType = VISH.Constant.QZ_TYPE.TF;
 	 	// Self-assessment (Autoevaluación)
 	 	quiz.selfA = false; //false by default
 
@@ -173,21 +188,20 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 		var choice = {};
 	 		choice.value = optionInstance.getPlainText();
 	 		choice.wysiwygValue = optionInstance.getData();
-	 		if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
+	 		var trueColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='true']");
+	 		if($(trueColumCheckbox).attr("check")==="true"){
 	 			choice.answer = true;
 	 			quiz.selfA = true;
 	 		} else {
-	 			choice.answer = "?";
+	 			var falseColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='false']");
+	 			if($(falseColumCheckbox).attr("check")==="false"){
+	 				choice.answer = false;
+	 				quiz.selfA = true;
+	 			} else {
+	 				choice.answer = "?";
+	 			}
 	 		}
 	 		quiz.choices.push(choice);
-	 	}
-
-	 	if(quiz.selfA){
-		 	$(quiz.choices).each(function(index,choice){
-		 		if(choice.answer !== true){
-		 			choice.answer = false;
-		 		}
-		 	});
 	 	}
 
 	 	return quiz;
@@ -201,7 +215,7 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		//Draw question
 		$(area).append(_getDummy());
 		$(area).attr('type','quiz');
-		$(area).attr('quiztype', VISH.Constant.QZ_TYPE.MCHOICE);
+		$(area).attr('quiztype', VISH.Constant.QZ_TYPE.TF);
 		_launchTextEditorForQuestion(area,quiz.question.wysiwygValue);
 		V.Editor.addDeleteButton(area);
 
@@ -211,6 +225,8 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 			if(quiz.selfA){
 				if(choice.answer===true){
 					check = "true";
+				} else if(choice.answer===false){
+					check = "false";
 				}
 			}
 			_addOptionInQuiz(area,choice.wysiwygValue,check);
