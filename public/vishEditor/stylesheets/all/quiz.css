@@ -1,5 +1,5 @@
 
-/* Multiple Choice (Editor) */
+/* Multiple Choice and TF (Editor) */
 
 .mcContainer {
     width: 100%;
@@ -83,6 +83,17 @@ img.mcCheckbox, img.tfCheckbox{
     cursor: pointer;
     margin-left: 12px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* Multiple Choice (Viewer...) */
 

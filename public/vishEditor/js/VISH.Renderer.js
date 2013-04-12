@@ -29,6 +29,7 @@ VISH.Renderer = (function(V,$,undefined){
 		switch(slide.type){
 			case undefined:
 			case V.Constant.STANDARD:
+			case V.Constant.QUIZ_SIMPLE:
 				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			case V.Constant.FLASHCARD:
@@ -36,10 +37,6 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 			case V.Constant.VTOUR:
 				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
-				break;
-			//TODO ask to Kike to do this in different way
-			case V.Constant.QUIZ_SIMPLE:
-				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
 				break;
 			default:
 				article = null;
@@ -63,23 +60,23 @@ VISH.Renderer = (function(V,$,undefined){
 		for(el in slide.elements){
 			if(!V.Renderer.Filter.allowElement(slide.elements[el])){
 				content += V.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === "text"){
+			} else if(slide.elements[el].type === V.Constant.TEXT){
 				content += _renderText(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === "image"){
+			} else if(slide.elements[el].type === V.Constant.IMAGE){
 				content += _renderImage(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === "video"){
+			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				content += renderVideo(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === "object"){
+			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
-			} else if(slide.elements[el].type === "snapshot"){
+			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
         		content += _renderSnapshot(slide.elements[el],slide.template);
         		classes += "snapshot ";
-      		} else if(slide.elements[el].type === "applet"){
+      		} else if(slide.elements[el].type === V.Constant.APPLET){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
 			} else if(slide.elements[el].type === V.Constant.QUIZ){
-				content += V.Quiz.Renderer.renderQuiz(slide.elements[el].quiztype , slide.elements[el] ,slide.template +"_"+slide.elements[el].areaid, slide.id, slide.elements[el].id);
+				content += V.Quiz.Renderer.renderQuiz(slide.elements[el],slide.template);
 				classes += V.Constant.QUIZ;
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);

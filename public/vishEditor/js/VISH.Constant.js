@@ -42,11 +42,12 @@ VISH.Constant.GAME = "game";
 VISH.Constant.VTOUR = "VirtualTour";
 
 //Element types
-VISH.Constant.IMAGE = "image";
 VISH.Constant.TEXT = "text";
+VISH.Constant.IMAGE = "image";
 VISH.Constant.VIDEO = "video";
 VISH.Constant.OBJECT = "object";
 VISH.Constant.SNAPSHOT = "snapshot";
+VISH.Constant.APPLET = "applet";
 VISH.Constant.QUIZ = "quiz";
 
 //Subtypes
