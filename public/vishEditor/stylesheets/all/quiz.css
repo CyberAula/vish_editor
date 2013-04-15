@@ -1,9 +1,23 @@
 
-/* Multiple Choice and TF (Editor) */
+/* Multiple Choice and TF (Viewer&Editor) */
 
 .mcContainer {
     width: 100%;
     height: 100%;
+}
+
+.mc_question_wrapper {
+    border: 1px solid #666666 !important;
+    color: #000000;
+    min-height: 15%;
+    margin-left: 6%;
+    margin-top: 10px;
+    width: 85%;
+    overflow: hidden;
+}
+
+.mc_question_wrapper_viewer {
+    border: none;
 }
 
 .mc_option_wrapper{
@@ -11,18 +25,18 @@
     position:relative;
 }
 
-.ul_mch_options_in_zone {
+ul.mc_options {
     padding: 0%;
 }
 
-.li_mch_options_in_zone {
+li.mc_option {
     display: inline-block;
     margin-left: 1%;
     margin-top: 5px;
     width: 98%;
 }
 
-.quiz_option_index {
+span.mc_option_index {
     color: #000000;
     display: inline-block;
     font-size: 1.7em;
@@ -33,7 +47,7 @@
     padding: 0%;
 }
 
-.multiplechoice_option_in_zone { 
+div.mc_option_text {
     border: 1px solid #666666;
     border-radius: 10px 10px 10px 10px;
     color: #000000;
@@ -49,7 +63,11 @@
     z-index: 1000;
 }
 
-table.MCchecks{
+div.mc_option_text_viewer{
+    border: none;
+}
+
+table.mc_checks{
     height: 52px;
     max-height: 52px;
     width: 14%;
@@ -57,12 +75,12 @@ table.MCchecks{
     text-align: center;
 }
 
-table.MCchecks > td {
+table.mc_checks > td {
     height: 100%;
     width: 50%;
 }
 
-table.MCchecks > td > img {
+table.mc_checks > td > img {
     margin-top: 5px;
 }
 
@@ -72,12 +90,12 @@ img.mcCheckbox, img.tfCheckbox{
     max-width: 32px;
 }
 
-.delete_quiz_option_button, .delete_quiz_option_button_tf {
+.delete_quiz_option_mc, .delete_quiz_option_tf {
     cursor: pointer;
     visibility: hidden;
 }
 
-.add_quiz_option_button, .add_quiz_option_button_tf {
+.add_quiz_option_mc, .add_quiz_option_tf {
     display: inline-block;
     width: 6%;
     cursor: pointer;
@@ -85,33 +103,51 @@ img.mcCheckbox, img.tfCheckbox{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-/* Multiple Choice (Viewer...) */
-
-.multiplechoice_option_in_viewer {
-    border: none !important;
-    display:inline-block;
-    position: relative;
-    text-align: left;
-
-}
-.option_in_stats {
-    display: block;
-}
+/* Multiple Choice (Only Viewer) */
 
 .mc_radio {
     float: left;
     display: inline-block;
+    margin-top: 2.3%;
 }
+
+.quizButtons{
+    height: 10%;
+}
+
+.quizButton {
+    height: 70%;
+    width: 15%;
+    margin-right: 4%;
+    background-color: #EEE;
+    border: 1px solid #CBCBCB;
+    border-radius: 14px 14px 14px 14px;
+    color: #3C3C3C;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-family: arial;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+}
+
+img.tfCheckbox_viewer{
+    width: 90%;
+    max-height: 28px;
+    max-width: 28px;
+    float: left;
+    margin-right: 1%;
+    margin-top: 1.6%;
+}
+
+
+/* ? */
+
+.option_in_stats {
+    display: block;
+}
+
 
 .participant_answer {
     display: none;
@@ -851,16 +887,6 @@ height: 20%;
     font-size: 2em;
     margin: 1%;
     color: #CCC;
-}
-
-.value_multiplechoice_question_in_zone, .value_truefalse_question_in_zone {
-    border: 1px solid #666666 !important;
-    color: #000000;
-    min-height: 15%;
-    margin-left: 8%;
-    margin-top: 10px;
-    width: 85%;
-    overflow: hidden;
 }
 
 .question_in_viewer {

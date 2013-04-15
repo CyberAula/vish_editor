@@ -47,7 +47,6 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	var _initAferStatusLoaded = function(options,presentation){
-		V.Quiz.init(presentation);
 		V.Flashcard.init();
 		V.Renderer.init();
 		V.Slides.init();
@@ -76,7 +75,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.Quiz.prepareQuiz(presentation);
+		
+		V.Quiz.init(presentation);
 
 		//Init Vish Editor Addons
 		if(options.addons){

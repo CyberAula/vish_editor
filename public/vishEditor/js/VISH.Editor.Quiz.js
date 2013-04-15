@@ -66,38 +66,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	}
 
 
-	/*
-	 * Utils
-	 */
-	var updateCheckbox = function(checkbox,check){
-		if(typeof check == "boolean"){
-			check = check.toString();
-		}
-
-		var imagePathRoot = V.ImagesPath+ "quiz/checkbox";
-		switch(check){
-			case "true":
-				$(checkbox).attr("check","true");
-				$(checkbox).attr("src",imagePathRoot+"_checked.jpg");
-				break;
-			case "false":
-				$(checkbox).attr("check","false");
-				$(checkbox).attr("src",imagePathRoot+"_wrong.png");
-				break;
-			case "none":
-			default:
-				$(checkbox).attr("check","none");
-				$(checkbox).attr("src",imagePathRoot+".jpg");
-				break;
-		}
-	}
-
 	return {
 		init			: init, 
 		add				: add,
 		save			: save,
-		draw			: draw,
-		updateCheckbox	: updateCheckbox
+		draw			: draw
 	};
 
 }) (VISH, jQuery);

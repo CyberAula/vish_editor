@@ -76,7 +76,7 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderApplet(slide.elements[el],slide.template);
 				classes += "applet ";
 			} else if(slide.elements[el].type === V.Constant.QUIZ){
-				content += V.Quiz.Renderer.renderQuiz(slide.elements[el],slide.template);
+				content += V.Quiz.render(slide.elements[el],slide.template);
 				classes += V.Constant.QUIZ;
 			} else {
 				content += _renderEmpty(slide.elements[el], slide.template);
@@ -85,10 +85,10 @@ VISH.Renderer = (function(V,$,undefined){
 
 		//When render a simple_quiz for voting
 		//if(slide.type==V.Constant.QUIZ) {
-		if(slide.type==V.Constant.QUIZ_SIMPLE) {
-			content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
-			classes += V.Constant.QUIZ;
-		}
+		// if(slide.type==V.Constant.QUIZ_SIMPLE) {
+		// 	content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
+		// 	classes += V.Constant.QUIZ;
+		// }
 
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
