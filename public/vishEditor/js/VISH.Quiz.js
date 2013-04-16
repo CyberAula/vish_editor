@@ -49,6 +49,12 @@ VISH.Quiz = (function(V,$,undefined){
     return quizButtons;
   }
 
+  var disableAnswerButton = function(quiz){
+    var answeButton = $(quiz).find("input.quizAnswerButton");
+    $(answeButton).attr("disabled", "disabled");
+    $(answeButton).addClass("quizAnswerButtonDisabled");
+  }
+
 
   /*
    * Utils
@@ -96,7 +102,8 @@ VISH.Quiz = (function(V,$,undefined){
     init            : init,
     render          : render,
     renderButtons   : renderButtons,
-    updateCheckbox  : updateCheckbox
+    updateCheckbox  : updateCheckbox,
+    disableAnswerButton : disableAnswerButton
   };
     
 }) (VISH, jQuery);

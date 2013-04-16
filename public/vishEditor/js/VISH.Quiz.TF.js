@@ -4,73 +4,65 @@ VISH.Quiz.TF = (function(V,$,undefined){
       _loadEvents();
   };
 
-
   var _loadEvents = function(){
-    $(document).on('click','.tfCheckbox_viewer', _onCheckboxClick);
   }
-
-
-  var _onCheckboxClick = function(event){
-    var check = $(event.target).attr("check");
-    var column = $(event.target).attr("column");
-
-    switch(column){
-      case "true":
-        if(check==="true"){
-          V.Quiz.updateCheckbox(event.target,"none");
-        } else {
-          var falseColumnCheckbox = $(event.target).parent().find(".tfCheckbox_viewer[column='false']");
-          V.Quiz.updateCheckbox(falseColumnCheckbox,"none");
-          V.Quiz.updateCheckbox(event.target,"true");
-        }
-        break;
-      case "false":
-        if(check==="false"){
-          V.Quiz.updateCheckbox(event.target,"none");
-        } else {
-          var trueColumnCheckbox = $(event.target).parent().find(".tfCheckbox_viewer[column='true']");
-          V.Quiz.updateCheckbox(trueColumnCheckbox,"none");
-          V.Quiz.updateCheckbox(event.target,"false");
-        }
-        break;
-      default:
-        break;
-    }
-  }
-
 
   var render = function(slide,template){
     var mcQuestion = $(V.Quiz.MC.render(slide,template));
     $(mcQuestion).attr("type",VISH.Constant.QZ_TYPE.TF);
+
+    var ul =  $(mcQuestion).find(".mc_options");
+    var newLi = $("<li class='mc_option'>");
+    $(newLi).html("<img src='/vishEditor/images/quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/><img src='/vishEditor/images/quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/>");
+    $(ul).prepend(newLi);
+
     $(mcQuestion).find(".option_wrapper").each(function(index,option){
       //Remove radio input
       $(option).find(".mc_radio").remove();
-      //Add checkbox input
-      var optionCheckbox = $("<img src='/vishEditor/images/quiz/checkbox.jpg' class='tfCheckbox_viewer' column='true' check='none'/><img src='/vishEditor/images/quiz/checkbox.jpg' class='tfCheckbox_viewer' column='false' check='none'/>");
-      $(option).prepend(optionCheckbox);
+      //Add new radio buttons
+      var form = $("<form></form>");
+      $(form).prepend("<input class='tf_radio' type='radio' name='tf_radio' column='false' value='"+index+"'/>");
+      $(form).prepend("<input class='tf_radio' type='radio' name='tf_radio' column='true' value='"+index+"'/>");
+      $(option).prepend(form);
     });
     return V.Utils.getOuterHTML(mcQuestion);
   };
 
   var onAnswerQuiz = function(quiz){
-    // TODO
-    // var myAnswer;
-    // $(quiz).find("input[type='radio']").each(function(index,radioButton){
-    //   if($(radioButton).is(':checked')){
-    //     myAnswer = parseInt($(radioButton).attr("value"));
-    //   }
-    // });
+    var choices = V.Quiz.MC.getChoices()[$(quiz).attr("id")];
 
-    // if(myAnswer){
-    //   //Compare
-    //   var quizAnswers = V.Quiz.MC.answers[$(quiz).attr("id")];
-    //   var correct = quizAnswers[myAnswer];
-    //   if(correct){
-    //     console.log("correct");
-    //   } else {
-    //     console.log("incorrect");
-    //   }
-    // }
+    $(quiz).find("form").each(function(index,form){
+      var trueRadio = $(form).find("input[type='radio'][column='true']")[0];
+      var falseRadio = $(form).find("input[type='radio'][column='false']")[0];
+
+      var myAnswer;
+      if($(trueRadio).is(':checked')){
+        myAnswer = true;
+      } else if($(falseRadio).is(':checked')){
+        myAnswer = false;
+      } else {
+        myAnswer = undefined;
+      }
+
+      var choice = choices[index];
+      var liChoice = $(quiz).find("li.mc_option")[index+1];
+
+      if(myAnswer===choice.answer){
+        $(liChoice).addClass("mc_correct_choice");
+      } else if(typeof myAnswer != "undefined"){
+        $(liChoice).addClass("mc_wrong_choice");
+      } else {
+        //No mark, indicate correct answer
+        if(choice.answer===true){
+          $(trueRadio).attr('checked', true);
+        } else if(choice.answer===false){
+          $(falseRadio).attr('checked', true);
+        }
+      }
+    });
+
+    $(quiz).find("input[type='radio']").attr("disabled","disabled");
+    V.Quiz.disableAnswerButton(quiz);
   }
 
   return {

@@ -103,12 +103,19 @@ img.mcCheckbox, img.tfCheckbox{
 }
 
 
-/* Multiple Choice (Only Viewer) */
+/* Multiple Choice and TF (Only Viewer) */
 
 .mc_radio {
     float: left;
     display: inline-block;
     margin-top: 2.3%;
+}
+
+.tf_radio {
+    float: left;
+    display: inline-block;
+    margin-top: 2.3%;
+    margin-right: 1.5%;
 }
 
 .quizButtons{
@@ -132,13 +139,26 @@ img.mcCheckbox, img.tfCheckbox{
     text-align: center;
 }
 
+.quizAnswerButtonDisabled{
+    color: #ccc;
+}
+
 img.tfCheckbox_viewer{
     width: 90%;
-    max-height: 28px;
-    max-width: 28px;
+    max-height: 25px;
+    max-width: 25px;
     float: left;
-    margin-right: 1%;
-    margin-top: 1.6%;
+    margin-right: 0%;
+    margin-bottom: -1.5%;
+    margin-right: 0.3%;
+}
+
+li.mc_correct_choice{
+    background: #E2FFE3;
+}
+
+li.mc_wrong_choice{
+    background: #FFE2E2;
 }
 
 

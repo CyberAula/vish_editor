@@ -1,7 +1,7 @@
 VISH.Quiz.MC = (function(V,$,undefined){
   
   var choicesLetters = ['a)','b)','c)','d)','e)','f)','g)','h)','i)','j)','k)','l)','m)','n)','o)','p)','q)','r)','s)'];
-  var answers = {};
+  var choices = {};
 
 
   var init = function(){
@@ -22,7 +22,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
     //Options
     var optionsWrapper = $("<ul class='mc_options'></<ul>");
-    answers[quizId] = [];
+    choices[quizId] = [];
 
     for(var i=0; i<slide.choices.length; i++){
       var option = slide.choices[i];
@@ -39,7 +39,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
       $(li).append(optionWrapper);
       $(optionsWrapper).append(li);
 
-      answers[quizId].push(option.answer);
+      choices[quizId].push(option);
     }
     $(container).append(optionsWrapper);
 
@@ -50,33 +50,55 @@ VISH.Quiz.MC = (function(V,$,undefined){
   };
 
   var onAnswerQuiz = function(quiz){
+    var myAnswerValue;
     var myAnswer;
+    var lisCorrect = [];
+
     $(quiz).find("input[type='radio']").each(function(index,radioButton){
       if($(radioButton).is(':checked')){
-        myAnswer = parseInt($(radioButton).attr("value"));
+        myAnswerValue = parseInt($(radioButton).attr("value"));
+        myAnswer = $("li.mc_option").has(radioButton);
       }
     });
 
-    if(myAnswer){
-      //Compare
-      var quizAnswers = answers[$(quiz).attr("id")];
-      var correct = quizAnswers[myAnswer];
-      if(correct){
-        console.log("correct");
-      } else {
-        console.log("incorrect");
+    //Look for correct answer
+    var quizChoices = choices[$(quiz).attr("id")];
+    for (var key in quizChoices){
+      if(quizChoices[key].answer===true){
+        //Get correct choice
+        lisCorrect.push($(quiz).find("li.mc_option")[key]);
       }
     }
+
+    if(myAnswerValue){
+      var choice = quizChoices[myAnswerValue];
+      if(choice.answer===true){
+        $(myAnswer).addClass("mc_correct_choice");
+      } else if(choice.answer===false){
+        $(myAnswer).addClass("mc_wrong_choice");
+        $(lisCorrect).each(function(index,liCorrect){
+          $(liCorrect).addClass("mc_correct_choice");
+        });
+      }
+    } else {
+      $(lisCorrect).each(function(index,liCorrect){
+        // $(liCorrect).addClass("mc_correct_choice");
+        $(liCorrect).find("input[type='radio']").attr("checked","checked");
+      });
+    }
+
+    $(quiz).find("input[type='radio']").attr("disabled","disabled");
+    V.Quiz.disableAnswerButton(quiz);
   }
 
-  var getAnswers = function(){
-    return answers;
+  var getChoices = function(){
+    return choices;
   }
 
   return {
     init          : init,
     render        : render,
-    getAnswers    : getAnswers,
+    getChoices    : getChoices,
     onAnswerQuiz  : onAnswerQuiz
   };
     
