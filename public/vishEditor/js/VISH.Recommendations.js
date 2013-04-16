@@ -16,7 +16,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(options && options["urlToGetRecommendations"]){
 			url_to_get_recommendations = options["urlToGetRecommendations"];			
 		}
-		generated = true;
+		generated = false;
 
 		//redimetion of fancybox is done in ViewerAdapter (line 300 aprox)
 		$("#fancyRec").fancybox({
