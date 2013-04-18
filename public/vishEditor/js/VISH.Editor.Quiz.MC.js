@@ -156,6 +156,9 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 	quiz.quizType = VISH.Constant.QZ_TYPE.MCHOICE;
 	 	// Self-assessment (Autoevaluación)
 	 	quiz.selfA = false; //false by default
+	 	quiz.extras = {};
+	 	quiz.extras.multipleAnswer = false; //false by default
+	 	var nAnswers = 0;
 
 	 	var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
 	 	quiz.question = {};
@@ -176,6 +179,7 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 		if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
 	 			choice.answer = true;
 	 			quiz.selfA = true;
+	 			nAnswers++;
 	 		} else {
 	 			choice.answer = "?";
 	 		}
@@ -188,6 +192,10 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		 			choice.answer = false;
 		 		}
 		 	});
+	 	}
+
+	 	if(nAnswers>1){
+	 		quiz.extras.multipleAnswer = true;
 	 	}
 
 	 	return quiz;
