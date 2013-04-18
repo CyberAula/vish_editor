@@ -13,15 +13,18 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
     var ul =  $(mcQuestion).find(".mc_options");
     var newLi = $("<li class='mc_option'>");
-    $(newLi).html("<img src='"+V.ImagesPath+"quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/><img src='"+V.ImagesPath+"quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/>");
+    $(newLi).html("<table class='tf_viewer'><tr><td><img src='"+V.ImagesPath+ "quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/></td></tr></table>");
+    $(ul).prepend(newLi);
 
     $(mcQuestion).find(".option_wrapper").each(function(index,option){
       //Remove radio input
       $(option).find(".mc_box").remove();
       //Add new radio buttons
-      var form = $("<form></form>");
-      $(form).prepend("<input class='tf_radio' type='radio' name='tf_radio' column='false' value='"+index+"'/>");
-      $(form).prepend("<input class='tf_radio' type='radio' name='tf_radio' column='true' value='"+index+"'/>");
+      var form = $("<form class='tf_viewer'></form>");
+      var table = $("<table><tr></tr></table>");
+      $(table).prepend("<td><input class='tf_radio' type='radio' name='tf_radio' column='false' value='"+index+"'/></td>");
+      $(table).prepend("<td><input class='tf_radio' type='radio' name='tf_radio' column='true' value='"+index+"'/></td>");
+      $(form).prepend(table);
       $(option).prepend(form);
     });
     return V.Utils.getOuterHTML(mcQuestion);
