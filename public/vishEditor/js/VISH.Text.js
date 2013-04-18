@@ -2,13 +2,14 @@ VISH.Text = (function(V,$,undefined){
 
 	//Convert <p><span> from px to ems
 	var init = function(){
-		$("article > div.VEtextArea > p").each(function(index,p){
-			if($(p).children().length === 0){
-				_setStyleInEm(p);
-				return;
-			}
-			_adaptSpans($(p).find("span"));
-		});
+
+		//Adapt area text fields
+		_adaptPs($("article > div.VEtextArea > p"));
+
+		//Adapt quiz questions
+		_adaptPs($("article > div.quizzContainer > div > p"));
+		//Adapt quiz answers
+		_adaptPs($("article > div.quizzContainer").find("td > p"));
 
 		//Make Tables responsive
 		$("article > div.VEtextArea > table").each(function(index,table){
@@ -40,6 +41,17 @@ VISH.Text = (function(V,$,undefined){
 					$(table).attr("style",tableStyle);
 				}
 			}
+		});
+	};
+
+	var _adaptPs = function(selector){
+		$(selector).each(function(index,p){
+			if($(p).children().length === 0){
+				_setStyleInEm(p);
+				return;
+			}
+			_adaptSpans($(p).find("span"));
+			_adaptFonts($(p).find("font"));
 		});
 	}
 

@@ -28,23 +28,21 @@ VISH.Quiz.MC = (function(V,$,undefined){
     $(container).append(questionWrapper);
 
     //Options
-    var optionsWrapper = $("<ul class='mc_options'></<ul>");
+    var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='mc_options'></table>");
     choices[quizId] = [];
 
     for(var i=0; i<slide.choices.length; i++){
       var option = slide.choices[i];
-      var li = $("<li class='mc_option' nChoice='"+(i+1)+"'></li>");
-      var optionWrapper = $("<div class='option_wrapper'></div>");
-      var optionBox = $("<input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/>");
-      var optionIndex = $("<span class='mc_option_index'>"+choicesLetters[i]+"</span>");
-      var optionText = $("<div class='mc_option_text mc_option_text_viewer'></div>");
+      var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
+      var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
+      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+choicesLetters[i]+"</span></td>");
+      var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
       $(optionText).html(option.wysiwygValue);
 
       $(optionWrapper).append(optionBox);
       $(optionWrapper).append(optionIndex);
       $(optionWrapper).append(optionText);
-      $(li).append(optionWrapper);
-      $(optionsWrapper).append(li);
+      $(optionsWrapper).append(optionWrapper);
 
       choices[quizId].push(option);
     }
@@ -66,25 +64,25 @@ VISH.Quiz.MC = (function(V,$,undefined){
       var choice = quizChoices[answerValue];
 
       if($(radioBox).is(':checked')){
-        var liAnswer = $("li.mc_option").has(radioBox);
+        var trAnswer = $("tr.mc_option").has(radioBox);
         if(choice.answer===true){
-          $(liAnswer).addClass("mc_correct_choice");
+          $(trAnswer).addClass("mc_correct_choice");
         } else if(choice.answer===false){
-          $(liAnswer).addClass("mc_wrong_choice");
+          $(trAnswer).addClass("mc_wrong_choice");
         }
         answeredQuiz = true;
       }
     });
 
     //Look and mark correct answers
-    var liCorrectAnswers = [];
+    var trCorrectAnswers = [];
     for (var key in quizChoices){
       if(quizChoices[key].answer===true){
         //Get correct choice
-        var liCorrect = $(quiz).find("li.mc_option")[key];
-        liCorrectAnswers.push($(quiz).find("li.mc_option")[key]);
+        var trCorrect = $(quiz).find("tr.mc_option")[key];
+        trCorrectAnswers.push($(quiz).find("tr.mc_option")[key]);
         if(answeredQuiz){
-          $(liCorrect).addClass("mc_correct_choice");
+          $(trCorrect).addClass("mc_correct_choice");
         }
       }
     }
@@ -92,8 +90,8 @@ VISH.Quiz.MC = (function(V,$,undefined){
     //Unfulfilled quiz
     if(!answeredQuiz){
       //Mark correct answers without colors
-      $(liCorrectAnswers).each(function(index,liCorrect){
-        $(liCorrect).find("input[name='mc_option']").attr("checked","checked");
+      $(trCorrectAnswers).each(function(index,trCorrect){
+        $(trCorrect).find("input[name='mc_option']").attr("checked","checked");
       });
     }
 
@@ -101,15 +99,15 @@ VISH.Quiz.MC = (function(V,$,undefined){
     V.Quiz.disableAnswerButton(quiz);
   }
 
-  var getChoices = function(){
-    return choices;
+  var getChoicesLetters = function(){
+    return choicesLetters;
   }
 
   return {
     init          : init,
     render        : render,
-    getChoices    : getChoices,
-    onAnswerQuiz  : onAnswerQuiz
+    onAnswerQuiz  : onAnswerQuiz,
+    getChoicesLetters  : getChoicesLetters
   };
     
 }) (VISH, jQuery);

@@ -1,5 +1,7 @@
 VISH.Quiz.TF = (function(V,$,undefined){
   
+  var choices = {};
+
   var init = function(){
       _loadEvents();
   };
@@ -8,34 +10,54 @@ VISH.Quiz.TF = (function(V,$,undefined){
   }
 
   var render = function(slide,template){
-    var mcQuestion = $(V.Quiz.MC.render(slide,template));
-    $(mcQuestion).attr("type",VISH.Constant.QZ_TYPE.TF);
+    var quizId = V.Utils.getId();
+    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+VISH.Constant.QZ_TYPE.TF+"'></div>");
 
-    var ul =  $(mcQuestion).find(".mc_options");
-    var newLi = $("<li class='mc_option'>");
-    $(newLi).html("<table class='tf_viewer'><tr><td><img src='"+V.ImagesPath+ "quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/></td></tr></table>");
-    $(ul).prepend(newLi);
+    //Question
+    var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
+    $(questionWrapper).html(slide.question.wysiwygValue);
+    $(container).append(questionWrapper);
 
-    $(mcQuestion).find(".option_wrapper").each(function(index,option){
-      //Remove radio input
-      $(option).find(".mc_box").remove();
-      //Add new radio buttons
-      var form = $("<form class='tf_viewer'></form>");
-      var table = $("<table><tr></tr></table>");
-      $(table).prepend("<td><input class='tf_radio' type='radio' name='tf_radio' column='false' value='"+index+"'/></td>");
-      $(table).prepend("<td><input class='tf_radio' type='radio' name='tf_radio' column='true' value='"+index+"'/></td>");
-      $(form).prepend(table);
-      $(option).prepend(form);
-    });
-    return V.Utils.getOuterHTML(mcQuestion);
+    //Options
+    var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='tf_options'></table>");
+    choices[quizId] = [];
+
+    //TF head
+    var newTr = $("<tr class='mc_option tf_head'><td><img src='"+V.ImagesPath+ "quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/></td><td></td><td></td></tr>");
+    $(optionsWrapper).prepend(newTr);
+
+    for(var i=0; i<slide.choices.length; i++){
+      var option = slide.choices[i];
+      var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
+      var optionBox1 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='true' value='"+index+"'/></td>");
+      var optionBox2 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='false' value='"+index+"'/></td>");
+      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+VISH.Quiz.MC.getChoicesLetters()[i]+"</span></td>");
+      var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
+      $(optionText).html(option.wysiwygValue);
+
+      $(optionWrapper).append(optionBox1);
+      $(optionWrapper).append(optionBox2);
+      $(optionWrapper).append(optionIndex);
+      $(optionWrapper).append(optionText);
+      $(optionsWrapper).append(optionWrapper);
+
+      choices[quizId].push(option);
+    }
+
+    $(container).append(optionsWrapper);
+
+    var quizButtons = V.Quiz.renderButtons(slide.selfA);
+    $(container).append(quizButtons);
+
+    return V.Utils.getOuterHTML(container);
   };
 
   var onAnswerQuiz = function(quiz){
-    var choices = V.Quiz.MC.getChoices()[$(quiz).attr("id")];
+    var quizChoices = choices[$(quiz).attr("id")];
+    $(quiz).find("tr.mc_option").not(".tf_head").each(function(index,tr){
 
-    $(quiz).find("form").each(function(index,form){
-      var trueRadio = $(form).find("input[type='radio'][column='true']")[0];
-      var falseRadio = $(form).find("input[type='radio'][column='false']")[0];
+      var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
+      var falseRadio = $(tr).find("input[type='radio'][column='false']")[0];
 
       var myAnswer;
       if($(trueRadio).is(':checked')){
@@ -46,13 +68,13 @@ VISH.Quiz.TF = (function(V,$,undefined){
         myAnswer = undefined;
       }
 
-      var choice = choices[index];
-      var liChoice = $(quiz).find("li.mc_option")[index+1];
+      var choice = quizChoices[index];
+      var trChoice = $(quiz).find("tr.mc_option").not(".tf_head")[index];
 
       if(myAnswer===choice.answer){
-        $(liChoice).addClass("mc_correct_choice");
+        $(trChoice).addClass("mc_correct_choice");
       } else if(typeof myAnswer != "undefined"){
-        $(liChoice).addClass("mc_wrong_choice");
+        $(trChoice).addClass("mc_wrong_choice");
       } else {
         //No mark, indicate correct answer
         if(choice.answer===true){

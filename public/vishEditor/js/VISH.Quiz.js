@@ -23,7 +23,8 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var _onStartQuiz = function(){
-    console.log("onStartQuiz");
+    // console.log("onStartQuiz");
+    //TODO
   }
 
   /**
