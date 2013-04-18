@@ -140,7 +140,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview){
 			$("div#viewerpreview").show();
-			V.Quiz.UnbindStartQuizEvents();
+			// V.Quiz.UnbindStartQuizEvents();
 		}
 
 		if((embed)&&(V.Status.getIsInIframe())){

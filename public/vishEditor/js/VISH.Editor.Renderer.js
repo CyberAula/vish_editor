@@ -33,33 +33,49 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var isSlideset = (slidesetModule!==null);
 
 		if(isSlideset){
-			var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
-			if((slideset)&&(slideset.slides)){
-				slides = slideset.slides;
-				var sL = slides.length;
-				for(var i=0;i<sL;i++){
-					_renderSlide(slides[i], i+1);
-				}
-			}
-			slidesetModule.loadSlideset(presentation);
-		} else {
-			//Presentation
-			slides = presentation.slides;
-			for(var i=0;i<slides.length;i++){
-				if(slides[i].type === V.Constant.FLASHCARD){
-					_renderFlashcard(slides[i], i+1);
-				} else {
-					_renderSlide(slides[i], i+1);			
-				}
-			}
+			_renderSlideset(presentation,slidesetModule);
+		} else if(presentation.type===VISH.Constant.PRESENTATION){
+			_renderPresentation(presentation);
+		} else if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
+			// Presentation stored in the quiz_simple_json field of quizzes;
+			// Edit this kind of presentations makes no sense, just for testing
+			//Edit as standard presentation
+			presentation.type = VISH.Constant.PRESENTATION;
+			_renderPresentation(presentation);
 		}
 	};
+
+	var _renderPresentation = function(presentation){
+		slides = presentation.slides;
+		for(var i=0;i<slides.length;i++){
+			if(slides[i].type === V.Constant.FLASHCARD){
+				_renderFlashcard(slides[i], i+1);
+			} else {
+				_renderSlide(slides[i], i+1);			
+			}
+		}
+	}
+
+	var _renderSlideset = function(presentation,slidesetModule){
+		var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
+		if((slideset)&&(slideset.slides)){
+			slides = slideset.slides;
+			var sL = slides.length;
+			for(var i=0;i<sL;i++){
+				_renderSlide(slides[i], i+1);
+			}
+		}
+		slidesetModule.loadSlideset(presentation);
+	}
 	
 	/**
 	 * function to render one slide in editor
 	 */
 	var _renderSlide = function(slide, slideNumber){
-		var template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
+		var template = "1";
+		if(slide.template){
+			template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
+		}
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
 		V.Editor.Slides.addSlide(scaffold);

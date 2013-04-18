@@ -801,6 +801,7 @@ VISH.Editor = (function(V,$,undefined){
 						if(quizJSON.extras){
 							element.extras = quizJSON.extras;
 						}
+						slide.containsQuiz = true;
 					} else if(element.type === V.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(".snapshot_wrapper");
 						var snapshotIframe = $(snapshotWrapper).children()[0];
@@ -825,25 +826,31 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type==V.Constant.QUIZ){
-						var quizSlide = $.extend(true, {}, element);
-						//Apply presentation Wrapper
-						var quizPresentation = {};
-						quizPresentation.title = presentation.title;
-						quizPresentation.description = presentation.description;
-						quizPresentation.author = '';
-						//add quiz_simple type to slide in json to render answer
-						quizSlide.type = V.Constant.QUIZ_SIMPLE;
-						quizPresentation.slides = [quizSlide];
-						quizPresentation.type = V.Constant.QUIZ_SIMPLE;
-						element.quiz_simple_json = quizPresentation;
-					}
 
 					element = {};
 				}
-			
 			});
 
+			if(slide.containsQuiz){
+				//Before save a slide with quiz
+				//Add a presentation to answer the quiz in live mode
+				var quizSlide = $.extend(true, {}, slide);
+				quizSlide.type = V.Constant.QUIZ_SIMPLE;
+				//Build a presentation Wrapper
+				var quizPresentation = {};
+				quizPresentation.title = presentation.title;
+				quizPresentation.description = presentation.description;
+				quizPresentation.author = presentation.author;
+				quizPresentation.type = V.Constant.QUIZ_SIMPLE;
+				quizPresentation.slides = [quizSlide];
+
+				for(var k=0; k<slide.elements.length; k++){
+					if(slide.elements[k].type===V.Constant.QUIZ){
+						slide.elements[k].quiz_simple_json = quizPresentation;
+					}
+				}
+			}
+			
 			if(isSlideset){
 				//If it is a slideset (e.g flashcard or virtual tour) we save 
 				//the slide into the slideset slides array
@@ -856,7 +863,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 
 			slide = {};
-			$(s).removeClass("temp_shown");						
+			$(s).removeClass("temp_shown");					
 		});
 
 		savedPresentation = presentation;  
