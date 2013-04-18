@@ -13,12 +13,11 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
     var ul =  $(mcQuestion).find(".mc_options");
     var newLi = $("<li class='mc_option'>");
-    $(newLi).html("<img src='/vishEditor/images/quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/><img src='/vishEditor/images/quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/>");
-    $(ul).prepend(newLi);
+    $(newLi).html("<img src='"+V.ImagesPath+"quiz/checkbox_checked.jpg' class='tfCheckbox_viewer'/><img src='"+V.ImagesPath+"quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/>");
 
     $(mcQuestion).find(".option_wrapper").each(function(index,option){
       //Remove radio input
-      $(option).find(".mc_radio").remove();
+      $(option).find(".mc_box").remove();
       //Add new radio buttons
       var form = $("<form></form>");
       $(form).prepend("<input class='tf_radio' type='radio' name='tf_radio' column='false' value='"+index+"'/>");

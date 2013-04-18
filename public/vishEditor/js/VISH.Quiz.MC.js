@@ -15,6 +15,13 @@ VISH.Quiz.MC = (function(V,$,undefined){
     var quizId = V.Utils.getId();
     var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+VISH.Constant.QZ_TYPE.MCHOICE+"'></div>");
 
+    var multipleAnswer = false;
+    var inputType = 'radio';
+    if((slide.extras)&&(slide.extras.multipleAnswer===true)){
+      multipleAnswer = true;
+      inputType = 'checkbox';
+    }
+
     //Question
     var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
     $(questionWrapper).html(slide.question.wysiwygValue);
@@ -28,12 +35,12 @@ VISH.Quiz.MC = (function(V,$,undefined){
       var option = slide.choices[i];
       var li = $("<li class='mc_option' nChoice='"+(i+1)+"'></li>");
       var optionWrapper = $("<div class='option_wrapper'></div>");
-      var optionRadio = $("<input class='mc_radio' type='radio' name='mc_radio' value='"+i+"'/>");
+      var optionBox = $("<input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/>");
       var optionIndex = $("<span class='mc_option_index'>"+choicesLetters[i]+"</span>");
       var optionText = $("<div class='mc_option_text mc_option_text_viewer'></div>");
       $(optionText).html(option.wysiwygValue);
 
-      $(optionWrapper).append(optionRadio);
+      $(optionWrapper).append(optionBox);
       $(optionWrapper).append(optionIndex);
       $(optionWrapper).append(optionText);
       $(li).append(optionWrapper);
@@ -50,44 +57,47 @@ VISH.Quiz.MC = (function(V,$,undefined){
   };
 
   var onAnswerQuiz = function(quiz){
-    var myAnswerValue;
-    var myAnswer;
-    var lisCorrect = [];
+    var answeredQuiz = false;
+    var quizChoices = choices[$(quiz).attr("id")];
+   
+    //Color correct and wrong answers
+    $(quiz).find("input[name='mc_option']").each(function(index,radioBox){
+      var answerValue = parseInt($(radioBox).attr("value"));
+      var choice = quizChoices[answerValue];
 
-    $(quiz).find("input[type='radio']").each(function(index,radioButton){
-      if($(radioButton).is(':checked')){
-        myAnswerValue = parseInt($(radioButton).attr("value"));
-        myAnswer = $("li.mc_option").has(radioButton);
+      if($(radioBox).is(':checked')){
+        var liAnswer = $("li.mc_option").has(radioBox);
+        if(choice.answer===true){
+          $(liAnswer).addClass("mc_correct_choice");
+        } else if(choice.answer===false){
+          $(liAnswer).addClass("mc_wrong_choice");
+        }
+        answeredQuiz = true;
       }
     });
 
-    //Look for correct answer
-    var quizChoices = choices[$(quiz).attr("id")];
+    //Look and mark correct answers
+    var liCorrectAnswers = [];
     for (var key in quizChoices){
       if(quizChoices[key].answer===true){
         //Get correct choice
-        lisCorrect.push($(quiz).find("li.mc_option")[key]);
+        var liCorrect = $(quiz).find("li.mc_option")[key];
+        liCorrectAnswers.push($(quiz).find("li.mc_option")[key]);
+        if(answeredQuiz){
+          $(liCorrect).addClass("mc_correct_choice");
+        }
       }
     }
 
-    if(myAnswerValue){
-      var choice = quizChoices[myAnswerValue];
-      if(choice.answer===true){
-        $(myAnswer).addClass("mc_correct_choice");
-      } else if(choice.answer===false){
-        $(myAnswer).addClass("mc_wrong_choice");
-        $(lisCorrect).each(function(index,liCorrect){
-          $(liCorrect).addClass("mc_correct_choice");
-        });
-      }
-    } else {
-      $(lisCorrect).each(function(index,liCorrect){
-        // $(liCorrect).addClass("mc_correct_choice");
-        $(liCorrect).find("input[type='radio']").attr("checked","checked");
+    //Unfulfilled quiz
+    if(!answeredQuiz){
+      //Mark correct answers without colors
+      $(liCorrectAnswers).each(function(index,liCorrect){
+        $(liCorrect).find("input[name='mc_option']").attr("checked","checked");
       });
     }
 
-    $(quiz).find("input[type='radio']").attr("disabled","disabled");
+    $(quiz).find("input[name='mc_option']").attr("disabled","disabled");
     V.Quiz.disableAnswerButton(quiz);
   }
 

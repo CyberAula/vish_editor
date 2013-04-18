@@ -40,7 +40,7 @@ VISH.Quiz = (function(V,$,undefined){
     var quizButtons = $("<div class='quizButtons'></div>");
     if(VISH.User.isLogged()){
       var startButton = $("<input type='button' class='quizButton quizStartButton' value='Start'/>");
-      $(quizButtons).prepend(startButton);
+      // $(quizButtons).prepend(startButton); //Not in this version
     }
     if(selfA){
       var answerButton = $("<input type='button' class='quizButton quizAnswerButton' value='Answer'/>");
