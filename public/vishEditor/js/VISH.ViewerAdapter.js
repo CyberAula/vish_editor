@@ -71,11 +71,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for preview
 			fs_button = fs_button && (!is_preview);
 
-			//Force fs buttons disabling
-			if(options["disablefullscreen"] === true){
-				fs_button = false;
-			}
-
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
 			//recommendations slide in the end
@@ -188,12 +183,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#back_arrow").show();
 			} 
-			if (V.Slides.isCurrentLastSlide()){
-				$("#forward_arrow").hide();		
-			} else {
-				$("#forward_arrow").show();
-			}
-			//$("#forward_arrow").show();
+			//if (V.Slides.isCurrentLastSlide()){
+			//	$("#forward_arrow").hide();		
+			//} else {
+			//	$("#forward_arrow").show();
+			//}
+			$("#forward_arrow").show();
 		}
 
 		// Pager
@@ -203,12 +198,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#page-switcher-start").show();
 			}
-			if(V.Slides.isCurrentLastSlide()){
-				$("#page-switcher-end").hide();
-			} else {
-				$("#page-switcher-end").show();
-			}
-			//$("#page-switcher-end").show();
+			//if(V.Slides.isCurrentLastSlide()){
+			//	$("#page-switcher-end").hide();
+			//} else {
+			//	$("#page-switcher-end").show();
+			//}
+			$("#page-switcher-end").show();
 		}
 	};
 
