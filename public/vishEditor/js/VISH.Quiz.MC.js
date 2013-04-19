@@ -95,6 +95,24 @@ VISH.Quiz.MC = (function(V,$,undefined){
       });
     }
 
+    disableQuiz(quiz);
+  }
+
+  var getResults = function(quiz){
+    var report = {};
+    report.results = [];
+
+    $(quiz).find("input[name='mc_option']").each(function(index,radioBox){
+      if($(radioBox).is(':checked')){
+        report.results.push({id: (index+1).toString(), answer: "true"});
+      }
+    });
+
+    report.empty = (report.results.length===0);
+    return report;
+  }
+
+  var disableQuiz = function(quiz){
     $(quiz).find("input[name='mc_option']").attr("disabled","disabled");
     V.Quiz.disableAnswerButton(quiz);
   }
@@ -104,10 +122,12 @@ VISH.Quiz.MC = (function(V,$,undefined){
   }
 
   return {
-    init          : init,
-    render        : render,
-    onAnswerQuiz  : onAnswerQuiz,
-    getChoicesLetters  : getChoicesLetters
+    init                : init,
+    render              : render,
+    onAnswerQuiz        : onAnswerQuiz,
+    getChoicesLetters   : getChoicesLetters,
+    getResults          : getResults,
+    disableQuiz         : disableQuiz
   };
     
 }) (VISH, jQuery);

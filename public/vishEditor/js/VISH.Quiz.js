@@ -1,9 +1,18 @@
 VISH.Quiz = (function(V,$,undefined){
   
+  var quizMode; //selfA or realTime
+  var selfA = "selfA";
+  var realTime = "realTime";
+
   var init = function(presentation){
     V.Quiz.MC.init();
     V.Quiz.TF.init();
     _loadEvents();
+    if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
+      quizMode = VISH.Constant.QZ_MODE.RT;
+    } else {
+      quizMode = VISH.Constant.QZ_MODE.SELFA;
+    }
   };
 
 /*
@@ -18,8 +27,27 @@ VISH.Quiz = (function(V,$,undefined){
     var quiz = $("div.quizzContainer").has(event.target);
     var quizModule = _getQuizModule($(quiz).attr("type"));
     if(quizModule){
-      quizModule.onAnswerQuiz(quiz);
+      if(quizMode===VISH.Constant.QZ_MODE.SELFA){
+        quizModule.onAnswerQuiz(quiz);
+      } else {
+        var report = quizModule.getResults(quiz);
+        _answerRTQuiz(quiz,quizModule,report);
+      }      
     }
+  }
+
+  var _answerRTQuiz = function(quiz,quizModule,report){
+    if(report.empty===true){
+      alert("Answer the quiz before send");
+      return;
+    }
+    quizModule.disableQuiz(quiz);
+
+    var results = report.results;
+    V.Debugging.log(results)
+    //Send to ViSH... get Quiz session id, etc
+    
+    alert("Your answer has been submitted");
   }
 
   var _onStartQuiz = function(){

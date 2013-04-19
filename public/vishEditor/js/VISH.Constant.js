@@ -56,6 +56,11 @@ VISH.Constant.QZ_TYPE.OPEN = "open";
 VISH.Constant.QZ_TYPE.MCHOICE = "multiplechoice";
 VISH.Constant.QZ_TYPE.TF = "truefalse";
 
+//Quiz
+VISH.Constant.QZ_MODE = {};
+VISH.Constant.QZ_MODE.SELFA = "selfA";
+VISH.Constant.QZ_MODE.RT = "realTime";
+
 //Text
 VISH.Constant.TextDefault = 12;
 VISH.Constant.TextBase = 12;

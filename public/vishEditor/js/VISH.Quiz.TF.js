@@ -85,6 +85,39 @@ VISH.Quiz.TF = (function(V,$,undefined){
       }
     });
 
+    disableQuiz(quiz);
+  }
+
+  var getResults = function(quiz){
+    var report = {};
+    report.results = [];
+    report.empty = true;
+
+    $(quiz).find("input[name='mc_option']").each(function(index,radioBox){
+      if($(radioBox).is(':checked')){
+        results.push({id: (index+1).toString(), answer: true});
+      }
+    });
+
+    $(quiz).find("tr.mc_option").not(".tf_head").each(function(index,tr){
+      var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
+      var falseRadio = $(tr).find("input[type='radio'][column='false']")[0];
+
+      if($(trueRadio).is(':checked')){
+        report.results.push({id: (index+1).toString(), answer: "true"});
+        report.empty = false;
+      } else if($(falseRadio).is(':checked')){
+        report.results.push({id: (index+1).toString(), answer: "false"});
+        report.empty = false;
+      } else {
+        report.results.push({id: (index+1).toString(), answer: "none"});
+      }
+    });
+
+    return report;
+  }
+
+  var disableQuiz = function(quiz){
     $(quiz).find("input[type='radio']").attr("disabled","disabled");
     V.Quiz.disableAnswerButton(quiz);
   }
@@ -92,7 +125,9 @@ VISH.Quiz.TF = (function(V,$,undefined){
   return {
     init          : init,
     render        : render,
-    onAnswerQuiz  : onAnswerQuiz
+    onAnswerQuiz  : onAnswerQuiz,
+    getResults    : getResults,
+    disableQuiz   : disableQuiz
   };
     
 }) (VISH, jQuery);

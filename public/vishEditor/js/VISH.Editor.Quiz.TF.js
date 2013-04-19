@@ -186,6 +186,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 	 		var textArea = optionTextAreas[i];
 	 		var optionInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
 	 		var choice = {};
+	 		choice.id = (i+1).toString();
 	 		choice.value = optionInstance.getPlainText();
 	 		choice.wysiwygValue = optionInstance.getData();
 	 		var trueColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='true']");

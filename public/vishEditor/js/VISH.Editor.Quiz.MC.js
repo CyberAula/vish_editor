@@ -174,6 +174,7 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	 		var textArea = optionTextAreas[i];
 	 		var optionInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
 	 		var choice = {};
+	 		choice.id = (i+1).toString();
 	 		choice.value = optionInstance.getPlainText();
 	 		choice.wysiwygValue = optionInstance.getData();
 	 		if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
