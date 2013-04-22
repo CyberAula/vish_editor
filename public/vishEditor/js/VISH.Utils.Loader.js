@@ -87,7 +87,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 		
 		
-    var loadImagesOnCarrouselOrder = function(imagesArray,callback, carrouselDivId,titleArray){
+    var loadImagesOnCarrouselOrder = function(imagesArray,callback,carrouselDivId,titleArray){
 			var validImagesArray = imagesArray;
       var imagesLength = imagesArray.length;
       var imagesLoaded = 0;

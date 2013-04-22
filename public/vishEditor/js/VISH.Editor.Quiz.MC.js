@@ -127,9 +127,9 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	var _launchTextEditorForQuestion = function(area,question){
 		var textArea = $(area).find(".mc_question_wrapper");
 		if(!question){
-			V.Editor.Text.launchTextEditor({}, textArea, "", {quiz: true, forceNew: true, fontSize: 38, focus: true, autogrow: true});
+			V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 38, focus: true, autogrow: true});
 		} else {
-			V.Editor.Text.launchTextEditor({}, textArea, question, {quiz: true, autogrow: true});
+			V.Editor.Text.launchTextEditor({}, textArea, question, {autogrow: true});
 		}
 	}
 

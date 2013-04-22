@@ -46,7 +46,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	 */
 	var generateFancybox = function(){
 		if(!generated){
-			console.log("user_id " + user_id + " presentation_id " + presentation_id);
+			// console.log("user_id " + user_id + " presentation_id " + presentation_id);
 			if(url_to_get_recommendations !== undefined){
 				var params_to_send = {
 					user_id: user_id,
@@ -95,7 +95,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var showFancybox = function(){
-		console.log("show");
+		// console.log("show");
 		$("#fancyRec").trigger('click');
 	};
 

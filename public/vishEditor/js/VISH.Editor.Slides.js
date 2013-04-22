@@ -82,6 +82,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			moving_current_slide = true;
 		}
 
+		var textAreas = copyTextAreasOfSlide(article_to_move);
 		$(article_to_move).remove();
 		if(movement=="after"){
 			$(article_reference).after(article_to_move);
@@ -94,6 +95,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		//Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
+
+		//Reload text areas
+		_cleanTextAreas(article_to_move);
+		_loadTextAreasOfSlide(article_to_move,textAreas);
 
 		//Update slideEls
 		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
@@ -109,24 +114,76 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		
 	}
 
-	var copySlideWithNumber = function(slideNumber){
+	var copySlideWithNumber = function(slideNumber,options){
 		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
 		var newSlide = $(slide).clone();
-		copySlide(newSlide);
+		copySlide(newSlide,options);
 	}
 
-	var copySlide = function(newSlide){
+	var copySlide = function(slideToCopy,options){
+		slideToCopy = _cleanTextAreas(slideToCopy);
+		slideToCopy = V.Editor.Utils.replaceIdsForSlide(slideToCopy);
+		var newId = $(slideToCopy).attr("id");
+
+		if(typeof slideToCopy == "undefined"){
+			return;
+		}
+
+		var slideToCopyType = V.Slides.getSlideType(slideToCopy);
+
+
+		/////////////////
+		//Pre-copy actions
+		/////////////////
+
+		if(slideToCopyType === V.Constant.FLASHCARD){
+			var flashcardId = $(slideToCopy).attr("id");
+
+			if(!options.flashcardExcursionJSON){
+				//We need flashcard excursion JSON to copy a flashcard!
+				return;
+			}
+
+			var the_flashcard_excursion = options.flashcardExcursionJSON;
+			var selectedFc = V.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion,flashcardId);
+			V.Editor.Flashcard.addFlashcard(selectedFc);
+			//And now we add the points of interest with their click events to show the slides
+			for(index in selectedFc.pois){
+				var poi = selectedFc.pois[index];
+				V.Flashcard.addArrow(selectedFc.id, poi, true);
+			}
+			V.Editor.Events.bindEventsForFlashcard(selectedFc);
+		}
+
+		/////////////////
+		//Copy actions
+		/////////////////
+
 		var currentSlide = V.Slides.getCurrentSlide();
 		if(currentSlide){
-			$(currentSlide).after(newSlide);
+			$(currentSlide).after(slideToCopy);
 		} else {
-			$("section#slides_panel").append(newSlide);
+			$("section#slides_panel").append(slideToCopy);
 		}
 		
-		V.Editor.Utils.refreshDraggables(newSlide);
+
+		/////////////////
+		//Post-copy actions
+		/////////////////
+		var slideCopied = $("#"+newId);
+
+		//Restore draggables
+		V.Editor.Utils.refreshDraggables(slideCopied);
+
+		//Restore text areas
+		if(slideToCopyType === V.Constant.STANDARD){
+			if(options.textAreas){
+				_loadTextAreasOfSlide(slideCopied,options.textAreas);
+			}
+		}
 		
 		//Update slideEls
 		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
@@ -136,13 +193,71 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Slides.updateSlideEls();
 
 		//Redraw thumbnails
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			if(currentSlide){
+				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber()+1);
+				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
+			} else {
+				V.Slides.goToSlide(1);
+				V.Editor.Thumbnails.moveCarrouselToSlide(1);
+			}
+		});
+	}
 
-		if(currentSlide){
-			V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
-		} else {
-			V.Slides.goToSlide(1);
-		}
+	var _cleanTextAreas = function(slide){
+		$(slide).find("div[type='text'],div.wysiwygTextArea").each(function(index,textArea){
+			$(textArea).html("");
+		});
+		return slide;
+	}
+
+	var copyTextAreasOfSlide = function(slide){
+		var textAreas = {};
+
+		//Copy text areas
+		$(slide).find("div[type='text']").each(function(index,textArea){
+			var areaId = $(textArea).attr("areaid");
+			var ckEditor = V.Editor.Text.getCKEditorFromZone(textArea);
+			if((areaId)&&(ckEditor!==null)){
+				textAreas[areaId] = ckEditor.getData();
+			}
+		});
+
+		//Copy quiz areas
+		$(slide).find("div[type='quiz']").each(function(index,quizArea){
+			var areaId = $(quizArea).attr("areaid");
+			textAreas[areaId] = [];
+			$(quizArea).find("div.wysiwygTextArea").each(function(index,textArea){
+				var ckEditor = V.Editor.Text.getCKEditorFromTextArea(textArea);
+				if((areaId)&&(ckEditor!==null)){
+					textAreas[areaId].push(ckEditor.getData());
+				}
+			});
+		});
+
+		return textAreas;
+	}
+
+	var _loadTextAreasOfSlide = function(slide,textAreas){
+		$(slide).find("div[type='text']").each(function(index,textArea){
+			var areaId = $(textArea).attr("areaid");
+			if((areaId)&&(textAreas[areaId])){
+				var data = textAreas[areaId];
+				V.Editor.Text.launchTextEditor({}, $(textArea), data);
+			}
+		});
+
+		$(slide).find("div[type='quiz']").each(function(index,quizArea){
+			var areaId = $(quizArea).attr("areaid");
+			if((areaId)&&(textAreas[areaId])){
+				var data = textAreas[areaId];
+				$(quizArea).find("div.wysiwygTextArea").each(function(index,textArea){
+					var parent = $(textArea).parent();
+					$(parent).html("");
+					V.Editor.Text.launchTextEditor({}, $(parent), data[index], {autogrow: true});
+				});
+			}
+		});
 	}
 
 	var addSlide = function(slide){
@@ -184,7 +299,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlide				: copySlide,
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
-		removeSlide				: removeSlide
+		removeSlide				: removeSlide,
+		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 
 }) (VISH, jQuery);

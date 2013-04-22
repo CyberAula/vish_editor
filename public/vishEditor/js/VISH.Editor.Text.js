@@ -82,7 +82,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
-		var wysiwygContainer = $("<div id='"+wysiwygContainerId+"'></div>")
+		var wysiwygContainer = $("<div id='"+wysiwygContainerId+"' class='wysiwygTextArea'></div>")
 		$(wysiwygContainer).attr('style','width: 100%; height: 100%');
 		$(current_area).append(wysiwygContainer);
 
