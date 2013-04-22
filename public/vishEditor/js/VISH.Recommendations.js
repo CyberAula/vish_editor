@@ -95,7 +95,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var showFancybox = function(){
-		// console.log("show");
+		if((V.Utils.getOptions())&&(V.Utils.getOptions().preview)){
+			return;
+		}
 		$("#fancyRec").trigger('click');
 	};
 
