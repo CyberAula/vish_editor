@@ -12,11 +12,6 @@ VISH.Quiz = (function(V,$,undefined){
     } else {
       quizMode = V.Constant.QZ_MODE.SELFA;
     }
-
-    if(V.Utils.getOptions().quizSessionId){
-        quizSessionId = V.Utils.getOptions().quizSessionId;
-      }
-    quizMode = V.Constant.QZ_MODE.RT;
   }
 
   var init = function(){
@@ -49,7 +44,6 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _answerRTQuiz = function(quiz,quizModule,report){
     if(!quizSessionId){
-      alert("No quizSessionId");
       return;
     }
     if(report.empty===true){
@@ -62,10 +56,11 @@ VISH.Quiz = (function(V,$,undefined){
     V.Debugging.log(answers);
 
     V.Quiz.API.sendAnwers(answers, quizSessionId, 
-      function(){
+      function(data){
          alert("Your answer has been submitted");
+         console.log(data);
     }, 
-      function(){
+      function(error){
         alert("Error on submit answer");
     });
   }
@@ -75,9 +70,16 @@ VISH.Quiz = (function(V,$,undefined){
     V.Quiz.API.startQuizSession(quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
   }
 
-  var _onQuizSessionReceived = function(data){
+  var _onQuizSessionReceived = function(quizSession){
     console.log("_onQuizSessionReceived");
-    console.log(data);
+    console.log(quizSession);
+
+    // V.Quiz.API.getResults(quizSession.id,
+    // function(results){
+    //   console.log(results);
+    // }, function(error){
+    //   console.log(error);
+    // })
   }
 
   var _onQuizSessionReceivedError = function(error){
