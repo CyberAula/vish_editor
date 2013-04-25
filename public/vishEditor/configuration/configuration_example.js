@@ -81,7 +81,7 @@ var getOptions = function(){
 			options["token"] = "12xfDgR345x6";
 
 			//Testing Quizes
-			options["quiz_active_session_id"] = "29";
+			options["quizSessionId"] = "29";
 
 			//Show full presentation when its outside an inframe 
 			options["full"] = false;

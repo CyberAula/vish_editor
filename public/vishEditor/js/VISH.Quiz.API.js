@@ -8,8 +8,8 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Request new quiz session
 	* Server responds with a quiz_session JSON object including the quiz session id
 	*/
-	var postStartQuizSession = function(quiz,successCallback, failCallback){
-		if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
+	var startQuizSession = function(quiz,successCallback, failCallback){
+		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
 			var send_type = 'POST';
 
 	        var params = {
@@ -39,7 +39,37 @@ VISH.Quiz.API = (function(V,$,undefined){
 		}
 	};
 
+	/**
+	 * Send answers for real time quizzes
+	 * PUT /quiz_sessions/X
+	 */
+	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
+		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
+			var send_type = 'PUT';
+	       
+	        var params = {
+	      	  "id": quizSessionId,
+	     	  "answers": JSON.stringify(answers),
+	          "authenticity_token" : V.User.getToken()
+	        }
 
+	        $.ajax({
+	          type    : send_type,
+	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId,
+	          data    : params,
+				success : function(data) {
+				if(typeof successCallback=="function"){
+					successCallback(data);
+				}
+	          },
+				error: function(error){
+					failCallback(error);
+				}
+             });
+
+	         return null;
+		}
+   };
 
 
 /*
@@ -95,49 +125,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
   };
 	
-	/**
-	 * PUT /quiz_sessions/X => vote => redirect to show
-     * used for students when send a vote 
-	 */
-	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()["mode"]=="vish"){
-		//POST 
-			var send_type = 'PUT';
-	       
-	        V.Debugging.log("token is: " + V.User.getToken());
-	        var params = {
-	      	  "id": quiz_active_session_id,
-	     	  "option":answer_selected,
-	          "authenticity_token" : V.User.getToken()
-	        }
 
-	        $.ajax({
-	          type    : send_type,
-	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quiz_active_session_id,
-	          data    : params,
-	          success : function(data) {
-	            var results = data;
-	            if(typeof successCallback=="function"){
-	            	successCallback(results);
-	            }
-	          },
-	          error: function(error){
-	          	failCallback(error);
-	          }
-
-             });
-
-	         return null;
-	} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
-			V.Debugging.log("No server case");
-			var quiz_session_id = "123";
-			if(typeof successCallback=="function"){
-				successCallback(quiz_session_id);
-			}
-		}
-	
-
-   };
  	/**
 	 * GET /quiz_sessions/X => render vote or results page 
 	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
@@ -191,13 +179,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	
 	return {
-		init					            : init, 
-		postStartQuizSession				: postStartQuizSession, 
-		deleteQuizSession					: deleteQuizSession, 
-		putQuizSession						: putQuizSession, 
-		getQuizSessionResults				: getQuizSessionResults
-
-		
+		init					    : init, 
+		startQuizSession			: startQuizSession, 
+		sendAnwers					: sendAnwers
 	};
 
 }) (VISH, jQuery);

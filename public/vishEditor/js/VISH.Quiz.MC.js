@@ -98,17 +98,17 @@ VISH.Quiz.MC = (function(V,$,undefined){
     disableQuiz(quiz);
   }
 
-  var getResults = function(quiz){
+  var getReport = function(quiz){
     var report = {};
-    report.results = [];
+    report.answers = [];
 
     $(quiz).find("input[name='mc_option']").each(function(index,radioBox){
       if($(radioBox).is(':checked')){
-        report.results.push({id: (index+1).toString(), answer: "true"});
+        report.answers.push({no: (index+1).toString(), answer: "true"});
       }
     });
 
-    report.empty = (report.results.length===0);
+    report.empty = (report.answers.length===0);
     return report;
   }
 
@@ -126,7 +126,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
     render              : render,
     onAnswerQuiz        : onAnswerQuiz,
     getChoicesLetters   : getChoicesLetters,
-    getResults          : getResults,
+    getReport           : getReport,
     disableQuiz         : disableQuiz
   };
     

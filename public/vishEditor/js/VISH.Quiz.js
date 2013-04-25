@@ -1,13 +1,22 @@
 VISH.Quiz = (function(V,$,undefined){
   
   var quizMode; //selfA or realTime
+  var quizSessionId;
 
   var initBeforeRender = function(presentation){
     if(presentation.type===V.Constant.QUIZ_SIMPLE){
       quizMode = V.Constant.QZ_MODE.RT;
+      if(V.Utils.getOptions().quizSessionId){
+        quizSessionId = V.Utils.getOptions().quizSessionId;
+      }
     } else {
       quizMode = V.Constant.QZ_MODE.SELFA;
     }
+
+    if(V.Utils.getOptions().quizSessionId){
+        quizSessionId = V.Utils.getOptions().quizSessionId;
+      }
+    quizMode = V.Constant.QZ_MODE.RT;
   }
 
   var init = function(){
@@ -32,29 +41,38 @@ VISH.Quiz = (function(V,$,undefined){
       if(quizMode===V.Constant.QZ_MODE.SELFA){
         quizModule.onAnswerQuiz(quiz);
       } else {
-        var report = quizModule.getResults(quiz);
+        var report = quizModule.getReport(quiz);
         _answerRTQuiz(quiz,quizModule,report);
       }      
     }
   }
 
   var _answerRTQuiz = function(quiz,quizModule,report){
+    if(!quizSessionId){
+      alert("No quizSessionId");
+      return;
+    }
     if(report.empty===true){
       alert("Answer the quiz before send");
       return;
     }
     quizModule.disableQuiz(quiz);
 
-    var results = report.results;
-    V.Debugging.log(results)
-    //Send to ViSH... get Quiz session id, etc
-    
-    alert("Your answer has been submitted");
+    var answers = report.answers;
+    V.Debugging.log(answers);
+
+    V.Quiz.API.sendAnwers(answers, quizSessionId, 
+      function(){
+         alert("Your answer has been submitted");
+    }, 
+      function(){
+        alert("Error on submit answer");
+    });
   }
 
   var _onStartQuiz = function(){
     var quizJSON = _getQuizJSONFromSlide(V.Slides.getCurrentSlide());
-    V.Quiz.API.postStartQuizSession(quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+    V.Quiz.API.startQuizSession(quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
   }
 
   var _onQuizSessionReceived = function(data){

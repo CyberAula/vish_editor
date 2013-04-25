@@ -88,29 +88,23 @@ VISH.Quiz.TF = (function(V,$,undefined){
     disableQuiz(quiz);
   }
 
-  var getResults = function(quiz){
+  var getReport = function(quiz){
     var report = {};
-    report.results = [];
+    report.answers = [];
     report.empty = true;
-
-    $(quiz).find("input[name='mc_option']").each(function(index,radioBox){
-      if($(radioBox).is(':checked')){
-        results.push({id: (index+1).toString(), answer: true});
-      }
-    });
 
     $(quiz).find("tr.mc_option").not(".tf_head").each(function(index,tr){
       var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
       var falseRadio = $(tr).find("input[type='radio'][column='false']")[0];
 
       if($(trueRadio).is(':checked')){
-        report.results.push({id: (index+1).toString(), answer: "true"});
+        report.answers.push({no: (index+1).toString(), answer: "true"});
         report.empty = false;
       } else if($(falseRadio).is(':checked')){
-        report.results.push({id: (index+1).toString(), answer: "false"});
+        report.answers.push({no: (index+1).toString(), answer: "false"});
         report.empty = false;
       } else {
-        report.results.push({id: (index+1).toString(), answer: "none"});
+        report.answers.push({no: (index+1).toString(), answer: "none"});
       }
     });
 
@@ -126,7 +120,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
     init          : init,
     render        : render,
     onAnswerQuiz  : onAnswerQuiz,
-    getResults    : getResults,
+    getReport     : getReport,
     disableQuiz   : disableQuiz
   };
     
