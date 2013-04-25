@@ -6,14 +6,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
    /*
 	* Request new quiz session
-	* Server responds with a quiz_session_id
+	* Server responds with a quiz_session JSON object including the quiz session id
 	*/
-	var postStartQuizSession = function(quizId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()["mode"]=="vish"){
+	var postStartQuizSession = function(quiz,successCallback, failCallback){
+		if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
 			var send_type = 'POST';
-	       
+
 	        var params = {
-	          "quiz_id": quizId,
+	          "quiz": JSON.stringify(quiz),
 	          "authenticity_token" : V.User.getToken()
 	        }
 
@@ -22,38 +22,33 @@ VISH.Quiz.API = (function(V,$,undefined){
 				url     : 'http://'+ window.location.host + '/quiz_sessions',
 				data    : params,
 				success : function(data) {
-					var quiz_session_id = data;
 					if(typeof successCallback=="function"){
-						successCallback(quiz_session_id);
+						successCallback(data);
 					}
 				},
 				error: function(error){
 					failCallback(error);
 				}
 			});
-
-	         return null;
-
-		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 			V.Debugging.log("No server case");
-
-			if(quizId==12) {
-				var quiz_session_id = "98988";
-			} else if (quizId==13) {
-				var quiz_session_id = "98955";
-			}
-			 else if (quizId==14) {
-				var quiz_session_id = "98977";
-			}
+			var quiz_session = {id: "10000"*(1+Math.random())};
 			if(typeof successCallback=="function"){
-				successCallback(quiz_session_id);
+				successCallback(quiz_session);
 			}
 		}
-
 	};
 
+
+
+
+/*
+ *	Old version
+ */
+
+
 	/**
-  * DELETE /quiz_sessions/X => close quiz => show results
+  	 * DELETE /quiz_sessions/X => close quiz => show results
 	 * function calls VISH server for closing a voting
 	 */
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){

@@ -1,4 +1,4 @@
-VISH.Quiz = (function(V,$,undefined){
+VISH.Quiz_OLD = (function(V,$,undefined){
   
   var quizMode;
   var quizSessionStarted = false; 

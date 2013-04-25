@@ -1,18 +1,20 @@
 VISH.Quiz = (function(V,$,undefined){
   
   var quizMode; //selfA or realTime
-  var selfA = "selfA";
-  var realTime = "realTime";
 
-  var init = function(presentation){
+  var initBeforeRender = function(presentation){
+    if(presentation.type===V.Constant.QUIZ_SIMPLE){
+      quizMode = V.Constant.QZ_MODE.RT;
+    } else {
+      quizMode = V.Constant.QZ_MODE.SELFA;
+    }
+  }
+
+  var init = function(){
+    V.Quiz.API.init();
     V.Quiz.MC.init();
     V.Quiz.TF.init();
     _loadEvents();
-    if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
-      quizMode = VISH.Constant.QZ_MODE.RT;
-    } else {
-      quizMode = VISH.Constant.QZ_MODE.SELFA;
-    }
   };
 
 /*
@@ -27,7 +29,7 @@ VISH.Quiz = (function(V,$,undefined){
     var quiz = $("div.quizzContainer").has(event.target);
     var quizModule = _getQuizModule($(quiz).attr("type"));
     if(quizModule){
-      if(quizMode===VISH.Constant.QZ_MODE.SELFA){
+      if(quizMode===V.Constant.QZ_MODE.SELFA){
         quizModule.onAnswerQuiz(quiz);
       } else {
         var report = quizModule.getResults(quiz);
@@ -51,9 +53,41 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var _onStartQuiz = function(){
-    // console.log("onStartQuiz");
-    //TODO
+    var quizJSON = _getQuizJSONFromSlide(V.Slides.getCurrentSlide());
+    V.Quiz.API.postStartQuizSession(quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
   }
+
+  var _onQuizSessionReceived = function(data){
+    console.log("_onQuizSessionReceived");
+    console.log(data);
+  }
+
+  var _onQuizSessionReceivedError = function(error){
+    console.log("_OnQuizSessionReceivedError");
+    console.log(error);
+  }
+
+  var _getQuizJSONFromSlide = function(slide){
+    var slideId = $(slide).attr("id");
+    var presentation = V.SlideManager.getCurrentPresentation();
+    if((slideId)&&(presentation)){
+      var slides = presentation.slides;
+      var sL = slides.length;
+      for(var i=0; i<sL; i++){
+        if(slides[i].id==slideId){
+          //Look for quiz element
+          var elements = slides[i].elements;
+          var eL = elements.length;
+          for(var j=0; j<eL; j++){
+            if(elements[j].type==V.Constant.QUIZ){
+              return elements[j].quiz_simple_json
+            }
+          }
+        }
+      }
+    }
+  }
+
 
   /**
    * Function to render a quiz inside an article (a slide)
@@ -67,14 +101,16 @@ VISH.Quiz = (function(V,$,undefined){
 
   var renderButtons = function(selfA){
     var quizButtons = $("<div class='quizButtons'></div>");
-    if(VISH.User.isLogged()){
+
+    if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())){
       var startButton = $("<input type='button' class='quizButton quizStartButton' value='Start'/>");
-      // $(quizButtons).prepend(startButton); //Not in this version
+      $(quizButtons).prepend(startButton);
     }
-    if(selfA){
+    if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
       var answerButton = $("<input type='button' class='quizButton quizAnswerButton' value='Answer'/>");
       $(quizButtons).prepend(answerButton);
     }
+
     return quizButtons;
   }
 
@@ -90,12 +126,12 @@ VISH.Quiz = (function(V,$,undefined){
    */
   var _getQuizModule = function(quiz_type){
     switch (quiz_type) {
-      case VISH.Constant.QZ_TYPE.OPEN:
+      case V.Constant.QZ_TYPE.OPEN:
          break;
-      case VISH.Constant.QZ_TYPE.MCHOICE:
+      case V.Constant.QZ_TYPE.MCHOICE:
         return V.Quiz.MC;
         break;
-      case VISH.Constant.QZ_TYPE.TF:
+      case V.Constant.QZ_TYPE.TF:
         return V.Quiz.TF;
         break;
       default:
@@ -113,7 +149,7 @@ VISH.Quiz = (function(V,$,undefined){
     switch(check){
       case "true":
         $(checkbox).attr("check","true");
-        $(checkbox).attr("src",imagePathRoot+"_checked.jpg");
+        $(checkbox).attr("src",imagePathRoot+"_checked.png");
         break;
       case "false":
         $(checkbox).attr("check","false");
@@ -122,12 +158,13 @@ VISH.Quiz = (function(V,$,undefined){
       case "none":
       default:
         $(checkbox).attr("check","none");
-        $(checkbox).attr("src",imagePathRoot+".jpg");
+        $(checkbox).attr("src",imagePathRoot+".png");
         break;
     }
   }
 
   return {
+    initBeforeRender  : initBeforeRender,
     init            : init,
     render          : render,
     renderButtons   : renderButtons,

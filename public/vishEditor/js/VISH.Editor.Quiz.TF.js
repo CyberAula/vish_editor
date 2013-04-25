@@ -87,7 +87,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 	}
 
 	var _getOptionDummy = function(){
-		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text'></div><table class='mc_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+tfCheckbox+"' column='true' check='none'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.jpg' class='"+tfCheckbox+"' column='false' check='none'/></td></tr></table></div></li>";
+		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text'></div><table class='mc_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+tfCheckbox+"' column='true' check='none'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+tfCheckbox+"' column='false' check='none'/></td></tr></table></div></li>";
 	}
 
 	/*

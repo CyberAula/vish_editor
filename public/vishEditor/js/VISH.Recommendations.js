@@ -45,31 +45,34 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * function to call ViSH via AJAX to get recommendation of excursions
 	 */
 	var generateFancybox = function(){
-		if(!generated){
-			// console.log("user_id " + user_id + " presentation_id " + presentation_id);
-			if(url_to_get_recommendations !== undefined){
-				var params_to_send = {
-					user_id: user_id,
-					excursion_id: presentation_id,
-					quantity: 9
-				};
-				$.ajax({
-					type    : "POST",
-					url     : url_to_get_recommendations,
-					data    : params_to_send,
-					success : function(data) {
-						_fillFancyboxWithData(data);
-					}
-				});
-			}
-			else{
-				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
-			}
-			generated = true;
-		}		
+		// if(!generated){
+		// 	// console.log("user_id " + user_id + " presentation_id " + presentation_id);
+		// 	if(url_to_get_recommendations !== undefined){
+		// 		var params_to_send = {
+		// 			user_id: user_id,
+		// 			excursion_id: presentation_id,
+		// 			quantity: 9
+		// 		};
+		// 		$.ajax({
+		// 			type    : "POST",
+		// 			url     : url_to_get_recommendations,
+		// 			data    : params_to_send,
+		// 			success : function(data) {
+		// 				_fillFancyboxWithData(data);
+		// 			}
+		// 		});
+		// 	} else {
+		// 		_fillFancyboxWithData(VISH.Samples.API.recommendationList);
+		// 	}
+		// 	generated = true;
+		// }		
 	};
 
 	var _fillFancyboxWithData = function(data){
+		if((!data)||(!data.items)){
+			return;
+		}
+		
         var ex;
         var result = "";
         for (var i = data.items.length - 1; i >= 0; i--) {
