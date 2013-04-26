@@ -123,33 +123,49 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		var isSlideset = (slidesetModule!==null);
 
 		if(isSlideset){
-			var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
-			if((slideset)&amp;&amp;(slideset.slides)){
-				slides = slideset.slides;
-				var sL = slides.length;
-				for(var i=0;i&lt;sL;i++){
-					_renderSlide(slides[i], i+1);
-				}
-			}
-			slidesetModule.loadSlideset(presentation);
-		} else {
-			&#x2F;&#x2F;Presentation
-			slides = presentation.slides;
-			for(var i=0;i&lt;slides.length;i++){
-				if(slides[i].type === V.Constant.FLASHCARD){
-					_renderFlashcard(slides[i], i+1);
-				} else {
-					_renderSlide(slides[i], i+1);			
-				}
-			}
+			_renderSlideset(presentation,slidesetModule);
+		} else if(presentation.type===VISH.Constant.PRESENTATION){
+			_renderPresentation(presentation);
+		} else if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
+			&#x2F;&#x2F; Presentation stored in the quiz_simple_json field of quizzes;
+			&#x2F;&#x2F; Edit this kind of presentations makes no sense, just for testing
+			&#x2F;&#x2F;Edit as standard presentation
+			presentation.type = VISH.Constant.PRESENTATION;
+			_renderPresentation(presentation);
 		}
 	};
+
+	var _renderPresentation = function(presentation){
+		slides = presentation.slides;
+		for(var i=0;i&lt;slides.length;i++){
+			if(slides[i].type === V.Constant.FLASHCARD){
+				_renderFlashcard(slides[i], i+1);
+			} else {
+				_renderSlide(slides[i], i+1);			
+			}
+		}
+	}
+
+	var _renderSlideset = function(presentation,slidesetModule){
+		var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
+		if((slideset)&amp;&amp;(slideset.slides)){
+			slides = slideset.slides;
+			var sL = slides.length;
+			for(var i=0;i&lt;sL;i++){
+				_renderSlide(slides[i], i+1);
+			}
+		}
+		slidesetModule.loadSlideset(presentation);
+	}
 	
 	&#x2F;**
 	 * function to render one slide in editor
 	 *&#x2F;
 	var _renderSlide = function(slide, slideNumber){
-		var template = slide.template.substring(1); &#x2F;&#x2F;slide.template is &quot;t10&quot;, with this we remove the &quot;t&quot;
+		var template = &quot;1&quot;;
+		if(slide.template){
+			template = slide.template.substring(1); &#x2F;&#x2F;slide.template is &quot;t10&quot;, with this we remove the &quot;t&quot;
+		}
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
 		V.Editor.Slides.addSlide(scaffold);
@@ -182,10 +198,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === &quot;snapshot&quot;){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			} else if(slide.elements[el].type === &quot;quiz&quot;){
-			 	var received = JSON.stringify(slide.elements[el]);
-				V.Editor.Quiz.addQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id), slide.elements[el].options.choices.length);
-				&#x2F;&#x2F;V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options[&#x27;choices&#x27;], slide.elements[el].quiz_id);
-			V.Editor.Quiz.drawQuiz(slide.elements[el].quiztype, $(&quot;#&quot;+slide.elements[el].id) , slide.elements[el].question, slide.elements[el].options, slide.elements[el].quiz_id);
+				V.Editor.Quiz.draw(area,slide.elements[el]);
 			}
 		}
 	

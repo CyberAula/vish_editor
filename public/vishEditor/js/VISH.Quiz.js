@@ -3,6 +3,13 @@ VISH.Quiz = (function(V,$,undefined){
   var quizMode; //selfA or realTime
   var quizSessionId;
 
+  //Quiz in real time
+  //Current quiz data
+  var currentQuiz;
+  var currentQuizSession;
+  var currentPolling;
+
+
   var initBeforeRender = function(presentation){
     if(presentation.type===V.Constant.QUIZ_SIMPLE){
       quizMode = V.Constant.QZ_MODE.RT;
@@ -27,6 +34,22 @@ VISH.Quiz = (function(V,$,undefined){
   var _loadEvents = function(){
     $(document).on('click', ".quizAnswerButton",_onAnswerQuiz);
     $(document).on('click', ".quizStartButton",_onStartQuiz);
+
+    $("a#addQuizSessionFancybox").fancybox({
+      'autoDimensions' : false,
+      'scrolling': 'no',
+      'width': '90%',
+      'height': '90%',
+      'margin': '20%',
+      'padding': 0,
+      "autoScale" : true,
+      "onStart"  : function(data) {
+        loadTab('tab_quiz_session');
+      },
+      "onClosed"  : function(){
+        _stopPolling();
+      }
+    });
   }
 
   var _onAnswerQuiz = function(event){
@@ -58,33 +81,52 @@ VISH.Quiz = (function(V,$,undefined){
     V.Quiz.API.sendAnwers(answers, quizSessionId, 
       function(data){
          alert("Your answer has been submitted");
-         console.log(data);
     }, 
       function(error){
         alert("Error on submit answer");
     });
   }
 
-  var _onStartQuiz = function(){
-    var quizJSON = _getQuizJSONFromSlide(V.Slides.getCurrentSlide());
-    V.Quiz.API.startQuizSession(quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+  var _onStartQuiz = function(event){
+    var startButton = $(event.target);
+    var quiz = $("div.quizzContainer").has(startButton);
+
+    switch($(startButton).attr("quizStatus")){
+      case "running":
+        $("a#addQuizSessionFancybox").trigger("click");
+        break;
+      case "loading":
+        break;
+      case "stop":
+      default:
+        //Start new quiz session
+        _loadingLaunchButton(quiz);
+        var quizJSON = _getQuizJSONFromQuiz(quiz);
+        V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+        break;
+    }
   }
 
-  var _onQuizSessionReceived = function(quizSession){
-    console.log("_onQuizSessionReceived");
-    console.log(quizSession);
+  var _onQuizSessionReceived = function(quiz,quizSession){
+    V.Debugging.log("_onQuizSessionReceived");
+    V.Debugging.log(quizSession);
 
-    // V.Quiz.API.getResults(quizSession.id,
-    // function(results){
-    //   console.log(results);
-    // }, function(error){
-    //   console.log(error);
-    // })
+    currentQuiz = quiz;
+    currentQuizSession = quizSession;
+
+    _runningLaunchButton(quiz);
+    $("a#addQuizSessionFancybox").trigger("click");
   }
 
-  var _onQuizSessionReceivedError = function(error){
-    console.log("_OnQuizSessionReceivedError");
-    console.log(error);
+  var _onQuizSessionReceivedError = function(quiz,error){
+    V.Debugging.log("_OnQuizSessionReceivedError");
+    V.Debugging.log(error);
+    _stopLaunchButton(quiz);
+  }
+
+  var _getQuizJSONFromQuiz = function(quiz){
+    var slide = $("article").has(quiz);
+    return _getQuizJSONFromSlide(slide);
   }
 
   var _getQuizJSONFromSlide = function(slide){
@@ -122,7 +164,7 @@ VISH.Quiz = (function(V,$,undefined){
   var renderButtons = function(selfA){
     var quizButtons = $("<div class='quizButtons'></div>");
 
-    if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())){
+    if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
       var startButton = $("<input type='button' class='quizButton quizStartButton' value='Start'/>");
       $(quizButtons).prepend(startButton);
     }
@@ -140,6 +182,96 @@ VISH.Quiz = (function(V,$,undefined){
     $(answeButton).addClass("quizAnswerButtonDisabled");
   }
 
+  var _loadingLaunchButton = function(quiz){
+    var startButton = $(quiz).find("input.quizStartButton");
+    $(startButton).attr("disabled", "disabled");
+    $(startButton).addClass("quizStartButtonLoading");
+    $(startButton).attr("quizStatus","loading");
+    $(startButton).attr("value","Start");
+  }
+
+  var _runningLaunchButton = function(quiz){
+    var startButton = $(quiz).find("input.quizStartButton");
+    $(startButton).removeAttr("disabled");
+    $(startButton).removeClass("quizStartButtonLoading");
+    $(startButton).attr("quizStatus","running");
+    $(startButton).attr("value","Options");
+  }
+
+  var _stopLaunchButton = function(quiz){
+    var startButton = $(quiz).find("input.quizStartButton");
+    $(startButton).removeAttr("disabled");
+    $(startButton).removeClass("quizStartButtonLoading");
+    $(startButton).removeAttr("quizStatus");
+    $(startButton).attr("value","Start");
+  }
+
+
+  /*
+   *  Fancybox
+   */
+
+  var loadTab = function(tab_id){
+    //hide previous tab
+    $(".fancy_tab_content").hide();
+    //show content
+    $("#" + tab_id + "_content").show();
+    //deselect all of them
+    $(".fancy_tab").removeClass("fancy_selected");
+    //select the correct one
+    $("#" + tab_id).addClass("fancy_selected");
+    //hide previous help button
+    $(".help_in_fancybox").hide();
+    //show correct one
+    $("#"+ tab_id + "_help").show();
+
+    switch(tab_id){
+      case "tab_quiz_session":
+        _loadQuizSession();
+        break;
+      case "tab_quiz_stats":
+        _loadStats();
+        break;
+      default:
+        break;
+    }
+  };
+
+  var _loadQuizSession = function(){
+    if(!currentQuizSession){
+      return;
+    }
+    var myA = $("<a class='link_quiz_session_url' target='_blank' href='"+currentQuizSession.url+"'>"+currentQuizSession.url+"</a>");
+    $("#tab_quiz_session_url").html("");
+    $("#tab_quiz_session_url").prepend(myA);
+  }
+
+  var _loadStats = function(){
+    V.Quiz.API.getResults(currentQuizSession.id, function(results){
+        _drawResults(results);
+        _startPolling();
+    });
+  }
+
+  var _startPolling = function(){
+    _stopPolling();
+    currentPolling = setInterval(function(){
+      V.Quiz.API.getResults(currentQuizSession.id, function(results){
+        _drawResults(results);
+      });
+    },2000);
+  }
+
+  var _stopPolling = function(){
+    if(currentPolling){
+      clearInterval(currentPolling);
+    }
+  }
+
+  var _drawResults = function(results){
+    var statsDiv = $("#tab_quiz_session_results");
+    $(statsDiv).html("<p>"+JSON.stringify(results)+"</p>");
+  }
 
   /*
    * Utils
@@ -185,11 +317,12 @@ VISH.Quiz = (function(V,$,undefined){
 
   return {
     initBeforeRender  : initBeforeRender,
-    init            : init,
-    render          : render,
-    renderButtons   : renderButtons,
-    updateCheckbox  : updateCheckbox,
-    disableAnswerButton : disableAnswerButton
+    init              : init,
+    render            : render,
+    renderButtons     : renderButtons,
+    updateCheckbox    : updateCheckbox,
+    disableAnswerButton : disableAnswerButton,
+    loadTab           : loadTab
   };
     
 }) (VISH, jQuery);

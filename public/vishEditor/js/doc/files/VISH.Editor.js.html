@@ -214,7 +214,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Utils.loadTab(&#x27;tab_templates&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_templates&#x27;);
 			}
 		});
 
@@ -226,7 +226,7 @@ VISH.Editor = (function(V,$,undefined){
 			&#x27;height&#x27;: 340,
 			&#x27;padding&#x27;: 0,
 			&quot;onStart&quot;  : function(data) {
-				V.Utils.loadTab(&#x27;tab_quizes&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_quizes&#x27;);
 			}
 		});
 	
@@ -548,7 +548,7 @@ VISH.Editor = (function(V,$,undefined){
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
 				V.Editor.Image.setAddContentMode(V.Constant.NONE);
-				V.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addobject&quot;).fancybox({
@@ -560,7 +560,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addvideo&quot;).fancybox({
@@ -572,7 +572,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
 			}
 		});
 		$(&quot;a.addLive&quot;).fancybox({
@@ -584,7 +584,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
 			}
 		});
 
@@ -883,65 +883,15 @@ VISH.Editor = (function(V,$,undefined){
 							element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 						}
 					} else if (element.type === V.Constant.QUIZ) {
-						
-						&#x2F;&#x2F;if($(div).find(&quot;.multiplechoice_option_in_zone&quot;)) {
-						if  ($(div).attr(&quot;quiztype&quot;)== &quot;multiplechoice&quot;) {
-							var	quizQuestion = $(div).find(&quot;.value_multiplechoice_question_in_zone&quot;);
-							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
-							&#x2F;*var CKEditor = V.Editor.Text.getCKEditorFromZone(quizQuestion);
-							if(CKEditor!==null){
-								element.question = CKEditor.getData();
-						} else {
-							element.question = &quot;&quot;;
-						} *&#x2F;
-							element.quiz_id = &quot;&quot;;
-							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!==&quot;&quot;) {
-								element.quiz_id = $(div).find(&quot;input[name=quiz_id]&quot;).val();
-							} 
-							element.quiztype = &quot;multiplechoice&quot;;
-							element.options = {};
-							element.options.choices = []; 
-							$(div).find(&#x27;.multiplechoice_option_in_zone&#x27;).each(function(i, option_text){
-								var option = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
-								&#x2F;&#x2F;var option = V.Editor.Text.getCKEditorFromZone(option_text);
-								if((option)&amp;&amp;($(option_text).text() !== &#x27;Write options here&#x27;)&amp;&amp; ($(option_text).text() !==&quot;&quot;)){
-									result = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan(option_text);
-									&#x2F;&#x2F;result = V.Editor.Text.getCKEditorFromZone(option_text);
-									var choice = {};
-									choice.value = $(option_text).text();
-									choice.container = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(option_text));
-									&#x2F;&#x2F;choice.container = V.Editor.Text.getCKEditorFromZone(option_text);
-									element.options.choices.push(choice);
-								}
-							});
+						var quizJSON = VISH.Editor.Quiz.save(div);
+						element.quiztype = quizJSON.quizType;
+						element.selfA = quizJSON.selfA;
+						element.question = quizJSON.question;
+						element.choices = quizJSON.choices;
+						if(quizJSON.extras){
+							element.extras = quizJSON.extras;
 						}
-						&#x2F;&#x2F;true false quiz type
-						else if($(div).attr(&quot;quiztype&quot;)== &quot;truefalse&quot;) {
-							var	quizQuestion = $(div).find(&quot;.value_truefalse_question_in_zone&quot;);
-							element.question = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(quizQuestion));
-							&#x2F;&#x2F;element.question = V.Editor.Text.getCKEditorFromZone($(quizQuestion));
-							element.quiz_id = &quot;&quot;;
-							if ($(div).find(&quot;input[name=quiz_id]&quot;).val()!=&quot;&quot;) {
-								element.quiz_id = $(div).find(&quot;input[name=quiz_id]&quot;).val();
-							} 
-							element.quiztype = &quot;truefalse&quot;;
-							element.options = {};  	
-							element.options.choices = []; 
-							$(div).find(&#x27;.truefalse_answers &gt; form &gt; input&#x27;).each(function(i, option_text){
-								var choice = new Object();
-								choice.value = $(option_text).attr(&quot;value&quot;);
-								choice.container= $(option_text).attr(&quot;value&quot;);
-								element.options.choices.push(choice);
-						}); 
-							&#x2F;&#x2F;add the correct answer 
-								 element.options.answer = $(div).find(&#x27;input[name=truefalse]:checked&#x27;).val();
-
-								&#x2F;&#x2F;}
-
-						}
-						else if($(div).attr(&quot;quiztype&quot;)== &quot;open&quot;) {
-						}
-
+						slide.containsQuiz = true;
 					} else if(element.type === V.Constant.SNAPSHOT){
 						var snapshotWrapper = $(div).find(&quot;.snapshot_wrapper&quot;);
 						var snapshotIframe = $(snapshotWrapper).children()[0];
@@ -966,25 +916,31 @@ VISH.Editor = (function(V,$,undefined){
 					}
 
 					slide.elements.push(element);
-					if(element.type==V.Constant.QUIZ){
-						var quizSlide = $.extend(true, {}, element);
-						&#x2F;&#x2F;Apply presentation Wrapper
-						var quizPresentation = {};
-						quizPresentation.title = presentation.title;
-						quizPresentation.description = presentation.description;
-						quizPresentation.author = &#x27;&#x27;;
-						&#x2F;&#x2F;add quiz_simple type to slide in json to render answer
-						quizSlide.type = V.Constant.QUIZ_SIMPLE;
-						quizPresentation.slides = [quizSlide];
-						quizPresentation.type = V.Constant.QUIZ_SIMPLE;
-						element.quiz_simple_json = quizPresentation;
-					}
 
 					element = {};
 				}
-			
 			});
 
+			if(slide.containsQuiz){
+				&#x2F;&#x2F;Before save a slide with quiz
+				&#x2F;&#x2F;Add a presentation to answer the quiz in live mode
+				var quizSlide = $.extend(true, {}, slide);
+				quizSlide.type = V.Constant.QUIZ_SIMPLE;
+				&#x2F;&#x2F;Build a presentation Wrapper
+				var quizPresentation = {};
+				quizPresentation.title = presentation.title;
+				quizPresentation.description = presentation.description;
+				quizPresentation.author = presentation.author;
+				quizPresentation.type = V.Constant.QUIZ_SIMPLE;
+				quizPresentation.slides = [quizSlide];
+
+				for(var k=0; k&lt;slide.elements.length; k++){
+					if(slide.elements[k].type===V.Constant.QUIZ){
+						slide.elements[k].quiz_simple_json = quizPresentation;
+					}
+				}
+			}
+			
 			if(isSlideset){
 				&#x2F;&#x2F;If it is a slideset (e.g flashcard or virtual tour) we save 
 				&#x2F;&#x2F;the slide into the slideset slides array
@@ -997,7 +953,7 @@ VISH.Editor = (function(V,$,undefined){
 			}
 
 			slide = {};
-			$(s).removeClass(&quot;temp_shown&quot;);						
+			$(s).removeClass(&quot;temp_shown&quot;);					
 		});
 
 		savedPresentation = presentation;  

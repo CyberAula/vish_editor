@@ -138,7 +138,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 					'padding' : 0,
 					"onStart"  : function(data) {						
 						V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
-						V.Utils.loadTab('tab_pic_from_url');
+						V.Editor.Utils.loadTab('tab_pic_from_url');
 					},
 					"onClosed"  : function(data) {				
 						V.Editor.Image.setAddContentMode(V.Constant.NONE);

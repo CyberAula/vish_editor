@@ -573,12 +573,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var insertFlashcard = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Utils.loadTab(&#x27;tab_flashcards_repo&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_flashcards_repo&#x27;);
 	};
 
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Utils.loadTab(&#x27;tab_templates&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_templates&#x27;);
 	};
 
 	var _hideMenuAfterAction = function(){

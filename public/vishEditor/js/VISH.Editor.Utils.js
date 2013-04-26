@@ -323,11 +323,99 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return fc;
 	};
 
+
+	/////////////////////////
+	/// Fancy Box Functions
+	/////////////////////////
+
+	/**
+	 * Function to load a tab and its content in the fancybox
+	 * also changes the help button to show the correct help
+	 */
+	var loadTab = function (tab_id){
+		// first remove the walkthrough if open
+		$('.joyride-close-tip').click();
+		//hide previous tab
+		$(".fancy_tab_content").hide();
+		//show content
+		$("#" + tab_id + "_content").show();
+		//deselect all of them
+		$(".fancy_tab").removeClass("fancy_selected");
+		//select the correct one
+		$("#" + tab_id).addClass("fancy_selected");
+		//hide previous help button
+		$(".help_in_fancybox").hide();
+		//show correct one
+		$("#"+ tab_id + "_help").show();
+
+        //Submodule callbacks	
+		switch (tab_id) {
+			//templates and flashcards
+			case "tab_templates":
+				break;
+			case "tab_flashcards_repo":
+				V.Editor.Flashcard.Repository.onLoadTab();
+				break;
+			//Image
+			case "tab_pic_from_url":
+				V.Editor.Image.onLoadTab("url");
+				break;
+			case "tab_pic_upload":
+				V.Editor.Image.onLoadTab("upload");
+				break;
+			case "tab_pic_repo":
+				V.Editor.Image.Repository.onLoadTab();
+				break;
+			case "tab_pic_flikr":
+				V.Editor.Image.Flikr.onLoadTab();
+				break;
+			//Video
+			case "tab_video_from_url":
+				V.Editor.Video.onLoadTab();
+				break;
+			case "tab_video_repo":
+				V.Editor.Video.Repository.onLoadTab();
+				break;
+			case "tab_video_youtube":
+				V.Editor.Video.Youtube.onLoadTab();
+				break;
+			case "tab_video_vimeo":
+				V.Editor.Video.Vimeo.onLoadTab();
+				break;	
+			//Objects
+			case "tab_object_from_url":
+				V.Editor.Object.onLoadTab("url");
+				break;
+			case "tab_object_from_web":
+				V.Editor.Object.Web.onLoadTab();
+				break;
+			case "tab_object_snapshot":
+				V.Editor.Object.Snapshot.onLoadTab();
+				break;
+			case "tab_object_upload":
+				V.Editor.Object.onLoadTab("upload");
+				break;
+			case "tab_object_repo":
+				V.Editor.Object.Repository.onLoadTab();
+				break;	
+			//Live
+			case "tab_live_webcam":
+				V.Editor.Object.Live.onLoadTab("webcam");
+				break;
+			case "tab_live_micro":
+				V.Editor.Object.Live.onLoadTab("micro");
+				break;
+ 			//Default
+			default:
+				break;
+	  }
+	};
+
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
 		addZoomToStyle  			: addZoomToStyle,	
 		getStylesInPercentages 		: getStylesInPercentages,
-		dimentionToDraw     		: dimentionToDraw,
+		dimentionToDraw		 		: dimentionToDraw,
 		refreshDraggables			: refreshDraggables,
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForFlashcardJSON  : replaceIdsForFlashcardJSON,
@@ -336,7 +424,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		generateTable 				: generateTable,
 		convertToTagsArray 			: convertToTagsArray,
 		autocompleteUrls 			: autocompleteUrls,
-		filterFilePath 				: filterFilePath
+		filterFilePath 				: filterFilePath,
+		loadTab						: loadTab
 	};
 
 }) (VISH, jQuery);

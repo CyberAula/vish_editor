@@ -152,7 +152,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 	* Allows users to include text content in the slide using a WYSIWYG editor
 	* param area: optional param indicating the area to add the wysiwyg, used for editing presentations
 	*&#x2F;
-	var launchTextEditor = function(event, area, initial_text){
+	var launchTextEditor = function(event, area, initial_text, options){
 		init();
 
 		var current_area;
@@ -161,13 +161,18 @@ VISH.Editor.Text = (function(V,$,undefined){
 		} else {
 			current_area = $(this).parents(&quot;.selectable&quot;);
 		}
-		current_area.attr(&#x27;type&#x27;,&#x27;text&#x27;);
 
-		var newInstance = !(typeof initial_text === &quot;string&quot;);
+		&#x2F;&#x2F;current_area can also be a &#x27;textArea&#x27; of a quiz.
+		var isQuiz = $(&quot;div[type=&#x27;quiz&#x27;]&quot;).has(current_area).length&gt;0;
+		var isTemplateArea = ($(current_area).attr(&quot;areaid&quot;)!==undefined);
+		
+		if(isTemplateArea){
+			current_area.attr(&#x27;type&#x27;,&#x27;text&#x27;);
+		}
 
 		&#x2F;&#x2F;Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
-		var wysiwygContainer = $(&quot;&lt;div id=&#x27;&quot;+wysiwygContainerId+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;)
+		var wysiwygContainer = $(&quot;&lt;div id=&#x27;&quot;+wysiwygContainerId+&quot;&#x27; class=&#x27;wysiwygTextArea&#x27;&gt;&lt;&#x2F;div&gt;&quot;)
 		$(wysiwygContainer).attr(&#x27;style&#x27;,&#x27;width: 100%; height: 100%&#x27;);
 		$(current_area).append(wysiwygContainer);
 
@@ -199,7 +204,12 @@ VISH.Editor.Text = (function(V,$,undefined){
 		&#x2F;&#x2F;Disable bottom tags
 		config.removePlugins = &#x27;elementspath&#x27;;
 		&#x2F;&#x2F;Enable table resize
-		config.extraPlugins = &#x27;tableresize&#x27;;
+		config.extraPlugins = &#x27;tableresize,autogrow&#x27;;
+
+		if((options)&amp;&amp;(options.autogrow)){
+			config.autoGrow_minHeight = 34;
+			config.autoGrow_maxHeight = 800;
+		}
 
 		&#x2F;&#x2F;Fit the current area
 		config.width = &#x27;100%&#x27;;
@@ -219,6 +229,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
+
+
+		var newInstance = !(typeof initial_text === &quot;string&quot;)||((options)&amp;&amp;(options.forceNew));
 
 		if(newInstance){
 			var defaultFontSize = 12;
@@ -243,15 +256,38 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 
 			&#x2F;&#x2F;Alignment depends of the area type
-			var isCircleArea = $(current_area).attr(&quot;areaid&quot;).indexOf(&quot;circle&quot;)!==-1;
-			if(isCircleArea){
-				defaultAlignment = &quot;center&quot;;
+			var areaId = $(current_area).attr(&quot;areaid&quot;);
+			if(areaId){
+				var isCircleArea = $(current_area).attr(&quot;areaid&quot;).indexOf(&quot;circle&quot;)!==-1;
+				if(isCircleArea){
+					defaultAlignment = &quot;center&quot;;
+				}
 			}
 
 			&#x2F;&#x2F;Color depends of the current theme
 			var initialTextColor = &quot;color:#&quot; + V.Editor.Themes.getCurrentTheme().color;
+			var blankTextColor = initialTextColor; &#x2F;&#x2F;For placeholders
 
-			initial_text = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span autoColor=&#x27;true&#x27; style=&#x27;&quot;+initialTextColor+&quot;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&amp;shy;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
+			&#x2F;&#x2F;We can also specify initial_texts style in the options param
+			&#x2F;&#x2F;This options override defaults
+			if(options){
+				&#x2F;&#x2F;Font size
+				if(typeof options.fontSize == &quot;number&quot;){
+					defaultFontSize = options.fontSize;
+				}
+
+				&#x2F;&#x2F;Placeholder
+				if(options.placeholder === true){
+					initialTextColor = &quot;color:#ccc&quot;;
+				}
+			}
+
+			if((isTemplateArea)||(typeof initial_text != &quot;string&quot;)||(initial_text===&quot;&quot;)){
+				initial_text = &quot;&amp;shy&quot;;
+			}
+
+			initial_text = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span autoColor=&#x27;true&#x27; style=&#x27;&quot;+initialTextColor+&quot;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&quot;+initial_text+&quot;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
+			initial_text_blank = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span autoColor=&#x27;true&#x27; style=&#x27;&quot;+blankTextColor+&quot;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&quot;+&quot;&amp;shy&quot;+&quot;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
 		}
 
 		ckeditor.on(&quot;instanceReady&quot;, function(){
@@ -264,23 +300,42 @@ VISH.Editor.Text = (function(V,$,undefined){
 					_fixCKEDITORBug(ckeditor);
 				});
 				if(newInstance){
-					ckeditor.focus();
+					if((isTemplateArea)||((options)&amp;&amp;(options.focus))){
+						ckeditor.focus();
+					}
 				}
 			}
 		});
 
 		&#x2F;&#x2F;Catch the focus event
 		ckeditor.on(&#x27;focus&#x27;, function(event){
-			var area = $(&quot;div[type=&#x27;text&#x27;]&quot;).has(event.editor.container.$);
+			if((options)&amp;&amp;(options.placeholder===true)){
+				var a = $(initial_text).text().replace(&#x2F;\s+&#x2F;g,&#x27;&#x27;);
+				var b = $(event.editor.getData()).text().replace(&#x2F;\s+&#x2F;g,&#x27;&#x27;);
+				if(a==b){
+					setTimeout(function(){
+						event.editor.setData(initial_text_blank);
+						event.editor.focus();
+					},20);
+				}
+			}
+
+			var area = getZoneForCKContainer(event.editor.container.$);
 			V.Editor.selectArea(area);
 		});
 
 		ckeditor.on(&#x27;blur&#x27;, function(event){
-			var area = $(&quot;div[type=&#x27;text&#x27;]&quot;).has(event.editor.container.$);
+			&#x2F;&#x2F;Code here
 		});
 
-		&#x2F;&#x2F; Add a button to delete the current text area
-		V.Editor.addDeleteButton(current_area);		
+		&#x2F;&#x2F;Exnteds CKEditor functionality
+
+		ckeditor.getPlainText = _getPlainText;
+
+		if(isTemplateArea){
+			&#x2F;&#x2F; Add a button to delete the current text area
+			V.Editor.addDeleteButton(current_area);	
+		}
 	};
 	
 
@@ -292,13 +347,23 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var CKEditorInstance = null;
 
 		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
-			var CKzone = $(CKinstance.container.$).parent().parent();
+			var CKzone = getZoneForCKContainer(CKinstance.container.$);
+
 			if($(CKzone).attr(&quot;id&quot;)===$(zone).attr(&quot;id&quot;)){
 				CKEditorInstance = CKinstance;
 				return;
 			}
 		});
 		return CKEditorInstance;
+	}
+
+	var getZoneForCKContainer = function(container){
+		var area;
+		area = $(&quot;div[type=&#x27;text&#x27;]&quot;).has(container);
+		if(area.length===0){
+			area = $(&quot;div[type=&#x27;quiz&#x27;]&quot;).has(container);
+		}
+		return area;
 	}
 
 	var getCKEditorIframeContentFromZone = function(zone){
@@ -308,6 +373,33 @@ VISH.Editor.Text = (function(V,$,undefined){
 		}
 		var iframe = $(document.getElementById(&#x27;cke_contents_&#x27; + editor.name)).find(&quot;iframe&quot;)[0];
 		return $(iframe).contents()[0];
+	}
+
+
+	var getCKEditorFromTextArea = function(textArea){
+		if((!textArea)||(typeof CKEDITOR === &#x27;undefined&#x27;)||(typeof CKEDITOR.instances === &#x27;undefined&#x27;)){
+			return null;
+		}
+
+		if(!$(textArea).hasClass(&quot;.cke_skin_vEditor&quot;)){
+			textArea = $(textArea).find(&quot;.cke_skin_vEditor&quot;);
+			if(textArea.length&gt;0){
+				textArea = textArea[0];
+			}
+		}
+		
+		var CKEditorInstance = null;
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+			if(textArea===CKinstance.container.$){
+				CKEditorInstance = CKinstance;
+				return;
+			}
+		});
+		return CKEditorInstance;
+	}
+
+	var _getPlainText = function(){
+		return $(this.getSnapshot()).text();
 	}
 
 	&#x2F;*
@@ -338,6 +430,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		launchTextEditor					: launchTextEditor,
 		getCKEditorFromZone					: getCKEditorFromZone,
 		getCKEditorIframeContentFromZone	: getCKEditorIframeContentFromZone,
+		getCKEditorFromTextArea				: getCKEditorFromTextArea,
 		refreshAutoColors					: refreshAutoColors
 	};
 

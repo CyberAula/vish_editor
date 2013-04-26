@@ -172,6 +172,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			moving_current_slide = true;
 		}
 
+		var textAreas = copyTextAreasOfSlide(article_to_move);
 		$(article_to_move).remove();
 		if(movement==&quot;after&quot;){
 			$(article_reference).after(article_to_move);
@@ -184,6 +185,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
+
+		&#x2F;&#x2F;Reload text areas
+		_cleanTextAreas(article_to_move);
+		_loadTextAreasOfSlide(article_to_move,textAreas);
 
 		&#x2F;&#x2F;Update slideEls
 		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
@@ -199,24 +204,76 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		
 	}
 
-	var copySlideWithNumber = function(slideNumber){
+	var copySlideWithNumber = function(slideNumber,options){
 		var slide = V.Slides.getSlideWithNumber(slideNumber);
 		if(slide===null){
 			return;
 		}
 		var newSlide = $(slide).clone();
-		copySlide(newSlide);
+		copySlide(newSlide,options);
 	}
 
-	var copySlide = function(newSlide){
+	var copySlide = function(slideToCopy,options){
+		slideToCopy = _cleanTextAreas(slideToCopy);
+		slideToCopy = V.Editor.Utils.replaceIdsForSlide(slideToCopy);
+		var newId = $(slideToCopy).attr(&quot;id&quot;);
+
+		if(typeof slideToCopy == &quot;undefined&quot;){
+			return;
+		}
+
+		var slideToCopyType = V.Slides.getSlideType(slideToCopy);
+
+
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+		&#x2F;&#x2F;Pre-copy actions
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+		if(slideToCopyType === V.Constant.FLASHCARD){
+			var flashcardId = $(slideToCopy).attr(&quot;id&quot;);
+
+			if(!options.flashcardExcursionJSON){
+				&#x2F;&#x2F;We need flashcard excursion JSON to copy a flashcard!
+				return;
+			}
+
+			var the_flashcard_excursion = options.flashcardExcursionJSON;
+			var selectedFc = V.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion,flashcardId);
+			V.Editor.Flashcard.addFlashcard(selectedFc);
+			&#x2F;&#x2F;And now we add the points of interest with their click events to show the slides
+			for(index in selectedFc.pois){
+				var poi = selectedFc.pois[index];
+				V.Flashcard.addArrow(selectedFc.id, poi, true);
+			}
+			V.Editor.Events.bindEventsForFlashcard(selectedFc);
+		}
+
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+		&#x2F;&#x2F;Copy actions
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
 		var currentSlide = V.Slides.getCurrentSlide();
 		if(currentSlide){
-			$(currentSlide).after(newSlide);
+			$(currentSlide).after(slideToCopy);
 		} else {
-			$(&quot;section#slides_panel&quot;).append(newSlide);
+			$(&quot;section#slides_panel&quot;).append(slideToCopy);
 		}
 		
-		V.Editor.Utils.refreshDraggables(newSlide);
+
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+		&#x2F;&#x2F;Post-copy actions
+		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+		var slideCopied = $(&quot;#&quot;+newId);
+
+		&#x2F;&#x2F;Restore draggables
+		V.Editor.Utils.refreshDraggables(slideCopied);
+
+		&#x2F;&#x2F;Restore text areas
+		if(slideToCopyType === V.Constant.STANDARD){
+			if(options.textAreas){
+				_loadTextAreasOfSlide(slideCopied,options.textAreas);
+			}
+		}
 		
 		&#x2F;&#x2F;Update slideEls
 		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
@@ -226,13 +283,71 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Slides.updateSlideEls();
 
 		&#x2F;&#x2F;Redraw thumbnails
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			if(currentSlide){
+				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber()+1);
+				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
+			} else {
+				V.Slides.goToSlide(1);
+				V.Editor.Thumbnails.moveCarrouselToSlide(1);
+			}
+		});
+	}
 
-		if(currentSlide){
-			V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
-		} else {
-			V.Slides.goToSlide(1);
-		}
+	var _cleanTextAreas = function(slide){
+		$(slide).find(&quot;div[type=&#x27;text&#x27;],div.wysiwygTextArea&quot;).each(function(index,textArea){
+			$(textArea).html(&quot;&quot;);
+		});
+		return slide;
+	}
+
+	var copyTextAreasOfSlide = function(slide){
+		var textAreas = {};
+
+		&#x2F;&#x2F;Copy text areas
+		$(slide).find(&quot;div[type=&#x27;text&#x27;]&quot;).each(function(index,textArea){
+			var areaId = $(textArea).attr(&quot;areaid&quot;);
+			var ckEditor = V.Editor.Text.getCKEditorFromZone(textArea);
+			if((areaId)&amp;&amp;(ckEditor!==null)){
+				textAreas[areaId] = ckEditor.getData();
+			}
+		});
+
+		&#x2F;&#x2F;Copy quiz areas
+		$(slide).find(&quot;div[type=&#x27;quiz&#x27;]&quot;).each(function(index,quizArea){
+			var areaId = $(quizArea).attr(&quot;areaid&quot;);
+			textAreas[areaId] = [];
+			$(quizArea).find(&quot;div.wysiwygTextArea&quot;).each(function(index,textArea){
+				var ckEditor = V.Editor.Text.getCKEditorFromTextArea(textArea);
+				if((areaId)&amp;&amp;(ckEditor!==null)){
+					textAreas[areaId].push(ckEditor.getData());
+				}
+			});
+		});
+
+		return textAreas;
+	}
+
+	var _loadTextAreasOfSlide = function(slide,textAreas){
+		$(slide).find(&quot;div[type=&#x27;text&#x27;]&quot;).each(function(index,textArea){
+			var areaId = $(textArea).attr(&quot;areaid&quot;);
+			if((areaId)&amp;&amp;(textAreas[areaId])){
+				var data = textAreas[areaId];
+				V.Editor.Text.launchTextEditor({}, $(textArea), data);
+			}
+		});
+
+		$(slide).find(&quot;div[type=&#x27;quiz&#x27;]&quot;).each(function(index,quizArea){
+			var areaId = $(quizArea).attr(&quot;areaid&quot;);
+			if((areaId)&amp;&amp;(textAreas[areaId])){
+				var data = textAreas[areaId];
+				$(quizArea).find(&quot;div.wysiwygTextArea&quot;).each(function(index,textArea){
+					var parent = $(textArea).parent();
+					$(parent).html(&quot;&quot;);
+					V.Editor.Text.launchTextEditor({}, $(parent), data[index], {autogrow: true});
+				});
+			}
+		});
 	}
 
 	var addSlide = function(slide){
@@ -274,7 +389,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlide				: copySlide,
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
-		removeSlide				: removeSlide
+		removeSlide				: removeSlide,
+		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 
 }) (VISH, jQuery);

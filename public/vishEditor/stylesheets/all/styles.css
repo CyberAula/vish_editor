@@ -1,4 +1,5 @@
 /*
+  Derived from
   Google HTML5 slides template
   Authors: Luke Mahé (code)
            Marcin Wichary (code and design)
@@ -8,19 +9,7 @@
   URL: http://code.google.com/p/html5slides/
 */
 
-/* Framework */
-
 .slides > article:not(.fill)::before {
-  content: '';
-  display: block;
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
-
-.slides2 > article:not(.fill)::before {
   content: '';
   display: block;
   width: 100px;
@@ -543,4 +532,111 @@ button#closeButton {
   left: -8px;
   opacity: 0.6;
   z-index: 2000;
+}
+
+
+/***** Real Time Quizzes *****/
+
+.quizStartButtonLoading{
+    color: #ccc !important;
+    cursor: wait !important;
+}
+
+#tab_quiz_session_url{
+  text-align: center;
+  margin-top: 20%;
+  color: blue;
+  font-size: 2.2em;
+  font-family: Helvetica;
+  font-weight: bold;
+}
+
+a.link_quiz_session_url{
+  text-decoration: none;
+}
+
+div#tab_quiz_session_results{
+  height: 100%;
+  width: 100%;
+}
+
+
+/***** Fancybox tabs (for quizzes) ****************/
+
+.outer_box{
+  width: 800px;
+  height: 600px;
+}
+.fancy_tabs{
+  border-bottom: 1px solid #ff005d;
+  border-radius: 5px 5px 0px 0px;
+  moz-border-radius: 5px 5px 0px 0px;
+  webkit-border-radius: 5px 5px 0px 0px;
+}
+
+.fancy_tabs ul{
+  width: auto;
+  list-style-type: none;
+  background-color: #ffffff;
+  color: #ff005d;
+  margin: 0px;
+  font-size: 1em;
+  line-height: 1.5;
+  font-weight: bold;
+  padding: 0px;
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px; 
+}
+
+.fancy_tabs li{
+  display: inline-block;
+  margin-bottom: -1px;
+}
+
+.fancy_tabs li a{
+  display:block;
+  padding: 0.5em 1.5em;
+  text-decoration: none;
+  background: #ffffff;
+  color: #ff005d;
+  font-size: 16px;
+  font-family: Helvetica;
+  font-weight: bold;
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  
+}
+
+.fancy_tabs li a:hover{
+  border:1px solid #ff005d;
+  border-bottom-color: transparent;
+}
+
+.fancy_tabs li a.fancy_selected{
+  background: #ffffff;
+  color: #ff005d;
+  border: 1px solid #ff005d;
+  border-bottom-color: transparent;
+}
+
+.fancy_tab_content{
+  text-align:left;
+}
+
+.help_in_fancybox{
+  background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
+  position: absolute;
+  margin-top: -1px;
+  margin-right: -5px;
+  top: 0px;
+  right: 30px;
+  margin-top: -1px;
+  margin-right: -5px;
+}
+
+.help_in_fancybox:hover{
+  background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
+  cursor: pointer;
 }

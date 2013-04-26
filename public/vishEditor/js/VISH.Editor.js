@@ -124,7 +124,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Utils.loadTab('tab_templates');
+				V.Editor.Utils.loadTab('tab_templates');
 			}
 		});
 
@@ -136,7 +136,7 @@ VISH.Editor = (function(V,$,undefined){
 			'height': 340,
 			'padding': 0,
 			"onStart"  : function(data) {
-				V.Utils.loadTab('tab_quizes');
+				V.Editor.Utils.loadTab('tab_quizes');
 			}
 		});
 	
@@ -458,7 +458,7 @@ VISH.Editor = (function(V,$,undefined){
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
 				V.Editor.Image.setAddContentMode(V.Constant.NONE);
-				V.Utils.loadTab('tab_pic_from_url');
+				V.Editor.Utils.loadTab('tab_pic_from_url');
 			}
 		});
 		$("a.addobject").fancybox({
@@ -470,7 +470,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Utils.loadTab('tab_object_from_url');
+				V.Editor.Utils.loadTab('tab_object_from_url');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -482,7 +482,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Utils.loadTab('tab_video_from_url');
+				V.Editor.Utils.loadTab('tab_video_from_url');
 			}
 		});
 		$("a.addLive").fancybox({
@@ -494,7 +494,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Utils.loadTab('tab_live_webcam');
+				V.Editor.Utils.loadTab('tab_live_webcam');
 			}
 		});
 

@@ -129,7 +129,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		setPresentationType(presentation.type);
 
 		&#x2F;&#x2F; V.Storage.setTestingMode(true);
-
+		
 		V.Status.init(function(){
 			&#x2F;&#x2F;Status loading finishes
 			_initAferStatusLoaded(options,presentation);
@@ -137,15 +137,16 @@ VISH.SlideManager = (function(V,$,undefined){
 	};
 
 	var _initAferStatusLoaded = function(options,presentation){
-		V.Quiz.init(presentation);
 		V.Flashcard.init();
+		V.Quiz.initBeforeRender(presentation);
 		V.Renderer.init();
 		V.Slides.init();
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		V.Storage.init();
 		V.Utils.init();
-
+		V.Recommendations.init(options);
+		
 		&#x2F;&#x2F;Experimental initializers for new excursion types
 		switch(presentation.type){
 			case V.Constant.GAME:
@@ -165,7 +166,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
 		V.Presentation.init(mySlides);
-		V.Quiz.prepareQuiz(presentation);
+		
+		V.Quiz.init();
 
 		&#x2F;&#x2F;Init Vish Editor Addons
 		if(options.addons){
@@ -284,19 +286,22 @@ VISH.SlideManager = (function(V,$,undefined){
 			if($(e.target).hasClass(&#x27;snapshot&#x27;)){
         		V.SnapshotPlayer.loadSnapshot($(slide));
 			}
-
-			&#x2F;&#x2F; if(V.Status.getDevice().mobile){
-			&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
-			&#x2F;&#x2F; }
-			
-			V.VideoPlayer.HTML5.playVideos(e.target);
-
-			if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
-				V.Flashcard.startAnimation(e.target.id);
-			}
-
 		},500);
-	};
+
+		&#x2F;&#x2F; if(V.Status.getDevice().mobile){
+		&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
+		&#x2F;&#x2F; }
+		
+		V.VideoPlayer.HTML5.playVideos(e.target);
+
+		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
+			V.Flashcard.startAnimation(e.target.id);
+		}
+
+		if(_isRecommendationMoment()){
+			V.Recommendations.generateFancybox();
+		}
+	};	
 
 	&#x2F;**
 	 * Private function that is called when we leave the slide
@@ -319,8 +324,22 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 	};
 
-	
+	&#x2F;**
+	 * function to check if this is the penultimate Slide (or the only one) and call to get the recommendations
+	 *&#x2F;
+	var _isRecommendationMoment = function(){
+		var number_of_slides = V.Slides.getSlides().length;
+		var slide_number = V.Slides.getCurrentSlideNumber();
 
+		if(number_of_slides===1 || slide_number===(number_of_slides-1)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+	
+	
 	&#x2F;**
 	 * function to update the number that indicates what slide is diplayed
 	 * with this format: 1&#x2F;12 2&#x2F;12
@@ -331,9 +350,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(number_of_slides===0){
 			slide_number=0;
 		}
-		$(&quot;#slide-counter&quot;).html(slide_number + &quot;&#x2F;&quot; + number_of_slides);	
+		$(&quot;#slide-counter&quot;).html(slide_number + &quot;&#x2F;&quot; + number_of_slides);
 	};
 	
+
 	var getCurrentPresentation = function(){
 		return current_presentation;
 	};

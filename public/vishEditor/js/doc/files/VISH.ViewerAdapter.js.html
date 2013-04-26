@@ -97,6 +97,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var can_use_nativeFs;
 	var embed;
 
+	var display_recommendations;
+
 	&#x2F;&#x2F;Fullscreen fallbacks
 	var enter_fs_button;
 	var enter_fs_url;
@@ -161,6 +163,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 			page_is_fullscreen = render_full &amp;&amp; (!V.Status.getIsInIframe());
 
+			&#x2F;&#x2F;recommendations slide in the end
+			if(typeof options[&quot;urlToGetRecommendations&quot;] == &quot;string&quot;){
+				display_recommendations = true;
+			} else {
+				display_recommendations = false;
+			}
+
 		} else {
 			render_full = false;
 			is_preview = false;
@@ -170,6 +179,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			fs_button = false;
 			can_use_nativeFs = false;
 			embed = false;
+			display_recommendations = false;
 		}
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -215,7 +225,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview){
 			$(&quot;div#viewerpreview&quot;).show();
-			V.Quiz.UnbindStartQuizEvents();
+			&#x2F;&#x2F; V.Quiz.UnbindStartQuizEvents();
 		}
 
 		if((embed)&amp;&amp;(V.Status.getIsInIframe())){
@@ -246,7 +256,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	&#x2F;**
 	 * Function to hide&#x2F;show the page-switchers buttons
 	 * hide the left one if on first slide
-	 * hide the right one if on last slide
+	 * hide the right one if on last slide -&gt; always show it, it will show the recommendations if on last slide
 	 * show both otherwise
 	 *&#x2F;
 	var decideIfPageSwitcher = function(){
@@ -254,7 +264,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F; ViewBar
 		if (V.Slides.getCurrentSubSlide()!==null){
 			&#x2F;&#x2F;Subslide active
-			$(&quot;#forward_arrow&quot;).hide();
+			&#x2F;&#x2F;$(&quot;#forward_arrow&quot;).hide();
 			$(&quot;#back_arrow&quot;).hide();
 		} else {
 			&#x2F;&#x2F;No subslide
@@ -263,11 +273,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$(&quot;#back_arrow&quot;).show();
 			} 
-			if (V.Slides.isCurrentLastSlide()){
-				$(&quot;#forward_arrow&quot;).hide();		
-			} else {
-				$(&quot;#forward_arrow&quot;).show();
-			}
+			&#x2F;&#x2F;if (V.Slides.isCurrentLastSlide()){
+			&#x2F;&#x2F;	$(&quot;#forward_arrow&quot;).hide();		
+			&#x2F;&#x2F;} else {
+			&#x2F;&#x2F;	$(&quot;#forward_arrow&quot;).show();
+			&#x2F;&#x2F;}
+			$(&quot;#forward_arrow&quot;).show();
 		}
 
 		&#x2F;&#x2F; Pager
@@ -277,11 +288,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$(&quot;#page-switcher-start&quot;).show();
 			}
-			if(V.Slides.isCurrentLastSlide()){
-				$(&quot;#page-switcher-end&quot;).hide();
-			} else {
-				$(&quot;#page-switcher-end&quot;).show();
-			}
+			&#x2F;&#x2F;if(V.Slides.isCurrentLastSlide()){
+			&#x2F;&#x2F;	$(&quot;#page-switcher-end&quot;).hide();
+			&#x2F;&#x2F;} else {
+			&#x2F;&#x2F;	$(&quot;#page-switcher-end&quot;).show();
+			&#x2F;&#x2F;}
+			$(&quot;#page-switcher-end&quot;).show();
 		}
 	};
 
@@ -381,20 +393,26 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(&quot;.fc_poi img&quot;).css(&quot;height&quot;, 50*increase + &quot;px&quot;);
 		
 		&#x2F;&#x2F;if fancybox is opened, resize it
-		if ($(&#x27;#fancy_content:empty&#x27;).length === 0){	
-			$(&#x27;#fancybox-inner&#x27;).width(&quot;80%&quot;);
-			$(&#x27;#fancybox-wrap&#x27;).width(&quot;80%&quot;);
+		
+		if ($(&#x27;#fancybox-content:empty&#x27;).length === 0){
+			$(&#x27;#fancybox-wrap&#x27;).width($(&quot;.current&quot;).width()+100); &#x2F;&#x2F;+100 because it is the padding
+			$(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);	&#x2F;&#x2F;+70 because it is the padding
+			$(&#x27;#fancybox-wrap&#x27;).css(&quot;top&quot;, $(&quot;.current&quot;).offset().top + &quot;px&quot;);	
+			$(&#x27;#fancybox-wrap&#x27;).css(&quot;left&quot;, $(&quot;.current&quot;).offset().left + &quot;px&quot;);
 
-			$(&quot;#fancybox-content&quot;).width(&quot;80%&quot;);
-			$(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
-			$(&#x27;#fancybox-inner&#x27;).height(&quot;80%&quot;);
-			$(&#x27;#fancybox-wrap&#x27;).height(&quot;80%&quot;);	
-
-			$(&#x27;#fancybox-wrap&#x27;).css(&quot;top&quot;, &quot;10%&quot;);	
-			$(&#x27;#fancybox-wrap&#x27;).css(&quot;left&quot;, &quot;10%&quot;);
+			setTimeout(function () {
+				$(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);	&#x2F;&#x2F;+70 because it is the padding
+				$(&quot;#fancybox-content&quot;).width(&quot;100%&quot;);
+				$(&quot;#fancybox-content&quot;).height(&quot;100%&quot;);
+				$(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
+				$(&quot;#fancybox-content &gt; div&quot;).height(&quot;100%&quot;); 
+			}, 300);
+			
+		
 			&#x2F;&#x2F;TODO check if the excursion has quiz() (fullscreen --&gt; remove QR FS Button)
 			V.Quiz.testFullScreen();
 		}
+		
 
 		decideIfPageSwitcher();
 

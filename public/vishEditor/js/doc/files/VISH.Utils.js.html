@@ -180,10 +180,12 @@ VISH.Utils = (function(V,undefined){
 	}
 
 	&#x2F;*
-	 * function to send the parent to the specified URL, used for fullscreen
+	 * Function to send the parent to the specified URL, used for fullscreen
+	 * We may be nested in more than one iframes
+	 * So, we need to use window.top instead of window.parent
 	 *&#x2F;
 	var sendParentToURL = function(the_url){
-		window.parent.location = the_url;
+		window.top.location = the_url;
 	};
 
 	var addParamToUrl = function(url,paramName,paramValue){
@@ -439,107 +441,6 @@ VISH.Utils = (function(V,undefined){
 		return dimensions;
 	};
 
-
-   &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; Fancy Box Functions
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-	&#x2F;**
-	 * function to load a tab and its content in the fancybox
-	 * also changes the help button to show the correct help
-	 *&#x2F;
-	var loadTab = function (tab_id){
-		&#x2F;&#x2F; first remove the walkthrough if open
-		$(&#x27;.joyride-close-tip&#x27;).click();
-		&#x2F;&#x2F;hide previous tab
-		$(&quot;.fancy_tab_content&quot;).hide();
-		&#x2F;&#x2F;show content
-		$(&quot;#&quot; + tab_id + &quot;_content&quot;).show();
-		&#x2F;&#x2F;deselect all of them
-		$(&quot;.fancy_tab&quot;).removeClass(&quot;fancy_selected&quot;);
-		&#x2F;&#x2F;select the correct one
-		$(&quot;#&quot; + tab_id).addClass(&quot;fancy_selected&quot;);
-		&#x2F;&#x2F;hide previous help button
-		$(&quot;.help_in_fancybox&quot;).hide();
-		&#x2F;&#x2F;show correct one
-		$(&quot;#&quot;+ tab_id + &quot;_help&quot;).show();
-
-        &#x2F;&#x2F;Submodule callbacks	
-		switch (tab_id) {
-			&#x2F;&#x2F;templates and flashcards
-			case &quot;tab_templates&quot;:
-				break;
-			case &quot;tab_flashcards_repo&quot;:
-				V.Editor.Flashcard.Repository.onLoadTab();
-				break;
-			&#x2F;&#x2F;Image
-			case &quot;tab_pic_from_url&quot;:
-				V.Editor.Image.onLoadTab(&quot;url&quot;);
-				break;
-			case &quot;tab_pic_upload&quot;:
-				V.Editor.Image.onLoadTab(&quot;upload&quot;);
-				break;
-			case &quot;tab_pic_repo&quot;:
-				V.Editor.Image.Repository.onLoadTab();
-				break;
-			case &quot;tab_pic_flikr&quot;:
-				V.Editor.Image.Flikr.onLoadTab();
-				break;
-			&#x2F;&#x2F;Video
-			case &quot;tab_video_from_url&quot;:
-				V.Editor.Video.onLoadTab();
-				break;
-			case &quot;tab_video_repo&quot;:
-				V.Editor.Video.Repository.onLoadTab();
-				break;
-			case &quot;tab_video_youtube&quot;:
-				V.Editor.Video.Youtube.onLoadTab();
-				break;
-			case &quot;tab_video_vimeo&quot;:
-				V.Editor.Video.Vimeo.onLoadTab();
-				break;
-				
-			&#x2F;&#x2F;Objects
-			case &quot;tab_object_from_url&quot;:
-				V.Editor.Object.onLoadTab(&quot;url&quot;);
-				break;
-			case &quot;tab_object_from_web&quot;:
-				V.Editor.Object.Web.onLoadTab();
-				break;
-			case &quot;tab_object_snapshot&quot;:
-				V.Editor.Object.Snapshot.onLoadTab();
-				break;
-			case &quot;tab_object_upload&quot;:
-				V.Editor.Object.onLoadTab(&quot;upload&quot;);
-				break;
-			case &quot;tab_object_repo&quot;:
-				V.Editor.Object.Repository.onLoadTab();
-				break;
-				
-			&#x2F;&#x2F;Live
-			case &quot;tab_live_webcam&quot;:
-				V.Editor.Object.Live.onLoadTab(&quot;webcam&quot;);
-				break;
-			case &quot;tab_live_micro&quot;:
-				V.Editor.Object.Live.onLoadTab(&quot;micro&quot;);
-				break;
-			&#x2F;&#x2F;quizzes
-			case &quot;tab_quiz_session&quot;:
-				V.Quiz.activatePolling(false);
-				break;
-			case &quot;tab_quiz_stats_bars&quot;:
-				V.Quiz.activatePolling(true);
-				break;
-			case &quot;tab_quiz_stats_pie&quot;:
-				V.Quiz.activatePolling(true);
-				break;
- 			&#x2F;&#x2F;Default
-			default:
-				break;
-	  }
-	};
-
-	
 	var getFontSizeFromStyle = function(style){
 		if(!style){
 			return;
@@ -611,7 +512,6 @@ VISH.Utils = (function(V,undefined){
 		getWidthFromStyle   	: getWidthFromStyle,
 		getHeightFromStyle  	: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
-		loadTab 				: loadTab,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
 		getParamsFromUrl		: getParamsFromUrl

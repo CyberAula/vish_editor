@@ -91,12 +91,16 @@
 VISH.Editor.Thumbnails = (function(V,$,undefined){
 	
 	var carrouselDivId = &quot;slides_carrousel&quot;;
-	
+
+	&#x2F;&#x2F;Tmp var
+	var redrawThumbnailsCallback;
 	
 	var init = function(){ }
 	 
 	 
-	var redrawThumbnails = function(){
+	var redrawThumbnails = function(successCallback){
+		redrawThumbnailsCallback = successCallback;
+
 		&#x2F;&#x2F;Clean previous content
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$(&quot;#&quot; + carrouselDivId).hide();
@@ -141,7 +145,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		}
 
-		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded, carrouselDivId,carrouselImagesTitles); 	
+		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles); 	
 	};
 	 
 
@@ -169,15 +173,14 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options[&#x27;width&#x27;] = 900;
 		options[&#x27;startAtLastElement&#x27;] = true;
 		options[&#x27;pagination&#x27;] = false;
+		options[&#x27;afterCreateCarruselFunction&#x27;] = _afterCreateSlidesCarrousel;
 
 		if(presentationType === V.Constant.PRESENTATION){
 			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
 		} else if(presentationType === V.Constant.FLASHCARD){
 			options[&#x27;callback&#x27;] = V.Editor.Flashcard.Creator.onClickCarrouselElement;
-			options[&#x27;afterCreateCarruselFunction&#x27;] = V.Editor.Flashcard.Creator.redrawPois;
 		} else if(presentationType === V.Constant.VTOUR){
 			options[&#x27;callback&#x27;] = V.Editor.VirtualTour.Creator.onClickCarrouselElement;
-			options[&#x27;afterCreateCarruselFunction&#x27;] = V.Editor.VirtualTour.Creator.redrawPois;
 		} else {
 			&#x2F;&#x2F;Generic
 			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
@@ -259,6 +262,21 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
 	
 	
+	var _afterCreateSlidesCarrousel = function(){
+		var presentationType = V.Editor.getPresentationType();
+		if(presentationType === V.Constant.FLASHCARD){
+			V.Editor.Flashcard.Creator.redrawPois;
+		} else if(presentationType === V.Constant.VTOUR){
+			V.Editor.VirtualTour.Creator.redrawPois;
+		}
+
+		if(typeof redrawThumbnailsCallback === &quot;function&quot;){
+			redrawThumbnailsCallback();
+			redrawThumbnailsCallback = undefined;
+		}
+	}
+
+
 	var _onClickCarrouselElement = function(event){
 		switch($(event.target).attr(&quot;action&quot;)){
 			case &quot;plus&quot;:
@@ -304,12 +322,20 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
     var _getNumberOfThumbnail = function(thumbnailDiv){
     	return parseInt($(thumbnailDiv).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;).attr(&quot;slidenumber&quot;));
     }
+
+    &#x2F;*
+     * SlideNumber can be also the slide element itself
+     *&#x2F;
+    var moveCarrouselToSlide = function(slideNumber){
+    	V.Editor.Carrousel.goToElement(carrouselDivId,slideNumber-1);
+    }
   
 	return {
 		init              		: init,
 		redrawThumbnails  		: redrawThumbnails,
 		selectThumbnail	  		: selectThumbnail,
-		getVisibleThumbnails	: getVisibleThumbnails
+		getVisibleThumbnails	: getVisibleThumbnails,
+		moveCarrouselToSlide	: moveCarrouselToSlide
 	};
 
 }) (VISH, jQuery);

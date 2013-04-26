@@ -96,14 +96,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 	
    &#x2F;*
 	* Request new quiz session
-	* Server responds with a quiz_session_id
+	* Server responds with a quiz_session JSON object including the quiz session id
 	*&#x2F;
-	var postStartQuizSession = function(quizId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+	var startQuizSession = function(quiz,successCallback, failCallback){
+		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
 			var send_type = &#x27;POST&#x27;;
-	       
+
 	        var params = {
-	          &quot;quiz_id&quot;: quizId,
+	          &quot;quiz&quot;: JSON.stringify(quiz),
 	          &quot;authenticity_token&quot; : V.User.getToken()
 	        }
 
@@ -112,38 +112,101 @@ VISH.Quiz.API = (function(V,$,undefined){
 				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x27;,
 				data    : params,
 				success : function(data) {
-					var quiz_session_id = data;
 					if(typeof successCallback==&quot;function&quot;){
-						successCallback(quiz_session_id);
+						successCallback(data);
 					}
 				},
 				error: function(error){
 					failCallback(error);
 				}
 			});
-
-	         return null;
-
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
 			V.Debugging.log(&quot;No server case&quot;);
-
-			if(quizId==12) {
-				var quiz_session_id = &quot;98988&quot;;
-			} else if (quizId==13) {
-				var quiz_session_id = &quot;98955&quot;;
-			}
-			 else if (quizId==14) {
-				var quiz_session_id = &quot;98977&quot;;
-			}
+			var quiz_session = {id: &quot;10000&quot;*(1+Math.random())};
 			if(typeof successCallback==&quot;function&quot;){
-				successCallback(quiz_session_id);
+				successCallback(quiz_session);
 			}
 		}
-
 	};
 
 	&#x2F;**
-  * DELETE &#x2F;quiz_sessions&#x2F;X =&gt; close quiz =&gt; show results
+	 * Send answers for real time quizzes
+	 * PUT &#x2F;quiz_sessions&#x2F;X
+	 *&#x2F;
+	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
+		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
+			var send_type = &#x27;PUT&#x27;;
+	       
+	        var params = {
+	      	  &quot;id&quot;: quizSessionId,
+	     	  &quot;answers&quot;: JSON.stringify(answers),
+	          &quot;authenticity_token&quot; : V.User.getToken()
+	        }
+
+	        $.ajax({
+	          type    : send_type,
+	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId,
+	          data    : params,
+				success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(data);
+				}
+	          },
+				error: function(error){
+					failCallback(error);
+				}
+             });
+
+	         return null;
+		}
+   };
+
+
+
+ 	&#x2F;**
+	 * GET &#x2F;quiz_sessions&#x2F;X&#x2F;results.json.
+	 *&#x2F;
+	var getResults = function(quizSessionId, successCallback, failCallback){
+		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+
+			var send_type = &#x27;GET&#x27;;
+	        var params = {
+	        	&quot;id&quot;: quizSessionId, 
+	        	&quot;authenticity_token&quot; : V.User.getToken() 
+	        }
+
+			$.ajax({
+				type    : send_type,
+				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId + &#x27;&#x2F;results.json&#x27;,
+				data    : params,
+				success : function(data) {
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(data);
+					}
+				},
+				error: function(error){
+					failCallback(error);
+				}
+			});
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+			&#x2F;&#x2F;Test
+			var data = [[{&quot;no&quot;:&quot;4&quot;,&quot;answer&quot;:&quot;true&quot;}],[{&quot;no&quot;:&quot;4&quot;,&quot;answer&quot;:&quot;true&quot;}],[{&quot;no&quot;:&quot;2&quot;,&quot;answer&quot;:&quot;true&quot;}]];
+			if(typeof successCallback==&quot;function&quot;){
+				successCallback(data);
+			}
+		}
+	};
+
+
+
+
+&#x2F;*
+ *	Old version
+ *&#x2F;
+
+
+	&#x2F;**
+  	 * DELETE &#x2F;quiz_sessions&#x2F;X =&gt; close quiz =&gt; show results
 	 * function calls VISH server for closing a voting
 	 *&#x2F;
 	var deleteQuizSession = function(quiz_session_id, successCallback, failCallback, quiz_name){
@@ -190,49 +253,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
   };
 	
-	&#x2F;**
-	 * PUT &#x2F;quiz_sessions&#x2F;X =&gt; vote =&gt; redirect to show
-     * used for students when send a vote 
-	 *&#x2F;
-	var putQuizSession = function(answer_selected, quiz_active_session_id, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
-		&#x2F;&#x2F;POST 
-			var send_type = &#x27;PUT&#x27;;
-	       
-	        V.Debugging.log(&quot;token is: &quot; + V.User.getToken());
-	        var params = {
-	      	  &quot;id&quot;: quiz_active_session_id,
-	     	  &quot;option&quot;:answer_selected,
-	          &quot;authenticity_token&quot; : V.User.getToken()
-	        }
 
-	        $.ajax({
-	          type    : send_type,
-	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quiz_active_session_id,
-	          data    : params,
-	          success : function(data) {
-	            var results = data;
-	            if(typeof successCallback==&quot;function&quot;){
-	            	successCallback(results);
-	            }
-	          },
-	          error: function(error){
-	          	failCallback(error);
-	          }
-
-             });
-
-	         return null;
-	} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
-			V.Debugging.log(&quot;No server case&quot;);
-			var quiz_session_id = &quot;123&quot;;
-			if(typeof successCallback==&quot;function&quot;){
-				successCallback(quiz_session_id);
-			}
-		}
-	
-
-   };
  	&#x2F;**
 	 * GET &#x2F;quiz_sessions&#x2F;X =&gt; render vote or results page 
 	 * could be called for a teacher who stop a voting and is redirected to the quiz_session_id
@@ -286,13 +307,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	
 	return {
-		init					            : init, 
-		postStartQuizSession				: postStartQuizSession, 
-		deleteQuizSession					: deleteQuizSession, 
-		putQuizSession						: putQuizSession, 
-		getQuizSessionResults				: getQuizSessionResults
-
-		
+		init					: init, 
+		startQuizSession		: startQuizSession, 
+		sendAnwers				: sendAnwers,
+		getResults 				: getResults
 	};
 
 }) (VISH, jQuery);
