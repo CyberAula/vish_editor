@@ -301,28 +301,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");
 		$(".fc_poi img").css("height", 50*increase + "px");
-		
-		//if fancybox is opened, resize it
-		
-		if ($('#fancybox-content:empty').length === 0){
-			$('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
-			$('#fancybox-wrap').height($(".current").height()+70);	//+70 because it is the padding
-			$('#fancybox-wrap').css("top", $(".current").offset().top + "px");	
-			$('#fancybox-wrap').css("left", $(".current").offset().left + "px");
-
-			setTimeout(function () {
-				$('#fancybox-wrap').height($(".current").height()+70);	//+70 because it is the padding
-				$("#fancybox-content").width("100%");
-				$("#fancybox-content").height("100%");
-				$("#fancybox-content > div").width("100%");
-				$("#fancybox-content > div").height("100%"); 
-			}, 300);
-			
-		
-			//TODO check if the excursion has quiz() (fullscreen --> remove QR FS Button)
-			V.Quiz.testFullScreen();
-		}
-		
 
 		decideIfPageSwitcher();
 
@@ -337,8 +315,30 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
+
+		_updateFancyboxAfterSetupSize();
 	};
 
+
+	/**
+	 * Fancybox resizing
+	 */
+	var _updateFancyboxAfterSetupSize = function(){
+		//If fancybox is opened, resize it
+	    if ($('#fancybox-content:empty').length === 0){
+	      $('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
+	      $('#fancybox-wrap').height($(".current").height()+70);  //+70 because it is the padding
+	      $('#fancybox-wrap').css("top", $(".current").offset().top + "px");  
+	      $('#fancybox-wrap').css("left", $(".current").offset().left + "px");
+
+	      setTimeout(function () {
+	        $("#fancybox-content").width("100%");
+	        $("#fancybox-content").height("100%");
+	        $("#fancybox-content > div").width("100%");
+	        $("#fancybox-content > div").height("100%"); 
+	      }, 300);
+	    }
+	}
 
 	///////////
 	// Fullscreen functions

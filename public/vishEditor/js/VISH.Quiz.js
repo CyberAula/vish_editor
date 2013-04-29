@@ -38,18 +38,41 @@ VISH.Quiz = (function(V,$,undefined){
     $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
-      'width': '90%',
-      'height': '90%',
-      'margin': '20%',
+      'width': '0%',
+      'height': '0%',
       'padding': 0,
       "autoScale" : true,
       "onStart"  : function(data) {
         loadTab('tab_quiz_session');
+        $("#fancybox-close").height(0);
+        $("#fancybox-close").css("padding",0);
+      },
+      'onComplete'  : function(data) {
+        setTimeout(function () {
+          $("#fancybox-close").height("22px");
+          $("#fancybox-close").css("padding","10px");
+          $("#fancybox-close").css("padding-left","4px");
+
+          $("#fancybox-wrap").css("margin-top", "0px");
+          $('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
+          $('#fancybox-wrap').height($(".current").height()+70);  //+70 because it is the padding
+          $('.outer_box').css("width","100%");
+          $('.outer_box').height($(".current").height()+70);
+          $('#fancybox-wrap').css("top", $(".current").offset().top + "px");  
+          $('#fancybox-wrap').css("left", $(".current").offset().left + "px");
+
+          $("#fancybox-content").width("100%");
+          $("#fancybox-content").height("100%");
+          $("#fancybox-content > div").width("100%");
+          $("#fancybox-content > div").height("100%");
+          $('#fancybox-wrap').show();
+        }, 300);   
       },
       "onClosed"  : function(){
         _stopPolling();
       }
     });
+
   }
 
   var _onAnswerQuiz = function(event){
@@ -93,6 +116,7 @@ VISH.Quiz = (function(V,$,undefined){
 
     switch($(startButton).attr("quizStatus")){
       case "running":
+        $("#fancybox-close").hide();
         $("a#addQuizSessionFancybox").trigger("click");
         break;
       case "loading":
@@ -241,9 +265,9 @@ VISH.Quiz = (function(V,$,undefined){
     if(!currentQuizSession){
       return;
     }
-    var myA = $("<a class='link_quiz_session_url' target='_blank' href='"+currentQuizSession.url+"'>"+currentQuizSession.url+"</a>");
-    $("#tab_quiz_session_url").html("");
-    $("#tab_quiz_session_url").prepend(myA);
+    var myA = $("#tab_quiz_session_url_link");
+    $(myA).attr("href",currentQuizSession.url);
+    $(myA).html("<p id='tab_quiz_session_url'>"+currentQuizSession.url+"</p>");
   }
 
   var _loadStats = function(){
@@ -269,8 +293,18 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var _drawResults = function(results){
+    var answers = _getAnswers(results);
     var statsDiv = $("#tab_quiz_session_results");
-    $(statsDiv).html("<p>"+JSON.stringify(results)+"</p>");
+    $(statsDiv).html("<p>"+JSON.stringify(answers)+"</p>");
+  }
+
+  var _getAnswers = function(results){
+    var answers = [];
+    var rL = results.length;
+    for(var i=0; i<rL; i++){
+      answers.push(JSON.parse(results[i].answer));
+    }
+    return answers;
   }
 
   /*

@@ -141,7 +141,7 @@ VISH.Text = (function(V,$,undefined){
 	var aftersetupSize = function(increase){
 		increase = increase*_correctionFactor(increase);
 		var reference_font_size = V.Constant.TextBase;
-		var texts = $("article");
+		var texts = $("article, #fancybox-content");
 		$(texts).css("font-size", reference_font_size*increase + "px");
 	}
 

@@ -102,10 +102,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			//Test
-			var data = [[{"no":"4","answer":"true"}],[{"no":"4","answer":"true"}],[{"no":"2","answer":"true"}]];
+			var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1}];
 			if(Math.random()<0.5){
-				data = [[{"no":"1","answer":"false"}],[{"no":"1","answer":"false"}],[{"no":"4","answer":"true"}]];
+				data = [{"answer":"[{\"no\":\"1\",\"answer\":\"false\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1}];
 			}
+
+
 			if(typeof successCallback=="function"){
 				successCallback(data);
 			}

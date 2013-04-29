@@ -546,7 +546,7 @@ button#closeButton {
   text-align: center;
   margin-top: 20%;
   color: blue;
-  font-size: 2.2em;
+  font-size: 3.2em;
   font-family: Helvetica;
   font-weight: bold;
 }
@@ -567,6 +567,7 @@ div#tab_quiz_session_results{
   width: 800px;
   height: 600px;
 }
+
 .fancy_tabs{
   border-bottom: 1px solid #ff005d;
   border-radius: 5px 5px 0px 0px;
@@ -580,7 +581,6 @@ div#tab_quiz_session_results{
   background-color: #ffffff;
   color: #ff005d;
   margin: 0px;
-  font-size: 1em;
   line-height: 1.5;
   font-weight: bold;
   padding: 0px;
@@ -598,20 +598,21 @@ div#tab_quiz_session_results{
   display:block;
   padding: 0.5em 1.5em;
   text-decoration: none;
-  background: #ffffff;
+  background: transparent;
   color: #ff005d;
-  font-size: 16px;
+  font-size: 1.5em;
   font-family: Helvetica;
   font-weight: bold;
   border-radius: 5px 5px 0px 0px;
   -moz-border-radius: 5px 5px 0px 0px;
   -webkit-border-radius: 5px 5px 0px 0px;
-  
+  border-bottom-color: transparent;
 }
 
 .fancy_tabs li a:hover{
-  border:1px solid #ff005d;
-  border-bottom-color: transparent;
+  border: 1px solid #ff005d;
+  border-bottom-color: #fff;
+  background: #fff;
 }
 
 .fancy_tabs li a.fancy_selected{
@@ -639,4 +640,9 @@ div#tab_quiz_session_results{
 .help_in_fancybox:hover{
   background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
   cursor: pointer;
+}
+
+.tab_quiz_session_content{
+  width: 100%;
+  text-align: center;
 }

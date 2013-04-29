@@ -36,8 +36,6 @@ VISH.Recommendations = (function(V,$,undefined){
 		      		$("#fancybox-outer").css("background", "white");
 		      		$("#fancybox-wrap").css("margin-top", "-14px");
 		      }
-
-
 		});
 	};
 
