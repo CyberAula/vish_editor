@@ -118,7 +118,6 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Close opened quiz session
 	*/
 	var closeQuizSession = function(quizSessionId,successCallback, failCallback){
-		//TODO (test)
 
 		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 

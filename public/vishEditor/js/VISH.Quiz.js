@@ -34,6 +34,7 @@ VISH.Quiz = (function(V,$,undefined){
   var _loadEvents = function(){
     $(document).on('click', ".quizAnswerButton",_onAnswerQuiz);
     $(document).on('click', ".quizStartButton",_onStartQuiz);
+    $(document).on('click', ".quizStopButton",_onStopQuiz);
 
     $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
@@ -174,6 +175,14 @@ VISH.Quiz = (function(V,$,undefined){
     }
   }
 
+  var _onStopQuiz = function(event){
+    V.Quiz.API.closeQuizSession(currentQuizSession.id,function(data){
+      $.fancybox.close();
+      _stopLaunchButton(currentQuiz);
+      currentQuiz = null;
+      currentQuizSession = null;
+    });
+  }
 
   /**
    * Function to render a quiz inside an article (a slide)
@@ -280,6 +289,10 @@ VISH.Quiz = (function(V,$,undefined){
   var _startPolling = function(){
     _stopPolling();
     currentPolling = setInterval(function(){
+      if(!currentQuizSession){
+        _stopPolling();
+        return;
+      }
       V.Quiz.API.getResults(currentQuizSession.id, function(results){
         _drawResults(results);
       });
