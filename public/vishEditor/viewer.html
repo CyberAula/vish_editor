@@ -79,7 +79,7 @@
   </head>
   
   <body onload="start()" style="display: none" class="loaded" id="presentation_iframe">
-<button id="vishwatermark" class="watermark" tabindex="2"></button>
+    <button id="vishwatermark" class="watermark" tabindex="2"></button>
     <section class="slides layout-regular template-default"></section>
         <button id="back_arrow" class="vish_arrow" style="display:none" tabindex="2"><</button>
     <button id="forward_arrow" class="vish_arrow" style="display:none" tabindex="2">></button>
@@ -123,20 +123,20 @@
     
     <!-- Quiz session fancybox (new)-->
     <div style='display:none'>
-        <div id="start_quiz_fancybox" class="outer_box">
-            <div class="fancy_tabs" id="images_fancy_tabs_id">     
+        <div id="start_quiz_fancybox" class="outer_box_viewer">
+            <div class="fancy_viewer_tabs" id="images_fancy_tabs_id">     
                 <ul>
-                    <li><a href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_tab tabbable">Quiz Session</a></li>
-                    <li><a href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_tab">Stats</a></li>
+                    <li><a href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_viewer_tab tabbable">Quiz Session</a></li>
+                    <li><a href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_viewer_tab">Stats</a></li>
                 </ul>
-                <img class='help_in_fancybox' id='tab_quiz_session_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
-                <img class='help_in_fancybox' id='tab_quiz_stats_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+                <img class='help_in_fancybox_viewer' id='tab_quiz_session_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+                <img class='help_in_fancybox_viewer' id='tab_quiz_stats_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
             </div>
-            <div id='tab_quiz_session_content' class="tab_quiz_session_content fancy_tab_content">
+            <div id='tab_quiz_session_content' class="tab_quiz_session_content fancy_viewer_tab_content">
                 <a target="_blank" id='tab_quiz_session_url_link'></a>
                 <input type='button' class='quizButton quizStopButton' value='Stop'/>
             </div>
-            <div id='tab_quiz_stats_content' class="fancy_tab_content">
+            <div id='tab_quiz_stats_content' class="fancy_viewer_tab_content">
                 <canvas id="quiz_chart" width="400" height="400"></canvas>
             </div>
         </div>
@@ -145,11 +145,11 @@
     <!-- PROMPT WHEN TRY TO LAUNCH TWO QUIZZES AT THE SAME TIME-->
     <div style='display:none'>
         <div id='prompt1_alert'>
-            <div class="prompt_text_container">
-                <span class="prompt_text">Please stop all quizzes before launch another one.</span>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Please stop all quizzes before launch another one.</span>
             </div>
             <div>
-                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
             </div>
         </div>
     </div>
@@ -157,12 +157,12 @@
     <!-- PROMPT WHEN SAVE A QUIZ SESSION -->
     <div style='display:none'>
         <div id='prompt2_alert'>
-            <div class="prompt_text_container prompt_text_container2">
-                <p><span class="prompt_text">Do you want to save the quiz?</span></p>
+            <div class="prompt_text_container_viewer prompt_text_container_viewer2">
+                <p><span class="prompt_text_viewer">Do you want to save the quiz?</span></p>
                 <p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
-                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button prompt_button2">Yes</a>
-                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button prompt_button1">No</a>
-                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button prompt_button3">Cancel</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button_viewer prompt_button_viewer2">Yes</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button_viewer prompt_button_viewer1">No</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button_viewer prompt_button_viewer3">Cancel</a>
             </div>
         </div>
       </div>
@@ -170,11 +170,11 @@
     <!-- PROMPT WHEN TRY TO SEND AN EMPTY ANSWER-->
     <div style='display:none'>
         <div id='prompt3_alert'>
-            <div class="prompt_text_container">
-                <span class="prompt_text">Please, answer the quiz before send</span>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Please, answer the quiz before send</span>
             </div>
             <div>
-                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
             </div>
         </div>
     </div>
@@ -182,11 +182,11 @@
     <!-- PROMPT AFTER SEND ANSWER-->
     <div style='display:none'>
         <div id='prompt4_alert'>
-            <div class="prompt_text_container">
-                <span class="prompt_text">Your answer has been submitted</span>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Your answer has been submitted</span>
             </div>
             <div>
-                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
             </div>
         </div>
     </div>
@@ -194,11 +194,11 @@
     <!-- PROMPT AFTER ERROR ON SENDING ANSWER-->
     <div style='display:none'>
         <div id='prompt5_alert'>
-            <div class="prompt_text_container">
-                <span class="prompt_text">Sorry, your answer can be submitted.</span>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Sorry, your answer can be submitted.</span>
             </div>
             <div>
-                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer_viewer4">accept</a>
             </div>
         </div>
     </div>

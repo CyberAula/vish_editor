@@ -611,19 +611,19 @@ div#tab_quiz_session_results{
 
 /***** Fancybox tabs (for quizzes) ****************/
 
-.outer_box{
+.outer_box_viewer{
   width: 800px;
   height: 600px;
 }
 
-.fancy_tabs{
+.fancy_viewer_tabs{
   border-bottom: 1px solid #ff005d;
   border-radius: 5px 5px 0px 0px;
   moz-border-radius: 5px 5px 0px 0px;
   webkit-border-radius: 5px 5px 0px 0px;
 }
 
-.fancy_tabs ul{
+.fancy_viewer_tabs ul{
   width: auto;
   list-style-type: none;
   background-color: #ffffff;
@@ -637,12 +637,12 @@ div#tab_quiz_session_results{
   -webkit-border-radius: 5px 5px 0px 0px; 
 }
 
-.fancy_tabs li{
+.fancy_viewer_tabs li{
   display: inline-block;
   margin-bottom: -1px;
 }
 
-.fancy_tabs li a{
+.fancy_viewer_tabs li a{
   display:block;
   padding: 0.5em 1.5em;
   text-decoration: none;
@@ -657,24 +657,24 @@ div#tab_quiz_session_results{
   border-bottom-color: transparent;
 }
 
-.fancy_tabs li a:hover{
+.fancy_viewer_tabs li a:hover{
   border: 1px solid #ff005d;
   border-bottom-color: #fff;
   background: #fff;
 }
 
-.fancy_tabs li a.fancy_selected{
+.fancy_viewer_tabs li a.fancy_selected{
   background: #ffffff;
   color: #ff005d;
   border: 1px solid #ff005d;
   border-bottom-color: transparent;
 }
 
-.fancy_tab_content{
+.fancy_viewer_tab_content{
   text-align:left;
 }
 
-.help_in_fancybox{
+.help_in_fancybox_viewer{
   background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
   position: absolute;
   margin-top: -1px;
@@ -685,7 +685,7 @@ div#tab_quiz_session_results{
   margin-right: -5px;
 }
 
-.help_in_fancybox:hover{
+.help_in_fancybox_viewer:hover{
   background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
   cursor: pointer;
 }
@@ -700,7 +700,7 @@ div#tab_quiz_session_results{
  * PROMPTS
  */
 
-.prompt_text_container{
+.prompt_text_container_viewer{
   height: 60%;
   width: 95%;
   position: absolute;
@@ -709,12 +709,12 @@ div#tab_quiz_session_results{
   padding: 2%;
 }
 
-.prompt_text_container2{
+.prompt_text_container_viewer2{
   top: 10%;
   height: 76%;
 }
 
-.prompt_text{
+.prompt_text_viewer{
   text-decoration:none;
   font-family:Helvetica;
   font-size:32px;
@@ -726,7 +726,7 @@ div#tab_quiz_session_results{
   margin-top: 2%;
 }
 
-.prompt_button {
+.prompt_button_viewer {
   position: absolute;
   bottom: 0%;
   margin-bottom: 2%;
@@ -743,22 +743,22 @@ div#tab_quiz_session_results{
   -webkit-border-radius: 5px;
 }
 
-.prompt_button4{
-  right: 0%;
-  margin-right: 10px;
-}
-
-.prompt_button1{
+.prompt_button_viewer1{
   left: 50%;
   margin-left: -30px;
 }
 
-.prompt_button2{
+.prompt_button_viewer2{
   left: 50%;
   margin-left: -115px;
 }
 
-.prompt_button3{
+.prompt_button_viewer3{
   left: 50%;
   margin-left: 50px;
+}
+
+.prompt_button_viewer4{
+  right: 0%;
+  margin-right: 10px;
 }

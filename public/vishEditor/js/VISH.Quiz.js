@@ -215,11 +215,11 @@ VISH.Quiz = (function(V,$,undefined){
             name = $(pn).val();
           }
         });
-        $(".prompt_button2").addClass("quizStartButtonLoading");
+        $(".prompt_button_viewer2").addClass("quizStartButtonLoading");
         _closeQuizSession(name);
         break;
       case "no":
-        $(".prompt_button1").addClass("quizStartButtonLoading");
+        $(".prompt_button_viewer1").addClass("quizStartButtonLoading");
         _closeQuizSession();
         break;
       case "cancel":
@@ -231,12 +231,12 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _closeQuizSession = function(name){
     V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
-      $(".prompt_button1").removeClass("quizStartButtonLoading")
-      $(".prompt_button2").removeClass("quizStartButtonLoading")
-      _enableLaunchButton(currentQuiz);
+      $.fancybox.close();
       currentQuiz = null;
       currentQuizSession = null;
-      $.fancybox.close();
+      $(".prompt_button_viewer1").removeClass("quizStartButtonLoading")
+      $(".prompt_button_viewer2").removeClass("quizStartButtonLoading")
+      _enableLaunchButton(currentQuiz);
     });
   }
 
@@ -329,15 +329,15 @@ VISH.Quiz = (function(V,$,undefined){
 
   var loadTab = function(tab_id){
     //hide previous tab
-    $(".fancy_tab_content").hide();
+    $(".fancy_viewer_tab_content").hide();
     //show content
     $("#" + tab_id + "_content").show();
     //deselect all of them
-    $(".fancy_tab").removeClass("fancy_selected");
+    $(".fancy_viewer_tab").removeClass("fancy_selected");
     //select the correct one
     $("#" + tab_id).addClass("fancy_selected");
     //hide previous help button
-    $(".help_in_fancybox").hide();
+    $(".help_in_fancybox_viewer").hide();
     //show correct one
     $("#"+ tab_id + "_help").show();
 

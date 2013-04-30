@@ -135,7 +135,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
     for(var i=0; i<nAnswers; i++){
       pieFragments[i] = {};
-      pieFragments[i].value = 10;
+      pieFragments[i].value = 0;
       pieFragments[i].label = choicesLetters[i];
       pieFragments[i].color = pieBackgroundColor[i];
       pieFragments[i].labelColor = pieLetterColor[i];
@@ -156,6 +156,10 @@ VISH.Quiz.MC = (function(V,$,undefined){
         }
       } 
     }
+
+    // if(pieFragments.length===0){
+    //   return;
+    // }
 
     for(var i=0; i<nAnswers; i++){
       data.push(pieFragments[i]);
