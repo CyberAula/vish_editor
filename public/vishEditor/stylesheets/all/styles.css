@@ -201,29 +201,51 @@ this can not be done with show() and hide() because then it remains with display
 
 
 #page-switcher-end{
-	right: 0px;
+    background-image: url("/vishEditor/images/arrows.png");
+  background-position: -160px -160px;
+  background-repeat: no-repeat;
+	right: 23%;
   cursor: pointer;
-}
-
-#page-switcher-start:hover{
-	color: #ededed;
-}
-
-#page-switcher-start{
-	left: 0px;
-  cursor: pointer;
+    height: 30px;
+  width: 20px;
+  top: 16%;
 }
 
 #page-switcher-end:hover{
-	color: #d7d7d7;
+  background-position: -200px -200px;
 }
 
-#page-fullscreen{
-  background-image: url("/vishEditor/images/icons/fullscreen_all.png");
+#page-switcher-end:active{
+  background-position: -240px -240px;
+}
+
+#page-switcher-start:hover{
+	background-position: -40px -40px;
+}
+
+#page-switcher-start:active{
+  background-position: -80px -80px;
+}
+
+#page-switcher-start{
+  background-image: url("/vishEditor/images/arrows.png");
   background-position: 0 0;
   background-repeat: no-repeat;
-  height: 40px;
-  width: 45px;
+	left: 31%;
+  cursor: pointer;
+  height: 30px;
+  width: 20px;
+  top: 16%;
+}
+
+
+#page-fullscreen{
+  background-image: url("/vishEditor/images/fullscreen.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  padding: 15px;
+  height: 15px;
+  width: 15px;
   position: absolute;
   right: 0;
   bottom: 0;
@@ -232,33 +254,41 @@ this can not be done with show() and hide() because then it remains with display
   border: medium none;
   opacity: 1;
   cursor: pointer;
+  z-index: 2;
 }
 
 #page-fullscreen:hover{
-    background-position:0px -41px;
+    background-position:-40px -40px !important;
+}
+
+#page-fullscreen:active{
+    background-position:-120px -120px !important;
 }
 
 #slide-counter {
-	z-index: 10;
-	font-family: Helvetica;
-	font-size:18px;
-	text-align: center;
-	margin-top: 10px;
+z-index: 10;
+font-family: Helvetica;
+font-size: 1.2em;
+text-align: center;
+margin-top: 8px;
 }
 
 .viewbar {
-	background-image: url(/vishEditor/images/viewbar.png) ;
+  background-image: -moz-linear-gradient(#ececec,#a8a8a8);
+  background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#ececec),to(#a8a8a8));
+  background-image: -o-linear-gradient(#ececec,#a8a8a8);
+  background-image: -ms-linear-gradient(#ececec,#a8a8a8);
 	height: 40px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    bottom: 0;
-    left: 50%;
-    margin-left: -200px;
-    opacity: 1.0;
-    position: absolute;
-    text-align: center;
-    width: 430px;
+  bottom: 0;
+  opacity: 1.0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid #888;
+  border-top: 1px solid #ccc;
+  z-index: 1;
 }
+
 
 /* Style for Texts (CkEditor version) */
 article {
@@ -518,10 +548,12 @@ button#closeButton {
 
 #back_arrow{
   left: 0%;
+  z-index: 0;
 }
 
 #forward_arrow{
   right: 0%;
+  z-index: 0;
 }
 
 /* Watermark */
