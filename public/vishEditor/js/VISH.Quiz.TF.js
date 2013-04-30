@@ -11,7 +11,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
   var render = function(slide,template){
     var quizId = V.Utils.getId();
-    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+VISH.Constant.QZ_TYPE.TF+"'></div>");
+    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+V.Constant.QZ_TYPE.TF+"'></div>");
 
     //Question
     var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
@@ -31,7 +31,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
       var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
       var optionBox1 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='true' value='"+index+"'/></td>");
       var optionBox2 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='false' value='"+index+"'/></td>");
-      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+VISH.Quiz.MC.getChoicesLetters()[i]+"</span></td>");
+      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+V.Quiz.MC.getChoicesLetters()[i]+"</span></td>");
       var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
       $(optionText).html(option.wysiwygValue);
 
@@ -116,12 +116,95 @@ VISH.Quiz.TF = (function(V,$,undefined){
     V.Quiz.disableAnswerButton(quiz);
   }
 
+
+  /*
+   * Data representation
+   */
+
+  var drawAnswers = function(quiz,answersList,options){
+    var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
+    var labels = [];
+    var dataTrue = [];
+    var dataFalse = [];
+    var maxValue = 0;
+    var scaleSteps = 10;
+
+    for(var i=0; i<nAnswers; i++){
+      labels[i] = "V       " + V.Quiz.MC.getChoicesLetters()[i] + "       F";
+      dataTrue[i] = 0;
+      dataFalse[i] = 0;
+    }
+
+    var alL = answersList.length;
+    for(var j=0; j<alL; j++){
+      //List of answers of a user
+      var answers = answersList[j];
+
+      var aL = answers.length;
+      for(var k=0; k<aL; k++){
+        var answer = answers[k];
+        var index = answer.no-1;
+        if(answer.answer==="true"){
+          dataTrue[index]++;
+        } else {
+          dataFalse[index]++;
+        }
+      } 
+    }
+
+    for(var l=0; l<nAnswers; l++){
+      if(dataTrue[i] > maxValue){
+        maxValue = dataTrue[i];
+      }
+      if(dataFalse[i] > maxValue){
+        maxValue = dataFalse[i];
+      }
+    }
+
+    if(maxValue<10){
+      scaleSteps = Math.max(1,maxValue);
+    }
+
+    var canvas = $("#quiz_chart");
+    var ctx = $(canvas).get(0).getContext("2d");
+    var data = {
+        labels : labels,
+        datasets : [
+            {
+                fillColor : "#E2FFE3",
+                strokeColor : "rgba(220,220,220,1)",
+                data : dataTrue
+            },
+            {
+                fillColor : "#FFE2E2",
+                strokeColor : "rgba(220,220,220,1)",
+                data : dataFalse
+            }
+        ]
+    };
+
+    var animation = false;
+    if((options)&&(options.first===true)){
+      animation = true;
+    }
+
+    var options = {
+      animation: animation,
+      scaleOverride: true,
+      scaleStepWidth: Math.max(1,Math.ceil(maxValue/10)),
+      scaleSteps: scaleSteps,
+      showTooltips: false
+    }
+    var myNewChart = new Chart(ctx).Bar(data,options);
+  }
+
   return {
     init          : init,
     render        : render,
     onAnswerQuiz  : onAnswerQuiz,
     getReport     : getReport,
-    disableQuiz   : disableQuiz
+    disableQuiz   : disableQuiz,
+    drawAnswers   : drawAnswers
   };
     
 }) (VISH, jQuery);
