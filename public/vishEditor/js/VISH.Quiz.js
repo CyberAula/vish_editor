@@ -124,12 +124,19 @@ VISH.Quiz = (function(V,$,undefined){
         break;
       case "stop":
       default:
-        //Start new quiz session
-        _loadingLaunchButton(quiz);
-        var quizJSON = _getQuizJSONFromQuiz(quiz);
-        V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+        _startNewQuizSession(quiz);
         break;
     }
+  }
+
+  var _startNewQuizSession = function(quiz){
+    if(currentQuizSession){
+      alert("There is another quiz running");
+      return;
+    }
+    _loadingLaunchButton(quiz);
+    var quizJSON = _getQuizJSONFromQuiz(quiz);
+    V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
   }
 
   var _onQuizSessionReceived = function(quiz,quizSession){
@@ -198,7 +205,7 @@ VISH.Quiz = (function(V,$,undefined){
     var quizButtons = $("<div class='quizButtons'></div>");
 
     if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
-      var startButton = $("<input type='button' class='quizButton quizStartButton' value='Start'/>");
+      var startButton = $("<input type='button' class='quizButton quizStartButton' value='Launch'/>");
       $(quizButtons).prepend(startButton);
     }
     if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
@@ -220,7 +227,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(startButton).attr("disabled", "disabled");
     $(startButton).addClass("quizStartButtonLoading");
     $(startButton).attr("quizStatus","loading");
-    $(startButton).attr("value","Start");
+    $(startButton).attr("value","Launch");
   }
 
   var _runningLaunchButton = function(quiz){
@@ -236,7 +243,7 @@ VISH.Quiz = (function(V,$,undefined){
     $(startButton).removeAttr("disabled");
     $(startButton).removeClass("quizStartButtonLoading");
     $(startButton).removeAttr("quizStatus");
-    $(startButton).attr("value","Start");
+    $(startButton).attr("value","Launch");
   }
 
 
@@ -281,7 +288,7 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _loadStats = function(){
     V.Quiz.API.getResults(currentQuizSession.id, function(results){
-        _drawResults(results);
+        _drawResults(results,{"first": true});
         _startPolling();
     });
   }
@@ -294,7 +301,7 @@ VISH.Quiz = (function(V,$,undefined){
         return;
       }
       V.Quiz.API.getResults(currentQuizSession.id, function(results){
-        _drawResults(results);
+        _drawResults(results,{"first": false});
       });
     },2000);
   }
@@ -305,10 +312,21 @@ VISH.Quiz = (function(V,$,undefined){
     }
   }
 
-  var _drawResults = function(results){
+  var _drawResults = function(results,options){
+    //Prepare canvas
+    var canvas = $("#quiz_chart");
+    var desiredWidth = $("#fancybox-content").width();
+    var desiredHeight = $("#fancybox-content").height()*0.8;
+    $(canvas).width(desiredWidth);
+    $(canvas).height(desiredHeight);
+    $(canvas).attr("width",desiredWidth);
+    $(canvas).attr("height",desiredHeight);
+
     var answers = _getAnswers(results);
-    var statsDiv = $("#tab_quiz_session_results");
-    $(statsDiv).html("<p>"+JSON.stringify(answers)+"</p>");
+    var quizModule = _getQuizModule($(currentQuiz).attr("type"));
+    if(quizModule){
+      quizModule.drawAnswers(currentQuiz,answers,options);
+    }
   }
 
   var _getAnswers = function(results){

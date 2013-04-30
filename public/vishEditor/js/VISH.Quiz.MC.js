@@ -1,6 +1,8 @@
 VISH.Quiz.MC = (function(V,$,undefined){
   
   var choicesLetters = ['a)','b)','c)','d)','e)','f)','g)','h)','i)','j)','k)','l)','m)','n)','o)','p)','q)','r)','s)'];
+  var pieBackgroundColor = ["#F38630","#E0E4CC","#69D2E7","#FFF82A","#FF0FB4","#2A31FF","#FF6075","#00D043"];
+  var pieLetterColor = ["#000","#000","#000","#000","#000","#000","#000","#000"];
   var choices = {};
 
 
@@ -13,7 +15,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
   var render = function(slide,template){
     var quizId = V.Utils.getId();
-    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+VISH.Constant.QZ_TYPE.MCHOICE+"'></div>");
+    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
 
     var multipleAnswer = false;
     var inputType = 'radio';
@@ -121,13 +123,67 @@ VISH.Quiz.MC = (function(V,$,undefined){
     return choicesLetters;
   }
 
+  /*
+   * Data representation
+   */
+
+  var drawAnswers = function(quiz,answersList,options){
+
+    var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
+    var pieFragments = [];
+    var data = [];
+
+    for(var i=0; i<nAnswers; i++){
+      pieFragments[i] = {};
+      pieFragments[i].value = 10;
+      pieFragments[i].label = choicesLetters[i];
+      pieFragments[i].color = pieBackgroundColor[i];
+      pieFragments[i].labelColor = pieLetterColor[i];
+      pieFragments[i].labelFontSize = '16';
+    }
+
+    var alL = answersList.length;
+    for(var j=0; j<alL; j++){
+      //List of answers of a user
+      var answers = answersList[j];
+
+      var aL = answers.length;
+      for(var k=0; k<aL; k++){
+        var answer = answers[k];
+        var index = answer.no-1;
+        if(answer.answer==="true"){
+          pieFragments[index].value++;
+        }
+      } 
+    }
+
+    for(var i=0; i<nAnswers; i++){
+      data.push(pieFragments[i]);
+    }
+
+    var canvas = $("#quiz_chart");
+    var ctx = $(canvas).get(0).getContext("2d");
+    
+    var animation = false;
+    if((options)&&(options.first===true)){
+      animation = true;
+    }
+
+    var options = {
+        showTooltips: false,
+        animation: animation
+    }
+    var myNewChart = new Chart(ctx).Pie(data,options);
+  }
+
   return {
     init                : init,
     render              : render,
     onAnswerQuiz        : onAnswerQuiz,
     getChoicesLetters   : getChoicesLetters,
     getReport           : getReport,
-    disableQuiz         : disableQuiz
+    disableQuiz         : disableQuiz,
+    drawAnswers         : drawAnswers
   };
     
 }) (VISH, jQuery);

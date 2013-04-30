@@ -592,6 +592,17 @@ div#tab_quiz_session_results{
   width: 100%;
 }
 
+#quiz_chart{
+  margin-top: 5%;
+}
+
+.quizStopButton{
+  height: 6% !important;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2%;
+}
 
 /***** Fancybox tabs (for quizzes) ****************/
 
@@ -678,12 +689,4 @@ div#tab_quiz_session_results{
   width: 100%;
   height: 100%;
   text-align: center;
-}
-
-.quizStopButton{
-  height: 6% !important;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: 2%;
 }

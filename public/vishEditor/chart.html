@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Chart Test</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/RegaddiChart.js"></script>
+    <script>
+        $(document).ready(function(){
+            //onload
+            var canvas = $("#myChart");
+            $(canvas).width(400);
+            $(canvas).height(400);
+            $(canvas).attr("width","600");
+            $(canvas).attr("height","400");
+
+
+                //BAR GRAPH
+                var ctx = $(canvas).get(0).getContext("2d");
+                // var myNewChart = new Chart(ctx);
+                var data = {
+                    labels : ["January","February","March","April","May","June","July"],
+                    datasets : [
+                        {
+                            fillColor : "rgba(220,220,220,0.5)",
+                            strokeColor : "rgba(220,220,220,1)",
+                            // data : [65,59,90,81,56,55,40],
+                            data : [10,10,10,10,10,10,10],
+                            label: ["a","a","a","a","a","a","a"]
+                        },
+                        {
+                            fillColor : "rgba(151,187,205,0.5)",
+                            strokeColor : "rgba(151,187,205,1)",
+                            // data : [28,48,40,19,96,27,100]
+                            data : [10,10,10,10,10,10,10],
+                             label: ["a","a","a","a","a","a","a"]
+                        }
+                    ]
+                }
+
+                var options = {
+                        scaleOverride: true,
+                        scaleStepWidth: 10,
+                        scaleSteps: 10,
+                        showTooltips: false
+                }
+                var myNewChart = new Chart(ctx).Bar(data,options);
+
+                // var ctx = $(canvas).get(0).getContext("2d");
+                // var data = [
+                //     {
+                //         value: 130,
+                //         color:"#F38630",
+                //         label : 'Sleep',
+                //         labelColor : 'white',
+                //         labelFontSize : '16'
+                //     },
+                //     {
+                //         value : 50,
+                //         color : "#E0E4CC"
+                //     },
+                //     {
+                //         value : 500,
+                //         color : "#69D2E7"
+                //     }           
+                // ]
+                // var options = {
+                //     showTooltips: false
+                // }
+                // var myNewChart = new Chart(ctx).Pie(data,options);
+                
+
+        });
+    </script>
+  </head>
+  
+    <body>
+        <p> Char Test</p>
+        <div  width="400" height="400">
+            <canvas id="myChart"></canvas>
+        </div>
+
+    </body>
+</html>
