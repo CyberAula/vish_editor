@@ -198,6 +198,11 @@ this can not be done with show() and hide() because then it remains with display
 	outline: none;
 }
 
+.disabledarrow {
+  background-position: -120px -120px !important;
+  cursor: auto !important; 
+}
+
 
 
 #page-switcher-end{

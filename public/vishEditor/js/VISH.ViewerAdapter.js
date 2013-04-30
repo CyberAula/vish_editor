@@ -194,9 +194,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		// Pager
 		if(!render_full){
 			if(V.Slides.isCurrentFirstSlide()){
-				$("#page-switcher-start").hide();			
+				$("#page-switcher-start").addClass("disabledarrow");			
 			} else {
-				$("#page-switcher-start").show();
+				$("#page-switcher-start").removeClass("disabledarrow");
 			}
 			//if(V.Slides.isCurrentLastSlide()){
 			//	$("#page-switcher-end").hide();
