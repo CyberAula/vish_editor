@@ -126,8 +126,6 @@ VISH.Recommendations = (function(V,$,undefined){
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
 		      }
-
-
 		});
 	};
 
@@ -135,27 +133,27 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * function to call ViSH via AJAX to get recommendation of excursions
 	 *&#x2F;
 	var generateFancybox = function(){
-		&#x2F;&#x2F; if(!generated){
-		&#x2F;&#x2F; 	&#x2F;&#x2F; console.log(&quot;user_id &quot; + user_id + &quot; presentation_id &quot; + presentation_id);
-		&#x2F;&#x2F; 	if(url_to_get_recommendations !== undefined){
-		&#x2F;&#x2F; 		var params_to_send = {
-		&#x2F;&#x2F; 			user_id: user_id,
-		&#x2F;&#x2F; 			excursion_id: presentation_id,
-		&#x2F;&#x2F; 			quantity: 9
-		&#x2F;&#x2F; 		};
-		&#x2F;&#x2F; 		$.ajax({
-		&#x2F;&#x2F; 			type    : &quot;POST&quot;,
-		&#x2F;&#x2F; 			url     : url_to_get_recommendations,
-		&#x2F;&#x2F; 			data    : params_to_send,
-		&#x2F;&#x2F; 			success : function(data) {
-		&#x2F;&#x2F; 				_fillFancyboxWithData(data);
-		&#x2F;&#x2F; 			}
-		&#x2F;&#x2F; 		});
-		&#x2F;&#x2F; 	} else {
-		&#x2F;&#x2F; 		_fillFancyboxWithData(VISH.Samples.API.recommendationList);
-		&#x2F;&#x2F; 	}
-		&#x2F;&#x2F; 	generated = true;
-		&#x2F;&#x2F; }		
+		if(!generated){
+			&#x2F;&#x2F; console.log(&quot;user_id &quot; + user_id + &quot; presentation_id &quot; + presentation_id);
+			if(url_to_get_recommendations !== undefined){
+				var params_to_send = {
+					user_id: user_id,
+					excursion_id: presentation_id,
+					quantity: 9
+				};
+				$.ajax({
+					type    : &quot;POST&quot;,
+					url     : url_to_get_recommendations,
+					data    : params_to_send,
+					success : function(data) {
+						_fillFancyboxWithData(data);
+					}
+				});
+			} else {
+				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
+			}
+			generated = true;
+		}		
 	};
 
 	var _fillFancyboxWithData = function(data){

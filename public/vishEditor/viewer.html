@@ -14,6 +14,7 @@
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/yt_iframe_api.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/RegaddiChart.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
@@ -148,7 +149,56 @@
                 <span class="prompt_text">Please stop all quizzes before launch another one.</span>
             </div>
             <div>
-                <a href="#" onclick="$.fancybox.close();" class="prompt_button">accept</a>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT WHEN SAVE A QUIZ SESSION -->
+    <div style='display:none'>
+        <div id='prompt2_alert'>
+            <div class="prompt_text_container prompt_text_container2">
+                <p><span class="prompt_text">Do you want to save the quiz?</span></p>
+                <p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button prompt_button2">Yes</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button prompt_button1">No</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button prompt_button3">Cancel</a>
+            </div>
+        </div>
+      </div>
+
+    <!-- PROMPT WHEN TRY TO SEND AN EMPTY ANSWER-->
+    <div style='display:none'>
+        <div id='prompt3_alert'>
+            <div class="prompt_text_container">
+                <span class="prompt_text">Please, answer the quiz before send</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT AFTER SEND ANSWER-->
+    <div style='display:none'>
+        <div id='prompt4_alert'>
+            <div class="prompt_text_container">
+                <span class="prompt_text">Your answer has been submitted</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT AFTER ERROR ON SENDING ANSWER-->
+    <div style='display:none'>
+        <div id='prompt5_alert'>
+            <div class="prompt_text_container">
+                <span class="prompt_text">Sorry, your answer can be submitted.</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button prompt_button4">accept</a>
             </div>
         </div>
     </div>
