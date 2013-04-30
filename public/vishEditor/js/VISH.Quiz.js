@@ -22,6 +22,7 @@ VISH.Quiz = (function(V,$,undefined){
   }
 
   var init = function(){
+    $("#prompt2name").watermark("Quiz Session Name");
     V.Quiz.API.init();
     V.Quiz.MC.init();
     V.Quiz.TF.init();

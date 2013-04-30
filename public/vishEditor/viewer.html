@@ -14,6 +14,7 @@
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/yt_iframe_api.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/RegaddiChart.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
@@ -158,7 +159,7 @@
         <div id='prompt2_alert'>
             <div class="prompt_text_container prompt_text_container2">
                 <p><span class="prompt_text">Do you want to save the quiz?</span></p>
-                <p><input type="text" id="prompt2name" placeholder="Quiz Session Name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
+                <p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
                 <a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button prompt_button2">Yes</a>
                 <a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button prompt_button1">No</a>
                 <a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button prompt_button3">Cancel</a>

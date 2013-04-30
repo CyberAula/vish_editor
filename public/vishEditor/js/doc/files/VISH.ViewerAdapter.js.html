@@ -284,9 +284,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F; Pager
 		if(!render_full){
 			if(V.Slides.isCurrentFirstSlide()){
-				$(&quot;#page-switcher-start&quot;).hide();			
+				$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);			
 			} else {
-				$(&quot;#page-switcher-start&quot;).show();
+				$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
 			}
 			&#x2F;&#x2F;if(V.Slides.isCurrentLastSlide()){
 			&#x2F;&#x2F;	$(&quot;#page-switcher-end&quot;).hide();
@@ -391,28 +391,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;and now the arrows have to be increased or decreased
 		$(&quot;.fc_poi img&quot;).css(&quot;width&quot;, 50*increase + &quot;px&quot;);
 		$(&quot;.fc_poi img&quot;).css(&quot;height&quot;, 50*increase + &quot;px&quot;);
-		
-		&#x2F;&#x2F;if fancybox is opened, resize it
-		
-		if ($(&#x27;#fancybox-content:empty&#x27;).length === 0){
-			$(&#x27;#fancybox-wrap&#x27;).width($(&quot;.current&quot;).width()+100); &#x2F;&#x2F;+100 because it is the padding
-			$(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);	&#x2F;&#x2F;+70 because it is the padding
-			$(&#x27;#fancybox-wrap&#x27;).css(&quot;top&quot;, $(&quot;.current&quot;).offset().top + &quot;px&quot;);	
-			$(&#x27;#fancybox-wrap&#x27;).css(&quot;left&quot;, $(&quot;.current&quot;).offset().left + &quot;px&quot;);
-
-			setTimeout(function () {
-				$(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);	&#x2F;&#x2F;+70 because it is the padding
-				$(&quot;#fancybox-content&quot;).width(&quot;100%&quot;);
-				$(&quot;#fancybox-content&quot;).height(&quot;100%&quot;);
-				$(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
-				$(&quot;#fancybox-content &gt; div&quot;).height(&quot;100%&quot;); 
-			}, 300);
-			
-		
-			&#x2F;&#x2F;TODO check if the excursion has quiz() (fullscreen --&gt; remove QR FS Button)
-			V.Quiz.testFullScreen();
-		}
-		
 
 		decideIfPageSwitcher();
 
@@ -427,8 +405,30 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
+
+		_updateFancyboxAfterSetupSize();
 	};
 
+
+	&#x2F;**
+	 * Fancybox resizing
+	 *&#x2F;
+	var _updateFancyboxAfterSetupSize = function(){
+		&#x2F;&#x2F;If fancybox is opened, resize it
+	    if ($(&#x27;#fancybox-content:empty&#x27;).length === 0){
+	      $(&#x27;#fancybox-wrap&#x27;).width($(&quot;.current&quot;).width()+100); &#x2F;&#x2F;+100 because it is the padding
+	      $(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);  &#x2F;&#x2F;+70 because it is the padding
+	      $(&#x27;#fancybox-wrap&#x27;).css(&quot;top&quot;, $(&quot;.current&quot;).offset().top + &quot;px&quot;);  
+	      $(&#x27;#fancybox-wrap&#x27;).css(&quot;left&quot;, $(&quot;.current&quot;).offset().left + &quot;px&quot;);
+
+	      setTimeout(function () {
+	        $(&quot;#fancybox-content&quot;).width(&quot;100%&quot;);
+	        $(&quot;#fancybox-content&quot;).height(&quot;100%&quot;);
+	        $(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
+	        $(&quot;#fancybox-content &gt; div&quot;).height(&quot;100%&quot;); 
+	      }, 300);
+	    }
+	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; Fullscreen functions
