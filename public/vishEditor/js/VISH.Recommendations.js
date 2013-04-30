@@ -29,7 +29,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'padding': 0,
 		      'overlayOpacity': 0,
 		      'onComplete'  : function(data) {
-		      		$("#fancybox-outer").css("background", "rgba(0,0,0,.6)");
+		      		$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
 		      		$("#fancybox-wrap").css("margin-top", "0px");
 		      },
 		      'onClosed' : function(data) {
