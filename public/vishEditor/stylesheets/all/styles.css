@@ -701,11 +701,17 @@ div#tab_quiz_session_results{
  */
 
 .prompt_text_container{
-  height: 100%;
+  height: 60%;
+  width: 95%;
   position: absolute;
   top: 25%;
   text-align: center;
-  padding: 10px;
+  padding: 2%;
+}
+
+.prompt_text_container2{
+  top: 10%;
+  height: 76%;
 }
 
 .prompt_text{
@@ -716,11 +722,14 @@ div#tab_quiz_session_results{
   padding-bottom: 15px;
 }
 
+#prompt2name{
+  margin-top: 2%;
+}
+
 .prompt_button {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  margin-bottom: 10px;
+  bottom: 0%;
+  margin-bottom: 2%;
   padding: 5px 20px;
   text-decoration:none;
   cursor: pointer;
@@ -732,4 +741,24 @@ div#tab_quiz_session_results{
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+
+.prompt_button4{
+  right: 0%;
+  margin-right: 10px;
+}
+
+.prompt_button1{
+  left: 50%;
+  margin-left: -30px;
+}
+
+.prompt_button2{
+  left: 50%;
+  margin-left: -115px;
+}
+
+.prompt_button3{
+  left: 50%;
+  margin-left: 50px;
 }

@@ -71,6 +71,12 @@ VISH.Quiz.API = (function(V,$,undefined){
              });
 
 	         return null;
+		} else {
+			if(typeof successCallback=="function"){
+				setTimeout(function(){
+					successCallback();
+				},1000);
+			}
 		}
    };
 
@@ -109,7 +115,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 
 			if(typeof successCallback=="function"){
-				successCallback(data);
+				setTimeout(function(){
+					successCallback(data);
+				},1000);
 			}
 		}
 	};
@@ -117,7 +125,7 @@ VISH.Quiz.API = (function(V,$,undefined){
    /*
 	* Close opened quiz session
 	*/
-	var closeQuizSession = function(quizSessionId,successCallback, failCallback){
+	var closeQuizSession = function(quizSessionId,name,successCallback, failCallback){
 
 		if(V.Configuration.getConfiguration()["mode"]=="vish"){
 
@@ -125,6 +133,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var params = {
 				"id": quizSessionId, 
 				"authenticity_token" : V.User.getToken() 
+			}
+
+			if(typeof name == "string"){
+				params["name"] = name;
 			}
 
 			$.ajax({
@@ -141,9 +153,21 @@ VISH.Quiz.API = (function(V,$,undefined){
 				}
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
+
+			// var params = {
+			// 	"id": quizSessionId, 
+			// 	"authenticity_token" : V.User.getToken() 
+			// }
+			// if(typeof name == "string"){
+			// 	params["name"] = name;
+			// }
+			// V.Debugging.log(params)
+
 			var data = {"processed":"true"};
 			if(typeof successCallback=="function"){
-				successCallback(data);
+				setTimeout(function(){
+					successCallback(data);
+				},1000);
 			}
 		}
 	}
