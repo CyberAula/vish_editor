@@ -99,7 +99,7 @@
     <!-- Hidden link to open fancybox to display recommendations in the end -->
     <a id="fancyRec" href="#fancy_recommendations" style="display: none;"></a>
 
-    <!-- Thumbnails fancybox -->
+    <!-- Recommendations fancybox -->
     <div style='display:none'>
         <div id='fancy_recommendations'>
             <div class="rec-first-row" style="display:none">
@@ -113,10 +113,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Games -->
-    <iframe id="my_game_iframe" src="" style="border:0" width="890" height="740" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; ></iframe>
 
 
     <!-- Quizzes -->
@@ -141,6 +137,18 @@
             </div>
             <div id='tab_quiz_stats_content' class="fancy_tab_content">
                 <canvas id="quiz_chart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT WHEN TRY TO LAUNCH TWO QUIZZES AT THE SAME TIME-->
+    <div style='display:none'>
+        <div id='prompt1_alert'>
+            <div class="prompt_text_container">
+                <span class="prompt_text">Please stop all quizzes before launch another one.</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button">accept</a>
             </div>
         </div>
     </div>

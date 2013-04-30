@@ -690,3 +690,41 @@ div#tab_quiz_session_results{
   height: 100%;
   text-align: center;
 }
+
+/*
+ * PROMPTS
+ */
+
+.prompt_text_container{
+  height: 100%;
+  position: absolute;
+  top: 25%;
+  text-align: center;
+  padding: 10px;
+}
+
+.prompt_text{
+  text-decoration:none;
+  font-family:Helvetica;
+  font-size:32px;
+  color:#CCC;
+  padding-bottom: 15px;
+}
+
+.prompt_button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10px;
+  padding: 5px 20px;
+  text-decoration:none;
+  cursor: pointer;
+  background: #ff005d repeat-x bottom;
+  opacity: 0.6;
+  color:#f9f9f9;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}

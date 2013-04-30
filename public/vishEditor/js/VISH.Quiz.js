@@ -131,7 +131,17 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _startNewQuizSession = function(quiz){
     if(currentQuizSession){
-      alert("There is another quiz running");
+      $.fancybox(
+        $("#prompt1_alert").html(),
+        {
+          'autoDimensions'  : false,
+          'scrolling': 'no',
+          'width'           : $(".current").width(),
+          'height'          : Math.min(200,$(".current").height()),
+          'showCloseButton' : false,
+          'padding'       : 5 
+        }
+      );
       return;
     }
     _loadingLaunchButton(quiz);
