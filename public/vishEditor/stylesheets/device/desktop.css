@@ -90,10 +90,11 @@ margin: auto;
 }
 
 .rec-excursion{
+  opacity: 0.8;
   border: 1px #ccc solid;
 padding-left: 15px;
 float: left;
-width: 45%;
+width: 44%;
 height: 33%;
 border-radius: 20px;
 margin-bottom: 2%;
@@ -109,7 +110,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', end
 }
 
 .rec-excursion:hover{
-  background-color: white;
+    opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-transition: opacity 1s linear;
+  -webkit-transition: margin 0.5s ease-out;
+background: rgb(254,255,255); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
 }
 
 
