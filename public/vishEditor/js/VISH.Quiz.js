@@ -366,15 +366,18 @@ VISH.Quiz = (function(V,$,undefined){
     $(myA).html("<p id='tab_quiz_session_url'>"+currentQuizSession.url+"</p>");
 
     var sharingText = $(currentQuiz).find(".mc_question_wrapper_viewer").text().trim();
+    
     var twitter = $("#tab_quiz_session_share_twitter");
     $(twitter).attr("href","https://twitter.com/share?url="+currentQuizSession.url+"&text="+sharingText+"");
+    
     var facebook = $("#tab_quiz_session_share_facebook");
-
     var facebookUrl = "http://www.facebook.com/sharer.php?s=100&p[url]="+currentQuizSession.url+"&p[title]="+sharingText;
     // &p[summary]=the description/summary you want to share";
     //&p[images][0]=the image you want to share
-
     $(facebook).attr("href",facebookUrl);
+
+    var gPlus = $("#tab_quiz_session_share_gPlus");
+    $(gPlus).attr("href","https://plus.google.com/share?url="+currentQuizSession.url);
   }
 
   var _loadStats = function(){
