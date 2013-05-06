@@ -121,7 +121,7 @@
     <!-- Hidden link to open fancybox when start a quiz session inside a slide  -->
     <a id="addQuizSessionFancybox" href="#start_quiz_fancybox" style="display: none;"></a>
     
-    <!-- Quiz session fancybox (new)-->
+    <!-- Quiz session fancybox -->
     <div style='display:none'>
         <div id="start_quiz_fancybox" class="outer_box_viewer">
             <div class="fancy_viewer_tabs" id="images_fancy_tabs_id">     
@@ -134,6 +134,10 @@
             </div>
             <div id='tab_quiz_session_content' class="tab_quiz_session_content fancy_viewer_tab_content">
                 <a target="_blank" id='tab_quiz_session_url_link'></a>
+                <div class="quizSharebuttons">
+                    <a target="_blank" href="#" id='tab_quiz_session_share_twitter'><img src='/vishEditor/images/icons/social/twitter.png' class='socialButton'/></a>
+                    <a target="_blank" href="#" id='tab_quiz_session_share_facebook'><img src='/vishEditor/images/icons/social/facebook.svg' class='socialButton'/></a>
+                </div>
                 <input type='button' class='quizButton quizStopButton' value='Stop'/>
             </div>
             <div id='tab_quiz_stats_content' class="fancy_viewer_tab_content">

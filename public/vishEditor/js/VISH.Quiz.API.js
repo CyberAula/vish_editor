@@ -27,7 +27,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(quiz,error);
+					if(typeof failCallback=="function"){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
@@ -61,12 +63,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId,
 	          data    : params,
 				success : function(data) {
-				if(typeof successCallback=="function"){
-					successCallback(data);
-				}
+					if(typeof successCallback=="function"){
+						successCallback(data);
+					}
 	          },
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback=="function"){
+						failCallback(error);
+					}
 				}
              });
 
@@ -103,7 +107,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback=="function"){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
@@ -149,7 +155,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback=="function"){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
