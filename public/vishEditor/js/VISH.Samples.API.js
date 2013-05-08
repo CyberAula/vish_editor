@@ -1,8 +1,8 @@
 VISH.Samples.API = (function(V,undefined){
 	
-  var recommendationList = {
-    'items': [
-    { "url"               : "http://vishub.org/excursions/144",
+  var recommendationList = [
+    { "id"                : "1",
+      "url"               : "http://vishub.org/excursions/144",
       "title"             : "Nanogame",
       "author"            : "ebarra",
       "description"       : " bla bla bla",
@@ -11,7 +11,8 @@ VISH.Samples.API = (function(V,undefined){
       "favourites"        : "3",
       "number_of_slides"  : "8"
     },
-    { "url"               : "http://vishub.org/excursions/83",
+    { "id"                : "2",
+      "url"               : "http://vishub.org/excursions/83",
       "title"             : "Flascard Curiosity in my title long",
       "author"            : "aldo",
       "description"       : " bla bla bla 2",
@@ -20,7 +21,8 @@ VISH.Samples.API = (function(V,undefined){
       "favourites"        : "13",
       "number_of_slides"  : "2"
     },
-    { "url"               : "http://vishub.org/excursions/55",
+    { "id"                : "3",
+      "url"               : "http://vishub.org/excursions/55",
       "title"             : "Nanogame by UCAM or by her friend",
       "author"            : "nestor",
       "description"       : " bla bla bla",
@@ -29,7 +31,8 @@ VISH.Samples.API = (function(V,undefined){
       "favourites"        : "33",
       "number_of_slides"  : "8"
     },
-    { "url"               : "http://vishub.org/excursions/14",
+    { "id"                : "4",
+      "url"               : "http://vishub.org/excursions/14",
       "title"             : "Heart",
       "author"            : "ebarra",
       "description"       : " bla bla bla",
@@ -38,7 +41,8 @@ VISH.Samples.API = (function(V,undefined){
       "favourites"        : "3",
       "number_of_slides"  : "8"
     },
-    { "url"               : "http://vishub.org/excursions/81",
+    { "id"                : "5",
+      "url"               : "http://vishub.org/excursions/81",
       "title"             : "Flascard Curiosity",
       "author"            : "aldo",
       "description"       : " bla bla bla 2",
@@ -47,7 +51,8 @@ VISH.Samples.API = (function(V,undefined){
       "favourites"        : "23",
       "number_of_slides"  : "2"
     },
-    { "url"               : "http://vishub.org/excursions/56",
+    { "id"                : "6",
+      "url"               : "http://vishub.org/excursions/56",
       "title"             : "Nanogame",
       "author"            : "nestor",
       "description"       : " bla bla bla",
@@ -55,9 +60,8 @@ VISH.Samples.API = (function(V,undefined){
       "views"             : "1256",
       "favourites"        : "33",
       "number_of_slides"  : "8"
-    }
-    ]
-  };
+    }    
+  ];
 
   var flashcardList = {
     'flashcards': [

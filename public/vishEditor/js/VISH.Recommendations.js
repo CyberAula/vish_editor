@@ -18,7 +18,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		}
 		generated = false;
 
-		//redimetion of fancybox is done in ViewerAdapter (line 300 aprox)
+		//redimention of fancybox is done in ViewerAdapter (line 300 aprox)
 		$("#fancyRec").fancybox({
 			  'type'	: 'inline',
 			  'autoDimensions' : false,
@@ -44,39 +44,41 @@ VISH.Recommendations = (function(V,$,undefined){
 	 */
 	var generateFancybox = function(){
 		if(!generated){
-			// console.log("user_id " + user_id + " presentation_id " + presentation_id);
-			if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
-				// var params_to_send = {
-				// 	user_id: user_id,
-				// 	excursion_id: presentation_id,
-				// 	quantity: 9
-				// };
-				// $.ajax({
-				// 	type    : "POST",
-				// 	url     : url_to_get_recommendations,
-				// 	data    : params_to_send,
-				// 	success : function(data) {
-				// 		_fillFancyboxWithData(data);
-				// 	}
-				// });
-			} else {
+			console.log("user_id " + user_id + " presentation_id " + presentation_id);
+			if(url_to_get_recommendations !== undefined){
+				var params_to_send = {
+					user_id: user_id,
+					excursion_id: presentation_id,
+					quantity: 9
+				};
+				$.ajax({
+					type    : "GET",
+					url     : url_to_get_recommendations,
+					data    : params_to_send,
+					success : function(data) {
+						_fillFancyboxWithData(data);
+					}
+				});
+			}
+			else{
 				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
 			}
 			generated = true;
-		}		
+		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(!data.items)){
 			return;
-		}
-		
+		}		
         var ex;
         var result = "";
-        for (var i = data.items.length - 1; i >= 0; i--) {
-        	ex = data.items[i];
-        	result += '<a href="'+ex.url+'">'+
-                    '<div class="rec-excursion">'+
+        for (var i = data.length - 1; i >= 0; i--) {
+        	ex = data[i];
+        	if(V.Status.getIsAnotherDomain()){
+        		result += '<a href="'+ex.url+'.full">';
+        	}
+        	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+ex.id+'">'+
                         '<ul class="rec-thumbnail">'+
                           '<li class="rec-img-excursion">'+
                            '<img src="'+ex.image+'">'+
@@ -89,10 +91,22 @@ VISH.Recommendations = (function(V,$,undefined){
                             '<div class="rec-likes">'+ex.favourites+'<img class="rec-menu_icon" src="http://vishub.org/assets/icons/star-on10.png"></div>'+
                           '</li>'+
                         '</ul>'+
-                    '</div>'+
-                    '</a>';
+                    '</div>';
+            if(V.Status.getIsAnotherDomain()){
+        		result += '</a>';
+        	}
         };
         $("#fancy_recommendations .rec-grid").html(result);
+
+        if(!V.Status.getIsAnotherDomain()){
+        	//we join the recom-X with sending the parent to the excursion url
+        	 for (var i = data.length - 1; i >= 0; i--) {
+        	 	$("#recom-"+data[i].id).click(function(my_event){
+        	 		V.Utils.sendParentToURL(data[$(my_event.toElement).closest(".rec-excursion").attr("number")].url);
+        	 	});
+        	 }
+        }
+
 	};
 
 	var showFancybox = function(){
