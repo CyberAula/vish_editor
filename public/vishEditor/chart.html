@@ -17,59 +17,60 @@
             $(canvas).attr("height","400");
 
 
-                //BAR GRAPH
-                var ctx = $(canvas).get(0).getContext("2d");
-                // var myNewChart = new Chart(ctx);
-                var data = {
-                    labels : ["January","February","March","April","May","June","July"],
-                    datasets : [
-                        {
-                            fillColor : "rgba(220,220,220,0.5)",
-                            strokeColor : "rgba(220,220,220,1)",
-                            // data : [65,59,90,81,56,55,40],
-                            data : [10,10,10,10,10,10,10],
-                            label: ["a","a","a","a","a","a","a"]
-                        },
-                        {
-                            fillColor : "rgba(151,187,205,0.5)",
-                            strokeColor : "rgba(151,187,205,1)",
-                            // data : [28,48,40,19,96,27,100]
-                            data : [10,10,10,10,10,10,10],
-                             label: ["a","a","a","a","a","a","a"]
-                        }
-                    ]
-                }
-
-                var options = {
-                        scaleOverride: true,
-                        scaleStepWidth: 10,
-                        scaleSteps: 10,
-                        showTooltips: false
-                }
-                var myNewChart = new Chart(ctx).Bar(data,options);
-
+                // //BAR GRAPH
                 // var ctx = $(canvas).get(0).getContext("2d");
-                // var data = [
-                //     {
-                //         value: 130,
-                //         color:"#F38630",
-                //         label : 'Sleep',
-                //         labelColor : 'white',
-                //         labelFontSize : '16'
-                //     },
-                //     {
-                //         value : 50,
-                //         color : "#E0E4CC"
-                //     },
-                //     {
-                //         value : 500,
-                //         color : "#69D2E7"
-                //     }           
-                // ]
-                // var options = {
-                //     showTooltips: false
+                // // var myNewChart = new Chart(ctx);
+                // var data = {
+                //     labels : ["January","February","March","April","May","June","July"],
+                //     datasets : [
+                //         {
+                //             fillColor : "rgba(220,220,220,0.5)",
+                //             strokeColor : "rgba(220,220,220,1)",
+                //             // data : [65,59,90,81,56,55,40],
+                //             data : [10,10,10,10,10,10,10],
+                //             label: ["a","a","a","a","a","a","a"]
+                //         },
+                //         {
+                //             fillColor : "rgba(151,187,205,0.5)",
+                //             strokeColor : "rgba(151,187,205,1)",
+                //             // data : [28,48,40,19,96,27,100]
+                //             data : [10,10,10,10,10,10,10],
+                //              label: ["a","a","a","a","a","a","a"]
+                //         }
+                //     ]
                 // }
-                // var myNewChart = new Chart(ctx).Pie(data,options);
+
+                // var options = {
+                //         scaleOverride: true,
+                //         scaleStepWidth: 10,
+                //         scaleSteps: 10,
+                //         showTooltips: false
+                // }
+                // var myNewChart = new Chart(ctx).Bar(data,options);
+
+                var ctx = $(canvas).get(0).getContext("2d");
+                var data = [
+                    {
+                        value: 1,
+                        color:"#F38630",
+                        label : 'Sleep',
+                        labelColor : 'white',
+                        labelFontSize : '16'
+                    },
+                    {
+                        value : 0,
+                        color : "#E0E4CC"
+                    },
+                    {
+                        value : 0,
+                        color : "#69D2E7"
+                    }           
+                ]
+                var options = {
+                    showTooltips: false,
+                    animation: false
+                }
+                var myNewChart = new Chart(ctx).Pie(data,options);
                 
 
         });

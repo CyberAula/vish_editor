@@ -235,11 +235,11 @@ VISH.Quiz = (function(V,$,undefined){
   var _closeQuizSession = function(name){
     V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
       $.fancybox.close();
-      currentQuiz = null;
-      currentQuizSession = null;
       $(".prompt_button_viewer1").removeClass("quizStartButtonLoading")
       $(".prompt_button_viewer2").removeClass("quizStartButtonLoading")
       _enableLaunchButton(currentQuiz);
+      currentQuiz = null;
+      currentQuizSession = null;
     });
   }
 
@@ -417,7 +417,7 @@ VISH.Quiz = (function(V,$,undefined){
   var _loadStats = function(){
     V.Quiz.API.getResults(currentQuizSession.id, function(results){
         _drawResults(results,{"first": true});
-        _startPolling();
+        // _startPolling();
     });
   }
 
@@ -529,7 +529,7 @@ VISH.Quiz = (function(V,$,undefined){
     renderButtons     : renderButtons,
     updateCheckbox    : updateCheckbox,
     disableAnswerButton : disableAnswerButton,
-    loadTab           : loadTab,
+    loadTab             : loadTab,
     onCloseQuizSession  : onCloseQuizSession
   };
     

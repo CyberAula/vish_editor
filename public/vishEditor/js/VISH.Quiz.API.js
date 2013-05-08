@@ -115,9 +115,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 			//Test
 			var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1}];
-			if(Math.random()<0.5){
+			// if(Math.random()<0.5){
 				data = [{"answer":"[{\"no\":\"1\",\"answer\":\"false\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-04-29T10:48:42Z","id":1,"quiz_session_id":1}];
-			}
+			// }
 
 
 			if(typeof successCallback=="function"){

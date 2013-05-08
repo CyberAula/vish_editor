@@ -177,6 +177,9 @@ VISH.Quiz.MC = (function(V,$,undefined){
         showTooltips: false,
         animation: animation
     }
+
+    console.log(data)
+
     var myNewChart = new Chart(ctx).Pie(data,options);
   }
 
