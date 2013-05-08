@@ -291,7 +291,7 @@ margin-top: 8px;
   width: 100%;
   border-bottom: 1px solid #888;
   border-top: 1px solid #ccc;
-  z-index: 1;
+  z-index: 1200;
 }
 
 
@@ -553,12 +553,10 @@ button#closeButton {
 
 #back_arrow{
   left: 0%;
-  z-index: 0;
 }
 
 #forward_arrow{
   right: 0%;
-  z-index: 0;
 }
 
 /* Watermark */

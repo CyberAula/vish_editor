@@ -122,80 +122,9 @@ VISH.Quiz.TF = (function(V,$,undefined){
    */
 
   var drawAnswers = function(quiz,answersList,options){
-    var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
-    var labels = [];
-    var dataTrue = [];
-    var dataFalse = [];
-    var maxValue = 0;
-    var scaleSteps = 10;
-
-    for(var i=0; i<nAnswers; i++){
-      labels[i] = "V       " + V.Quiz.MC.getChoicesLetters()[i] + "       F";
-      dataTrue[i] = 0;
-      dataFalse[i] = 0;
-    }
-
-    var alL = answersList.length;
-    for(var j=0; j<alL; j++){
-      //List of answers of a user
-      var answers = answersList[j];
-
-      var aL = answers.length;
-      for(var k=0; k<aL; k++){
-        var answer = answers[k];
-        var index = answer.no-1;
-        if(answer.answer==="true"){
-          dataTrue[index]++;
-        } else {
-          dataFalse[index]++;
-        }
-      } 
-    }
-
-    for(var l=0; l<nAnswers; l++){
-      if(dataTrue[i] > maxValue){
-        maxValue = dataTrue[i];
-      }
-      if(dataFalse[i] > maxValue){
-        maxValue = dataFalse[i];
-      }
-    }
-
-    if(maxValue<10){
-      scaleSteps = Math.max(1,maxValue);
-    }
-
     var canvas = $("#quiz_chart");
-    var ctx = $(canvas).get(0).getContext("2d");
-    var data = {
-        labels : labels,
-        datasets : [
-            {
-                fillColor : "#E2FFE3",
-                strokeColor : "rgba(220,220,220,1)",
-                data : dataTrue
-            },
-            {
-                fillColor : "#FFE2E2",
-                strokeColor : "rgba(220,220,220,1)",
-                data : dataFalse
-            }
-        ]
-    };
-
-    var animation = false;
-    if((options)&&(options.first===true)){
-      animation = true;
-    }
-
-    var options = {
-      animation: animation,
-      scaleOverride: true,
-      scaleStepWidth: Math.max(1,Math.ceil(maxValue/10)),
-      scaleSteps: scaleSteps,
-      showTooltips: false
-    }
-    var myNewChart = new Chart(ctx).Bar(data,options);
+    var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
+    V.QuizCharts.drawQuizChart(canvas,V.Constant.QZ_TYPE.TF,nAnswers,answersList,options);
   }
 
   return {
