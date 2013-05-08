@@ -316,6 +316,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
 
+		//Quiz callbacks
+		V.Quiz.aftersetupSize(increase,increaseW);
+
 		_updateFancyboxAfterSetupSize();
 	};
 

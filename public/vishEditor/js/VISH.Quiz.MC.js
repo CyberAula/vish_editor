@@ -157,10 +157,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
       } 
     }
 
-    // if(pieFragments.length===0){
-    //   return;
-    // }
-
     for(var i=0; i<nAnswers; i++){
       data.push(pieFragments[i]);
     }
@@ -177,8 +173,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
         showTooltips: false,
         animation: animation
     }
-
-    console.log(data)
 
     var myNewChart = new Chart(ctx).Pie(data,options);
   }

@@ -75,6 +75,7 @@ VISH.Quiz = (function(V,$,undefined){
       },
       "onClosed"  : function(){
         _stopPolling();
+        _cleanResults();
       }
     });
 
@@ -357,6 +358,7 @@ VISH.Quiz = (function(V,$,undefined){
   };
 
   var _loadQuizSession = function(){
+    _cleanResults();
     if(!currentQuizSession){
       return;
     }
@@ -409,15 +411,14 @@ VISH.Quiz = (function(V,$,undefined){
       text: url.toString()
     }
     $(container).qrcode(qrOptions);
-
-
   }
 
 
   var _loadStats = function(){
+    _cleanResults();
     V.Quiz.API.getResults(currentQuizSession.id, function(results){
         _drawResults(results,{"first": true});
-        // _startPolling();
+        _startPolling();
     });
   }
 
@@ -453,8 +454,16 @@ VISH.Quiz = (function(V,$,undefined){
     var answers = _getAnswers(results);
     var quizModule = _getQuizModule($(currentQuiz).attr("type"));
     if(quizModule){
+      $("#quiz_chart").show();
       quizModule.drawAnswers(currentQuiz,answers,options);
     }
+  }
+
+  var _cleanResults = function(){
+    var canvas = $("#quiz_chart");
+    var ctx = $(canvas).get(0).getContext("2d");
+    ctx.clearRect(0, 0, $(canvas).width(), $(canvas).height());
+    $(canvas).hide();
   }
 
   var _getAnswers = function(results){
@@ -522,6 +531,15 @@ VISH.Quiz = (function(V,$,undefined){
     );
   }
 
+
+  var aftersetupSize = function(increase){
+    setTimeout(function(){
+      if((currentQuizSession)&&(currentQuizSession.url)){
+        _loadQr(currentQuizSession.url);
+      }
+    },500);
+  }
+
   return {
     initBeforeRender  : initBeforeRender,
     init              : init,
@@ -530,7 +548,8 @@ VISH.Quiz = (function(V,$,undefined){
     updateCheckbox    : updateCheckbox,
     disableAnswerButton : disableAnswerButton,
     loadTab             : loadTab,
-    onCloseQuizSession  : onCloseQuizSession
+    onCloseQuizSession  : onCloseQuizSession,
+    aftersetupSize    : aftersetupSize
   };
     
 }) (VISH, jQuery);
