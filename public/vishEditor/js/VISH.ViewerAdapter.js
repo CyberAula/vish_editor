@@ -198,12 +198,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$("#page-switcher-start").removeClass("disabledarrow");
 			}
-			//if(V.Slides.isCurrentLastSlide()){
-			//	$("#page-switcher-end").hide();
-			//} else {
-			//	$("#page-switcher-end").show();
-			//}
-			$("#page-switcher-end").show();
+			// if(V.Slides.isCurrentLastSlide()){
+			// 	$("#page-switcher-end").hide();
+			// } else {
+			// 	$("#page-switcher-end").show();
+			// }
+			$("#page-switcher-end").show(); //always show, if you are in the last you can see the recommendations
 		}
 	};
 
