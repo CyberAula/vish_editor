@@ -68,6 +68,9 @@ VISH.Quiz = (function(V,$,undefined){
           $("#fancybox-content > div").width("100%");
           $("#fancybox-content > div").height("100%");
           $('#fancybox-wrap').show();
+          if((currentQuizSession)&&(currentQuizSession.url)){
+            _loadQr(currentQuizSession.url);
+          }
         }, 300);   
       },
       "onClosed"  : function(){
@@ -379,6 +382,37 @@ VISH.Quiz = (function(V,$,undefined){
     var gPlus = $("#tab_quiz_session_share_gPlus");
     $(gPlus).attr("href","https://plus.google.com/share?url="+currentQuizSession.url);
   }
+
+
+  var _loadQr = function(url){
+    if(typeof url != "string"){
+      return;
+    }
+
+    var container = $(".quizQr");
+    $(container).html("");
+
+    var height = $(container).height();
+    var width = height;
+
+    var qrOptions = {
+      // render method: 'canvas' or 'div'
+      render: 'div', 
+      // width and height in pixel
+      width: width,
+      height: height,
+      // QR code color
+      color: '#000',
+      // background color, null for transparent background
+      bgColor: '#fff',
+      // the encoded text
+      text: url.toString()
+    }
+    $(container).qrcode(qrOptions);
+
+
+  }
+
 
   var _loadStats = function(){
     V.Quiz.API.getResults(currentQuizSession.id, function(results){
