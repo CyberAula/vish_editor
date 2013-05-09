@@ -697,7 +697,7 @@ div#tab_quiz_session_results{
 }
 
 .socialButton{
-  height: 9%;
+  height: 100%;
   margin-left: 5%;
 }
 
@@ -705,6 +705,7 @@ div#tab_quiz_session_results{
   text-align: right;
   margin-right: 5%;
   margin-bottom: 3%;
+  height: 9%;
 }
 
 #tab_quiz_session_share_twitter{
