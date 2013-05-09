@@ -717,9 +717,15 @@ div#tab_quiz_session_results{
 }
 
 div.quizQr {
-  width: 100%;
+  width: 50%;
   height: 50%;
+  margin-left: 25%;
 }
+div.quizQr:-webkit-full-screen  { margin-left: 0; width: 100%; height: 100%; }
+div.quizQr:-moz-full-screen   { margin-left: 0; width: 100%; height: 100%; }
+div.quizQr:-ms-full-screen    { margin-left: 0; width: 100%; height: 100%; }
+div.quizQr:-o-full-screen   { margin-left: 0; width: 100%; height: 100%; }
+div.quizQr:full-screen      { margin-left: 0; width: 100%; height: 100%; }
 
 div.quizQr > table {
   margin-left: auto;

@@ -302,6 +302,11 @@ VISH.Slides = (function(V,$,undefined){
 			return;
 		}
 
+		//Close fancybox
+		if((!V.Editing)&&($.fancybox)){
+			$.fancybox.close();
+		}
+
 		if((no > slideEls.length) || (no <= 0)){
 			return;
 		} else if (no > curSlideIndex+1){

@@ -37,6 +37,13 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on('click', ".quizStartButton",_onStartQuiz);
     $(document).on('click', ".quizStopButton",_onStopQuiz);
 
+    // Fullscreen QR Code: Not stable feature
+    // if(V.Status.getDevice().features.fullscreen){
+    //   $(document).on('click', ".quizQr",_onClickQR);
+    //   $(".quizQr").attr("title","Click to put the QR in full screen");
+    //   $(".quizQr").css("cursor","pointer");
+    // }    
+
     $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
       'scrolling': 'no',
@@ -399,7 +406,7 @@ VISH.Quiz = (function(V,$,undefined){
 
     var qrOptions = {
       // render method: 'canvas' or 'div'
-      render: 'div', 
+      render: 'canvas', 
       // width and height in pixel
       width: width,
       height: height,
@@ -411,6 +418,70 @@ VISH.Quiz = (function(V,$,undefined){
       text: url.toString()
     }
     $(container).qrcode(qrOptions);
+  }
+
+  var _onClickQR = function(){
+    var changeToFs = false;
+    var changeFromFs = false;
+    var elem = $(".quizQr")[0];
+
+    if((V.Status.getIsInIframe())&&(isFullscreen(parent.document))){
+      //VE in FS
+      //Breaks
+      //TODO
+      return; 
+    }
+
+    if(isFullscreen(document)){
+      //Qr is in fullscreen
+      changeFromFS = cancelFullScreen(document);
+    } else {
+      //Qr is not in fullscreen
+      changeToFS = requestFullScreen(elem);
+    }
+
+    if(changeToFs){
+      $(".quizQr").attr("disabledTitle",$(".quizQr").attr("title"));
+      $(".quizQr").removeAttr("title");
+    } else if(changeFromFs){
+      $(".quizQr").attr("title",$(".quizQr").attr("disabledTitle"));
+    }
+
+    if((changeToFs)||(changeFromFs)){
+      _loadQr(currentQuizSession.url);
+    }
+  }
+
+  var isFullscreen = function(myDoc){
+    return((myDoc.fullScreen) || (myDoc.mozFullScreen) || (myDoc.webkitIsFullScreen));
+  }
+
+  var cancelFullScreen = function(myDoc){
+     if (myDoc.cancelFullScreen) {
+        myDoc.cancelFullScreen();
+        return true;
+      } else if (myDoc.mozCancelFullScreen) {
+        myDoc.mozCancelFullScreen();
+        return true;
+      } else if (myDoc.webkitCancelFullScreen) {
+        myDoc.webkitCancelFullScreen();
+        return true;
+      }
+      return false;
+  }
+
+  var requestFullScreen = function(elem){
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+      return true;
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+      return true;
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+      return true;
+    }
+    return false;
   }
 
 
