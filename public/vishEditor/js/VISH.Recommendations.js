@@ -68,7 +68,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var _fillFancyboxWithData = function(data){
-		if((!data)||(!data.items)){
+		if((!data)||(data.length===0)){
 			return;
 		}		
         var ex;
