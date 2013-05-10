@@ -61,11 +61,11 @@ var getOptions = function(){
 			developmentSettings.actionInit = "loadSamples";
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
-				developmentSettings.samples = VISH.Samples.basic_samples;
+				// developmentSettings.samples = VISH.Samples.basic_samples;
 				// developmentSettings.samples = VISH.Samples.samplesv01;
 				// developmentSettings.samples = VISH.Samples.fc_sample;
 				// developmentSettings.samples = VISH.Samples.samples_vtour;
-				// developmentSettings.samples = VISH.Samples.full_samples;
+				developmentSettings.samples = VISH.Samples.full_samples;
 				// developmentSettings.samples = VISH.Samples.quiz_samples;
 				//quiz_simple_sample
 				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json
@@ -87,8 +87,8 @@ var getOptions = function(){
 
 			options["full"] = true;
 			options["forcefull"] = false;
-			// options["embed"] = true;
-
+			options["forceHideViewbar"] = false;
+			
 			// options["preview"] = true;
         	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 

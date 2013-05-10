@@ -7,7 +7,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var can_use_nativeFs;
 	var embed;
 	var display_recommendations;
-	var forceHideViewbar;
+	var showViewbar;
 
 	//Fullscreen fallbacks
 	var enter_fs_button;
@@ -82,9 +82,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 
 			if(typeof options["forceHideViewbar"] == "boolean"){
-				forceHideViewbar = options["forceHideViewbar"];
+				showViewbar = !options["forceHideViewbar"];
 			} else {
-				forceHideViewbar = false;
+				showViewbar = true;
 			}	
 
 		} else {
@@ -96,7 +96,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			fs_button = false;
 			can_use_nativeFs = false;
 			display_recommendations = false;
-			forceHideViewbar = false;
+			showViewbar = true;
 		}
 
 		//////////////
@@ -111,6 +111,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 			if(page_is_fullscreen){
 				fs_button = false;
+				showViewbar = false;
 			} else {
 				close_button = false;
 			}
@@ -127,11 +128,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#forward_arrow").html("");
 		}
 
-		if(forceHideViewbar){
-			$("#viewbar").hide();
-		} else {
+		if(showViewbar){
 			V.SlideManager.updateSlideCounter();
 			$("#viewbar").show();
+		} else {
+			$("#viewbar").hide();
 		}
 
 		if(is_preview){
@@ -203,8 +204,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	///////////
 
 	var _decideIfViewBarShow = function(fullScreen){
-		//Always show
-		$("#viewbar").show();
+		if(showViewbar){
+			$("#viewbar").show();
+		} else {
+			$("#viewbar").hide();
+		}
 	}
 
 
@@ -229,9 +233,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
 	 */
 	var _setupSize = function(fullscreen){
-		var reserved_px_for_menubar = 40; //we don´t show the menubar
+		var reserved_px_for_menubar = 40;
 		var margin_height = 40;
 		var margin_width = 30;
+
+		if(!showViewbar){
+			reserved_px_for_menubar = 0;
+			margin_height = 0;
+			margin_width = 0;
+		}
 
 		if(fullscreen){
 			_onFullscreenEvent(true);
@@ -345,7 +355,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			if((fullscreen)&&(exit_fs_button)){
 				//we are in "simulated" fullscreen ,showing the .full version and we need a close fullscreen
-				$("#page-fullscreen").css("background-image", 'url("/vishEditor/images/icons/fullscreen.png")');
+				$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreen.png")');
 				$("#page-fullscreen").css("background-position", "0px 0px");
 
 				$(document).on('click', '#page-fullscreen', function(){
@@ -382,7 +392,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _onEnterFullScreen = function(){
-		$("#page-fullscreen").css("background-image", 'url("/vishEditor/images/icons/fullscreenback.png")');
+		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreenback.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
 			$("#page-fullscreen").css("background-position", "-30px -40px");
@@ -393,7 +403,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	}
 
 	var _onLeaveFullScreen = function(){
-		$("#page-fullscreen").css("background-image", 'url("/vishEditor/images/icons/fullscreen.png")');
+		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreen.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
 			$("#page-fullscreen").css("background-position", "-40px -40px");
