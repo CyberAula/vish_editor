@@ -1,7 +1,6 @@
 VISH.Status = (function(V,$,undefined){
 	var _device;
 	var _isInIframe;
-	var _isEmbed;
 	var _isAnotherDomain;
 	var _isOnline;
 	var _isSlave;
@@ -9,7 +8,6 @@ VISH.Status = (function(V,$,undefined){
 	
 	var init = function(callback){
 		_checkIframe();
-		_checkEmbed();
 		_checkDomain();
 
 		V.Status.Device.init(function(returnedDevice){
@@ -33,17 +31,11 @@ VISH.Status = (function(V,$,undefined){
 	}
 
    /*
-	* Use to see if we are in embed mode
-	*/
-	var _checkEmbed = function(){
-		_isEmbed = (V.Utils.getOptions()["embed"]===true);
-	}
-
-   /*
 	* Use to see if we are embeded in another domain
 	*/
 	var _checkDomain = function(){
 		_isAnotherDomain = ((_checkIframe())&&(typeof window.parent.location.href === "undefined"));
+		return _isAnotherDomain;
 	}
 
 
@@ -93,10 +85,6 @@ VISH.Status = (function(V,$,undefined){
 	};
 
 	var getIsEmbed = function(){
-		return _isEmbed;
-	};
-
-	var getIsAnotherDomain = function(){
 		return _isAnotherDomain;
 	};
 
@@ -160,8 +148,7 @@ VISH.Status = (function(V,$,undefined){
 	return {
 		init					: init,
 		getDevice				: getDevice,
-		getIsEmbed				: getIsEmbed,
-		getIsAnotherDomain 		: getIsAnotherDomain,
+		getIsEmbed 				: getIsEmbed,
 		getIsInIframe			: getIsInIframe,
 		getIframe				: getIframe,
 		isOnline 				: isOnline,

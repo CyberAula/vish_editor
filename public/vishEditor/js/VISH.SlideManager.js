@@ -86,7 +86,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		V.ViewerAdapter.init(options); //Also init texts
 
-		if(!V.Status.getIsAnotherDomain()){
+		if(!V.Status.getIsEmbed()){
 			//Try to win focus
 			window.focus();
 		}

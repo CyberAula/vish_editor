@@ -17,7 +17,7 @@ var getOptions = function(){
 		var configuration = {};
 
 		//Specified VISH Editor Configuration
-		
+
 		//Paths
 		configuration["ImagesPath"] = "/vishEditor/images/";
 		configuration["StylesheetsPath"] = "/vishEditor/stylesheets/";
@@ -25,7 +25,7 @@ var getOptions = function(){
 		configuration["uploadObjectPath"] = "/object";
 		configuration["uploadPresentationPath"] = "/presentation/";
 
-		configuration["presentationSettings"] = true;
+		configuration["presentationSettings"] = false;
 		configuration["presentationTags"] = true;
 		configuration["presentationThumbnails"] = true;
 
@@ -58,15 +58,19 @@ var getOptions = function(){
 			var developmentSettings = new Object();
 
 			//Possible action: "nothing" or "loadSamples".
-			developmentSettings.actionInit = "nothing";
+			developmentSettings.actionInit = "loadSamples";
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
 				developmentSettings.samples = VISH.Samples.basic_samples;
 				// developmentSettings.samples = VISH.Samples.samplesv01;
 				// developmentSettings.samples = VISH.Samples.fc_sample;
+				// developmentSettings.samples = VISH.Samples.samples_vtour;
 				// developmentSettings.samples = VISH.Samples.full_samples;
-				// developmentSettings.samples = VISH.Samples.quizes_samples;
-				// developmentSettings.samples = VISH.Samples.quizzes__samples2;
+				// developmentSettings.samples = VISH.Samples.quiz_samples;
+				//quiz_simple_sample
+				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json
+				// developmentSettings.samples = VISH.Samples.magnetic_gifs;
+				// developmentSettings.samples = VISH.Samples.new_wysiwyg;
 			}
 
 			//Possible actions: "view", "edit", or "nothing".
@@ -79,28 +83,17 @@ var getOptions = function(){
 			options["username"] = "ebarra";
 			options["userId"] = "3456";
 			options["token"] = "12xfDgR345x6";
+			options["quizSessionId"] = "1";
 
-			//Testing Quizes
-			options["quizSessionId"] = "29";
-
-			//Show full presentation when its outside an inframe 
-			options["full"] = false;
-			//Show full presentation, even its inside an iframe 
+			options["full"] = true;
 			options["forcefull"] = false;
+			// options["embed"] = true;
 
-			//Indicate that the presentation is embeded (in another domain)
-			options["embed"] = false;
+			// options["preview"] = true;
+        	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
-			//Preview
-			options["preview"] = false;
-
-			//Close or come back button
-			//If comeBackUrl not exists, back button will be hidden
-        	options["comeBackUrl"] = "https://github.com/ging/vish_editor";
-
-        	//to show the fullscreen if the feature is not present
-        	options["fullscreen"] = "http://localhost/vishEditor/viewer.html";
-        	options["exitFullscreen"] = "http://localhost/vishEditor/framed_viewer.html";
+			options["fullscreen"]  = "http://trapo.dit.upm.es:3000/excursions/83.full";
+			options["exitFullscreen"]  = "http://localhost/vishEditor/framed_viewer.html";
 
         	//Draft presentations
         	options["draft"] = false;
@@ -108,19 +101,15 @@ var getOptions = function(){
 			//And a default landguage
 			options["lang"] = "en";
 
-			//URL to get the recommendations to show in the last slide
-			options["urlToGetRecommendations"] = "http://sabina.dit.upm.es:3000/recommendations"
-
-			//Addons Configuration
+			//Addons
 			options.addons = [];
 
-			//Add a new addon: For example, VISH.Addons.IFrameMessenger
 			var addon = new Object();
-			addon.target = "Both";
 			addon.id = "IframeMessenger";
+			addon.target = "Both";
 			addon.url = "";
-			//Specific addon config, readed by VISH.Addons.IFrameMessenger
-			addon.config = {enable: true};
+			addon.config = new Object();
+			addon.config.enable = true;
 
 			options.addons.push(addon);
 		}
@@ -129,6 +118,7 @@ var getOptions = function(){
 			console.log("Vish Editor Configured Options")
 			console.log(options)
 		}
+
 	}
 
 	return options;

@@ -75,7 +75,7 @@ VISH.Recommendations = (function(V,$,undefined){
         var result = "";
         for (var i = data.length - 1; i >= 0; i--) {
         	ex = data[i];
-        	if(V.Status.getIsAnotherDomain()){
+        	if(V.Status.getIsEmbed()){
         		result += '<a href="'+ex.url+'.full">';
         	}
         	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+ex.id+'">'+
@@ -92,13 +92,13 @@ VISH.Recommendations = (function(V,$,undefined){
                           '</li>'+
                         '</ul>'+
                     '</div>';
-            if(V.Status.getIsAnotherDomain()){
+            if(V.Status.getIsEmbed()){
         		result += '</a>';
         	}
         };
         $("#fancy_recommendations .rec-grid").html(result);
 
-        if(!V.Status.getIsAnotherDomain()){
+        if(!V.Status.getIsEmbed()){
         	//we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i >= 0; i--) {
         	 	$("#recom-"+data[i].id).click(function(my_event){

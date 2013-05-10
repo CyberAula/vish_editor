@@ -245,7 +245,7 @@ this can not be done with show() and hide() because then it remains with display
 
 
 #page-fullscreen{
-  background-image: url("/vishEditor/images/fullscreen.png");
+  background-image: url("/vishEditor/images/icons/fullscreen.png");
   background-position: 0 0;
   background-repeat: no-repeat;
   padding: 15px;
@@ -260,14 +260,6 @@ this can not be done with show() and hide() because then it remains with display
   opacity: 1;
   cursor: pointer;
   z-index: 2;
-}
-
-#page-fullscreen:hover{
-    background-position:-40px -40px !important;
-}
-
-#page-fullscreen:active{
-    background-position:-120px -120px !important;
 }
 
 #slide-counter {
@@ -562,11 +554,13 @@ button#closeButton {
 /* Watermark */
 
 #embedWatermark{
+  background-image:url("/vishEditor/images/watermark.png");
   position: absolute;
-  top: -5px;
-  left: -8px;
-  opacity: 0.6;
-  z-index: 2000;
+  bottom: 0;
+  left: 2%;
+  width: 100px;
+  height: 31px;
+  background-size: 112%;
 }
 
 
