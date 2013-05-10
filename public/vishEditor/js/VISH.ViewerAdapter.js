@@ -48,10 +48,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				is_preview = options["preview"];
 			}
 
+			//Close button
 			close_button = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
 			
-			//Embed elements can not use native fullscreen
-			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&&(!embed);
+			//Full screen buttons
+			can_use_nativeFs = (V.Status.getDevice().features.fullscreen);
 
 			enter_fs_button = (typeof options["fullscreen"] !== "undefined")&&(!can_use_nativeFs);
 			if(enter_fs_button){
@@ -63,10 +64,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				exit_fs_url = options["exitFullscreen"];
 			}
 
-			//Full screen buttons
+			//Decide if show full screen buttons
 			fs_button = ((can_use_nativeFs)&&(V.Status.getIsInIframe()))||((enter_fs_button)&&(exit_fs_button));
 			//No fs for preview
 			fs_button = fs_button && (!is_preview);
+			//No fs for embed
+			fs_button = fs_button && (!embed);
+
 
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
