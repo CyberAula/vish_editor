@@ -133,6 +133,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		if(embed){
+			if((options)&&(typeof options.watermarkURL == "string")){
+				$("#embedWatermark").parent().attr("href",options.watermarkURL);
+			}
 			$("#embedWatermark").show();
 		}
 

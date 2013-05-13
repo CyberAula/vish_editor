@@ -88,6 +88,7 @@ var getOptions = function(){
 			options["full"] = true;
 			options["forcefull"] = false;
 			options["forceHideViewbar"] = false;
+			options["watermarkURL"] = "http://localhost/vishEditor/viewer.html";
 			
 			// options["preview"] = true;
         	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
