@@ -121,10 +121,10 @@ VISH.Quiz.TF = (function(V,$,undefined){
    * Data representation
    */
 
-  var drawAnswers = function(quiz,answersList,options){
+  var drawResults = function(quiz,results,options){
     var canvas = $("#quiz_chart");
     var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
-    V.QuizCharts.drawQuizChart(canvas,V.Constant.QZ_TYPE.TF,nAnswers,answersList,options);
+    V.QuizCharts.drawQuizChart(canvas,V.Constant.QZ_TYPE.TF,nAnswers,results,options);
   }
 
   return {
@@ -133,7 +133,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
     onAnswerQuiz  : onAnswerQuiz,
     getReport     : getReport,
     disableQuiz   : disableQuiz,
-    drawAnswers   : drawAnswers
+    drawResults   : drawResults
   };
     
 }) (VISH, jQuery);

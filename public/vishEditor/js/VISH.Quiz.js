@@ -522,11 +522,10 @@ VISH.Quiz = (function(V,$,undefined){
     $(canvas).attr("width",desiredWidth);
     $(canvas).attr("height",desiredHeight);
 
-    var answers = _getAnswers(results);
     var quizModule = _getQuizModule($(currentQuiz).attr("type"));
     if(quizModule){
       $("#quiz_chart").show();
-      quizModule.drawAnswers(currentQuiz,answers,options);
+      quizModule.drawResults(currentQuiz,results,options);
     }
   }
 
@@ -537,14 +536,6 @@ VISH.Quiz = (function(V,$,undefined){
     $(canvas).hide();
   }
 
-  var _getAnswers = function(results){
-    var answers = [];
-    var rL = results.length;
-    for(var i=0; i<rL; i++){
-      answers.push(JSON.parse(results[i].answer));
-    }
-    return answers;
-  }
 
   /*
    * Utils
