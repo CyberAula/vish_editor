@@ -112,11 +112,11 @@ VISH.QuizCharts = (function(V,$,undefined){
     }
 
     for(var l=0; l<nAnswers; l++){
-      if(dataTrue[i] > maxValue){
-        maxValue = dataTrue[i];
+      if(dataTrue[l] > maxValue){
+        maxValue = dataTrue[l];
       }
-      if(dataFalse[i] > maxValue){
-        maxValue = dataFalse[i];
+      if(dataFalse[l] > maxValue){
+        maxValue = dataFalse[l];
       }
     }
 
