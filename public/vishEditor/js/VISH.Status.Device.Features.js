@@ -9,19 +9,9 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		//Fullscreen support
 		var elem = document.getElementById("page-fullscreen");
 		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
-			if(!V.Status.getIsInIframe()){
-				features.fullscreen = true;
-			} else {
-				//fullscreen supported by browser, let´s check that the iframe is the same domain as the vish_editor
-				//and that we are not in preview in the editor (in that case we don't want fullscreen)
-				try	{
-					if((window.parent.location.host === window.location.host) && (!window.parent.VISH || !window.parent.VISH.Editor || !(typeof window.parent.VISH.Editor.Preview.getPreview === "function"))){
-				    	features.fullscreen = true; 
-					}
-				} catch (e)	{
-				    features.fullscreen = false;
-				}
-			}
+			features.fullscreen = true;
+		} else {
+			features.fullscreen = false;
 		}
 		
 		//Touchscreen detection

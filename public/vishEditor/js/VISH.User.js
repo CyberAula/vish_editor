@@ -16,8 +16,8 @@ VISH.User = (function(V,$,undefined){
 	};
 
 	var isLogged = function(){
-		if((user)&&(user.token)){
-			return (typeof user.token == "string");
+		if((user)&&(typeof user.token == "string")&&(user.id)){
+			return true;
 		} else {
 			return false;
 		}
