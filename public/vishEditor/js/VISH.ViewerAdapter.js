@@ -36,8 +36,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Init vars
-
 		embed = V.Status.getIsEmbed();
+		showViewbar = _defaultViewbar();
 
 		if(options){
 			//Decide if we must render the presentation in fullscreen mode
@@ -79,12 +79,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				display_recommendations = true;
 			} else {
 				display_recommendations = false;
-			}
-
-			if(typeof options["forceHideViewbar"] == "boolean"){
-				showViewbar = !options["forceHideViewbar"];
-			} else {
-				showViewbar = true;
 			}	
 
 		} else {
@@ -96,7 +90,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			fs_button = false;
 			can_use_nativeFs = false;
 			display_recommendations = false;
-			showViewbar = true;
 		}
 
 		//////////////
@@ -211,6 +204,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 	}
 
+	var _defaultViewbar = function(){
+		var presentationType = V.SlideManager.getPresentationType();
+		var slidesQuantity = V.Slides.getSlidesQuantity();
+		if((presentationType===V.Constant.QUIZ_SIMPLE)&&(slidesQuantity===1)){
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	///////////
 	// Setup

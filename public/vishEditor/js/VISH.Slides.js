@@ -269,7 +269,7 @@ VISH.Slides = (function(V,$,undefined){
 	*/
 	var forwardOneSlide = function(event){
 		if(isCurrentLastSlide() && V.Status.getDevice().desktop){
-			VISH.Recommendations.showFancybox();
+			V.Recommendations.showFancybox();
 		}
 		else{
 			goToSlide(curSlideIndex+2);
