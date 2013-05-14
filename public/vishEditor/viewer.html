@@ -71,6 +71,7 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.TF.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.QuizCharts.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.SlidesSelector.js"></script>
     
     <!-- load google visualization libraries -->
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -91,6 +92,25 @@
 	    <div id="slide-counter"></div>
 	    <button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
     </div> 
+
+    <div id="selectSlidesBar" class="selectSlidesBar" style="display:none">
+        <div class="selectSlidesButtons1">
+            <button id="ssbAll">Select All</button>
+            <button id="ssbuAll">Unselect All</button>
+        </div>
+        <div class="selectSlidesButtons3">
+            <div class="selectSlidesSelection">
+                <p id="ssbsp"></p>
+                <img src="/vishEditor/images/templatesthumbs/t3.png"/>
+            </div>
+            <div class="selectSlidesButtonWrapper">
+                <button id="ssbdone">Done</button>
+            </div>
+        </div>
+        <div class="selectSlidesButtons2">
+            <button id="ssbaccept">Deny</button>
+        </div>
+    </div>
 
     <div style="display:none" id="viewerpreview">Preview</div>
     </div>

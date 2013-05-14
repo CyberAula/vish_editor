@@ -143,6 +143,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview_insertMode){
 			$("div#viewerpreview").html("Select slides")
+			$("#selectSlidesBar").show();
+			$("#viewbar").css("bottom",$("#selectSlidesBar").height()+"px");
+			$("#viewbar").css("border-bottom","none");
+			V.SlidesSelector.init();
 		}
 
 		if(embed){
@@ -256,9 +260,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var margin_width = 30;
 
 		if(!showViewbar){
+			//Cases without viewbar (quiz_simple , etc)
 			reserved_px_for_menubar = 0;
 			margin_height = 0;
 			margin_width = 0;
+		} else if(is_preview_insertMode){
+			//Preview with insert images
+			reserved_px_for_menubar = 120;
 		}
 
 		if(fullscreen){
