@@ -77,6 +77,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.Editor.Slideset.init();
+		V.Editor.Presentation.init();
 		V.Editor.Flashcard.init();
 		V.Editor.VirtualTour.init();
 		V.Renderer.init();
@@ -118,8 +119,8 @@ VISH.Editor = (function(V,$,undefined){
 		$("a#addSlideFancybox").fancybox({
 			'autoDimensions' : false,
 			'scrolling': 'no',
-			'width': 640,
-			'height': 350,
+			'width': 800,
+			'height': 600,
 			'padding': 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
@@ -187,6 +188,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		V.Editor.Flashcard.Repository.init();
+		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();

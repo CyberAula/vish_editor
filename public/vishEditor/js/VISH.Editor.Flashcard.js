@@ -5,7 +5,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	// myFlashcard = myFlashcards['flashcardIdInMyPresentation']
 
 	var init = function(){
-		V.Editor.Flashcard.Repository.init();
 		V.Editor.Flashcard.Creator.init();
 		myFlashcards = new Array();
 	};

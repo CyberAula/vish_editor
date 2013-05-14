@@ -103,7 +103,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 
 	/* Generate table for carrousels */
-	var generateTable = function(author,title,description){       
+	var generateTable = function(author,title,description,tableClass){       
 		if(!author){
 			author = "";
 		}
@@ -113,8 +113,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		if(!description){
 			description = "";
 		}
+		if(!tableClass){
+			tableClass = "metadata";
+		}
 
-		return "<table class=\"metadata\">"+
+		return "<table class=\""+tableClass+"\">"+
 		 "<tr class=\"even\">" +
 		   "<td class=\"title header_left\">" + V.Editor.I18n.getTrans("i.Title") + "</td>" + 
 		   "<td class=\"title header_right\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
@@ -352,6 +355,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		switch (tab_id) {
 			//templates and flashcards
 			case "tab_templates":
+				break;
+			case "tab_presentations_repo":
+				V.Editor.Presentation.Repository.onLoadTab();
 				break;
 			case "tab_flashcards_repo":
 				V.Editor.Flashcard.Repository.onLoadTab();

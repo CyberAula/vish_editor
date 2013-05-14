@@ -1,24 +1,43 @@
 VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	
-	var carrouselDivId = "tab_flashcards_repo_content_carrousel";
-	var previewDivId = "tab_flashcards_repo_content_preview";
+  	var carrouselDivId = "tab_flashcards_repo_content_carrousel";
+  	var previewDivId = "tab_flashcards_repo_content_preview";
+
 	var currentFlashcards = new Array();
-	var selectedFlashcard = null;
+	var selectedFc = null;
+	var myInput;
+	var previewButton;
+
+	var initialized = false;
 
 	var init = function() {
-		var myInput = $("#tab_flashcards_repo_content").find("input[type='search']");
-		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
-		$(myInput).keydown(function(event) {
-			if(event.keyCode == 13) {
-				_requestData($(myInput).val());
-				$(myInput).blur();
-			}
-		});
-	};	
+		myInput = $("#tab_flashcards_repo_content").find("input[type='search']");
+		previewButton = $("#" + previewDivId).find("button.okButton");
+
+		if(!initialized){
+			$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
+			$(myInput).keydown(function(event) {
+				if(event.keyCode == 13) {
+					_requestData($(myInput).val());
+					$(myInput).blur();
+				}
+			});
+		
+			$(previewButton).click(function(){
+				if(selectedFc){
+					V.Editor.Presentation.previewPresentation(selectedFc);
+				}
+			})
+
+			initialized = true;
+		}
+
+	};
 	
 	var onLoadTab = function() {
-		var previousSearch = ($("#tab_flashcards_repo_content").find("input[type='search']").val() != "");
+		var previousSearch = ($(myInput).val() !== "");
 		if(!previousSearch) {
+			_cleanObjectMetadata();
 			_requestInitialData();
 		}
 	};
@@ -72,10 +91,10 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		var options = new Array();
 		options['rows'] = 1;
 		options['callback'] = _onClickCarrouselElement;
-		options['rowItems'] = 4;
-		options['scrollItems'] = 4;
-		options['width'] = 650;
-		options['styleClass'] = "flashcard_repository";
+		options['rowItems'] = 5;
+		options['scrollItems'] = 5;
+		options['width'] = 800;
+		options['styleClass'] = "presentation_repository";
 		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 	}
 	
@@ -86,24 +105,45 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event) {
 		var flashcardid = $(event.target).attr("flashcardid");
 		if(flashcardid){
-			var the_flashcard_excursion = currentFlashcards[flashcardid];
-			//we have the flashcard as is in the repository but we have to update its ids to the adequate ones
-			var selectedFc = V.Editor.Utils.replaceIdsForFlashcardJSON(the_flashcard_excursion.slides[0]);
-			V.Editor.Flashcard.addFlashcard(selectedFc);
-			V.Renderer.renderSlide(selectedFc, "", "<div class='delete_slide'></div>");
-			//currentSlide number is next slide
-			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-			V.Editor.Slides.redrawSlides();
-			V.Editor.Thumbnails.redrawThumbnails();
-			V.Editor.Events.bindEventsForFlashcard(selectedFc);
-			V.Slides.lastSlide();  //important to get the browser to draw everything
-			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
-			$.fancybox.close();
+			selectedFc = currentFlashcards[flashcardid];
+			_renderObjectMetadata(selectedFc);
+
+
+			//After preview!
+			// //we have the flashcard as is in the repository but we have to update its ids to the adequate ones
+			// var myFc = V.Editor.Utils.replaceIdsForFlashcardJSON(selectedFc.slides[0]);
+			// V.Editor.Flashcard.addFlashcard(myFc);
+			// V.Renderer.renderSlide(myFc, "", "<div class='delete_slide'></div>");
+			// //currentSlide number is next slide
+			// V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+			// V.Editor.Slides.redrawSlides();
+			// V.Editor.Thumbnails.redrawThumbnails();
+			// V.Editor.Events.bindEventsForFlashcard(myFc);
+			// V.Slides.lastSlide();  //important to get the browser to draw everything
+			// V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
+			// $.fancybox.close();
 		}
 	};
 
+	var _renderObjectMetadata = function(object){
+		var metadataArea = $("#" + previewDivId).find("div.content_preview_metadata");
+		$(metadataArea).html("");
+		if(object){
+			var table = V.Editor.Utils.generateTable(object.author,object.title,object.description,"metadata metadata_presentation");
+			$(metadataArea).html(table);
+			$(previewButton).show();
+		}
+	}
+	
+	var _cleanObjectMetadata = function(){
+		var metadataArea = $("#" + previewDivId).find("div.content_preview_metadata");
+		$(metadataArea).html("");
+		$(previewButton).hide();
+	}
+
+
 	return {
-		init 					    : init,
+		init 					: init,
 		onLoadTab 				: onLoadTab
 	};
 

@@ -107,6 +107,9 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>	
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.js"></script>	
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.Repository.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
 	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
@@ -452,11 +455,14 @@
     <!-- Thumbnails fancybox -->
 	<div style='display:none'>
 		<div id='thumbcontent'>
-
+			
 			<div class='fancy_tabs' id='thumcontent_tabs'>
 				<ul>
 					<li>
 						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a>
+					</li>
+					<li>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_presentations_repo')" id="tab_presentations_repo" class="fancy_tab tabbable" i18n-key="i.Excursions">Excursions</a>
 					</li>
 					<li>
 						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_flashcards_repo')" id="tab_flashcards_repo" class="fancy_tab tabbable" i18n-key="i.Flashcards">Flashcards</a>
@@ -513,15 +519,30 @@
 				</div>
 			</div>
 
-			<div id='tab_flashcards_repo_content' class="fancy_tab_content" style='display:none' > 
-			  <div class="fc_repo_content">
-	          		<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>				  		  
+			<div id='tab_presentations_repo_content' class="fancy_tab_content" style='display:none'> 
+				<div class="excursions_repo_content">
+					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
-					  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy3" > </input>
+						<input type="search" class="input_text_fancy formsizefancy2 marginsfancy3" > </input>
+					</div> 		
+				</div>	
+			</div>
+
+			<div id='tab_flashcards_repo_content' class="fancy_tab_content" style='display:none'> 
+				<div class="excursions_repo_content">
+					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
+					<div class="search_container">
+						<input type="search" class="input_text_fancy input_text_excursions formsizefancy2 marginsfancy3" > </input>
 					</div>
-						
-					<div id="tab_flashcards_repo_content_carrousel"></div>       		
-          		</div>	
+					<div id="tab_flashcards_repo_content_carrousel"></div>
+					<div id="tab_flashcards_repo_content_preview" class="content_preview_presentation">
+						<div class="content_preview_data"></div>
+						<div class="content_preview_metadata"></div>
+						<div class="content_preview_foot">
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton okButtonCarrousel">Preview</button>
+						</div>
+					</div> 	
+				</div>	
 			</div>
 
 		</div>
@@ -800,18 +821,18 @@
 							</div>
         </div>            
 				<div id='tab_pic_repo_content' class="fancy_tab_content">
-          <div class="box1 box1fancy2">
-	          <img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>				  		  
+					<div class="box1 box1fancy2">
+						<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>				  		  
 						<div class="search_container">
-						  <input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+							<input id="search_picture" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 						</div>
-						
+
 						<div id="tab_pic_repo_content_carrousel"></div>
-						
-	          <div id="tab_pic_repo_content_preview">
+
+						<div id="tab_pic_repo_content_preview">
 							<div id="tab_pic_repo_content_preview_image"></div>
 						</div>
-          </div>	
+					</div>	
 				</div>
 				<div id='tab_pic_flikr_content' class="fancy_tab_content">
                 	  <div class="box1 box1fancy2">
@@ -957,23 +978,23 @@
               </div>
         </div> 
 				
-				<div id='tab_object_repo_content' class="fancy_tab_content">	
-          <div class="box1 box1fancy2">
-	          <img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>				  
-						<div class="search_container">
-						  <input id="search_object" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
-						</div>
-						
-						<div id="tab_object_repo_content_carrousel"></div>
-						<div id="tab_object_repo_content_preview" class="content_preview">
-							<div id="tab_object_repo_content_preview_object" class="content_preview_data"></div>
-							<div id="tab_object_repo_content_preview_metadata" class="content_preview_metadata"></div>
-							<div id="tab_object_repo_content_preview_foot" class="content_preview_foot">
-								<button i18n-key="i.Add" type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
-							</div>
-						</div>				
-				  </div>
-        </div>	
+		<div id='tab_object_repo_content' class="fancy_tab_content">	
+			<div class="box1 box1fancy2">
+				<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>				  
+				<div class="search_container">
+				<input id="search_object" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+				</div>
+
+				<div id="tab_object_repo_content_carrousel"></div>
+				<div id="tab_object_repo_content_preview" class="content_preview">
+					<div id="tab_object_repo_content_preview_object" class="content_preview_data"></div>
+					<div id="tab_object_repo_content_preview_metadata" class="content_preview_metadata"></div>
+					<div id="tab_object_repo_content_preview_foot" class="content_preview_foot">
+						<button i18n-key="i.Add" type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Repository.addSelectedObject()">Add</button>
+					</div>
+				</div>				
+			</div>
+		</div>	
 				
 				<div id='tab_object_snapshot_content' class="fancy_tab_content">
           <div class="box1 box1fancy1">

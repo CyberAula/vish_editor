@@ -30,7 +30,8 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			},
 			'onComplete': function() {
 				$("#fancybox-wrap").css('top','60px');
-				$("#fancybox-wrap").css('left','-2px');   			
+				$("#fancybox-wrap").css('left','-2px');
+				$("#fancybox-frame").addClass("vishEditorIframe");	
 			}
 		});
 	}
@@ -70,8 +71,17 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		} else if(V.Configuration.getConfiguration()["mode"]=="node"){
 			//Code here
 		}
-			
-		presentation_preview = V.Editor.savePresentation({preview: true, forcePresentation: forcePresentation});
+
+		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] !== "object")){
+			presentation_preview = V.Editor.savePresentation({preview: true, forcePresentation: forcePresentation});
+		} else {
+			presentation_preview = options["presentationJSON"];
+		}
+
+		if((options)&&(options["insertMode"])&&(typeof options["insertMode"] == "boolean")){
+			presentation_preview.insertMode = options["insertMode"];
+		}
+		
 	};
 
 	var getPreview = function(){

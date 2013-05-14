@@ -2,6 +2,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 	var render_full;
 	var is_preview;
+	var is_preview_insertMode;
 	var close_button;
 	var fs_button;
 	var can_use_nativeFs;
@@ -92,6 +93,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			display_recommendations = false;
 		}
 
+		is_preview_insertMode = false;
+		if(is_preview){
+			var presentation = V.SlideManager.getCurrentPresentation();
+			if(presentation.insertMode===true){
+				is_preview_insertMode = true;
+			}
+		}
+
 		//////////////
 		//Restrictions
 		/////////////
@@ -130,6 +139,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview){
 			$("div#viewerpreview").show();
+		}
+
+		if(is_preview_insertMode){
+			$("div#viewerpreview").html("Select slides")
 		}
 
 		if(embed){
