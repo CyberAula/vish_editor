@@ -107,21 +107,6 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		if(flashcardid){
 			selectedFc = currentFlashcards[flashcardid];
 			_renderObjectMetadata(selectedFc);
-
-
-			//After preview!
-			// //we have the flashcard as is in the repository but we have to update its ids to the adequate ones
-			// var myFc = V.Editor.Utils.replaceIdsForFlashcardJSON(selectedFc.slides[0]);
-			// V.Editor.Flashcard.addFlashcard(myFc);
-			// V.Renderer.renderSlide(myFc, "", "<div class='delete_slide'></div>");
-			// //currentSlide number is next slide
-			// V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-			// V.Editor.Slides.redrawSlides();
-			// V.Editor.Thumbnails.redrawThumbnails();
-			// V.Editor.Events.bindEventsForFlashcard(myFc);
-			// V.Slides.lastSlide();  //important to get the browser to draw everything
-			// V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
-			// $.fancybox.close();
 		}
 	};
 

@@ -35,17 +35,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		if(isSlideset){
 			_renderSlideset(presentation,slidesetModule);
 		} else if(presentation.type===VISH.Constant.PRESENTATION){
-			_renderPresentation(presentation);
+			renderPresentation(presentation);
 		} else if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
 			// Presentation stored in the quiz_simple_json field of quizzes;
 			// Edit this kind of presentations makes no sense, just for testing
 			//Edit as standard presentation
 			presentation.type = VISH.Constant.PRESENTATION;
-			_renderPresentation(presentation);
+			renderPresentation(presentation);
 		}
 	};
 
-	var _renderPresentation = function(presentation){
+	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
 			if(slides[i].type === V.Constant.FLASHCARD){
@@ -126,7 +126,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 
 	return {
-		init	: init
+		init	: init,
+		renderPresentation	: renderPresentation
 	};
 
 }) (VISH, jQuery);

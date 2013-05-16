@@ -72,7 +72,6 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 		V.Utils.loadDeviceCSS();
-
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
 		V.Editor.Themes.init();
@@ -103,11 +102,10 @@ VISH.Editor = (function(V,$,undefined){
 		});
 		$("#age_range").val(V.Constant.AGE_RANGE);
 
+
 		//If we have to edit
 		if(presentation){
-			if(typeof presentation.VEVersion === "undefined"){
-				presentation.VEVersion = "0.1";
-			}
+			presentation = V.Utils.fixPresentation(presentation);
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Renderer.init(presentation);

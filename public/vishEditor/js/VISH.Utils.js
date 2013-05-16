@@ -1,11 +1,14 @@
 VISH.Utils = (function(V,undefined){
 	
+	var ids;
+	// a list of all used ids
 	var domIds;
 	// myDomId = domIds['prefix'] returns a unicId for the specified prefix
 
 	var init = function(){
 		if(!domIds){
 			domIds = new Array();
+			ids = [];
 		}
 	}
 
@@ -48,12 +51,76 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		//Ensure that the id is unic.
-		if($("#"+full_id).length===0){
+		if(($("#"+full_id).length===0)&&(ids.indexOf(full_id)===-1)){
+			ids.push(full_id);
 			return full_id;
 		} else {
 			return getId(full_id_prefix,false,separator);
 		}
 	};
+
+	/**
+	 * Fix old JSON formats, update to current version
+	 */
+	var fixPresentation = function(presentation){
+		if(typeof presentation.type == "undefined"){
+			presentation.type = V.Constant.STANDARD;
+		}
+		if(typeof presentation.VEVersion == "undefined"){
+			presentation.VEVersion = "0.1";
+		}
+		presentation = _fixIds(presentation);
+		return presentation;
+	}
+
+	var _fixIds = function(presentation){
+		var slides = presentation.slides;
+		var sL = slides.length;
+
+		for(var i=0; i<sL; i++){
+			var slide = slides[i];
+
+			if(!slide.id.match(/^article[0-9]+/g)){
+				slide.id = getId("article");
+			} else {
+				slide.id = getId(slide.id,true);
+			}
+
+			if(typeof slide.type == "undefined"){
+				slide.type = V.Constant.STANDARD;
+			}
+			
+			switch(slide.type){
+				case V.Constant.STANDARD:
+					slide = _fixIdsStandardSlide(slide);
+					break;
+				case V.Constant.FLASHCARD:
+					slide = _fixIdsFlashcardSlide(slide);
+					break;
+				default:
+					return;
+			}
+		}
+
+		return presentation;
+	}
+
+	var _fixIdsStandardSlide = function(slide){
+		var elements = slide.elements;
+		var eL = elements.length;
+		for(var j=0;j<eL;j++){
+			if (elements[j].id.match(new RegExp("^"+slide.id, "g")) === null){
+				elements[j].id = getId(slide.id + "_zone");
+			} else {
+				elements[j].id = getId(elements[j].id,true);
+			}
+		}
+		return slide;
+	}
+
+	var _fixIdsFlashcardSlide = function(slide){
+		return slide;
+	}
 
 	var getOuterHTML = function(tag){
 		//In some old browsers (before firefox 11 for example) outerHTML does not work
@@ -424,7 +491,8 @@ VISH.Utils = (function(V,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
-		getParamsFromUrl		: getParamsFromUrl
+		getParamsFromUrl		: getParamsFromUrl,
+		fixPresentation			: fixPresentation
    };
 
 }) (VISH);

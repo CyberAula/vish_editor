@@ -299,27 +299,67 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 	}
 
-   /*
-	* Ensure that forceId is really unic in the DOM before call replaceIdsForFlashcardJSON.
-	* ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
-	*/
-	var replaceIdsForFlashcardJSON = function(flashcard,forceId){
-		var hash_subslide_new_ids = {};
-		var old_id;
-		var fc = jQuery.extend(true, {}, flashcard);
+	/*
+	 *	Ensure that forceId is really unic in the DOM before call.
+	 *  ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
+	 *	Replace Ids for a slide in JSON
+	 */
+	var replaceIdsForSlideJSON = function(slide,forceId){
+		var slideType = slide.type;
+		var slideId;
 
 		if(forceId){
-			fc.id = forceId;
+			slideId = forceId;
 		} else {
-			fc.id = V.Utils.getId("article");
+			slideId = V.Utils.getId("article");
+		}
+		
+		switch(slideType){
+			case V.Constant.STANDARD:
+				slide = _replaceIdsForStandardSlideJSON(slide,slideId);
+				break;
+			case V.Constant.FLASHCARD:
+				slide = _replaceIdsForFlashcardJSON(slide,slideId);
+				break;
+			default:
+				return;
 		}
 
-		for(var ind in fc.slides){			
+		return slide;
+	}
+
+	var _replaceIdsForStandardSlideJSON = function(slide,slideId){
+		var s = jQuery.extend(true, {}, slide);
+		var oldId = s.id;
+		s.id = slideId;
+
+		var eL = s.elements.length;
+		for(var i=0; i<eL; i++){
+			var el = s.elements[i];
+
+			if (el.id.match(new RegExp("^"+oldId, "g")) != null){
+				el.id = el.id.replace(oldId,s.id);
+			} else {
+				return null;
+			}
+		}
+
+		return s;
+	}
+
+	var _replaceIdsForFlashcardJSON = function(flashcard,slideId){
+		var hash_subslide_new_ids = {};
+		var old_id;
+
+		var fc = jQuery.extend(true, {}, flashcard);
+		fc.id = slideId;
+
+		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
 			fc.slides[ind].id = V.Utils.getId(fc.id + "_article" + (parseInt(ind)+1),true);
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
-		for(var num in fc.pois){	
+		for(var num in fc.pois){
 			fc.pois[num].id = V.Utils.getId(fc.id + "_poi" + (parseInt(num)+1),true);
 			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
 		}
@@ -424,7 +464,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		dimentionToDraw		 		: dimentionToDraw,
 		refreshDraggables			: refreshDraggables,
 		replaceIdsForSlide 			: replaceIdsForSlide,
-		replaceIdsForFlashcardJSON  : replaceIdsForFlashcardJSON,
+		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,
 		prepareSlideToNest			: prepareSlideToNest,
 		undoNestedSlide 			: undoNestedSlide,
 		generateTable 				: generateTable,

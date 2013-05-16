@@ -693,7 +693,8 @@ VISH.Samples = (function(V,undefined){
 						"id":"article3_zone2",
 						"type":"object",
 						"areaid":"left",
-						"body":"<iframe src=\"http://www.youtube.com/embed/8t29CZcGAbs?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID4\" class=\"t3_object\" wmode=\"opaque\"></iframe>","style":"position: relative; width:85.81661891117479%; height:100%; top:0%; left:6.446991404011461%;"
+						"body":"<iframe src=\"http://www.youtube.com/embed/8t29CZcGAbs?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID4\" class=\"t3_object\" wmode=\"opaque\"></iframe>",
+						"style":"position: relative; width:85.81661891117479%; height:100%; top:0%; left:6.446991404011461%;"
 					}
 				]
 			},{

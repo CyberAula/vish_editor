@@ -35,10 +35,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Debugging.log("\n\nSlideManager.init with presentation:\n"); 
 		V.Debugging.log(JSON.stringify(presentation));
 
+		V.Utils.init();
+		presentation = V.Utils.fixPresentation(presentation);
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
-
-		// V.Storage.setTestingMode(true);
 		
 		V.Status.init(function(){
 			//Status loading finishes
@@ -54,7 +54,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		V.Storage.init();
-		V.Utils.init();
 		V.Recommendations.init(options);
 		
 		//Experimental initializers for new excursion types
