@@ -40,7 +40,6 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			switch(mySlide.type){
 				case V.Constant.FLASHCARD:
 					flashcards.push(mySlide);
-					V.Editor.Flashcard.addFlashcard(mySlide);
 					break;
 				default:
 					break;

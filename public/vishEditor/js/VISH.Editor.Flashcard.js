@@ -21,6 +21,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		}
 	}
 
+	var getFlashcards = function(){
+		return myFlashcards;
+	}
+
 	var hasFlascards = function(){
 		return $("section.slides > .flashcard_slide[type='flashcard']").length>0;
 	}
@@ -29,6 +33,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		init 				 	: init,
 		addFlashcard 			: addFlashcard,
 		getFlashcard 			: getFlashcard,
+		getFlashcards			: getFlashcards,
 		hasFlascards 			: hasFlascards
 	};
 
