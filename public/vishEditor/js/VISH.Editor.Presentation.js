@@ -1,15 +1,14 @@
 VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var init = function(){
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSelectedSlides, function(params){ 
+			insertPresentation(params.JSON,params.acceptedSlides);
+			$.fancybox.close();
+		});
 	};
 
 	var _onConnect = function(origin){
-		V.Debugging.log("Communication stablished with origin " + origin);
-
-		VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
-			V.Debugging.log("onMessage from " + origin);
-			V.Debugging.log(VEMessage);
-		});
+		// V.Debugging.log("Communication stablished with origin " + origin);
 	}
 
 	/*
@@ -20,8 +19,17 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		VISH.IframeAPI.init({callback: _onConnect});
 	}
 
+	/**
+	 *
+	 */
+	var insertPresentation = function(presentationJSON,selectedSlides){
+		console.log(presentationJSON);
+		console.log(selectedSlides);
+	}
+
 	return {
 		init 				 	: init,
+		insertPresentation		: insertPresentation,
 		previewPresentation		: previewPresentation
 	};
 

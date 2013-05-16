@@ -11,7 +11,6 @@ VISH.SlidesSelector = (function(V,$,undefined){
 	 */
 	var init = function(){
 		if(!initialized){
-			V.Debugging.log("Init VISH.SlidesSelector");
 			countIndex = $("#ssbsp");
 			acceptButton = $("#ssbaccept");
 			nSlides = V.Slides.getSlidesQuantity();
@@ -43,14 +42,18 @@ VISH.SlidesSelector = (function(V,$,undefined){
 					//Accept
 					slides[aIndex] = true;
 				}
-				_updateInterface();
+				_updateInterface(V.Slides.getCurrentSlideNumber());
 				_updateIndex();
 			});
 
 			//Done
 			$("#ssbdone").click(function(event){
-				V.Debugging.log("Done: Slides aceptadas");
-				V.Debugging.log(_getAcceptedSlides());
+				// V.Debugging.log("Viewer Done: Slides aceptadas");
+				// V.Debugging.log(_getAcceptedSlides());
+				var params = new Object();
+				params.acceptedSlides = _getAcceptedSlides();
+				params.JSON = V.SlideManager.getCurrentPresentation();
+				V.Messenger.notifyEventByMessage(V.Constant.Event.onSelectedSlides,params);
 			});
 
 			V.EventsNotifier.registerCallback(V.Constant.Event.onGoToSlide, function(params){ 

@@ -1,11 +1,46 @@
  /**
-  * Provide an API with Global Excursions (VISH)
+  * Provide an API with ViSH (Virtual Science Hub)
   */
 
 VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
 	
+
+  /**
+   * function to call to VISH and request excursions in json format
+   * The request is:
+   * GET /excursions/search.json?q=nano
+   */
+  var requestExcursions = function(text, successCallback, failCallback){
+    if (V.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = V.Samples.API.excursionsList;
+        successCallback(result);
+      }
+      return;
+    }
+             
+    _requestByType("excursions", text, successCallback, failCallback);   
+  };
+
+
+  /**
+   * function to call to VISH and request recommended excursions
+   */
+  var requestRecomendedExcursions = function(successCallback, failCallback){
+    if (V.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+            var result = V.Samples.API.excursionsList;
+            successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("excursions", "", successCallback, failCallback);
+  };
+
+
   /**
    * function to call to VISH and request flashcards in json format
    * The request is:
@@ -414,6 +449,8 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	return {
 		init					            : init,
+    requestExcursions         : requestExcursions,
+    requestRecomendedExcursions : requestRecomendedExcursions,
     requestFlashcards         : requestFlashcards,
     requestRecomendedFlashcards : requestRecomendedFlashcards,
 		requestVideos             : requestVideos,

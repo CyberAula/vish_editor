@@ -226,7 +226,7 @@
 										<a style="display:none" class="menu_option menu_action" i18n-key="i.File">File</a>
 									</li>
 									<li>
-										<a style="display:none" class="menu_option menu_action" i18n-key="i.Presentation">Presentation</a>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertPresentation" i18n-key="i.Presentation">Excursion</a>
 									</li>
 									<li>
 										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertFlashcard" i18n-key="i.Flashcard">Flashcard</a>
@@ -523,8 +523,16 @@
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
-						<input type="search" class="input_text_fancy formsizefancy2 marginsfancy3" > </input>
-					</div> 		
+						<input type="search" class="input_text_fancy input_text_excursions formsizefancy2 marginsfancy3" > </input>
+					</div>
+					<div id="tab_presentations_repo_content_carrousel"></div>
+					<div id="tab_presentations_repo_content_preview" class="content_preview_presentation">
+						<div class="content_preview_data"></div>
+						<div class="content_preview_metadata"></div>
+						<div class="content_preview_foot">
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton okButtonCarrousel">Preview</button>
+						</div>
+					</div> 	
 				</div>	
 			</div>
 

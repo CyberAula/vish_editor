@@ -486,6 +486,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Editor.Utils.loadTab('tab_flashcards_repo');
 	};
 
+	var insertPresentation = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_presentations_repo');
+	};
+
 	var insertSlide = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_templates');
@@ -506,6 +511,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		disableMenu 					: disableMenu ,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
+		insertPresentation				: insertPresentation,
 		insertFlashcard					: insertFlashcard,
 		insertSlide						: insertSlide,
 		onSettings						: onSettings,

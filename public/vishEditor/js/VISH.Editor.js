@@ -74,6 +74,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.loadDeviceCSS();
 
 		V.Editor.Dummies.init();
+		V.EventsNotifier.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.Editor.Slideset.init();
@@ -198,9 +199,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Filter.init();
 		V.Storage.init();
 		V.Editor.Clipboard.init();
-
 		V.Editor.Events.init();
-		V.EventsNotifier.init();
+		
 
 		//Init Vish Editor Addons
 		if(options.addons){

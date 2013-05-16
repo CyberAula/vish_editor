@@ -63,6 +63,15 @@ VISH.Samples.API = (function(V,undefined){
     }    
   ];
 
+
+  var excursionsList = {
+     'excursions': [
+        VISH.Samples.full_samples, VISH.Samples.quiz_samples, VISH.Samples.magnetic_gifs, 
+        VISH.Samples.basic_samples, VISH.Samples.fc_sample, VISH.Samples.samples_vtour,
+        VISH.Samples.samplesv01
+     ]
+  }
+
   var flashcardList = {
     'flashcards': [
     {
@@ -1434,6 +1443,7 @@ VISH.Samples.API = (function(V,undefined){
 		
 	return {
     recommendationList  : recommendationList,
+    excursionsList : excursionsList,
     flashcardList     : flashcardList,
 		imageList         : imageList,
 		imageListLittle   : imageListLittle,
