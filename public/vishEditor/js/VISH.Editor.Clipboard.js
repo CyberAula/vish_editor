@@ -11,7 +11,6 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 	var copy = function(element,type) {
 		if(element){
 			var params = {};
-
 			switch(type){
 				case V.Constant.Clipboard.Slide:
 					var slideType = V.Slides.getSlideType(element);

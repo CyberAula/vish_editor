@@ -147,9 +147,9 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				return;
 			}
 
-			var the_flashcard_excursion = options.flashcardExcursionJSON;
-			var selectedFc = V.Editor.Utils.replaceIdsForSlideJSON(the_flashcard_excursion,flashcardId);
+			var selectedFc = V.Editor.Utils.replaceIdsForSlideJSON(options.flashcardExcursionJSON,flashcardId);
 			V.Editor.Flashcard.addFlashcard(selectedFc);
+			
 			//And now we add the points of interest with their click events to show the slides
 			for(index in selectedFc.pois){
 				var poi = selectedFc.pois[index];

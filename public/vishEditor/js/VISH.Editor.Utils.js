@@ -300,7 +300,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	}
 
 	/*
-	 *	Ensure that forceId is really unic in the DOM before call.
+	 *	Ensure that forceId is/will be really unic in the DOM before call.
 	 *  ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
 	 *	Replace Ids for a slide in JSON
 	 */
@@ -356,11 +356,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
-			fc.slides[ind].id = V.Utils.getId(fc.id + "_article" + (parseInt(ind)+1),true);
+			fc.slides[ind].id = fc.id + "_article" + (parseInt(ind)+1);
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
 		for(var num in fc.pois){
-			fc.pois[num].id = V.Utils.getId(fc.id + "_poi" + (parseInt(num)+1),true);
+			fc.pois[num].id = fc.id + "_poi" + (parseInt(num)+1);
 			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
 		}
 		return fc;

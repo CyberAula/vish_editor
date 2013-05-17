@@ -624,7 +624,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t2",
 						"elements":[
 							{
-								"id":"article4_article1_zone1",
+								"id":"article8_article1_zone1",
 								"type":"image",
 								"areaid":"left",
 								"body":"http://vishub.org/pictures/318.jpeg",
@@ -637,7 +637,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t2",
 						"elements":[
 							{
-								"id":"article4_article2_zone1",
+								"id":"article8_article2_zone1",
 								"type":"image",
 								"areaid":"left",
 								"body":"http://vishub.org/pictures/327.jpeg",
@@ -650,7 +650,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t2",
 						"elements":[
 							{
-								"id":"article4_article3_zone1",
+								"id":"article8_article3_zone1",
 								"type":"image",
 								"areaid":"left",
 								"body":"http://vishub.org/pictures/319.jpeg",
@@ -766,7 +766,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t10",
 						"elements":[
 							{
-								"id":"article4_article3_zone1",
+								"id":"article7_article1_zone1",
 								"type":"image",
 								"areaid":"center",
 								"body":"http://vishub.org/pictures/321.jpeg",
@@ -779,7 +779,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t10",
 						"elements":[
 							{
-								"id":"article4_article1_zone1",
+								"id":"article7_article2_zone1",
 								"type":"image",
 								"areaid":"center",
 								"body":"http://vishub.org/pictures/322.jpeg",
@@ -792,7 +792,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t10",
 						"elements":[
 							{
-								"id":"article4_article2_zone1",
+								"id":"article7_article3_zone1",
 								"type":"image",
 								"areaid":"center",
 								"body":"http://vishub.org/pictures/323.jpeg",
