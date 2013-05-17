@@ -39,16 +39,19 @@ VISH.Editor.Utils.Loader = (function(V,$,undefined){
 
 	var _unloadSnapshotsInEditor = function(snapshots,updateScrolls){
 		$.each(snapshots, function(index, snapshot){
-			//Scrolls only must been saved when the slide is visible
-			//Otherwise scrollTop/Left returns 0 and values ​​are corrupted
-			if(updateScrolls===true){
-				//Save scrolls
-				$(snapshot).attr("scrollTop",$(snapshot).scrollTop());
-				$(snapshot).attr("scrollLeft",$(snapshot).scrollLeft());
-			}
+			var htmlContent = $(snapshot).html();
+			if((typeof htmlContent !== "undefined")&&(htmlContent!=="")){
+				//Scrolls only must been saved when the slide is visible
+				//Otherwise scrollTop/Left returns 0 and values ​​are corrupted
+				if(updateScrolls===true){
+					//Save scrolls
+					$(snapshot).attr("scrollTop",$(snapshot).scrollTop());
+					$(snapshot).attr("scrollLeft",$(snapshot).scrollLeft());
+				}
 
-			$(snapshot).attr("htmlContent",$(snapshot).html());
-			$(snapshot).html("");
+				$(snapshot).attr("htmlContent",htmlContent);
+				$(snapshot).html("");
+			}
 		});
 	}
 

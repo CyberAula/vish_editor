@@ -142,7 +142,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		if(is_preview_insertMode){
-			$("div#viewerpreview").html("Select slides")
 			$("#selectSlidesBar").show();
 			$("#viewbar").css("bottom",$("#selectSlidesBar").height()+"px");
 			$("#viewbar").css("border-bottom","none");

@@ -49,19 +49,21 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		}
 
 		presentationJSON.slides = selectedSlides;
-
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
 		V.Editor.Slides.redrawSlides();
 		V.Editor.Thumbnails.redrawThumbnails();
+		V.Slides.lastSlide();
+		//Unload all objects
+		V.Editor.Utils.Loader.unloadAllObjects();
+		//Reload current slide objects
+		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
 		//POST-renderer actions
 		for(var j=0; j<flashcards.length; j++){
 			V.Editor.Events.bindEventsForFlashcard(flashcards[j]);
 			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
 		}
-		
-		V.Slides.lastSlide(); 
 
 		$.fancybox.close();
 	}

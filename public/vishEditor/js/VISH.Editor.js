@@ -809,7 +809,6 @@ VISH.Editor = (function(V,$,undefined){
 						$(snapshotIframe).removeAttr("style");
 						element.body   = V.Utils.getOuterHTML(snapshotIframe);
 						element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
-						
 						//Save scrolls
 						var scrollTopAttr = $(snapshotWrapper).attr("scrollTop");
 						if(typeof scrollTopAttr !== "undefined"){
