@@ -321,6 +321,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case V.Constant.FLASHCARD:
 				slide = _replaceIdsForFlashcardJSON(slide,slideId);
 				break;
+			case V.Constant.VTOUR:
+				slide = _replaceIdsForVTourJSON(slide,slideId);
 			default:
 				return;
 		}
@@ -366,6 +368,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return fc;
 	};
 
+	var _replaceIdsForVTourJSON = function(vTour,vTourId){
+		var vt = jQuery.extend(true, {}, vTour);
+
+		// console.log("vt");
+		// console.log(vt);
+
+		return vt;
+	}
 
 	/////////////////////////
 	/// Fancy Box Functions

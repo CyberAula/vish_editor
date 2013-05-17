@@ -162,11 +162,12 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 		V.Utils.loadDeviceCSS();
-
 		V.Editor.Dummies.init();
+		V.EventsNotifier.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.Editor.Slideset.init();
+		V.Editor.Presentation.init();
 		V.Editor.Flashcard.init();
 		V.Editor.VirtualTour.init();
 		V.Renderer.init();
@@ -191,11 +192,10 @@ VISH.Editor = (function(V,$,undefined){
 		});
 		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
 
+
 		&#x2F;&#x2F;If we have to edit
 		if(presentation){
-			if(typeof presentation.VEVersion === &quot;undefined&quot;){
-				presentation.VEVersion = &quot;0.1&quot;;
-			}
+			presentation = V.Utils.fixPresentation(presentation);
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Renderer.init(presentation);
@@ -208,8 +208,8 @@ VISH.Editor = (function(V,$,undefined){
 		$(&quot;a#addSlideFancybox&quot;).fancybox({
 			&#x27;autoDimensions&#x27; : false,
 			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;width&#x27;: 640,
-			&#x27;height&#x27;: 350,
+			&#x27;width&#x27;: 800,
+			&#x27;height&#x27;: 600,
 			&#x27;padding&#x27;: 0,
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
@@ -277,6 +277,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		V.Editor.Flashcard.Repository.init();
+		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
@@ -285,9 +287,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Filter.init();
 		V.Storage.init();
 		V.Editor.Clipboard.init();
-
 		V.Editor.Events.init();
-		V.EventsNotifier.init();
+		
 
 		&#x2F;&#x2F;Init Vish Editor Addons
 		if(options.addons){
@@ -803,7 +804,7 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
 		var isSlideset = (slidesetModule!==null);
 		if(isSlideset){
 			slide = slidesetModule.getSlideHeader();
@@ -898,7 +899,6 @@ VISH.Editor = (function(V,$,undefined){
 						$(snapshotIframe).removeAttr(&quot;style&quot;);
 						element.body   = V.Utils.getOuterHTML(snapshotIframe);
 						element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
-						
 						&#x2F;&#x2F;Save scrolls
 						var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
 						if(typeof scrollTopAttr !== &quot;undefined&quot;){

@@ -20,7 +20,9 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 							params.textAreas = V.Editor.Slides.copyTextAreasOfSlide(element);
 							break;
 						case V.Constant.FLASHCARD:
-							params.flashcardExcursionJSON = jQuery.extend(true, {}, V.Editor.Flashcard.getFlashcard(element.id));
+						case V.Constant.VTOUR:
+							var slidesetModule = V.Editor.Slideset.getModule(slideType);
+							params.JSON = jQuery.extend(true, {}, slidesetModule.getSlideset(element.id));
 							break;
 						default:
 							break;
@@ -80,8 +82,8 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 					if(myStack[2].textAreas){
 						options.textAreas = myStack[2].textAreas;
 					}
-					if(myStack[2].flashcardExcursionJSON){
-						options.flashcardExcursionJSON = myStack[2].flashcardExcursionJSON;
+					if(myStack[2].JSON){
+						options.JSON = myStack[2].JSON;
 					}
 				}
 

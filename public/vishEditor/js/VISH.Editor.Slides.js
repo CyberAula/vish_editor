@@ -139,23 +139,18 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Pre-copy actions
 		/////////////////
 
-		if(slideToCopyType === V.Constant.FLASHCARD){
-			var flashcardId = $(slideToCopy).attr("id");
+		var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
+		if(typeof slidesetModule !== "undefined"){
+			var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
+			var slidesetId = $(slideToCopy).attr("id");
 
-			if(!options.flashcardExcursionJSON){
-				//We need flashcard excursion JSON to copy a flashcard!
+			if(!options.JSON){
+				//We need the JSON to copy a flashcard!
 				return;
 			}
 
-			var selectedFc = V.Editor.Utils.replaceIdsForSlideJSON(options.flashcardExcursionJSON,flashcardId);
-			V.Editor.Flashcard.addFlashcard(selectedFc);
-			
-			//And now we add the points of interest with their click events to show the slides
-			for(index in selectedFc.pois){
-				var poi = selectedFc.pois[index];
-				V.Flashcard.addArrow(selectedFc.id, poi, true);
-			}
-			V.Editor.Events.bindEventsForFlashcard(selectedFc);
+			var selectedSlideset = V.Editor.Utils.replaceIdsForSlideJSON(options.JSON,slidesetId);
+			slidesetModule.preCopyActions(selectedSlideset);
 		}
 
 		/////////////////
@@ -183,6 +178,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			if(options.textAreas){
 				_loadTextAreasOfSlide(slideCopied,options.textAreas);
 			}
+		}
+
+		if(typeof slidesetModule !== "undefined"){
+			slidesetModule.postCopyActions(selectedSlideset);
 		}
 		
 		//Update slideEls

@@ -127,6 +127,13 @@ VISH.Quiz = (function(V,$,undefined){
     $(document).on(&#x27;click&#x27;, &quot;.quizStartButton&quot;,_onStartQuiz);
     $(document).on(&#x27;click&#x27;, &quot;.quizStopButton&quot;,_onStopQuiz);
 
+    &#x2F;&#x2F; Fullscreen QR Code: Not stable feature
+    &#x2F;&#x2F; if(V.Status.getDevice().features.fullscreen){
+    &#x2F;&#x2F;   $(document).on(&#x27;click&#x27;, &quot;.quizQr&quot;,_onClickQR);
+    &#x2F;&#x2F;   $(&quot;.quizQr&quot;).attr(&quot;title&quot;,&quot;Click to put the QR in full screen&quot;);
+    &#x2F;&#x2F;   $(&quot;.quizQr&quot;).css(&quot;cursor&quot;,&quot;pointer&quot;);
+    &#x2F;&#x2F; }    
+
     $(&quot;a#addQuizSessionFancybox&quot;).fancybox({
       &#x27;autoDimensions&#x27; : false,
       &#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -158,10 +165,14 @@ VISH.Quiz = (function(V,$,undefined){
           $(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
           $(&quot;#fancybox-content &gt; div&quot;).height(&quot;100%&quot;);
           $(&#x27;#fancybox-wrap&#x27;).show();
+          if((currentQuizSession)&amp;&amp;(currentQuizSession.url)){
+            _loadQr(currentQuizSession.url);
+          }
         }, 300);   
       },
       &quot;onClosed&quot;  : function(){
         _stopPolling();
+        _cleanResults();
       }
     });
 
@@ -305,11 +316,11 @@ VISH.Quiz = (function(V,$,undefined){
             name = $(pn).val();
           }
         });
-        $(&quot;.prompt_button2&quot;).addClass(&quot;quizStartButtonLoading&quot;);
+        $(&quot;.prompt_button_viewer2&quot;).addClass(&quot;quizStartButtonLoading&quot;);
         _closeQuizSession(name);
         break;
       case &quot;no&quot;:
-        $(&quot;.prompt_button1&quot;).addClass(&quot;quizStartButtonLoading&quot;);
+        $(&quot;.prompt_button_viewer1&quot;).addClass(&quot;quizStartButtonLoading&quot;);
         _closeQuizSession();
         break;
       case &quot;cancel&quot;:
@@ -321,12 +332,12 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _closeQuizSession = function(name){
     V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
-      $(&quot;.prompt_button1&quot;).removeClass(&quot;quizStartButtonLoading&quot;)
-      $(&quot;.prompt_button2&quot;).removeClass(&quot;quizStartButtonLoading&quot;)
+      $.fancybox.close();
+      $(&quot;.prompt_button_viewer1&quot;).removeClass(&quot;quizStartButtonLoading&quot;)
+      $(&quot;.prompt_button_viewer2&quot;).removeClass(&quot;quizStartButtonLoading&quot;)
       _enableLaunchButton(currentQuiz);
       currentQuiz = null;
       currentQuizSession = null;
-      $.fancybox.close();
     });
   }
 
@@ -419,15 +430,15 @@ VISH.Quiz = (function(V,$,undefined){
 
   var loadTab = function(tab_id){
     &#x2F;&#x2F;hide previous tab
-    $(&quot;.fancy_tab_content&quot;).hide();
+    $(&quot;.fancy_viewer_tab_content&quot;).hide();
     &#x2F;&#x2F;show content
     $(&quot;#&quot; + tab_id + &quot;_content&quot;).show();
     &#x2F;&#x2F;deselect all of them
-    $(&quot;.fancy_tab&quot;).removeClass(&quot;fancy_selected&quot;);
+    $(&quot;.fancy_viewer_tab&quot;).removeClass(&quot;fancy_selected&quot;);
     &#x2F;&#x2F;select the correct one
     $(&quot;#&quot; + tab_id).addClass(&quot;fancy_selected&quot;);
     &#x2F;&#x2F;hide previous help button
-    $(&quot;.help_in_fancybox&quot;).hide();
+    $(&quot;.help_in_fancybox_viewer&quot;).hide();
     &#x2F;&#x2F;show correct one
     $(&quot;#&quot;+ tab_id + &quot;_help&quot;).show();
 
@@ -444,15 +455,128 @@ VISH.Quiz = (function(V,$,undefined){
   };
 
   var _loadQuizSession = function(){
+    _cleanResults();
     if(!currentQuizSession){
       return;
     }
+    if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
+      currentQuizSession.url = &quot;http:&#x2F;&#x2F;vishub.org&#x2F;quiz_sessions&#x2F;4567&quot;;
+    }
+
     var myA = $(&quot;#tab_quiz_session_url_link&quot;);
     $(myA).attr(&quot;href&quot;,currentQuizSession.url);
     $(myA).html(&quot;&lt;p id=&#x27;tab_quiz_session_url&#x27;&gt;&quot;+currentQuizSession.url+&quot;&lt;&#x2F;p&gt;&quot;);
+
+    var sharingText = $(currentQuiz).find(&quot;.mc_question_wrapper_viewer&quot;).text().trim();
+    
+    var twitter = $(&quot;#tab_quiz_session_share_twitter&quot;);
+    $(twitter).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;twitter.com&#x2F;share?url=&quot;+currentQuizSession.url+&quot;&amp;text=&quot;+sharingText+&quot;&quot;);
+    
+    var facebook = $(&quot;#tab_quiz_session_share_facebook&quot;);
+    var facebookUrl = &quot;http:&#x2F;&#x2F;www.facebook.com&#x2F;sharer.php?s=100&amp;p[url]=&quot;+currentQuizSession.url+&quot;&amp;p[title]=&quot;+sharingText;
+    &#x2F;&#x2F; &amp;p[summary]=the description&#x2F;summary you want to share&quot;;
+    &#x2F;&#x2F;&amp;p[images][0]=the image you want to share
+    $(facebook).attr(&quot;href&quot;,facebookUrl);
+
+    var gPlus = $(&quot;#tab_quiz_session_share_gPlus&quot;);
+    $(gPlus).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;plus.google.com&#x2F;share?url=&quot;+currentQuizSession.url);
   }
 
+
+  var _loadQr = function(url){
+    if(typeof url != &quot;string&quot;){
+      return;
+    }
+
+    var container = $(&quot;.quizQr&quot;);
+    $(container).html(&quot;&quot;);
+
+    var height = $(container).height();
+    var width = height;
+
+    var qrOptions = {
+      &#x2F;&#x2F; render method: &#x27;canvas&#x27; or &#x27;div&#x27;
+      render: &#x27;canvas&#x27;, 
+      &#x2F;&#x2F; width and height in pixel
+      width: width,
+      height: height,
+      &#x2F;&#x2F; QR code color
+      color: &#x27;#000&#x27;,
+      &#x2F;&#x2F; background color, null for transparent background
+      bgColor: &#x27;#fff&#x27;,
+      &#x2F;&#x2F; the encoded text
+      text: url.toString()
+    }
+    $(container).qrcode(qrOptions);
+  }
+
+  var _onClickQR = function(){
+    var changeToFs = false;
+    var changeFromFs = false;
+    var elem = $(&quot;.quizQr&quot;)[0];
+
+    if((V.Status.getIsInIframe())&amp;&amp;(isFullscreen(parent.document))){
+      &#x2F;&#x2F;VE in FS
+      &#x2F;&#x2F;Breaks
+      &#x2F;&#x2F;TODO
+      return; 
+    }
+
+    if(isFullscreen(document)){
+      &#x2F;&#x2F;Qr is in fullscreen
+      changeFromFS = cancelFullScreen(document);
+    } else {
+      &#x2F;&#x2F;Qr is not in fullscreen
+      changeToFS = requestFullScreen(elem);
+    }
+
+    if(changeToFs){
+      $(&quot;.quizQr&quot;).attr(&quot;disabledTitle&quot;,$(&quot;.quizQr&quot;).attr(&quot;title&quot;));
+      $(&quot;.quizQr&quot;).removeAttr(&quot;title&quot;);
+    } else if(changeFromFs){
+      $(&quot;.quizQr&quot;).attr(&quot;title&quot;,$(&quot;.quizQr&quot;).attr(&quot;disabledTitle&quot;));
+    }
+
+    if((changeToFs)||(changeFromFs)){
+      _loadQr(currentQuizSession.url);
+    }
+  }
+
+  var isFullscreen = function(myDoc){
+    return((myDoc.fullScreen) || (myDoc.mozFullScreen) || (myDoc.webkitIsFullScreen));
+  }
+
+  var cancelFullScreen = function(myDoc){
+     if (myDoc.cancelFullScreen) {
+        myDoc.cancelFullScreen();
+        return true;
+      } else if (myDoc.mozCancelFullScreen) {
+        myDoc.mozCancelFullScreen();
+        return true;
+      } else if (myDoc.webkitCancelFullScreen) {
+        myDoc.webkitCancelFullScreen();
+        return true;
+      }
+      return false;
+  }
+
+  var requestFullScreen = function(elem){
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+      return true;
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+      return true;
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+      return true;
+    }
+    return false;
+  }
+
+
   var _loadStats = function(){
+    _cleanResults();
     V.Quiz.API.getResults(currentQuizSession.id, function(results){
         _drawResults(results,{&quot;first&quot;: true});
         _startPolling();
@@ -488,21 +612,20 @@ VISH.Quiz = (function(V,$,undefined){
     $(canvas).attr(&quot;width&quot;,desiredWidth);
     $(canvas).attr(&quot;height&quot;,desiredHeight);
 
-    var answers = _getAnswers(results);
     var quizModule = _getQuizModule($(currentQuiz).attr(&quot;type&quot;));
     if(quizModule){
-      quizModule.drawAnswers(currentQuiz,answers,options);
+      $(&quot;#quiz_chart&quot;).show();
+      quizModule.drawResults(currentQuiz,results,options);
     }
   }
 
-  var _getAnswers = function(results){
-    var answers = [];
-    var rL = results.length;
-    for(var i=0; i&lt;rL; i++){
-      answers.push(JSON.parse(results[i].answer));
-    }
-    return answers;
+  var _cleanResults = function(){
+    var canvas = $(&quot;#quiz_chart&quot;);
+    var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+    ctx.clearRect(0, 0, $(canvas).width(), $(canvas).height());
+    $(canvas).hide();
   }
+
 
   &#x2F;*
    * Utils
@@ -560,6 +683,15 @@ VISH.Quiz = (function(V,$,undefined){
     );
   }
 
+
+  var aftersetupSize = function(increase){
+    setTimeout(function(){
+      if((currentQuizSession)&amp;&amp;(currentQuizSession.url)){
+        _loadQr(currentQuizSession.url);
+      }
+    },500);
+  }
+
   return {
     initBeforeRender  : initBeforeRender,
     init              : init,
@@ -567,8 +699,9 @@ VISH.Quiz = (function(V,$,undefined){
     renderButtons     : renderButtons,
     updateCheckbox    : updateCheckbox,
     disableAnswerButton : disableAnswerButton,
-    loadTab           : loadTab,
-    onCloseQuizSession  : onCloseQuizSession
+    loadTab             : loadTab,
+    onCloseQuizSession  : onCloseQuizSession,
+    aftersetupSize    : aftersetupSize
   };
     
 }) (VISH, jQuery);

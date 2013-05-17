@@ -193,7 +193,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 
 	&#x2F;* Generate table for carrousels *&#x2F;
-	var generateTable = function(author,title,description){       
+	var generateTable = function(author,title,description,tableClass){       
 		if(!author){
 			author = &quot;&quot;;
 		}
@@ -203,8 +203,11 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		if(!description){
 			description = &quot;&quot;;
 		}
+		if(!tableClass){
+			tableClass = &quot;metadata&quot;;
+		}
 
-		return &quot;&lt;table class=\&quot;metadata\&quot;&gt;&quot;+
+		return &quot;&lt;table class=\&quot;&quot;+tableClass+&quot;\&quot;&gt;&quot;+
 		 &quot;&lt;tr class=\&quot;even\&quot;&gt;&quot; +
 		   &quot;&lt;td class=\&quot;title header_left\&quot;&gt;&quot; + V.Editor.I18n.getTrans(&quot;i.Title&quot;) + &quot;&lt;&#x2F;td&gt;&quot; + 
 		   &quot;&lt;td class=\&quot;title header_right\&quot;&gt;&lt;div class=\&quot;height_wrapper\&quot;&gt;&quot; + title + &quot;&lt;&#x2F;div&gt;&lt;&#x2F;td&gt;&quot; + 
@@ -386,33 +389,83 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 	}
 
-   &#x2F;*
-	* Ensure that forceId is really unic in the DOM before call replaceIdsForFlashcardJSON.
-	* ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
-	*&#x2F;
-	var replaceIdsForFlashcardJSON = function(flashcard,forceId){
-		var hash_subslide_new_ids = {};
-		var old_id;
-		var fc = jQuery.extend(true, {}, flashcard);
+	&#x2F;*
+	 *	Ensure that forceId is&#x2F;will be really unic in the DOM before call.
+	 *  ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
+	 *	Replace Ids for a slide in JSON
+	 *&#x2F;
+	var replaceIdsForSlideJSON = function(slide,forceId){
+		var slideType = slide.type;
+		var slideId;
 
 		if(forceId){
-			fc.id = forceId;
+			slideId = forceId;
 		} else {
-			fc.id = V.Utils.getId(&quot;article&quot;);
+			slideId = V.Utils.getId(&quot;article&quot;);
+		}
+		
+		switch(slideType){
+			case V.Constant.STANDARD:
+				slide = _replaceIdsForStandardSlideJSON(slide,slideId);
+				break;
+			case V.Constant.FLASHCARD:
+				slide = _replaceIdsForFlashcardJSON(slide,slideId);
+				break;
+			case V.Constant.VTOUR:
+				slide = _replaceIdsForVTourJSON(slide,slideId);
+			default:
+				return;
 		}
 
-		for(var ind in fc.slides){			
+		return slide;
+	}
+
+	var _replaceIdsForStandardSlideJSON = function(slide,slideId){
+		var s = jQuery.extend(true, {}, slide);
+		var oldId = s.id;
+		s.id = slideId;
+
+		var eL = s.elements.length;
+		for(var i=0; i&lt;eL; i++){
+			var el = s.elements[i];
+
+			if (el.id.match(new RegExp(&quot;^&quot;+oldId, &quot;g&quot;)) != null){
+				el.id = el.id.replace(oldId,s.id);
+			} else {
+				return null;
+			}
+		}
+
+		return s;
+	}
+
+	var _replaceIdsForFlashcardJSON = function(flashcard,slideId){
+		var hash_subslide_new_ids = {};
+		var old_id;
+
+		var fc = jQuery.extend(true, {}, flashcard);
+		fc.id = slideId;
+
+		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
-			fc.slides[ind].id = V.Utils.getId(fc.id + &quot;_article&quot; + (parseInt(ind)+1),true);
+			fc.slides[ind].id = fc.id + &quot;_article&quot; + (parseInt(ind)+1);
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
-		for(var num in fc.pois){	
-			fc.pois[num].id = V.Utils.getId(fc.id + &quot;_poi&quot; + (parseInt(num)+1),true);
+		for(var num in fc.pois){
+			fc.pois[num].id = fc.id + &quot;_poi&quot; + (parseInt(num)+1);
 			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
 		}
 		return fc;
 	};
 
+	var _replaceIdsForVTourJSON = function(vTour,vTourId){
+		var vt = jQuery.extend(true, {}, vTour);
+
+		&#x2F;&#x2F; console.log(&quot;vt&quot;);
+		&#x2F;&#x2F; console.log(vt);
+
+		return vt;
+	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; Fancy Box Functions
@@ -442,6 +495,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		switch (tab_id) {
 			&#x2F;&#x2F;templates and flashcards
 			case &quot;tab_templates&quot;:
+				break;
+			case &quot;tab_presentations_repo&quot;:
+				V.Editor.Presentation.Repository.onLoadTab();
 				break;
 			case &quot;tab_flashcards_repo&quot;:
 				V.Editor.Flashcard.Repository.onLoadTab();
@@ -508,7 +564,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		dimentionToDraw		 		: dimentionToDraw,
 		refreshDraggables			: refreshDraggables,
 		replaceIdsForSlide 			: replaceIdsForSlide,
-		replaceIdsForFlashcardJSON  : replaceIdsForFlashcardJSON,
+		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,
 		prepareSlideToNest			: prepareSlideToNest,
 		undoNestedSlide 			: undoNestedSlide,
 		generateTable 				: generateTable,

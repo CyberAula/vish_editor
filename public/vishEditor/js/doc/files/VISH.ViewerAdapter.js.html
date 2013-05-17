@@ -92,19 +92,19 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 	var render_full;
 	var is_preview;
+	var is_preview_insertMode;
 	var close_button;
 	var fs_button;
 	var can_use_nativeFs;
 	var embed;
-
 	var display_recommendations;
+	var showViewbar;
 
 	&#x2F;&#x2F;Fullscreen fallbacks
 	var enter_fs_button;
 	var enter_fs_url;
 	var exit_fs_button;
 	var exit_fs_url;
-	var isOneSlide;
 
 	&#x2F;&#x2F;Indicate if the render is currently in fullscreen
 	var page_is_fullscreen;
@@ -127,6 +127,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Init vars
+		embed = V.Status.getIsEmbed();
+		showViewbar = _defaultViewbar();
+
 		if(options){
 			&#x2F;&#x2F;Decide if we must render the presentation in fullscreen mode
 			if(typeof render_full !== &quot;boolean&quot;){
@@ -135,31 +138,30 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			if(typeof options[&quot;preview&quot;] === &quot;boolean&quot;){
 				is_preview = options[&quot;preview&quot;];
 			}
-			if(typeof options[&quot;embed&quot;] === &quot;boolean&quot;){
-				embed = options[&quot;embed&quot;];
-			} else {
-				embed = false;
-			}
 
-			close_button = (V.Status.getDevice().mobile)&amp;&amp;(!V.Status.getIsInIframe())&amp;&amp;((options[&quot;comeBackUrl&quot;])||((V.Status.getDevice().features.history)&amp;&amp;(embed)));
+			&#x2F;&#x2F;Close button
+			close_button = (V.Status.getDevice().mobile)&amp;&amp;(!V.Status.getIsInIframe())&amp;&amp;(options[&quot;comeBackUrl&quot;]);
 			
-			&#x2F;&#x2F;Embed elements can use native fullscreen
-			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&amp;&amp;(!embed);
+			&#x2F;&#x2F;Full screen buttons
+			can_use_nativeFs = (V.Status.getDevice().features.fullscreen);
 
 			enter_fs_button = (typeof options[&quot;fullscreen&quot;] !== &quot;undefined&quot;)&amp;&amp;(!can_use_nativeFs);
 			if(enter_fs_button){
 				enter_fs_url = options[&quot;fullscreen&quot;];
 			}
 
-			exit_fs_button = ((typeof options[&quot;exitFullscreen&quot;] !== &quot;undefined&quot;)||((V.Status.getDevice().features.history)&amp;&amp;(embed)))&amp;&amp;(!can_use_nativeFs);
+			exit_fs_button = (typeof options[&quot;exitFullscreen&quot;] !== &quot;undefined&quot;)&amp;&amp;(!can_use_nativeFs);
 			if(exit_fs_button){
 				exit_fs_url = options[&quot;exitFullscreen&quot;];
 			}
 
-			&#x2F;&#x2F;Full screen buttons
+			&#x2F;&#x2F;Decide if show full screen buttons
 			fs_button = ((can_use_nativeFs)&amp;&amp;(V.Status.getIsInIframe()))||((enter_fs_button)&amp;&amp;(exit_fs_button));
 			&#x2F;&#x2F;No fs for preview
 			fs_button = fs_button &amp;&amp; (!is_preview);
+			&#x2F;&#x2F;No fs for embed
+			fs_button = fs_button &amp;&amp; (!embed);
+
 
 			page_is_fullscreen = render_full &amp;&amp; (!V.Status.getIsInIframe());
 
@@ -168,7 +170,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 				display_recommendations = true;
 			} else {
 				display_recommendations = false;
-			}
+			}	
 
 		} else {
 			render_full = false;
@@ -178,8 +180,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
-			embed = false;
 			display_recommendations = false;
+		}
+
+		is_preview_insertMode = false;
+		if(is_preview){
+			var presentation = V.SlideManager.getCurrentPresentation();
+			if(presentation.insertMode===true){
+				is_preview_insertMode = true;
+			}
 		}
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -194,13 +203,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 			if(page_is_fullscreen){
 				fs_button = false;
+				showViewbar = false;
 			} else {
 				close_button = false;
 			}
 		}
 
-
-		isOneSlide = (!(V.Slides.getSlidesQuantity()&gt;1));
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Init interface
@@ -212,24 +220,29 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(&quot;#forward_arrow&quot;).html(&quot;&quot;);
 		}
 
-		if(!isOneSlide){
-			if(render_full){
-				$(&quot;#viewbar&quot;).hide();
-			} else {
-				$(&quot;#viewbar&quot;).show();
-			}
+		if(showViewbar){
 			V.SlideManager.updateSlideCounter();
+			$(&quot;#viewbar&quot;).show();
 		} else {
 			$(&quot;#viewbar&quot;).hide();
 		}
 
 		if(is_preview){
 			$(&quot;div#viewerpreview&quot;).show();
-			&#x2F;&#x2F; V.Quiz.UnbindStartQuizEvents();
 		}
 
-		if((embed)&amp;&amp;(V.Status.getIsInIframe())){
-			$(&quot;#embedWatermarkWrapper&quot;).show();
+		if(is_preview_insertMode){
+			$(&quot;#selectSlidesBar&quot;).show();
+			$(&quot;#viewbar&quot;).css(&quot;bottom&quot;,$(&quot;#selectSlidesBar&quot;).height()+&quot;px&quot;);
+			$(&quot;#viewbar&quot;).css(&quot;border-bottom&quot;,&quot;none&quot;);
+			V.SlidesSelector.init();
+		}
+
+		if(embed){
+			if((options)&amp;&amp;(typeof options.watermarkURL == &quot;string&quot;)){
+				$(&quot;#embedWatermark&quot;).parent().attr(&quot;href&quot;,options.watermarkURL);
+			}
+			$(&quot;#embedWatermark&quot;).show();
 		}
 
 		if(close_button){
@@ -264,7 +277,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F; ViewBar
 		if (V.Slides.getCurrentSubSlide()!==null){
 			&#x2F;&#x2F;Subslide active
-			&#x2F;&#x2F;$(&quot;#forward_arrow&quot;).hide();
+			$(&quot;#forward_arrow&quot;).hide();
 			$(&quot;#back_arrow&quot;).hide();
 		} else {
 			&#x2F;&#x2F;No subslide
@@ -273,28 +286,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				$(&quot;#back_arrow&quot;).show();
 			} 
-			&#x2F;&#x2F;if (V.Slides.isCurrentLastSlide()){
-			&#x2F;&#x2F;	$(&quot;#forward_arrow&quot;).hide();		
-			&#x2F;&#x2F;} else {
-			&#x2F;&#x2F;	$(&quot;#forward_arrow&quot;).show();
-			&#x2F;&#x2F;}
+			&#x2F;&#x2F;Always show
 			$(&quot;#forward_arrow&quot;).show();
 		}
 
 		&#x2F;&#x2F; Pager
-		if(!render_full){
-			if(V.Slides.isCurrentFirstSlide()){
-				$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);			
-			} else {
-				$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
-			}
-			&#x2F;&#x2F;if(V.Slides.isCurrentLastSlide()){
-			&#x2F;&#x2F;	$(&quot;#page-switcher-end&quot;).hide();
-			&#x2F;&#x2F;} else {
-			&#x2F;&#x2F;	$(&quot;#page-switcher-end&quot;).show();
-			&#x2F;&#x2F;}
-			$(&quot;#page-switcher-end&quot;).show();
+		if(V.Slides.isCurrentFirstSlide()){
+			$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);			
+		} else {
+			$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
 		}
+		&#x2F;&#x2F;Always show, if you are in the last you can see the recommendations
+		$(&quot;#page-switcher-end&quot;).show(); 
 	};
 
 
@@ -303,17 +306,22 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	var _decideIfViewBarShow = function(fullScreen){
-		if(!fullScreen){
-			if(!isOneSlide){
-				$(&quot;#viewbar&quot;).show();
-			} else {
-				$(&quot;#viewbar&quot;).hide();
-			}
+		if(showViewbar){
+			$(&quot;#viewbar&quot;).show();
 		} else {
 			$(&quot;#viewbar&quot;).hide();
 		}
 	}
 
+	var _defaultViewbar = function(){
+		var presentationType = V.SlideManager.getPresentationType();
+		var slidesQuantity = V.Slides.getSlidesQuantity();
+		if((presentationType===V.Constant.QUIZ_SIMPLE)&amp;&amp;(slidesQuantity===1)){
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; Setup
@@ -336,24 +344,24 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * param &quot;fullscreen&quot; indicates that the call comes from a fullscreen button
 	 *&#x2F;
 	var _setupSize = function(fullscreen){
-		var reserved_px_for_menubar; &#x2F;&#x2F;we don´t show the menubar
-		var margin_height;
-		var margin_width;
+		var reserved_px_for_menubar = 40;
+		var margin_height = 40;
+		var margin_width = 30;
+
+		if(!showViewbar){
+			&#x2F;&#x2F;Cases without viewbar (quiz_simple , etc)
+			reserved_px_for_menubar = 0;
+			margin_height = 0;
+			margin_width = 0;
+		} else if(is_preview_insertMode){
+			&#x2F;&#x2F;Preview with insert images
+			reserved_px_for_menubar = 120;
+		}
 
 		if(fullscreen){
 			_onFullscreenEvent(true);
-			reserved_px_for_menubar = 0; &#x2F;&#x2F;we don´t show the menubar
-			margin_height = 0;
-			margin_width = 0;
 		} else {
 			_onFullscreenEvent(false);
-			if(!isOneSlide){
-				reserved_px_for_menubar = 40;
-			} else {
-				reserved_px_for_menubar = 0;
-			}							
-			margin_height = 40;
-			margin_width = 30;
 		}
 		
 		var height = _lastHeight - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - 40px that is the menubar height
@@ -405,6 +413,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
+
+		&#x2F;&#x2F;Quiz callbacks
+		V.Quiz.aftersetupSize(increase,increaseW);
 
 		_updateFancyboxAfterSetupSize();
 	};
@@ -459,12 +470,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			if((fullscreen)&amp;&amp;(exit_fs_button)){
 				&#x2F;&#x2F;we are in &quot;simulated&quot; fullscreen ,showing the .full version and we need a close fullscreen
-				$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px 0px&quot;);
-				$(&quot;#page-fullscreen&quot;).hover(function(){
-					$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px -40px&quot;);
-				}, function() {
-					$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px 0px&quot;);
-				});
+				$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreen.png&quot;)&#x27;);
+				$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
+
 				$(document).on(&#x27;click&#x27;, &#x27;#page-fullscreen&#x27;, function(){
 					&#x2F;&#x2F;Try fallback first
 					if((exit_fs_url)&amp;&amp;(!embed)){
@@ -499,19 +507,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _onEnterFullScreen = function(){
-		$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px 0px&quot;);
+		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreenback.png&quot;)&#x27;);
+		$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		$(&quot;#page-fullscreen&quot;).hover(function(){
-			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px -40px&quot;);
+			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-30px -40px&quot;);
 		}, function() {
-			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-45px 0px&quot;);
+			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		});
 		_decideIfViewBarShow(true);
 	}
 
 	var _onLeaveFullScreen = function(){
+		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreen.png&quot;)&#x27;);
 		$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		$(&quot;#page-fullscreen&quot;).hover(function(){
-			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px -40px&quot;);
+			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-40px -40px&quot;);
 		}, function() {
 			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		});

@@ -117,7 +117,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(quiz,error);
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
@@ -151,12 +153,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId,
 	          data    : params,
 				success : function(data) {
-				if(typeof successCallback==&quot;function&quot;){
-					successCallback(data);
-				}
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(data);
+					}
 	          },
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
 				}
              });
 
@@ -193,15 +197,20 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
 			&#x2F;&#x2F;Test
-			var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-04-29T10:48:42Z&quot;,&quot;id&quot;:1,&quot;quiz_session_id&quot;:1}];
-			if(Math.random()&lt;0.5){
-				data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-04-29T10:48:42Z&quot;,&quot;id&quot;:1,&quot;quiz_session_id&quot;:1},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-04-29T10:48:42Z&quot;,&quot;id&quot;:1,&quot;quiz_session_id&quot;:1}];
-			}
+
+			&#x2F;&#x2F; For MCChoice
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-04-29T10:48:42Z&quot;,&quot;id&quot;:1,&quot;quiz_session_id&quot;:1}];
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:00:11Z&quot;,&quot;id&quot;:25,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:00:31Z&quot;,&quot;id&quot;:26,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:03Z&quot;,&quot;id&quot;:27,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:11Z&quot;,&quot;id&quot;:28,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:20Z&quot;,&quot;id&quot;:29,&quot;quiz_session_id&quot;:18}];
+
+			&#x2F;&#x2F;For TF quizzes (also works with MC)
+			var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
 
 
 			if(typeof successCallback==&quot;function&quot;){
@@ -239,7 +248,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				},
 				error: function(error){
-					failCallback(error);
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
 				}
 			});
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){

@@ -175,9 +175,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var _afterCreateSlidesCarrousel = function(){
 		var presentationType = V.Editor.getPresentationType();
 		if(presentationType === V.Constant.FLASHCARD){
-			V.Editor.Flashcard.Creator.redrawPois;
+			V.Editor.Flashcard.Creator.redrawPois();
 		} else if(presentationType === V.Constant.VTOUR){
-			V.Editor.VirtualTour.Creator.redrawPois;
+			V.Editor.VirtualTour.Creator.redrawPois();
 		}
 
 		if(typeof redrawThumbnailsCallback === "function"){

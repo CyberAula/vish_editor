@@ -714,7 +714,7 @@ VISH.Editor = (function(V,$,undefined){
 		presentation.slides = [];
 
 		var slide = {};
-		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
 		var isSlideset = (slidesetModule!==null);
 		if(isSlideset){
 			slide = slidesetModule.getSlideHeader();

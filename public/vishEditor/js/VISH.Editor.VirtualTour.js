@@ -26,11 +26,26 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		return $("section.slides > .VirtualTour_slide[type='VirtualTour']").length>0;
 	}
 
+	var getSlideset = function(id){
+		return getVirtualTour(id);
+	}
+
+	var preCopyActions = function(){
+		// console.log("VTour precopy");
+	}
+
+	var postCopyActions = function(){
+		// console.log("VTour postcopy");
+	}
+
 	return {
 		init 				 	: init,
 		addVirtualTour 			: addVirtualTour,
 		getVirtualTour 			: getVirtualTour,
-		hasVirtualTours 		: hasVirtualTours
+		hasVirtualTours 		: hasVirtualTours,
+		getSlideset				: getSlideset,
+		preCopyActions			: preCopyActions,
+		postCopyActions			: postCopyActions
 	};
 
 }) (VISH, jQuery);

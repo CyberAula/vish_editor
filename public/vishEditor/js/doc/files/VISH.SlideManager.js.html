@@ -125,10 +125,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Debugging.log(&quot;\n\nSlideManager.init with presentation:\n&quot;); 
 		V.Debugging.log(JSON.stringify(presentation));
 
+		V.Utils.init();
+		presentation = V.Utils.fixPresentation(presentation);
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
-
-		&#x2F;&#x2F; V.Storage.setTestingMode(true);
 		
 		V.Status.init(function(){
 			&#x2F;&#x2F;Status loading finishes
@@ -144,7 +144,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Utils.loadDeviceCSS();
 		V.User.init(options);
 		V.Storage.init();
-		V.Utils.init();
 		V.Recommendations.init(options);
 		
 		&#x2F;&#x2F;Experimental initializers for new excursion types
@@ -176,7 +175,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
 
-		if(!V.Status.getIsAnotherDomain()){
+		if(!V.Status.getIsEmbed()){
 			&#x2F;&#x2F;Try to win focus
 			window.focus();
 		}

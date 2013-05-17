@@ -359,7 +359,7 @@ VISH.Slides = (function(V,$,undefined){
 	*&#x2F;
 	var forwardOneSlide = function(event){
 		if(isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop){
-			VISH.Recommendations.showFancybox();
+			V.Recommendations.showFancybox();
 		}
 		else{
 			goToSlide(curSlideIndex+2);
@@ -390,6 +390,11 @@ VISH.Slides = (function(V,$,undefined){
 			params.slideNumber = no;
 			V.Messenger.notifyEventByMessage(V.Constant.Event.onGoToSlide,params);
 			return;
+		}
+
+		&#x2F;&#x2F;Close fancybox
+		if((!V.Editing)&amp;&amp;($.fancybox)){
+			$.fancybox.close();
 		}
 
 		if((no &gt; slideEls.length) || (no &lt;= 0)){

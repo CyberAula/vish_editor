@@ -406,7 +406,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*&#x2F;
 	var onSaveButtonClicked = function(){
-		var slidesetModule = V.Editor.Slideset.getModule(V.Editor.getPresentationType());
+		var slidesetModule = V.Editor.Slideset.getCreatorModule(V.Editor.getPresentationType());
 		var isSlideset = (slidesetModule!==null);
 
 		if(isSlideset){
@@ -576,6 +576,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Editor.Utils.loadTab(&#x27;tab_flashcards_repo&#x27;);
 	};
 
+	var insertPresentation = function(){
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_presentations_repo&#x27;);
+	};
+
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_templates&#x27;);
@@ -596,6 +601,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		disableMenu 					: disableMenu ,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
+		insertPresentation				: insertPresentation,
 		insertFlashcard					: insertFlashcard,
 		insertSlide						: insertSlide,
 		onSettings						: onSettings,

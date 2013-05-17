@@ -90,12 +90,15 @@
     <pre class="code prettyprint linenums">
 VISH.Utils = (function(V,undefined){
 	
+	var ids;
+	&#x2F;&#x2F; a list of all used ids
 	var domIds;
 	&#x2F;&#x2F; myDomId = domIds[&#x27;prefix&#x27;] returns a unicId for the specified prefix
 
 	var init = function(){
 		if(!domIds){
 			domIds = new Array();
+			ids = [];
 		}
 	}
 
@@ -114,7 +117,7 @@ VISH.Utils = (function(V,undefined){
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get &quot;article_x&quot; ids.
 	* Specify a separator for nested ids.
-	* justCheck: only check if the id is really unic, if dont generate a new id.
+	* justCheck: only check if the id is really unic, if not generate a new id.
 	*&#x2F;
 	var getId = function(full_id_prefix,justCheck,separator){
 		if(!justCheck){
@@ -138,12 +141,83 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		&#x2F;&#x2F;Ensure that the id is unic.
-		if($(&quot;#&quot;+full_id).length===0){
+		if(($(&quot;#&quot;+full_id).length===0)&amp;&amp;(ids.indexOf(full_id)===-1)){
+			ids.push(full_id);
 			return full_id;
 		} else {
 			return getId(full_id_prefix,false,separator);
 		}
 	};
+
+	&#x2F;**
+	 * Fix old JSON formats, update to current version
+	 *&#x2F;
+	var fixPresentation = function(presentation){
+		if(typeof presentation.type == &quot;undefined&quot;){
+			presentation.type = V.Constant.STANDARD;
+		}
+		if(typeof presentation.VEVersion == &quot;undefined&quot;){
+			presentation.VEVersion = &quot;0.1&quot;;
+		}
+		presentation = _fixIds(presentation);
+		return presentation;
+	}
+
+	var _fixIds = function(presentation){
+		var slides = presentation.slides;
+		var sL = slides.length;
+
+		for(var i=0; i&lt;sL; i++){
+			var slide = slides[i];
+
+			if(!slide.id.match(&#x2F;^article[0-9]+&#x2F;g)){
+				slide.id = getId(&quot;article&quot;);
+			} else {
+				slide.id = getId(slide.id,true);
+			}
+
+			if(typeof slide.type == &quot;undefined&quot;){
+				slide.type = V.Constant.STANDARD;
+			}
+			
+			switch(slide.type){
+				case V.Constant.STANDARD:
+					slide = _fixIdsStandardSlide(slide);
+					break;
+				case V.Constant.FLASHCARD:
+					slide = _fixIdsFlashcardSlide(slide);
+					break;
+				case V.Constant.VTOUR:
+					slide = _fixIdsVTourSlide(slide);
+					break;
+				default:
+					return;
+			}
+		}
+
+		return presentation;
+	}
+
+	var _fixIdsStandardSlide = function(slide){
+		var elements = slide.elements;
+		var eL = elements.length;
+		for(var j=0;j&lt;eL;j++){
+			if (elements[j].id.match(new RegExp(&quot;^&quot;+slide.id, &quot;g&quot;)) === null){
+				elements[j].id = getId(slide.id + &quot;_zone&quot;);
+			} else {
+				elements[j].id = getId(elements[j].id,true);
+			}
+		}
+		return slide;
+	}
+
+	var _fixIdsFlashcardSlide = function(slide){
+		return slide;
+	}
+
+	var _fixIdsVTourSlide = function(slide){
+		return slide;
+	}
 
 	var getOuterHTML = function(tag){
 		&#x2F;&#x2F;In some old browsers (before firefox 11 for example) outerHTML does not work
@@ -514,7 +588,8 @@ VISH.Utils = (function(V,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
-		getParamsFromUrl		: getParamsFromUrl
+		getParamsFromUrl		: getParamsFromUrl,
+		fixPresentation			: fixPresentation
    };
 
 }) (VISH);

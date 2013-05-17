@@ -97,6 +97,9 @@ VISH.Utils = (function(V,undefined){
 				case V.Constant.FLASHCARD:
 					slide = _fixIdsFlashcardSlide(slide);
 					break;
+				case V.Constant.VTOUR:
+					slide = _fixIdsVTourSlide(slide);
+					break;
 				default:
 					return;
 			}
@@ -119,6 +122,19 @@ VISH.Utils = (function(V,undefined){
 	}
 
 	var _fixIdsFlashcardSlide = function(slide){
+		return slide;
+	}
+
+	var _fixIdsVTourSlide = function(slide){
+		var slides = slide.slides;
+		if(slides){
+			var sL = slides.length;
+			for(var i=0; i<sL;i++){
+				if(typeof slides[i].type == "undefined"){
+					slides[i].type = V.Constant.STANDARD;
+				}
+			}
+		}
 		return slide;
 	}
 

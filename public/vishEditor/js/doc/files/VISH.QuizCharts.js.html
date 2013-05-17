@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.QuizCharts.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.QuizCharts.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+var VISH = VISH || {};
+VISH.Constant = VISH.Constant || {};
+VISH.Constant.QZ_TYPE = VISH.Constant.QZ_TYPE || {};
+VISH.Constant.QZ_TYPE.OPEN = &quot;open&quot;;
+VISH.Constant.QZ_TYPE.MCHOICE = &quot;multiplechoice&quot;;
+VISH.Constant.QZ_TYPE.TF = &quot;truefalse&quot;;
+
+
+VISH.QuizCharts = (function(V,$,undefined){
+  
+  var choicesLetters = [&#x27;a)&#x27;,&#x27;b)&#x27;,&#x27;c)&#x27;,&#x27;d)&#x27;,&#x27;e)&#x27;,&#x27;f)&#x27;,&#x27;g)&#x27;,&#x27;h)&#x27;,&#x27;i)&#x27;,&#x27;j)&#x27;,&#x27;k)&#x27;,&#x27;l)&#x27;,&#x27;m)&#x27;,&#x27;n)&#x27;,&#x27;o)&#x27;,&#x27;p)&#x27;,&#x27;q)&#x27;,&#x27;r)&#x27;,&#x27;s)&#x27;];
+  var pieBackgroundColor = [&quot;#F38630&quot;,&quot;#E0E4CC&quot;,&quot;#69D2E7&quot;,&quot;#FFF82A&quot;,&quot;#FF0FB4&quot;,&quot;#2A31FF&quot;,&quot;#FF6075&quot;,&quot;#00D043&quot;];
+  var pieLetterColor = [&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;];
+  var choices = {};
+
+  var init = function(){
+  };
+
+  var drawQuizChart = function(canvas,quizType,nAnswers,results,options){
+    var answersList = _getAnswers(results);
+    switch (quizType) {
+      case V.Constant.QZ_TYPE.OPEN:
+         break;
+      case V.Constant.QZ_TYPE.MCHOICE:
+        _drawMcChoiceQuizChart(canvas,nAnswers,answersList,options);
+        break;
+      case V.Constant.QZ_TYPE.TF:
+        _drawTFQuizChart(canvas,nAnswers,answersList,options);
+        break;
+      default:
+        return null; 
+        break;
+    }
+  }
+
+  var _drawMcChoiceQuizChart = function(canvas,nAnswers,answersList,options){
+    var pieFragments = [];
+    var data = [];
+
+    for(var i=0; i&lt;nAnswers; i++){
+      pieFragments[i] = {};
+      pieFragments[i].value = 0;
+      pieFragments[i].label = choicesLetters[i];
+      pieFragments[i].color = pieBackgroundColor[i];
+      pieFragments[i].labelColor = pieLetterColor[i];
+      pieFragments[i].labelFontSize = &#x27;16&#x27;;
+    }
+
+    var alL = answersList.length;
+    for(var j=0; j&lt;alL; j++){
+      &#x2F;&#x2F;List of answers of a user
+      var answers = answersList[j];
+
+      var aL = answers.length;
+      for(var k=0; k&lt;aL; k++){
+        var answer = answers[k];
+        var index = answer.no-1;
+        if(answer.answer===&quot;true&quot;){
+          pieFragments[index].value++;
+        }
+      } 
+    }
+
+    for(var i=0; i&lt;nAnswers; i++){
+      data.push(pieFragments[i]);
+    }
+
+
+    var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+    
+    var animation = false;
+    if((options)&amp;&amp;(options.first===true)){
+      animation = true;
+    }
+
+    var options = {
+        showTooltips: false,
+        animation: animation
+    }
+
+    var myNewChart = new Chart(ctx).Pie(data,options);
+  }
+
+
+  var _drawTFQuizChart = function(canvas,nAnswers,answersList,options){
+    var labels = [];
+    var dataTrue = [];
+    var dataFalse = [];
+    var maxValue = 0;
+    var scaleSteps = 10;
+
+    for(var i=0; i&lt;nAnswers; i++){
+      labels[i] = &quot;V       &quot; + choicesLetters[i] + &quot;       F&quot;;
+      dataTrue[i] = 0;
+      dataFalse[i] = 0;
+    }
+
+    var alL = answersList.length;
+    for(var j=0; j&lt;alL; j++){
+      &#x2F;&#x2F;List of answers of a user
+      var answers = answersList[j];
+
+      var aL = answers.length;
+      for(var k=0; k&lt;aL; k++){
+        var answer = answers[k];
+        var index = answer.no-1;
+        if(answer.answer===&quot;true&quot;){
+          dataTrue[index]++;
+        } else {
+          dataFalse[index]++;
+        }
+      } 
+    }
+
+    for(var l=0; l&lt;nAnswers; l++){
+      if(dataTrue[l] &gt; maxValue){
+        maxValue = dataTrue[l];
+      }
+      if(dataFalse[l] &gt; maxValue){
+        maxValue = dataFalse[l];
+      }
+    }
+
+    if(maxValue&lt;10){
+      scaleSteps = Math.max(1,maxValue);
+    }
+
+    var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+    var data = {
+        labels : labels,
+        datasets : [
+            {
+                fillColor : &quot;#E2FFE3&quot;,
+                strokeColor : &quot;rgba(220,220,220,1)&quot;,
+                data : dataTrue
+            },
+            {
+                fillColor : &quot;#FFE2E2&quot;,
+                strokeColor : &quot;rgba(220,220,220,1)&quot;,
+                data : dataFalse
+            }
+        ]
+    };
+
+    var animation = false;
+    if((options)&amp;&amp;(options.first===true)){
+      animation = true;
+    }
+
+    var options = {
+      animation: animation,
+      scaleOverride: true,
+      scaleStepWidth: Math.max(1,Math.ceil(maxValue&#x2F;10)),
+      scaleSteps: scaleSteps,
+      showTooltips: false
+    }
+    var myNewChart = new Chart(ctx).Bar(data,options);
+  }
+
+  &#x2F;**
+   * Helpers
+   *&#x2F;
+  var _getAnswers = function(results){
+    var answers = [];
+    var rL = results.length;
+    for(var i=0; i&lt;rL; i++){
+      answers.push(JSON.parse(results[i].answer));
+    }
+    return answers;
+  }
+
+  var getQuizParams = function(quiz){
+    var params = {};
+    try {
+      params.quizType = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0][&quot;quiztype&quot;];
+      params.nAnswers = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0][&quot;choices&quot;].length;
+    } catch (e){}
+    return params;
+  }
+
+
+  return {
+    init                : init,
+    drawQuizChart       : drawQuizChart,
+    getQuizParams       : getQuizParams
+  };
+    
+}) (VISH, jQuery);
+
+ 
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

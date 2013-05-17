@@ -29,12 +29,33 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		return $("section.slides > .flashcard_slide[type='flashcard']").length>0;
 	}
 
+	var getSlideset = function(id){
+		return getFlashcard(id);
+	}
+
+	var preCopyActions = function(fc){
+		//Add the points of interest with their click events to show the slides
+		addFlashcard(fc);
+		for(index in fc.pois){
+			var poi = fc.pois[index];
+			V.Flashcard.addArrow(fc.id, poi, true);
+		}
+		V.Editor.Events.bindEventsForFlashcard(fc);
+	}
+
+	var postCopyActions = function(){
+
+	}
+
 	return {
 		init 				 	: init,
 		addFlashcard 			: addFlashcard,
 		getFlashcard 			: getFlashcard,
 		getFlashcards			: getFlashcards,
-		hasFlascards 			: hasFlascards
+		hasFlascards 			: hasFlascards,
+		getSlideset				: getSlideset,
+		preCopyActions			: preCopyActions,
+		postCopyActions			: postCopyActions
 	};
 
 }) (VISH, jQuery);

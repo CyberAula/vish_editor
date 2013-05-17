@@ -316,7 +316,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
-		var slidesetModule = V.Editor.Slideset.getModule(V.Editor.getPresentationType());
+		var slidesetModule = V.Editor.Slideset.getCreatorModule(V.Editor.getPresentationType());
 		var isSlideset = (slidesetModule!==null);
 
 		if(isSlideset){

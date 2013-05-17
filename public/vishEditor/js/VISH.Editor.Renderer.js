@@ -29,7 +29,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		V.Editor.Themes.selectTheme(presentation.theme);
 		V.Editor.setMode(presentation.type);
 
-		var slidesetModule = V.Editor.Slideset.getModule(presentation.type);
+		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
 		var isSlideset = (slidesetModule!==null);
 
 		if(isSlideset){

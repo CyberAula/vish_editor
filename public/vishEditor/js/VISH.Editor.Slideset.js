@@ -23,15 +23,33 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	/*
+	 * Module to create slidesets
 	 * Type: slide or presentation type
 	 */
-	var getModule = function(type){
+	var getCreatorModule = function(type){
 		switch(type){
 			case V.Constant.FLASHCARD:
 				return V.Editor.Flashcard.Creator;
 				break;
 			case V.Constant.VTOUR:
 				return V.Editor.VirtualTour.Creator;
+				break;
+			default:
+				return null;
+		}
+	}
+
+	/*
+	 * Module to insert and manage the inserted slidesets
+	 * Not use in the creator process
+	 */
+	var getModule = function(type){
+		switch(type){
+			case V.Constant.FLASHCARD:
+				return V.Editor.Flashcard;
+				break;
+			case V.Constant.VTOUR:
+				return V.Editor.VirtualTour;
 				break;
 			default:
 				return null;
@@ -88,9 +106,11 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	}
 
+
 	return {
 		init 				: init,
 		isSlideset			: isSlideset,
+		getCreatorModule	: getCreatorModule,
 		getModule			: getModule,
 		prepareToNest		: prepareToNest,
 		undoNestedSlides	: undoNestedSlides

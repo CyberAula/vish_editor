@@ -108,7 +108,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		}
 		generated = false;
 
-		&#x2F;&#x2F;redimetion of fancybox is done in ViewerAdapter (line 300 aprox)
+		&#x2F;&#x2F;redimention of fancybox is done in ViewerAdapter (line 300 aprox)
 		$(&quot;#fancyRec&quot;).fancybox({
 			  &#x27;type&#x27;	: &#x27;inline&#x27;,
 			  &#x27;autoDimensions&#x27; : false,
@@ -119,7 +119,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		      &#x27;padding&#x27;: 0,
 		      &#x27;overlayOpacity&#x27;: 0,
 		      &#x27;onComplete&#x27;  : function(data) {
-		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;transparent&quot;);
+		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
 		      },
 		      &#x27;onClosed&#x27; : function(data) {
@@ -142,31 +142,33 @@ VISH.Recommendations = (function(V,$,undefined){
 					quantity: 9
 				};
 				$.ajax({
-					type    : &quot;POST&quot;,
+					type    : &quot;GET&quot;,
 					url     : url_to_get_recommendations,
 					data    : params_to_send,
 					success : function(data) {
 						_fillFancyboxWithData(data);
 					}
 				});
-			} else {
+			}
+			else{
 				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
 			}
 			generated = true;
-		}		
+		}
 	};
 
 	var _fillFancyboxWithData = function(data){
-		if((!data)||(!data.items)){
+		if((!data)||(data.length===0)){
 			return;
-		}
-		
+		}		
         var ex;
         var result = &quot;&quot;;
-        for (var i = data.items.length - 1; i &gt;= 0; i--) {
-        	ex = data.items[i];
-        	result += &#x27;&lt;a href=&quot;&#x27;+ex.url+&#x27;&quot;&gt;&#x27;+
-                    &#x27;&lt;div class=&quot;rec-excursion&quot;&gt;&#x27;+
+        for (var i = data.length - 1; i &gt;= 0; i--) {
+        	ex = data[i];
+        	if(V.Status.getIsEmbed()){
+        		result += &#x27;&lt;a href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
+        	}
+        	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+ex.id+&#x27;&quot;&gt;&#x27;+
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
                           &#x27;&lt;li class=&quot;rec-img-excursion&quot;&gt;&#x27;+
                            &#x27;&lt;img src=&quot;&#x27;+ex.image+&#x27;&quot;&gt;&#x27;+
@@ -179,10 +181,22 @@ VISH.Recommendations = (function(V,$,undefined){
                             &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
                           &#x27;&lt;&#x2F;li&gt;&#x27;+
                         &#x27;&lt;&#x2F;ul&gt;&#x27;+
-                    &#x27;&lt;&#x2F;div&gt;&#x27;+
-                    &#x27;&lt;&#x2F;a&gt;&#x27;;
+                    &#x27;&lt;&#x2F;div&gt;&#x27;;
+            if(V.Status.getIsEmbed()){
+        		result += &#x27;&lt;&#x2F;a&gt;&#x27;;
+        	}
         };
         $(&quot;#fancy_recommendations .rec-grid&quot;).html(result);
+
+        if(!V.Status.getIsEmbed()){
+        	&#x2F;&#x2F;we join the recom-X with sending the parent to the excursion url
+        	 for (var i = data.length - 1; i &gt;= 0; i--) {
+        	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
+        	 		V.Utils.sendParentToURL(data[$(my_event.toElement).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
+        	 	});
+        	 }
+        }
+
 	};
 
 	var showFancybox = function(){
