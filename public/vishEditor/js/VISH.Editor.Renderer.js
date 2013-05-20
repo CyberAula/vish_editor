@@ -48,10 +48,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
-			if(slides[i].type === V.Constant.FLASHCARD){
-				_renderFlashcard(slides[i], i+1);
-			} else {
-				_renderSlide(slides[i], i+1);			
+			switch(slides[i].type){
+				case V.Constant.FLASHCARD:
+					_renderFlashcard(slides[i], i+1);
+					break;
+				case V.Constant.VTOUR:
+					_renderVTour(slides[i], i+1);
+					break;
+				case V.Constant.STANDARD:	
+				default:
+					_renderSlide(slides[i], i+1);	
+					break;
 			}
 		}
 	}
@@ -124,9 +131,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
 	};
 
+	/**
+	 * function to render one VTour inside a presentation
+	 */
+	var _renderVTour = function(slide, slideNumber){
+		V.Editor.VirtualTour.addVirtualTour(slide);
+		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
+	};
+
 
 	return {
-		init	: init,
+		init				: init,
 		renderPresentation	: renderPresentation
 	};
 

@@ -35,7 +35,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					carrouselImagesTitles.push(carrouselElements);
 				break;
 			case V.Constant.VTOUR:
-				//TODO... ¿put a generic img?
+					carrouselElements += 1;
+					carrouselImages.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/tVTour.png' />"));
+					carrouselImagesTitles.push(carrouselElements);
 				break;
 			default:
 				break;

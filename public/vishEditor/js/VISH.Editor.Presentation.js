@@ -32,6 +32,8 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 		var selectedSlides = [];
 		var flashcards = [];
+		var vts = [];
+
 		for(var i=0; i<snL; i++){
 			var slide = presentationJSON.slides[selectedSlideNumbers[i]-1];
 			var mySlide = V.Editor.Utils.replaceIdsForSlideJSON(slide);
@@ -40,6 +42,9 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			switch(mySlide.type){
 				case V.Constant.FLASHCARD:
 					flashcards.push(mySlide);
+					break;
+				case V.Constant.VTOUR:
+					vts.push(mySlide);
 					break;
 				default:
 					break;
@@ -63,6 +68,10 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		for(var j=0; j<flashcards.length; j++){
 			V.Editor.Events.bindEventsForFlashcard(flashcards[j]);
 			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
+		}
+		for(var k=0; k<vts.length; k++){
+			// V.Editor.Events.bindEventsForFlashcard(flashcards[k]);
+			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.VTOUR);
 		}
 
 		$.fancybox.close();

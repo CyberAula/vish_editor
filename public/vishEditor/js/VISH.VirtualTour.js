@@ -14,6 +14,7 @@ VISH.VirtualTour = (function(V,$,undefined){
   //Keep last increase param to manage resizing
   var lastIncrease;
 
+
   var init = function(presentation){
     virtualTours = new Array();
   };

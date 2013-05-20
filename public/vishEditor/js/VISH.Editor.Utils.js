@@ -323,6 +323,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case V.Constant.VTOUR:
 				slide = _replaceIdsForVTourJSON(slide,slideId);
+				break;
 			default:
 				return;
 		}
