@@ -349,30 +349,42 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return s;
 	}
 
-	var _replaceIdsForFlashcardJSON = function(flashcard,slideId){
+	var _replaceIdsForFlashcardJSON = function(flashcard,fcId){
 		var hash_subslide_new_ids = {};
 		var old_id;
 
 		var fc = jQuery.extend(true, {}, flashcard);
-		fc.id = slideId;
+		fc.id = fcId;
 
 		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
-			fc.slides[ind].id = fc.id + "_article" + (parseInt(ind)+1);
+			fc.slides[ind] = _replaceIdsForStandardSlideJSON(fc.slides[ind],fc.id + "_article" + (parseInt(ind)+1));
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
 		for(var num in fc.pois){
 			fc.pois[num].id = fc.id + "_poi" + (parseInt(num)+1);
 			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
 		}
+
 		return fc;
 	};
 
 	var _replaceIdsForVTourJSON = function(vTour,vTourId){
+		var hash_subslide_new_ids = {};
+		var old_id;
+
 		var vt = jQuery.extend(true, {}, vTour);
 
-		// console.log("vt");
-		// console.log(vt);
+		vt.id = vTourId;
+		for(var ind in vt.slides){	
+			old_id = vt.slides[ind].id;
+			vt.slides[ind] = _replaceIdsForStandardSlideJSON(vt.slides[ind],vt.id + "_article" + (parseInt(ind)+1));
+			hash_subslide_new_ids[old_id] = vt.slides[ind].id;
+		}
+		for(var num in vt.pois){
+			vt.pois[num].id = vt.id + "_poi" + (parseInt(num)+1);
+			vt.pois[num].slide_id = hash_subslide_new_ids[vt.pois[num].slide_id];
+		}
 
 		return vt;
 	}
