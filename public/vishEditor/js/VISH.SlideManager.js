@@ -48,6 +48,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	var _initAferStatusLoaded = function(options,presentation){
 		V.Flashcard.init();
+		V.VirtualTour.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Renderer.init();
 		V.Slides.init();
@@ -56,17 +57,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Storage.init();
 		V.Recommendations.init(options);
 		
-		//Experimental initializers for new excursion types
-		switch(presentation.type){
-			case V.Constant.GAME:
-				V.ViewerAdapter.setupGame(presentation);	
-				V.Game.registerActions(presentation);
-				break;
-			case V.Constant.VTOUR:
-				V.VirtualTour.init();
-				break;
-		}
-
 		//important that events are initialized after presentation type is proccessed
 		V.Events.init();
 		V.EventsNotifier.init();

@@ -136,13 +136,13 @@ VISH.Storage = (function(V,$,undefined){
 	}
 
 	return {
-		init				: init,
-		add					: add,
-		get					: get,
-		addPresentation		: addPresentation,
+		init						: init,
+		add							: add,
+		get							: get,
+		addPresentation				: addPresentation,
 		checkLocalStorageSupport	: checkLocalStorageSupport,
-		clear 				: clear,
-		setTestingMode 		: setTestingMode
+		clear 						: clear,
+		setTestingMode 				: setTestingMode
 	};
     
 }) (VISH, jQuery);

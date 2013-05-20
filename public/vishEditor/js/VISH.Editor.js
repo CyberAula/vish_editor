@@ -732,6 +732,10 @@ VISH.Editor = (function(V,$,undefined){
 				presentation.slides.push(fc);
 				slide = {};
 				return true; //equivalent to continue in an each loop
+			} else if(slide.type === V.Constant.VTOUR){
+				var vt = V.Editor.VirtualTour.getVirtualTour(slide.id);
+				presentation.slides.push(vt);
+				return true; //equivalent to continue in an each loop
 			}
 
 			slide.template = $(s).attr('template');

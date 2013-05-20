@@ -18,7 +18,7 @@ VISH.Slides = (function(V,$,undefined){
 	  slideEls = document.querySelectorAll('section.slides > article');
 	  if(isSlideset(V.SlideManager.getPresentationType())){
 	  	//this way updateSlides will add the class current and it will be shown
-	  	curSlideIndex = 0;
+	  	setCurrentSlideIndex(0);
 	  }
 	  updateSlides(true);
 	  $('body').addClass('loaded');
@@ -27,12 +27,15 @@ VISH.Slides = (function(V,$,undefined){
 	var _getcurSlideIndexFromHash = function() {
 	  var slideNo = parseInt(location.hash.substr(1));
 	  if (slideNo) {
-	    curSlideIndex = slideNo - 1;
+	  	setCurrentSlideIndex(slideNo - 1);
 	  } else {
 	  	if(V.Editing){
-	  		curSlideIndex = -1; //Start in 0 (no slides)
+	  		//Start in 0 (no slides)
+	  		setCurrentSlideIndex(-1);
+	  		//If there are slides, this param will be updated
 	  	} else {
-	  		curSlideIndex = 0; //Start in 1 (first slide)
+	  		//Start in 1 (first slide)
+	  		setCurrentSlideIndex(0);
 	  	}
 	  }
 	};
@@ -128,7 +131,7 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
-		curSlideIndex = currentSlideNumber-1;
+		setCurrentSlideIndex(currentSlideNumber-1);
 	}
 
 	var _getSlide = function(no) {
@@ -252,14 +255,14 @@ VISH.Slides = (function(V,$,undefined){
 
    	var _prevSlide = function() {
 		if (curSlideIndex > 0) {
-			curSlideIndex--;
+			setCurrentSlideIndex(curSlideIndex-1);
 			updateSlides(false);
 		}
 	};
 
 	var _nextSlide = function() {	  
 		if (curSlideIndex < slideEls.length - 1) {
-			curSlideIndex++;
+			setCurrentSlideIndex(curSlideIndex+1);
 			updateSlides(true);
 		}
 	};
@@ -270,8 +273,7 @@ VISH.Slides = (function(V,$,undefined){
 	var forwardOneSlide = function(event){
 		if(isCurrentLastSlide() && V.Status.getDevice().desktop){
 			V.Recommendations.showFancybox();
-		}
-		else{
+		} else {
 			goToSlide(curSlideIndex+2);
 		}		
 	};
@@ -326,7 +328,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Editor.Tools.cleanZoneTools();
 
 			//finally add a background color to thumbnail of the selected slide
-			V.Editor.Thumbnails.selectThumbnail(no);   	
+			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
 			//update slide counter
 			V.SlideManager.updateSlideCounter();

@@ -70,7 +70,6 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
 		}
 		for(var k=0; k<vts.length; k++){
-			// V.Editor.Events.bindEventsForFlashcard(flashcards[k]);
 			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.VTOUR);
 		}
 

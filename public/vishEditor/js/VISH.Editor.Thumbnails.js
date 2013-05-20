@@ -5,8 +5,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	//Tmp var
 	var redrawThumbnailsCallback;
 	
-	var init = function(){ }
-	 
+	var init = function(){ 
+	}
 	 
 	var redrawThumbnails = function(successCallback){
 		redrawThumbnailsCallback = successCallback;
@@ -101,11 +101,18 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		//Create carrousel
 		$("#" + carrouselDivId).show();
 		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-		
+	}
+	
+	
+	var _afterCreateSlidesCarrousel = function(){
+		var presentationType = V.Editor.getPresentationType();
+
 		if(presentationType === V.Constant.PRESENTATION){
+
 			if(V.Slides.getCurrentSlideNumber()>0){
 				selectThumbnail(V.Slides.getCurrentSlideNumber());
 			}
+
 			//Add sortable
 			var firstCarrouselNumber;
 			$( "#" + carrouselDivId).sortable({
@@ -170,13 +177,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					}
 				}
 			});
-		}
-	}
-	
-	
-	var _afterCreateSlidesCarrousel = function(){
-		var presentationType = V.Editor.getPresentationType();
-		if(presentationType === V.Constant.FLASHCARD){
+		} else if (presentationType === V.Constant.FLASHCARD){
 			V.Editor.Flashcard.Creator.redrawPois();
 		} else if(presentationType === V.Constant.VTOUR){
 			V.Editor.VirtualTour.Creator.redrawPois();
@@ -186,6 +187,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			redrawThumbnailsCallback();
 			redrawThumbnailsCallback = undefined;
 		}
+
 	}
 
 

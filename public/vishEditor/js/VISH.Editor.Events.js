@@ -140,7 +140,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 	
 	return {
-			init 		: init,
+			init 						: init,
 			bindEditorEventListeners	: bindEditorEventListeners,
 			bindEventsForFlashcard		: bindEventsForFlashcard,
 			unbindEditorEventListeners	: unbindEditorEventListeners

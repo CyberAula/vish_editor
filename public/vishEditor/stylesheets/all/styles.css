@@ -592,7 +592,7 @@ button#closeButton {
 }
 
 .virtualTour_slide{
-  display: block !important;
+  display: block;
 }
 
 /** Arrows **/

@@ -184,10 +184,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return;
 		}
 
-		slide.id = V.Utils.getId(parentId + "_" + slide.id,true);
+		slide.id = parentId + "_" + slide.id;
 		if(slide.elements){
 			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = V.Utils.getId(parentId + "_" + slide.elements[index].id,true);
+				slide.elements[index].id = parentId + "_" + slide.elements[index].id;
 			});
 		}
 		return slide;
