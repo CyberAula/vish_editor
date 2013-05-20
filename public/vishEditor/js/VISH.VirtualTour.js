@@ -10,12 +10,13 @@ VISH.VirtualTour = (function(V,$,undefined){
 
   //Loading GoogleMaps library asynchronously
   var gMlLoaded = false;
+  var gMlLoading = false;
 
   //Keep last increase param to manage resizing
   var lastIncrease;
 
-  //
-  var loadQueue;
+  //Load maps queue 
+  var _loadQueue;
 
   var init = function(presentation){
     virtualTours = new Array();
@@ -27,8 +28,17 @@ VISH.VirtualTour = (function(V,$,undefined){
   */
   var drawMap = function(vt){
     if(!gMlLoaded){
+      if(gMlLoading){
+        //wait for loading
+        setTimeout(function(){
+          drawMap(vt);
+        },1000);
+        return;
+      }
+      gMlLoading = true;
       V.Utils.Loader.loadGoogleLibrary("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places",function(){
         gMlLoaded = true;
+        gMlLoading = false;
         drawMap(vt);
       });
       return;
@@ -64,9 +74,11 @@ VISH.VirtualTour = (function(V,$,undefined){
 
     var lqL = _loadQueue.length;
     for(var i=0; i<lqL; i++){
-      loadMap(_loadQueue[i]);
+      if(_loadQueue[i]===vt.id){
+        loadMap(vt.id);
+        _loadQueue.splice(_loadQueue.indexOf(vt.id),1);
+      }
     }
-    _loadQueue = [];
   }
 
   var loadMap = function(vtId){
