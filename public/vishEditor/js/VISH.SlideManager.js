@@ -195,6 +195,8 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
+		} else if($(e.target).hasClass("virtualTour_slide")){
+			V.VirtualTour.loadMap(e.target.id);
 		}
 
 		if(_isRecommendationMoment()){

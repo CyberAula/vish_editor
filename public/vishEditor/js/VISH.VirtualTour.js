@@ -14,16 +14,18 @@ VISH.VirtualTour = (function(V,$,undefined){
   //Keep last increase param to manage resizing
   var lastIncrease;
 
+  //
+  var loadQueue;
 
   var init = function(presentation){
     virtualTours = new Array();
+    _loadQueue = [];
   };
 
  /*
-  * Vt is a slide of VirtualTour type
+  * Vt is a JSON slide of VirtualTour type
   */
   var drawMap = function(vt){
-
     if(!gMlLoaded){
       V.Utils.Loader.loadGoogleLibrary("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places",function(){
         gMlLoaded = true;
@@ -37,46 +39,82 @@ VISH.VirtualTour = (function(V,$,undefined){
       return;
     }
 
+    if(typeof virtualTours[vt.id] != "undefined"){
+      //Already drawed
+      return;
+    }
+
     //Include canvas
     var canvas_id = V.Utils.getId(vt.id + "_canvas");
     var canvas =  $("<div id='"+canvas_id+"' class='map_canvas' style='height:"+"100%"+"; width:"+"100%"+"'></div>");
     $("#"+vt.id).append(canvas);
 
     var latlng = new google.maps.LatLng(vt.center.lat, vt.center.lng);
-    var myOptions = {
-      zoom: parseInt(vt.zoom),
-      center: latlng,
-      mapTypeId: vt.mapType
-    };
-
-    if(typeof virtualTours[vt.id] === "undefined"){
+    if(typeof virtualTours[vt.id] == "undefined"){
       virtualTours[vt.id] = new Object();
+      virtualTours[vt.id].id = vt.id
       virtualTours[vt.id].canvasId = canvas_id;
       virtualTours[vt.id].center = latlng;
+      virtualTours[vt.id].zoom = parseInt(vt.zoom);
+      virtualTours[vt.id].mapType = vt.mapType;
       virtualTours[vt.id].pois = new Array();
+      virtualTours[vt.id].orgPois = vt.pois;
       virtualTours[vt.id].paths = [];
     }
 
-    var map = new google.maps.Map(document.getElementById(canvas_id), myOptions);
-    virtualTours[vt.id].map = map;
+    var lqL = _loadQueue.length;
+    for(var i=0; i<lqL; i++){
+      loadMap(_loadQueue[i]);
+    }
+    _loadQueue = [];
+  }
 
-    $(vt.pois).each(function(index,poi){
-      virtualTours[vt.id].pois[poi.id] = poi;
+  var loadMap = function(vtId){
+    //vt is a JSON object representing a Virtual Tour
+    //is different in comparison with the JSON slide 
+    var vt = virtualTours[vtId];
+
+    if(typeof vt == "undefined"){
+      //vt not drawed
+      //wait for drawing...
+      _loadQueue.push(vtId);
+      return;
+    }
+
+    if(typeof vt.map != "undefined"){
+      //vt already loaded
+      return;
+    }
+
+    $("#"+vt.id).addClass("temp_shown");
+
+    var canvasId = vt.canvasId;
+    var myOptions = {
+      zoom: vt.zoom,
+      center: vt.center,
+      mapTypeId: vt.mapType
+    };
+
+    var map = new google.maps.Map(document.getElementById(canvasId), myOptions);
+    vt.map = map;
+
+    $(vt.orgPois).each(function(index,poi){
+      vt.pois[poi.id] = poi;
       _addMarkerToCoordinates(vt,poi.lat,poi.lng,poi.id);
     });
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
       //this part runs when the mapobject is created and rendered
+      $("#"+vtId).removeClass("temp_shown");
       google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
           //this part runs when the mapobject shown for the first time
       });
     });
 
-    // google.maps.event.addDomListener(map, 'idle', function() {
-    // });
-    // google.maps.event.addDomListener(window, 'resize', function() {
-    // });
-
+    google.maps.event.addDomListener(map, 'idle', function() {
+    });
+    google.maps.event.addDomListener(window, 'resize', function() {
+    });
   }
 
   var _addMarkerToCoordinates = function(vt,lat,lng,poi_id){
@@ -147,6 +185,7 @@ VISH.VirtualTour = (function(V,$,undefined){
   return {
     init		        : init,
     drawMap         : drawMap,
+    loadMap         : loadMap,
     aftersetupSize  : aftersetupSize,
     getVirtualTours : getVirtualTours
   };

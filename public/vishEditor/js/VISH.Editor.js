@@ -352,21 +352,20 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
+		} else if($(e.target).hasClass("virtualTour_slide")){
+			V.VirtualTour.loadMap(e.target.id);
 		}
 
 		if($(e.target).hasClass("subslide")){
 			setTimeout(function(){
 				if($(e.target).hasClass('object')){
 					V.ObjectPlayer.loadObject($(e.target));
-				}
-				else if($(e.target).hasClass('applet')){
+				} else if($(e.target).hasClass('applet')){
 					V.AppletPlayer.loadApplet($(e.target));
-				}
-				else if($(e.target).hasClass('snapshot')){
+				} else if($(e.target).hasClass('snapshot')){
 					V.SnapshotPlayer.loadSnapshot($(e.target));
 				}
 			},500);
-			
 			V.VideoPlayer.HTML5.playVideos(e.target);
 		} else {
 			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
