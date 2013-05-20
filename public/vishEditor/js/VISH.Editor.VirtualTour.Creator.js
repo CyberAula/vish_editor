@@ -519,8 +519,8 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 			var poi = {};
 			poi.lat = marker.position.lat().toString();
 			poi.lng = marker.position.lng().toString();
-			poi.id = V.Utils.getId(virtualTourId+"_"+marker.poi_id,true);
-			poi.slide_id = V.Utils.getId(virtualTourId+"_"+marker.slide_id,true);
+			poi.id = virtualTourId+"_"+marker.poi_id;
+			poi.slide_id = virtualTourId+"_"+marker.slide_id;
 			pois.push(poi);
 		};
 		return pois;
