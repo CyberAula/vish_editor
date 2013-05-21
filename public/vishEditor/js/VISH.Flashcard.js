@@ -23,7 +23,7 @@ VISH.Flashcard = (function(V,$,undefined){
   };
 
   var startAnimation = function(slideId){
-    if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")){
+    if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer == "undefined")){
       flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );      
     }
   };
@@ -31,6 +31,7 @@ VISH.Flashcard = (function(V,$,undefined){
   var stopAnimation = function(slideId){
     if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
       clearTimeout(flashcards[slideId].timer);
+      flashcards[slideId].timer = undefined;
     }
   };
 

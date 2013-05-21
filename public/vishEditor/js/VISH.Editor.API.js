@@ -10,7 +10,7 @@ VISH.Editor.API = (function(V,$,undefined){
   /**
    * function to call to VISH and request excursions in json format
    * The request is:
-   * GET /excursions/search.json?q=nano
+   * GET /excursions/search.json?q=text
    */
   var requestExcursions = function(text, successCallback, failCallback){
     if (V.Debugging.isDevelopping()) {
@@ -42,9 +42,42 @@ VISH.Editor.API = (function(V,$,undefined){
 
 
   /**
+   * function to call to VISH and request smartcards (flashcards and virtual tours) in json format
+   * The request is:
+   * GET /excursions/search.json?q=text&type=flashcard|virtualTour
+   */
+  var requestSmartcards = function(text, successCallback, failCallback){
+    if (V.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+        var result = V.Samples.API.smartcardList;
+        successCallback(result);
+      }
+      return;
+    }
+             
+    _requestByType("smartcard", text, successCallback, failCallback);   
+  };
+
+  /**
+   * function to call to VISH and request recommended smartcards
+   */
+  var requestRecomendedSmartcards = function(successCallback, failCallback){
+    if (V.Debugging.isDevelopping()) {
+      if(typeof successCallback == "function"){
+            var result = V.Samples.API.smartcardList;
+            successCallback(result);
+      }
+      return;
+    }
+    
+    _requestByType("smartcard", "", successCallback, failCallback);
+  };
+
+
+  /**
    * function to call to VISH and request flashcards in json format
    * The request is:
-   * GET /excursions/search.json?q=nano&type=flashcard
+   * GET /excursions/search.json?q=text&type=flashcard
    */
   var requestFlashcards = function(text, successCallback, failCallback){
     if (V.Debugging.isDevelopping()) {
@@ -451,6 +484,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		init					            : init,
     requestExcursions         : requestExcursions,
     requestRecomendedExcursions : requestRecomendedExcursions,
+    requestSmartcards         : requestSmartcards,
+    requestRecomendedSmartcards : requestRecomendedSmartcards,
     requestFlashcards         : requestFlashcards,
     requestRecomendedFlashcards : requestRecomendedFlashcards,
 		requestVideos             : requestVideos,

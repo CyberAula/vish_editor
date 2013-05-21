@@ -72,6 +72,7 @@ VISH.Samples.API = (function(V,undefined){
      ]
   }
 
+  
   var flashcardList = {
     'flashcards': [
     {
@@ -742,6 +743,8 @@ VISH.Samples.API = (function(V,undefined){
 
 
     ]};
+
+  var smartcardList = flashcardList;
 
 	var imageList = {
 		'pictures': [
@@ -1443,7 +1446,8 @@ VISH.Samples.API = (function(V,undefined){
 		
 	return {
     recommendationList  : recommendationList,
-    excursionsList : excursionsList,
+    excursionsList    : excursionsList,
+    smartcardList     : smartcardList,
     flashcardList     : flashcardList,
 		imageList         : imageList,
 		imageListLittle   : imageListLittle,

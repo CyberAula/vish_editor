@@ -166,6 +166,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.EventsNotifier.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
+		V.VirtualTour.init();
 		V.Editor.Slideset.init();
 		V.Editor.Presentation.init();
 		V.Editor.Flashcard.init();
@@ -277,8 +278,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
-		V.Editor.Flashcard.Repository.init();
 		V.Editor.Presentation.Repository.init();
+		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
@@ -441,21 +442,20 @@ VISH.Editor = (function(V,$,undefined){
 		
 		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
 			V.Flashcard.startAnimation(e.target.id);
+		} else if($(e.target).hasClass(&quot;virtualTour_slide&quot;)){
+			V.VirtualTour.loadMap(e.target.id);
 		}
 
 		if($(e.target).hasClass(&quot;subslide&quot;)){
 			setTimeout(function(){
 				if($(e.target).hasClass(&#x27;object&#x27;)){
 					V.ObjectPlayer.loadObject($(e.target));
-				}
-				else if($(e.target).hasClass(&#x27;applet&#x27;)){
+				} else if($(e.target).hasClass(&#x27;applet&#x27;)){
 					V.AppletPlayer.loadApplet($(e.target));
-				}
-				else if($(e.target).hasClass(&#x27;snapshot&#x27;)){
+				} else if($(e.target).hasClass(&#x27;snapshot&#x27;)){
 					V.SnapshotPlayer.loadSnapshot($(e.target));
 				}
 			},500);
-			
 			V.VideoPlayer.HTML5.playVideos(e.target);
 		} else {
 			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
@@ -820,6 +820,10 @@ VISH.Editor = (function(V,$,undefined){
 				var fc = V.Editor.Flashcard.getFlashcard(slide.id);
 				presentation.slides.push(fc);
 				slide = {};
+				return true; &#x2F;&#x2F;equivalent to continue in an each loop
+			} else if(slide.type === V.Constant.VTOUR){
+				var vt = V.Editor.VirtualTour.getVirtualTour(slide.id);
+				presentation.slides.push(vt);
 				return true; &#x2F;&#x2F;equivalent to continue in an each loop
 			}
 

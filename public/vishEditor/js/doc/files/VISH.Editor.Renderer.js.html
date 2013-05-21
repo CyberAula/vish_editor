@@ -138,10 +138,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i&lt;slides.length;i++){
-			if(slides[i].type === V.Constant.FLASHCARD){
-				_renderFlashcard(slides[i], i+1);
-			} else {
-				_renderSlide(slides[i], i+1);			
+			switch(slides[i].type){
+				case V.Constant.FLASHCARD:
+					_renderFlashcard(slides[i], i+1);
+					break;
+				case V.Constant.VTOUR:
+					_renderVTour(slides[i], i+1);
+					break;
+				case V.Constant.STANDARD:	
+				default:
+					_renderSlide(slides[i], i+1);	
+					break;
 			}
 		}
 	}
@@ -212,11 +219,23 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var _renderFlashcard = function(slide, slideNumber){
 		V.Editor.Flashcard.addFlashcard(slide);
 		V.Renderer.renderSlide(slide, &quot;&quot;, &quot;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		V.Editor.Slides.redrawSlides();
+		V.Slides.lastSlide();
+	};
+
+	&#x2F;**
+	 * function to render one VTour inside a presentation
+	 *&#x2F;
+	var _renderVTour = function(slide, slideNumber){
+		V.Editor.VirtualTour.addVirtualTour(slide);
+		V.Renderer.renderSlide(slide, &quot;&quot;, &quot;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		V.Editor.Slides.redrawSlides();
+		V.Slides.lastSlide();
 	};
 
 
 	return {
-		init	: init,
+		init				: init,
 		renderPresentation	: renderPresentation
 	};
 

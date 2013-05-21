@@ -108,7 +108,7 @@ VISH.Slides = (function(V,$,undefined){
 	  slideEls = document.querySelectorAll(&#x27;section.slides &gt; article&#x27;);
 	  if(isSlideset(V.SlideManager.getPresentationType())){
 	  	&#x2F;&#x2F;this way updateSlides will add the class current and it will be shown
-	  	curSlideIndex = 0;
+	  	setCurrentSlideIndex(0);
 	  }
 	  updateSlides(true);
 	  $(&#x27;body&#x27;).addClass(&#x27;loaded&#x27;);
@@ -117,12 +117,15 @@ VISH.Slides = (function(V,$,undefined){
 	var _getcurSlideIndexFromHash = function() {
 	  var slideNo = parseInt(location.hash.substr(1));
 	  if (slideNo) {
-	    curSlideIndex = slideNo - 1;
+	  	setCurrentSlideIndex(slideNo - 1);
 	  } else {
 	  	if(V.Editing){
-	  		curSlideIndex = -1; &#x2F;&#x2F;Start in 0 (no slides)
+	  		&#x2F;&#x2F;Start in 0 (no slides)
+	  		setCurrentSlideIndex(-1);
+	  		&#x2F;&#x2F;If there are slides, this param will be updated
 	  	} else {
-	  		curSlideIndex = 0; &#x2F;&#x2F;Start in 1 (first slide)
+	  		&#x2F;&#x2F;Start in 1 (first slide)
+	  		setCurrentSlideIndex(0);
 	  	}
 	  }
 	};
@@ -218,7 +221,7 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
-		curSlideIndex = currentSlideNumber-1;
+		setCurrentSlideIndex(currentSlideNumber-1);
 	}
 
 	var _getSlide = function(no) {
@@ -342,14 +345,14 @@ VISH.Slides = (function(V,$,undefined){
 
    	var _prevSlide = function() {
 		if (curSlideIndex &gt; 0) {
-			curSlideIndex--;
+			setCurrentSlideIndex(curSlideIndex-1);
 			updateSlides(false);
 		}
 	};
 
 	var _nextSlide = function() {	  
 		if (curSlideIndex &lt; slideEls.length - 1) {
-			curSlideIndex++;
+			setCurrentSlideIndex(curSlideIndex+1);
 			updateSlides(true);
 		}
 	};
@@ -360,8 +363,7 @@ VISH.Slides = (function(V,$,undefined){
 	var forwardOneSlide = function(event){
 		if(isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop){
 			V.Recommendations.showFancybox();
-		}
-		else{
+		} else {
 			goToSlide(curSlideIndex+2);
 		}		
 	};
@@ -416,7 +418,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Editor.Tools.cleanZoneTools();
 
 			&#x2F;&#x2F;finally add a background color to thumbnail of the selected slide
-			V.Editor.Thumbnails.selectThumbnail(no);   	
+			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
 			&#x2F;&#x2F;update slide counter
 			V.SlideManager.updateSlideCounter();

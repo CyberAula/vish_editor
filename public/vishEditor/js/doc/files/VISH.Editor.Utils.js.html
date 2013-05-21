@@ -274,10 +274,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			return;
 		}
 
-		slide.id = V.Utils.getId(parentId + &quot;_&quot; + slide.id,true);
+		slide.id = parentId + &quot;_&quot; + slide.id;
 		if(slide.elements){
 			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = V.Utils.getId(parentId + &quot;_&quot; + slide.elements[index].id,true);
+				slide.elements[index].id = parentId + &quot;_&quot; + slide.elements[index].id;
 			});
 		}
 		return slide;
@@ -317,6 +317,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case V.Constant.FLASHCARD:
 				slide = _replaceIdsForFlashcardSlide(slide,slideId);
 				break;
+			case V.Constant.VTOUR:
+				slide = _replaceIdsForVirtualTourSlide(slide,slideId);
+				break;
 			default:
 				return;
 		}
@@ -346,6 +349,20 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 
 		return flashcard;
+	};
+
+	var _replaceIdsForVirtualTourSlide = function(vt,vtId){	
+		var canvas = $(vt).find(&quot;.map_canvas&quot;);
+		var canvasId = V.Utils.getId(vtId + &quot;_canvas&quot;);
+		$(canvas).attr(&quot;id&quot;,canvasId);
+		
+		var subslides = $(vt).find(&quot;.subslides &gt; article.subslide&quot;);
+
+		$(subslides).each(function(index, subSlide) {
+			subSlide = _replaceIdsForSubSlide(subSlide,vtId);
+		});
+
+		return vt;
 	};
 
 	var _replaceIdsForSubSlide = function(subSlide,parentId){
@@ -413,6 +430,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case V.Constant.VTOUR:
 				slide = _replaceIdsForVTourJSON(slide,slideId);
+				break;
 			default:
 				return;
 		}
@@ -439,30 +457,42 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return s;
 	}
 
-	var _replaceIdsForFlashcardJSON = function(flashcard,slideId){
+	var _replaceIdsForFlashcardJSON = function(flashcard,fcId){
 		var hash_subslide_new_ids = {};
 		var old_id;
 
 		var fc = jQuery.extend(true, {}, flashcard);
-		fc.id = slideId;
+		fc.id = fcId;
 
 		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
-			fc.slides[ind].id = fc.id + &quot;_article&quot; + (parseInt(ind)+1);
+			fc.slides[ind] = _replaceIdsForStandardSlideJSON(fc.slides[ind],fc.id + &quot;_article&quot; + (parseInt(ind)+1));
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
 		for(var num in fc.pois){
 			fc.pois[num].id = fc.id + &quot;_poi&quot; + (parseInt(num)+1);
 			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
 		}
+
 		return fc;
 	};
 
 	var _replaceIdsForVTourJSON = function(vTour,vTourId){
+		var hash_subslide_new_ids = {};
+		var old_id;
+
 		var vt = jQuery.extend(true, {}, vTour);
 
-		&#x2F;&#x2F; console.log(&quot;vt&quot;);
-		&#x2F;&#x2F; console.log(vt);
+		vt.id = vTourId;
+		for(var ind in vt.slides){	
+			old_id = vt.slides[ind].id;
+			vt.slides[ind] = _replaceIdsForStandardSlideJSON(vt.slides[ind],vt.id + &quot;_article&quot; + (parseInt(ind)+1));
+			hash_subslide_new_ids[old_id] = vt.slides[ind].id;
+		}
+		for(var num in vt.pois){
+			vt.pois[num].id = vt.id + &quot;_poi&quot; + (parseInt(num)+1);
+			vt.pois[num].slide_id = hash_subslide_new_ids[vt.pois[num].slide_id];
+		}
 
 		return vt;
 	}
@@ -499,8 +529,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case &quot;tab_presentations_repo&quot;:
 				V.Editor.Presentation.Repository.onLoadTab();
 				break;
-			case &quot;tab_flashcards_repo&quot;:
-				V.Editor.Flashcard.Repository.onLoadTab();
+			case &quot;tab_smartcards_repo&quot;:
+				V.Editor.Slideset.Repository.onLoadTab();
 				break;
 			&#x2F;&#x2F;Image
 			case &quot;tab_pic_from_url&quot;:

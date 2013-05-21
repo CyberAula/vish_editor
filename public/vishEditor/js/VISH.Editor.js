@@ -188,8 +188,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
-		V.Editor.Flashcard.Repository.init();
 		V.Editor.Presentation.Repository.init();
+		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();

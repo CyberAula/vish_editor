@@ -1,17 +1,17 @@
-VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
+VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 	
-  	var carrouselDivId = "tab_flashcards_repo_content_carrousel";
-  	var previewDivId = "tab_flashcards_repo_content_preview";
+  	var carrouselDivId = "tab_smartcards_repo_content_carrousel";
+  	var previewDivId = "tab_smartcards_repo_content_preview";
 
-	var currentFlashcards = new Array();
-	var selectedFc = null;
+	var currentSmartcards = new Array();
+	var selectedSmartcard = null;
 	var myInput;
 	var previewButton;
 
 	var initialized = false;
 
 	var init = function() {
-		myInput = $("#tab_flashcards_repo_content").find("input[type='search']");
+		myInput = $("#tab_smartcards_repo_content").find("input[type='search']");
 		previewButton = $("#" + previewDivId).find("button.okButton");
 
 		if(!initialized){
@@ -24,8 +24,8 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 			});
 		
 			$(previewButton).click(function(){
-				if(selectedFc){
-					V.Editor.Presentation.previewPresentation(selectedFc);
+				if(selectedSmartcard){
+					V.Editor.Presentation.previewPresentation(selectedSmartcard);
 				}
 			})
 
@@ -46,14 +46,14 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
-		V.Editor.API.requestRecomendedFlashcards(_onDataReceived, _onAPIError);
+		V.Editor.API.requestRecomendedSmartcards(_onDataReceived, _onAPIError);
 	};
 	
 	/*
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
-		V.Editor.API.requestFlashcards(text, _onDataReceived, _onAPIError);
+		V.Editor.API.requestSmartcards(text, _onDataReceived, _onAPIError);
 	};
 	
 	/*
@@ -65,7 +65,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		$("#" + carrouselDivId).hide();
 
 		//Clean previous Images
-		currentFlashcards = new Array();
+		currentSmartcards = new Array();
 		var carrouselImages = [];
 
 		var content = "";
@@ -81,7 +81,7 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 		$.each(data.flashcards, function(index, fc) {
 			var myImg = $("<img flashcardid ='"+fc.id+"'' src=" + V.Utils.getSrcFromCSS(fc.slides[0].background) + " >")
 			carrouselImages.push(myImg);
-			currentFlashcards[fc.id] = fc;
+			currentSmartcards[fc.id] = fc;
 		});
 		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
 	};
@@ -103,10 +103,10 @@ VISH.Editor.Flashcard.Repository = (function(V,$,undefined){
 	};
 	
 	var _onClickCarrouselElement = function(event) {
-		var flashcardid = $(event.target).attr("flashcardid");
-		if(flashcardid){
-			selectedFc = currentFlashcards[flashcardid];
-			_renderObjectMetadata(selectedFc);
+		var smartCardId = $(event.target).attr("flashcardid");
+		if(smartCardId){
+			selectedSmartcard = currentSmartcards[smartCardId];
+			_renderObjectMetadata(selectedSmartcard);
 		}
 	};
 

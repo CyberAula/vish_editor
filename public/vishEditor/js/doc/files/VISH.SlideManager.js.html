@@ -138,6 +138,7 @@ VISH.SlideManager = (function(V,$,undefined){
 
 	var _initAferStatusLoaded = function(options,presentation){
 		V.Flashcard.init();
+		V.VirtualTour.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Renderer.init();
 		V.Slides.init();
@@ -146,17 +147,6 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Storage.init();
 		V.Recommendations.init(options);
 		
-		&#x2F;&#x2F;Experimental initializers for new excursion types
-		switch(presentation.type){
-			case V.Constant.GAME:
-				V.ViewerAdapter.setupGame(presentation);	
-				V.Game.registerActions(presentation);
-				break;
-			case V.Constant.VTOUR:
-				V.VirtualTour.init();
-				break;
-		}
-
 		&#x2F;&#x2F;important that events are initialized after presentation type is proccessed
 		V.Events.init();
 		V.EventsNotifier.init();
@@ -295,6 +285,8 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		if($(e.target).hasClass(&quot;flashcard_slide&quot;)){
 			V.Flashcard.startAnimation(e.target.id);
+		} else if($(e.target).hasClass(&quot;virtualTour_slide&quot;)){
+			V.VirtualTour.loadMap(e.target.id);
 		}
 
 		if(_isRecommendationMoment()){

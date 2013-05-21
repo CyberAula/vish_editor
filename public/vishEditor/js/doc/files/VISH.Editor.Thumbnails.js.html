@@ -95,8 +95,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	&#x2F;&#x2F;Tmp var
 	var redrawThumbnailsCallback;
 	
-	var init = function(){ }
-	 
+	var init = function(){ 
+	}
 	 
 	var redrawThumbnails = function(successCallback){
 		redrawThumbnailsCallback = successCallback;
@@ -125,7 +125,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					carrouselImagesTitles.push(carrouselElements);
 				break;
 			case V.Constant.VTOUR:
-				&#x2F;&#x2F;TODO... ¿put a generic img?
+					carrouselElements += 1;
+					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&#x27; &#x2F;&gt;&quot;));
+					carrouselImagesTitles.push(carrouselElements);
 				break;
 			default:
 				break;
@@ -189,11 +191,18 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		&#x2F;&#x2F;Create carrousel
 		$(&quot;#&quot; + carrouselDivId).show();
 		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-		
+	}
+	
+	
+	var _afterCreateSlidesCarrousel = function(){
+		var presentationType = V.Editor.getPresentationType();
+
 		if(presentationType === V.Constant.PRESENTATION){
+
 			if(V.Slides.getCurrentSlideNumber()&gt;0){
 				selectThumbnail(V.Slides.getCurrentSlideNumber());
 			}
+
 			&#x2F;&#x2F;Add sortable
 			var firstCarrouselNumber;
 			$( &quot;#&quot; + carrouselDivId).sortable({
@@ -258,22 +267,17 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					}
 				}
 			});
-		}
-	}
-	
-	
-	var _afterCreateSlidesCarrousel = function(){
-		var presentationType = V.Editor.getPresentationType();
-		if(presentationType === V.Constant.FLASHCARD){
-			V.Editor.Flashcard.Creator.redrawPois;
+		} else if (presentationType === V.Constant.FLASHCARD){
+			V.Editor.Flashcard.Creator.redrawPois();
 		} else if(presentationType === V.Constant.VTOUR){
-			V.Editor.VirtualTour.Creator.redrawPois;
+			V.Editor.VirtualTour.Creator.redrawPois();
 		}
 
 		if(typeof redrawThumbnailsCallback === &quot;function&quot;){
 			redrawThumbnailsCallback();
 			redrawThumbnailsCallback = undefined;
 		}
+
 	}
 
 

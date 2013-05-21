@@ -377,6 +377,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
 			fc.slides[ind] = _replaceIdsForStandardSlideJSON(fc.slides[ind],fc.id + "_article" + (parseInt(ind)+1));
+			if(fc.slides[ind]===null){
+				return null;
+			}
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
 		for(var num in fc.pois){
@@ -439,8 +442,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_presentations_repo":
 				V.Editor.Presentation.Repository.onLoadTab();
 				break;
-			case "tab_flashcards_repo":
-				V.Editor.Flashcard.Repository.onLoadTab();
+			case "tab_smartcards_repo":
+				V.Editor.Slideset.Repository.onLoadTab();
 				break;
 			//Image
 			case "tab_pic_from_url":

@@ -98,8 +98,8 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Utils.Loader.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Slideset.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Slideset.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Flashcard.Creator.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.VirtualTour.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.VirtualTour.Creator.js"></script>
@@ -229,13 +229,10 @@
 										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertPresentation" i18n-key="i.Presentation">Excursion</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertFlashcard" i18n-key="i.Flashcard">Flashcard</a>
+										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertSmartcard" i18n-key="i.Smartcard">Smartcard</a>
 									</li>
 									<li>
 										<a style="display:none" class="menu_option menu_action" i18n-key="i.Game">Game</a>
-									</li>
-									<li>
-										<a style="display:none" class="menu_option menu_action" i18n-key="i.vExperiment">Virtual Experiment</a>
 									</li>
 								</ul>
 							</li>							
@@ -465,7 +462,7 @@
 						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_presentations_repo')" id="tab_presentations_repo" class="fancy_tab tabbable" i18n-key="i.Excursions">Excursions</a>
 					</li>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_flashcards_repo')" id="tab_flashcards_repo" class="fancy_tab tabbable" i18n-key="i.Flashcards">Flashcards</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_smartcards_repo')" id="tab_smartcards_repo" class="fancy_tab tabbable" i18n-key="i.Smartcards">Smartcards</a>
 					</li>
 				</ul>
 			</div> 
@@ -536,14 +533,14 @@
 				</div>	
 			</div>
 
-			<div id='tab_flashcards_repo_content' class="fancy_tab_content" style='display:none'> 
+			<div id='tab_smartcards_repo_content' class="fancy_tab_content" style='display:none'> 
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
 						<input type="search" class="input_text_fancy input_text_excursions formsizefancy2 marginsfancy3" > </input>
 					</div>
-					<div id="tab_flashcards_repo_content_carrousel"></div>
-					<div id="tab_flashcards_repo_content_preview" class="content_preview_presentation">
+					<div id="tab_smartcards_repo_content_carrousel"></div>
+					<div id="tab_smartcards_repo_content_preview" class="content_preview_presentation">
 						<div class="content_preview_data"></div>
 						<div class="content_preview_metadata"></div>
 						<div class="content_preview_foot">

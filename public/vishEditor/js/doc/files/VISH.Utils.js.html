@@ -216,6 +216,15 @@ VISH.Utils = (function(V,undefined){
 	}
 
 	var _fixIdsVTourSlide = function(slide){
+		var slides = slide.slides;
+		if(slides){
+			var sL = slides.length;
+			for(var i=0; i&lt;sL;i++){
+				if(typeof slides[i].type == &quot;undefined&quot;){
+					slides[i].type = V.Constant.STANDARD;
+				}
+			}
+		}
 		return slide;
 	}
 

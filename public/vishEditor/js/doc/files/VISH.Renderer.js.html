@@ -202,7 +202,7 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, &quot;subslide&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
 		var div_for_slides_hidden = &quot;&lt;div class=&#x27;subslides&#x27; &gt;&quot;+all_slides+&quot;&lt;&#x2F;div&gt;&quot;;
-		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; virtualTour_slide&#x27; type=&#x27;virtualTour&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
+		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; virtualTour_slide&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
 
 

@@ -38,6 +38,12 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			var slide = presentationJSON.slides[selectedSlideNumbers[i]-1];
 			var mySlide = V.Editor.Utils.replaceIdsForSlideJSON(slide);
 
+			if(mySlide===null){
+				$.fancybox.close();
+				V.Debugging.log("Not valid presentation");
+				return null;
+			}
+
 			//PRE-renderer actions
 			switch(mySlide.type){
 				case V.Constant.FLASHCARD:
