@@ -227,6 +227,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case V.Constant.FLASHCARD:
 				slide = _replaceIdsForFlashcardSlide(slide,slideId);
 				break;
+			case V.Constant.VTOUR:
+				slide = _replaceIdsForVirtualTourSlide(slide,slideId);
+				break;
 			default:
 				return;
 		}
@@ -256,6 +259,20 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 
 		return flashcard;
+	};
+
+	var _replaceIdsForVirtualTourSlide = function(vt,vtId){	
+		var canvas = $(vt).find(".map_canvas");
+		var canvasId = V.Utils.getId(vtId + "_canvas");
+		$(canvas).attr("id",canvasId);
+		
+		var subslides = $(vt).find(".subslides > article.subslide");
+
+		$(subslides).each(function(index, subSlide) {
+			subSlide = _replaceIdsForSubSlide(subSlide,vtId);
+		});
+
+		return vt;
 	};
 
 	var _replaceIdsForSubSlide = function(subSlide,parentId){

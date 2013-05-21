@@ -149,8 +149,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				return;
 			}
 
-			var selectedSlideset = V.Editor.Utils.replaceIdsForSlideJSON(options.JSON,slidesetId);
-			slidesetModule.preCopyActions(selectedSlideset);
+			var slideToCopyJSON = V.Editor.Utils.replaceIdsForSlideJSON(options.JSON,slidesetId);
+			slidesetModule.preCopyActions(slideToCopyJSON,slideToCopy);
 		}
 
 		/////////////////
@@ -181,7 +181,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		if(typeof slidesetModule !== "undefined"){
-			slidesetModule.postCopyActions(selectedSlideset);
+			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
 		//Update slideEls

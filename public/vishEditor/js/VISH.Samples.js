@@ -511,7 +511,7 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
-	//Sample of a fully complete VE Presentation (including flashcards)
+	//Sample of a fully complete VE Presentation
 	var full_samples = {
 		"id":"4",
 		"VEVersion":"0.2",

@@ -33,18 +33,18 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		return getFlashcard(id);
 	}
 
-	var preCopyActions = function(fc){
+	var preCopyActions = function(fcJSON,fcDOM){
 		//Add the points of interest with their click events to show the slides
-		addFlashcard(fc);
-		for(index in fc.pois){
-			var poi = fc.pois[index];
-			V.Flashcard.addArrow(fc.id, poi, true);
+		addFlashcard(fcJSON);
+		for(index in fcJSON.pois){
+			var poi = fcJSON.pois[index];
+			V.Flashcard.addArrow(fcJSON.id, poi, true);
 		}
-		V.Editor.Events.bindEventsForFlashcard(fc);
+		V.Editor.Events.bindEventsForFlashcard(fcJSON);
 	}
 
-	var postCopyActions = function(){
-
+	var postCopyActions = function(fcJSON,fcDOM){
+		//No code required
 	}
 
 	return {

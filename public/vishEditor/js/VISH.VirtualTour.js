@@ -117,7 +117,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
       //this part runs when the mapobject is created and rendered
-      $("#"+vtId).removeClass("temp_shown");
+      $("#"+vt.id).removeClass("temp_shown");
       google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
           //this part runs when the mapobject shown for the first time
       });

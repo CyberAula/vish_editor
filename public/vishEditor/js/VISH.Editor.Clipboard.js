@@ -86,7 +86,6 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 						options.JSON = myStack[2].JSON;
 					}
 				}
-
 				V.Editor.Slides.copySlide(slideToCopy,options);
 				break;
 			default:

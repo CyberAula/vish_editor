@@ -30,12 +30,16 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		return getVirtualTour(id);
 	}
 
-	var preCopyActions = function(){
-		// console.log("VTour precopy");
+	var preCopyActions = function(vtJSON,vtDOM){
+		var canvas = $(vtDOM).find(".map_canvas");
+		$(canvas).remove();
+
 	}
 
-	var postCopyActions = function(){
-		// console.log("VTour postcopy");
+	var postCopyActions = function(vtJSON,vtDOM){
+		V.VirtualTour.drawMap(vtJSON);
+		V.VirtualTour.loadMap(vtJSON.id);
+		V.Editor.VirtualTour.addVirtualTour(vtJSON);
 	}
 
 	return {
