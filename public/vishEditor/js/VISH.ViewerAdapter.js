@@ -72,6 +72,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for embed
 			fs_button = fs_button && (!embed);
 
+			if(embed){
+				$(".rec-first-row").hide();
+			}
 
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 
