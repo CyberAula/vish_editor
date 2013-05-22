@@ -693,7 +693,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		if((saveForPreview)&&(options)&&(options.forcePresentation)){
-			presentation.type = "presentation";
+			presentation.type = V.Constant.PRESENTATION;
 		} else {
 			presentation.type = getPresentationType();
 		}
@@ -753,9 +753,6 @@ VISH.Editor = (function(V,$,undefined){
 					element.areaid	=	$(div).attr('areaid');					 
 						 
 					if(element.type==V.Constant.TEXT){
-						//NicEditor version
-						// element.body   = V.Editor.Text.NiceEditor.changeFontPropertiesToSpan($(div).find(".wysiwygInstance"));
-
 						//CKEditor version	
 						var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
 						if(CKEditor!==null){
@@ -763,7 +760,6 @@ VISH.Editor = (function(V,$,undefined){
 						} else {
 							element.body = "";
 						}
-
 					} else if(element.type==V.Constant.IMAGE){
 						element.body   = $(div).find('img').attr('src');
 						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
@@ -906,7 +902,7 @@ VISH.Editor = (function(V,$,undefined){
 				var draft = (order==="draft");
 
 				//POST to http://server/excursions/
-				var jsonPresentation = JSON.stringify(presentation);  
+				var jsonPresentation = JSON.stringify(presentation);
 				var params = {
 					"excursion[json]": jsonPresentation,
 					"authenticity_token" : initOptions.token,

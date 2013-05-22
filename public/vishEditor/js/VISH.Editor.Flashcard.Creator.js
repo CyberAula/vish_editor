@@ -146,10 +146,10 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		var pois = [];
 		$(".draggable_arrow_div[moved='true']").each(function(index,s){
 			pois[index]= {};
-			pois[index].id = V.Utils.getId(flashcardId+"_"+s.id,true);
+			pois[index].id = flashcardId+"_"+s.id;
 			pois[index].x = (100*($(s).offset().left - 48)/800).toString(); //to be relative to his parent, the flashcard-background
 			pois[index].y = (100*($(s).offset().top - 38)/600).toString(); //to be relative to his parent, the flashcard-background
-			pois[index].slide_id = V.Utils.getId(flashcardId+"_"+$(s).attr('slide_id'),true);
+			pois[index].slide_id = flashcardId+"_"+$(s).attr('slide_id');
 		});
 		return pois;
 	};
