@@ -10,7 +10,7 @@ VISH.Editor.API = (function(V,$,undefined){
   /**
    * function to call to VISH and request excursions in json format
    * The request is:
-   * GET /excursions/search.json?q=text
+   * GET /excursions/search.json?type=&q=text
    */
   var requestExcursions = function(text, successCallback, failCallback){
     if (V.Debugging.isDevelopping()) {
@@ -21,7 +21,7 @@ VISH.Editor.API = (function(V,$,undefined){
       return;
     }
              
-    _requestByType("excursions", text, successCallback, failCallback);   
+    _requestByType("excursions", text, successCallback, failCallback);
   };
 
 
@@ -44,7 +44,7 @@ VISH.Editor.API = (function(V,$,undefined){
   /**
    * function to call to VISH and request smartcards (flashcards and virtual tours) in json format
    * The request is:
-   * GET /excursions/search.json?q=text&type=flashcard|virtualTour
+   * GET /excursions/search.json?type=smartcard&q=text
    */
   var requestSmartcards = function(text, successCallback, failCallback){
     if (V.Debugging.isDevelopping()) {
@@ -353,10 +353,12 @@ VISH.Editor.API = (function(V,$,undefined){
      */    
   var _requestByType = function(type, query, successCallback, failCallback){
 		
-		if((type=="live")||(type=="object")){
+		if((type==="live")||(type==="object")){
 			_requestResourceType(type,query, successCallback, failCallback);
 			return;
-		}
+		}else if((type==="excursion")||(type==="smartcard")){
+      _requestExcursionType(type,query, successCallback, failCallback);
+    }
 		
   	$.ajax({
               type: "GET",
@@ -401,7 +403,36 @@ VISH.Editor.API = (function(V,$,undefined){
               }
      });  
   };
-	
+
+
+	/**
+   * Specific function to call VISH and request excursions
+   * The request is:
+   * GET /excursions/search.json?type=&q=query
+   */    
+  var _requestExcursionType = function(type, query, successCallback, failCallback){
+
+    if(type === "excursion"){
+      type = "";
+    }
+
+    $.ajax({
+              type: "GET",
+              url: "/excursions/search.json?type=" + type + "&q="+ query,
+              dataType:"html",
+              success:function(response){
+                  if(typeof successCallback == "function"){
+                    var resp = JSON.parse(response);
+                    successCallback(resp);
+                  }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == "function"){
+                    failCallback();
+                  }
+              }
+     });  
+  };
 	
 	/**
    * function to call to VISH and request tags
