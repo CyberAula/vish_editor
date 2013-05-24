@@ -86,7 +86,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.User.init(options);
 
 		if(V.Debugging.isDevelopping()){
-			if ((options.configuration.mode=="noserver")&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
 				presentation = V.Debugging.getPresentationSamples();
 			}
 		}
