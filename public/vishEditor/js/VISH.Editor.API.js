@@ -5,7 +5,6 @@
 VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
-	
 
   /**
    * function to call to VISH and request excursions in json format
@@ -21,7 +20,7 @@ VISH.Editor.API = (function(V,$,undefined){
       return;
     }
              
-    _requestByType("excursions", text, successCallback, failCallback);
+    _requestByType("excursion", text, successCallback, failCallback);
   };
 
 
@@ -36,8 +35,8 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }
-    
-    _requestByType("excursions", "", successCallback, failCallback);
+
+    _requestByType("excursion", "", successCallback, failCallback);
   };
 
 
@@ -71,39 +70,6 @@ VISH.Editor.API = (function(V,$,undefined){
     }
     
     _requestByType("smartcard", "", successCallback, failCallback);
-  };
-
-
-  /**
-   * function to call to VISH and request flashcards in json format
-   * The request is:
-   * GET /excursions/search.json?q=text&type=flashcard
-   */
-  var requestFlashcards = function(text, successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
-      if(typeof successCallback == "function"){
-        var result = V.Samples.API.flashcardList;
-        successCallback(result);
-      }
-      return;
-    }
-             
-    _requestByType("flashcard", text, successCallback, failCallback);   
-  };
-  
-  /**
-   * function to call to VISH and request recommended flashcards
-   */
-  var requestRecomendedFlashcards = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
-      if(typeof successCallback == "function"){
-            var result =  V.Samples.API.flashcardList;
-            successCallback(result);
-      }
-      return;
-    }
-    
-    _requestByType("flashcard", "", successCallback, failCallback);
   };
 
 
@@ -358,6 +324,7 @@ VISH.Editor.API = (function(V,$,undefined){
 			return;
 		}else if((type==="excursion")||(type==="smartcard")){
       _requestExcursionType(type,query, successCallback, failCallback);
+      return;
     }
 		
   	$.ajax({
@@ -411,7 +378,6 @@ VISH.Editor.API = (function(V,$,undefined){
    * GET /excursions/search.json?type=&q=query
    */    
   var _requestExcursionType = function(type, query, successCallback, failCallback){
-
     if(type === "excursion"){
       type = "";
     }
@@ -512,25 +478,23 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					            : init,
-    requestExcursions         : requestExcursions,
+		init					              : init,
+    requestExcursions           : requestExcursions,
     requestRecomendedExcursions : requestRecomendedExcursions,
-    requestSmartcards         : requestSmartcards,
+    requestSmartcards           : requestSmartcards,
     requestRecomendedSmartcards : requestRecomendedSmartcards,
-    requestFlashcards         : requestFlashcards,
-    requestRecomendedFlashcards : requestRecomendedFlashcards,
-		requestVideos             : requestVideos,
-		requestRecomendedVideos   : requestRecomendedVideos,
-		requestImages             : requestImages,
-		requestRecomendedImages   : requestRecomendedImages,
-		requestFlashes			      : requestFlashes,
-		requestRecomendedFlashes  : requestRecomendedFlashes,
-		requestObjects            : requestObjects,
-    requestRecomendedObjects  : requestRecomendedObjects,
-		requestLives              : requestLives,
-		requestRecomendedLives    : requestRecomendedLives,
-		requestTags               : requestTags,
-		requestThumbnails         : requestThumbnails
+		requestVideos               : requestVideos,
+		requestRecomendedVideos     : requestRecomendedVideos,
+		requestImages               : requestImages,
+		requestRecomendedImages     : requestRecomendedImages,
+		requestFlashes			        : requestFlashes,
+		requestRecomendedFlashes    : requestRecomendedFlashes,
+		requestObjects              : requestObjects,
+    requestRecomendedObjects    : requestRecomendedObjects,
+		requestLives                : requestLives,
+		requestRecomendedLives      : requestRecomendedLives,
+		requestTags                 : requestTags,
+		requestThumbnails           : requestThumbnails
 	};
 
 }) (VISH, jQuery);

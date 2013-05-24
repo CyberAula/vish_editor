@@ -70,15 +70,15 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 
 		var content = "";
 
-		//the received data has an array called "smartcards", see V.Samples.API.smartcardList for an example
-		if((!data.smartcards)||(data.smartcards.length==0)){
+		//the received data has an array called "excursions", see V.Samples.API.smartcardList for an example
+		if((!data.excursions)||(data.excursions.length==0)){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
 			$("#" + carrouselDivId).show();
 			return;
 		}
 		
-		//data.smartcards is an array with the results
-		$.each(data.smartcards, function(index, sc) {
+		//data.excursions is an array with the results
+		$.each(data.excursions, function(index, sc) {
 			switch(sc.type){
 				case V.Constant.FLASHCARD:
 					var myImg = $("<img smartcardid ='"+sc.id+"'' src='" + V.Utils.getSrcFromCSS(sc.slides[0].background) + "' />");
