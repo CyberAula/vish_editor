@@ -5,23 +5,22 @@
 VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
-	
 
   /**
    * function to call to VISH and request excursions in json format
    * The request is:
-   * GET /excursions/search.json?q=text
+   * GET /excursions/search.json?type=&q=text
    */
   var requestExcursions = function(text, successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
       if(typeof successCallback == "function"){
         var result = V.Samples.API.excursionsList;
         successCallback(result);
       }
       return;
     }
-             
-    _requestByType("excursions", text, successCallback, failCallback);   
+       
+    _requestByType("excursion", text, successCallback, failCallback);
   };
 
 
@@ -29,25 +28,25 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended excursions
    */
   var requestRecomendedExcursions = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
             var result = V.Samples.API.excursionsList;
             successCallback(result);
       }
       return;
     }
-    
-    _requestByType("excursions", "", successCallback, failCallback);
+
+    _requestByType("excursion", "", successCallback, failCallback);
   };
 
 
   /**
    * function to call to VISH and request smartcards (flashcards and virtual tours) in json format
    * The request is:
-   * GET /excursions/search.json?q=text&type=flashcard|virtualTour
+   * GET /excursions/search.json?type=smartcard&q=text
    */
   var requestSmartcards = function(text, successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = V.Samples.API.smartcardList;
         successCallback(result);
@@ -62,7 +61,7 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended smartcards
    */
   var requestRecomendedSmartcards = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
             var result = V.Samples.API.smartcardList;
             successCallback(result);
@@ -74,39 +73,6 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 
 
-  /**
-   * function to call to VISH and request flashcards in json format
-   * The request is:
-   * GET /excursions/search.json?q=text&type=flashcard
-   */
-  var requestFlashcards = function(text, successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
-      if(typeof successCallback == "function"){
-        var result = V.Samples.API.flashcardList;
-        successCallback(result);
-      }
-      return;
-    }
-             
-    _requestByType("flashcard", text, successCallback, failCallback);   
-  };
-  
-  /**
-   * function to call to VISH and request recommended flashcards
-   */
-  var requestRecomendedFlashcards = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
-      if(typeof successCallback == "function"){
-            var result =  V.Samples.API.flashcardList;
-            successCallback(result);
-      }
-      return;
-    }
-    
-    _requestByType("flashcard", "", successCallback, failCallback);
-  };
-
-
 	/**
 	 * function to call to VISH and request videos in json format
 	 * The request is:
@@ -114,7 +80,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 */
 	var requestVideos = function(text, successCallback, failCallback){
 		
-		if (V.Debugging.isDevelopping()) {
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = jQuery.extend({}, V.Samples.API.videoList);
 
@@ -142,7 +108,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended videos
 	 */
 	var requestRecomendedVideos = function(successCallback, failCallback){
-		if (V.Debugging.isDevelopping()) {
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
 	      if(typeof successCallback == "function"){
 	            var result = V.Samples.API.videoList;
 	            result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
@@ -162,7 +128,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 */
 	var requestFlashes = function(text, successCallback, failCallback){
 		
-		if (V.Debugging.isDevelopping()) {
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = jQuery.extend({}, V.Samples.API.flashList);
 
@@ -190,7 +156,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended flash objects
 	 */
 	var requestRecomendedFlashes = function(successCallback, failCallback){
-		if (V.Debugging.isDevelopping()) {
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
 			if(typeof successCallback == "function"){
 				var result = V.Samples.API.flashList;
 				result['flashes'] = V.Debugging.shuffleJson(V.Samples.API.flashList['flashes']);
@@ -210,7 +176,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET /search.json?type=picture&q=text
 	 */
 	var requestImages = function(text, successCallback, failCallback){
-		if (V.Debugging.isDevelopping()) {
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
 				var result = jQuery.extend({}, V.Samples.API.imageList);
 
@@ -237,7 +203,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended videos
 	 */
 	var requestRecomendedImages = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
             var result = V.Samples.API.imageList;
             result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
@@ -258,7 +224,7 @@ VISH.Editor.API = (function(V,$,undefined){
    */
   var requestLives = function(text, successCallback, failCallback){
     
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = jQuery.extend({}, V.Samples.API.liveList);
 
@@ -286,7 +252,7 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended lives objects
    */
   var requestRecomendedLives = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = V.Debugging.shuffleJson(V.Samples.API.liveList);
         successCallback(result);
@@ -306,7 +272,7 @@ VISH.Editor.API = (function(V,$,undefined){
    */
   var requestObjects = function(text, successCallback, failCallback){
     
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = jQuery.extend({}, V.Samples.API.objectList);
 
@@ -334,7 +300,7 @@ VISH.Editor.API = (function(V,$,undefined){
    * function to call to VISH and request recommended lives objects
    */
   var requestRecomendedObjects = function(successCallback, failCallback){
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
         var result = V.Debugging.shuffleJson(V.Samples.API.objectList);
         successCallback(result);
@@ -353,10 +319,13 @@ VISH.Editor.API = (function(V,$,undefined){
      */    
   var _requestByType = function(type, query, successCallback, failCallback){
 		
-		if((type=="live")||(type=="object")){
+		if((type==="live")||(type==="object")){
 			_requestResourceType(type,query, successCallback, failCallback);
 			return;
-		}
+		}else if((type==="excursion")||(type==="smartcard")){
+      _requestExcursionType(type,query, successCallback, failCallback);
+      return;
+    }
 		
   	$.ajax({
               type: "GET",
@@ -401,7 +370,35 @@ VISH.Editor.API = (function(V,$,undefined){
               }
      });  
   };
-	
+
+
+	/**
+   * Specific function to call VISH and request excursions
+   * The request is:
+   * GET /excursions/search.json?type=&q=query
+   */    
+  var _requestExcursionType = function(type, query, successCallback, failCallback){
+    if(type === "excursion"){
+      type = "";
+    }
+
+    $.ajax({
+              type: "GET",
+              url: "/excursions/search.json?type=" + type + "&q="+ query,
+              dataType:"html",
+              success:function(response){
+                  if(typeof successCallback == "function"){
+                    var resp = JSON.parse(response);
+                    successCallback(resp);
+                  }
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                  if(typeof failCallback == "function"){
+                    failCallback();
+                  }
+              }
+     });  
+  };
 	
 	/**
    * function to call to VISH and request tags
@@ -415,7 +412,7 @@ VISH.Editor.API = (function(V,$,undefined){
 			return;
 		}
 		
-    if (V.Debugging.isDevelopping()) {
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
             tags = V.Samples.API.tagsList['tags'];
             successCallback(V.Samples.API.tagsList['tags']);
@@ -453,7 +450,7 @@ VISH.Editor.API = (function(V,$,undefined){
    */
 	var requestThumbnails = function(successCallback, failCallback){
 
-      if (V.Debugging.isDevelopping()) {
+      if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
         if(typeof successCallback == "function"){
               successCallback(V.Samples.API.thumbnailsList);
         }
@@ -481,25 +478,23 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	
 	return {
-		init					            : init,
-    requestExcursions         : requestExcursions,
+		init					              : init,
+    requestExcursions           : requestExcursions,
     requestRecomendedExcursions : requestRecomendedExcursions,
-    requestSmartcards         : requestSmartcards,
+    requestSmartcards           : requestSmartcards,
     requestRecomendedSmartcards : requestRecomendedSmartcards,
-    requestFlashcards         : requestFlashcards,
-    requestRecomendedFlashcards : requestRecomendedFlashcards,
-		requestVideos             : requestVideos,
-		requestRecomendedVideos   : requestRecomendedVideos,
-		requestImages             : requestImages,
-		requestRecomendedImages   : requestRecomendedImages,
-		requestFlashes			      : requestFlashes,
-		requestRecomendedFlashes  : requestRecomendedFlashes,
-		requestObjects            : requestObjects,
-    requestRecomendedObjects  : requestRecomendedObjects,
-		requestLives              : requestLives,
-		requestRecomendedLives    : requestRecomendedLives,
-		requestTags               : requestTags,
-		requestThumbnails         : requestThumbnails
+		requestVideos               : requestVideos,
+		requestRecomendedVideos     : requestRecomendedVideos,
+		requestImages               : requestImages,
+		requestRecomendedImages     : requestRecomendedImages,
+		requestFlashes			        : requestFlashes,
+		requestRecomendedFlashes    : requestRecomendedFlashes,
+		requestObjects              : requestObjects,
+    requestRecomendedObjects    : requestRecomendedObjects,
+		requestLives                : requestLives,
+		requestRecomendedLives      : requestRecomendedLives,
+		requestTags                 : requestTags,
+		requestThumbnails           : requestThumbnails
 	};
 
 }) (VISH, jQuery);

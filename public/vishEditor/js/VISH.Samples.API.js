@@ -350,7 +350,7 @@ VISH.Samples.API = (function(V,undefined){
     ]};
 
   var smartcardList = {
-    'smartcards': [
+    'excursions': [
         flashcardList.flashcards[0],
         flashcardList.flashcards[1],
         flashcardList.flashcards[2],
