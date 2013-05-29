@@ -12,7 +12,7 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 
 	var init = function() {
 		myInput = $("#tab_smartcards_repo_content").find("input[type='search']");
-		previewButton = $("#" + previewDivId).find("button.okButton");
+		previewButton = $("#" + previewDivId).find("button.okButton2");
 
 		if(!initialized){
 			$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
