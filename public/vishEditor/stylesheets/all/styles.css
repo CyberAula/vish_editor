@@ -997,3 +997,9 @@ overflow: hidden;
 -moz-transform: rotate(360deg);
 -o-transform: rotate(360deg);
 }
+
+.previewbutton2 {
+margin-left: 431px !important;
+margin-top: 242px !important;
+position: absolute;
+  }
