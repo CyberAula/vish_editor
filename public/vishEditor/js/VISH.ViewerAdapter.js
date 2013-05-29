@@ -72,7 +72,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for embed
 			fs_button = fs_button && (!embed);
 
-			if(embed){
+			if(true){
 				$(".rec-first-row").hide();
 			}
 
