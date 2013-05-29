@@ -68,7 +68,7 @@ VISH.Samples.API = (function(V,undefined){
      'excursions': [
         VISH.Samples.full_samples, VISH.Samples.quiz_samples, VISH.Samples.magnetic_gifs, 
         VISH.Samples.basic_samples, VISH.Samples.fc_sample, VISH.Samples.samples_vtour,
-        VISH.Samples.samplesv01
+        VISH.Samples.samplesv01, VISH.Samples.test
      ]
   }
 
