@@ -107,15 +107,16 @@ VISH.Events = (function(V,$,undefined){
 
 	var unbindViewerEventListeners = function(){
 		if(!bindedEventListeners){
+			console.log("return unbindViewerEventListeners");
 			return;
 		} else {
 			bindedEventListeners = false;
 		}
 
-		$(document).unbind('keydown', handleBodyKeyDown); 
+		$(document).unbind('keydown', handleBodyKeyDown);
 
-		$(document).off('click', '#page-switcher-start', V.Slides.backwardOneSlide);
-		$(document).off('click', '#page-switcher-end', V.Slides.forwardOneSlide);
+		$(document).off('click', '#page-switcher-start');
+		$(document).off('click', '#page-switcher-end');
 
 		$(document).off('click', '#back_arrow', V.Slides.backwardOneSlide);
 		$(document).off('click', '#forward_arrow', V.Slides.forwardOneSlide);
@@ -132,7 +133,7 @@ VISH.Events = (function(V,$,undefined){
 					//Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
-						$(document).off('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
+						$(document).off('click', "#" + poi.id, onFlashcardPoiClicked);
 					}
 					break;
 				case V.Constant.VTOUR:
