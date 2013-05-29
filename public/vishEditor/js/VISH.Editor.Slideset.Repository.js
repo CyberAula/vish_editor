@@ -114,6 +114,8 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event) {
 		var smartCardId = $(event.target).attr("smartcardid");
 		if(smartCardId){
+			$(".smartcardSelectedInCarrousel").removeClass("smartcardSelectedInCarrousel");
+			$(event.target).addClass("smartcardSelectedInCarrousel");
 			selectedSmartcard = currentSmartcards[smartCardId];
 			_renderObjectMetadata(selectedSmartcard);
 		}

@@ -105,6 +105,8 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event) {
 		var excursionid = $(event.target).attr("excursionid");
 		if(excursionid){
+			$(".excursionSelectedInCarrousel").removeClass("excursionSelectedInCarrousel");
+			$(event.target).addClass("excursionSelectedInCarrousel");
 			selectedPres = currentExcursions[excursionid];
 			_renderObjectMetadata(selectedPres);
 		}
