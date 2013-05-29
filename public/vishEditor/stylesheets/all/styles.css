@@ -959,7 +959,6 @@ margin-left: -6px !important
 .selected_accept {
 -webkit-transition: opacity 0.7s linear;
 overflow: hidden;
-  opacity: 1;
   border: 1px solid green !important;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
@@ -967,7 +966,6 @@ overflow: hidden;
 }
 
 .selected_deny {
-  opacity: 0.8 !important;
   border: 1px solid red !important;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
