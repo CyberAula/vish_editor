@@ -112,6 +112,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Renderer.init(presentation);
 			//remove focus from any zone
 			_removeSelectableProperties();					
+		} else {
+			initialPresentation = false;
+			V.Editor.setMode(V.Constant.PRESENTATION);
 		}
 
 		
