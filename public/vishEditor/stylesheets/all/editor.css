@@ -1555,8 +1555,13 @@ iframe.snapshot_content{
 
 .excursionSelectedInCarrousel, .smartcardSelectedInCarrousel{
 	opacity: 1.0 !important;
-	border: 1px solid #005fdd;
+	border: 2px solid #005fdd;
 }
+
+img.excursionSelectedInCarrousel:active , img.smartcardSelectedInCarrousel:active{
+	opacity: 1.0 !important;
+}
+
 
 /* Flashcards */
 #flashcard_button img{
