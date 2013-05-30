@@ -1300,6 +1300,25 @@ textarea {
 	right: 21px;
 }
 
+#help_excursion_selection {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_tp.png);
+position: absolute;
+margin-top: -43px;
+right: 21px;
+}
+
+#help_smartcard_selection {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_tp.png);
+position: absolute;
+margin-top: -43px;
+right: 21px;
+}
+
+#help_smartcard_selection:hover, #help_excursion_selection:hover {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
+}
+
 #help_themes_selection {
 	position: absolute;
 	margin-top: -88px;
@@ -1606,6 +1625,13 @@ img.excursionSelectedInCarrousel:active , img.smartcardSelectedInCarrousel:activ
 	cursor: pointer;
 }
 
+.draggable_arrow_div img.fc_draggable_arrow:hover  {
+		-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow:   none !important;
+	opacity: 1.0;
+}
+
 div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 	z-index: 1075;
 }
@@ -1624,8 +1650,17 @@ div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 }
 
 #flashcard_help_button{
-	position: absolute;
+background-image:url(/vishEditor/images/icons/helptutorial_circle_bg.png);
+	cursor: pointer;
+		position: absolute;
 	right: 0px;
+
+height: 29px;
+}
+
+#flashcard_help_button:hover {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
 }
 
 .change_bg_button_class{
@@ -1873,6 +1908,12 @@ img#message3img{
 }
 
 #help_vtour{
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_bg.png);
+	cursor: pointer;
+}
+
+#help_vtour:hover {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
 

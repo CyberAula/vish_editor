@@ -284,6 +284,16 @@ VISH.Editor = (function(V,$,undefined){
 		$(document).on('click','#help_template_selection', function(){
 			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
 		});	
+
+				//template selection fancybox	
+		$(document).on('click','#help_excursion_selection', function(){
+			V.Editor.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+		});	
+
+				//template selection fancybox	
+		$(document).on('click','#help_smartcard_selection', function(){
+			V.Editor.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
+		});	
 		
 		//image fancybox, one help button in each tab
 		$(document).on('click','#tab_pic_from_url_help', function(){
