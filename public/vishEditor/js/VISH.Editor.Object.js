@@ -51,7 +51,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
 					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadObjectPath);
 					var tagList = $("#" + uploadDivId + " .tagList");
-					$("#" + uploadDivId + " input[name='tags']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					$("#" + uploadDivId + " input[name='document[tag_list]']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
 				}

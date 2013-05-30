@@ -45,7 +45,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadImagePath);
 
 					var tagList = $("#" + uploadDivId + " .tagList");
-					$("#" + uploadDivId + " input[name='tags']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
+					$("#" + uploadDivId + " input[name='document[tag_list]']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
 					$(tagList).parent().hide();
 					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
 				}
