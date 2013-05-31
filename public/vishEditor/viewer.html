@@ -102,21 +102,22 @@
     </div> 
 
     <div id="selectSlidesBar" class="selectSlidesBar" style="display:none">
+        <img id='help_addslides_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
         <div class="selectSlidesButtons1">
-            <button id="ssbAll">Select All</button>
-            <button id="ssbuAll">Unselect All</button>
+            <button id="ssbAll" class="buttonadd selectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_checked.png"/>Select All</button>
+            <button id="ssbuAll" class="buttonadd unselectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Unselect All</button>
         </div>
         <div class="selectSlidesButtons3">
             <div class="selectSlidesSelection">
-                <p id="ssbsp"></p>
-                <img src="/vishEditor/images/templatesthumbs/t3.png"/>
+                <p id="ssbsp" class="selected_n_slides addslidetrans"></p>
+                <img  class="addt" src="/vishEditor/images/templatesthumbs/addt.png"/>
             </div>
             <div class="selectSlidesButtonWrapper">
-                <button id="ssbdone">Done</button>
+                <button id="ssbdone" class="button buttonconfirm">Add Slides</button>
             </div>
         </div>
         <div class="selectSlidesButtons2">
-            <button id="ssbaccept">Deny</button>
+            <button id="ssbaccept" class="buttoncenter buttonadd"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Remove Slide</button>
         </div>
     </div>
 
@@ -132,7 +133,7 @@
         <div id='fancy_recommendations'>
             <div class="rec-first-row">
                 <span class="textrec1" i18n-key="i.evaluateTitle">Want to contribute evaluating the excursion?</span>
-                <button onclick="window.opener.document..etElementById('evaluation-button-id').click();" id='evaluate_excursion' submit='disable' class='button' i18n-key="i.evaluate">Evaluate</button>
+                <button onclick="window.opener.document.getElementById('evaluation-button-id').click();" id='evaluate_excursion' submit='disable' class='button' i18n-key="i.evaluate">Evaluate</button>
             </div>
             <div class="rec-second-row">
                 <span class="textrec1" i18n-key="i.recommendationsTitle">Recommended excursions for you:</span>
@@ -167,7 +168,7 @@
                     <a target="_blank" href="#" id='tab_quiz_session_share_gPlus'><img src='/vishEditor/images/icons/social/gplus.svg' class='socialButton'/></a>
                 </div>
                 <div class="quizQr"></div>
-                <input type='button' class='quizButton quizStopButton' value='Stop'/>
+                <input type='button2' class='quizButton button quizStopButton' value='Stop'/>
             </div>
             <div id='tab_quiz_stats_content' class="fancy_viewer_tab_content">
                 <canvas id="quiz_chart" width="400" height="400"></canvas>
@@ -238,7 +239,7 @@
 
 
     <!-- WALKTHROUGH HELP SECTION -->
-    <!--help for themes-->
+    <!--help for quiz session-->
     <ol id="quiz_session_help" class="joyRideTipContent">>
         <li data-id="tab_quiz_session_content" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
          <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
@@ -246,9 +247,18 @@
         </li>
     </ol>
 
+    <!--help for quiz stats-->
     <ol id="quiz_stats_help" class="joyRideTipContent">>
         <li data-id="tab_quiz_stats_content" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
          <h2 i18n-key="i.themesTitle">Vish Editor Themes 2</h2>
+           <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
+        </li>
+    </ol>
+
+    <!--help for add excursion-->
+    <ol id="addslides_help" class="joyRideTipContent">>
+        <li data-id="viewbar" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+         <h2 i18n-key="i.themesTitle">Vish Editor Themes 3</h2>
            <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
         </li>
     </ol>

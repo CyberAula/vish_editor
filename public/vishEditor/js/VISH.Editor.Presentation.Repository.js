@@ -12,7 +12,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 
 	var init = function() {
 		myInput = $("#tab_presentations_repo_content").find("input[type='search']");
-		previewButton = $("#" + previewDivId).find("button.okButton");
+		previewButton = $("#" + previewDivId).find("button.okButton2");
 
 		if(!initialized){
 			$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
@@ -105,6 +105,8 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event) {
 		var excursionid = $(event.target).attr("excursionid");
 		if(excursionid){
+			$(".excursionSelectedInCarrousel").removeClass("excursionSelectedInCarrousel");
+			$(event.target).addClass("excursionSelectedInCarrousel");
 			selectedPres = currentExcursions[excursionid];
 			_renderObjectMetadata(selectedPres);
 		}

@@ -270,7 +270,7 @@
 			</div>
 			<div id="toolbar_presentation">
 				<img id="toolbarborder" class="toolbar_icon toolbar_presentation" style="display:none" 
-				action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png" title="Select theme"/>
+				action="selectTheme" src="/vishEditor/images/toolbar/flashcard_background.png" title="Select theme"/>
 				<img id="change_background_fc" class="toolbar_icon toolbar_flashcard" style="display:none" 
 				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png" title="Change background"/>
 			</div>
@@ -336,6 +336,7 @@
         </div>
 
          <div id="pedagogical_options_fields" style="display:none">
+         	<img id='help_pedagogical_selection' src="/vishEditor/images/icons/helptutorial_circle.png"/>
             <div id="titlepres2">
         		<p class="titlepresp2">Pedagogical Aspects*</p>
         	</div>
@@ -470,6 +471,7 @@
 
 			<div id='tab_templates_content' class="fancy_tab_content" style='display:none' > 
 				<img id='help_template_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<div class="tab_templates_content">
 				<div class='templatethumb' template='1'>
 					<img src='/vishEditor/images/templatesthumbs/t1.png' />
 				</div>
@@ -516,8 +518,10 @@
 					<img src='/vishEditor/images/templatesthumbs/t15.png' />
 				</div>
 			</div>
+			</div>
 
 			<div id='tab_presentations_repo_content' class="fancy_tab_content" style='display:none'> 
+				<img id='help_excursion_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
@@ -528,13 +532,14 @@
 						<div class="content_preview_data"></div>
 						<div class="content_preview_metadata"></div>
 						<div class="content_preview_foot">
-							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton okButtonCarrousel">Preview</button>
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2 previewbutton2">Preview</button>
 						</div>
 					</div> 	
 				</div>	
 			</div>
 
 			<div id='tab_smartcards_repo_content' class="fancy_tab_content" style='display:none'> 
+			<img id='help_smartcard_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
@@ -545,7 +550,7 @@
 						<div class="content_preview_data"></div>
 						<div class="content_preview_metadata"></div>
 						<div class="content_preview_foot">
-							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton okButtonCarrousel">Preview</button>
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2 previewbutton2">Preview</button>
 						</div>
 					</div> 	
 				</div>	
@@ -616,8 +621,8 @@
 	  		<img id="delimg" class="delimg" src="/vishEditor/images/icons/ve_delete_border.png">
 	  		<span i18n-key="i.sure" class="deltext">are you sure?</span>
 	  		<div class="buttons_together">
-	  			<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="button button220" i18n-key="i.delete">delete</a>
-	  			<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="button button2" i18n-key="i.no">no</a>
+	  			<a href="#" onclick="$('#prompt_answer').val('true'); $.fancybox.close();" class="button" i18n-key="i.delete">delete</a>
+	  			<a href="#" onclick="$('#prompt_answer').val('false'); $.fancybox.close();" class="button" i18n-key="i.no">no</a>
 	  		</div>
 	  	</div>
 	  </div>
@@ -663,7 +668,7 @@
 	  			<a save-option-id="save" href="#" onclick="$('#save_answer').val('save'); $.fancybox.close();" class=" button" i18n-key="i.save">Save</a>
 	  			<a save-option-id="publish" href="#" onclick="$('#save_answer').val('publish'); $.fancybox.close();" class=" button" i18n-key="i.publish">Publish</a>
 	  			<a save-option-id="draft" href="#" onclick="$('#save_answer').val('draft'); $.fancybox.close();" class="button" i18n-key="i.draft">Draft</a>
-	  			<a save-option-id="cancel" i18n-key="i.cancel" href="#" onclick="$('#save_answer').val('cancel'); $.fancybox.close();" class="button button2">cancel</a>
+	  			<a save-option-id="cancel" i18n-key="i.cancel" href="#" onclick="$('#save_answer').val('cancel'); $.fancybox.close();" class="button">cancel</a>
 	  		</div>
 	  	</div>
 	  </div>
@@ -806,7 +811,7 @@
 							        <input type="hidden" name="document[description]">
 							        <input type="hidden" name="document[owner_id]">
 							        <input type="hidden" name="authenticity_token">
-											<input type="hidden" name="tags">
+									<input type="hidden" name="document[tag_list]">
 							        <input id="upload_document_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
 							    </form>
 							    
@@ -963,7 +968,7 @@
                       <input type="hidden" name="document[description]">
                       <input type="hidden" name="document[owner_id]">
                       <input type="hidden" name="authenticity_token">
-											<input type="hidden" name="tags">
+					  <input type="hidden" name="document[tag_list]">
                       <input id="upload_document_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
                   </form>
                   
@@ -1270,19 +1275,26 @@
 		<ol id="vt_help" class="joyRideTipContent">
 			<li data-id="change_background_fc" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
 				<h2>Virtual Tours</h2>
-				<p>A virtual tour is a represententation of your excursion as a map.</p>
-				<p>Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>
+				<p i18n-key="i.walk79">A virtual tour is a represententation of your excursion as a map.</p>
+				<p i18n-key="i.walk80">Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>
 				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
-				<p>The arrows will be converted into a pin, which you can moved across the map.</p>
-				<p>To remove a pin from the map, just click the desired pin.</p>
-				<p><span>You can click on the "preview button" to show the resulting virtual tour before you save it.</span>
-					<img src="/vishEditor/images/icons/preview_circle.png"/>
+				<p i18n-key="i.walk81">The arrows will be converted into a pin, which you can moved across the map.</p>
+				<p i18n-key="i.walk82">To remove a pin from the map, just click the desired pin.</p>
+				<p i18n-key="i.walk83">You can click on the "preview button" to show the resulting virtual tour before you save it.<img src="/vishEditor/images/icons/preview_circle.png"/>
 				</p>
 			</li>
 		</ol>
 
 		<!--help for themes-->
 		<ol id="themes_help" class="joyRideTipContent">>
+		<li data-id="select_theme3" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+		 <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
+		   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
+		</li>
+		</ol>
+
+		<!--help for addslides-->
+		<ol id="help_addslides_selection_help" class="joyRideTipContent">>
 		<li data-id="select_theme3" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
 		 <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
 		   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
@@ -1359,11 +1371,34 @@
 		  <!--help for template selection fancybox-->
 		<ol id="help_template_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
-		 <h2 i18n-key="i.selectSlide">Selecting a Slide</h2>
+		 <h2 i18n-key="i.selectSlide">Adding a Slide</h2>
 		 <p i18n-key="i.walk14">This window offers you a variety of templates to create your excursion. You just have to click on one of the image to add it in order to fill it with your content. Click on "Close" to finish this walkthrough.</p>
 		</li>
 		</ol>
 
+		  <!--help for excursion selection fancybox-->
+		<ol id="help_excursion_selection_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+		 <h2 i18n-key="i.selectSlide">Adding Slides from another excursion</h2>
+		 <p i18n-key="i.walk77">This window offers you to search excursions in the Vish platform in order to add them (or add selected slides from them) into your excursion in just two steps. You just have to click on one of the excusions, click on preview (which will lead you to the next screen) ,choose the slides, and click on "add slides" in order to fill them to your content. Click on "Close" to finish this walkthrough.</p>
+		</li>
+		</ol>
+
+		<!--Pedagogical options fancybox-->
+		<ol id="help_pedagogical_selection_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+		 <h2 i18n-key="i.selectSlide">Peadgogical Aspects</h2>
+		 <p i18n-key="i.walk76">This window offers you to define your excursion in matters of <i>"age range, subject, languaje, objectives and competencies"</i>.<br> If you fill these fields you will show other users and viewers the information they need to use this excursion correctly.<br> Click on "Close" to finish this walkthrough.</p>
+		</li>
+		</ol>
+
+				  <!--help for smartcard selection fancybox-->
+		<ol id="help_smartcard_selection_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+		 <h2 i18n-key="i.selectSlide">Adding Flashcards or Virtual Tours</h2>
+		 <p i18n-key="i.walk78">This window offers you to search Flashcards or Virtual Tours in the Vish platform in order to add them into your excursion in just two steps. You just have to click on the smartcard you choose, click on preview (which will lead you to the next screen) and click on "add slides" in order to insert it to your content. Click on "Close" to finish this walkthrough.</p>
+		</li>
+		</ol>
 
 		<!--help for quiz selection fancybox-->
 		<ol id="quiz_help" class="joyRideTipContent">

@@ -90,8 +90,13 @@ VISH.SlideManager = (function(V,$,undefined){
 		$(document).on('click','#tab_quiz_session_help', function(){
 			V.Tour.startTourWithId('quiz_session_help', 'bottom');
 		});
+
 		$(document).on('click','#tab_quiz_stats_help', function(){
 			V.Tour.startTourWithId('quiz_stats_help', 'bottom');
+		});
+
+		$(document).on('click','#help_addslides_selection', function(){
+			V.Tour.startTourWithId('addslides_help', 'bottom');
 		});
 
 	};

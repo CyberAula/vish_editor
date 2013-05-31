@@ -112,6 +112,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Renderer.init(presentation);
 			//remove focus from any zone
 			_removeSelectableProperties();					
+		} else {
+			initialPresentation = false;
+			V.Editor.setMode(V.Constant.PRESENTATION);
 		}
 
 		
@@ -267,6 +270,11 @@ VISH.Editor = (function(V,$,undefined){
 			V.Tour.startTourWithId('template_help', 'bottom');
 		});
 
+		//add slides
+		$(document).on('click','.help_addslides_selection', function(){			
+			V.Editor.Tour.startTourWithId('help_addslides_selection_help', 'bottom');
+		});
+
 		//Quiz
 		$(document).on('click','#tab_quizes_help', function(){			
 			V.Tour.startTourWithId('quiz_help', 'bottom');
@@ -280,6 +288,21 @@ VISH.Editor = (function(V,$,undefined){
 		//template selection fancybox	
 		$(document).on('click','#help_template_selection', function(){
 			V.Tour.startTourWithId('help_template_selection_help', 'bottom');
+		});	
+
+		//pedagogical options fancybox	
+		$(document).on('click','#help_pedagogical_selection', function(){
+			V.Editor.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
+		});	
+
+				//template selection fancybox	
+		$(document).on('click','#help_excursion_selection', function(){
+			V.Editor.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+		});	
+
+				//template selection fancybox	
+		$(document).on('click','#help_smartcard_selection', function(){
+			V.Editor.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
 		});	
 		
 		//image fancybox, one help button in each tab

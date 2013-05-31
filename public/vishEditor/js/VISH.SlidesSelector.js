@@ -17,18 +17,21 @@ VISH.SlidesSelector = (function(V,$,undefined){
 			slides = [nSlides];
 			_acceptAll();
 			_updateIndex();
+			_updateAllInterface("accept");
 
 			//Select All
 			$("#ssbAll").click(function(event){
 				_acceptAll();
-				_updateInterface(V.Slides.getCurrentSlideNumber());
+				_updateAllInterface("accept");
+				_updateButtonValue(V.Slides.getCurrentSlideNumber());
 				_updateIndex();
 			});
 
 			//Unselect All
 			$("#ssbuAll").click(function(event){
 				_denyAll();
-				_updateInterface(V.Slides.getCurrentSlideNumber());
+				_updateAllInterface("deny");
+				_updateButtonValue(V.Slides.getCurrentSlideNumber());
 				_updateIndex();
 			});
 
@@ -38,11 +41,15 @@ VISH.SlidesSelector = (function(V,$,undefined){
 				if(slides[aIndex] === true){
 					//Deny
 					slides[aIndex] = false;
+					_updateOneInterface(V.Slides.getCurrentSlide(), "deny");
 				} else {
 					//Accept
 					slides[aIndex] = true;
+					_updateOneInterface(V.Slides.getCurrentSlide(), "accept");
 				}
-				_updateInterface(V.Slides.getCurrentSlideNumber());
+				$("#ssbAll").removeClass("selected_inactive");
+				$("#ssbuAll").removeClass("selected_inactive");
+				_updateButtonValue(V.Slides.getCurrentSlideNumber());
 				_updateIndex();
 			});
 
@@ -57,7 +64,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 			});
 
 			V.EventsNotifier.registerCallback(V.Constant.Event.onGoToSlide, function(params){ 
-				_updateInterface(params.slideNumber);
+				_updateButtonValue(params.slideNumber);
 			});
 
 			initialized = true;
@@ -80,7 +87,21 @@ VISH.SlidesSelector = (function(V,$,undefined){
 	_updateIndex = function(){
 		var nAcceptedSlides = _getAcceptedSlides().length;
 		$(countIndex).html("+"+nAcceptedSlides);
-	}
+		if(nAcceptedSlides===0){
+			$(countIndex).removeClass("selected_n_slides");
+			$(countIndex).addClass("selected_zero_slides");
+		}
+		else{
+			$(countIndex).removeClass("selected_zero_slides");
+			$(countIndex).addClass("selected_n_slides");
+		} 
+		$(countIndex).addClass("addslidetrans");
+		$(countIndex).addClass("addslidetrans2");
+		setTimeout(function(){
+			$(countIndex).removeClass("addslidetrans");
+			$(countIndex).removeClass("addslidetrans2");
+		},800);
+	}	
 
 	_getAcceptedSlides = function(){
 		var aSlides = [];
@@ -90,15 +111,37 @@ VISH.SlidesSelector = (function(V,$,undefined){
 			}
 		}
 		return aSlides;
-	}
+	};
 
-	_updateInterface = function(slideNumber){
-		if(slides[slideNumber-1] === true){
-			$(acceptButton).html("Deny");
-		} else {
-			$(acceptButton).html("Accept");
+	//params: status can be "accept" or "deny"
+	_updateAllInterface = function(status){
+		if(status==="accept"){
+			$("#ssbAll").addClass("selected_inactive");
+			$("#ssbuAll").removeClass("selected_inactive");
+		}else{
+			$("#ssbuAll").addClass("selected_inactive");
+			$("#ssbAll").removeClass("selected_inactive");
 		}
-	}
+		var all_slides = V.Slides.getSlides();
+		for (var i = 0; i < all_slides.length; i++) {
+			_updateOneInterface(all_slides[i], status);
+		};
+	};
+
+	//params: the_slide is the slide element, status can be "accept" or "deny"
+	_updateOneInterface = function(the_slide, status){
+		$(the_slide).removeClass("selected_accept");
+		$(the_slide).removeClass("selected_deny");
+		$(the_slide).addClass("selected_"+status);
+	};
+
+	_updateButtonValue = function(slideNumber){
+		if(slides[slideNumber-1] === true){
+			$(acceptButton).html('<img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Remove Slide');
+		} else {
+			$(acceptButton).html('<img class="imgbutton" src="/vishEditor/images/quiz/checkbox_checked.png"/>Add Slide');
+		}
+	};
 
 
 	return {

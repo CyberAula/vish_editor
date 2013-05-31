@@ -420,7 +420,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		var presentation = V.Editor.savePresentation();
 		V.Editor.setPresentation(presentation);
-		V.Editor.setPresentationType("presentation");
+		V.Editor.setPresentationType(V.Constant.PRESENTATION);
 		V.Editor.Slides.showSlides();
 		V.Editor.Thumbnails.redrawThumbnails();
 		V.Editor.Tools.init();

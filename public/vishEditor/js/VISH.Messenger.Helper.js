@@ -53,6 +53,12 @@ VISH.Messenger.Helper = (function(V,undefined){
 					return false;
 				}
 			}
+			//Avoid messages from subiframes
+			if((typeof VEMessageObject.origin != "undefined")&&(VEMessageObject.origin!=="?")){
+				if($.contains(document, $("#"+VEMessageObject.origin)[0])){
+					return false;
+				}
+			}
 		} catch(e){
 			return false;
 		}
@@ -66,6 +72,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 
 	var processVEMessage = function(VEMessage){
 		var VEMessageObject = JSON.parse(VEMessage);
+
 		switch(VEMessageObject.VEevent){
 			case V.Constant.Event.onGoToSlide:
 				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
