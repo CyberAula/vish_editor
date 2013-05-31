@@ -214,7 +214,8 @@ var i18n =
 				"i.publish"				: "Publicar",
 				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado.",
-				"i.Remove"				: "Borrar"
+				"i.Remove"				: "Borrar",
+				"i.ZoneTooltip"			: "Click aquí para añadir contenido"
 			},
 			
 		  "default" :
@@ -229,7 +230,8 @@ var i18n =
 				"i.limitReached"				: "limit reached",
 				"i.wysiwyg.addurl"				: "Add link",
 				"i.Title"						: "Título",
-				"i.exitConfirmation"			: "You are about to leave this website. You will lose any changes you have not saved."
+				"i.exitConfirmation"			: "You are about to leave this website. You will lose any changes you have not saved.",
+				"i.ZoneTooltip"					: "Click here to add content"
 			}
 		},
 	 "standalone":

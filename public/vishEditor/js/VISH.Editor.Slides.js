@@ -287,7 +287,16 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		if(!standardSlide){
 			V.Editor.Tools.Menu.init();
 		}
-	}
+	};
+
+	var addTooltipsToAddedSlide = function(){
+		var last_slide = $(".slides article").filter(":last");
+		var tooltip = "<span class='zone_tooltip'>"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
+		var zones = last_slide.find(".editable");
+		for (var i = 0; i < zones.length; i++) {
+			$(last_slide.find(".editable")[i]).append(tooltip);
+		};
+	};
 
 	return {
 		showSlides				: showSlides,
@@ -299,6 +308,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
+		addTooltipsToAddedSlide : addTooltipsToAddedSlide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 

@@ -427,6 +427,7 @@ VISH.Editor = (function(V,$,undefined){
 		$.fancybox.close();
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+		V.Editor.Slides.addTooltipsToAddedSlide();
 		V.Editor.Slides.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		setTimeout(function(){
