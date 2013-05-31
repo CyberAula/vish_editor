@@ -245,92 +245,92 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var _addTutorialEvents = function(){
 		$(document).on('click','#start_tutorial', function(){
-			V.Editor.Tour.startTourWithId('initial_screen_help', 'top');
+			V.Tour.startTourWithId('initial_screen_help', 'top');
 		});
 
 		$(document).on('click','#help_right', function(){
-			V.Editor.Tour.startTourWithId('menubar_help', 'top');
+			V.Tour.startTourWithId('menubar_help', 'top');
 		});
 
 		//flashcard
 		$(document).on('click','#help_flashcard', function(){
-			V.Editor.Tour.startTourWithId('fc_help', 'top');
+			V.Tour.startTourWithId('fc_help', 'top');
 		});
 
 		//vtour
 		$(document).on('click','#help_vtour', function(){
-			V.Editor.Tour.startTourWithId('vt_help', 'top');
+			V.Tour.startTourWithId('vt_help', 'top');
 		});
 
 		//template
 		$(document).on('click','.help_in_template', function(){			
-			V.Editor.Tour.startTourWithId('template_help', 'bottom');
+			V.Tour.startTourWithId('template_help', 'bottom');
 		});
 
 		//Quiz
 		$(document).on('click','#tab_quizes_help', function(){			
-			V.Editor.Tour.startTourWithId('quiz_help', 'bottom');
+			V.Tour.startTourWithId('quiz_help', 'bottom');
 		});
 
 		//themes
 		$(document).on('click','#help_themes_selection', function(){			
-			V.Editor.Tour.startTourWithId('themes_help', 'bottom');
+			V.Tour.startTourWithId('themes_help', 'bottom');
 		});
 		
 		//template selection fancybox	
 		$(document).on('click','#help_template_selection', function(){
-			V.Editor.Tour.startTourWithId('help_template_selection_help', 'bottom');
+			V.Tour.startTourWithId('help_template_selection_help', 'bottom');
 		});	
 		
 		//image fancybox, one help button in each tab
 		$(document).on('click','#tab_pic_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
+			V.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_pic_upload_help', function(){
-			V.Editor.Tour.startTourWithId('upload_picture_form_help', 'top');
+			V.Tour.startTourWithId('upload_picture_form_help', 'top');
 		});
 		$(document).on('click','#tab_pic_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_picture_help', 'bottom');
+			V.Tour.startTourWithId('search_picture_help', 'bottom');
 		});
 		$(document).on('click','#tab_pic_flikr_help', function(){
-			V.Editor.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
+			V.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
 		
 		//object fancybox, one help button in each tab
 		$(document).on('click','#tab_object_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
+			V.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_object_from_web_help', function(){
-			V.Editor.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
+			V.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
 		});
 		$(document).on('click','#tab_object_upload_help', function(){
-			V.Editor.Tour.startTourWithId('upload_object_form_help', 'top');
+			V.Tour.startTourWithId('upload_object_form_help', 'top');
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_object_help', 'bottom');
+			V.Tour.startTourWithId('search_object_help', 'bottom');
 		});
 		$(document).on('click','#tab_object_snapshot_help', function(){
-			V.Editor.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
+			V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
 		});
 
 		
 		//video fancybox, one help button in each tab
 		$(document).on('click','#tab_video_from_url_help', function(){
-			V.Editor.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+			V.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
 		});	
 		$(document).on('click','#tab_video_repo_help', function(){
-			V.Editor.Tour.startTourWithId('search_video_help', 'top');
+			V.Tour.startTourWithId('search_video_help', 'top');
 		});
 		$(document).on('click','#tab_video_youtube_help', function(){
-			V.Editor.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
+			V.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
 		});
 		$(document).on('click','#tab_video_vimeo_help', function(){
-			V.Editor.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
+			V.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
 		});
 		
 		// live fancybox, one help button in each tab
 		$(document).on('click','#tab_live_webcam_help', function(){
-				V.Editor.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+				V.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
 		});	
 	};
   

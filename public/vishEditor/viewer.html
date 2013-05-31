@@ -11,11 +11,17 @@
 	<script>window.jQuery || document.write('<script src="/vishEditor/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.fancybox-1.3.4.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.joyride-1.0.5.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/yt_iframe_api.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/modernizr.mq.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/modernizr.foundation.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/yt_iframe_api.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/RegaddiChart.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.watermark.min.js"></script>
     
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/joyride-1.0.5.css">
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/jquery.fancybox-1.3.4.css"/>
@@ -72,7 +78,9 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.Quiz.API.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.QuizCharts.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.SlidesSelector.js"></script>
-    
+    <script type="text/javascript" src="/vishEditor/js/VISH.Tour.js"></script>
+
+
     <!-- load google visualization libraries -->
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -228,6 +236,22 @@
         </div>
     </div>
 
+
+    <!-- WALKTHROUGH HELP SECTION -->
+    <!--help for themes-->
+    <ol id="quiz_session_help" class="joyRideTipContent">>
+        <li data-id="tab_quiz_session_content" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+         <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
+           <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
+        </li>
+    </ol>
+
+    <ol id="quiz_stats_help" class="joyRideTipContent">>
+        <li data-id="tab_quiz_stats_content" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+         <h2 i18n-key="i.themesTitle">Vish Editor Themes 2</h2>
+           <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
+        </li>
+    </ol>
 
     <script>
         function start(){

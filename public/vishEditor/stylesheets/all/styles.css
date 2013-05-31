@@ -873,3 +873,31 @@ div.quizQr > table {
   right: 0%;
   margin-right: 10px;
 }
+
+/*
+ * TUTORIALS
+ */
+.tut_themes {
+  left: 250px;
+  position: absolute;
+  top: 265px;
+}
+
+.tut_with_arrow span.joyride-nub {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color:  #0066ff;
+}
+
+.tut_with_arrow_up span.joyride-nub {
+  border-bottom-color: #0066ff;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.tut_without_arrow span.joyride-nub{
+  display: none;
+}
+

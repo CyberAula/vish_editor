@@ -46,7 +46,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		});
 	};
 
-	var _initAferStatusLoaded = function(options,presentation){
+	var _initAferStatusLoaded = function(options,presentation){		
 		V.Flashcard.init();
 		V.VirtualTour.init();
 		V.Quiz.initBeforeRender(presentation);
@@ -61,6 +61,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		V.Events.init();
 		V.EventsNotifier.init();
 	  	V.VideoPlayer.init();
+		_addTutorialEvents();
 
 		V.Themes.loadTheme(presentation.theme);
 		mySlides = presentation.slides;
@@ -80,6 +81,20 @@ VISH.SlideManager = (function(V,$,undefined){
 			window.focus();
 		}
 	}
+
+
+	/**
+	* function to add the events to the help buttons to launch joy ride bubbles
+	*/
+	var _addTutorialEvents = function(){
+		$(document).on('click','#tab_quiz_session_help', function(){
+			V.Tour.startTourWithId('quiz_session_help', 'bottom');
+		});
+		$(document).on('click','#tab_quiz_stats_help', function(){
+			V.Tour.startTourWithId('quiz_stats_help', 'bottom');
+		});
+
+	};
 
 
 	/**
