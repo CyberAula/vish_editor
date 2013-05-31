@@ -295,14 +295,14 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
 		});	
 
-				//template selection fancybox	
+		//template selection fancybox	
 		$(document).on('click','#help_excursion_selection', function(){
-			V.Editor.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
 		});	
 
 				//template selection fancybox	
 		$(document).on('click','#help_smartcard_selection', function(){
-			V.Editor.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
+			V.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
 		});	
 		
 		//image fancybox, one help button in each tab
