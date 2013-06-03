@@ -46,9 +46,15 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		reader.readAsText(file);
 	}
 
+	var exportToJSON = function(){
+		var presentation = V.Editor.savePresentation();
+		V.Editor.API.downloadJSON(presentation);
+	}
+
 	return {
 		init 				: init,
-		onLoadTab 			: onLoadTab
+		onLoadTab 			: onLoadTab,
+		exportToJSON		: exportToJSON
 	};
 
 }) (VISH, jQuery);

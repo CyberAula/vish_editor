@@ -500,6 +500,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#addJSONFancybox").trigger('click');
 	};
 
+	var exportToJSON = function(){
+		VISH.Editor.Presentation.File.exportToJSON();
+	};
+
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
 			$("#menu").hide();
@@ -519,6 +523,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
 		insertJSON						: insertJSON,
+		exportToJSON 					: exportToJSON,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,

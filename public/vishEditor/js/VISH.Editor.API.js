@@ -476,6 +476,29 @@ VISH.Editor.API = (function(V,$,undefined){
       });
   }
 	
+
+  var downloadJSON = function(json){
+    console.log("downloadJSON");
+    console.log(json)
+
+    $.ajax({
+      async: false,
+      type: 'POST',
+      url: '/downloadExcursionJSON.json',
+      dataType: 'json',
+      data: { 
+        'json': JSON.stringify(json)
+      },
+      success: function(data) {
+          console.log("downloadJSON");
+          console.log(data);
+      },
+      error: function(xhr, ajaxOptions, thrownError){
+          console.log("downloadJSON error");
+      }
+    });
+  }
+
 	
 	return {
 		init					              : init,
@@ -494,7 +517,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestLives                : requestLives,
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
-		requestThumbnails           : requestThumbnails
+		requestThumbnails           : requestThumbnails,
+    downloadJSON                : downloadJSON
 	};
 
 }) (VISH, jQuery);
