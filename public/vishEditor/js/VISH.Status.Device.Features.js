@@ -23,6 +23,13 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		//Session management
 		features.history = (typeof history === "object")&&(typeof history.back === "function")&&(typeof history.go === "function");
 
+		//FileReader API
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+			features.reader = true;
+		} else {
+			features.reader = false;
+		}
+
 		return features;
 	};
 	

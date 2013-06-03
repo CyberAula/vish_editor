@@ -110,6 +110,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.Repository.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.File.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
 	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
@@ -232,8 +233,8 @@
 									<li>
 										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertSmartcard" i18n-key="i.Smartcard">Smartcard</a>
 									</li>
-									<li>
-										<a style="display:none" class="menu_option menu_action" i18n-key="i.Game">Game</a>
+									<li class="liInsertJson">
+										<a style="display:none" class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertJSON">JSON</a>
 									</li>
 								</ul>
 							</li>							
@@ -296,7 +297,8 @@
     <a id="addSlideFancybox" href="#thumbcontent" style="display: none;"></a>
     <!-- Hidden link to open fancybox when adding a quiz inside a slide -->
     <a id="addQuizFancybox" href="#quizcontent" style="display: none;"></a>
-    
+    <!-- Hidden link to open fancybox when adding a json  -->
+    <a id="addJSONFancybox" href="#json_fancybox" style="display: none;"></a>
     <!-- Hidden link to open fancybox when creating a new presentation -->
     <a id="launch_presentation_details" href="#presentationdetails" style="display: none;"></a>
 
@@ -612,7 +614,29 @@
 		</div>
 	    
 	  </div>
-	  	  
+	  	
+
+    <!-- JSON fancybox -->
+	  <div style='display:none'>
+	    <div id="json_fancybox" class="outer_box">
+				<div class="fancy_tabs" id="json_fancy_tabs_id">  
+				  <ul>
+				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_json_file')" id="tab_json_file" class="fancy_tab">file</a></li>
+				  </ul>
+				  <img class='help_in_fancybox' id='tab_json_file_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				</div>
+				<div id='tab_json_file_content' class="fancy_tab_content">
+					<div class="box1 box1fancy3">
+						<p class="textfancy">Add Excursion or Smartcard from JSON file</p></br>
+						<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
+						<input id="json_file_input" type="file" id="files" name="files[]" multiple />
+						<button id="json_preview_button" type="button" class="button buttonfancy previewButton" i18n-key="i.preview">Preview</button>
+					</div>
+				</div> 
+	    </div>
+	  </div>
+
+
 	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>
 	  	<input type="hidden" id="prompt_answer" value="false"></input>

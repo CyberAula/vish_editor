@@ -1,6 +1,7 @@
 VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var init = function(){
+		V.Editor.Presentation.File.init();
 		V.EventsNotifier.registerCallback(V.Constant.Event.onSelectedSlides, function(params){ 
 			insertPresentation(params.JSON,params.acceptedSlides);
 			$.fancybox.close();

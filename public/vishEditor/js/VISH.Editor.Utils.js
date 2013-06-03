@@ -486,13 +486,15 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case "tab_object_repo":
 				V.Editor.Object.Repository.onLoadTab();
-				break;	
-			//Live
+				break;
 			case "tab_live_webcam":
 				V.Editor.Object.Live.onLoadTab("webcam");
 				break;
 			case "tab_live_micro":
 				V.Editor.Object.Live.onLoadTab("micro");
+				break;
+			case "tab_json_file":
+				V.Editor.Presentation.File.onLoadTab();
 				break;
  			//Default
 			default:

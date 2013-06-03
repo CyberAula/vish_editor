@@ -143,6 +143,18 @@ VISH.Editor = (function(V,$,undefined){
 				V.Editor.Utils.loadTab('tab_quizes');
 			}
 		});
+
+		// fancybox to insert JSON	
+		$("a#addJSONFancybox").fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': 800,
+			'height': 300,
+			'padding' : 0,
+			"onComplete"  : function(data) {
+				V.Editor.Utils.loadTab('tab_json_file');
+			}
+		});
 	
 		if(!eventsLoaded){
 			eventsLoaded = true;

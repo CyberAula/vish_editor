@@ -496,6 +496,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Editor.Utils.loadTab('tab_templates');
 	};
 
+	var insertJSON = function(){
+		$("#addJSONFancybox").trigger('click');
+	};
+
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
 			$("#menu").hide();
@@ -514,6 +518,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertPresentation				: insertPresentation,
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
+		insertJSON						: insertJSON,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,

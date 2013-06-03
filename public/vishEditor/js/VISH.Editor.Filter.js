@@ -20,6 +20,12 @@ VISH.Editor.Filter = (function(V,$,undefined){
 				$("#tab_object_snapshot").hide();
 				break;
 		}
+
+		//Disable file reader when is not supported
+		if(!device.features.reader){
+			$(".liInsertJson > a").css("display","none");
+		}
+		
 	}
 
 
