@@ -292,7 +292,8 @@ VISH.Editor = (function(V,$,undefined){
 
 		//pedagogical options fancybox	
 		$(document).on('click','#help_pedagogical_selection', function(){
-			V.Editor.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
+			console.log('works');
+			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
 		});	
 
 		//template selection fancybox	
