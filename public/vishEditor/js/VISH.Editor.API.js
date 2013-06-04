@@ -477,26 +477,31 @@ VISH.Editor.API = (function(V,$,undefined){
   }
 	
 
-  var downloadJSON = function(json){
-    console.log("downloadJSON");
-    console.log(json)
-
+  var uploadTmpJSON = function(json){
     $.ajax({
       async: false,
       type: 'POST',
-      url: '/downloadExcursionJSON.json',
+      url: '/excursions/tmpJson.json',
       dataType: 'json',
       data: { 
-        'json': JSON.stringify(json)
+        "authenticity_token" : V.User.getToken(),
+        "json": JSON.stringify(json)
       },
       success: function(data) {
-          console.log("downloadJSON");
-          console.log(data);
+          if((data)&&(data.fileId)){
+            V.Editor.API.downloadTmpJSON(data.fileId);
+          }
       },
       error: function(xhr, ajaxOptions, thrownError){
-          console.log("downloadJSON error");
+          V.Debugging.log("uploadTmpJSON error");
       }
     });
+  }
+
+  var downloadTmpJSON = function(fileId){
+    var filename = fileId
+    var iframe = $("#hiddenIframeForAjaxDownloads");
+    $(iframe).attr("src",'/excursions/tmpJson.json?fileId='+fileId+'&filename='+filename);
   }
 
 	
@@ -518,7 +523,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
-    downloadJSON                : downloadJSON
+    uploadTmpJSON               : uploadTmpJSON,
+    downloadTmpJSON             : downloadTmpJSON
 	};
 
 }) (VISH, jQuery);

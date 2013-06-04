@@ -48,7 +48,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 
 	var exportToJSON = function(){
 		var presentation = V.Editor.savePresentation();
-		V.Editor.API.downloadJSON(presentation);
+		V.Editor.API.uploadTmpJSON(presentation);
 	}
 
 	return {
