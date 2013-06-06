@@ -32,6 +32,12 @@ VISH.Events = (function(V,$,undefined){
 		$(document).on('click', '#page-switcher-end', function(){
 			V.Slides.forwardOneSlide();
 		});
+		$(document).on('keypress', '#slide-counter-input', function(e){
+			if(e.which == 13) { //pressed enter in the goToSlide input field
+				V.Slides.goToSlide($("#slide-counter-input").val());
+			}
+		});
+
 
 		$(document).on('click', '#closeButton', function(event){
 			event.stopPropagation();

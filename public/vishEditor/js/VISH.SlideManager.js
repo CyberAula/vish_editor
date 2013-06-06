@@ -271,7 +271,8 @@ VISH.SlideManager = (function(V,$,undefined){
 		if(number_of_slides===0){
 			slide_number=0;
 		}
-		$("#slide-counter").html(slide_number + "/" + number_of_slides);
+		$("#slide-counter-input").val(slide_number);
+		$("#slide-counter-span").html("/" + number_of_slides);
 	};
 	
 

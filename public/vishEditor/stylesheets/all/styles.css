@@ -262,12 +262,24 @@ this can not be done with show() and hide() because then it remains with display
   z-index: 2;
 }
 
-#slide-counter {
+#slide-counter-div {
 z-index: 10;
 font-family: Helvetica;
 font-size: 1.2em;
 text-align: center;
 margin-top: 8px;
+}
+
+#slide-counter-span{
+
+}
+
+#slide-counter-input{
+  width: 24px;
+  padding: 1px 1px 1px 0;
+  text-align: right;
+  height: 20px;
+  font-size: 1.0em;
 }
 
 .viewbar {
