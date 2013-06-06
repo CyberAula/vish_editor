@@ -1,4 +1,4 @@
-.slides > article {
+section.slides > article:not(.slideset_slide), section.slides > article article.subslide {
   background-color: transparent;
   border: none;
   background: url(/vishEditor/images/themes/theme11/bg.png) top;
@@ -42,7 +42,7 @@
   position: relative;
 }
 
-.slides {
+section.slides {
   background: rgb(181,189,200); /* Old browsers */
   background: url(/vishEditor/images/background1.png) no-repeat 255px, -moz-linear-gradient(top,  rgba(181,189,200,1) 0%, rgba(130,140,149,1) 36%, rgba(40,52,59,1) 100%); /* FF3.6+ */
   background: url(/vishEditor/images/background1.png) no-repeat 255px, -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,189,200,1)), color-stop(36%,rgba(130,140,149,1)), color-stop(100%,rgba(40,52,59,1))); /* Chrome,Safari4+ */
