@@ -47,6 +47,7 @@ body {
 }
 
 .slides {
+  overflow: hidden; /*to disable horizontal scroll when selecting with the mouse*/
 	background: url(/vishEditor/images/background1.png) no-repeat 300px, url(/vishEditor/images/background_text.jpg) repeat 300px;
 	background-position: center; 
   width: 100%;
