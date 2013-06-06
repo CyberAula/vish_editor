@@ -2020,8 +2020,7 @@ div.poi_label_container{
 }
 
 .zone_tooltip {
-	display: none;
-	opacity: 0.5;
+	opacity: 0.2;
 	font-family: arial;
 	color: #fff;
 	font-weight: bold;
