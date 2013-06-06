@@ -86,6 +86,9 @@ VISH.Text = (function(V,$,undefined){
 					fontSize = V.Constant.TextDefault; //Default font
 				}
 				var em = (fontSize/V.Constant.TextBase) + "em";
+				if(typeof oldStyle == "undefined"){
+					oldStyle = "";
+				}
 				newStyle = V.Utils.addFontSizeToStyle(oldStyle,em);
 				$(span).attr("style",newStyle);
 			}
