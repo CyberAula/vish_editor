@@ -282,6 +282,15 @@ margin-top: 8px;
   font-size: 1.0em;
 }
 
+#slide-counter-input:hover{
+  cursor: pointer;
+  border-radius: 1px;
+}
+
+#slide-counter-input:focus{
+  border-radius: 3px;
+}
+
 .viewbar {
   background-image: -moz-linear-gradient(#ececec,#a8a8a8);
   background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#ececec),to(#a8a8a8));
