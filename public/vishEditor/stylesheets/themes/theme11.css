@@ -12,6 +12,11 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
   padding-right: 7%;
 }
 
+section.slides > article.slideset_slide {
+  background-color: transparent;
+  border: none;
+}
+
 .slides > article > div.grey_background {
   background-color: rgba(255, 255, 255, 0.3);
 }
