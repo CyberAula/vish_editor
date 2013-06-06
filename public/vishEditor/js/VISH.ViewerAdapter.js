@@ -72,11 +72,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for embed
 			fs_button = fs_button && (!embed);
 
-			if(V.Configuration.getConfiguration()["mode"]!==V.Constant.VISH){
-				$(".rec-first-row").hide();
+			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
+				$(".rec-first-row").show();
 			}
 			else{
-				$(".rec-first-row").show();
+				$(".rec-first-row").hide();
 			}
 
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
