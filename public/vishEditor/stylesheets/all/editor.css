@@ -12,6 +12,23 @@ img {
 	z-index: 1075;
 }
 
+.empty_slide_button {
+	cursor: default !important;
+	opacity: 0.6 !important
+}
+
+.empty_slide_button:hover {
+	cursor: default !important;
+	opacity: 0.6 !important;
+-webkit-box-shadow: none !important;
+-moz-box-shadow: none !important;
+box-shadow: none !important;
+}
+
+.empty_slide_button:active {
+border: none !important;
+}
+
 #presentation_details_fields {
 	top:-32px;
 	background: url(/vishEditor/images/excursiondetails_bg.png) no-repeat top;
