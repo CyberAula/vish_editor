@@ -1494,6 +1494,7 @@ right: 21px;
 iframe {
 	width: 100%;
 	height: 100%;
+	border: none;
 }
 	
 /** Slides bar **/
