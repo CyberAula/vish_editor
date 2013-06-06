@@ -23,6 +23,10 @@ img {
 	overflow: hidden;
 }
 
+section.slides {
+	overflow: hidden;
+}
+
 .barbuttonaddsave{
 	position: relative;
 	top: 8px;
