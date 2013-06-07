@@ -226,7 +226,8 @@ var i18n =
 				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado.",
 				"i.Remove"				: "Borrar",
-				"i.ZoneTooltip"			: "Click aquí para añadir contenido"
+				"i.ZoneTooltip"			: "Click aquí para añadir contenido",
+				"i.pNotValid"			: "Este recurso no puede ser abierto porque está dañado o no es compatible con la versión actual de ViSH Editor."
 			},
 			
 		  "default" :

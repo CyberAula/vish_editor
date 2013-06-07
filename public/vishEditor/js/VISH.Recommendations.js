@@ -78,7 +78,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	if(V.Status.getIsEmbed()){
         		result += '<a href="'+ex.url+'.full">';
         	}
-        	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+ex.id+'">'+
+        	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+i+'">'+
                         '<ul class="rec-thumbnail">'+
                           '<li class="rec-img-excursion">'+
                            '<img src="'+ex.image+'">'+
