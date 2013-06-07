@@ -7,7 +7,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var fs_button;
 	var can_use_nativeFs;
 	var embed;
-	var display_recommendations;
 	var showViewbar;
 
 	//Fullscreen fallbacks
@@ -80,7 +79,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
-
+			
 		} else {
 			render_full = false;
 			is_preview = false;
