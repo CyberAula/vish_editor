@@ -1647,6 +1647,10 @@ img.excursionSelectedInCarrousel:active , img.smartcardSelectedInCarrousel:activ
 	cursor: pointer;
 }
 
+.draggable_arrow_div img.fc_draggable_arrow:active {
+	border: none !important;
+}
+
 .draggable_arrow_div img.fc_draggable_arrow:hover  {
 		-webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
