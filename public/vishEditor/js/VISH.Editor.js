@@ -1125,6 +1125,9 @@ VISH.Editor = (function(V,$,undefined){
 			if(V.Editor.Flashcard.hasFlascards()){
 				return false;
 			}
+			if(V.Editor.VirtualTour.hasVirtualTours()){
+				return false;
+			}
 			return true;
 		}
 

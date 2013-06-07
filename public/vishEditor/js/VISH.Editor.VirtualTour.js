@@ -23,7 +23,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	}
 
 	var hasVirtualTours = function(){
-		return $("section.slides > .VirtualTour_slide[type='VirtualTour']").length>0;
+		return $("section.slides > .virtualTour_slide[type='VirtualTour']").length>0;
 	}
 
 	var getSlideset = function(id){
