@@ -37,6 +37,10 @@ VISH.SlideManager = (function(V,$,undefined){
 
 		V.Utils.init();
 		presentation = V.Utils.fixPresentation(presentation);
+		if(presentation===null){
+			V.Utils.showPNotValidDialog();
+			return;
+		}
 		current_presentation = presentation;
 		setPresentationType(presentation.type);
 		

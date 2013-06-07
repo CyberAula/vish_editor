@@ -107,6 +107,10 @@ VISH.Editor = (function(V,$,undefined){
 		//If we have to edit
 		if(presentation){
 			presentation = V.Utils.fixPresentation(presentation);
+			if(presentation===null){
+				V.Utils.showPNotValidDialog();
+				return;
+			}
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Renderer.init(presentation);

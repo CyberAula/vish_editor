@@ -60,9 +60,14 @@ VISH.Utils = (function(V,undefined){
 	};
 
 	/**
-	 * Fix old JSON formats, update to current version
+	 * Fix presentations with old JSON format
+	 * Try to update them to current version
+	 * Return null if presentation is irretrievable
 	 */
 	var fixPresentation = function(presentation){
+		if((typeof presentation == "undefined")||(presentation === null)){
+			return null;
+		}
 		if(typeof presentation.type == "undefined"){
 			presentation.type = V.Constant.STANDARD;
 		}
@@ -138,6 +143,19 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 		return slide;
+	}
+
+	var showPNotValidDialog = function(){
+		$.fancybox(
+			$("#presentation_not_valid_wrapper").html(),
+			{
+				'autoDimensions'  : false,
+				'width'           : 650,
+				'height'          : 250,
+				'showCloseButton' : false,
+				'padding'       : 0
+			}
+		);
 	}
 
 	var getOuterHTML = function(tag){
@@ -510,7 +528,8 @@ VISH.Utils = (function(V,undefined){
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
 		getParamsFromUrl		: getParamsFromUrl,
-		fixPresentation			: fixPresentation
+		fixPresentation			: fixPresentation,
+		showPNotValidDialog		: showPNotValidDialog
    };
 
 }) (VISH);

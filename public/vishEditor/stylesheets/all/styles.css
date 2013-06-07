@@ -1106,14 +1106,87 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6
 }
 
 .unselectedslidetut {
-top: 320px;
-left: 388px;
-position: absolute;
-float: left;
+  top: 320px;
+  left: 388px;
+  position: absolute;
+  float: left;
   width: 30px;
   height: 20px;
   border: 1px solid red !important;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
+}
+
+
+/* Import slides */
+
+.buttonadd {
+    padding: 5px 10px;
+    display: inline;
+    text-decoration:none;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(99%,#f3f3f3)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 99%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f3f3f3',GradientType=0 ); /* IE6-9 */
+    opacity: 1;
+    color:#000;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.selected_inactive {
+  cursor: default !important;
+  opacity: 0.4 !important;
+}
+
+/* Presentation not valid dialog */
+
+div.fancy_msg_advert{
+  text-align: center;
+  padding: 20px 20px 20px 20px;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;  
+}
+
+span.adverttext{
+  text-decoration:none;
+  font-family:Helvetica;
+  font-size:32px;
+  color:#CCC;
+  padding-bottom: 15px;
+}
+
+div.button_advert_wrapper{
+  margin-top: 50px;
+  text-align: center;
+}
+
+a.button_advert {
+  width: 60px;
+  height: 23px;
+  padding: 5px 10px;
+  display: inline;
+  text-decoration:none;
+  background: #ff005d repeat-x bottom;
+  opacity: 0.6;
+  color:#f9f9f9;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+a.button_advert:hover {
+  opacity: 1;
+  text-shadow: 1px 1px #666;
 }
