@@ -505,6 +505,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Editor.Presentation.File.exportToJSON(function(){
 			//on success
 			V.Utils.Loader.stopLoading();
+		}, function(){
+			//on fail
+			V.Utils.Loader.stopLoading();
 		});
 	};
 
