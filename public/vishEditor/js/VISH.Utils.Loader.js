@@ -187,9 +187,13 @@ VISH.Utils.Loader = (function(V,undefined){
       $.fancybox.close();
     }
 
-    var startLoadingInContainer = function(container){
+    var startLoadingInContainer = function(container,options){
       $(container).html($("#loading_fancy_wrapper").html());
       $(container).addClass("loadingtmpShown");
+
+      if((options)&&(options.style)){
+         $(container).find(".loading_fancy_img").addClass(options.style);
+      }
     }
 
     var stopLoadingInContainer = function(container){

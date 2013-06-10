@@ -389,7 +389,9 @@ VISH.Editor.API = (function(V,$,undefined){
     if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
       if(typeof successCallback == "function"){
             tags = V.Samples.API.tagsList['tags'];
-            successCallback(V.Samples.API.tagsList['tags']);
+            setTimeout(function(){
+              successCallback(V.Samples.API.tagsList['tags']);
+            }, 2000);
       }
       return;
     }
@@ -426,7 +428,9 @@ VISH.Editor.API = (function(V,$,undefined){
 
       if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
         if(typeof successCallback == "function"){
-              successCallback(V.Samples.API.thumbnailsList);
+              setTimeout(function(){
+                successCallback(V.Samples.API.thumbnailsList);
+              }, 2000);
         }
         return;
       }
@@ -462,7 +466,6 @@ VISH.Editor.API = (function(V,$,undefined){
       }
       return;
     }
-
 
     $.ajax({
       async: false,

@@ -29,7 +29,10 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		}
 
 		if(avatars===null){
-			$("#" + thumbnailsDetailsId).hide();
+			//Clean previous carrousel
+			V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+			$("#" + carrouselDivId).hide();
+			V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId),{style: "loading_avatars"});
 			V.Editor.API.requestThumbnails(_onThumbnailsReceived,_onThumbnailsError);
 		} else {
 			_selectAvatarInCarrousel(selectedAvatar);
@@ -125,9 +128,6 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	var _onThumbnailsReceived = function(data){
 		avatars = data;
 
-		//Clean previous carrousel
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-
 		//Build new carrousel
 		var content = "";
 		var carrouselImages = [];
@@ -148,14 +148,14 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	}
 	
 	var _onImagesLoaded = function(){
-		$("#" + thumbnailsDetailsId).show(); 
+		$("#" + carrouselDivId).show(); 
+		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 
 		var options = new Array();
 		options['rows'] = 1;
 		options['callback'] = _onAvatarSelected;
 		options['rowItems'] = 5;
 		options['styleClass'] = "thumbnails";
-
 		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
 		$(".buttonintro").addClass("buttonintro_extramargin");

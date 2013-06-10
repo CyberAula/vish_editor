@@ -1410,8 +1410,18 @@ a.button_advert:hover {
 }
 
 img.loading_fancy_img{
-  height: 10%;
-  margin-top: 40%;
+  height: 15%;
+  margin-top: 30%;
+}
+
+img.loading_avatars{
+  height: 10% !important;
+  margin-top: 0% !important;
+}
+
+img.loading_presentation_carrousel{
+  height: 30% !important;
+  margin-top: 32% !important;
 }
 
 .waitCursor {
@@ -1425,3 +1435,4 @@ img.loading_fancy_img{
 .loadingtmpShown img:not(.loading_fancy_img) {
   display: none !important;
 }
+
