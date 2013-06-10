@@ -501,10 +501,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var exportToJSON = function(){
-		//TODO: Show Loading
-		VISH.Editor.Presentation.File.exportToJSON(function(){
+		V.Utils.Loader.startLoading();
+		V.Editor.Presentation.File.exportToJSON(function(){
 			//on success
-			//TODO: Hide Loading
+			V.Utils.Loader.stopLoading();
 		});
 	};
 

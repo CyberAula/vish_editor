@@ -2062,3 +2062,16 @@ float: left;
 .waitCursor {
 	cursor: wait !important;
 }
+
+/* Loading fancy */
+
+#loading_fancy{
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+img.loading_fancy_img{
+	height: 10%;
+	margin-top: 40%;
+}

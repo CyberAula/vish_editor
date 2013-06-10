@@ -298,6 +298,10 @@
     <a id="addJSONFancybox" href="#json_fancybox" style="display: none;"></a>
     <!-- Hidden link to open fancybox when creating a new presentation -->
     <a id="launch_presentation_details" href="#presentationdetails" style="display: none;"></a>
+    <!-- Hidden link for loading fancybox -->
+    <a id="fancyLoad" href="#loading_fancy" style="display: none;"></a>
+
+
 
     <!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
     <div style='display:none'>    
@@ -1585,9 +1589,6 @@
 		</li>
 		</ol>
 
-
-
-
 		<ol id="upload_object_form_help" class="joyRideTipContent">
 		<li data-id="object_file_input" data-text="Next" i18n-key="i.Next" class="custom" data-options="tipLocation:bottom;">
 		 <h2 i18n-key="i.AddObjectContentUpload">Adding Object content by upload</h2>
@@ -1720,6 +1721,13 @@
 	</ol> 
 
 	<iframe id="hiddenIframeForAjaxDownloads" style="border:0" iframeborder="0" frameborder="0" iframeelement.frameborder="0;"></iframe>
+
+	<!-- Loading fancybox -->
+    <div style='display:none'>
+        <div id='loading_fancy'>
+        	<img class="loading_fancy_img" src='/vishEditor/images/lightbox-ico-loading.gif'></img>
+        </div>
+    </div>
 
 	<!-- Copy HTML until here -->
 
