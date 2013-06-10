@@ -175,6 +175,9 @@ VISH.Utils.Loader = (function(V,undefined){
       _loadGoogleLibraryCallback = undefined;
     }
 
+
+    
+
     return {
             getImage              : getImage,
             getVideo              : getVideo,

@@ -501,7 +501,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var exportToJSON = function(){
-		VISH.Editor.Presentation.File.exportToJSON();
+		//TODO: Show Loading
+		VISH.Editor.Presentation.File.exportToJSON(function(){
+			//on success
+			//TODO: Hide Loading
+		});
 	};
 
 	var _hideMenuAfterAction = function(){

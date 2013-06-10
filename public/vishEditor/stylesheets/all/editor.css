@@ -2059,4 +2059,6 @@ height: 100%;
 float: left;
 }
 
-
+.waitCursor {
+	cursor: wait !important;
+}
