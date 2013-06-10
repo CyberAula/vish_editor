@@ -35,6 +35,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
    * Request inicial data to the server.
    */
   var _requestInicialData = function(){
+    _prepareRequest();
     V.Editor.API.requestRecomendedLives(_onDataReceived, _onAPIError);
   }
 	
@@ -42,19 +43,24 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
    * Request data to the server.
    */
   var _requestData = function(text){
+    _prepareRequest();
     V.Editor.API.requestLives(text, _onDataReceived, _onAPIError);
   }
+
+  var _prepareRequest = function(){
+    //Clean previous content
+    V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+    $("#" + carrouselDivId).hide();
+    _cleanObjectPreview();
+    V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
+  }
 	
+
   /*
    * Fill tab_live_webcam_content_carrousel div with server data.
    */
   var _onDataReceived = function(data){
-		
-    //Clean previous content
-    V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$("#" + carrouselDivId).hide();
-		_cleanObjectPreview();
-  
+	
     //Clean previous object
     currentObject = new Array();  
 		var carrouselImages = [];
@@ -103,7 +109,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	
 	 var _onImagesLoaded = function(){
     $("#" + carrouselDivId).show();
-		
+		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		var options = new Array();
     options['rows'] = 1;
     options['callback'] = _onClickCarrouselElement;

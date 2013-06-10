@@ -30,6 +30,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 		//clean carrousel
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);    
 		$("#" + carrouselDivId).hide();
+		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 
 		var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
 
@@ -58,6 +59,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	};
 	
 	var _onImagesLoaded = function(){
+		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$("#" + carrouselDivId).show();
 		var options = new Array();
 		options['rows'] = 2;

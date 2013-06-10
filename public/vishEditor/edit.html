@@ -1164,7 +1164,7 @@
         <div class="fancy_tabs" id="live_fancy_tabs_id">    
           <ul>
             <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_webcam')" id="tab_live_webcam" class="fancy_tab">Webcams</a></li>
-            <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_micro')" id="tab_live_micro" class="fancy_tab" i18n-key="i.Microscopes">Microscopes</a></li>
+            <li><a style='display:none' href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_micro')" id="tab_live_micro" class="fancy_tab" i18n-key="i.Microscopes">Microscopes</a></li>
           </ul>
           <img class='help_in_fancybox' id='tab_live_webcam_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/> 
         </div>
@@ -1723,7 +1723,7 @@
 	<iframe id="hiddenIframeForAjaxDownloads" style="border:0" iframeborder="0" frameborder="0" iframeelement.frameborder="0;"></iframe>
 
 	<!-- Loading fancybox -->
-    <div style='display:none'>
+    <div id='loading_fancy_wrapper' style='display:none'>
         <div id='loading_fancy'>
         	<img class="loading_fancy_img" src='/vishEditor/images/lightbox-ico-loading.gif'></img>
         </div>

@@ -1399,3 +1399,29 @@ a.button_advert:hover {
   opacity: 1;
   text-shadow: 1px 1px #666;
 }
+
+
+/* Loading */
+
+#loading_fancy{
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+img.loading_fancy_img{
+  height: 10%;
+  margin-top: 40%;
+}
+
+.waitCursor {
+  cursor: wait !important;
+}
+
+.loadingtmpShown {
+  display: block !important;
+}
+
+.loadingtmpShown img:not(.loading_fancy_img) {
+  display: none !important;
+}

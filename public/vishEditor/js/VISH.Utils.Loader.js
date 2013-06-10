@@ -187,6 +187,15 @@ VISH.Utils.Loader = (function(V,undefined){
       $.fancybox.close();
     }
 
+    var startLoadingInContainer = function(container){
+      $(container).html($("#loading_fancy_wrapper").html());
+      $(container).addClass("loadingtmpShown");
+    }
+
+    var stopLoadingInContainer = function(container){
+      $(container).find(".loading_fancy_img").parent().remove();
+      $(container).removeClass("loadingtmpShown");
+    }
 
     return {
       getImage                   : getImage,
@@ -199,7 +208,9 @@ VISH.Utils.Loader = (function(V,undefined){
       loadGoogleLibrary          : loadGoogleLibrary,
       onGoogleLibraryLoaded      : onGoogleLibraryLoaded,
       startLoading               : startLoading,
-      stopLoading                : stopLoading
+      stopLoading                : stopLoading,
+      startLoadingInContainer    : startLoadingInContainer,
+      stopLoadingInContainer     : stopLoadingInContainer
     };
 
 }) (VISH);
