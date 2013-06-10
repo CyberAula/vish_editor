@@ -460,7 +460,7 @@ VISH.Editor.API = (function(V,$,undefined){
       if(typeof successCallback == "function"){
         setTimeout(function(){
           var iframe = $("#hiddenIframeForAjaxDownloads");
-          $(iframe).attr("src",'http://localhost/vishEditor/examples/contents/jsons/255.json');
+          $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
           successCallback();
         },2000);
       }
@@ -482,6 +482,8 @@ VISH.Editor.API = (function(V,$,undefined){
             if(typeof successCallback == "function"){
               successCallback();
             }
+          } else if(typeof failCallback == "function"){
+              failCallback();
           }
       },
       error: function(xhr, ajaxOptions, thrownError){
@@ -492,7 +494,7 @@ VISH.Editor.API = (function(V,$,undefined){
     });
   }
 
-  var downloadTmpJSON = function(fileId,successCallback){
+  var downloadTmpJSON = function(fileId){
     var filename = fileId
     var iframe = $("#hiddenIframeForAjaxDownloads");
     $(iframe).attr("src",'/excursions/tmpJson.json?fileId='+fileId+'&filename='+filename);

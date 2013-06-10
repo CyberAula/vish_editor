@@ -179,11 +179,20 @@ VISH.Utils.Loader = (function(V,undefined){
      * Loading dialogs
      */
 
+    var t1Loading;
+
     var startLoading = function(){
+      t1Loading = Date.now();
       $("#fancyLoad").trigger('click');
     }
 
     var stopLoading = function(){
+      if(Date.now()-t1Loading < 600){
+        setTimeout(function(){
+          $.fancybox.close();
+        },600);
+        return;
+      }
       $.fancybox.close();
     }
 
