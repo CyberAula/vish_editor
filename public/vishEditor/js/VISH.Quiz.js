@@ -265,11 +265,11 @@ VISH.Quiz = (function(V,$,undefined){
     var quizButtons = $("<div class='quizButtons'></div>");
 
     if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
-      var startButton = $("<input type='button' class='button2 quizStartButton' value='Launch'/>");
+      var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='Launch'/>");
       $(quizButtons).prepend(startButton);
     }
     if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-      var answerButton = $("<input type='button' class='button2 quizAnswerButton' value='Answer'/>");
+      var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='Answer'/>");
       $(quizButtons).prepend(answerButton);
     }
 
