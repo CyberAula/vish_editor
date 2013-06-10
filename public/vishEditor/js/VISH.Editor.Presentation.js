@@ -39,6 +39,14 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			return;
 		}
 
+		//Fix presentation (for old versions)
+		presentationJSON = V.Utils.fixPresentation(presentationJSON);
+		if(presentationJSON===null){
+			V.Utils.showPNotValidDialog();
+			$.fancybox.close();
+			return;
+		}
+
 		var selectedSlides = [];
 		var flashcards = [];
 		var vts = [];

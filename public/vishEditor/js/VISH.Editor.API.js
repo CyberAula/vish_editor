@@ -477,7 +477,19 @@ VISH.Editor.API = (function(V,$,undefined){
   }
 	
 
-  var uploadTmpJSON = function(json){
+  var uploadTmpJSON = function(json, successCallback, failCallback){
+    if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+      if(typeof successCallback == "function"){
+        setTimeout(function(){
+          var iframe = $("#hiddenIframeForAjaxDownloads");
+          $(iframe).attr("src",'http://localhost/vishEditor/examples/contents/jsons/255.json');
+          successCallback();
+        },2000);
+      }
+      return;
+    }
+
+
     $.ajax({
       async: false,
       type: 'POST',
@@ -490,15 +502,20 @@ VISH.Editor.API = (function(V,$,undefined){
       success: function(data) {
           if((data)&&(data.fileId)){
             V.Editor.API.downloadTmpJSON(data.fileId);
+            if(typeof successCallback == "function"){
+              successCallback();
+            }
           }
       },
       error: function(xhr, ajaxOptions, thrownError){
-          V.Debugging.log("uploadTmpJSON error");
+          if(typeof failCallback == "function"){
+              failCallback(xhr, ajaxOptions, thrownError);
+          }
       }
     });
   }
 
-  var downloadTmpJSON = function(fileId){
+  var downloadTmpJSON = function(fileId,successCallback){
     var filename = fileId
     var iframe = $("#hiddenIframeForAjaxDownloads");
     $(iframe).attr("src",'/excursions/tmpJson.json?fileId='+fileId+'&filename='+filename);

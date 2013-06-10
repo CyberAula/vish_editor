@@ -159,6 +159,29 @@ VISH.Editor = (function(V,$,undefined){
 				V.Editor.Utils.loadTab('tab_json_file');
 			}
 		});
+
+		//Loading fancybox
+		$("#fancyLoad").fancybox({
+			  'type'		   : 'inline',
+			  'autoDimensions' : false,
+		      'scrolling': 'no',
+		      'autoScale' : true,		      
+		      'width': '100%',
+		      'height': '100%',
+		      'padding': 0,
+		      'margin' : 0,
+		      'overlayOpacity': 0.0,
+		      'overlayColor' : "#fff",
+		      'showCloseButton'	: false,
+		      'onComplete'  : function(data) {
+		      		$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
+		      		$("#fancybox-wrap").css("margin-top", "20px");
+		      		$("#fancybox-wrap").css("margin-left", "20px");
+		      },
+		      'onClosed' : function(data) {
+		      		$("#fancybox-outer").css("background", "white");
+		      }
+		});
 	
 		if(!eventsLoaded){
 			eventsLoaded = true;

@@ -175,16 +175,31 @@ VISH.Utils.Loader = (function(V,undefined){
       _loadGoogleLibraryCallback = undefined;
     }
 
+    /*
+     * Loading dialogs
+     */
+
+    var startLoading = function(){
+      $("#fancyLoad").trigger('click');
+    }
+
+    var stopLoading = function(){
+      $.fancybox.close();
+    }
+
+
     return {
-            getImage              : getImage,
-            getVideo              : getVideo,
-            loadImage             : loadImage,
-            loadVideo             : loadVideo,
-  					loadImagesOnCarrousel : loadImagesOnCarrousel,
-  					loadImagesOnCarrouselOrder : loadImagesOnCarrouselOrder,
-            loadScript            : loadScript,
-            loadGoogleLibrary     : loadGoogleLibrary,
-            onGoogleLibraryLoaded : onGoogleLibraryLoaded
+      getImage                   : getImage,
+      getVideo                   : getVideo,
+      loadImage                  : loadImage,
+      loadVideo                  : loadVideo,
+  		loadImagesOnCarrousel      : loadImagesOnCarrousel,
+  		loadImagesOnCarrouselOrder : loadImagesOnCarrouselOrder,
+      loadScript                 : loadScript,
+      loadGoogleLibrary          : loadGoogleLibrary,
+      onGoogleLibraryLoaded      : onGoogleLibraryLoaded,
+      startLoading               : startLoading,
+      stopLoading                : stopLoading
     };
 
 }) (VISH);
