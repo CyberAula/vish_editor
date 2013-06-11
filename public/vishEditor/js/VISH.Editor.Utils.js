@@ -496,6 +496,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_json_file":
 				V.Editor.Presentation.File.onLoadTab();
 				break;
+			case "tab_pdfex":
+				V.Editor.PDFex.onLoadTab();
+				break;
+				
  			//Default
 			default:
 				break;

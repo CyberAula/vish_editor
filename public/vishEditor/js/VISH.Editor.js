@@ -160,6 +160,18 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 
+		// fancybox to insert PDF as excursion	
+		$("a#addPDFexFancybox").fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': 800,
+			'height': 300,
+			'padding' : 0,
+			"onComplete"  : function(data) {
+				V.Editor.Utils.loadTab('tab_pdfex');
+			}
+		});
+
 		//Loading fancybox
 		$("#fancyLoad").fancybox({
 			  'type'		   : 'inline',
@@ -230,6 +242,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Image.init();
 		V.Editor.Video.init();
 		V.Editor.Object.init();
+		V.Editor.PDFex.init();
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();

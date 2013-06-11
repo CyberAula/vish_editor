@@ -149,11 +149,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var processResponse = function(response){
 		try  {
-			var jsonResponse = JSON.parse(response)
+			var jsonResponse = JSON.parse(response);
 			if(jsonResponse.src){
 				if (V.Police.validateObject(jsonResponse.src)[0]) {
-					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
-					contentToAdd = jsonResponse.src
+					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src);
+					contentToAdd = jsonResponse.src;
 				}
 			}
 		} catch(e) {

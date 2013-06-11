@@ -500,6 +500,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#addJSONFancybox").trigger('click');
 	};
 
+	var insertPDFex = function(){
+		$("#addPDFexFancybox").trigger('click');
+	};
+
 	var exportToJSON = function(){
 		V.Utils.Loader.startLoading();
 		V.Editor.Presentation.File.exportToJSON(function(){
@@ -530,6 +534,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
 		insertJSON						: insertJSON,
+		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,

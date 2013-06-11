@@ -13,6 +13,7 @@ VISH.Configuration = (function(V,$,undefined){
 		V.UploadImagePath = configuration["uploadImagePath"];
 		V.UploadObjectPath = configuration["uploadObjectPath"];
 		V.UploadPresentationPath = configuration["uploadPresentationPath"];
+		V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
 	};
 	
 	var applyConfiguration = function(){
