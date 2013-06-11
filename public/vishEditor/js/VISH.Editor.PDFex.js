@@ -7,7 +7,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
 
-		$("#" + uploadDivId + " input[name='pdfex[file]']").change(function () {
+		$("#" + uploadDivId + " input[name='pdfex[attach]']").change(function () {
 			var filterFilePath = V.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
 			$("#" + uploadDivId + " input[name='pdfex[title]']").val(filterFilePath);
 			_resetUploadFields();
@@ -16,7 +16,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		});
 
 		$("#" + uploadDivId + " #upload_pdfex_submit").click(function(event) {
-			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='pdfex[file]']").val())[0]){
+			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='pdfex[attach]']").val())[0]){
 				event.preventDefault();
 			} else {
 				if (options) {
@@ -42,7 +42,8 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 			complete: function(xhr) {
 				switch(V.Configuration.getConfiguration()["mode"]){
 					case V.Constant.NOSERVER:
-						processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
+						var responseTest = '{"urls":["http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-0.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-1.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-2.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-3.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-4.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-5.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-6.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-7.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-8.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-9.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-10.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-11.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-12.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-13.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-14.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-15.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-16.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-17.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-18.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-19.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-20.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-21.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-22.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-23.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-24.jpg","http://localhost:3000//system/pdfexes/attaches/000/000/021/original/vish_user_manual-25.jpg"]}';
+						processResponse(responseTest);
 					break;
 					case V.Constant.VISH:
 						processResponse(xhr.responseText);
@@ -65,7 +66,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 	var onLoadTab = function(){
 		$("#" + uploadDivId + ' form' + ' .button').hide();
 		$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
-		$("#" + uploadDivId + " input[name='pdfex[file]']").val("");	
+		$("#" + uploadDivId + " input[name='pdfex[attach]']").val("");	
 		_resetUploadFields();
 	};
 	
@@ -79,9 +80,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 	var processResponse = function(response){
 		try  {
 			var jsonResponse = JSON.parse(response);
-			console.log("V.Editor.PDFex get response");
-			console.log(response);
-			console.log(jsonResponse);
+			V.Debugging.log(jsonResponse);
 		} catch(e) {}
 	}
 
