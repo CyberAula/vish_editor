@@ -127,6 +127,11 @@ this can not be done with show() and hide() because then it remains with display
   display: none;
 }
 
+/* Allow temp shown to be applied to any element*/
+.temp_shown{
+  display: block !important;
+}
+
 .slides > article.far-past {
   display: block;
   transform: translate(-230%);

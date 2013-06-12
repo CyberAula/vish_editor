@@ -111,7 +111,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		element.body = imgUrl;
 		element.id = slide.id + "_zone1";
 		//TODO: calculate style
-		element.style = "position: relative; width:100%; height:100%; top:0%; left:0%;"
+		// element.style = "position: relative; width:100%; height:100%; top:0%; left:0%;"
 		element.type = V.Constant.IMAGE;
 		slide.elements.push(element);
 
