@@ -182,18 +182,27 @@ VISH.Utils.Loader = (function(V,undefined){
     var t1Loading;
 
     var startLoading = function(){
-      t1Loading = Date.now();
-      $("#fancyLoad").trigger('click');
+      if(!_isFullLoadingActive()){
+        t1Loading = Date.now();
+        $("#fancyLoad").trigger('click');
+      }
     }
 
     var stopLoading = function(){
-      if(Date.now()-t1Loading < 600){
+      var diff = Date.now()-t1Loading;
+      if(diff < 800){
         setTimeout(function(){
+          stopLoading();
+        },800);
+      } else {
+        if(_isFullLoadingActive()){
           $.fancybox.close();
-        },600);
-        return;
+        }
       }
-      $.fancybox.close();
+    }
+
+    var _isFullLoadingActive = function(){
+      return $("#loading_fancy").is(":visible");
     }
 
     var startLoadingInContainer = function(container,options){

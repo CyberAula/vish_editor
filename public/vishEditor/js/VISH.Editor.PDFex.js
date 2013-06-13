@@ -38,29 +38,48 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 				var percentVal = percentComplete + '%';
 				bar.width(percentVal)
 				percent.html(percentVal);
+				if(percentVal==="100%"){
+					V.Utils.Loader.startLoading();
+				}
 			},
-			complete: function(xhr) {
+			success: function(responseText, statusText, xhr, form) {
+				//responseText == JSON.parse(xhr.responseText)
 				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.NOSERVER:
-						var responseTest = '{"urls":["http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-0.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-1.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-2.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-3.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-4.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-5.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-6.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-7.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-8.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-9.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-10.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-11.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-12.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-13.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-14.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-15.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-16.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-17.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-18.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-19.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-20.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-21.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-22.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-23.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-24.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-25.jpg"]}';
-						processResponse(responseTest);
-					break;
 					case V.Constant.VISH:
-						processResponse(xhr.responseText);
-					break;
+						processResponse(responseText);
+						break;
 					case V.Constant.STANDALONE:
-						processResponse(xhr.responseText);
-					break;
+						processResponse(responseText);
+						break;
+					default:
+						break;
 				}
 				var percentVal = '100%';
 				bar.width(percentVal)
 				percent.html(percentVal);
 			},
+			complete: function(xhr){
+				switch(V.Configuration.getConfiguration()["mode"]){
+					case V.Constant.NOSERVER:
+						setTimeout(function(){
+							var responseTest = '{"urls":["http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-0.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-1.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-2.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-3.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-4.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-5.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-6.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-7.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-8.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-9.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-10.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-11.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-12.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-13.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-14.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-15.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-16.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-17.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-18.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-19.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-20.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-21.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-22.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-23.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-24.jpg","http://localhost:3000/system/pdfexes/attaches/000/000/021/original/vish_user_manual-25.jpg"]}';
+							processResponse(JSON.parse(responseTest));
+						},10000);
+						break;
+					case V.Constant.VISH:
+					case V.Constant.STANDALONE:
+					default:
+						break;
+				}
+			},
 			error: function(error){
-				V.Debugging.log("Upload error");
-				V.Debugging.log(error);
+				if(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
+					//ignore the error
+					return;
+				}
+				V.Utils.Loader.stopLoading();
 			}
-		});	
+		});
 	};
 	
 	var onLoadTab = function(){
@@ -77,12 +96,15 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		percent.html('0%');
 	}	
 	
-	var processResponse = function(response){
+	var processResponse = function(jsonResponse){
 		try  {
-			var jsonResponse = JSON.parse(response);
 			var presentation = generatePresentationWithImgArray(jsonResponse.urls);
 			V.Editor.Presentation.previewPresentation(presentation);
-		} catch(e) {}
+			//We don't need to call V.Utils.Loader.stopLoading();
+			//because previewPresentation close all active fancyboxes
+		} catch(e) {
+			V.Utils.Loader.stopLoading();	
+		}
 	}
 
 	var generatePresentationWithImgArray = function(imgs){
