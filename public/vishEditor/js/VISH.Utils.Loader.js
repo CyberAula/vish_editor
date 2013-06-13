@@ -206,6 +206,14 @@ VISH.Utils.Loader = (function(V,undefined){
       }
     }
 
+    /*
+     * Called when loading panel is going to be closed by another fancybox
+     * Keep original fancybox CSS
+     */
+    var onCloseLoading = function(){
+      $("#fancybox-outer").css("background", "white");
+    }
+
     var _isFullLoadingActive = function(){
       return $("#loading_fancy").is(":visible");
     }
@@ -236,6 +244,7 @@ VISH.Utils.Loader = (function(V,undefined){
       onGoogleLibraryLoaded      : onGoogleLibraryLoaded,
       startLoading               : startLoading,
       stopLoading                : stopLoading,
+      onCloseLoading             : onCloseLoading,
       startLoadingInContainer    : startLoadingInContainer,
       stopLoadingInContainer     : stopLoadingInContainer
     };

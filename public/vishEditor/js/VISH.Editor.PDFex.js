@@ -82,6 +82,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 					return;
 				}
 				setTimeout(function(){
+					V.Utils.Loader.onCloseLoading();
           			_showErrorDialog();
         		},800);
 			}
@@ -121,6 +122,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 			V.Editor.Presentation.previewPresentation(presentation);
 			//We don't need to call V.Utils.Loader.stopLoading();
 			//because previewPresentation close all active fancyboxes
+			V.Utils.Loader.onCloseLoading();
 		} catch(e) {
 			V.Utils.Loader.stopLoading();	
 		}
