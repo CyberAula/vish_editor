@@ -1402,9 +1402,28 @@ a.button_advert:hover {
   margin-top: 6%;
   font-size: 1.2em;
   margin-right: 9%;
-} 
+}
 
 .recbutton:hover {
+  opacity: 1;
+  text-shadow: 1px 1px #666;
+}
+
+.viewer_button{
+  padding: 5px 10px;
+  display: inline;
+  text-decoration:none;
+  background: #ff005d repeat-x bottom;
+  opacity: 0.6;
+  color:#f9f9f9;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+} 
+
+.viewer_button:hover {
   opacity: 1;
   text-shadow: 1px 1px #666;
 }
