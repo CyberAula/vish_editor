@@ -39,9 +39,6 @@ div.image_carousel img {
 
 div.image_carousel img:hover {
   opacity: 1;
-    -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
-  -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
-  box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
 }
 
 div.image_carousel img:active {
@@ -238,7 +235,8 @@ div.image_carousel_single_row_thumbnails {
 }
 
 div.image_carousel_single_row_thumbnails > div.caroufredsel_wrapper {
-  margin-left: 30px !important;
+  margin-left: 37px !important;
+  margin-bottom: 10px !important;
 }
 
 div.carrousel_element_single_row_thumbnails{
@@ -247,7 +245,7 @@ div.carrousel_element_single_row_thumbnails{
   max-width: 150px;
   max-height: 150px;
   float: left;
-  margin-left: 27px;
+  margin-left: 28px;
   border-radius: 20px;
 }
 
@@ -256,8 +254,8 @@ img.carrousel_element_single_row_thumbnails{
   height: 90px;
   max-width: 150px;
   max-height: 150px;
-  margin-left: -27px;
-  margin-top: -2px;
+  margin-left: -2px !important;
+  margin-top: 1px !important;
   border: none;
   opacity: 0.6;
   border-radius: 15px;
@@ -265,17 +263,23 @@ img.carrousel_element_single_row_thumbnails{
   -moz-border-radius: 15px;
 }
 
-img.carrousel_element_single_row_thumbnails:hover{
-  opacity: 0.8;
-  cursor: pointer;
+img.carrousel_element_single_row_thumbnails:not(.uploadThumbnail):hover {
   -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
   -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
   box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
 }
 
+img.carrousel_element_single_row_thumbnails:hover{
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 img.carrousel_element_single_row_thumbnails:active{
   opacity: 1;
   cursor: pointer;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
 }
 
 a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
@@ -287,11 +291,8 @@ a.prev_single_row_thumbnails, a.next_single_row_thumbnails{
 }
 
 div.pagination_single_row_thumbnails{
-	margin-bottom: 25px;
-}
-
-div.image_carousel_single_row_thumbnails  > div.caroufredsel_wrapper {
-  margin-bottom: 20px !important;
+	margin-bottom: 33px;
+  margin-top: 10px !important;
 }
 
 
