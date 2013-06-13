@@ -188,15 +188,20 @@ VISH.Utils.Loader = (function(V,undefined){
       }
     }
 
-    var stopLoading = function(){
+    var stopLoading = function(callback){
       var diff = Date.now()-t1Loading;
       if(diff < 800){
         setTimeout(function(){
-          stopLoading();
+          stopLoading(callback);
         },800);
       } else {
+        var closed = false;
         if(_isFullLoadingActive()){
           $.fancybox.close();
+          closed = true;
+        }
+        if(typeof callback == "function"){
+          callback(closed);
         }
       }
     }
