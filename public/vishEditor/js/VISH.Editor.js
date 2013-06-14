@@ -575,6 +575,19 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 
+		$("a.addLre").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Utils.loadTab('tab_lre');
+			}
+		});
+
 		$("a.addQuiz").click(function(event){
 			$("a#addQuizFancybox").trigger("click");
 		});

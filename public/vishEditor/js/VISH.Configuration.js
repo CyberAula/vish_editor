@@ -47,8 +47,14 @@ VISH.Configuration = (function(V,$,undefined){
 	      $("#tab_video_youtube").css("display","none");
 	    }
 			
-		 if(!configuration["Vimeo"]){
+		if(!configuration["Vimeo"]){
 	      $("#tab_video_vimeo").css("display","none");
+	    }
+
+	    if(!configuration["LRE"]){
+	      $("#tab_video_lre").css("display","none");
+	      $("#tab_image_lre").css("display","none");
+	      $("#tab_object_lre").css("display","none");
 	    }
 			
 		if(!configuration["Flickr"]){

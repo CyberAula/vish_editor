@@ -38,6 +38,7 @@ var getOptions = function(){
 		configuration["Vimeo"] = false;
 
 		configuration["Upload"] = true;
+		configuration["LRE"] = true;
 
 		//Posible values: noserver, node, vish
 		configuration["mode"] = "noserver";
@@ -102,6 +103,12 @@ var getOptions = function(){
 
 			//And a default landguage
 			options["lang"] = "en";
+
+			//URL to get the recommendations to show in the last slide
+			//options["urlToGetRecommendations"] = "/excursions/last_slide.js"
+
+			//URL to call LRE search
+			options["urlToSearchLRE"] = "/lre/search";
 
 			//Addons
 			options.addons = [];
