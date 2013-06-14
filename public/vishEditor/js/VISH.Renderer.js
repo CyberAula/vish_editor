@@ -160,8 +160,14 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an image inside an article (a slide)
 	 */
 	var _renderImage = function(element, template){
+		if(typeof element['style'] == "undefined"){
+			style = "max-height: 100%; max-width: 100%;";
+		} else {
+			style = element['style'];
+		}
+
 		var div = $("<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'></div>");
-		var img = $("<img class='"+template+"_image' src='"+element['body']+"' style='"+element['style']+"' />");
+		var img = $("<img class='"+template+"_image' src='"+element['body']+"' style='"+style+"' />");
 
 		if(element['hyperlink']){
 			var a = $("<a href='" + element['hyperlink'] + "' target='blank_'></a>");

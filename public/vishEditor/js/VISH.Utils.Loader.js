@@ -182,18 +182,40 @@ VISH.Utils.Loader = (function(V,undefined){
     var t1Loading;
 
     var startLoading = function(){
-      t1Loading = Date.now();
-      $("#fancyLoad").trigger('click');
+      if(!_isFullLoadingActive()){
+        t1Loading = Date.now();
+        $("#fancyLoad").trigger('click');
+      }
     }
 
-    var stopLoading = function(){
-      if(Date.now()-t1Loading < 600){
+    var stopLoading = function(callback){
+      var diff = Date.now()-t1Loading;
+      if(diff < 800){
         setTimeout(function(){
+          stopLoading(callback);
+        },800);
+      } else {
+        var closed = false;
+        if(_isFullLoadingActive()){
           $.fancybox.close();
-        },600);
-        return;
+          closed = true;
+        }
+        if(typeof callback == "function"){
+          callback(closed);
+        }
       }
-      $.fancybox.close();
+    }
+
+    /*
+     * Called when loading panel is going to be closed by another fancybox
+     * Keep original fancybox CSS
+     */
+    var onCloseLoading = function(){
+      $("#fancybox-outer").css("background", "white");
+    }
+
+    var _isFullLoadingActive = function(){
+      return $("#loading_fancy").is(":visible");
     }
 
     var startLoadingInContainer = function(container,options){
@@ -222,6 +244,7 @@ VISH.Utils.Loader = (function(V,undefined){
       onGoogleLibraryLoaded      : onGoogleLibraryLoaded,
       startLoading               : startLoading,
       stopLoading                : stopLoading,
+      onCloseLoading             : onCloseLoading,
       startLoadingInContainer    : startLoadingInContainer,
       stopLoadingInContainer     : stopLoadingInContainer
     };

@@ -227,7 +227,8 @@ var i18n =
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado.",
 				"i.Remove"				: "Borrar",
 				"i.ZoneTooltip"			: "Click aquí para añadir contenido",
-				"i.pNotValid"			: "Este recurso no puede ser abierto porque está dañado o no es compatible con la versión actual de ViSH Editor."
+				"i.pNotValid"			: "Este recurso no puede ser abierto porque está dañado o no es compatible con la versión actual de ViSH Editor.",
+				"i.PDFNotValid"			: "Se ha producido un error. Asegúrese de que el fichero PDF seleccionado es correcto."
 			},
 			
 		  "default" :
