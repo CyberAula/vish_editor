@@ -169,11 +169,13 @@ VISH.Events = (function(V,$,undefined){
 
 	var handleBodyKeyDown = function(event) {
 		switch (event.keyCode) {
+			case 34: // av pag
 			case 38: // up arrow
 			case 39: // right arrow	    
 				V.Slides.forwardOneSlide();
 				event.preventDefault();
 				break;
+			case 33: //re pag
 			case 37: // left arrow
 			case 40: // down arrow
 				V.Slides.backwardOneSlide();
