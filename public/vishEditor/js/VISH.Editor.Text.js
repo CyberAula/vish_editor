@@ -128,7 +128,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.height = $(current_area).height();
 
 		//Toolbar defaults
-		config.fontSize_defaultLabel = '12px';
+		config.fontSize_defaultLabel = '12';
 
 		//Apply vEditor skin
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));

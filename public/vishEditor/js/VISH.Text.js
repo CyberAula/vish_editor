@@ -2,7 +2,7 @@ VISH.Text = (function(V,$,undefined){
 
 	var disableConversion = false;
 
-	//Convert <p><span> from px to rems
+	//Convert <p><span> from px to rems (http://caniuse.com/rem)
 	var init = function(){
 
 		//Disable conversions for IE8-
