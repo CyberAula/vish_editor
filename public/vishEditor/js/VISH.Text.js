@@ -1,7 +1,18 @@
 VISH.Text = (function(V,$,undefined){
 
-	//Convert <p><span> from px to ems
+	var disableConversion = false;
+
+	//Convert <p><span> from px to rems
 	var init = function(){
+
+		//Disable conversions for IE8-
+		if((V.Status.getDevice().browser.name === V.Constant.IE) && (V.Status.getDevice().browser.version < 9)){
+			disableConversion = true;
+		}
+
+		if(disableConversion){
+			return;
+		}
 
 		//Adapt area text fields
 		_adaptPs($("article > div.VEtextArea > p"));
@@ -46,52 +57,27 @@ VISH.Text = (function(V,$,undefined){
 
 	var _adaptPs = function(selector){
 		$(selector).each(function(index,p){
-			if($(p).children().length === 0){
-				_setStyleInEm(p);
-				return;
-			}
+			_setStyleInRem(p);
 			_adaptSpans($(p).find("span"));
 			_adaptFonts($(p).find("font"));
 		});
 	}
 
 	var _adaptSpans = function(spans){
-		var oldStyle = null;
-		var newStyle = null;
-		var lastFontSizeCandidate = null;
-		var lastFontSize = null;
-
 		$(spans).each(function(index,span){
-			oldStyle = $(span).attr("style");
-			lastFontSizeCandidate = parseInt(V.Utils.getFontSizeFromStyle(oldStyle));
-			if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
-				lastFontSize = lastFontSizeCandidate;
+			var oldStyle = $(span).attr("style");
+			if(typeof oldStyle == "undefined"){
+				return;
 			}
 
-			if($(span).find("span").length !== 0) {
-				newStyle = V.Utils.removeFontSizeInStyle(oldStyle);
-				if((newStyle === null)||(newStyle === "; ")){
-					$(span).removeAttr("style");
-				} else {
-					$(span).attr("style",newStyle);
-				}
-			} else {
-			 	//Last SPAN
-				var fontSize;
-				if((typeof lastFontSizeCandidate === "number")&&(!isNaN(lastFontSizeCandidate))){
-					fontSize = lastFontSizeCandidate;
-				} else if(lastFontSize !== null){
-					fontSize = lastFontSize;
-				} else {
-					fontSize = V.Constant.TextDefault; //Default font
-				}
-				var em = (fontSize/V.Constant.TextBase) + "em";
-				if(typeof oldStyle == "undefined"){
-					oldStyle = "";
-				}
-				newStyle = V.Utils.addFontSizeToStyle(oldStyle,em);
-				$(span).attr("style",newStyle);
+			fontSize = parseInt(V.Utils.getFontSizeFromStyle(oldStyle));
+			if((typeof fontSize != "number")||(isNaN(fontSize))){
+				return;
 			}
+
+			var rem = (fontSize/V.Constant.TextBase) + "rem";
+			newStyle = V.Utils.addFontSizeToStyle(oldStyle,rem);
+			$(span).attr("style",newStyle);
 		});
 	}
 
@@ -108,33 +94,30 @@ VISH.Text = (function(V,$,undefined){
 			}
 			$(font).hide();
 
-			//Convert to em
+			//Convert to rem
 			var pxfontSize = _font_to_px(fontSize);
-			var em = (pxfontSize/V.Constant.TextBase) + "em";
-			var span = $("<span style='font-size:"+em+"'></span>");
+			var rem = (pxfontSize/V.Constant.TextBase) + "rem";
+			var span = $("<span style='font-size:"+rem+"'></span>");
 			$(span).html($(font).html());
 			$(font).parent().prepend(span);
 			$(font).remove();
 		});
 	}
 
-	var _setStyleInEm = function(el){
+	var _setStyleInRem = function(el){
 		var oldStyle = $(el).attr("style");
-		var fontSize;
-
 		if(typeof oldStyle !== "string"){
-			oldStyle = "";
-		} else {
-			fontSize = V.Utils.getFontSizeFromStyle(oldStyle);
+			return;
 		}
 
-		if((typeof fontSize !== "number")||(isNaN(fontSize))){
-			fontSize = V.Constant.TextDefault; //Default font-size
+		var fontSize = V.Utils.getFontSizeFromStyle(oldStyle);
+		if((typeof fontSize != "number")||(isNaN(fontSize))){
+			return;
 		}
 
-		//Convert to em (http://pxtoem.com/)
-		var em = (fontSize/V.Constant.TextBase) + "em";
-		var newStyle = V.Utils.addFontSizeToStyle(oldStyle,em);
+		//Convert to rem (http://pxtoem.com/)
+		var rem = (fontSize/V.Constant.TextBase) + "rem";
+		var newStyle = V.Utils.addFontSizeToStyle(oldStyle,rem);
 		$(el).attr("style",newStyle);
 	}
 
@@ -144,7 +127,7 @@ VISH.Text = (function(V,$,undefined){
 	var aftersetupSize = function(increase){
 		increase = increase*_correctionFactor(increase);
 		var reference_font_size = V.Constant.TextBase;
-		var texts = $("article, #fancybox-content");
+		var texts = $("html");
 		$(texts).css("font-size", reference_font_size*increase + "px");
 	}
 
