@@ -72,8 +72,8 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$.each(data.videos, function(index, video) {
 			if(video){
 				var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "'/>")
-        carrouselImages.push(myImg);
-        currentVideos[video.id] = video;
+				carrouselImages.push(myImg);
+				currentVideos[video.id] = video;
 			}
 		});
 

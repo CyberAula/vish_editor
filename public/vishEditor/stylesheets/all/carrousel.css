@@ -84,7 +84,7 @@ a.prev span, a.next span {
 div.pagination {
   text-align: center;
 	margin-right: 0px;
-	margin-top: 25px;
+	margin-top: 12px;
 }
 div.pagination a {
   background: url(/vishEditor/images/carrousel/carrousel_sprite.png) 0 -260px no-repeat transparent;
