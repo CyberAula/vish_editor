@@ -28,6 +28,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
+		_prepareRequest();
 		V.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError);
 	};
 	
@@ -35,20 +36,24 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
+		_prepareRequest();
 		V.Editor.API.requestVideos(text, _onDataReceived, _onAPIError);
 	};
 	
+
+	var _prepareRequest = function(){
+		//Clean previous carrousel
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$("#" + carrouselDivId).hide();
+		//clean previous preview if any
+		_cleanVideoPreview(); 
+		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
+	}
+
 	/*
 	 * Fill tab_video_repo_content_carrousel div with server data.
 	 */
 	var _onDataReceived = function(data) {
-		//Clean previous content
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$("#" + carrouselDivId).hide();
-		
-		//clean previous preview if any
-		_cleanVideoPreview(); 
-
 		//Clean previous videos
 		currentVideos = new Array();
 		
@@ -78,12 +83,13 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	
 	var _onImagesLoaded = function(){
-    $("#" + carrouselDivId).show();
+		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
+		$("#" + carrouselDivId).show();
 		var options = new Array();
-    options['rows'] = 1;
-    options['callback'] = _onClickCarrouselElement;
-    options['rowItems'] = 5;
-    V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		options['rows'] = 1;
+		options['callback'] = _onClickCarrouselElement;
+		options['rowItems'] = 5;
+		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
   }
 	
 	

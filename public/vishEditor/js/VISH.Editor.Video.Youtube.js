@@ -31,6 +31,11 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	 Request videos to Youtube API
 	 */	
 	var requestYoutubeData = function(text){
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$("#" + carrouselDivId).hide();
+		_cleanVideoPreview();
+		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
+
 		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+text+"&alt=json-in-script&callback=?&max-results="+queryMaxMaxNumberYoutubeVideo+"&start-index=1";	 
 		jQuery.getJSON(url_youtube,function (data) {
 			_onDataReceived(data);
@@ -38,12 +43,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _onDataReceived = function(data) {
-		//Clean previous content
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$("#" + carrouselDivId).hide();
-		//clean previous preview if any
-		_cleanVideoPreview();
-
 		//Clean previous videos
 		currentVideos = new Array();
 
@@ -82,6 +81,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _onImagesLoaded = function(){
+		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$("#" + carrouselDivId).show();
 		var options = new Array();
 		options['rows'] = 1;
