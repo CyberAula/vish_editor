@@ -616,9 +616,6 @@
 			<a class="addLive medium large" href="#live_fancybox">
 				<div class='thumbicon livethumb' i18n-key="i.Live" title="Live"></div>
 			</a>
-			<a class="addLre medium large" href="#lre_fancybox">
-				<div class='thumbicon lrethumb' i18n-key="i.Live" title="LRE repository"></div>
-			</a>
 			<a class="addQuiz large" href="#quiz_fancybox" id="add_quiz_thumb">
 				<div class='thumbicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
 			</a>
@@ -1256,36 +1253,7 @@
       </div>
     </div>
 
-    <!-- LRE -->
-    <div style='display:none'>
-      <div id="lre_fancybox" class="outer_box">
-        <div class="fancy_tabs" id="lre_fancy_tabs_id">    
-          <ul>
-            <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_lre')" id="tab_lre" class="fancy_tab">LRE</a></li>
-          </ul>
-          <img class='help_in_fancybox' id='tab_lre_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/> 
-        </div>
-        
-        <div id='tab_lre_content' class="fancy_tab_content"> 
-          <div class="box1 box1fancy2">
-            <img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>         
-            <div class="search_container">
-              <input id="search_lre" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
-            </div>
-            
-            <div id="tab_lre_content_carrousel"></div>
-            <div id="tab_lre_content_preview" class="content_preview">
-              <div id="tab_lre_content_preview_live" class="content_preview_data"></div>
-              <div id="tab_lre_content_preview_metadata" class="content_preview_metadata"></div>
-              <div id="tab_lre_content_preview_foot" class="content_preview_foot">
-                <button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Live.addSelectedObject()">Add</button>
-              </div>
-            </div>        
-          </div>
-        </div>	
-      </div>
-    </div>
-	
+    
 	
 	<!-- WALKTHROUGH HELP SECTION -->
 		<!-- help for initial screen -->
