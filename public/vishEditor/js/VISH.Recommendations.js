@@ -102,7 +102,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	//we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i >= 0; i--) {
         	 	$("#recom-"+data[i].id).click(function(my_event){
-        	 		V.Utils.sendParentToURL(data[$(my_event.toElement).closest(".rec-excursion").attr("number")].url);
+        	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(".rec-excursion").attr("number")].url);
         	 	});
         	 }
         }
