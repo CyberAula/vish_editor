@@ -198,7 +198,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Redraw thumbnails
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(currentSlide){
-				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber());
 				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
 			} else {
 				V.Slides.goToSlide(1);
