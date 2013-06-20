@@ -195,7 +195,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				_setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width);
 			}
 		}
-		$(".caroufredsel_wrapper").css("margin-bottom","30px")
+		$(".caroufredsel_wrapper").css("margin-bottom","30px");
 	}
 
 
@@ -206,11 +206,11 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			infinite: false,
 			width   : width,
 			scroll : {
-			//items         : "page",
-			items           : scrollItems,
-			fx              : "scroll",
-			duration        : 1000,
-			timeoutDuration : 2000                
+				//items         : "page",
+				items           : scrollItems,
+				fx              : "scroll",
+				duration        : 1000,
+				timeoutDuration : 2000                
 			},
 			items : {
 			  visible    : {
@@ -247,12 +247,12 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				start   : start
 			},
 			prev    : {
-				button  : "#carrousel_prev" + widgetsId,
-				key     : "left"
+				button  : "#carrousel_prev" + widgetsId
+				// key     : "left"
 			},
 			next    : {
-				button  : "#carrousel_next" + widgetsId,
-				key     : "right"
+				button  : "#carrousel_next" + widgetsId
+				// key     : "right"
 			},
 			pagination  : "#carrousel_pag"  + widgetsId,
 			onCreate    : afterCreateCarruselFunction      

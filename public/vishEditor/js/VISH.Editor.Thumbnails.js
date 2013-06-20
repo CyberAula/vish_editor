@@ -155,7 +155,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 					}
 
 					var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
-					var slideDst= V.Slides.getSlideWithNumber(destPosition);
+					var slideDst = V.Slides.getSlideWithNumber(destPosition);
 
 					if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
 						V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);

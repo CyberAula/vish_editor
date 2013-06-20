@@ -275,7 +275,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Recommendations.showFancybox();
 		} else {
 			goToSlide(curSlideIndex+2);
-		}		
+		}
 	};
 
    /**
@@ -283,6 +283,22 @@ VISH.Slides = (function(V,$,undefined){
 	*/
 	var backwardOneSlide = function(){
 		goToSlide(curSlideIndex);
+	};
+
+   /**
+	* Function to move n slides and change the thumbnails and focus 
+	* n > 0 (advance slides)
+	* n < 0 (go back)
+	*/
+	var moveSlides = function(n){
+		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))){
+			V.Recommendations.showFancybox();
+			return;
+		}
+
+		var no = curSlideIndex+n+1;
+		no = Math.min(Math.max(1,no),slideEls.length);
+		goToSlide(no);
 	};
 
 
@@ -326,6 +342,13 @@ VISH.Slides = (function(V,$,undefined){
 			$(".selectable").css("border-style", "none");
 
 			V.Editor.Tools.cleanZoneTools();
+
+			var firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
+			var lastCarrouselNumber = firstCarrouselNumber + 7;
+
+			if((no<firstCarrouselNumber)||(no>lastCarrouselNumber)){
+				V.Editor.Thumbnails.moveCarrouselToSlide(no);
+			}
 
 			//finally add a background color to thumbnail of the selected slide
 			V.Editor.Thumbnails.selectThumbnail(no);
@@ -448,6 +471,7 @@ VISH.Slides = (function(V,$,undefined){
 			getSlideType 			: getSlideType,
 			isCurrentFirstSlide		: isCurrentFirstSlide,
 			isCurrentLastSlide		: isCurrentLastSlide,
+			moveSlides				: moveSlides,
 			forwardOneSlide			: forwardOneSlide,
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,

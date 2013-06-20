@@ -138,13 +138,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		var slideToCopyType = V.Slides.getSlideType(slideToCopy);
 
-
 		/////////////////
 		//Pre-copy actions
 		/////////////////
 
 		var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-		if(typeof slidesetModule !== "undefined"){
+		if((typeof slidesetModule != "undefined")&&(slidesetModule!=null)){
 			var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
 			var slidesetId = $(slideToCopy).attr("id");
 
@@ -184,7 +183,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			}
 		}
 
-		if(typeof slidesetModule !== "undefined"){
+		if((typeof slidesetModule != "undefined")&&(slidesetModule!=null)){
 			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
@@ -195,10 +194,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Current slide needs to be stablished before this call.
 		V.Slides.updateSlideEls();
 
+
 		//Redraw thumbnails
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(currentSlide){
-				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber()+1);
+				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber());
 				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
 			} else {
 				V.Slides.goToSlide(1);

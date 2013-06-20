@@ -15,13 +15,21 @@ VISH.Editor.Events = (function(V,$,undefined){
 	  switch (event.keyCode) {
 	    case 39: // right arrow	    
 			if(V.Editor.Slides.isSlideFocused()) {
-				V.Slides.forwardOneSlide();
+				if(!ctrlDown){
+					V.Slides.forwardOneSlide();
+				} else {
+					V.Slides.moveSlides(10);
+				}
 				event.preventDefault();
 			}
 			break;
 	    case 37: // left arrow
 	    	if(V.Editor.Slides.isSlideFocused()) {
-				V.Slides.backwardOneSlide();
+				if(!ctrlDown){
+					V.Slides.backwardOneSlide();
+				} else {
+					V.Slides.moveSlides(-10);
+				}
 	    		event.preventDefault();    		
 	    	}
 	    	break;
