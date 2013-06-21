@@ -479,7 +479,9 @@ VISH.Slides = (function(V,$,undefined){
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
 			closeAllSlides			: closeAllSlides,
-			isSlideset				: isSlideset
+			isSlideset				: isSlideset,
+			triggerEnterEvent 		: triggerEnterEvent,
+			triggerLeaveEvent 		: triggerLeaveEvent
 	};
 
 }) (VISH,jQuery);

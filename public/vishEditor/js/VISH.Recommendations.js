@@ -4,7 +4,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	var user_id;
 	var presentation_id;
 	var generated;
-
+	var _isRecVisible;
 
 	/**
 	 * Function to initialize the Recommendations
@@ -12,6 +12,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	var init = function(options){
 		user_id = V.User.getId(); ;
 		presentation_id = V.SlideManager.getCurrentPresentation().id;
+		_isRecVisible = false;
 
 		if(options && options["urlToGetRecommendations"]){
 			url_to_get_recommendations = options["urlToGetRecommendations"];			
@@ -31,10 +32,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'onComplete'  : function(data) {
 		      		$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
 		      		$("#fancybox-wrap").css("margin-top", "0px");
+		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		_isRecVisible = true;
 		      },
 		      'onClosed' : function(data) {
 		      		$("#fancybox-outer").css("background", "white");
 		      		$("#fancybox-wrap").css("margin-top", "-14px");
+		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		_isRecVisible = false;
 		      }
 		});
 	};
@@ -44,7 +49,6 @@ VISH.Recommendations = (function(V,$,undefined){
 	 */
 	var generateFancybox = function(){
 		if(!generated){
-			// console.log("user_id " + user_id + " presentation_id " + presentation_id);
 			if(url_to_get_recommendations !== undefined){
 				var params_to_send = {
 					user_id: user_id,
@@ -59,8 +63,7 @@ VISH.Recommendations = (function(V,$,undefined){
 						_fillFancyboxWithData(data);
 					}
 				});
-			}
-			else{
+			} else {
 				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
 			}
 			generated = true;
@@ -116,10 +119,15 @@ VISH.Recommendations = (function(V,$,undefined){
 		$("#fancyRec").trigger('click');
 	};
 
+	var isRecVisible = function(){
+		return _isRecVisible;
+	}
+
 	return {
 		init          			: init,
 		generateFancybox		: generateFancybox,
-		showFancybox			: showFancybox
+		showFancybox			: showFancybox,
+		isRecVisible 			: isRecVisible
 	};
 
 }) (VISH,jQuery);
