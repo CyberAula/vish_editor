@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest 
+  identifier="VISH_VIRTUAL_EXCURSION_55"
+  version="1.0" 
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
+                        http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd
+                        http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd
+                        http://ltsc.ieee.org/xsd/LOM/lom.xsd"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.imsglobal.org/xsd/imscp_v1p1"
+  xmlns:imsss="http://www.imsglobal.org/xsd/imsss" 
+  xmlns:lom="http://ltsc.ieee.org/xsd/LOM/lom.xsd">
+    
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>CAM 1.3</schemaversion>
+    
+    <lom:lom>
+
+      <lom:general>
+        <lom:identifier>VISH_VIRTUAL_EXCURSION_55</lom:identifier>
+        <lom:title> 
+           <lom:langstring>The Iberian Lynx</lom:langstring>
+        </lom:title>
+        <lom:language>en</lom:language>
+        <lom:description>
+          <lom:langstring>The Iberian Lynx. A Virtual Excursion provided by http://vishub.org.</lom:langstring>
+        </lom:description>
+        <lom:keyword> 
+             <lom:langstring>Science</lom:langstring> 
+         </lom:keyword>         
+        <lom:keyword> 
+             <lom:langstring>Iberian Lynx</lom:langstring> 
+         </lom:keyword>         
+        <lom:keyword> 
+             <lom:langstring>Biology</lom:langstring> 
+         </lom:keyword> 
+        <lom:structure> 
+          <lom:source> 
+            <lom:langstring>LOMv1.0</lom:langstring> 
+          </lom:source> 
+          <lom:value> 
+            <lom:langstring>hierarchical</lom:langstring> 
+          </lom:value>             
+        </lom:structure>         
+        <lom:aggregationlevel> 
+             <lom:source> 
+                    <lom:langstring>LOMv1.0</lom:langstring> 
+              </lom:source> 
+             <lom:value> 
+                  <lom:langstring>4</lom:langstring> 
+              </lom:value>             
+         </lom:aggregationlevel>                
+      </lom:general>
+
+
+      <lom:lifecycle> 
+        <lom:version>
+             <lom:langstring>1.0</lom:langstring> 
+        </lom:version>
+        <lom:status> 
+              <lom:source> 
+                  <lom:langstring>LOMv1.0</lom:langstring> 
+              </lom:source> 
+              <lom:value> 
+                  <lom:langstring>final</lom:langstring> 
+              </lom:value> 
+        </lom:status>
+        <lom:contribute> 
+          <lom:role> 
+              <lom:source> 
+                  <lom:langstring>LOMv1.0</lom:langstring> 
+              </lom:source> 
+              <lom:value>
+                  <lom:langstring>author</lom:langstring> 
+              </lom:value> 
+            </lom:role>  
+          <lom:centity> 
+              <lom:vcard> 
+                     begin:vcard
+                     n:Aldo
+                     fn:Gordillo
+                     end:vcard
+               </lom:vcard> 
+          </lom:centity>    
+          <lom:date> 
+                <lom:datetime>20/04/2008</lom:datetime>
+          </lom:date>        
+        </lom:contribute> 
+      </lom:lifecycle> 
+
+      <lom:technical> 
+         <lom:format>text/html</lom:format> 
+         <lom:location>http://vishub.org/excursions/55</lom:location> 
+         <lom:requirement> 
+             <lom:type> 
+                  <lom:source> 
+                       <lom:langstring>LOMv1.0</lom:langstring> 
+                   </lom:source> 
+                  <lom:value> 
+                       <lom:langstring xml:lang="en">browser</lom:langstring> 
+                   </lom:value> 
+              </lom:type>     
+             <lom:name> 
+                  <lom:source> 
+                       <lom:langstring>LOMv1.0</lom:langstring> 
+                   </lom:source> 
+                  <lom:value> 
+                       <lom:langstring xml:lang="en">any</lom:langstring> 
+                   </lom:value> 
+              </lom:name>    
+          </lom:requirement> 
+          <lom:otherplatformrequirements> 
+               <lom:langstring>HTML5-compliant web browser</lom:langstring> 
+          </lom:otherplatformrequirements> 
+      </lom:technical>
+
+      <lom:educational> 
+        <lom:interactivitytype> 
+            <lom:source> 
+                <lom:langstring>LOMv1.0</lom:langstring> 
+            </lom:source> 
+            <lom:value> 
+                <lom:langstring xml:lang="en">mixed</lom:langstring> 
+            </lom:value> 
+        </lom:interactivitytype>     
+        <lom:learningresourcetype>
+              <lom:source> 
+                  <lom:langstring>LOMv1.0</lom:langstring> 
+              </lom:source> 
+              <lom:value> 
+                  <lom:langstring xml:lang="en">slide</lom:langstring> 
+              </lom:value> 
+        </lom:learningresourcetype>     
+        <lom:interactivitylevel> 
+          <lom:source>
+              <lom:langstring>LOMv1.0</lom:langstring> 
+          </lom:source>
+          <lom:value>
+              <lom:langstring xml:lang="en">very high</lom:langstring> 
+          </lom:value>
+        </lom:interactivitylevel>     
+        <lom:intendedenduserrole>
+            <lom:source>
+                <lom:langstring>LOMv1.0</lom:langstring> 
+            </lom:source> 
+            <lom:value>
+                <lom:langstring xml:lang="en">learner</lom:langstring> 
+            </lom:value> 
+        </lom:intendedenduserrole>         
+        <lom:typicalagerange> 
+          <lom:langstring>16-20</lom:langstring> 
+        </lom:typicalagerange>     
+        <lom:difficulty> 
+          <lom:source> 
+              <lom:langstring>LOMv1.0</lom:langstring> 
+          </lom:source> 
+          <lom:value> 
+              <lom:langstring xml:lang="en">medium</lom:langstring> 
+          </lom:value> 
+        </lom:difficulty>  
+        <lom:typicallearningtime> 
+          <lom:duration>PT5M30S</lom:duration> 
+        </lom:typicallearningtime>   
+        <lom:description> 
+          <!-- Comments on how this learning object is to be used.  -->
+            <lom:langstring>Know about Iberian Lynx</lom:langstring> 
+        </lom:description>
+        <lom:language>en</lom:language>           
+      </lom:educational>
+
+    </lom:lom>
+  </metadata>
+
+
+  <organizations default="ViSH" structure="hierarchical">
+    <organization identifier="ViSH">
+      <title>Virtual Science Hub</title>
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>ViSH</lom:identifier>
+            <lom:title> 
+               <lom:langstring>Virtual Science Hub</lom:langstring>
+            </lom:title>
+            <lom:description>
+              <lom:langstring>Virtual Science Hub. http://vishub.org.</lom:langstring>
+            </lom:description>              
+          </lom:general>
+        </lom:lom>
+      </metadata>
+      <item identifier="VIRTUAL_EXCURSION_55" identifierref="VIRTUAL_EXCURSION_55_RESOURCE">
+        <title>The Iberian Lynx</title>
+      </item>
+    </organization>
+  </organizations>
+
+
+  <resources>
+    <resource identifier="VIRTUAL_EXCURSION_55_RESOURCE" 
+              type="webcontent" 
+              href="excursion.html" 
+              adlcp:scormtype="sco">
+      <file href="excursion.html"/>
+    </resource>
+  </resources>
+
+</manifest>
+
+
+<!-- Ejemplos en http://ares.cnice.mec.es/informes/16/contenido/30.htm -->
+<!-- LOM DRAFT http://ltsc.ieee.org/wg12/files/LOM_1484_12_1_v1_Final_Draft.pdf -->
