@@ -10,7 +10,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * Function to initialize the Recommendations
 	 */
 	var init = function(options){
-		user_id = V.User.getId(); ;
+		user_id = V.User.getId();
 		presentation_id = V.SlideManager.getCurrentPresentation().id;
 		_isRecVisible = false;
 
@@ -49,31 +49,33 @@ VISH.Recommendations = (function(V,$,undefined){
 	 */
 	var generateFancybox = function(){
 		if(!generated){
-			if(url_to_get_recommendations !== undefined){
-				var params_to_send = {
-					user_id: user_id,
-					excursion_id: presentation_id,
-					quantity: 9
-				};
-				$.ajax({
-					type    : "GET",
-					url     : url_to_get_recommendations,
-					data    : params_to_send,
-					success : function(data) {
-						_fillFancyboxWithData(data);
-					}
-				});
-			} else {
+			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
+				if(url_to_get_recommendations !== undefined){
+					var params_to_send = {
+						user_id: user_id,
+						excursion_id: presentation_id,
+						quantity: 9
+					};
+					$.ajax({
+						type    : "GET",
+						url     : url_to_get_recommendations,
+						data    : params_to_send,
+						success : function(data) {
+							_fillFancyboxWithData(data);
+						}
+					});
+				}
+			} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
 				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
 			}
-			generated = true;
 		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(data.length===0)){
 			return;
-		}		
+		}
+
         var ex;
         var result = "";
         for (var i = data.length - 1; i >= 0; i--) {
@@ -100,6 +102,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	}
         };
         $("#fancy_recommendations .rec-grid").html(result);
+        generated = true;
 
         if(!V.Status.getIsEmbed()){
         	//we join the recom-X with sending the parent to the excursion url
@@ -114,6 +117,9 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var showFancybox = function(){
 		if((V.Utils.getOptions())&&(V.Utils.getOptions().preview)){
+			return;
+		}
+		if((V.Configuration.getConfiguration()["mode"]!=V.Constant.NOSERVER)&&(typeof url_to_get_recommendations == "undefined")){
 			return;
 		}
 		$("#fancyRec").trigger('click');

@@ -1,6 +1,244 @@
 <html>
-<head></head>
-<body>
-<iframe class="vishEditorIframe" id="presentation_iframe" src="http://vishub.org/excursions/55.full" width="95%" height="95%" style="border:0" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+<head>
+	<script type="text/javascript" src="js/vishViewer.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/joyride-1.0.5.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/pack1templates.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/jquery.fancybox-1.3.4.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/quiz.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/customPlayer.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/all/jquery-ui-1.9.2.custom.css">
+</head>
+
+<body onload="start()" style="display: none" class="loaded" id="presentation_iframe">
+
+    <!-- Copy HTML from here -->
+    
+    <section class="slides layout-regular template-default"></section>
+        <button id="back_arrow" class="vish_arrow" style="display:none" tabindex="2"><</button>
+    <button id="forward_arrow" class="vish_arrow" style="display:none" tabindex="2">></button>
+
+    <div id="viewbar" class="viewbar" style="display:none">
+        <a href="#" target="_blank"><div id="embedWatermark" class="watermark" style="display:none"></div></a>
+        <button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent; display: none;" tabindex="2"></button>
+		<button id="page-switcher-start" class="page-switcher" tabindex="2"></button>	    
+        <div id="slide-counter-div" style="">
+            <input id="slide-counter-input" type="text" name="goToSlide" maxlength="2" value="1">
+            <span id="slide-counter-span"></span>
+        </div>
+	    <button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
+    </div> 
+
+    <div id="selectSlidesBar" class="selectSlidesBar" style="display:none">
+        <img id='help_addslides_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+        <div class="selectSlidesButtons1">
+            <button id="ssbAll" class="buttonadd selectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_checked.png"/>Select All</button>
+            <button id="ssbuAll" class="buttonadd unselectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Unselect All</button>
+        </div>
+        <div class="selectSlidesButtons3">
+            <div class="selectSlidesSelection">
+                <p id="ssbsp" class="selected_n_slides addslidetrans"></p>
+                <img  class="addt" src="/vishEditor/images/templatesthumbs/addt.png"/>
+            </div>
+            <div class="selectSlidesButtonWrapper">
+                <button id="ssbdone" class="viewer_button buttonconfirm">Add Slides</button>
+            </div>
+        </div>
+        <div class="selectSlidesButtons2">
+            <button id="ssbaccept" class="buttoncenter buttonadd"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Remove Slide</button>
+        </div>
+    </div>
+
+    <div style="display:none" id="viewerpreview">Preview</div>
+    </div>
+    <button id="closeButton" style="display:none" ><img id="closeButtonImg" src="/vishEditor/images/icons/back_icon.png"/></button>
+    
+    <!-- Hidden link to open fancybox to display recommendations in the end -->
+    <a id="fancyRec" href="#fancy_recommendations" style="display: none;"></a>
+
+    <!-- Recommendations fancybox -->
+    <div style='display:none'>
+        <div id='fancy_recommendations'>
+            <div class="rec-first-row">
+                <span class="textrec1" i18n-key="i.evaluateTitle">Want to contribute evaluating the excursion?</span>
+                <button onclick="window.parent.document.getElementById('evaluation-button-id').click();" id='evaluate_excursion' submit='disable' class='recbutton' i18n-key="i.evaluate">Evaluate</button>
+            </div>
+            <div class="rec-second-row">
+                <span class="textrec1" i18n-key="i.recommendationsTitle">Recommended excursions for you:</span>
+                <div class="rec-grid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Quizzes -->
+
+    <!-- Hidden link to open fancybox when start a quiz session inside a slide  -->
+    <a id="addQuizSessionFancybox" href="#start_quiz_fancybox" style="display: none;"></a>
+    
+    <!-- Quiz session fancybox -->
+    <div style='display:none'>
+        <div id="start_quiz_fancybox" class="outer_box_viewer">
+            <div class="fancy_viewer_tabs" id="images_fancy_tabs_id">     
+                <ul>
+                    <li><a href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_viewer_tab tabbable">Quiz Session</a></li>
+                    <li><a href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_viewer_tab">Stats</a></li>
+                </ul>
+                <img class='help_in_fancybox_viewer' id='tab_quiz_session_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+                <img class='help_in_fancybox_viewer' id='tab_quiz_stats_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+            </div>
+            <div id='tab_quiz_session_content' class="tab_quiz_session_content fancy_viewer_tab_content">
+                <a target="_blank" id='tab_quiz_session_url_link'></a>
+                <div class="quizSharebuttons">
+                    <a target="_blank" href="#" id='tab_quiz_session_share_twitter'><img src='/vishEditor/images/icons/social/twitter.png' class='socialButton'/></a>
+                    <a target="_blank" href="#" id='tab_quiz_session_share_facebook'><img src='/vishEditor/images/icons/social/facebook.svg' class='socialButton'/></a>
+                    <a target="_blank" href="#" id='tab_quiz_session_share_gPlus'><img src='/vishEditor/images/icons/social/gplus.svg' class='socialButton'/></a>
+                </div>
+                <div class="quizQr"></div>
+                <input class='quizButton button quizStopButton' value='Stop'/>
+            </div>
+            <div id='tab_quiz_stats_content' class="fancy_viewer_tab_content">
+                <canvas id="quiz_chart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT WHEN TRY TO LAUNCH TWO QUIZZES AT THE SAME TIME-->
+    <div style='display:none'>
+        <div id='prompt1_alert'>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Please stop all quizzes before launch another one.</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT WHEN SAVE A QUIZ SESSION -->
+    <div style='display:none'>
+        <div id='prompt2_alert'>
+            <div class="prompt_text_container_viewer prompt_text_container_viewer2">
+                <p><span class="prompt_text_viewer">Do you want to save the quiz?</span></p>
+                <p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button_viewer prompt_button_viewer2">Yes</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button_viewer prompt_button_viewer1">No</a>
+                <a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button_viewer prompt_button_viewer3">Cancel</a>
+            </div>
+        </div>
+      </div>
+
+    <!-- PROMPT WHEN TRY TO SEND AN EMPTY ANSWER-->
+    <div style='display:none'>
+        <div id='prompt3_alert'>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Please, answer the quiz before send</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT AFTER SEND ANSWER-->
+    <div style='display:none'>
+        <div id='prompt4_alert'>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Your answer has been submitted</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT AFTER ERROR ON SENDING ANSWER-->
+    <div style='display:none'>
+        <div id='prompt5_alert'>
+            <div class="prompt_text_container_viewer">
+                <span class="prompt_text_viewer">Sorry, your answer can be submitted.</span>
+            </div>
+            <div>
+                <a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer_viewer4">accept</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMPT USER WHEN PRESENTATION IS NOT VALID -->
+    <div style='display:none'>
+        <div id='presentation_not_valid_wrapper'>
+            <div id='presentation_not_valid' class='fancy_msg_advert'>      
+                <span i18n-key="i.NotValid" class="adverttext">
+                This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.
+                </span> 
+                <div class="button_advert_wrapper">
+                    <a href="#" onclick="$.fancybox.close();" class="button_advert" i18n-key="i.OK">OK</a>
+                </div>
+                </div>
+        </div>
+    </div>
+
+
+    <!-- WALKTHROUGH HELP SECTION -->
+    <!--help for quiz session-->
+    <ol id="quiz_session_help" class="joyRideTipContent">>
+        <li data-id="tab_quiz_session_content" class="custom tut_quiz tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+         <h2 i18n-key="i.themesTitle">Quiz session</h2>
+           <p i18n-key="i.walk92">This window offers you a Qr-code and a link that you can give or show to the users that you want to participate in your simple quiz, or multiple-choice session, you can check in real-time too the results by clicking on the "stats" tab in the upper section of this window.<br>
+            You can share this session in other social networks by clicking on their icon.<br>
+            If you click on the close button in the superior zone of this windows you can always go back here by clicking the options button in the slide of the excursion.<br>
+           You can save all the results once you finish by clicking on the button Stop in the button "Stop" in the inferior section of this window.<br>A new window will appear for naming and saving the session in your profile.<br>Click on close button to finish this tutorial.</p>
+        </li>
+    </ol>
+
+    <!--help for quiz stats-->
+    <ol id="quiz_stats_help" class="joyRideTipContent">>
+        <li data-id="tab_quiz_stats_content" class="custom tut_quiz tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+         <h2 i18n-key="i.themesTitle">Quiz Session stats</h2>
+           <p i18n-key="i.walk93">This window offers you stadistics of your Quiz session, if you are offering a session with a simple quiz the stadistics the results will be shown as a circle shape separating every option in a different area.<br> If you are offering a session of multiple-choice you will get the results in a bar graph, you can always go back, close or save the results by clicking in the quiz session tab which is located in upper zone of this windows. Click "close" to finsih this tutorial.</p>
+        </li>
+    </ol>
+
+    <!--help for add excursion-->
+    <ol id="addslides_help" class="joyRideTipContent">
+<li data-id="viewbar" data-text="Close" i18n-key="i.Close" class="addslidestut custom tut_template tut_without_arrow" data-options="tipLocation:none">
+        <h2 i18n-key="i.AddingSlideinto">Adding slides into your excursion</h2>
+        <p i18n-key="i.walk84">In this window you can preview the slides of the excursion that you had already choosen in order to add all or some of the slides into your excursion.This preview offers you some options (at the bottom) which are:</p>
+        <p i18n-key="i.walk85"><img src="/vishEditor/images/tutorial/selectall.png"/>This button will select all the slides in order to add them to your excursion.</p>
+        <p i18n-key="i.walk86"><img src="/vishEditor/images/tutorial/unselectall.png"/>This button will unselect all the slides.</p>
+        <p i18n-key="i.walk87"><img src="/vishEditor/images/tutorial/selectslides.png"/> Also, you can add or remove any slide by clicking the button in the lower center space below the number of the slide.</p>
+        <p i18n-key="i.walk88">Every time you select an slide it will show its border green</p>
+        <p i18n-key="i.walk89">and if you remove it it will show a red border.</p>
+        <p i18n-key="i.walk90">You will know how many slides you are going to add to your excursion by checking the cuantity at the right bottom of the screen.Example: <i style="color: green; font-size: 1.4em">"+4"</i></p>
+        <p i18n-key="i.walk91">If you finished your selection you can finally add your slides to you excursion by click the button "add slides" at the right bottom in the screen. Click on "Close" to finish the tutorial.</p><br>
+        <div class="selectedslidetut"></div><div class="unselectedslidetut"></div>
+        </ol>
+
+    <!-- Copy HTML until here -->
+
+    <script>	
+		options = {};
+		var configuration = {};
+
+		configuration["ImagesPath"] = "images/";
+		configuration["StylesheetsPath"] = "stylesheets/";
+		configuration["mode"] = "vish";
+		options["configuration"] = configuration;
+		options["full"] = true;
+		options["developping"] = false;
+		// options["watermarkURL"] = "<%=excursion_path(@excursion)%>";
+		options["watermarkURL"] = "http://vishub.org/excursions/55";
+		// options["urlToGetRecommendations"] = "http://localhost:3000/excursions/last_slide.json"
+
+		function start(){ 
+			var presentation = {};
+
+			presentation = {"id":"1","title":"The Iberian Lynx","description":"The Iberian Lynx.\nAmazing presentation with images, videos and objects, generated by Vish Editor.","author":"Vish Editor Team","language":"en","avatar":"http://vishub.org/assets/logos/original/excursion-10.png","tags":["Doñana","Lynx","Biology"],"age_range":"4 - 20","subject":["Biology"],"educational_objectives":"Know about Iberian Lynx","adquired_competencies":"Pupils will be smarter","VEVersion":"0.2","type":"presentation","theme":"theme1","slides":[{"id":"article1","type":"standard","template":"t1","elements":[{"id":"article1_zone1","type":"image","areaid":"left","body":"http://vishub.org/pictures/312.jpg","style":"position: relative; width:117.0886075949367%; height:109.47368421052632%; top:-4.7368421052631575%; left:-2.5316455696202533%;"},{"id":"article1_zone2","type":"text","areaid":"header","body":"<div class=\"initTextDiv vish-parent-font4\" style=\"text-align: right; font-weight: normal; \"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><b><i><br></i></b></span></div><div class=\"initTextDiv vish-parent-font4\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><b><i><br></i></b></span></div><div class=\"initTextDiv vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: right;\"><span class=\"vish-font4 vish-fonthelvetica\" style=\"color:undefined;undefined;\"><i>by <b><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#cb6120;undefined;\">Vish</span> Editor</b> Team<b>&nbsp;</b></i></span></div>"},{"id":"article1_zone3","areaid":"subheader"}]},{"id":"article2","type":"standard","template":"t8","elements":[{"id":"article2_zone1","type":"text","areaid":"header","body":"<div class=\"initTextDiv vish-parent-font6 vish-parent-fontundefined\" style=\"font-weight: normal; \"><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:#db9600;font-weight: bold;  ;\">Iberian</span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;font-weight: bold; ;\"> Lynx &nbsp; &nbsp; &nbsp;</span><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#5ea099;undefined;\">Description and habitat</span></div>"},{"id":"article2_zone2","type":"image","areaid":"left","body":"http://vishub.org/pictures/73.jpeg","style":"position: relative; width:130.4%; height:106.6%; top:0.5%; left:-25.2%;"},{"id":"article2_zone3","type":"text","areaid":"center","body":"In most respects, the Iberian Lynx resembles other species of lynx, with a short tail,tufted ears and a ruff of fur beneath the chin. ...<div class=\"vish-parent-font7\" style=\"font-weight: normal; \"><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"},{"id":"article2_zone4","type":"image","areaid":"right","body":"http://vishub.org/pictures/313.png","style":"position: relative; width:119.5%; height:88.6%; top:3.4%; left:-2.6%;"}]},{"id":"article3","type":"standard","template":"t3","elements":[{"id":"article3_zone1","type":"text","areaid":"header","body":"<span class=\"vish-font6 vish-fontHelvetica\" style=\"color: rgb(219, 150, 0); font-weight: normal; \">Iberian</span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;font-weight: bold; ;\">&nbsp;</span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;font-weight: bold; ;\">Lynx</span><div class=\"vish-parent-font4\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"},{"id":"article3_zone2","type":"object","areaid":"left","body":"<iframe src=\"http://www.youtube.com/embed/8t29CZcGAbs?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID9\" class=\"t3_object\" wmode=\"opaque\"></iframe>","style":"position: relative; width:85.81661891117479%; height:100%; top:0.22321428571428573%; left:6.446991404011461%;"}]},{"id":"article4","type":"standard","template":"t6","elements":[{"id":"article4_zone1","type":"text","areaid":"header","body":"<div class=\"initTextDiv vish-parent-font6\" style=\"font-weight: normal; \"><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:#db9600;font-weight: bold;  ;\">Iberian</span><span class=\"vish-font6 vish-fontHelvetica\" style=\"color:undefined;font-weight: bold; ;\">&nbsp;Lynx</span><br></div>"},{"id":"article4_zone2","type":"image","areaid":"left","body":"http://vishub.org/pictures/314.jpeg","style":"position: relative; width:373.6111111111111%; height:217.9%; top:-34.97%; left:-42.13%;"},{"id":"article4_zone3","type":"image","areaid":"center","body":"http://vishub.org/pictures/314.jpeg","style":"position: relative; width:373.1%; height:217.7%; top:-46.9%; left:-199.1%;"},{"id":"article4_zone4","type":"text","areaid":"right","body":"<div class=\"vish-parent-font4 vish-parent-fontundefined\" style=\"text-align: center; font-weight: normal; \"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">During the mating season the female leaves her territory...</span><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"}]},{"id":"article5","type":"standard","template":"t10","elements":[{"id":"article5_zone1","type":"object","areaid":"center","body":"<iframe src=\"http://en.wikipedia.org/wiki/Do%C3%B1ana_National_Park?wmode=transparent\" id=\"resizableunicID15\" class=\"t10_object\" wmode=\"opaque\"></iframe>","style":"position: relative; width:100%; height:100%; top:0%; left:0%;"}]},{"id":"article6","type":"standard","template":"t12","elements":[{"id":"article6_zone1","areaid":"left1"},{"id":"article6_zone2","areaid":"right1"},{"id":"article6_zone3","areaid":"left2"},{"id":"article6_zone4","type":"image","areaid":"right2","body":"http://vishub.org/pictures/312.jpg","style":"position: relative; width:114.6%; height:113.8%; top:0%; left:0%;"}]}]};
+
+			VISH.SlideManager.init(options , presentation);
+		}
+	</script>
+
 </body>
 </html>
