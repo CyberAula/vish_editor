@@ -2,11 +2,11 @@
 <manifest 
   identifier="VISH_VIRTUAL_EXCURSION_55"
   version="1.0" 
-  xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
-                        http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
-                        http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd
-                        http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd
-                        http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1.xsd
+                        http://www.adlnet.org/xsd/adlcp_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlnav_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlseq_v1p3.xsd
+                        http://www.imsglobal.org/xsd/imsss_v1p0.xsd
                         http://ltsc.ieee.org/xsd/LOM/lom.xsd"
   xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
