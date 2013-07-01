@@ -16,3 +16,12 @@
 #toolbar_text {
 	margin-top: -30px !important;
 }
+
+
+#forward_arrow:hover{
+  	cursor: url(right-pointer.png),url(/vishEditor/images/cursor/right-pointer.png), default;
+}
+
+#back_arrow:hover{
+	cursor: url(left-pointer.png),url(/vishEditor/images/cursor/left-pointer.png), default;
+}
