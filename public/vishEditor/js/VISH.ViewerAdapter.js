@@ -7,7 +7,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var fs_button;
 	var can_use_nativeFs;
 	var embed;
+	var scorm;
 	var showViewbar;
+	var isInexternalSite;
+	var isInVishSite;
 
 	//Fullscreen fallbacks
 	var enter_fs_button;
@@ -41,11 +44,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(options){
 			//Decide if we must render the presentation in fullscreen mode
-			if(typeof render_full !== "boolean"){
+			if(typeof render_full != "boolean"){
 				render_full = ((options["full"]===true)&&(!V.Status.getIsInIframe()) || (options["forcefull"]===true));
 			}
-			if(typeof options["preview"] === "boolean"){
+			if(typeof options["preview"] == "boolean"){
 				is_preview = options["preview"];
+			}
+
+			//SCORM package
+			if(typeof options["scorm"] == "boolean"){
+				scorm = options["scorm"];
 			}
 
 			//Close button
@@ -71,13 +79,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//No fs for embed
 			fs_button = fs_button && (!embed);
 
-			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
-				$(".rec-first-row").show();
-			}
-			else{
-				$(".rec-first-row").hide();
-			}
-
 			page_is_fullscreen = render_full && (!V.Status.getIsInIframe());
 			
 		} else {
@@ -88,7 +89,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
+			scorm = false;
 		}
+
+		isInexternalSite = ((embed)||(scorm));
+	 	isInVishSite = ((!isInexternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
 
 		is_preview_insertMode = false;
 		if(is_preview){
@@ -151,11 +156,19 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			V.SlidesSelector.init();
 		}
 
-		if(embed){
+		//Watermark
+		if(isInexternalSite){
 			if((options)&&(typeof options.watermarkURL == "string")){
 				$("#embedWatermark").parent().attr("href",options.watermarkURL);
+				$("#embedWatermark").show();
 			}
-			$("#embedWatermark").show();
+		}
+
+		//Recommendations
+		if(isInVishSite || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
+			$(".rec-first-row").show();
+		} else {
+			$(".rec-first-row").hide();
 		}
 
 		if(close_button){

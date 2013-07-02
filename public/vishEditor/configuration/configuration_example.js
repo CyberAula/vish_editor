@@ -101,6 +101,9 @@ var getOptions = function(){
         	//Draft presentations
         	options["draft"] = false;
 
+        	//SCORM package
+        	// options["scorm"] = true;
+
 			//And a default landguage
 			options["lang"] = "en";
 
