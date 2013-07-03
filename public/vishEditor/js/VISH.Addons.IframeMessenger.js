@@ -39,7 +39,9 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 						_initListener();
 						if(V.Status.getIsInIframe()){
 							var helloEcho = JSON.parse(VEMessage);
-							helloEcho.origin = V.Status.getIframe().id;
+							if(V.Status.getIframe()!=null){
+								helloEcho.origin = V.Status.getIframe().id;
+							}
 							VEMessage = JSON.stringify(helloEcho);
 						}
 						_sendMessage(VEMessage);

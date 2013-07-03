@@ -110,7 +110,7 @@ VISH.Status = (function(V,$,undefined){
 	};
 
 	var getIframe = function(){
-		if(_isInIframe){
+		if((_isInIframe)&&(!_isAnotherDomain)){
 			return window.frameElement;
 		} else {
 			return null;

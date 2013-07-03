@@ -24,7 +24,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 
 	var createMessage = function(VEevent,params,origin,destination){
 		if(!origin){
-			if(V.Status.getIsInIframe()){
+			if((V.Status.getIsInIframe())&&(V.Status.getIframe()!=null)){
 				origin = V.Status.getIframe().id;
 			}
 		}
@@ -48,7 +48,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 			if(!VEMessageObject.VEevent){
 				return false;
 			}
-			if((V.Status.getIsInIframe())&&(params)&&(params.allowSelfMessages===false)){
+			if((V.Status.getIsInIframe())&&(V.Status.getIframe()!=null)&&(params)&&(params.allowSelfMessages===false)){
 				if(VEMessageObject.origin===V.Status.getIframe().id){
 					return false;
 				}
