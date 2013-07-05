@@ -568,6 +568,19 @@ a#tab_pic_flikr > img {
 	max-width: 47px;
 }
 
+a#tab_pic_lre {
+	padding: 0;
+}
+
+a#tab_pic_lre > img {
+	max-width: 47px;
+	max-height: 40px;
+}
+
+#lrelogo_in_tab{
+	max-width: 300px;
+}
+
 .delete_icon{
 	position: absolute;
 	bottom: 0px;

@@ -24,7 +24,8 @@ var getOptions = function(){
 		configuration["uploadImagePath"] = "/image";
 		configuration["uploadObjectPath"] = "/object";
 		configuration["uploadPresentationPath"] = "/presentation/";
-		configuration["uploadPDF2PPath"] = "/pdfex/";
+		configuration["uploadPDF2PPath"] = "/pdfex/";		
+		configuration["SearchLREPath"] = "/lre/search";
 
 		configuration["presentationSettings"] = false;
 		configuration["presentationTags"] = true;

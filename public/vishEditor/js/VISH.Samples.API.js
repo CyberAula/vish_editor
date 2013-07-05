@@ -1058,6 +1058,417 @@ VISH.Samples.API = (function(V,undefined){
         { "title" : "Thumbnail 30",   "description" : "Sample excursion thumbnail 30",   "src" : "/vishEditor/images/excursion_thumbnails/excursion-30.png" }
       ]
     };
+
+    var LREImageList = {
+      "results":[
+        {
+          "meta":{
+            "id":157132,
+            "provider":"ILBE",
+            "langBlocks":[
+              {
+                "language":"x-mt-it",
+                "title":"Fauna e Floara dell'Israele",
+                "description":"Questa risorsa ha le fotografie, le descrizioni di alcuna della flora e fauna dell'Israele"
+              },
+              {
+                "language":"x-mt-fr",
+                "title":"Faune et Floara de l'Israel",
+                "description":"Cette ressource a des photographies, des descriptions d'une partie de la flore et la faune de l'Israel"
+              },
+              {
+                "language":"x-mt-de",
+                "title":"Fauna und Floara von Israel",
+                "description":"Dieses Hilfsmittel hat Fotographien, Beschreibungen von etwas von der Flora und Fauna von Israel"
+              },
+              {
+                "language":"x-mt-es",
+                "title":"Fauna y Floara de Israel",
+                "description":"Este recurso tiene las fotografías, las descripciones de algo de la flora y fauna de Israel"
+              },
+              {
+                "language":"en",
+                "title":"Fauna and Floara of Israel",
+                "description":"This resource has photographs, descriptions of some of the flora and Fauna of Israel"
+              },
+              {
+                "language":"x-mt-pt",
+                "title":"Fauna e Floara de Israel",
+                "description":"Este recurso tem fotografias, descrições de algum do flora e fauna de Israel"
+              },
+              {
+                "language":"x-mt-el",
+                "title":"Πανίδα και Floara του Ισραήλ",
+                "description":"Αυτό το στοιχείο συμπεριφοράς έχει τις φωτογραφίες, περιγραφές μερικές από τη χλωρίδα και την πανίδα του Ισραήλ"
+              }
+            ],
+            "rights":{
+              "cc":false,
+              "url":"",
+              "by":false,
+              "nc":false,
+              "nd":false,
+              "sa":false
+            },
+            "expressions":[
+              {
+                "language":"en",
+                "manifestations":[
+                  {
+                    "player":"webBrowser",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0HZLsQohR_gIPB3Tm41jgwk"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "para":{
+            "commentsInfo":{
+              "count":0
+            },
+            "favouritesInfo":{
+              "count":0
+            },
+            "idsTuple":{
+              "expressionID":0,
+              "globalLREID":157132,
+              "manifestationID":0,
+              "socialID":"157132/0/0"
+            },
+            "opinionsInfo":{
+              "downCount":0,
+              "upCount":0
+            },
+            "ratingsInfo":{
+              "average":0,
+              "count":0,
+              "sum":0
+            },
+            "tagsInfo":{
+              "labels":[
+
+              ]
+            }
+          }
+        },
+        {
+          "meta":{
+            "id":249838,
+            "provider":"TD",
+            "langBlocks":[
+              {
+                "language":"en",
+                "title":"Design Inspired by Nature",
+                "description":"In this stills collage produced for Teachers' Domain, see several examples of everyday inventions that were either inspired by nature or are similar in form and function to plants or animals."
+              }
+            ],
+            "rights":{
+              "cc":false,
+              "url":"http://www.teachersdomain.org/terms_of_use.html",
+              "by":false,
+              "nc":false,
+              "nd":false,
+              "sa":false
+            },
+            "expressions":[
+              {
+                "language":"en",
+                "manifestations":[
+                  {
+                    "player":"landingPage",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0LSLsIrhB_gIPJ4Rgn51X81"
+                    ]
+                  },
+                  {
+                    "player":"webBrowser",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0LSLsIrhR_gIPJ4RgU23uqf"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "para":{
+            "commentsInfo":{
+              "count":0
+            },
+            "favouritesInfo":{
+              "count":0
+            },
+            "idsTuple":{
+              "expressionID":0,
+              "globalLREID":249838,
+              "manifestationID":0,
+              "socialID":"249838/0/0"
+            },
+            "opinionsInfo":{
+              "downCount":0,
+              "upCount":0
+            },
+            "ratingsInfo":{
+              "average":0,
+              "count":0,
+              "sum":0
+            },
+            "tagsInfo":{
+              "labels":[
+
+              ]
+            }
+          }
+        },
+        {
+          "meta":{
+            "id":253883,
+            "provider":"NASAPHOTOJOURNAL",
+            "langBlocks":[
+              {
+                "language":"x-mt-it",
+                "title":"Hamersley ': Non abbastanza Come 'Il Cratere Dell'Aquila '",
+                "description":"Questo mosaico approssimativo di immagine di allineare-colore dalla macchina fotografica panoramica sull'occasione del vagabondo di esplorazione del Marte mostra l'obiettivo nicknamed \"Hamersley\" all'interno \"del cratere di Fram.\" La natura del materiale dell'affioramento visto in questa posizione si interrompe visibilmente. Alcune zone egualmente hanno fare uno strato di che può essere distintivo da che cosa gli scienziati hanno visto precedentemente in \"cratere dell'aquila.\" L'occasione sta viaggiando verso \"una resistenza dubbed grande cratere.\" Può ritornare a Fram per ulteriore analisi delle relativi roccie e terrenise permessi di tempo. Le immagini in questo mosaico sono state prese sul solenoide 87 con le macchine fotografiche panoramica 480 -, 530- ed i filtri 600-nanometer."
+              },
+              {
+                "language":"x-mt-de",
+                "title":"Hamersley ': Nicht Durchaus Wie ' Adler-Krater '",
+                "description":"Dieses ungefähre Zutreffendfarbe Bildmosaik von der panoramischen Kamera auf der Mars Erforschung-Vagabund-Gelegenheit zeigt das Ziel, das nicknamed ist \"Hamersley\" innerhalb \"des Fram Kraters.\" Die Natur des Zutageliegenmaterials, das in diesen Standort gesehen wird, wird sichtbar gestört. Etwas Bereiche haben auch das Überlagern, das sein kann unterscheidend von, was Wissenschaftler sahen vorher in \"Adler-Krater.\" Gelegenheit reist in Richtung zu einer großer Krater betitelten \"Ausdauer.\" Sie kann zu Fram für weitere Analyse seiner Felsen und Bodens zurückgehen wenn Zeiterlaubnis. Die Bilder in diesem Mosaik wurden auf Solenoid 87 mit der panoramischen Kamera 480 -, 530- und Filter 600-nanometer genommen."
+              },
+              {
+                "language":"x-mt-fr",
+                "title":"Hamersley ': Pas tout à fait Comme Le 'Cratère d'Aigle '",
+                "description":"Cette mosaïque approximative d'image de vrai-couleur de l'appareil-photo panoramique sur l'occasion de vagabond d'exploration de Mars montre la cible surnommée \"Hamersley\" dans le \"cratère de Fram.\" La nature du matériel d'affleurement vu dans cet emplacement est visiblement perturbée. Quelques zones ont également poser qui peut être distinctif dece que les scientifiques ont vu précédemment en \"cratère d'aigle.\" L'occasion voyage vers une \"résistance doublée grand par cratère.\" Elle peut retourner à Fram pour davantage d'analyse de ses roches et sols si des laisux de temps. Les images dans cette mosaïque ont été prises sur le solénoïde 87 avec l'appareil-photo panoramique 480 -, 530- et filtres 600-nanometer."
+              },
+              {
+                "language":"x-mt-es",
+                "title":"Hamersley ': No absolutamente Como El ' Cráter Del Águila '",
+                "description":"Este mosaico aproximado de la imagen del verdadero-color de la cámara fotográfica panorámica en la oportunidad del rover de la exploración de Marte muestra la blanco apodada \"Hamersley\" dentro del \"cráter de Fram.\" La naturaleza del material del afloramiento considerado en esta localización se interrumpe visiblemente. Algunas áreas también tienen acodar que pueda ser distintivo de lo que vieron los científicos previamenteen \"cráter del águila.\" La oportunidad está viajando hacia una \"resistencia doblada cráter grande.\" Puede volver a Fram para el análisis adicional de sus rocas y suelos si los permisos del tiempo. Las imágenes en este mosaico fueron adquiridas el solenoide 87 con la cámara fotográfica panorámica 480 -, 530- y filtros 600-nanometer."
+              },
+              {
+                "language":"en",
+                "title":"Hamersley' : Not Quite Like 'Eagle Crater'",
+                "description":"This approximate true-color image mosaic from the panoramic camera on the Mars Exploration Rover Opportunity shows the target nicknamed \"Hamersley\" within \"Fram Crater.\" The nature of the outcrop material seen in this location is visibly disrupted. Some areas also have layering that may be distinctive from what scientists saw previously in \"Eagle Crater.\" Opportunity is traveling toward a large crater dubbed \"Endurance.\" It may return to Fram for further analysis of its rocks and soils if time permits. The images in this mosaic were taken on sol 87 with the panoramic camera's 480-, 530- and 600-nanometer filters."
+              },
+              {
+                "language":"x-mt-pt",
+                "title":"Hamersley ': Não completamente Como ' A Cratera Da Águia '",
+                "description":"Este mosaic aproximado da imagem da verdadeiro-cor da câmera panoramic na oportunidade do vagabundo da exploração de Marte mostra o alvo nicknamed \"Hamersley\" dentro de \"da cratera Fram.\" A natureza do material do outcrop visto nestaposição disrupted visivelmente. Algumas áreas têm também mergulhar que pode ser distintivo de o que os cientistas viram previamente da \"na cratera águia.\" A oportunidade está viajando para cratera grande uma \"resistência dubbed.\" Pode retornar a Fram para uma análise mais adicional de seus rochas e solos se licenças do tempo. As imagens neste mosaic foram feitas exame no solenóide 87 com a câmera panoramic 480 -, 530- e filtros 600-nanometer."
+              }
+            ],
+            "rights":{
+              "cc":false,
+              "url":"http://creativecommons.org/publicdomain/mark/1.0/",
+              "by":false,
+              "nc":false,
+              "nd":false,
+              "sa":false
+            },
+            "expressions":[
+              {
+                "language":"en",
+                "manifestations":[
+                  {
+                    "player":"landingPage",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0HbKM4qhR_gIPB5TFHGMCw1"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "para":{
+            "commentsInfo":{
+              "count":0
+            },
+            "favouritesInfo":{
+              "count":0
+            },
+            "idsTuple":{
+              "expressionID":0,
+              "globalLREID":253883,
+              "manifestationID":0,
+              "socialID":"253883/0/0"
+            },
+            "opinionsInfo":{
+              "downCount":0,
+              "upCount":0
+            },
+            "ratingsInfo":{
+              "average":0,
+              "count":0,
+              "sum":0
+            },
+            "tagsInfo":{
+              "labels":[
+
+              ]
+            }
+          }
+        },
+        {
+          "meta":{
+            "id":253896,
+            "provider":"NASAPHOTOJOURNAL",
+            "langBlocks":[
+              {
+                "language":"x-mt-it",
+                "title":"Roccie Sedimentarie Di Schiaparelli",
+                "description":"Versione no. MOC2-403, il 26 di MGS MOC giugno 2003 alcuni dei risultati di formazione immagine di alta risoluzione più importanti del centro globale di esperimento della macchina fotografica del orbiter del Marte dell'ispettore del Marte (MGS) (MOC)sulle scoperte circa la presenza e la natura del record sedimentario della roccia su Marte. Questo vecchio cratere di effetto del meteor in bacino nordoccidentale di Schiaparelli esibisce una vista spettacolare della roccia fatta uno strato di e sedimentaria. Ilcratere (1.4 miglio) largo 2.3 chilometri può completamente essere riempito una volta di sedimento; il materiale più successivamente è stato corroso alla relativa forma attuale. Ledozzine degli strati di spessore simile e le proprietà fisiche ora sono espresse nelle nozze raggrum-come la pila nel mezzo del cratere. La luce solare che illumina la scena dalla parte di sinistra indica che il cerchio, o la parte superiore di MESA, alla metà del cratere si leva in piedi più superiore agli altri strati scala-fatti un passo. Le proprietà fisiche dell'uniforme e l'assestamento di questi strati potrebbero indicare che originalmente sono state depositate in un lago (è possibile che il cratere era allaparte inferiore di lago molto più grande, di un bacino riempientesi di Schiaparelli); alternativamente, gli strati sono stati depositati sistemandosi dell'atmosfera in un ambiente asciutto. Questa immagine è stata acquistata il 3 giugno 2003 ed è situata vicino a 0.9S, 346.2W."
+              },
+              {
+                "language":"en",
+                "title":"Schiaparelli Sedimentary Rocks",
+                "description":"MGS MOC Release No. MOC2-403, 26 June 2003 Some of the most important high resolution imaging results of the Mars Global Surveyor (MGS) Mars Orbiter Camera (MOC) experiment center on discoveries about the presence and nature of the sedimentary rock record on Mars. This old meteor impact crater in northwestern Schiaparelli Basin exhibits a spectacular view of layered, sedimentary rock. The 2.3 kilometer (1.4 miles) wide crater may have once been completely filled with sediment; the material was later eroded to its present form. Dozens of layers of similar thickness and physical properties are now expressed in a wedding cake-like stack in the middle of the crater. Sunlight illuminating the scene from the left shows that the circle, or mesa top, at the middle of the crater stands higher than the other stair-stepped layers. The uniform physical properties and bedding of these layers might indicate that they were originally deposited in a lake (it is possible that the crater was at the bottom of a much larger lake, filling Schiaparelli Basin); alternatively, the layers were deposited by settling out of the atmosphere in a dry environment. This picture was acquired on June 3, 2003, and is located near 0.9S, 346.2W."
+              },
+              {
+                "language":"x-mt-pt",
+                "title":"Rochas Sedimentary De Schiaparelli",
+                "description":"Liberação no. MOC2-403 de MGS MOC, 26 junho 2003alguns dos resultados de alta resolução os mais importantes da imagem latente do centro global da experiência da câmera do orbiter de Marte do surveyor de Marte (MGS) (MOC) em descobertas sobre a presença e a natureza do registro sedimentary da rocha em Marte. Esta cratera velha do impacto do meteoro na bacia do noroeste deSchiaparelli exibe uma vista espectacular da rocha mergulhada, sedimentary. A cratera de 2.3 quilômetros (1.4 milha) de largura pode uma vez completamente ter sido enchida com o sedimento; o material foi corroído mais tarde a seu formulário atual. As dúzias das camadas de espessura similar e as propriedades físicas são expressadas agora em um casamento endureç-como a pilha no meio da cratera. A luz solar que ilumina a cena da esquerda mostra que o círculo, ou o alto do mesa, no meio da cratera estão mais altamente do que as outras camadas escada-pisadas. As propriedades físicas e o fundamento uniformes destas camadas puderam indicar que estiveram depositadas originalmente em um lago (é possível que a cratera estava no fundo de um lago muito maior, de umabacia de enchimento de Schiaparelli); alternativamente, as camadas foram depositadas estabelecindo-se fora da atmosfera em um ambiente seco. Este retrato foi adquirido junho em 3, 2003, e éficado situado perto de 0.9S, 346.2W."
+              }
+            ],
+            "rights":{
+              "cc":false,
+              "url":"http://creativecommons.org/publicdomain/mark/1.0/",
+              "by":false,
+              "nc":false,
+              "nd":false,
+              "sa":false
+            },
+            "expressions":[
+              {
+                "language":"en",
+                "manifestations":[
+                  {
+                    "player":"landingPage",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0HbKMcpgh_gIPB5TLh4hjKH"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "para":{
+            "commentsInfo":{
+              "count":0
+            },
+            "favouritesInfo":{
+              "count":0
+            },
+            "idsTuple":{
+              "expressionID":0,
+              "globalLREID":253896,
+              "manifestationID":0,
+              "socialID":"253896/0/0"
+            },
+            "opinionsInfo":{
+              "downCount":0,
+              "upCount":0
+            },
+            "ratingsInfo":{
+              "average":0,
+              "count":0,
+              "sum":0
+            },
+            "tagsInfo":{
+              "labels":[
+
+              ]
+            }
+          }
+        },
+        {
+          "meta":{
+            "id":253900,
+            "provider":"NASAPHOTOJOURNAL",
+            "langBlocks":[
+              {
+                "language":"x-mt-it",
+                "title":"Banda del radar de 28 ottobre 2005, flyby di Titan",
+                "description":"Questo programma della luna Titan del Saturno mostra la posizione tracciata con il rilevamento del radar di Cassini usando il relativo modo sintetico di formazione immagine del radar dell'apertura durante 28 ottobre 2005, flyby. La banda del radarè sovrapposta su un'immagine di falso-colore fatta dalle osservazionidal telescopio dello spazio del Hubble della NASA. La posizione del luogo di atterraggio di Huygens è contrassegnata nel colore rossoall'estrema destra. La sovrapposizione fra i dati di Huygens e la volontà di dati del radar dà i nuovi indizii alla natura della superficie vista dalla sonda di Huygens, che ha atterrato su Titan nelmese di gennaio del 2005. Del 28 la banda ottobre è di lunghezza circa 6.150 chilometri (3.821 miglio), estendendosi del nordda 7 gradi fino 18 gradi di latitudine del sud ed ad ovest da 179 gradi fino 320 gradi di longitudine ad ovest. La risoluzione spaziale delle immagini del radar varia da circa 300 tester (980 piedi) per il pixel a circa 1.5 chilometro (0.93 miglia) per il pixel.Quattro passaggi del radar del Cassini hanno rivelato una varietà di caratteristiche geologiche, compreso i crateri di effetto,di depositi vento-saltati, di scanalature e di caratteristiche cryovolcanic. La missione di Cassini-Huygens è un progetto cooperativo della NASA, dell'Ente Spaziale Europeo e dell'agenzia italiana dello spazio. Il laboratorio di propulsione del getto, una divisione della California Institute of Technology A Pasadena, gestisce la missione per la direzione di missione di scienza della NASA, Washington, D.C. The Cassini che il orbiter è stato progettato,sviluppato e montato a JPL. Lo strumento del radar è stato costruito da JPL e l'agenzia italiana dello spazio, funzionante con i membri della squadra dal unito Dichiara e parecchi paesi europei. Per le più informazioni sulla chiamata di missione di Cassini-Huygens"
+              },
+              {
+                "language":"x-mt-de",
+                "title":"Radar-Schwade von Okt. 28, 2005, Titan Flyby",
+                "description":"Diese Karte von Mond Titan Saturns zeigt den Standort, der mit dem Cassini Radarkartographen mit seinem synthetischen Blendenöffnung Radar-Belichtung Modus während des Okt.28, 2005, Flyby abgebildet wird. Die RadarSchwade wird auf einem Falschfarbe Bild gelegt, das von den Beobachtungen durch Platz-Teleskop Hubble NASAs gebildet wird. Der Standort der Huygens Landungsites wird im Rot auf dem weit rechten gekennzeichnet. Die Deckung zwischen den Huygens Daten und dem Radardatenwillen geben neue Anhaltspunkte zur Natur der Oberfläche, die durch die Huygens Prüfspitze gesehen wird, die auf Titan im Januar 2005 landete. Die Okt. 28 Schwade ist ungefähr 6.150 Kilometer (3.821 Meilen) lang und dehnt sich von 7 Grad Nord auf 18 Grad Südbreite und von 179 Grad West auf 320 Grad Westlänge aus. Die räumliche Zerlegung der Radarbilder reicht von ungefähr 300 Metern (980 Fuß) pro Pixel bis zu ungefähr 1.5 Kilometern (0.93 Meilen) pro Pixel. Cassinis deckten vier Radardurchläufe eine Vielzahl der geologischen Merkmale, einschließlich Auswirkung Krater,der Wind-durchgebrannten Ablagerungen, der Führungen und der cryovolcanic Merkmale auf. Die Cassini-Huygens Mission ist ein kooperatives Projekt der NASAS, der Europäischen Weltraumorganisationund der italienischen Platz-Agentur. Das Strahl Antrieb-Labor, eine Abteilung der California Institutes of Technology in Pasadena, handhat die Mission für Direktorat Mission Wissenschaft der NASAS, Washington, D.C. The Cassini, das Orbiter konzipiert war, sich entwickelt und an JPL zusammengebaut. Das Radarinstrument wurde durch JPL und die italienische Platz-Agentur aufgebaut und arbeitete mit Teambauteilen von den Vereinigten Staaten und von einigen europäischen Ländern. Zu mehr Information über den Cassini-Huygens Mission Besuch"
+              },
+              {
+                "language":"x-mt-fr",
+                "title":"Bandage de radar oct. de 28, 2005, flyby de Titan",
+                "description":"Cette carte du Titan de la lune de Saturne montre l'emplacement tracé avec le cartographe de radar de Cassini enutilisant son mode synthétique de formation image de radar d'ouverture pendant oct. 28, 2005, flyby. Le bandage de radar est superposé à une image de faux-couleur faite à partir des observations par le télescope de l'espace de Hubble de NASA's. L'emplacement du site d'atterrissage de Huygens est marqué dansle rouge sur loin le droit. La superposition entre les données de Huygens et la volonté de données de radar donnent de nouveaux indices à la nature de la surface vue par la sonde de Huygens, qui a débarqué sur le Titan en janvier 2005. Le bandage oct. de 28 est d'environ 6.150 kilomètres de long (3.821 milles), s'étendant de 7 degrés de du nord à 18 degrés de latitude du sud et de 179 degrés d'occidental à 320 degrés de longitude occidentale. La résolution spatiale des images de radar s'étend d'environ 300 mètres (980 pieds) par Pixel à environ 1.5 kilomètre (0.93 mille) par Pixel. Quatre passages du radar de Cassini ont indiqué une variété de dispositifs géologiques, y compris des cratères d'impact, de dépôts vent-soufflés, de canaux et de dispositifs cryovolcanic. La mission de Cassini-Huygens est un projet coopératif de la NASA, de l'Agence européenne de l'espace et de l'agence italienne de l'espace. Le laboratoire depropulsion de Voyager en jet, une division de la California Institute of Technology À Pasadena, contrôle la mission pour la direction de mission de la Science de la NASA, Washington, D.C. The Cassini que la navette spatiale a été conçue, développé et réuni à JPL. L'instrument de radar a été construit par JPL et l'agence italienne de l'espace, fonctionnant avec des membres d'équipe des Etats-Unis et plusieurs pays européens. Pour plus d'informations sur la visite de mission de Cassini-Huygens"
+              },
+              {
+                "language":"x-mt-es",
+                "title":"Andana del radar del de oct. 28 de 2005, flyby delTitán",
+                "description":"Esta correspondencia del Titán de la luna de Saturno muestra la localización asociada con el mapper del radar de Cassini usando su modo sintetizado de la proyección de imagen del radar de la abertura durante de oct. el 28 de 2005, flyby. La andana del radar se sobrepone en una imagen del falso-color hecha de observaciones por el telescopio del espacio de Hubble de NASÁs. La localización del sitio del aterrizaje de Huygens está marcada en rojo en el lejos derecho. El traslapo entre los datosde Huygens y la voluntad de los datos del radar da nuevas pistas a la naturaleza de la superficie considerada por la punta de prueba de Huygens, que aterrizó en Titán en enero de 2005. La andanade oct. del 28 tiene cerca de 6.150 kilómetros de largo (3.821 millas), extendiendo a partir de 7 grados de del norte a 18 grados de latitud del sur y de 179 grados de del oeste a 320 grados de longitud del oeste. La resolución espacial de las imágenes del radar seextiende de cerca de 300 contadores (980 pies) por el pixel a cerca de1.5 kilómetros (0.93 milla) por el pixel. Cuatro pasos del radar de Cassini revelaron una variedad de características geológicas, incluyendo los cráteres del impacto, de depósitos viento-soplados, de canales y de características cryovolcanic. La misión de Cassini-Huygens es un proyecto cooperativo de la NASA, de la Agencia Espacial Europea y de la agencia italiana del espacio. El laboratorio de la propulsión del jet, división de la California Institute of Technology En Pasadena, maneja la misión para la dirección de la misión de la ciencia de la NASA, Washington,D.C. The Cassini que el orbiter fue diseñado, convertido y ensambladoen JPL. El instrumento del radar fue construido por JPL y la agencia italiana del espacio, trabajando con los miembros del equipo de los Estados Unidos y de varios países europeos. Para más información sobre la visita de la misión de Cassini-Huygens"
+              },
+              {
+                "language":"en",
+                "title":"Radar Swath of Oct. 28, 2005, Titan Flyby",
+                "description":"This map of Saturn's moon Titan shows the location mapped with the Cassini radar mapper using its synthetic aperture radar imaging mode during the Oct. 28, 2005, flyby. The radar swath is superimposed on a false-color image made from observations by NASA's Hubble Space Telescope. The location of the Huygens landing site is marked in red on the far right. The overlap between the Huygens data and the radar data will give new clues to the nature of the surface seen by the Huygens probe, which landed on Titan in January 2005. The Oct. 28 swath is about 6,150 kilometers long (3,821 miles), extending from 7 degrees north to 18 degrees south latitude and 179 degrees west to 320 degrees west longitude. The spatial resolution of the radar images ranges from about 300 meters (980 feet) per pixel to about 1.5 kilometers (0.93 miles) per pixel. Cassini's four radar passes revealed a variety of geologic features, including impact craters, wind-blown deposits, channels and cryovolcanic features. The Cassini-Huygens mission is a cooperative project of NASA, the European Space Agency and the Italian Space Agency. The Jet Propulsion Laboratory, a division of the California Institute of Technology in Pasadena, manages the mission for NASA's Science Mission Directorate, Washington, D.C. The Cassini orbiter was designed, developed and assembled at JPL. The radar instrument was built by JPL and the Italian Space Agency, working with team members from the United States and several European countries. For more information about the Cassini-Huygens mission visit"
+              },
+              {
+                "language":"x-mt-pt",
+                "title":"Swath do radar outubro de 28, 2005, demostração aérea de Titan",
+                "description":"Este mapa da lua Titan de Saturno mostra a posição traçada com o cartógrafo do radar de Cassini usando sua modalidade sintética da imagem latente do radar da abertura durante outubro o 28, 2005, demostração aérea. O swath do radar é sobreposto em uma imagem da falso-cor feita das observações pelo telescópio do espaço de Hubble de NASA. A posição do local da aterragem de Huygens é marcada no vermelho no distante direito. A sobreposição entre os dados de Huygens e a vontade dos dadosdo radar dá indícios novos à natureza da superfície vista pela ponta de prova de Huygens, que aterrou em Titan em janeiro 2005. O swath outubro de 28 tem aproximadamente 6.150 quilômetros de comprimento (3.821 milhas), estendendo de 7 graus norte a 18 graus de latitude sul e de 179 graus ocidental a 320 graus de longitude ocidental. A definição spatial das imagens do radar varia de aproximadamente 300 medidores (980 pés) por o pixel a aproximadamente1.5 quilômetro (0.93 milha) por o pixel. Passagens do radar de Cassini quatro revelaram uma variedade de características geologic, including crateras do impacto, de depósitos vento-fundidos, de canaletas e de características cryovolcanic. A missão de Cassini-Huygens é um projeto cooperativo da NASA, da agência de espaço européia e da agência italiana do espaço. O laboratório da propulsão do jato, uma divisão da California Institute of Technology Em Pasadena, controla a missão para o directorate da missão da ciência da NASA, Washington, C.C.  Cassini que o orbiter foi projetado, tornado e montado em JPL. O instrumento do radar foi construído por JPL e pela agência italiana do espaço, trabalhando com membros da equipe dos estados unidos e de diversos países europeus. Para mais informação sobre a visitada missão de Cassini-Huygens"
+              }
+            ],
+            "rights":{
+              "cc":false,
+              "url":"http://creativecommons.org/publicdomain/mark/1.0/",
+              "by":false,
+              "nc":false,
+              "nd":false,
+              "sa":false
+            },
+            "expressions":[
+              {
+                "language":"en",
+                "manifestations":[
+                  {
+                    "player":"landingPage",
+                    "urls":[
+                      "http://oer.eun.org/VWClc0LSJcMhih_gIPJ5TpiQpQej"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "para":{
+            "commentsInfo":{
+              "count":0
+            },
+            "favouritesInfo":{
+              "count":0
+            },
+            "idsTuple":{
+              "expressionID":0,
+              "globalLREID":253900,
+              "manifestationID":0,
+              "socialID":"253900/0/0"
+            },
+            "opinionsInfo":{
+              "downCount":0,
+              "upCount":0
+            },
+            "ratingsInfo":{
+              "average":0,
+              "count":0,
+              "sum":0
+            },
+            "tagsInfo":{
+              "labels":[
+
+              ]
+            }
+          }
+        }
+      ]
+    };
                 
 		
 	return {
@@ -1081,7 +1492,8 @@ VISH.Samples.API = (function(V,undefined){
     objectListLittle  : objectListLittle,
     objectListDummy   : objectListDummy,
 		tagsList          : tagsList,
-    thumbnailsList    : thumbnailsList
+    thumbnailsList    : thumbnailsList,
+    LREImageList      : LREImageList
 	};
 
 })(VISH);

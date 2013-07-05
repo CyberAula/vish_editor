@@ -9,6 +9,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	var init = function(){
 		V.Editor.Image.Flikr.init();
 		V.Editor.Image.Repository.init();
+		V.Editor.Image.LRE.init();
 
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
