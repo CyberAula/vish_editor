@@ -19,11 +19,11 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	//function that is called when tab loads
 	var onLoadTab = function(){
 		//clean carrousel
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
-		$("#" + carrouselDivId).hide();
+		//V.Editor.Carrousel.cleanCarrousel(carrouselDivId); 
+		//$("#" + carrouselDivId).hide();
 
 		//clean search field
-		$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");	
+		//$("#tab_pic_flikr_content").find("input[type='search']").attr("value","");	
 	};
 
 	var listImages = function(text){

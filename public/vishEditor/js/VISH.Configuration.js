@@ -14,6 +14,7 @@ VISH.Configuration = (function(V,$,undefined){
 		V.UploadObjectPath = configuration["uploadObjectPath"];
 		V.UploadPresentationPath = configuration["uploadPresentationPath"];
 		V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
+		V.SearchLREPath = configuration["SearchLREPath"];
 	};
 	
 	var applyConfiguration = function(){
@@ -53,7 +54,7 @@ VISH.Configuration = (function(V,$,undefined){
 
 	    if(!configuration["LRE"]){
 	      $("#tab_video_lre").css("display","none");
-	      $("#tab_image_lre").css("display","none");
+	      $("#tab_pic_lre").css("display","none");
 	      $("#tab_object_lre").css("display","none");
 	    }
 			
