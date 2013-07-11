@@ -53,7 +53,6 @@ VISH.Configuration = (function(V,$,undefined){
 	    }
 
 	    if(!configuration["LRE"]){
-	      $("#tab_video_lre").css("display","none");
 	      $("#tab_pic_lre").css("display","none");
 	      $("#tab_object_lre").css("display","none");
 	    }
