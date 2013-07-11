@@ -242,7 +242,7 @@ var i18n =
 				"i.Description"					: "Description",
 				"i.limitReached"				: "limit reached",
 				"i.wysiwyg.addurl"				: "Add link",
-				"i.Title"						: "Título",
+				"i.Title"						: "Title",
 				"i.exitConfirmation"			: "You are about to leave this website. You will lose any changes you have not saved.",
 				"i.ZoneTooltip"					: "Click here to add content"
 			}

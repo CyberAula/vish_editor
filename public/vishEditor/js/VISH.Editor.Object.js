@@ -6,7 +6,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var urlInputId = "object_embed_code";
 		
 	var init = function(){
-
+		V.Editor.Object.LRE.init();
 		V.Editor.Object.Repository.init();
 		V.Editor.Object.Live.init();
 		V.Editor.Object.Web.init();

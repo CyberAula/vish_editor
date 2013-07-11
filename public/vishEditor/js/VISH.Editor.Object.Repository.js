@@ -19,10 +19,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
   var onLoadTab = function(){
     var previousSearch = ($("#tab_object_repo_content").find("input[type='search']").val()!="");
-		if(! previousSearch){
-		  _cleanObjectPreview();
+		if(! previousSearch){		  
 	    _requestInicialData();
 		}
+    _cleanObjectPreview();
 		$("#" + footId).find(".okButton").hide();
   }
 	

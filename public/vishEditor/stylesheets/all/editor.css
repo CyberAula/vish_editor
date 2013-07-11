@@ -505,6 +505,7 @@ div.addUrlButtons{
 .outer_box{
 	width: 800px;
 	height: 600px;
+	overflow: hidden;
 }
 .fancy_tabs{
 	border-bottom: 1px solid #ff005d;
@@ -569,10 +570,21 @@ a#tab_pic_flikr > img {
 }
 
 a#tab_pic_lre {
-	padding: 0;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 a#tab_pic_lre > img {
+	max-width: 47px;
+	max-height: 40px;
+}
+
+a#tab_object_lre {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+a#tab_object_lre > img {
 	max-width: 47px;
 	max-height: 40px;
 }
@@ -681,7 +693,7 @@ div.content_preview_presentation > div.content_preview_data{
 
 .content_preview_metadata{
 	width: 300px;
-	height: 195px;
+	height: 175px;
 	float: right;
 	overflow: hidden;
 }
@@ -863,10 +875,12 @@ table.metadata tr.odd{
 
 table.metadata td.header_left{
 	background: url(/vishEditor/images/table_left.png) no-repeat scroll left -1px #FF005D;
+	width: 80px;
 } 
 
 table.metadata td.header_right{
 	background: url(/vishEditor/images/table_right.png) no-repeat scroll right -1px #FF005D;
+	width: 220px;
 }
 
 table.metadata td div.height_wrapper_description{
@@ -978,13 +992,26 @@ div.object_wrapper{
 	overflow: hidden;
 }
 
+#tab_object_lre_content_preview_object > .objectPreview, #tab_object_from_web_content * .objectPreview, #tab_object_snapshot_content * .objectPreview {
+	width: 1322px;
+	height: 885px;
+	max-width: none;
+	max-height: none;
+	zoom: 0.5;
+    -moz-transform: scale(0.5);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.5);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+}
+
 .objectPreview , .preview_video { 
 	max-width: 90%;
 	max-height: 90%;
 	min-width: 80%;
   min-height: 80%;
 }
-
 
 /************************************
  * EXCURSION DETAILS FANCYBOX

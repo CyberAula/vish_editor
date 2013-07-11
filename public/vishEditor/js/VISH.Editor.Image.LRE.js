@@ -53,7 +53,8 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 		
 		//data.results is an array with the results
 		$.each(data.pictures, function(index, image) {
-			var myImg = $("<img src=" + image.src + " >");
+			var myTitle = image.title;
+			var myImg = $("<img src='" + image.src + "' title='"+ myTitle +"' >");
 			carrouselImages.push(myImg);
 			currentImages[image.id] = image;
 		});
@@ -77,7 +78,9 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 	
 	var _onClickCarrouselElement = function(event) {
 		var image_url = $(event.target).attr("src");
-		V.Editor.Image.addContent(image_url);
+		V.Editor.Image.drawImage(image_url);
+		$.fancybox.close();
+		V.Editor.Tools.loadToolsForZone(V.Editor.getCurrentArea());
 	};
 
 		return {
