@@ -993,16 +993,15 @@ div.object_wrapper{
 }
 
 #tab_object_lre_content_preview_object > .objectPreview, #tab_object_from_web_content * .objectPreview, #tab_object_snapshot_content * .objectPreview {
-	width: 1322px;
-	height: 885px;
+	width: 855px;
+	height: 530px;
 	max-width: none;
 	max-height: none;
-	zoom: 0.5;
-    -moz-transform: scale(0.5);
+    -moz-transform: scale(0.4);
     -moz-transform-origin: top left;
-    -o-transform: scale(0.5);
+    -o-transform: scale(0.4);
     -o-transform-origin: top left;
-    -webkit-transform: scale(0.5);
+    -webkit-transform: scale(0.4);
     -webkit-transform-origin: top left;
 }
 
