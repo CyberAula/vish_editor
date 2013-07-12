@@ -569,24 +569,15 @@ a#tab_pic_flikr > img {
 	max-width: 47px;
 }
 
-a#tab_pic_lre {
-	padding-bottom: 0;
-	padding-top: 0;
+a#tab_object_lre, a#tab_pic_lre {
+	padding-left: 6px;
+	padding-right: 6px;
 }
 
-a#tab_pic_lre > img {
-	max-width: 47px;
-	max-height: 40px;
-}
-
-a#tab_object_lre {
-	padding-bottom: 0;
-	padding-top: 0;
-}
-
-a#tab_object_lre > img {
-	max-width: 47px;
-	max-height: 40px;
+a#tab_object_lre > img, a#tab_pic_lre > img {
+	width: 155px;
+	height: 28px;
+	margin-bottom: -10px;
 }
 
 #lrelogo_in_tab{
