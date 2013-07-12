@@ -67,7 +67,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		
 		//data.images is an array with the results
 		$.each(data.pictures, function(index, image) {
-			var myImg = $("<img src=" + image.src + " >")
+			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >")
 			carrouselImages.push(myImg);
 			currentImages[image.id] = image;
 		});

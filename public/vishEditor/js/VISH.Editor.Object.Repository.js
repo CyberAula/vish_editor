@@ -91,7 +91,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	      break;
       }
 			
-      var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "'>")
+      var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"'>")
 			carrouselImages.push(myImg)
 			carrouselImagesTitles.push(objectItem.title)
       currentObject[objectItem.id]=objectItem;

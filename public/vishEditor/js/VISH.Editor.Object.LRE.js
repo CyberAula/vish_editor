@@ -64,7 +64,7 @@ VISH.Editor.Object.LRE = (function(V,$,undefined){
     $.each(data, function(index, objectItem) {
       var objectInfo = V.Object.getObjectInfo(objectItem.object);
       			
-      var myImg = $("<img src='" + objectItem.thumbnail + "' objectId='" + objectItem.id + "'>");
+      var myImg = $("<img src='" + objectItem.thumbnail + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"'>");
 	  carrouselImages.push(myImg);
       carrouselImagesTitles.push(objectItem.title);
       currentObject[objectItem.id]=objectItem;
