@@ -113,7 +113,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.resize_enabled = false;
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
-		//Enable table resize
+		//Enable table resize and autogrow
 		config.extraPlugins = 'tableresize,autogrow';
 
 		if((options)&&(options.autogrow)){
