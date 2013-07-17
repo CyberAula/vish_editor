@@ -55,12 +55,19 @@ section.slides {
 	overflow: hidden;
 }
 
-#slides_list > img.slides_list_element{
+#slides_list > img.image_barbutton{
 	display: block;
-	padding: 3px;
+	padding: 5px;
 	width: 75%;
 	margin: auto;
 }
+
+.slides > article.past {
+  display: none;
+}
+/*.slides > article.next {
+  display: none;
+}*/
 
 .barbuttonaddsave{
 	position: relative;
@@ -901,11 +908,6 @@ table.metadata td div.height_wrapper_description{
 .caroufredsel_wrapper{
 	overflow-y: visible;
 	overflow-x: visible;
-}
-
-.image_barbutton{
-	width: 60px;
-	margin-top: 6px;
 }
 
 .delete_img{

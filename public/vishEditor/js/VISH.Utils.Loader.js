@@ -113,14 +113,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		
 	 var _insertElementsWithOrder = function(imagesArray,carrouselDivId,titleArray){
 	 	 $.each(imagesArray, function(i, image) {
-	     if((titleArray)&&(titleArray[imagesArray.indexOf(image)])){
-          var slideNumber = titleArray[imagesArray.indexOf(image)];
-          var slideId = V.Slides.getSlideWithNumber(slideNumber).id;
-          var poiId = "poi" + slideNumber;
-				  $("#" + carrouselDivId).append("<div><div class='draggable_arrow_div' slide_id='"+slideId+"' id='"+poiId+"'><img src='" + V.ImagesPath + "flashcard/flashcard_button.png'  class='fc_draggable_arrow'/><p class='draggable_number'>"+slideNumber+"</p></div><p slidenumber='"+slideNumber+"' action='goToSlide'>"+slideNumber+"</p>" + V.Utils.getOuterHTML(image) + "</div>");
-	     } else {
 	       $("#" + carrouselDivId).append('<div>' + V.Utils.getOuterHTML(image) + '</div>');
-	     }
      });
 	 }
 
