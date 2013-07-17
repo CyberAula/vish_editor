@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/joyride-1.0.5.css">
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery.fancybox-1.3.4.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery-ui-1.9.2.custom.css">
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery.mCustomScrollbar.css">
 
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/fonts.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css">
@@ -40,6 +41,7 @@
 	<script type="text/javascript" src="/vishEditor/js/libs/modernizr.foundation.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/jquery.qrcode.min.js"></script>
     <script type="text/javascript" src="/vishEditor/js/libs/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/libs/jquery.mCustomScrollbar.concat.min.js"></script>
 	<script type="text/javascript" src="/vishEditor/configuration/configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Constant.js"></script>
@@ -171,34 +173,48 @@
 			</button>
 		</div>
     </div>
-    <div id="menubarbg" class="menubarcolor"></div>
-    <div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
-    <div id="menubar_helpsection2"><img src="/vishEditor/images/menubar_helpsection2.png"/></div>
-		<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/icons/helptutorial_circle.png"/></div>
-        <div id="preview"><img id="preview_circle" src="/vishEditor/images/icons/preview_circle.png"/></div>        
-		<div id='menubar'>
-			<div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
-			<div id="menubarButtons">
-				<a id="edit_presentation_details" href="#presentationdetails">
-					<div id="config_div" class='barbuttonaddsave noSelectableElement' title="Edit details"></div>
-				</a>
-				<a id="save">
-					<div id="save_div" class='barbuttonaddsave' i18n-key="i.SaveSlides" title="Save slides"></div>
-				</a>
-			</div>	
-			<div id="menubarCarrousel">
-			<div id="slides_carrousel"></div>   
-			</div>
+	<div id="menubarbg" class="menubarcolor"></div>
+	<div id="menubar_helpsection"><img src="/vishEditor/images/menubar_helpsection.png"/></div>
+	<div id="menubar_helpsection2"><img src="/vishEditor/images/menubar_helpsection2.png"/></div>
+	<div id="joyride_help_button"><img id="help_right" src="/vishEditor/images/icons/helptutorial_circle.png"/></div>
+	<div id="preview"><img id="preview_circle" src="/vishEditor/images/icons/preview_circle.png"/></div>        
+	<div id='menubar'>
+		<div id="menubar_background"><img src="/vishEditor/images/menubar.png"/></div>
+		<div id="menubarButtons">
+			<a id="edit_presentation_details" href="#presentationdetails">
+				<div id="config_div" class='barbuttonaddsave noSelectableElement' title="Edit details"></div>
+			</a>
+			<a id="save">
+				<div id="save_div" class='barbuttonaddsave' i18n-key="i.SaveSlides" title="Save slides"></div>
+			</a>
+		</div>	
+		<div id="menubarCarrousel">
+		<div id="slides_carrousel"></div>   
 		</div>
+	</div>
+	<div id="slides_list">
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t1.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t2.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t3.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t4.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t5.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t6.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t7.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t8.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t9.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t10.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t11.png"/>
+		<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t12.png"/>
+	</div>
 		
-		<div id="menubar-viewer" style="display:none">
-			<button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
-	    <div id="viewbar" class="viewbar">
-		  <button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
-	      <div id="slide-counter"></div>
-	  	  <button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
+	<div id="menubar-viewer" style="display:none">
+		<button id="page-fullscreen" class="fullscreen" type="submit" style="border: none; background-color: transparent" tabindex="2"></button>
+		<div id="viewbar" class="viewbar">
+			<button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
+			<div id="slide-counter"></div>
+			<button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
 		</div>
-		</div>
+	</div>
 		
 		
 		<!-- Toolbar -->
@@ -1838,6 +1854,10 @@
 		 		getOptions();
 		 		VISH.Editor.init(options);
 		 	}
+
+			$("#slides_list").mCustomScrollbar();
+			$("#slides_list").find(".mCSB_container").css("margin-right","5px");
+			
 		}
 	</script>
 		
