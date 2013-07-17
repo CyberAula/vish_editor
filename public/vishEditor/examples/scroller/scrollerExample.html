@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Scroller Example</title>
+	<style type="text/css">
+		#slides_list {
+			width: 120px;
+			height: 500px;
+			max-height: 500px;
+			display:block;
+			overflow: hidden;
+		}
+
+		#slides_list > img.slides_list_element{
+			display:block;
+		}
+
+		#slides_list_horizontal{
+			width: 800px;
+			max-width: 800px;
+			height: 90px;
+			display: block;
+			overflow: hidden;
+			margin-top: 50px;
+		}
+
+		#slides_list_horizontal > img.slides_list_element{
+			display: inline;
+		}
+
+	</style>
+
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	</head>
+
+	<body onload="start()">
+		<div id="slides_list">
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t1.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t2.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t3.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t4.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t5.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t6.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t7.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t8.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t9.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t10.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t11.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t12.png"/>
+		</div>
+
+		<div id="slides_list_horizontal">
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t1.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t2.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t3.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t4.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t5.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t6.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t7.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t8.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t9.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t10.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t11.png"/>
+			<img class="slides_list_element" src="/vishEditor/images/templatesthumbs/t12.png"/>
+		</div>
+
+		<script>
+			var start = function(){
+				$("#slides_list").mCustomScrollbar();
+				$("#slides_list").find(".mCSB_container").css("margin-right","5px");
+				$("#slides_list_horizontal").mCustomScrollbar({
+					horizontalScroll:true
+				});
+			}
+		</script>
+	</body>
+</html>
