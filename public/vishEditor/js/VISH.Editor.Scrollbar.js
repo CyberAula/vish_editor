@@ -1,7 +1,6 @@
 VISH.Editor.Scrollbar = (function(V,$,undefined){
 	
 	//Available Options: callback
-	
 	var createScrollbar = function(containerId,options){
 		//Necessary params
 		if(!containerId){
@@ -26,7 +25,7 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		if(typeof callback === "function"){
 			callback();
 		}
-			
+		
 		return;
 	}
 	

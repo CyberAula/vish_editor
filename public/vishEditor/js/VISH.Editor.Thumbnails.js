@@ -26,17 +26,17 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			case V.Constant.STANDARD:
 					var template = $(s).attr('template');
 					carrouselElements += 1;
-					imagesArray.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
+					imagesArray.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
 					imagesArrayTitles.push(carrouselElements);
 				break;
 			case V.Constant.FLASHCARD:
 					carrouselElements += 1;
-					imagesArray.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.Utils.getSrcFromCSS($(s).attr('avatar'))+ "' />"));
+					imagesArray.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.Utils.getSrcFromCSS($(s).attr('avatar'))+ "' />"));
 					imagesArrayTitles.push(carrouselElements);
 				break;
 			case V.Constant.VTOUR:
 					carrouselElements += 1;
-					imagesArray.push($("<img class='image_barbutton fill_slide_button' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/tVTour.png' />"));
+					imagesArray.push($("<img class='image_barbutton' slideNumber='" + carrouselElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/tVTour.png' />"));
 					imagesArrayTitles.push(carrouselElements);
 				break;
 			default:
@@ -62,132 +62,35 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	 
 
 	var _onImagesLoaded = function(){
-		var presentationType = V.Editor.getPresentationType();
-
 		//Unselect all thumbnails
 		$(".barbutton").css("background-color", "transparent");
 
 		var options = new Array();
-		// options['rows'] = 1;
-		// options['rowItems'] = 8;
-		// options['scrollItems'] = 1;
-		// options['styleClass'] = "slides";
-		// options['width'] = 900;
-		// options['startAtLastElement'] = true;
-		// options['pagination'] = false;
-		options['callback'] = function(){
-			console.log("Scrollbar created");
+		options['callback'] = _afterCreateSlidesScrollbar;
 
-			if(presentationType === V.Constant.PRESENTATION){
-				$("#" + carrouselDivId).find("img").click(function(event){
-					_onClickCarrouselElement(event);
-				});
-			}
-		};
-
-		// if(presentationType === V.Constant.PRESENTATION){
-		// 	options['callback'] = _onClickCarrouselElement;
-		// } else if(presentationType === V.Constant.FLASHCARD){
-		// 	options['callback'] = V.Editor.Flashcard.Creator.onClickCarrouselElement;
-		// } else if(presentationType === V.Constant.VTOUR){
-		// 	options['callback'] = V.Editor.VirtualTour.Creator.onClickCarrouselElement;
-		// } else {
-		// 	//Generic
-		// 	options['callback'] = _onClickCarrouselElement;
-		// }
-
-		//Create carrousel
+		//Create scrollbar
 		$("#" + carrouselDivId).show();
 		V.Editor.Scrollbar.createScrollbar(carrouselDivId, options);
 	}
 	
-	
-	var _afterCreateSlidesCarrousel = function(){
-		var presentationType = V.Editor.getPresentationType();
+	var _afterCreateSlidesScrollbar = function(){
+		
+		$("#" + carrouselDivId).find("img.image_barbutton").each(function(index,img){
+			//Add class to title
+			var imgContainer = $(img).parent();
+			$(imgContainer).addClass("wrapper_barbutton");
+			var p = $(imgContainer).find("p");
+			$(p).addClass("ptext_barbutton");
 
-		if(presentationType === V.Constant.PRESENTATION){
-
-			if(V.Slides.getCurrentSlideNumber()>0){
-				selectThumbnail(V.Slides.getCurrentSlideNumber());
-			}
-
-			//Add sortable
-			var firstCarrouselNumber;
-			$( "#" + carrouselDivId).sortable({
-				items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
-				change: function(event, ui) {
-					//Do nothing
-				},
-				start: function(event, ui) { 
-					firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
-				},
-				stop: function(event, ui) { 
-					var dragElement = ui.item;
-
-					var img = $(ui.item).find("img.carrousel_element_single_row_slides[slidenumber]");
-					if(isNaN($(img).attr("slidenumber"))){
-						return;
-					}
-
-					var orgPosition = parseInt($(img).attr("slidenumber"));
-					var carrouselContainer =  [];
-
-					$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
-						carrouselContainer.push(value);
-					});
-
-					var destPosition = firstCarrouselNumber + $(carrouselContainer).index($("div.carrousel_element_single_row_slides:has(img[slidenumber='" + orgPosition + "'])"));
-
-					// V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
-					// V.Debugging.log("Org position: " + orgPosition);
-					// V.Debugging.log("Dest position: " + destPosition);
-
-					//We must move slide orgPosition after or before destPosition
-					var movement = null;
-					if(destPosition > orgPosition){
-						movement = "after";
-					} else if(destPosition < orgPosition){
-						movement = "before";
-					} else {
-						return;
-					}
-
-					var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
-					var slideDst = V.Slides.getSlideWithNumber(destPosition);
-
-					if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
-						V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
-
-						//Update params and counters
-						var carrouselVisibleElements = 8;
-						$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
-							var slideNumber = $(value).find("img.carrousel_element_single_row_slides").attr("slidenumber");
-							if((slideNumber < firstCarrouselNumber)||(slideNumber > firstCarrouselNumber+carrouselVisibleElements-1)){
-								return;
-							} else {
-								var slideNumber = firstCarrouselNumber + index;
-								var p = $(value).find("p.carrousel_element_single_row_slides");
-								$(p).html(slideNumber);
-								var img = $(value).find("img.carrousel_element_single_row_slides");
-								$(img).attr("slidenumber",slideNumber);
-							}
-						});
-					}
-				}
+			//Add events to imgs
+			$(img).click(function(event){
+				_onClickCarrouselElement(event);
 			});
-		} else if (presentationType === V.Constant.FLASHCARD){
-			V.Editor.Flashcard.Creator.redrawPois();
-		} else if(presentationType === V.Constant.VTOUR){
-			V.Editor.VirtualTour.Creator.redrawPois();
-		}
+		});
 
-		if(typeof redrawThumbnailsCallback === "function"){
-			redrawThumbnailsCallback();
-			redrawThumbnailsCallback = undefined;
-		}
-
+		
+		
 	}
-
 
 	var _onClickCarrouselElement = function(event){
 		switch($(event.target).attr("action")){
@@ -201,6 +104,91 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			  break;
 		}
 	}
+
+	// var _afterCreateSlidesCarrousel = function(){
+	// 	var presentationType = V.Editor.getPresentationType();
+
+	// 	if(presentationType === V.Constant.PRESENTATION){
+
+	// 		if(V.Slides.getCurrentSlideNumber()>0){
+	// 			selectThumbnail(V.Slides.getCurrentSlideNumber());
+	// 		}
+
+	// 		//Add sortable
+	// 		var firstCarrouselNumber;
+	// 		$( "#" + carrouselDivId).sortable({
+	// 			items: 'div.carrousel_element_single_row_slides:has(img[action="goToSlide"])',
+	// 			change: function(event, ui) {
+	// 				//Do nothing
+	// 			},
+	// 			start: function(event, ui) { 
+	// 				firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
+	// 			},
+	// 			stop: function(event, ui) { 
+	// 				var dragElement = ui.item;
+
+	// 				var img = $(ui.item).find("img.carrousel_element_single_row_slides[slidenumber]");
+	// 				if(isNaN($(img).attr("slidenumber"))){
+	// 					return;
+	// 				}
+
+	// 				var orgPosition = parseInt($(img).attr("slidenumber"));
+	// 				var carrouselContainer =  [];
+
+	// 				$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
+	// 					carrouselContainer.push(value);
+	// 				});
+
+	// 				var destPosition = firstCarrouselNumber + $(carrouselContainer).index($("div.carrousel_element_single_row_slides:has(img[slidenumber='" + orgPosition + "'])"));
+
+	// 				// V.Debugging.log("firstCarrouselNumber: " + firstCarrouselNumber);
+	// 				// V.Debugging.log("Org position: " + orgPosition);
+	// 				// V.Debugging.log("Dest position: " + destPosition);
+
+	// 				//We must move slide orgPosition after or before destPosition
+	// 				var movement = null;
+	// 				if(destPosition > orgPosition){
+	// 					movement = "after";
+	// 				} else if(destPosition < orgPosition){
+	// 					movement = "before";
+	// 				} else {
+	// 					return;
+	// 				}
+
+	// 				var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
+	// 				var slideDst = V.Slides.getSlideWithNumber(destPosition);
+
+	// 				if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
+	// 					V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
+
+	// 					//Update params and counters
+	// 					var carrouselVisibleElements = 8;
+	// 					$.each($("div.carrousel_element_single_row_slides:has(img[slidenumber])"), function(index, value) {
+	// 						var slideNumber = $(value).find("img.carrousel_element_single_row_slides").attr("slidenumber");
+	// 						if((slideNumber < firstCarrouselNumber)||(slideNumber > firstCarrouselNumber+carrouselVisibleElements-1)){
+	// 							return;
+	// 						} else {
+	// 							var slideNumber = firstCarrouselNumber + index;
+	// 							var p = $(value).find("p.carrousel_element_single_row_slides");
+	// 							$(p).html(slideNumber);
+	// 							var img = $(value).find("img.carrousel_element_single_row_slides");
+	// 							$(img).attr("slidenumber",slideNumber);
+	// 						}
+	// 					});
+	// 				}
+	// 			}
+	// 		});
+	// 	} else if (presentationType === V.Constant.FLASHCARD){
+	// 		V.Editor.Flashcard.Creator.redrawPois();
+	// 	} else if(presentationType === V.Constant.VTOUR){
+	// 		V.Editor.VirtualTour.Creator.redrawPois();
+	// 	}
+
+	// 	if(typeof redrawThumbnailsCallback === "function"){
+	// 		redrawThumbnailsCallback();
+	// 		redrawThumbnailsCallback = undefined;
+	// 	}
+	// }
 
 	/**
 	* function to select the thumbnail
