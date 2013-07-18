@@ -48,33 +48,23 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		imagesArray.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + V.ImagesPath + "templatesthumbs/add_slide.png' />"));
 		carrouselElements += 1;
 
-		if(carrouselElements<8){
-			//Fill with default
-			var i;
-			for(i=0+carrouselElements;i<8;i++){
-				imagesArray.push($("<img class='image_barbutton empty_slide_button' action='default' src='" + V.ImagesPath + "templatesthumbs/default.png' />"));
-				carrouselElements += 1;
-			}
-		}
+		//Default filling (disabled on new version)
+		//
+		// if(carrouselElements<8){
+		// 	//Fill with default
+		// 	var i;
+		// 	for(i=0+carrouselElements;i<8;i++){
+		// 		imagesArray.push($("<img class='image_barbutton empty_slide_button' action='default' src='" + V.ImagesPath + "templatesthumbs/default.png' />"));
+		// 		carrouselElements += 1;
+		// 	}
+		// }
 
-		V.Utils.Loader.loadImagesOnCarrouselOrder(imagesArray,_onImagesLoaded,carrouselDivId,imagesArrayTitles); 	
+		V.Utils.Loader.loadImagesOnCarrouselOrder(imagesArray,_onImagesLoaded,carrouselDivId,imagesArrayTitles);
 	};
 	 
 
 	var _onImagesLoaded = function(){
-		//Unselect all thumbnails
-		$(".barbutton").css("background-color", "transparent");
-
-		var options = new Array();
-		options['callback'] = _afterCreateSlidesScrollbar;
-
-		//Create scrollbar
-		$("#" + carrouselDivId).show();
-		V.Editor.Scrollbar.createScrollbar(carrouselDivId, options);
-	}
-	
-	var _afterCreateSlidesScrollbar = function(){
-		
+		//Add class to title elements and events
 		$("#" + carrouselDivId).find("img.image_barbutton").each(function(index,img){
 			//Add class to title
 			var imgContainer = $(img).parent();
@@ -88,8 +78,18 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			});
 		});
 
-		
-		
+		//Unselect all thumbnails
+		$(".barbutton").css("background-color", "transparent");
+
+		var options = new Array();
+		options['callback'] = _afterCreateSlidesScrollbar;
+
+		//Create scrollbar
+		$("#" + carrouselDivId).show();
+		V.Editor.Scrollbar.createScrollbar(carrouselDivId, options);
+	}
+	
+	var _afterCreateSlidesScrollbar = function(){
 	}
 
 	var _onClickCarrouselElement = function(event){
