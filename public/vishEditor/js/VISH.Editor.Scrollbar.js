@@ -30,15 +30,16 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		$(scrollbar).find(".mCSB_container").css("margin-right","5px");
 
 		setTimeout(function(){
-			$(scrollbar).mCustomScrollbar("scrollTo","bottom");
 			$(scrollbar).mCustomScrollbar("update");
-		},150);
+			setTimeout(function(){
+				$(scrollbar).mCustomScrollbar("scrollTo","bottom");
+				//Callback
+				if(typeof callback === "function"){
+					callback();
+				}
+			},150);
+		},100);
 
-		//Callback
-		if(typeof callback === "function"){
-			callback();
-		}
-		
 		return;
 	}
 	
