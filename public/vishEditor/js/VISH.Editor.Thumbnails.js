@@ -29,17 +29,17 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			case V.Constant.STANDARD:
 					var template = $(s).attr('template');
 					slideElements += 1;
-					imagesArray.push($("<img class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
+					imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/"+ template + ".png' />"));
 					imagesArrayTitles.push(slideElements);
 				break;
 			case V.Constant.FLASHCARD:
 					slideElements += 1;
-					imagesArray.push($("<img class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.Utils.getSrcFromCSS($(s).attr('avatar'))+ "' />"));
+					imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.Utils.getSrcFromCSS($(s).attr('avatar'))+ "' />"));
 					imagesArrayTitles.push(slideElements);
 				break;
 			case V.Constant.VTOUR:
 					slideElements += 1;
-					imagesArray.push($("<img class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/tVTour.png' />"));
+					imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + V.ImagesPath + "templatesthumbs/tVTour.png' />"));
 					imagesArrayTitles.push(slideElements);
 				break;
 			default:
@@ -86,7 +86,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
 	
 	var _afterCreateSlidesScrollbar = function(){
-
 		//Add sortable
 		$( "#" + thumbnailsDivId).sortable({
 			items: 'div.wrapper_barbutton:has(img[action="goToSlide"])',
@@ -148,6 +147,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				}
 			}
 		});
+
+		if(typeof redrawThumbnailsCallback == "function"){
+			redrawThumbnailsCallback();
+		}
 	}
 
 	var _onClickSlideElement = function(event){
@@ -167,17 +170,18 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	* Function to select the thumbnail
 	*/
 	var selectThumbnail = function(no){
-		$(".image_barbutton").removeClass("selectedSlideThumbnail");
-		$(".image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
+		$("img.image_barbutton").removeClass("selectedSlideThumbnail");
+		$("img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
 	};
 
 
     /*
      * SlideNumber can be also the slide element itself
      */
-    var moveThumbnailsToSlide = function(slideNumber){
-    	V.Editor.Carrousel.goToElement(thumbnailsDivId,slideNumber-1);
-    }
+	var moveThumbnailsToSlide = function(slideNumber){
+		var element = $("img.image_barbutton[slideNumber=" + slideNumber + "]");
+		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
+	}
   
 	return {
 		init              		: init,

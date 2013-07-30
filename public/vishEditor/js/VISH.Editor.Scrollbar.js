@@ -51,15 +51,22 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		return;
 	}
   
-	var goToElement = function(carrouselDivId,element){
+	var goToElement = function(containerId,element){
+		var elementId = $(element).attr("id");
+		if(typeof elementId == "string"){
+			$("#"+containerId).mCustomScrollbar("scrollTo","#" + elementId);
+		} else {
+			// V.Debugging.log("Elements without id can't be scrolled to");
+		}
 	}
   
-	var insertElement = function(carrouselDivId,element,posc){
+	var insertElement = function(containerId,element,posc){
 	}
 
 	return {
 		createScrollbar	  : createScrollbar,
-		cleanScrollbar    : cleanScrollbar
+		cleanScrollbar    : cleanScrollbar,
+		goToElement		  : goToElement
 	};
 
 }) (VISH, jQuery);
