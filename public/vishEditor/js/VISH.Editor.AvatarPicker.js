@@ -137,7 +137,10 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			carrouselImages.push($(myImg)[0]);
 		});
 
-		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId);
+		var options = {};
+		options.order = true;
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	}
 	
 	var _onThumbnailsError = function(xhr, ajaxOptions, thrownError){

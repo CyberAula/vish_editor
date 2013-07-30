@@ -321,39 +321,13 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		$("#" + carrouselDivId).trigger("insertItem", [element, posc]);
 	}
 
-	var mustMoveCarrousel = function(direction){
-		if(!V.Editor.Slides.isSlideFocused()){
-			return false;
-		}
-		var visibleThumbnails = V.Editor.Thumbnails.getVisibleThumbnails();
-		switch(direction){
-			case "next":
-				var last = visibleThumbnails[1];
-				var future = V.Slides.getCurrentSlideNumber()+1;
-				if(future>last){
-					return true;
-				}
-				break;
-			case "prev":
-				var first = visibleThumbnails[0];
-				var future = V.Slides.getCurrentSlideNumber()-1;
-				if(future < first){
-					return true;
-				}
-				break;
-			default:
-				return false;
-		}
-	}
-
 	return {
 		createCarrousel	  : createCarrousel,
 		cleanCarrousel    : cleanCarrousel,
 		goToElement       : goToElement,
 		advanceCarrousel  : advanceCarrousel,
 		backCarrousel     : backCarrousel,
-		insertElement	  : insertElement,
-		mustMoveCarrousel : mustMoveCarrousel
+		insertElement	  : insertElement
 	};
 
 }) (VISH, jQuery);

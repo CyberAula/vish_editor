@@ -199,9 +199,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(currentSlide){
 				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
+				V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber()+1);
 			} else {
 				V.Slides.goToSlide(1);
-				V.Editor.Thumbnails.moveCarrouselToSlide(1);
+				V.Editor.Thumbnails.moveThumbnailsToSlide(1);
 			}
 		});
 	}

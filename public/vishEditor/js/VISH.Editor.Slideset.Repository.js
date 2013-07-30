@@ -98,7 +98,10 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 			carrouselImages.push(myImg);
 			currentSmartcards[sc.id] = sc;
 		});
-		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+
+		var options = {};
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	};
 	
 	var _onImagesLoaded = function(){

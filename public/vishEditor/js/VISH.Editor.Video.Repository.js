@@ -77,8 +77,9 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			}
 		});
 
-		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
-		
+		var options = {};
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	};
 	
 	

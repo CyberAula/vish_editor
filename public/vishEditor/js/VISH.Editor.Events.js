@@ -3,17 +3,18 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var bindedEventListeners = false;
 
 	var init = function() {
-	  if(V.Editing){
-	  	bindEditorEventListeners();
-	  }
+		if(V.Editing){
+			bindEditorEventListeners();
+		}
 	};
 
 	/* Event listeners */
 	var ctrlDown = false;
 
 	var handleBodyKeyDown = function(event) {
-	  switch (event.keyCode) {
-	    case 39: // right arrow	    
+		switch (event.keyCode) {
+		case 39: // right arrow
+		case 40: //down arrow	    
 			if(V.Editor.Slides.isSlideFocused()) {
 				if(!ctrlDown){
 					V.Slides.forwardOneSlide();
@@ -23,20 +24,21 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 			}
 			break;
-	    case 37: // left arrow
-	    	if(V.Editor.Slides.isSlideFocused()) {
+		case 37: // left arrow
+		case 38: //up arrow	
+			if(V.Editor.Slides.isSlideFocused()) {
 				if(!ctrlDown){
 					V.Slides.backwardOneSlide();
 				} else {
 					V.Slides.moveSlides(-10);
 				}
-	    		event.preventDefault();    		
-	    	}
-	    	break;
-	    case 17: //ctrl key
-	    	ctrlDown = true;
-	    	break;	
-	    case 67: //cKey
+				event.preventDefault();    		
+			}
+			break;
+		case 17: //ctrl key
+			ctrlDown = true;
+			break;	
+		case 67: //cKey
 			if(V.Editor.Slides.isSlideFocused()) {
 				if(ctrlDown){
 					if(V.Slides.getCurrentSlideNumber()){
@@ -44,8 +46,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 					}
 				}
 			}
-	    	break;	
-	    case 86: //vKey
+			break;	
+		case 86: //vKey
 		    if(V.Editor.Slides.isSlideFocused()) {
 			    if(ctrlDown){
 			    	V.Editor.Clipboard.paste();
@@ -57,7 +59,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 			}
 			break;	
-	  }
+		}
 	};
 
 	var handleBodyKeyUp = function(event) {

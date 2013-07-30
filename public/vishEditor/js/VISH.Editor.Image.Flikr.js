@@ -48,7 +48,10 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 				var myImg = $("<img id=img_flkr" + i + " src='" + item.media.m.replace(/_m/i, "")+"'"+ " imageFlikrId='" + i + "' title='"+item.title+"'/>")
 				carrouselImages.push(myImg);
 			});
-			V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+
+			var options = {};
+			options.callback = _onImagesLoaded;
+			V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 		});
 	};
 
