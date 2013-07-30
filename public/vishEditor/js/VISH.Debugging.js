@@ -104,7 +104,7 @@ VISH.Debugging = (function(V,$,undefined){
 	    $('#menubar_helpsection').hide();
 	    $('#menubar_helpsection2').hide();
 	    $('#joyride_help_button').hide();
-	    $('#preview_circle').hide();
+	    $('#preview_action').hide();
 	    V.Editor.Tools.cleanZoneTools();
 	    V.Editor.Tools.disableToolbar();
 	    $("#menubar-viewer").show();
@@ -132,7 +132,7 @@ VISH.Debugging = (function(V,$,undefined){
 		$('#menubar_helpsection').show();
 		$('#menubar_helpsection2').show();
 		$('#joyride_help_button').show();
-		$('#preview_circle').show();
+		$('#preview_action').show();
 		V.Editor.Tools.enableToolbar();
 		$("#menubar-viewer").hide();
 

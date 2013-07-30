@@ -10,7 +10,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 	}
 
 	var _realInit = function(){
-		$("img#preview_circle").fancybox({
+		$("#preview_action").fancybox({
 			'width'				: 875,
 			'height'			: 656,
 			'padding'			: 0,
@@ -38,7 +38,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 
 	var preview = function(options){
 		_prepare(options);
-		$("img#preview_circle").trigger('click');
+		$("#preview_action").trigger('click');
 	}
 
 
@@ -65,9 +65,9 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		}
 
 		if(V.Configuration.getConfiguration()["mode"]=="vish"){
-			$("#preview_circle").attr("href",  "/excursions/preview#" + slideNumberToPreview);
+			$("#preview_action").attr("href",  "/excursions/preview#" + slideNumberToPreview);
 		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
-			$("#preview_circle").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
+			$("#preview_action").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
 		} else if(V.Configuration.getConfiguration()["mode"]=="node"){
 			//Code here
 		}
