@@ -40,10 +40,6 @@ img {
 	overflow: hidden;
 }
 
-section.slides {
-	overflow: hidden;
-}
-
 #slides_list{
 	position: absolute;
 	top: 46px;
@@ -75,11 +71,15 @@ section.slides {
 	margin-left: 20px;
 }
 
-.slides > article:not(.current) {
+section.slides_editor {
+	overflow: hidden;
+}
+
+section.slides_editor > article:not(.current) {
   display: none;
 }
 
-.slides > article, .subslide {
+section.slides_editor > article {
   left: 56%;
 }
 
@@ -160,10 +160,6 @@ section.slides {
 	-webkit-border-radius: 10px;
 	text-align: center;
 	vertical-align: middle;
-}
-
-.previewButton{
-
 }
 
 .textfancy {
@@ -1708,8 +1704,6 @@ div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 	height: 29px;
 }
 
-
-
 #flashcard_help_button:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
@@ -1718,16 +1712,16 @@ div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 
 #help_pedagogical_selection {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
-position: absolute;
-right: 25px;
-height: 29px;
-top: -1px;
+	position: absolute;
+	right: 25px;
+	height: 29px;
+	top: -1px;
 }
 
 #help_pedagogical_selection:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
-	}
+}
 
 .change_bg_button_class{
 	position: absolute;
@@ -1745,44 +1739,44 @@ top: -1px;
 
 
 .l11 {
-    left: 400px;
-    position: absolute;
-    top: 88px;
+	left: 400px;
+	position: absolute;
+	top: 88px;
 }
 
 #objectimagetut {
-    margin-top: -48px;
-    padding-left: 200px;
-    position: absolute;
+	margin-top: -48px;
+	padding-left: 200px;
+	position: absolute;
 }
 
 .l22 {
-    left: 400px;
-    position: absolute;
-    top: 123px;
+	left: 400px;
+	position: absolute;
+	top: 123px;
 }
 
 #quizimagetut {
-    margin-top: -48px;
-    padding-left: 200px;
-    position: absolute;
+	margin-top: -48px;
+	padding-left: 200px;
+	position: absolute;
 }
 
 .l33 {
-    left: 400px;
-    position: absolute;
-    top: 159px;
+	left: 400px;
+	position: absolute;
+	top: 159px;
 }
 
 #liveimagetut {
-    margin-top: -48px;
-    padding-left: 200px;
-    position: absolute;
+	margin-top: -48px;
+	padding-left: 200px;
+	position: absolute;
 }
 
 .tut_menubuttonpresentation span.joyride-nub {
-    bottom: -28px;
-    left: 37px;
+	bottom: -28px;
+	left: 37px;
 }
 
 .imagetut {
