@@ -42,10 +42,10 @@ img {
 
 #slides_list{
 	position: absolute;
-	top: 46px;
+	top: 100px;
 	text-align: center;
 	width: 155px;
-	height: 700px;
+	height: 640px;
 	max-height: 700px;
 	display:block;
 	overflow: hidden;
@@ -80,7 +80,8 @@ section.slides_editor > article:not(.current) {
 }
 
 section.slides_editor > article {
-  left: 56%;
+  left: 56% !important;
+  top: 53% !important;
 }
 
 .barbuttonaddsave{

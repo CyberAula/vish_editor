@@ -90,15 +90,14 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var config = {};
 
 		//Select the features of the toolbar
-		config.toolbar = 'Basic';
-		config.toolbar_Basic =
+		config.toolbar = 'Full';
+		config.toolbar_Full =
 		[
-			['Bold','Italic','Underline','-','Subscript','Superscript'],
-			['NumberedList','BulletedList','Table'],
-			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-			['Link'],
-			['Font','FontSize'],
-			['TextColor','BGColor']
+			{ name: 'first', items : ['Bold','Italic','Underline','-','Subscript','Superscript','Font','FontSize','TextColor','BGColor'] },
+			'/',
+			{ name: 'lists', items : ['NumberedList','BulletedList','Table'] },
+			{ name: 'alignment', items : ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+			{ name: 'link', items : ['Link'] }
 		];
 
 		//Singleton toolbar

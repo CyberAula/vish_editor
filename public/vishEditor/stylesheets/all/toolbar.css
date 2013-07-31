@@ -4,7 +4,7 @@
   border: 1px solid #ccc;
   background-color: #fff;
   display: inline-block;
-  height: 24px;
+  height: 50px;
   width: 1158px;
   margin: 0px 0px 0px 0px; /* top margin, right margin, bottom margin, left margin */
   padding-left: 20px;
@@ -15,8 +15,8 @@
 
 #toolbar_menu , #toolbar_presentation, #toolbar_element {
   display: inline-block;
-  height: 24px;
-  min-height: 24px;
+  height: 50px;
+  min-height: 50px;
   text-align: center;
 }
 
@@ -30,7 +30,8 @@
     padding-right: 20px;
     padding-left: 20px;
     border-right: 1px solid #ccc;
-    min-width: 60px;
+    min-width: 485px;
+    float: left;
 }
 
 #toolbar_element {
