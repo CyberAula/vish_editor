@@ -173,7 +173,6 @@
 		<!-- Toolbar -->
 		<div id="toolbar_wrapper">
 			<div id="toolbar_menu">
-
 				<!-- MENU -->
 				<ul id="menu" style="display:none">
 					<li class="current">
@@ -244,13 +243,29 @@
 						</ul>
 					</li>
 				</ul>
-
 			</div>
+
 			<div id="toolbar_presentation">
-				<img id="toolbarborder" class="toolbar_icon toolbar_presentation" style="display:none" 
-				action="selectTheme" src="/vishEditor/images/toolbar/flashcard_background.png" title="Select theme"/>
-				<img id="change_background_fc" class="toolbar_icon toolbar_flashcard" style="display:none" 
-				action="changeFlashcardBackground" src="/vishEditor/images/toolbar/flashcard_background.png" title="Change background"/>
+				<div class="toolbar_presentation_wrapper">
+					<img id="toolbar_save" class="toolbar_bigicon" action="save" src="/vishEditor/images/toolbar/save_document.png"/>
+					<p class="toolbar_prseentation_title"> save </p>
+				</div>
+				<div class="toolbar_presentation_wrapper">
+					<img id="toolbar_publish" class="toolbar_bigicon" action="publish" src="/vishEditor/images/toolbar/save_document.png"/>
+					<p class="toolbar_prseentation_title"> publish </p>
+				</div>
+				<div class="toolbar_presentation_wrapper">
+					<img id="toolbar_preview" class="toolbar_bigicon" action="preview" src="/vishEditor/images/toolbar/preview_circle.png"/>
+					<p class="toolbar_prseentation_title"> preview </p>
+				</div>
+				<div class="toolbar_presentation_wrapper">
+					<img id="toolbar_background" class="toolbar_bigicon" action="changeBackground" src="/vishEditor/images/toolbar/cBackground.png"/>
+					<p class="toolbar_prseentation_title"> background </p>
+				</div>
+				<div class="toolbar_presentation_wrapper">
+					<img id="toolbar_theme" class="toolbar_bigicon" action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
+					<p class="toolbar_prseentation_title"> style </p>
+				</div>
 			</div>
 			<div id="toolbar_element">
 				<img class="toolbar_icon toolbar_image" style="display:none" action="addLink" 
@@ -757,7 +772,7 @@
 	  <div style='display:none'>
 	  	<input type="hidden" id="save_answer" value="cancel"></input>
 	  	<div id='save_form'>
-	  		<img id="saveimg" class="delete_img" src="/vishEditor/images/icons/save_document.png">
+	  		<img id="saveimg" class="delete_img" src="/vishEditor/images/toolbar/save_document.png">
 	  		<span i18n-key="i.sure" class="deltext">are you sure?</span> 		
 	  		<div class="buttons_together">
 	  			<a save-option-id="save" href="#" onclick="$('#save_answer').val('save'); $.fancybox.close();" class=" button" i18n-key="i.save">Save</a>
@@ -1363,7 +1378,7 @@
 		  <li><h1 i18n-key="i.link">Link Image to Url</h1></li> <img class="tutaddlink" src="/vishEditor/images/toolbar/addLink.png"/>
 		  <li><h1 i18n-key="i.resize">Resize content</h1></li> <img class="tutresize" src="/vishEditor/images/toolbar/zoomLess.png"/> <img class="tutresize2" src="/vishEditor/images/toolbar/zoomMore.png"/>
 		  <li><h1 i18n-key="i.text">Text Editor</h1></li> <img class="tuttext" src="/vishEditor/images/textedimg.png"/>
-		  <li><h1 i18n-key="i.flashcardbg">Flashcard Background</h1></li> <img class="tutflashbg" src="/vishEditor/images/toolbar/flashcard_background.png"/>
+		  <li><h1 i18n-key="i.flashcardbg">Flashcard Background</h1></li> <img class="tutflashbg" src="/vishEditor/images/toolbar/cBackground.png"/>
 		</ul>
 		<p i18n-key="i.walk69"> Every time that you add or select content in your excursion this toolbar will provide you tools to interact with that content.</p>
 		</li>
@@ -1395,7 +1410,7 @@
 				</ul>
 				<p i18n-key="i.walk59">Once, you finish this step, you can "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the flashcard background image to mark the zones that you want the user to interact with.</p>
 				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
-				<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/icons/preview_circle.png"/></p>
+				<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/toolbar/preview_circle.png"/></p>
 				<p i18n-key="i.walk61">If you save your presentation as a flashcard, it will be shown on the Vish web page as a flashcard, but you can always edit your excursion back and save it as a presentation.</p>
 			</li>
 		</ol>
@@ -1409,7 +1424,7 @@
 				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
 				<p i18n-key="i.walk81">The arrows will be converted into a pin, which you can moved across the map.</p>
 				<p i18n-key="i.walk82">To remove a pin from the map, just click the desired pin.</p>
-				<p i18n-key="i.walk83">You can click on the "preview button" to show the resulting virtual tour before you save it.<img src="/vishEditor/images/icons/preview_circle.png"/>
+				<p i18n-key="i.walk83">You can click on the "preview button" to show the resulting virtual tour before you save it.<img src="/vishEditor/images/toolbar/preview_circle.png"/>
 				</p>
 			</li>
 		</ol>

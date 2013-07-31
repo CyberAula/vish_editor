@@ -6,7 +6,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	/*
 	 * Toolbar is divided in three zones.
-	 * 1) Menu botton (Menu toolbar)
+	 * 1) Menu button (Menu toolbar)
 	 * 1) Presentation toolbar
 	 * 3) Element toolbar
 	 */
@@ -17,7 +17,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 		if(!toolbarEventsLoaded){
 			//Add listeners to toolbar buttons
-			$.each($("img.toolbar_icon"), function(index, toolbarButton) {
+			$.each($("img.toolbar_icon, img.toolbar_bigicon"), function(index, toolbarButton) {
 				$(toolbarButton).on("click", function(event){
 					if(typeof V.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
 						V.Editor.Tools[$(toolbarButton).attr("action")](this);
@@ -118,55 +118,13 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 	var loadPresentationToolbar = function(){
 		var presentationType = V.Editor.getPresentationType();
-		switch(presentationType){
-			case V.Constant.PRESENTATION:			
-				$("#hidden_button_to_launch_theme_fancybox").fancybox({
-					'autoDimensions' : false,
-					'width': 600,
-					'scrolling': 'no',
-					'height': 400,
-					'padding' : 0
-				});
-				$("#toolbar_presentation").find("img.toolbar_presentation").show();
-				break;
-			case V.Constant.FLASHCARD:
-				$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
-					'autoDimensions' : false,
-					'width': 800,
-					'scrolling': 'no',
-					'height': 600,
-					'padding' : 0,
-					"onStart"  : function(data) {						
-						V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
-						V.Editor.Utils.loadTab('tab_pic_from_url');
-					},
-					"onClosed"  : function(data) {				
-						V.Editor.Image.setAddContentMode(V.Constant.NONE);
-					}
-				});
-				$("#toolbar_presentation").find("img.toolbar_flashcard").show();
-				break;
-			case V.Constant.GAME:
-				$("#toolbar_presentation").find("img.toolbar_game").show();
-				break;
-			case V.Constant.QUIZ_SIMPLE:
-				//Toolbar has no sense here...
-				disableToolbar();
-				//Also add new slides has no sense...
-				$("#menubarCarrousel").hide();
-				break;
-			case V.Constant.VTOUR:
-				$("#toolbar_presentation").find("img.toolbar_vtour").show();
-				break;
-			default:
-				//Unknown presentation type
-				disableToolbar();
-				break;
+		if(presentationType !== V.Constant.PRESENTATION){
+			disableToolbar();
 		}
 	}
 
 	var _cleanPresentationToolbar = function(){
-		$("#toolbar_presentation").find("img").hide();
+		// Do nothing
 	}
 
 
@@ -189,7 +147,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var _loadTextToolbar = function(){
 		$("#toolbar_element").find("img").hide();
 		$("#toolbar_text").show();
-		// $(".nicEdit-panel").show();
 		$("#toolbar_text").show();
 	}
 
@@ -209,7 +166,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _cleanElementToolbar = function(){
 		//Wysiwyg Toolbar
-		// $(".nicEdit-panel").hide();
 		$("#toolbar_text").hide();
 		$("#toolbar_text").hide();
 		//Generic Toolbars
@@ -217,16 +173,27 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 
-
    /*
 	* Presentation actions
     */
+
+    var save = function(){
+		V.Editor.Tools.Menu.onSaveButtonClicked();
+	}
+
+	var publish = function(){
+		V.Editor.Tools.Menu.onSaveButtonClicked();
+	}
+
+	var preview = function(){
+		V.Editor.Preview.preview();
+	}
 
 	var selectTheme = function(){
 		$("#hidden_button_to_launch_theme_fancybox").trigger("click");
 	}
 
-	var changeFlashcardBackground = function(){
+	var changeBackground = function(){
 		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger("click");
 	}
 
@@ -438,15 +405,18 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		cleanToolbar					: cleanToolbar,
 		enableToolbar					: enableToolbar,
 		disableToolbar					: disableToolbar,
-		selectTheme						: selectTheme,
-		changeFlashcardBackground		: changeFlashcardBackground,
 		addLink							: addLink,
 		addUrl 							: addUrl,
 		removeUrl 						: removeUrl,
 		resizeMore						: resizeMore,
 		resizeLess						: resizeLess,
 		zoomMore 						: zoomMore,
-		zoomLess 						: zoomLess
+		zoomLess 						: zoomLess,
+		save 							: save,
+		publish							: publish,
+		preview 						: preview,
+		selectTheme						: selectTheme,
+		changeBackground				: changeBackground
 	};
 
 }) (VISH, jQuery);

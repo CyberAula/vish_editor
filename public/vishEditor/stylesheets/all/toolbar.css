@@ -42,6 +42,18 @@
     max-width: 620px;
 }
 
+.toolbar_presentation_wrapper{
+  display: inline-block;
+  min-width: 75px;
+  text-align: center;
+}
+
+.toolbar_prseentation_title{
+  text-align: center;
+  font-size: 12px;
+  padding: 0;
+  margin: 0px 5px 0px 5px;
+}
 
 .toolbar_icon{
     top: -1px;
@@ -54,7 +66,17 @@
 
 .toolbar_icon:hover{
   opacity: 1;
+}
 
+.toolbar_bigicon{
+    cursor: pointer;
+    height: 30px;
+    margin: 0;
+    border: none;
+}
+
+.toolbar_bigicon:hover{
+  opacity: 1;
 }
 
 #toolbarborder {

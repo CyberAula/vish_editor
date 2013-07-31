@@ -173,6 +173,15 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 
+		//Select theme fancybox
+		$("#hidden_button_to_launch_theme_fancybox").fancybox({
+			'autoDimensions' : false,
+			'width': 600,
+			'scrolling': 'no',
+			'height': 400,
+			'padding' : 0
+		});
+
 		//Loading fancybox
 		$("#fancyLoad").fancybox({
 			  'type'		   : 'inline',
@@ -195,12 +204,27 @@ VISH.Editor = (function(V,$,undefined){
 		      		$("#fancybox-outer").css("background", "white");
 		      }
 		});
+
+		//Change flashcard background
+		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {						
+				V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
+				V.Editor.Utils.loadTab('tab_pic_from_url');
+			},
+			"onClosed"  : function(data) {				
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
+			}
+		});
 	
 		if(!eventsLoaded){
 			eventsLoaded = true;
 				 
 			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
-			$(document).on('click', '#save', V.Editor.Tools.Menu.onSaveButtonClicked);
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
@@ -216,7 +240,7 @@ VISH.Editor = (function(V,$,undefined){
 			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
 			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
 
-			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeFlashcardBackground);
+			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeBackground);
 
 			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
 			_addEditorEnterLeaveEvents();
