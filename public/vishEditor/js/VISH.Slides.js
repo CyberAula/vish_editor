@@ -49,6 +49,11 @@ VISH.Slides = (function(V,$,undefined){
 
 	var setSlides = function(newSlideEls){
 		slideEls = newSlideEls;
+
+		//Update slidenumber param
+		$.each(slideEls, function(index, value) {
+			$(value).attr("slidenumber",index+1);
+		});
 	}
 
 	var updateSlides = function(goingRight) {
@@ -152,7 +157,7 @@ VISH.Slides = (function(V,$,undefined){
 			var result = 0;
 			$.each(slideEls, function(index, value) { 
 		  		if($(value).attr("id")==$(slide).attr("id")){
-		  			result = index;
+		  			result = index + 1;
 		  			return;
 		  		}
 			});

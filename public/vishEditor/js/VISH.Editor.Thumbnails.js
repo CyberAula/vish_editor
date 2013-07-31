@@ -120,36 +120,13 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				// V.Debugging.log("Org position: " + orgPosition);
 				// V.Debugging.log("Dest position: " + destPosition);
 
-				//We must move slide orgPosition after or before destPosition
-				var movement = null;
-				if(destPosition > orgPosition){
-					movement = "after";
-				} else if(destPosition < orgPosition){
-					movement = "before";
-				} else {
-					return;
-				}
-
-				var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
-				var slideDst = V.Slides.getSlideWithNumber(destPosition);
-
-				if((slideOrg!=null)&&(slideDst!=null)&&(movement!=null)){
-					V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
-
-					//Update params and counters
-					$("#slides_list").find("div.wrapper_barbutton:has(img[slidenumber])").each(function(index,div){
-						var slideNumber = index+1;
-						var p = $(div).find("p.ptext_barbutton");
-						$(p).html(slideNumber);
-						var img = $(div).find("img.image_barbutton");
-						$(img).attr("slidenumber",slideNumber);
-					});
-				}
+				V.Editor.Slides.moveSlideTo(orgPosition, destPosition);
 			}
 		});
 
 		if(typeof redrawThumbnailsCallback == "function"){
 			redrawThumbnailsCallback();
+			redrawThumbnailsCallback = undefined;
 		}
 	}
 

@@ -50,7 +50,9 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	 *	Move slide_to_move after or before reference_slide.
 	 *  Movement param posible values: "after", "before"
 	 */
-	var moveSlideTo = function(slide_to_move, reference_slide, movement){
+	var moveSlideTo = function(orgPosition, destPosition){
+		var slide_to_move = V.Slides.getSlideWithNumber(orgPosition);
+		var reference_slide = V.Slides.getSlideWithNumber(destPosition);
 
 		if((typeof slide_to_move === "undefined")||(typeof reference_slide === "undefined")){
 			return;
@@ -74,11 +76,23 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
+		//We must move slide orgPosition after or before destPosition
+		var movement = null;
+		if(destPosition > orgPosition){
+			movement = "after";
+		} else if(destPosition < orgPosition){
+			movement = "before";
+		} else {
+			return;
+		}
+
 		var article_to_move = slide_to_move;
 		var article_reference = reference_slide;
 
 		var moving_current_slide = false;
-		if(V.Slides.getCurrentSlide() === article_to_move){
+		var currentSlide = V.Slides.getCurrentSlide();
+		var oldCurrentSlideNumber = parseInt($(currentSlide).attr("slidenumber"));
+		if(currentSlide === article_to_move){
 			moving_current_slide = true;
 		}
 
@@ -107,15 +121,35 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Update slideEls
 		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
 
+		//Update scrollbar params and counters
+		$("#slides_list").find("div.wrapper_barbutton:has(img[slidenumber])").each(function(index,div){
+			var slideNumber = index+1;
+			var p = $(div).find("p.ptext_barbutton");
+			$(p).html(slideNumber);
+			var img = $(div).find("img.image_barbutton");
+			$(img).attr("slidenumber",slideNumber);
+		});
+
+		//Update current slide number
+		var newCurrentSlideNumber;
+
 		if(moving_current_slide){
-			//Update currentSlide
-			V.Slides.setCurrentSlideIndex(V.Slides.getNumberOfSlide(article_to_move));
+			newCurrentSlideNumber = destPosition;
+		} else {
+			if((orgPosition > oldCurrentSlideNumber)&&(destPosition <= oldCurrentSlideNumber)){
+				newCurrentSlideNumber = (oldCurrentSlideNumber+1);
+			} else if((orgPosition < oldCurrentSlideNumber)&&(destPosition >= oldCurrentSlideNumber)){
+				newCurrentSlideNumber = (oldCurrentSlideNumber-1);
+			}
 		}
 
+		if(typeof newCurrentSlideNumber == "number"){
+			V.Slides.setCurrentSlideNumber(newCurrentSlideNumber);
+		}
+		
 		//Update slides classes next and past.
 		//Current slide needs to be stablished before this call.
 		V.Slides.updateSlideEls();
-		
 	}
 
 	var copySlideWithNumber = function(slideNumber,options){
@@ -148,7 +182,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			var slidesetId = $(slideToCopy).attr("id");
 
 			if(!options.JSON){
-				//We need the JSON to copy a flashcard!
+				//We need the JSON to copy a slideset!
 				return;
 			}
 
@@ -193,7 +227,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Update slides classes next and past.
 		//Current slide needs to be stablished before this call.
 		V.Slides.updateSlideEls();
-
 
 		//Redraw thumbnails
 		V.Editor.Thumbnails.redrawThumbnails(function(){

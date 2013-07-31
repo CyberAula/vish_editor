@@ -16,7 +16,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * slides.html only have a section element and in this function we add an article element
 	 * with the proper content for the slide
 	 */	
-	var renderSlide = function(slide, extra_classes, extra_buttons){
+	var renderSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var article;
 
 		if(!extra_classes){
@@ -30,13 +30,13 @@ VISH.Renderer = (function(V,$,undefined){
 			case undefined:
 			case V.Constant.STANDARD:
 			case V.Constant.QUIZ_SIMPLE:
-				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
+				article = _renderStandardSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			case V.Constant.FLASHCARD:
-				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons);
+				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			case V.Constant.VTOUR:
-				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
+				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			default:
 				article = null;
@@ -83,17 +83,10 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		//When render a simple_quiz for voting
-		//if(slide.type==V.Constant.QUIZ) {
-		// if(slide.type==V.Constant.QUIZ_SIMPLE) {
-		// 	content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +"_"+slide.areaid, null, slide.id);
-		// 	classes += V.Constant.QUIZ;
-		// }
-
 		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
-	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons){
+	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = "";
 		//The flashcard has its own slides
 		for(index in slide.slides){
@@ -102,17 +95,17 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='"+ extra_classes + " slideset_slide flashcard_slide' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + " slideset_slide flashcard_slide' slidenumber='"+slidenumber+"' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
 	};
 
-	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons){
+	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = "";
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
 			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='"+ extra_classes + " slideset_slide virtualTour_slide' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + " slideset_slide virtualTour_slide' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
 	};
 
 

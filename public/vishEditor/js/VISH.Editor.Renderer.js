@@ -128,7 +128,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 */
 	var _renderFlashcard = function(slide, slideNumber){
 		V.Editor.Flashcard.addFlashcard(slide);
-		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
+		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>",slideNumber);
 		V.Editor.Slides.redrawSlides();
 		V.Slides.lastSlide();
 	};
@@ -138,7 +138,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 */
 	var _renderVTour = function(slide, slideNumber){
 		V.Editor.VirtualTour.addVirtualTour(slide);
-		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>");
+		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>",slideNumber);
 		V.Editor.Slides.redrawSlides();
 		V.Slides.lastSlide();
 	};
