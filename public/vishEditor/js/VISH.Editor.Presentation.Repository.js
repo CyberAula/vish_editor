@@ -9,6 +9,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	var previewButton;
 
 	var initialized = false;
+	var isCurrentlySearching = false;
 
 	var init = function() {
 		myInput = $("#tab_presentations_repo_content").find("input[type='search']");
@@ -46,6 +47,11 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	 * Request inicial data to the server.
 	 */
 	var _requestInitialData = function() {
+		if(isCurrentlySearching){
+			return;
+		} else {
+			isCurrentlySearching = true;
+		}
 		_prepareRequest();
 		V.Editor.API.requestRecomendedExcursions(_onDataReceived, _onAPIError);
 	};
@@ -54,6 +60,11 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	 * Request data to the server.
 	 */
 	var _requestData = function(text) {
+		if(isCurrentlySearching){
+			return;
+		} else {
+			isCurrentlySearching = true;
+		}
 		_prepareRequest();
 		V.Editor.API.requestExcursions(text, _onDataReceived, _onAPIError);
 	};
@@ -70,7 +81,9 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	 * Fill tab_pic_repo_content_carrousel div with server data.
 	 */
 	var _onDataReceived = function(data) {
-		//Clean previous Images
+		isCurrentlySearching = false;
+
+		//Clean previous excursions
 		currentExcursions = new Array();
 		var carrouselImages = [];
 
