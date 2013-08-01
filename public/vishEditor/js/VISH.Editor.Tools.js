@@ -6,21 +6,29 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	/*
 	 * Toolbar is divided in three zones.
-	 * 1) Menu button (Menu toolbar)
-	 * 1) Presentation toolbar
+	 * 1) Menu
+	 * 1) Presentation toolbar (always visible and updated when current slide changed)
 	 * 3) Element toolbar
 	 */
 
 	var init = function(){
-		cleanZoneTools();
 		cleanToolbar();
+		cleanZoneTools();
+
+		var presentationType = V.Editor.getPresentationType();
+		if(presentationType !== V.Constant.PRESENTATION){
+			disableToolbar();
+			return;
+		}
 
 		if(!toolbarEventsLoaded){
 			//Add listeners to toolbar buttons
 			$.each($("img.toolbar_icon, img.toolbar_bigicon"), function(index, toolbarButton) {
 				$(toolbarButton).on("click", function(event){
 					if(typeof V.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
-						V.Editor.Tools[$(toolbarButton).attr("action")](this);
+						if(!$(toolbarButton).parent().hasClass("toolbar_presentation_wrapper_disabled")){
+							V.Editor.Tools[$(toolbarButton).attr("action")](this);
+						}
 					}
 				});
 			});
@@ -31,42 +39,87 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			toolbarEventsLoaded = true;
 		}
 
-		loadPresentationToolbar();
-
 		V.Editor.Tools.Menu.init();
 	}
 	 
+	var cleanToolbar = function(){
+		loadToolsForSlide(V.Slides.getCurrentSlide());
+		_cleanElementToolbar();
+	}
+
+	var enableToolbar = function(){
+		$("#toolbar_wrapper").show();
+	}
+
+	var disableToolbar = function(){
+		$("#toolbar_wrapper").hide();
+	}
 
 
    /*
-	* Tools
+	* Menu Toolbar and Menu itself
+	*/
+	//Enable and disable menu methods in VISH.Editor.Tools.Menu.js
+
+
+   /*
+	* Presentation Toolbar
 	*/
 
-	var loadToolsForZone = function(zone){
+	/*
+	 * Update toolbar when load slide
+	 */
+	var loadToolsForSlide = function(slide){
+		_cleanPresentationToolbar();
 
+		var type = $(slide).attr("type");
+		switch(type){
+			case V.Constant.STANDARD:
+				$("#toolbar_background").parent().addClass("toolbar_presentation_wrapper_disabled");
+				break;
+			case V.Constant.FLASHCARD:
+				break;
+			case V.Constant.VTOUR:
+				$("#toolbar_background").parent().addClass("toolbar_presentation_wrapper_disabled");
+				break;
+			default:
+				return;
+		}
+	}
+
+	var _cleanPresentationToolbar = function(){
+		//Enable all buttons
+		$(".toolbar_presentation_wrapper").removeClass("toolbar_presentation_wrapper_disabled");
+	}
+
+
+   /*
+	* Zone Tools
+	*/
+	var loadToolsForZone = function(zone){
 		cleanZoneTools();
 		
 		var type = $(zone).clone().attr("type");
 
 		switch(type){
 			case "text":  
-				loadToolbarForElement(type);
+				_loadToolbarForElement(type);
 				break;
 			case "image":
-				loadToolbarForElement(type);
+				_loadToolbarForElement(type);
 				break;
 			case "video":
-				loadToolbarForElement(type);
+				_loadToolbarForElement(type);
 				break;
 			case "object":
 				var object = $(zone).find(".object_wrapper").children()[0];
 				loadToolbarForObject(object);
 				break;
 			case "snapshot":
-				loadToolbarForElement("snapshot");
+				_loadToolbarForElement("snapshot");
 				break;
 			case "quiz":
-				loadToolbarForElement("quiz");
+				_loadToolbarForElement("quiz");
 				break;
 			case undefined:
 				//Add menuselect button
@@ -87,52 +140,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		_cleanElementToolbar();
 	}
 
-
-
-    /*
-     * Toolbar
-     */
-
-	var cleanToolbar = function(){
-		_cleanPresentationToolbar();
-		_cleanElementToolbar();
-	}
-
-	var enableToolbar = function(){
-		$("#toolbar_wrapper").show();
-	}
-
-	var disableToolbar = function(){
-		$("#toolbar_wrapper").hide();
-	}
-
-
-   /*
-	* Menu Toolbar and Menu itself
-	*/
-	//Enable and disable menu methods in V.Editor.Tools.Menu.js
-
-
-   /*
-	* Presentation Toolbar
-	*/
-	var loadPresentationToolbar = function(){
-		var presentationType = V.Editor.getPresentationType();
-		if(presentationType !== V.Constant.PRESENTATION){
-			disableToolbar();
-		}
-	}
-
-	var _cleanPresentationToolbar = function(){
-		// Do nothing
-	}
-
-
    /*
 	* Element Toolbar
 	*/
 
-	var loadToolbarForElement = function(type){
+	var _loadToolbarForElement = function(type){
 		_cleanElementToolbar();
 		if(type=="text" || type=="quiz"){
 			_loadTextToolbar();
@@ -147,7 +159,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var _loadTextToolbar = function(){
 		$("#toolbar_element").find("img").hide();
 		$("#toolbar_text").show();
-		$("#toolbar_text").show();
 	}
 
 	var loadToolbarForObject = function(object){
@@ -155,10 +166,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 		switch(objectInfo.type){
 			case "web":
-				loadToolbarForElement(objectInfo.type);
+				_loadToolbarForElement(objectInfo.type);
 				break;
 			default:
-				loadToolbarForElement("object");
+				_loadToolbarForElement("object");
 				//object default toolbar
 				break;
 		}
@@ -166,7 +177,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _cleanElementToolbar = function(){
 		//Wysiwyg Toolbar
-		$("#toolbar_text").hide();
 		$("#toolbar_text").hide();
 		//Generic Toolbars
 		$("#toolbar_element").find("img").hide();
@@ -397,10 +407,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
   
 	return {
 		init							: init,
-		loadPresentationToolbar			: loadPresentationToolbar,
+		loadToolsForSlide				: loadToolsForSlide,
 		loadToolsForZone				: loadToolsForZone,
 		loadToolbarForObject			: loadToolbarForObject,
-		loadToolbarForElement			: loadToolbarForElement,
 		cleanZoneTools 					: cleanZoneTools,
 		cleanToolbar					: cleanToolbar,
 		enableToolbar					: enableToolbar,

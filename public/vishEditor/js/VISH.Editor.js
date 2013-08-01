@@ -470,6 +470,8 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
 		}
+
+		V.Editor.Tools.loadToolsForSlide(e.target);
 	};
   
 	/**

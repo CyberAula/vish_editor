@@ -33,13 +33,15 @@ VISH.Constant.NONE = "none";
 VISH.Constant.UNKNOWN = 'Unknown';
 VISH.Constant.AGE_RANGE = "4 - 20";
 
-//Presentation and slide types
+//Presentation types
 VISH.Constant.PRESENTATION = "presentation";
+VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
+
+//Slide types
 VISH.Constant.STANDARD = "standard";
 VISH.Constant.FLASHCARD = "flashcard";
-VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
-VISH.Constant.GAME = "game";
 VISH.Constant.VTOUR = "VirtualTour";
+VISH.Constant.GAME = "game";
 
 //Element types
 VISH.Constant.TEXT = "text";

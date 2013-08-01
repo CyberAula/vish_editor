@@ -48,6 +48,18 @@
   text-align: center;
 }
 
+.toolbar_presentation_wrapper > p {
+  cursor: default;
+}
+
+.toolbar_presentation_wrapper_disabled {
+  opacity: 0.2;
+}
+
+.toolbar_presentation_wrapper_disabled > * {
+  cursor: default !important;
+}
+
 .toolbar_prseentation_title{
   text-align: center;
   font-size: 12px;
