@@ -118,7 +118,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>	
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.File.js"></script>
@@ -187,64 +187,44 @@
 						</a>
 						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option menu_action menu_all" action="onSaveButtonClicked" i18n-key="i.Save">Save</a>
+								<a class="menu_option menu_action" action="onSaveButtonClicked" i18n-key="i.Save">Save</a>
 							</li>
 							<li>
-								<a class="menu_option menu_all" href="#" i18n-key="i.Insert">Insert</a>
+								<a class="menu_option menu_action" action="insertSlide" i18n-key="i.NewSlide">Add Slide</a>
+							</li>
+							<li>
+								<a class="menu_option" href="#" i18n-key="i.Import">Import</a>
 								<ul>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertSlide" i18n-key="i.NewSlide">New Slide</a>
+										<a class="menu_option menu_action" action="insertPDFex">PDF Slideshow</a>
 									</li>
 									<li>
-										<a style="display:none" class="menu_option menu_action" i18n-key="i.File">File</a>
+										<a class="menu_option menu_action" action="insertPresentation" i18n-key="i.Presentation">Excursion</a>
 									</li>
 									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertPresentation" i18n-key="i.Presentation">Excursion</a>
-									</li>
-									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertSmartcard" i18n-key="i.Smartcard">Smartcard</a>
+										<a class="menu_option menu_action" action="insertSmartcard" i18n-key="i.Smartcard">Smartcard</a>
 									</li>
 									<li class="liInsertJson">
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertJSON">JSON</a>
-									</li>
-									<li>
-										<a class="menu_option menu_action menu_presentation menu_standard_presentation" action="insertPDFex">PDF Slideshow</a>
+										<a class="menu_option menu_action" action="insertJSON">JSON</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option menu_all" href="#" i18n-key="i.Export">Export</a>
+								<a class="menu_option" href="#" i18n-key="i.Export">Export</a>
 								<ul>
 									<li>
-										<a class="menu_option menu_action menu_all" action="exportToJSON" i18n-key="i.toJSON">to JSON</a>
-									</li>
-								</ul>
-							</li>							
-							<li>
-								<a class="menu_option menu_all" i18n-key="i.ConvertTo">Convert to</a>
-								<ul>
-									<li>
-										<a class="menu_option menu_action menu_flashcard menu_game menu_vtour" action="switchToPresentation" i18n-key="i.Presentation">Presentation</a>
-									</li>
-									<li>
-										<a class="menu_option menu_action menu_standard_presentation menu_game menu_vtour" action="switchToFlashcard" i18n-key="i.Flashcard">Flashcard</a>
-									</li>
-									<li>
-										<a style="display:none" class="menu_option menu_action" action="switchToGame" i18n-key="i.Game">Game</a>
-									</li>
-									<li>
-										<a class="menu_option menu_action menu_standard_presentation menu_flashcard menu_game" action="switchToVirtualTour" i18n-key="i.VirtualTour">Virtual Tour</a>
+										<a class="menu_option menu_action" action="exportToJSON" i18n-key="i.toJSON">to JSON</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option menu_action menu_all" action="preview" i18n-key="i.preview">Preview</a>
+								<a class="menu_option menu_action" action="preview" i18n-key="i.preview">Preview</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action menu_all" action="displaySettings" i18n-key="i.Settings">Settings</a>
+								<a class="menu_option menu_action" action="displaySettings" i18n-key="i.Settings">Settings</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action menu_all" action="help" i18n-key="i.Help">Help</a>
+								<a class="menu_option menu_action" action="help" i18n-key="i.Help">Help</a>
 							</li
 						</ul>
 					</li>
@@ -321,8 +301,6 @@
 	    <a id="addQuizFancybox" href="#quizcontent"></a>
 	    <!-- Hidden link to open fancybox when adding a json  -->
 	    <a id="addJSONFancybox" href="#json_fancybox"></a>
-	    <!-- Hidden link to open fancybox when adding a pdf slideshow as excursion  -->
-	    <a id="addPDFexFancybox" href="#pdfex_fancybox"></a>
 	    <!-- Hidden link to open fancybox when creating a new presentation -->
 	    <a id="launch_presentation_details" href="#presentationdetails"></a>
 	    <!-- Hidden link for loading fancybox -->
@@ -427,7 +405,6 @@
 				  </select>
 			  </div>
 
-
 			  <div id="language_tag_box">
 		          <label for="language_tag">
 		            <div id="language_text" class="textintro1 textmarginbottom"><span i18n-key="i.language">Language</span></div>
@@ -465,22 +442,8 @@
         </div>
       </form>
     </div>  
-      
-      <!--
-	  <div class="attachmentIntro">
-      	<span id="attachmentIntroSpan" i18n-key="i.TeachingGuidelines">Teaching guidelines</span>
-      	<form  id="attachment_intro_file_input" class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
-                  <input type="file" name="document[file]" class="upload_file_input">
-                  <input type="hidden" name="document[title]">
-                  <input type="hidden" name="document[description]">
-                  <input type="hidden" name="document[owner_id]">
-                  <input type="hidden" name="authenticity_token">					  
-                  <input id="upload_document_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
-        </form>
-      </div>
-      -->
-      
-    <!-- Thumbnails fancybox -->
+
+	<!-- Thumbnails fancybox -->
 	<div style='display:none'>
 		<div id='thumbcontent'>
 			
@@ -488,6 +451,9 @@
 				<ul>
 					<li>
 						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_templates')" id="tab_templates" class="fancy_tab tabbable" i18n-key="i.Templates">Templates</a>
+					</li>
+					<li>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pdfex')" id="tab_pdfex" class="fancy_tab">PDF</a>
 					</li>
 					<li>
 						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_presentations_repo')" id="tab_presentations_repo" class="fancy_tab tabbable" i18n-key="i.Excursions">Excursions</a>
@@ -547,6 +513,27 @@
 					<img src='/vishEditor/images/templatesthumbs/t15.png' />
 				</div>
 			</div>
+			</div>
+
+			<div id='tab_pdfex_content' class="fancy_tab_content" style='display:none'>
+				<img class='help_in_fancybox' id='tab_pdfex_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<div class="box1 box1fancy3">
+					<p class="textfancy">Add slideshow from PDF file</p></br>
+					<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
+
+					<form class="documentsForm" action="pdfex.json" method="post" enctype="multipart/form-data">
+						<input id="upload_file_input" type="file" name="pdfex[attach]" class="upload_file_input">
+						<input type="hidden" name="document[owner_id]">
+						<input type="hidden" name="authenticity_token">
+						<input id="upload_pdfex_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
+					</form>
+
+					<div class="upload_progress_bar_wrapper">
+						<div class="upload_progress_bar"></div >
+						<div class="upload_progress_bar_percent">0%</div >
+					</div>
+
+				</div>
 			</div>
 
 			<div id='tab_presentations_repo_content' class="fancy_tab_content" style='display:none'> 
@@ -616,9 +603,7 @@
 		</div>
 	</div>
 
-
-  	  <div style='display:none'>
-	  	
+	<div style='display:none'>
 		<div id='menuselect' class="menuselect_hide">
 			<a class='all' href="#">
 				<div class='thumbicon textthumb' i18n-key="i.Text" title="Text"></div>
@@ -639,10 +624,8 @@
 				<div class='thumbicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
 			</a>
 		</div>
-	    
-	  </div>
+	</div>
 	  	
-
     <!-- JSON fancybox -->
 	  <div style='display:none'>
 	    <div id="json_fancybox" class="outer_box">
@@ -662,45 +645,6 @@
 				</div> 
 	    </div>
 	  </div>
-
-	  <!-- PDFex fancybox -->
-	  <div style='display:none'>
-	    <div id="pdfex_fancybox" class="outer_box">
-				<div class="fancy_tabs" id="pdfex_fancy_tabs_id">
-				  <ul>
-				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pdfex')" id="tab_pdfex" class="fancy_tab">file</a></li>
-				  </ul>
-				  <img class='help_in_fancybox' id='tab_pdfex_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
-				</div>
-
-				<div id='tab_pdfex_content' class="fancy_tab_content">
-					<div class="box1 box1fancy3">
-						<p class="textfancy">Add slideshow from PDF file</p></br>
-						<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
-
-						<form class="documentsForm" action="pdfex.json" method="post" enctype="multipart/form-data">
-							<input id="upload_file_input" type="file" name="pdfex[attach]" class="upload_file_input">
-							<input type="hidden" name="document[owner_id]">
-							<input type="hidden" name="authenticity_token">
-							<input id="upload_pdfex_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
-						</form>
-
-						<div class="upload_progress_bar_wrapper">
-							<div class="upload_progress_bar"></div >
-							<div class="upload_progress_bar_percent">0%</div >
-						</div>
-
-					</div>
-				</div>
-	    </div>
-	  </div>
-
-
-					
-
-
-
-
 
 	  <!-- PROMPT USER IF SHE IS SURE TO DELETE ITEM -->
 	  <div style='display:none'>

@@ -90,10 +90,6 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		//POST-renderer actions
 		for(var j=0; j<flashcards.length; j++){
 			V.Editor.Events.bindEventsForFlashcard(flashcards[j]);
-			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
-		}
-		for(var k=0; k<vts.length; k++){
-			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.VTOUR);
 		}
 
 		$.fancybox.close();

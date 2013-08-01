@@ -7,7 +7,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 * Init singleton
 	 * Perform actions that must be executed only once
 	 */
-	var _init = function(){
+	var init = function(){
 		if(!_initialized){
 			if(!V.Status.getDevice().desktop){
 				if(V.Status.getDevice().tablet){
@@ -38,85 +38,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			_initialized = true;
 		}
-	}
-
-
-   /**
-    * Called every time that menu needs to be updated
-    *
-	* Menu item classes:
-	* menu_all : Always visible
-	* menu_standard_presentation: 	Visible for standard presentations
-	* menu_presentation: 			Visible for presentations
-	* menu_flaschard: 				Visible for flashcards
-	* menu_game: 					Visible for games
-	*/
-	var init = function(){
-		_init();
-
-		$("#menu").hide();
-
-		var presentationType = V.Editor.getPresentationType();
-
-		_disableMenuItem($("ul.menu_option_main").find("li"));
-		_enableMenuItem($("ul.menu_option_main").find("a.menu_all").parent());
-
-		switch(presentationType){
-			case V.Constant.PRESENTATION:
-				_enableMenuItem($("ul.menu_option_main").find("a.menu_presentation").parent());
-				if(V.Editor.isPresentationStandard()){
-					_enableMenuItem($("ul.menu_option_main").find("a.menu_standard_presentation").parent());
-				}
-				break;
-			case V.Constant.FLASHCARD:
-				_enableMenuItem($("ul.menu_option_main").find("a.menu_flashcard").parent());
-				break;
-			case V.Constant.GAME:
-				_enableMenuItem($("ul.menu_option_main").find("a.menu_game").parent());
-				break;
-			case V.Constant.VTOUR:
-				_enableMenuItem($("ul.menu_option_main").find("a.menu_vtour").parent());
-				break;	
-			case V.Constant.QUIZ_SIMPLE:
-				break;
-			default:
-				break;
-		}
-
-		/////////////////////////////////////////////
-		// Check for single elements and death menus (For flexible-dynamic menus)
-		//////////////////////////////////////////////
-
-		// var menus = $("ul.menu_option_main").find("ul");
-
-		// $.each($(menus), function(index, menu) {
-		// 	var lis = $(menu).find("li");
-		// 	var visibleLis = 0;
-		// 	var lastVisibleLi = null;
-
-		// 	$.each($(lis), function(index, li) {
-		// 		if($(li).css("display")!="none"){
-		// 			visibleLis = visibleLis+1;
-		// 			lastVisibleLi = li;
-		// 		}
-		// 	});
-			
-		// 	if(visibleLis==0){
-		// 		//No elements... hide li that contains ul.
-		// 		var liContainer = $(menu).parent();
-				
-		// 		if($(liContainer)[0].tagName=="LI"){
-		// 			_disableMenuItem($(liContainer));
-		// 		}
-				
-		// 	} else if(visibleLis==1){
-		// 		//Add special class for single elements
-		// 		$(lastVisibleLi).find("a").addClass("menu_single_element");
-		// 	}
-
-		// 	visibleLis = 0;
-		// });
-
 		$("#menu").show();
 	}
 
@@ -128,19 +49,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var _disableMenuItem = function(items){
 		// $(items).hide();
 		$(items).removeClass("menu_item_enabled").addClass("menu_item_disabled");
-	}
-
-	var updateMenuAfterAddSlide = function(slideType){
-		switch(slideType){
-			case V.Constant.STANDARD:
-				break;
-			case V.Constant.FLASHCARD:
-			case V.Constant.VTOUR:
-				return init();
-				break;
-			default:
-				break;
-		}
 	}
 
 	var disableMenu = function(){
@@ -316,17 +224,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*/
 	var onSaveButtonClicked = function(){
-		var slidesetModule = V.Editor.Slideset.getCreatorModule(V.Editor.getPresentationType());
-		var isSlideset = (slidesetModule!==null);
-
-		if(isSlideset){
-			var validate = slidesetModule.validateOnSave();
-			if(typeof validate === "string"){
-				_showDialog(validate);
-				return;
-			}
-		}
-
 		if(V.Slides.getSlides().length === 0){
 			_showDialog("message1_form");
 			return;
@@ -501,7 +398,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var insertPDFex = function(){
-		$("#addPDFexFancybox").trigger('click');
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_pdfex');
 	};
 
 	var exportToJSON = function(){
@@ -526,8 +424,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	return {
 		init							: init,
-		updateMenuAfterAddSlide 		: updateMenuAfterAddSlide,
-		disableMenu 					: disableMenu ,
+		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
 		insertPresentation				: insertPresentation,
