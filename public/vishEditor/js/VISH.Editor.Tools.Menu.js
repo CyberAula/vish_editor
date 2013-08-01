@@ -217,6 +217,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/// SAVE
 	/////////////////
 
+	var onPublishButtonClicked = function(){
+		onSaveButtonClicked();
+	}
+
 	/**
 	* function called when user clicks on save
 	* Generates the json for the current slides
@@ -437,6 +441,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 	: onDonePedagogicalButtonClicked,
+		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,

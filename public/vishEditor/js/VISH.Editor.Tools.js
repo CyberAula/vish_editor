@@ -192,7 +192,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var publish = function(){
-		V.Editor.Tools.Menu.onSaveButtonClicked();
+		V.Editor.Tools.Menu.onPublishButtonClicked();
 	}
 
 	var preview = function(){
