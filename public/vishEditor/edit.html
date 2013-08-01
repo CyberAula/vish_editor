@@ -159,8 +159,14 @@
 
 	<section id="slides_panel" class="slides slides_editor layout-regular template-default">
 		
-		<div id="slides_list"></div>
-		
+		<div id="leftside">
+			<div id="slides_list_actions">
+				<button id="addSlideButton">add slide</button>
+				<button id="importButton">import</button>
+			</div>
+			<div id="slides_list"></div>
+		</div>
+
 		<div id="menubar-viewer" style="display:none">
 			<!-- TODO -->
 			<div id="viewbar" class="viewbar">
@@ -1383,7 +1389,7 @@
 		<p i18n-key="i.walk69"> Every time that you add or select content in your excursion this toolbar will provide you tools to interact with that content.</p>
 		</li>
 
-		   <li data-id="addslidebutton" class="tut_addslide tut_with_arrow" data-text="Close" i18n-key="i.Close">
+		   <li data-id="addSlideButton" class="tut_addslide tut_with_arrow" data-text="Close" i18n-key="i.Close">
 		 <h2 i18n-key="i.AddSlide">Add new slide button</h2>
 		   <p i18n-key="i.walk13">This icon will get you to the templates selection screen to add your slide to your excursion. As you add the slides they will appear at the time-line as an icon providing you with the pagination of it inside the presentation. Click on "Close" to finish this walk through and start adding content to your excursion.</p>
 		</li>

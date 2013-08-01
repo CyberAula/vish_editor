@@ -224,6 +224,8 @@ VISH.Editor = (function(V,$,undefined){
 		if(!eventsLoaded){
 			eventsLoaded = true;
 				 
+			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
+			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPresentation);
 			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);

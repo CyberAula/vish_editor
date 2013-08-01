@@ -40,12 +40,28 @@ img {
 	overflow: hidden;
 }
 
-#slides_list{
+#leftside{
 	position: absolute;
-	top: 100px;
+	top: 50px;
+	display:block;
+	width: 180px;
+	height: 700px;
 	text-align: center;
-	width: 155px;
-	height: 640px;
+	background: gray;
+}
+
+#slides_list_actions{
+	width: 100%;
+	height: 50px;
+	background: gray;
+}
+
+#slides_list{
+	position: relative;
+	margin-top: 15px;
+	text-align: center;
+	width: 100%;
+	height: 630px;
 	max-height: 700px;
 	display:block;
 	overflow: hidden;

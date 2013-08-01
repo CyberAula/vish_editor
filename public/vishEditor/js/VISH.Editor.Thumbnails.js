@@ -46,10 +46,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				break;
 		  }          
     	});
-		
-		//Add plus button
-		imagesArray.push($("<img class='image_barbutton add_slide_button' action='plus' id='addslidebutton' src='" + V.ImagesPath + "templatesthumbs/add_slide.png' />"));
-		slideElements += 1;
 
 		var options = {};
 		options.order = true;
@@ -132,14 +128,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var _onClickSlideElement = function(event){
 		switch($(event.target).attr("action")){
-			case "plus":
-				$("#addSlideFancybox").trigger('click');
-				break;
 			case "goToSlide":
 				V.Slides.goToSlide($(event.target).attr("slideNumber"));
 				break;
 			default:
-			  break;
+			  return;
 		}
 	}
 
