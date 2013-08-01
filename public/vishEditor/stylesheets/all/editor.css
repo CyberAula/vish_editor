@@ -593,6 +593,20 @@ div.addUrlButtons{
 	text-align:left;
 }
 
+.tab_slides_content {
+  margin-top: 30px;
+  margin-left: 73px;
+}
+
+.tab_slides_templates{
+
+}
+
+.tab_slides_smartcards{
+	display: inline-block;
+	margin-top: 30px;
+}
+
 a#tab_pic_flikr > img {
 	max-width: 47px;
 }

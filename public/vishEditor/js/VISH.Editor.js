@@ -133,7 +133,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_templates');
+				V.Editor.Utils.loadTab('tab_slides');
 			}
 		});
 

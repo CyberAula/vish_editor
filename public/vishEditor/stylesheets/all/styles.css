@@ -963,50 +963,44 @@ width: 28%
 .prompt_button_viewer4:hover {
   opacity: 1;
   text-shadow: 1px 1px #666;
-} 
-
-
-.tab_templates_content {
-margin-top: 102px;
-margin-left: 73px;
 }
 
 .addt {
-margin-left: 26px !important;
-width: 58px;
+  margin-left: 26px !important;
+  width: 58px;
 }
 
 .buttonconfirm {
-width: 92px;
-margin-top: -22px;
-margin-left: -74px;
-position: absolute;
+  width: 92px;
+  margin-top: -22px;
+  margin-left: -74px;
+  position: absolute;
 }
 
 .buttoncenter {
-margin-left: -273px !important;
-margin-top: -76px;
-position: absolute;
+  margin-left: -273px !important;
+  margin-top: -76px;
+  position: absolute;
 }
 
 .imgbutton {
-width: 17px;
-margin-right: 8px;
-margin-top: -3px;
+  width: 17px;
+  margin-right: 8px;
+  margin-top: -3px;
 }
 
 .unselectall {
   position: absolute;
-margin-left: 118px !important;
+  margin-left: 118px !important;
 }
 
 .selectall {
-margin-left: -6px !important
+  margin-left: -6px !important;
 }
 
 .selected_accept {
--webkit-transition: opacity 0.7s linear;
-overflow: hidden;
+  -webkit-transition: opacity 0.7s linear;
+  overflow: hidden;
   border: 1px solid green !important;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;

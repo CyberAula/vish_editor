@@ -394,7 +394,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var insertSlide = function(){
 		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_templates');
+		V.Editor.Utils.loadTab('tab_slides');
 	};
 
 	var insertJSON = function(){
