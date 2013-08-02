@@ -97,8 +97,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var fs_button;
 	var can_use_nativeFs;
 	var embed;
-	var display_recommendations;
+	var scorm;
 	var showViewbar;
+	var isInexternalSite;
+	var isInVishSite;
 
 	&#x2F;&#x2F;Fullscreen fallbacks
 	var enter_fs_button;
@@ -132,11 +134,16 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(options){
 			&#x2F;&#x2F;Decide if we must render the presentation in fullscreen mode
-			if(typeof render_full !== &quot;boolean&quot;){
+			if(typeof render_full != &quot;boolean&quot;){
 				render_full = ((options[&quot;full&quot;]===true)&amp;&amp;(!V.Status.getIsInIframe()) || (options[&quot;forcefull&quot;]===true));
 			}
-			if(typeof options[&quot;preview&quot;] === &quot;boolean&quot;){
+			if(typeof options[&quot;preview&quot;] == &quot;boolean&quot;){
 				is_preview = options[&quot;preview&quot;];
+			}
+
+			&#x2F;&#x2F;SCORM package
+			if(typeof options[&quot;scorm&quot;] == &quot;boolean&quot;){
+				scorm = options[&quot;scorm&quot;];
 			}
 
 			&#x2F;&#x2F;Close button
@@ -162,16 +169,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			&#x2F;&#x2F;No fs for embed
 			fs_button = fs_button &amp;&amp; (!embed);
 
-
 			page_is_fullscreen = render_full &amp;&amp; (!V.Status.getIsInIframe());
-
-			&#x2F;&#x2F;recommendations slide in the end
-			if(typeof options[&quot;urlToGetRecommendations&quot;] == &quot;string&quot;){
-				display_recommendations = true;
-			} else {
-				display_recommendations = false;
-			}	
-
+			
 		} else {
 			render_full = false;
 			is_preview = false;
@@ -180,8 +179,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
-			display_recommendations = false;
+			scorm = false;
 		}
+
+		isInexternalSite = ((embed)||(scorm));
+	 	isInVishSite = ((!isInexternalSite)&amp;&amp;(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH));
 
 		is_preview_insertMode = false;
 		if(is_preview){
@@ -232,17 +234,31 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		if(is_preview_insertMode){
+			&#x2F;&#x2F;Enable images
+			$(&quot;#selectSlidesBar&quot;).find(&quot;img.addt&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;templatesthumbs&#x2F;addt.png&quot;);
+			$(&quot;#tutorialSelectAllImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;selectall.png&quot;);
+			$(&quot;tutorialUnselectAllImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;unselectall.png&quot;);
+			$(&quot;tutorialSelectSlidesImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;selectslides.png&quot;);
+
 			$(&quot;#selectSlidesBar&quot;).show();
 			$(&quot;#viewbar&quot;).css(&quot;bottom&quot;,$(&quot;#selectSlidesBar&quot;).height()+&quot;px&quot;);
 			$(&quot;#viewbar&quot;).css(&quot;border-bottom&quot;,&quot;none&quot;);
 			V.SlidesSelector.init();
 		}
 
-		if(embed){
+		&#x2F;&#x2F;Watermark
+		if(isInexternalSite){
 			if((options)&amp;&amp;(typeof options.watermarkURL == &quot;string&quot;)){
 				$(&quot;#embedWatermark&quot;).parent().attr(&quot;href&quot;,options.watermarkURL);
+				$(&quot;#embedWatermark&quot;).show();
 			}
-			$(&quot;#embedWatermark&quot;).show();
+		}
+
+		&#x2F;&#x2F;Recommendations
+		if(isInVishSite || V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER){
+			$(&quot;.rec-first-row&quot;).show();
+		} else {
+			$(&quot;.rec-first-row&quot;).hide();
 		}
 
 		if(close_button){

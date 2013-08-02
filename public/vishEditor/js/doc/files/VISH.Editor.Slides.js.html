@@ -140,7 +140,9 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	 *	Move slide_to_move after or before reference_slide.
 	 *  Movement param posible values: &quot;after&quot;, &quot;before&quot;
 	 *&#x2F;
-	var moveSlideTo = function(slide_to_move, reference_slide, movement){
+	var moveSlideTo = function(orgPosition, destPosition){
+		var slide_to_move = V.Slides.getSlideWithNumber(orgPosition);
+		var reference_slide = V.Slides.getSlideWithNumber(destPosition);
 
 		if((typeof slide_to_move === &quot;undefined&quot;)||(typeof reference_slide === &quot;undefined&quot;)){
 			return;
@@ -164,11 +166,23 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
+		&#x2F;&#x2F;We must move slide orgPosition after or before destPosition
+		var movement = null;
+		if(destPosition &gt; orgPosition){
+			movement = &quot;after&quot;;
+		} else if(destPosition &lt; orgPosition){
+			movement = &quot;before&quot;;
+		} else {
+			return;
+		}
+
 		var article_to_move = slide_to_move;
 		var article_reference = reference_slide;
 
 		var moving_current_slide = false;
-		if(V.Slides.getCurrentSlide() === article_to_move){
+		var currentSlide = V.Slides.getCurrentSlide();
+		var oldCurrentSlideNumber = parseInt($(currentSlide).attr(&quot;slidenumber&quot;));
+		if(currentSlide === article_to_move){
 			moving_current_slide = true;
 		}
 
@@ -183,6 +197,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
+		$(article_to_move).addClass(&quot;temp_shown&quot;);
+
 		&#x2F;&#x2F;Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
 
@@ -190,18 +206,40 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		_cleanTextAreas(article_to_move);
 		_loadTextAreasOfSlide(article_to_move,textAreas);
 
+		$(article_to_move).removeClass(&quot;temp_shown&quot;);
+
 		&#x2F;&#x2F;Update slideEls
 		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
 
+		&#x2F;&#x2F;Update scrollbar params and counters
+		$(&quot;#slides_list&quot;).find(&quot;div.wrapper_barbutton:has(img[slidenumber])&quot;).each(function(index,div){
+			var slideNumber = index+1;
+			var p = $(div).find(&quot;p.ptext_barbutton&quot;);
+			$(p).html(slideNumber);
+			var img = $(div).find(&quot;img.image_barbutton&quot;);
+			$(img).attr(&quot;slidenumber&quot;,slideNumber);
+		});
+
+		&#x2F;&#x2F;Update current slide number
+		var newCurrentSlideNumber;
+
 		if(moving_current_slide){
-			&#x2F;&#x2F;Update currentSlide
-			V.Slides.setCurrentSlideIndex(V.Slides.getNumberOfSlide(article_to_move));
+			newCurrentSlideNumber = destPosition;
+		} else {
+			if((orgPosition &gt; oldCurrentSlideNumber)&amp;&amp;(destPosition &lt;= oldCurrentSlideNumber)){
+				newCurrentSlideNumber = (oldCurrentSlideNumber+1);
+			} else if((orgPosition &lt; oldCurrentSlideNumber)&amp;&amp;(destPosition &gt;= oldCurrentSlideNumber)){
+				newCurrentSlideNumber = (oldCurrentSlideNumber-1);
+			}
 		}
 
+		if(typeof newCurrentSlideNumber == &quot;number&quot;){
+			V.Slides.setCurrentSlideNumber(newCurrentSlideNumber);
+		}
+		
 		&#x2F;&#x2F;Update slides classes next and past.
 		&#x2F;&#x2F;Current slide needs to be stablished before this call.
 		V.Slides.updateSlideEls();
-		
 	}
 
 	var copySlideWithNumber = function(slideNumber,options){
@@ -224,18 +262,17 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		var slideToCopyType = V.Slides.getSlideType(slideToCopy);
 
-
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Pre-copy actions
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 		var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-		if(typeof slidesetModule !== &quot;undefined&quot;){
+		if((typeof slidesetModule != &quot;undefined&quot;)&amp;&amp;(slidesetModule!=null)){
 			var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
 			var slidesetId = $(slideToCopy).attr(&quot;id&quot;);
 
 			if(!options.JSON){
-				&#x2F;&#x2F;We need the JSON to copy a flashcard!
+				&#x2F;&#x2F;We need the JSON to copy a slideset!
 				return;
 			}
 
@@ -270,7 +307,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			}
 		}
 
-		if(typeof slidesetModule !== &quot;undefined&quot;){
+		if((typeof slidesetModule != &quot;undefined&quot;)&amp;&amp;(slidesetModule!=null)){
 			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
@@ -284,11 +321,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		&#x2F;&#x2F;Redraw thumbnails
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(currentSlide){
-				V.Editor.Thumbnails.moveCarrouselToSlide(V.Slides.getCurrentSlideNumber()+1);
 				V.Slides.goToSlide(V.Slides.getCurrentSlideNumber()+1);
+				V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 			} else {
 				V.Slides.goToSlide(1);
-				V.Editor.Thumbnails.moveCarrouselToSlide(1);
+				V.Editor.Thumbnails.moveThumbnailsToSlide(1);
 			}
 		});
 	}
@@ -377,7 +414,16 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		if(!standardSlide){
 			V.Editor.Tools.Menu.init();
 		}
-	}
+	};
+
+	var addTooltipsToAddedSlide = function(){
+		var last_slide = $(&quot;.slides article&quot;).filter(&quot;:last&quot;);
+		var tooltip = &quot;&lt;span class=&#x27;zone_tooltip&#x27;&gt;&quot;+V.Editor.I18n.getTrans(&#x27;i.ZoneTooltip&#x27;)+&quot;&lt;&#x2F;span&gt;&quot;;
+		var zones = last_slide.find(&quot;.editable&quot;);
+		for (var i = 0; i &lt; zones.length; i++) {
+			$(last_slide.find(&quot;.editable&quot;)[i]).append(tooltip);
+		};
+	};
 
 	return {
 		showSlides				: showSlides,
@@ -389,6 +435,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
+		addTooltipsToAddedSlide : addTooltipsToAddedSlide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 

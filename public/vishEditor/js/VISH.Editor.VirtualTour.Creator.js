@@ -567,7 +567,7 @@ VISH.Editor.VirtualTour.Creator = (function(V,$,undefined){
 					);
 			  break;
 			case "goToSlide":
-			  	V.Editor.Preview.preview({forcePresentation: true, slideNumberToPreview: parseInt($(event.target).attr("slideNumber"))});
+			  	V.Editor.Preview.preview({slideNumberToPreview: parseInt($(event.target).attr("slideNumber"))});
 			  break;
 			default:
 			  break;

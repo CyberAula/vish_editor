@@ -44,24 +44,14 @@ VISH.Editor.Preview = (function(V,$,undefined){
 
 	/*
 	 * Function to prepare the preview of the presentation as it is now
-	 * options["forcePresentation"] is a boolean to indicate if we should preview only the slide, 
-	   although we might be in flashcard
-	 *
 	 */
 	var _prepare = function(options){
 		var slideNumberToPreview;
-		var forcePresentation;
 
 		if((!options)||(!options["slideNumberToPreview"])||(typeof options["slideNumberToPreview"] !== "number")){
 			slideNumberToPreview =  V.Slides.getCurrentSlideNumber();
 		} else {
 			slideNumberToPreview =  options["slideNumberToPreview"];
-		}
-
-		if((!options)||(!options["forcePresentation"])||(typeof options["forcePresentation"] !== "boolean")){
-			forcePresentation =  false;	
-		} else {
-			forcePresentation =  options["forcePresentation"];
 		}
 
 		if(V.Configuration.getConfiguration()["mode"]=="vish"){
@@ -73,7 +63,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		}
 
 		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] !== "object")){
-			presentation_preview = V.Editor.savePresentation({preview: true, forcePresentation: forcePresentation});
+			presentation_preview = V.Editor.savePresentation({preview: true});
 		} else {
 			presentation_preview = options["presentationJSON"];
 		}

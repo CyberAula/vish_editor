@@ -355,11 +355,11 @@ VISH.Quiz = (function(V,$,undefined){
     var quizButtons = $(&quot;&lt;div class=&#x27;quizButtons&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 
     if((quizMode === V.Constant.QZ_MODE.SELFA)&amp;&amp;((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER))&amp;&amp;(V.User.isLogged())&amp;&amp;(!V.Utils.getOptions().preview)){
-      var startButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;quizButton quizStartButton&#x27; value=&#x27;Launch&#x27;&#x2F;&gt;&quot;);
+      var startButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizStartButton&#x27; value=&#x27;Launch&#x27;&#x2F;&gt;&quot;);
       $(quizButtons).prepend(startButton);
     }
     if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-      var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;quizButton quizAnswerButton&#x27; value=&#x27;Answer&#x27;&#x2F;&gt;&quot;);
+      var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizAnswerButton&#x27; value=&#x27;Answer&#x27;&#x2F;&gt;&quot;);
       $(quizButtons).prepend(answerButton);
     }
 

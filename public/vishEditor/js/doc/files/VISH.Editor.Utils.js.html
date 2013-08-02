@@ -467,6 +467,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		for(var ind in fc.slides){	
 			old_id = fc.slides[ind].id;
 			fc.slides[ind] = _replaceIdsForStandardSlideJSON(fc.slides[ind],fc.id + &quot;_article&quot; + (parseInt(ind)+1));
+			if(fc.slides[ind]===null){
+				return null;
+			}
 			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
 		}
 		for(var num in fc.pois){
@@ -523,8 +526,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
         &#x2F;&#x2F;Submodule callbacks	
 		switch (tab_id) {
-			&#x2F;&#x2F;templates and flashcards
-			case &quot;tab_templates&quot;:
+			case &quot;tab_slides&quot;:
+				&#x2F;&#x2F;templates and smartcards
 				break;
 			case &quot;tab_presentations_repo&quot;:
 				V.Editor.Presentation.Repository.onLoadTab();
@@ -573,14 +576,23 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case &quot;tab_object_repo&quot;:
 				V.Editor.Object.Repository.onLoadTab();
-				break;	
-			&#x2F;&#x2F;Live
+				break;
+			case &quot;tab_object_lre&quot;:
+				V.Editor.Object.LRE.onLoadTab();
+				break;
 			case &quot;tab_live_webcam&quot;:
 				V.Editor.Object.Live.onLoadTab(&quot;webcam&quot;);
 				break;
 			case &quot;tab_live_micro&quot;:
 				V.Editor.Object.Live.onLoadTab(&quot;micro&quot;);
 				break;
+			case &quot;tab_json_file&quot;:
+				V.Editor.Presentation.File.onLoadTab();
+				break;
+			case &quot;tab_pdfex&quot;:
+				V.Editor.PDFex.onLoadTab();
+				break;
+				
  			&#x2F;&#x2F;Default
 			default:
 				break;

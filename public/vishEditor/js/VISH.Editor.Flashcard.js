@@ -40,7 +40,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			var poi = fcJSON.pois[index];
 			V.Flashcard.addArrow(fcJSON.id, poi, true);
 		}
-		V.Editor.Events.bindEventsForFlashcard(fcJSON);
+		// V.Editor.Events.bindEventsForFlashcard(fcJSON); //Deprecated
 	}
 
 	var postCopyActions = function(fcJSON,fcDOM){

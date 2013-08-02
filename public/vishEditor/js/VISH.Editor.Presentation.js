@@ -89,7 +89,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 		//POST-renderer actions
 		for(var j=0; j<flashcards.length; j++){
-			V.Editor.Events.bindEventsForFlashcard(flashcards[j]);
+			// V.Editor.Events.bindEventsForFlashcard(flashcards[j]); //Deprecated
 		}
 
 		$.fancybox.close();

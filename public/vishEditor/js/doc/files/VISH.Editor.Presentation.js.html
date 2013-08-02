@@ -91,6 +91,7 @@
 VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var init = function(){
+		V.Editor.Presentation.File.init();
 		V.EventsNotifier.registerCallback(V.Constant.Event.onSelectedSlides, function(params){ 
 			insertPresentation(params.JSON,params.acceptedSlides);
 			$.fancybox.close();
@@ -99,6 +100,14 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var _onConnect = function(origin){
 		&#x2F;&#x2F; V.Debugging.log(&quot;Communication stablished with origin &quot; + origin);
+		V.IframeAPI.registerCallback(&quot;onMessage&quot;,function(VEMessage,origin){
+			&#x2F;&#x2F; V.Debugging.log(&quot;onMessage from &quot; + origin);
+			&#x2F;&#x2F; V.Debugging.log(VEMessage);
+			var VEMessageObject = JSON.parse(VEMessage);
+			if(VEMessageObject.VEevent===V.Constant.Event.onSelectedSlides){
+				V.Messenger.Helper.processVEMessage(VEMessage);
+			}
+		});
 	}
 
 	&#x2F;*
@@ -120,6 +129,14 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			return;
 		}
 
+		&#x2F;&#x2F;Fix presentation (for old versions)
+		presentationJSON = V.Utils.fixPresentation(presentationJSON);
+		if(presentationJSON===null){
+			V.Utils.showPNotValidDialog();
+			$.fancybox.close();
+			return;
+		}
+
 		var selectedSlides = [];
 		var flashcards = [];
 		var vts = [];
@@ -127,6 +144,12 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		for(var i=0; i&lt;snL; i++){
 			var slide = presentationJSON.slides[selectedSlideNumbers[i]-1];
 			var mySlide = V.Editor.Utils.replaceIdsForSlideJSON(slide);
+
+			if(mySlide===null){
+				$.fancybox.close();
+				V.Debugging.log(&quot;Not valid presentation&quot;);
+				return null;
+			}
 
 			&#x2F;&#x2F;PRE-renderer actions
 			switch(mySlide.type){
@@ -156,11 +179,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 		&#x2F;&#x2F;POST-renderer actions
 		for(var j=0; j&lt;flashcards.length; j++){
-			V.Editor.Events.bindEventsForFlashcard(flashcards[j]);
-			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.FLASHCARD);
-		}
-		for(var k=0; k&lt;vts.length; k++){
-			V.Editor.Tools.Menu.updateMenuAfterAddSlide(V.Constant.VTOUR);
+			&#x2F;&#x2F; V.Editor.Events.bindEventsForFlashcard(flashcards[j]); &#x2F;&#x2F;Deprecated
 		}
 
 		$.fancybox.close();

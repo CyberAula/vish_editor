@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>VISH.Editor.Tour.js</title>
+    <title>VISH.Tour.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -84,11 +84,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.Tour.js</h1>
+                        <h1 class="file-heading">File: VISH.Tour.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-VISH.Editor.Tour = (function(V,$,undefined){
+VISH.Tour = (function(V,$,undefined){
 		
 	&#x2F;**
 	 * function to start a walkme tour witht he help &quot;ol&quot; id given
@@ -106,7 +106,7 @@ VISH.Editor.Tour = (function(V,$,undefined){
 		$(window).joyride({
 			 &#x27;tipLocation&#x27;		: loc,
 			 &#x27;tipContent&#x27;		: &#x27;#&#x27; + helpid,
-			 &#x27;postRideCallback&#x27; : V.Editor.Tour.clear	 
+			 &#x27;postRideCallback&#x27; : V.Tour.clear	 
 		});
 	};
 	

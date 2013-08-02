@@ -121,6 +121,11 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	 Request videos to Youtube API
 	 *&#x2F;	
 	var requestYoutubeData = function(text){
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+		$(&quot;#&quot; + carrouselDivId).hide();
+		_cleanVideoPreview();
+		V.Utils.Loader.startLoadingInContainer($(&quot;#&quot;+carrouselDivId));
+
 		var url_youtube = &quot;http:&#x2F;&#x2F;gdata.youtube.com&#x2F;feeds&#x2F;api&#x2F;videos?q=&quot;+text+&quot;&amp;alt=json-in-script&amp;callback=?&amp;max-results=&quot;+queryMaxMaxNumberYoutubeVideo+&quot;&amp;start-index=1&quot;;	 
 		jQuery.getJSON(url_youtube,function (data) {
 			_onDataReceived(data);
@@ -128,12 +133,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _onDataReceived = function(data) {
-		&#x2F;&#x2F;Clean previous content
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$(&quot;#&quot; + carrouselDivId).hide();
-		&#x2F;&#x2F;clean previous preview if any
-		_cleanVideoPreview();
-
 		&#x2F;&#x2F;Clean previous videos
 		currentVideos = new Array();
 
@@ -164,14 +163,17 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			currentVideos[videoID].subtitle = subtitle;
 
 			var image_url = &quot;http:&#x2F;&#x2F;img.youtube.com&#x2F;vi&#x2F;&quot;+videoID+&quot;&#x2F;0.jpg&quot; 
-			var myImg = $(&quot;&lt;img videoID=&quot;+videoID+&quot; src=&quot;+image_url+&quot; &#x2F;&gt;&quot;)
+			var myImg = $(&quot;&lt;img videoID=&#x27;&quot;+videoID+&quot;&#x27; src=&#x27;&quot;+image_url+&quot;&#x27; title=&#x27;&quot;+title+&quot;&#x27;&#x2F;&gt;&quot;)
 			carrouselImages.push(myImg); 
 		});
 			
-		V.Utils.Loader.loadImagesOnCarrousel(carrouselImages,_onImagesLoaded,carrouselDivId);
+		var options = {};
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	};
 
 	var _onImagesLoaded = function(){
+		V.Utils.Loader.stopLoadingInContainer($(&quot;#&quot;+carrouselDivId));
 		$(&quot;#&quot; + carrouselDivId).show();
 		var options = new Array();
 		options[&#x27;rows&#x27;] = 1;

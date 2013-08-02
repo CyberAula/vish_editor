@@ -31,7 +31,9 @@ VISH.Constant.LARGE = "large";
 VISH.Constant.THUMBNAIL = "thumbnail";
 VISH.Constant.NONE = "none";
 VISH.Constant.UNKNOWN = 'Unknown';
-VISH.Constant.AGE_RANGE = "4 - 20";
+VISH.Constant.AGE_RANGE_MIN = 4;
+VISH.Constant.AGE_RANGE_MAX = 20;
+VISH.Constant.AGE_RANGE = VISH.Constant.AGE_RANGE_MIN + " - " + VISH.Constant.AGE_RANGE_MAX;
 
 //Presentation types
 VISH.Constant.PRESENTATION = "presentation";

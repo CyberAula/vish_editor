@@ -150,20 +150,75 @@ VISH.Utils = (function(V,undefined){
 	};
 
 	&#x2F;**
-	 * Fix old JSON formats, update to current version
+	 * Fix presentations with old JSON format
+	 * Try to update them to current version
+	 * Return null if presentation is irretrievable
 	 *&#x2F;
 	var fixPresentation = function(presentation){
-		if(typeof presentation.type == &quot;undefined&quot;){
-			presentation.type = V.Constant.STANDARD;
+		if((typeof presentation == &quot;undefined&quot;)||(presentation === null)||(typeof presentation.slides == &quot;undefined&quot;)){
+			return null;
 		}
+
 		if(typeof presentation.VEVersion == &quot;undefined&quot;){
 			presentation.VEVersion = &quot;0.1&quot;;
 		}
-		presentation = _fixIds(presentation);
+
+		presentation = _fixTypes(presentation);
+
+		if(!_checkIds(presentation)){
+			presentation = _overwriteIds(presentation);
+			&#x2F;&#x2F; return null;
+		}
+		
 		return presentation;
 	}
 
-	var _fixIds = function(presentation){
+	&#x2F;**
+	 * Check slide types and fix it
+	 *&#x2F;
+    var _fixTypes = function(presentation){
+    	&#x2F;&#x2F;Presentation type
+    	if(typeof presentation.type == &quot;undefined&quot;){
+			presentation.type = V.Constant.STANDARD;
+		}
+
+		&#x2F;&#x2F;Slides type
+		var slides = presentation.slides;
+		var sL = slides.length;
+		for(var i=0; i&lt;sL; i++){
+			var slide = slides[i];
+
+			switch(slide.type){
+				case V.Constant.STANDARD:
+					break;
+				case V.Constant.FLASHCARD:
+				case V.Constant.VTOUR:
+					var subslides = slide.slides;
+					if(subslides){
+						var ssL = subslides.length;
+						for(var j=0; j&lt;ssL;j++){
+							if(typeof subslides[j].type == &quot;undefined&quot;){
+								subslides[j].type = V.Constant.STANDARD;
+							}
+						}
+					}
+					break;
+				case V.Constant.QUIZ_SIMPLE:
+					break;
+				default:
+					slide.type = V.Constant.STANDARD;
+					break;
+			}
+		}
+
+		return presentation;
+    }
+
+	&#x2F;*
+	 * Look for errors in the presentation ids
+	 * Return false if ids are wrong
+	 *&#x2F;
+	var _checkIds = function(presentation){
 		var slides = presentation.slides;
 		var sL = slides.length;
 
@@ -171,24 +226,116 @@ VISH.Utils = (function(V,undefined){
 			var slide = slides[i];
 
 			if(!slide.id.match(&#x2F;^article[0-9]+&#x2F;g)){
-				slide.id = getId(&quot;article&quot;);
-			} else {
-				slide.id = getId(slide.id,true);
-			}
-
-			if(typeof slide.type == &quot;undefined&quot;){
-				slide.type = V.Constant.STANDARD;
+				return false;
 			}
 			
 			switch(slide.type){
 				case V.Constant.STANDARD:
-					slide = _fixIdsStandardSlide(slide);
+					if(!_checkIdsStandardSlide(slide)){
+						return false;
+					}
 					break;
 				case V.Constant.FLASHCARD:
-					slide = _fixIdsFlashcardSlide(slide);
+					if(!_checkIdsFlashcardSlide(slide)){
+						return false;
+					}
 					break;
 				case V.Constant.VTOUR:
-					slide = _fixIdsVTourSlide(slide);
+					if(!_checkIdsVTourSlide(slide)){
+						return false;
+					}
+					break;
+				case V.Constant.QUIZ_SIMPLE:
+					break;
+				default:
+					break;
+			}
+		}
+
+		return true;
+	}
+
+	var _checkIdsStandardSlide = function(slide){
+		var elements = slide.elements;
+		var eL = elements.length;
+		for(var j=0;j&lt;eL;j++){
+			if (elements[j].id.match(new RegExp(&quot;^&quot;+slide.id, &quot;g&quot;)) === null){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	var _checkIdsFlashcardSlide = function(slide){
+		return _checkSlideset(slide);
+	}
+
+	var _checkIdsVTourSlide = function(slide){
+		return _checkSlideset(slide);
+	}
+
+	var _checkSlideset = function(slideset){
+		var subslides = slideset.slides;
+		var subslidesIds = [];
+		if(subslides){
+			var ssL = subslides.length;
+			for(var i=0; i&lt;ssL;i++){
+				var subslide = subslides[i];
+				if(typeof subslide.id != &quot;undefined&quot;){
+					subslidesIds.push(subslide.id);
+				}
+				if(!_checkIdsStandardSlide(subslide)){
+					return false;
+				}
+			}
+		}
+
+		var pois = slideset.pois;
+		if(typeof pois != &quot;undefined&quot;){
+			var pL = pois.length;
+			for(var j=0; j&lt;pL;j++){
+				var poi = pois[j];
+
+				if (poi.id.match(new RegExp(&quot;^&quot;+slideset.id+&quot;_poi[0-9]+&quot;, &quot;g&quot;)) === null){
+					return false;
+				}
+
+				if(typeof poi.slide_id == &quot;undefined&quot;){
+					return false;
+				}
+
+				if (poi.slide_id.match(new RegExp(&quot;^&quot;+slideset.id+&quot;_article[0-9]+&quot;, &quot;g&quot;)) === null){
+					return false;
+				}
+
+				if(subslidesIds.indexOf(poi.slide_id)===-1){
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	var _overwriteIds = function(presentation){
+		var slides = presentation.slides;
+		var sL = slides.length;
+
+		for(var i=0; i&lt;sL; i++){
+			var slide = slides[i];
+			slide.id = &quot;article&quot;+(i+1).toString();
+			
+			switch(slide.type){
+				case V.Constant.STANDARD:
+					slide = _overwriteIdsStandardSlide(slide);
+					break;
+				case V.Constant.FLASHCARD:
+					slide = _overwriteIdsFlashcardSlide(slide);
+					break;
+				case V.Constant.VTOUR:
+					slide = _overwriteIdsVTourSlide(slide);
+					break;
+				case V.Constant.QUIZ_SIMPLE:
 					break;
 				default:
 					return;
@@ -198,34 +345,70 @@ VISH.Utils = (function(V,undefined){
 		return presentation;
 	}
 
-	var _fixIdsStandardSlide = function(slide){
+	var _overwriteIdsStandardSlide = function(slide){
 		var elements = slide.elements;
 		var eL = elements.length;
 		for(var j=0;j&lt;eL;j++){
-			if (elements[j].id.match(new RegExp(&quot;^&quot;+slide.id, &quot;g&quot;)) === null){
-				elements[j].id = getId(slide.id + &quot;_zone&quot;);
-			} else {
-				elements[j].id = getId(elements[j].id,true);
-			}
+			elements[j].id = slide.id + &quot;_zone&quot;+(j+1).toString();
 		}
 		return slide;
 	}
 
-	var _fixIdsFlashcardSlide = function(slide){
-		return slide;
+	var _overwriteIdsFlashcardSlide = function(slide){
+		return _overwriteIdsSlideset(slide);
 	}
 
-	var _fixIdsVTourSlide = function(slide){
-		var slides = slide.slides;
-		if(slides){
-			var sL = slides.length;
-			for(var i=0; i&lt;sL;i++){
-				if(typeof slides[i].type == &quot;undefined&quot;){
-					slides[i].type = V.Constant.STANDARD;
+	var _overwriteIdsVTourSlide = function(slide){
+		return _overwriteIdsSlideset(slide);
+	}
+
+	var _overwriteIdsSlideset = function(slideset){
+		var subslides = slideset.slides;
+		
+		var subslidesIds = new Array();
+		&#x2F;&#x2F; subslidesIds[oldId] = newId
+
+		if(subslides){
+			var ssL = subslides.length;
+			for(var i=0; i&lt;ssL;i++){
+				var subslide = subslides[i];
+				var oldId = subslide.id;
+				subslide.id = slideset.id + &quot;_article&quot;+(i+1).toString();
+				subslidesIds[oldId] = subslide.id
+				subslide = _overwriteIdsStandardSlide(subslide);
+			}
+		}
+
+		var newPois = [];
+		var pois = slideset.pois;
+		if(typeof pois != &quot;undefined&quot;){
+			var pL = pois.length;
+			for(var j=0; j&lt;pL;j++){
+				var poi = pois[j];
+				poi.id = slideset.id + &quot;_poi&quot;+(j+1).toString();
+				if(typeof subslidesIds[poi.slide_id] != &quot;undefined&quot;){
+					poi.slide_id = subslidesIds[poi.slide_id];
+					newPois.push(poi);
 				}
 			}
+			slideset.pois = newPois;
 		}
-		return slide;
+
+		return slideset;
+	}
+
+
+	var showPNotValidDialog = function(){
+		$.fancybox(
+			$(&quot;#presentation_not_valid_wrapper&quot;).html(),
+			{
+				&#x27;autoDimensions&#x27;  : false,
+				&#x27;width&#x27;           : 650,
+				&#x27;height&#x27;          : 250,
+				&#x27;showCloseButton&#x27; : false,
+				&#x27;padding&#x27;       : 0
+			}
+		);
 	}
 
 	var getOuterHTML = function(tag){
@@ -598,7 +781,8 @@ VISH.Utils = (function(V,undefined){
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
 		getParamsFromUrl		: getParamsFromUrl,
-		fixPresentation			: fixPresentation
+		fixPresentation			: fixPresentation,
+		showPNotValidDialog		: showPNotValidDialog
    };
 
 }) (VISH);

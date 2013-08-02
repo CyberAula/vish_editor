@@ -139,6 +139,11 @@ VISH.Slides = (function(V,$,undefined){
 
 	var setSlides = function(newSlideEls){
 		slideEls = newSlideEls;
+
+		&#x2F;&#x2F;Update slidenumber param
+		$.each(slideEls, function(index, value) {
+			$(value).attr(&quot;slidenumber&quot;,index+1);
+		});
 	}
 
 	var updateSlides = function(goingRight) {
@@ -242,7 +247,7 @@ VISH.Slides = (function(V,$,undefined){
 			var result = 0;
 			$.each(slideEls, function(index, value) { 
 		  		if($(value).attr(&quot;id&quot;)==$(slide).attr(&quot;id&quot;)){
-		  			result = index;
+		  			result = index + 1;
 		  			return;
 		  		}
 			});
@@ -365,7 +370,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Recommendations.showFancybox();
 		} else {
 			goToSlide(curSlideIndex+2);
-		}		
+		}
 	};
 
    &#x2F;**
@@ -373,6 +378,22 @@ VISH.Slides = (function(V,$,undefined){
 	*&#x2F;
 	var backwardOneSlide = function(){
 		goToSlide(curSlideIndex);
+	};
+
+   &#x2F;**
+	* Function to move n slides and change the thumbnails and focus 
+	* n &gt; 0 (advance slides)
+	* n &lt; 0 (go back)
+	*&#x2F;
+	var moveSlides = function(n){
+		if((n&gt;0)&amp;&amp;(!V.Editing)&amp;&amp;((isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop))){
+			V.Recommendations.showFancybox();
+			return;
+		}
+
+		var no = curSlideIndex+n+1;
+		no = Math.min(Math.max(1,no),slideEls.length);
+		goToSlide(no);
 	};
 
 
@@ -416,6 +437,13 @@ VISH.Slides = (function(V,$,undefined){
 			$(&quot;.selectable&quot;).css(&quot;border-style&quot;, &quot;none&quot;);
 
 			V.Editor.Tools.cleanZoneTools();
+
+			var firstCarrouselNumber = parseInt($($(&quot;div.carrousel_element_single_row_slides&quot;)[0]).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;).attr(&quot;slidenumber&quot;));
+			var lastCarrouselNumber = firstCarrouselNumber + 7;
+
+			if((no&lt;firstCarrouselNumber)||(no&gt;lastCarrouselNumber)){
+				V.Editor.Thumbnails.moveCarrouselToSlide(no);
+			}
 
 			&#x2F;&#x2F;finally add a background color to thumbnail of the selected slide
 			V.Editor.Thumbnails.selectThumbnail(no);
@@ -538,6 +566,7 @@ VISH.Slides = (function(V,$,undefined){
 			getSlideType 			: getSlideType,
 			isCurrentFirstSlide		: isCurrentFirstSlide,
 			isCurrentLastSlide		: isCurrentLastSlide,
+			moveSlides				: moveSlides,
 			forwardOneSlide			: forwardOneSlide,
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
@@ -545,7 +574,9 @@ VISH.Slides = (function(V,$,undefined){
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
 			closeAllSlides			: closeAllSlides,
-			isSlideset				: isSlideset
+			isSlideset				: isSlideset,
+			triggerEnterEvent 		: triggerEnterEvent,
+			triggerLeaveEvent 		: triggerLeaveEvent
 	};
 
 }) (VISH,jQuery);

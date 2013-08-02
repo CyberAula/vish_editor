@@ -200,7 +200,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$("#presentation_details_fields").slideUp();
 	 	$("#pedagogical_options_fields").slideDown();
-
 	 };
 
 	 /**
@@ -210,7 +209,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$("#pedagogical_options_fields").slideUp();
 	 	$("#presentation_details_fields").slideDown();
-	 	
 	 };
 
 	//////////////////
@@ -310,77 +308,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$("#help_right").trigger('click');
 	}
 
-
-	/////////////////////
-	/// Modes
-	///////////////////////
-
-	var switchToPresentation = function(){
-		_beforeChangeMode();
-		V.Editor.setMode(V.Constant.PRESENTATION);
-
-		var presentation = V.Editor.savePresentation();
-		V.Editor.setPresentation(presentation);
-		V.Editor.setPresentationType(V.Constant.PRESENTATION);
-		V.Editor.Slides.showSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
-		V.Editor.Tools.init();
-	};
-
-	var switchToFlashcard = function(){
-		if(V.Slides.getSlides().length === 0){
-			$.fancybox(
-				$("#message5_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 450,
-					'height'        	: 220,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else {
-			_beforeChangeMode();
-			V.Editor.setMode(V.Constant.FLASHCARD);
-			V.Editor.Flashcard.Creator.onLoadMode();
-		}
-	};
-
-	var switchToVirtualTour = function(){
-		if(V.Slides.getSlides().length === 0){
-			$.fancybox(
-				$("#message5_form").html(),
-				{
-					'autoDimensions'	: false,
-					'scrolling': 'no',
-					'width'         	: 450,
-					'height'        	: 220,
-					'showCloseButton'	: false,
-					'padding' 			: 5		
-				}
-			);
-		} else {
-			_beforeChangeMode();
-			V.Editor.setMode(V.Constant.VTOUR);
-			V.Editor.VirtualTour.Creator.onLoadMode();
-		}
-	}
-
-	var _beforeChangeMode = function(){
-		switch(V.Editor.getMode()){
-			case V.Constant.PRESENTATION:
-				break;
-			case V.Constant.FLASHCARD:
-					V.Editor.Flashcard.Creator.onLeaveMode();
-				break;
-			case V.Constant.VTOUR:
-					V.Editor.VirtualTour.Creator.onLeaveMode();
-				break;
-			default:
-				break;
-		}
-	}
+	////////////////
+	//More Actions
+	///////////////
 
 	var insertSmartcard = function(){
 		$("#addSlideFancybox").trigger('click');
@@ -444,10 +374,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
-		help 							: help,
-		switchToPresentation			: switchToPresentation,
-		switchToFlashcard				: switchToFlashcard,
-		switchToVirtualTour 			: switchToVirtualTour
+		help 							: help
 	};
 
 }) (VISH, jQuery);

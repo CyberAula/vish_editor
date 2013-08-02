@@ -117,20 +117,14 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$(&quot;#acquired_competencies_tag&quot;).val(presentation.adquired_competencies);
 
 		V.Editor.Themes.selectTheme(presentation.theme);
-		V.Editor.setMode(presentation.type);
 
-		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
-		var isSlideset = (slidesetModule!==null);
-
-		if(isSlideset){
-			_renderSlideset(presentation,slidesetModule);
-		} else if(presentation.type===VISH.Constant.PRESENTATION){
+		if(presentation.type===V.Constant.PRESENTATION){
 			renderPresentation(presentation);
-		} else if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
+		} else if(presentation.type===V.Constant.QUIZ_SIMPLE){
 			&#x2F;&#x2F; Presentation stored in the quiz_simple_json field of quizzes;
 			&#x2F;&#x2F; Edit this kind of presentations makes no sense, just for testing
 			&#x2F;&#x2F;Edit as standard presentation
-			presentation.type = VISH.Constant.PRESENTATION;
+			presentation.type = V.Constant.PRESENTATION;
 			renderPresentation(presentation);
 		}
 	};
@@ -138,32 +132,19 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i&lt;slides.length;i++){
-			switch(slides[i].type){
-				case V.Constant.FLASHCARD:
-					_renderFlashcard(slides[i], i+1);
-					break;
-				case V.Constant.VTOUR:
-					_renderVTour(slides[i], i+1);
-					break;
-				case V.Constant.STANDARD:	
-				default:
-					_renderSlide(slides[i], i+1);	
-					break;
+			var type = slides[i].type;
+			
+			if(type===V.Constant.STANDARD){
+				_renderSlide(slides[i], i+1);
+			} else {
+				var isSlideset = V.Editor.Slideset.isSlideset(type);
+				if(isSlideset){
+					_renderSlideset();
+				}
 			}
 		}
 	}
 
-	var _renderSlideset = function(presentation,slidesetModule){
-		var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
-		if((slideset)&amp;&amp;(slideset.slides)){
-			slides = slideset.slides;
-			var sL = slides.length;
-			for(var i=0;i&lt;sL;i++){
-				_renderSlide(slides[i], i+1);
-			}
-		}
-		slidesetModule.loadSlideset(presentation);
-	}
 	
 	&#x2F;**
 	 * function to render one slide in editor
@@ -214,24 +195,13 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	};
 	
 	&#x2F;**
-	 * function to render one flashcard inside a presentation
+	 * Function to render slidesets
 	 *&#x2F;
-	var _renderFlashcard = function(slide, slideNumber){
-		V.Editor.Flashcard.addFlashcard(slide);
-		V.Renderer.renderSlide(slide, &quot;&quot;, &quot;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
-		V.Editor.Slides.redrawSlides();
-		V.Slides.lastSlide();
-	};
-
-	&#x2F;**
-	 * function to render one VTour inside a presentation
-	 *&#x2F;
-	var _renderVTour = function(slide, slideNumber){
-		V.Editor.VirtualTour.addVirtualTour(slide);
-		V.Renderer.renderSlide(slide, &quot;&quot;, &quot;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
-		V.Editor.Slides.redrawSlides();
-		V.Slides.lastSlide();
-	};
+	var _renderSlideset = function(slide, slideNumber){
+		&#x2F;&#x2F;TODO
+		console.log(&quot;_renderSlideset&quot;);
+		console.log(slide);
+	}
 
 
 	return {

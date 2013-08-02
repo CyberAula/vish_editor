@@ -88,9 +88,12 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&#x2F;*
+ * Manage slide thumbnails
+ *&#x2F;
 VISH.Editor.Thumbnails = (function(V,$,undefined){
 	
-	var carrouselDivId = &quot;slides_carrousel&quot;;
+	var thumbnailsDivId = &quot;slides_list&quot;;
 
 	&#x2F;&#x2F;Tmp var
 	var redrawThumbnailsCallback;
@@ -102,244 +105,149 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		redrawThumbnailsCallback = successCallback;
 
 		&#x2F;&#x2F;Clean previous content
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$(&quot;#&quot; + carrouselDivId).hide();
+		V.Editor.Scrollbar.cleanScrollbar(thumbnailsDivId);
+		$(&quot;#&quot; + thumbnailsDivId).hide();
 
-		&#x2F;&#x2F;Generate carrousel images
-		var carrouselImages = [];
-		var carrouselImagesTitles = [];
+		&#x2F;&#x2F;Generate thumbnail images
+		var imagesArray = [];
+		var imagesArrayTitles = [];
 
-		var carrouselElements = 0;
+		var slideElements = 0;
 		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
           switch($(s).attr(&#x27;type&#x27;)){
 			case undefined:
 			case V.Constant.STANDARD:
 					var template = $(s).attr(&#x27;template&#x27;);
-					carrouselElements += 1;
-					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&#x27; &#x2F;&gt;&quot;));
-					carrouselImagesTitles.push(carrouselElements);
+					slideElements += 1;
+					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&#x27; &#x2F;&gt;&quot;));
+					imagesArrayTitles.push(slideElements);
 				break;
 			case V.Constant.FLASHCARD:
-					carrouselElements += 1;
-					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.Utils.getSrcFromCSS($(s).attr(&#x27;avatar&#x27;))+ &quot;&#x27; &#x2F;&gt;&quot;));
-					carrouselImagesTitles.push(carrouselElements);
+					slideElements += 1;
+					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.Utils.getSrcFromCSS($(s).attr(&#x27;avatar&#x27;))+ &quot;&#x27; &#x2F;&gt;&quot;));
+					imagesArrayTitles.push(slideElements);
 				break;
 			case V.Constant.VTOUR:
-					carrouselElements += 1;
-					carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton fill_slide_button&#x27; slideNumber=&#x27;&quot; + carrouselElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&#x27; &#x2F;&gt;&quot;));
-					carrouselImagesTitles.push(carrouselElements);
+					slideElements += 1;
+					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&#x27; &#x2F;&gt;&quot;));
+					imagesArrayTitles.push(slideElements);
 				break;
 			default:
 				break;
 		  }          
     	});
-		
-		&#x2F;&#x2F;Add plus button
-		carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton add_slide_button&#x27; action=&#x27;plus&#x27; id=&#x27;addslidebutton&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&#x27; &#x2F;&gt;&quot;));
-		carrouselElements += 1;
 
-		if(carrouselElements&lt;8){
-			&#x2F;&#x2F;Fill with default
-			var i;
-			for(i=0+carrouselElements;i&lt;8;i++){
-				carrouselImages.push($(&quot;&lt;img class=&#x27;image_barbutton empty_slide_button&#x27; action=&#x27;default&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;default.png&#x27; &#x2F;&gt;&quot;));
-				carrouselElements += 1;
-			}
-		}
-
-		V.Utils.Loader.loadImagesOnCarrouselOrder(carrouselImages,_onImagesLoaded,carrouselDivId,carrouselImagesTitles); 	
+		var options = {};
+		options.order = true;
+		options.titleArray = imagesArrayTitles;
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(imagesArray,thumbnailsDivId,options);
 	};
 	 
 
 	var _onImagesLoaded = function(){
-		var presentationType = V.Editor.getPresentationType();
+		&#x2F;&#x2F;Add class to title elements and events
+		$(&quot;#&quot; + thumbnailsDivId).find(&quot;img.image_barbutton&quot;).each(function(index,img){
+			&#x2F;&#x2F;Add class to title
+			var imgContainer = $(img).parent();
+			$(imgContainer).addClass(&quot;wrapper_barbutton&quot;);
+			var p = $(imgContainer).find(&quot;p&quot;);
+			$(p).addClass(&quot;ptext_barbutton&quot;);
 
-		&#x2F;&#x2F;Add button events
-		$(&quot;.add_slide_button&quot;).hover(
-			function () {
-				$(this).attr(&quot;src&quot;, V.ImagesPath + &quot;hover&#x2F;add_slide.png&quot;);
-			},
-			function () {
-				$(this).attr(&quot;src&quot;, V.ImagesPath + &quot;templatesthumbs&#x2F;add_slide.png&quot;);
-			}
-		);
-		
+			&#x2F;&#x2F;Add events to imgs
+			$(img).click(function(event){
+				_onClickSlideElement(event);
+			});
+		});
+
 		&#x2F;&#x2F;Unselect all thumbnails
 		$(&quot;.barbutton&quot;).css(&quot;background-color&quot;, &quot;transparent&quot;);
 
 		var options = new Array();
-		options[&#x27;rows&#x27;] = 1;
-		options[&#x27;rowItems&#x27;] = 8;
-		options[&#x27;scrollItems&#x27;] = 1;
-		options[&#x27;styleClass&#x27;] = &quot;slides&quot;;
-		options[&#x27;width&#x27;] = 900;
-		options[&#x27;startAtLastElement&#x27;] = true;
-		options[&#x27;pagination&#x27;] = false;
-		options[&#x27;afterCreateCarruselFunction&#x27;] = _afterCreateSlidesCarrousel;
+		options[&#x27;callback&#x27;] = _afterCreateSlidesScrollbar;
 
-		if(presentationType === V.Constant.PRESENTATION){
-			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
-		} else if(presentationType === V.Constant.FLASHCARD){
-			options[&#x27;callback&#x27;] = V.Editor.Flashcard.Creator.onClickCarrouselElement;
-		} else if(presentationType === V.Constant.VTOUR){
-			options[&#x27;callback&#x27;] = V.Editor.VirtualTour.Creator.onClickCarrouselElement;
-		} else {
-			&#x2F;&#x2F;Generic
-			options[&#x27;callback&#x27;] = _onClickCarrouselElement;
-		}
-
-		&#x2F;&#x2F;Create carrousel
-		$(&quot;#&quot; + carrouselDivId).show();
-		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		&#x2F;&#x2F;Create scrollbar
+		$(&quot;#&quot; + thumbnailsDivId).show();
+		V.Editor.Scrollbar.createScrollbar(thumbnailsDivId, options);
 	}
 	
-	
-	var _afterCreateSlidesCarrousel = function(){
-		var presentationType = V.Editor.getPresentationType();
+	var _afterCreateSlidesScrollbar = function(){
+		&#x2F;&#x2F;Add sortable
+		$( &quot;#&quot; + thumbnailsDivId).sortable({
+			items: &#x27;div.wrapper_barbutton:has(img[action=&quot;goToSlide&quot;])&#x27;,
+			change: function(event, ui) {
+				&#x2F;&#x2F;Do nothing
+			},
+			start: function(event, ui) { 
+				&#x2F;&#x2F;Do nothing
+			},
+			stop: function(event, ui) {
+				var dragElement = ui.item;
 
-		if(presentationType === V.Constant.PRESENTATION){
-
-			if(V.Slides.getCurrentSlideNumber()&gt;0){
-				selectThumbnail(V.Slides.getCurrentSlideNumber());
-			}
-
-			&#x2F;&#x2F;Add sortable
-			var firstCarrouselNumber;
-			$( &quot;#&quot; + carrouselDivId).sortable({
-				items: &#x27;div.carrousel_element_single_row_slides:has(img[action=&quot;goToSlide&quot;])&#x27;,
-				change: function(event, ui) {
-					&#x2F;&#x2F;Do nothing
-				},
-				start: function(event, ui) { 
-					firstCarrouselNumber = parseInt($($(&quot;div.carrousel_element_single_row_slides&quot;)[0]).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;).attr(&quot;slidenumber&quot;));
-				},
-				stop: function(event, ui) { 
-					var dragElement = ui.item;
-
-					var img = $(ui.item).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;);
-					if(isNaN($(img).attr(&quot;slidenumber&quot;))){
-						return;
-					}
-
-					var orgPosition = parseInt($(img).attr(&quot;slidenumber&quot;));
-					var carrouselContainer =  [];
-
-					$.each($(&quot;div.carrousel_element_single_row_slides:has(img[slidenumber])&quot;), function(index, value) {
-						carrouselContainer.push(value);
-					});
-
-					var destPosition = firstCarrouselNumber + $(carrouselContainer).index($(&quot;div.carrousel_element_single_row_slides:has(img[slidenumber=&#x27;&quot; + orgPosition + &quot;&#x27;])&quot;));
-
-					&#x2F;&#x2F; V.Debugging.log(&quot;firstCarrouselNumber: &quot; + firstCarrouselNumber);
-					&#x2F;&#x2F; V.Debugging.log(&quot;Org position: &quot; + orgPosition);
-					&#x2F;&#x2F; V.Debugging.log(&quot;Dest position: &quot; + destPosition);
-
-					&#x2F;&#x2F;We must move slide orgPosition after or before destPosition
-					var movement = null;
-					if(destPosition &gt; orgPosition){
-						movement = &quot;after&quot;;
-					} else if(destPosition &lt; orgPosition){
-						movement = &quot;before&quot;;
-					} else {
-						return;
-					}
-
-					var slideOrg = V.Slides.getSlideWithNumber(orgPosition);
-					var slideDst= V.Slides.getSlideWithNumber(destPosition);
-
-					if((slideOrg!=null)&amp;&amp;(slideDst!=null)&amp;&amp;(movement!=null)){
-						V.Editor.Slides.moveSlideTo(slideOrg, slideDst, movement);
-
-						&#x2F;&#x2F;Update params and counters
-						var carrouselVisibleElements = 8;
-						$.each($(&quot;div.carrousel_element_single_row_slides:has(img[slidenumber])&quot;), function(index, value) {
-							var slideNumber = $(value).find(&quot;img.carrousel_element_single_row_slides&quot;).attr(&quot;slidenumber&quot;);
-							if((slideNumber &lt; firstCarrouselNumber)||(slideNumber &gt; firstCarrouselNumber+carrouselVisibleElements-1)){
-								return;
-							} else {
-								var slideNumber = firstCarrouselNumber + index;
-								var p = $(value).find(&quot;p.carrousel_element_single_row_slides&quot;);
-								$(p).html(slideNumber);
-								var img = $(value).find(&quot;img.carrousel_element_single_row_slides&quot;);
-								$(img).attr(&quot;slidenumber&quot;,slideNumber);
-							}
-						});
-					}
+				var img = $(ui.item).find(&quot;img.image_barbutton[slidenumber]&quot;);
+				if(isNaN($(img).attr(&quot;slidenumber&quot;))){
+					return;
 				}
-			});
-		} else if (presentationType === V.Constant.FLASHCARD){
-			V.Editor.Flashcard.Creator.redrawPois();
-		} else if(presentationType === V.Constant.VTOUR){
-			V.Editor.VirtualTour.Creator.redrawPois();
-		}
 
-		if(typeof redrawThumbnailsCallback === &quot;function&quot;){
+				var orgPosition = parseInt($(img).attr(&quot;slidenumber&quot;));
+				var destPosition;
+
+				&#x2F;&#x2F;Detect destPosition
+				$(&quot;#slides_list&quot;).find(&quot;img.image_barbutton[slidenumber]&quot;).each(function(index,item){
+					var beforeIndex = parseInt($(item).attr(&quot;slidenumber&quot;));
+					var afterIndex = index+1;
+
+					if((beforeIndex===orgPosition)&amp;&amp;(beforeIndex!=afterIndex)){
+						destPosition = afterIndex;
+					}
+
+				});
+
+				&#x2F;&#x2F; V.Debugging.log(&quot;Org position: &quot; + orgPosition);
+				&#x2F;&#x2F; V.Debugging.log(&quot;Dest position: &quot; + destPosition);
+
+				V.Editor.Slides.moveSlideTo(orgPosition, destPosition);
+			}
+		});
+
+		if(typeof redrawThumbnailsCallback == &quot;function&quot;){
 			redrawThumbnailsCallback();
 			redrawThumbnailsCallback = undefined;
 		}
-
 	}
 
-
-	var _onClickCarrouselElement = function(event){
+	var _onClickSlideElement = function(event){
 		switch($(event.target).attr(&quot;action&quot;)){
-			case &quot;plus&quot;:
-				$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-				break;
 			case &quot;goToSlide&quot;:
 				V.Slides.goToSlide($(event.target).attr(&quot;slideNumber&quot;));
 				break;
 			default:
-			  break;
+			  return;
 		}
 	}
 
 	&#x2F;**
-	* function to select the thumbnail
+	* Function to select the thumbnail
 	*&#x2F;
 	var selectThumbnail = function(no){
-		$(&quot;.image_barbutton&quot;).removeClass(&quot;selectedSlideThumbnail&quot;);
-		$(&quot;.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).addClass(&quot;selectedSlideThumbnail&quot;);
+		$(&quot;img.image_barbutton&quot;).removeClass(&quot;selectedSlideThumbnail&quot;);
+		$(&quot;img.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).addClass(&quot;selectedSlideThumbnail&quot;);
 	};
-    	
-    &#x2F;*
-     * Return the slideNumbers of the current visible thumbnails
-     *&#x2F;
-    var getVisibleThumbnails = function(){
-    	var thumbnails = $(&quot;div.carrousel_element_single_row_slides&quot;).not(&quot;.draggable_arrow_div&quot;);
-    	var first = _getNumberOfThumbnail($(thumbnails[0]));
-    	var last = first;
 
-    	$(thumbnails).each(function(index,thumbnail){
-			var number = _getNumberOfThumbnail(thumbnail);
-			if(isNaN(number)){
-				return false;
-			} else {
-				last = number;
-			}
-    	});
-    	&#x2F;&#x2F;Prevent not visible thumbnails to be selected, is:visible doesn&#x27;t working!
-    	var last = Math.min(last,first+7); 
-    	return [first,last];
-    }
-
-    var _getNumberOfThumbnail = function(thumbnailDiv){
-    	return parseInt($(thumbnailDiv).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;).attr(&quot;slidenumber&quot;));
-    }
 
     &#x2F;*
      * SlideNumber can be also the slide element itself
      *&#x2F;
-    var moveCarrouselToSlide = function(slideNumber){
-    	V.Editor.Carrousel.goToElement(carrouselDivId,slideNumber-1);
-    }
+	var moveThumbnailsToSlide = function(slideNumber){
+		var element = $(&quot;img.image_barbutton[slideNumber=&quot; + slideNumber + &quot;]&quot;);
+		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
+	}
   
 	return {
 		init              		: init,
 		redrawThumbnails  		: redrawThumbnails,
 		selectThumbnail	  		: selectThumbnail,
-		getVisibleThumbnails	: getVisibleThumbnails,
-		moveCarrouselToSlide	: moveCarrouselToSlide
+		moveThumbnailsToSlide	: moveThumbnailsToSlide
 	};
 
 }) (VISH, jQuery);

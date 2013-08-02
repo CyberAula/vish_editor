@@ -122,6 +122,12 @@ VISH.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;, &#x27;#page-switcher-end&#x27;, function(){
 			V.Slides.forwardOneSlide();
 		});
+		$(document).on(&#x27;keypress&#x27;, &#x27;#slide-counter-input&#x27;, function(e){
+			if(e.which == 13) { &#x2F;&#x2F;pressed enter in the goToSlide input field
+				V.Slides.goToSlide($(&quot;#slide-counter-input&quot;).val());
+			}
+		});
+
 
 		$(document).on(&#x27;click&#x27;, &#x27;#closeButton&#x27;, function(event){
 			event.stopPropagation();
@@ -197,15 +203,16 @@ VISH.Events = (function(V,$,undefined){
 
 	var unbindViewerEventListeners = function(){
 		if(!bindedEventListeners){
+			console.log(&quot;return unbindViewerEventListeners&quot;);
 			return;
 		} else {
 			bindedEventListeners = false;
 		}
 
-		$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown); 
+		$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown);
 
-		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-start&#x27;, V.Slides.backwardOneSlide);
-		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-end&#x27;, V.Slides.forwardOneSlide);
+		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-start&#x27;);
+		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-end&#x27;);
 
 		$(document).off(&#x27;click&#x27;, &#x27;#back_arrow&#x27;, V.Slides.backwardOneSlide);
 		$(document).off(&#x27;click&#x27;, &#x27;#forward_arrow&#x27;, V.Slides.forwardOneSlide);
@@ -222,7 +229,7 @@ VISH.Events = (function(V,$,undefined){
 					&#x2F;&#x2F;Add the points of interest with their click events to show the slides
 					for(ind in slide.pois){
 						var poi = slide.pois[ind];
-						$(document).off(&#x27;click&#x27;, &quot;#&quot; + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
+						$(document).off(&#x27;click&#x27;, &quot;#&quot; + poi.id, onFlashcardPoiClicked);
 					}
 					break;
 				case V.Constant.VTOUR:
@@ -252,11 +259,13 @@ VISH.Events = (function(V,$,undefined){
 
 	var handleBodyKeyDown = function(event) {
 		switch (event.keyCode) {
+			case 34: &#x2F;&#x2F; av pag
 			case 38: &#x2F;&#x2F; up arrow
 			case 39: &#x2F;&#x2F; right arrow	    
 				V.Slides.forwardOneSlide();
 				event.preventDefault();
 				break;
+			case 33: &#x2F;&#x2F;re pag
 			case 37: &#x2F;&#x2F; left arrow
 			case 40: &#x2F;&#x2F; down arrow
 				V.Slides.backwardOneSlide();
