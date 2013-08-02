@@ -163,19 +163,47 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var onTemplateThumbClicked = function(event){
-		var theid = draftPresentation ? draftPresentation.id : "";
-		var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+		_onAddSlide(V.Constant.STANDARD);	
+	};
+
+	/**
+	 * function called when user clicks on new flashcard
+	 * create a new flashcard
+	 */
+	var onFlashcardThumbClicked = function(event){
+		_onAddSlide(V.Constant.FLASHCARD);	
+	};
+
+	var _onAddSlide = function(type){
+		switch(type){
+			case V.Constant.STANDARD:
+				var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.FLASHCARD:
+				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.VTOUR:
+				break;
+			default:
+				break;
+		}
+
 		V.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
+
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		V.Editor.Slides.addTooltipsToAddedSlide();
+
+		if(type===V.Constant.STANDARD){
+			V.Editor.Slides.addTooltipsToSlide($(".slides article").filter(":last"));
+		}
+
 		V.Editor.Slides.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		setTimeout(function(){
 			V.Slides.lastSlide();
-		}, 300);	
-	};
+		}, 300);
+	}
 
 	/**
 	 * Function called when user clicks on an editable element
@@ -881,6 +909,7 @@ VISH.Editor = (function(V,$,undefined){
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
 		onTemplateThumbClicked	: onTemplateThumbClicked,
+		onFlashcardThumbClicked : onFlashcardThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,
