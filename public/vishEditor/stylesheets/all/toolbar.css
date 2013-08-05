@@ -30,6 +30,11 @@ z-index: 10;
     float: left;
 }
 
+#toolbar_menu .icon-button{
+  float: left;
+margin-right: 20px;
+}
+
 #toolbar_presentation {
     padding-right: 20px;
     padding-left: 20px;
