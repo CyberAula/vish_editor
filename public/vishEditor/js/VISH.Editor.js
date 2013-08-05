@@ -13,29 +13,19 @@ VISH.Editor = (function(V,$,undefined){
 
 	//Pointer to the currentZone
 	var currentZone;
-
-	//Prevent to load events multiple times.
-	var eventsLoaded = false;
-
-	//Confirm on exit
-	var confirmOnExit;
 	
 	//drafPresentation uses:
 	//* Store the presentation we are previewing
-	//* Used when changing from presentation to flashcard
 	//* Used when editing a presentation
 	var draftPresentation = null;
 
-	//savedPresentation uses:
+	//savedPresentation contains the JSON of the saved presentation
 	var savedPresentation = null;
-
-	//Mode
-	var editorMode;
 
 
 	/**
 	 * VISH Editor initializer.
-	 * Adds the listeners to the click events in the different images and buttons.
+	 * Adds the listeners to the click events in the different images and buttons of the UI.
 	 * Call submodule initializers.
 	 *
 	 * @param {hashTable} options Hash with params and options received from the server.
@@ -97,7 +87,7 @@ VISH.Editor = (function(V,$,undefined){
 			range: true,
 			min: 0,
 			max: 30,
-			values: [ 4, 20 ],
+			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
 			slide: function( event, ui ) {
 				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 			}
@@ -119,132 +109,10 @@ VISH.Editor = (function(V,$,undefined){
 			_removeSelectableProperties();					
 		} else {
 			initialPresentation = false;
-			V.Editor.setMode(V.Constant.PRESENTATION);
 		}
 
-		
-		// fancybox to create a new slide		
-		$("a#addSlideFancybox").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 800,
-			'height': 600,
-			'padding': 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_slides');
-			}
-		});
-
-		// fancybox to create a new quiz		
-		$("a#addQuizFancybox").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 385,
-			'height': 340,
-			'padding': 0,
-			"onStart"  : function(data) {
-				V.Editor.Utils.loadTab('tab_quizes');
-			}
-		});
-
-		// fancybox to insert JSON	
-		$("a#addJSONFancybox").fancybox({
-			'autoDimensions' : false,
-			'scrolling': 'no',
-			'width': 800,
-			'height': 300,
-			'padding' : 0,
-			"onComplete"  : function(data) {
-				V.Editor.Utils.loadTab('tab_json_file');
-			}
-		});
-
-		//Select theme fancybox
-		$("#hidden_button_to_launch_theme_fancybox").fancybox({
-			'autoDimensions' : false,
-			'width': 600,
-			'scrolling': 'no',
-			'height': 400,
-			'padding' : 0
-		});
-
-		//Loading fancybox
-		$("#fancyLoad").fancybox({
-			  'type'		   : 'inline',
-			  'autoDimensions' : false,
-		      'scrolling': 'no',
-		      'autoScale' : true,		      
-		      'width': '100%',
-		      'height': '100%',
-		      'padding': 0,
-		      'margin' : 0,
-		      'overlayOpacity': 0.0,
-		      'overlayColor' : "#fff",
-		      'showCloseButton'	: false,
-		      'onComplete'  : function(data) {
-		      		$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
-		      		$("#fancybox-wrap").css("margin-top", "20px");
-		      		$("#fancybox-wrap").css("margin-left", "20px");
-		      },
-		      'onClosed' : function(data) {
-		      		$("#fancybox-outer").css("background", "white");
-		      }
-		});
-
-		//Change flashcard background
-		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {						
-				V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
-				V.Editor.Utils.loadTab('tab_pic_from_url');
-			},
-			"onClosed"  : function(data) {				
-				V.Editor.Image.setAddContentMode(V.Constant.NONE);
-			}
-		});
-	
-		if(!eventsLoaded){
-			eventsLoaded = true;
-				 
-			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
-			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
-			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
-			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
-			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
-			$(document).on('click', '#done_in_pedagogical', V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
-
-			$(document).on('click','.templatethumb', _onTemplateThumbClicked);
-			$(document).on('click','.editable', _onEditableClicked);
-			$(document).on('click','.selectable', _onSelectableClicked);
-			$(document).on('click',':not(".selectable")', _onNoSelectableClicked);
-			
-			$(document).on('click','.delete_content', _onDeleteItemClicked);
-			$(document).on('click','.delete_slide', _onDeleteSlideClicked);
-			//arrows in button panel
-			$(document).on('click','#arrow_left_div', _onArrowLeftClicked);
-			$(document).on('click','#arrow_right_div', _onArrowRightClicked);
-
-			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeBackground);
-
-			//used directly from SlideManager, if we separate editor from viewer that code would have to be in a common file used by editor and viewer
-			_addEditorEnterLeaveEvents();
-
-			V.Editor.Slides.redrawSlides();
-			V.Editor.Thumbnails.redrawThumbnails();
-
-			//if click on begginers tutorial->launch it
-			_addTutorialEvents();
-
-			//onbeforeunload event
-			window.onbeforeunload = exitConfirmation;
-			confirmOnExit = true;
-		}
+		V.Editor.Slides.redrawSlides();
+		V.Editor.Thumbnails.redrawThumbnails();
 		
 		if(presentation){
 			//hide objects (the _onSlideEnterEditor event will show the objects in the current slide)
@@ -270,7 +138,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Clipboard.init();
 		V.Editor.Events.init();
 		
-
 		//Init Vish Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
@@ -285,230 +152,64 @@ VISH.Editor = (function(V,$,undefined){
 		window.focus();
 	};
 	
-	
-	
-	////////////////
-	/// Helpers 
-	////////////////
-
-	var getOptions = function(){
-		return initOptions;
-	};	
-	
-
-	/**
-	* Function to add a delete button to the element
-	*/
-	var addDeleteButton = function(element){
-		element.append("<div class='delete_content'></div>");
-	};
   
 
-	
-
-	//////////////////
-	///    Events
-	//////////////////
-	
-	/**
-	* function to add the events to the help buttons to launch joy ride bubbles
-	*/
-	var _addTutorialEvents = function(){
-		$(document).on('click','#start_tutorial', function(){
-			V.Tour.startTourWithId('initial_screen_help', 'top');
-		});
-
-		$(document).on('click','#help_right', function(){
-			V.Tour.startTourWithId('menubar_help', 'top');
-		});
-
-		//flashcard
-		$(document).on('click','#help_flashcard', function(){
-			V.Tour.startTourWithId('fc_help', 'top');
-		});
-
-		//vtour
-		$(document).on('click','#help_vtour', function(){
-			V.Tour.startTourWithId('vt_help', 'top');
-		});
-
-		//template
-		$(document).on('click','.help_in_template', function(){			
-			V.Tour.startTourWithId('template_help', 'bottom');
-		});
-
-		//add slides
-		$(document).on('click','.help_addslides_selection', function(){			
-			V.Editor.Tour.startTourWithId('help_addslides_selection_help', 'bottom');
-		});
-
-		//Quiz
-		$(document).on('click','#tab_quizes_help', function(){			
-			V.Tour.startTourWithId('quiz_help', 'bottom');
-		});
-
-		//themes
-		$(document).on('click','#help_themes_selection', function(){			
-			V.Tour.startTourWithId('themes_help', 'bottom');
-		});
-		
-		//template selection fancybox	
-		$(document).on('click','#help_template_selection', function(){
-			V.Tour.startTourWithId('help_template_selection_help', 'bottom');
-		});	
-
-		//pedagogical options fancybox	
-		$(document).on('click','#help_pedagogical_selection', function(){
-			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
-		});	
-
-		//template selection fancybox	
-		$(document).on('click','#help_excursion_selection', function(){
-			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
-		});	
-
-				//template selection fancybox	
-		$(document).on('click','#help_smartcard_selection', function(){
-			V.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
-		});	
-		
-		//image fancybox, one help button in each tab
-		$(document).on('click','#tab_pic_from_url_help', function(){
-			V.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
-		});	
-		$(document).on('click','#tab_pic_upload_help', function(){
-			V.Tour.startTourWithId('upload_picture_form_help', 'top');
-		});
-		$(document).on('click','#tab_pic_repo_help', function(){
-			V.Tour.startTourWithId('search_picture_help', 'bottom');
-		});
-		$(document).on('click','#tab_pic_flikr_help', function(){
-			V.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
-		});
-		
-		//object fancybox, one help button in each tab
-		$(document).on('click','#tab_object_from_url_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
-		});	
-		$(document).on('click','#tab_object_from_web_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
-		});
-		$(document).on('click','#tab_object_upload_help', function(){
-			V.Tour.startTourWithId('upload_object_form_help', 'top');
-		});
-		$(document).on('click','#tab_object_repo_help', function(){
-			V.Tour.startTourWithId('search_object_help', 'bottom');
-		});
-		$(document).on('click','#tab_object_snapshot_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
-		});
-
-		
-		//video fancybox, one help button in each tab
-		$(document).on('click','#tab_video_from_url_help', function(){
-			V.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
-		});	
-		$(document).on('click','#tab_video_repo_help', function(){
-			V.Tour.startTourWithId('search_video_help', 'top');
-		});
-		$(document).on('click','#tab_video_youtube_help', function(){
-			V.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
-		});
-		$(document).on('click','#tab_video_vimeo_help', function(){
-			V.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
-		});
-		
-		// live fancybox, one help button in each tab
-		$(document).on('click','#tab_live_webcam_help', function(){
-				V.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
-		});	
-	};
+	////////////
+	// UI EVENTS
+	////////////
   
-	/**
-	* function to add enter and leave events only for the VISH editor
-	*/
-	var _addEditorEnterLeaveEvents = function(){
-		$('article').live('slideenter',_onSlideEnterEditor);
-		$('article').live('slideleave',_onSlideLeaveEditor);
-	};
-  
-	/**
-	* function called when entering slide in editor, we have to show the objects
-	*/
-	var _onSlideEnterEditor = function(e){
-		setTimeout(function(){
-			$(e.target).find('.object_wrapper').show();
-		},500);
-		
-		if($(e.target).hasClass("flashcard_slide")){
-			V.Flashcard.startAnimation(e.target.id);
-		} else if($(e.target).hasClass("virtualTour_slide")){
-			V.VirtualTour.loadMap(e.target.id);
-		}
-
-		if($(e.target).hasClass("subslide")){
-			setTimeout(function(){
-				if($(e.target).hasClass('object')){
-					V.ObjectPlayer.loadObject($(e.target));
-				} else if($(e.target).hasClass('applet')){
-					V.AppletPlayer.loadApplet($(e.target));
-				} else if($(e.target).hasClass('snapshot')){
-					V.SnapshotPlayer.loadSnapshot($(e.target));
-				}
-			},500);
-			V.VideoPlayer.HTML5.playVideos(e.target);
-		} else {
-			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
-		}
-
-		V.Editor.Tools.loadToolsForSlide(e.target);
-	};
-  
-	/**
-	* Function called when leaving slide in editor, we have to hide the objects
-	*/
-	var _onSlideLeaveEditor = function(e){
-		$('.object_wrapper').hide();
-		
-		if($(e.target).hasClass("flashcard_slide")){
-			V.Flashcard.stopAnimation(e.target.id);
-		}
-
-		if($(e.target).hasClass("subslide")){
-			V.VideoPlayer.HTML5.stopVideos(e.target);
-			V.ObjectPlayer.unloadObject(e.target);
-			V.AppletPlayer.unloadApplet();
-		} else {
-			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
-		}
-	};
-  
-
-
 	/**
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
 	 */
-	var _onTemplateThumbClicked = function(event){
-		var theid = draftPresentation ? draftPresentation.id : "";
-		var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+	var onTemplateThumbClicked = function(event){
+		_onAddSlide(V.Constant.STANDARD);	
+	};
+
+	/**
+	 * function called when user clicks on new flashcard
+	 * create a new flashcard
+	 */
+	var onFlashcardThumbClicked = function(event){
+		_onAddSlide(V.Constant.FLASHCARD);	
+	};
+
+	var _onAddSlide = function(type){
+		switch(type){
+			case V.Constant.STANDARD:
+				var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.FLASHCARD:
+				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.VTOUR:
+				break;
+			default:
+				break;
+		}
+
 		V.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
+
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		V.Editor.Slides.addTooltipsToAddedSlide();
+
+		if(type===V.Constant.STANDARD){
+			V.Editor.Slides.addTooltipsToSlide($(".slides article").filter(":last"));
+		}
+
 		V.Editor.Slides.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		setTimeout(function(){
 			V.Slides.lastSlide();
-		}, 300);	
-	};
+		}, 300);
+	}
 
 	/**
 	 * Function called when user clicks on an editable element
 	 * Event launched when an editable element belonging to the slide is clicked
 	 */
-	var _onEditableClicked = function(event){
+	var onEditableClicked = function(event){
 		//first remove the "editable" class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass("editable");
 		setCurrentArea($(this));
@@ -598,11 +299,10 @@ VISH.Editor = (function(V,$,undefined){
 
 	}; 
 
-
 	/**
 	* function called when user clicks on the delete icon of the zone
 	*/
-	var _onDeleteItemClicked = function(){
+	var onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
 		$("#image_template_prompt").attr("src", V.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png");
 		$.fancybox(
@@ -630,13 +330,8 @@ VISH.Editor = (function(V,$,undefined){
   /**
    * Function called when user delete a slide
    */
-	var _onDeleteSlideClicked = function(){
+	var onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent()[0];
-
-		if(getMode()===V.Constant.FLASHCARD){
-			$(article_to_delete).hide();
-			return;
-		}
 
 		var thumb;
 		switch(V.Slides.getSlideType(article_to_delete)){
@@ -645,7 +340,6 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 			case V.Constant.FLASHCARD:
 				thumb = V.Utils.getSrcFromCSS($(article_to_delete).attr("avatar"));
-				// thumb = V.ImagesPath + "templatesthumbs/" + "flashcard_template.png";
 				break;
 			case V.Constant.VTOUR:
 				break;
@@ -675,28 +369,19 @@ VISH.Editor = (function(V,$,undefined){
 		);
 	};
 
-
-
 	/**
 	* function called when user clicks on template zone with class selectable
 	*/
-	var _onSelectableClicked = function(event){
+	var onSelectableClicked = function(event){
 		selectArea($(this));
 		event.stopPropagation();
 		event.preventDefault();
-	};
-
-	var selectArea = function(area){
-		setCurrentArea(area);	
-		_removeSelectableProperties(area);
-		_addSelectableProperties(area);
-		V.Editor.Tools.loadToolsForZone(area);
 	};
   
    /**
 	* Function called when user clicks on any element without class selectable
 	*/
-	var _onNoSelectableClicked = function(event){
+	var onNoSelectableClicked = function(event){
 		
 		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
 		if(!$(event.target).hasClass("noSelectableElement")){
@@ -758,13 +443,81 @@ VISH.Editor = (function(V,$,undefined){
 		$(".selectable").css("cursor", "pointer");
 	};
 
-	
-	
 	/**
+	* Function to add a delete button to the element
+	*/
+	var addDeleteButton = function(element){
+		element.append("<div class='delete_content'></div>");
+	};
+
+
+	/////////////////
+	// CORE methods
+	/////////////////
+
+	/**
+	* function called when entering slide in editor, we have to show the objects
+	*/
+	var onSlideEnterEditor = function(e){
+		setTimeout(function(){
+			$(e.target).find('.object_wrapper').show();
+		},500);
+		
+		if($(e.target).hasClass("flashcard_slide")){
+			V.Flashcard.startAnimation(e.target.id);
+		} else if($(e.target).hasClass("virtualTour_slide")){
+			V.VirtualTour.loadMap(e.target.id);
+		}
+
+		if($(e.target).hasClass("subslide")){
+			setTimeout(function(){
+				if($(e.target).hasClass('object')){
+					V.ObjectPlayer.loadObject($(e.target));
+				} else if($(e.target).hasClass('applet')){
+					V.AppletPlayer.loadApplet($(e.target));
+				} else if($(e.target).hasClass('snapshot')){
+					V.SnapshotPlayer.loadSnapshot($(e.target));
+				}
+			},500);
+			V.VideoPlayer.HTML5.playVideos(e.target);
+		} else {
+			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
+		}
+
+		V.Editor.Tools.loadToolsForSlide(e.target);
+	};
+  
+	/**
+	* Function called when leaving slide in editor, we have to hide the objects
+	*/
+	var onSlideLeaveEditor = function(e){
+		$('.object_wrapper').hide();
+		
+		if($(e.target).hasClass("flashcard_slide")){
+			V.Flashcard.stopAnimation(e.target.id);
+		}
+
+		if($(e.target).hasClass("subslide")){
+			V.VideoPlayer.HTML5.stopVideos(e.target);
+			V.ObjectPlayer.unloadObject(e.target);
+			V.AppletPlayer.unloadApplet();
+		} else {
+			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
+		}
+	};
+
+
+	var selectArea = function(area){
+		setCurrentArea(area);	
+		_removeSelectableProperties(area);
+		_addSelectableProperties(area);
+		V.Editor.Tools.loadToolsForZone(area);
+	};
+	
+
+   /**
 	* function to save the presentation
-	* 
-	* options["forcePresentation"] is a boolean to indicate if we should force type to presentation
-	* For example, it is used for preview slides in a flashcard
+	*
 	*/
 	var savePresentation = function(options){
 		//Load all objects
@@ -785,11 +538,7 @@ VISH.Editor = (function(V,$,undefined){
 			saveForPreview = true;
 		}
 
-		if((saveForPreview)&&(options)&&(options.forcePresentation)){
-			presentation.type = V.Constant.PRESENTATION;
-		} else {
-			presentation.type = getPresentationType();
-		}
+		presentation.type = V.Constant.PRESENTATION;
 
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
@@ -1007,7 +756,7 @@ VISH.Editor = (function(V,$,undefined){
 					url     : V.UploadPresentationPath,
 					data    : params,
 					success : function(data) {
-						allowExitWithoutConfirmation();
+						V.Editor.Events.allowExitWithoutConfirmation();
 						window.top.location.href = data.url;
 					}     
 				});
@@ -1043,33 +792,20 @@ VISH.Editor = (function(V,$,undefined){
 			data    : params,
 			success : function(data) {
 				//Redirect
-				allowExitWithoutConfirmation();
+				V.Editor.Events.allowExitWithoutConfirmation();
 				window.top.location.href = data.url;
 			}
 		});
 	};
-
-
-
-	
-	/**
-	 * Function to move the slides left one item
-	 */
-	var _onArrowLeftClicked = function(){
-		V.Slides.backwardOneSlide();
-	};
-	
-	/**
-	 * Function to move the slides right one item
-	 */
-	var _onArrowRightClicked = function(){
-		V.Slides.forwardOneSlide();
-	};
 	
 	
 	//////////////////
-	///    Getters
+	///  Getters and Setters
 	//////////////////
+
+	var getOptions = function(){
+		return initOptions;
+	};
 
 	/**
 	 * function to get the template of the slide of current_el
@@ -1103,14 +839,6 @@ VISH.Editor = (function(V,$,undefined){
 		draftPresentation = presentation;
 	};
 
-	var setMode = function(mode){
-		editorMode = mode;
-	}
-
-	var getMode = function(){
-		return editorMode;
-	}
-
 	var getSavedPresentation = function() {
 		if(savedPresentation){
 			return savedPresentation;
@@ -1122,29 +850,13 @@ VISH.Editor = (function(V,$,undefined){
 	var hasInitialPresentation = function(){
 		return initialPresentation;
 	};
-	
-	/*
-	 * Load the initial fancybox
-	 */
-	var loadFancyBox = function(fancy) {
-		var fancyBoxes = {1: "templates", 2: "flashcards"};
-				
-		for( var tab in fancyBoxes) {
-			$('#tab_'+fancyBoxes[tab]+'_content').hide();
-			$('#tab_'+fancyBoxes[tab]).attr("class", "");
-			$('#tab_'+fancyBoxes[tab]).attr("class", "fancy_tab");
-		}
-		//just show the fancybox selected 
-		$('#tab_'+fancy+'_content').show();
-		$('#tab_'+fancy).attr("class", "fancy_tab fancy_selected");
-	};
 
 	/*
-	 * type can be "presentation", "flashcard" or "game"
+	 * Type can be "presentation" or "quiz_simple"
 	 */
 	var getPresentationType = function(){
 		if((!draftPresentation)||(!draftPresentation.type)){
-			return "presentation";
+			return V.Constant.PRESENTATION;
 		}
 		return draftPresentation.type;
 	};
@@ -1158,47 +870,6 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			draftPresentation.type = V.Constant.PRESENTATION;
 		}
-	};
-
-	/*
-	 * Check if a presentation is standard.
-	 * true when only contain standard slides.
-	 * false when contains other slide types like flashcards, games or virtual experiments.
-	 */
-	var isPresentationStandard = function(presentation){
-		if(presentation){
-			//Eval presentation
-			return _isThisPresentationStandard(presentation);
-		} else {
-			//Eval current presentation
-			if($("article[template]").length===0){
-				//Empty presentation
-				return true;
-			}
-			if(V.Editor.Flashcard.hasFlascards()){
-				return false;
-			}
-			if(V.Editor.VirtualTour.hasVirtualTours()){
-				return false;
-			}
-			return true;
-		}
-
-		return true;
-	};
-
-	var _isThisPresentationStandard = function(presentation){
-		if(presentation.type!=="presentation"){
-			return false;
-		}
-		var isStandard = true;
-		$.each(presentation.slides, function(index, slide) {
-			if((slide.type)&&(slide.type!=="standard")){
-				isStandard = false;
-				return false;
-			}
-		});
-		return isStandard;
 	};
 
 	/*
@@ -1219,42 +890,32 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
-
-	var exitConfirmation = function(){
-		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&&(confirmOnExit)){
-			return V.Editor.I18n.getTrans("i.exitConfirmation");
-		} else {
-			return;
-		}
-	};
-
-	var allowExitWithoutConfirmation = function(){
-		confirmOnExit = false;
-	};
-
-
 	return {
 		init					: init,
-		addDeleteButton			: addDeleteButton,
+		getOptions				: getOptions, 
 		getTemplate				: getTemplate,
 		getCurrentArea			: getCurrentArea,
 		getPresentationType		: getPresentationType,
-		getOptions				: getOptions, 
-		loadFancyBox			: loadFancyBox,
 		getPresentation			: getPresentation,
-		setPresentation			: setPresentation,
-		isPresentationStandard	: isPresentationStandard,
-		isPresentationDraft		: isPresentationDraft,
 		getSavedPresentation	: getSavedPresentation,
+		setPresentation			: setPresentation,
+		setPresentationType		: setPresentationType,
+		isPresentationDraft		: isPresentationDraft,
 		hasInitialPresentation	: hasInitialPresentation,
 		savePresentation		: savePresentation,
 		afterSavePresentation	: afterSavePresentation,
-		setPresentationType		: setPresentationType,
-		allowExitWithoutConfirmation	:allowExitWithoutConfirmation, 
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea,
-		setMode 				: setMode,
-		getMode 				: getMode
+		onSlideEnterEditor 		: onSlideEnterEditor,
+		onSlideLeaveEditor		: onSlideLeaveEditor,
+		onTemplateThumbClicked	: onTemplateThumbClicked,
+		onFlashcardThumbClicked : onFlashcardThumbClicked,
+		onEditableClicked		: onEditableClicked,
+		onSelectableClicked 	: onSelectableClicked,
+		onNoSelectableClicked 	: onNoSelectableClicked,
+		onDeleteItemClicked 	: onDeleteItemClicked,
+		onDeleteSlideClicked 	: onDeleteSlideClicked,
+		addDeleteButton			: addDeleteButton
 	};
 
 }) (VISH, jQuery);

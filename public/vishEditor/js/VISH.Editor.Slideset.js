@@ -59,8 +59,9 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	/*
 	 * Nest slides into a slideset
 	 */
-	var prepareToNest = function(slide){
-		return V.Editor.Utils.prepareSlideToNest(_getIdForSlideSet(V.Editor.getMode()),slide);
+	var prepareToNest = function(subslide){
+		//TODO: get real slidesetId
+		return V.Editor.Utils.prepareSlideToNest("slidesetId",subslide);
 	}
 
 	/*
@@ -92,20 +93,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 		return pois;
 	}
-
-	var _getIdForSlideSet = function(type){
-		switch(type){
-			case V.Constant.FLASHCARD:
-				return V.Editor.Flashcard.Creator.getId();
-				break;
-			case V.Constant.VTOUR:
-				return V.Editor.VirtualTour.Creator.getId();
-				break;
-			default:
-				return null;
-		}
-	}
-
 
 	return {
 		init 				: init,

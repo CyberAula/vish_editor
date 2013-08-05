@@ -180,15 +180,14 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var config = {};
 
 		&#x2F;&#x2F;Select the features of the toolbar
-		config.toolbar = &#x27;Basic&#x27;;
-		config.toolbar_Basic =
+		config.toolbar = &#x27;Full&#x27;;
+		config.toolbar_Full =
 		[
-			[&#x27;Bold&#x27;,&#x27;Italic&#x27;,&#x27;Underline&#x27;,&#x27;-&#x27;,&#x27;Subscript&#x27;,&#x27;Superscript&#x27;],
-			[&#x27;NumberedList&#x27;,&#x27;BulletedList&#x27;,&#x27;Table&#x27;],
-			[&#x27;JustifyLeft&#x27;,&#x27;JustifyCenter&#x27;,&#x27;JustifyRight&#x27;,&#x27;JustifyBlock&#x27;],
-			[&#x27;Link&#x27;],
-			[&#x27;Font&#x27;,&#x27;FontSize&#x27;],
-			[&#x27;TextColor&#x27;,&#x27;BGColor&#x27;]
+			{ name: &#x27;first&#x27;, items : [&#x27;Bold&#x27;,&#x27;Italic&#x27;,&#x27;Underline&#x27;,&#x27;-&#x27;,&#x27;Subscript&#x27;,&#x27;Superscript&#x27;,&#x27;Font&#x27;,&#x27;FontSize&#x27;,&#x27;TextColor&#x27;,&#x27;BGColor&#x27;] },
+			&#x27;&#x2F;&#x27;,
+			{ name: &#x27;lists&#x27;, items : [&#x27;NumberedList&#x27;,&#x27;BulletedList&#x27;,&#x27;Table&#x27;] },
+			{ name: &#x27;alignment&#x27;, items : [&#x27;JustifyLeft&#x27;,&#x27;JustifyCenter&#x27;,&#x27;JustifyRight&#x27;,&#x27;JustifyBlock&#x27;] },
+			{ name: &#x27;link&#x27;, items : [&#x27;Link&#x27;] }
 		];
 
 		&#x2F;&#x2F;Singleton toolbar
@@ -203,7 +202,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.resize_enabled = false;
 		&#x2F;&#x2F;Disable bottom tags
 		config.removePlugins = &#x27;elementspath&#x27;;
-		&#x2F;&#x2F;Enable table resize
+		&#x2F;&#x2F;Enable table resize and autogrow
 		config.extraPlugins = &#x27;tableresize,autogrow&#x27;;
 
 		if((options)&amp;&amp;(options.autogrow)){
@@ -218,7 +217,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.height = $(current_area).height();
 
 		&#x2F;&#x2F;Toolbar defaults
-		config.fontSize_defaultLabel = &#x27;12px&#x27;;
+		config.fontSize_defaultLabel = &#x27;12&#x27;;
 
 		&#x2F;&#x2F;Apply vEditor skin
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf(&quot;editor&#x2F;&quot;));

@@ -97,7 +97,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 * Init singleton
 	 * Perform actions that must be executed only once
 	 *&#x2F;
-	var _init = function(){
+	var init = function(){
 		if(!_initialized){
 			if(!V.Status.getDevice().desktop){
 				if(V.Status.getDevice().tablet){
@@ -128,85 +128,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			_initialized = true;
 		}
-	}
-
-
-   &#x2F;**
-    * Called every time that menu needs to be updated
-    *
-	* Menu item classes:
-	* menu_all : Always visible
-	* menu_standard_presentation: 	Visible for standard presentations
-	* menu_presentation: 			Visible for presentations
-	* menu_flaschard: 				Visible for flashcards
-	* menu_game: 					Visible for games
-	*&#x2F;
-	var init = function(){
-		_init();
-
-		$(&quot;#menu&quot;).hide();
-
-		var presentationType = V.Editor.getPresentationType();
-
-		_disableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;li&quot;));
-		_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_all&quot;).parent());
-
-		switch(presentationType){
-			case V.Constant.PRESENTATION:
-				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_presentation&quot;).parent());
-				if(V.Editor.isPresentationStandard()){
-					_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_standard_presentation&quot;).parent());
-				}
-				break;
-			case V.Constant.FLASHCARD:
-				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_flashcard&quot;).parent());
-				break;
-			case V.Constant.GAME:
-				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_game&quot;).parent());
-				break;
-			case V.Constant.VTOUR:
-				_enableMenuItem($(&quot;ul.menu_option_main&quot;).find(&quot;a.menu_vtour&quot;).parent());
-				break;	
-			case V.Constant.QUIZ_SIMPLE:
-				break;
-			default:
-				break;
-		}
-
-		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-		&#x2F;&#x2F; Check for single elements and death menus (For flexible-dynamic menus)
-		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-		&#x2F;&#x2F; var menus = $(&quot;ul.menu_option_main&quot;).find(&quot;ul&quot;);
-
-		&#x2F;&#x2F; $.each($(menus), function(index, menu) {
-		&#x2F;&#x2F; 	var lis = $(menu).find(&quot;li&quot;);
-		&#x2F;&#x2F; 	var visibleLis = 0;
-		&#x2F;&#x2F; 	var lastVisibleLi = null;
-
-		&#x2F;&#x2F; 	$.each($(lis), function(index, li) {
-		&#x2F;&#x2F; 		if($(li).css(&quot;display&quot;)!=&quot;none&quot;){
-		&#x2F;&#x2F; 			visibleLis = visibleLis+1;
-		&#x2F;&#x2F; 			lastVisibleLi = li;
-		&#x2F;&#x2F; 		}
-		&#x2F;&#x2F; 	});
-			
-		&#x2F;&#x2F; 	if(visibleLis==0){
-		&#x2F;&#x2F; 		&#x2F;&#x2F;No elements... hide li that contains ul.
-		&#x2F;&#x2F; 		var liContainer = $(menu).parent();
-				
-		&#x2F;&#x2F; 		if($(liContainer)[0].tagName==&quot;LI&quot;){
-		&#x2F;&#x2F; 			_disableMenuItem($(liContainer));
-		&#x2F;&#x2F; 		}
-				
-		&#x2F;&#x2F; 	} else if(visibleLis==1){
-		&#x2F;&#x2F; 		&#x2F;&#x2F;Add special class for single elements
-		&#x2F;&#x2F; 		$(lastVisibleLi).find(&quot;a&quot;).addClass(&quot;menu_single_element&quot;);
-		&#x2F;&#x2F; 	}
-
-		&#x2F;&#x2F; 	visibleLis = 0;
-		&#x2F;&#x2F; });
-
 		$(&quot;#menu&quot;).show();
 	}
 
@@ -218,19 +139,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var _disableMenuItem = function(items){
 		&#x2F;&#x2F; $(items).hide();
 		$(items).removeClass(&quot;menu_item_enabled&quot;).addClass(&quot;menu_item_disabled&quot;);
-	}
-
-	var updateMenuAfterAddSlide = function(slideType){
-		switch(slideType){
-			case V.Constant.STANDARD:
-				break;
-			case V.Constant.FLASHCARD:
-			case V.Constant.VTOUR:
-				return init();
-				break;
-			default:
-				break;
-		}
 	}
 
 	var disableMenu = function(){
@@ -382,7 +290,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$(&quot;#presentation_details_fields&quot;).slideUp();
 	 	$(&quot;#pedagogical_options_fields&quot;).slideDown();
-
 	 };
 
 	 &#x2F;**
@@ -392,12 +299,15 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$(&quot;#pedagogical_options_fields&quot;).slideUp();
 	 	$(&quot;#presentation_details_fields&quot;).slideDown();
-	 	
 	 };
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; SAVE
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	var onPublishButtonClicked = function(){
+		onSaveButtonClicked();
+	}
 
 	&#x2F;**
 	* function called when user clicks on save
@@ -406,17 +316,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* finally calls SlideManager with the generated json
 	*&#x2F;
 	var onSaveButtonClicked = function(){
-		var slidesetModule = V.Editor.Slideset.getCreatorModule(V.Editor.getPresentationType());
-		var isSlideset = (slidesetModule!==null);
-
-		if(isSlideset){
-			var validate = slidesetModule.validateOnSave();
-			if(typeof validate === &quot;string&quot;){
-				_showDialog(validate);
-				return;
-			}
-		}
-
 		if(V.Slides.getSlides().length === 0){
 			_showDialog(&quot;message1_form&quot;);
 			return;
@@ -499,77 +398,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$(&quot;#help_right&quot;).trigger(&#x27;click&#x27;);
 	}
 
-
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; Modes
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-	var switchToPresentation = function(){
-		_beforeChangeMode();
-		V.Editor.setMode(V.Constant.PRESENTATION);
-
-		var presentation = V.Editor.savePresentation();
-		V.Editor.setPresentation(presentation);
-		V.Editor.setPresentationType(&quot;presentation&quot;);
-		V.Editor.Slides.showSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
-		V.Editor.Tools.init();
-	};
-
-	var switchToFlashcard = function(){
-		if(V.Slides.getSlides().length === 0){
-			$.fancybox(
-				$(&quot;#message5_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;width&#x27;         	: 450,
-					&#x27;height&#x27;        	: 220,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 5		
-				}
-			);
-		} else {
-			_beforeChangeMode();
-			V.Editor.setMode(V.Constant.FLASHCARD);
-			V.Editor.Flashcard.Creator.onLoadMode();
-		}
-	};
-
-	var switchToVirtualTour = function(){
-		if(V.Slides.getSlides().length === 0){
-			$.fancybox(
-				$(&quot;#message5_form&quot;).html(),
-				{
-					&#x27;autoDimensions&#x27;	: false,
-					&#x27;scrolling&#x27;: &#x27;no&#x27;,
-					&#x27;width&#x27;         	: 450,
-					&#x27;height&#x27;        	: 220,
-					&#x27;showCloseButton&#x27;	: false,
-					&#x27;padding&#x27; 			: 5		
-				}
-			);
-		} else {
-			_beforeChangeMode();
-			V.Editor.setMode(V.Constant.VTOUR);
-			V.Editor.VirtualTour.Creator.onLoadMode();
-		}
-	}
-
-	var _beforeChangeMode = function(){
-		switch(V.Editor.getMode()){
-			case V.Constant.PRESENTATION:
-				break;
-			case V.Constant.FLASHCARD:
-					V.Editor.Flashcard.Creator.onLeaveMode();
-				break;
-			case V.Constant.VTOUR:
-					V.Editor.VirtualTour.Creator.onLeaveMode();
-				break;
-			default:
-				break;
-		}
-	}
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F;More Actions
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	var insertSmartcard = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
@@ -583,7 +414,27 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Editor.Utils.loadTab(&#x27;tab_templates&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+	};
+
+	var insertJSON = function(){
+		$(&quot;#addJSONFancybox&quot;).trigger(&#x27;click&#x27;);
+	};
+
+	var insertPDFex = function(){
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_pdfex&#x27;);
+	};
+
+	var exportToJSON = function(){
+		V.Utils.Loader.startLoading();
+		V.Editor.Presentation.File.exportToJSON(function(){
+			&#x2F;&#x2F;on success
+			V.Utils.Loader.stopLoading();
+		}, function(){
+			&#x2F;&#x2F;on fail
+			V.Utils.Loader.stopLoading();
+		});
 	};
 
 	var _hideMenuAfterAction = function(){
@@ -597,23 +448,23 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	return {
 		init							: init,
-		updateMenuAfterAddSlide 		: updateMenuAfterAddSlide,
-		disableMenu 					: disableMenu ,
+		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
 		displaySettings					: displaySettings,
 		insertPresentation				: insertPresentation,
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
+		insertJSON						: insertJSON,
+		insertPDFex						: insertPDFex,
+		exportToJSON 					: exportToJSON,
 		onSettings						: onSettings,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 	: onDonePedagogicalButtonClicked,
+		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,
-		help 							: help,
-		switchToPresentation			: switchToPresentation,
-		switchToFlashcard				: switchToFlashcard,
-		switchToVirtualTour 			: switchToVirtualTour
+		help 							: help
 	};
 
 }) (VISH, jQuery);

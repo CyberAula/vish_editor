@@ -91,34 +91,298 @@
 VISH.Editor.Events = (function(V,$,undefined){
 	
 	var bindedEventListeners = false;
-
-	var init = function() {
-	  if(V.Editing){
-	  	bindEditorEventListeners();
-	  }
-	};
-
-	&#x2F;* Event listeners *&#x2F;
+	&#x2F;&#x2F;Confirm on exit web app
+	var confirmOnExit;
+	&#x2F;&#x2F;Ctrl key
 	var ctrlDown = false;
 
+
+	var init = function() {
+		bindEditorEventListeners();
+	};
+
+   var bindEditorEventListeners = function(){
+		if((!bindedEventListeners)&amp;&amp;(V.Editing)){
+			var presentation = V.Editor.getPresentation();
+
+			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
+			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
+			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, V.Editor.Tools.Menu.onSettings); 
+			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Tools.Menu.onPedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+
+			$(document).on(&#x27;click&#x27;,&#x27;.templatethumb&#x27;, V.Editor.onTemplateThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.selectable&#x27;, V.Editor.onSelectableClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;)&#x27;, V.Editor.onNoSelectableClicked);
+			
+			$(document).on(&#x27;click&#x27;,&#x27;.delete_content&#x27;, V.Editor.onDeleteItemClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.delete_slide&#x27;, V.Editor.onDeleteSlideClicked);
+
+			$(document).on(&quot;click&quot;, &quot;#fc_change_bg_big&quot;, V.Editor.Tools.changeBackground);
+
+			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
+			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
+			&#x2F;&#x2F; $(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
+
+			&#x2F;&#x2F; Slide Enter and Leave events
+			$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;, V.Editor.onSlideEnterEditor);
+			$(&#x27;article&#x27;).live(&#x27;slideleave&#x27;, V.Editor.onSlideLeaveEditor);
+
+			&#x2F;&#x2F;Tutorial events
+			_addTutorialEvents();
+
+
+			&#x2F;&#x2F;Fancyboxes
+
+			&#x2F;&#x2F; fancybox to create a new slide	
+			$(&quot;a#addSlideFancybox&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;width&#x27;: 800,
+				&#x27;height&#x27;: 600,
+				&#x27;padding&#x27;: 0,
+				&quot;onStart&quot;  : function(data) {
+					var clickedZoneId = $(data).attr(&quot;zone&quot;);
+					V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+					V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+				}
+			});
+
+			&#x2F;&#x2F; fancybox to create a new quiz		
+			$(&quot;a#addQuizFancybox&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;width&#x27;: 385,
+				&#x27;height&#x27;: 340,
+				&#x27;padding&#x27;: 0,
+				&quot;onStart&quot;  : function(data) {
+					V.Editor.Utils.loadTab(&#x27;tab_quizes&#x27;);
+				}
+			});
+
+			&#x2F;&#x2F; fancybox to insert JSON	
+			$(&quot;a#addJSONFancybox&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;width&#x27;: 800,
+				&#x27;height&#x27;: 300,
+				&#x27;padding&#x27; : 0,
+				&quot;onComplete&quot;  : function(data) {
+					V.Editor.Utils.loadTab(&#x27;tab_json_file&#x27;);
+				}
+			});
+
+			&#x2F;&#x2F;Select theme fancybox
+			$(&quot;#hidden_button_to_launch_theme_fancybox&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;width&#x27;: 600,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;: 400,
+				&#x27;padding&#x27; : 0
+			});
+
+			&#x2F;&#x2F;Loading fancybox
+			$(&quot;#fancyLoad&quot;).fancybox({
+				&#x27;type&#x27;		   : &#x27;inline&#x27;,
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;autoScale&#x27; : true,		      
+				&#x27;width&#x27;: &#x27;100%&#x27;,
+				&#x27;height&#x27;: &#x27;100%&#x27;,
+				&#x27;padding&#x27;: 0,
+				&#x27;margin&#x27; : 0,
+				&#x27;overlayOpacity&#x27;: 0.0,
+				&#x27;overlayColor&#x27; : &quot;#fff&quot;,
+				&#x27;showCloseButton&#x27;	: false,
+				&#x27;onComplete&#x27;  : function(data) {
+						$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(255,255,255,0.9)&quot;);
+						$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
+						$(&quot;#fancybox-wrap&quot;).css(&quot;margin-left&quot;, &quot;20px&quot;);
+				},
+				&#x27;onClosed&#x27; : function(data) {
+						$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
+				}
+			});
+
+			&#x2F;&#x2F;Change flashcard background
+			$(&quot;#hidden_button_to_launch_picture_fancybox_for_flashcard&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;width&#x27;: 800,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;: 600,
+				&#x27;padding&#x27; : 0,
+				&quot;onStart&quot;  : function(data) {						
+					V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
+					V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+				},
+				&quot;onClosed&quot;  : function(data) {				
+					V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				}
+			});
+
+			&#x2F;&#x2F;onbeforeunload event
+			window.onbeforeunload = _exitConfirmation;
+			confirmOnExit = true;
+
+			&#x2F;&#x2F;Allow keyboard events with the first click
+			$(window.document).on(&#x27;click&#x27;, function(){
+				window.focus();
+			});
+
+			bindedEventListeners = true;
+		}
+	};
+
+	
+	&#x2F;**
+	* Tutorial
+	* Function to add the events to the help buttons to launch joy ride bubbles
+	*&#x2F;
+	var _addTutorialEvents = function(){
+		$(document).on(&#x27;click&#x27;,&#x27;#start_tutorial&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;initial_screen_help&#x27;, &#x27;top&#x27;);
+		});
+
+		$(document).on(&#x27;click&#x27;,&#x27;#help_right&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;flashcard
+		$(document).on(&#x27;click&#x27;,&#x27;#help_flashcard&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;vtour
+		$(document).on(&#x27;click&#x27;,&#x27;#help_vtour&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;template
+		$(document).on(&#x27;click&#x27;,&#x27;.help_in_template&#x27;, function(){			
+			V.Tour.startTourWithId(&#x27;template_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;add slides
+		$(document).on(&#x27;click&#x27;,&#x27;.help_addslides_selection&#x27;, function(){			
+			V.Editor.Tour.startTourWithId(&#x27;help_addslides_selection_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;Quiz
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizes_help&#x27;, function(){			
+			V.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;themes
+		$(document).on(&#x27;click&#x27;,&#x27;#help_themes_selection&#x27;, function(){			
+			V.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F;template selection fancybox	
+		$(document).on(&#x27;click&#x27;,&#x27;#help_template_selection&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_template_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+
+		&#x2F;&#x2F;pedagogical options fancybox	
+		$(document).on(&#x27;click&#x27;,&#x27;#help_pedagogical_selection&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_pedagogical_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+
+		&#x2F;&#x2F;template selection fancybox	
+		$(document).on(&#x27;click&#x27;,&#x27;#help_excursion_selection&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_excursion_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+
+		&#x2F;&#x2F;template selection fancybox	
+		$(document).on(&#x27;click&#x27;,&#x27;#help_smartcard_selection&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_smartcard_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+		
+		&#x2F;&#x2F;image fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});	
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_upload_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;upload_picture_form_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_repo_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_picture_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_flikr_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F;object fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_web_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_web_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_upload_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;upload_object_form_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_snapshot_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F;video fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;video_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_repo_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_video_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_youtube_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_youtube_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_vimeo_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_vimeo_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		
+		&#x2F;&#x2F; live fancybox, one help button in each tab
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_webcam_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;tab_live_webcam_id&#x27;, &#x27;bottom&#x27;);
+		});	
+	};
+
+
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Event Listeners
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	
 	var handleBodyKeyDown = function(event) {
-	  switch (event.keyCode) {
-	    case 39: &#x2F;&#x2F; right arrow	    
+		switch (event.keyCode) {
+		case 39: &#x2F;&#x2F; right arrow
+		case 40: &#x2F;&#x2F;down arrow	    
 			if(V.Editor.Slides.isSlideFocused()) {
-				V.Slides.forwardOneSlide();
+				if(!ctrlDown){
+					V.Slides.forwardOneSlide();
+				} else {
+					V.Slides.moveSlides(10);
+				}
 				event.preventDefault();
 			}
 			break;
-	    case 37: &#x2F;&#x2F; left arrow
-	    	if(V.Editor.Slides.isSlideFocused()) {
-				V.Slides.backwardOneSlide();
-	    		event.preventDefault();    		
-	    	}
-	    	break;
-	    case 17: &#x2F;&#x2F;ctrl key
-	    	ctrlDown = true;
-	    	break;	
-	    case 67: &#x2F;&#x2F;cKey
+		case 37: &#x2F;&#x2F; left arrow
+		case 38: &#x2F;&#x2F;up arrow	
+			if(V.Editor.Slides.isSlideFocused()) {
+				if(!ctrlDown){
+					V.Slides.backwardOneSlide();
+				} else {
+					V.Slides.moveSlides(-10);
+				}
+				event.preventDefault();    		
+			}
+			break;
+		case 17: &#x2F;&#x2F;ctrl key
+			ctrlDown = true;
+			break;	
+		case 67: &#x2F;&#x2F;cKey
 			if(V.Editor.Slides.isSlideFocused()) {
 				if(ctrlDown){
 					if(V.Slides.getCurrentSlideNumber()){
@@ -126,8 +390,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 					}
 				}
 			}
-	    	break;	
-	    case 86: &#x2F;&#x2F;vKey
+			break;	
+		case 86: &#x2F;&#x2F;vKey
 		    if(V.Editor.Slides.isSlideFocused()) {
 			    if(ctrlDown){
 			    	V.Editor.Clipboard.paste();
@@ -139,7 +403,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
 			}
 			break;	
-	  }
+		}
 	};
 
 	var handleBodyKeyUp = function(event) {
@@ -150,90 +414,44 @@ VISH.Editor.Events = (function(V,$,undefined){
 	  }
 	};
 
-	&#x2F;**
-	 * function called when a poi is clicked
-	 *&#x2F;
-	 var _onFlashcardPoiClicked = function(event){
-	 	if(V.Editor.getMode()===V.Constant.PRESENTATION){
-	 		V.Slides.openSubslide(event.data.slide_id,true);
-	 	}
-	 };
-
-
-   var _onFlashcardCloseSlideClicked = function(event){
-	    var close_slide = event.target.id.substring(5); &#x2F;&#x2F;the id is close3
-	    V.Slides.closeSubslide(close_slide,true);
-   };
-
-   var bindEditorEventListeners = function(){
-   		if(!bindedEventListeners){
-   			var presentation = V.Editor.getPresentation();
-
-			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown); 
-			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
-			$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
-
-			if((V.Editing)&amp;&amp;(presentation)){
-				for(index in presentation.slides){
-		      		var slide = presentation.slides[index];
-	      			switch(slide.type){
-	      				case V.Constant.FLASHCARD:
-		      				bindEventsForFlashcard(slide);
-	      					break;
-	      				case V.Constant.VTOUR:
-	      					break;
-	      			}
-	  		    }
-			}
-
-			&#x2F;&#x2F;Allow keyboard events with the first click
-			$(window.document).on(&#x27;click&#x27;, function(){
-				window.focus();
-			});
-
-	  		bindedEventListeners = true;
-		} 
-   };
-
-   var bindEventsForFlashcard = function(slide){
-		&#x2F;&#x2F;Add the points of interest with their click events to show the slides
-		for(ind in slide.pois){
-			var poi = slide.pois[ind];
-			$(document).on(&#x27;click&#x27;, &quot;#&quot; + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
+	var _exitConfirmation = function(){
+		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&amp;&amp;(confirmOnExit)){
+			return V.Editor.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+		} else {
+			return;
 		}
-   };
+	};
+
+	var allowExitWithoutConfirmation = function(){
+		confirmOnExit = false;
+	};
+
+
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Unbind events
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	var unbindEditorEventListeners = function(){
 		if(bindedEventListeners){
-			var presentation = V.Editor.getPresentation();
-			if(presentation.type === &quot;presentation&quot;){
-				$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown);
-				$(document).unbind(&#x27;keyup&#x27;, handleBodyKeyUp);
-	  		}			
-	      	for(index in presentation.slides){
-				if(presentation.slides[index].type === &quot;flashcard&quot;){
-					&#x2F;&#x2F;and now we add the points of interest with their click events to show the slides
-	  				for(ind in presentation.slides[index].pois){
-	  					var poi = presentation.slides[index].pois[ind];
-	  					$(document).off(&#x27;click&#x27;, &quot;#&quot; + poi.id,  { slide_id: poi.slide_id}, _onFlashcardPoiClicked);
-	  				}
-	      			$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
-      			}
-  		    }
+			$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown);
+			$(document).unbind(&#x27;keyup&#x27;, handleBodyKeyUp);
 
 			$(window.document).off(&#x27;click&#x27;, function(){
 				window.focus();
 			});
 
-	  		bindedEventListeners = false;
+			bindedEventListeners = false;
+
+			&#x2F;&#x2F;TODO...
 		}
 	};
 	
+
 	return {
-			init 						: init,
-			bindEditorEventListeners	: bindEditorEventListeners,
-			bindEventsForFlashcard		: bindEventsForFlashcard,
-			unbindEditorEventListeners	: unbindEditorEventListeners
+			init 							: init,
+			bindEditorEventListeners		: bindEditorEventListeners,
+			unbindEditorEventListeners		: unbindEditorEventListeners,
+			allowExitWithoutConfirmation 	: allowExitWithoutConfirmation
 	};
 
 }) (VISH,jQuery);

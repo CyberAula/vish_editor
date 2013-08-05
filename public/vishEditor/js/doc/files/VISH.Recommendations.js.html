@@ -94,14 +94,15 @@ VISH.Recommendations = (function(V,$,undefined){
 	var user_id;
 	var presentation_id;
 	var generated;
-
+	var _isRecVisible;
 
 	&#x2F;**
 	 * Function to initialize the Recommendations
 	 *&#x2F;
 	var init = function(options){
-		user_id = V.User.getId(); ;
+		user_id = V.User.getId();
 		presentation_id = V.SlideManager.getCurrentPresentation().id;
+		_isRecVisible = false;
 
 		if(options &amp;&amp; options[&quot;urlToGetRecommendations&quot;]){
 			url_to_get_recommendations = options[&quot;urlToGetRecommendations&quot;];			
@@ -121,10 +122,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		      &#x27;onComplete&#x27;  : function(data) {
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
+		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		_isRecVisible = true;
 		      },
 		      &#x27;onClosed&#x27; : function(data) {
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
+		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		_isRecVisible = false;
 		      }
 		});
 	};
@@ -134,33 +139,33 @@ VISH.Recommendations = (function(V,$,undefined){
 	 *&#x2F;
 	var generateFancybox = function(){
 		if(!generated){
-			&#x2F;&#x2F; console.log(&quot;user_id &quot; + user_id + &quot; presentation_id &quot; + presentation_id);
-			if(url_to_get_recommendations !== undefined){
-				var params_to_send = {
-					user_id: user_id,
-					excursion_id: presentation_id,
-					quantity: 9
-				};
-				$.ajax({
-					type    : &quot;GET&quot;,
-					url     : url_to_get_recommendations,
-					data    : params_to_send,
-					success : function(data) {
-						_fillFancyboxWithData(data);
-					}
-				});
-			}
-			else{
+			if(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH){
+				if(url_to_get_recommendations !== undefined){
+					var params_to_send = {
+						user_id: user_id,
+						excursion_id: presentation_id,
+						quantity: 9
+					};
+					$.ajax({
+						type    : &quot;GET&quot;,
+						url     : url_to_get_recommendations,
+						data    : params_to_send,
+						success : function(data) {
+							_fillFancyboxWithData(data);
+						}
+					});
+				}
+			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
 				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
 			}
-			generated = true;
 		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(data.length===0)){
 			return;
-		}		
+		}
+
         var ex;
         var result = &quot;&quot;;
         for (var i = data.length - 1; i &gt;= 0; i--) {
@@ -168,7 +173,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	if(V.Status.getIsEmbed()){
         		result += &#x27;&lt;a href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
         	}
-        	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+ex.id+&#x27;&quot;&gt;&#x27;+
+        	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
                           &#x27;&lt;li class=&quot;rec-img-excursion&quot;&gt;&#x27;+
                            &#x27;&lt;img src=&quot;&#x27;+ex.image+&#x27;&quot;&gt;&#x27;+
@@ -187,12 +192,13 @@ VISH.Recommendations = (function(V,$,undefined){
         	}
         };
         $(&quot;#fancy_recommendations .rec-grid&quot;).html(result);
+        generated = true;
 
         if(!V.Status.getIsEmbed()){
         	&#x2F;&#x2F;we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i &gt;= 0; i--) {
         	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
-        	 		V.Utils.sendParentToURL(data[$(my_event.toElement).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
+        	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
         	 	});
         	 }
         }
@@ -203,13 +209,24 @@ VISH.Recommendations = (function(V,$,undefined){
 		if((V.Utils.getOptions())&amp;&amp;(V.Utils.getOptions().preview)){
 			return;
 		}
+		if((V.Configuration.getConfiguration()[&quot;mode&quot;]!=V.Constant.NOSERVER)&amp;&amp;(typeof url_to_get_recommendations == &quot;undefined&quot;)){
+			return;
+		}
+		if(isRecVisible()){
+			return;
+		}
 		$(&quot;#fancyRec&quot;).trigger(&#x27;click&#x27;);
 	};
+
+	var isRecVisible = function(){
+		return _isRecVisible;
+	}
 
 	return {
 		init          			: init,
 		generateFancybox		: generateFancybox,
-		showFancybox			: showFancybox
+		showFancybox			: showFancybox,
+		isRecVisible 			: isRecVisible
 	};
 
 }) (VISH,jQuery);

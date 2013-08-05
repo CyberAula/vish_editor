@@ -27,20 +27,14 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$("#acquired_competencies_tag").val(presentation.adquired_competencies);
 
 		V.Editor.Themes.selectTheme(presentation.theme);
-		V.Editor.setMode(presentation.type);
 
-		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
-		var isSlideset = (slidesetModule!==null);
-
-		if(isSlideset){
-			_renderSlideset(presentation,slidesetModule);
-		} else if(presentation.type===VISH.Constant.PRESENTATION){
+		if(presentation.type===V.Constant.PRESENTATION){
 			renderPresentation(presentation);
-		} else if(presentation.type===VISH.Constant.QUIZ_SIMPLE){
+		} else if(presentation.type===V.Constant.QUIZ_SIMPLE){
 			// Presentation stored in the quiz_simple_json field of quizzes;
 			// Edit this kind of presentations makes no sense, just for testing
 			//Edit as standard presentation
-			presentation.type = VISH.Constant.PRESENTATION;
+			presentation.type = V.Constant.PRESENTATION;
 			renderPresentation(presentation);
 		}
 	};
@@ -48,32 +42,19 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
-			switch(slides[i].type){
-				case V.Constant.FLASHCARD:
-					_renderFlashcard(slides[i], i+1);
-					break;
-				case V.Constant.VTOUR:
-					_renderVTour(slides[i], i+1);
-					break;
-				case V.Constant.STANDARD:	
-				default:
-					_renderSlide(slides[i], i+1);	
-					break;
+			var type = slides[i].type;
+			
+			if(type===V.Constant.STANDARD){
+				_renderSlide(slides[i], i+1);
+			} else {
+				var isSlideset = V.Editor.Slideset.isSlideset(type);
+				if(isSlideset){
+					_renderSlideset();
+				}
 			}
 		}
 	}
 
-	var _renderSlideset = function(presentation,slidesetModule){
-		var slideset = V.Editor.Slideset.undoNestedSlides(presentation.slides[0]);
-		if((slideset)&&(slideset.slides)){
-			slides = slideset.slides;
-			var sL = slides.length;
-			for(var i=0;i<sL;i++){
-				_renderSlide(slides[i], i+1);
-			}
-		}
-		slidesetModule.loadSlideset(presentation);
-	}
 	
 	/**
 	 * function to render one slide in editor
@@ -124,24 +105,13 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	};
 	
 	/**
-	 * function to render one flashcard inside a presentation
+	 * Function to render slidesets
 	 */
-	var _renderFlashcard = function(slide, slideNumber){
-		V.Editor.Flashcard.addFlashcard(slide);
-		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>",slideNumber);
-		V.Editor.Slides.redrawSlides();
-		V.Slides.lastSlide();
-	};
-
-	/**
-	 * function to render one VTour inside a presentation
-	 */
-	var _renderVTour = function(slide, slideNumber){
-		V.Editor.VirtualTour.addVirtualTour(slide);
-		V.Renderer.renderSlide(slide, "", "<div class='delete_slide'></div>",slideNumber);
-		V.Editor.Slides.redrawSlides();
-		V.Slides.lastSlide();
-	};
+	var _renderSlideset = function(slide, slideNumber){
+		//TODO
+		console.log("_renderSlideset");
+		console.log(slide);
+	}
 
 
 	return {

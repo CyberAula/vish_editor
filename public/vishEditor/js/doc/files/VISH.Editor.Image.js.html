@@ -99,6 +99,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	var init = function(){
 		V.Editor.Image.Flikr.init();
 		V.Editor.Image.Repository.init();
+		V.Editor.Image.LRE.init();
 
 		&#x2F;&#x2F;Load from URL
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
@@ -133,8 +134,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(V.User.getId());
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(V.User.getToken());
 					$(&quot;#&quot; + uploadDivId + &quot; .documentsForm&quot;).attr(&quot;action&quot;, V.UploadImagePath);
-					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;tags&#x27;]&quot;).val(V.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
+
 					var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
+					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[tag_list]&#x27;]&quot;).val(V.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
 					$(tagList).parent().hide();
 					$(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_wrapper&quot;).show();
 				}
@@ -238,11 +240,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var processResponse = function(response){
 		try  {
-			var jsonResponse = JSON.parse(response)
+			var jsonResponse = JSON.parse(response);
 			if(jsonResponse.src){
 				if (V.Police.validateObject(jsonResponse.src)[0]) {
-					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src)
-					contentToAdd = jsonResponse.src
+					V.Editor.Object.drawPreview(uploadDivId,jsonResponse.src);
+					contentToAdd = jsonResponse.src;
 				}
 			}
 		} catch(e) {
@@ -309,7 +311,16 @@ VISH.Editor.Image = (function(V,$,undefined){
 			&#x2F;&#x2F;Adjust dimensions after drawing (Only after insert new images)
 			var theImg = $(&quot;#&quot;+idToDragAndResize);
 			$(theImg).load(function(){
+				$(current_area).parent().addClass(&quot;temp_shown&quot;);
+				$(current_area).addClass(&quot;temp_shown&quot;);
+				$(theImg).addClass(&quot;temp_shown&quot;);
+				
 				var dimentionsToDraw = V.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+				
+				$(current_area).parent().removeClass(&quot;temp_shown&quot;);
+				$(current_area).removeClass(&quot;temp_shown&quot;);
+				$(theImg).removeClass(&quot;temp_shown&quot;);
+
 				$(theImg).width(dimentionsToDraw.width);
 				&#x2F;&#x2F;Prevent incorrect height detections
 				if(dimentionsToDraw.height&gt;0){

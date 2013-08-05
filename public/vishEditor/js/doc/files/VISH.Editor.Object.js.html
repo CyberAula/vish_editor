@@ -96,7 +96,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var urlInputId = &quot;object_embed_code&quot;;
 		
 	var init = function(){
-
+		V.Editor.Object.LRE.init();
 		V.Editor.Object.Repository.init();
 		V.Editor.Object.Live.init();
 		V.Editor.Object.Web.init();
@@ -140,8 +140,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(V.User.getId());
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(V.User.getToken());
 					$(&quot;#&quot; + uploadDivId + &quot; .documentsForm&quot;).attr(&quot;action&quot;, V.UploadObjectPath);
-					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;tags&#x27;]&quot;).val(V.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
-					var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;)
+					var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
+					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[tag_list]&#x27;]&quot;).val(V.Editor.Utils.convertToTagsArray($(tagList).tagit(&quot;tags&quot;)));
 					$(tagList).parent().hide();
 					$(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_wrapper&quot;).show();
 				}

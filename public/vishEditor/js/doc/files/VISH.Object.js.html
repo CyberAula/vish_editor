@@ -193,6 +193,10 @@ VISH.Object = (function(V,$,undefined){
 			return &quot;HTML5&quot;;
 		}
 
+		if(extension==&quot;json&quot;){
+			return &quot;json&quot;;
+		}
+
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
 			return &quot;web&quot;;
 		}

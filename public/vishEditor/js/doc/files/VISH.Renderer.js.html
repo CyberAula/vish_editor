@@ -106,7 +106,7 @@ VISH.Renderer = (function(V,$,undefined){
 	 * slides.html only have a section element and in this function we add an article element
 	 * with the proper content for the slide
 	 *&#x2F;	
-	var renderSlide = function(slide, extra_classes, extra_buttons){
+	var renderSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var article;
 
 		if(!extra_classes){
@@ -120,13 +120,13 @@ VISH.Renderer = (function(V,$,undefined){
 			case undefined:
 			case V.Constant.STANDARD:
 			case V.Constant.QUIZ_SIMPLE:
-				article = _renderStandardSlide(slide, extra_classes, extra_buttons);
+				article = _renderStandardSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			case V.Constant.FLASHCARD:
-				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons);
+				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			case V.Constant.VTOUR:
-				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons);
+				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
 			default:
 				article = null;
@@ -173,17 +173,10 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		&#x2F;&#x2F;When render a simple_quiz for voting
-		&#x2F;&#x2F;if(slide.type==V.Constant.QUIZ) {
-		&#x2F;&#x2F; if(slide.type==V.Constant.QUIZ_SIMPLE) {
-		&#x2F;&#x2F; 	content += V.Quiz.Renderer.renderQuiz(slide.quiztype , slide ,slide.template +&quot;_&quot;+slide.areaid, null, slide.id);
-		&#x2F;&#x2F; 	classes += V.Constant.QUIZ;
-		&#x2F;&#x2F; }
-
 		return &quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; &quot; +classes+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + content+&quot;&lt;&#x2F;article&gt;&quot;;
 	};
 
-	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons){
+	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = &quot;&quot;;
 		&#x2F;&#x2F;The flashcard has its own slides
 		for(index in slide.slides){
@@ -192,17 +185,17 @@ VISH.Renderer = (function(V,$,undefined){
 			all_slides += _renderStandardSlide(subslide, &quot;subslide&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
 		var div_for_slides_hidden = &quot;&lt;div class=&#x27;subslides&#x27; &gt;&quot;+all_slides+&quot;&lt;&#x2F;div&gt;&quot;;
-		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; flashcard_slide&#x27; type=&#x27;flashcard&#x27; avatar=&#x27;&quot;+slide.background+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
+		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; slideset_slide flashcard_slide&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;flashcard&#x27; avatar=&#x27;&quot;+slide.background+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
 
-	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons){
+	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = &quot;&quot;;
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
 			all_slides += _renderStandardSlide(subslide, &quot;subslide&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
 		var div_for_slides_hidden = &quot;&lt;div class=&#x27;subslides&#x27; &gt;&quot;+all_slides+&quot;&lt;&#x2F;div&gt;&quot;;
-		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; virtualTour_slide&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
+		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; slideset_slide virtualTour_slide&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
 
 
@@ -250,8 +243,14 @@ VISH.Renderer = (function(V,$,undefined){
 	 * Function to render an image inside an article (a slide)
 	 *&#x2F;
 	var _renderImage = function(element, template){
+		if(typeof element[&#x27;style&#x27;] == &quot;undefined&quot;){
+			style = &quot;max-height: 100%; max-width: 100%;&quot;;
+		} else {
+			style = element[&#x27;style&#x27;];
+		}
+
 		var div = $(&quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+template+&quot;_&quot;+element[&#x27;areaid&#x27;]+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
-		var img = $(&quot;&lt;img class=&#x27;&quot;+template+&quot;_image&#x27; src=&#x27;&quot;+element[&#x27;body&#x27;]+&quot;&#x27; style=&#x27;&quot;+element[&#x27;style&#x27;]+&quot;&#x27; &#x2F;&gt;&quot;);
+		var img = $(&quot;&lt;img class=&#x27;&quot;+template+&quot;_image&#x27; src=&#x27;&quot;+element[&#x27;body&#x27;]+&quot;&#x27; style=&#x27;&quot;+style+&quot;&#x27; &#x2F;&gt;&quot;);
 
 		if(element[&#x27;hyperlink&#x27;]){
 			var a = $(&quot;&lt;a href=&#x27;&quot; + element[&#x27;hyperlink&#x27;] + &quot;&#x27; target=&#x27;blank_&#x27;&gt;&lt;&#x2F;a&gt;&quot;);
