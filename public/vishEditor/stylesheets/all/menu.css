@@ -35,6 +35,9 @@
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 }
 
+.menu_option {
+}
+
 
 /* Level 1 */
 
@@ -44,6 +47,8 @@
 	color: #333;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
+	border-bottom: 1px solid #ccc;
+	border-radius: 0px;
 }
 
 #menu ul a:hover {
@@ -128,7 +133,10 @@ padding-top: 16px;
 	-webkit-border-top-left-radius: 0px 9px 9px 9px;
 	-moz-border-radius-topleft: 0px 9px 9px 9px;
 	left: 160px;
-	top: -1px;
+	top: 0px;
+-webkit-box-shadow: 0px 7px 16px rgba(50, 50, 50, 0.3);
+-moz-box-shadow:    0px 7px 16px rgba(50, 50, 50, 0.3);
+box-shadow:         0px 7px 16px rgba(50, 50, 50, 0.3);
 }
 
 #menu ul ul li:first-child > a {
