@@ -9,7 +9,7 @@
 	margin-bottom: 0px;
 	margin-top: 0px;
 	padding: 0px;
-	width: 131px;
+	width: 158px;
 	min-width: 131px;
 }
 
@@ -24,11 +24,11 @@
 
 /* main level link */
 #menu a {
-	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
 	color: #e7e5e5;
 	text-decoration: none;
 	display: block;
-	padding:  8px 20px;
+	padding: 10px;
 	margin: 0;
 	-webkit-border-radius: 1.6em;
 	-moz-border-radius: 1.6em;
@@ -47,10 +47,7 @@
 }
 
 #menu ul a:hover {
-	background: #0399d4 !important; /* for non-css3 browsers */
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#04acec', endColorstr='#0186ba'); /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba)) !important; /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #04acec,  #0186ba) !important; /* for firefox 3.6+ */
+	background: #357ebd !important;
 	color: #fff !important;
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
@@ -66,18 +63,16 @@
 	display: none;
 	margin: 0;
 	padding: 0;
-	width: 152px;
+	width: 178px;
 	position: absolute;
-	top: 25px;
+	top: 40px;
 	left: -20px;
-
 	-webkit-border-radius: 0px 0px 10px 10px;
 	-moz-border-radius: 0px 0px 10px 10px;
 	border-radius: 0px 0px 10px 10px;
-
-	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+-webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+-moz-box-shadow:    4px 4px 5px rgba(50, 50, 50, 0.2);
+box-shadow:         4px 4px 5px rgba(50, 50, 50, 0.2);
 }
 
 ul.menu_option_main ul {
@@ -85,11 +80,12 @@ ul.menu_option_main ul {
 }
 
 #menu a.menu_option_main{
-	padding-top: 0px;
-	padding-bottom: 20px;
-	padding-right: 0px;
-	padding-left: 0px;
-	margin-left: -10px;
+margin-top: -11px;
+width: 179px;
+margin-left: -21px;
+padding-left: 15px;
+padding-bottom: 17px;
+padding-top: 16px;
 }
 
 #menu ul li {
@@ -131,7 +127,7 @@ ul.menu_option_main ul {
 	border-radius: 0px 9px 9px 9px;
 	-webkit-border-top-left-radius: 0px 9px 9px 9px;
 	-moz-border-radius-topleft: 0px 9px 9px 9px;
-	left: 140px;
+	left: 160px;
 	top: -1px;
 }
 

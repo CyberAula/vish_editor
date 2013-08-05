@@ -4,18 +4,22 @@
   border: 1px solid #ccc;
   background-color: #fff;
   display: inline-block;
-  height: 50px;
-  width: 1158px;
+height: 57px;
+width: 1200px;
   margin: 0px 0px 0px 0px; /* top margin, right margin, bottom margin, left margin */
   padding-left: 20px;
   padding-right: 20px;
   zoom: 1;
   overflow: visible;
+box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+z-index: 10;
 }
 
 #toolbar_menu , #toolbar_presentation, #toolbar_element {
   display: inline-block;
-  height: 50px;
+  height: 56px;
   min-height: 50px;
   text-align: center;
 }
@@ -46,10 +50,18 @@
   display: inline-block;
   min-width: 75px;
   text-align: center;
+  margin-top: 4px;
+  border-right: 1px solid #E9E9E9;
 }
+
 
 .toolbar_presentation_wrapper > p {
   cursor: default;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.icon-button {
+  font-size: 18px;
 }
 
 .toolbar_presentation_wrapper_disabled {
@@ -72,13 +84,9 @@
     cursor: pointer;
     height: 21px;
     margin: 1px 10px 0 8px;
-    opacity: 0.6;
     border: 1px solid #EFEFEF;
 }
 
-.toolbar_icon:hover{
-  opacity: 1;
-}
 
 .toolbar_bigicon{
     cursor: pointer;

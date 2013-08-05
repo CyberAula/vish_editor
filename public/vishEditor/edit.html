@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery.fancybox-1.3.4.css"/>
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery-ui-1.9.2.custom.css">
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/jquery.mCustomScrollbar.css">
-
+    <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/fonts.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/styles.css">
 	<link rel="stylesheet" type="text/css" href="/vishEditor/stylesheets/all/pack1templates.css">
@@ -151,6 +153,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Slides.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Events.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.EventsNotifier.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
 </head>
 
 <body onload="start()" style="display: none" class="loaded">
@@ -158,25 +161,8 @@
 	<!-- Copy HTML from here -->
 
 	<section id="slides_panel" class="slides slides_editor layout-regular template-default">
-		
-		<div id="leftside">
-			<div id="slides_list_actions">
-				<button id="addSlideButton">add slide</button>
-				<button id="importButton">import</button>
-			</div>
-			<div id="slides_list"></div>
-		</div>
 
-		<div id="menubar-viewer" style="display:none">
-			<!-- TODO -->
-			<div id="viewbar" class="viewbar">
-				<button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
-				<div id="slide-counter"></div>
-				<button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
-			</div>
-		</div>
-		
-		<!-- Toolbar -->
+			<!-- Toolbar -->
 		<div id="toolbar_wrapper">
 			<div id="toolbar_menu">
 				<!-- MENU -->
@@ -187,16 +173,16 @@
 						</a>
 						<ul class="menu_option_main">
 							<li>
-								<a class="menu_option menu_action" action="onSaveButtonClicked" i18n-key="i.Save">Save</a>
+								<a class="menu_option menu_action" action="onSaveButtonClicked" i18n-key="i.Save"><i class="icon-button icon-save"></i> Save</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action" action="onPublishButtonClicked" i18n-key="i.Publish">Publish</a>
+								<a class="menu_option menu_action" action="onPublishButtonClicked" i18n-key="i.Publish"><i class="icon-button icon-rotate-270 icon-download-alt"></i> Publish</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action" action="insertSlide" i18n-key="i.NewSlide">Add Slide</a>
+								<a class="menu_option menu_action" action="insertSlide" i18n-key="i.NewSlide"><i class="icon-plus-sign-alt"></i> Add Slide</a>
 							</li>
 							<li>
-								<a class="menu_option" href="#" i18n-key="i.Import">Import</a>
+								<a class="menu_option" href="#" i18n-key="i.Import"><i class="icon-rotate-180 icon-download-alt"></i> Import</a>
 								<ul>
 									<li>
 										<a class="menu_option menu_action" action="insertPDFex">PDF Slideshow</a>
@@ -213,7 +199,7 @@
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option" href="#" i18n-key="i.Export">Export</a>
+								<a class="menu_option" href="#" i18n-key="i.Export"><i class="icon-rotate-360 icon-download-alt"></i> Export</a>
 								<ul>
 									<li>
 										<a class="menu_option menu_action" action="exportToJSON" i18n-key="i.toJSON">to JSON</a>
@@ -221,13 +207,13 @@
 								</ul>
 							</li>
 							<li>
-								<a class="menu_option menu_action" action="preview" i18n-key="i.preview">Preview</a>
+								<a class="menu_option menu_action" action="preview" i18n-key="i.preview"><i class="icon-button icon-eye-open"></i> Preview</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action" action="displaySettings" i18n-key="i.Settings">Settings</a>
+								<a class="menu_option menu_action" action="displaySettings" i18n-key="i.Settings"><i class="icon-button icon-edit"></i> Settings</a>
 							</li>
 							<li>
-								<a class="menu_option menu_action" action="help" i18n-key="i.Help">Help</a>
+								<a class="menu_option menu_action" action="help" i18n-key="i.Help"><i class="icon-button icon-question"></i> Help</a>
 							</li
 						</ul>
 					</li>
@@ -236,24 +222,29 @@
 
 			<div id="toolbar_presentation">
 				<div class="toolbar_presentation_wrapper">
-					<img id="toolbar_save" class="toolbar_bigicon" action="save" src="/vishEditor/images/toolbar/save_document.png"/>
-					<p class="toolbar_prseentation_title"> save </p>
+				<a id="toolbar_save" action="save" href="#"><button type="button" class="btn btn-primary btn-small">
+ 				<i class="icon-button icon-save"></i></button></a>
+					<p class="toolbar_prseentation_title"> Save </p>
 				</div>
 				<div class="toolbar_presentation_wrapper">
-					<img id="toolbar_publish" class="toolbar_bigicon" action="publish" src="/vishEditor/images/toolbar/save_document.png"/>
-					<p class="toolbar_prseentation_title"> publish </p>
+				<a id="toolbar_publish" action="publish" href="#"><button type="button" class="btn btn-primary btn-small">
+ 				<i class="icon-button icon-rotate-270 icon-download-alt"></i></button></a>
+					<p class="toolbar_prseentation_title"> Publish </p>
 				</div>
 				<div class="toolbar_presentation_wrapper">
-					<img id="toolbar_preview" class="toolbar_bigicon" action="preview" src="/vishEditor/images/toolbar/preview_circle.png"/>
-					<p class="toolbar_prseentation_title"> preview </p>
+					<a id="toolbar_preview" action="preview" href="#"><button type="button" class="btn btn-primary btn-small">
+ 					<i class="icon-button icon-eye-open"></i></button></a>
+					<p class="toolbar_prseentation_title"> Preview </p>
 				</div>
 				<div class="toolbar_presentation_wrapper">
-					<img id="toolbar_theme" class="toolbar_bigicon" action="selectTheme" src="/vishEditor/images/toolbar/theme_selection.png"/>
-					<p class="toolbar_prseentation_title"> style </p>
+					<a id="toolbar_theme" action="selectTheme" href="#"><button type="button" class="btn btn-primary btn-small">
+ 					<i class="icon-button icon-adjust"></i></button></a>
+					<p class="toolbar_prseentation_title"> Style </p>
 				</div>
 				<div class="toolbar_presentation_wrapper">
-					<img id="toolbar_background" class="toolbar_bigicon" action="changeBackground" src="/vishEditor/images/toolbar/cBackground.png"/>
-					<p class="toolbar_prseentation_title"> background </p>
+					<a id="toolbar_background" action="changeBackground" href="#"><button type="button" class="btn btn-primary btn-small">
+ 					<i class="icon-button icon-picture"></i></button></a>
+					<p class="toolbar_prseentation_title"> Background </p>
 				</div>
 			</div>
 			<div id="toolbar_element">
@@ -269,6 +260,25 @@
 				src="/vishEditor/images/toolbar/zoomLess.png"/>
 				<div id="toolbar_text">
 				</div>
+			</div>
+		</div>
+		
+		<div id="leftside">
+			<div id="slides_list_actions">
+			<a id="addSlideButton" href="#"><button type="button" class="btn btn-small leftsideb">
+  			<i class="icon-plus"></i>  Add Slide</button></a>
+  			<a id="importButton" href="#"><button type="button" class="btn btn-small leftsideb">
+  			<i class="icon-rotate-180 icon-download-alt"></i>  Import</button></a>
+			</div>
+			<div id="slides_list"></div>
+		</div>
+
+		<div id="menubar-viewer" style="display:none">
+			<!-- TODO -->
+			<div id="viewbar" class="viewbar">
+				<button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
+				<div id="slide-counter"></div>
+				<button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
 			</div>
 		</div>
 		
