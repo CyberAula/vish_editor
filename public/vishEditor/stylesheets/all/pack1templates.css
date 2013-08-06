@@ -624,12 +624,12 @@
 }
 
 .t12_right1{
-    float: left;
+    float: right;
     margin-bottom: 3%;
     height: 48%;
     overflow: hidden;
     position: relative;
-    width: 48%;
+    width: 47%;
 }
 
 .t12_left2{
@@ -642,11 +642,11 @@
 }
 
 .t12_right2{
-	float: left;
+	float: right;
     height: 48%;
     overflow: hidden;
     position: relative;
-    width: 48%;
+    width: 47%;
 }
 
 .t12_image{
