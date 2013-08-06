@@ -79,9 +79,10 @@ img {
 }
 
 #subslides_list_actions{
-	height: 80%;
-	width: 15%;
-	float: left;
+margin-top: 2px;
+height: 80%;
+width: 15%;
+float: left;
 }
 
 #subslides_list{
@@ -152,11 +153,12 @@ img {
 
 
 #slides_list p.ptext_barbutton{
-	display: block;
-	float: left;
-	margin-left: 7px;
-	margin-top: 35px;
-	font-family: 'Open Sans', sans-serif;
+display: block;
+float: left;
+margin-left: 8px;
+margin-top: 0px;
+font-size: 1.2em;
+font-family: 'Open Sans', sans-serif;
 }
 
 #slides_list img.image_barbutton{
@@ -2283,7 +2285,7 @@ margin-left: 24px;
 
 .t1_left .zone_tooltip {
 	vertical-align: middle;
-	width: 100%;
+	width: 56%;
 	height: 100%;
 	float: left;
 margin-top: 134px;
@@ -2760,3 +2762,12 @@ filter: "alpha(opacity=85)";
 	filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
 }
 
+
+#slides_list div:first-child {
+	margin-top: 0px;
+	border-top: none;
+}
+
+.downimport {
+	width: 86px;
+}
