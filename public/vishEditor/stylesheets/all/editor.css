@@ -2738,28 +2738,29 @@ border-radius: 3px;
 /* scroll bar */
 
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-background: rgba(114, 114, 114, 0.75);
+background: #A3A1A1;
 filter: "alpha(opacity=75)";
 -ms-filter: "alpha(opacity=75)";
 }
 
 .mCSB_scrollTools .mCSB_draggerRail {
 background: #000;
-background: rgba(95, 95, 95, 0.4);
+background: rgba(155, 154, 154, 0.4);
 filter: "alpha(opacity=40)";
 -ms-filter: "alpha(opacity=40)";
 }
 
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
-background: #357ebd;
+background: #9E9E9E;
 filter: "alpha(opacity=85)";
 -ms-filter: "alpha(opacity=85)";
 }
 
 .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-	background: #357ebd;
-	filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
+background: #6B6B6B;
+filter: "alpha(opacity=85)";
+-ms-filter: "alpha(opacity=85)";
 }
 
 
