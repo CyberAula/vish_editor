@@ -14,18 +14,23 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		
 		//Default values
 		var callback = null;
+		var horizontalScroll = false;
 		
 		//Read options
 		if(options){
 			if(options['callback']){
 				callback = options['callback'];
 			}
+			if(options['horizontalScroll']){
+				horizontalScroll = options['horizontalScroll'];
+			}
 		}
 
 		var scrollbar = $("#"+containerId);
 		$(scrollbar).mCustomScrollbar({
 			scrollInertia: 0,
-			autoDraggerLength: true
+			autoDraggerLength: true,
+			horizontalScroll:horizontalScroll
 		});
 		$(scrollbar).find(".mCSB_container").css("margin-right","5px");
 
@@ -47,7 +52,8 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		//Remove content
 		var scrollbar = $("#"+containerId);
 		$(scrollbar).html("");
-		$(scrollbar).removeClass("mCustomScrollbar _mCS_1 _mCS_2");
+		//Remove all classes
+		$(scrollbar).removeClass();
 		return;
 	}
   

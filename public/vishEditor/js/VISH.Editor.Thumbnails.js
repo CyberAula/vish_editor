@@ -4,9 +4,11 @@
 VISH.Editor.Thumbnails = (function(V,$,undefined){
 	
 	var thumbnailsDivId = "slides_list";
+	var slidesetThumbnailsDivId = "subslides_list";
 
 	//Tmp var
 	var redrawThumbnailsCallback;
+	var drawSlidesetThumbnailsCallback;
 	
 	var init = function(){ 
 	}
@@ -60,6 +62,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options.titleArray = imagesArrayTitles;
 		options.callback = _onImagesLoaded;
 		V.Utils.Loader.loadImagesOnContainer(imagesArray,thumbnailsDivId,options);
+
+		//Testing
+		setTimeout(function(){
+			VISH.Editor.Thumbnails.drawSlidesetThumbnails($("article"));
+		},3000);
 	};
 	 
 
@@ -148,8 +155,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	* Function to select the thumbnail
 	*/
 	var selectThumbnail = function(no){
-		$("img.image_barbutton").removeClass("selectedSlideThumbnail");
-		$("img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
+		$("#slides_list img.image_barbutton").removeClass("selectedSlideThumbnail");
+		$("#slides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
 	};
 
 
@@ -161,11 +168,125 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
 	}
   
+
+
+	////////////////
+	// Slideset Thumbnails
+	///////////////
+
+	var drawSlidesetThumbnails = function(subslides,successCallback){
+
+		console.log("drawSlidesetThumbnails");
+
+		drawSlidesetThumbnailsCallback = successCallback;
+
+		//Clean previous content
+		V.Editor.Scrollbar.cleanScrollbar(slidesetThumbnailsDivId);
+		$("#" + slidesetThumbnailsDivId).hide();
+
+		//Generate thumbnail images
+		var imagesArray = [];
+		var imagesArrayTitles = [];
+
+		var slideElements = 0;
+
+		$(subslides).each(function(index,s){
+
+			if($(s).attr('type')!==V.Constant.STANDARD){
+				V.Debugging.log("Subslide must be of standard type");
+				return true; //Continue
+			}
+
+			var template = $(s).attr('template');
+			var srcURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
+			slideElements += 1;
+			imagesArray.push($("<img id='subslideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "' />"));
+			imagesArrayTitles.push(slideElements);
+    	});
+
+		var options = {};
+		options.order = true;
+		options.titleArray = imagesArrayTitles;
+		options.callback = _onSlidesetThumbnailsImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(imagesArray,slidesetThumbnailsDivId,options);
+	};
+
+	var _onSlidesetThumbnailsImagesLoaded = function(){
+		//Add class to title elements and events
+		$("#" + slidesetThumbnailsDivId).find("img.image_barbutton").each(function(index,img){
+			//Add class to title
+			var imgContainer = $(img).parent();
+			$(imgContainer).addClass("wrapper_barbutton");
+			var p = $(imgContainer).find("p");
+			$(p).addClass("ptext_barbutton");
+
+			//Add events to imgs
+			$(img).click(function(event){
+				// _onClickSlideElement(event);
+				console.log("Click on subslide thumbnail!");
+			});
+		});
+
+		var options = new Array();
+		options['horizontalScroll'] = true;
+		options['callback'] = _afterCreateSubslidesScrollbar;
+
+		//Create scrollbar
+		$("#" + slidesetThumbnailsDivId).show();
+		V.Editor.Scrollbar.createScrollbar(slidesetThumbnailsDivId, options);
+	}
+
+	var _afterCreateSubslidesScrollbar = function(){
+		// //Add sortable
+		// $( "#" + thumbnailsDivId).sortable({
+		// 	items: 'div.wrapper_barbutton:has(img[action="goToSlide"])',
+		// 	change: function(event, ui) {
+		// 		//Do nothing
+		// 	},
+		// 	start: function(event, ui) { 
+		// 		//Do nothing
+		// 	},
+		// 	stop: function(event, ui) {
+		// 		var dragElement = ui.item;
+
+		// 		var img = $(ui.item).find("img.image_barbutton[slidenumber]");
+		// 		if(isNaN($(img).attr("slidenumber"))){
+		// 			return;
+		// 		}
+
+		// 		var orgPosition = parseInt($(img).attr("slidenumber"));
+		// 		var destPosition;
+
+		// 		//Detect destPosition
+		// 		$("#slides_list").find("img.image_barbutton[slidenumber]").each(function(index,item){
+		// 			var beforeIndex = parseInt($(item).attr("slidenumber"));
+		// 			var afterIndex = index+1;
+
+		// 			if((beforeIndex===orgPosition)&&(beforeIndex!=afterIndex)){
+		// 				destPosition = afterIndex;
+		// 			}
+
+		// 		});
+
+		// 		// V.Debugging.log("Org position: " + orgPosition);
+		// 		// V.Debugging.log("Dest position: " + destPosition);
+
+		// 		V.Editor.Slides.moveSlideTo(orgPosition, destPosition);
+		// 	}
+		// });
+
+		if(typeof drawSlidesetThumbnailsCallback == "function"){
+			drawSlidesetThumbnailsCallback();
+			drawSlidesetThumbnailsCallback = undefined;
+		}
+	}
+
 	return {
 		init              		: init,
 		redrawThumbnails  		: redrawThumbnails,
 		selectThumbnail	  		: selectThumbnail,
-		moveThumbnailsToSlide	: moveThumbnailsToSlide
+		moveThumbnailsToSlide	: moveThumbnailsToSlide,
+		drawSlidesetThumbnails  : drawSlidesetThumbnails
 	};
 
 }) (VISH, jQuery);

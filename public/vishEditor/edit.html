@@ -277,12 +277,35 @@
 		
 		<div id="leftside">
 			<div id="slides_list_actions">
-			<a id="addSlideButton" href="#"><button type="button" class="btn btn-small leftsideb">
-  			<i class="icon-plus"></i>  Add Slide</button></a>
-  			<a id="importButton" href="#"><button type="button" class="btn btn-small leftsideb">
-  			<i class="icon-rotate-180 icon-download-alt"></i>  Import</button></a>
+			<a id="addSlideButton" href="#"><button type="button" class="btn btn-small slidesScrollbarButton">
+			<i class="icon-plus"></i>  Add Slide</button></a>
+			<a id="importButton" href="#"><button type="button" class="btn btn-small slidesScrollbarButton">
+			<i class="icon-rotate-180 icon-download-alt"></i>  Import</button></a>
 			</div>
 			<div id="slides_list"></div>
+		</div>
+
+		<div id="bottomside">
+			<div id="subslide_selected">
+				<img class="image_barbutton" src="/vishEditor/images/templatesthumbs/t2.png">
+			</div>
+			<div id="subslides_wrapper">
+				<div id="subslides_list_actions">
+					<a id="addSlideButtonOnSubslides" href="#">
+						<button type="button" class="btn btn-small slidesScrollbarButton">
+							<i class="icon-plus"></i>  
+							Add Slide
+						</button>
+					</a>
+					<a id="importButtonOnSubslides" href="#">
+						<button type="button" class="btn btn-small slidesScrollbarButton">
+							<i class="icon-rotate-180 icon-download-alt"></i>  
+							Import
+						</button>
+					</a>
+				</div>
+				<div id="subslides_list"></div>
+			</div>
 		</div>
 
 		<div id="menubar-viewer" style="display:none">

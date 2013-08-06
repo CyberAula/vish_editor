@@ -160,11 +160,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('menubar_help', 'top');
 		});
 
-		//vtour
-		$(document).on('click','#help_vtour', function(){
-			V.Tour.startTourWithId('vt_help', 'top');
-		});
-
 		//template
 		$(document).on('click','.help_in_template', function(){
 			V.Tour.startTourWithId('template_help', 'bottom');
@@ -173,6 +168,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 		//flashcard
 		$(document).on('click','.help_in_flashcard', function(){
 			V.Tour.startTourWithId('fc_help', 'top');
+		});
+
+		//vtour
+		$(document).on('click','#help_vtour', function(){
+			V.Tour.startTourWithId('vt_help', 'top');
 		});
 
 		//add slides

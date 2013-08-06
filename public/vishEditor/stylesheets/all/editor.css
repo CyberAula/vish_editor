@@ -54,16 +54,52 @@ img {
 	-moz-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
 }
 
-.leftsideb {
+#bottomside{
+	position: absolute;
+	left: 180px;
+	bottom: 0px;
+	display:block;
+	width: 1018px;
+	height: 70px;
+	text-align: center;
+	background: #f0f0f0;
+	border: 1px solid #ccc;
+}
+
+#subslide_selected{
+	height: 100%;
+	width: 15%;
+	float: left;
+}
+
+#subslides_wrapper{
+	height: 100%;
+	width: 85%;
+	float: left;
+}
+
+#subslides_list_actions{
+	height: 80%;
+	width: 15%;
+	float: left;
+}
+
+#subslides_list{
+	height: 100%;
+	width: 84%;
+	float: left;
+}
+
+.slidesScrollbarButton {
 	border: 1px solid #B9B9B9 !important;
 }
 
-.leftsideb:hover {
+.slidesScrollbarButton:hover {
 	background: #357ebd;
 	color: #fff;
 }
 
-.leftsideb:active {
+.slidesScrollbarButton:active {
 	background: #357ebd;
 	color: #fff;
 	box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
@@ -143,6 +179,32 @@ img {
 	 padding: 1px;
 }
 
+/* 
+ * Subslides
+ */
+
+#subslides_list div.wrapper_barbutton{
+	width: 15%;
+	display: inline;
+	margin-right: 20px;
+}
+
+#subslides_list p.ptext_barbutton{
+	display: none;
+	/*float: left;*/
+	font-family: 'Open Sans', sans-serif;
+}
+
+#subslide_selected img.image_barbutton{
+	height: 65px;
+	margin-top: 3px;
+}
+
+#subslides_list img.image_barbutton{
+	height: 55px;
+	border-radius: 5px;
+}
+
 section.slides_editor {
 	overflow: hidden;
 }
@@ -153,7 +215,7 @@ section.slides_editor > article:not(.current) {
 
 section.slides_editor > article {
 	left: 58% !important;
-	top: 53% !important;
+	top: 52.5% !important;
 }
 
 div.zoneSelected{
