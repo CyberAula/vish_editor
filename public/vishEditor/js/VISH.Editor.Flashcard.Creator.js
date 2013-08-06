@@ -61,10 +61,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * Callback from the V.Editor.Image module to add the background
 	 */
 	var onBackgroundSelected = function(contentToAdd){
-		//get current flashcard
 		var fc = V.Slides.getCurrentSlide();
-		console.log("current slide");
-		console.log(fc);
 
 		if($(fc).attr("type")===V.Constant.FLASHCARD){
 			$(fc).css("background-image", "url("+contentToAdd+")");

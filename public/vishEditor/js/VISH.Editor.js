@@ -11,8 +11,9 @@ VISH.Editor = (function(V,$,undefined){
 	//Store the initialOptions
 	var initOptions;
 
-	//Pointer to the currentZone
+	//Pointers to the current and last zone
 	var currentZone;
+	var lastZone;
 	
 	//drafPresentation uses:
 	//* Store the presentation we are previewing
@@ -208,7 +209,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 
 			if(type===V.Constant.STANDARD){
-				V.Editor.Slides.addTooltipsToSlide($(".slides article").filter(":last"));
+				V.Editor.Tools.addTooltipsToSlide($(".slides article").filter(":last"));
 			}
 
 			V.Editor.Slides.redrawSlides();		
@@ -236,8 +237,9 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentArea($(this));
 				
 		//need to clone it, because we need to show it many times, not only the first one
-		//so we need to remove its id		
-		var content = $("#menuselect").clone().attr('id','current_menu');
+		//so we need to remove its id
+		var content = $("#menuselect").clone();
+		$(content).removeAttr("id");
 
 		$(content).find("a").css("display","none");
 		$(content).find("a.all").css("display","inline");
@@ -261,7 +263,8 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 
-		$(this).html(content);
+		$(this).find(".zone_tooltip").hide();
+		$(this).append(content);
 
 		$("a.addpicture").fancybox({
 			'autoDimensions' : false,
@@ -439,10 +442,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		}
 
-		// V.Debugging.log(event.target);
+		V.Editor.Tools.cleanZoneTools(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
-		V.Editor.Tools.cleanZoneTools();
 	};
 	
 	var _addSelectableProperties = function(zone){
@@ -853,7 +855,17 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var setCurrentArea = function(area){
-		currentZone = area;
+		if($(area).attr("id")!=$(currentZone).attr("id")){
+			lastZone = currentZone
+			currentZone = area;
+		}
+	};
+
+	var getLastArea = function() {
+		if(lastZone){
+			return lastZone;
+		}
+		return null;
 	};
 
 	var getPresentation = function() {
@@ -875,6 +887,10 @@ VISH.Editor = (function(V,$,undefined){
 	var hasInitialPresentation = function(){
 		return initialPresentation;
 	};
+
+	var isZoneEmpty = function(zone){
+		return ((zone)&&($(zone).find(".delete_content").length===0));
+	}
 
 	var getContentAddMode = function(){
 		return contentAddModeForSlides;
@@ -928,6 +944,7 @@ VISH.Editor = (function(V,$,undefined){
 		getOptions				: getOptions, 
 		getTemplate				: getTemplate,
 		getCurrentArea			: getCurrentArea,
+		getLastArea				: getLastArea,
 		getPresentationType		: getPresentationType,
 		getPresentation			: getPresentation,
 		getSavedPresentation	: getSavedPresentation,
@@ -937,6 +954,7 @@ VISH.Editor = (function(V,$,undefined){
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,
+		isZoneEmpty				: isZoneEmpty,
 		savePresentation		: savePresentation,
 		afterSavePresentation	: afterSavePresentation,
 		setCurrentArea			: setCurrentArea,

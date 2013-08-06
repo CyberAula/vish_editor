@@ -97,7 +97,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Zone Tools
 	*/
 	var loadToolsForZone = function(zone){
-		cleanZoneTools();
+		cleanZoneTools(V.Editor.getLastArea());
 		
 		var type = $(zone).clone().attr("type");
 
@@ -122,8 +122,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				_loadToolbarForElement("quiz");
 				break;
 			case undefined:
-				//Add menuselect button
+				//Add menuselect button and hide tooltips
 				$(zone).find(".menuselect_hide").show();
+				$(zone).find(".zone_tooltip").hide();
 				return;
 			default:
 				break;
@@ -133,11 +134,28 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(zone).find(".delete_content").show();
 	};
 
+	var addTooltipsToSlide = function(slide){
+		var zones = slide.find(".editable");
+		for (var i = 0; i < zones.length; i++) {
+			addTooltipToZone($(slide.find(".editable")[i]));
+		};
+	};
+
+	var addTooltipToZone = function(zone){
+		var tooltip = "<span class='zone_tooltip'>"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
+		zone.html(tooltip);
+	};
 
 	var cleanZoneTools = function(zone){
 		$(".menuselect_hide").hide();
 		$(".delete_content").hide();
 		_cleanElementToolbar();
+
+		if(V.Editor.isZoneEmpty(zone)){
+			$(zone).find(".zone_tooltip").show();
+		} else {
+			$(zone).find(".zone_tooltip").hide();
+		}
 	}
 
    /*
@@ -425,7 +443,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		publish							: publish,
 		preview 						: preview,
 		selectTheme						: selectTheme,
-		changeBackground				: changeBackground
+		changeBackground				: changeBackground,
+		addTooltipsToSlide				: addTooltipsToSlide,
+		addTooltipToZone				: addTooltipToZone
 	};
 
 }) (VISH, jQuery);

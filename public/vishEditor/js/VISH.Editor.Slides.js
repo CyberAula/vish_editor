@@ -326,14 +326,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var addTooltipsToSlide = function(slide){
-		var tooltip = "<span class='zone_tooltip'>"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
-		var zones = slide.find(".editable");
-		for (var i = 0; i < zones.length; i++) {
-			$(slide.find(".editable")[i]).append(tooltip);
-		};
-	};
-
 	return {
 		showSlides				: showSlides,
 		hideSlides				: hideSlides,
@@ -344,7 +336,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
-		addTooltipsToSlide 		: addTooltipsToSlide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 
