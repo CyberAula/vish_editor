@@ -159,14 +159,14 @@ section.slides_editor > article {
 div.zoneSelected{
 	cursor: auto;
 	background: url(/vishEditor/images/grid.png) repeat;
-	border: 2px solid #0096fd;
+	border: 1px solid #0096fd;
 	outline: 0;
 }
 
 div.zoneUnselected{
 	cursor: pointer;
 	background: none;
-	border: 2px dotted #BBB;
+	border: 1px dotted #BBB;
 	outline: 0;
 }
 
@@ -2134,12 +2134,214 @@ float: left;
 }
 
 .t14_circle1 .zone_tooltip, .t14_circle2 .zone_tooltip, .t14_circle3 .zone_tooltip{
-	margin: 24% 0 0 9%;
+	margin-top: 52px;
+	margin-left: 11px;
 	vertical-align: middle;
 	width: 84%;
 	height: 100%;
 	float: left;
 }
+
+.t14_right1 .zone_tooltip, .t14_right2 .zone_tooltip, .t14_right3 .zone_tooltip{
+	vertical-align: middle;
+	width: 84%;
+	height: 100%;
+	float: left;
+	margin-top: 56px;
+	margin-left: 94px;
+}
+
+.t15_left .zone_tooltip, .t15_center .zone_tooltip, .t15_right .zone_tooltip{
+	vertical-align: middle;
+	width: 84%;
+	height: 100%;
+	float: left;
+	margin-top: 62px;
+	margin-left: 34px;
+}
+
+.t15_center2 .zone_tooltip, .t4_left .zone_tooltip  {
+	vertical-align: middle;
+	width: 84%;
+	height: 100%;
+	float: left;
+margin-top: 142px;
+margin-left: 133px;
+}
+
+.t13_header .zone_tooltip, .t9_header .zone_tooltip, .t8_header .zone_tooltip, .t7_header .zone_tooltip, .t5_header .zone_tooltip, .t6_header .zone_tooltip, .t3_header .zone_tooltip, .t4_header .zone_tooltip {
+vertical-align: middle;
+width: 84%;
+height: 100%;
+float: left;
+margin-top: 16px;
+margin-left: 234px;
+}
+
+.t13_left .zone_tooltip {
+vertical-align: middle;
+width: 96%;
+height: 100%;
+float: left;
+margin-top: 205px;
+margin-left: 24px;
+}
+
+.t13_right .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+	margin-top: 26px;
+	margin-left: 21px;
+}
+
+.t12_right1 .zone_tooltip, .t12_right2 .zone_tooltip, .t12_left1 .zone_tooltip, .t12_left2 .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+	margin-top: 104px;
+	margin-left: 21px;
+}
+
+.t11_center1 .zone_tooltip, .t11_center2 .zone_tooltip, .t11_center3 .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+	margin-top: 61px;
+	margin-left: 189px;
+}
+
+.t10_center .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+	margin-top: 263px;
+	margin-left: 175px;
+}
+
+.t1_left .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+margin-top: 134px;
+margin-left: 123px;
+}
+
+.t1_header .zone_tooltip {
+	vertical-align: middle;
+	width: 56%;
+	height: 100%;
+	float: left;
+margin-top: 23px;
+margin-left: 111px;
+}
+
+.t2_left .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+margin-top: 231px;
+margin-left: 125px;
+}
+
+.t3_left .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+margin-top: 190px;
+margin-left: 136px;
+}
+
+.t4_right .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+margin-top: 49px;
+margin-left: 236px;
+}
+
+.t1_subheader .zone_tooltip {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	float: left;
+margin-top: 7px;
+margin-left: 153px;
+}
+
+.t9_right .zone_tooltip, .t9_left .zone_tooltip {
+vertical-align: middle;
+width: 100%;
+height: 100%;
+float: left;
+margin-top: 90px;
+margin-left: 74px;
+}
+
+.t5_left .zone_tooltip, .t5_right .zone_tooltip {
+vertical-align: middle;
+width: 55%;
+height: 100%;
+float: left;
+margin-top: 198px;
+margin-left: 93px;
+}
+
+.t9_center .zone_tooltip, .t7_left .zone_tooltip, .t6_left .zone_tooltip, .t6_center .zone_tooltip, .t6_right .zone_tooltip {
+vertical-align: middle;
+width: 75%;
+height: 100%;
+float: left;
+margin-top: 193px;
+margin-left: 45px;
+}
+
+.t8_center .zone_tooltip {
+vertical-align: middle;
+width: 59%;
+height: 100%;
+float: left;
+margin-top: 186px;
+margin-left: 110px;
+}
+
+.t7_center .zone_tooltip {
+vertical-align: middle;
+width: 59%;
+height: 100%;
+float: left;
+margin-top: 139px;
+margin-left: 110px;
+}
+
+.t7_subheader .zone_tooltip {
+vertical-align: middle;
+width: 59%;
+height: 100%;
+float: left;
+margin-top: 22px;
+margin-left: 110px;
+}
+
+.t8_right .zone_tooltip, .t8_left .zone_tooltip {
+vertical-align: middle;
+width: 62%;
+height: 100%;
+float: left;
+margin-top: 85px;
+margin-left: 59px;
+}
+
+
+
 
 
 .mCSB_container {

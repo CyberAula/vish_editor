@@ -297,7 +297,7 @@
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 33%;
+    width: 34%;
 }
 
 .t6_image{
@@ -624,12 +624,12 @@
 }
 
 .t12_right1{
-    float: right;
+    float: left;
     margin-bottom: 3%;
     height: 48%;
     overflow: hidden;
     position: relative;
-    width: 47%;
+    width: 48%;
 }
 
 .t12_left2{
@@ -642,11 +642,11 @@
 }
 
 .t12_right2{
-	float: right;
+	float: left;
     height: 48%;
     overflow: hidden;
     position: relative;
-    width: 47%;
+    width: 48%;
 }
 
 .t12_image{
@@ -763,7 +763,7 @@
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 22%;
+    width: 23%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -777,7 +777,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 22%;
+    width: 23%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -791,7 +791,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 22%;
+    width: 23%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -833,34 +833,34 @@
 }
 
 .t14_right1{
-    float: right;
+    float: left;
     height: 28%;
     margin-left: 5%;
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 70%;
+    width: 71.1%;
 }
 
 .t14_right2{
-    float: right;
+    float: left;
     height: 28%;
     margin-left: 5%;
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 70%;
+    width: 71.1%;
 }
 
 
 .t14_right3{
-    float: right;
+    float: left;
     height: 28%;
     margin-left: 5%;
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 70%;
+    width: 71.1%;
 }
 
 .t14_image{
@@ -897,7 +897,7 @@
     margin-right: 3%;
     overflow: hidden;
     position: relative;
-    width: 30%;
+    width: 31%;
 }
 
 .t15_center{
