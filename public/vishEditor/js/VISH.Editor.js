@@ -427,13 +427,13 @@ VISH.Editor = (function(V,$,undefined){
 		//add selectable css
 		$(zone).css("cursor", "auto");
 		$(zone).css("background", "url(/vishEditor/images/grid.png) repeat");
-		$(zone).css("border", "1px solid #0096fd");
+		$(zone).css("border", "2px solid #0096fd");
 		$(zone).css("outline", "0");
 	};
 	
 	var _removeSelectableProperties = function(zone){
 		//Remove selectable css
-		$(".selectable").css("border", "1px dotted #BBB");
+		$(".selectable").css("border", "2px dotted #BBB");
 		$(".selectable").css("background", "none");
 		$(".selectable").css("outline", "0");
 		$(".selectable").css("cursor", "pointer");
