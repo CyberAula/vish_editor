@@ -163,7 +163,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 */
 	var onTemplateThumbClicked = function(event){
-		_onAddSlide(V.Constant.STANDARD);	
+		_onAddSlide(event,V.Constant.STANDARD);
 	};
 
 	/**
@@ -171,13 +171,14 @@ VISH.Editor = (function(V,$,undefined){
 	 * create a new flashcard
 	 */
 	var onFlashcardThumbClicked = function(event){
-		_onAddSlide(V.Constant.FLASHCARD);	
+		_onAddSlide(event,V.Constant.FLASHCARD);	
 	};
 
-	var _onAddSlide = function(type){
+	var _onAddSlide = function(event,type){
 		switch(type){
 			case V.Constant.STANDARD:
-				var slide = V.Editor.Dummies.getDummy($(this).attr('template'), V.Slides.getSlidesQuantity()+1);
+				var template = $($(event.target).parent()).attr('template');
+				var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
 				break;
 			case V.Constant.FLASHCARD:
 				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
