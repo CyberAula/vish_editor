@@ -55,7 +55,7 @@ img {
 }
 
 .leftsideb {
-	border: 1px solid #B9B9B9;
+	border: 1px solid #B9B9B9 !important;
 }
 
 .leftsideb:hover {
