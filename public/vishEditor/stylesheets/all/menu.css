@@ -85,12 +85,12 @@ ul.menu_option_main ul {
 }
 
 #menu a.menu_option_main{
-margin-top: -11px;
-width: 179px;
-margin-left: -21px;
-padding-left: 15px;
-padding-bottom: 17px;
-padding-top: 16px;
+	margin-top: -11px;
+	width: 179px;
+	margin-left: -21px;
+	padding-left: 15px;
+	padding-bottom: 12px;
+	padding-top: 16px;
 }
 
 #menu ul li {
