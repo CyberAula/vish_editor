@@ -253,19 +253,48 @@ VISH.Editor = (function(V,$,undefined){
 	 * Includes a new slide following the template selected
 	 *&#x2F;
 	var onTemplateThumbClicked = function(event){
-		var theid = draftPresentation ? draftPresentation.id : &quot;&quot;;
-		var slide = V.Editor.Dummies.getDummy($(this).attr(&#x27;template&#x27;), V.Slides.getSlidesQuantity()+1);
+		_onAddSlide(event,V.Constant.STANDARD);
+	};
+
+	&#x2F;**
+	 * function called when user clicks on new flashcard
+	 * create a new flashcard
+	 *&#x2F;
+	var onFlashcardThumbClicked = function(event){
+		_onAddSlide(event,V.Constant.FLASHCARD);	
+	};
+
+	var _onAddSlide = function(event,type){
+		switch(type){
+			case V.Constant.STANDARD:
+				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
+				var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.FLASHCARD:
+				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
+				break;
+			case V.Constant.VTOUR:
+				break;
+			default:
+				break;
+		}
+
 		V.Editor.Slides.addSlide(slide);
 		$.fancybox.close();
+
 		&#x2F;&#x2F;currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-		V.Editor.Slides.addTooltipsToAddedSlide();
+
+		if(type===V.Constant.STANDARD){
+			V.Editor.Slides.addTooltipsToSlide($(&quot;.slides article&quot;).filter(&quot;:last&quot;));
+		}
+
 		V.Editor.Slides.redrawSlides();		
 		V.Editor.Thumbnails.redrawThumbnails();
 		setTimeout(function(){
 			V.Slides.lastSlide();
-		}, 300);	
-	};
+		}, 300);
+	}
 
 	&#x2F;**
 	 * Function called when user clicks on an editable element
@@ -482,27 +511,23 @@ VISH.Editor = (function(V,$,undefined){
 
 		&#x2F;&#x2F; V.Debugging.log(event.target);
 		setCurrentArea(null);
+		_removeSelectableProperties();
 		V.Editor.Tools.cleanZoneTools();
 	};
 	
 	var _addSelectableProperties = function(zone){
-		&#x2F;&#x2F;add selectable css
-		$(zone).css(&quot;cursor&quot;, &quot;auto&quot;);
-		$(zone).css(&quot;border-color&quot;, &quot;rgb(255, 2, 94)&quot;);
-		$(zone).css(&quot;-webkit-box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
-		$(zone).css(&quot;-moz-box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
-		$(zone).css(&quot;box-shadow&quot;, &quot;inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)&quot;);
-		$(zone).css(&quot;outline&quot;, &quot;0&quot;);
+		$(zone).removeClass(&quot;zoneUnselected&quot;);
+		$(zone).addClass(&quot;zoneSelected&quot;);
 	};
 	
 	var _removeSelectableProperties = function(zone){
-		&#x2F;&#x2F;Remove selectable css
-		$(&quot;.selectable&quot;).css(&quot;border-color&quot;, &quot;none&quot;);
-		$(&quot;.selectable&quot;).css(&quot;-webkit-box-shadow&quot;, &quot;none&quot;);
-		$(&quot;.selectable&quot;).css(&quot;-moz-box-shadow&quot;, &quot;none&quot;);
-		$(&quot;.selectable&quot;).css(&quot;box-shadow&quot;, &quot;none&quot;);
-		$(&quot;.selectable&quot;).css(&quot;outline&quot;, &quot;0&quot;);
-		$(&quot;.selectable&quot;).css(&quot;cursor&quot;, &quot;pointer&quot;);
+		if(zone){
+			$(zone).removeClass(&quot;zoneSelected&quot;);
+			$(zone).addClass(&quot;zoneUnselected&quot;);
+		} else {
+			$(&quot;.zoneSelected&quot;).addClass(&quot;zoneUnselected&quot;);
+			$(&quot;.zoneSelected&quot;).removeClass(&quot;zoneSelected&quot;);
+		}
 	};
 
 	&#x2F;**
@@ -570,8 +595,8 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	var selectArea = function(area){
-		setCurrentArea(area);	
-		_removeSelectableProperties(area);
+		setCurrentArea(area);
+		_removeSelectableProperties();
 		_addSelectableProperties(area);
 		V.Editor.Tools.loadToolsForZone(area);
 	};
@@ -971,6 +996,7 @@ VISH.Editor = (function(V,$,undefined){
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
 		onTemplateThumbClicked	: onTemplateThumbClicked,
+		onFlashcardThumbClicked : onFlashcardThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,
