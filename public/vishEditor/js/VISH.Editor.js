@@ -426,19 +426,15 @@ VISH.Editor = (function(V,$,undefined){
 	var _addSelectableProperties = function(zone){
 		//add selectable css
 		$(zone).css("cursor", "auto");
-		$(zone).css("border-color", "rgb(255, 2, 94)");
-		$(zone).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(zone).css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
-		$(zone).css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 100, 100, 0.6)");
+		$(zone).css("background", "url(/vishEditor/images/grid.png) repeat");
+		$(zone).css("border", "1px solid #0096fd");
 		$(zone).css("outline", "0");
 	};
 	
 	var _removeSelectableProperties = function(zone){
 		//Remove selectable css
-		$(".selectable").css("border-color", "none");
-		$(".selectable").css("-webkit-box-shadow", "none");
-		$(".selectable").css("-moz-box-shadow", "none");
-		$(".selectable").css("box-shadow", "none");
+		$(".selectable").css("border", "1px dotted #BBB");
+		$(".selectable").css("background", "none");
 		$(".selectable").css("outline", "0");
 		$(".selectable").css("cursor", "pointer");
 	};

@@ -344,7 +344,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		if(V.Editing){
 			//first deselect zone if anyone was selected
-			$(".selectable").css("border-style", "none");
+			//$(".selectable").css("border-style", "none");
 
 			V.Editor.Tools.cleanZoneTools();
 

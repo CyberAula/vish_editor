@@ -131,12 +131,13 @@ border-top: none;
 	display: block;
 	width: 73%;
 	margin: auto;
+	border-radius: 11px;
 }
 
 #slides_list img.image_barbutton:hover{
 	cursor:pointer;
-	border: 1px solid #357ebd;
-	border-radius: 6px;
+	border: 2px solid #357ebd;
+	
 }
 
 #slides_list img.image_barbutton:active{
