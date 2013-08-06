@@ -55,7 +55,7 @@ box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
 }
 
 .leftsideb {
-	border: 1px solid #B9B9B9;
+	border: 1px solid #B9B9B9 !important;
 }
 
 .leftsideb:hover {
