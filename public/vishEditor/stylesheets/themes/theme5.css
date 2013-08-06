@@ -10,11 +10,11 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
 
 section.slides {
 	background: rgb(255,255,255); /* Old browsers */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px, -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%, rgba(39,37,58,1) 100%); /* FF3.6+ */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px, -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(23%,rgba(255,255,255,1)), color-stop(100%,rgba(39,37,58,1))); /* Chrome,Safari4+ */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px, -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px, -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* Opera 12+ */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px, -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* IE10+ */
-	background: url(/vishEditor/images/background1.png) no-repeat 255px,  radial-gradient(ellipse at center,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* W3C */
+	background:  -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%, rgba(39,37,58,1) 100%); /* FF3.6+ */
+	background:  -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(23%,rgba(255,255,255,1)), color-stop(100%,rgba(39,37,58,1))); /* Chrome,Safari4+ */
+	background:  -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* Chrome10+,Safari5.1+ */
+	background:  -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* Opera 12+ */
+	background:  -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* IE10+ */
+	background:   radial-gradient(ellipse at center,  rgba(255,255,255,1) 23%,rgba(39,37,58,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#27253a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
