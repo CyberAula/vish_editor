@@ -124,6 +124,7 @@ border-top: none;
 	float: left;
 	margin-left: 7px;
 	margin-top: 35px;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #slides_list img.image_barbutton{
@@ -2157,6 +2158,7 @@ float: left;
       -ms-user-select: none;
        -o-user-select: none;
           user-select: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .btn:focus {
