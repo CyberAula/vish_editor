@@ -12,21 +12,54 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(initialized){
 			return;
 		}
-		//Initialize
+		//Initialize module
+
+		initialized = true;
 	};
 
 	/*
-	 * Type: slide or presentation type
+	 * Obj: slide or slide type
 	 */
-	var isSlideset = function(type){
+	var isSlideset = function(obj){
+		type = _getTypeIfPresent(obj);
 		return V.Slides.isSlideset(type);
+	}
+
+	var _getTypeIfPresent = function(obj){
+		if(typeof obj == "string"){
+			return obj;
+		} else if(typeof obj == "object"){
+			return $(obj).attr("type");
+		}
+		return undefined;
+	}
+
+	/*
+	 * Update UI when enter in a slideset
+	 */
+	var onEnterSlideset = function(slideset){
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.loadSlideset == "function"){
+			slidesetCreator.loadSlideset(slideset);
+		}
+	}
+
+	/*
+	 * Update UI when leave from a slideset
+	 */
+	var onLeaveSlideset = function(slideset){
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.unloadSlideset == "function"){
+			slidesetCreator.unloadSlideset(slideset);
+		}
 	}
 
 	/*
 	 * Module to create slidesets
-	 * Type: slide or presentation type
+	 * Obj: slide or slide type
 	 */
-	var getCreatorModule = function(type){
+	var getCreatorModule = function(obj){
+		type = _getTypeIfPresent(obj);
 		switch(type){
 			case V.Constant.FLASHCARD:
 				return V.Editor.Flashcard.Creator;
@@ -55,6 +88,13 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 				return null;
 		}
 	}
+
+
+
+
+	////////////////
+	// DEPRECATED
+	////////////////
 
 	/*
 	 * Nest slides into a slideset
@@ -99,6 +139,8 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		isSlideset			: isSlideset,
 		getCreatorModule	: getCreatorModule,
 		getModule			: getModule,
+		onEnterSlideset		: onEnterSlideset,
+		onLeaveSlideset		: onLeaveSlideset,
 		prepareToNest		: prepareToNest,
 		undoNestedSlides	: undoNestedSlides
 	};

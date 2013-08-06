@@ -1,20 +1,27 @@
 VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
-	//Point to current flashcard.
-	var flashcardId;
-
-
 	var init = function(){
-		flashcardId = null;
-	};
 
-	var getId = function(){
-		return flashcardId;
 	}
 
 	var getDummy = function(slideNumber){
 		var fcId = V.Utils.getId("article");
 		return "<article id='"+fcId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
+	}
+
+	var loadSlideset = function(fc){
+		$("#bottomside").show();
+
+		console.log("loadSlideset flashcard");
+		console.log(fc);
+		var fcId = $(fc).attr("id");
+		var subslides = $("#" + fcId + " > article");
+		console.log("subslides");
+		console.log(subslides);
+	}
+
+	var unloadSlideset = function(fc){
+		$("#bottomside").hide();
 	}
 
 	// /*
@@ -109,6 +116,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	return {
 		init 				 		: init,
 		getDummy					: getDummy,
+		loadSlideset				: loadSlideset,
+		unloadSlideset				: unloadSlideset,
 		onBackgroundSelected		: onBackgroundSelected
 	};
 

@@ -6,7 +6,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var thumbnailsDivId = "slides_list";
 	var slidesetThumbnailsDivId = "subslides_list";
 
-	//Tmp var
+	//Tmp vars
 	var redrawThumbnailsCallback;
 	var drawSlidesetThumbnailsCallback;
 	
@@ -62,11 +62,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options.titleArray = imagesArrayTitles;
 		options.callback = _onImagesLoaded;
 		V.Utils.Loader.loadImagesOnContainer(imagesArray,thumbnailsDivId,options);
-
-		//Testing
-		setTimeout(function(){
-			VISH.Editor.Thumbnails.drawSlidesetThumbnails($("article"));
-		},3000);
 	};
 	 
 
