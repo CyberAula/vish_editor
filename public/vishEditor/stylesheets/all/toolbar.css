@@ -19,7 +19,7 @@ z-index: 10;
 
 #toolbar_menu , #toolbar_presentation, #toolbar_element {
   display: inline-block;
-  height: 56px;
+  height: 57px;
   min-height: 50px;
   text-align: center;
 }
