@@ -23,7 +23,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 		if(!toolbarEventsLoaded){
 			//Add listeners to toolbar buttons
-			$.each($("img.toolbar_icon, img.toolbar_bigicon"), function(index, toolbarButton) {
+			$.each($("#toolbar_wrapper a.tool_action"), function(index, toolbarButton) {
 				$(toolbarButton).on("click", function(event){
 					if(typeof V.Editor.Tools[$(toolbarButton).attr("action")] == "function"){
 						if(!$(toolbarButton).parent().hasClass("toolbar_presentation_wrapper_disabled")){
