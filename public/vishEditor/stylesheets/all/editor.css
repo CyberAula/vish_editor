@@ -153,7 +153,7 @@ section.slides_editor > article:not(.current) {
 
 section.slides_editor > article {
 	left: 58% !important;
-	top: 56% !important;
+	top: 53% !important;
 }
 
 div.zoneSelected{
@@ -1317,7 +1317,7 @@ textarea {
 	color: #FF005D;
 }
 
-.help_in_template{
+.help_in_slide {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
 	position: absolute;
 	top: 2px;
@@ -1329,7 +1329,7 @@ textarea {
 	z-index: 200000;
 }
 
-.help_in_template:hover{
+.help_in_slide:hover{
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
@@ -1760,7 +1760,7 @@ div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 	cursor: pointer;
 }
 
-.change_bg_button_class{
+div.change_bg_button{
 	position: absolute;
 	left: 325px;
 	top: 225px;
@@ -1770,7 +1770,7 @@ div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
 	cursor: pointer;
 }
 
-.change_bg_button_class:hover {
+div.change_bg_button:hover {
 	background: url(/vishEditor/images/flashcard/flashcard_add_img_button_hover.png);
 }
 
@@ -1961,10 +1961,6 @@ margin: 0px;
 
 .input_text_excursions{
 	width: 345px !important;
-}
-
-img#help_flashcard{
-	cursor: pointer;
 }
 
 img#message2img{

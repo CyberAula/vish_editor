@@ -416,12 +416,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var addTooltipsToAddedSlide = function(){
-		var last_slide = $(&quot;.slides article&quot;).filter(&quot;:last&quot;);
+	var addTooltipsToSlide = function(slide){
 		var tooltip = &quot;&lt;span class=&#x27;zone_tooltip&#x27;&gt;&quot;+V.Editor.I18n.getTrans(&#x27;i.ZoneTooltip&#x27;)+&quot;&lt;&#x2F;span&gt;&quot;;
-		var zones = last_slide.find(&quot;.editable&quot;);
+		var zones = slide.find(&quot;.editable&quot;);
 		for (var i = 0; i &lt; zones.length; i++) {
-			$(last_slide.find(&quot;.editable&quot;)[i]).append(tooltip);
+			$(slide.find(&quot;.editable&quot;)[i]).append(tooltip);
 		};
 	};
 
@@ -435,7 +434,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		copySlideWithNumber		: copySlideWithNumber,
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
-		addTooltipsToAddedSlide : addTooltipsToAddedSlide,
+		addTooltipsToSlide 		: addTooltipsToSlide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 

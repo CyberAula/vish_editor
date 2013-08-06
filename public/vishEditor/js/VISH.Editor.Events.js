@@ -31,7 +31,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click','.delete_content', V.Editor.onDeleteItemClicked);
 			$(document).on('click','.delete_slide', V.Editor.onDeleteSlideClicked);
 
-			$(document).on("click", "#fc_change_bg_big", V.Editor.Tools.changeBackground);
+			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
 
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
@@ -160,19 +160,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('menubar_help', 'top');
 		});
 
-		//flashcard
-		$(document).on('click','#help_flashcard', function(){
-			V.Tour.startTourWithId('fc_help', 'top');
-		});
-
 		//vtour
 		$(document).on('click','#help_vtour', function(){
 			V.Tour.startTourWithId('vt_help', 'top');
 		});
 
 		//template
-		$(document).on('click','.help_in_template', function(){			
+		$(document).on('click','.help_in_template', function(){
 			V.Tour.startTourWithId('template_help', 'bottom');
+		});
+
+		//flashcard
+		$(document).on('click','.help_in_flashcard', function(){
+			V.Tour.startTourWithId('fc_help', 'top');
 		});
 
 		//add slides

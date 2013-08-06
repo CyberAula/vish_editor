@@ -114,27 +114,35 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		var slideElements = 0;
 		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
-          switch($(s).attr(&#x27;type&#x27;)){
-			case undefined:
+
+		var srcURL;
+
+		switch($(s).attr(&#x27;type&#x27;)){
 			case V.Constant.STANDARD:
-					var template = $(s).attr(&#x27;template&#x27;);
-					slideElements += 1;
-					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&#x27; &#x2F;&gt;&quot;));
-					imagesArrayTitles.push(slideElements);
+				var template = $(s).attr(&#x27;template&#x27;);
+				srcURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
 				break;
 			case V.Constant.FLASHCARD:
-					slideElements += 1;
-					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.Utils.getSrcFromCSS($(s).attr(&#x27;avatar&#x27;))+ &quot;&#x27; &#x2F;&gt;&quot;));
-					imagesArrayTitles.push(slideElements);
+				var avatar = $(s).attr(&#x27;avatar&#x27;);
+				if(avatar){
+					srcURL = V.Utils.getSrcFromCSS($(s).attr(&#x27;avatar&#x27;));
+				} else {
+					srcURL = V.ImagesPath + &quot;templatesthumbs&#x2F;flashcard_template.png&quot;;
+				}
 				break;
 			case V.Constant.VTOUR:
-					slideElements += 1;
-					imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&#x27; &#x2F;&gt;&quot;));
-					imagesArrayTitles.push(slideElements);
+				srcURL = V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&quot;;
 				break;
 			default:
 				break;
-		  }          
+		}
+
+			if(srcURL){
+				slideElements += 1;
+				imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
+				imagesArrayTitles.push(slideElements);
+			}
+
     	});
 
 		var options = {};

@@ -14,7 +14,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	var getDummy = function(slideNumber){
 		var fcId = V.Utils.getId("article");
-		return "<article id='"+fcId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_template' id='help_flashcard_image' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/></article>";
+		return "<article id='"+fcId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
 	}
 
 	// /*
@@ -54,8 +54,16 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * Callback from the V.Editor.Image module to add the background
 	 */
 	var onBackgroundSelected = function(contentToAdd){
-		$("#flashcard-background").css("background-image", "url("+contentToAdd+")");
-		$("#fc_change_bg_big").hide();
+		//get current flashcard
+		var fc = V.Slides.getCurrentSlide();
+		console.log("current slide");
+		console.log(fc);
+
+		if($(fc).attr("type")===V.Constant.FLASHCARD){
+			$(fc).css("background-image", "url("+contentToAdd+")");
+			$(fc).find("div.change_bg_button").hide();
+		}
+
 		$.fancybox.close();
 	}
 
