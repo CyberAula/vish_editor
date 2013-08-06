@@ -297,7 +297,7 @@
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 34%;
+    width: 33%;
 }
 
 .t6_image{
@@ -763,7 +763,7 @@
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -777,7 +777,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -791,7 +791,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -833,34 +833,34 @@
 }
 
 .t14_right1{
-    float: left;
+    float: right;
     height: 28%;
     margin-left: 5%;
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 71.1%;
+    width: 70%;
 }
 
 .t14_right2{
-    float: left;
+    float: right;
     height: 28%;
     margin-left: 5%;
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 71.1%;
+    width: 70%;
 }
 
 
 .t14_right3{
-    float: left;
+    float: right;
     height: 28%;
     margin-left: 5%;
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 71.1%;
+    width: 70%;
 }
 
 .t14_image{
