@@ -421,23 +421,23 @@ VISH.Editor = (function(V,$,undefined){
 
 		// V.Debugging.log(event.target);
 		setCurrentArea(null);
+		_removeSelectableProperties();
 		V.Editor.Tools.cleanZoneTools();
 	};
 	
 	var _addSelectableProperties = function(zone){
-		//add selectable css
-		$(zone).css("cursor", "auto");
-		$(zone).css("background", "url(/vishEditor/images/grid.png) repeat");
-		$(zone).css("border", "2px solid #0096fd");
-		$(zone).css("outline", "0");
+		$(zone).removeClass("zoneUnselected");
+		$(zone).addClass("zoneSelected");
 	};
 	
 	var _removeSelectableProperties = function(zone){
-		//Remove selectable css
-		$(".selectable").css("border", "2px dotted #BBB");
-		$(".selectable").css("background", "none");
-		$(".selectable").css("outline", "0");
-		$(".selectable").css("cursor", "pointer");
+		if(zone){
+			$(zone).removeClass("zoneSelected");
+			$(zone).addClass("zoneUnselected");
+		} else {
+			$(".zoneSelected").addClass("zoneUnselected");
+			$(".zoneSelected").removeClass("zoneSelected");
+		}
 	};
 
 	/**
@@ -505,8 +505,8 @@ VISH.Editor = (function(V,$,undefined){
 
 
 	var selectArea = function(area){
-		setCurrentArea(area);	
-		_removeSelectableProperties(area);
+		setCurrentArea(area);
+		_removeSelectableProperties();
 		_addSelectableProperties(area);
 		V.Editor.Tools.loadToolsForZone(area);
 	};
