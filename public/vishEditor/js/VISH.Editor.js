@@ -22,6 +22,9 @@ VISH.Editor = (function(V,$,undefined){
 	//savedPresentation contains the JSON of the saved presentation
 	var savedPresentation = null;
 
+	//Content mode to add slides
+	var contentAddModeForSlides = V.Constant.NONE;
+
 
 	/**
 	 * VISH Editor initializer.
@@ -189,21 +192,38 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 
-		V.Editor.Slides.addSlide(slide);
+		console.log("contentAddMode");
+		console.log(contentAddModeForSlides);
+
+		//Get slideMode before close fancybox!
+		var slideMode = contentAddModeForSlides;
 		$.fancybox.close();
 
-		//currentSlide number is next slide
-		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+		if(slideMode===V.Constant.STANDARD){
+			//Add a new slide to the presentation
 
-		if(type===V.Constant.STANDARD){
-			V.Editor.Slides.addTooltipsToSlide($(".slides article").filter(":last"));
+			V.Editor.Slides.addSlide(slide);
+			
+			//currentSlide number is next slide
+			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+
+			if(type===V.Constant.STANDARD){
+				V.Editor.Slides.addTooltipsToSlide($(".slides article").filter(":last"));
+			}
+
+			V.Editor.Slides.redrawSlides();		
+			V.Editor.Thumbnails.redrawThumbnails();
+			setTimeout(function(){
+				V.Slides.lastSlide();
+			}, 300);
+
+			V.Debugging.log("Add a slide to the presentation");
+
+		} else if(slideMode===V.Constant.SLIDESET){
+			//Add a new subslide to a smartcard (flashcard or virtual tour)
+			V.Debugging.log("Add a subslide to a smartcard");
 		}
 
-		V.Editor.Slides.redrawSlides();		
-		V.Editor.Thumbnails.redrawThumbnails();
-		setTimeout(function(){
-			V.Slides.lastSlide();
-		}, 300);
 	}
 
 	/**
@@ -456,51 +476,59 @@ VISH.Editor = (function(V,$,undefined){
 	* function called when entering slide in editor, we have to show the objects
 	*/
 	var onSlideEnterEditor = function(e){
-		setTimeout(function(){
-			$(e.target).find('.object_wrapper').show();
-		},500);
-		
-		if($(e.target).hasClass("flashcard_slide")){
-			V.Flashcard.startAnimation(e.target.id);
-		} else if($(e.target).hasClass("virtualTour_slide")){
-			V.VirtualTour.loadMap(e.target.id);
-		}
+		var slide = e.target;
 
-		if($(e.target).hasClass("subslide")){
-			setTimeout(function(){
-				if($(e.target).hasClass('object')){
-					V.ObjectPlayer.loadObject($(e.target));
-				} else if($(e.target).hasClass('applet')){
-					V.AppletPlayer.loadApplet($(e.target));
-				} else if($(e.target).hasClass('snapshot')){
-					V.SnapshotPlayer.loadSnapshot($(e.target));
-				}
-			},500);
-			V.VideoPlayer.HTML5.playVideos(e.target);
+		if(V.Editor.Slideset.isSlideset(slide)){
+			V.Editor.Slideset.onEnterSlideset($(slide));
 		} else {
-			V.Editor.Utils.Loader.loadObjectsInEditorSlide(e.target);
+			//Standard slide
+
+			if($(e.target).hasClass("subslide")){
+				//Subslides
+				setTimeout(function(){
+					if($(e.target).hasClass('object')){
+						V.ObjectPlayer.loadObject($(slide));
+					} else if($(e.target).hasClass('snapshot')){
+						V.SnapshotPlayer.loadSnapshot($(slide));
+					}
+				},500);
+				V.VideoPlayer.HTML5.playVideos(slide);
+			} else {
+				V.Editor.Utils.Loader.loadObjectsInEditorSlide(slide);
+			}
+
+			//Show objects
+			setTimeout(function(){
+				$(slide).find('.object_wrapper').show();
+			},500);
 		}
 
-		V.Editor.Tools.loadToolsForSlide(e.target);
+		V.Editor.Tools.loadToolsForSlide(slide);
 	};
   
 	/**
 	* Function called when leaving slide in editor, we have to hide the objects
 	*/
 	var onSlideLeaveEditor = function(e){
-		$('.object_wrapper').hide();
-		
-		if($(e.target).hasClass("flashcard_slide")){
-			V.Flashcard.stopAnimation(e.target.id);
+		var slide = e.target;
+
+		if(V.Editor.Slideset.isSlideset(slide)){
+			V.Editor.Slideset.onLeaveSlideset($(slide));
+		} else {
+			//Standard slide
+
+			if($(e.target).hasClass("subslide")){
+				//Subslides
+				V.VideoPlayer.HTML5.stopVideos(slide);
+				V.ObjectPlayer.unloadObject(slide);
+			} else {
+				V.Editor.Utils.Loader.unloadObjectsInEditorSlide(slide);
+			}
+
+			//Hide objects
+			$('.object_wrapper').hide();
 		}
 
-		if($(e.target).hasClass("subslide")){
-			V.VideoPlayer.HTML5.stopVideos(e.target);
-			V.ObjectPlayer.unloadObject(e.target);
-			V.AppletPlayer.unloadApplet();
-		} else {
-			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(e.target);
-		}
 	};
 
 
@@ -848,6 +876,14 @@ VISH.Editor = (function(V,$,undefined){
 		return initialPresentation;
 	};
 
+	var getContentAddMode = function(){
+		return contentAddModeForSlides;
+	}
+
+	var setContentAddMode = function(mode){
+		contentAddModeForSlides = mode;
+	}
+
 	/*
 	 * Type can be "presentation" or "quiz_simple"
 	 */
@@ -898,6 +934,8 @@ VISH.Editor = (function(V,$,undefined){
 		setPresentation			: setPresentation,
 		setPresentationType		: setPresentationType,
 		isPresentationDraft		: isPresentationDraft,
+		getContentAddMode		: getContentAddMode,
+		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,
 		savePresentation		: savePresentation,
 		afterSavePresentation	: afterSavePresentation,

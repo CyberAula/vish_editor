@@ -41,6 +41,7 @@ VISH.Constant.QUIZ_SIMPLE = "quiz_simple";
 
 //Slide types
 VISH.Constant.STANDARD = "standard";
+VISH.Constant.SLIDESET = "slideset";
 VISH.Constant.FLASHCARD = "flashcard";
 VISH.Constant.VTOUR = "VirtualTour";
 VISH.Constant.GAME = "game";

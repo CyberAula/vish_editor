@@ -16,6 +16,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			var presentation = V.Editor.getPresentation();
 
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
+			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
 			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
@@ -55,11 +56,18 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'height': 600,
 				'padding': 0,
 				"onStart"  : function(data) {
+					var slidesAddMode = V.Editor.getContentAddMode();
+					if(slidesAddMode===V.Constant.NONE){
+						V.Editor.setContentAddMode(V.Constant.STANDARD);
+					}
 					var clickedZoneId = $(data).attr("zone");
 					V.Editor.setCurrentArea($("#" + clickedZoneId));
 					V.Editor.Utils.loadTab('tab_slides');
+				},
+				"onClosed"  : function(data) {
+					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
-			});
+			});	
 
 			// fancybox to create a new quiz		
 			$("a#addQuizFancybox").fancybox({
@@ -124,11 +132,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'scrolling': 'no',
 				'height': 600,
 				'padding' : 0,
-				"onStart"  : function(data) {						
+				"onStart"  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
 					V.Editor.Utils.loadTab('tab_pic_from_url');
 				},
-				"onClosed"  : function(data) {				
+				"onClosed"  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.NONE);
 				}
 			});
