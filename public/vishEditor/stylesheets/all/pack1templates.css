@@ -897,7 +897,7 @@
     margin-right: 3%;
     overflow: hidden;
     position: relative;
-    width: 32%;
+    width: 30%;
 }
 
 .t15_center{
@@ -911,7 +911,7 @@
 }
 
 .t15_right{
-    float: left;
+    float: right;
     height: 35%;
     overflow: hidden;
     position: relative;
