@@ -49,9 +49,9 @@ img {
 	text-align: center;
 	background: #f0f0f0;
 	border: 1px solid #ccc;
-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
--webkit-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
--moz-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
+	box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
 }
 
 .leftsideb {
@@ -66,21 +66,18 @@ box-shadow: 3px 13px 10px 1px rgba(0,0,0,0.1);
 .leftsideb:active {
 	background: #357ebd;
 	color: #fff;
-box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
--webkit-box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
--moz-box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
-
-
-
+	box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
+	-webkit-box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
 }
 
 #slides_list_actions{
-width: 179px;
-height: 34px;
-background: #fbfbfb;
-border-bottom: 1px solid #ccc;
-padding-top: 13px;
-padding-bottom: 15px;
+	width: 179px;
+	height: 34px;
+	background: #fbfbfb;
+	border-bottom: 1px solid #ccc;
+	padding-top: 13px;
+	padding-bottom: 15px;
 }
 
 
@@ -104,18 +101,17 @@ padding-bottom: 15px;
 }
 
 #slides_list div.wrapper_barbutton{
-display: block;
-width: 90%;
-margin-bottom: 13px;
-margin-top: 10px;
-border-top: 1px solid #ccc;
-padding-top: 12px;
-padding-bottom: 0px;
+	display: block;
+	width: 90%;
+	margin-bottom: 13px;
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	padding-top: 12px;
+	padding-bottom: 0px;
 }
 
 #slides_list div.wrapper_barbutton:active{
-border-top: none;
-
+	border-top: none;
 }
 
 
@@ -137,7 +133,6 @@ border-top: none;
 #slides_list img.image_barbutton:hover{
 	cursor:pointer;
 	border: 2px solid #357ebd;
-	
 }
 
 #slides_list img.image_barbutton:active{
@@ -157,8 +152,22 @@ section.slides_editor > article:not(.current) {
 }
 
 section.slides_editor > article {
-left: 58% !important;
-top: 56% !important;
+	left: 58% !important;
+	top: 56% !important;
+}
+
+div.zoneSelected{
+	cursor: auto;
+	background: url(/vishEditor/images/grid.png) repeat;
+	border: 2px solid #0096fd;
+	outline: 0;
+}
+
+div.zoneUnselected{
+	cursor: pointer;
+	background: none;
+	border: 2px dotted #BBB;
+	outline: 0;
 }
 
 .barbuttonaddsave{
