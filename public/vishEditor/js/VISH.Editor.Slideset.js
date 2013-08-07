@@ -20,89 +20,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		initialized = true;
 	};
 
-	var getCurrentSubslide = function(){
-		return currentSubslide;
-	};
-
-	var setCurrentSubslide = function(newSubslide){
-		currentSubslide = newSubslide;
-	};
-
-	/*
-	 * Obj: slide or slide type
-	 */
-	var isSlideset = function(obj){
-		type = _getTypeIfPresent(obj);
-		return V.Slides.isSlideset(type);
-	}
-
-	var _getTypeIfPresent = function(obj){
-		if(typeof obj == "string"){
-			return obj;
-		} else if(typeof obj == "object"){
-			return $(obj).attr("type");
-		}
-		return undefined;
-	}
-
-	/*
-	 * Update UI when enter in a slideset
-	 */
-	var onEnterSlideset = function(slideset){
-		_loadSlideset(slideset);
-		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
-		if(typeof slidesetCreator.loadSlideset == "function"){
-			slidesetCreator.loadSlideset(slideset);
-		}
-	}
-
-	/*
-	 * Update UI when leave from a slideset
-	 */
-	var onLeaveSlideset = function(slideset){
-		_unloadSlideset(slideset);
-		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
-		if(typeof slidesetCreator.unloadSlideset == "function"){
-			slidesetCreator.unloadSlideset(slideset);
-		}
-	}
-
-	/*
-	 * Common actions to all slidesets when load/unload one
-	 */
-	var _loadSlideset = function(slideset){
-		updateThumbnails(slideset);
-
-		$("#bottomside").show();
-		var slidesetId = $(slideset).attr("id");
-		var subslides = $("#" + slidesetId + " > article");
-		
-		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
-			//Subslides Thumbnails drawed succesfully
-			openSlideset(slideset);
-		});
-	}
-
-	var _unloadSlideset = function(slideset){
-		var slidesetId = $(slideset).attr("id");
-		var subslides = $("#" + slidesetId + " > article");
-		$(subslides).css("display","none");
-		$("#bottomside").hide();
-		$("#subslide_selected > img").attr("src","");
-	}
-
-	var updateThumbnails = function(slideset){
-		var thumbnailURL = V.Editor.Thumbnails.getThumbnailURL(slideset);
-		$("#subslide_selected > img").attr("src",thumbnailURL);
-		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(slideset);
-		$(slideThumbnail).attr("src",thumbnailURL);
-	}
-
-	var onClickOpenSlideset = function(){
-		var slideset = V.Slides.getCurrentSlide();
-		openSlideset(slideset);
-	}
-
 	/*
 	 * Module to create slidesets
 	 * Obj: slide or slide type
@@ -138,15 +55,89 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	}
 
+	/*
+	 * Obj: slide or slide type
+	 */
+	var isSlideset = function(obj){
+		type = _getTypeIfPresent(obj);
+		return V.Slides.isSlideset(type);
+	}
+
+	var _getTypeIfPresent = function(obj){
+		if(typeof obj == "string"){
+			return obj;
+		} else if(typeof obj == "object"){
+			return $(obj).attr("type");
+		}
+		return undefined;
+	}
+
+	var getCurrentSubslide = function(){
+		return currentSubslide;
+	};
+
+	var setCurrentSubslide = function(newSubslide){
+		currentSubslide = newSubslide;
+	};
+
+
+
+	/*
+	 * Update UI when enter in a slideset
+	 */
+	var onEnterSlideset = function(slideset){
+		updateThumbnails(slideset);
+
+		$("#bottomside").show();
+		var slidesetId = $(slideset).attr("id");
+		var subslides = $("#" + slidesetId + " > article");
+		
+		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
+			//Subslides Thumbnails drawed succesfully
+			openSlideset(slideset);
+		});
+
+		//Success callback is not called when subslides are 0
+		if(subslides.length === 0) {
+			openSlideset(slideset);
+		}
+	}
+
+	/*
+	 * Update UI when leave from a slideset
+	 */
+	var onLeaveSlideset = function(slideset){
+		var slidesetId = $(slideset).attr("id");
+		$("#bottomside").hide();
+		$("#subslide_selected > img").attr("src","");
+		closeSlideset(slideset);
+	}
+
 	var openSlideset = function(slideset){
 		//Show slideset delete and help buttons
 		_showSlideButtons(slideset);
 
-		//Hide subslides
-		var subslides = $(slideset).find("article");
-		$(subslides).each(function(index,subslide){
-			_hideSubslide(subslide);
-		});
+		var currentSubslide = getCurrentSubslide();
+		if(currentSubslide){
+			closeSubslide(currentSubslide);
+		}
+
+		//Load
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.loadSlideset == "function"){
+			slidesetCreator.loadSlideset(slideset);
+		}
+	}
+
+	var closeSlideset = function(slideset){
+		//Hide slideset delete and help buttons
+		_hideSlideButtons(slideset);
+
+		//Unload slideset
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.unloadSlideset == "function"){
+			slidesetCreator.unloadSlideset(slideset);
+		}
 	}
 
 	var openSubslideWithNumber = function(subslideNumber){
@@ -163,12 +154,12 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			closeSubslide(currentSubslide);
 		} else {
 			var slideset = $(subslide).parent();
-			//Hide slideset delete and help buttons
-			_hideSlideButtons(slideset);
+			closeSlideset(slideset);
 		}
 
 		setCurrentSubslide(subslide);
 		_showSubslide(subslide);
+		V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr("slidenumber"));
 		V.Slides.triggerEnterEventById($(subslide).attr("id"));
 	}
 
@@ -189,6 +180,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 
 	var closeSubslide = function(subslide){
 		setCurrentSubslide(null);
+		V.Editor.Thumbnails.selectSubslideThumbnail(null);
 		_hideSubslide(subslide);
 		V.Slides.triggerLeaveEventById($(subslide).attr("id"));
 	}
@@ -203,6 +195,17 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		$(slide).find("img.help_in_slide:first").hide();
 	}
 
+	var updateThumbnails = function(slideset){
+		var thumbnailURL = V.Editor.Thumbnails.getThumbnailURL(slideset);
+		$("#subslide_selected > img").attr("src",thumbnailURL);
+		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(slideset);
+		$(slideThumbnail).attr("src",thumbnailURL);
+	}
+
+	var onClickOpenSlideset = function(){
+		var slideset = V.Slides.getCurrentSlide();
+		openSlideset(slideset);
+	}
 
 	////////////////
 	// DEPRECATED
@@ -254,6 +257,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		onEnterSlideset			: onEnterSlideset,
 		onLeaveSlideset			: onLeaveSlideset,
 		openSlideset			: openSlideset,
+		closeSlideset			: closeSlideset,
 		openSubslideWithNumber 	: openSubslideWithNumber,
 		openSubslide			: openSubslide,
 		closeSubslideWithNumber	: closeSubslideWithNumber,

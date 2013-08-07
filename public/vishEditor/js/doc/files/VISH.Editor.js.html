@@ -115,6 +115,8 @@ VISH.Editor = (function(V,$,undefined){
 
 	&#x2F;&#x2F;Content mode to add slides
 	var contentAddModeForSlides = V.Constant.NONE;
+	&#x2F;&#x2F;Tmp var to store slide to delete
+	var article_to_delete;
 
 
 	&#x2F;**
@@ -156,6 +158,7 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 		V.Utils.loadDeviceCSS();
+		V.Editor.I18n.init(options.lang);
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
 		V.Editor.Themes.init();
@@ -214,7 +217,6 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		&#x2F;&#x2F;Init submodules
-		V.Editor.I18n.init(options.lang);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
@@ -269,52 +271,44 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onAddSlide = function(event,type){
-		switch(type){
-			case V.Constant.STANDARD:
-				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
-				var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
-				break;
-			case V.Constant.FLASHCARD:
-				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
-				break;
-			case V.Constant.VTOUR:
-				break;
-			default:
-				break;
-		}
-
-		console.log(&quot;contentAddMode&quot;);
-		console.log(contentAddModeForSlides);
 
 		&#x2F;&#x2F;Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
-		$.fancybox.close();
 
 		if(slideMode===V.Constant.STANDARD){
 			&#x2F;&#x2F;Add a new slide to the presentation
 
-			V.Editor.Slides.addSlide(slide);
-			
-			&#x2F;&#x2F;currentSlide number is next slide
-			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-
-			if(type===V.Constant.STANDARD){
-				V.Editor.Tools.addTooltipsToSlide($(&quot;.slides article&quot;).filter(&quot;:last&quot;));
+			switch(type){
+				case V.Constant.STANDARD:
+					var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
+					var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
+					break;
+				case V.Constant.FLASHCARD:
+					var slide = $(V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1));
+					break;
+				case V.Constant.VTOUR:
+					break;
+				default:
+					break;
 			}
 
-			V.Editor.Slides.redrawSlides();		
-			V.Editor.Thumbnails.redrawThumbnails();
-			setTimeout(function(){
-				V.Slides.lastSlide();
-			}, 300);
-
-			V.Debugging.log(&quot;Add a slide to the presentation&quot;);
+			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
 			&#x2F;&#x2F;Add a new subslide to a smartcard (flashcard or virtual tour)
-			V.Debugging.log(&quot;Add a subslide to a smartcard&quot;);
+
+			var slideset = V.Slides.getCurrentSlide();
+
+			&#x2F;&#x2F;Add a subslide (slide[type=&#x27;standard&#x27;]) to a slideset
+			if((type === V.Constant.STANDARD)&amp;&amp;(V.Editor.Slideset.isSlideset(slideset))){
+				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
+				var subslide = V.Editor.Dummies.getDummyForSubslide(slideset,template);
+				V.Editor.Slides.addSubslide(slideset,subslide);
+			}
+
 		}
 
+		$.fancybox.close();
 	}
 
 	&#x2F;**
@@ -432,9 +426,12 @@ VISH.Editor = (function(V,$,undefined){
 					&#x2F;&#x2F;if user has answered &quot;yes&quot;
 					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){
 						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
-						getCurrentArea().html(&quot;&quot;);
-						getCurrentArea().removeAttr(&quot;type&quot;);
-						getCurrentArea().addClass(&quot;editable&quot;);
+						var area = getCurrentArea();
+						area.html(&quot;&quot;);
+						area.removeAttr(&quot;type&quot;);
+						area.addClass(&quot;editable&quot;);
+						V.Editor.Tools.addTooltipToZone(area);
+						selectArea(null);
 					}
 				}
 			}
@@ -445,26 +442,13 @@ VISH.Editor = (function(V,$,undefined){
    * Function called when user delete a slide
    *&#x2F;
 	var onDeleteSlideClicked = function(){
-		var article_to_delete = $(this).parent()[0];
+		article_to_delete = $(this).parent()[0];
 
-		var thumb;
-		switch(V.Slides.getSlideType(article_to_delete)){
-			case V.Constant.STANDARD:
-				thumb = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + $(article_to_delete).attr(&quot;template&quot;) + &quot;.png&quot;; 
-				break;
-			case V.Constant.FLASHCARD:
-				thumb = V.Utils.getSrcFromCSS($(article_to_delete).attr(&quot;avatar&quot;));
-				break;
-			case V.Constant.VTOUR:
-				break;
-			default:
-				thumb = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot; + &quot;default.png&quot;;
-				break;
-		}
-
+		var thumb = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
 		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, thumb);
+
 		$.fancybox(
-		$(&quot;#prompt_form&quot;).html(),
+			$(&quot;#prompt_form&quot;).html(),
 			{
 				&#x27;autoDimensions&#x27;	: false,
 				&#x27;width&#x27;				: 350,
@@ -476,7 +460,11 @@ VISH.Editor = (function(V,$,undefined){
 					&#x2F;&#x2F;if user has answered &quot;yes&quot;
 					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){						
 						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
-						V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+						if(V.Editor.Slides.isSubslide(article_to_delete)){
+							V.Editor.Slides.removeSubslide(article_to_delete);
+						} else {
+							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+						}
 					}
 				}
 			}
@@ -568,27 +556,13 @@ VISH.Editor = (function(V,$,undefined){
 	* function called when entering slide in editor, we have to show the objects
 	*&#x2F;
 	var onSlideEnterEditor = function(e){
-		var slide = e.target;
+		var slide = $(e.target);
 
 		if(V.Editor.Slideset.isSlideset(slide)){
-			V.Editor.Slideset.onEnterSlideset($(slide));
+			V.Editor.Slideset.onEnterSlideset(slide);
 		} else {
 			&#x2F;&#x2F;Standard slide
-
-			if($(e.target).hasClass(&quot;subslide&quot;)){
-				&#x2F;&#x2F;Subslides
-				setTimeout(function(){
-					if($(e.target).hasClass(&#x27;object&#x27;)){
-						V.ObjectPlayer.loadObject($(slide));
-					} else if($(e.target).hasClass(&#x27;snapshot&#x27;)){
-						V.SnapshotPlayer.loadSnapshot($(slide));
-					}
-				},500);
-				V.VideoPlayer.HTML5.playVideos(slide);
-			} else {
-				V.Editor.Utils.Loader.loadObjectsInEditorSlide(slide);
-			}
-
+			V.Editor.Utils.Loader.loadObjectsInEditorSlide(slide);
 			&#x2F;&#x2F;Show objects
 			setTimeout(function(){
 				$(slide).find(&#x27;.object_wrapper&#x27;).show();
@@ -602,27 +576,17 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when leaving slide in editor, we have to hide the objects
 	*&#x2F;
 	var onSlideLeaveEditor = function(e){
-		var slide = e.target;
+		var slide = $(e.target);
 
 		if(V.Editor.Slideset.isSlideset(slide)){
-			V.Editor.Slideset.onLeaveSlideset($(slide));
+			V.Editor.Slideset.onLeaveSlideset(slide);
 		} else {
 			&#x2F;&#x2F;Standard slide
-
-			if($(e.target).hasClass(&quot;subslide&quot;)){
-				&#x2F;&#x2F;Subslides
-				V.VideoPlayer.HTML5.stopVideos(slide);
-				V.ObjectPlayer.unloadObject(slide);
-			} else {
-				V.Editor.Utils.Loader.unloadObjectsInEditorSlide(slide);
-			}
-
+			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(slide);
 			&#x2F;&#x2F;Hide objects
 			$(&#x27;.object_wrapper&#x27;).hide();
 		}
-
 	};
-
 
 	var selectArea = function(area){
 		setCurrentArea(area);
@@ -631,10 +595,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForZone(area);
 	};
 	
-
    &#x2F;**
-	* function to save the presentation
-	*
+	* Function to save the presentation
 	*&#x2F;
 	var savePresentation = function(options){
 		&#x2F;&#x2F;Load all objects

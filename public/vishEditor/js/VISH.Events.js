@@ -113,7 +113,6 @@ VISH.Events = (function(V,$,undefined){
 
 	var unbindViewerEventListeners = function(){
 		if(!bindedEventListeners){
-			console.log("return unbindViewerEventListeners");
 			return;
 		} else {
 			bindedEventListeners = false;

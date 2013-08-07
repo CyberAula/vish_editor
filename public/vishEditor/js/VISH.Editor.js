@@ -473,6 +473,10 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			//Standard slide
 			V.Editor.Utils.Loader.loadObjectsInEditorSlide(slide);
+			//Show objects
+			setTimeout(function(){
+				$(slide).find('.object_wrapper').show();
+			},500);
 		}
 
 		V.Editor.Tools.loadToolsForSlide(slide);

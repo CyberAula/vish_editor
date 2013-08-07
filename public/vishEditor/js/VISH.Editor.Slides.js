@@ -376,7 +376,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		var slideset = $(subslide).parent();
-		V.Editor.Slideset.hideSubslide(subslide);
+		V.Editor.Slideset.closeSubslide(subslide);
 		$(subslide).remove();
 
 		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
