@@ -160,19 +160,12 @@ float: left;
 
 #slides_list img.image_barbutton:active {
 	cursor: url(https://mail.google.com/mail/images/2/openhand.cur) 8 8, move;
-<<<<<<< Updated upstream
 	 background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
 	 border: none;
 	 width: 72%;
 	 padding: 1px;
 	 z-index: 20;
 	 opacity: 1;
-=======
-	background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
-	border: none;
-	width: 72%;
-	padding: 1px;
->>>>>>> Stashed changes
 }
 
 /* 
@@ -199,6 +192,7 @@ float: left;
 #subslides_list img.image_barbutton {
 	height: 55px;
 	border-radius: 5px;
+	border: 1px solid white;
 }
 
 section.slides_editor {
@@ -1710,6 +1704,11 @@ iframe.snapshot_content{
 .selectedSlideThumbnail {
 	opacity: 1 !important;
 	border: 1px solid #005fdd;
+}
+
+.selectedSubslideThumbnail{
+	opacity: 1 !important;
+	border: 1px solid #005fdd !important;
 }
 
 .excursionSelectedInCarrousel, .smartcardSelectedInCarrousel{

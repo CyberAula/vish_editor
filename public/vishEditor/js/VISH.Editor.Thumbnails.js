@@ -192,7 +192,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			var template = $(s).attr('template');
 			var srcURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
 			slideElements += 1;
-			imagesArray.push($("<img id='subslideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "' />"));
+			imagesArray.push($("<img id='subslideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' src='" + srcURL + "' />"));
 			imagesArrayTitles.push(slideElements);
     	});
 
@@ -275,15 +275,22 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var _onClickSubslideElement = function(event){
 		var subslideNumber = $(event.target).attr("slideNumber");
+		selectSubslideThumbnail(subslideNumber);
 		V.Editor.Slideset.showSubslideWithNumber(subslideNumber);
 	}
+
+	var selectSubslideThumbnail = function(no){
+		$("#subslides_list img.image_barbutton").removeClass("selectedSubslideThumbnail");
+		$("#subslides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSubslideThumbnail");
+	};
 
 	return {
 		init              		: init,
 		redrawThumbnails  		: redrawThumbnails,
 		selectThumbnail	  		: selectThumbnail,
 		moveThumbnailsToSlide	: moveThumbnailsToSlide,
-		drawSlidesetThumbnails  : drawSlidesetThumbnails
+		drawSlidesetThumbnails  : drawSlidesetThumbnails,
+		selectSubslideThumbnail	: selectSubslideThumbnail
 	};
 
 }) (VISH, jQuery);

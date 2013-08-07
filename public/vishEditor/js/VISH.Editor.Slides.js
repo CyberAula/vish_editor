@@ -364,6 +364,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
 			//Subslides Thumbnails drawed succesfully
+			V.Editor.Slideset.showSubslide(subslide);
+			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr("slidenumber"));
 		});
 	};
 
