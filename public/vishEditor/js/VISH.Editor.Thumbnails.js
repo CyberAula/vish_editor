@@ -170,9 +170,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	///////////////
 
 	var drawSlidesetThumbnails = function(subslides,successCallback){
-
-		console.log("drawSlidesetThumbnails");
-
 		drawSlidesetThumbnailsCallback = successCallback;
 
 		//Clean previous content
@@ -217,8 +214,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 			//Add events to imgs
 			$(img).click(function(event){
-				// _onClickSlideElement(event);
-				console.log("Click on subslide thumbnail!");
+				_onClickSubslideElement(event);
 			});
 		});
 
@@ -233,6 +229,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var _afterCreateSubslidesScrollbar = function(){
 		// //Add sortable
+		
 		// $( "#" + thumbnailsDivId).sortable({
 		// 	items: 'div.wrapper_barbutton:has(img[action="goToSlide"])',
 		// 	change: function(event, ui) {
@@ -274,6 +271,16 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			drawSlidesetThumbnailsCallback();
 			drawSlidesetThumbnailsCallback = undefined;
 		}
+	}
+
+	var _onClickSubslideElement = function(event){
+		var subslideNumber = $(event.target).attr("slideNumber");
+		var slideset = V.Slides.getCurrentSlide();
+		var subslides = $(slideset).find("article");
+		var subslide = subslides[subslideNumber-1];
+
+		$(subslides).css("display","none");
+		$(subslide).css("display","block");
 	}
 
 	return {
