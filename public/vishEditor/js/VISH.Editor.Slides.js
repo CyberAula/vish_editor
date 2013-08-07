@@ -297,15 +297,13 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var addSlide = function(slide){
-		$('.slides').append(slide);
+		appendSlide(slide);
 
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
 
-		var type = $(slide).attr("type");
-
-		if(type===V.Constant.STANDARD){
-			V.Editor.Tools.addTooltipsToSlide($(".slides article").filter(":last"));
+		if($(slide).attr("type")===V.Constant.STANDARD){
+			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
 		redrawSlides();		
@@ -315,6 +313,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		}, 300);
 	};
+
+	var appendSlide = function(slide){
+		$('.slides').append(slide);
+	}
 
 	var removeSlide = function(slideNumber){
 		var slide = V.Slides.getSlideWithNumber(slideNumber);
@@ -346,9 +348,35 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	// Subslides
 	//////////////
 
+	var isSubslide = function(slide){
+		var parent = $(slide).parent()[0];
+		if(parent){
+			return (parent.tagName==="ARTICLE");
+		} else {
+			return false;
+		}
+	};
+
 	var addSubslide = function(slideset,subslide){ 
 		var subslide = $(subslide).css("display","none");
 		$(slideset).append(subslide);
+		V.Editor.Tools.addTooltipsToSlide(subslide);
+
+		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
+			//Subslides Thumbnails drawed succesfully
+			V.Editor.Slideset.showSubslide(subslide);
+			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr("slidenumber"));
+		});
+	};
+
+	var removeSubslide = function(subslide){
+		if(typeof subslide !== "object"){
+			return;
+		}
+
+		var slideset = $(subslide).parent();
+		V.Editor.Slideset.hideSubslide(subslide);
+		$(subslide).remove();
 
 		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
 			//Subslides Thumbnails drawed succesfully
@@ -363,9 +391,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		moveSlideTo				: moveSlideTo,
 		copySlide				: copySlide,
 		copySlideWithNumber		: copySlideWithNumber,
+		appendSlide				: appendSlide,
 		addSlide 				: addSlide,
-		addSubslide				: addSubslide,
 		removeSlide				: removeSlide,
+		addSubslide				: addSubslide,
+		removeSubslide			: removeSubslide,
+		isSubslide				: isSubslide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 

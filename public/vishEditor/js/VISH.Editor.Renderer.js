@@ -64,7 +64,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		}
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
-		V.Editor.Slides.addSlide(scaffold);
+		V.Editor.Slides.appendSlide(scaffold);
 		V.Editor.Slides.redrawSlides();
 		V.Slides.lastSlide();  //important to get the browser to draw everything
 

@@ -38,6 +38,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when enter in a slideset
 	 */
 	var onEnterSlideset = function(slideset){
+		_loadSlideset(slideset);
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.loadSlideset == "function"){
 			slidesetCreator.loadSlideset(slideset);
@@ -48,10 +49,32 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when leave from a slideset
 	 */
 	var onLeaveSlideset = function(slideset){
+		_unloadSlideset(slideset);
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.unloadSlideset == "function"){
 			slidesetCreator.unloadSlideset(slideset);
 		}
+	}
+
+	/*
+	 * Common actions to all slidesets when load/unload one
+	 */
+	var _loadSlideset = function(slideset){
+		$("#bottomside").show();
+		var slidesetId = $(slideset).attr("id");
+		var subslides = $("#" + slidesetId + " > article");
+		
+		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
+			//Subslides Thumbnails drawed succesfully
+			showSlideset(slideset);
+		});
+	}
+
+	var _unloadSlideset = function(slideset){
+		var slidesetId = $(slideset).attr("id");
+		var subslides = $("#" + slidesetId + " > article");
+		$(subslides).css("display","none");
+		$("#bottomside").hide();
 	}
 
 	/*
@@ -89,7 +112,58 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	}
 
+	var showSlideset = function(slideset){
+		//Show slideset delete and help buttons
+		_showSlideButtons(slideset);
 
+		//Hide subslides
+		var subslides = $(slideset).find("article");
+		$(subslides).css("display","none");
+	}
+
+	var showSubslideWithNumber = function(subslideNumber){
+		var slideset = V.Slides.getCurrentSlide();
+		var subslides = $(slideset).find("article");
+		var subslide = subslides[subslideNumber-1];
+		showSubslide(subslide);
+	}
+
+	var showSubslide = function(subslide){
+		var slideset = $(subslide).parent();
+		var subslides = $(slideset).find("article");
+
+		//Hide slideset delete and help buttons
+		_hideSlideButtons(slideset);
+
+		$(subslides).css("display","none");
+		$(subslide).css("display","block");
+	}
+
+	var hideSubslideWithNumber = function(subslideNumber){
+		var slideset = V.Slides.getCurrentSlide();
+		var subslides = $(slideset).find("article");
+		var subslide = subslides[subslideNumber-1];
+		hideSubslide(subslide);
+	}
+
+	var hideSubslide = function(subslide){
+		var slideset = $(subslide).parent();
+
+		//Show slideset delete and help buttons
+		_showSlideButtons(slideset);
+
+		$(subslide).css("display","none");
+	}
+
+	var _showSlideButtons = function(slide){
+		$(slide).find("div.delete_slide:first").show();
+		$(slide).find("img.help_in_slide:first").show();
+	}
+
+	var _hideSlideButtons = function(slide){
+		$(slide).find("div.delete_slide:first").hide();
+		$(slide).find("img.help_in_slide:first").hide();
+	}
 
 
 	////////////////
@@ -135,14 +209,19 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	return {
-		init 				: init,
-		isSlideset			: isSlideset,
-		getCreatorModule	: getCreatorModule,
-		getModule			: getModule,
-		onEnterSlideset		: onEnterSlideset,
-		onLeaveSlideset		: onLeaveSlideset,
-		prepareToNest		: prepareToNest,
-		undoNestedSlides	: undoNestedSlides
+		init 					: init,
+		isSlideset				: isSlideset,
+		getCreatorModule		: getCreatorModule,
+		getModule				: getModule,
+		onEnterSlideset			: onEnterSlideset,
+		onLeaveSlideset			: onLeaveSlideset,
+		showSlideset			: showSlideset,
+		showSubslideWithNumber 	: showSubslideWithNumber,
+		showSubslide			: showSubslide,
+		hideSubslideWithNumber	: hideSubslideWithNumber,
+		hideSubslide 			: hideSubslide,
+		prepareToNest			: prepareToNest,
+		undoNestedSlides		: undoNestedSlides
 	};
 
 }) (VISH, jQuery);

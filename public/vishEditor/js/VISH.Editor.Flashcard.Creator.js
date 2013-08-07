@@ -10,18 +10,14 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	}
 
 	var loadSlideset = function(fc){
-		$("#bottomside").show();
+		//Load flashcard
 
-		console.log("loadSlideset flashcard");
-		console.log(fc);
 		var fcId = $(fc).attr("id");
 		var subslides = $("#" + fcId + " > article");
-		console.log("subslides");
-		console.log(subslides);
 	}
 
 	var unloadSlideset = function(fc){
-		$("#bottomside").hide();
+		//Unload flashcard
 	}
 
 	// /*

@@ -135,7 +135,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var addTooltipsToSlide = function(slide){
-		var zones = slide.find("div.vezone");
+		var zones = $(slide).find("div.vezone");
 		for (var i = 0; i < zones.length; i++) {
 			addTooltipToZone(zones[i]);
 		};

@@ -25,6 +25,8 @@ VISH.Editor = (function(V,$,undefined){
 
 	//Content mode to add slides
 	var contentAddModeForSlides = V.Constant.NONE;
+	//Tmp var to store slide to delete
+	var article_to_delete;
 
 
 	/**
@@ -189,10 +191,10 @@ VISH.Editor = (function(V,$,undefined){
 			switch(type){
 				case V.Constant.STANDARD:
 					var template = $($(event.target).parent()).attr('template');
-					var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
+					var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
 					break;
 				case V.Constant.FLASHCARD:
-					var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
+					var slide = $(V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1));
 					break;
 				case V.Constant.VTOUR:
 					break;
@@ -350,7 +352,7 @@ VISH.Editor = (function(V,$,undefined){
    * Function called when user delete a slide
    */
 	var onDeleteSlideClicked = function(){
-		var article_to_delete = $(this).parent()[0];
+		article_to_delete = $(this).parent()[0];
 
 		var thumb;
 		switch(V.Slides.getSlideType(article_to_delete)){
@@ -366,8 +368,8 @@ VISH.Editor = (function(V,$,undefined){
 				thumb = V.ImagesPath + "templatesthumbs/" + "default.png";
 				break;
 		}
-
 		$("#image_template_prompt").attr("src", thumb);
+
 		$.fancybox(
 			$("#prompt_form").html(),
 			{
@@ -381,7 +383,11 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){						
 						$("#prompt_answer").val("false");
-						V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+						if(V.Editor.Slides.isSubslide(article_to_delete)){
+							V.Editor.Slides.removeSubslide(article_to_delete);
+						} else {
+							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+						}
 					}
 				}
 			}
