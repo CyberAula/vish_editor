@@ -61,7 +61,11 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 		if($(fc).attr("type")===V.Constant.FLASHCARD){
 			$(fc).css("background-image", "url("+contentToAdd+")");
+			$(fc).attr("avatar", "url("+contentToAdd+")");
 			$(fc).find("div.change_bg_button").hide();
+
+			//Update thumbnails
+			V.Editor.Slideset.updateThumbnails(fc);
 		}
 
 		$.fancybox.close();

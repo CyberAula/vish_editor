@@ -17,6 +17,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
+			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
 			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
@@ -36,7 +37,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
-			// $(document).on('click','.close_subslide', _onFlashcardCloseSlideClicked);
 
 			// Slide Enter and Leave events
 			$('article').live('slideenter', V.Editor.onSlideEnterEditor);

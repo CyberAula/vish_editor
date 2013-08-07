@@ -147,6 +147,7 @@ float: left;
 #slides_list img.image_barbutton {
 	display: block;
 	width: 73%;
+	height: 81px;
 	margin: auto;
 	border-radius: 11px;
 	opacity: 0.7;
@@ -185,6 +186,7 @@ float: left;
 }
 
 #subslide_selected img.image_barbutton {
+	width: 85px;
 	height: 65px;
 	margin-top: 3px;
 }
@@ -1058,10 +1060,11 @@ table.metadata td div.height_wrapper_description{
 	overflow-x: visible;
 }
 
-.delete_img{
+img.delete_img{
 	margin-left: 25px;
 	margin-top: 30px;
 	height: 50px;
+	width: 65px;
 }
 
 .deltext{
