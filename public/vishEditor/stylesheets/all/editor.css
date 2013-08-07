@@ -223,7 +223,7 @@ section.slides_editor > article {
 div.zoneSelected{
 	cursor: auto;
 	background: url(/vishEditor/images/grid.png) repeat;
-	border: 1px solid #0096fd;
+	border: 1px solid #0096fd !important;
 	outline: 0;
 }
 
