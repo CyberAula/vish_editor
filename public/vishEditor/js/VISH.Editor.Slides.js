@@ -297,7 +297,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var addSlide = function(slide){
-		$('.slides').append(slide);
+		appendSlide(slide);
 
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
@@ -313,6 +313,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		}, 300);
 	};
+
+	var appendSlide = function(slide){
+		$('.slides').append(slide);
+	}
 
 	var removeSlide = function(slideNumber){
 		var slide = V.Slides.getSlideWithNumber(slideNumber);
@@ -368,9 +372,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
-		console.log("remove subslide");
-		console.log(subslide);
-
 		var slideset = $(subslide).parent();
 		V.Editor.Slideset.hideSubslide(subslide);
 		$(subslide).remove();
@@ -388,6 +389,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		moveSlideTo				: moveSlideTo,
 		copySlide				: copySlide,
 		copySlideWithNumber		: copySlideWithNumber,
+		appendSlide				: appendSlide,
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
 		addSubslide				: addSubslide,

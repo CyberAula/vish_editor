@@ -38,6 +38,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when enter in a slideset
 	 */
 	var onEnterSlideset = function(slideset){
+		_loadSlideset(slideset);
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.loadSlideset == "function"){
 			slidesetCreator.loadSlideset(slideset);
@@ -48,10 +49,32 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when leave from a slideset
 	 */
 	var onLeaveSlideset = function(slideset){
+		_unloadSlideset(slideset);
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.unloadSlideset == "function"){
 			slidesetCreator.unloadSlideset(slideset);
 		}
+	}
+
+	/*
+	 * Common actions to all slidesets when load/unload one
+	 */
+	var _loadSlideset = function(slideset){
+		$("#bottomside").show();
+		var slidesetId = $(slideset).attr("id");
+		var subslides = $("#" + slidesetId + " > article");
+		
+		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
+			//Subslides Thumbnails drawed succesfully
+			showSlideset(slideset);
+		});
+	}
+
+	var _unloadSlideset = function(slideset){
+		var slidesetId = $(slideset).attr("id");
+		var subslides = $("#" + slidesetId + " > article");
+		$(subslides).css("display","none");
+		$("#bottomside").hide();
 	}
 
 	/*
@@ -87,6 +110,15 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			default:
 				return null;
 		}
+	}
+
+	var showSlideset = function(slideset){
+		//Show slideset delete and help buttons
+		_showSlideButtons(slideset);
+
+		//Hide subslides
+		var subslides = $(slideset).find("article");
+		$(subslides).css("display","none");
 	}
 
 	var showSubslideWithNumber = function(subslideNumber){
@@ -183,6 +215,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		getModule				: getModule,
 		onEnterSlideset			: onEnterSlideset,
 		onLeaveSlideset			: onLeaveSlideset,
+		showSlideset			: showSlideset,
 		showSubslideWithNumber 	: showSubslideWithNumber,
 		showSubslide			: showSubslide,
 		hideSubslideWithNumber	: hideSubslideWithNumber,
