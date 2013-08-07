@@ -179,47 +179,44 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onAddSlide = function(event,type){
-		switch(type){
-			case V.Constant.STANDARD:
-				var template = $($(event.target).parent()).attr('template');
-				var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
-				break;
-			case V.Constant.FLASHCARD:
-				var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
-				break;
-			case V.Constant.VTOUR:
-				break;
-			default:
-				break;
-		}
 
 		//Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
-		$.fancybox.close();
 
 		if(slideMode===V.Constant.STANDARD){
 			//Add a new slide to the presentation
 
-			V.Editor.Slides.addSlide(slide);
-			
-			//currentSlide number is next slide
-			V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
-
-			if(type===V.Constant.STANDARD){
-				V.Editor.Tools.addTooltipsToSlide($(".slides article").filter(":last"));
+			switch(type){
+				case V.Constant.STANDARD:
+					var template = $($(event.target).parent()).attr('template');
+					var slide = V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1);
+					break;
+				case V.Constant.FLASHCARD:
+					var slide = V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1);
+					break;
+				case V.Constant.VTOUR:
+					break;
+				default:
+					break;
 			}
 
-			V.Editor.Slides.redrawSlides();		
-			V.Editor.Thumbnails.redrawThumbnails();
-			setTimeout(function(){
-				V.Slides.lastSlide();
-			}, 300);
+			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
 			//Add a new subslide to a smartcard (flashcard or virtual tour)
-			V.Debugging.log("Add a subslide to a smartcard");
+
+			var slideset = V.Slides.getCurrentSlide();
+
+			//Add a subslide (slide[type='standard']) to a slideset
+			if((type === V.Constant.STANDARD)&&(V.Editor.Slideset.isSlideset(slideset))){
+				var template = $($(event.target).parent()).attr('template');
+				var subslide = V.Editor.Dummies.getDummyForSubslide(slideset,template);
+				V.Editor.Slides.addSubslide(slideset,subslide);
+			}
+
 		}
 
+		$.fancybox.close();
 	}
 
 	/**
