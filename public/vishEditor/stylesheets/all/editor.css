@@ -160,12 +160,19 @@ float: left;
 
 #slides_list img.image_barbutton:active {
 	cursor: url(https://mail.google.com/mail/images/2/openhand.cur) 8 8, move;
+<<<<<<< Updated upstream
 	 background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
 	 border: none;
 	 width: 72%;
 	 padding: 1px;
 	 z-index: 20;
 	 opacity: 1;
+=======
+	background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
+	border: none;
+	width: 72%;
+	padding: 1px;
+>>>>>>> Stashed changes
 }
 
 /* 
@@ -202,9 +209,13 @@ section.slides_editor > article:not(.current) {
 	display: none;
 }
 
-section.slides_editor > article, section.slides_editor > article > article {
+section.slides_editor > article {
 	left: 58% !important;
 	top: 52.5% !important;
+}
+
+section.slides_editor > article > article {
+	top: 54% !important;
 }
 
 div.zoneSelected {

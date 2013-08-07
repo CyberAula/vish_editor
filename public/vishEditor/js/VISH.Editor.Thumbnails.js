@@ -275,12 +275,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var _onClickSubslideElement = function(event){
 		var subslideNumber = $(event.target).attr("slideNumber");
-		var slideset = V.Slides.getCurrentSlide();
-		var subslides = $(slideset).find("article");
-		var subslide = subslides[subslideNumber-1];
-
-		$(subslides).css("display","none");
-		$(subslide).css("display","block");
+		V.Editor.Slideset.showSubslideWithNumber(subslideNumber);
 	}
 
 	return {

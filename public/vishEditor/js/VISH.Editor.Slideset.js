@@ -89,7 +89,49 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	}
 
+	var showSubslideWithNumber = function(subslideNumber){
+		var slideset = V.Slides.getCurrentSlide();
+		var subslides = $(slideset).find("article");
+		var subslide = subslides[subslideNumber-1];
+		showSubslide(subslide);
+	}
 
+	var showSubslide = function(subslide){
+		var slideset = $(subslide).parent();
+		var subslides = $(slideset).find("article");
+
+		//Hide slideset delete and help buttons
+		_hideSlideButtons(slideset);
+
+		$(subslides).css("display","none");
+		$(subslide).css("display","block");
+	}
+
+	var hideSubslideWithNumber = function(subslideNumber){
+		var slideset = V.Slides.getCurrentSlide();
+		var subslides = $(slideset).find("article");
+		var subslide = subslides[subslideNumber-1];
+		hideSubslide(subslide);
+	}
+
+	var hideSubslide = function(subslide){
+		var slideset = $(subslide).parent();
+
+		//Show slideset delete and help buttons
+		_showSlideButtons(slideset);
+
+		$(subslide).css("display","none");
+	}
+
+	var _showSlideButtons = function(slide){
+		$(slide).find("div.delete_slide:first").show();
+		$(slide).find("img.help_in_slide:first").show();
+	}
+
+	var _hideSlideButtons = function(slide){
+		$(slide).find("div.delete_slide:first").hide();
+		$(slide).find("img.help_in_slide:first").hide();
+	}
 
 
 	////////////////
@@ -135,14 +177,18 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	return {
-		init 				: init,
-		isSlideset			: isSlideset,
-		getCreatorModule	: getCreatorModule,
-		getModule			: getModule,
-		onEnterSlideset		: onEnterSlideset,
-		onLeaveSlideset		: onLeaveSlideset,
-		prepareToNest		: prepareToNest,
-		undoNestedSlides	: undoNestedSlides
+		init 					: init,
+		isSlideset				: isSlideset,
+		getCreatorModule		: getCreatorModule,
+		getModule				: getModule,
+		onEnterSlideset			: onEnterSlideset,
+		onLeaveSlideset			: onLeaveSlideset,
+		showSubslideWithNumber 	: showSubslideWithNumber,
+		showSubslide			: showSubslide,
+		hideSubslideWithNumber	: hideSubslideWithNumber,
+		hideSubslide 			: hideSubslide,
+		prepareToNest			: prepareToNest,
+		undoNestedSlides		: undoNestedSlides
 	};
 
 }) (VISH, jQuery);
