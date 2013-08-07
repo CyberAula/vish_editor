@@ -99,9 +99,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$(&#x27;#presentation_title&#x27;).val(presentation.title);
 		$(&#x27;#presentation_description&#x27;).val(presentation.description);
 		$(&#x27;#presentation_avatar&#x27;).val(presentation.avatar);
-
-		&#x2F;&#x2F;also the pedagogical fields if any
-		
+	
 		if(presentation.age_range){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
 			var end_range = presentation.age_range.substring(presentation.age_range.indexOf(&quot;-&quot;)+2);
@@ -139,7 +137,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else {
 				var isSlideset = V.Editor.Slideset.isSlideset(type);
 				if(isSlideset){
-					_renderSlideset();
+					_renderSlideset(slides[i], i+1);
 				}
 			}
 		}
@@ -156,23 +154,23 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		}
 		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
 
-		V.Editor.Slides.addSlide(scaffold);
+		V.Editor.Slides.appendSlide(scaffold);
 		V.Editor.Slides.redrawSlides();
 		V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
 
 		for(el in slide.elements){
 			var areaId = slide.elements[el].id;
-			var area = $(&quot;div#&quot; + areaId + &quot;[areaid=&#x27;&quot; + slide.elements[el].areaid +&quot;&#x27;]&quot;);
+			var area = $(&quot;div#&quot; + areaId + &quot;[areaid=&#x27;&quot; + slide.elements[el].areaid +&quot;&#x27;]&quot;);		
 			
 			if(area.length === 0){
 				continue; &#x2F;&#x2F;with first version presentations we had different template names and some fails, this condition avoid that
 			}
 
-			if(slide.elements[el].type === &quot;text&quot;){
+			if(slide.elements[el].type === V.Constant.TEXT){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  &#x2F;&#x2F;in this case there is no event, so we pass a new empty object
-			} else if(slide.elements[el].type === &quot;image&quot;){
+			} else if(slide.elements[el].type === V.Constant.IMAGE){
 				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink);
-			}	else if(slide.elements[el].type === &quot;video&quot;){
+			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				var options = [];
 				options[&#x27;poster&#x27;] = slide.elements[el].poster;
 				options[&#x27;autoplay&#x27;] = slide.elements[el].autoplay;
@@ -181,17 +179,23 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 					sourcesArray.push([source.src, source.type]);
 				});
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
-			}	else if(slide.elements[el].type === &quot;object&quot;){				
+			} else if(slide.elements[el].type === V.Constant.OBJECT){				
 				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].zoomInStyle);
-			} else if(slide.elements[el].type === &quot;snapshot&quot;){
+			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
-			} else if(slide.elements[el].type === &quot;quiz&quot;){
+			} else if(slide.elements[el].type === V.Constant.QUIZ){
 				V.Editor.Quiz.draw(area,slide.elements[el]);
 			}
+
+			&#x2F;&#x2F;Add tooltips to area
+			var hideTooltip = true;
+			if(V.Editor.isZoneEmpty(area)){
+				hideTooltip = false;
+				&#x2F;&#x2F;Give class &quot;editable&quot; to the empty areas
+				$(area).addClass(&quot;editable&quot;);
+			}
+			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
 		}
-	
-		&#x2F;&#x2F;finally give class &quot;editable&quot; to the empty areas
-		$(&quot;div.selectable:empty&quot;).addClass(&quot;editable&quot;);		
 	};
 	
 	&#x2F;**
@@ -199,8 +203,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 *&#x2F;
 	var _renderSlideset = function(slide, slideNumber){
 		&#x2F;&#x2F;TODO
-		console.log(&quot;_renderSlideset&quot;);
-		console.log(slide);
+		&#x2F;&#x2F; console.log(&quot;_renderSlideset&quot;);
+		&#x2F;&#x2F; console.log(slide);
 	}
 
 

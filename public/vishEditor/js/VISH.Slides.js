@@ -211,12 +211,12 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Slide events */
 
-	var triggerEnterEvent = function (no) {  
+	var triggerEnterEvent = function (no) {
 		var el = _getSlide(no);
 		if (!el) {
 			return;
 		}
-		_triggerEnterEventById(el.id);
+		triggerEnterEventById(el.id);
 	};
 
 	var triggerLeaveEvent = function(no) {
@@ -225,10 +225,10 @@ VISH.Slides = (function(V,$,undefined){
 			return;
 		}
 
-		_triggerLeaveEventById(el.id);	  
+		triggerLeaveEventById(el.id);
 	};
 
-	var _triggerEnterEventById = function (slide_id) {
+	var triggerEnterEventById = function (slide_id) {
 		var el = $("#" +slide_id)[0];
 
 		var onEnter = el.getAttribute('onslideenter');
@@ -241,7 +241,7 @@ VISH.Slides = (function(V,$,undefined){
 		el.dispatchEvent(evt);
 	};
 
-	var _triggerLeaveEventById = function(slide_id) {
+	var triggerLeaveEventById = function(slide_id) {
 		var el = $("#" + slide_id)[0];
 
 		var onLeave = el.getAttribute('onslideleave');
@@ -390,7 +390,7 @@ VISH.Slides = (function(V,$,undefined){
 
   		_onOpenSubslide(slide_id);
 		$("#" + slide_id).show();
-		_triggerEnterEventById(slide_id);
+		triggerEnterEventById(slide_id);
 
 		//Notify
 		var params = new Object();
@@ -414,7 +414,7 @@ VISH.Slides = (function(V,$,undefined){
 
   		_onCloseSubslide(slide_id);
 		$("#"+slide_id).hide();
-		_triggerLeaveEventById(slide_id);	
+		triggerLeaveEventById(slide_id);	
 
 		//Notify
 		var params = new Object();
@@ -486,7 +486,9 @@ VISH.Slides = (function(V,$,undefined){
 			closeAllSlides			: closeAllSlides,
 			isSlideset				: isSlideset,
 			triggerEnterEvent 		: triggerEnterEvent,
-			triggerLeaveEvent 		: triggerLeaveEvent
+			triggerEnterEventById	: triggerEnterEventById,
+			triggerLeaveEvent 		: triggerLeaveEvent,
+			triggerLeaveEventById	: triggerLeaveEventById
 	};
 
 }) (VISH,jQuery);

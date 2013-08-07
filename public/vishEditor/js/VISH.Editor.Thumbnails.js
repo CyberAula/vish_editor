@@ -26,35 +26,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		var slideElements = 0;
 		$('.slides > article').each(function(index,s){
-
-		var srcURL;
-
-		switch($(s).attr('type')){
-			case V.Constant.STANDARD:
-				var template = $(s).attr('template');
-				srcURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
-				break;
-			case V.Constant.FLASHCARD:
-				var avatar = $(s).attr('avatar');
-				if(avatar){
-					srcURL = V.Utils.getSrcFromCSS($(s).attr('avatar'));
-				} else {
-					srcURL = V.ImagesPath + "templatesthumbs/flashcard_template.png";
-				}
-				break;
-			case V.Constant.VTOUR:
-				srcURL = V.ImagesPath + "templatesthumbs/tVTour.png";
-				break;
-			default:
-				break;
-		}
-
+			var srcURL = getThumbnailURL(s);
 			if(srcURL){
 				slideElements += 1;
 				imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "' />"));
 				imagesArrayTitles.push(slideElements);
 			}
-
     	});
 
 		var options = {};
@@ -163,7 +140,39 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
 	}
   
+	var getThumbnailForSlide = function(slide){
+		var slidenumber = $(slide).attr("slidenumber");
+		return $("#slides_list img.image_barbutton[slideNumber=" + slidenumber + "]");
+	}
 
+	var getThumbnailForSubslide = function(subslide){
+		var slidenumber = $(subslide).attr("slidenumber");
+		return $("#subslides_list img.image_barbutton[slideNumber=" + slidenumber + "]");
+	}
+
+	var getThumbnailURL = function(slide){
+		var thumbnailURL;
+		switch($(slide).attr('type')){
+			case V.Constant.STANDARD:
+				var template = $(slide).attr('template');
+				thumbnailURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
+				break;
+			case V.Constant.FLASHCARD:
+				var avatar = $(slide).attr('avatar');
+				if(avatar){
+					thumbnailURL = V.Utils.getSrcFromCSS($(slide).attr('avatar'));
+				} else {
+					thumbnailURL = V.ImagesPath + "templatesthumbs/flashcard_template.png";
+				}
+				break;
+			case V.Constant.VTOUR:
+				thumbnailURL = V.ImagesPath + "templatesthumbs/tVTour.png";
+				break;
+			default:
+				break;
+		}
+		return thumbnailURL;
+	}
 
 	////////////////
 	// Slideset Thumbnails
@@ -275,8 +284,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var _onClickSubslideElement = function(event){
 		var subslideNumber = $(event.target).attr("slideNumber");
-		selectSubslideThumbnail(subslideNumber);
-		V.Editor.Slideset.showSubslideWithNumber(subslideNumber);
+		V.Editor.Slideset.openSubslideWithNumber(subslideNumber);
 	}
 
 	var selectSubslideThumbnail = function(no){
@@ -290,7 +298,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		selectThumbnail	  		: selectThumbnail,
 		moveThumbnailsToSlide	: moveThumbnailsToSlide,
 		drawSlidesetThumbnails  : drawSlidesetThumbnails,
-		selectSubslideThumbnail	: selectSubslideThumbnail
-	};
+		selectSubslideThumbnail	: selectSubslideThumbnail,
+		getThumbnailURL			: getThumbnailURL,
+		getThumbnailForSlide 	: getThumbnailForSlide,
+		getThumbnailForSubslide : getThumbnailForSubslide
+	}
 
 }) (VISH, jQuery);

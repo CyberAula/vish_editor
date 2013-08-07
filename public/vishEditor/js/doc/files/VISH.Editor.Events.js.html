@@ -107,6 +107,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
+			$(document).on(&#x27;click&#x27;, &#x27;#subslide_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
 			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, V.Editor.Tools.Menu.onSettings); 
 			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Tools.Menu.onPedagogicalButtonClicked);
@@ -126,7 +127,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
 			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
-			&#x2F;&#x2F; $(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, _onFlashcardCloseSlideClicked);
 
 			&#x2F;&#x2F; Slide Enter and Leave events
 			$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;, V.Editor.onSlideEnterEditor);

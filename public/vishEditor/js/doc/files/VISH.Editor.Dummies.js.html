@@ -121,6 +121,14 @@ VISH.Editor.Dummies = (function(V,undefined){
 		return _replaceIds(dummy, slideNumber);
 	};
 
+	var getDummyForSubslide = function(slideset,template){
+		var dummy = dummies[parseInt(template,10)-1];
+		var slidesetId = $(slideset).attr(&quot;id&quot;);
+		var subslideId = V.Utils.getId(slidesetId + &quot;_article&quot;);
+		var slideNumber = $(slideset).find(&quot;article&quot;).length + 1;
+		return _replaceIds(dummy, slideNumber, subslideId);
+	};
+
     &#x2F;*
 	 *	Function to get a existing slide (in string format)
 	 *&#x2F;
@@ -176,6 +184,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 	return {
 		init				: init,
 		getDummy			: getDummy,
+		getDummyForSubslide	: getDummyForSubslide,
 		getScaffold 		: getScaffold, 
 		getScaffoldForSlide : getScaffoldForSlide
 	};
