@@ -66,6 +66,7 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 		V.Utils.loadDeviceCSS();
+		V.Editor.I18n.init(options.lang);
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
 		V.Editor.Themes.init();
@@ -124,7 +125,6 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		
 		//Init submodules
-		V.Editor.I18n.init(options.lang);
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
@@ -193,9 +193,6 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 
-		console.log("contentAddMode");
-		console.log(contentAddModeForSlides);
-
 		//Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
 		$.fancybox.close();
@@ -217,8 +214,6 @@ VISH.Editor = (function(V,$,undefined){
 			setTimeout(function(){
 				V.Slides.lastSlide();
 			}, 300);
-
-			V.Debugging.log("Add a slide to the presentation");
 
 		} else if(slideMode===V.Constant.SLIDESET){
 			//Add a new subslide to a smartcard (flashcard or virtual tour)
@@ -342,9 +337,12 @@ VISH.Editor = (function(V,$,undefined){
 					//if user has answered "yes"
 					if($("#prompt_answer").val() ==="true"){
 						$("#prompt_answer").val("false");
-						getCurrentArea().html("");
-						getCurrentArea().removeAttr("type");
-						getCurrentArea().addClass("editable");
+						var area = getCurrentArea();
+						area.html("");
+						area.removeAttr("type");
+						area.addClass("editable");
+						V.Editor.Tools.addTooltipToZone(area);
+						selectArea(null);
 					}
 				}
 			}
@@ -374,7 +372,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		$("#image_template_prompt").attr("src", thumb);
 		$.fancybox(
-		$("#prompt_form").html(),
+			$("#prompt_form").html(),
 			{
 				'autoDimensions'	: false,
 				'width'				: 350,

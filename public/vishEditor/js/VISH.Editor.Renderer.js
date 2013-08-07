@@ -9,9 +9,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		$('#presentation_title').val(presentation.title);
 		$('#presentation_description').val(presentation.description);
 		$('#presentation_avatar').val(presentation.avatar);
-
-		//also the pedagogical fields if any
-		
+	
 		if(presentation.age_range){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
 			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
@@ -49,7 +47,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			} else {
 				var isSlideset = V.Editor.Slideset.isSlideset(type);
 				if(isSlideset){
-					_renderSlideset();
+					_renderSlideset(slides[i], i+1);
 				}
 			}
 		}
@@ -72,17 +70,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		for(el in slide.elements){
 			var areaId = slide.elements[el].id;
-			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");
+			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");		
 			
 			if(area.length === 0){
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
 
-			if(slide.elements[el].type === "text"){
+			if(slide.elements[el].type === V.Constant.TEXT){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
-			} else if(slide.elements[el].type === "image"){
+			} else if(slide.elements[el].type === V.Constant.IMAGE){
 				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink);
-			}	else if(slide.elements[el].type === "video"){
+			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				var options = [];
 				options['poster'] = slide.elements[el].poster;
 				options['autoplay'] = slide.elements[el].autoplay;
@@ -91,17 +89,23 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 					sourcesArray.push([source.src, source.type]);
 				});
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
-			}	else if(slide.elements[el].type === "object"){				
+			} else if(slide.elements[el].type === V.Constant.OBJECT){				
 				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].zoomInStyle);
-			} else if(slide.elements[el].type === "snapshot"){
+			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
-			} else if(slide.elements[el].type === "quiz"){
+			} else if(slide.elements[el].type === V.Constant.QUIZ){
 				V.Editor.Quiz.draw(area,slide.elements[el]);
 			}
+
+			//Add tooltips to area
+			var hideTooltip = true;
+			if(V.Editor.isZoneEmpty(area)){
+				hideTooltip = false;
+				//Give class "editable" to the empty areas
+				$(area).addClass("editable");
+			}
+			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
 		}
-	
-		//finally give class "editable" to the empty areas
-		$("div.selectable:empty").addClass("editable");		
 	};
 	
 	/**
@@ -109,8 +113,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 */
 	var _renderSlideset = function(slide, slideNumber){
 		//TODO
-		console.log("_renderSlideset");
-		console.log(slide);
+		// console.log("_renderSlideset");
+		// console.log(slide);
 	}
 
 

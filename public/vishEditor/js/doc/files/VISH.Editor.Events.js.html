@@ -106,6 +106,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			var presentation = V.Editor.getPresentation();
 
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
+			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
 			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, V.Editor.Tools.Menu.onSettings); 
 			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Tools.Menu.onPedagogicalButtonClicked);
@@ -145,11 +146,18 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;height&#x27;: 600,
 				&#x27;padding&#x27;: 0,
 				&quot;onStart&quot;  : function(data) {
+					var slidesAddMode = V.Editor.getContentAddMode();
+					if(slidesAddMode===V.Constant.NONE){
+						V.Editor.setContentAddMode(V.Constant.STANDARD);
+					}
 					var clickedZoneId = $(data).attr(&quot;zone&quot;);
 					V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
 					V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+				},
+				&quot;onClosed&quot;  : function(data) {
+					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
-			});
+			});	
 
 			&#x2F;&#x2F; fancybox to create a new quiz		
 			$(&quot;a#addQuizFancybox&quot;).fancybox({
@@ -214,11 +222,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
 				&#x27;height&#x27;: 600,
 				&#x27;padding&#x27; : 0,
-				&quot;onStart&quot;  : function(data) {						
+				&quot;onStart&quot;  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.FLASHCARD);
 					V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
 				},
-				&quot;onClosed&quot;  : function(data) {				
+				&quot;onClosed&quot;  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.NONE);
 				}
 			});
@@ -250,19 +258,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;vtour
-		$(document).on(&#x27;click&#x27;,&#x27;#help_vtour&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
-		});
-
 		&#x2F;&#x2F;template
-		$(document).on(&#x27;click&#x27;,&#x27;.help_in_template&#x27;, function(){			
+		$(document).on(&#x27;click&#x27;,&#x27;.help_in_template&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;template_help&#x27;, &#x27;bottom&#x27;);
 		});
 
 		&#x2F;&#x2F;flashcard
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_flashcard&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;vtour
+		$(document).on(&#x27;click&#x27;,&#x27;#help_vtour&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;add slides

@@ -15,7 +15,7 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
 	height: 84%;
 }
 
-.slides > article > div.grey_background {
+.slides > article > div.vezone {
   background-color: rgba(100, 100, 100, 0.4);
 }
 

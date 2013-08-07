@@ -417,6 +417,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
 	};
 
+	var insertSubslide = function(){
+		V.Editor.setContentAddMode(V.Constant.SLIDESET);
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+	};
+
 	var insertJSON = function(){
 		$(&quot;#addJSONFancybox&quot;).trigger(&#x27;click&#x27;);
 	};
@@ -454,6 +460,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertPresentation				: insertPresentation,
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
+		insertSubslide					: insertSubslide,
 		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,

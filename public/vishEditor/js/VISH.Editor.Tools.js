@@ -135,15 +135,19 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var addTooltipsToSlide = function(slide){
-		var zones = slide.find(".editable");
+		var zones = slide.find("div.vezone");
 		for (var i = 0; i < zones.length; i++) {
-			addTooltipToZone($(slide.find(".editable")[i]));
+			addTooltipToZone(zones[i]);
 		};
 	};
 
-	var addTooltipToZone = function(zone){
-		var tooltip = "<span class='zone_tooltip'>"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
-		zone.html(tooltip);
+	var addTooltipToZone = function(zone,hidden){
+		var style = "";
+		if(hidden === true){
+			style = "style='display:none'";
+		}
+		var tooltip = "<span class='zone_tooltip' " + style + " >"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
+		$(zone).append(tooltip);
 	};
 
 	var cleanZoneTools = function(zone){
