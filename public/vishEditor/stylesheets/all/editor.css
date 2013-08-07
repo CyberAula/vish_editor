@@ -166,11 +166,13 @@ font-family: 'Open Sans', sans-serif;
 	width: 73%;
 	margin: auto;
 	border-radius: 11px;
+	opacity: 0.7;
 }
 
 #slides_list img.image_barbutton:hover{
 	cursor:pointer;
 	border: 2px solid #357ebd;
+	opacity: 0.9;
 }
 
 #slides_list img.image_barbutton:active{
@@ -179,6 +181,8 @@ font-family: 'Open Sans', sans-serif;
 	 border: none;
 	 width: 72%;
 	 padding: 1px;
+	 z-index: 20;
+	 opacity: 1;
 }
 
 /* 
@@ -225,6 +229,8 @@ div.zoneSelected{
 	background: url(/vishEditor/images/grid.png) repeat;
 	border: 1px solid #0096fd !important;
 	outline: 0;
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(211, 211, 211, 0.1);
+	box-shadow: inset 1px 1px 1px 1px rgba(211, 211, 211, 0.1);
 }
 
 div.zoneUnselected{
@@ -1708,7 +1714,7 @@ iframe.snapshot_content{
 }
 
 .selectedSlideThumbnail {
-	opacity: 1.0 !important;
+	opacity: 1 !important;
 	border: 1px solid #005fdd;
 }
 
