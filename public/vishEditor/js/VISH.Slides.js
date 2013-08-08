@@ -224,18 +224,11 @@ VISH.Slides = (function(V,$,undefined){
 		if (!el) {    
 			return;
 		}
-
 		triggerLeaveEventById(el.id);
 	};
 
 	var triggerEnterEventById = function (slide_id) {
 		var el = $("#" +slide_id)[0];
-
-		var onEnter = el.getAttribute('onslideenter');
-		if (onEnter) {
-			new Function(onEnter).call(el);
-		}
-
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideenter', true, true);
 		el.dispatchEvent(evt);
@@ -243,15 +236,8 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerLeaveEventById = function(slide_id) {
 		var el = $("#" + slide_id)[0];
-
-		var onLeave = el.getAttribute('onslideleave');
-		if (onLeave) {
-			new Function(onLeave).call(el);
-		}
-
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideleave', true, true);
-
 		el.dispatchEvent(evt);
 	};
 
