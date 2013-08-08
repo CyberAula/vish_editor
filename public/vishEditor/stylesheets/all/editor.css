@@ -598,13 +598,15 @@ div.addUrlButtons{
 }
 
 .slidethumb, .quizFancythumb {
-	width: 100px;
-	height: 75px;
-	margin: 16px 11px 6px 16px;
-	float: left;
-	color: black;
-	cursor: pointer;
-	opacity: 0.7;
+width: 99px;
+height: 75px;
+margin: 16px 11px 6px 16px;
+float: left;
+color: black;
+cursor: pointer;
+opacity: 0.8;
+border: 1px solid #ccc;
+border-radius: 10px;
 }
 
 .slidethumb img, .quizFancythumb img {
@@ -613,20 +615,17 @@ div.addUrlButtons{
 	border-radius: 9px;
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
-	opacity: 0.7;
+	opacity: 0.8;
 }
 
 .slidethumb:hover, .quizFancythumb:hover {
-	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
-	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
-	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
-	border-radius: 9px;
-	-webkit-border-radius: 9px;
-	-moz-border-radius: 9px;
-	opacity: 1.0;	
+cursor: pointer;
+border: 1px solid #357ebd;
+opacity: 1;	
 }
 
 .slidethumb:active, .quizFancythumb:active {
+	border: 1px solid #000;
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.0);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -2764,4 +2763,27 @@ fieldset[disabled] .btn-link:focus {
 
 .downimport {
 	width: 86px;
+}
+
+.templateselectlist {
+border: 1px solid #ccc;
+width: 642px;
+height: 302px;
+margin-bottom: -31px;
+border-radius: 6px;
+}
+
+.templateselectlist2 {
+	border: 1px solid #ccc;
+	width: 642px;
+	height: 102px;
+	margin-bottom: -24px;
+	border-radius: 6px;
+}
+
+.select_text {
+font-size: 1.4em;
+font-family: 'Open Sans', sans-serif;
+font-weight: 400;
+margin-bottom: 10px;
 }
