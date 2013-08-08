@@ -178,13 +178,13 @@ float: left;
 	display: inline-block;
 	width: 57px;
 	height: 70px;
-	margin-right: 35px;
+	margin-right: 34px;
 }
 
 #subslides_list p.ptext_barbutton {
 	position: absolute;
 	top: 27%;
-	right: -20%;
+	right: -22%;
 	background: white;
 	padding: 4px;
 	font-family: 'Open Sans', sans-serif;

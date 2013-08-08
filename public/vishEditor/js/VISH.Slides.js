@@ -8,16 +8,14 @@ VISH.Slides = (function(V,$,undefined){
 	
 	var init = function(){
 		_getcurSlideIndexFromHash();
-		$(document).bind('OURDOMContentLoaded', handleDomLoaded);	
 	};
 
 
 	/* Initialization Methods */
 
-	var handleDomLoaded = function () {
+	var redrawSlides = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
-	  updateSlides(true);
-	  $('body').addClass('loaded');
+	  _updateSlides();
 	};
 
 	var _getcurSlideIndexFromHash = function() {
@@ -51,15 +49,8 @@ VISH.Slides = (function(V,$,undefined){
 		});
 	}
 
-	var updateSlides = function(goingRight) {
+	var _updateSlides = function() {
 		updateSlideEls();
-
-		if(goingRight){
-			triggerLeaveEvent(curSlideIndex - 1);
-		} else {
-			triggerLeaveEvent(curSlideIndex + 1);    
-		}
-		triggerEnterEvent(curSlideIndex);
 		_updateHash();
 	};
 
@@ -71,29 +62,29 @@ VISH.Slides = (function(V,$,undefined){
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
-					updateSlideClass(i, 'far-past');
+					updateSlideClass(i+1, 'far-past');
 					break;
 				case curSlideIndex - 1:
-					updateSlideClass(i, 'past');
+					updateSlideClass(i+1, 'past');
 					break;
-				case curSlideIndex: 
-					updateSlideClass(i, 'current');
+				case curSlideIndex:
+					updateSlideClass(i+1, 'current');
 					break;
 				case curSlideIndex + 1:
-					updateSlideClass(i, 'next');      
+					updateSlideClass(i+1, 'next');
 					break;
 				case curSlideIndex + 2:
-					updateSlideClass(i, 'far-next');      
+					updateSlideClass(i+1, 'far-next');
 					break;
 				default:
-					updateSlideClass(i);
+					updateSlideClass(i+1);
 					break;
 			}
 		}
 	}
 
-	var updateSlideClass = function(slideNo, className) {
-		var el = _getSlide(slideNo);
+	var updateSlideClass = function(slideNumber, className) {
+		var el = getSlideWithNumber(slideNumber);
 
 		if (!el) {
 			return;
@@ -134,13 +125,9 @@ VISH.Slides = (function(V,$,undefined){
 		curSlideIndex = newCurSlideIndex;
 	}
 
-	var _getSlide = function(no) {
-		return getSlideWithNumber(no+1);
-	};
-
 	var getSlideWithNumber = function(slideNumber) {
 		var no = slideNumber-1;
-		if ((no < 0) || (no >= slideEls.length)) { 
+		if ((no < 0) || (no >= slideEls.length)) {
 			return null;
 		} else {
 			return slideEls[no];
@@ -206,16 +193,17 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Slide events */
 
-	var triggerEnterEvent = function (no) {
-		var el = _getSlide(no);
+	var triggerEnterEvent = function(slideNumber) {
+		var el = getSlideWithNumber(slideNumber);
+
 		if (!el) {
 			return;
 		}
 		triggerEnterEventById(el.id);
 	};
 
-	var triggerLeaveEvent = function(no) {
-		var el = _getSlide(no);
+	var triggerLeaveEvent = function(slideNumber) {
+		var el = getSlideWithNumber(slideNumber);
 		if (!el) {    
 			return;
 		}
@@ -224,6 +212,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerEnterEventById = function (slide_id) {
 		var el = $("#" +slide_id)[0];
+
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideenter', true, true);
 		el.dispatchEvent(evt);
@@ -231,6 +220,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerLeaveEventById = function(slide_id) {
 		var el = $("#" + slide_id)[0];
+
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideleave', true, true);
 		el.dispatchEvent(evt);
@@ -312,8 +302,10 @@ VISH.Slides = (function(V,$,undefined){
 	var _goToSlide = function(no){
 		var nextSlideIndex = no - 1;
 		if ((nextSlideIndex < slideEls.length)&&(nextSlideIndex >= 0)) {
+			triggerLeaveEvent(curSlideIndex+1);
 			_setCurrentSlideIndex(nextSlideIndex);
-			updateSlides(true);
+			triggerEnterEvent(curSlideIndex+1);
+			_updateSlides();
 		}
 	}
   
@@ -411,9 +403,9 @@ VISH.Slides = (function(V,$,undefined){
 
 	return {	
 			init          			: init,
+			redrawSlides			: redrawSlides,
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
-			updateSlides			: updateSlides,
 			updateSlideEls			: updateSlideEls,
 			getCurrentSlide 		: getCurrentSlide,
 			getCurrentSubSlide 		: getCurrentSubSlide,

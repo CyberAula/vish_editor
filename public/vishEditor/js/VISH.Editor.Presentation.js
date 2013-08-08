@@ -79,7 +79,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		presentationJSON.slides = selectedSlides;
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
-		V.Editor.Slides.redrawSlides();
+		V.Slides.redrawSlides();
 		V.Editor.Thumbnails.redrawThumbnails();
 		V.Slides.lastSlide();
 		//Unload all objects

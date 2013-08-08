@@ -81,24 +81,29 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	};
 
 
-
 	/*
 	 * Update UI when enter in a slideset
 	 */
 	var onEnterSlideset = function(slideset){
 		updateThumbnails(slideset);
-
 		$("#bottomside").show();
+		
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		var slidesetId = $(slideset).attr("id");
 		var subslides = $("#" + slidesetId + " > article");
-		
 		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
+			if(typeof slidesetCreator.onEnterSlideset == "function"){
+				slidesetCreator.onEnterSlideset(slideset);
+			}
 			//Subslides Thumbnails drawed succesfully
 			openSlideset(slideset);
 		});
 
 		//Success callback is not called when subslides are 0
 		if(subslides.length === 0) {
+			if(typeof slidesetCreator.onEnterSlideset == "function"){
+				slidesetCreator.onEnterSlideset(slideset);
+			}
 			openSlideset(slideset);
 		}
 	}
@@ -107,10 +112,14 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when leave from a slideset
 	 */
 	var onLeaveSlideset = function(slideset){
-		var slidesetId = $(slideset).attr("id");
+		closeSlideset(slideset);
 		$("#bottomside").hide();
 		$("#subslide_selected > img").attr("src","");
-		closeSlideset(slideset);
+
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.onLeaveSlideset == "function"){
+			slidesetCreator.onLeaveSlideset(slideset);
+		}
 	}
 
 	var openSlideset = function(slideset){
@@ -135,6 +144,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 
 		//Unload slideset
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+
 		if(typeof slidesetCreator.unloadSlideset == "function"){
 			slidesetCreator.unloadSlideset(slideset);
 		}

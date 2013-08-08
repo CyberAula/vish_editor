@@ -8,14 +8,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		$(".slides > article").addClass("temp_hidden");
 	};
 
-   /**
-	* Function to dispatch the event that redraws the slides
-	*/
-	var redrawSlides = function(){
-		$(document).trigger('OURDOMContentLoaded');
-	};
-
-
 	/**
 	 * function to know if the slides have the focus or not
 	 * Use to disable actions (like keyboard shortcuts) when the slide is not focused 
@@ -299,19 +291,21 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	var addSlide = function(slide){
 		appendSlide(slide);
 
+		var oldCurrentSlideNumber = V.Slides.getCurrentSlideNumber();
 		//currentSlide number is next slide
-		V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()+1);
+		V.Slides.setCurrentSlideNumber(oldCurrentSlideNumber+1);
 
 		if($(slide).attr("type")===V.Constant.STANDARD){
 			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
-		redrawSlides();		
-		V.Editor.Thumbnails.redrawThumbnails();
-		setTimeout(function(){
+		V.Slides.redrawSlides();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			V.Slides.triggerLeaveEvent(oldCurrentSlideNumber);
 			V.Slides.lastSlide();
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
-		}, 300);
+			V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+		});
 	};
 
 	var appendSlide = function(slide){
@@ -341,7 +335,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
-		redrawSlides();					
+		V.Slides.redrawSlides();				
 		V.Editor.Thumbnails.redrawThumbnails();
 	};
 
@@ -387,7 +381,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	return {
 		showSlides				: showSlides,
 		hideSlides				: hideSlides,
-		redrawSlides	    	: redrawSlides,
 		isSlideFocused			: isSlideFocused,
 		moveSlideTo				: moveSlideTo,
 		copySlide				: copySlide,
