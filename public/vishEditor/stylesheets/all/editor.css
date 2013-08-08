@@ -174,15 +174,21 @@ float: left;
  */
 
 #subslides_list div.wrapper_barbutton {
-	width: 15%;
-	display: inline;
-	margin-right: 20px;
+	position: relative;
+	display: inline-block;
+	width: 57px;
+	height: 70px;
+	margin-right: 35px;
 }
 
 #subslides_list p.ptext_barbutton {
-	display: none;
-	/*float: left;*/
+	position: absolute;
+	top: 27%;
+	right: -20%;
+	background: white;
+	padding: 4px;
 	font-family: 'Open Sans', sans-serif;
+	border-radius: 5px 0px 5px 5px;
 }
 
 #subslide_selected img.image_barbutton {
