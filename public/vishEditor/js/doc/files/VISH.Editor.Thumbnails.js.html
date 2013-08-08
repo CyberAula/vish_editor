@@ -292,7 +292,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			var srcURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
 			slideElements += 1;
 			imagesArray.push($(&quot;&lt;img id=&#x27;subslideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
-			imagesArrayTitles.push(slideElements);
+			imagesArrayTitles.push(String.fromCharCode(64+slideElements));
     	});
 
 		var options = {};

@@ -79,18 +79,13 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		presentationJSON.slides = selectedSlides;
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
-		V.Slides.redrawSlides();
+		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails();
 		V.Slides.lastSlide();
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
-
-		//POST-renderer actions
-		for(var j=0; j<flashcards.length; j++){
-			// V.Editor.Events.bindEventsForFlashcard(flashcards[j]); //Deprecated
-		}
 
 		$.fancybox.close();
 	}

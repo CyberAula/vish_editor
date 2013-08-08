@@ -141,7 +141,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		
 		//Update slides classes next and past.
 		//Current slide needs to be stablished before this call.
-		V.Slides.updateSlideEls();
+		V.Slides.updateSlides();
 	}
 
 	var copySlideWithNumber = function(slideNumber,options){
@@ -213,12 +213,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
-		//Update slideEls
-		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
-
-		//Update slides classes next and past.
-		//Current slide needs to be stablished before this call.
-		V.Slides.updateSlideEls();
+		//Update slideEls and refresh classes
+		V.Slides.updateSlides();
 
 		//Redraw thumbnails
 		V.Editor.Thumbnails.redrawThumbnails(function(){
@@ -299,7 +295,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
-		V.Slides.redrawSlides();
+		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Slides.triggerLeaveEvent(oldCurrentSlideNumber);
 			V.Slides.lastSlide();
@@ -335,7 +331,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
-		V.Slides.redrawSlides();				
+		V.Slides.updateSlides();				
 		V.Editor.Thumbnails.redrawThumbnails();
 	};
 

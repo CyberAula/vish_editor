@@ -96,31 +96,23 @@ VISH.Presentation = (function(V,undefined){
 	 * Initialize renderer and call it to render each slide
 	 *&#x2F;
 	var init = function(slides){
-		
 		mySlides = slides;		
 		V.Renderer.init();
 
 		for(var i=0;i&lt;slides.length;i++){
 			V.Renderer.renderSlide(slides[i]);			
 		}
-		&#x2F;&#x2F;TODO preload all content of the presentation
 
 		_finishRenderer();
 	};
 
 	&#x2F;**
-	 * Private function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)
-	 * Cover all the slides array to preload the flashcards content
-	 * Finally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run
+	 * Private function called when we have finished rendering the slides
 	 *&#x2F;
 	var _finishRenderer = function(){
 		V.VideoPlayer.HTML5.setVideoEvents();
-		
 		V.SlideManager.addEnterLeaveEvents();
-		
-		var evt = document.createEvent(&quot;Event&quot;);
-		evt.initEvent(&quot;OURDOMContentLoaded&quot;, false, true); &#x2F;&#x2F; event type,bubbling,cancelable
-		document.dispatchEvent(evt);		
+		V.Slides.updateSlides();
 	};
 
 	return {

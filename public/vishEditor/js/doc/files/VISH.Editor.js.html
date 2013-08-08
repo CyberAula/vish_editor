@@ -208,12 +208,14 @@ VISH.Editor = (function(V,$,undefined){
 			initialPresentation = false;
 		}
 
-		V.Editor.Slides.redrawSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Slides.updateSlides();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		});
 		
 		if(presentation){
-			&#x2F;&#x2F;hide objects (the _onSlideEnterEditor event will show the objects in the current slide)
-			$(&#x27;.object_wrapper&#x27;).hide();		
+			&#x2F;&#x2F;hide objects (the onSlideEnterEditor event will show the objects in the current slide)
+			$(&#x27;.object_wrapper&#x27;).hide();
 		}
 		
 		&#x2F;&#x2F;Init submodules
@@ -241,8 +243,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
-		&#x2F;&#x2F;Reload current slide objects
-		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
+		V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 
 		&#x2F;&#x2F;Try to win focus
 		window.focus();
@@ -558,6 +561,10 @@ VISH.Editor = (function(V,$,undefined){
 	var onSlideEnterEditor = function(e){
 		var slide = $(e.target);
 
+		&#x2F;&#x2F;Prevent parent to trigger onSlideEnterEditor
+		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
+		e.stopPropagation();
+
 		if(V.Editor.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onEnterSlideset(slide);
 		} else {
@@ -577,6 +584,8 @@ VISH.Editor = (function(V,$,undefined){
 	*&#x2F;
 	var onSlideLeaveEditor = function(e){
 		var slide = $(e.target);
+
+		e.stopPropagation();
 
 		if(V.Editor.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onLeaveSlideset(slide);

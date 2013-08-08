@@ -90,105 +90,65 @@
     <pre class="code prettyprint linenums">
 VISH.Slides = (function(V,$,undefined){
 
-	&#x2F;* Variables to store slide elements and point to current slide*&#x2F;
+	&#x2F;&#x2F; Array of slide DOM elements
 	var slideEls;
+	&#x2F;&#x2F; Pointer to the current slide. Index of the slideEls array.
 	var curSlideIndex;
+	&#x2F;&#x2F;Array of slide classes
 	var SLIDE_CLASSES = [&#x27;far-past&#x27;, &#x27;past&#x27;, &#x27;current&#x27;, &#x27;next&#x27;, &#x27;far-next&#x27;];
+
+	&#x2F;&#x2F;Pointer to the id of the current subslide.
 	var curSubSlideId = null;
 	
+
+
+	&#x2F;* Initialization Method *&#x2F;
 	var init = function(){
 		_getcurSlideIndexFromHash();
-		$(document).bind(&#x27;OURDOMContentLoaded&#x27;, handleDomLoaded);		
 	};
 
-
-	&#x2F;* Initialization Methods *&#x2F;
-
-	var handleDomLoaded = function () {
-	  slideEls = document.querySelectorAll(&#x27;section.slides &gt; article&#x27;);
-	  if(isSlideset(V.SlideManager.getPresentationType())){
-	  	&#x2F;&#x2F;this way updateSlides will add the class current and it will be shown
-	  	setCurrentSlideIndex(0);
-	  }
-	  updateSlides(true);
-	  $(&#x27;body&#x27;).addClass(&#x27;loaded&#x27;);
-	};
-
-	var _getcurSlideIndexFromHash = function() {
-	  var slideNo = parseInt(location.hash.substr(1));
-	  if (slideNo) {
-	  	setCurrentSlideIndex(slideNo - 1);
-	  } else {
-	  	if(V.Editing){
-	  		&#x2F;&#x2F;Start in 0 (no slides)
-	  		setCurrentSlideIndex(-1);
-	  		&#x2F;&#x2F;If there are slides, this param will be updated
-	  	} else {
-	  		&#x2F;&#x2F;Start in 1 (first slide)
-	  		setCurrentSlideIndex(0);
-	  	}
-	  }
-	};
-
-
-	&#x2F;* API Methods *&#x2F;
-
-	var getSlides = function(){
-		return slideEls;
-	}
-
-	var setSlides = function(newSlideEls){
-		slideEls = newSlideEls;
-
-		&#x2F;&#x2F;Update slidenumber param
-		$.each(slideEls, function(index, value) {
-			$(value).attr(&quot;slidenumber&quot;,index+1);
-		});
-	}
-
-	var updateSlides = function(goingRight) {
-		updateSlideEls();
-
-		if(goingRight){
-			triggerLeaveEvent(curSlideIndex - 1);
-		} else {
-			triggerLeaveEvent(curSlideIndex + 1);    
-		}
-		triggerEnterEvent(curSlideIndex);
+	&#x2F;* 
+	 * Slides Management
+	 *&#x2F;
+	var updateSlides = function() {
+		setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
+		_updateSlideClasses();
 		_updateHash();
 	};
 
 	var _updateHash = function() {
-		location.replace(&#x27;#&#x27; + (curSlideIndex + 1));
+		if(!V.Editing){
+			location.replace(&#x27;#&#x27; + (curSlideIndex + 1));
+		}
 	};
 
-	var updateSlideEls = function() {
+	var _updateSlideClasses = function() {
 		for (var i = 0; i &lt; slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
-					updateSlideClass(i, &#x27;far-past&#x27;);
+					updateSlideClass(i+1, &#x27;far-past&#x27;);
 					break;
 				case curSlideIndex - 1:
-					updateSlideClass(i, &#x27;past&#x27;);
+					updateSlideClass(i+1, &#x27;past&#x27;);
 					break;
-				case curSlideIndex: 
-					updateSlideClass(i, &#x27;current&#x27;);
+				case curSlideIndex:
+					updateSlideClass(i+1, &#x27;current&#x27;);
 					break;
 				case curSlideIndex + 1:
-					updateSlideClass(i, &#x27;next&#x27;);      
+					updateSlideClass(i+1, &#x27;next&#x27;);
 					break;
 				case curSlideIndex + 2:
-					updateSlideClass(i, &#x27;far-next&#x27;);      
+					updateSlideClass(i+1, &#x27;far-next&#x27;);
 					break;
 				default:
-					updateSlideClass(i);
+					updateSlideClass(i+1);
 					break;
 			}
 		}
 	}
 
-	var updateSlideClass = function(slideNo, className) {
-		var el = _getSlide(slideNo);
+	var updateSlideClass = function(slideNumber, className) {
+		var el = getSlideWithNumber(slideNumber);
 
 		if (!el) {
 			return;
@@ -205,8 +165,35 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var setCurrentSlideIndex = function(newCurSlideIndex){
-		curSlideIndex = newCurSlideIndex;
+	var _getcurSlideIndexFromHash = function() {
+		if(V.Editing){
+			&#x2F;&#x2F;Start in 0 (no slides), if there are slides, this param will be updated
+			setCurrentSlideNumber(0);
+		} else {
+			var slideNo = parseInt(location.hash.substr(1));
+			if (slideNo) {
+				setCurrentSlideNumber(slideNo);
+			} else {
+				&#x2F;&#x2F;Start in 1 (first slide)
+				setCurrentSlideNumber(1);
+			}
+		}
+	};
+
+
+	&#x2F;* API Methods *&#x2F;
+
+	var getSlides = function(){
+		return slideEls;
+	}
+
+	var setSlides = function(newSlideEls){
+		slideEls = newSlideEls;
+
+		&#x2F;&#x2F;Update slidenumber param
+		$.each(slideEls, function(index, value) {
+			$(value).attr(&quot;slidenumber&quot;,index+1);
+		});
 	}
 
 	var getCurrentSlide = function(){
@@ -226,16 +213,16 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
-		setCurrentSlideIndex(currentSlideNumber-1);
+		_setCurrentSlideIndex(currentSlideNumber-1);
 	}
 
-	var _getSlide = function(no) {
-		return getSlideWithNumber(no+1);
-	};
+	var _setCurrentSlideIndex = function(newCurSlideIndex){
+		curSlideIndex = newCurSlideIndex;
+	}
 
-	var getSlideWithNumber = function(slideNumber) {
+	var getSlideWithNumber = function(slideNumber){
 		var no = slideNumber-1;
-		if ((no &lt; 0) || (no &gt;= slideEls.length)) { 
+		if ((no &lt; 0) || (no &gt;= slideEls.length)) {
 			return null;
 		} else {
 			return slideEls[no];
@@ -263,27 +250,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&amp;&amp;(slideEl.tagName===&quot;ARTICLE&quot;)){
-			switch($(slideEl).attr(&quot;type&quot;)){
-				case undefined:
-				case V.Constant.STANDARD:
-					return V.Constant.STANDARD;
-					break;
-				case V.Constant.FLASHCARD:
-					return V.Constant.FLASHCARD;
-					break;
-				case V.Constant.QUIZ_SIMPLE:
-					return V.Constant.QUIZ_SIMPLE;
-					break;
-				case V.Constant.GAME:
-					return V.Constant.GAME;
-					break;
-				case V.Constant.VTOUR:
-					return V.Constant.VTOUR;
-					break;
-				default:
-					return V.Constant.UNKNOWN;
-					break;
-			}
+			return $(slideEl).attr(&quot;type&quot;);
 		} else {
 			&#x2F;&#x2F;slideEl is not a slide
 			return null;
@@ -301,31 +268,24 @@ VISH.Slides = (function(V,$,undefined){
 
 	&#x2F;* Slide events *&#x2F;
 
-	var triggerEnterEvent = function (no) {
-		var el = _getSlide(no);
+	var triggerEnterEvent = function(slideNumber) {
+		var el = getSlideWithNumber(slideNumber);
 		if (!el) {
 			return;
 		}
 		triggerEnterEventById(el.id);
 	};
 
-	var triggerLeaveEvent = function(no) {
-		var el = _getSlide(no);
+	var triggerLeaveEvent = function(slideNumber) {
+		var el = getSlideWithNumber(slideNumber);
 		if (!el) {    
 			return;
 		}
-
 		triggerLeaveEventById(el.id);
 	};
 
 	var triggerEnterEventById = function (slide_id) {
 		var el = $(&quot;#&quot; +slide_id)[0];
-
-		var onEnter = el.getAttribute(&#x27;onslideenter&#x27;);
-		if (onEnter) {
-			new Function(onEnter).call(el);
-		}
-
 		var evt = document.createEvent(&#x27;Event&#x27;);
 		evt.initEvent(&#x27;slideenter&#x27;, true, true);
 		el.dispatchEvent(evt);
@@ -333,55 +293,30 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerLeaveEventById = function(slide_id) {
 		var el = $(&quot;#&quot; + slide_id)[0];
-
-		var onLeave = el.getAttribute(&#x27;onslideleave&#x27;);
-		if (onLeave) {
-			new Function(onLeave).call(el);
-		}
-
 		var evt = document.createEvent(&#x27;Event&#x27;);
 		evt.initEvent(&#x27;slideleave&#x27;, true, true);
-
 		el.dispatchEvent(evt);
 	};
 
 
    &#x2F;* Slide Movement *&#x2F;
 
-   	var _prevSlide = function() {
-		if (curSlideIndex &gt; 0) {
-			setCurrentSlideIndex(curSlideIndex-1);
-			updateSlides(false);
-		}
-	};
-
-	var _nextSlide = function() {	  
-		if (curSlideIndex &lt; slideEls.length - 1) {
-			setCurrentSlideIndex(curSlideIndex+1);
-			updateSlides(true);
-		}
-	};
-
    &#x2F;**
-	* function to go to next slide and change the thumbnails and focus 
+	* Function to go to next slide 
 	*&#x2F;
 	var forwardOneSlide = function(event){
-		if(isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop){
-			V.Recommendations.showFancybox();
-		} else {
-			goToSlide(curSlideIndex+2);
-		}
+		moveSlides(1);
 	};
 
    &#x2F;**
-	* function to go to previous slide and change the thumbnails and focus 
+	* Function to go to previous slide
 	*&#x2F;
 	var backwardOneSlide = function(){
-		goToSlide(curSlideIndex);
+		moveSlides(-1);
 	};
 
    &#x2F;**
-	* Function to move n slides and change the thumbnails and focus 
+	* Function to move n slides and change the thumbnails and focus
 	* n &gt; 0 (advance slides)
 	* n &lt; 0 (go back)
 	*&#x2F;
@@ -397,11 +332,11 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
-	&#x2F;**
-	* go to the slide when clicking the thumbnail
+   &#x2F;**
+	* Go to the slide no
 	*&#x2F;
 	var goToSlide = function(no,triggeredByUser){
-		if(no === getCurrentSlideNumber()){
+		if((no === getCurrentSlideNumber())||(no &gt; slideEls.length)||(no &lt;= 0)){
 			&#x2F;&#x2F;Do nothing
 			return;
 		};
@@ -420,31 +355,10 @@ VISH.Slides = (function(V,$,undefined){
 			$.fancybox.close();
 		}
 
-		if((no &gt; slideEls.length) || (no &lt;= 0)){
-			return;
-		} else if (no &gt; curSlideIndex+1){
-			while (curSlideIndex+1 &lt; no) {
-				_nextSlide();
-			}
-		} else if (no &lt; curSlideIndex+1){
-			while (curSlideIndex+1 &gt; no) {
-				_prevSlide();
-			}
-		}
+		_goToSlide(no);
 
 		if(V.Editing){
-			&#x2F;&#x2F;first deselect zone if anyone was selected
-			&#x2F;&#x2F;$(&quot;.selectable&quot;).css(&quot;border-style&quot;, &quot;none&quot;);
-
 			V.Editor.Tools.cleanZoneTools();
-
-			var firstCarrouselNumber = parseInt($($(&quot;div.carrousel_element_single_row_slides&quot;)[0]).find(&quot;img.carrousel_element_single_row_slides[slidenumber]&quot;).attr(&quot;slidenumber&quot;));
-			var lastCarrouselNumber = firstCarrouselNumber + 7;
-
-			if((no&lt;firstCarrouselNumber)||(no&gt;lastCarrouselNumber)){
-				V.Editor.Thumbnails.moveCarrouselToSlide(no);
-			}
-
 			&#x2F;&#x2F;finally add a background color to thumbnail of the selected slide
 			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
@@ -456,6 +370,16 @@ VISH.Slides = (function(V,$,undefined){
 		params.slideNumber = no;
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onGoToSlide,params,triggeredByUser);
 	};
+
+	var _goToSlide = function(no){
+		var nextSlideIndex = no - 1;
+		if ((nextSlideIndex &lt; slideEls.length)&amp;&amp;(nextSlideIndex &gt;= 0)) {
+			triggerLeaveEvent(curSlideIndex+1);
+			_setCurrentSlideIndex(nextSlideIndex);
+			triggerEnterEvent(curSlideIndex+1);
+			updateSlides();
+		}
+	}
   
    &#x2F;**
 	* Go to the last slide
@@ -466,7 +390,7 @@ VISH.Slides = (function(V,$,undefined){
 
 
 	&#x2F;**
-	 * function to show one specific slide in the flashcard
+	 * Function to open a subslide
 	 *&#x2F;
 	var openSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
@@ -490,7 +414,7 @@ VISH.Slides = (function(V,$,undefined){
 
 
 	&#x2F;**
-	 * function to close one specific slide in the flashcard
+	 * Function to close a subslide
 	 *&#x2F;
 	var closeSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
@@ -531,14 +455,6 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	}
 
-	&#x2F;**
-	 * Function to close all slides in the flashcard, in case one remains open
-	 *&#x2F;
-	var closeAllSlides = function(){
-		$(&quot;.slides &gt; article&quot;).hide();	
-	};
-
-
 	var isSlideset = function(type){
 		switch(type){
 			case V.Constant.FLASHCARD:
@@ -551,11 +467,9 @@ VISH.Slides = (function(V,$,undefined){
 
 	return {	
 			init          			: init,
+			updateSlides			: updateSlides,
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
-			updateSlides			: updateSlides,
-			updateSlideEls			: updateSlideEls,
-	 		setCurrentSlideIndex	: setCurrentSlideIndex,
 			getCurrentSlide 		: getCurrentSlide,
 			getCurrentSubSlide 		: getCurrentSubSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
@@ -573,7 +487,6 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			closeAllSlides			: closeAllSlides,
 			isSlideset				: isSlideset,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,

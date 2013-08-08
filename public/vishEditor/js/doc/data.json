@@ -806,12 +806,6 @@
         {
             "file": "VISH.Editor.Slides.js",
             "line": 11,
-            "description": "Function to dispatch the event that redraws the slides",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.Slides.js",
-            "line": 19,
             "description": "function to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
             "return": {
                 "description": "false if other element has the focus"
@@ -907,84 +901,84 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 167,
+            "line": 170,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 175,
+            "line": 178,
             "description": "function called when user clicks on new flashcard\ncreate a new flashcard",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 224,
+            "line": 227,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 320,
+            "line": 323,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 351,
+            "line": 354,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 384,
+            "line": 387,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 393,
+            "line": 396,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 453,
+            "line": 456,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 465,
+            "line": 468,
             "description": "function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 485,
+            "line": 492,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 508,
+            "line": 517,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 799,
+            "line": 808,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1033,8 +1027,8 @@
         },
         {
             "file": "VISH.Presentation.js",
-            "line": 21,
-            "description": "Private function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)\nCover all the slides array to preload the flashcards content\nFinally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run",
+            "line": 19,
+            "description": "Private function called when we have finished rendering the slides",
             "class": "",
             "namespace": "VISH"
         },
@@ -1222,57 +1216,50 @@
         },
         {
             "file": "VISH.Slides.js",
-            "line": 275,
-            "description": "function to go to next slide and change the thumbnails and focus",
+            "line": 214,
+            "description": "Function to go to next slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 286,
-            "description": "function to go to previous slide and change the thumbnails and focus",
+            "line": 221,
+            "description": "Function to go to previous slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 293,
-            "description": "Function to move n slides and change the thumbnails and focus \nn > 0 (advance slides)\nn < 0 (go back)",
+            "line": 228,
+            "description": "Function to move n slides and change the thumbnails and focus\nn > 0 (advance slides)\nn < 0 (go back)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 310,
-            "description": "go to the slide when clicking the thumbnail",
+            "line": 245,
+            "description": "Go to the slide no",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 370,
+            "line": 294,
             "description": "Go to the last slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 378,
-            "description": "function to show one specific slide in the flashcard",
+            "line": 302,
+            "description": "Function to open a subslide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 402,
-            "description": "function to close one specific slide in the flashcard",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Slides.js",
-            "line": 444,
-            "description": "Function to close all slides in the flashcard, in case one remains open",
+            "line": 326,
+            "description": "Function to close a subslide",
             "class": "",
             "namespace": "VISH"
         },
@@ -1715,12 +1702,8 @@
             "line": " VISH.Editor.Renderer.js:111"
         },
         {
-            "message": "Missing item type\nFunction to dispatch the event that redraws the slides",
-            "line": " VISH.Editor.Slides.js:11"
-        },
-        {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
-            "line": " VISH.Editor.Slides.js:19"
+            "line": " VISH.Editor.Slides.js:11"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
@@ -1768,51 +1751,51 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:167"
+            "line": " VISH.Editor.js:170"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on new flashcard\ncreate a new flashcard",
-            "line": " VISH.Editor.js:175"
+            "line": " VISH.Editor.js:178"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:224"
+            "line": " VISH.Editor.js:227"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:320"
+            "line": " VISH.Editor.js:323"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:351"
+            "line": " VISH.Editor.js:354"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:384"
+            "line": " VISH.Editor.js:387"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:393"
+            "line": " VISH.Editor.js:396"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:453"
+            "line": " VISH.Editor.js:456"
         },
         {
             "message": "Missing item type\nfunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:465"
+            "line": " VISH.Editor.js:468"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:485"
+            "line": " VISH.Editor.js:492"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:508"
+            "line": " VISH.Editor.js:517"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:799"
+            "line": " VISH.Editor.js:808"
         },
         {
             "message": "Missing item type\nFunction called when a poi is clicked\n'event' can be a delegate click event or a number",
@@ -1839,8 +1822,8 @@
             "line": " VISH.Presentation.js:4"
         },
         {
-            "message": "Missing item type\nPrivate function called when we have finished rendering the slides (the html now have everything and the slides.js can be started)\nCover all the slides array to preload the flashcards content\nFinally dispatch the event OURDOMContentLoaded that will start the slides.js script adding all the keys events and everything for the presentation to run",
-            "line": " VISH.Presentation.js:21"
+            "message": "Missing item type\nPrivate function called when we have finished rendering the slides",
+            "line": " VISH.Presentation.js:19"
         },
         {
             "message": "Missing item type\nSend answers for real time quizzes\nPUT /quiz_sessions/X",
@@ -1947,36 +1930,32 @@
             "line": " VISH.SlideManager.js:268"
         },
         {
-            "message": "Missing item type\nfunction to go to next slide and change the thumbnails and focus",
-            "line": " VISH.Slides.js:275"
+            "message": "Missing item type\nFunction to go to next slide",
+            "line": " VISH.Slides.js:214"
         },
         {
-            "message": "Missing item type\nfunction to go to previous slide and change the thumbnails and focus",
-            "line": " VISH.Slides.js:286"
+            "message": "Missing item type\nFunction to go to previous slide",
+            "line": " VISH.Slides.js:221"
         },
         {
-            "message": "Missing item type\nFunction to move n slides and change the thumbnails and focus \nn > 0 (advance slides)\nn < 0 (go back)",
-            "line": " VISH.Slides.js:293"
+            "message": "Missing item type\nFunction to move n slides and change the thumbnails and focus\nn > 0 (advance slides)\nn < 0 (go back)",
+            "line": " VISH.Slides.js:228"
         },
         {
-            "message": "Missing item type\ngo to the slide when clicking the thumbnail",
-            "line": " VISH.Slides.js:310"
+            "message": "Missing item type\nGo to the slide no",
+            "line": " VISH.Slides.js:245"
         },
         {
             "message": "Missing item type\nGo to the last slide",
-            "line": " VISH.Slides.js:370"
+            "line": " VISH.Slides.js:294"
         },
         {
-            "message": "Missing item type\nfunction to show one specific slide in the flashcard",
-            "line": " VISH.Slides.js:378"
+            "message": "Missing item type\nFunction to open a subslide",
+            "line": " VISH.Slides.js:302"
         },
         {
-            "message": "Missing item type\nfunction to close one specific slide in the flashcard",
-            "line": " VISH.Slides.js:402"
-        },
-        {
-            "message": "Missing item type\nFunction to close all slides in the flashcard, in case one remains open",
-            "line": " VISH.Slides.js:444"
+            "message": "Missing item type\nFunction to close a subslide",
+            "line": " VISH.Slides.js:326"
         },
         {
             "message": "Missing item type\nLoad web snapshots",

@@ -1,64 +1,37 @@
 VISH.Slides = (function(V,$,undefined){
 
-	/* Variables to store slide elements and point to current slide*/
+	// Array of slide DOM elements
 	var slideEls;
+	// Pointer to the current slide. Index of the slideEls array.
 	var curSlideIndex;
+	//Array of slide classes
 	var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
+
+	//Pointer to the id of the current subslide.
 	var curSubSlideId = null;
 	
+
+	/* Initialization Method */
 	var init = function(){
 		_getcurSlideIndexFromHash();
 	};
 
-
-	/* Initialization Methods */
-
-	var redrawSlides = function () {
-	  slideEls = document.querySelectorAll('section.slides > article');
-	  _updateSlides();
-	};
-
-	var _getcurSlideIndexFromHash = function() {
-		if(V.Editing){
-			//Start in 0 (no slides), if there are slides, this param will be updated
-			setCurrentSlideNumber(0);
-		} else {
-			var slideNo = parseInt(location.hash.substr(1));
-			if (slideNo) {
-				setCurrentSlideNumber(slideNo);
-			} else {
-				//Start in 1 (first slide)
-				setCurrentSlideNumber(1);
-			}
-		}
-	};
-
-
-	/* API Methods */
-
-	var getSlides = function(){
-		return slideEls;
-	}
-
-	var setSlides = function(newSlideEls){
-		slideEls = newSlideEls;
-
-		//Update slidenumber param
-		$.each(slideEls, function(index, value) {
-			$(value).attr("slidenumber",index+1);
-		});
-	}
-
-	var _updateSlides = function() {
-		updateSlideEls();
+	/* 
+	 * Slides Management
+	 */
+	var updateSlides = function() {
+		setSlides(document.querySelectorAll('section.slides > article'));
+		_updateSlideClasses();
 		_updateHash();
 	};
 
 	var _updateHash = function() {
-		location.replace('#' + (curSlideIndex + 1));
+		if(!V.Editing){
+			location.replace('#' + (curSlideIndex + 1));
+		}
 	};
 
-	var updateSlideEls = function() {
+	var _updateSlideClasses = function() {
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
@@ -101,6 +74,37 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
+	var _getcurSlideIndexFromHash = function() {
+		if(V.Editing){
+			//Start in 0 (no slides), if there are slides, this param will be updated
+			setCurrentSlideNumber(0);
+		} else {
+			var slideNo = parseInt(location.hash.substr(1));
+			if (slideNo) {
+				setCurrentSlideNumber(slideNo);
+			} else {
+				//Start in 1 (first slide)
+				setCurrentSlideNumber(1);
+			}
+		}
+	};
+
+
+	/* API Methods */
+
+	var getSlides = function(){
+		return slideEls;
+	}
+
+	var setSlides = function(newSlideEls){
+		slideEls = newSlideEls;
+
+		//Update slidenumber param
+		$.each(slideEls, function(index, value) {
+			$(value).attr("slidenumber",index+1);
+		});
+	}
+
 	var getCurrentSlide = function(){
 		return slideEls[curSlideIndex];
 	}
@@ -125,7 +129,7 @@ VISH.Slides = (function(V,$,undefined){
 		curSlideIndex = newCurSlideIndex;
 	}
 
-	var getSlideWithNumber = function(slideNumber) {
+	var getSlideWithNumber = function(slideNumber){
 		var no = slideNumber-1;
 		if ((no < 0) || (no >= slideEls.length)) {
 			return null;
@@ -155,27 +159,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
-			switch($(slideEl).attr("type")){
-				case undefined:
-				case V.Constant.STANDARD:
-					return V.Constant.STANDARD;
-					break;
-				case V.Constant.FLASHCARD:
-					return V.Constant.FLASHCARD;
-					break;
-				case V.Constant.QUIZ_SIMPLE:
-					return V.Constant.QUIZ_SIMPLE;
-					break;
-				case V.Constant.GAME:
-					return V.Constant.GAME;
-					break;
-				case V.Constant.VTOUR:
-					return V.Constant.VTOUR;
-					break;
-				default:
-					return V.Constant.UNKNOWN;
-					break;
-			}
+			return $(slideEl).attr("type");
 		} else {
 			//slideEl is not a slide
 			return null;
@@ -195,7 +179,6 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerEnterEvent = function(slideNumber) {
 		var el = getSlideWithNumber(slideNumber);
-
 		if (!el) {
 			return;
 		}
@@ -212,7 +195,6 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerEnterEventById = function (slide_id) {
 		var el = $("#" +slide_id)[0];
-
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideenter', true, true);
 		el.dispatchEvent(evt);
@@ -220,7 +202,6 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerLeaveEventById = function(slide_id) {
 		var el = $("#" + slide_id)[0];
-
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideleave', true, true);
 		el.dispatchEvent(evt);
@@ -230,7 +211,7 @@ VISH.Slides = (function(V,$,undefined){
    /* Slide Movement */
 
    /**
-	* function to go to next slide 
+	* Function to go to next slide 
 	*/
 	var forwardOneSlide = function(event){
 		moveSlides(1);
@@ -260,8 +241,8 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
-	/**
-	* go to the slide when clicking the thumbnail
+   /**
+	* Go to the slide no
 	*/
 	var goToSlide = function(no,triggeredByUser){
 		if((no === getCurrentSlideNumber())||(no > slideEls.length)||(no <= 0)){
@@ -305,7 +286,7 @@ VISH.Slides = (function(V,$,undefined){
 			triggerLeaveEvent(curSlideIndex+1);
 			_setCurrentSlideIndex(nextSlideIndex);
 			triggerEnterEvent(curSlideIndex+1);
-			_updateSlides();
+			updateSlides();
 		}
 	}
   
@@ -318,7 +299,7 @@ VISH.Slides = (function(V,$,undefined){
 
 
 	/**
-	 * function to show one specific slide in the flashcard
+	 * Function to open a subslide
 	 */
 	var openSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
@@ -342,7 +323,7 @@ VISH.Slides = (function(V,$,undefined){
 
 
 	/**
-	 * function to close one specific slide in the flashcard
+	 * Function to close a subslide
 	 */
 	var closeSubslide = function(slide_id,triggeredByUser){
 		triggeredByUser = !(triggeredByUser===false);
@@ -383,14 +364,6 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	}
 
-	/**
-	 * Function to close all slides in the flashcard, in case one remains open
-	 */
-	var closeAllSlides = function(){
-		$(".slides > article").hide();	
-	};
-
-
 	var isSlideset = function(type){
 		switch(type){
 			case V.Constant.FLASHCARD:
@@ -403,10 +376,9 @@ VISH.Slides = (function(V,$,undefined){
 
 	return {	
 			init          			: init,
-			redrawSlides			: redrawSlides,
+			updateSlides			: updateSlides,
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
-			updateSlideEls			: updateSlideEls,
 			getCurrentSlide 		: getCurrentSlide,
 			getCurrentSubSlide 		: getCurrentSubSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
@@ -424,7 +396,6 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			closeAllSlides			: closeAllSlides,
 			isSlideset				: isSlideset,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,

@@ -22,7 +22,7 @@ VISH.Presentation = (function(V,undefined){
 	var _finishRenderer = function(){
 		V.VideoPlayer.HTML5.setVideoEvents();
 		V.SlideManager.addEnterLeaveEvents();
-		V.Slides.redrawSlides();
+		V.Slides.updateSlides();
 	};
 
 	return {

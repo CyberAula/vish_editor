@@ -118,7 +118,7 @@ VISH.Editor = (function(V,$,undefined){
 			initialPresentation = false;
 		}
 
-		V.Slides.redrawSlides();
+		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		});
