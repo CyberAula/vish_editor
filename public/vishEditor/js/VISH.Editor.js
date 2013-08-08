@@ -468,6 +468,10 @@ VISH.Editor = (function(V,$,undefined){
 	var onSlideEnterEditor = function(e){
 		var slide = $(e.target);
 
+		//Prevent parent to trigger onSlideEnterEditor
+		//Use to prevent slidesets to be called when enter in one of their subslides
+		e.stopPropagation();
+
 		if(V.Editor.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onEnterSlideset(slide);
 		} else {
@@ -487,6 +491,8 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var onSlideLeaveEditor = function(e){
 		var slide = $(e.target);
+
+		e.stopPropagation();
 
 		if(V.Editor.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onLeaveSlideset(slide);
