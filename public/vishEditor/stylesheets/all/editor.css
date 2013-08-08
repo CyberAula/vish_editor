@@ -47,6 +47,7 @@ img {
 	text-align: center;
 	background: #f0f0f0;
 	border: 1px solid #ccc;
+	z-index: 1100;
 }
 
 #subslide_selected {
@@ -62,16 +63,17 @@ img {
 }
 
 #subslides_list_actions {
-margin-top: 2px;
-height: 80%;
-width: 15%;
-float: left;
+	margin-top: 2px;
+	height: 80%;
+	width: 15%;
+	float: left;
 }
 
 #subslides_list {
-	height: 100%;
+	height: 125%;
 	width: 84%;
 	float: left;
+	margin-top: -15px;
 }
 
 .slidesScrollbarButton {
@@ -180,6 +182,7 @@ float: left;
 	width: 57px;
 	height: 70px;
 	margin-right: 34px;
+	margin-top: 18px;
 }
 
 #subslides_list p.ptext_barbutton {
@@ -1734,104 +1737,6 @@ img.excursionSelectedInCarrousel:active , img.smartcardSelectedInCarrousel:activ
 
 
 /* Flashcards */
-#flashcard_button img{
-	width: 40px;
-	height: 40px;
-}
-
-#flashcard_button{
-	display: inline-block;
-}
-
-#flashcard-background{
-	background: #fff;
-	display:none;
-	z-index: 1050;
-	width: 800px;
-	height: 600px;
-	background-size: 800px 600px;
-	margin-top: -327px;
-	margin-left: -400px;
-	left: 50%;
-	top: 50%;
-	position: absolute;
-	background-image: url(/vishEditor/images/flashcard/flashcard_initial_background.jpg);
-	background-repeat:no-repeat;
-	background-position:center center;
-	border-radius: 20px;
-	webkit-border-radius: 20px;
-	moz-border-radius: 20px;
-	border: 1px solid #CCCCCC;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-    moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-    webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-}
-
-.carrousel_element_single_row_slides div.draggable_arrow_div{
-	display: none;
-	margin-top: -30px;
-	margin-bottom: -30px;
-	opacity: 1;
-	cursor: pointer;
-}
-
-.draggable_arrow_div img.fc_draggable_arrow:active {
-	border: none !important;
-	opacity: 1.0 !important;
-}
-
-.draggable_arrow_div img.fc_draggable_arrow:hover  {
-	-webkit-box-shadow: none !important;
-	-moz-box-shadow: none !important;
-	box-shadow:   none !important;
-	opacity: 1.0 !important;
-}
-
-div.draggable_arrow_div, div.carrrousel_element_single_row_slides{
-	z-index: 1075;
-	opacity: 1.0;
-}
-
-.draggable_arrow_div img.fc_draggable_arrow{
-	background-color: transparent;
-	opacity: 1.0 !important;
-}
-
-.draggable_number{
-	position: relative;
-	text-align: center;
-	top: -39px;
-	left: 0px;
-	font-family: Helvetica;
-	font-size: 15px;
-}
-
-#flashcard_help_button{
-	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
-	cursor: pointer;
-	position: absolute;
-	right: 0px;
-	height: 29px;
-}
-
-#flashcard_help_button:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
-
-
-#help_pedagogical_selection {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
-	position: absolute;
-	right: 25px;
-	height: 29px;
-	top: -1px;
-}
-
-#help_pedagogical_selection:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
 
 div.change_bg_button{
 	position: absolute;
@@ -1845,6 +1750,64 @@ div.change_bg_button{
 
 div.change_bg_button:hover {
 	background: url(/vishEditor/images/flashcard/flashcard_add_img_button_hover.png);
+}
+
+div.draggable_sc_div {
+	display: block;
+	position: absolute;
+	margin-top: -20px;
+	margin-left: 12px;
+	opacity: 1;
+	cursor: pointer;
+	height: 50px;
+	width: 50px;
+}
+
+div.draggable_sc_div img.fc_draggable_arrow {
+	background-color: transparent;
+	opacity: 1.0 !important;
+}
+
+div.draggable_sc_div img.fc_draggable_arrow:active {
+	border: none !important;
+	opacity: 1.0 !important;
+}
+
+div.draggable_sc_div img.fc_draggable_arrow:hover {
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow:   none !important;
+	opacity: 1.0 !important;
+}
+
+p.draggable_number{
+	position: relative;
+	top: -58px;
+	left: 0px !important;
+	text-align: center;
+	font-family: Helvetica;
+	font-size: 15px;
+}
+
+/* Overwrite scrollbar style */
+.mCSB_horizontal > .mCSB_container.mCS_no_scrollbar{
+	overflow: visible !important;
+}
+
+
+
+
+#help_pedagogical_selection {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
+	position: absolute;
+	right: 25px;
+	height: 29px;
+	top: -1px;
+}
+
+#help_pedagogical_selection:hover {
+	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
 }
 
 

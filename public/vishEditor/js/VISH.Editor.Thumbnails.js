@@ -235,7 +235,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		//Create scrollbar
 		$("#" + slidesetThumbnailsDivId).show();
-		// V.Editor.Scrollbar.createScrollbar(slidesetThumbnailsDivId, options);
+		V.Editor.Scrollbar.createScrollbar(slidesetThumbnailsDivId, options);
 	}
 
 	var _afterCreateSubslidesScrollbar = function(){

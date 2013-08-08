@@ -32,14 +32,22 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		var POIdata = undefined;
 
 		//Draw POIS
-		
+		drawPois(fc);
 	}
 
 	/*
 	 * Redraw the pois of the flashcard
 	 * This actions must be called after thumbnails have been rewritten
 	 */
-	var drawPois = function(){
+	var drawPois = function(fc){
+
+		$("#subslides_list").find("div.wrapper_barbutton").each(function(index,div){
+			var arrowDiv = $('<div class="draggable_sc_div" >');
+			$(arrowDiv).append($('<img src="'+V.ImagesPath+'flashcard/flashcard_button.png" class="fc_draggable_arrow">'));
+			$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
+			$(div).prepend(arrowDiv);
+		});
+
 		// //Show draggable items to create the flashcard
 		// $(".draggable_arrow_div").show();
 		// //Apply them the style to get the previous position
@@ -224,7 +232,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		loadSlideset				: loadSlideset,
 		unloadSlideset				: unloadSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
-		onBackgroundSelected		: onBackgroundSelected
+		onBackgroundSelected		: onBackgroundSelected,
+		drawPois					: drawPois
 	};
 
 }) (VISH, jQuery);
