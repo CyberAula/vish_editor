@@ -119,11 +119,13 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		V.Editor.Slides.redrawSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		});
 		
 		if(presentation){
-			//hide objects (the _onSlideEnterEditor event will show the objects in the current slide)
-			$('.object_wrapper').hide();		
+			//hide objects (the onSlideEnterEditor event will show the objects in the current slide)
+			$('.object_wrapper').hide();
 		}
 		
 		//Init submodules
@@ -151,8 +153,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
-		//Reload current slide objects
-		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		//Enter in currentSlide (this will cause that objects will be shown)
+		V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
 
 		//Try to win focus
 		window.focus();

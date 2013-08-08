@@ -8,7 +8,7 @@ VISH.Slides = (function(V,$,undefined){
 	
 	var init = function(){
 		_getcurSlideIndexFromHash();
-		$(document).bind('OURDOMContentLoaded', handleDomLoaded);		
+		$(document).bind('OURDOMContentLoaded', handleDomLoaded);	
 	};
 
 
@@ -16,28 +16,23 @@ VISH.Slides = (function(V,$,undefined){
 
 	var handleDomLoaded = function () {
 	  slideEls = document.querySelectorAll('section.slides > article');
-	  if(isSlideset(V.SlideManager.getPresentationType())){
-	  	//this way updateSlides will add the class current and it will be shown
-	  	setCurrentSlideIndex(0);
-	  }
 	  updateSlides(true);
 	  $('body').addClass('loaded');
 	};
 
 	var _getcurSlideIndexFromHash = function() {
-	  var slideNo = parseInt(location.hash.substr(1));
-	  if (slideNo) {
-	  	setCurrentSlideIndex(slideNo - 1);
-	  } else {
-	  	if(V.Editing){
-	  		//Start in 0 (no slides)
-	  		setCurrentSlideIndex(-1);
-	  		//If there are slides, this param will be updated
-	  	} else {
-	  		//Start in 1 (first slide)
-	  		setCurrentSlideIndex(0);
-	  	}
-	  }
+		if(V.Editing){
+			//Start in 0 (no slides), if there are slides, this param will be updated
+			setCurrentSlideNumber(0);
+		} else {
+			var slideNo = parseInt(location.hash.substr(1));
+			if (slideNo) {
+				setCurrentSlideNumber(slideNo);
+			} else {
+				//Start in 1 (first slide)
+				setCurrentSlideNumber(1);
+			}
+		}
 	};
 
 
@@ -115,10 +110,6 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var setCurrentSlideIndex = function(newCurSlideIndex){
-		curSlideIndex = newCurSlideIndex;
-	}
-
 	var getCurrentSlide = function(){
 		return slideEls[curSlideIndex];
 	}
@@ -136,7 +127,11 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
-		setCurrentSlideIndex(currentSlideNumber-1);
+		_setCurrentSlideIndex(currentSlideNumber-1);
+	}
+
+	var _setCurrentSlideIndex = function(newCurSlideIndex){
+		curSlideIndex = newCurSlideIndex;
 	}
 
 	var _getSlide = function(no) {
@@ -244,40 +239,22 @@ VISH.Slides = (function(V,$,undefined){
 
    /* Slide Movement */
 
-   	var _prevSlide = function() {
-		if (curSlideIndex > 0) {
-			setCurrentSlideIndex(curSlideIndex-1);
-			updateSlides(false);
-		}
-	};
-
-	var _nextSlide = function() {	  
-		if (curSlideIndex < slideEls.length - 1) {
-			setCurrentSlideIndex(curSlideIndex+1);
-			updateSlides(true);
-		}
-	};
-
    /**
-	* function to go to next slide and change the thumbnails and focus 
+	* function to go to next slide 
 	*/
 	var forwardOneSlide = function(event){
-		if(isCurrentLastSlide() && V.Status.getDevice().desktop){
-			V.Recommendations.showFancybox();
-		} else {
-			goToSlide(curSlideIndex+2);
-		}
+		moveSlides(1);
 	};
 
    /**
-	* function to go to previous slide and change the thumbnails and focus 
+	* Function to go to previous slide
 	*/
 	var backwardOneSlide = function(){
-		goToSlide(curSlideIndex);
+		moveSlides(-1);
 	};
 
    /**
-	* Function to move n slides and change the thumbnails and focus 
+	* Function to move n slides and change the thumbnails and focus
 	* n > 0 (advance slides)
 	* n < 0 (go back)
 	*/
@@ -297,7 +274,7 @@ VISH.Slides = (function(V,$,undefined){
 	* go to the slide when clicking the thumbnail
 	*/
 	var goToSlide = function(no,triggeredByUser){
-		if(no === getCurrentSlideNumber()){
+		if((no === getCurrentSlideNumber())||(no > slideEls.length)||(no <= 0)){
 			//Do nothing
 			return;
 		};
@@ -316,31 +293,10 @@ VISH.Slides = (function(V,$,undefined){
 			$.fancybox.close();
 		}
 
-		if((no > slideEls.length) || (no <= 0)){
-			return;
-		} else if (no > curSlideIndex+1){
-			while (curSlideIndex+1 < no) {
-				_nextSlide();
-			}
-		} else if (no < curSlideIndex+1){
-			while (curSlideIndex+1 > no) {
-				_prevSlide();
-			}
-		}
+		_goToSlide(no);
 
 		if(V.Editing){
-			//first deselect zone if anyone was selected
-			//$(".selectable").css("border-style", "none");
-
 			V.Editor.Tools.cleanZoneTools();
-
-			var firstCarrouselNumber = parseInt($($("div.carrousel_element_single_row_slides")[0]).find("img.carrousel_element_single_row_slides[slidenumber]").attr("slidenumber"));
-			var lastCarrouselNumber = firstCarrouselNumber + 7;
-
-			if((no<firstCarrouselNumber)||(no>lastCarrouselNumber)){
-				V.Editor.Thumbnails.moveCarrouselToSlide(no);
-			}
-
 			//finally add a background color to thumbnail of the selected slide
 			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
@@ -352,6 +308,14 @@ VISH.Slides = (function(V,$,undefined){
 		params.slideNumber = no;
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onGoToSlide,params,triggeredByUser);
 	};
+
+	var _goToSlide = function(no){
+		var nextSlideIndex = no - 1;
+		if ((nextSlideIndex < slideEls.length)&&(nextSlideIndex >= 0)) {
+			_setCurrentSlideIndex(nextSlideIndex);
+			updateSlides(true);
+		}
+	}
   
    /**
 	* Go to the last slide
@@ -451,7 +415,6 @@ VISH.Slides = (function(V,$,undefined){
 			setSlides				: setSlides,
 			updateSlides			: updateSlides,
 			updateSlideEls			: updateSlideEls,
-	 		setCurrentSlideIndex	: setCurrentSlideIndex,
 			getCurrentSlide 		: getCurrentSlide,
 			getCurrentSubSlide 		: getCurrentSubSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
