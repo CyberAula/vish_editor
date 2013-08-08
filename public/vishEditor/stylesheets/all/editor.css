@@ -142,6 +142,7 @@ float: left;
 	margin-top: 0px;
 	font-size: 1.2em;
 	font-family: 'Open Sans', sans-serif;
+	cursor: default;
 }
 
 #slides_list img.image_barbutton {
@@ -189,6 +190,8 @@ float: left;
 	padding: 4px;
 	font-family: 'Open Sans', sans-serif;
 	border-radius: 5px 0px 5px 5px;
+	cursor: default;
+	pointer-events: none;
 }
 
 #subslide_selected img.image_barbutton {
@@ -201,6 +204,7 @@ float: left;
 	height: 55px;
 	border-radius: 5px;
 	border: 1px solid white;
+	cursor: pointer;
 }
 
 section.slides_editor {

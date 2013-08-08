@@ -168,20 +168,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Pre-copy actions
 		/////////////////
 
-		var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-		if((typeof slidesetModule != "undefined")&&(slidesetModule!=null)){
-			var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-			var slidesetId = $(slideToCopy).attr("id");
-
-			if(!options.JSON){
-				//We need the JSON to copy a slideset!
-				return;
-			}
-
-			var slideToCopyJSON = V.Editor.Utils.replaceIdsForSlideJSON(options.JSON,slidesetId);
-			slidesetModule.preCopyActions(slideToCopyJSON,slideToCopy);
-		}
-
 		/////////////////
 		//Copy actions
 		/////////////////
@@ -193,7 +179,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			$("section#slides_panel").append(slideToCopy);
 		}
 		
-
 		/////////////////
 		//Post-copy actions
 		/////////////////
@@ -207,10 +192,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			if(options.textAreas){
 				_loadTextAreasOfSlide(slideCopied,options.textAreas);
 			}
-		}
-
-		if((typeof slidesetModule != "undefined")&&(slidesetModule!=null)){
-			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
 		//Update slideEls and refresh classes

@@ -227,13 +227,15 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			});
 		});
 
+		V.Editor.Slideset.beforeCreateSlidesetThumbnails();
+
 		var options = new Array();
 		options['horizontalScroll'] = true;
 		options['callback'] = _afterCreateSubslidesScrollbar;
 
 		//Create scrollbar
 		$("#" + slidesetThumbnailsDivId).show();
-		V.Editor.Scrollbar.createScrollbar(slidesetThumbnailsDivId, options);
+		// V.Editor.Scrollbar.createScrollbar(slidesetThumbnailsDivId, options);
 	}
 
 	var _afterCreateSubslidesScrollbar = function(){

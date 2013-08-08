@@ -21,8 +21,6 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 							break;
 						case V.Constant.FLASHCARD:
 						case V.Constant.VTOUR:
-							var slidesetModule = V.Editor.Slideset.getModule(slideType);
-							params.JSON = jQuery.extend(true, {}, slidesetModule.getSlideset(element.id));
 							break;
 						default:
 							break;

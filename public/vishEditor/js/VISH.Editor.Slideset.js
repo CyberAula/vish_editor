@@ -39,23 +39,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	/*
-	 * Module to insert and manage the inserted slidesets
-	 * Not use in the creator process
-	 */
-	var getModule = function(type){
-		switch(type){
-			case V.Constant.FLASHCARD:
-				return V.Editor.Flashcard;
-				break;
-			case V.Constant.VTOUR:
-				return V.Editor.VirtualTour;
-				break;
-			default:
-				return null;
-		}
-	}
-
-	/*
 	 * Obj: slide or slide type
 	 */
 	var isSlideset = function(obj){
@@ -80,6 +63,10 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		currentSubslide = newSubslide;
 	};
 
+
+	/////////////////
+	// Callbacks
+	////////////////
 
 	/*
 	 * Update UI when enter in a slideset
@@ -150,6 +137,21 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	}
 
+	var beforeCreateSlidesetThumbnails = function(){
+		var slideset = V.Slides.getCurrentSlide();
+		if(isSlideset(slideset)){
+			var slidesetCreator = getCreatorModule(slideset);
+			if(typeof slidesetCreator.beforeCreateSlidesetThumbnails == "function"){
+				slidesetCreator.beforeCreateSlidesetThumbnails(slideset);
+			}
+		}
+	}
+
+
+	/////////////////
+	// Methods
+	////////////////
+
 	var openSubslideWithNumber = function(subslideNumber){
 		var slideset = V.Slides.getCurrentSlide();
 		var subslides = $(slideset).find("article");
@@ -212,10 +214,16 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		$(slideThumbnail).attr("src",thumbnailURL);
 	}
 
+
+	/////////////////
+	// Events
+	////////////////
+
 	var onClickOpenSlideset = function(){
 		var slideset = V.Slides.getCurrentSlide();
 		openSlideset(slideset);
 	}
+
 
 	////////////////
 	// DEPRECATED
@@ -263,11 +271,11 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		init 					: init,
 		isSlideset				: isSlideset,
 		getCreatorModule		: getCreatorModule,
-		getModule				: getModule,
 		onEnterSlideset			: onEnterSlideset,
 		onLeaveSlideset			: onLeaveSlideset,
 		openSlideset			: openSlideset,
 		closeSlideset			: closeSlideset,
+		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		openSubslideWithNumber 	: openSubslideWithNumber,
 		openSubslide			: openSubslide,
 		closeSubslideWithNumber	: closeSubslideWithNumber,

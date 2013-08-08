@@ -1,7 +1,6 @@
 VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	var init = function(){
-
 	};
 
 	var getDummy = function(slideNumber){
@@ -10,13 +9,9 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(fc){
-		// console.log("onEnterSlideset");
-		// console.log(fc);
 	};
 
 	var onLeaveSlideset = function(fc){
-		// console.log("onLeaveSlideset");
-		// console.log(fc);
 	};
 
 	var loadSlideset = function(fc){
@@ -28,6 +23,17 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	var unloadSlideset = function(fc){
 		//Unload flashcard
 	};
+
+	var beforeCreateSlidesetThumbnails = function(fc){
+		console.log("beforeCreateSlidesetThumbnail");
+		console.log(fc);
+
+		//Load POI data
+		var POIdata = undefined;
+
+		//Draw POIS
+		
+	}
 
 	/*
 	 * Redraw the pois of the flashcard
@@ -217,6 +223,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		onLeaveSlideset				: onLeaveSlideset,
 		loadSlideset				: loadSlideset,
 		unloadSlideset				: unloadSlideset,
+		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		onBackgroundSelected		: onBackgroundSelected
 	};
 
