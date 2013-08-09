@@ -275,6 +275,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		onLeaveSlideset			: onLeaveSlideset,
 		openSlideset			: openSlideset,
 		closeSlideset			: closeSlideset,
+		getCurrentSubslide		: getCurrentSubslide,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		openSubslideWithNumber 	: openSubslideWithNumber,
 		openSubslide			: openSubslide,
