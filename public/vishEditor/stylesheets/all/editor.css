@@ -681,10 +681,7 @@ div.vezone{
 	overflow: hidden;
 }
 .fancy_tabs{
-	border-bottom: 1px solid #ff005d;
-	border-radius: 5px 5px 0px 0px;
-	moz-border-radius: 5px 5px 0px 0px;
-	webkit-border-radius: 5px 5px 0px 0px;
+border: 1px solid #e6e6e6;
 }
 
 .fancy_tabs ul{
@@ -704,34 +701,37 @@ div.vezone{
 
 .fancy_tabs li{
 	display: inline-block;
-	margin-bottom: -1px;
 }
 
 .fancy_tabs li a{
-	display:block;
-	padding: 0.5em 1.5em;
-	text-decoration: none;
-	background: #ffffff;
-	color: #ff005d;
-	font-size: 16px;
-	font-family: Helvetica;
-	font-weight: bold;
-	border-radius: 5px 5px 0px 0px;
-	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
-	
+	height: 1.6em;
+display: block;
+padding: 0.5em 1.5em;
+text-decoration: none;
+background: #ffffff;
+color: #000;
+font-size: 15px;
+opacity: 0.5;
+font-family: 'Open Sans', sans-serif;
+font-weight: 400;
 }
 
 .fancy_tabs li a:hover{
-	border:1px solid #ff005d;
-	border-bottom-color: transparent;
+	margin-top: 1px;
+	opacity: 0.8;
+	font-size: 15px;
+	border-bottom: 3px solid #930;
+	font-weight: 400;
 }
 
 .fancy_tabs li a.fancy_selected{
-	background: #ffffff;
-	color: #ff005d;
-	border: 1px solid #ff005d;
-	border-bottom-color: transparent;
+color: #000;
+height: 24px;
+border-bottom: 3px solid #ff005d;
+opacity: 1;
+font-size: 16px;
+filter: none;
+font-weight: 600;
 }
 
 .fancy_tab_content{
@@ -763,7 +763,7 @@ a#tab_object_lre, a#tab_pic_lre {
 
 a#tab_object_lre > img, a#tab_pic_lre > img {
 	width: 155px;
-	height: 28px;
+	height: 27px;
 	margin-bottom: -10px;
 }
 
