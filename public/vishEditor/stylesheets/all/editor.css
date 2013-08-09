@@ -812,26 +812,6 @@ a#tab_object_lre > img, a#tab_pic_lre > img {
 	width: 50px;
 	height: 50px;
 }
-
-#picture_fancybox{
-	background: url(/vishEditor/images/background_img_fancybox.png);
-	background-repeat:no-repeat;
-	background-position: right bottom;
-}
-
-#flash_fancybox{
-	background: url(/vishEditor/images/background_flash_fancybox.png);
-	background-repeat:no-repeat;
-	background-position: right bottom;
-}
-
-#video_fancybox{
-	background: url(/vishEditor/images/background_video_fancybox.png);
-	background-repeat:no-repeat;
-	background-position: right bottom;
-}
-
-
 .slide_number{
 	position: absolute;
 	top: 20px;
