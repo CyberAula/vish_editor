@@ -25,9 +25,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	};
 
 	var beforeCreateSlidesetThumbnails = function(fc){
-		console.log("beforeCreateSlidesetThumbnail");
-		console.log(fc);
-
 		//Load POI data
 		var POIdata = undefined;
 
@@ -42,130 +39,87 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	var drawPois = function(fc){
 
 		$("#subslides_list").find("div.wrapper_barbutton").each(function(index,div){
-			var arrowDiv = $('<div class="draggable_sc_div" >');
+			var arrowDiv = $('<div class="draggable_sc_div">');
 			$(arrowDiv).append($('<img src="'+V.ImagesPath+'flashcard/flashcard_button.png" class="fc_draggable_arrow">'));
 			$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 			$(div).prepend(arrowDiv);
 		});
 
-		// //Show draggable items to create the flashcard
-		// $(".draggable_arrow_div").show();
-		// //Apply them the style to get the previous position
-		// _applyStyleToPois();
+		//Drag&Drop POIs
 
-		// $(".draggable_arrow_div").draggable({
-		// 	revert: "invalid",   //poi will return to original position if not dropped on the background
-		// 	stop: function(event, ui) { 
-		// 		//change the moved attribute of the poi, and change it to position absolute
-		// 		//check if inside background
-		// 		if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
-		// 			$(event.target).attr("moved", "true");
-		// 			//change to position absolute
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "fixed");
-		// 			$(event.target).css("top", (old_pos.top +30) + "px");
-		// 			$(event.target).css("left", (old_pos.left -16) + "px");
-		// 		} else {
-		// 			$(event.target).attr("moved", "false");
-		// 			//change to position relative so it moves with the carrousel
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "relative");
-		// 			$(event.target).css("top", "auto");
-		// 			$(event.target).css("left", "auto");
-		// 		}
-		// 	}
-		// });
-		// $(".carrousel_element_single_row_slides").droppable();
+		$("div.draggable_sc_div").draggable({
+			start: function( event, ui ) {
+				var position = $(event.target).css("position");
+				if(position==="fixed"){
+					//Start d&d in droppable
+					$(event.target).attr("ddstart","droppable");
+				} else {
+					//Start d&d in scrollbar
+					//Compensate change to position fixed with margins
+					var current_offset = $(event.target).offset();
+					$(event.target).css("position", "fixed");
+					$(event.target).css("margin-top", (current_offset.top) + "px");
+					$(event.target).css("margin-left", (current_offset.left) + "px");
+					$(event.target).attr("ddstart","scrollbar");
+				}
+			},
+			stop: function(event, ui) {
+				//Chek if poi is inside background
+				var current_offset = $(event.target).offset();
+				var fc_offset = $(fc).offset();
+				var yOk = ((current_offset.top > (fc_offset.top-10))&&(current_offset.top < (fc_offset.top+$(fc).outerHeight()-38)));
+				var xOk = ((current_offset.left > (fc_offset.left-5))&&(current_offset.left < (fc_offset.left+$(fc).outerWidth()-44)));
+				var insideBackground = ((yOk)&&(xOk));
+
+				if(insideBackground){
+					if($(event.target).attr("ddstart")==="scrollbar"){
+						//Drop inside background from scrollbar
+						//Transform margins to top and left
+						var newTop = $(event.target).cssNumber("margin-top") +  $(event.target).cssNumber("top");
+						var newLeft = $(event.target).cssNumber("margin-left") +  $(event.target).cssNumber("left");
+						$(event.target).css("margin-top", "0px");
+						$(event.target).css("margin-left", "0px");
+						$(event.target).css("top", newTop+"px");
+						$(event.target).css("left", newLeft+"px");
+					} else {
+						//Drop inside background from background
+						//Do nothing
+					}
+				} else {
+					//Drop outside background
+					//Return to original position
+
+					if($(event.target).attr("ddstart")==="scrollbar"){
+						//Do nothing
+					} else if($(event.target).attr("ddstart")==="droppable"){
+						//Decompose top and left, in top,left,margin-top and margin-left
+						//This way, top:0 and left:0 will lead to the original position
+
+						//Get the parent (container in scrollbar)
+						var parent = $(event.target).parent();
+						var parent_offset = $(parent).offset();
+
+						var newMarginTop = parent_offset.top - 20;
+						var newMarginLeft = parent_offset.left + 12;
+						var newTop = $(event.target).cssNumber("top") - newMarginTop;
+						var newLeft = $(event.target).cssNumber("left") - newMarginLeft;
+						$(event.target).css("margin-top", newMarginTop+"px");
+						$(event.target).css("margin-left", newMarginLeft+"px");
+						$(event.target).css("top", newTop+"px");
+						$(event.target).css("left", newLeft+"px");	
+					}
+
+					$(event.target).animate({ top: 0, left: 0 }, 'slow', function(){
+						//Animate complete
+						$(event.target).css("position", "absolute");
+						//Original margins
+						$(event.target).css("margin-top","-20px");
+						$(event.target).css("margin-left","12px");
+					});
+				}
+			}
+		});
 	};
-
-	/*
-	 * Redraw the pois of the flashcard
-	 * This actions must be called after thumbnails have been rewritten
-	 */
-	var redrawPois = function(){
-		// //Show draggable items to create the flashcard
-		// $(".draggable_arrow_div").show();
-		// //Apply them the style to get the previous position
-		// _applyStyleToPois();
-
-		// $(".draggable_arrow_div").draggable({
-		// 	revert: "invalid",   //poi will return to original position if not dropped on the background
-		// 	stop: function(event, ui) { 
-		// 		//change the moved attribute of the poi, and change it to position absolute
-		// 		//check if inside background
-		// 		if($(event.target).offset().top > 50 && $(event.target).offset().top < 600 && $(event.target).offset().left > 55 && $(event.target).offset().left < 805){
-		// 			$(event.target).attr("moved", "true");
-		// 			//change to position absolute
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "fixed");
-		// 			$(event.target).css("top", (old_pos.top +30) + "px");
-		// 			$(event.target).css("left", (old_pos.left -16) + "px");
-		// 		} else {
-		// 			$(event.target).attr("moved", "false");
-		// 			//change to position relative so it moves with the carrousel
-		// 			var old_pos = $(event.target).offset();
-		// 			$(event.target).css("position", "relative");
-		// 			$(event.target).css("top", "auto");
-		// 			$(event.target).css("left", "auto");
-		// 		}
-		// 	}
-		// });
-		// $(".carrousel_element_single_row_slides").droppable();
-	};
-
-	var _applyStyleToPois = function(){
-		// if((typeof currentPois === "undefined")&&(trustOrgPois)){
-		// 	//We are loading a flascard, get the pois from the json
-		// 	var presentation = V.Editor.getPresentation();
-		// 	if(presentation && presentation.slides && presentation.slides[0] && presentation.slides[0].pois){
-		// 		currentPois = presentation.slides[0].pois;
-		// 	} else {
-		// 		return;
-		// 	}
-		// }
-
-		// if(typeof currentPois !== "undefined"){
-		// 	$.each(currentPois, function(index, val) { 
-		// 		$("#" + val.id).css("position", "fixed");
-		// 		$("#" + val.id).offset({ top: 600*parseInt(val.y)/100 + 38, left: 800*parseInt(val.x)/100 + 48});
-		// 		$("#" + val.id).attr("moved", "true");
-		// 	});
-		// }
-	};
-
-
-	// /*
-	//  * Load a flashcard in the creator mode
-	//  * @presentation must be undefined for new flashcard, or a previous flashcard
-	//  * (presentation[type='flashcard']) if we are editing an existing flashcard
-	//  */
-	// var loadSlideset = function(presentation){
-	// 	V.Editor.setPresentationType(V.Constant.FLASHCARD);
-		
-	// 	V.Editor.Slides.hideSlides();
-
-	// 	//Show flashcard background
-	// 	$("#flashcard-background").show();
-
-	// 	if(presentation){
-	// 		//If we are editing an existing flashcard
-	// 		var flashcard = presentation.slides[0];
-	// 		flashcardId = flashcard.id;
-	// 		$("#flashcard-background").attr("flashcard_id", flashcardId);
-	// 		$("#flashcard-background").css("background-image", flashcard.background);
-	// 		$("#fc_change_bg_big").hide();
-	// 		//When we load a flashcard, we can trust in the json pois
-	// 		//Otherwise, this pois may be belong to another slideset (e.g virtual tour)
-	// 		trustOrgPois = true;
-	// 	} else {
-	// 		//Create new flashcard
-	// 		if(!flashcardId){
-	// 			flashcardId = V.Utils.getId("article");
-	// 		}
-	// 		$("#flashcard-background").attr("flashcard_id", flashcardId);
-	// 	}
-	// 	$("#flashcard-background").droppable();  //to accept the pois
-	// };
 
 	/*
 	 * Callback from the V.Editor.Image module to add the background
@@ -186,7 +140,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	}
 
 	
-
 
 	////////////////////
 	// Validate
@@ -225,15 +178,15 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	}
 
 	return {
-		init 				 		: init,
-		getDummy					: getDummy,
-		onEnterSlideset				: onEnterSlideset,
-		onLeaveSlideset				: onLeaveSlideset,
-		loadSlideset				: loadSlideset,
-		unloadSlideset				: unloadSlideset,
+		init 				 			: init,
+		getDummy						: getDummy,
+		onEnterSlideset					: onEnterSlideset,
+		onLeaveSlideset					: onLeaveSlideset,
+		loadSlideset					: loadSlideset,
+		unloadSlideset					: unloadSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
-		onBackgroundSelected		: onBackgroundSelected,
-		drawPois					: drawPois
+		onBackgroundSelected			: onBackgroundSelected,
+		drawPois						: drawPois
 	};
 
 }) (VISH, jQuery);
