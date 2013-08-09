@@ -285,8 +285,8 @@ VISH.Slides = (function(V,$,undefined){
 		if ((nextSlideIndex < slideEls.length)&&(nextSlideIndex >= 0)) {
 			triggerLeaveEvent(curSlideIndex+1);
 			_setCurrentSlideIndex(nextSlideIndex);
-			triggerEnterEvent(curSlideIndex+1);
 			updateSlides();
+			triggerEnterEvent(curSlideIndex+1);
 		}
 	}
   

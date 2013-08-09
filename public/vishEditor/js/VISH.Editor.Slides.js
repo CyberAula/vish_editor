@@ -276,12 +276,13 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
+		V.Slides.triggerLeaveEvent(oldCurrentSlideNumber);
 		V.Slides.updateSlides();
+		V.Slides.lastSlide();
+		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+
 		V.Editor.Thumbnails.redrawThumbnails(function(){
-			V.Slides.triggerLeaveEvent(oldCurrentSlideNumber);
-			V.Slides.lastSlide();
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
-			V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
 		});
 	};
 

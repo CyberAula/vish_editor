@@ -46,7 +46,6 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var _drawPois = function(fc,POIdata){
-
 		var pois = {};
 		var fc_offset = $(fc).offset();
 
@@ -177,6 +176,13 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	var _savePoisToJson = function(fc){
 		var pois = [];
+
+		var hasCurrentClass = $(fc).hasClass("current");
+		if(!hasCurrentClass){
+			$(fc).addClass("current");
+			$(fc).addClass("temp_shown");
+		}
+		
 		var fc_offset = $(fc).offset();
 
 		$("#subslides_list").find("div.draggable_sc_div[ddend='background']").each(function(index,poi){	
@@ -187,13 +193,18 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 				pois[index].slide_id = $(poi).attr('slide_id');
 		});
 
+		if(!hasCurrentClass){
+			$(fc).removeClass("current");
+			$(fc).removeClass("temp_shown");
+		}
+
 		return pois;
 	}
 
 	var _savePoisToDom = function(fc){
 		var poisJSON = _savePoisToJson(fc);
 		$(fc).attr("poisData",JSON.stringify(poisJSON));
-		return;
+		return poisJSON;
 	}
 
 	var _getPoisFromDoom = function(fc){
@@ -256,7 +267,10 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		slide.id = $(fc).attr('id');
 		slide.type = V.Constant.FLASHCARD;
 		slide.background = $(fc).css("background-image");
-		slide.pois = _savePoisToJson(fc);
+		if(V.Slides.getCurrentSlide()===fc){
+			_savePoisToDom(fc);
+		}
+		slide.pois = _getPoisFromDoom(fc);
 		slide.slides = [];
 		return slide;
 	}
@@ -270,7 +284,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		unloadSlideset					: unloadSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		onBackgroundSelected			: onBackgroundSelected,
-		getSlideHeader					: getSlideHeader
+		getSlideHeader					: getSlideHeader,
+		_savePoisToDom					: _savePoisToDom
 	};
 
 }) (VISH, jQuery);
