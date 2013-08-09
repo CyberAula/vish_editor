@@ -717,7 +717,6 @@ font-weight: 400;
 }
 
 .fancy_tabs li a:hover{
-	margin-top: 1px;
 	opacity: 0.8;
 	font-size: 15px;
 	border-bottom: 3px solid #930;
