@@ -1076,7 +1076,6 @@ img.delete_img{
 	margin-left: 25px;
 	margin-top: 30px;
 	height: 50px;
-	width: 65px;
 }
 
 .deltext{
@@ -1144,6 +1143,8 @@ img.delete_img{
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
 }	
 
 .button:hover {
