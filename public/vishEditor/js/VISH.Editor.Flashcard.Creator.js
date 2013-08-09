@@ -176,16 +176,18 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	var _savePoisToJson = function(fc){
 		var pois = [];
+		var poisDOM = $("#subslides_list").find("div.draggable_sc_div[ddend='background']");
 
 		var hasCurrentClass = $(fc).hasClass("current");
 		if(!hasCurrentClass){
 			$(fc).addClass("current");
-			$(fc).addClass("temp_shown");
 		}
+		$(fc).addClass("temp_shown");
+		$(poisDOM).addClass("temp_shown");
 		
 		var fc_offset = $(fc).offset();
 
-		$("#subslides_list").find("div.draggable_sc_div[ddend='background']").each(function(index,poi){	
+		$(poisDOM).each(function(index,poi){
 				pois[index]= {};
 				pois[index].id = $(fc).attr("id") + "_poi" + (index+1);
 				pois[index].x = (100*($(poi).offset().left - fc_offset.left)/800).toString();
@@ -195,8 +197,9 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 		if(!hasCurrentClass){
 			$(fc).removeClass("current");
-			$(fc).removeClass("temp_shown");
 		}
+		$(poisDOM).removeClass("temp_shown");
+		$(fc).removeClass("temp_shown");
 
 		return pois;
 	}

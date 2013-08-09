@@ -100,6 +100,12 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 */
 	var onLeaveSlideset = function(slideset){
 		closeSlideset(slideset);
+
+		var currentSubslide = getCurrentSubslide();
+		if(currentSubslide){
+			closeSubslide(currentSubslide);
+		}
+
 		$("#bottomside").hide();
 		$("#subslide_selected > img").attr("src","");
 
