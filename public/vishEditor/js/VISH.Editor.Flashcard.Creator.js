@@ -175,7 +175,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	};
 
 
-	var savePoisToJson = function(fc){
+	var _savePoisToJson = function(fc){
 		var pois = [];
 		var fc_offset = $(fc).offset();
 
@@ -191,7 +191,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	}
 
 	var _savePoisToDom = function(fc){
-		var poisJSON = savePoisToJson(fc);
+		var poisJSON = _savePoisToJson(fc);
 		$(fc).attr("poisData",JSON.stringify(poisJSON));
 		return;
 	}
@@ -249,14 +249,14 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Used by VISH.Editor module to save the flashcard in a JSON file
+	 * Used by VISH.Editor module to save the flashcard in the JSON
 	 */
-	var getSlideHeader = function(){
+	var getSlideHeader = function(fc){
 		var slide = {};
-		slide.id = flashcardId;
+		slide.id = $(fc).attr('id');
 		slide.type = V.Constant.FLASHCARD;
-		slide.background = $("#flashcard-background").css("background-image");
-		slide.pois = savePoisToJson();
+		slide.background = $(fc).css("background-image");
+		slide.pois = _savePoisToJson(fc);
 		slide.slides = [];
 		return slide;
 	}
@@ -270,7 +270,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 		unloadSlideset					: unloadSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		onBackgroundSelected			: onBackgroundSelected,
-		savePoisToJson					: savePoisToJson
+		getSlideHeader					: getSlideHeader
 	};
 
 }) (VISH, jQuery);

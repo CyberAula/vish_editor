@@ -193,7 +193,7 @@ VISH.Slides = (function(V,$,undefined){
 		triggerLeaveEventById(el.id);
 	};
 
-	var triggerEnterEventById = function (slide_id) {
+	var triggerEnterEventById = function(slide_id) {
 		var el = $("#" +slide_id)[0];
 		var evt = document.createEvent('Event');
 		evt.initEvent('slideenter', true, true);
