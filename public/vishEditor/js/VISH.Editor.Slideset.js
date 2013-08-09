@@ -124,6 +124,8 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			closeSubslide(currentSubslide);
 		}
 
+		V.Editor.Tools.loadToolsForSlide(slideset);
+
 		//Load
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.loadSlideset == "function"){
