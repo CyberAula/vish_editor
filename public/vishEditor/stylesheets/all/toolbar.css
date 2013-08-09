@@ -38,17 +38,18 @@ margin-right: 20px;
 #toolbar_presentation {
     padding-right: 20px;
     padding-left: 20px;
-    border-right: 1px solid #ccc;
     min-width: 485px;
     float: left;
+    -webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 }
 
 #toolbar_element {
-    padding-left: 15px;
-    padding-left: 5px;
-    min-width: 425px;
-    text-align: left;
-    max-width: 620px;
+padding-left: 12px;
+min-width: 425px;
+text-align: left;
+max-width: 620px;
 }
 
 .toolbar_presentation_wrapper{
@@ -85,11 +86,24 @@ margin-right: 20px;
 }
 
 .toolbar_icon{
-    top: -1px;
-    cursor: pointer;
-    height: 21px;
-    margin: 1px 10px 0 8px;
-    border: 1px solid #EFEFEF;
+padding-right: 10px;
+padding-left: 10px;
+padding-top: 16px;
+padding-bottom: 17px;
+height: 43px;
+border-left: 1px solid #EBEBEB;
+border-right: 1px solid #EBEBEB;
+cursor: pointer;
+opacity:0.8;
+}
+
+.toolbar_icon:hover {
+  opacity: 1;
+}
+
+img.toolbar_icon{
+height: 24px;
+width: 23px;
 }
 
 
