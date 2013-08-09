@@ -50,7 +50,7 @@ VISH.SlideManager = (function(V,$,undefined){
 		});
 	};
 
-	var _initAferStatusLoaded = function(options,presentation){		
+	var _initAferStatusLoaded = function(options,presentation){	
 		V.Flashcard.init();
 		V.VirtualTour.init();
 		V.Quiz.initBeforeRender(presentation);
@@ -79,6 +79,10 @@ VISH.SlideManager = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); //Also init texts
+
+		if(V.Slides.getCurrentSlideNumber()>0){
+			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
+		}
 
 		if(!V.Status.getIsEmbed()){
 			//Try to win focus
