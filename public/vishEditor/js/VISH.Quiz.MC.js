@@ -1,8 +1,6 @@
 VISH.Quiz.MC = (function(V,$,undefined){
   
-  var choicesLetters = ['a)','b)','c)','d)','e)','f)','g)','h)','i)','j)','k)','l)','m)','n)','o)','p)','q)','r)','s)'];
   var choices = {};
-
 
   var init = function(){
       _loadEvents();
@@ -35,7 +33,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
       var option = slide.choices[i];
       var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
       var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
-      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+choicesLetters[i]+"</span></td>");
+      var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
       var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
       $(optionText).html(option.wysiwygValue);
 
@@ -117,10 +115,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
     V.Quiz.disableAnswerButton(quiz);
   }
 
-  var getChoicesLetters = function(){
-    return choicesLetters;
-  }
-
   /*
    * Data representation
    */
@@ -135,7 +129,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
     init                : init,
     render              : render,
     onAnswerQuiz        : onAnswerQuiz,
-    getChoicesLetters   : getChoicesLetters,
     getReport           : getReport,
     disableQuiz         : disableQuiz,
     drawResults         : drawResults

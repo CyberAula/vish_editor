@@ -42,7 +42,7 @@ VISH.Quiz = (function(V,$,undefined){
     //   $(document).on('click', ".quizQr",_onClickQR);
     //   $(".quizQr").attr("title","Click to put the QR in full screen");
     //   $(".quizQr").css("cursor","pointer");
-    // }    
+    // }
 
     $("a#addQuizSessionFancybox").fancybox({
       'autoDimensions' : false,
