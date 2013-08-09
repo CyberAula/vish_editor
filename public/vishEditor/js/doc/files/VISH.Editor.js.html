@@ -245,7 +245,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Utils.Loader.unloadAllObjects();
 
 		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
-		V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
+		if(V.Slides.getCurrentSlideNumber()&gt;0){
+			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
+		}
 
 		&#x2F;&#x2F;Try to win focus
 		window.focus();
@@ -556,7 +558,7 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	&#x2F;**
-	* function called when entering slide in editor, we have to show the objects
+	* Function called when entering slide in editor, we have to show the objects
 	*&#x2F;
 	var onSlideEnterEditor = function(e){
 		var slide = $(e.target);
@@ -608,29 +610,19 @@ VISH.Editor = (function(V,$,undefined){
 	* Function to save the presentation
 	*&#x2F;
 	var savePresentation = function(options){
-		&#x2F;&#x2F;Load all objects
+		&#x2F;&#x2F;Load and show all objects
 		V.Editor.Utils.Loader.loadAllObjects();
 		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
 
-		&#x2F;&#x2F;Now save the presentation
+		&#x2F;&#x2F;Save the presentation in JSON
 		var presentation = {};
 		presentation.VEVersion = V.VERSION;
-		if(draftPresentation){
-			presentation.id = draftPresentation.id;
-		}else{
-			presentation.id = &#x27;&#x27;;	
-		}
-
-		var saveForPreview = false;
-		if((options)&amp;&amp;(options.preview===true)){
-			saveForPreview = true;
-		}
-
 		presentation.type = V.Constant.PRESENTATION;
 
 		if(draftPresentation){
 			presentation.title = draftPresentation.title;
 			presentation.description = draftPresentation.description;
+			presentation.author = draftPresentation.author;
 			presentation.avatar = draftPresentation.avatar;
 			presentation.tags = draftPresentation.tags;
 			presentation.theme = draftPresentation.theme;
@@ -639,175 +631,162 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.language = draftPresentation.language;
 			presentation.educational_objectives = draftPresentation.educational_objectives;
 			presentation.adquired_competencies = draftPresentation.adquired_competencies;
+		} else {
+			presentation.author = &#x27;&#x27;; &#x2F;&#x2F;Filled in server side
 		}
-		presentation.author = &#x27;&#x27;;
+
+		&#x2F;&#x2F;Slides of the presentation
 		presentation.slides = [];
 
-		var slide = {};
-		var slidesetModule = V.Editor.Slideset.getCreatorModule(presentation.type);
-		var isSlideset = (slidesetModule!==null);
-		if(isSlideset){
-			slide = slidesetModule.getSlideHeader();
-			presentation.slides.push(slide);
-		}
+		$(&#x27;section.slides &gt; article&#x27;).each(function(index,slideDOM){
+			var slide = {};
 
-		slide = {};
-		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
-			slide.id = $(s).attr(&#x27;id&#x27;);
-			slide.type = $(s).attr(&#x27;type&#x27;);
-			
-			if(slide.type === V.Constant.FLASHCARD){
-				var fc = V.Editor.Flashcard.getFlashcard(slide.id);
-				presentation.slides.push(fc);
-				slide = {};
-				return true; &#x2F;&#x2F;equivalent to continue in an each loop
-			} else if(slide.type === V.Constant.VTOUR){
-				var vt = V.Editor.VirtualTour.getVirtualTour(slide.id);
-				presentation.slides.push(vt);
-				return true; &#x2F;&#x2F;equivalent to continue in an each loop
-			}
-
-			slide.template = $(s).attr(&#x27;template&#x27;);
-			slide.elements = [];
-			var element = {};
-
-			&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
-			$(s).addClass(&quot;temp_shown&quot;);
-
-			$(s).find(&#x27;div&#x27;).each(function(i,div){
-				
-				if($(div).attr(&quot;areaid&quot;) !== undefined){   
-
-					element.id		=	$(div).attr(&#x27;id&#x27;);
-					element.type	=	$(div).attr(&#x27;type&#x27;);
-					element.areaid	=	$(div).attr(&#x27;areaid&#x27;);					 
-						 
-					if(element.type==V.Constant.TEXT){
-						&#x2F;&#x2F;CKEditor version	
-						var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
-						if(CKEditor!==null){
-							element.body = CKEditor.getData();
-						} else {
-							element.body = &quot;&quot;;
-						}
-					} else if(element.type==V.Constant.IMAGE){
-						element.body   = $(div).find(&#x27;img&#x27;).attr(&#x27;src&#x27;);
-						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
-						if($(div).attr(&quot;hyperlink&quot;)){
-							element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
-						}
-					} else if(element.type==V.Constant.VIDEO){
-						var video = $(div).find(&quot;video&quot;);
-						element.poster = $(video).attr(&quot;poster&quot;);
-						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
-						&#x2F;&#x2F;Sources
-						var sources= &#x27;&#x27;;				
-						$(video).find(&#x27;source&#x27;).each(function(index, source) {
-							if(index!==0){
-								sources = sources + &#x27;,&#x27;;
-							}
-							var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
-							sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
-						});
-						sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
-						element.sources = sources;
-					} else if(element.type===V.Constant.OBJECT){
-						var wrapper = $(div).find(&quot;.object_wrapper&quot;)[0];
-						var object = $(wrapper).children()[0];
-
-						var myObject = $(object).clone();
-						$(myObject).removeAttr(&quot;style&quot;);
-						element.body   = V.Utils.getOuterHTML(myObject);
-						element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
-						var zoom = V.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
-						if(zoom!=1){
-							element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
-						}
-					} else if (element.type === V.Constant.QUIZ) {
-						var quizJSON = VISH.Editor.Quiz.save(div);
-						element.quiztype = quizJSON.quizType;
-						element.selfA = quizJSON.selfA;
-						element.question = quizJSON.question;
-						element.choices = quizJSON.choices;
-						if(quizJSON.extras){
-							element.extras = quizJSON.extras;
-						}
-						slide.containsQuiz = true;
-					} else if(element.type === V.Constant.SNAPSHOT){
-						var snapshotWrapper = $(div).find(&quot;.snapshot_wrapper&quot;);
-						var snapshotIframe = $(snapshotWrapper).children()[0];
-						$(snapshotIframe).removeAttr(&quot;style&quot;);
-						element.body   = V.Utils.getOuterHTML(snapshotIframe);
-						element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
-						&#x2F;&#x2F;Save scrolls
-						var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
-						if(typeof scrollTopAttr !== &quot;undefined&quot;){
-							element.scrollTop = scrollTopAttr;
-							element.scrollLeft = $(snapshotWrapper).attr(&quot;scrollLeft&quot;);
-						} else {
-							&#x2F;&#x2F;Fallback. Ideally never execute
-							&#x2F;&#x2F;It only works for visible slides, otherwise returns 0,0
-							element.scrollTop = $(snapshotWrapper).scrollTop();
-							element.scrollLeft = $(snapshotWrapper).scrollLeft();
-						}
-						
-					} else if(typeof element.type == &quot;undefined&quot;){
-						&#x2F;&#x2F;Empty element
-					}
-
-					slide.elements.push(element);
-
-					element = {};
-				}
-			});
-
-			if(slide.containsQuiz){
-				&#x2F;&#x2F;Before save a slide with quiz
-				&#x2F;&#x2F;Add a presentation to answer the quiz in live mode
-				var quizSlide = $.extend(true, {}, slide);
-				quizSlide.type = V.Constant.QUIZ_SIMPLE;
-				&#x2F;&#x2F;Build a presentation Wrapper
-				var quizPresentation = {};
-				quizPresentation.title = presentation.title;
-				quizPresentation.description = presentation.description;
-				quizPresentation.author = presentation.author;
-				quizPresentation.type = V.Constant.QUIZ_SIMPLE;
-				quizPresentation.slides = [quizSlide];
-
-				for(var k=0; k&lt;slide.elements.length; k++){
-					if(slide.elements[k].type===V.Constant.QUIZ){
-						slide.elements[k].quiz_simple_json = quizPresentation;
-					}
-				}
-			}
-			
-			if(isSlideset){
-				&#x2F;&#x2F;If it is a slideset (e.g flashcard or virtual tour) we save 
-				&#x2F;&#x2F;the slide into the slideset slides array
-				&#x2F;&#x2F;(the slideset itself is the first slide by convention)
-				slide = V.Editor.Slideset.prepareToNest(slide);
-				presentation.slides[0].slides.push(slide);
+			if(!V.Editor.Slideset.isSlideset(slideDOM)){
+				slide = _saveStandardSlide(slideDOM,presentation);
 			} else {
-				&#x2F;&#x2F;Presentation
-				presentation.slides.push(slide);
+				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
+				slide = slidesetModule.getSlideHeader(slideDOM);
+				&#x2F;&#x2F;Save subslides
+				$(slideDOM).find(&quot;article&quot;).each(function(index,subslideDOM){
+					var subslide = _saveStandardSlide(subslideDOM,presentation);
+					slide.slides.push(subslide);
+				});
 			}
 
-			slide = {};
-			$(s).removeClass(&quot;temp_shown&quot;);					
+			presentation.slides.push(slide);	
 		});
 
-		savedPresentation = presentation;  
+		savedPresentation = presentation;
 
 		&#x2F;&#x2F;Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 		&#x2F;&#x2F;Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
-		V.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;);
+		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;);
 		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
+
 		return savedPresentation;
 	};
 	
+	var _saveStandardSlide = function(slideDOM,presentation){
+		slide = {};
+		slide.id = $(slideDOM).attr(&#x27;id&#x27;);
+		slide.type = $(slideDOM).attr(&#x27;type&#x27;);
+		slide.template = $(slideDOM).attr(&#x27;template&#x27;);
+		slide.elements = [];
+
+		&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
+		$(slideDOM).addClass(&quot;temp_shown&quot;);
+
+		$(slideDOM).find(&#x27;div&#x27;).each(function(i,div){
+			var element = {};
+
+			if($(div).attr(&quot;areaid&quot;) !== undefined){
+				element.id		=	$(div).attr(&#x27;id&#x27;);
+				element.type	=	$(div).attr(&#x27;type&#x27;);
+				element.areaid	=	$(div).attr(&#x27;areaid&#x27;);				 
+					
+				if(element.type==V.Constant.TEXT){
+					var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
+					if(CKEditor!==null){
+						element.body = CKEditor.getData();
+					} else {
+						element.body = &quot;&quot;;
+					}
+				} else if(element.type==V.Constant.IMAGE){
+					element.body   = $(div).find(&#x27;img&#x27;).attr(&#x27;src&#x27;);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
+					if($(div).attr(&quot;hyperlink&quot;)){
+						element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
+					}
+				} else if(element.type==V.Constant.VIDEO){
+					var video = $(div).find(&quot;video&quot;);
+					element.poster = $(video).attr(&quot;poster&quot;);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
+					&#x2F;&#x2F;Sources
+					var sources= &#x27;&#x27;;				
+					$(video).find(&#x27;source&#x27;).each(function(index, source) {
+						if(index!==0){
+							sources = sources + &#x27;,&#x27;;
+						}
+						var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
+						sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
+					});
+					sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
+					element.sources = sources;
+				} else if(element.type===V.Constant.OBJECT){
+					var wrapper = $(div).find(&quot;.object_wrapper&quot;)[0];
+					var object = $(wrapper).children()[0];
+
+					var myObject = $(object).clone();
+					$(myObject).removeAttr(&quot;style&quot;);
+					element.body   = V.Utils.getOuterHTML(myObject);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+					var zoom = V.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
+					if(zoom!=1){
+						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
+					}
+				} else if (element.type === V.Constant.QUIZ) {
+					var quizJSON = VISH.Editor.Quiz.save(div);
+					element.quiztype = quizJSON.quizType;
+					element.selfA = quizJSON.selfA;
+					element.question = quizJSON.question;
+					element.choices = quizJSON.choices;
+					if(quizJSON.extras){
+						element.extras = quizJSON.extras;
+					}
+					slide.containsQuiz = true;
+				} else if(element.type === V.Constant.SNAPSHOT){
+					var snapshotWrapper = $(div).find(&quot;.snapshot_wrapper&quot;);
+					var snapshotIframe = $(snapshotWrapper).children()[0];
+					$(snapshotIframe).removeAttr(&quot;style&quot;);
+					element.body   = V.Utils.getOuterHTML(snapshotIframe);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+
+					&#x2F;&#x2F;Save scrolls
+					var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
+					if(typeof scrollTopAttr !== &quot;undefined&quot;){
+						element.scrollTop = scrollTopAttr;
+						element.scrollLeft = $(snapshotWrapper).attr(&quot;scrollLeft&quot;);
+					} else {
+						&#x2F;&#x2F;Fallback. Ideally never execute
+						&#x2F;&#x2F;It only works for visible slides, otherwise returns 0,0
+						element.scrollTop = $(snapshotWrapper).scrollTop();
+						element.scrollLeft = $(snapshotWrapper).scrollLeft();
+					}
+					
+				} else if(typeof element.type == &quot;undefined&quot;){
+					&#x2F;&#x2F;Empty element
+				}
+
+				slide.elements.push(element);
+			}
+		});
+
+		if(slide.containsQuiz){
+			&#x2F;&#x2F;Before save a slide with quiz
+			&#x2F;&#x2F;Add a presentation to answer the quiz in live mode
+			var quizSlide = $.extend(true, {}, slide);
+			quizSlide.type = V.Constant.QUIZ_SIMPLE;
+			&#x2F;&#x2F;Build a presentation Wrapper
+			var quizPresentation = {};
+			quizPresentation.title = presentation.title;
+			quizPresentation.description = presentation.description;
+			quizPresentation.author = presentation.author;
+			quizPresentation.type = V.Constant.QUIZ_SIMPLE;
+			quizPresentation.slides = [quizSlide];
+
+			for(var k=0; k&lt;slide.elements.length; k++){
+				if(slide.elements[k].type===V.Constant.QUIZ){
+					slide.elements[k].quiz_simple_json = quizPresentation;
+				}
+			}
+		}
+
+		$(slideDOM).removeClass(&quot;temp_shown&quot;);	
+		return slide;
+	}
 
 	var afterSavePresentation = function(presentation, order){
 		switch(V.Configuration.getConfiguration().mode){

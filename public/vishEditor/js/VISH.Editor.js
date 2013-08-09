@@ -468,7 +468,7 @@ VISH.Editor = (function(V,$,undefined){
 	/////////////////
 
 	/**
-	* function called when entering slide in editor, we have to show the objects
+	* Function called when entering slide in editor, we have to show the objects
 	*/
 	var onSlideEnterEditor = function(e){
 		var slide = $(e.target);
@@ -552,13 +552,13 @@ VISH.Editor = (function(V,$,undefined){
 			var slide = {};
 
 			if(!V.Editor.Slideset.isSlideset(slideDOM)){
-				slide = _saveStandardSlide(slideDOM);
+				slide = _saveStandardSlide(slideDOM,presentation);
 			} else {
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
 				slide = slidesetModule.getSlideHeader(slideDOM);
 				//Save subslides
 				$(slideDOM).find("article").each(function(index,subslideDOM){
-					var subslide = _saveStandardSlide(subslideDOM);
+					var subslide = _saveStandardSlide(subslideDOM,presentation);
 					slide.slides.push(subslide);
 				});
 			}
@@ -579,7 +579,7 @@ VISH.Editor = (function(V,$,undefined){
 		return savedPresentation;
 	};
 	
-	var _saveStandardSlide = function(slideDOM){
+	var _saveStandardSlide = function(slideDOM,presentation){
 		slide = {};
 		slide.id = $(slideDOM).attr('id');
 		slide.type = $(slideDOM).attr('type');

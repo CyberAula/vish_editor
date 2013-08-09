@@ -247,7 +247,7 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render an applet inside an article (a slide)
 	 * the applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div
-	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF (see V.SlideManager._onslideenter) and it will add the params inside the div
+	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF
 	 */
 	var _renderApplet = function(element, template){
 		return "<div id='"+element['id']+"' class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";

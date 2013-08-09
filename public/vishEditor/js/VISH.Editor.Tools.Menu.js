@@ -223,7 +223,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* function called when user clicks on save
 	* Generates the json for the current slides
 	* covers the section element and every article inside
-	* finally calls SlideManager with the generated json
+	* finally calls V.Viewer with the generated json
 	*/
 	var onSaveButtonClicked = function(){
 		if(V.Slides.getSlides().length === 0){

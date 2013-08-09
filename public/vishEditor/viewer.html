@@ -49,7 +49,7 @@
     <script type="text/javascript" src="/vishEditor/js/VISH.ObjectPlayer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.SnapshotPlayer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.AppletPlayer.js"></script>
-    <script type="text/javascript" src="/vishEditor/js/VISH.SlideManager.js"></script>
+    <script type="text/javascript" src="/vishEditor/js/VISH.Viewer.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Utils.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
     <script type="text/javascript" src="/vishEditor/js/VISH.Status.Device.js"></script>
@@ -307,14 +307,14 @@
                 //called to show a preview
                 getOptions();
                 options["preview"] = true;
-                VISH.SlideManager.init(options, window.parent.VISH.Editor.Preview.getPreview());
+                VISH.Viewer.init(options, window.parent.VISH.Editor.Preview.getPreview());
             } else if(parentSameDomain && window.parent.options){
                 //called from web server to show a presentation
-                VISH.SlideManager.init(window.parent.options, window.parent.presentation);
+                VISH.Viewer.init(window.parent.options, window.parent.presentation);
             } else {
                 //Developping
                 getOptions();
-                VISH.SlideManager.init(options);
+                VISH.Viewer.init(options);
             }
         }
     </script>

@@ -272,7 +272,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
 			//update slide counter
-			V.SlideManager.updateSlideCounter();
+			V.Viewer.updateSlideCounter();
 		}
 
 		var params = new Object();

@@ -258,20 +258,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		&#x2F;&#x2F;Pre-copy actions
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
-		var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-		if((typeof slidesetModule != &quot;undefined&quot;)&amp;&amp;(slidesetModule!=null)){
-			var slidesetModule = V.Editor.Slideset.getModule(slideToCopyType);
-			var slidesetId = $(slideToCopy).attr(&quot;id&quot;);
-
-			if(!options.JSON){
-				&#x2F;&#x2F;We need the JSON to copy a slideset!
-				return;
-			}
-
-			var slideToCopyJSON = V.Editor.Utils.replaceIdsForSlideJSON(options.JSON,slidesetId);
-			slidesetModule.preCopyActions(slideToCopyJSON,slideToCopy);
-		}
-
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Copy actions
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -283,7 +269,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			$(&quot;section#slides_panel&quot;).append(slideToCopy);
 		}
 		
-
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Post-copy actions
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -297,10 +282,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			if(options.textAreas){
 				_loadTextAreasOfSlide(slideCopied,options.textAreas);
 			}
-		}
-
-		if((typeof slidesetModule != &quot;undefined&quot;)&amp;&amp;(slidesetModule!=null)){
-			slidesetModule.postCopyActions(slideToCopyJSON,slideCopied);
 		}
 		
 		&#x2F;&#x2F;Update slideEls and refresh classes
@@ -443,9 +424,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		$(slideset).append(subslide);
 		V.Editor.Tools.addTooltipsToSlide(subslide);
 
+		V.Editor.Slideset.openSubslide(subslide);
+
 		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find(&quot;article&quot;),function(){
 			&#x2F;&#x2F;Subslides Thumbnails drawed succesfully
-			V.Editor.Slideset.openSubslide(subslide);
 			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr(&quot;slidenumber&quot;));
 		});
 	};

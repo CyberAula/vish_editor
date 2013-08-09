@@ -6,7 +6,7 @@ VISH.Presentation = (function(V,undefined){
 	 * Initialize renderer and call it to render each slide
 	 */
 	var init = function(slides){
-		mySlides = slides;		
+		mySlides = slides;
 		V.Renderer.init();
 
 		for(var i=0;i<slides.length;i++){
@@ -21,7 +21,6 @@ VISH.Presentation = (function(V,undefined){
 	 */
 	var _finishRenderer = function(){
 		V.VideoPlayer.HTML5.setVideoEvents();
-		V.SlideManager.addEnterLeaveEvents();
 		V.Slides.updateSlides();
 	};
 

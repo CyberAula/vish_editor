@@ -33,7 +33,7 @@ js/VISH.VideoPlayer.Youtube.js
 js/VISH.ObjectPlayer.js  
 js/VISH.SnapshotPlayer.js  
 js/VISH.AppletPlayer.js  
-js/VISH.SlideManager.js  
+js/VISH.Viewer.js  
 js/VISH.Utils.js  
 js/VISH.Status.js  
 js/VISH.ViewerAdapter.js  

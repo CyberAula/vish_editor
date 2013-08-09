@@ -59,7 +59,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 				// V.Debugging.log(_getAcceptedSlides());
 				var params = new Object();
 				params.acceptedSlides = _getAcceptedSlides();
-				params.JSON = V.SlideManager.getCurrentPresentation();
+				params.JSON = V.Viewer.getCurrentPresentation();
 				V.Messenger.notifyEventByMessage(V.Constant.Event.onSelectedSlides,params);
 			});
 

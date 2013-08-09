@@ -101,7 +101,6 @@ VISH.Slides = (function(V,$,undefined){
 	var curSubSlideId = null;
 	
 
-
 	&#x2F;* Initialization Method *&#x2F;
 	var init = function(){
 		_getcurSlideIndexFromHash();
@@ -284,7 +283,7 @@ VISH.Slides = (function(V,$,undefined){
 		triggerLeaveEventById(el.id);
 	};
 
-	var triggerEnterEventById = function (slide_id) {
+	var triggerEnterEventById = function(slide_id) {
 		var el = $(&quot;#&quot; +slide_id)[0];
 		var evt = document.createEvent(&#x27;Event&#x27;);
 		evt.initEvent(&#x27;slideenter&#x27;, true, true);
@@ -363,7 +362,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectThumbnail(no);
 		}	else {
 			&#x2F;&#x2F;update slide counter
-			V.SlideManager.updateSlideCounter();
+			V.Viewer.updateSlideCounter();
 		}
 
 		var params = new Object();

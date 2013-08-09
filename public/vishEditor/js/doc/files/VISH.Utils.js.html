@@ -100,6 +100,12 @@ VISH.Utils = (function(V,undefined){
 			domIds = new Array();
 			ids = [];
 		}
+
+		&#x2F;&#x2F;Extend JQuery functionality
+		jQuery.fn.cssNumber = function(prop){
+			var v = parseInt(this.css(prop),10);
+			return isNaN(v) ? 0 : v;
+		};
 	}
 
 	&#x2F;*
@@ -109,7 +115,7 @@ VISH.Utils = (function(V,undefined){
 		if(V.Editing){
 			return V.Editor.getOptions();
 		} else {
-			return V.SlideManager.getOptions();
+			return V.Viewer.getOptions();
 		}
 	}
 

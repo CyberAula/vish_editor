@@ -25,7 +25,7 @@ VISH.Utils = (function(V,undefined){
 		if(V.Editing){
 			return V.Editor.getOptions();
 		} else {
-			return V.SlideManager.getOptions();
+			return V.Viewer.getOptions();
 		}
 	}
 

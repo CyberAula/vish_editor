@@ -179,7 +179,7 @@ VISH.Quiz = (function(V,$,undefined){
 
   var _getQuizJSONFromSlide = function(slide){
     var slideId = $(slide).attr("id");
-    var presentation = V.SlideManager.getCurrentPresentation();
+    var presentation = V.Viewer.getCurrentPresentation();
     if((slideId)&&(presentation)){
       var slides = presentation.slides;
       var sL = slides.length;

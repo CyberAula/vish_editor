@@ -110,7 +110,7 @@ VISH.Debugging = (function(V,$,undefined){
 	    $("#menubar-viewer").show();
 
 		// V.Debugging.log("Init Vish Viewer with presentation: " + JSON.stringify(mypresentation));
-		V.SlideManager.init(presentationOptions, mypresentation);
+		V.Viewer.init(presentationOptions, mypresentation);
 	}
 	
 	var initVishEditor = function(){

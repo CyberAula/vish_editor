@@ -20,9 +20,14 @@ VISH.Events = (function(V,$,undefined){
 	var bindViewerEventListeners = function(){
 		if(bindedEventListeners){
 			return;
-		} else {
-			bindedEventListeners = true;
 		}
+
+		//Enter and leave events
+		$('article').live('slideenter', V.Viewer.onSlideEnterViewer);
+		$('article').live('slideleave', V.Viewer.onSlideLeaveViewer);
+
+		//Add tutorial events
+		_addTutorialEvents();
 
 		$(document).bind('keydown', handleBodyKeyDown); 
 
@@ -38,13 +43,12 @@ VISH.Events = (function(V,$,undefined){
 			}
 		});
 
-
 		$(document).on('click', '#closeButton', function(event){
 			event.stopPropagation();
 			event.preventDefault();
-			var comeBackUrl = V.SlideManager.getOptions()["comeBackUrl"];
+			var comeBackUrl = V.Viewer.getOptions()["comeBackUrl"];
 			if(comeBackUrl){
-				window.top.location.href = V.SlideManager.getOptions()["comeBackUrl"];
+				window.top.location.href = V.Viewer.getOptions()["comeBackUrl"];
 			} else if((V.Status.getIsEmbed())&&(V.Status.getDevice().features.history)){
 				//Go back
 				history.back();
@@ -60,7 +64,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).on('click','.close_subslide', onFlashcardCloseSlideClicked);
 
-		var presentation = V.SlideManager.getCurrentPresentation();
+		var presentation = V.Viewer.getCurrentPresentation();
 		for(index in presentation.slides){
 			var slide = presentation.slides[index];
 			switch(slide.type){
@@ -109,13 +113,30 @@ VISH.Events = (function(V,$,undefined){
 		if (mobile){
 			eMobile.bindViewerMobileEventListeners();
 		}
+
+		bindedEventListeners = true;
 	}
+
+	/**
+	* function to add the events to the help buttons to launch joy ride bubbles
+	*/
+	var _addTutorialEvents = function(){
+		$(document).on('click','#tab_quiz_session_help', function(){
+			V.Tour.startTourWithId('quiz_session_help', 'bottom');
+		});
+
+		$(document).on('click','#tab_quiz_stats_help', function(){
+			V.Tour.startTourWithId('quiz_stats_help', 'bottom');
+		});
+
+		$(document).on('click','#help_addslides_selection', function(){
+			V.Tour.startTourWithId('addslides_help', 'bottom');
+		});
+	};
 
 	var unbindViewerEventListeners = function(){
 		if(!bindedEventListeners){
 			return;
-		} else {
-			bindedEventListeners = false;
 		}
 
 		$(document).unbind('keydown', handleBodyKeyDown);
@@ -130,7 +151,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off('click','.close_subslide', onFlashcardCloseSlideClicked);
 
-		var presentation = V.SlideManager.getCurrentPresentation();
+		var presentation = V.Viewer.getCurrentPresentation();
 		for(index in presentation.slides){
 			var slide = presentation.slides[index];
 			switch(slide.type){
@@ -159,6 +180,7 @@ VISH.Events = (function(V,$,undefined){
 			eMobile.unbindViewerMobileEventListeners();
 		}
 
+		bindedEventListeners = false;
 	};
 
 

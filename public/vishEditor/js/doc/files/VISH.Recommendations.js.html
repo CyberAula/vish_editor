@@ -101,7 +101,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	 *&#x2F;
 	var init = function(options){
 		user_id = V.User.getId();
-		presentation_id = V.SlideManager.getCurrentPresentation().id;
+		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
 
 		if(options &amp;&amp; options[&quot;urlToGetRecommendations&quot;]){

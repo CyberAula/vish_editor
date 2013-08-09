@@ -97,7 +97,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		is_preview_insertMode = false;
 		if(is_preview){
-			var presentation = V.SlideManager.getCurrentPresentation();
+			var presentation = V.Viewer.getCurrentPresentation();
 			if(presentation.insertMode===true){
 				is_preview_insertMode = true;
 			}
@@ -133,7 +133,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		if(showViewbar){
-			V.SlideManager.updateSlideCounter();
+			V.Viewer.updateSlideCounter();
 			$("#viewbar").show();
 		} else {
 			$("#viewbar").hide();
@@ -240,7 +240,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	}
 
 	var _defaultViewbar = function(){
-		var presentationType = V.SlideManager.getPresentationType();
+		var presentationType = V.Viewer.getPresentationType();
 		var slidesQuantity = V.Slides.getSlidesQuantity();
 		if((presentationType===V.Constant.QUIZ_SIMPLE)&&(slidesQuantity===1)){
 			return false;
@@ -384,7 +384,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			} else {
 				var myDoc = document;
 			}
-			$(document).on('click', '#page-fullscreen', V.SlideManager.toggleFullScreen);
+			$(document).on('click', '#page-fullscreen', V.Viewer.toggleFullScreen);
 			$(myDoc).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
 				//Done with a timeout because it did not work well in ubuntu
 				setTimeout(function(){
