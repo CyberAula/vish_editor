@@ -99,6 +99,8 @@ opacity:0.6;
 
 .toolbar_icon:hover {
   opacity: 1;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 .toolbar_icon:active {
