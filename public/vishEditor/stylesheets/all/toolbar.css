@@ -1,16 +1,16 @@
 #toolbar_wrapper {
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  display: inline-block;
+border-top-right-radius: 6px;
+border-top-left-radius: 6px;
+border: 1px solid #ccc;
+background-color: #fff;
+display: inline-block;
 height: 57px;
-width: 1200px;
-  margin: 0px 0px 0px 0px; /* top margin, right margin, bottom margin, left margin */
-  padding-left: 20px;
-  padding-right: 20px;
-  zoom: 1;
-  overflow: visible;
+width: 1158px;
+margin: 0px 0px 0px 0px;
+padding-left: 20px;
+padding-right: 20px;
+zoom: 1;
+overflow: visible;
 box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
 -webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
 -moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
