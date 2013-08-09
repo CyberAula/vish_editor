@@ -94,14 +94,21 @@ height: 43px;
 border-left: 1px solid #EBEBEB;
 border-right: 1px solid #EBEBEB;
 cursor: pointer;
-opacity:0.8;
+opacity:0.6;
 }
 
 .toolbar_icon:hover {
   opacity: 1;
 }
 
+.toolbar_icon:active {
+-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+}
+
 img.toolbar_icon{
+
 height: 24px;
 width: 23px;
 }
