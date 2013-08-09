@@ -60,11 +60,24 @@ VISH.Editor.Events = (function(V,$,undefined){
 					if(slidesAddMode===V.Constant.NONE){
 						V.Editor.setContentAddMode(V.Constant.STANDARD);
 					}
+
+					if(slidesAddMode===V.Constant.SLIDESET){
+						//Hide smartcards, show templates only
+						$(".tab_slides_smartcards").hide();
+						$("#tab_pdfex").parent().hide();
+						$("#tab_presentations_repo").parent().hide();
+						$("#tab_smartcards_repo").parent().hide();
+					}
+
 					var clickedZoneId = $(data).attr("zone");
 					V.Editor.setCurrentArea($("#" + clickedZoneId));
 					V.Editor.Utils.loadTab('tab_slides');
 				},
 				"onClosed"  : function(data) {
+					$(".tab_slides_smartcards").show();
+					$("#tab_pdfex").parent().show();
+					$("#tab_presentations_repo").parent().show();
+					$("#tab_smartcards_repo").parent().show();
 					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
 			});	
