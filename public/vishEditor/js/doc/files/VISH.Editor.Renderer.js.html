@@ -133,7 +133,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			var type = slides[i].type;
 			
 			if(type===V.Constant.STANDARD){
-				_renderSlide(slides[i], i+1);
+				_renderSlide(slides[i], {slideNumber: i+1 });
 			} else {
 				var isSlideset = V.Editor.Slideset.isSlideset(type);
 				if(isSlideset){
@@ -147,16 +147,28 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	&#x2F;**
 	 * function to render one slide in editor
 	 *&#x2F;
-	var _renderSlide = function(slide, slideNumber){
-		var template = &quot;1&quot;;
-		if(slide.template){
-			template = slide.template.substring(1); &#x2F;&#x2F;slide.template is &quot;t10&quot;, with this we remove the &quot;t&quot;
-		}
-		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+	var _renderSlide = function(slide, renderOptions){
+		var options = {};
 
-		V.Editor.Slides.appendSlide(scaffold);
-		V.Slides.updateSlides();
-		V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
+		options.template = &quot;1&quot;;
+		if(slide.template){
+			options.template = slide.template.substring(1); &#x2F;&#x2F;slide.template is &quot;t10&quot;, with this we remove the &quot;t&quot;
+		}
+
+		options.slideNumber = renderOptions.slideNumber;
+		var scaffold = V.Editor.Dummies.getScaffoldForSlide(slide,options);
+
+		if(!renderOptions.subslide){
+			V.Editor.Slides.appendSlide(scaffold);
+			V.Slides.updateSlides();
+			V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
+		} else {
+			&#x2F;&#x2F;Render subslide
+			V.Editor.Slides.appendSubslide(renderOptions.slidesetDOM,scaffold);
+			var scaffoldDOM = $(&quot;#&quot;+$(scaffold).attr(&quot;id&quot;));
+			&#x2F;&#x2F;Show subslide
+			$(scaffoldDOM).addClass(&quot;temp_shown&quot;);
+		}
 
 		for(el in slide.elements){
 			var areaId = slide.elements[el].id;
@@ -195,24 +207,46 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				$(area).addClass(&quot;editable&quot;);
 			}
 			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
+
+			if(renderOptions.subslide){
+				$(scaffoldDOM).removeClass(&quot;temp_shown&quot;);
+			}
 		}
 	};
 	
 	&#x2F;**
 	 * Function to render slidesets
 	 *&#x2F;
-	var _renderSlideset = function(slideset, slideNumber){
-		&#x2F;&#x2F;TODO
-		console.log(&quot;_renderSlideset&quot;);
-		console.log(slideset);
-		console.log(slideNumber);
+	var _renderSlideset = function(slidesetJSON, slideNumber){
+		var options = {};
+		options.slideNumber = slideNumber;
+		options.slidesetId = (slidesetJSON.id).toString();
+		var scaffold = V.Editor.Dummies.getScaffoldForSlide(slidesetJSON,options);
 
-		&#x2F;&#x2F; var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+		if(scaffold){
+			V.Editor.Slides.appendSlide(scaffold);
+			V.Slides.updateSlides();
+			V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
 
-		&#x2F;&#x2F; V.Editor.Slides.appendSlide(scaffold);
-		&#x2F;&#x2F; V.Slides.updateSlides();
-		&#x2F;&#x2F; V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
-	}
+			&#x2F;&#x2F;Get slideset in DOM
+			var slidesetId = $(scaffold).attr(&quot;id&quot;);
+			var scaffoldDOM = $(&quot;#&quot;+slidesetId);
+
+			&#x2F;&#x2F;Draw subslides
+			var subslides = slidesetJSON.slides;
+			if(subslides){
+				var ssL = subslides.length;
+				for(var i=0; i&lt;ssL; i++){
+					var subslideJSON = subslides[i];
+					_renderSlide(subslideJSON, {slidesetDOM: scaffoldDOM, slideNumber: i+1, subslide: true});
+				}
+			}
+
+			&#x2F;&#x2F;Complete scaffold
+			var slidesetCreator = V.Editor.Slideset.getCreatorModule(slidesetJSON.type);
+			slidesetCreator.draw(slidesetJSON,scaffoldDOM);
+		}
+	};
 
 
 	return {

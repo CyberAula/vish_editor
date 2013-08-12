@@ -28,10 +28,10 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		type = _getTypeIfPresent(obj);
 		switch(type){
 			case V.Constant.FLASHCARD:
-				return V.Editor.Flashcard.Creator;
+				return V.Editor.Flashcard;
 				break;
 			case V.Constant.VTOUR:
-				return V.Editor.VirtualTour.Creator;
+				return V.Editor.VirtualTour;
 				break;
 			default:
 				return null;

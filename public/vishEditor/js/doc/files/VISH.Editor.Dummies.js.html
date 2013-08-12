@@ -113,36 +113,70 @@ VISH.Editor.Dummies = (function(V,undefined){
 	}
 
 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Dummies: used to create new slides
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
 	&#x2F;*
-	 * Function to get a new slide (in string format)
+	 * Function to get the dummy of a new slide
 	 *&#x2F;
-	var getDummy = function(template, slideNumber){
-		var dummy = dummies[parseInt(template,10)-1];
-		return _replaceIds(dummy, slideNumber);
+	var getDummy = function(slideType, options){
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		if(isSlideset){
+			return V.Editor.Slideset.getDummy(slideType, options);
+		} else if(slideType==V.Constant.STANDARD){
+			if((options)&amp;&amp;(options.subslide)){
+				return _getDummyForSubslide(slideType, options);
+			} else {
+				return _getDummyForStandardSlide(slideType, options);
+			}
+		}
 	};
 
-	var getDummyForSubslide = function(slideset,template){
-		var dummy = dummies[parseInt(template,10)-1];
-		var slidesetId = $(slideset).attr(&quot;id&quot;);
+	var _getDummyForStandardSlide = function(slideType, options){
+		var dummy = dummies[parseInt(options.template,10)-1];
+		return _replaceIds(dummy, options.slideNumber);
+	};
+
+	var _getDummyForSubslide = function(slideType, options){
+		var dummy = dummies[parseInt(options.template,10)-1];
+		var slidesetId = $(options.slideset).attr(&quot;id&quot;);
 		var subslideId = V.Utils.getId(slidesetId + &quot;_article&quot;);
-		var slideNumber = $(slideset).find(&quot;article&quot;).length + 1;
+		var slideNumber = $(options.slideset).find(&quot;article&quot;).length + 1;
 		return _replaceIds(dummy, slideNumber, subslideId);
 	};
 
-    &#x2F;*
-	 *	Function to get a existing slide (in string format)
+
+
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Scaffolds: used to render slides from JSON files
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	&#x2F;*
+	 * Function to get the scaffold of an existing slide in string format
+	 * slide: slide in JSON format
 	 *&#x2F;
-	var getScaffoldForSlide = function(template, slideNumber, slide){
+
+	var getScaffoldForSlide = function(slide,options){
+		var slideType = V.Slides.getSlideType(slide);
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		if(isSlideset){
+			var dummy = V.Editor.Slideset.getDummy(slideType, options);
+			if(dummy){
+				return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id));
+			}
+		} else if(slideType==V.Constant.STANDARD){
+			return _getScaffoldForStandardSlide(slide,options);
+		}
+	}
+
+	var _getScaffoldForStandardSlide = function(slide,options){
 		var zoneIds = [];
 		for(el in slide.elements){
 			zoneIds.push(slide.elements[el].id);
 		}
-		return _getScaffold(template, slideNumber, slide.id, zoneIds);
-	}
-
-	var _getScaffold = function(template, slideNumber, articleId, zoneIds){
-		var dummy = dummies[parseInt(template,10)-1];
-		return _removeEditable(_replaceIds(dummy, slideNumber, articleId, zoneIds));
+		var dummy = dummies[parseInt(options.template,10)-1];
+		return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id, zoneIds));
 	}
 
 	&#x2F;**
@@ -157,7 +191,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		}
 
 		if(newDummy.indexOf(&quot;article_id_to_change&quot;) != -1){
-			newDummy = newDummy.replace(&quot;article_id_to_change&quot;, articleId);				
+			newDummy = newDummy.replace(&quot;article_id_to_change&quot;, articleId);			
 		}
 		
 		while(newDummy.indexOf(&quot;slidenumber_to_change&quot;) != -1){
@@ -184,7 +218,6 @@ VISH.Editor.Dummies = (function(V,undefined){
 	return {
 		init				: init,
 		getDummy			: getDummy,
-		getDummyForSubslide	: getDummyForSubslide,
 		getScaffoldForSlide : getScaffoldForSlide
 	};
 

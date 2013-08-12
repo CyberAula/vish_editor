@@ -5,8 +5,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	// myVirtualTour = myVirtualTours['virtualTourIdInMyPresentation']
 
 	var init = function(){
-		// V.Editor.VirtualTour.Repository.init();
-		V.Editor.VirtualTour.Creator.init();
 		myVirtualTours = new Array();
 	};
 

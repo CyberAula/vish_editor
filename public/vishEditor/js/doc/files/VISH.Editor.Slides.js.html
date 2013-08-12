@@ -356,6 +356,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var addSlide = function(slide){
+		var slide = $(slide);
+		
 		appendSlide(slide);
 
 		var oldCurrentSlideNumber = V.Slides.getCurrentSlideNumber();
@@ -422,7 +424,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 	var addSubslide = function(slideset,subslide){ 
 		var subslide = $(subslide).css(&quot;display&quot;,&quot;none&quot;);
-		$(slideset).append(subslide);
+		appendSubslide(slideset,subslide);
 		V.Editor.Tools.addTooltipsToSlide(subslide);
 
 		V.Editor.Slideset.openSubslide(subslide);
@@ -432,6 +434,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr(&quot;slidenumber&quot;));
 		});
 	};
+
+	var appendSubslide = function(slideset,subslide){
+		$(slideset).append(subslide);
+	}
 
 	var removeSubslide = function(subslide){
 		if(typeof subslide !== &quot;object&quot;){
@@ -458,6 +464,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
 		addSubslide				: addSubslide,
+		appendSubslide			: appendSubslide,
 		removeSubslide			: removeSubslide,
 		isSubslide				: isSubslide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide

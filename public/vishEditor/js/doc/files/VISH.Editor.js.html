@@ -276,22 +276,18 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onAddSlide = function(event,type){
-
 		&#x2F;&#x2F;Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
 
 		if(slideMode===V.Constant.STANDARD){
 			&#x2F;&#x2F;Add a new slide to the presentation
 
-			var isSlideset = V.Editor.Slideset.isSlideset(type);
-			if(isSlideset){
-				var slide = V.Editor.Slideset.getDummy(type, V.Slides.getSlidesQuantity()+1);
-			} else if(type==V.Constant.STANDARD){
-				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
-				var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
-			} else {
-				return;
+			var options = {};
+			if(type===V.Constant.STANDARD){
+				options.template = $(event.currentTarget).attr(&#x27;template&#x27;);
 			}
+			options.slideNumber = V.Slides.getSlidesQuantity()+1;
+			var slide = V.Editor.Dummies.getDummy(type, options);
 
 			V.Editor.Slides.addSlide(slide);
 
@@ -302,8 +298,11 @@ VISH.Editor = (function(V,$,undefined){
 
 			&#x2F;&#x2F;Add a subslide (slide[type=&#x27;standard&#x27;]) to a slideset
 			if((type === V.Constant.STANDARD)&amp;&amp;(V.Editor.Slideset.isSlideset(slideset))){
-				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
-				var subslide = V.Editor.Dummies.getDummyForSubslide(slideset,template);
+				var options = {};
+				options.subslide = true;
+				options.template = $(event.currentTarget).attr(&#x27;template&#x27;);
+				options.slideset = slideset;
+				var subslide = V.Editor.Dummies.getDummy(type, options);
 				V.Editor.Slides.addSubslide(slideset,subslide);
 			}
 
@@ -602,7 +601,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForZone(area);
 	};
 	
-   &#x2F;**
+	&#x2F;**
 	* Function to save the presentation
 	*&#x2F;
 	var savePresentation = function(options){
