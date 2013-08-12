@@ -3,9 +3,8 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	var init = function(){
 	};
 
-	var getDummy = function(slideNumber){
-		var fcId = V.Utils.getId("article");
-		return "<article id='"+fcId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
+	var getDummy = function(slidesetId,slideNumber){
+		return "<article id='"+slidesetId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
 	};
 
 	var onEnterSlideset = function(fc){

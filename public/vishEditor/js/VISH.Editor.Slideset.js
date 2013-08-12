@@ -39,6 +39,17 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	/*
+	 * slideset can be the object itself or its type
+	 */
+	var getDummy = function(slideset,slideNumber){
+		var slidesetCreator = getCreatorModule(slideset);
+		if(typeof slidesetCreator.getDummy == "function"){
+			var slidesetId = V.Utils.getId("article");
+			return slidesetCreator.getDummy(slidesetId,slideNumber);
+		}
+	};
+
+	/*
 	 * Obj: slide or slide type
 	 */
 	var isSlideset = function(obj){
@@ -279,6 +290,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		init 					: init,
 		isSlideset				: isSlideset,
 		getCreatorModule		: getCreatorModule,
+		getDummy				: getDummy,
 		onEnterSlideset			: onEnterSlideset,
 		onLeaveSlideset			: onLeaveSlideset,
 		openSlideset			: openSlideset,

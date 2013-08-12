@@ -283,18 +283,14 @@ VISH.Editor = (function(V,$,undefined){
 		if(slideMode===V.Constant.STANDARD){
 			&#x2F;&#x2F;Add a new slide to the presentation
 
-			switch(type){
-				case V.Constant.STANDARD:
-					var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
-					var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
-					break;
-				case V.Constant.FLASHCARD:
-					var slide = $(V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1));
-					break;
-				case V.Constant.VTOUR:
-					break;
-				default:
-					break;
+			var isSlideset = V.Editor.Slideset.isSlideset(type);
+			if(isSlideset){
+				var slide = V.Editor.Slideset.getDummy(type, V.Slides.getSlidesQuantity()+1);
+			} else if(type==V.Constant.STANDARD){
+				var template = $($(event.target).parent()).attr(&#x27;template&#x27;);
+				var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
+			} else {
+				return;
 			}
 
 			V.Editor.Slides.addSlide(slide);

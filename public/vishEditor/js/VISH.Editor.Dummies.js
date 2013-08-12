@@ -23,36 +23,58 @@ VISH.Editor.Dummies = (function(V,undefined){
 	}
 
 
+
+	////////////
+	// Dummies: used to create new slides
+	////////////
+
 	/*
-	 * Function to get a new slide (in string format)
+	 * Function to get the dummy of a new slide
 	 */
-	var getDummy = function(template, slideNumber){
-		var dummy = dummies[parseInt(template,10)-1];
-		return _replaceIds(dummy, slideNumber);
+	var getDummy = function(slideType, options){
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		if(isSlideset){
+			return V.Editor.Slideset.getDummy(slideType, options);
+		} else if(slideType==V.Constant.STANDARD){
+			if((options)&&(options.subslide)){
+				return _getDummyForSubslide(slideType, options);
+			} else {
+				return _getDummyForStandardSlide(slideType, options);
+			}
+		}
 	};
 
-	var getDummyForSubslide = function(slideset,template){
-		var dummy = dummies[parseInt(template,10)-1];
-		var slidesetId = $(slideset).attr("id");
+	var _getDummyForStandardSlide = function(slideType, options){
+		var dummy = dummies[parseInt(options.template,10)-1];
+		return _replaceIds(dummy, options.slideNumber);
+	};
+
+	var _getDummyForSubslide = function(slideType, options){
+		var dummy = dummies[parseInt(options.template,10)-1];
+		var slidesetId = $(options.slideset).attr("id");
 		var subslideId = V.Utils.getId(slidesetId + "_article");
-		var slideNumber = $(slideset).find("article").length + 1;
+		var slideNumber = $(options.slideset).find("article").length + 1;
 		return _replaceIds(dummy, slideNumber, subslideId);
 	};
 
-    /*
-	 *	Function to get a existing slide (in string format)
-	 */
-	var getScaffold = function(template, slideNumber, articleId, zoneIds){
-		var dummy = dummies[parseInt(template,10)-1];
-		return _removeEditable(_replaceIds(dummy, slideNumber, articleId, zoneIds));
-	}
 
+
+	////////////
+	// Scaffolds: used to render slides from JSON files
+	////////////
+
+    /*
+	 * Function to get the scaffold of an existing slide in string format
+	 * slide: slide in JSON format
+	 */
 	var getScaffoldForSlide = function(template, slideNumber, slide){
 		var zoneIds = [];
 		for(el in slide.elements){
 			zoneIds.push(slide.elements[el].id);
 		}
-		return getScaffold(template, slideNumber, slide.id, zoneIds);
+
+		var dummy = dummies[parseInt(template,10)-1];
+		return _removeEditable(_replaceIds(dummy, slideNumber, slide.id, zoneIds));
 	}
 
 	/**
@@ -67,7 +89,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		}
 
 		if(newDummy.indexOf("article_id_to_change") != -1){
-			newDummy = newDummy.replace("article_id_to_change", articleId);				
+			newDummy = newDummy.replace("article_id_to_change", articleId);			
 		}
 		
 		while(newDummy.indexOf("slidenumber_to_change") != -1){
@@ -94,8 +116,6 @@ VISH.Editor.Dummies = (function(V,undefined){
 	return {
 		init				: init,
 		getDummy			: getDummy,
-		getDummyForSubslide	: getDummyForSubslide,
-		getScaffold 		: getScaffold, 
 		getScaffoldForSlide : getScaffoldForSlide
 	};
 

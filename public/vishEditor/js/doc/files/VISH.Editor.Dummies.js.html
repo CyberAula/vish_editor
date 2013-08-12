@@ -132,17 +132,17 @@ VISH.Editor.Dummies = (function(V,undefined){
     &#x2F;*
 	 *	Function to get a existing slide (in string format)
 	 *&#x2F;
-	var getScaffold = function(template, slideNumber, articleId, zoneIds){
-		var dummy = dummies[parseInt(template,10)-1];
-		return _removeEditable(_replaceIds(dummy, slideNumber, articleId, zoneIds));
-	}
-
 	var getScaffoldForSlide = function(template, slideNumber, slide){
 		var zoneIds = [];
 		for(el in slide.elements){
 			zoneIds.push(slide.elements[el].id);
 		}
-		return getScaffold(template, slideNumber, slide.id, zoneIds);
+		return _getScaffold(template, slideNumber, slide.id, zoneIds);
+	}
+
+	var _getScaffold = function(template, slideNumber, articleId, zoneIds){
+		var dummy = dummies[parseInt(template,10)-1];
+		return _removeEditable(_replaceIds(dummy, slideNumber, articleId, zoneIds));
 	}
 
 	&#x2F;**
@@ -185,7 +185,6 @@ VISH.Editor.Dummies = (function(V,undefined){
 		init				: init,
 		getDummy			: getDummy,
 		getDummyForSubslide	: getDummyForSubslide,
-		getScaffold 		: getScaffold, 
 		getScaffoldForSlide : getScaffoldForSlide
 	};
 

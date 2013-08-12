@@ -186,26 +186,18 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _onAddSlide = function(event,type){
-
 		//Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
 
 		if(slideMode===V.Constant.STANDARD){
 			//Add a new slide to the presentation
 
-			switch(type){
-				case V.Constant.STANDARD:
-					var template = $($(event.target).parent()).attr('template');
-					var slide = $(V.Editor.Dummies.getDummy(template, V.Slides.getSlidesQuantity()+1));
-					break;
-				case V.Constant.FLASHCARD:
-					var slide = $(V.Editor.Flashcard.Creator.getDummy(V.Slides.getSlidesQuantity()+1));
-					break;
-				case V.Constant.VTOUR:
-					break;
-				default:
-					break;
+			var options = {};
+			if(type===V.Constant.STANDARD){
+				options.template = $(event.currentTarget).attr('template');
 			}
+			options.slideNumber = V.Slides.getSlidesQuantity()+1;
+			var slide = V.Editor.Dummies.getDummy(type, options);
 
 			V.Editor.Slides.addSlide(slide);
 
@@ -216,8 +208,11 @@ VISH.Editor = (function(V,$,undefined){
 
 			//Add a subslide (slide[type='standard']) to a slideset
 			if((type === V.Constant.STANDARD)&&(V.Editor.Slideset.isSlideset(slideset))){
-				var template = $($(event.target).parent()).attr('template');
-				var subslide = V.Editor.Dummies.getDummyForSubslide(slideset,template);
+				var options = {};
+				options.subslide = true;
+				options.template = $(event.currentTarget).attr('template');
+				options.slideset = slideset;
+				var subslide = V.Editor.Dummies.getDummy(type, options);
 				V.Editor.Slides.addSubslide(slideset,subslide);
 			}
 

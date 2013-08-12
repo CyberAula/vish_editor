@@ -24,8 +24,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
 
-			$(document).on('click','.templatethumb', V.Editor.onTemplateThumbClicked);
-			$(document).on('click','.flashcardthumb', V.Editor.onFlashcardThumbClicked);
+			$(document).on('click','div.templatethumb', V.Editor.onTemplateThumbClicked);
+			$(document).on('click','div.flashcardthumb', V.Editor.onFlashcardThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);
 			$(document).on('click','.selectable', V.Editor.onSelectableClicked);
 			$(document).on('click',':not(".selectable")', V.Editor.onNoSelectableClicked);

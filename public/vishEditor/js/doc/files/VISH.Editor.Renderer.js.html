@@ -201,10 +201,17 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	&#x2F;**
 	 * Function to render slidesets
 	 *&#x2F;
-	var _renderSlideset = function(slide, slideNumber){
+	var _renderSlideset = function(slideset, slideNumber){
 		&#x2F;&#x2F;TODO
-		&#x2F;&#x2F; console.log(&quot;_renderSlideset&quot;);
-		&#x2F;&#x2F; console.log(slide);
+		console.log(&quot;_renderSlideset&quot;);
+		console.log(slideset);
+		console.log(slideNumber);
+
+		&#x2F;&#x2F; var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+
+		&#x2F;&#x2F; V.Editor.Slides.appendSlide(scaffold);
+		&#x2F;&#x2F; V.Slides.updateSlides();
+		&#x2F;&#x2F; V.Slides.lastSlide();  &#x2F;&#x2F;important to get the browser to draw everything
 	}
 
 

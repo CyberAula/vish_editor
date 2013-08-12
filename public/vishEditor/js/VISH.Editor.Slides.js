@@ -266,6 +266,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	}
 
 	var addSlide = function(slide){
+		var slide = $(slide);
+		
 		appendSlide(slide);
 
 		var oldCurrentSlideNumber = V.Slides.getCurrentSlideNumber();
