@@ -334,7 +334,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 	var addSubslide = function(slideset,subslide){ 
 		var subslide = $(subslide).css("display","none");
-		$(slideset).append(subslide);
+		appendSubslide(slideset,subslide);
 		V.Editor.Tools.addTooltipsToSlide(subslide);
 
 		V.Editor.Slideset.openSubslide(subslide);
@@ -344,6 +344,10 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr("slidenumber"));
 		});
 	};
+
+	var appendSubslide = function(slideset,subslide){
+		$(slideset).append(subslide);
+	}
 
 	var removeSubslide = function(subslide){
 		if(typeof subslide !== "object"){
@@ -370,6 +374,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		addSlide 				: addSlide,
 		removeSlide				: removeSlide,
 		addSubslide				: addSubslide,
+		appendSubslide			: appendSubslide,
 		removeSubslide			: removeSubslide,
 		isSubslide				: isSubslide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide

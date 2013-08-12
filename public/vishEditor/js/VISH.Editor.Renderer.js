@@ -43,7 +43,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			var type = slides[i].type;
 			
 			if(type===V.Constant.STANDARD){
-				_renderSlide(slides[i], i+1);
+				_renderSlide(slides[i], {slideNumber: i+1 });
 			} else {
 				var isSlideset = V.Editor.Slideset.isSlideset(type);
 				if(isSlideset){
@@ -57,16 +57,28 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one slide in editor
 	 */
-	var _renderSlide = function(slide, slideNumber){
-		var template = "1";
-		if(slide.template){
-			template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
-		}
-		var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+	var _renderSlide = function(slide, renderOptions){
+		var options = {};
 
-		V.Editor.Slides.appendSlide(scaffold);
-		V.Slides.updateSlides();
-		V.Slides.lastSlide();  //important to get the browser to draw everything
+		options.template = "1";
+		if(slide.template){
+			options.template = slide.template.substring(1); //slide.template is "t10", with this we remove the "t"
+		}
+
+		options.slideNumber = renderOptions.slideNumber;
+		var scaffold = V.Editor.Dummies.getScaffoldForSlide(slide,options);
+
+		if(!renderOptions.subslide){
+			V.Editor.Slides.appendSlide(scaffold);
+			V.Slides.updateSlides();
+			V.Slides.lastSlide();  //important to get the browser to draw everything
+		} else {
+			//Render subslide
+			V.Editor.Slides.appendSubslide(renderOptions.slidesetDOM,scaffold);
+			var scaffoldDOM = $("#"+$(scaffold).attr("id"));
+			//Show subslide
+			$(scaffoldDOM).addClass("temp_shown");
+		}
 
 		for(el in slide.elements){
 			var areaId = slide.elements[el].id;
@@ -105,24 +117,46 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				$(area).addClass("editable");
 			}
 			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
+
+			if(renderOptions.subslide){
+				$(scaffoldDOM).removeClass("temp_shown");
+			}
 		}
 	};
 	
 	/**
 	 * Function to render slidesets
 	 */
-	var _renderSlideset = function(slideset, slideNumber){
-		//TODO
-		console.log("_renderSlideset");
-		console.log(slideset);
-		console.log(slideNumber);
+	var _renderSlideset = function(slidesetJSON, slideNumber){
+		var options = {};
+		options.slideNumber = slideNumber;
+		options.slidesetId = (slidesetJSON.id).toString();
+		var scaffold = V.Editor.Dummies.getScaffoldForSlide(slidesetJSON,options);
 
-		// var scaffold = V.Editor.Dummies.getScaffoldForSlide(template, slideNumber, slide);
+		if(scaffold){
+			V.Editor.Slides.appendSlide(scaffold);
+			V.Slides.updateSlides();
+			V.Slides.lastSlide();  //important to get the browser to draw everything
 
-		// V.Editor.Slides.appendSlide(scaffold);
-		// V.Slides.updateSlides();
-		// V.Slides.lastSlide();  //important to get the browser to draw everything
-	}
+			//Get slideset in DOM
+			var slidesetId = $(scaffold).attr("id");
+			var scaffoldDOM = $("#"+slidesetId);
+
+			//Draw subslides
+			var subslides = slidesetJSON.slides;
+			if(subslides){
+				var ssL = subslides.length;
+				for(var i=0; i<ssL; i++){
+					var subslideJSON = subslides[i];
+					_renderSlide(subslideJSON, {slidesetDOM: scaffoldDOM, slideNumber: i+1, subslide: true});
+				}
+			}
+
+			//Complete scaffold
+			var slidesetCreator = V.Editor.Slideset.getCreatorModule(slidesetJSON.type);
+			slidesetCreator.draw(slidesetJSON,scaffoldDOM);
+		}
+	};
 
 
 	return {

@@ -41,11 +41,15 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	/*
 	 * slideset can be the object itself or its type
 	 */
-	var getDummy = function(slideset,slideNumber){
+	var getDummy = function(slideset,options){
 		var slidesetCreator = getCreatorModule(slideset);
 		if(typeof slidesetCreator.getDummy == "function"){
-			var slidesetId = V.Utils.getId("article");
-			return slidesetCreator.getDummy(slidesetId,slideNumber);
+			if((!options)||(typeof options.slidesetId != "string")){
+				var slidesetId = V.Utils.getId("article");
+			} else {
+				var slidesetId = options.slidesetId;
+			}		
+			return slidesetCreator.getDummy(slidesetId,options);
 		}
 	};
 
@@ -243,49 +247,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		openSlideset(slideset);
 	}
 
-
-	////////////////
-	// DEPRECATED
-	////////////////
-
-	/*
-	 * Nest slides into a slideset
-	 */
-	var prepareToNest = function(subslide){
-		//TODO: get real slidesetId
-		return V.Editor.Utils.prepareSlideToNest("slidesetId",subslide);
-	}
-
-	/*
-	 * Revert the nest of the slides into a slideset
-	 */
-	var undoNestedSlides = function(slideset){
-		slideset.slides = _undoNestedSlides(slideset.id,slideset.slides);
-		slideset.pois = _undoNestedPois(slideset.id,slideset.pois);
-		return slideset;
-	}
-
-	var _undoNestedSlides = function(slidesetId,slides){
-		if(slides){
-			var sl = slides.length;
-			for(var j=0; j<sl; j++){
-				slides[j] = V.Editor.Utils.undoNestedSlide(slidesetId,slides[j]);
-			}
-		}
-		return slides;
-	}
-
-	var _undoNestedPois = function(slidesetId,pois){
-		if(pois){
-			var lp = pois.length;
-			for(var k=0; k<lp; k++){
-				pois[k].id = pois[k].id.replace(slidesetId+"_","");
-				pois[k].slide_id = pois[k].slide_id.replace(slidesetId+"_","");
-			}
-		}
-		return pois;
-	}
-
 	return {
 		init 					: init,
 		isSlideset				: isSlideset,
@@ -302,9 +263,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		closeSubslideWithNumber	: closeSubslideWithNumber,
 		closeSubslide 			: closeSubslide,
 		updateThumbnails		: updateThumbnails,
-		onClickOpenSlideset		: onClickOpenSlideset,
-		prepareToNest			: prepareToNest,
-		undoNestedSlides		: undoNestedSlides
+		onClickOpenSlideset		: onClickOpenSlideset
 	};
 
 }) (VISH, jQuery);

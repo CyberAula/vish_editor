@@ -159,7 +159,11 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
+			//slide in DOM element
 			return $(slideEl).attr("type");
+		} else if ((typeof slideEl == "object")&&(typeof slideEl.type == "string")){
+			//slide in JSON
+			return slideEl.type;
 		} else {
 			//slideEl is not a slide
 			return null;

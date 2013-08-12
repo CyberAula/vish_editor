@@ -3,8 +3,20 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	var init = function(){
 	};
 
-	var getDummy = function(slidesetId,slideNumber){
-		return "<article id='"+slidesetId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
+	var getDummy = function(slidesetId,options){
+		return "<article id='"+slidesetId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
+	};
+
+	/*
+	 * Complete the fc scaffold to draw the flashcard in the presentation
+	 */
+	var draw = function(slidesetJSON,scaffoldDOM){
+		if(slidesetJSON.background){
+			onBackgroundSelected(V.Utils.getSrcFromCSS(slidesetJSON.background));
+		};
+		if(slidesetJSON.pois){
+			_savePoisJSONToDom(scaffoldDOM,slidesetJSON.pois);
+		};
 	};
 
 	var onEnterSlideset = function(fc){
@@ -205,8 +217,12 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 
 	var _savePoisToDom = function(fc){
 		var poisJSON = _savePoisToJson(fc);
-		$(fc).attr("poisData",JSON.stringify(poisJSON));
+		_savePoisJSONToDom(fc,poisJSON);
 		return poisJSON;
+	}
+
+	var _savePoisJSONToDom = function(fc,poisJSON){
+		$(fc).attr("poisData",JSON.stringify(poisJSON));
 	}
 
 	var _getPoisFromDoom = function(fc){
@@ -280,6 +296,7 @@ VISH.Editor.Flashcard.Creator = (function(V,$,undefined){
 	return {
 		init 				 			: init,
 		getDummy						: getDummy,
+		draw 							: draw,
 		onEnterSlideset					: onEnterSlideset,
 		onLeaveSlideset					: onLeaveSlideset,
 		loadSlideset					: loadSlideset,

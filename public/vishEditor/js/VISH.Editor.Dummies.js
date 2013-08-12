@@ -23,7 +23,6 @@ VISH.Editor.Dummies = (function(V,undefined){
 	}
 
 
-
 	////////////
 	// Dummies: used to create new slides
 	////////////
@@ -63,18 +62,31 @@ VISH.Editor.Dummies = (function(V,undefined){
 	// Scaffolds: used to render slides from JSON files
 	////////////
 
-    /*
+	/*
 	 * Function to get the scaffold of an existing slide in string format
 	 * slide: slide in JSON format
 	 */
-	var getScaffoldForSlide = function(template, slideNumber, slide){
+
+	var getScaffoldForSlide = function(slide,options){
+		var slideType = V.Slides.getSlideType(slide);
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		if(isSlideset){
+			var dummy = V.Editor.Slideset.getDummy(slideType, options);
+			if(dummy){
+				return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id));
+			}
+		} else if(slideType==V.Constant.STANDARD){
+			return _getScaffoldForStandardSlide(slide,options);
+		}
+	}
+
+	var _getScaffoldForStandardSlide = function(slide,options){
 		var zoneIds = [];
 		for(el in slide.elements){
 			zoneIds.push(slide.elements[el].id);
 		}
-
-		var dummy = dummies[parseInt(template,10)-1];
-		return _removeEditable(_replaceIds(dummy, slideNumber, slide.id, zoneIds));
+		var dummy = dummies[parseInt(options.template,10)-1];
+		return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id, zoneIds));
 	}
 
 	/**

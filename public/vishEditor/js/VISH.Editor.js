@@ -511,7 +511,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForZone(area);
 	};
 	
-   /**
+	/**
 	* Function to save the presentation
 	*/
 	var savePresentation = function(options){
