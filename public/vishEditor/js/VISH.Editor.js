@@ -173,19 +173,12 @@ VISH.Editor = (function(V,$,undefined){
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
 	 */
-	var onTemplateThumbClicked = function(event){
-		_onAddSlide(event,V.Constant.STANDARD);
-	};
+	var onSlideThumbClicked = function(event){
+		var type = $(event.currentTarget).attr('type');
+		if(!type){
+			type=V.Constant.STANDARD;
+		}
 
-	/**
-	 * function called when user clicks on new flashcard
-	 * create a new flashcard
-	 */
-	var onFlashcardThumbClicked = function(event){
-		_onAddSlide(event,V.Constant.FLASHCARD);	
-	};
-
-	var _onAddSlide = function(event,type){
 		//Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
 
@@ -202,7 +195,7 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
-			//Add a new subslide to a smartcard (flashcard or virtual tour)
+			//Add a new subslide to a slideset (flashcard or virtual tour)
 
 			var slideset = V.Slides.getCurrentSlide();
 
@@ -906,8 +899,7 @@ VISH.Editor = (function(V,$,undefined){
 		selectArea				: selectArea,
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
-		onTemplateThumbClicked	: onTemplateThumbClicked,
-		onFlashcardThumbClicked : onFlashcardThumbClicked,
+		onSlideThumbClicked		: onSlideThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,
