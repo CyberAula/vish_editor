@@ -190,6 +190,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('fc_help', 'top');
 		});
 
+		//VirtualTour
+		$(document).on('click','.help_in_vt', function(){
+			V.Tour.startTourWithId('vt_help', 'top');
+		});
+
 		//vtour
 		$(document).on('click','#help_vtour', function(){
 			V.Tour.startTourWithId('vt_help', 'top');

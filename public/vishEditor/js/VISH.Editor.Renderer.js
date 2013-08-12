@@ -117,10 +117,10 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				$(area).addClass("editable");
 			}
 			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
+		}
 
-			if(renderOptions.subslide){
-				$(scaffoldDOM).removeClass("temp_shown");
-			}
+		if(renderOptions.subslide){
+			$(scaffoldDOM).removeClass("temp_shown");
 		}
 	};
 	

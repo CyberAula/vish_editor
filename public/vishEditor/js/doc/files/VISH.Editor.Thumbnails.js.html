@@ -242,25 +242,16 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var getThumbnailURL = function(slide){
 		var thumbnailURL;
-		switch($(slide).attr(&#x27;type&#x27;)){
-			case V.Constant.STANDARD:
-				var template = $(slide).attr(&#x27;template&#x27;);
-				thumbnailURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
-				break;
-			case V.Constant.FLASHCARD:
-				var avatar = $(slide).attr(&#x27;avatar&#x27;);
-				if(avatar){
-					thumbnailURL = V.Utils.getSrcFromCSS($(slide).attr(&#x27;avatar&#x27;));
-				} else {
-					thumbnailURL = V.ImagesPath + &quot;templatesthumbs&#x2F;flashcard_template.png&quot;;
-				}
-				break;
-			case V.Constant.VTOUR:
-				thumbnailURL = V.ImagesPath + &quot;templatesthumbs&#x2F;tVTour.png&quot;;
-				break;
-			default:
-				break;
+		var slideType = $(slide).attr(&#x27;type&#x27;);
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+
+		if(isSlideset){
+			thumbnailURL = V.Editor.Slideset.getCreatorModule(slideType).getThumbnailURL(slide);
+		} else if(slideType==V.Constant.STANDARD){
+			var template = $(slide).attr(&#x27;template&#x27;);
+			thumbnailURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
 		}
+
 		return thumbnailURL;
 	}
 

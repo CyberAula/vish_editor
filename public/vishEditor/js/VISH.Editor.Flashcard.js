@@ -252,24 +252,13 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$.fancybox.close();
 	}
 
-	
-
-	////////////////////
-	// Validate
-	////////////////////
-
-	/*
-	 * OnValidationError: Return the id of the form to be show
-	 * OnValidationSuccess:Return true
-	 */
-	var validateOnSave = function(){
-		// if(!_hasPoiInBackground()){
-		// 	return "message3_form";
-		// }
-		// if(!_hasChangedBackground()){
-		// 	return "message4_form";
-		// }
-		return true;
+	var getThumbnailURL = function(fc){
+		var avatar = $(fc).attr('avatar');
+		if(avatar){
+			return V.Utils.getSrcFromCSS(avatar);
+		} else {
+			return (V.ImagesPath + "templatesthumbs/flashcard_template.png");
+		}
 	}
 
 
@@ -316,6 +305,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		getSlideHeader					: getSlideHeader,
 		onBackgroundSelected			: onBackgroundSelected,
+		getThumbnailURL					: getThumbnailURL,
 		preCopyActions					: preCopyActions,
 		postCopyActions					: postCopyActions
 	};

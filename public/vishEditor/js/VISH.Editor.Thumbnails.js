@@ -152,25 +152,16 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var getThumbnailURL = function(slide){
 		var thumbnailURL;
-		switch($(slide).attr('type')){
-			case V.Constant.STANDARD:
-				var template = $(slide).attr('template');
-				thumbnailURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
-				break;
-			case V.Constant.FLASHCARD:
-				var avatar = $(slide).attr('avatar');
-				if(avatar){
-					thumbnailURL = V.Utils.getSrcFromCSS($(slide).attr('avatar'));
-				} else {
-					thumbnailURL = V.ImagesPath + "templatesthumbs/flashcard_template.png";
-				}
-				break;
-			case V.Constant.VTOUR:
-				thumbnailURL = V.ImagesPath + "templatesthumbs/tVTour.png";
-				break;
-			default:
-				break;
+		var slideType = $(slide).attr('type');
+		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+
+		if(isSlideset){
+			thumbnailURL = V.Editor.Slideset.getCreatorModule(slideType).getThumbnailURL(slide);
+		} else if(slideType==V.Constant.STANDARD){
+			var template = $(slide).attr('template');
+			thumbnailURL = V.ImagesPath + "templatesthumbs/"+ template + ".png";
 		}
+
 		return thumbnailURL;
 	}
 

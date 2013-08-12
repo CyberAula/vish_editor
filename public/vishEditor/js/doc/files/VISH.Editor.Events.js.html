@@ -114,8 +114,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
 			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
 
-			$(document).on(&#x27;click&#x27;,&#x27;div.templatethumb&#x27;, V.Editor.onTemplateThumbClicked);
-			$(document).on(&#x27;click&#x27;,&#x27;div.flashcardthumb&#x27;, V.Editor.onFlashcardThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;div.slidethumb&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.selectable&#x27;, V.Editor.onSelectableClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;)&#x27;, V.Editor.onNoSelectableClicked);
@@ -279,6 +278,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 		&#x2F;&#x2F;flashcard
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_flashcard&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;VirtualTour
+		$(document).on(&#x27;click&#x27;,&#x27;.help_in_vt&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;vtour
