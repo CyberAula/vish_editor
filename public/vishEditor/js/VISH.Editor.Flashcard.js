@@ -108,8 +108,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			start: function( event, ui ) {
 				var position = $(event.target).css("position");
 				if(position==="fixed"){
-					//Start d&d in droppable
-					$(event.target).attr("ddstart","droppable");
+					//Start d&d in background
+					$(event.target).attr("ddstart","background");
 				} else {
 					//Start d&d in scrollbar
 					//Compensate change to position fixed with margins
@@ -153,7 +153,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 					if($(event.target).attr("ddstart")==="scrollbar"){
 						//Do nothing
-					} else if($(event.target).attr("ddstart")==="droppable"){
+					} else if($(event.target).attr("ddstart")==="background"){
 						//Decompose top and left, in top,left,margin-top and margin-left
 						//This way, top:0 and left:0 will lead to the original position
 
