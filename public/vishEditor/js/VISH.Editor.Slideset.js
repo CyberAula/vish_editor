@@ -93,21 +93,15 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		var slidesetId = $(slideset).attr("id");
 		var subslides = $("#" + slidesetId + " > article");
-		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
-			if(typeof slidesetCreator.onEnterSlideset == "function"){
-				slidesetCreator.onEnterSlideset(slideset);
-			}
-			//Subslides Thumbnails drawed succesfully
-			openSlideset(slideset);
-		});
 
-		//Success callback is not called when subslides are 0
-		if(subslides.length === 0) {
-			if(typeof slidesetCreator.onEnterSlideset == "function"){
-				slidesetCreator.onEnterSlideset(slideset);
-			}
-			openSlideset(slideset);
+		if(typeof slidesetCreator.onEnterSlideset == "function"){
+			slidesetCreator.onEnterSlideset(slideset);
 		}
+		openSlideset(slideset);
+
+		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
+			//Subslides Thumbnails drawed succesfully
+		});
 	}
 
 	/*
