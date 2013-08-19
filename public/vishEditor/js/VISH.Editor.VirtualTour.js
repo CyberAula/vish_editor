@@ -18,6 +18,12 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			V.Utils.Loader.loadGoogleLibrary("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places",function(){
 				geocoder = new google.maps.Geocoder();
 				gMlLoaded = true;
+
+				//Notify event
+				var el = document;
+				var evt = document.createEvent('Event');
+				evt.initEvent('googleMapsLibraryLoadedinVE', true, true);
+				el.dispatchEvent(evt);
 			});
 			initialized = true;
 		}
@@ -43,10 +49,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 
 	var _drawMap = function(vtJSON,vtDOM){
-		if(!gMlLoaded){
-			return;
-		}
-
 		if(!vtJSON){
 			//Default values
 			vtJSON = {};
@@ -56,12 +58,24 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		}
 
 		var vtId = $(vtDOM).attr("id");
-		if(typeof vts[vtId] != "undefined"){
-			//Already drawed
-			return;
-		} else {
+
+		if(typeof vts[vtId] == "undefined"){
 			vts[vtId] = vtJSON;
 			vts[vtId].markers = {};
+			vts[vtId].drawAttempts = 0;
+		}
+
+		if(vts[vtId].drawed === true){
+			//Already drawed
+			return;
+		}
+
+		if(!gMlLoaded){
+			//Wait for map to load
+			$(document).on('googleMapsLibraryLoadedinVE', function(){
+				_drawMap(vtJSON,vtDOM);
+			});
+			return;
 		}
 
 		var latlng = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
@@ -99,6 +113,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			$(".vt_search_input").blur();
 		});
 
+		vts[vtId].drawed = true;
 	}
 
 
