@@ -62,7 +62,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		if(typeof vts[vtId] == "undefined"){
 			vts[vtId] = vtJSON;
 			vts[vtId].markers = {};
-			vts[vtId].drawAttempts = 0;
 		}
 
 		if(vts[vtId].drawed === true){
@@ -414,9 +413,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var loadSlideset = function(vt){
-		var vtId = $(vt).attr("id");
-		var subslides = $("#" + vtId + " > article");
-
 		//Show Arrows
 		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
@@ -542,18 +538,48 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	/*
 	 * Used by VISH.Editor module to save the virtual tour in the JSON
 	 */
-	var getSlideHeader = function(vt){
+	var getSlideHeader = function(vtDOM){
+		var vtId = $(vtDOM).attr('id');
+		var vt = vts[vtId];
+
 		var slide = {};
-		slide.id = $(vt).attr('id');
+		slide.id = vtId;
 		slide.type = V.Constant.VTOUR;
-		if(V.Slides.getCurrentSlide()===vt){
-			// _savePoisToDom(vt);
-		}
-		// TODO
-		// slide.pois = _getPoisFromDoom(vt);
+		slide.map_service = V.Constant.VTour.SERVICES.GMaps;
+
+		var center = vt.map.getCenter();
+		slide.center = { lat: center.lat().toString(), lng: center.lng().toString() };
+		slide.zoom = vt.map.getZoom().toString();
+		slide.mapType = _getMapType(vt.map);
+		slide.width = "100%";
+		slide.height = "100%";
+
+		//Get pois
+		var pois = [];
+		for(var key in vt.markers){
+			var marker = vt.markers[key];
+			var poi = {};
+			poi.lat = marker.position.lat().toString();
+			poi.lng = marker.position.lng().toString();
+			poi.id = marker.poi_id;
+			poi.slide_id = marker.slide_id;
+			pois.push(poi);
+		};
+		slide.pois = pois;
+
 		slide.slides = [];
+
 		return slide;
 	}
+
+	var _getMapType = function(map){
+		if((map)&&(map.mapTypeId)){
+			return map.mapTypeId;
+		} else {
+			return V.Constant.VTour.DEFAULT_MAP;
+		}
+	};
+
 
 	/////////////////
 	// Clipboard

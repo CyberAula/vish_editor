@@ -106,6 +106,8 @@ VISH.Constant.Storage.Device = "Device";
 VISH.Constant.VTour = {};
 VISH.Constant.VTour.DEFAULT_MAP = "roadmap";
 VISH.Constant.VTour.ROADMAP = "roadmap";
+VISH.Constant.VTour.SERVICES = {};
+VISH.Constant.VTour.SERVICES.GMaps = "Google Maps";
 
 //Keys
 VISH.Constant.INTRO = 13;
