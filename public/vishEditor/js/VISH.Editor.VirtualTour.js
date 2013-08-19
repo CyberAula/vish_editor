@@ -248,7 +248,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
         new google.maps.Point(10, 34));
 
 		var marker = new google.maps.Marker({
-			position: myLatlng, 
+			position: myLatlng,
 			map: map,
 			draggable: true,
 			icon: pinImage,
@@ -299,18 +299,28 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var _onClick = function(marker){
+		// Return the arrow to original position.
+		// Arrow is always in background
+
 		// The point in pixels in the map
-		// var vt = _getCurrentTour();
-		// var point = vt.overlay.getProjection().fromLatLngToContainerPixel(marker.position);
+		var vt = _getCurrentTour();
+		var point = vt.overlay.getProjection().fromLatLngToContainerPixel(marker.position);
 
-
-		//Return the arrow to original position
 		var arrow = $("#"+marker.poi_id);
 		//We need to show the arrow to properly get the offset
 		$(arrow).show();
 
-		//Arrow is always in background
-		//Decompose top and left, in top,left,margin-top and margin-left
+		//1. Move the arrow to the PIN of the map
+		var vtDOM = V.Slides.getCurrentSlide();
+		var canvas = $(vtDOM).find("div.vt_canvas");
+		var xDif = ($(vtDOM).outerWidth() - $(canvas).outerWidth())/2;
+		var yDif = ($(vtDOM).outerHeight() - $(canvas).outerHeight())/2;
+		var vt_offset = $(vtDOM).offset();
+		var top = point.y + vt_offset.top + yDif - 38;
+		var left = point.x + vt_offset.left + xDif - 25;
+
+
+		//2. Decompose top and left, in top,left,margin-top and margin-left
 		//This way, top:0 and left:0 will lead to the original position
 
 		//Get the parent (container in scrollbar)
@@ -319,14 +329,16 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 		var newMarginTop = parent_offset.top - 20;
 		var newMarginLeft = parent_offset.left + 12;
-		var newTop = $(arrow).cssNumber("top") - newMarginTop;
-		var newLeft = $(arrow).cssNumber("left") - newMarginLeft;
+		var newTop = top - newMarginTop;
+		var newLeft = left - newMarginLeft;
 
+		$(arrow).css("position", "fixed");
 		$(arrow).css("margin-top", newMarginTop+"px");
 		$(arrow).css("margin-left", newMarginLeft+"px");
 		$(arrow).css("top", newTop+"px");
 		$(arrow).css("left", newLeft+"px");
-		
+
+		//3. Return arrow to original position
 		$(arrow).animate({ top: 0, left: 0 }, 'slow', function(){
 			//Animate complete
 			$(arrow).css("position", "absolute");
@@ -395,23 +407,18 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var unloadSlideset = function(vt){
-		//Save POI info
-		_saveArrowsToDom(vt);
 	};
 
 	var beforeCreateSlidesetThumbnails = function(vt){
-		//Load arrow data
-		var arrowData = _getArrowsFromDoom(vt);
-
 		//Draw POIS
-		_drawPois(vt,arrowData);
+		_drawPois(vt);
 	}
 
 	/*
 	 * Redraw the pois of the virtual tour
 	 * This actions must be called after thumbnails have been rewritten
 	 */
-	var _drawPois = function(vtDOM,arrowData){
+	var _drawPois = function(vtDOM){
 		var vt = _getCurrentTour();
 		if(!vt){
 			return;
@@ -430,19 +437,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 				$(div).prepend(arrowDiv);
 
 				if(typeof markers[poi_id] != "undefined"){
-					//Hide arrow and change position based on arrowData
 					$(arrowDiv).hide();
-
-					if(typeof arrowData[poi_id] != "undefined"){
-						//Change position
-						$(arrowDiv).css("position", "fixed");
-						$(arrowDiv).css("margin-top", "0px");
-						$(arrowDiv).css("margin-left", "0px");
-						$(arrowDiv).css("top", arrowData[poi_id].y + "px");
-						$(arrowDiv).css("left", arrowData[poi_id].x + "px");
-						$(arrowDiv).attr("ddstart","scrollbar");
-						$(arrowDiv).attr("ddend","background");
-					}
 				}
 			};
 		});
@@ -520,52 +515,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 
-	var _saveArrowsToJson = function(vt){
-		var arrows = {};
-		var arrowsDOM = $("#subslides_list").find("div.draggable_sc_div[ddend='background']");
-
-		var hasCurrentClass = $(vt).hasClass("current");
-		if(!hasCurrentClass){
-			$(vt).addClass("current");
-		}
-		$(vt).addClass("temp_shown");
-		$(arrowsDOM).addClass("temp_shown");
-
-		$(arrowsDOM).each(function(index,arrow){
-				var poi_id = $(vt).attr("id") + "_poi" + (index+1);
-				arrows[poi_id]= {};
-				arrows[poi_id].x = $(arrow).cssNumber("left");
-				arrows[poi_id].y = $(arrow).cssNumber("top");
-		});
-
-		if(!hasCurrentClass){
-			$(vt).removeClass("current");
-		}
-		$(arrowsDOM).removeClass("temp_shown");
-		$(vt).removeClass("temp_shown");
-
-		return arrows;
-	}
-
-	var _saveArrowsToDom = function(vt){
-		var arrowsJSON = _saveArrowsToJson(vt);
-		_saveArrowsJSONToDom(vt,arrowsJSON);
-		return arrowsJSON;
-	}
-
-	var _saveArrowsJSONToDom = function(vt,arrowsJSON){
-		$(vt).attr("arrowsData",JSON.stringify(arrowsJSON));
-	}
-
-	var _getArrowsFromDoom = function(vt){
-		var poisData = $(vt).attr("arrowsData");
-		if(poisData){
-			return JSON.parse($(vt).attr("arrowsData"));
-		} else {
-			return [];
-		}
-	}
-
 	var getThumbnailURL = function(fc){
 		return (V.ImagesPath + "templatesthumbs/tVTour.png");
 	}
@@ -583,7 +532,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		slide.id = $(vt).attr('id');
 		slide.type = V.Constant.VTOUR;
 		if(V.Slides.getCurrentSlide()===vt){
-			_savePoisToDom(vt);
+			// _savePoisToDom(vt);
 		}
 		// TODO
 		// slide.pois = _getPoisFromDoom(vt);
