@@ -134,10 +134,17 @@ VISH.VirtualTour = (function(V,$,undefined){
   }
 
   var _addMarkerToPosition = function(vt,myLatlng,poi_id){
+
+    var pinImage = new google.maps.MarkerImage(V.ImagesPath + "vtour/marker.png",
+        new google.maps.Size(25, 40),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
+
     var marker = new google.maps.Marker({
       position: myLatlng, 
       map: virtualTours[vt.id].map,
       draggable: false,
+      icon: pinImage,
       poi_id: poi_id,
       title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
     });
