@@ -910,7 +910,7 @@ VISH.Samples = (function(V,undefined){
 					}, 
 					{
 						'id'       	:'article14_article2',
-						'template' 	:'t2',
+						'template' 	:'t3',
 						'elements'	: [
 							{
 			                    'id'     : 'article14_article2_zone1',
