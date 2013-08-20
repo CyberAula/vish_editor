@@ -540,13 +540,13 @@ VISH.Editor = (function(V,$,undefined){
 			var slide = {};
 
 			if(!V.Editor.Slideset.isSlideset(slideDOM)){
-				slide = _saveStandardSlide(slideDOM,presentation);
+				slide = _saveStandardSlide(slideDOM,presentation,false);
 			} else {
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
 				slide = slidesetModule.getSlideHeader(slideDOM);
 				//Save subslides
 				$(slideDOM).find("article").each(function(index,subslideDOM){
-					var subslide = _saveStandardSlide(subslideDOM,presentation);
+					var subslide = _saveStandardSlide(subslideDOM,presentation,true);
 					slide.slides.push(subslide);
 				});
 			}
@@ -567,7 +567,7 @@ VISH.Editor = (function(V,$,undefined){
 		return savedPresentation;
 	};
 	
-	var _saveStandardSlide = function(slideDOM,presentation){
+	var _saveStandardSlide = function(slideDOM,presentation,isSubslide){
 		slide = {};
 		slide.id = $(slideDOM).attr('id');
 		slide.type = $(slideDOM).attr('type');
@@ -575,6 +575,9 @@ VISH.Editor = (function(V,$,undefined){
 		slide.elements = [];
 
 		//important show it (the browser does not know the height and width if it is hidden)
+		if(isSubslide){
+			$(slideDOM).parent().addClass("temp_shown");
+		}
 		$(slideDOM).addClass("temp_shown");
 
 		$(slideDOM).find('div').each(function(i,div){
@@ -682,7 +685,11 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
-		$(slideDOM).removeClass("temp_shown");	
+		if(isSubslide){
+			$(slideDOM).parent().removeClass("temp_shown");
+		}
+		$(slideDOM).removeClass("temp_shown");
+		
 		return slide;
 	}
 
