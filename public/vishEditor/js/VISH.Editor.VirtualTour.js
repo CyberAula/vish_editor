@@ -71,7 +71,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		}
 
 		if(!gMlLoaded){
-			//Wait for map to load
+			//Wait for GMap library to load
 			$(document).on('googleMapsLibraryLoadedinVE', function(){
 				_drawMap(vtJSON,vtDOM);
 			});

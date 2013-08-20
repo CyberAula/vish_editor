@@ -142,7 +142,7 @@ VISH.Viewer = (function(V,$,undefined){
 				V.ObjectPlayer.loadObject($(slide));
 			}
 			if($(e.target).hasClass('snapshot')){
-        		V.SnapshotPlayer.loadSnapshot($(slide));
+				V.SnapshotPlayer.loadSnapshot($(slide));
 			}
 		},500);
 
@@ -155,7 +155,7 @@ VISH.Viewer = (function(V,$,undefined){
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.startAnimation(e.target.id);
 		} else if($(e.target).hasClass("virtualTour_slide")){
-			V.VirtualTour.loadMap(e.target.id);
+			V.VirtualTour.loadVirtualTour(e.target.id);
 		}
 
 		if(_isRecommendationMoment()){
@@ -173,13 +173,15 @@ VISH.Viewer = (function(V,$,undefined){
 			V.ObjectPlayer.unloadObject($(slide));
 		}
 		if($(slide).hasClass('snapshot')){
-    		V.SnapshotPlayer.unloadSnapshot($(slide));
-  		}
+			V.SnapshotPlayer.unloadSnapshot($(slide));
+		}
 
 		V.VideoPlayer.HTML5.stopVideos(slide);
 
 		if($(e.target).hasClass("flashcard_slide")){
 			V.Flashcard.stopAnimation(e.target.id);
+		} else if($(e.target).hasClass("virtualTour_slide")){
+			V.VirtualTour.unloadVirtualTour(e.target.id);
 		}
 	};
 
