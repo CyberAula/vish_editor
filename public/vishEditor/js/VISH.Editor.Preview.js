@@ -11,8 +11,8 @@ VISH.Editor.Preview = (function(V,$,undefined){
 
 	var _realInit = function(){
 		$("#preview_action").fancybox({
-			'width'				: 875,
-			'height'			: 656,
+			'width'				: 910,
+			'height'			: 680,
 			'padding'			: 0,
 			'autoScale'     	: false,
 			'transitionIn'		: 'none',
@@ -29,8 +29,8 @@ VISH.Editor.Preview = (function(V,$,undefined){
 				V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 			},
 			'onComplete': function() {
-				$("#fancybox-wrap").css('top','60px');
-				$("#fancybox-wrap").css('left','-2px');
+				$("#fancybox-wrap").css('top','45px');
+				$("#fancybox-wrap").css('left','135px');
 				$("#fancybox-frame").addClass("vishEditorIframe");	
 			}
 		});
