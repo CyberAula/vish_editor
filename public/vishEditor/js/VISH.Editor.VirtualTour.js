@@ -55,6 +55,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			vtJSON.center = {"lat":34,"lng":2};
 			vtJSON.zoom = 2;
 			vtJSON.mapType = V.Constant.VTour.DEFAULT_MAP;
+			vtJSON.pois = [];
 		}
 
 		var vtId = $(vtDOM).attr("id");
@@ -110,6 +111,12 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		//Map events
 		google.maps.event.addListener(vts[vtId].map, 'click', function() {
 			$(".vt_search_input").blur();
+		});
+
+		//Add pois
+		$(vtJSON.pois).each(function(index,poi){
+			_addMarkerToCoordinates(poi.lat,poi.lng,poi.id,poi.slide_id,index+1);
+			$("#"+poi.id).hide();
 		});
 
 		vts[vtId].drawed = true;
@@ -403,6 +410,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	 * Complete the vt scaffold to draw the virtual tour in the presentation
 	 */
 	var draw = function(slidesetJSON,scaffoldDOM){
+		_drawMap(slidesetJSON,scaffoldDOM);
 	};
 
 	var onEnterSlideset = function(vt){
