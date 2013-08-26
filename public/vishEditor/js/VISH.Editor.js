@@ -140,6 +140,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
+		V.Editor.Settings.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();
@@ -157,6 +158,11 @@ VISH.Editor = (function(V,$,undefined){
 		//Enter in currentSlide (this will cause that objects will be shown)
 		if(V.Slides.getCurrentSlideNumber()>0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
+		}
+
+		//Init settings
+		if ((V.Configuration.getConfiguration().presentationSettings) && (!V.Editor.hasInitialPresentation())){
+			V.Editor.Settings.displaySettings();
 		}
 
 		//Try to win focus
