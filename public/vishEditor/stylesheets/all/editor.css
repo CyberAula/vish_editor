@@ -38,6 +38,9 @@ img {
 }
 
 #bottomside {
+box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+-moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+-webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 	position: absolute;
 	left: 180px;
 	bottom: 0px;
@@ -63,10 +66,17 @@ img {
 }
 
 #subslides_list_actions {
-	margin-top: 2px;
-	height: 80%;
-	width: 15%;
-	float: left;
+padding-top: 2px;
+margin-top: 0px;
+margin-right: 18px;
+margin-left: -14px;
+padding-left: 12px;
+height: 100%;
+padding-right: 11px;
+width: 12%;
+float: left;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
 }
 
 #subslides_list {
@@ -186,29 +196,47 @@ img {
 }
 
 #subslides_list p.ptext_barbutton {
-	position: absolute;
-	top: 27%;
-	right: -22%;
-	background: white;
-	padding: 4px;
-	font-family: 'Open Sans', sans-serif;
-	border-radius: 5px 0px 5px 5px;
-	cursor: default;
-	pointer-events: none;
+position: absolute;
+border: 1px solid #666;
+top: 19px;
+padding-top: 7px;
+height: 15px;
+right: -15px;
+background: white;
+padding: 4px;
+font-family: 'Open Sans', sans-serif;
+border-radius: 5px 0px 5px 5px;
+cursor: default;
+pointer-events: none;
 }
 
 #subslide_selected img.image_barbutton {
 	width: 85px;
 	height: 65px;
 	margin-top: 3px;
+	border-radius: 5px;
+	opacity: 0.8;
+}
+
+#subslide_selected img.image_barbutton:hover {
+	width: 84px;
+	height: 64px;
+	opacity: 1;
+	border: 1px solid #357ebd;
+	cursor: pointer;
 }
 
 #subslides_list img.image_barbutton {
 	height: 55px;
 	border-radius: 5px;
 	border: 1px solid white;
-	cursor: pointer;
 }
+
+#subslides_list img.image_barbutton:hover {
+border: 1px solid #357ebd;
+cursor: pointer;
+}
+
 
 section.slides_editor {
 	overflow: hidden;
