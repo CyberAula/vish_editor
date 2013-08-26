@@ -3,7 +3,6 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	var selectedAvatar; //avatar url
 	var thumbnailsDetailsId = "thumbnails_in_presentation_details";
 	var carrouselDivId = "avatars_carrousel";
-    
 
 	var init = function(){
 		//Add fancybox to upload Thumbnail
@@ -21,9 +20,12 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 				V.Editor.Image.setAddContentMode(V.Constant.NONE);
 			}
 		});
-	};	
-	 
+	};
+
 	var onLoadPresentationDetails = function(mySelectedAvatar){
+
+		console.log("onLoadPresentationDetails");
+
 		if(mySelectedAvatar){
 			selectedAvatar = mySelectedAvatar;
 		}
@@ -37,7 +39,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		} else {
 			_selectAvatarInCarrousel(selectedAvatar);
 		}
-	}  
+	}
 
 	var onCustomThumbnailSelected = function(thumbnail_url){
 		V.Editor.Tools.Menu.displaySettings(); //Hide previous fancybox
@@ -126,6 +128,9 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
     
 	
 	var _onThumbnailsReceived = function(data){
+
+		console.log("_onThumbnailsReceived");
+
 		avatars = data;
 
 		//Build new carrousel

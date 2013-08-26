@@ -19,10 +19,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
-			$(document).on('click', '#edit_presentation_details', V.Editor.Tools.Menu.onSettings); 
-			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Tools.Menu.onPedagogicalButtonClicked);
-			$(document).on('click', '#save_presentation_details', V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
-			$(document).on('click', '#done_in_pedagogical', V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
+			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
+			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 
 			$(document).on('click','div.slidethumb', V.Editor.onSlideThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);
