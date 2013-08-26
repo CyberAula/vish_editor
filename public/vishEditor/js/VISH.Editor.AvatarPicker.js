@@ -14,9 +14,11 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data) {						
 				V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-				V.Editor.Utils.loadTab('tab_pic_from_url');
+				$("#tab_pic_thumbnails").show();
+				V.Editor.Utils.loadTab('tab_pic_thumbnails');
 			},
 			"onClosed" : function(data){
+				$("#tab_pic_thumbnails").hide();
 				V.Editor.Image.setAddContentMode(V.Constant.NONE);
 			}
 		});
@@ -42,7 +44,7 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 	}
 
 	var onCustomThumbnailSelected = function(thumbnail_url){
-		V.Editor.Tools.Menu.displaySettings(); //Hide previous fancybox
+		V.Editor.Settings.displaySettings(); //Hide previous fancybox
 		_addCustomThumbnail(thumbnail_url);
 	}
 

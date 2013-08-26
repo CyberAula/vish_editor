@@ -175,19 +175,21 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			window[mainDiv.id + "_row" + i ].setAttribute('id',mainDiv.id + "_row" + i);
 			window[mainDiv.id + "_row" + i ].setAttribute('class',"carrousel_wrapper_" + rowClass);
 			if(i!=0){
-				synchronizeIds.push(mainDiv.id + "_row" + i)
+				synchronizeIds.push(mainDiv.id + "_row" + i);
 			}
 		}
+
+		console.log("synchronizeIds");
+		console.log(synchronizeIds);
 			
 		//Divide children into the different divs.
 		$(mainDiv).children().each(function(index,value){
-			$(window[mainDiv.id + "_row" + index%rows  ]).append(value)
+			$(window[mainDiv.id + "_row" + index%rows  ]).append(value);
 		});
-			
 			
 		//Add divs to the wrapper and invoke carrousel Plugin
 		for (i=rows-1;i>=0;i--) {
-			$(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ])
+			$(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ]);
 			if(i==0){
 				var newContainerId = mainDiv.id + "_row" + i;
 				_setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width);
@@ -259,13 +261,18 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		});  
 			
 		if(synchronizeIds){
+			var syncString = "";
 			$(synchronizeIds).each(function(index,value){
-		  		$("#" + id).trigger("configuration", ["synchronise", "#" + value]);
+				if(index !=0){
+					syncString = syncString + ", ";
+				}
+				syncString = syncString + "#" + value;
 			});
+			$("#" + id).trigger("configuration", ["synchronise", syncString]);
 		}
 
-		$("#" + id).attr("rows",rows)
-	}
+		$("#" + id).attr("rows",rows);
+	};
 	
 	
 	var cleanCarrousel = function(containerId){
@@ -280,7 +287,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			for(i=0; i<rows;i++){
 				_cleanOneRowCarrousel(containerId + "_row" + i);
 			}
-			$("#" + containderIdForMultiRow).attr("id",containerId)
+			$("#" + containderIdForMultiRow).attr("id",containerId);
 		} else {
 			_cleanOneRowCarrousel(containerId);
 		}
@@ -289,9 +296,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	var _cleanOneRowCarrousel = function(containerId){
 		var carrouselWrapper = $("#" + containerId).parent().parent();
 		if($(carrouselWrapper).hasClass('image_carousel')){
-			$(carrouselWrapper).removeClass()
-			$(carrouselWrapper).html("")
-			$(carrouselWrapper).attr("id",containerId)
+			$(carrouselWrapper).removeClass();
+			$(carrouselWrapper).html("");
+			$(carrouselWrapper).attr("id",containerId);
 		}
 	}
 	

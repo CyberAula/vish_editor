@@ -86,6 +86,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Flikr.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.LRE.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Image.Thumbnails.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Flash.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Repository.js"></script>
@@ -880,29 +881,36 @@
 	    <div id="picture_fancybox" class="outer_box">
 				<div class="fancy_tabs" id="images_fancy_tabs_id">	   
 				  <ul>
+				  	<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_thumbnails')" id="tab_pic_thumbnails" class="fancy_tab tabbable" style="display:none" i18n-key="i.url">thumbnails</a></li>
 				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab tabbable" i18n-key="i.url">url</a></li>
 				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab" i18n-key="i.upload">upload</a></li>
 				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">vish</a></li>
 				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab"><img src='/vishEditor/images/logos/flickrlogo2.png'/></a></li>
 				    <li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_lre')" id="tab_pic_lre" class="fancy_tab"><img src='/vishEditor/images/logos/lrelogo.gif'/></a></li>
 				  </ul>
+				  <img class='help_in_fancybox' id='tab_pic_thumbnails' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				  <img class='help_in_fancybox' id='tab_pic_from_url_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				  <img class='help_in_fancybox' id='tab_pic_upload_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				  <img class='help_in_fancybox' id='tab_pic_repo_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				  <img class='help_in_fancybox' id='tab_pic_flikr_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				</div>
+
+				<div id='tab_pic_thumbnails_content' class="fancy_tab_content">
+					<div id="tab_pic_thumbnails_carrousel"></div>
+				</div>
+
 				<div id='tab_pic_from_url_content' class="fancy_tab_content">
-            			<div class="box1 box1fancy1">
-					    			<p i18n-key="i.pic.add" class="textfancy">add image url</p></br>
-	                  <img class="image_add_url" src="/vishEditor/images/icons/url_img.png"/>
-					    			<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
-					    			<button type="button" class="button buttonfancy previewButton" i18n-key="i.preview">Preview</button>
-              		</div>
-            			<div class="box2">
-            				<div id="picture_preview" class="previewimgbox">
-                				<button i18n-key="i.AddContent" type="button" class="button button_addContent" onclick="VISH.Editor.Image.addContent()">Add Content</button>
-                			</div>
-            			</div>
+					<div class="box1 box1fancy1">
+						<p i18n-key="i.pic.add" class="textfancy">add image url</p></br>
+						<img class="image_add_url" src="/vishEditor/images/icons/url_img.png"/>
+						<input id="picture_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="text" size="25" value="">
+						<button type="button" class="button buttonfancy previewButton" i18n-key="i.preview">Preview</button>
+					</div>
+					<div class="box2">
+						<div id="picture_preview" class="previewimgbox">
+							<button i18n-key="i.AddContent" type="button" class="button button_addContent" onclick="VISH.Editor.Image.addContent()">Add Content</button>
+						</div>
+					</div>
 				</div> 
 
 
@@ -947,21 +955,19 @@
 						</div>
 
 						<div id="tab_pic_repo_content_carrousel"></div>
-
-						<div id="tab_pic_repo_content_preview">
-							<div id="tab_pic_repo_content_preview_image"></div>
-						</div>
 					</div>	
 				</div>
+
 				<div id='tab_pic_flikr_content' class="fancy_tab_content">
-                	  <div class="box1 box1fancy2">
-                      <img src="/vishEditor/images/logos/flickrlogo.png" class="imagelogotab">
-				      	<div class="search_container">
-				  	   		<input id="search_flickr_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
-    				     </div>	
+					<div class="box1 box1fancy2">
+						<img src="/vishEditor/images/logos/flickrlogo.png" class="imagelogotab">
+						<div class="search_container">
+							<input id="search_flickr_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						</div>	
 						<div id="tab_flikr_content_carrousel"></div>
-                	  </div>
-			    </div>
+					</div>
+				</div>
+
 			    <div id='tab_pic_lre_content' class="fancy_tab_content">
                 	  <div class="box1 box1fancy2">
                       <img id="lrelogo_in_tab" src="/vishEditor/images/logos/lrelogo.gif" class="imagelogotab">

@@ -295,6 +295,43 @@ div.pagination_single_row_thumbnails{
   margin-top: 10px !important;
 }
 
+/* CSS for NEW Thumbnails Carrousel */
+
+div.image_carousel_multiple_row_thumbnails > div.caroufredsel_wrapper {
+  margin-left: 46px !important;
+}
+
+div.image_carousel_multiple_row_thumbnails {
+    padding: 62px 0 60px 0px;
+    margin-left: 20px !important;
+}
+
+div.carrousel_element_multiple_row_thumbnails {
+  width: 115px;
+  height: 115px;
+  max-width: 115px;
+  max-height: 115px;
+  float: left;
+  margin-left: 15px;
+}
+
+img.carrousel_element_multiple_row_thumbnails {
+  width: 115px;
+  height: 115px;
+  max-width: 115px;
+  max-height: 115px;
+  margin-left: 0px;
+  padding: 0px 0px 0px 0px;
+  margin-top: 0px;
+}
+
+div.carrousel_wrapper_multiple_row_thumbnails {
+}
+
+a.prev_multiple_row_thumbnails, a.next_multiple_row_thumbnails{
+    top: 240px;
+}
+
 
 /* CSS for Slides Carrousel */
 
@@ -386,7 +423,7 @@ a.next_single_row_slides {
 }
 
 
-/* CSS for Flashcard repository carrousel */
+/* CSS for Presentation repository carrousel */
 
 
 div.carrousel_element_single_row_presentation_repository > img.carrousel_element_single_row_presentation_repository{

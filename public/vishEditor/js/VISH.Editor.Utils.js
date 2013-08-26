@@ -446,6 +446,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Slideset.Repository.onLoadTab();
 				break;
 			//Image
+			case "tab_pic_thumbnails":
+				V.Editor.Image.Thumbnails.onLoadTab();
+				break;
 			case "tab_pic_from_url":
 				V.Editor.Image.onLoadTab("url");
 				break;
