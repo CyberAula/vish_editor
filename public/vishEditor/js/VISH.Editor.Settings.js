@@ -7,17 +7,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		// fancybox to edit presentation settings
 		$("a#edit_presentation_details").fancybox({
 			'autoDimensions' : false,
+			'autoScale' : true,
 			'scrolling': 'no',
-			'width': 800,
-			'height': 660,
+			'width': 1000,
+			'height': 700,
 			'padding': 0,
 			'hideOnOverlayClick': false,
 			'hideOnContentClick': false,
 			'showCloseButton': true,
 			"onComplete"  : function(data) {
+				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
 			}
 		});
+
 		$("a#edit_presentation_details").trigger('click');
 	}
 

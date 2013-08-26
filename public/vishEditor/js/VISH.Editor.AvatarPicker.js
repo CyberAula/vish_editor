@@ -168,8 +168,8 @@ VISH.Editor.AvatarPicker = (function(V,$,undefined){
 		options['styleClass'] = "thumbnails";
 		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 
-		$(".buttonintro").addClass("buttonintro_extramargin");
-		$(".buttonpedagogical").addClass("buttonpedagogical_extramargin");
+		// $(".buttonintro").addClass("buttonintro_extramargin");
+		// $(".buttonpedagogical").addClass("buttonpedagogical_extramargin");
 
 		if(selectedAvatar){
 			if(!_isDefaultAvatar(selectedAvatar)){

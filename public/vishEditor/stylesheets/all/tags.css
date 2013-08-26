@@ -18,27 +18,6 @@ div.tagBoxUpload .tagit{
   height: 57px;
 }
 
-.tagBoxIntro{
-	  padding: 0px;
-    color: #7a8fa9;
-    font-size: 14px;
-    -moz-border-radius: 5px;
-    -khtml-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: #fff;
-    max-height: 45%;
-		position: absolute;
-		margin-top: 85px;
-		margin-left: 70px;
-		width: 83%;	
-}
-
-div.tagBoxIntro .tagit{
-	height: 57px;
-}
-
-
 select.tagit-hiddenSelect{
     display: inline-block !important;
 }

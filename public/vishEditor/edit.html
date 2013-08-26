@@ -335,44 +335,47 @@
 
 	<!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
 	<div style='display:none'>    
-		<form id='presentationdetails'>         
+		<form id='presentationdetails'>
+
 			<div id="presentation_details_fields">
-				<div id="titlepres">
-					<p class="titlepresp">Welcome</p>
-				</div>
-				
-				<label for="presentation_title">
-					<div id="tutorialstart" class="textintro1 textintromargin1">
-						<span i18n-key="i.Title">Title</span>
+				<div id="presentation_details_fields_row1">
+					<div id="presentation_details_fields_row1_column1">
+						<img id='presentation_details_logo' src="/vishEditor/images/repositoryimg.png"/>
 					</div>
-				</label>
-				
-				<input id='presentation_title' class="title1 formsizefancy3" type="text" name="presentation_title" placeholder="Excursion title" i18n-key="i.presTitle"></input>
-				<img id="start_tutorial" src="/vishEditor/images/tutorial/tutorialimage_blank.png"/>
-				
-				<label for="presentation_description">
-					<div class="textintro1 textintromargin2"><span i18n-key="i.Description">Description</span></div>
-				</label>
 
-				<textarea id='presentation_description' class="description1 formsizefancy4" name="presentation_description" placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
+					<div id="presentation_details_fields_row1_column2">
 
-				<div id="attachment_and_tag">
-					<div class="tagBoxIntro">
-						<ul id="tagindex" class="tagList"></ul>
+						<p> Excursion Details </p>
+
+						<div id="presentation_title">
+							<span class="pres_details_text" i18n-key="i.Title">Title</span>
+							<input id='presentation_title_input' class="pres_details_input" type="text" name="presentation_title" placeholder="Excursion title" i18n-key="i.presTitle"></input>
+						</div>
+
+						<div id="presentation_description">
+							<span class="pres_details_text" i18n-key="i.Description">Description</span>
+							<textarea id='presentation_description_textarea' name="presentation_description" placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
+						</div>			
+
+						<div id="tags_in_presentation_details">
+							<div class="tagBoxIntro">
+								<ul id="tagindex" class="tagList"></ul>
+							</div>
+						</div>
+					</div>
+
+					<div id="presentation_details_fields_row1_column3">
+						<p> Select Theme </p>
 					</div>
 				</div>
-				<div id="thumbnails_in_presentation_details">
-					<label for="presentation_avatar">
-						<div class="textintro1 textintromargin3"><span i18n-key="i.Thumbnail">Thumbnail</span></div>
-					</label>
-					<div id="avatars_carrousel"></div>
-					<input type="hidden" id="presentation_avatar" value="">
-				</div>
 
-				<button id='pedagogical_clasification_button' submit='disable' class='button buttonpedagogical' i18n-key="i.pedagogicalClasification">Pedagogical Aspects</button>
-				<button id='save_presentation_details' submit='disable' class='button buttonintro' i18n-key="i.continue">Continue</button>
-				<p id="presentation_details_error" class="error_intro" style='display:none' i18n-key="i.enterTitle">Please, enter a title</p>
+				<div id="presentation_details_fields_row2">
+					<button id='pedagogical_clasification_button' submit='disable' class='button buttonpedagogical' i18n-key="i.pedagogicalClasification">Pedagogical Aspects</button>
+					<button id='save_presentation_details' submit='disable' class='button' i18n-key="i.continue">Continue</button>
+					<p id="presentation_details_error" class="error_intro" style='display:none' i18n-key="i.enterTitle">Please, enter a title</p>
+				</div>
 			</div>
+
 
 			<div id="pedagogical_options_fields" style="display:none">
 				<img id='help_pedagogical_selection' src="/vishEditor/images/icons/helptutorial_circle.png"/>
@@ -477,8 +480,9 @@
 				</div>
 
 				<i id="based_on_lom" class="" i18n-key="i.basedOnLOM">*based on LOM standard</i>
-				<button id='done_in_pedagogical' submit='disable' class='button buttonintro' i18n-key="i.done">Done</button>
+				<button id='done_in_pedagogical' submit='disable' class='button' i18n-key="i.done">Done</button>
 			</div>
+
 		</form>
 	</div>
 
@@ -1820,7 +1824,7 @@
 		    <h2 i18n-key="i.SearchLiveContent">Search Live Content</h2>
 		 <p i18n-key="i.walk55">Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by clicking the "add button". Click on "Close" to finish this walkthrough.</p>
 		</li>
-	</ol> 
+	</ol>
 
 	<!-- Walkthrough end -->
 
