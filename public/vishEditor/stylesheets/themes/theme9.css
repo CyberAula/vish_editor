@@ -63,7 +63,7 @@ section.slides {
   height: 100%;
   float: left;
   margin-top: 46px;
-margin-left: 79px;
+margin-left: 44px;
 }
 
 .t15_left .zone_tooltip, .t15_center .zone_tooltip, .t15_right .zone_tooltip {
@@ -72,7 +72,7 @@ margin-left: 79px;
   height: 100%;
   float: left;
   margin-top: 44px;
-margin-left: 26px;
+margin-left: 15px
 }
 
 .t15_center2 .zone_tooltip, .t4_left .zone_tooltip  {
@@ -81,7 +81,7 @@ margin-left: 26px;
   height: 100%;
   float: left;
 margin-top: 105px;
-margin-left: 130px;
+margin-left: 50px;
 }
 
 .t13_header .zone_tooltip, .t9_header .zone_tooltip, .t8_header .zone_tooltip, .t7_header .zone_tooltip, .t5_header .zone_tooltip, .t6_header .zone_tooltip, .t3_header .zone_tooltip, .t4_header .zone_tooltip {
@@ -90,7 +90,6 @@ margin-left: 130px;
   height: 100%;
   float: left;
 margin-top: 13px;
-margin-left: 228px;
 }
 
 .t13_left .zone_tooltip {
@@ -99,7 +98,7 @@ width: 75%;
 height: 100%;
 float: left;
 margin-top: 144px;
-margin-left: 67px;
+margin-left: 41px;
 }
 
 .t13_right .zone_tooltip {
@@ -108,7 +107,7 @@ width: 83%;
 height: 100%;
 float: left;
 margin-top: 10px;
-margin-left: 51px;
+margin-left: 26px;
 }
 
 .t12_right1 .zone_tooltip, .t12_right2 .zone_tooltip, .t12_left1 .zone_tooltip, .t12_left2 .zone_tooltip {
@@ -117,7 +116,7 @@ width: 83%;
 height: 100%;
 float: left;
 margin-top: 84px;
-margin-left: 48px;
+margin-left: 24px;
 }
 
 .t11_center1 .zone_tooltip, .t11_center2 .zone_tooltip, .t11_center3 .zone_tooltip {
@@ -126,7 +125,7 @@ margin-left: 48px;
   height: 100%;
   float: left;
  margin-top: 49px;
-margin-left: 176px;
+margin-left: 0px;
 }
 
 .t10_center .zone_tooltip {
@@ -135,7 +134,7 @@ margin-left: 176px;
   height: 100%;
   float: left;
 margin-top: 231px;
-margin-left: 171px;
+margin-left: 0px;
 }
 
 .t1_left .zone_tooltip {
@@ -144,7 +143,7 @@ margin-left: 171px;
   height: 100%;
   float: left;
 margin-top: 129px;
-margin-left: 122px;
+margin-left: 99px;
 }
 
 .t1_header .zone_tooltip {
@@ -153,7 +152,7 @@ margin-left: 122px;
   height: 100%;
   float: left;
   margin-top: 23px;
-  margin-left: 121px;
+  margin-left: 104px;
 }
 
 .t2_left .zone_tooltip {
@@ -162,7 +161,6 @@ margin-left: 122px;
   height: 100%;
   float: left;
 margin-top: 188px;
-margin-left: 133px;
 }
 
 .t3_left .zone_tooltip {
@@ -171,7 +169,6 @@ margin-left: 133px;
   height: 100%;
   float: left;
 margin-top: 153px;
-margin-left: 134px;
 }
 
 .t4_right .zone_tooltip {
@@ -180,7 +177,6 @@ margin-left: 134px;
   height: 100%;
   float: left;
  margin-top: 40px;
-margin-left: 238px;
 }
 
 .t1_subheader .zone_tooltip {
@@ -189,7 +185,6 @@ margin-left: 238px;
   height: 100%;
   float: left;
   margin-top: 7px;
-  margin-left: 166px;
 }
 
 .t9_right .zone_tooltip, .t9_left .zone_tooltip {
@@ -198,7 +193,7 @@ margin-left: 238px;
   height: 100%;
   float: left;
   margin-top: 78px;
-margin-left: 61px;
+margin-left: 6px;
 
 }
 
@@ -226,7 +221,7 @@ margin-left: 40px;
   height: 100%;
   float: left;
   margin-top: 145px;
-margin-left: 95px;
+margin-left: 88px;
 }
 
 .t7_center .zone_tooltip {
@@ -252,8 +247,8 @@ margin-left: 92px;
   width: 62%;
   height: 100%;
   float: left;
-  margin-top: 85px;
-  margin-left: 59px;
+  margin-top: 70px;
+margin-left: 41px;
 }
 
 

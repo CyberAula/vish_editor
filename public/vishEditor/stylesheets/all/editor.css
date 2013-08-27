@@ -278,6 +278,9 @@ border-right: 1px solid #ccc;
 }
 
 #slides_list img.image_barbutton:active {
+	-webkit-box-shadow: 15px 15px 18px rgba(50, 50, 50, 0.17);
+-moz-box-shadow:    15px 15px 18px rgba(50, 50, 50, 0.17);
+box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
 	cursor: url(https://mail.google.com/mail/images/2/openhand.cur) 8 8, move;
 	 background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
 	 border: none;
@@ -1645,7 +1648,7 @@ iframe {
 	width: 100%;
 	height: 100%;
 	border: none;
-	
+
 }
 	
 /** Slides bar **/
@@ -2120,6 +2123,7 @@ div.poi_label_container{
 	width: 50%;
 	height: 100%;
 	float: left;
+	text-align: center;
 }
 
 .t14_circle1 .zone_tooltip, .t14_circle2 .zone_tooltip, .t14_circle3 .zone_tooltip {
@@ -2129,6 +2133,7 @@ div.poi_label_container{
 	width: 84%;
 	height: 100%;
 	float: left;
+	text-align: center;
 }
 
 .t14_right1 .zone_tooltip, .t14_right2 .zone_tooltip, .t14_right3 .zone_tooltip {
@@ -2137,7 +2142,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 56px;
-	margin-left: 94px;
+margin-left: 36px;
+	text-align: center;
 }
 
 .t15_left .zone_tooltip, .t15_center .zone_tooltip, .t15_right .zone_tooltip {
@@ -2146,7 +2152,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 62px;
-	margin-left: 34px;
+margin-left: 17;
+	text-align: center;
 }
 
 .t15_center2 .zone_tooltip, .t4_left .zone_tooltip  {
@@ -2155,7 +2162,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 142px;
-	margin-left: 133px;
+	margin-left: 53px;
+	text-align: center;
 }
 
 .t13_header .zone_tooltip, .t9_header .zone_tooltip, .t8_header .zone_tooltip, .t7_header .zone_tooltip, .t5_header .zone_tooltip, .t6_header .zone_tooltip, .t3_header .zone_tooltip, .t4_header .zone_tooltip {
@@ -2164,7 +2172,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 16px;
-	margin-left: 234px;
+	margin-left: 50px;
+	text-align: center;
 }
 
 .t13_left .zone_tooltip {
@@ -2173,7 +2182,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 205px;
-	margin-left: 24px;
+	margin-left: 6px;
+	text-align: center;
 }
 
 .t13_right .zone_tooltip {
@@ -2182,7 +2192,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 26px;
-	margin-left: 21px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t12_right1 .zone_tooltip, .t12_right2 .zone_tooltip, .t12_left1 .zone_tooltip, .t12_left2 .zone_tooltip {
@@ -2191,7 +2202,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 104px;
-	margin-left: 21px;
+	margin-left: 2px;
+	text-align: center;
 }
 
 .t11_center1 .zone_tooltip, .t11_center2 .zone_tooltip, .t11_center3 .zone_tooltip {
@@ -2200,7 +2212,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 61px;
-	margin-left: 189px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t10_center .zone_tooltip {
@@ -2209,7 +2222,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 263px;
-	margin-left: 175px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t1_left .zone_tooltip {
@@ -2218,7 +2232,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 134px;
-	margin-left: 123px;
+	margin-left: 103px;
+	text-align: center;
 }
 
 .t1_header .zone_tooltip {
@@ -2228,6 +2243,7 @@ div.poi_label_container{
 	float: left;
 	margin-top: 23px;
 	margin-left: 111px;
+	text-align: center;
 }
 
 .t2_left .zone_tooltip {
@@ -2236,7 +2252,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 231px;
-	margin-left: 125px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t3_left .zone_tooltip {
@@ -2245,7 +2262,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 190px;
-	margin-left: 136px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t4_right .zone_tooltip {
@@ -2254,7 +2272,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 49px;
-	margin-left: 236px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .t1_subheader .zone_tooltip {
@@ -2263,7 +2282,7 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 7px;
-	margin-left: 153px;
+	text-align: center;
 }
 
 .t9_right .zone_tooltip, .t9_left .zone_tooltip {
@@ -2272,7 +2291,7 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 90px;
-	margin-left: 74px;
+	text-align: center;
 }
 
 .t5_left .zone_tooltip, .t5_right .zone_tooltip {
@@ -2281,7 +2300,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 198px;
-	margin-left: 93px;
+	margin-left: 72px;
+	text-align: center;
 }
 
 .t9_center .zone_tooltip, .t7_left .zone_tooltip, .t6_left .zone_tooltip, .t6_center .zone_tooltip, .t6_right .zone_tooltip {
@@ -2290,7 +2310,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 193px;
-	margin-left: 45px;
+	margin-left: 32px;
+	text-align: center;
 }
 
 .t8_center .zone_tooltip {
@@ -2299,7 +2320,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 186px;
-	margin-left: 110px;
+margin-left: 86px;
+	text-align: center;
 }
 
 .t7_center .zone_tooltip {
@@ -2308,7 +2330,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 139px;
-	margin-left: 110px;
+	margin-left: 90px;
+	text-align: center;
 }
 
 .t7_subheader .zone_tooltip {
@@ -2317,7 +2340,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 22px;
-	margin-left: 110px;
+	margin-left: 92px;
+	text-align: center;
 }
 
 .t8_right .zone_tooltip, .t8_left .zone_tooltip {
@@ -2326,7 +2350,8 @@ div.poi_label_container{
 	height: 100%;
 	float: left;
 	margin-top: 85px;
-	margin-left: 59px;
+margin-left: 43px;
+	text-align: center;
 }
 
 
