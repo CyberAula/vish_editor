@@ -16,7 +16,13 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
 }
 
 .slides > article > div.vezone {
-	background-color: rgba(100, 100, 100, 0.4);
+background-color: rgba(207, 207, 207, 0.4);
+}
+
+.zone_tooltip {
+font-family: 'Open Sans', sans-serif;
+font-weight: 100;
+color: #AFAFAF;
 }
 
 
@@ -30,3 +36,224 @@ section.slides {
 	background:  linear-gradient(to bottom,  rgba(254,254,254,1) 0%,rgba(209,209,209,1) 49%,rgba(219,219,219,1) 50%,rgba(226,226,226,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#e2e2e2',GradientType=0 ); /* IE6-9 */
 }
+
+
+
+
+.t13_circle .zone_tooltip {
+  margin: 37% 0 0 25%;
+  vertical-align: middle;
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+.t14_circle1 .zone_tooltip, .t14_circle2 .zone_tooltip, .t14_circle3 .zone_tooltip {
+  margin-top: 41px;
+  margin-left: 11px;
+  vertical-align: middle;
+  width: 84%;
+  height: 100%;
+  float: left;
+}
+
+.t14_right1 .zone_tooltip, .t14_right2 .zone_tooltip, .t14_right3 .zone_tooltip {
+  vertical-align: middle;
+  width: 84%;
+  height: 100%;
+  float: left;
+  margin-top: 46px;
+margin-left: 79px;
+}
+
+.t15_left .zone_tooltip, .t15_center .zone_tooltip, .t15_right .zone_tooltip {
+  vertical-align: middle;
+  width: 84%;
+  height: 100%;
+  float: left;
+  margin-top: 44px;
+margin-left: 26px;
+}
+
+.t15_center2 .zone_tooltip, .t4_left .zone_tooltip  {
+  vertical-align: middle;
+  width: 84%;
+  height: 100%;
+  float: left;
+margin-top: 105px;
+margin-left: 130px;
+}
+
+.t13_header .zone_tooltip, .t9_header .zone_tooltip, .t8_header .zone_tooltip, .t7_header .zone_tooltip, .t5_header .zone_tooltip, .t6_header .zone_tooltip, .t3_header .zone_tooltip, .t4_header .zone_tooltip {
+  vertical-align: middle;
+  width: 84%;
+  height: 100%;
+  float: left;
+margin-top: 13px;
+margin-left: 228px;
+}
+
+.t13_left .zone_tooltip {
+vertical-align: middle;
+width: 75%;
+height: 100%;
+float: left;
+margin-top: 144px;
+margin-left: 67px;
+}
+
+.t13_right .zone_tooltip {
+vertical-align: middle;
+width: 83%;
+height: 100%;
+float: left;
+margin-top: 10px;
+margin-left: 51px;
+}
+
+.t12_right1 .zone_tooltip, .t12_right2 .zone_tooltip, .t12_left1 .zone_tooltip, .t12_left2 .zone_tooltip {
+  vertical-align: middle;
+width: 83%;
+height: 100%;
+float: left;
+margin-top: 84px;
+margin-left: 48px;
+}
+
+.t11_center1 .zone_tooltip, .t11_center2 .zone_tooltip, .t11_center3 .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+ margin-top: 49px;
+margin-left: 176px;
+}
+
+.t10_center .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+margin-top: 231px;
+margin-left: 171px;
+}
+
+.t1_left .zone_tooltip {
+  vertical-align: middle;
+  width: 56%;
+  height: 100%;
+  float: left;
+margin-top: 129px;
+margin-left: 122px;
+}
+
+.t1_header .zone_tooltip {
+  vertical-align: middle;
+  width: 56%;
+  height: 100%;
+  float: left;
+  margin-top: 23px;
+  margin-left: 121px;
+}
+
+.t2_left .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+margin-top: 188px;
+margin-left: 133px;
+}
+
+.t3_left .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+margin-top: 153px;
+margin-left: 134px;
+}
+
+.t4_right .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+ margin-top: 40px;
+margin-left: 238px;
+}
+
+.t1_subheader .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+  margin-top: 7px;
+  margin-left: 166px;
+}
+
+.t9_right .zone_tooltip, .t9_left .zone_tooltip {
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  float: left;
+  margin-top: 78px;
+margin-left: 61px;
+
+}
+
+.t5_left .zone_tooltip, .t5_right .zone_tooltip {
+  vertical-align: middle;
+  width: 55%;
+  height: 100%;
+  float: left;
+  margin-top: 148px;
+margin-left: 84px;
+}
+
+.t9_center .zone_tooltip, .t7_left .zone_tooltip, .t6_left .zone_tooltip, .t6_center .zone_tooltip, .t6_right .zone_tooltip {
+  vertical-align: middle;
+  width: 75%;
+  height: 100%;
+  float: left;
+  margin-top: 158px;
+margin-left: 40px;
+}
+
+.t8_center .zone_tooltip {
+  vertical-align: middle;
+  width: 59%;
+  height: 100%;
+  float: left;
+  margin-top: 145px;
+margin-left: 95px;
+}
+
+.t7_center .zone_tooltip {
+  vertical-align: middle;
+  width: 59%;
+  height: 100%;
+  float: left;
+  margin-top: 113px;
+margin-left: 96px;
+}
+
+.t7_subheader .zone_tooltip {
+  vertical-align: middle;
+  width: 59%;
+  height: 100%;
+  float: left;
+  margin-top: 16px;
+margin-left: 92px;
+}
+
+.t8_right .zone_tooltip, .t8_left .zone_tooltip {
+  vertical-align: middle;
+  width: 62%;
+  height: 100%;
+  float: left;
+  margin-top: 85px;
+  margin-left: 59px;
+}
+
+

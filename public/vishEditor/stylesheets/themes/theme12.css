@@ -24,6 +24,11 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
   background-color: rgba(100, 100, 100, 0.3);
 }
 
+.zone_tooltip {
+font-family: 'Open Sans', sans-serif;
+font-weight: 100;
+color: #9B9B9B;
+}
 
 section.slides {
   background: rgb(63,76,107); /* Old browsers */
