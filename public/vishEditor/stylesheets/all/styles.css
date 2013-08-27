@@ -45,9 +45,6 @@ section.slides {
 	left: 0;
 	top: 0;
 	position: absolute;
-	border-radius: 20px 20px 0 0;
-	-moz-border-radius: 20px 20px 0 0;
-	-webkit-border-radius: 20px 20px 0 0;
 }
 
 section.slides > article, section.slides > article > article, .subslide {

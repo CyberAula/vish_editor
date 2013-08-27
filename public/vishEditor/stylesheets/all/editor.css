@@ -131,7 +131,7 @@ p.error_intro {
 	top: 58px;
 	display:block;
 	width: 179px;
-	height: 694px;
+	height: 690px;
 	text-align: center;
 	background: #f0f0f0;
 	border: 1px solid #ccc;
@@ -144,16 +144,16 @@ p.error_intro {
 box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 -moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 -webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
-	position: absolute;
-	left: 180px;
-	bottom: 0px;
-	display:block;
-	width: 1018px;
-	height: 70px;
-	text-align: center;
-	background: #f0f0f0;
-	border: 1px solid #ccc;
-	z-index: 1100;
+position: absolute;
+left: 180px;
+bottom: 0px;
+display: block;
+width: 1018px;
+height: 70px;
+text-align: center;
+background: #EBEBEB;
+border: 1px solid #BBB;
+z-index: 1100;
 }
 
 #subslide_selected {
@@ -1645,6 +1645,7 @@ iframe {
 	width: 100%;
 	height: 100%;
 	border: none;
+	
 }
 	
 /** Slides bar **/
