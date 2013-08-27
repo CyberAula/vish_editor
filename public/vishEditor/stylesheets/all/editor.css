@@ -45,19 +45,27 @@ img {
 	height: 70px;
 }
 
-#presentation_title{
+p.presentation_details_column_title{
+	color: #ccc;
+}
+
+#presentation_details_preview{
+
+}
+
+#presentation_details_title{
 	width: 100%;
 	display: inline;
 	margin-top: 10%;
 }
 
-span.pres_details_text {
+span.presentation_details_text {
 	font-family:Helvetica;
 	font-size:24px;
 	color: #ff005d ;
 }
 
-input.pres_details_input {
+input.presentation_details_input {
 	width: 80%;
 	height: 25px;
 	font-family: Arial;
@@ -69,12 +77,12 @@ input.pres_details_input {
 	z-index: 1000;
 }
 
-#presentation_description{
+#presentation_details_description{
 	width: 100%;
 	display: block;
 }
 
-#presentation_description_textarea {
+textarea.presentation_details_textarea {
 	display: block;
 	width: 80%;
 	height: 70px;
@@ -114,14 +122,6 @@ button.buttonpedagogical {
 #pedagogical_options_fields {
 	overflow: hidden;
 } 
-
-p.error_intro {
-	margin-left: 75px;
-	margin-top: -30px;
-	font-family:Helvetica;
-	font-size:16px;
-	color: #F00;
-}
 
 /* Settings End */
 

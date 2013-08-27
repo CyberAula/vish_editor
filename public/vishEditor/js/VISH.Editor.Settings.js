@@ -73,12 +73,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 */
 	var onSavePresentationDetailsButtonClicked = function(event){
 		event.preventDefault();
-		
-		if($('#presentation_title').val().length < 1) {
-			$('#presentation_details_error').slideDown("slow");
-			$('#presentation_details_error').show();
-			return false;
-		}
+
+		// TODO: Validate	
+		// if($('#presentation_title').val().length < 1) {
+		// 	return false;
+		// }
 		
 		var draftPresentation = V.Editor.getPresentation();
 
@@ -100,7 +99,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		V.Editor.setPresentation(draftPresentation);
 
-		$('#presentation_details_error').hide();
 		$.fancybox.close();
 	};
 
