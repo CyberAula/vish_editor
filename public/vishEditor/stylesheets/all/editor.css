@@ -109,6 +109,7 @@ span.presentation_details_text {
 	font-family: Helvetica;
 	font-size: 1.6em;
 	color: #ff005d;
+	margin-right: 55px;
 }
 
 input.presentation_details_input {
