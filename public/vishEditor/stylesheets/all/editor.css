@@ -147,6 +147,21 @@ textarea.presentation_details_textarea {
 	z-index: 1000;
 }
 
+/* Themes in settings */
+
+#scrollbar_themes_list{
+	height: 486px;
+}
+
+#scrollbar_themes_list img.image_barbutton{
+	width: 120px;
+	margin-left: 15px;
+}
+
+#scrollbar_themes_list p.ptext_barbutton{
+	display: none;
+}
+
 #fill_details_later_button {
 	margin-left: 518px;
 	margin-right: 30px;

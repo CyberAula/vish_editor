@@ -1,5 +1,7 @@
 VISH.Editor.Settings = (function(V,$,undefined){
 
+	var themeScrollbarDivId = "scrollbar_themes_list";
+
 	var init = function(){
 	};
 
@@ -25,14 +27,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onDisplaySettings = function(){
-		//Tags
-		if(V.Configuration.getConfiguration()["presentationTags"]){
-			//Loader
-			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
-			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
-			V.Editor.API.requestTags(_onInitialTagsReceived);
-		}
-
 		//Avatar
 		var presentation = V.Editor.getPresentation();
 		if(presentation && presentation.avatar){
@@ -40,6 +34,70 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		} else {
 			V.Editor.AvatarPicker.onLoadPresentationDetails(null);
 		}
+
+		//Tags
+		if(V.Configuration.getConfiguration()["presentationTags"]){
+			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
+			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
+			V.Editor.API.requestTags(_onInitialTagsReceived);
+		}
+
+		//Select Theme scrollbar
+		V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
+		$("#" + themeScrollbarDivId).hide();
+
+		//Generate thumbnail images
+		var imagesArray = [];
+		var imagesArrayTitles = [];
+
+		for(var i=1; i<11; i++){
+			var srcURL = V.ImagesPath + "themes/theme" + i + "/select.png";
+			imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
+			imagesArrayTitles.push(i);
+		}
+
+		var options = {};
+		options.order = true;
+		options.titleArray = imagesArrayTitles;
+		options.callback = _onThemeImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
+
+		V.Debugging.log("wating for _onThemeImagesLoaded");
+	}
+
+	var _onThemeImagesLoaded = function(){
+		V.Debugging.log("_onThemeImagesLoaded");
+
+		//Add class to title elements and events
+		$("#" + themeScrollbarDivId).find("img.image_barbutton").each(function(index,img){
+			//Add class to title
+			var imgContainer = $(img).parent();
+			$(imgContainer).addClass("wrapper_barbutton");
+			var p = $(imgContainer).find("p");
+			$(p).addClass("ptext_barbutton");
+
+			//Add events to imgs
+			$(img).click(function(event){
+				_onClickTheme(event);
+			});
+		});
+
+		var options = new Array();
+		options.scrollTop = true;
+		options.callback = _afterCreateThemesScrollbar;
+
+		//Create scrollbar
+		$("#" + themeScrollbarDivId).show();
+		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
+	}
+
+	var _onClickTheme = function(event){
+		var themeNumber = $(event.target).attr("themeNumber");
+		V.Debugging.log("select Theme " + themeNumber);
+	}
+
+	var _afterCreateThemesScrollbar = function(){
+		V.Debugging.log("Themes Scrollbar created");
 	}
 
 	var _onInitialTagsReceived = function(data){

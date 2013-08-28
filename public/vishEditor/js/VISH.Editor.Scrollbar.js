@@ -37,7 +37,13 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		setTimeout(function(){
 			$(scrollbar).mCustomScrollbar("update");
 			setTimeout(function(){
-				$(scrollbar).mCustomScrollbar("scrollTo","bottom");
+				if((options)&&(options.scrollTop === true)){
+					// Not necessary (default behaviour)
+					// $(scrollbar).mCustomScrollbar("scrollTo","top");
+				} else {
+					$(scrollbar).mCustomScrollbar("scrollTo","bottom");
+				}
+				
 				//Callback
 				if(typeof callback === "function"){
 					callback();
