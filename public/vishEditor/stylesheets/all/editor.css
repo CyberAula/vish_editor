@@ -36,22 +36,22 @@ img {
 }
 
 #presentation_details_fields_row1_column2{
-	height: 519px;
-	width: 494px;
+	height: 571px;
+	width: 491px;
 	margin-left: -19px;
-	margin-top: 37px;
+	margin-top: 15px;
 	float: left;
 	border-left: 1px solid #EBEBEB;
 	padding-left: 24px;
 }
 
 #presentation_details_fields_row1_column3{
-	height: 519px;
+	height: 572px;
 	width: 191px;
 	float: left;
-	margin-left: -47px;
+	margin-left: -55px;
 	padding-left: 45px;
-	margin-top: 32px;
+	margin-top: 15px;
 	margin-bottom: -50px;
 	border-left: 1px solid #EBEBEB;
 }
@@ -178,6 +178,9 @@ button.buttonpedagogical {
 
 #pedagogical_options_fields {
 	overflow: hidden;
+	font-size: 1.4em;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
 } 
 
 .pedagogical_title{
@@ -191,20 +194,24 @@ button.buttonpedagogical {
 
 #pedagogical_options_fields_row1_column1{
 	float: left;
-	width: 33%;
-	height: 100%;
+	width: 29%;
+	height: 165px;
+	margin-left: 33px;
 }
 
 #pedagogical_options_fields_row1_column2{
 	float: left;
-	width: 33%;
-	height: 100%;
+	width: 321px;
+	height: 246px;
+	border-left: 1px solid #ebebeb;
+	padding-left: 33px;
 }
 
 #pedagogical_options_fields_row1_column3{
 	float: left;
-	width: 33%;
-	height: 100%;
+	margin-left: 12px;
+	height: 245px;
+	border-left: 1px solid #ebebeb;
 }
 
 #language_tag_box_text{
@@ -243,12 +250,16 @@ input.slider_range_input {
 }
 
 #educational_objectives_title{
-	margin-bottom: 10px;
+	position: absolute;
+	margin-left: 45px;
+	margin-top: 266px;
 }
 
 #educational_objectives_textarea{
-	width: 92%;
-	height: 140px;
+width: 886px;
+height: 151px;
+margin-top: 55px;
+margin-left: 46px;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
@@ -2098,7 +2109,9 @@ p.draggable_number{
 }
 
 #done_in_pedagogical {
-	margin-top: -17px;
+	margin-top: 23px;
+margin-left: 43px;
+font-size: 0.9em;
 }
 
 #educational_objectives_tag {
@@ -2933,6 +2946,6 @@ fieldset[disabled] .btn-link:focus {
 
 #presentation_details_logo {
 width: 107%;
-margin-top: -16px;
+margin-top: -33px;
 margin-left: -20px;
 }
