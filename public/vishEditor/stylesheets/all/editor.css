@@ -153,9 +153,19 @@ textarea.presentation_details_textarea {
 	height: 486px;
 }
 
+#scrollbar_themes_list .mCSB_container{
+	border: 1px solid #ccc;
+padding: 14px;
+background: #EEEEEE;
+box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	-moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	-webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+}
+
 #scrollbar_themes_list img.image_barbutton{
 	width: 120px;
 	margin-left: 15px;
+	margin-bottom: 10px;
 }
 
 #scrollbar_themes_list p.ptext_barbutton{
