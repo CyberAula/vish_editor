@@ -89,8 +89,8 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
-		//init age range slider, this has to be done BEFORE V.Editor.Renderer.init(presentation);
-		$("#slider-range").slider({
+		//init age sliders, this has to be done BEFORE V.Editor.Renderer.init(presentation);
+		$("#slider-age").slider({
 			range: true,
 			min: 0,
 			max: 30,
@@ -100,6 +100,26 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$("#age_range").val(V.Constant.AGE_RANGE);
+
+		var LOM_difficulty = new Array();
+		LOM_difficulty[0] = "unspecified";
+		LOM_difficulty[1] = "very easy";
+		LOM_difficulty[2] = "easy";
+		LOM_difficulty[3] = "medium";
+		LOM_difficulty[4] = "difficult";
+		LOM_difficulty[5] = "very difficult";
+
+		$("#slider-difficulty").slider({
+			min: 0,
+			max: 5,
+			value: [ V.Constant.DIFFICULTY ],
+			slide: function( event, ui ) {
+				$("#difficulty_range").attr("difficulty",ui.value);
+				$("#difficulty_range").val(LOM_difficulty[ui.value]);
+			}
+		}); 
+		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
+		$("#difficulty_range").val(LOM_difficulty[V.Constant.DIFFICULTY]);
 
 
 		//If we have to edit
