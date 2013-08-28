@@ -250,6 +250,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 	};
 
+	var getAddContentMode = function(){
+		return contentAddMode;
+	}
+
 	var setAddContentMode = function(mode){
 		contentAddMode = mode;
 	}
@@ -259,6 +263,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		onLoadTab 			: onLoadTab,
 		drawImage 			: drawImage,
 		addContent 			: addContent,
+		getAddContentMode	: getAddContentMode,
 		setAddContentMode	: setAddContentMode
 	};
 

@@ -178,9 +178,6 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				synchronizeIds.push(mainDiv.id + "_row" + i);
 			}
 		}
-
-		console.log("synchronizeIds");
-		console.log(synchronizeIds);
 			
 		//Divide children into the different divs.
 		$(mainDiv).children().each(function(index,value){

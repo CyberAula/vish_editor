@@ -163,9 +163,9 @@ textarea.presentation_details_textarea {
 
 #scrollbar_themes_list .mCSB_container{
 	border: 1px solid #ccc;
-padding: 14px;
-background: #EEEEEE;
-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	padding: 14px;
+	background: #EEEEEE;
+	box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 	-moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 	-webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 }
@@ -311,10 +311,10 @@ input.slider_range_input {
 }
 
 #educational_objectives_textarea{
-width: 886px;
-height: 151px;
-margin-top: 55px;
-margin-left: 46px;
+	width: 886px;
+	height: 151px;
+	margin-top: 55px;
+	margin-left: 46px;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }

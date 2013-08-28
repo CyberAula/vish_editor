@@ -1,6 +1,8 @@
 VISH.Editor.Settings = (function(V,$,undefined){
 
 	var themeScrollbarDivId = "scrollbar_themes_list";
+	var tagsLoaded = false;
+	var themeScrollbarCreated = false;
 
 	var init = function(){
 	};
@@ -34,42 +36,40 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Tags
-		if(V.Configuration.getConfiguration()["presentationTags"]){
+		if((V.Configuration.getConfiguration()["presentationTags"])&&(!tagsLoaded)){
 			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
 			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
 
-		//Select Theme scrollbar
-		V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
-		$("#" + themeScrollbarDivId).hide();
+		if(!themeScrollbarCreated){
+			//Select Theme scrollbar
+			V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
+			$("#" + themeScrollbarDivId).hide();
 
-		//Generate thumbnail images
-		var imagesArray = [];
-		var imagesArrayTitles = [];
+			//Generate thumbnail images
+			var imagesArray = [];
+			var imagesArrayTitles = [];
 
-		for(var i=1; i<13; i++){
-			var imgExt = "png";
-			if(i==12){
-				imgExt = "gif";
+			for(var i=1; i<13; i++){
+				var imgExt = "png";
+				if(i==12){
+					imgExt = "gif";
+				}
+				var srcURL = V.ImagesPath + "themes/theme" + i + "/select." + imgExt;
+				imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
+				imagesArrayTitles.push(i);
 			}
-			var srcURL = V.ImagesPath + "themes/theme" + i + "/select." + imgExt;
-			imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
-			imagesArrayTitles.push(i);
+
+			var options = {};
+			options.order = true;
+			options.titleArray = imagesArrayTitles;
+			options.callback = _onThemeImagesLoaded;
+			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		}
-
-		var options = {};
-		options.order = true;
-		options.titleArray = imagesArrayTitles;
-		options.callback = _onThemeImagesLoaded;
-		V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
-
-		V.Debugging.log("wating for _onThemeImagesLoaded");
 	}
 
 	var _onThemeImagesLoaded = function(){
-		V.Debugging.log("_onThemeImagesLoaded");
-
 		//Add class to title elements and events
 		$("#" + themeScrollbarDivId).find("img.image_barbutton").each(function(index,img){
 			//Add class to title
@@ -95,14 +95,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onClickTheme = function(event){
 		var themeNumber = $(event.target).attr("themeNumber");
-		V.Debugging.log("select Theme " + themeNumber);
 	}
 
 	var _afterCreateThemesScrollbar = function(){
-		V.Debugging.log("Themes Scrollbar created");
+		themeScrollbarCreated = true;
 	}
 
 	var _onInitialTagsReceived = function(data){
+		tagsLoaded = true;
+
 		V.Utils.Loader.stopLoadingInContainer($("#tagBoxIntro"));
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
 

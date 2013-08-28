@@ -169,6 +169,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				},
 				"onClosed" : function(data){
 					$("#tab_pic_thumbnails").hide();
+					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){
+						setTimeout(function(){
+							V.Editor.Settings.displaySettings();
+						},100);
+					};
 					V.Editor.Image.setAddContentMode(V.Constant.NONE);
 				}
 			});
