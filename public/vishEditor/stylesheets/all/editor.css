@@ -103,7 +103,6 @@ p.presentation_details_column_title{
 #presentation_details_title{
 	width: 100%;
 	display: inline;
-	margin-top: 10%;
 }
 
 span.presentation_details_text {
@@ -152,7 +151,7 @@ textarea.presentation_details_textarea {
 	margin-right: 30px;
 }
 
-div.tagBoxIntro{
+div#tagBoxIntro{
 	padding: 0px;
 	color: #7a8fa9;
 	font-family: Arial;
@@ -166,7 +165,7 @@ div.tagBoxIntro{
 	width: 83%;	
 }
 
-div.tagBoxIntro .tagit{
+div#tagBoxIntro .tagit{
 	height: 57px;
 }
 

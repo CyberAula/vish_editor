@@ -27,6 +27,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onDisplaySettings = function(){
 		//Tags
 		if(V.Configuration.getConfiguration()["presentationTags"]){
+			//Loader
+			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
+			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
 
@@ -40,7 +43,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onInitialTagsReceived = function(data){
-		var tagList = $(".tagBoxIntro .tagList");
+		V.Utils.Loader.stopLoadingInContainer($("#tagBoxIntro"));
+		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
+
+		var tagList = $("#tagBoxIntro .tagList");
 		var draftPresentation = V.Editor.getPresentation();
 
 		if ($(tagList).children().length == 0){

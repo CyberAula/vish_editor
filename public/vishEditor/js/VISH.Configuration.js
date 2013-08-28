@@ -21,7 +21,7 @@ VISH.Configuration = (function(V,$,undefined){
 		if(configuration["presentationSettings"]){
 			if(!configuration["presentationTags"]){
 				$(".tagBoxUpload").css("display","none");
-				$(".tagBoxIntro").css("display","none");
+				$("#tagBoxIntro").css("display","none");
 			}
 			if(!configuration["presentationThumbnails"]){
 				$("#thumbnails_in_excursion_details").css("display","none");
