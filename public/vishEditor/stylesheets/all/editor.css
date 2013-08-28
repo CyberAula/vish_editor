@@ -18,7 +18,9 @@ img {
 }
 
 #presentation_details_preview_thumbnail_img {
-	width: 100%;
+	width: 220px;
+	margin-top: -35px;
+	overflow: hidden;
 	background: #EEE;
 	border-bottom: 1px solid #ccc;
 }
@@ -145,6 +147,11 @@ textarea.presentation_details_textarea {
 	outline: 0 none;
 	padding: 5px 7px;
 	z-index: 1000;
+}
+
+#presentation_details_preview_thumbnail {
+	height: 148px;
+	overflow: hidden;
 }
 
 /* Themes in settings */
@@ -2992,7 +2999,8 @@ fieldset[disabled] .btn-link:focus {
 }
 
 #presentation_details_logo {
-width: 107%;
-margin-top: -33px;
-margin-left: -20px;
+	width: 107%;
+	margin-top: -33px;
+	margin-left: -20px;
+	margin-bottom: 74px;
 }
