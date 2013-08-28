@@ -18,11 +18,12 @@ img {
 }
 
 #presentation_details_preview_thumbnail_img {
-	width: 220px;
-	margin-top: -35px;
-	overflow: hidden;
-	background: #EEE;
-	border-bottom: 1px solid #ccc;
+width: 67%;
+height: 100%;
+margin-left: 34px;
+overflow: hidden;
+border-bottom: 1px solid #ccc;
+background: #eee;
 }
 
 #presentation_details_fields_row1{
@@ -76,11 +77,11 @@ img {
 
 .addthumbtitle  {
 	position: absolute;
-	margin-top: -141px;
+	margin-top: -93px;
 	margin-left: 92px;
-	width: 12%;
+	width: 8%;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.5em;
+	font-size: 1.2em;
 	font-weight: 600;
 	color: #A3A3A3;
 }
@@ -150,7 +151,7 @@ textarea.presentation_details_textarea {
 }
 
 #presentation_details_preview_thumbnail {
-	height: 148px;
+	height: 135px;
 	overflow: hidden;
 }
 
