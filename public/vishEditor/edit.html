@@ -403,7 +403,7 @@
 					
 					<div id="pedagogical_options_fields_row1_column1">
 						<div id="language_tag_box">
-							<div id="language_tag_box_text" class="textintro1 textmarginbottom">
+							<div id="language_tag_box_text">
 								<span i18n-key="i.language">Language</span>
 							</div>
 							<select id="language_tag" class="">
@@ -431,7 +431,7 @@
 						<div>
 							<div class="range_text"><span i18n-key="i.age_range">Age range:</span></div>
 							<div class="slider_wrapper">
-								<input type="text" id="age_range" class="slider_range"/>
+								<input type="text" id="age_range" class="slider_range_input"/>
 								<div id="slider-age" class="slider_bar"></div>
 							</div>
 						</div>
@@ -439,8 +439,26 @@
 						<div>
 							<div class="range_text"><span i18n-key="i.difficulty">Difficulty:</span></div>
 							<div class="slider_wrapper">
-								<input type="text" id="difficulty_range" class="slider_range"/>
+								<input type="text" id="difficulty_range" class="slider_range_input"/>
 								<div id="slider-difficulty" class="slider_bar"></div>
+							</div>
+						</div>
+
+						<div id="tlt_wrapper">
+							<div class="range_text"><span i18n-key="i.TLT">Typical Learning Time:</span></div>
+							<div class="tlt_inputs_wrapper">
+								<div class="tlt_input_wrapper">
+									<p class="tlt_input_title" i18n-key="i.Hours"> Hours </p>
+									<input type="number" value="0" min="0" max="23" id="tlt_hours" class="tlt_input"/>
+								</div>
+								<div class="tlt_input_wrapper">
+									<p class="tlt_input_title" i18n-key="i.Minutes"> Minutes </p>
+									<input type="number" value="0" min="0" max="59" id="tlt_minutes" class="tlt_input"/>
+								</div>
+								<div class="tlt_input_wrapper">
+									<p class="tlt_input_title" i18n-key="i.Seconds"> Seconds </p>
+									<input type="number" value="0" min="0" max="59" step="5" id="tlt_seconds" class="tlt_input"/>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -497,11 +515,11 @@
 				</div>
 
 				<div id="pedagogical_options_fields_row2">
-					<div id="educational_objectives_tag_box">
-						<div class="textintro1">
+					<div>
+						<div id="educational_objectives_title">
 							<span i18n-key="i.Educational">Educational Objectives</span>
 						</div>
-						<textarea id='educational_objectives_tag' class="description1 formsizefancy4" name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
+						<textarea id='educational_objectives_textarea' name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
 					</div>
 				</div>
 

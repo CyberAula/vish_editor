@@ -18,9 +18,9 @@ img {
 }
 
 #presentation_details_preview_thumbnail_img {
-width: 100%;
-background: #EEE;
-border-bottom: 1px solid #ccc;
+	width: 100%;
+	background: #EEE;
+	border-bottom: 1px solid #ccc;
 }
 
 #presentation_details_fields_row1{
@@ -29,31 +29,31 @@ border-bottom: 1px solid #ccc;
 }
 
 #presentation_details_fields_row1_column1{
-height: 100%;
-width: 24%;
-padding: 34px;
-float: left;
+	height: 100%;
+	width: 24%;
+	padding: 34px;
+	float: left;
 }
 
 #presentation_details_fields_row1_column2{
-height: 519px;
-width: 494px;
-margin-left: -19px;
-margin-top: 37px;
-float: left;
-border-left: 1px solid #EBEBEB;
-padding-left: 24px;
+	height: 519px;
+	width: 494px;
+	margin-left: -19px;
+	margin-top: 37px;
+	float: left;
+	border-left: 1px solid #EBEBEB;
+	padding-left: 24px;
 }
 
 #presentation_details_fields_row1_column3{
-height: 519px;
-width: 191px;
-float: left;
-margin-left: -47px;
-padding-left: 45px;
-margin-top: 32px;
-margin-bottom: -50px;
-border-left: 1px solid #EBEBEB;
+	height: 519px;
+	width: 191px;
+	float: left;
+	margin-left: -47px;
+	padding-left: 45px;
+	margin-top: 32px;
+	margin-bottom: -50px;
+	border-left: 1px solid #EBEBEB;
 }
 
 #presentation_details_fields_row2{
@@ -62,32 +62,32 @@ border-left: 1px solid #EBEBEB;
 }
 
 #presentation_details_preview_title {
-padding-top: 5px;
-padding-left: 5px;
-padding-bottom: 12px;
-border-bottom: 1px solid #ccc;
-font-family: 'Open Sans', sans-serif;
-font-size: 1.3em;
-font-weight: 400;
-color: #323232;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #ccc;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.3em;
+	font-weight: 400;
+	color: #323232;
 }
 
 .addthumbtitle  {
-position: absolute;
-margin-top: -141px;
-margin-left: 92px;
-width: 12%;
-font-family: 'Open Sans', sans-serif;
-font-size: 1.5em;
-font-weight: 600;
-color: #A3A3A3;
+	position: absolute;
+	margin-top: -141px;
+	margin-left: 92px;
+	width: 12%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #A3A3A3;
 }
 
 #presentation_details_preview_author {
 	padding: 5px;
 	font-family: 'Open Sans', sans-serif;
-font-size: 1em;
-font-weight: 400;
+	font-size: 1em;
+	font-weight: 400;
 	color: #323232;
 }
 
@@ -97,7 +97,7 @@ p.presentation_details_column_title{
 
 #presentation_details_preview{
 	width: 220px;
-border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 #presentation_details_title{
@@ -107,14 +107,14 @@ border: 1px solid #ccc;
 }
 
 span.presentation_details_text {
-font-family: Helvetica;
-font-size: 1.6em;
-color: #ff005d;
+	font-family: Helvetica;
+	font-size: 1.6em;
+	color: #ff005d;
 }
 
 input.presentation_details_input {
 	margin-top: 9px;
-margin-bottom: 17px;
+	margin-bottom: 17px;
 	width: 80%;
 	height: 25px;
 	font-family: Arial;
@@ -149,7 +149,7 @@ textarea.presentation_details_textarea {
 
 #fill_details_later_button {
 	margin-left: 518px;
-margin-right: 30px;
+	margin-right: 30px;
 }
 
 div.tagBoxIntro{
@@ -180,6 +180,112 @@ button.buttonpedagogical {
 	overflow: hidden;
 } 
 
+.pedagogical_title{
+	color: #B6B6B6;
+    font-family: Arial;
+    font-size: 2em;
+    left: 9%;
+    position: relative;
+    margin-bottom: 4%;
+}
+
+#pedagogical_options_fields_row1_column1{
+	float: left;
+	width: 33%;
+	height: 100%;
+}
+
+#pedagogical_options_fields_row1_column2{
+	float: left;
+	width: 33%;
+	height: 100%;
+}
+
+#pedagogical_options_fields_row1_column3{
+	float: left;
+	width: 33%;
+	height: 100%;
+}
+
+#language_tag_box_text{
+	display: inline;
+}
+
+input.slider_range_input {
+	border: 0; 
+	color: #005580; 
+	font-weight: bold;
+}
+
+.range_text{
+	display: inline;
+}
+
+.slider_wrapper{ 
+	display: inline;
+	margin-left: 10px;
+}
+
+.slider_bar{
+	margin-left: 0px;
+	margin-top: 5px;
+	width: 85%;
+}
+
+#subject_tag{
+	height: 171px;
+}
+
+#subject_tag_box{
+	float: left;
+	width: 240px;
+	margin-left: 40px;
+}
+
+#educational_objectives_title{
+	margin-bottom: 10px;
+}
+
+#educational_objectives_textarea{
+	width: 92%;
+	height: 140px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
+.ui-widget-header { border: 1px solid #e78f08; background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
+
+
+#tlt_wrapper{
+	margin-top: 5px;
+}
+
+.tlt_inputs_wrapper{
+	margin-left: 28px;
+}
+
+.tlt_input_wrapper{
+	margin-top: 6px;
+	float: left;
+	width: 23%;
+	text-align: center;
+}
+
+.tlt_input_title{
+	padding: 0;
+	margin: 0;
+}
+
+.tlt_input{
+	width: 60%;
+}
+
+#done_in_pedagogical {
+	margin-top: -17px;
+}
+
 /* Settings End */
 
 
@@ -198,19 +304,19 @@ button.buttonpedagogical {
 }
 
 #bottomside {
-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
--moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
--webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
-position: absolute;
-left: 180px;
-bottom: 0px;
-display: block;
-width: 1018px;
-height: 70px;
-text-align: center;
-background: #EBEBEB;
-border: 1px solid #BBB;
-z-index: 1100;
+	box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	-moz-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	-webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
+	position: absolute;
+	left: 180px;
+	bottom: 0px;
+	display: block;
+	width: 1018px;
+	height: 70px;
+	text-align: center;
+	background: #EBEBEB;
+	border: 1px solid #BBB;
+	z-index: 1100;
 }
 
 #subslide_selected {
@@ -226,17 +332,17 @@ z-index: 1100;
 }
 
 #subslides_list_actions {
-padding-top: 2px;
-margin-top: 0px;
-margin-right: 18px;
-margin-left: -14px;
-padding-left: 12px;
-height: 100%;
-padding-right: 11px;
-width: 12%;
-float: left;
-border-left: 1px solid #ccc;
-border-right: 1px solid #ccc;
+	padding-top: 2px;
+	margin-top: 0px;
+	margin-right: 18px;
+	margin-left: -14px;
+	padding-left: 12px;
+	height: 100%;
+	padding-right: 11px;
+	width: 12%;
+	float: left;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 
 #subslides_list {
@@ -282,9 +388,9 @@ border-right: 1px solid #ccc;
 }	
 
 .presentation_details_column_title {
-font-family: 'Open Sans', sans-serif;
-font-size: 1.7em;
-font-weight: 600;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.7em;
+	font-weight: 600;
 	color: #323232;
 }
 
@@ -343,8 +449,8 @@ font-weight: 600;
 
 #slides_list img.image_barbutton:active {
 	-webkit-box-shadow: 15px 15px 18px rgba(50, 50, 50, 0.17);
--moz-box-shadow:    15px 15px 18px rgba(50, 50, 50, 0.17);
-box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
+	-moz-box-shadow:    15px 15px 18px rgba(50, 50, 50, 0.17);
+	box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
 	cursor: url(https://mail.google.com/mail/images/2/openhand.cur) 8 8, move;
 	 background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
 	 border: none;
@@ -368,18 +474,18 @@ box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
 }
 
 #subslides_list p.ptext_barbutton {
-position: absolute;
-border: 1px solid #666;
-top: 19px;
-padding-top: 7px;
-height: 15px;
-right: -15px;
-background: white;
-padding: 4px;
-font-family: 'Open Sans', sans-serif;
-border-radius: 5px 0px 5px 5px;
-cursor: default;
-pointer-events: none;
+	position: absolute;
+	border: 1px solid #666;
+	top: 19px;
+	padding-top: 7px;
+	height: 15px;
+	right: -15px;
+	background: white;
+	padding: 4px;
+	font-family: 'Open Sans', sans-serif;
+	border-radius: 5px 0px 5px 5px;
+	cursor: default;
+	pointer-events: none;
 }
 
 #subslide_selected img.image_barbutton {
@@ -405,10 +511,9 @@ pointer-events: none;
 }
 
 #subslides_list img.image_barbutton:hover {
-border: 1px solid #357ebd;
-cursor: pointer;
+	border: 1px solid #357ebd;
+	cursor: pointer;
 }
-
 
 section.slides_editor {
 	overflow: hidden;
