@@ -17,27 +17,43 @@ img {
 #presentation_details_fields {
 }
 
+#presentation_details_preview_thumbnail_img {
+width: 100%;
+background: #EEE;
+border-bottom: 1px solid #ccc;
+}
+
 #presentation_details_fields_row1{
 	width: 100%;
 	height: 600px;
 }
 
 #presentation_details_fields_row1_column1{
-	height: 100%;
-	width: 15%;
-	float: left;
+height: 100%;
+width: 24%;
+padding: 34px;
+float: left;
 }
 
 #presentation_details_fields_row1_column2{
-	height: 100%;
-	width: 70%;
-	float: left;
+height: 519px;
+width: 494px;
+margin-left: -19px;
+margin-top: 37px;
+float: left;
+border-left: 1px solid #EBEBEB;
+padding-left: 24px;
 }
 
 #presentation_details_fields_row1_column3{
-	height: 100%;
-	width: 15%;
-	float: left;
+height: 519px;
+width: 191px;
+float: left;
+margin-left: -47px;
+padding-left: 45px;
+margin-top: 32px;
+margin-bottom: -50px;
+border-left: 1px solid #EBEBEB;
 }
 
 #presentation_details_fields_row2{
@@ -45,12 +61,43 @@ img {
 	height: 70px;
 }
 
+#presentation_details_preview_title {
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 12px;
+border-bottom: 1px solid #ccc;
+font-family: 'Open Sans', sans-serif;
+font-size: 1.3em;
+font-weight: 400;
+color: #323232;
+}
+
+.addthumbtitle  {
+position: absolute;
+margin-top: -141px;
+margin-left: 92px;
+width: 12%;
+font-family: 'Open Sans', sans-serif;
+font-size: 1.5em;
+font-weight: 600;
+color: #A3A3A3;
+}
+
+#presentation_details_preview_author {
+	padding: 5px;
+	font-family: 'Open Sans', sans-serif;
+font-size: 1em;
+font-weight: 400;
+	color: #323232;
+}
+
 p.presentation_details_column_title{
 	color: #ccc;
 }
 
 #presentation_details_preview{
-
+	width: 220px;
+border: 1px solid #ccc;
 }
 
 #presentation_details_title{
@@ -60,12 +107,14 @@ p.presentation_details_column_title{
 }
 
 span.presentation_details_text {
-	font-family:Helvetica;
-	font-size:24px;
-	color: #ff005d ;
+font-family: Helvetica;
+font-size: 1.6em;
+color: #ff005d;
 }
 
 input.presentation_details_input {
+	margin-top: 9px;
+margin-bottom: 17px;
 	width: 80%;
 	height: 25px;
 	font-family: Arial;
@@ -83,9 +132,11 @@ input.presentation_details_input {
 }
 
 textarea.presentation_details_textarea {
+	margin-top: 15px;
+	margin-bottom: 15px;
 	display: block;
 	width: 80%;
-	height: 70px;
+	height: 177px;
 	resize: none;
 	border: 1px solid #9B999D;
 	border-radius: 10px 10px 10px 10px;
@@ -94,6 +145,11 @@ textarea.presentation_details_textarea {
 	outline: 0 none;
 	padding: 5px 7px;
 	z-index: 1000;
+}
+
+#fill_details_later_button {
+	margin-left: 518px;
+margin-right: 30px;
 }
 
 div.tagBoxIntro{
@@ -115,6 +171,7 @@ div.tagBoxIntro .tagit{
 }
 
 button.buttonpedagogical {
+	margin-left: -279px;
 	width: 220px;
 	text-align: center;
 }
@@ -223,6 +280,13 @@ border-right: 1px solid #ccc;
 #importButton {
 	font-family: 'Open Sans', sans-serif;
 }	
+
+.presentation_details_column_title {
+font-family: 'Open Sans', sans-serif;
+font-size: 1.7em;
+font-weight: 600;
+	color: #323232;
+}
 
 #slides_list {
 	position: relative;
@@ -2760,4 +2824,10 @@ fieldset[disabled] .btn-link:focus {
 
 .lasticonborder {
 	border-right: none;
+}
+
+#presentation_details_logo {
+width: 107%;
+margin-top: -16px;
+margin-left: -20px;
 }
