@@ -34,6 +34,7 @@ VISH.Constant.UNKNOWN = 'Unknown';
 VISH.Constant.AGE_RANGE_MIN = 4;
 VISH.Constant.AGE_RANGE_MAX = 20;
 VISH.Constant.AGE_RANGE = VISH.Constant.AGE_RANGE_MIN + " - " + VISH.Constant.AGE_RANGE_MAX;
+VISH.Constant.DIFFICULTY = 0;
 
 //Presentation types
 VISH.Constant.PRESENTATION = "presentation";

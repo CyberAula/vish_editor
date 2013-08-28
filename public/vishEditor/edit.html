@@ -395,108 +395,120 @@
 
 			<div id="pedagogical_options_fields" style="display:none">
 				<img id='help_pedagogical_selection' src="/vishEditor/images/icons/helptutorial_circle.png"/>
-				<div id="titlepres2">
-					<p class="titlepresp2">Pedagogical Aspects*</p>
+				<div>
+					<p class="pedagogical_title">Pedagogical Aspects</p>
 				</div>
 
-				<div id="pedagogical_first_row" class="pedagogical_tab_element">
-					<div id="age_range_box">
-						<label for="age_range">
-							<div id="age_range_text" class="textintro1 textmarginbottom"><span i18n-key="i.age_range">Age range:</span></div>
-						</label>
-						<input type="text" id="age_range" style="border: 0; color: #005580; font-weight: bold;" />
-						<div id="slider-range"></div>
-					</div>
-
-					<div id="subject_tag_box">		  
-						<label for="subject_tag">
-							<div id="subject_text" class="textintro1 textmarginbottom">
-								<span i18n-key="i.Subject">Subject</span>
-							</div>
-						</label>
-						<select id="subject_tag" class="" size="4" multiple="multiple">
-							<option value="Unspecified" selected="1">Unespecified</option>
-							<option value="Art">Art</option>
-							<option value="Astronomy">Astronomy</option>
-							<option value="Biology">Biology</option>
-							<option value="Chemistry">Chemistry</option>
-							<option value="Citizenship">Citizenship</option>
-							<option value="Classical Languages">Classical Languages</option>
-							<option value="Cross Curricular education">Cross Curricular education</option>
-							<option value="Culture">Culture</option>
-							<option value="Economics">Economics</option>
-							<option value="Educational administration">Educational administration</option>
-							<option value="Environmental Education">Environmental Education</option>
-							<option value="Ethics">Ethics</option>
-							<option value="European Studies">European Studies</option>
-							<option value="Foreign Languages">Foreign Languages</option>
-							<option value="Geography">Geography</option>
-							<option value="Geology">Geology</option>
-							<option value="Health education">Health education</option>
-							<option value="History">History</option>
-							<option value="Home economics">Home economics</option>
-							<option value="Informatics">Informatics</option>
-							<option value="Language and literature">Language and literature</option>
-							<option value="Law">Law</option>
-							<option value="Mathematics">Mathematics</option>
-							<option value="Media Education">Media Education</option>
-							<option value="Music">Music</option>
-							<option value="Natural Sciences">Natural Sciences</option>
-							<option value="Philosophy">Philosophy</option>
-							<option value="Physical Education">Physical Education</option>
-							<option value="Physics">Physics</option>
-							<option value="Politics">Politics</option>
-							<option value="Pre-school Subjects">Pre-school Subjects</option>
-							<option value="Primary School Subjects">Primary School Subjects</option>
-							<option value="Psychology">Psychology</option>
-							<option value="Religion">Religion</option>
-							<option value="School-community relationship">School-community relationship</option>
-							<option value="Social sciences">Social sciences</option>
-							<option value="Special (needs) Education">Special (needs) Education</option>
-							<option value="Technology">Technology</option>
-						</select>
-					</div>
-
-					<div id="language_tag_box">
-						<label for="language_tag">
-							<div id="language_text" class="textintro1 textmarginbottom">
+				<div id="pedagogical_options_fields_row1">
+					
+					<div id="pedagogical_options_fields_row1_column1">
+						<div id="language_tag_box">
+							<div id="language_tag_box_text" class="textintro1 textmarginbottom">
 								<span i18n-key="i.language">Language</span>
 							</div>
-						</label>
-						<select id="language_tag" class="">
-							<option value="independent" selected="1">(Language independent)</option>
-							<option value="de">Deutsch</option>
-							<option value="en">English</option>
-							<option value="es">Español</option>
-							<option value="fr">Français</option>
-							<option value="it">Italiano</option>
-							<option value="pt">Português</option>
-							<option value="ru">Русский</option>
-							<option value="ot">Others</option>
-						</select>
+							<select id="language_tag" class="">
+								<option value="independent" selected="1">(Language independent)</option>
+								<option value="de">Deutsch</option>
+								<option value="en">English</option>
+								<option value="es">Español</option>
+								<option value="fr">Français</option>
+								<option value="it">Italiano</option>
+								<option value="pt">Português</option>
+								<option value="ru">Русский</option>
+								<option value="ot">Others</option>
+							</select>
+						</div>
+						<div id="tlt_box">
+
+						</div>
+						<div id="difficulty_box">
+
+						</div>
+					</div>
+
+					<div id="pedagogical_options_fields_row1_column2">
+						
+						<div>
+							<div class="range_text"><span i18n-key="i.age_range">Age range:</span></div>
+							<div class="slider_wrapper">
+								<input type="text" id="age_range" class="slider_range"/>
+								<div id="slider-age" class="slider_bar"></div>
+							</div>
+						</div>
+
+						<div>
+							<div class="range_text"><span i18n-key="i.difficulty">Difficulty:</span></div>
+							<div class="slider_wrapper">
+								<input type="text" id="difficulty_range" class="slider_range"/>
+								<div id="slider-difficulty" class="slider_bar"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="pedagogical_options_fields_row1_column3">
+						<div id="subject_tag_box">		  
+							<div id="subject_tag_box_text">
+								<span i18n-key="i.Subject">Subject</span>
+							</div>
+							<select id="subject_tag" class="" size="4" multiple="multiple">
+								<option value="Unspecified" selected="1">Unespecified</option>
+								<option value="Art">Art</option>
+								<option value="Astronomy">Astronomy</option>
+								<option value="Biology">Biology</option>
+								<option value="Chemistry">Chemistry</option>
+								<option value="Citizenship">Citizenship</option>
+								<option value="Classical Languages">Classical Languages</option>
+								<option value="Cross Curricular education">Cross Curricular education</option>
+								<option value="Culture">Culture</option>
+								<option value="Economics">Economics</option>
+								<option value="Educational administration">Educational administration</option>
+								<option value="Environmental Education">Environmental Education</option>
+								<option value="Ethics">Ethics</option>
+								<option value="European Studies">European Studies</option>
+								<option value="Foreign Languages">Foreign Languages</option>
+								<option value="Geography">Geography</option>
+								<option value="Geology">Geology</option>
+								<option value="Health education">Health education</option>
+								<option value="History">History</option>
+								<option value="Home economics">Home economics</option>
+								<option value="Informatics">Informatics</option>
+								<option value="Language and literature">Language and literature</option>
+								<option value="Law">Law</option>
+								<option value="Mathematics">Mathematics</option>
+								<option value="Media Education">Media Education</option>
+								<option value="Music">Music</option>
+								<option value="Natural Sciences">Natural Sciences</option>
+								<option value="Philosophy">Philosophy</option>
+								<option value="Physical Education">Physical Education</option>
+								<option value="Physics">Physics</option>
+								<option value="Politics">Politics</option>
+								<option value="Pre-school Subjects">Pre-school Subjects</option>
+								<option value="Primary School Subjects">Primary School Subjects</option>
+								<option value="Psychology">Psychology</option>
+								<option value="Religion">Religion</option>
+								<option value="School-community relationship">School-community relationship</option>
+								<option value="Social sciences">Social sciences</option>
+								<option value="Special (needs) Education">Special (needs) Education</option>
+								<option value="Technology">Technology</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div id="pedagogical_options_fields_row2">
+					<div id="educational_objectives_tag_box">
+						<div class="textintro1">
+							<span i18n-key="i.Educational">Educational Objectives</span>
+						</div>
+						<textarea id='educational_objectives_tag' class="description1 formsizefancy4" name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
 					</div>
 				</div>
 
-				<div id="educational_objectives_tag_box" class="pedagogical_new_row">
-					<label for="educational_objectives_tag">
-						<div class="textintro1 pedagogical_tab_element">
-							<span i18n-key="i.Educational">Educational Objectives</span>
-						</div>
-					</label>
-					<textarea id='educational_objectives_tag' class="description1 formsizefancy4 pedagogical_tab_element" name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalPlaceholder"></textarea>
+				<div id="pedagogical_options_fields_row3">
+					<button id='done_in_pedagogical' submit='disable' class='button' i18n-key="i.done">Done</button>
 				</div>
 
-				<div id="acquired_competencies_tag_box" class="pedagogical_new_row">
-					<label for="acquired_competencies_tag ">
-						<div class="textintro1 pedagogical_tab_element">
-							<span i18n-key="i.Competencies">Skills & competencies</span>
-						</div>
-					</label>
-					<textarea id='acquired_competencies_tag' class="description1 formsizefancy4 pedagogical_tab_element fixbottom" name="acquired_competencies" placeholder="Skills & competencies that students will acquire and develop by using this excursion..." i18n-key="i.CompetenciesPlaceholder"></textarea>
-				</div>
-
-				<i id="based_on_lom" class="" i18n-key="i.basedOnLOM">*based on LOM standard</i>
-				<button id='done_in_pedagogical' submit='disable' class='button' i18n-key="i.done">Done</button>
 			</div>
 
 		</form>

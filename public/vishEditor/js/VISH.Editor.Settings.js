@@ -92,6 +92,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//now the pedagogical fields if any
 		draftPresentation.age_range = $("#age_range").val();
+		draftPresentation.difficulty = $("#difficulty_range").attr("difficulty");
 		draftPresentation.subject = $("#subject_tag").val();
 		draftPresentation.language = $("#language_tag").val();
 		draftPresentation.educational_objectives = $("#educational_objectives_tag").val();
