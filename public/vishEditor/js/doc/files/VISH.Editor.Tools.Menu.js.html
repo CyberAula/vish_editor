@@ -124,7 +124,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					}
 				});
 			});
-			_initSettings();
 
 			_initialized = true;
 		}
@@ -151,155 +150,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$(&quot;#menuDisabled&quot;).attr(&quot;id&quot;,&quot;menu&quot;);
 	}
 
-
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; SETTINGS
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-	var _initSettings = function(){
-		if ((V.Configuration.getConfiguration()[&quot;presentationSettings&quot;]) &amp;&amp; (!V.Editor.hasInitialPresentation())){
-			$(&quot;a#edit_presentation_details&quot;).fancybox({
-				&#x27;autoDimensions&#x27; : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;: 800,
-				&#x27;height&#x27;: 660,
-				&#x27;padding&#x27;: 0,
-				&#x27;hideOnOverlayClick&#x27;: false,
-				&#x27;hideOnContentClick&#x27;: false,
-				&#x27;showCloseButton&#x27;: false
-			});
-			displaySettings();
-		} else {
-			$(&quot;a#edit_presentation_details&quot;).fancybox({
-				&#x27;autoDimensions&#x27; : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;: 800,
-				&#x27;height&#x27;: 660,
-				&#x27;padding&#x27;: 0,
-				&#x27;hideOnOverlayClick&#x27;: false,
-				&#x27;hideOnContentClick&#x27;: false,
-				&#x27;showCloseButton&#x27;: true
-			});
-		}
-	}
-
-
-	var displaySettings = function(){
-		$(&quot;a#edit_presentation_details&quot;).trigger(&#x27;click&#x27;);
-	}
-
-
-	var firstSettingsCall = true;
-
-	var onSettings = function(){
-		
-		if(firstSettingsCall){
-			$(&quot;a#edit_presentation_details&quot;).fancybox({
-				&#x27;autoDimensions&#x27; : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;: 800,
-				&#x27;height&#x27;: 660,
-				&#x27;padding&#x27;: 0,
-				&#x27;hideOnOverlayClick&#x27;: false,
-				&#x27;hideOnContentClick&#x27;: false,
-				&#x27;showCloseButton&#x27;: true
-			});
-		}
-
-		if((V.Configuration.getConfiguration()[&quot;presentationTags&quot;])&amp;&amp;(firstSettingsCall)){
-			V.Editor.API.requestTags(_onInitialTagsReceived);
-			var draftPresentation = V.Editor.getPresentation();
-			if(draftPresentation &amp;&amp; draftPresentation.avatar){
-				V.Editor.AvatarPicker.onLoadPresentationDetails(draftPresentation.avatar);
-			} else {
-				V.Editor.AvatarPicker.onLoadPresentationDetails(null);
-			}
-		}
-	}
-
-	var _onInitialTagsReceived = function(data){
-		var tagList = $(&quot;.tagBoxIntro .tagList&quot;);
-		var draftPresentation = V.Editor.getPresentation();
-
-		if ($(tagList).children().length == 0){
-			if(!draftPresentation){
-				&#x2F;&#x2F; &#x2F;&#x2F;Insert the two first tags. &#x2F;&#x2F;DEPRECATED
-				&#x2F;&#x2F; $.each(data, function(index, tag) {
-				&#x2F;&#x2F; 	if(index==2){
-				&#x2F;&#x2F; 		return false; &#x2F;&#x2F;break the bucle
-				&#x2F;&#x2F; 	}
-				&#x2F;&#x2F; 	$(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
-				&#x2F;&#x2F; });
-			} else {	
-				if(draftPresentation.tags){
-					&#x2F;&#x2F;Insert draftPresentation tags
-					$.each(draftPresentation.tags, function(index, tag) {
-						$(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
-					});
-				}
-			}
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: V.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
-		}
-	}
-
-
-	&#x2F;**
-	 * function called when the user clicks on the save button
-	 * in the initial presentation details fancybox to save
-	 * the data in order to be stored at the end in the JSON file   
-	 *&#x2F;
-	var onSavePresentationDetailsButtonClicked = function(event){
-		event.preventDefault();
-		
-		if($(&#x27;#presentation_title&#x27;).val().length &lt; 1) {
-			$(&#x27;#presentation_details_error&#x27;).slideDown(&quot;slow&quot;);
-			$(&#x27;#presentation_details_error&#x27;).show();
-			return false;
-		}
-		
-		var draftPresentation = V.Editor.getPresentation();
-
-		if(!draftPresentation){
-			draftPresentation = {};
-		}
-
-		draftPresentation.title = $(&#x27;#presentation_title&#x27;).val();
-		draftPresentation.description = $(&#x27;#presentation_description&#x27;).val();
-		draftPresentation.avatar = $(&#x27;#presentation_avatar&#x27;).val();
-		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
-
-		&#x2F;&#x2F;now the pedagogical fields if any
-		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
-		draftPresentation.subject = $(&quot;#subject_tag&quot;).val();
-		draftPresentation.language = $(&quot;#language_tag&quot;).val();
-		draftPresentation.educational_objectives = $(&quot;#educational_objectives_tag&quot;).val();
-		draftPresentation.adquired_competencies = $(&quot;#acquired_competencies_tag&quot;).val();
-
-		V.Editor.setPresentation(draftPresentation);
-
-		$(&#x27;#presentation_details_error&#x27;).hide();
-		$.fancybox.close();
-	};
-
-
-	&#x2F;**
-	 * function called when the user clicks on the pedagogical options button
-	 *&#x2F;
-	 var onPedagogicalButtonClicked = function(event){
-	 	event.preventDefault();
-	 	$(&quot;#presentation_details_fields&quot;).slideUp();
-	 	$(&quot;#pedagogical_options_fields&quot;).slideDown();
-	 };
-
-	 &#x2F;**
-	 * function called when the user clicks on the done button in the pedagogical options panel
-	 *&#x2F;
-	 var onDonePedagogicalButtonClicked = function(event){
-	 	event.preventDefault();
-	 	$(&quot;#pedagogical_options_fields&quot;).slideUp();
-	 	$(&quot;#presentation_details_fields&quot;).slideDown();
-	 };
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; SAVE
@@ -456,7 +306,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		init							: init,
 		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
-		displaySettings					: displaySettings,
 		insertPresentation				: insertPresentation,
 		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
@@ -464,10 +313,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,
-		onSettings						: onSettings,
-		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
-		onPedagogicalButtonClicked   	: onPedagogicalButtonClicked,
-		onDonePedagogicalButtonClicked 	: onDonePedagogicalButtonClicked,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked             : onSaveButtonClicked,
 		preview 						: preview,

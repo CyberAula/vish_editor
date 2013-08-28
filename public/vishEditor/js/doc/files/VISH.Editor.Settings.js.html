@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Editor.Settings.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Editor.Settings.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+VISH.Editor.Settings = (function(V,$,undefined){
+
+	var themeScrollbarDivId = &quot;scrollbar_themes_list&quot;;
+
+	var init = function(){
+	};
+
+	var displaySettings = function(){
+		&#x2F;&#x2F; fancybox to edit presentation settings
+		$(&quot;a#edit_presentation_details&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;autoScale&#x27; : true,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;width&#x27;: 1000,
+			&#x27;height&#x27;: 700,
+			&#x27;padding&#x27;: 0,
+			&#x27;hideOnOverlayClick&#x27;: false,
+			&#x27;hideOnContentClick&#x27;: false,
+			&#x27;showCloseButton&#x27;: true,
+			&quot;onComplete&quot;  : function(data) {
+				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
+				_onDisplaySettings();
+			}
+		});
+
+		$(&quot;a#edit_presentation_details&quot;).trigger(&#x27;click&#x27;);
+	}
+
+	var _onDisplaySettings = function(){
+		&#x2F;&#x2F;Avatar
+		var presentation = V.Editor.getPresentation();
+		if(presentation &amp;&amp; presentation.avatar){
+			_addThumbnail(presentation.avatar);
+		}
+
+		&#x2F;&#x2F;Tags
+		if(V.Configuration.getConfiguration()[&quot;presentationTags&quot;]){
+			$(&quot;#tagBoxIntro&quot;).attr(&quot;HTMLcontent&quot;, $(&quot;#tagBoxIntro&quot;).html());
+			V.Utils.Loader.startLoadingInContainer($(&quot;#tagBoxIntro&quot;),{style: &quot;loading_tags&quot;});
+			V.Editor.API.requestTags(_onInitialTagsReceived);
+		}
+
+		&#x2F;&#x2F;Select Theme scrollbar
+		V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
+		$(&quot;#&quot; + themeScrollbarDivId).hide();
+
+		&#x2F;&#x2F;Generate thumbnail images
+		var imagesArray = [];
+		var imagesArrayTitles = [];
+
+		for(var i=1; i&lt;13; i++){
+			var imgExt = &quot;png&quot;;
+			if(i==12){
+				imgExt = &quot;gif&quot;;
+			}
+			var srcURL = V.ImagesPath + &quot;themes&#x2F;theme&quot; + i + &quot;&#x2F;select.&quot; + imgExt;
+			imagesArray.push($(&quot;&lt;img themeNumber=&#x27;&quot;+ i +&quot;&#x27; class=&#x27;image_barbutton&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
+			imagesArrayTitles.push(i);
+		}
+
+		var options = {};
+		options.order = true;
+		options.titleArray = imagesArrayTitles;
+		options.callback = _onThemeImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
+
+		V.Debugging.log(&quot;wating for _onThemeImagesLoaded&quot;);
+	}
+
+	var _onThemeImagesLoaded = function(){
+		V.Debugging.log(&quot;_onThemeImagesLoaded&quot;);
+
+		&#x2F;&#x2F;Add class to title elements and events
+		$(&quot;#&quot; + themeScrollbarDivId).find(&quot;img.image_barbutton&quot;).each(function(index,img){
+			&#x2F;&#x2F;Add class to title
+			var imgContainer = $(img).parent();
+			$(imgContainer).addClass(&quot;wrapper_barbutton&quot;);
+			var p = $(imgContainer).find(&quot;p&quot;);
+			$(p).addClass(&quot;ptext_barbutton&quot;);
+
+			&#x2F;&#x2F;Add events to imgs
+			$(img).click(function(event){
+				_onClickTheme(event);
+			});
+		});
+
+		var options = new Array();
+		options.scrollTop = true;
+		options.callback = _afterCreateThemesScrollbar;
+
+		&#x2F;&#x2F;Create scrollbar
+		$(&quot;#&quot; + themeScrollbarDivId).show();
+		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
+	}
+
+	var _onClickTheme = function(event){
+		var themeNumber = $(event.target).attr(&quot;themeNumber&quot;);
+		V.Debugging.log(&quot;select Theme &quot; + themeNumber);
+	}
+
+	var _afterCreateThemesScrollbar = function(){
+		V.Debugging.log(&quot;Themes Scrollbar created&quot;);
+	}
+
+	var _onInitialTagsReceived = function(data){
+		V.Utils.Loader.stopLoadingInContainer($(&quot;#tagBoxIntro&quot;));
+		$(&quot;#tagBoxIntro&quot;).html($(&quot;#tagBoxIntro&quot;).attr(&quot;HTMLcontent&quot;));
+
+		var tagList = $(&quot;#tagBoxIntro .tagList&quot;);
+		var draftPresentation = V.Editor.getPresentation();
+
+		if ($(tagList).children().length == 0){
+			if(!draftPresentation){
+				&#x2F;&#x2F; &#x2F;&#x2F;Insert the two first tags. &#x2F;&#x2F;DEPRECATED
+				&#x2F;&#x2F; $.each(data, function(index, tag) {
+				&#x2F;&#x2F; 	if(index==2){
+				&#x2F;&#x2F; 		return false; &#x2F;&#x2F;break the bucle
+				&#x2F;&#x2F; 	}
+				&#x2F;&#x2F; 	$(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
+				&#x2F;&#x2F; });
+			} else {
+				if(draftPresentation.tags){
+					&#x2F;&#x2F;Insert draftPresentation tags
+					$.each(draftPresentation.tags, function(index, tag) {
+						$(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
+					});
+				}
+			}
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
+			watermarkAllowMessage: V.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
+		}
+	}
+
+	var onChangeThumbnailClicked = function(){
+		$(&quot;#hidden_button_to_uploadThumbnail&quot;).trigger(&quot;click&quot;);
+	}
+
+	var onThumbnailSelected = function(thumbnail_url){
+		V.Editor.Settings.displaySettings(); &#x2F;&#x2F;Hide previous fancybox
+		_addThumbnail(thumbnail_url);
+	}
+
+	var _addThumbnail = function(thumbnail_url){
+		var thumbnail_wrapper = $(&quot;#presentation_details_preview_thumbnail&quot;);
+		$(&quot;#presentation_details_preview_thumbnail_img&quot;).attr(&quot;src&quot;,thumbnail_url);
+		$(thumbnail_wrapper).find(&quot;p.addthumbtitle&quot;).hide();
+	}
+
+	&#x2F;**
+	 * function called when the user clicks on the save button
+	 * in the initial presentation details fancybox to save
+	 * the data in order to be stored at the end in the JSON file   
+	 *&#x2F;
+	var onSavePresentationDetailsButtonClicked = function(event){
+		event.preventDefault();
+
+		&#x2F;&#x2F; TODO: Validate	
+		&#x2F;&#x2F; if($(&#x27;#presentation_title&#x27;).val().length &lt; 1) {
+		&#x2F;&#x2F; 	return false;
+		&#x2F;&#x2F; }
+		
+		var draftPresentation = V.Editor.getPresentation();
+
+		if(!draftPresentation){
+			draftPresentation = {};
+		}
+
+		draftPresentation.title = $(&#x27;#presentation_title&#x27;).val();
+		draftPresentation.description = $(&#x27;#presentation_description&#x27;).val();
+		draftPresentation.avatar = $(&#x27;#presentation_avatar&#x27;).val();
+		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
+
+		&#x2F;&#x2F;now the pedagogical fields if any
+		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
+		draftPresentation.difficulty = $(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;);
+		draftPresentation.subject = $(&quot;#subject_tag&quot;).val();
+		draftPresentation.language = $(&quot;#language_tag&quot;).val();
+		draftPresentation.educational_objectives = $(&quot;#educational_objectives_tag&quot;).val();
+		draftPresentation.adquired_competencies = $(&quot;#acquired_competencies_tag&quot;).val();
+
+		V.Editor.setPresentation(draftPresentation);
+
+		$.fancybox.close();
+	};
+
+
+	&#x2F;**
+	 * function called when the user clicks on the pedagogical options button
+	 *&#x2F;
+	 var onPedagogicalButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$(&quot;#presentation_details_fields&quot;).slideUp();
+	 	$(&quot;#pedagogical_options_fields&quot;).slideDown();
+	 };
+
+	 &#x2F;**
+	 * function called when the user clicks on the done button in the pedagogical options panel
+	 *&#x2F;
+	 var onDonePedagogicalButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$(&quot;#pedagogical_options_fields&quot;).slideUp();
+	 	$(&quot;#presentation_details_fields&quot;).slideDown();
+	 };
+
+	return {
+		init									: init,
+		displaySettings							: displaySettings,
+		onChangeThumbnailClicked				: onChangeThumbnailClicked,
+		onThumbnailSelected						: onThumbnailSelected,
+		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
+		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
+		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
+	};
+
+}) (VISH, jQuery);
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

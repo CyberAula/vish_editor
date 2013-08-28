@@ -107,12 +107,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
-			$(document).on(&#x27;click&#x27;, &#x27;#subslide_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
-			$(document).on(&#x27;click&#x27;, &#x27;#edit_presentation_details&#x27;, V.Editor.Tools.Menu.onSettings); 
-			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Tools.Menu.onPedagogicalButtonClicked);
-			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Tools.Menu.onSavePresentationDetailsButtonClicked);
-			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, V.Editor.Tools.Menu.onDonePedagogicalButtonClicked);
+
+			$(document).on(&#x27;click&#x27;, &#x27;#subslide_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
+			
+			$(document).on(&#x27;click&#x27;, &#x27;#presentation_details_preview_thumbnail_img&#x27;, V.Editor.Settings.onChangeThumbnailClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Settings.onPedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#done_in_pedagogical&#x27;, V.Editor.Settings.onDonePedagogicalButtonClicked);
+			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 
 			$(document).on(&#x27;click&#x27;,&#x27;div.slidethumb&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
@@ -137,7 +139,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			&#x2F;&#x2F;Fancyboxes
 
-			&#x2F;&#x2F; fancybox to create a new slide	
+			&#x2F;&#x2F; fancybox to create a new slide
 			$(&quot;a#addSlideFancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -239,6 +241,24 @@ VISH.Editor.Events = (function(V,$,undefined){
 					V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
 				},
 				&quot;onClosed&quot;  : function(data) {
+					V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				}
+			});
+
+			&#x2F;&#x2F;Fancybox to select presentation Thumbnail
+			$(&quot;#hidden_button_to_uploadThumbnail&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;width&#x27;: 800,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;: 600,
+				&#x27;padding&#x27; : 0,
+				&quot;onStart&quot;  : function(data) {						
+					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
+					$(&quot;#tab_pic_thumbnails&quot;).show();
+					V.Editor.Utils.loadTab(&#x27;tab_pic_thumbnails&#x27;);
+				},
+				&quot;onClosed&quot; : function(data){
+					$(&quot;#tab_pic_thumbnails&quot;).hide();
 					V.Editor.Image.setAddContentMode(V.Constant.NONE);
 				}
 			});

@@ -179,8 +179,8 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
-		&#x2F;&#x2F;init age range slider, this has to be done BEFORE V.Editor.Renderer.init(presentation);
-		$(&quot;#slider-range&quot;).slider({
+		&#x2F;&#x2F;init age sliders, this has to be done BEFORE V.Editor.Renderer.init(presentation);
+		$(&quot;#slider-age&quot;).slider({
 			range: true,
 			min: 0,
 			max: 30,
@@ -190,6 +190,26 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		});
 		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
+
+		var LOM_difficulty = new Array();
+		LOM_difficulty[0] = &quot;unspecified&quot;;
+		LOM_difficulty[1] = &quot;very easy&quot;;
+		LOM_difficulty[2] = &quot;easy&quot;;
+		LOM_difficulty[3] = &quot;medium&quot;;
+		LOM_difficulty[4] = &quot;difficult&quot;;
+		LOM_difficulty[5] = &quot;very difficult&quot;;
+
+		$(&quot;#slider-difficulty&quot;).slider({
+			min: 0,
+			max: 5,
+			value: [ V.Constant.DIFFICULTY ],
+			slide: function( event, ui ) {
+				$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,ui.value);
+				$(&quot;#difficulty_range&quot;).val(LOM_difficulty[ui.value]);
+			}
+		}); 
+		$( &quot;#difficulty_range&quot; ).attr( &quot;difficulty&quot; , V.Constant.DIFFICULTY);
+		$(&quot;#difficulty_range&quot;).val(LOM_difficulty[V.Constant.DIFFICULTY]);
 
 
 		&#x2F;&#x2F;If we have to edit
@@ -227,9 +247,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
-		V.Editor.AvatarPicker.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
+		V.Editor.Settings.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();
@@ -247,6 +267,11 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
+		}
+
+		&#x2F;&#x2F;Init settings
+		if ((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!V.Editor.hasInitialPresentation())){
+			V.Editor.Settings.displaySettings();
 		}
 
 		&#x2F;&#x2F;Try to win focus
@@ -630,13 +655,13 @@ VISH.Editor = (function(V,$,undefined){
 			var slide = {};
 
 			if(!V.Editor.Slideset.isSlideset(slideDOM)){
-				slide = _saveStandardSlide(slideDOM,presentation);
+				slide = _saveStandardSlide(slideDOM,presentation,false);
 			} else {
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
 				slide = slidesetModule.getSlideHeader(slideDOM);
 				&#x2F;&#x2F;Save subslides
 				$(slideDOM).find(&quot;article&quot;).each(function(index,subslideDOM){
-					var subslide = _saveStandardSlide(subslideDOM,presentation);
+					var subslide = _saveStandardSlide(subslideDOM,presentation,true);
 					slide.slides.push(subslide);
 				});
 			}
@@ -657,7 +682,7 @@ VISH.Editor = (function(V,$,undefined){
 		return savedPresentation;
 	};
 	
-	var _saveStandardSlide = function(slideDOM,presentation){
+	var _saveStandardSlide = function(slideDOM,presentation,isSubslide){
 		slide = {};
 		slide.id = $(slideDOM).attr(&#x27;id&#x27;);
 		slide.type = $(slideDOM).attr(&#x27;type&#x27;);
@@ -665,6 +690,9 @@ VISH.Editor = (function(V,$,undefined){
 		slide.elements = [];
 
 		&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
+		if(isSubslide){
+			$(slideDOM).parent().addClass(&quot;temp_shown&quot;);
+		}
 		$(slideDOM).addClass(&quot;temp_shown&quot;);
 
 		$(slideDOM).find(&#x27;div&#x27;).each(function(i,div){
@@ -772,7 +800,11 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
-		$(slideDOM).removeClass(&quot;temp_shown&quot;);	
+		if(isSubslide){
+			$(slideDOM).parent().removeClass(&quot;temp_shown&quot;);
+		}
+		$(slideDOM).removeClass(&quot;temp_shown&quot;);
+		
 		return slide;
 	}
 

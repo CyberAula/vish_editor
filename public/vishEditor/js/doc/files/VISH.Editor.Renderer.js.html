@@ -103,8 +103,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		if(presentation.age_range){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
 			var end_range = presentation.age_range.substring(presentation.age_range.indexOf(&quot;-&quot;)+2);
-			$(&quot;#slider-range&quot; ).slider( &quot;values&quot;, [start_range, end_range] );
-			$(&quot;#age_range&quot;).val(start_range + &quot; - &quot; + end_range);
+			$(&quot;#slider-age&quot; ).slider( &quot;values&quot;, [start_range, end_range] );
 			$(&quot;#age_range&quot;).val(presentation.age_range);
 		} else {
 			$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);

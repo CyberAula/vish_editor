@@ -17,8 +17,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
-			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
+
+			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
+			
+			$(document).on('click', '#presentation_details_preview_thumbnail_img', V.Editor.Settings.onChangeThumbnailClicked);
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
@@ -46,7 +49,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			//Fancyboxes
 
-			// fancybox to create a new slide	
+			// fancybox to create a new slide
 			$("a#addSlideFancybox").fancybox({
 				'autoDimensions' : false,
 				'scrolling': 'no',
@@ -148,6 +151,24 @@ VISH.Editor.Events = (function(V,$,undefined){
 					V.Editor.Utils.loadTab('tab_pic_from_url');
 				},
 				"onClosed"  : function(data) {
+					V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				}
+			});
+
+			//Fancybox to select presentation Thumbnail
+			$("#hidden_button_to_uploadThumbnail").fancybox({
+				'autoDimensions' : false,
+				'width': 800,
+				'scrolling': 'no',
+				'height': 600,
+				'padding' : 0,
+				"onStart"  : function(data) {						
+					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
+					$("#tab_pic_thumbnails").show();
+					V.Editor.Utils.loadTab('tab_pic_thumbnails');
+				},
+				"onClosed" : function(data){
+					$("#tab_pic_thumbnails").hide();
 					V.Editor.Image.setAddContentMode(V.Constant.NONE);
 				}
 			});

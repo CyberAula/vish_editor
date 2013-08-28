@@ -171,6 +171,12 @@ VISH.Utils = (function(V,undefined){
 
 		presentation = _fixTypes(presentation);
 
+		&#x2F;&#x2F;Fix old slidesets
+		if(V.Slides.isSlideset(presentation.type)){
+			&#x2F;&#x2F;Force presentation standard
+			presentation.type = V.Constant.PRESENTATION;
+		}
+
 		if(!_checkIds(presentation)){
 			presentation = _overwriteIds(presentation);
 			&#x2F;&#x2F; return null;

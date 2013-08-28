@@ -30,9 +30,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//Avatar
 		var presentation = V.Editor.getPresentation();
 		if(presentation && presentation.avatar){
-			V.Editor.AvatarPicker.onLoadPresentationDetails(presentation.avatar);
-		} else {
-			V.Editor.AvatarPicker.onLoadPresentationDetails(null);
+			_addThumbnail(presentation.avatar);
 		}
 
 		//Tags
@@ -50,8 +48,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var imagesArray = [];
 		var imagesArrayTitles = [];
 
-		for(var i=1; i<11; i++){
-			var srcURL = V.ImagesPath + "themes/theme" + i + "/select.png";
+		for(var i=1; i<13; i++){
+			var imgExt = "png";
+			if(i==12){
+				imgExt = "gif";
+			}
+			var srcURL = V.ImagesPath + "themes/theme" + i + "/select." + imgExt;
 			imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
 			imagesArrayTitles.push(i);
 		}
@@ -129,6 +131,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	}
 
+	var onChangeThumbnailClicked = function(){
+		$("#hidden_button_to_uploadThumbnail").trigger("click");
+	}
+
+	var onThumbnailSelected = function(thumbnail_url){
+		V.Editor.Settings.displaySettings(); //Hide previous fancybox
+		_addThumbnail(thumbnail_url);
+	}
+
+	var _addThumbnail = function(thumbnail_url){
+		var thumbnail_wrapper = $("#presentation_details_preview_thumbnail");
+		$("#presentation_details_preview_thumbnail_img").attr("src",thumbnail_url);
+		$(thumbnail_wrapper).find("p.addthumbtitle").hide();
+	}
 
 	/**
 	 * function called when the user clicks on the save button
@@ -189,6 +205,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	return {
 		init									: init,
 		displaySettings							: displaySettings,
+		onChangeThumbnailClicked				: onChangeThumbnailClicked,
+		onThumbnailSelected						: onThumbnailSelected,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
