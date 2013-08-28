@@ -185,16 +185,16 @@ button.buttonpedagogical {
 
 .pedagogical_title{
 	color: #B6B6B6;
-    font-family: Arial;
-    font-size: 2em;
-    left: 9%;
-    position: relative;
-    margin-bottom: 4%;
+	font-family: Arial;
+	font-size: 2em;
+	left: 35px;
+	position: relative;
+	margin-bottom: 4%;
 }
 
 #pedagogical_options_fields_row1_column1{
 	float: left;
-	width: 29%;
+	width: 303px;
 	height: 165px;
 	margin-left: 33px;
 }
@@ -204,7 +204,9 @@ button.buttonpedagogical {
 	width: 321px;
 	height: 246px;
 	border-left: 1px solid #ebebeb;
-	padding-left: 33px;
+	padding-left: 32px;
+	margin-left: 16px;
+	margin-right: -19px;
 }
 
 #pedagogical_options_fields_row1_column3{
@@ -216,6 +218,15 @@ button.buttonpedagogical {
 
 #language_tag_box_text{
 	display: inline;
+}
+
+#context_tag_box_text{
+	display: inline;
+}
+
+.content_tag_box_class {
+	margin-top: 42px;
+	margin-left: 10px;
 }
 
 input.slider_range_input {
@@ -241,6 +252,16 @@ input.slider_range_input {
 
 #subject_tag{
 	height: 171px;
+}
+
+.ped_box_fields {
+	float: right;
+	margin-right: 16px;
+}
+
+.ped_box_fields2 {
+	float: right;
+	margin-right: -19px;
 }
 
 #subject_tag_box{
