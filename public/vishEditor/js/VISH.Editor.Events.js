@@ -21,6 +21,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			
+			//Settings events
 			$(document).on('click', '#presentation_details_preview_thumbnail', V.Editor.Settings.onChangeThumbnailClicked);
 			$(document).on('hover', '#presentation_details_preview_thumbnail', function(event){
 				var thumbnail = $("#presentation_details_preview_thumbnail_img");
@@ -33,21 +34,16 @@ VISH.Editor.Events = (function(V,$,undefined){
 					$("#editthumb").slideUp();
 				}
 			});
-
-			$(document).on('keyup', '#presentation_details_input_title', function(event){
-				var input = $("#presentation_details_input_title");
-				var span = $("#presentation_details_preview_addtitle").find("span");
-				var title = $("#presentation_details_input_title").val();
-				if(title.trim() != ""){
-					$(span).html($("#presentation_details_input_title").val());
-				} else {
-					$(span).html("add a title");
-				}
-			});
-
+			$(document).on('keyup', '#presentation_details_input_title', V.Editor.Settings.onKeyUpOnTitle);
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
+			$(document).on('click', '#fill_details_later_button', function(){
+				event.preventDefault();
+				$.fancybox.close();
+			});
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
+			
+
 
 			$(document).on('click','div.slidethumb', V.Editor.onSlideThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);

@@ -5,7 +5,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var themeScrollbarCreated = false;
 
 	//Metadata
-	var presentationAvatar;
+	var presentationThumbnail;
 
 
 	var init = function(){
@@ -56,7 +56,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			'padding': 0,
 			'hideOnOverlayClick': false,
 			'hideOnContentClick': false,
-			'showCloseButton': true,
+			'showCloseButton': false,
 			"onComplete"  : function(data) {
 				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
@@ -136,7 +136,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//TODO: Pedagogical metadata...
-		//Sliders are initialized in VISH.Editor.js
+		//Sliders are initialized in the init() method.
+
+
+		//Check for enable continue button
+		_checkIfEnableContinueButton();
 	}
 
 	var _onThemeImagesLoaded = function(){
@@ -218,6 +222,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var onThumbnailSelected = function(thumbnail_url){
 		V.Editor.Settings.displaySettings(); //Hide previous fancybox
 		_addThumbnail(thumbnail_url);
+		_checkIfEnableContinueButton();
 	}
 
 	var _addThumbnail = function(thumbnail_url){
@@ -226,7 +231,49 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$(thumbnail).removeClass("addThumbnailPlus");
 		$(thumbnail).attr("src",thumbnail_url);
 		$(thumbnail_wrapper).find("p.addthumbtitle").hide();
-		presentationAvatar = thumbnail_url;
+		presentationThumbnail = thumbnail_url;
+	}
+
+	var onKeyUpOnTitle = function(event){
+		var input = $("#presentation_details_input_title");
+		var span = $("#presentation_details_preview_addtitle").find("span");
+		var title = $("#presentation_details_input_title").val();
+		if(title.trim() != ""){
+			$(span).html($("#presentation_details_input_title").val());
+		} else {
+			$(span).html("add a title");
+		}
+		_checkIfEnableContinueButton();
+	}
+
+	var _checkIfEnableContinueButton = function(){
+		var enable = _checkMandatoryFields();
+		if(enable){
+			$("#save_presentation_details").removeClass("buttonDisabledOnSettings");
+			$("#save_presentation_details").removeAttr("disabled");
+			$("#save_presentation_details").attr("disabledTitle",$("#save_presentation_details").attr("title"));
+			$("#save_presentation_details").removeAttr("title");
+		} else {
+			if(!$("#save_presentation_details").attr("title")){
+				$("#save_presentation_details").attr("title",$("#save_presentation_details").attr("disabledTitle"));
+			}
+			$("#save_presentation_details").addClass("buttonDisabledOnSettings");
+			$("#save_presentation_details").attr("disabled","true");
+		}
+	}
+
+	var _checkMandatoryFields = function(){
+		//Check that mandatory params are filled appropiately.
+		var title = $('#presentation_details_input_title').val();
+		var thumbnailURL = presentationThumbnail;
+
+		if((typeof title != "string")||(title.trim()=="")){
+			return false;
+		}
+		if((typeof thumbnailURL != "string")||(thumbnailURL.trim()=="")){
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -236,6 +283,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 */
 	var onSavePresentationDetailsButtonClicked = function(event){
 		event.preventDefault();
+
+		//Check if is disabled
+		if($(event.target).hasClass("buttonDisabledOnSettings")){
+			return;
+		}
 
 		// TODO: Validate	
 		// if($('#presentation_title').val().length < 1) {
@@ -250,8 +302,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		draftPresentation.title = $('#presentation_details_input_title').val();
 		draftPresentation.description = $('#presentation_details_textarea').val();
-		if(presentationAvatar){
-			draftPresentation.avatar = presentationAvatar;
+		if(presentationThumbnail){
+			draftPresentation.avatar = presentationThumbnail;
 		}
 		draftPresentation.author = $("#author_span_in_preview").html();
 		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
@@ -298,6 +350,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
 		selectTheme								: selectTheme,
+		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked

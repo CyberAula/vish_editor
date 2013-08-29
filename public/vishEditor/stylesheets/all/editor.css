@@ -44,11 +44,16 @@ img {
 }
 
 img.addThumbnailPlus{
+	opacity: 0.7 !important;
 	background: white !important;
 	margin-left: -4px;
 	-moz-border-radius: 0px !important;
 	-webkit-border-radius: 0px !important;
 	border-radius: 0px !important;
+}
+
+img.addThumbnailPlus:hover {
+	opacity: 1 !important;
 }
 
 #editthumb {
@@ -179,7 +184,7 @@ span.presentation_details_text {
 }
 
 input.presentation_details_input {
-	margin-top: 9px;
+	margin-top: 7px;
 	margin-bottom: 17px;
 	width: 80%;
 	height: 25px;
@@ -198,7 +203,7 @@ input.presentation_details_input {
 }
 
 textarea#presentation_details_textarea {
-	margin-top: 15px;
+	margin-top: 7px;
 	margin-bottom: 15px;
 	display: block;
 	width: 80%;
@@ -221,6 +226,16 @@ textarea#presentation_details_textarea {
 	cursor: pointer;
 	background: #eee;
 	border-bottom: 1px solid #ccc;
+}
+
+.buttonDisabledOnSettings{
+	background: #ccc !important;
+	cursor: default !important;
+}
+
+.buttonDisabledOnSettings:hover {
+	opacity: 0.6 !important;
+	text-shadow: none !important;
 }
 
 /* Themes in settings */
@@ -273,7 +288,8 @@ div#tagBoxIntro{
 	border-radius: 5px;
 	background: #fff;
 	max-height: 45%;
-	width: 83%;	
+	width: 83%;
+	margin-top: -7px;	
 }
 
 div#tagBoxIntro .tagit{
