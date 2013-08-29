@@ -34,6 +34,17 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
+			$(document).on('keyup', '#presentation_details_input_title', function(event){
+				var input = $("#presentation_details_input_title");
+				var span = $("#presentation_details_preview_addtitle").find("span");
+				var title = $("#presentation_details_input_title").val();
+				if(title.trim() != ""){
+					$(span).html($("#presentation_details_input_title").val());
+				} else {
+					$(span).html("add a title");
+				}
+			});
+
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
