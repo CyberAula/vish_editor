@@ -429,7 +429,7 @@
 								<span i18n-key="i.context">Context</span>
 							</div>
 							<select id="context_tag" class="ped_box_fields">
-								<option value="school" selected="1">Unespecified</option>
+								<option value="unspecified" selected="1">Unspecified</option>
 								<option value="school">School</option>
 								<option value="higher education">Higher Education</option>
 								<option value="university">University</option>
@@ -460,6 +460,7 @@
 
 						<div id="tlt_wrapper">
 							<div class="range_text"><span i18n-key="i.TLT">Typical Learning Time:</span></div>
+							<input type="text" id="tlt_current_value" class="slider_range_input"/>
 							<div class="tlt_inputs_wrapper">
 								<div class="tlt_input_wrapper">
 									<p class="tlt_input_title" i18n-key="i.Hours"> Hours </p>
@@ -482,8 +483,8 @@
 							<div id="subject_tag_box_text">
 								<span i18n-key="i.Subject">Subject</span>
 							</div>
-							<select id="subject_tag" class="" size="4" multiple="multiple">
-								<option value="Unspecified" selected="1">Unespecified</option>
+							<select id="subject_tag" size="4" multiple="multiple">
+								<option value="Unspecified" selected="1">Unspecified</option>
 								<option value="Art">Art</option>
 								<option value="Astronomy">Astronomy</option>
 								<option value="Biology">Biology</option>

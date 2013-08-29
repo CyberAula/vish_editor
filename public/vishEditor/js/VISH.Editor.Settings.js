@@ -138,6 +138,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//TODO: Pedagogical metadata...
 		//Sliders are initialized in the init() method.
 
+		//TODO: Fill TLT forms
+		onTLTchange();
 
 		//Check for enable continue button
 		_checkIfEnableContinueButton();
@@ -246,6 +248,17 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		_checkIfEnableContinueButton();
 	}
 
+	var onTLTchange = function(){
+		var TLT = _getTLT();
+		if(TLT===null){
+			$("#tlt_current_value").val("invalid value");
+		} else if(typeof TLT == "undefined"){
+			$("#tlt_current_value").val("unspecified");
+		} else if(typeof TLT == "string"){
+			$("#tlt_current_value").val(TLT);
+		}
+	}
+
 	var _checkIfEnableContinueButton = function(){
 		var enable = _checkMandatoryFields();
 		if(enable){
@@ -288,14 +301,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if($(event.target).hasClass("buttonDisabledOnSettings")){
 			return;
 		}
-
-		// TODO: Validate	
-		// if($('#presentation_title').val().length < 1) {
-		// 	return false;
-		// }
 		
 		var draftPresentation = V.Editor.getPresentation();
-
 		if(!draftPresentation){
 			draftPresentation = {};
 		}
@@ -310,21 +317,61 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		draftPresentation.theme = $(".theme_selected_in_scrollbar").attr("themeNumber");
 
-		//now the pedagogical fields if any
+		//Pedagogical fields
+		draftPresentation.language = $("#language_tag").val();
+		draftPresentation.context = $("#context_tag").val();
 		draftPresentation.age_range = $("#age_range").val();
 		draftPresentation.difficulty = $("#difficulty_range").val();
-		draftPresentation.subject = $("#subject_tag").val();
-		draftPresentation.language = $("#language_tag").val();
+		var TLT = _getTLT();
+		if(typeof TLT == "string"){
+			draftPresentation.tlt = TLT;
+		}
+		draftPresentation.subject = $("#subject_tag").val().toString();
 		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
 
-		// V.Debugging.log("draftPresentation");
-		// V.Debugging.log(draftPresentation);
+		V.Debugging.log("draftPresentation");
+		V.Debugging.log(draftPresentation);
 
 		V.Editor.setPresentation(draftPresentation);
 
 		$.fancybox.close();
 	};
 
+	// Return Typical Learning Time (TLT) compliant to LOM.
+	// Return null if form values are incorrect (e.g. letters).
+	// Return undefined when no TLT is specified. In other words, when value (i.e duration) is zero.
+	// TLT must be in ISO8601:2000 format
+	// e.g. PT1H30M5S means 1 hour, 30 minutes and 5 seconds
+	var _getTLT = function(){
+		var TLT = "PT";
+		var hours = $("#tlt_hours").val();
+		var minutes = $("#tlt_minutes").val();
+		var seconds = $("#tlt_seconds").val();
+
+		if(jQuery.isNumeric(hours)&&jQuery.isNumeric(minutes)&&jQuery.isNumeric(seconds)){
+			hours = parseInt(hours);
+			minutes = parseInt(minutes);
+			seconds = parseInt(seconds);
+			
+			if((hours>=0)&&(hours<100)&&(minutes>=0)&&(minutes<60)&&(seconds>=0)&&(seconds<60)){
+				if(hours*24*60+minutes*60+seconds>0){
+					if(hours!=0){
+						TLT = TLT + hours + "H";
+					}
+					if(minutes!=0){
+						TLT = TLT + minutes + "M";
+					}
+					if(seconds!=0){
+						TLT = TLT + seconds + "S";
+					}
+					return TLT;
+				} else if((hours===0)&&(minutes===0)&&(seconds===0)){
+					return undefined;
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * function called when the user clicks on the pedagogical options button
@@ -351,6 +398,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onThumbnailSelected						: onThumbnailSelected,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
+		onTLTchange								: onTLTchange,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked

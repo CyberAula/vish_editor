@@ -30,6 +30,10 @@ img {
 	width: 100%;
 	height: 100%;
 	background: #eee;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
 .addthumbtitle  {
@@ -238,6 +242,12 @@ textarea#presentation_details_textarea {
 	text-shadow: none !important;
 }
 
+#tlt_current_value{
+	display: inline;
+	width: 90px;
+	margin-left: 7px;
+}
+
 /* Themes in settings */
 
 #scrollbar_themes_list{
@@ -257,21 +267,19 @@ textarea#presentation_details_textarea {
 	width: 120px;
 	margin-left: 15px;
 	margin-bottom: 10px;
-	border: solid 1px transparent;
+	border: solid 4px transparent;
 	-moz-border-radius: 13px;
 	-khtml-border-radius: 13px;
 	-webkit-border-radius: 13px;
 	border-radius: 13px;
-	opacity:0.8;
+	opacity: 0.8;
 }
 
 #scrollbar_themes_list img.image_barbutton:hover{
 	opacity: 1;
 	cursor: pointer;
-	border: 1px solid #357ebd;
+	border: 4px solid #357ebd;
 }
-
-
 
 #scrollbar_themes_list p.ptext_barbutton{
 	display: none;
