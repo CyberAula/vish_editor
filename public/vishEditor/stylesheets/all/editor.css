@@ -258,19 +258,31 @@ textarea#presentation_details_textarea {
 	margin-left: 15px;
 	margin-bottom: 10px;
 	border: solid 1px transparent;
-	-moz-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	-moz-border-radius: 13px;
+	-khtml-border-radius: 13px;
+	-webkit-border-radius: 13px;
+	border-radius: 13px;
+	opacity:0.8;
 }
+
+#scrollbar_themes_list img.image_barbutton:hover{
+	opacity: 1;
+	cursor: pointer;
+	border: 1px solid #357ebd;
+}
+
+
 
 #scrollbar_themes_list p.ptext_barbutton{
 	display: none;
 }
 
 .theme_selected_in_scrollbar{
-	border: solid 1px red !important;
+	border: 4px solid #357ebd !important;
+	opacity:1 !important;
+	width: 116px !important;
 }
+
 
 #fill_details_later_button {
 	margin-left: 518px;
