@@ -421,13 +421,18 @@ input.slider_range_input {
 
 /* Settings End */
 
+#fancybox-overlay {
+border-radius: 0px;
+-moz-border-radius: 0px;
+-webkit-border-radius: 0px;
+}
 
 #leftside {
 	position: absolute;
 	top: 58px;
 	display:block;
 	width: 179px;
-	height: 690px;
+	height: 694px;
 	text-align: center;
 	background: #f0f0f0;
 	border: 1px solid #ccc;
