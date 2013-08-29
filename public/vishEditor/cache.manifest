@@ -36,8 +36,7 @@ js/VISH.AppletPlayer.js
 js/VISH.Viewer.js  
 js/VISH.Utils.js  
 js/VISH.Status.js  
-js/VISH.ViewerAdapter.js  
-js/VISH.Game.js  
+js/VISH.ViewerAdapter.js
 js/VISH.Flashcard.js   
 js/VISH.Themes.js  
 js/VISH.Messenger.js  

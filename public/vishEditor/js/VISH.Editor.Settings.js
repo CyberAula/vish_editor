@@ -126,8 +126,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Title
 		if(presentation && presentation.title){
-			var titleDOM = $("#presentation_details_preview_addtitle").find("span");
-			$(titleDOM).html(presentation.title);
+			var previewTitleDOM = $("#presentation_details_preview_addtitle").find("span");
+			$(previewTitleDOM).html(presentation.title);
+			$("#presentation_details_input_title").val(presentation.title); //input
 		}
 
 		//Author
