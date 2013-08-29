@@ -22,6 +22,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			"onComplete"  : function(data) {
 				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
+			},
+			"onClose" : function(data){
 			}
 		});
 
@@ -133,6 +135,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var onChangeThumbnailClicked = function(){
+		$("#editthumb").hide();
 		$("#hidden_button_to_uploadThumbnail").trigger("click");
 	}
 
@@ -143,7 +146,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _addThumbnail = function(thumbnail_url){
 		var thumbnail_wrapper = $("#presentation_details_preview_thumbnail");
-		$("#presentation_details_preview_thumbnail_img").attr("src",thumbnail_url);
+		var thumbnail = $("#presentation_details_preview_thumbnail_img");
+		$(thumbnail).removeClass("addThumbnailPlus");
+		$(thumbnail).attr("src",thumbnail_url);
 		$(thumbnail_wrapper).find("p.addthumbtitle").hide();
 	}
 

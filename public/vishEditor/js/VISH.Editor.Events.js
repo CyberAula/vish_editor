@@ -21,7 +21,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			
-			$(document).on('click', '#presentation_details_preview_thumbnail_img', V.Editor.Settings.onChangeThumbnailClicked);
+			$(document).on('click', '#presentation_details_preview_thumbnail', V.Editor.Settings.onChangeThumbnailClicked);
+			$(document).on('hover', '#presentation_details_preview_thumbnail', function(event){
+				var thumbnail = $("#presentation_details_preview_thumbnail_img");
+				if($(thumbnail).hasClass("addThumbnailPlus")){
+					return;
+				}
+				if(event.type==="mouseenter"){
+					$("#editthumb").slideDown();
+				} else {
+					$("#editthumb").slideUp();
+				}
+			});
+
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);

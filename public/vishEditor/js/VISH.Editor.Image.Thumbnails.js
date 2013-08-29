@@ -1,14 +1,21 @@
 VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 	
 	var carrouselDivId = "tab_pic_thumbnails_carrousel";
-	var dataLoaded = false;
+	var dataLoaded;
+	var dataDrawed = false;
 	
 	var init = function() {
 	};
 	
 	var onLoadTab = function() {
-		if(!dataLoaded){
+		if(typeof dataLoaded == "undefined"){
 			_requestInitialData();
+		} else if (dataDrawed === false){
+			//data received but not drawed, draw it
+			//Give time the fancybox to effectively show the carrousel
+			setTimeout(function(){
+				_drawData(dataLoaded);
+			},1000);
 		}
 	};
 	
@@ -34,8 +41,19 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 		if(dataLoaded){
 			return;
 		} else {
-			dataLoaded = true;
+			dataLoaded = data;
+			_drawData(data);
 		}
+	};
+
+	var _drawData = function(data){
+		//Ensure that carrousel is visible before drawing it
+		var carrouselVisible = $("#tab_pic_thumbnails_carrousel").is(":visible");
+		if(!carrouselVisible){
+			return;
+		}
+
+		dataDrawed = true;
 
 		var carrouselImages = [];
 		var content = "";
@@ -55,7 +73,7 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 		options.callback = _onImagesLoaded;
 		options.order = true;
 		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
-	};
+	}
 	
 	var _onImagesLoaded = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
