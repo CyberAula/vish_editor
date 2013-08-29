@@ -82,45 +82,13 @@ VISH.Editor = (function(V,$,undefined){
 		V.Slides.init();
 		V.User.init(options);
 		V.Editor.LRE.init(options.lang);
+		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 
 		if(V.Debugging.isDevelopping()){
 			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
 				presentation = V.Debugging.getPresentationSamples();
 			}
 		}
-
-		//init age sliders, this has to be done BEFORE V.Editor.Renderer.init(presentation);
-		$("#slider-age").slider({
-			range: true,
-			min: 0,
-			max: 30,
-			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
-			slide: function( event, ui ) {
-				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-			}
-		});
-		$("#age_range").val(V.Constant.AGE_RANGE);
-
-		var LOM_difficulty = new Array();
-		LOM_difficulty[0] = "unspecified";
-		LOM_difficulty[1] = "very easy";
-		LOM_difficulty[2] = "easy";
-		LOM_difficulty[3] = "medium";
-		LOM_difficulty[4] = "difficult";
-		LOM_difficulty[5] = "very difficult";
-
-		$("#slider-difficulty").slider({
-			min: 0,
-			max: 5,
-			value: [ V.Constant.DIFFICULTY ],
-			slide: function( event, ui ) {
-				$("#difficulty_range").attr("difficulty",ui.value);
-				$("#difficulty_range").val(LOM_difficulty[ui.value]);
-			}
-		}); 
-		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
-		$("#difficulty_range").val(LOM_difficulty[V.Constant.DIFFICULTY]);
-
 
 		//If we have to edit
 		if(presentation){
@@ -159,7 +127,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
-		V.Editor.Settings.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();

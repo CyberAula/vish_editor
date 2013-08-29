@@ -356,7 +356,7 @@
 								<span>add a title</span>
 							</div>
 							<div id="presentation_details_preview_author">
-								<span>by Aldo G.</span>
+								<span>by </span><span id="author_span_in_preview"></span>
 							</div>
 						</div>
 					</div>
@@ -367,12 +367,12 @@
 
 						<div id="presentation_details_title">
 							<span class="presentation_details_text" i18n-key="i.Title">Title</span>
-							<input id="presentation_details_input_title" class="presentation_details_input" type="text" placeholder="Excursion title" i18n-key="i.presTitle"></input>
+							<input id="presentation_details_input_title" class="presentation_details_input" type="text" placeholder="Excursion title" i18n-key="i.presTitle" maxLength="120"></input>
 						</div>
 
 						<div id="presentation_details_description">
 							<span class="presentation_details_text" i18n-key="i.Description">Description</span>
-							<textarea class='presentation_details_textarea' placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
+							<textarea id='presentation_details_textarea' placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
 						</div>			
 
 						<div id="tags_in_presentation_details">

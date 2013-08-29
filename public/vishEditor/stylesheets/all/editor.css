@@ -122,7 +122,7 @@ img.addThumbnailPlus{
 }
 
 #presentation_details_preview_title{
-	margin-top: 0px;
+	margin-top: -15px;
 }
 
 #presentation_details_preview_addtitle {
@@ -163,6 +163,7 @@ p.presentation_details_column_title{
 #presentation_details_preview{
 	width: 200px;
 	border: 1px solid #ccc;
+	margin-top: -9px;
 }
 
 #presentation_details_title{
@@ -196,7 +197,7 @@ input.presentation_details_input {
 	display: block;
 }
 
-textarea.presentation_details_textarea {
+textarea#presentation_details_textarea {
 	margin-top: 15px;
 	margin-bottom: 15px;
 	display: block;
@@ -241,10 +242,19 @@ textarea.presentation_details_textarea {
 	width: 120px;
 	margin-left: 15px;
 	margin-bottom: 10px;
+	border: solid 1px transparent;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #scrollbar_themes_list p.ptext_barbutton{
 	display: none;
+}
+
+.theme_selected_in_scrollbar{
+	border: solid 1px red !important;
 }
 
 #fill_details_later_button {

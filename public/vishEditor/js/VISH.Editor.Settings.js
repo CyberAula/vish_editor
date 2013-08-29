@@ -4,8 +4,46 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var tagsLoaded = false;
 	var themeScrollbarCreated = false;
 
+	//Metadata
+	var presentationAvatar;
+
+
 	var init = function(){
+		_initSliders();
 	};
+
+	var _initSliders = function(){
+		$("#slider-age").slider({
+			range: true,
+			min: 0,
+			max: 30,
+			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
+			slide: function( event, ui ) {
+				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+			}
+		});
+		$("#age_range").val(V.Constant.AGE_RANGE);
+
+		var LOM_difficulty = new Array();
+		LOM_difficulty[0] = "unspecified";
+		LOM_difficulty[1] = "very easy";
+		LOM_difficulty[2] = "easy";
+		LOM_difficulty[3] = "medium";
+		LOM_difficulty[4] = "difficult";
+		LOM_difficulty[5] = "very difficult";
+
+		$("#slider-difficulty").slider({
+			min: 0,
+			max: 5,
+			value: [ V.Constant.DIFFICULTY ],
+			slide: function( event, ui ) {
+				$("#difficulty_range").attr("difficulty",ui.value);
+				$("#difficulty_range").val(LOM_difficulty[ui.value]);
+			}
+		}); 
+		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
+		$("#difficulty_range").val(LOM_difficulty[V.Constant.DIFFICULTY]);
+	}
 
 	var displaySettings = function(){
 		// fancybox to edit presentation settings
@@ -31,10 +69,36 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onDisplaySettings = function(){
-		//Avatar
+		var options = V.Utils.getOptions();
 		var presentation = V.Editor.getPresentation();
+
+		//Avatar
 		if(presentation && presentation.avatar){
 			_addThumbnail(presentation.avatar);
+		}
+
+		//Title
+		if(presentation && presentation.title){
+			var titleDOM = $("#presentation_details_preview_addtitle").find("span");
+			$(titleDOM).html(presentation.title);
+		}
+
+		//Author
+		var author;
+		if(options && options.username){
+			author = options.username;
+		} else if(presentation && presentation.author){
+			author = presentation.author;
+		}
+		if(author){
+			var authorDOM = $("#author_span_in_preview");
+			$(authorDOM).html(author);
+		}
+
+		//Description
+		if(presentation && presentation.description){
+			var descriptionDOM = $("#presentation_details_textarea");
+			$(descriptionDOM).val(presentation.description);
 		}
 
 		//Tags
@@ -44,6 +108,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
 
+		//Themes
 		if(!themeScrollbarCreated){
 			//Select Theme scrollbar
 			V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
@@ -69,6 +134,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			options.callback = _onThemeImagesLoaded;
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		}
+
+		//TODO: Pedagogical metadata...
+		//Sliders are initialized in VISH.Editor.js
 	}
 
 	var _onThemeImagesLoaded = function(){
@@ -97,10 +165,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onClickTheme = function(event){
 		var themeNumber = $(event.target).attr("themeNumber");
+		selectTheme(themeNumber);
 	}
 
 	var _afterCreateThemesScrollbar = function(){
+		//Select default theme
+		selectTheme(1);
 		themeScrollbarCreated = true;
+	}
+
+	var selectTheme = function(themeNumber){
+		$(".theme_selected_in_scrollbar").removeClass("theme_selected_in_scrollbar");
+		var themeDOM = $("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
 	}
 
 	var _onInitialTagsReceived = function(data){
@@ -150,6 +226,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$(thumbnail).removeClass("addThumbnailPlus");
 		$(thumbnail).attr("src",thumbnail_url);
 		$(thumbnail_wrapper).find("p.addthumbtitle").hide();
+		presentationAvatar = thumbnail_url;
 	}
 
 	/**
@@ -171,18 +248,25 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation = {};
 		}
 
-		draftPresentation.title = $('#presentation_title').val();
-		draftPresentation.description = $('#presentation_description').val();
-		draftPresentation.avatar = $('#presentation_avatar').val();
+		draftPresentation.title = $('#presentation_details_input_title').val();
+		draftPresentation.description = $('#presentation_details_textarea').val();
+		if(presentationAvatar){
+			draftPresentation.avatar = presentationAvatar;
+		}
+		draftPresentation.author = $("#author_span_in_preview").html();
 		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+
+		draftPresentation.theme = $(".theme_selected_in_scrollbar").attr("themeNumber");
 
 		//now the pedagogical fields if any
 		draftPresentation.age_range = $("#age_range").val();
-		draftPresentation.difficulty = $("#difficulty_range").attr("difficulty");
+		draftPresentation.difficulty = $("#difficulty_range").val();
 		draftPresentation.subject = $("#subject_tag").val();
 		draftPresentation.language = $("#language_tag").val();
-		draftPresentation.educational_objectives = $("#educational_objectives_tag").val();
-		draftPresentation.adquired_competencies = $("#acquired_competencies_tag").val();
+		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
+
+		// V.Debugging.log("draftPresentation");
+		// V.Debugging.log(draftPresentation);
 
 		V.Editor.setPresentation(draftPresentation);
 
@@ -213,6 +297,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		displaySettings							: displaySettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
+		selectTheme								: selectTheme,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
