@@ -4,11 +4,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var tagsLoaded = false;
 	var themeScrollbarCreated = false;
 
+	//LOM
+	var LOM_Difficulty;
+
 	//Metadata
 	var presentationThumbnail;
 
 
 	var init = function(){
+		LOM_Difficulty = V.Editor.Utils.LOM.getDifficulty();
 		_initSliders();
 	};
 
@@ -24,25 +28,17 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		});
 		$("#age_range").val(V.Constant.AGE_RANGE);
 
-		var LOM_difficulty = new Array();
-		LOM_difficulty[0] = "unspecified";
-		LOM_difficulty[1] = "very easy";
-		LOM_difficulty[2] = "easy";
-		LOM_difficulty[3] = "medium";
-		LOM_difficulty[4] = "difficult";
-		LOM_difficulty[5] = "very difficult";
-
 		$("#slider-difficulty").slider({
 			min: 0,
 			max: 5,
 			value: [ V.Constant.DIFFICULTY ],
 			slide: function( event, ui ) {
 				$("#difficulty_range").attr("difficulty",ui.value);
-				$("#difficulty_range").val(LOM_difficulty[ui.value]);
+				$("#difficulty_range").val(LOM_Difficulty[ui.value]);
 			}
 		}); 
 		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
-		$("#difficulty_range").val(LOM_difficulty[V.Constant.DIFFICULTY]);
+		$("#difficulty_range").val(LOM_Difficulty[V.Constant.DIFFICULTY]);
 	}
 
 	var displaySettings = function(){
@@ -61,7 +57,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
 			},
-			"onClose" : function(data){
+			"onClosed" : function(data){
+				//Update theme if it has change
+				var selectedThemeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");
+				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
+
+				if((typeof selectedThemeNumber == "string")&&(selectedThemeNumber!=currentThemeNumber)){
+					V.Editor.Themes.selectTheme("theme"+selectedThemeNumber);
+				}
 			}
 		});
 
@@ -71,35 +74,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
 		var presentation = V.Editor.getPresentation();
-
-		//Avatar
-		if(presentation && presentation.avatar){
-			_addThumbnail(presentation.avatar);
-		}
-
-		//Title
-		if(presentation && presentation.title){
-			var titleDOM = $("#presentation_details_preview_addtitle").find("span");
-			$(titleDOM).html(presentation.title);
-		}
-
-		//Author
-		var author;
-		if(options && options.username){
-			author = options.username;
-		} else if(presentation && presentation.author){
-			author = presentation.author;
-		}
-		if(author){
-			var authorDOM = $("#author_span_in_preview");
-			$(authorDOM).html(author);
-		}
-
-		//Description
-		if(presentation && presentation.description){
-			var descriptionDOM = $("#presentation_details_textarea");
-			$(descriptionDOM).val(presentation.description);
-		}
 
 		//Tags
 		if((V.Configuration.getConfiguration()["presentationTags"])&&(!tagsLoaded)){
@@ -135,8 +109,75 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		}
 
-		//TODO: Pedagogical metadata...
 		//Sliders are initialized in the init() method.
+		onTLTchange();
+
+		//Check for enable continue button
+		_checkIfEnableContinueButton();
+	}
+
+	var loadPresentationSettings = function(presentation){
+		var options = V.Utils.getOptions();
+
+		//Avatar
+		if(presentation && presentation.avatar){
+			_addThumbnail(presentation.avatar);
+		}
+
+		//Title
+		if(presentation && presentation.title){
+			var titleDOM = $("#presentation_details_preview_addtitle").find("span");
+			$(titleDOM).html(presentation.title);
+		}
+
+		//Author
+		var author;
+		if(options && options.username){
+			author = options.username;
+		} else if(presentation && presentation.author){
+			author = presentation.author;
+		}
+		if(author){
+			var authorDOM = $("#author_span_in_preview");
+			$(authorDOM).html(author);
+		}
+
+		//Description
+		if(presentation && presentation.description){
+			var descriptionDOM = $("#presentation_details_textarea");
+			$(descriptionDOM).val(presentation.description);
+		}
+
+		//Tags: intialized on _onInitialTagsReceived method.
+
+		//Themes
+		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+
+		//Pedagogical
+		
+		$("#language_tag").val(presentation.language);
+		$("#context_tag").val(presentation.context);
+		
+		if(presentation.age_range){
+			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
+			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
+			$("#slider-age" ).slider( "values", [start_range, end_range] );
+			$("#age_range").val(presentation.age_range);
+		} else {
+			$("#age_range").val(V.Constant.AGE_RANGE);
+		}
+
+		if(presentation.difficulty){
+			var difficultyValue = 0; 
+			for(var j=0; j<LOM_difficulty.length; j++){
+				if(LOM_difficulty[j]===presentation.difficulty){
+					difficultyValue = j;
+				}
+			}
+			$("#difficulty_range").val(LOM_difficulty[difficultyValue]);
+			$("#difficulty_range").attr("difficulty",difficultyValue);
+			$("#slider-difficulty" ).slider("value",difficultyValue);
+		}
 
 		if(presentation && presentation.TLT){
 			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
@@ -144,10 +185,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#tlt_minutes").val(durations[5].toString());
 			$("#tlt_seconds").val(durations[6].toString());
 		}
-		onTLTchange();
 
-		//Check for enable continue button
-		_checkIfEnableContinueButton();
+		$("#subject_tag").val(presentation.subject);
+		$("#educational_objectives_tag").val(presentation.educational_objectives);
 	}
 
 	var _onThemeImagesLoaded = function(){
@@ -399,6 +439,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	return {
 		init									: init,
 		displaySettings							: displaySettings,
+		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
 		selectTheme								: selectTheme,
