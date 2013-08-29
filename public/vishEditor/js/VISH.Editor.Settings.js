@@ -138,7 +138,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//TODO: Pedagogical metadata...
 		//Sliders are initialized in the init() method.
 
-		//TODO: Fill TLT forms
+		if(presentation && presentation.TLT){
+			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
+			$("#tlt_hours").val(durations[4].toString());
+			$("#tlt_minutes").val(durations[5].toString());
+			$("#tlt_seconds").val(durations[6].toString());
+		}
 		onTLTchange();
 
 		//Check for enable continue button
