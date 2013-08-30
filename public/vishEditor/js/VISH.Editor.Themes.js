@@ -80,7 +80,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		if(currentTheme){
 			return themes[currentTheme];
 		} else {
-			return null;
+			return themes[VISH.Constant.Themes.Default];
 		}
 	}
 

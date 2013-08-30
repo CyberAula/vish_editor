@@ -63,7 +63,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
 				if((typeof selectedThemeNumber == "string")&&(selectedThemeNumber!=currentThemeNumber)){
 					V.Editor.Themes.selectTheme("theme"+selectedThemeNumber);
-				}
+				};
 			}
 		});
 
@@ -106,6 +106,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			options.titleArray = imagesArrayTitles;
 			options.callback = _onThemeImagesLoaded;
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
+		} else {
+			//Select and move to current theme
+			selectTheme(V.Editor.Themes.getCurrentTheme().number);
+			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
 		}
 
 		//Sliders are initialized in the init() method.
@@ -168,13 +172,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		if(presentation.difficulty){
-			var difficultyValue = 0; 
-			for(var j=0; j<LOM_difficulty.length; j++){
-				if(LOM_difficulty[j]===presentation.difficulty){
+			var difficultyValue = 0;
+			for(var j=0; j<LOM_Difficulty.length; j++){
+				if(LOM_Difficulty[j]===presentation.difficulty){
 					difficultyValue = j;
 				}
 			}
-			$("#difficulty_range").val(LOM_difficulty[difficultyValue]);
+			$("#difficulty_range").val(LOM_Difficulty[difficultyValue]);
 			$("#difficulty_range").attr("difficulty",difficultyValue);
 			$("#slider-difficulty" ).slider("value",difficultyValue);
 		}
@@ -187,7 +191,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		$("#subject_tag").val(presentation.subject);
-		$("#educational_objectives_tag").val(presentation.educational_objectives);
+		$("#educational_objectives_textarea").val(presentation.educational_objectives);
 	}
 
 	var _onThemeImagesLoaded = function(){
@@ -220,14 +224,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _afterCreateThemesScrollbar = function(){
-		var currentTheme = V.Editor.Themes.getCurrentTheme();
-		if(currentTheme){
-			selectTheme(V.Editor.Themes.getCurrentTheme().number);
-			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
-		} else {
-			//Select default theme
-			selectTheme(1);
-		}
+		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
 		themeScrollbarCreated = true;
 	}
 
@@ -379,7 +377,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		draftPresentation.difficulty = $("#difficulty_range").val();
 		var TLT = _getTLT();
 		if(typeof TLT == "string"){
-			draftPresentation.tlt = TLT;
+			draftPresentation.TLT = TLT;
 		}
 		draftPresentation.subject = $("#subject_tag").val().toString();
 		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
