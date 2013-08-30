@@ -1,3 +1,4 @@
-section.slides > article:not(.slideset_slide), section.slides > article article.subslide {
+/* Style for standard slides */
+section.slides article[type='standard']{
 	background-color: white;
 }

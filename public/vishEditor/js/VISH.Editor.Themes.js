@@ -1,6 +1,7 @@
 VISH.Editor.Themes = (function(V,$,undefined){
 
 	var initialized = false;
+	var currentTheme;
 	var themes = {};
 
 	var init = function(){
@@ -57,6 +58,8 @@ VISH.Editor.Themes = (function(V,$,undefined){
 	}
 
 	var selectTheme = function(theme){
+		currentTheme = theme;
+
 		V.Themes.loadTheme(theme);
 
 		//Save it in the draftPresentation
@@ -74,14 +77,11 @@ VISH.Editor.Themes = (function(V,$,undefined){
 	};
 
 	var getCurrentTheme = function(){
-		var themeId;
-		var draftPresentation = V.Editor.getPresentation();
-		if((draftPresentation)&&(draftPresentation.theme)){
-			themeId = draftPresentation.theme;
+		if(currentTheme){
+			return themes[currentTheme];
 		} else {
-			themeId = V.Constant.Themes.Default;
+			return null;
 		}
-		return themes[themeId];
 	}
 
 

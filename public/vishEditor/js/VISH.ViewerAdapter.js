@@ -305,19 +305,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			finalH = finalW/slidesRatio;
 		}
 
-		$(".slides > article").css("height", finalH);
-		$(".slides > article").css("width", finalW);
-		$(".subslide").css("height", finalH);
-		$(".subslide").css("width", finalW);
+		var topSlides = $(".slides > article");
+		var subSlides = $(".slides > article > article");
+		$(topSlides).css("height", finalH);
+		$(topSlides).css("width", finalW);
+		$(subSlides).css("height", finalH);
+		$(subSlides).css("width", finalW);
 
 		//margin-top and margin-left half of the height and width
 		var marginTop = finalH/2 + reserved_px_for_menubar/2;
 		var marginLeft = finalW/2;
-		$(".slides > article").css("margin-top", "-" + marginTop + "px");
-		$(".slides > article").css("margin-left", "-" + marginLeft + "px");
+		$(topSlides).css("margin-top", "-" + marginTop + "px");
+		$(topSlides).css("margin-left", "-" + marginLeft + "px");
 		
-		$(".subslide").css("margin-top", "-" + finalH/2 + "px");
-		$(".subslide").css("margin-left", "-" + marginLeft + "px");	
+		$(subSlides).css("margin-top", "-" + finalH/2 + "px");
+		$(subSlides).css("margin-left", "-" + marginLeft + "px");	
 		
 		var increase = finalH/600;
 		var increaseW = finalW/800;

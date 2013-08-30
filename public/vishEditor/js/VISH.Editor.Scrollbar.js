@@ -65,10 +65,18 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
   
 	var goToElement = function(containerId,element){
 		var elementId = $(element).attr("id");
-		if(typeof elementId == "string"){
-			$("#"+containerId).mCustomScrollbar("scrollTo","#" + elementId);
-		} else {
-			// V.Debugging.log("Elements without id can't be scrolled to");
+		var hasId = (typeof elementId == "string");
+
+		if(!hasId){
+			var tmpId = V.Utils.getId("tmp");
+			$(element).attr("id",tmpId);
+			elementId = tmpId;
+		}
+
+		$("#"+containerId).mCustomScrollbar("scrollTo","#" + elementId);
+
+		if(!hasId){
+			$(element).removeAttr("id",tmpId);
 		}
 	}
   

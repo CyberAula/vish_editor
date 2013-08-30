@@ -509,9 +509,9 @@
 */
 
 .t10_center{
-	border-radius: 10px !important;
-	-moz-border-radius: 10px !important;
-	-webkit-border-radius: 10px !important;
+	border-radius: 6px !important;
+	-moz-border-radius: 6px !important;
+	-webkit-border-radius: 6px !important;
 	float: left;
 	height: 100%;
 	left: 0;

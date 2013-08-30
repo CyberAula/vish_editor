@@ -1,4 +1,4 @@
-section.slides > article:not(.slideset_slide), section.slides > article article.subslide {
+section.slides article[type='standard'] {
 	background-color: transparent;
 	border: none;
 	padding: 17px 40px 86px 40px;;
@@ -9,13 +9,7 @@ section.slides > article:not(.slideset_slide), section.slides > article article.
  	webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
 }
 
-.slides > article[template='t10'] > div.t10_center {
-	margin: 3% 0% 0% 4%;
-	width: 92%;
-	height: 84%;
-}
-
-.slides > article > div.vezone {
+section.slides > article > div.vezone, section.slides > article > article > div.vezone {
   background-color: rgba(100, 100, 100, 0.4);
 }
 
@@ -29,4 +23,10 @@ section.slides {
 	background:  -ms-radial-gradient(center, ellipse cover,  #f2f5f6 0%,#afafaf 100%); /* IE10+ */
 	background:  radial-gradient(ellipse at center,  #f2f5f6 0%,#afafaf 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', endColorstr='#afafaf',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+section.slides article[type='standard'][template='t10'] > div.t10_center {
+	margin: 3% 0% 0% 4%;
+	width: 92%;
+	height: 84%;
 }

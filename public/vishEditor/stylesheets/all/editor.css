@@ -713,7 +713,7 @@ section.slides_editor > article {
 }
 
 section.slides_editor > article > article {
-	top: 54% !important;
+	top: 50% !important;
 }
 
 div.zoneSelected {
@@ -2383,7 +2383,7 @@ img#message3img{
 	background-color: #fff;
 	border: 1px solid rgba(0,0,0,0.15);
 	border-top: 1px solid rgba(0,0,0,0.25);
-	height: 28px;
+	height: 25px;
 	padding-left: 4px;
 	font-family: Helvetica;
 }
@@ -2402,7 +2402,7 @@ img#message3img{
 	background-image: -webkit-linear-gradient(top, #4d90fe,#4787ed) !important;
 	left: 495px;
 	width: 44px;
-	height: 32px;
+	height: 30px;
 	padding: 0px;
 	top: -1px;
 }

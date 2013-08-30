@@ -83,7 +83,7 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		return "<article class='"+ extra_classes + " " +classes+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
+		return "<article class='"+ extra_classes + " " +classes+"' type='"+V.Constant.STANDARD+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
 	};
 
 	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons, slidenumber){
@@ -92,20 +92,18 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			//Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, null, "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
-		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='"+ extra_classes + " slideset_slide flashcard_slide' slidenumber='"+slidenumber+"' type='flashcard' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.FLASHCARD+"' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
 	};
 
 	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = "";
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, "subslide", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, null, "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
-		var div_for_slides_hidden = "<div class='subslides' >"+all_slides+"</div>";
-		return $("<article class='"+ extra_classes + " slideset_slide virtualTour_slide' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + div_for_slides_hidden + "</article>");
+		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
 	};
 
 

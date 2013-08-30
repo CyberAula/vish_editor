@@ -53,7 +53,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			'hideOnOverlayClick': false,
 			'hideOnContentClick': false,
 			'showCloseButton': false,
-			"onComplete"  : function(data) {
+			"onComplete"  : function(data){
 				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
 			},
@@ -61,7 +61,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				//Update theme if it has change
 				var selectedThemeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");
 				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
-
 				if((typeof selectedThemeNumber == "string")&&(selectedThemeNumber!=currentThemeNumber)){
 					V.Editor.Themes.selectTheme("theme"+selectedThemeNumber);
 				}
@@ -221,8 +220,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _afterCreateThemesScrollbar = function(){
-		//Select default theme
-		selectTheme(1);
+		var currentTheme = V.Editor.Themes.getCurrentTheme();
+		if(currentTheme){
+			selectTheme(V.Editor.Themes.getCurrentTheme().number);
+			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
+		} else {
+			//Select default theme
+			selectTheme(1);
+		}
 		themeScrollbarCreated = true;
 	}
 
@@ -361,7 +366,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		draftPresentation.author = $("#author_span_in_preview").html();
 		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 
-		draftPresentation.theme = $(".theme_selected_in_scrollbar").attr("themeNumber");
+		if(typeof $(".theme_selected_in_scrollbar").attr("themeNumber") == "string"){
+			draftPresentation.theme = "theme" + $(".theme_selected_in_scrollbar").attr("themeNumber");
+		} else {
+			draftPresentation.theme = V.Constant.Themes.Default;
+		}
 
 		//Pedagogical fields
 		draftPresentation.language = $("#language_tag").val();

@@ -1,16 +1,16 @@
-section.slides > article:not(.slideset_slide), section.slides > article article.subslide {
+section.slides article[type='standard'] {
 	background: white url(/vishEditor/images/themes/theme7/bg.jpg) top;
 	background-size: 100% 100%;
 }
 
-.slides > article > div.vezone {
+section.slides > article > div.vezone, section.slides > article > article > div.vezone {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
-.zone_tooltip {
-font-family: 'Open Sans', sans-serif;
-font-weight: 100;
-color: #5C5C5C;
+div.vezone > span.zone_tooltip {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100;
+	color: #5C5C5C;
 }
 
 section.slides {
