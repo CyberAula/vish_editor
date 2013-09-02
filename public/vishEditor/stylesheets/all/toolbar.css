@@ -1,131 +1,125 @@
 #toolbar_wrapper {
-border: 1px solid #ccc;
-background-color: #fff;
-display: inline-block;
-height: 57px;
-width: 1158px;
-margin: 0px 0px 0px 0px;
-padding-left: 20px;
-padding-right: 20px;
-zoom: 1;
-overflow: visible;
-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
--webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
--moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
-z-index: 10;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	display: inline-block;
+	height: 57px;
+	width: 1158px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+	zoom: 1;
+	overflow: visible;
+	box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.1);
+	z-index: 10;
 }
 
 #toolbar_menu , #toolbar_presentation, #toolbar_element {
-  display: inline-block;
-  height: 57px;
-  min-height: 50px;
-  text-align: center;
+	display: inline-block;
+	height: 57px;
+	min-height: 50px;
+	text-align: center;
 }
 
 #toolbar_menu {
-    border-right: 1px solid #ccc;
-    min-width: 121px;
-    float: left;
+	border-right: 1px solid #ccc;
+	min-width: 121px;
+	float: left;
 }
 
-#toolbar_menu .icon-button{
-  float: left;
-margin-right: 20px;
+#toolbar_menu .icon-button {
+	float: left;
+	margin-right: 20px;
 }
 
 #toolbar_presentation {
-    padding-right: 20px;
-    padding-left: 20px;
-    min-width: 485px;
-    float: left;
-    -webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
--moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	padding-right: 20px;
+	padding-left: 20px;
+	min-width: 485px;
+	float: left;
+	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 }
 
 #toolbar_element {
-padding-left: 12px;
-min-width: 425px;
-text-align: left;
-max-width: 620px;
+	padding-left: 12px;
+	min-width: 425px;
+	text-align: left;
+	max-width: 620px;
 }
 
-.toolbar_presentation_wrapper{
-  display: inline-block;
-  min-width: 75px;
-  text-align: center;
-  margin-top: 4px;
-  border-right: 1px solid #E9E9E9;
+.toolbar_presentation_wrapper {
+	display: inline-block;
+	min-width: 75px;
+	text-align: center;
+	margin-top: 4px;
+	border-right: 1px solid #E9E9E9;
 }
 
 
 .toolbar_presentation_wrapper > p {
-  cursor: default;
-  font-family: 'Open Sans', sans-serif;
+	cursor: default;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .icon-button {
-  font-size: 18px;
+	font-size: 18px;
 }
 
 .toolbar_presentation_wrapper_disabled {
-  opacity: 0.2;
+	opacity: 0.2;
 }
 
 .toolbar_presentation_wrapper_disabled > * {
-  cursor: default !important;
+	cursor: default !important;
 }
 
-.toolbar_prseentation_title{
-  text-align: center;
-  font-size: 12px;
-  padding: 0;
-  margin: 0px 5px 0px 5px;
+.toolbar_prseentation_title {
+	text-align: center;
+	font-size: 12px;
+	padding: 0;
+	margin: 0px 5px 0px 5px;
 }
 
-.toolbar_icon{
-padding-right: 10px;
-padding-left: 10px;
-padding-top: 16px;
-padding-bottom: 17px;
-height: 43px;
-border-left: 1px solid #EBEBEB;
-border-right: 1px solid #EBEBEB;
-cursor: pointer;
-opacity:0.6;
+.toolbar_icon {
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 16px;
+	padding-bottom: 17px;
+	height: 43px;
+	cursor: pointer;
+	opacity:0.6;
 }
 
 .toolbar_icon:hover {
-  opacity: 1;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+	opacity: 1;	
 }
 
 .toolbar_icon:active {
--webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
--moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
+	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
 }
 
-img.toolbar_icon{
-
-height: 24px;
-width: 23px;
+img.toolbar_icon {
+	height: 24px;
+	width: 23px;
 }
 
-
-.toolbar_bigicon{
-    cursor: pointer;
-    height: 30px;
-    margin: 0;
-    border: none;
+.toolbar_bigicon {
+	cursor: pointer;
+	height: 30px;
+	margin: 0;
+	border: none;
 }
 
-.toolbar_bigicon:hover{
-  opacity: 1;
+.toolbar_bigicon:hover {
+	opacity: 1;
 }
 
 #toolbarborder {
-  border: none;
-  margin-bottom: 12px;
+	border: none;
+	margin-bottom: 12px;
 }

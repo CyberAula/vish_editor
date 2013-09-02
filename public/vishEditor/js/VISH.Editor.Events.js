@@ -220,70 +220,67 @@ VISH.Editor.Events = (function(V,$,undefined){
 	* Function to add the events to the help buttons to launch joy ride bubbles
 	*/
 	var _addTutorialEvents = function(){
-		$(document).on('click','#start_tutorial', function(){
-			V.Tour.startTourWithId('initial_screen_help', 'top');
-		});
-
+		//Help in menu
 		$(document).on('click','#help_right', function(){
 			V.Tour.startTourWithId('menubar_help', 'top');
 		});
 
-		//template
-		$(document).on('click','.help_in_template', function(){
-			V.Tour.startTourWithId('template_help', 'bottom');
+		//Help in standard slide
+		$(document).on('click','.help_in_sslide', function(){
+			V.Tour.startTourWithId('sslide_help', 'bottom');
 		});
 
-		//flashcard
+		//Help in Flashcards
 		$(document).on('click','.help_in_flashcard', function(){
 			V.Tour.startTourWithId('fc_help', 'top');
 		});
 
-		//VirtualTour
+		//Help in Virtual Tours
 		$(document).on('click','.help_in_vt', function(){
 			V.Tour.startTourWithId('vt_help', 'top');
 		});
 
-		//vtour
-		$(document).on('click','#help_vtour', function(){
-			V.Tour.startTourWithId('vt_help', 'top');
+		//Help in slide templates selection
+		$(document).on('click','#tab_slides_help', function(){
+			V.Tour.startTourWithId('help_template_selection_help', 'bottom');
 		});
 
-		//add slides
-		$(document).on('click','.help_addslides_selection', function(){			
-			V.Editor.Tour.startTourWithId('help_addslides_selection_help', 'bottom');
+		//Help inserting a PDF presentation
+		$(document).on('click','#tab_pdfex_help', function(){
+			V.Tour.startTourWithId('help_pdfex_help', 'bottom');
 		});
 
-		//Quiz
+		//Help in presentation carrousel
+		$(document).on('click','#tab_presentations_repo_help', function(){
+			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+		});	
+
+		//Help in smartcards carrousel
+		$(document).on('click','#tab_smartcards_repo_help', function(){
+			V.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
+		});
+
+		//Help in themes templates
+		$(document).on('click','#help_themes_selection', function(){			
+			V.Tour.startTourWithId('themes_help', 'bottom');
+		});
+
+		//Help in Settings
+		$(document).on('click','#help_in_settings', function(){
+			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
+		})
+
+		//Help in pedagogical options settings	
+		$(document).on('click','#help_pedagogical_selection', function(){
+			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
+		});
+	
+		//Help in Quiz Templates
 		$(document).on('click','#tab_quizes_help', function(){			
 			V.Tour.startTourWithId('quiz_help', 'bottom');
 		});
 
-		//themes
-		$(document).on('click','#help_themes_selection', function(){			
-			V.Tour.startTourWithId('themes_help', 'bottom');
-		});
-		
-		//template selection fancybox	
-		$(document).on('click','#help_template_selection', function(){
-			V.Tour.startTourWithId('help_template_selection_help', 'bottom');
-		});	
-
-		//pedagogical options fancybox	
-		$(document).on('click','#help_pedagogical_selection', function(){
-			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
-		});	
-
-		//template selection fancybox	
-		$(document).on('click','#help_excursion_selection', function(){
-			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
-		});	
-
-		//template selection fancybox	
-		$(document).on('click','#help_smartcard_selection', function(){
-			V.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
-		});	
-		
-		//image fancybox, one help button in each tab
+		//Help inserting images [URL, Upload, Repository, Flickr]
 		$(document).on('click','#tab_pic_from_url_help', function(){
 			V.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
 		});	
@@ -297,7 +294,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
 		
-		//object fancybox, one help button in each tab
+		//Help inserting objects [URL, Upload, Repository, Snapshot]
 		$(document).on('click','#tab_object_from_url_help', function(){
 			V.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
 		});
@@ -314,7 +311,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
 		});
 		
-		//video fancybox, one help button in each tab
+		//Help inserting videos [URL, Repository, YouTube, Vimeo]
 		$(document).on('click','#tab_video_from_url_help', function(){
 			V.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
 		});
@@ -328,10 +325,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
 		});
 		
-		// live fancybox, one help button in each tab
+		//Help inserting live objects
 		$(document).on('click','#tab_live_webcam_help', function(){
 			V.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
-		});	
+		});
 	};
 
 

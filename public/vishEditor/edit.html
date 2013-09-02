@@ -337,6 +337,7 @@
 		<form id='presentationdetails'>
 
 			<div id="presentation_details_fields">
+				<img class='help_in_settings' id='help_in_settings' src="/vishEditor/images/icons/helptutorial_circle_blank.png"/>
 				<div id="presentation_details_fields_row1">
 
 					<div id="presentation_details_fields_row1_column1">
@@ -398,7 +399,7 @@
 
 
 			<div id="pedagogical_options_fields" style="display:none">
-				<img id='help_pedagogical_selection' src="/vishEditor/images/icons/helptutorial_circle.png"/>
+				<img class='help_in_settings' id='help_pedagogical_selection' src="/vishEditor/images/icons/helptutorial_circle_blank.png"/>
 				<div>
 					<p class="pedagogical_title">Pedagogical Aspects</p>
 				</div>
@@ -424,7 +425,7 @@
 							</select>
 						</div>
 
-						<div id="context_tag_box" class="content_tag_box_class">
+						<div id="context_tag_box" class="content_tag_box_class margin_for_new_field_settings">
 							<div id="context_tag_box_text">
 								<span i18n-key="i.context">Context</span>
 							</div>
@@ -450,7 +451,7 @@
 							</div>
 						</div>
 
-						<div>
+						<div class="margin_for_new_field_settings">
 							<div class="range_text"><span i18n-key="i.difficulty">Difficulty:</span></div>
 							<div class="slider_wrapper">
 								<input type="text" id="difficulty_range" class="slider_range_input"/>
@@ -458,7 +459,7 @@
 							</div>
 						</div>
 
-						<div id="tlt_wrapper">
+						<div id="tlt_wrapper" class="margin_for_new_field_settings">
 							<div class="range_text"><span i18n-key="i.TLT">Typical Learning Time:</span></div>
 							<input type="text" id="tlt_current_value" class="slider_range_input"/>
 							<div class="tlt_inputs_wrapper">
@@ -572,7 +573,7 @@
 			</div> 
 
 			<div id='tab_slides_content' class="fancy_tab_content" style='display:none' > 
-				<img id='help_template_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<img class='help_in_fancybox' id='tab_slides_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="tab_slides_content">
 
 					<div class="tab_slides_templates">
@@ -661,7 +662,7 @@
 			</div>
 
 			<div id='tab_presentations_repo_content' class="fancy_tab_content" style='display:none'> 
-				<img id='help_excursion_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<img class='help_in_fancybox' id='tab_presentations_repo_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
@@ -679,7 +680,7 @@
 			</div>
 
 			<div id='tab_smartcards_repo_content' class="fancy_tab_content" style='display:none'> 
-			<img id='help_smartcard_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<img class='help_in_fancybox' id='tab_smartcards_repo_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
 					<div class="search_container">
@@ -740,9 +741,9 @@
 			<a class="addvideo medium large" href="#video_fancybox">
 				<div class='thumbicon videothumb' i18n-key="i.Video" title="Video"></div>
 			</a>
-			<a class="addLive medium large" href="#live_fancybox">
+<!-- 			<a class="addLive medium large" href="#live_fancybox">
 				<div class='thumbicon livethumb' i18n-key="i.Live" title="Live"></div>
-			</a>
+			</a> -->
 			<a class="addQuiz large" href="#quiz_fancybox" id="add_quiz_thumb">
 				<div class='thumbicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
 			</a>
@@ -1356,64 +1357,36 @@
 
 
 	<!-- WALKTHROUGH HELP SECTION -->
-		<!-- help for initial screen -->
-		 <ol id="initial_screen_help" class="joyRideTipContent">
-		   <li data-id="tutorialstart" data-text="Next" i18n-key="i.Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
-		 <h2 i18n-key="i.welcomeVishEditor">Welcome to ViSH editor!</h2>
-		 <p>
-		  <span i18n-key="i.walk1">Using the "Walk through icon"</span>
-		<img src="/vishEditor/images/icons/helptutorial_circle.png"/>
-		<span i18n-key="i.walk2">around the application, will show you how to use the ViSH editor in several easy steps. All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walk through.</span>
-		</p>
-		</li>
-		<li data-id="presentation_title" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
-		 <h2 i18n-key="i.writeTitle">Let´s write a title (Mandatory)</h2>
-		 <p i18n-key="i.walk3">This black space will allow you to write a title to name your excursions. The title in the excursion is obligatory because it is used to find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
-		</li>
-		<li data-id="presentation_description" data-options="tipLocation:bottom;" i18n-key="i.Next" data-text="Next">
-		 <h2 i18n-key="i.WriteDescription">Write a description (optional)</h2>
-		   <p i18n-key="i.walk4">Here you can explain in a little more detail what the excursion is about. Click on "Next" to continue.</p>
-		</li>
-		   <li data-id="tagindex" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;">
-		 <h2 i18n-key="i.AddTags">Add tags to your excursion</h2>
-		   <p i18n-key="i.walk5">In this zone you can add topics that will represent your excursion when users search in the ViSH platform. Click on "Next" to continue.</p>
-		</li>
-		   <li data-id="avatars_carrousel" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
-		 <h2 i18n-key="i.thumbnailsChoosing">Choose or add an image that represents your excursion</h2>
-		   <p i18n-key="i.walk6">In this zone you can choose an image that represents your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.If you want, you can add your own thumbnail by pressing the plus icon at the left of the carrousel.Then click "Next" to continue.</p>
-		</li>
-		   <li data-id="save_presentation_details" class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close" i18n-key="i.Close">
-		 <h2 i18n-key="i.SavePresentationDetails">Save your excursion details</h2>
-		   <p i18n-key="i.walk7">Finally click on continue to save your excursion details, and start adding content to your excursion.</p>
-		</li>
-		</ol>
 
+		<!-- Help in menu -->
 		<ol id="menubar_help" class="joyRideTipContent">
-		   <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_welcome_exc tut_without_arrow Next" data-options="tipLocation:none">
+		   <li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_welcome_exc tut_without_arrow Next" data-options="tipLocation:none">
 		 <h2 i18n-key="i.thisIsVishEditor">This is ViSH editor!</h2>
 		 <p i18n-key="i.walk8">Welcome, this is the application where you can create your excursions. Click on "Next" to continue.</p>
 		</li>
-		   <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+		   <li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
 		 <h2 i18n-key="i.thisIsToolsMenu">This is the tools menu</h2>
 		 <p i18n-key="i.walk9">In this bar you can see all the options provided to create and manage a new virtual excursion in ViSH. Click on "Next" to continue. </p>
 		</li>
-		<li data-id="config_div" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
+		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
 		 <h2 i18n-key="i.configButton">Configuration Button</h2>
 		   <p i18n-key="i.walk10">This button will get you to the first screen where you added the title and the description to your excursion. Click on "Next" to continue.</p>
 		</li>
-		<li data-id="help_right" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
-		 <h2 i18n-key="i.previewButton">Tutorial buttons</h2>
-		   <p i18n-key="i.walk66">Clicking these buttons,<img src="/vishEditor/images/icons/helptutorial_circle.png"/> will get you to every tutorial around the VisH Editor interface</p>
+		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
+			<h2 i18n-key="i.previewButton">Tutorial buttons</h2>
+			<p i18n-key="i.walk66">Clicking these buttons,
+				<img src="/vishEditor/images/icons/helptutorial_circle.png"/> 
+				will get you to every tutorial around the VisH Editor interface</p>
 		</li>
-		   <li data-id="menubar" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
+		   <li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_menubar tut_with_arrow Next" data-options="tipLocation:none">
 		 <h2 i18n-key="i.slidesmenu">This is the slides menu</h2>
 		 <p i18n-key="i.walk11">In this zone the slides that you have created will appear. If you click on them you will be moved to that slide and you will be able to edit it. Click on "Next" to continue. </p>
 		   </li>
-		   <li data-id="save_presentation_details" class="tut_savepresentation tut_with_arrow" data-options="tipLocation:none;" data-text="Next" i18n-key="i.Next">
+		   <li data-id="thumbcontent" class="tut_savepresentation tut_with_arrow" data-options="tipLocation:none;" data-text="Next" i18n-key="i.Next">
 		 <h2 i18n-key="i.SaveButton">Save Button</h2>
 		   <p i18n-key="i.walk12">This button will able you to save your excursion.Click on "Next" to continue.</p>
 		</li>
-		<li data-id="preview_circle" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
+		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top">
 		 <h2 i18n-key="i.previewButton">Preview</h2>
 		   <p i18n-key="i.walk62">This button will get you to preview your excursion as if you were watching it already published</p>
 		</li>
@@ -1447,65 +1420,8 @@
 		</li>
 		</ol>
 
-		<!--help for flashcard -->
-		<ol id="fc_help" class="joyRideTipContent">
-			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
-				<h2>Flashcards</h2>
-				<p i18n-key="i.walk56">
-					A flashcard, is an application that will help you represent your excursion as an infographic, using an image to represent the concept of the excursion and mark zones of the image for the user to interact with them in order to see the pages of the excursion.
-				</p>
-				<p i18n-key="i.walk57">First, use these icons to add a background to the slide.</p>
-				<img class="imagetutflash" src="/vishEditor/images/tutorial/icons_flashcard_tut.png"/>
-				<p i18n-key="i.walk58">You can add images by:</p>
-				<ul>
-					<li>
-						<h1 i18n-key="i.Url">Url</h1>
-					</li>
-					<img class="imagetutflash2" src="/vishEditor/images/tutorial/icons_flashcard_tut3.png"/>
-					<li><h1 i18n-key="i.OwnImages">Upload your own images</h1></li>
-					<li><h1 i18n-key="i.SearchImagesVish">From the vish repository</h1></li>
-					<li><h1 i18n-key="i.SearchImagesFlickr">From Flickr</h1></li>
-				</ul>
-				<p i18n-key="i.walk59">Once, you finish this step, you can "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the flashcard background image to mark the zones that you want the user to interact with.</p>
-				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
-				<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/toolbar/preview_circle.png"/></p>
-				<p i18n-key="i.walk61">If you save your presentation as a flashcard, it will be shown on the Vish web page as a flashcard, but you can always edit your excursion back and save it as a presentation.</p>
-			</li>
-		</ol>
-
-		<!--help for vtours -->
-		<ol id="vt_help" class="joyRideTipContent">
-			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
-				<h2>Virtual Tours</h2>
-				<p i18n-key="i.walk79">A virtual tour is a represententation of your excursion as a map.</p>
-				<p i18n-key="i.walk80">Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>
-				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
-				<p i18n-key="i.walk81">The arrows will be converted into a pin, which you can moved across the map.</p>
-				<p i18n-key="i.walk82">To remove a pin from the map, just click the desired pin.</p>
-				<p i18n-key="i.walk83">You can click on the "preview button" to show the resulting virtual tour before you save it.<img src="/vishEditor/images/toolbar/preview_circle.png"/>
-				</p>
-			</li>
-		</ol>
-
-		<!--help for themes-->
-		<ol id="themes_help" class="joyRideTipContent">>
-		<li data-id="select_theme3" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
-		 <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
-		   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
-		</li>
-		</ol>
-
-		<!--help for addslides-->
-		<ol id="help_addslides_selection_help" class="joyRideTipContent">>
-		<li data-id="select_theme3" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
-		 <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
-		   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
-		</li>
-		</ol>
-
-
-		<!--help for template-->
-		<ol id="template_help" class="joyRideTipContent">
+		<!-- Help in standard slide -->
+		<ol id="sslide_help" class="joyRideTipContent">
 		<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
 		<h2 i18n-key="i.AddSlideContent">Adding content to a slide</h2>
 		<p>
@@ -1569,8 +1485,49 @@
 		</p>
 		</li>
 		</ol>
-		 
-		  <!--help for template selection fancybox-->
+
+
+		<!-- Help in Flashcards -->
+		<ol id="fc_help" class="joyRideTipContent">
+			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+				<h2>Flashcards</h2>
+				<p i18n-key="i.walk56">
+					A flashcard, is an application that will help you represent your excursion as an infographic, using an image to represent the concept of the excursion and mark zones of the image for the user to interact with them in order to see the pages of the excursion.
+				</p>
+				<p i18n-key="i.walk57">First, use these icons to add a background to the slide.</p>
+				<img class="imagetutflash" src="/vishEditor/images/tutorial/icons_flashcard_tut.png"/>
+				<p i18n-key="i.walk58">You can add images by:</p>
+				<ul>
+					<li>
+						<h1 i18n-key="i.Url">Url</h1>
+					</li>
+					<img class="imagetutflash2" src="/vishEditor/images/tutorial/icons_flashcard_tut3.png"/>
+					<li><h1 i18n-key="i.OwnImages">Upload your own images</h1></li>
+					<li><h1 i18n-key="i.SearchImagesVish">From the vish repository</h1></li>
+					<li><h1 i18n-key="i.SearchImagesFlickr">From Flickr</h1></li>
+				</ul>
+				<p i18n-key="i.walk59">Once, you finish this step, you can "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the flashcard background image to mark the zones that you want the user to interact with.</p>
+				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
+				<p><span i18n-key="i.walk60">You can click on the "preview button" to test the flashcard before you save it.</span><img src="/vishEditor/images/toolbar/preview_circle.png"/></p>
+				<p i18n-key="i.walk61">If you save your presentation as a flashcard, it will be shown on the Vish web page as a flashcard, but you can always edit your excursion back and save it as a presentation.</p>
+			</li>
+		</ol>
+
+		<!-- Help in Virtual Tours -->
+		<ol id="vt_help" class="joyRideTipContent">
+			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+				<h2>Virtual Tours</h2>
+				<p i18n-key="i.walk79">A virtual tour is a represententation of your excursion as a map.</p>
+				<p i18n-key="i.walk80">Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>
+				<img src="/vishEditor/images/tutorial/icons_flashcard_tut2.png"/>
+				<p i18n-key="i.walk81">The arrows will be converted into a pin, which you can moved across the map.</p>
+				<p i18n-key="i.walk82">To remove a pin from the map, just click the desired pin.</p>
+				<p i18n-key="i.walk83">You can click on the "preview button" to show the resulting virtual tour before you save it.<img src="/vishEditor/images/toolbar/preview_circle.png"/>
+				</p>
+			</li>
+		</ol>
+
+		 <!-- Help in slide templates selection -->
 		<ol id="help_template_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.selectSlide">Adding a Slide</h2>
@@ -1578,7 +1535,15 @@
 		</li>
 		</ol>
 
-		  <!--help for excursion selection fancybox-->
+		<!-- Help inserting a PDF presentation -->
+		<ol id="help_pdfex_help" class="joyRideTipContent">
+			<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+				 <h2>Insert a PDF presentation</h2>
+				 <p>Select a presentation in PDF format and upload the file. Only files with PDF format are allowed.</p>
+			</li>
+		</ol>
+
+		<!-- Help in presentation carrousel -->
 		<ol id="help_excursion_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.selectSlide">Adding Slides from another excursion</h2>
@@ -1586,7 +1551,55 @@
 		</li>
 		</ol>
 
-		<!--Pedagogical options fancybox-->
+		<!-- Help in smartcards carrousel -->
+		<ol id="help_smartcard_selection_help" class="joyRideTipContent">
+			<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+				 <h2 i18n-key="i.selectSlide">Adding Flashcards or Virtual Tours</h2>
+				 <p i18n-key="i.walk78">This window offers you to search Flashcards or Virtual Tours in the Vish platform in order to add them into your excursion in just two steps. You just have to click on the smartcard you choose, click on preview (which will lead you to the next screen) and click on "add slides" in order to insert it to your content. Click on "Close" to finish this walkthrough.</p>
+			</li>
+		</ol>
+
+		<!-- Help in themes templates -->
+		<ol id="themes_help" class="joyRideTipContent">>
+		<li data-id="select_theme3" class="custom tut_themes tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+		 <h2 i18n-key="i.themesTitle">Vish Editor Themes</h2>
+		   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
+		</li>
+		</ol>
+
+		<!-- Help in Settings -->
+		 <ol id="help_in_settings_help" class="joyRideTipContent">
+		   <li data-id="tutorialstart" data-text="Next" i18n-key="i.Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
+		 <h2 i18n-key="i.welcomeVishEditor">Welcome to ViSH editor!</h2>
+		 <p>
+		  <span i18n-key="i.walk1">Using the "Walk through icon"</span>
+		<img src="/vishEditor/images/icons/helptutorial_circle.png"/>
+		<span i18n-key="i.walk2">around the application, will show you how to use the ViSH editor in several easy steps. All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walk through.</span>
+		</p>
+		</li>
+		<li data-id="presentation_title" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
+		 <h2 i18n-key="i.writeTitle">Let´s write a title (Mandatory)</h2>
+		 <p i18n-key="i.walk3">This black space will allow you to write a title to name your excursions. The title in the excursion is obligatory because it is used to find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
+		</li>
+		<li data-id="presentation_description" data-options="tipLocation:bottom;" i18n-key="i.Next" data-text="Next">
+		 <h2 i18n-key="i.WriteDescription">Write a description (optional)</h2>
+		   <p i18n-key="i.walk4">Here you can explain in a little more detail what the excursion is about. Click on "Next" to continue.</p>
+		</li>
+		   <li data-id="tagindex" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;">
+		 <h2 i18n-key="i.AddTags">Add tags to your excursion</h2>
+		   <p i18n-key="i.walk5">In this zone you can add topics that will represent your excursion when users search in the ViSH platform. Click on "Next" to continue.</p>
+		</li>
+		   <li data-id="avatars_carrousel" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
+		 <h2 i18n-key="i.thumbnailsChoosing">Choose or add an image that represents your excursion</h2>
+		   <p i18n-key="i.walk6">In this zone you can choose an image that represents your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.If you want, you can add your own thumbnail by pressing the plus icon at the left of the carrousel.Then click "Next" to continue.</p>
+		</li>
+		   <li data-id="save_presentation_details" class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close" i18n-key="i.Close">
+		 <h2 i18n-key="i.SavePresentationDetails">Save your excursion details</h2>
+		   <p i18n-key="i.walk7">Finally click on continue to save your excursion details, and start adding content to your excursion.</p>
+		</li>
+		</ol>
+
+		<!-- Help in pedagogical options settings -->
 		<ol id="help_pedagogical_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.selectSlide">Peadgogical Aspects</h2>
@@ -1594,26 +1607,15 @@
 		</li>
 		</ol>
 
-				  <!--help for smartcard selection fancybox-->
-		<ol id="help_smartcard_selection_help" class="joyRideTipContent">
-		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
-		 <h2 i18n-key="i.selectSlide">Adding Flashcards or Virtual Tours</h2>
-		 <p i18n-key="i.walk78">This window offers you to search Flashcards or Virtual Tours in the Vish platform in order to add them into your excursion in just two steps. You just have to click on the smartcard you choose, click on preview (which will lead you to the next screen) and click on "add slides" in order to insert it to your content. Click on "Close" to finish this walkthrough.</p>
-		</li>
-		</ol>
-
-		<!--help for quiz selection fancybox-->
+		<!-- Help in Quiz Templates -->
 		<ol id="quiz_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
-
 		 <h2 i18n-key="i.selectquiz">Selecting a Quiz</h2>
 		 <p i18n-key="i.walk14">This window offers you a variety of Quizzes to create your excursion. You just have to click on one of the images in order to add it to the area you selected. Click on "Close" to finish this walkthrough.</p>
 		</li>
 		</ol>
 
-
-		 
-		  <!--help for fancybox of images-->
+		 <!-- Help inserting images [URL, Upload, Repository, Flickr] -->
 		<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
 		 <li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 		  <h2 i18n-key="i.AddImagesContent">Adding Images</h2>
@@ -1681,8 +1683,7 @@
 		</li>
 		</ol>
 
-
-		<!--help for fancybox of object-->
+		<!-- Help inserting objects [URL, Upload, Repository, Snapshot] -->
 		<ol id="object_fancy_tabs_id_help" class="joyRideTipContent">
 		<li data-id="object_fancy_tabs_id" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 		    <h2 i18n-key="i.AddObjectContent">Adding Object content</h2>
@@ -1800,7 +1801,7 @@
 		</ol>
 
 
-		<!--help for fancybox of videos-->
+		<!-- Help inserting videos [URL, Repository, YouTube, Vimeo] -->
 		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
 		<li data-id="video_fancy_tabs_id" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.AddVideoContent">Adding Video</h2>
@@ -1862,7 +1863,7 @@
 		</li>
 		</ol>
 		   
-		  <!--help for fancybox of live-->
+		<!-- Help inserting live objects -->
 		  <ol id="tab_live_webcam_id" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.AddLiveContent">Adding Live Content</h2>

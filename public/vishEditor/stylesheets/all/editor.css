@@ -1,64 +1,3 @@
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/vishEditor/stylesheets/libs/OpenSans-Light.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/vishEditor/stylesheets/libs/OpenSans-Regular.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/vishEditor/stylesheets/libs/OpenSans-Semibold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/vishEditor/stylesheets/libs/OpenSans-Bold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 300;
-  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-LightItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-Italic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-SemiboldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-BoldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 800;
-  src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBoldItalic.ttf) format('ttf');
-}
-
 img {
   border:0;
 }
@@ -74,11 +13,10 @@ img {
 }
 
 /* Settings */
-
 #presentation_details_fields {
 }
 
-#presentation_details_preview_thumbnail_img_wrapper{
+#presentation_details_preview_thumbnail_img_wrapper {
 	width: 60%;
 	height: 60%;
 	margin-left: 20%;
@@ -97,7 +35,7 @@ img {
 	border-radius: 10px;
 }
 
-.addthumbtitle  {
+.addthumbtitle {
 	position: absolute;
 	margin-top: -92px;
 	margin-left: 90px;
@@ -108,7 +46,7 @@ img {
 	color: #A3A3A3;
 }
 
-img.addThumbnailPlus{
+img.addThumbnailPlus {
 	opacity: 0.7 !important;
 	background: white !important;
 	margin-left: -4px;
@@ -148,24 +86,31 @@ img.addThumbnailPlus:hover {
 	margin: 5px;
 }
 
+p.presentation_details_column_title {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.7em;
+	font-weight: 600;
+	color: #323232;
+}
+
 #presentation_details_preview_thumbnail_img .addthumbtitle:hover {
 	color: #000;
 	cursor: pointer;
 }
 
-#presentation_details_fields_row1{
+#presentation_details_fields_row1 {
 	width: 100%;
 	height: 600px;
 }
 
-#presentation_details_fields_row1_column1{
+#presentation_details_fields_row1_column1 {
 	height: 100%;
 	width: 24%;
 	padding: 34px;
 	float: left;
 }
 
-#presentation_details_fields_row1_column2{
+#presentation_details_fields_row1_column2 {
 	height: 571px;
 	width: 491px;
 	margin-left: -19px;
@@ -175,7 +120,7 @@ img.addThumbnailPlus:hover {
 	padding-left: 24px;
 }
 
-#presentation_details_fields_row1_column3{
+#presentation_details_fields_row1_column3 {
 	height: 572px;
 	width: 191px;
 	float: left;
@@ -186,12 +131,13 @@ img.addThumbnailPlus:hover {
 	border-left: 1px solid #EBEBEB;
 }
 
-#presentation_details_fields_row2{
+#presentation_details_fields_row2 {
 	width: 100%;
-	height: 70px;
+	padding-top: 10px;
+	height: 60px;
 }
 
-#presentation_details_preview_title{
+#presentation_details_preview_title {
 	margin-top: -15px;
 }
 
@@ -226,17 +172,17 @@ img.addThumbnailPlus:hover {
 	color: #323232;
 }
 
-p.presentation_details_column_title{
+p.presentation_details_column_title {
 	color: #ccc;
 }
 
-#presentation_details_preview{
+#presentation_details_preview {
 	width: 200px;
 	border: 1px solid #ccc;
 	margin-top: -9px;
 }
 
-#presentation_details_title{
+#presentation_details_title {
 	width: 100%;
 	display: inline;
 }
@@ -262,7 +208,7 @@ input.presentation_details_input {
 	z-index: 1000;
 }
 
-#presentation_details_description{
+#presentation_details_description {
 	width: 100%;
 	display: block;
 }
@@ -303,19 +249,23 @@ textarea#presentation_details_textarea {
 	text-shadow: none !important;
 }
 
-#tlt_current_value{
+#tlt_current_value {
 	display: inline;
-	width: 90px;
-	margin-left: 7px;
+	width: 100px;
+	margin-left: 4px;
+}
+
+.margin_for_new_field_settings {
+	margin-top: 20px;
 }
 
 /* Themes in settings */
 
-#scrollbar_themes_list{
+#scrollbar_themes_list {
 	height: 486px;
 }
 
-#scrollbar_themes_list .mCSB_container{
+#scrollbar_themes_list .mCSB_container {
 	border: 1px solid #ccc;
 	padding: 14px;
 	background: #EEEEEE;
@@ -324,7 +274,7 @@ textarea#presentation_details_textarea {
 	-webkit-box-shadow: inset 2px 1px 10px 0px rgba(226, 226, 226, 0.82);
 }
 
-#scrollbar_themes_list img.image_barbutton{
+#scrollbar_themes_list img.image_barbutton {
 	width: 120px;
 	margin-left: 15px;
 	margin-bottom: 10px;
@@ -336,17 +286,17 @@ textarea#presentation_details_textarea {
 	opacity: 0.8;
 }
 
-#scrollbar_themes_list img.image_barbutton:hover{
+#scrollbar_themes_list img.image_barbutton:hover {
 	opacity: 1;
 	cursor: pointer;
 	border: 4px solid #357ebd;
 }
 
-#scrollbar_themes_list p.ptext_barbutton{
+#scrollbar_themes_list p.ptext_barbutton {
 	display: none;
 }
 
-.theme_selected_in_scrollbar{
+.theme_selected_in_scrollbar {
 	border: 4px solid #357ebd !important;
 	opacity:1 !important;
 	width: 116px !important;
@@ -358,7 +308,7 @@ textarea#presentation_details_textarea {
 	margin-right: 30px;
 }
 
-div#tagBoxIntro{
+div#tagBoxIntro {
 	padding: 0px;
 	color: #7a8fa9;
 	font-family: Arial;
@@ -373,7 +323,7 @@ div#tagBoxIntro{
 	margin-top: -7px;	
 }
 
-div#tagBoxIntro .tagit{
+div#tagBoxIntro .tagit {
 	height: 57px;
 }
 
@@ -390,7 +340,7 @@ button.buttonpedagogical {
 	font-weight: 300;
 } 
 
-.pedagogical_title{
+.pedagogical_title {
 	color: #B6B6B6;
 	font-family: Arial;
 	font-size: 2em;
@@ -399,14 +349,22 @@ button.buttonpedagogical {
 	margin-bottom: 4%;
 }
 
-#pedagogical_options_fields_row1_column1{
+#pedagogical_options_fields_row1 {
+	height: 250px;
+}
+
+#pedagogical_options_fields_row2 {
+	height: 250px;
+}
+
+#pedagogical_options_fields_row1_column1 {
 	float: left;
 	width: 303px;
 	height: 165px;
 	margin-left: 33px;
 }
 
-#pedagogical_options_fields_row1_column2{
+#pedagogical_options_fields_row1_column2 {
 	float: left;
 	width: 321px;
 	height: 246px;
@@ -416,23 +374,22 @@ button.buttonpedagogical {
 	margin-right: -19px;
 }
 
-#pedagogical_options_fields_row1_column3{
+#pedagogical_options_fields_row1_column3 {
 	float: left;
 	margin-left: 12px;
 	height: 245px;
 	border-left: 1px solid #ebebeb;
 }
 
-#language_tag_box_text{
+#language_tag_box_text {
 	display: inline;
 }
 
-#context_tag_box_text{
+#context_tag_box_text {
 	display: inline;
 }
 
 .content_tag_box_class {
-	margin-top: 42px;
 	margin-left: 10px;
 }
 
@@ -440,50 +397,49 @@ input.slider_range_input {
 	border: 0; 
 	color: #005580; 
 	font-weight: bold;
+	width: 175px;
 }
 
-.range_text{
+.range_text {
 	display: inline;
 }
 
-.slider_wrapper{ 
+.slider_wrapper { 
 	display: inline;
 	margin-left: 10px;
 }
 
-.slider_bar{
+.slider_bar {
 	margin-left: 0px;
-	margin-top: 5px;
+	margin-top: 7px;
 	width: 85%;
 }
 
-#subject_tag{
+#subject_tag {
 	height: 171px;
 }
 
 .ped_box_fields {
 	float: right;
 	margin-right: 16px;
-	width: 164px;
+	width: 180px;
 }
 
 .ped_box_fields2 {
 	float: right;
 	margin-right: -19px;
+	width: 180px;
 }
 
 
-
-#educational_objectives_title{
-	position: absolute;
+#educational_objectives_title {
 	margin-left: 45px;
-	margin-top: 266px;
 }
 
-#educational_objectives_textarea{
-	width: 886px;
+#educational_objectives_textarea {
+	width: 923px;
 	height: 151px;
-	margin-top: 55px;
+	margin-top: 10px;
 	margin-left: 46px;
 }
 
@@ -494,59 +450,55 @@ input.slider_range_input {
 .ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
 
 
-#tlt_wrapper{
-	margin-top: 5px;
+.tlt_inputs_wrapper {
+	margin-left: 0px;
 }
 
-.tlt_inputs_wrapper{
-	margin-left: 28px;
-}
-
-.tlt_input_wrapper{
+.tlt_input_wrapper {
 	margin-top: 6px;
 	float: left;
-	width: 23%;
+	width: 28%;
 	text-align: center;
 }
 
-.tlt_input_title{
+.tlt_input_title {
 	padding: 0;
 	margin: 0;
+	font-size: 13px;
 }
 
-.tlt_input{
+.tlt_input {
 	width: 60%;
+	text-align: center;
 }
 
 #done_in_pedagogical {
 	position: absolute;
-	right: 48px;
-	margin-top: 23px;
-	font-size: 0.9em;
+	margin-top: 38px;
+	right: 23px;
+	font-size: 12px;
 }
 
-
-#subject_tag_box{
+#subject_tag_box {
 	float: left;
 	width: 240px;
 	margin-left: 40px;
 }
 
-#language_tag_box{
-	float: left;
+#language_tag_box {
 	width: 260px;
 	margin-left: 9px;
 }
 
-#help_pedagogical_selection {
+.help_in_settings {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
 	position: absolute;
-	right: 25px;
+	right: 1px;
 	height: 29px;
 	top: -1px;
 }
 
-#help_pedagogical_selection:hover {
+.help_in_settings:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
@@ -626,6 +578,7 @@ input.slider_range_input {
 
 .slidesScrollbarButton {
 	border: 1px solid #B9B9B9 !important;
+
 }
 
 .slidesScrollbarButton:hover {
@@ -651,20 +604,31 @@ input.slider_range_input {
 }
 
 
-#addSlideButton {
+#addSlideButton, #importButton {
 	font-family: 'Open Sans', sans-serif;
 }
 
-#importButton {
-	font-family: 'Open Sans', sans-serif;
-}	
-
-.presentation_details_column_title {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.7em;
-	font-weight: 600;
-	color: #323232;
+#addSlideButton > .slidesScrollbarButton {
+	width: 90px;
 }
+
+#importButton > .slidesScrollbarButton {
+	width: 70px;
+}
+
+#addSlideButtonOnSubslides > .slidesScrollbarButton {
+	width: 90px;
+	margin-top: 15px;
+}
+
+#importButtonOnSubslides {
+	display: none;
+}
+
+#importButtonOnSubslides > .slidesScrollbarButton {
+	width: 90px;
+}
+
 
 #slides_list {
 	position: relative;
@@ -691,15 +655,14 @@ input.slider_range_input {
 	border-top: none;
 }
 
-
 #slides_list p.ptext_barbutton {
 	display: block;
 	float: left;
-	margin-left: 8px;
-	margin-top: 0px;
 	font-size: 1.2em;
 	font-family: 'Open Sans', sans-serif;
 	cursor: default;
+	width: 25px;
+	margin: 0px 5px 0px 5px;
 }
 
 #slides_list img.image_barbutton {
@@ -724,12 +687,12 @@ input.slider_range_input {
 	-moz-box-shadow:    15px 15px 18px rgba(50, 50, 50, 0.17);
 	box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
 	cursor: url(https://mail.google.com/mail/images/2/openhand.cur) 8 8, move;
-	 background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
-	 border: none;
-	 width: 72%;
-	 padding: 1px;
-	 z-index: 20;
-	 opacity: 1;
+	background-image: url(http://matthewjamestaylor.com/blog/selection.gif);
+	border: none;
+	width: 72%;
+	padding: 1px;
+	z-index: 20;
+	opacity: 1;
 }
 
 #slides_list div:first-child {
@@ -833,12 +796,29 @@ div.vezone[tooltip='true'] {
 	text-align: center;
 }
 
+div.vezone[tooltip='true'][size='extra-small'] {
+	font-size: 12px;
+}
+
+div.vezone[tooltip='true'][size='small'] {
+	font-size: 15px;
+}
+
+div.vezone[tooltip='true'][size='medium'] {
+	font-size: 21px;
+}
+
+div.vezone[tooltip='true'][size='large'] {
+	font-size: 35px;
+}
+
 .zone_tooltip {
 	text-align: center;
 	display: block;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 100;
 	color: #c9c9c9;
+	opacity: 0.8;
 }
 
 .box1 {
@@ -1129,14 +1109,13 @@ div.addUrlButtons{
 	background: url(/vishEditor/images/zonethumbs/live_hover.png);
 }
 
-.thumbicon{
+.thumbicon {
 	float: left;
     margin-left: 15px;
     margin-right: 2px;
     margin-top: 12px;
 	cursor: pointer;
 	background-size: 100% !important;
-
 }
 
 .thumb_extra_small {
@@ -1174,11 +1153,7 @@ div.addUrlButtons{
 	margin-left: 7px;
 }
 
-.with_pointer{
-	cursor: pointer;
-}
-
-#thumbcontent{
+#thumbcontent {
 	margin: 0px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -1325,8 +1300,8 @@ div.vezone {
 }
 
 .tab_slides_content {
-  margin-top: 30px;
-  margin-left: 73px;
+	margin-top: 30px;
+	margin-left: 73px;
 }
 
 .tab_slides_templates {
@@ -1479,7 +1454,7 @@ input[type=search] {
 	-webkit-appearance:none;
 }
 
-input.url, input.upload{
+input.url, input.upload {
 	width: 500px;
 	padding: 1px 3px 0 28px;
 }
@@ -1862,8 +1837,6 @@ div.object_wrapper {
 	margin-right: -5px;
 	top: 0px;
 	right: 30px;
-	margin-top: -1px;
-	margin-right: -5px;
 }
 
 .help_in_fancybox:hover {
@@ -1896,36 +1869,10 @@ div.object_wrapper {
 	float: left;
 }
 
-#help_template_selection, #help_quiz_selection {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_tp.png);
-	position: absolute;
-	margin-top: -145px;
-	right: 21px;
-}
-
-#help_excursion_selection {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_tp.png);
-	position: absolute;
-	margin-top: -43px;
-	right: 21px;
-}
-
-#help_smartcard_selection {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_tp.png);
-	position: absolute;
-	margin-top: -43px;
-	right: 21px;
-}
-
-#help_smartcard_selection:hover, #help_excursion_selection:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
-
 #help_themes_selection {
 	position: absolute;
 	margin-top: -88px;
-	right: 21px;
+	right: 25px;
 	cursor: pointer;
 }
 
@@ -1934,11 +1881,6 @@ div.object_wrapper {
 	cursor: pointer;
 }
 
-
-#help_template_selection:hover, #help_quiz_selection:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
 
 /* Joyride positions */
 
@@ -2549,4 +2491,68 @@ div.poi_label_container {
 	height: 102px;
 	margin-bottom: -24px;
 	border-radius: 6px;
+}
+
+
+/* Fonts */
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/vishEditor/stylesheets/libs/OpenSans-Light.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/vishEditor/stylesheets/libs/OpenSans-Regular.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/vishEditor/stylesheets/libs/OpenSans-Semibold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/vishEditor/stylesheets/libs/OpenSans-Bold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-LightItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-Italic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 600;
+  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-SemiboldItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-BoldItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 800;
+  src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBoldItalic.ttf) format('ttf');
 }
