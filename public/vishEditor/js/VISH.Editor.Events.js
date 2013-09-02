@@ -55,6 +55,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click','.delete_content', V.Editor.onDeleteItemClicked);
 			$(document).on('click','.delete_slide', V.Editor.onDeleteSlideClicked);
 
+			$(document).on('click','#theme_fancybox img[theme]', V.Editor.Themes.onThemeSelected);
+
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
 
 			$(document).bind('keydown', handleBodyKeyDown);

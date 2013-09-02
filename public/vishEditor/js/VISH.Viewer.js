@@ -54,7 +54,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Quiz.initBeforeRender(presentation);
 		V.Renderer.init();
 		V.Slides.init();
-		V.Utils.loadDeviceCSS();
+		V.Utils.Loader.loadDeviceCSS();
 		V.User.init(options);
 		V.Storage.init();
 		V.Recommendations.init(options);

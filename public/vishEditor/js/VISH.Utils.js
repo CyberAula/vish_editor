@@ -343,30 +343,6 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
-	var loadDeviceCSS = function(){
-		//Set device CSS
-		if(V.Status.getDevice().desktop){
-			loadCSS("device/desktop.css");
-		} else if(V.Status.getDevice().mobile){
-			loadCSS("device/mobile.css");
-		} else if(V.Status.getDevice().tablet){
-			loadCSS("device/tablet.css");
-		}
-
-		//Set browser CSS
-		switch(V.Status.getDevice().browser.name){
-			case V.Constant.FIREFOX:
-				loadCSS("browser/firefox.css");
-				break;
-			case V.Constant.IE:
-				loadCSS("browser/ie.css");
-				break;
-			case V.Constant.CHROME:
-				loadCSS("browser/chrome.css");
-				break;
-		}
-	}
-
 	/*
 	 * Function to send the parent to the specified URL, used for fullscreen
 	 * We may be nested in more than one iframes
@@ -420,13 +396,6 @@ VISH.Utils = (function(V,undefined){
 			return params;
 		}
 	}
-
-   /**
-	* Function to dinamically add a css
-	*/
-	var loadCSS = function(path){
-		$("head").append('<link rel="stylesheet" href="' + V.StylesheetsPath + path + '" type="text/css" />');
-	};
 
 		
 	//Check minium requirements to init vish editor
@@ -689,8 +658,6 @@ VISH.Utils = (function(V,undefined){
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,
-		loadDeviceCSS			: loadDeviceCSS,
-		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
 		addFontSizeToStyle 		: addFontSizeToStyle,
 		removeFontSizeInStyle 	: removeFontSizeInStyle,

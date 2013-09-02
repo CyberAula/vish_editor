@@ -1,11 +1,11 @@
 VISH.Themes = (function(V,$,undefined){
 
-	var loadTheme = function(theme){
+	var loadTheme = function(theme,callback){
 		if(!theme){
 			theme = V.Constant.Themes.Default;
 		}
 		_unloadAllThemes();
-		V.Utils.loadCSS("themes/" + theme + ".css");
+		V.Utils.Loader.loadCSS("themes/" + theme + ".css",callback);
 	}
 
 	var _unloadAllThemes = function(){

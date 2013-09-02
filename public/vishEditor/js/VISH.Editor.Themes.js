@@ -57,23 +57,42 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		}
 	}
 
+	var onThemeSelected = function(event){
+		event.preventDefault();
+		var themeNumber = $(event.target).attr("theme");
+		if($(event.target).hasClass("waitCursor")){
+			return;
+		}
+		selectTheme(themeNumber);
+	}
+
 	var selectTheme = function(theme){
 		currentTheme = theme;
 
-		V.Themes.loadTheme(theme);
+		$("#theme_fancybox").addClass("waitCursor");
+		$(".templathumb").addClass("waitCursor");
 
-		//Save it in the draftPresentation
-		var draftPresentation = V.Editor.getPresentation();
-		if(!draftPresentation){
-			draftPresentation = {};
-		}
-		draftPresentation.theme = theme;
-		V.Editor.setPresentation(draftPresentation);
+		V.Themes.loadTheme(theme, function(){
+			//Theme loaded callback
 
-		//Refresh colors
-		V.Editor.Text.refreshAutoColors();
-		
-		$.fancybox.close();
+			//Save it in the draftPresentation
+			var draftPresentation = V.Editor.getPresentation();
+			if(!draftPresentation){
+				draftPresentation = {};
+			}
+			draftPresentation.theme = theme;
+			V.Editor.setPresentation(draftPresentation);
+
+			//Refresh colors
+			V.Editor.Text.refreshAutoColors();
+			
+			//Reset Tooltips
+			V.Editor.Tools.setAllTooltipMargins(function(){
+				$.fancybox.close();
+				$("#theme_fancybox").removeClass("waitCursor");
+				$(".templathumb").removeClass("waitCursor");
+			});
+		});
 	};
 
 	var getCurrentTheme = function(){
@@ -87,6 +106,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 
 	return {
 		init			: init,
+		onThemeSelected	: onThemeSelected,
 		selectTheme		: selectTheme,
 		getCurrentTheme	: getCurrentTheme
 	};

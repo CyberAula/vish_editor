@@ -67,7 +67,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}
-		V.Utils.loadDeviceCSS();
+		V.Utils.Loader.loadDeviceCSS();
 		V.Editor.I18n.init(options.lang);
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
@@ -242,7 +242,8 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 
-		$(this).find(".zone_tooltip").hide();
+		V.Editor.Tools.hideZoneToolTip($(this).find(".zone_tooltip"));
+
 		$(this).append(content);
 
 		$("a.addpicture").fancybox({

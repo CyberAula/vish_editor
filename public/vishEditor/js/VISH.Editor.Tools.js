@@ -124,7 +124,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			case undefined:
 				//Add menuselect button and hide tooltips
 				$(zone).find(".menuselect_hide").show();
-				$(zone).find(".zone_tooltip").hide();
+				hideZoneToolTip($(zone).find(".zone_tooltip"));
 				return;
 			default:
 				break;
@@ -143,22 +143,80 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var addTooltipToZone = function(zone,hidden){
 		var style = "";
+		var visible = "true";
 		if(hidden === true){
 			style = "style='display:none'";
+			visible = "false";
 		}
-		var tooltip = "<span class='zone_tooltip' " + style + " >"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
+		var tooltip = "<span class='zone_tooltip' visible='" + visible + "' " + style + " >"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
 		$(zone).append(tooltip);
+
+		tooltip = $(zone).find(".zone_tooltip");
+		if(hidden === true){
+			hideZoneToolTip(tooltip);
+		} else {
+			showZoneToolTip(tooltip);
+		}
 	};
+
+	var showZoneToolTip = function(tooltip){
+		var zone = $("div").has(tooltip);
+
+		$(tooltip).show();
+		$(tooltip).attr("visible","true");
+		$(zone).attr("tooltip","true");
+
+		if($(tooltip).css("margin-top")==="0px"){	
+			_setTooltipMargins(tooltip);
+		}
+	}
+
+	var _setTooltipMargins = function(tooltip){
+		var zone = $("div").has(tooltip);
+		var slide = $("article").has(zone);
+
+		$(slide).addClass("temp_shown");
+		$(zone).addClass("temp_shown");
+		$(tooltip).addClass("temp_shown");
+
+		//Adjust margin-top
+		var zoneHeight = $(zone).height();
+		var spanHeight = $(tooltip).height();
+		var marginTop = ((zoneHeight-spanHeight)/2);
+		
+		$(slide).removeClass("temp_shown");
+		$(zone).removeClass("temp_shown");
+		$(tooltip).removeClass("temp_shown");
+
+		$(tooltip).css("margin-top",marginTop+"px");
+	}
+
+	var setAllTooltipMargins = function(callback){
+		$("span.zone_tooltip").each(function(index,tooltip){
+			_setTooltipMargins(tooltip);
+		});
+		if(typeof callback == "function"){
+			callback(true);
+		}
+	}
+
+	var hideZoneToolTip = function(tooltip){
+		var zone = $("div").has(tooltip);
+		$(tooltip).hide();
+		$(tooltip).attr("visible","false");
+		$(zone).attr("tooltip","false");
+	}
 
 	var cleanZoneTools = function(zone){
 		$(".menuselect_hide").hide();
 		$(".delete_content").hide();
 		_cleanElementToolbar();
 
+		var tooltip = $(zone).find(".zone_tooltip");	
 		if(V.Editor.isZoneEmpty(zone)){
-			$(zone).find(".zone_tooltip").show();
+			showZoneToolTip(tooltip);
 		} else {
-			$(zone).find(".zone_tooltip").hide();
+			hideZoneToolTip(tooltip);
 		}
 	}
 
@@ -449,7 +507,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		selectTheme						: selectTheme,
 		changeBackground				: changeBackground,
 		addTooltipsToSlide				: addTooltipsToSlide,
-		addTooltipToZone				: addTooltipToZone
+		addTooltipToZone				: addTooltipToZone,
+		showZoneToolTip					: showZoneToolTip,
+		hideZoneToolTip					: hideZoneToolTip,
+		setAllTooltipMargins			: setAllTooltipMargins
 	};
 
 }) (VISH, jQuery);

@@ -94,11 +94,10 @@ VISH.Utils.Loader = (function(V,undefined){
 					callback();
 				}
 			};
-
 			//calling a function after the js is loaded (IE)
 			script.onreadystatechange = loadFunction;
 
-			//calling a function after the js is loaded (Firefox)
+			//calling a function after the js is loaded (Firefox & GChrome)
 			script.onload = callback;
 
 			head.appendChild(script);
@@ -126,6 +125,62 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 		_loadGoogleLibraryCallback = undefined;
 	}
+
+	/**
+	* Function to dinamically add a css
+	*/
+	var loadCSS = function(path, callback){
+		var url = V.StylesheetsPath + path;
+		var head = document.getElementsByTagName('head')[0];
+		var link = document.createElement('link');
+		link.type = "text/css";
+		link.rel = "stylesheet"
+		link.href = url;
+
+		//Callback
+		if(typeof callback == "function"){
+
+			//calling a function after the css is loaded (Firefox & Google Chrome)
+			link.onload = function () {
+				callback();
+			}
+
+			var loadFunction = function(){
+				if((this.readyState == 'complete')||(this.readyState == 'loaded')){
+					callback();
+				}
+			};
+			//calling a function after the css is loaded (IE)
+			link.onreadystatechange = loadFunction;
+		}
+
+		head.appendChild(link);
+	};
+
+	var loadDeviceCSS = function(){
+		//Set device CSS
+		if(V.Status.getDevice().desktop){
+			loadCSS("device/desktop.css");
+		} else if(V.Status.getDevice().mobile){
+			loadCSS("device/mobile.css");
+		} else if(V.Status.getDevice().tablet){
+			loadCSS("device/tablet.css");
+		}
+
+		//Set browser CSS
+		switch(V.Status.getDevice().browser.name){
+			case V.Constant.FIREFOX:
+				loadCSS("browser/firefox.css");
+				break;
+			case V.Constant.IE:
+				loadCSS("browser/ie.css");
+				break;
+			case V.Constant.CHROME:
+				loadCSS("browser/chrome.css");
+				break;
+		}
+	}
+
 
 	/*
 	* Loading dialogs
@@ -185,15 +240,17 @@ VISH.Utils.Loader = (function(V,undefined){
 	}
 
 	return {
-		loadImagesOnContainer      : loadImagesOnContainer,
-		loadScript                 : loadScript,
-		loadGoogleLibrary          : loadGoogleLibrary,
-		onGoogleLibraryLoaded      : onGoogleLibraryLoaded,
-		startLoading               : startLoading,
-		stopLoading                : stopLoading,
-		onCloseLoading             : onCloseLoading,
-		startLoadingInContainer    : startLoadingInContainer,
-		stopLoadingInContainer     : stopLoadingInContainer
+		loadImagesOnContainer		: loadImagesOnContainer,
+		loadScript					: loadScript,
+		loadGoogleLibrary			: loadGoogleLibrary,
+		loadCSS						: loadCSS,
+		loadDeviceCSS				: loadDeviceCSS,
+		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		startLoading				: startLoading,
+		stopLoading					: stopLoading,
+		onCloseLoading				: onCloseLoading,
+		startLoadingInContainer		: startLoadingInContainer,
+		stopLoadingInContainer		: stopLoadingInContainer
 	};
 
 }) (VISH);
