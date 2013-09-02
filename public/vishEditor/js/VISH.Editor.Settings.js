@@ -379,7 +379,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(typeof TLT == "string"){
 			draftPresentation.TLT = TLT;
 		}
-		draftPresentation.subject = $("#subject_tag").val().toString();
+		draftPresentation.subject = $("#subject_tag").val();
 		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
 
 		V.Debugging.log("draftPresentation");

@@ -527,7 +527,7 @@ VISH.Samples = (function(V,undefined){
 		"context": "university",
 		"age_range":"4 - 20",
 		"difficulty" : "easy",
-		"subject":["Biology"],
+		"subject":["Art","Astronomy","Biology"],
 		"TLT": "PT6H30M15S",
 		"educational_objectives":"Know about the Iberian Lynx",
 		
