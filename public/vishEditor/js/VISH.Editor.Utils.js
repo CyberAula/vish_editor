@@ -431,10 +431,56 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$("#" + tab_id).addClass("fancy_selected");
 		//hide previous help button
 		$(".help_in_fancybox").hide();
+
+		//Submodule callbacks	
+		switch (tab_id) {
+			case "tab_presentations_repo":
+				// V.Editor.Presentation.Repository.beforeLoadTab();
+				break;
+			case "tab_smartcards_repo":
+				// V.Editor.Slideset.Repository.beforeLoadTab();
+				break;
+			//Image
+			case "tab_pic_thumbnails":
+				// V.Editor.Image.Thumbnails.beforeLoadTab();
+				break;
+			case "tab_pic_repo":
+				V.Editor.Image.Repository.beforeLoadTab();
+				break;
+			case "tab_pic_flikr":
+				// V.Editor.Image.Flikr.beforeLoadTab();
+				break;
+			//Video
+			case "tab_video_repo":
+				// V.Editor.Video.Repository.beforeLoadTab();
+				break;
+			case "tab_video_youtube":
+				// V.Editor.Video.Youtube.beforeLoadTab();
+				break;
+			case "tab_video_vimeo":
+				// V.Editor.Video.Vimeo.beforeLoadTab();
+				break;	
+			//Objects
+			case "tab_object_repo":
+				// V.Editor.Object.Repository.beforeLoadTab();
+				break;
+			case "tab_object_lre":
+				// V.Editor.Object.LRE.beforeLoadTab();
+				break;
+			case "tab_live_webcam":
+				// V.Editor.Object.Live.beforeLoadTab("webcam");
+				break;
+			case "tab_live_micro":
+				// V.Editor.Object.Live.beforeLoadTab("micro");
+				break;
+			default:
+				break;
+		}
+
 		//show correct one
 		$("#"+ tab_id + "_help").show();
 
-        //Submodule callbacks	
+		//Submodule callbacks	
 		switch (tab_id) {
 			case "tab_slides":
 				//templates and smartcards
@@ -505,11 +551,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_pdfex":
 				V.Editor.PDFex.onLoadTab();
 				break;
-				
- 			//Default
 			default:
 				break;
-	  }
+		}
 	};
 
 	return {

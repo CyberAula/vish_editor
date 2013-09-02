@@ -1035,6 +1035,12 @@ div.addUrlButtons{
 	padding: 5px 7px 5px 7px;	
 }
 
+.input_text_fancy[disabled]{
+	background: #ccc;
+	cursor: default;
+	opacity: 0.2;
+}
+
 .input_text_fancy:focus {
 	position:absolute;
 	border: 1px solid rgb(255, 2, 94);

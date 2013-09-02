@@ -133,7 +133,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 		}
 			
 		if (multipleRow) {
-			_applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width);
+			_applyMultipleRows(containerId, wrapperDiv, mainDiv, rows, rowItems, scrollItems, rowClass, width, afterCreateCarruselFunction);
 		} else {
 			$(wrapperDiv).prepend(mainDiv);
 
@@ -164,9 +164,9 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 	}
 
 	
-	var _applyMultipleRows = function(containerId,wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass,width){
-
+	var _applyMultipleRows = function(containerId,wrapperDiv,mainDiv,rows,rowItems,scrollItems,rowClass,width,afterCreateCarruselFunction){
 		var synchronizeIds = [];
+		var createdRows = 0;
 
 		//Create one div for each row.
 		var i;
@@ -189,16 +189,26 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			$(wrapperDiv).prepend(window[mainDiv.id + "_row" + i ]);
 			if(i==0){
 				var newContainerId = mainDiv.id + "_row" + i;
-				_setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width);
+				_setMainCarrousel(newContainerId,containerId,rows,synchronizeIds,rowItems,scrollItems,width, null, function(){
+					createdRows++;
+					_afterCreateRow(createdRows,rows,afterCreateCarruselFunction);
+				});
 			} else {
-				_setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width);
+				_setRowCarrousel(mainDiv.id + "_row" + i,rowItems,scrollItems,width, function(){
+					createdRows++;
+					_afterCreateRow(createdRows,rows,afterCreateCarruselFunction);
+				});
 			}
 		}
-		$(".caroufredsel_wrapper").css("margin-bottom","30px");
 	}
 
+	var _afterCreateRow = function(createdRows,rows,afterCreateCarruselFunction){
+		if((createdRows===rows)&&(typeof afterCreateCarruselFunction == "function")){
+			afterCreateCarruselFunction();
+		}
+	}
 
-	var _setRowCarrousel = function (id,rowItems,scrollItems,width){
+	var _setRowCarrousel = function (id,rowItems,scrollItems,width,afterCreateCarruselFunction){
 		$("#" + id).carouFredSel({
 			auto    : false,
 			circular: false,
@@ -216,12 +226,12 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 			      min : rowItems,
 			      max : rowItems
 			    }
-			}
+			},
+			onCreate    		: afterCreateCarruselFunction
 		}); 
 	}
 
-
-	var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start, afterCreateCarruselFunction){
+	var _setMainCarrousel = function (id,widgetsId,rows,synchronizeIds,rowItems,scrollItems,width,start,afterCreateCarruselFunction){
 		if(!start){
 			start = 0;
 		}
@@ -254,7 +264,7 @@ VISH.Editor.Carrousel = (function(V,$,undefined){
 				// key     : "right"
 			},
 			pagination  : "#carrousel_pag"  + widgetsId,
-			onCreate    : afterCreateCarruselFunction      
+			onCreate    : afterCreateCarruselFunction
 		});  
 			
 		if(synchronizeIds){

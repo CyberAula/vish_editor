@@ -3,10 +3,10 @@
 }
 
 div.image_carousel {
-    position: relative;
-    width: 750px;
-    overflow: hidden;
-    margin-left: -10px;
+	position: relative;
+	width: 750px;
+	overflow: hidden;
+	margin-left: -10px;
 }
 
 div.image_carousel_single_row > div.caroufredsel_wrapper {
@@ -14,15 +14,20 @@ div.image_carousel_single_row > div.caroufredsel_wrapper {
 }
 
 div.image_carousel_multiple_row > div.caroufredsel_wrapper {
-  margin-left: 46px !important;
+	margin-left: 46px !important;
+	margin-bottom: 30px !important;
+}
+
+div.image_carousel_multiple_row_thumbnails > div.caroufredsel_wrapper {
+	margin-bottom: 30px !important;
 }
 
 div.image_carousel_single_row {
-    padding: 85px 0 20px 0px;
+	padding: 85px 0 20px 0px;
 }
 
 div.image_carousel_multiple_row {
-    padding: 102px 0 60px 0px;
+	padding: 102px 0 60px 0px;
 }
 
 div.image_carousel img {
@@ -45,11 +50,11 @@ div.image_carousel img:active {
 }
 
 a.prev, a.next {
-    background: url(/vishEditor/images/carrousel/carrousel_sprite.png) no-repeat transparent;
-    width: 45px;
-    height: 50px;
-    display: block;
-    position: absolute;
+	background: url(/vishEditor/images/carrousel/carrousel_sprite.png) no-repeat transparent;
+	width: 45px;
+	height: 50px;
+	display: block;
+	position: absolute;
 	  outline: none;
 }
 
@@ -74,7 +79,7 @@ a.next.disabled {
   background-position: -50px -100px !important;  
 }
 a.prev.disabled, a.next.disabled {
-    cursor: default;
+	cursor: default;
 }
 a.prev span, a.next span {
   display: none;
@@ -103,8 +108,8 @@ div.pagination a span {
 }
 
 div.clearfix {
-    float: none;
-    clear: both;
+	float: none;
+	clear: both;
 }
 
 
@@ -115,7 +120,7 @@ a.prev_single_row, a.next_single_row{
 }
 
 a.prev_multiple_row, a.next_multiple_row{
-    top: 245px;
+	top: 245px;
 }
 
 div.carrousel_element_single_row{
@@ -302,8 +307,8 @@ div.image_carousel_multiple_row_thumbnails > div.caroufredsel_wrapper {
 }
 
 div.image_carousel_multiple_row_thumbnails {
-    padding: 62px 0 60px 0px;
-    margin-left: 20px !important;
+	padding: 62px 0 60px 0px;
+	margin-left: 20px !important;
 }
 
 div.carrousel_element_multiple_row_thumbnails {
@@ -329,7 +334,7 @@ div.carrousel_wrapper_multiple_row_thumbnails {
 }
 
 a.prev_multiple_row_thumbnails, a.next_multiple_row_thumbnails{
-    top: 240px;
+	top: 240px;
 }
 
 
@@ -340,12 +345,12 @@ a.prev_multiple_row_thumbnails, a.next_multiple_row_thumbnails{
 }
 
 div.image_carousel_single_row_slides {
-    padding: 3px 0 0px 112px;
-    margin-left: 25px;
+	padding: 3px 0 0px 112px;
+	margin-left: 25px;
 }
 
 div.image_carousel_single_row_slides{
-    overflow: visible;
+	overflow: visible;
 }
 
 div.image_carousel_single_row_slides  > div.caroufredsel_wrapper {
@@ -491,3 +496,4 @@ div.pagination_single_row_presentation_repository{
   margin-top: 15px;
   margin-bottom: 15px;
 }
+

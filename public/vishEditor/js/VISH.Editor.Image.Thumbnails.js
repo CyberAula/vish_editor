@@ -48,7 +48,7 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 
 	var _drawData = function(data){
 		//Ensure that carrousel is visible before drawing it
-		var carrouselVisible = $("#tab_pic_thumbnails_carrousel").is(":visible");
+		var carrouselVisible = $("#" + carrouselDivId).is(":visible");
 		if(!carrouselVisible){
 			return;
 		}
