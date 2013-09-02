@@ -9,3 +9,10 @@ div#viewerpreview {
 #toolbar_element {
 	position: absolute;
 }
+
+/* Button fonts */
+.button {
+	font-weight: bold;
+	font-family: Helvetica;
+	font-size: 1.1em;
+}

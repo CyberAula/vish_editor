@@ -89,8 +89,7 @@ img.addThumbnailPlus:hover {
 p.presentation_details_column_title {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1.7em;
-	font-weight: 600;
-	color: #323232;
+	color: #ccc;
 }
 
 #presentation_details_preview_thumbnail_img .addthumbtitle:hover {
@@ -170,10 +169,6 @@ p.presentation_details_column_title {
 	font-size: 1em;
 	font-weight: 400;
 	color: #323232;
-}
-
-p.presentation_details_column_title {
-	color: #ccc;
 }
 
 #presentation_details_preview {
@@ -256,7 +251,7 @@ textarea#presentation_details_textarea {
 }
 
 .margin_for_new_field_settings {
-	margin-top: 20px;
+	margin-top: 23px;
 }
 
 /* Themes in settings */
@@ -304,8 +299,12 @@ textarea#presentation_details_textarea {
 
 
 #fill_details_later_button {
-	margin-left: 518px;
+	margin-left: 498px;
 	margin-right: 30px;
+}
+
+#fill_details_later_button, #save_presentation_details {
+	width: 99px;
 }
 
 div#tagBoxIntro {
@@ -354,7 +353,11 @@ button.buttonpedagogical {
 }
 
 #pedagogical_options_fields_row2 {
-	height: 250px;
+	height: 248px;
+}
+
+#pedagogical_options_fields_row3 {
+	height: 55px;
 }
 
 #pedagogical_options_fields_row1_column1 {
@@ -417,6 +420,7 @@ input.slider_range_input {
 
 #subject_tag {
 	height: 171px;
+	width: 234px;
 }
 
 .ped_box_fields {
@@ -450,6 +454,18 @@ input.slider_range_input {
 .ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
 
 
+#age_range_wrapper{
+	height: 50px;
+}
+
+#difficulty_wrapper{
+	height: 50px;
+}
+
+#tlt_wrapper {
+	height: 75px;
+}
+
 .tlt_inputs_wrapper {
 	margin-left: 0px;
 }
@@ -474,9 +490,8 @@ input.slider_range_input {
 
 #done_in_pedagogical {
 	position: absolute;
-	margin-top: 38px;
 	right: 23px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 #subject_tag_box {
@@ -885,8 +900,8 @@ div.vezone[tooltip='true'][size='large'] {
 }
 
 .textfancy {
-	position:absolute;
-	font-family:Helvetica;
+	position: absolute;
+	font-family: Helvetica;
 	margin-left: 70px;
 	margin-top: 15px;
 	font-size: 20px;
@@ -1005,7 +1020,7 @@ div.addUrlButtons{
 }
 
 .input_text_fancy {
-	font-family:Helvetica;
+	font-family: Helvetica;
 	font-size: 16px;
 	background: 5px 50% no-repeat;
 	position:absolute;
@@ -1671,19 +1686,19 @@ img.delete_img {
 }
 
 .button {
-    padding: 5px 10px;
-    display: inline;
+	padding: 5px 10px;
+	display: inline;
 	text-decoration:none;
-    background: #ff005d repeat-x bottom;
+	background: #ff005d repeat-x bottom;
 	opacity: 0.6;
 	color:#f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.1em;
 }	
 
 .button:hover {

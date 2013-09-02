@@ -11,7 +11,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 		bindEditorEventListeners();
 	};
 
-   var bindEditorEventListeners = function(){
+	var bindEditorEventListeners = function(){
 		if((!bindedEventListeners)&&(V.Editing)){
 			var presentation = V.Editor.getPresentation();
 
