@@ -1,64 +1,3 @@
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/vishEditor/stylesheets/libs/OpenSans-Light.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/vishEditor/stylesheets/libs/OpenSans-Regular.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/vishEditor/stylesheets/libs/OpenSans-Semibold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/vishEditor/stylesheets/libs/OpenSans-Bold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 300;
-  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-LightItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-Italic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-SemiboldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-BoldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 800;
-  src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBoldItalic.ttf) format('ttf');
-}
-
 img {
   border:0;
 }
@@ -829,11 +768,31 @@ div.zoneUnselected {
 	outline: 0;
 }
 
+
+/* Tooltips */
+
 div.vezone[tooltip='true'] {
 	text-align: center;
+	opacity: 0.6;
 }
 
-.zone_tooltip {
+div.vezone[tooltip='true'][size='extra-small'] {
+	font-size: 15px;
+}
+
+div.vezone[tooltip='true'][size='small'] {
+	font-size: 18px;
+}
+
+div.vezone[tooltip='true'][size='medium'] {
+	font-size: 21px;
+}
+
+div.vezone[tooltip='true'][size='large'] {
+	font-size: 35px;
+}
+
+span.zone_tooltip {
 	text-align: center;
 	display: block;
 	font-family: 'Open Sans', sans-serif;
@@ -2549,4 +2508,68 @@ div.poi_label_container {
 	height: 102px;
 	margin-bottom: -24px;
 	border-radius: 6px;
+}
+
+
+/* Fonts */
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/vishEditor/stylesheets/libs/OpenSans-Light.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/vishEditor/stylesheets/libs/OpenSans-Regular.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/vishEditor/stylesheets/libs/OpenSans-Semibold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/vishEditor/stylesheets/libs/OpenSans-Bold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBold.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-LightItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-Italic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 600;
+  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-SemiboldItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-BoldItalic.ttf) format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 800;
+  src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBoldItalic.ttf) format('ttf');
 }
