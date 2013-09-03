@@ -100,10 +100,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			currentObject[objectItem.id]=objectItem;
 		});
 
-			var options = {};
-			options.titleArray = carrouselImagesTitles;
-			options.callback = _onImagesLoaded;
-			V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
+		var options = {};
+		options.titleArray = carrouselImagesTitles;
+		options.callback = _onImagesLoaded;
+		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	};
 
 	var _onImagesLoaded = function(){

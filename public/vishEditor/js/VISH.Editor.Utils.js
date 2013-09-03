@@ -442,7 +442,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			//Image
 			case "tab_pic_thumbnails":
-				// V.Editor.Image.Thumbnails.beforeLoadTab();
+				V.Editor.Image.Thumbnails.beforeLoadTab();
 				break;
 			case "tab_pic_repo":
 				V.Editor.Image.Repository.beforeLoadTab();
