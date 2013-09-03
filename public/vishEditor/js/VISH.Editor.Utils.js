@@ -448,7 +448,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Image.Repository.beforeLoadTab();
 				break;
 			case "tab_pic_flikr":
-				// V.Editor.Image.Flikr.beforeLoadTab();
+				V.Editor.Image.Flikr.beforeLoadTab();
 				break;
 			//Video
 			case "tab_video_repo":

@@ -133,54 +133,59 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	 
 		
-  /**
+	/**
 	 * function to call to VISH and request videos in json format
 	 * The request is:
 	 * GET /search.json?type=picture&q=text
 	 */
 	var requestImages = function(text, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-				var result = jQuery.extend({}, V.Samples.API.imageList);
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			var result = jQuery.extend({}, V.Samples.API.imageList);
+			switch(text){
+				case "dummy":
+					result['pictures'] = V.Samples.API.imageListDummy['pictures'];
+					break;
+				case "little":
+					result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageListLittle['pictures']);
+					break;
+				case "server error":
+					result = undefined;
+					break;
+				default:
+					result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
+			}
 
-			  switch(text){
-					case "dummy":
-			  result['pictures'] = V.Samples.API.imageListDummy['pictures'];
-					  break;
-					case "little":
-			  result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageListLittle['pictures']);
-					  break;
-					default:
-			  result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
+			setTimeout(function(){
+				if((typeof result == "undefined")&&(typeof failCallback == "function")){
+					failCallback();
+				} else if(typeof successCallback == "function"){
+					successCallback(result);
 				}
-			
-		setTimeout(function(){
-		  successCallback(result);
-		}, 2000);
-	  }
-	  return;
-	}
-					 
-	_requestByType("picture", text, successCallback, failCallback);		
+			}, 2000);
+
+			return;
+		}
+
+		_requestByType("picture", text, successCallback, failCallback);		
 	};
 	
 	/**
-	 * function to call to VISH and request recommended videos
-	 */
+	* function to call to VISH and request recommended videos
+	*/
 	var requestRecomendedImages = function(successCallback, failCallback){
-	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-			var result = V.Samples.API.imageList;
-			result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
-			setTimeout(function(){
-			  successCallback(result);
-			}, 2000);
-	  }
-	  return;
-	}
-		
-	_requestByType("picture", "", successCallback, failCallback);
-  };
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = V.Samples.API.imageList;
+				result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
+				setTimeout(function(){
+					successCallback(result);
+				}, 2000);
+			}
+			return;
+		}
+
+		_requestByType("picture", "", successCallback, failCallback);
+	};
 	
 		
 		  

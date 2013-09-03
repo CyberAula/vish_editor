@@ -5,7 +5,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	var myInput;
 	var timestampLastSearch;
 	
-	var init = function() {
+	var init = function(){
 		myInput = $("#tab_pic_repo_content").find("input[type='search']");
 		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
@@ -20,14 +20,11 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		_cleanSearch();
 	}
 	
-	var onLoadTab = function() {
+	var onLoadTab = function(){
 		
 	};
 	
-	/*
-	 * Request data to the server.
-	 */
-	var _requestData = function(text) {
+	var _requestData = function(text){
 		_prepareRequest();
 		V.Editor.API.requestImages(text, _onDataReceived, _onAPIError);
 	};
@@ -40,10 +37,10 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	}
 	
 	var _cleanSearch = function(){
+		timestampLastSearch = undefined;
 		$(myInput).val("");
 		$(myInput).removeAttr("disabled");
 		_cleanCarrousel();
-		timestampLastSearch = undefined;
 	}
 
 	var _cleanCarrousel = function(){
@@ -51,12 +48,8 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 	}
 
-	/*
-	 * Fill carrousel with server data.
-	 */
-	var _onDataReceived = function(data) {
-		if(typeof timestampLastSearch == "undefined"){
-			//Old search (not valid).
+	var _onDataReceived = function(data){
+		if(!_isValidResult()){
 			return;
 		}
 
@@ -67,15 +60,9 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 			return;
 		}
 
-		var isVisible = $("#" + carrouselDivId).is(":visible");
-		if(!isVisible){
-			return;
-		}
-
-		//data.images is an array with the results
 		var carrouselImages = [];
-		$.each(data.pictures, function(index, image) {
-			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >")
+		$.each(data.pictures, function(index, image){
+			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >");
 			carrouselImages.push(myImg);
 		});
 
@@ -97,16 +84,20 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
 
-		var isVisible = $("#" + carrouselDivId).is(":visible");
-		if(!isVisible){
+		if(!_isValidResult()){
+			//We need to clean because data has been loaded by V.Utils.Loader
+			_cleanCarrousel();
 			return;
 		}
 
 		$("#" + containerDivId).addClass("temp_shown");
 		$("#" + carrouselDivId).addClass("temp_shown");
 
+
 		if(noResults===true){
-			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "No results found" + "</p>");
+		} else if(noResults===false){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "Error connecting to ViSH server" + "</p>");
 		} else {
 			var options = new Array();
 			options.rows = 2;
@@ -124,15 +115,31 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 		}
 	}
 	
-	var _onAPIError = function() {
-		V.Debugging.log("API error");
+	var _onAPIError = function(){
+		if(_isValidResult()){
+			_onSearchFinished();
+			_drawData(false);
+		}
 	};
 	
-	var _onClickCarrouselElement = function(event) {
+	var _onClickCarrouselElement = function(event){
 		var image_url = $(event.target).attr("src");
 		V.Editor.Image.addContent(image_url);
-		_cleanSearch();
 	};
+
+	var _isValidResult = function(){
+		if(typeof timestampLastSearch == "undefined"){
+			//Old search (not valid).
+			return false;
+		}
+
+		var isVisible = $("#" + carrouselDivId).is(":visible");
+		if(!isVisible){
+			return false;
+		}
+
+		return true;
+	}
 			
 	return {
 		init 					: init,
