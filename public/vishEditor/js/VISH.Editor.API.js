@@ -6,142 +6,9 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	var init = function(){}
 
-  /**
-   * function to call to VISH and request excursions in json format
-   * The request is:
-   * GET /excursions/search.json?type=&q=text
-   */
-  var requestExcursions = function(text, successCallback, failCallback){
-	if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-	  if(typeof successCallback == "function"){
-		var result = V.Samples.API.excursionsList;
-		setTimeout(function(){
-		  successCallback(result);
-		}, 2000);
-	  }
-	  return;
-	}
-	   
-	_requestByType("excursion", text, successCallback, failCallback);
-  };
-
-
-  /**
-   * function to call to VISH and request recommended excursions
-   */
-  var requestRecomendedExcursions = function(successCallback, failCallback){
-	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-			var result = V.Samples.API.excursionsList;
-			setTimeout(function(){
-			  successCallback(result);
-			}, 2000);
-	  }
-	  return;
-	}
-
-	_requestByType("excursion", "", successCallback, failCallback);
-  };
-
-
-  /**
-   * function to call to VISH and request smartcards (flashcards and virtual tours) in json format
-   * The request is:
-   * GET /excursions/search.json?type=smartcard&q=text
-   */
-  var requestSmartcards = function(text, successCallback, failCallback){
-	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-		var result = V.Samples.API.smartcardList;
-		setTimeout(function(){
-		  successCallback(result);
-		}, 2000);
-	  }
-	  return;
-	}
-			 
-	_requestByType("smartcard", text, successCallback, failCallback);   
-  };
-
-  /**
-   * function to call to VISH and request recommended smartcards
-   */
-  var requestRecomendedSmartcards = function(successCallback, failCallback){
-	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-			var result = V.Samples.API.smartcardList;
-			setTimeout(function(){
-			  successCallback(result);
-			}, 2000);
-	  }
-	  return;
-	}
-	
-	_requestByType("smartcard", "", successCallback, failCallback);
-  };
-
-
 	/**
-	 * function to call to VISH and request videos in json format
-	 * The request is:
-	 * GET /search.json?type=video&q=text
-	 */
-	var requestVideos = function(text, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = jQuery.extend({}, V.Samples.API.videoList);
-				switch(text){
-					case "dummy":
-						result['videos'] = V.Samples.API.videoListDummy['videos'];
-						break;
-					case "little":
-						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle['videos']);
-						break;
-					case "server error":
-						result = undefined;
-						break;
-					default:
-						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
-				}
-
-				setTimeout(function(){
-					if((typeof result == "undefined")&&(typeof failCallback == "function")){
-						failCallback();
-					} else if(typeof successCallback == "function"){
-						successCallback(result);
-					}
-				}, 2000);
-
-			}
-			return;
-		}
-
-		_requestByType("video", text, successCallback, failCallback);		
-	};
-	
-	
-	/**
-	 * function to call to VISH and request recommended videos
-	 */
-	var requestRecomendedVideos = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.videoList;
-				result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-		_requestByType("video", "", successCallback, failCallback);
-	};
-	 
-		
-	/**
-	 * function to call to VISH and request videos in json format
-	 * The request is:
-	 * GET /search.json?type=picture&q=text
+	 * Request IMAGES in json format
+	 * The request is: GET /search.json?type=picture&q=text
 	 */
 	var requestImages = function(text, successCallback, failCallback){
 		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
@@ -175,10 +42,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	};
 	
 	/**
-	* function to call to VISH and request recommended videos
+	* function to call VISH and request recommended images
 	*/
 	var requestRecomendedImages = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof successCallback == "function"){
 				var result = V.Samples.API.imageList;
 				result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
@@ -191,11 +58,121 @@ VISH.Editor.API = (function(V,$,undefined){
 
 		_requestByType("picture", "", successCallback, failCallback);
 	};
+
+
+	/**
+	 * Request VIDEOS in json format
+	 * The request is: GET /search.json?type=video&q=text
+	 */
+	var requestVideos = function(text, successCallback, failCallback){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = jQuery.extend({}, V.Samples.API.videoList);
+				switch(text){
+					case "dummy":
+						result['videos'] = V.Samples.API.videoListDummy['videos'];
+						break;
+					case "little":
+						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle['videos']);
+						break;
+					case "server error":
+						result = undefined;
+						break;
+					default:
+						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
+				}
+
+				setTimeout(function(){
+					if((typeof result == "undefined")&&(typeof failCallback == "function")){
+						failCallback();
+					} else if(typeof successCallback == "function"){
+						successCallback(result);
+					}
+				}, 2000);
+
+			}
+			return;
+		}
+
+		_requestByType("video", text, successCallback, failCallback);		
+	};
 	
-		
-		  
+	
+	/**
+	 * function to call VISH and request recommended videos
+	 */
+	var requestRecomendedVideos = function(successCallback, failCallback){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = V.Samples.API.videoList;
+				result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
+				setTimeout(function(){
+					successCallback(result);
+				}, 2000);
+			}
+			return;
+		}
+		_requestByType("video", "", successCallback, failCallback);
+	};
+	
+				  
+	/**
+	 * Request OBJECTS in json format
+	 * The request is: GET /search.json?object=1&q=text
+	 */
+	var requestObjects = function(text, successCallback, failCallback){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = jQuery.extend({}, V.Samples.API.objectList);
+				switch(text){
+					case "dummy":
+						result = V.Samples.API.objectListDummy;
+						break;
+					case "little":
+						result = V.Debugging.shuffleJson(V.Samples.API.objectListLittle);
+						break;
+					case "server error":
+						result = undefined;
+						break;
+					default:
+						result = V.Debugging.shuffleJson(V.Samples.API.objectList);
+				}
+
+				setTimeout(function(){
+					if((typeof result == "undefined")&&(typeof failCallback == "function")){
+						failCallback();
+					} else if(typeof successCallback == "function"){
+						successCallback(result);
+					}
+				}, 2000);
+			}
+			return;
+		}
+
+		_requestByType("object", text, successCallback, failCallback);  
+	};
+
+	/**
+	* function to call VISH and request recommended objects
+	*/
+	var requestRecomendedObjects = function(successCallback, failCallback){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = V.Debugging.shuffleJson(V.Samples.API.objectList);
+				setTimeout(function(){
+					successCallback(result);
+				}, 2000);
+			}
+			return;
+		}
+
+		_requestByType("object", "", successCallback, failCallback);
+	};
+	
+
+
   /**
-   * function to call to VISH and request live objects in json format
+   * function to call VISH and request live objects in json format
    * The request is:
    * GET /search.json?live=1&q=
    */
@@ -227,7 +204,7 @@ VISH.Editor.API = (function(V,$,undefined){
   
   
   /**
-   * function to call to VISH and request recommended lives objects
+   * function to call VISH and request recommended lives objects
    */
   var requestRecomendedLives = function(successCallback, failCallback){
 	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
@@ -242,60 +219,83 @@ VISH.Editor.API = (function(V,$,undefined){
 		
 		_requestByType("live", "", successCallback, failCallback);
    };
-		
-		
-			  
-  /**
-   * function to call to VISH and request objects in json format
-   * The request is:
-   * GET /search.json?object=1&q=
-   */
-  var requestObjects = function(text, successCallback, failCallback){
-	
-	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-		var result = jQuery.extend({}, V.Samples.API.objectList);
 
-		switch(text){
-		  case "dummy":
-			result = V.Samples.API.objectListDummy;
-			break;
-		  case "little":
-			result = V.Debugging.shuffleJson(V.Samples.API.objectListLittle);
-			break;
-		  default:
-			result = V.Debugging.shuffleJson(V.Samples.API.objectList);
-		}
-		  
+
+  /**
+   * function to call VISH and request excursions in json format
+   * The request is:
+   * GET /excursions/search.json?type=&q=text
+   */
+  var requestExcursions = function(text, successCallback, failCallback){
+	if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+	  if(typeof successCallback == "function"){
+		var result = V.Samples.API.excursionsList;
 		setTimeout(function(){
 		  successCallback(result);
 		}, 2000);
 	  }
 	  return;
 	}
-	
-	_requestByType("object", text, successCallback, failCallback);  
+	   
+	_requestByType("excursion", text, successCallback, failCallback);
   };
-  
-  
+
+
   /**
-   * function to call to VISH and request recommended lives objects
+   * function to call VISH and request recommended excursions
    */
-  var requestRecomendedObjects = function(successCallback, failCallback){
+  var requestRecomendedExcursions = function(successCallback, failCallback){
 	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
 	  if(typeof successCallback == "function"){
-		var result = V.Debugging.shuffleJson(V.Samples.API.objectList);
+			var result = V.Samples.API.excursionsList;
+			setTimeout(function(){
+			  successCallback(result);
+			}, 2000);
+	  }
+	  return;
+	}
+
+	_requestByType("excursion", "", successCallback, failCallback);
+  };
+
+
+  /**
+   * function to call VISH and request smartcards (flashcards and virtual tours) in json format
+   * The request is:
+   * GET /excursions/search.json?type=smartcard&q=text
+   */
+  var requestSmartcards = function(text, successCallback, failCallback){
+	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
+	  if(typeof successCallback == "function"){
+		var result = V.Samples.API.smartcardList;
 		setTimeout(function(){
 		  successCallback(result);
 		}, 2000);
 	  }
 	  return;
 	}
+			 
+	_requestByType("smartcard", text, successCallback, failCallback);   
+  };
+
+  /**
+   * function to call VISH and request recommended smartcards
+   */
+  var requestRecomendedSmartcards = function(successCallback, failCallback){
+	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
+	  if(typeof successCallback == "function"){
+			var result = V.Samples.API.smartcardList;
+			setTimeout(function(){
+			  successCallback(result);
+			}, 2000);
+	  }
+	  return;
+	}
 	
-	_requestByType("object", "", successCallback, failCallback);
-   };
-		
-		
+	_requestByType("smartcard", "", successCallback, failCallback);
+  };
+
+
 	/**
 	 * generic function to call VISH and request by query and type
 	 * The request is:
@@ -385,7 +385,7 @@ VISH.Editor.API = (function(V,$,undefined){
   };
 	
 	/**
-   * function to call to VISH and request tags
+   * function to call VISH and request tags
    */
 	var requestTags = function(successCallback, failCallback){
 		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {

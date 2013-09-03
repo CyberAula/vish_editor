@@ -462,7 +462,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;	
 			//Objects
 			case "tab_object_repo":
-				// V.Editor.Object.Repository.beforeLoadTab();
+				V.Editor.Object.Repository.beforeLoadTab();
 				break;
 			case "tab_object_lre":
 				// V.Editor.Object.LRE.beforeLoadTab();
