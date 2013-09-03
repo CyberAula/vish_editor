@@ -17,6 +17,9 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 		});
 	}
 	
+	var beforeLoadTab = function(tab){
+	}
+
 	var onLoadTab = function(tab){
 		if(tab!="webcam"){
 			return;
@@ -118,7 +121,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	}
 	
 	var _onAPIError = function(){
-		V.Debugging.log("Error")
+		V.Debugging.log("Error");
 	}
 	 
   
@@ -162,6 +165,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 	
 	return {
 		init                : init,
+		beforeLoadTab		: beforeLoadTab,
 		onLoadTab			: onLoadTab,
 		addSelectedObject   : addSelectedObject
 	};

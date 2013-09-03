@@ -14,7 +14,9 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 		});
 	};
 
-	//function that is called when tab loads
+	var beforeLoadTab = function(){
+	};
+
 	var onLoadTab = function(){		
 	};
 
@@ -86,9 +88,10 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForZone(V.Editor.getCurrentArea());
 	};
 
-		return {
-		init        : init,
-		onLoadTab	: onLoadTab
+	return {
+		init			: init,
+		beforeLoadTab	: beforeLoadTab,
+		onLoadTab		: onLoadTab
 	};
 
 }) (VISH, jQuery);

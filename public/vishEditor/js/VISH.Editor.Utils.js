@@ -450,6 +450,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_pic_flikr":
 				V.Editor.Image.Flikr.beforeLoadTab();
 				break;
+			case "tab_pic_lre":
+				V.Editor.Image.LRE.beforeLoadTab();
+				break;
 			//Video
 			case "tab_video_repo":
 				V.Editor.Video.Repository.beforeLoadTab();
@@ -465,13 +468,13 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Object.Repository.beforeLoadTab();
 				break;
 			case "tab_object_lre":
-				// V.Editor.Object.LRE.beforeLoadTab();
+				V.Editor.Object.LRE.beforeLoadTab();
 				break;
 			case "tab_live_webcam":
-				// V.Editor.Object.Live.beforeLoadTab("webcam");
+				V.Editor.Object.Live.beforeLoadTab("webcam");
 				break;
 			case "tab_live_micro":
-				// V.Editor.Object.Live.beforeLoadTab("micro");
+				V.Editor.Object.Live.beforeLoadTab("micro");
 				break;
 			default:
 				break;
@@ -506,6 +509,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case "tab_pic_flikr":
 				V.Editor.Image.Flikr.onLoadTab();
+				break;
+			case "tab_pic_lre":
+				V.Editor.Image.LRE.onLoadTab();
 				break;
 			//Video
 			case "tab_video_from_url":
