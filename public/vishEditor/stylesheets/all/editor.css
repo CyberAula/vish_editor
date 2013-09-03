@@ -1343,7 +1343,8 @@ a#tab_object_lre, a#tab_pic_lre {
 }
 
 a#tab_object_lre > img, a#tab_pic_lre > img {
-	width: 155px;
+	width: 150px;
+	max-width: 100%;
 	height: 27px;
 	margin-bottom: -10px;
 }

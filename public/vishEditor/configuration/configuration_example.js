@@ -37,9 +37,9 @@ var getOptions = function(){
 		configuration["Flickr"] = true;
 		configuration["Youtube"] = true;
 		configuration["Vimeo"] = false;
+		configuration["LRE"] = true;
 
 		configuration["Upload"] = true;
-		configuration["LRE"] = true;
 
 		//Posible values: noserver, node, vish
 		configuration["mode"] = "noserver";

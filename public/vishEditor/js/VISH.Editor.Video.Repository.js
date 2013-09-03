@@ -180,7 +180,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		$(button).hide();
 	};
 	
-	var addSelectedVideo = function() {
+	var addSelectedVideo = function(){
 		if(selectedVideo != null){
 			var sourcesArray = [];
 			var options = new Array();

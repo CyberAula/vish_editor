@@ -435,10 +435,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		//Submodule callbacks	
 		switch (tab_id) {
 			case "tab_presentations_repo":
-				// V.Editor.Presentation.Repository.beforeLoadTab();
+				V.Editor.Presentation.Repository.beforeLoadTab();
 				break;
 			case "tab_smartcards_repo":
-				// V.Editor.Slideset.Repository.beforeLoadTab();
+				V.Editor.Slideset.Repository.beforeLoadTab();
 				break;
 			//Image
 			case "tab_pic_thumbnails":
@@ -458,7 +458,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Video.Youtube.beforeLoadTab();
 				break;
 			case "tab_video_vimeo":
-				// V.Editor.Video.Vimeo.beforeLoadTab();
+				V.Editor.Video.Vimeo.beforeLoadTab();
 				break;	
 			//Objects
 			case "tab_object_repo":
