@@ -433,30 +433,6 @@ VISH.Utils = (function(V,undefined){
 		}
 	}
 
-	var loadDeviceCSS = function(){
-		&#x2F;&#x2F;Set device CSS
-		if(V.Status.getDevice().desktop){
-			loadCSS(&quot;device&#x2F;desktop.css&quot;);
-		} else if(V.Status.getDevice().mobile){
-			loadCSS(&quot;device&#x2F;mobile.css&quot;);
-		} else if(V.Status.getDevice().tablet){
-			loadCSS(&quot;device&#x2F;tablet.css&quot;);
-		}
-
-		&#x2F;&#x2F;Set browser CSS
-		switch(V.Status.getDevice().browser.name){
-			case V.Constant.FIREFOX:
-				loadCSS(&quot;browser&#x2F;firefox.css&quot;);
-				break;
-			case V.Constant.IE:
-				loadCSS(&quot;browser&#x2F;ie.css&quot;);
-				break;
-			case V.Constant.CHROME:
-				loadCSS(&quot;browser&#x2F;chrome.css&quot;);
-				break;
-		}
-	}
-
 	&#x2F;*
 	 * Function to send the parent to the specified URL, used for fullscreen
 	 * We may be nested in more than one iframes
@@ -510,13 +486,6 @@ VISH.Utils = (function(V,undefined){
 			return params;
 		}
 	}
-
-   &#x2F;**
-	* Function to dinamically add a css
-	*&#x2F;
-	var loadCSS = function(path){
-		$(&quot;head&quot;).append(&#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;&#x27; + V.StylesheetsPath + path + &#x27;&quot; type=&quot;text&#x2F;css&quot; &#x2F;&gt;&#x27;);
-	};
 
 		
 	&#x2F;&#x2F;Check minium requirements to init vish editor
@@ -779,8 +748,6 @@ VISH.Utils = (function(V,undefined){
 		getId					: getId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,
-		loadDeviceCSS			: loadDeviceCSS,
-		loadCSS					: loadCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
 		addFontSizeToStyle 		: addFontSizeToStyle,
 		removeFontSizeInStyle 	: removeFontSizeInStyle,

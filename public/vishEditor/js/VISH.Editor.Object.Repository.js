@@ -12,7 +12,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 
 
 	var init = function(){
-		myInput = $("#tab_object_repo_content").find("input[type='search']");
+		myInput = $("#" + containerDivId).find("input[type='search']");
 		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {

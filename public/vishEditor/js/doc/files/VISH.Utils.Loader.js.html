@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Utils.Loader.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: VISH.Utils.Loader.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+VISH.Utils.Loader = (function(V,undefined){
+
+	var _loadGoogleLibraryCallback = undefined;
+
+
+	var loadImagesOnContainer = function(imagesArray,containerId,options){
+		if(options.order===true){
+			_loadImagesOnContainerWithOrder(imagesArray,containerId,options);
+		} else {
+			_loadImagesOnContainer(imagesArray,containerId,options);
+		}
+	}
+
+	var _loadImagesOnContainer = function(imagesArray,containerId,options){
+		var imagesLength = imagesArray.length;
+		var imagesLoaded = 0;
+
+		$.each(imagesArray, function(i, image) {
+			$(image).load(function(response) {
+				_insertElementOnContainer(image,imagesArray,containerId,options);
+				imagesLoaded = imagesLoaded + 1;
+				if((imagesLoaded == imagesLength)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+					options.callback();
+				}
+			})
+			$(image).error(function(response) {
+				imagesLoaded = imagesLoaded + 1;
+				if((imagesLoaded == imagesLength)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+					options.callback();
+				}
+			})
+		});
+	}
+
+	var _loadImagesOnContainerWithOrder = function(imagesArray,containerId,options){
+		var validImagesArray = imagesArray;
+		var imagesLength = imagesArray.length;
+		var imagesLoaded = 0;
+
+		$.each(imagesArray, function(i, image) {
+			$(image).load(function(response) {
+				imagesLoaded = imagesLoaded + 1;
+				if(imagesLoaded == imagesLength){
+					_insertElementsWithOrder(validImagesArray,containerId,options);
+					if(typeof options.callback == &quot;function&quot;){
+						options.callback();
+					}
+				}
+			})
+			$(image).error(function(response) {
+				imagesLoaded = imagesLoaded + 1;
+				validImagesArray.splice(validImagesArray.indexOf(image),1);
+				if(imagesLoaded == imagesLength){
+					_insertElementsWithOrder(validImagesArray,containerId,options);
+					if(typeof options.callback == &quot;function&quot;){
+						options.callback();
+					}
+				}
+			})
+		});
+	}
+
+	var _insertElementsWithOrder = function(imagesArray,containerId,options){
+		$.each(imagesArray, function(i, image) {
+			_insertElementOnContainer(image,imagesArray,containerId,options);
+		});
+	}
+
+	var _insertElementOnContainer = function(image,imagesArray,containerId,options){
+		var titleArray = options.titleArray;
+		if((titleArray)&amp;&amp;(titleArray[imagesArray.indexOf(image)])){
+			$(&quot;#&quot; + containerId).append(&quot;&lt;div&gt;&lt;p&gt;&quot;+titleArray[imagesArray.indexOf(image)]+&quot;&lt;&#x2F;p&gt;&quot; + V.Utils.getOuterHTML(image) + &quot;&lt;&#x2F;div&gt;&quot;);
+		} else {
+			$(&quot;#&quot; + containerId).append(&#x27;&lt;div&gt;&#x27; + V.Utils.getOuterHTML(image) + &#x27;&lt;&#x2F;div&gt;&#x27;);
+		}
+	}
+
+	&#x2F;*
+	* Load a script asynchronously
+	*&#x2F;
+	var loadScript = function(scriptSrc,callback){
+		if((typeof scriptSrc !== &quot;string&quot;)||(typeof callback !== &quot;function&quot;)){
+			return;
+		}
+
+		var head = document.getElementsByTagName(&#x27;head&#x27;)[0];
+		if(head) {
+			var script = document.createElement(&#x27;script&#x27;);
+			script.setAttribute(&#x27;src&#x27;,scriptSrc);
+			script.setAttribute(&#x27;type&#x27;,&#x27;text&#x2F;javascript&#x27;);
+
+			var loadFunction = function(){
+				if((this.readyState == &#x27;complete&#x27;)||(this.readyState == &#x27;loaded&#x27;)){
+					callback();
+				}
+			};
+			&#x2F;&#x2F;calling a function after the js is loaded (IE)
+			script.onreadystatechange = loadFunction;
+
+			&#x2F;&#x2F;calling a function after the js is loaded (Firefox &amp; GChrome)
+			script.onload = callback;
+
+			head.appendChild(script);
+		}
+	}
+
+	var loadGoogleLibrary = function(scriptSrc,callback){
+		if(typeof callback === &quot;function&quot;){
+			_loadGoogleLibraryCallback = callback;
+		} else {
+			return;
+		}
+
+		var fullScriptSrc = scriptSrc + &quot;&amp;callback=VISH.Utils.Loader.onGoogleLibraryLoaded&quot;;
+		loadScript(fullScriptSrc,function(){
+			&#x2F;&#x2F; We should wait for onGoogleLibraryLoaded callback.
+			&#x2F;&#x2F; We can not use this callback, because the loaded script would load more scripts internally
+			&#x2F;&#x2F; So, despite the script is loaded, the full library may be not
+		});
+	}
+
+	var onGoogleLibraryLoaded = function(){
+		if(typeof _loadGoogleLibraryCallback === &quot;function&quot;){
+			_loadGoogleLibraryCallback();
+		}
+		_loadGoogleLibraryCallback = undefined;
+	}
+
+	&#x2F;**
+	* Function to dinamically add a css
+	*&#x2F;
+	var loadCSS = function(path, callback){
+		var url = V.StylesheetsPath + path;
+		var head = document.getElementsByTagName(&#x27;head&#x27;)[0];
+		var link = document.createElement(&#x27;link&#x27;);
+		link.type = &quot;text&#x2F;css&quot;;
+		link.rel = &quot;stylesheet&quot;
+		link.href = url;
+
+		&#x2F;&#x2F;Callback
+		if(typeof callback == &quot;function&quot;){
+
+			&#x2F;&#x2F;calling a function after the css is loaded (Firefox &amp; Google Chrome)
+			link.onload = function () {
+				callback();
+			}
+
+			var loadFunction = function(){
+				if((this.readyState == &#x27;complete&#x27;)||(this.readyState == &#x27;loaded&#x27;)){
+					callback();
+				}
+			};
+			&#x2F;&#x2F;calling a function after the css is loaded (IE)
+			link.onreadystatechange = loadFunction;
+		}
+
+		head.appendChild(link);
+	};
+
+	var loadDeviceCSS = function(){
+		&#x2F;&#x2F;Set device CSS
+		if(V.Status.getDevice().desktop){
+			loadCSS(&quot;device&#x2F;desktop.css&quot;);
+		} else if(V.Status.getDevice().mobile){
+			loadCSS(&quot;device&#x2F;mobile.css&quot;);
+		} else if(V.Status.getDevice().tablet){
+			loadCSS(&quot;device&#x2F;tablet.css&quot;);
+		}
+
+		&#x2F;&#x2F;Set browser CSS
+		switch(V.Status.getDevice().browser.name){
+			case V.Constant.FIREFOX:
+				loadCSS(&quot;browser&#x2F;firefox.css&quot;);
+				break;
+			case V.Constant.IE:
+				loadCSS(&quot;browser&#x2F;ie.css&quot;);
+				break;
+			case V.Constant.CHROME:
+				loadCSS(&quot;browser&#x2F;chrome.css&quot;);
+				break;
+		}
+	}
+
+
+	&#x2F;*
+	* Loading dialogs
+	*&#x2F;
+
+	var t1Loading;
+
+	var startLoading = function(){
+		if(!_isFullLoadingActive()){
+			t1Loading = Date.now();
+			$(&quot;#fancyLoad&quot;).trigger(&#x27;click&#x27;);
+		}
+	}
+
+	var stopLoading = function(callback){
+		var diff = Date.now()-t1Loading;
+		if(diff &lt; 800){
+			setTimeout(function(){
+				stopLoading(callback);
+			},800);
+		} else {
+			var closed = false;
+			if(_isFullLoadingActive()){
+				$.fancybox.close();
+				closed = true;
+			}
+			if(typeof callback == &quot;function&quot;){
+				callback(closed);
+			}
+		}
+	}
+
+	&#x2F;*
+	* Called when loading panel is going to be closed by another fancybox
+	* Keep original fancybox CSS
+	*&#x2F;
+	var onCloseLoading = function(){
+		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
+	}
+
+	var _isFullLoadingActive = function(){
+		return $(&quot;#loading_fancy&quot;).is(&quot;:visible&quot;);
+	}
+
+	var startLoadingInContainer = function(container,options){
+		$(container).html($(&quot;#loading_fancy_wrapper&quot;).html());
+		$(container).addClass(&quot;loadingtmpShown&quot;);
+
+		if((options)&amp;&amp;(options.style)){
+			$(container).find(&quot;.loading_fancy_img&quot;).addClass(options.style);
+		}
+	}
+
+	var stopLoadingInContainer = function(container){
+		$(container).find(&quot;.loading_fancy_img&quot;).parent().remove();
+		$(container).removeClass(&quot;loadingtmpShown&quot;);
+	}
+
+	return {
+		loadImagesOnContainer		: loadImagesOnContainer,
+		loadScript					: loadScript,
+		loadGoogleLibrary			: loadGoogleLibrary,
+		loadCSS						: loadCSS,
+		loadDeviceCSS				: loadDeviceCSS,
+		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		startLoading				: startLoading,
+		stopLoading					: stopLoading,
+		onCloseLoading				: onCloseLoading,
+		startLoadingInContainer		: startLoadingInContainer,
+		stopLoadingInContainer		: stopLoadingInContainer
+	};
+
+}) (VISH);
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

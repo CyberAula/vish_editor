@@ -395,19 +395,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			finalH = finalW&#x2F;slidesRatio;
 		}
 
-		$(&quot;.slides &gt; article&quot;).css(&quot;height&quot;, finalH);
-		$(&quot;.slides &gt; article&quot;).css(&quot;width&quot;, finalW);
-		$(&quot;.subslide&quot;).css(&quot;height&quot;, finalH);
-		$(&quot;.subslide&quot;).css(&quot;width&quot;, finalW);
+		var topSlides = $(&quot;.slides &gt; article&quot;);
+		var subSlides = $(&quot;.slides &gt; article &gt; article&quot;);
+		$(topSlides).css(&quot;height&quot;, finalH);
+		$(topSlides).css(&quot;width&quot;, finalW);
+		$(subSlides).css(&quot;height&quot;, finalH);
+		$(subSlides).css(&quot;width&quot;, finalW);
 
 		&#x2F;&#x2F;margin-top and margin-left half of the height and width
 		var marginTop = finalH&#x2F;2 + reserved_px_for_menubar&#x2F;2;
 		var marginLeft = finalW&#x2F;2;
-		$(&quot;.slides &gt; article&quot;).css(&quot;margin-top&quot;, &quot;-&quot; + marginTop + &quot;px&quot;);
-		$(&quot;.slides &gt; article&quot;).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);
+		$(topSlides).css(&quot;margin-top&quot;, &quot;-&quot; + marginTop + &quot;px&quot;);
+		$(topSlides).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);
 		
-		$(&quot;.subslide&quot;).css(&quot;margin-top&quot;, &quot;-&quot; + finalH&#x2F;2 + &quot;px&quot;);
-		$(&quot;.subslide&quot;).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);	
+		$(subSlides).css(&quot;margin-top&quot;, &quot;-&quot; + finalH&#x2F;2 + &quot;px&quot;);
+		$(subSlides).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);	
 		
 		var increase = finalH&#x2F;600;
 		var increaseW = finalW&#x2F;800;

@@ -521,10 +521,57 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(&quot;#&quot; + tab_id).addClass(&quot;fancy_selected&quot;);
 		&#x2F;&#x2F;hide previous help button
 		$(&quot;.help_in_fancybox&quot;).hide();
+
+		&#x2F;&#x2F;Submodule callbacks	
+		switch (tab_id) {
+			case &quot;tab_presentations_repo&quot;:
+				V.Editor.Presentation.Repository.beforeLoadTab();
+				break;
+			case &quot;tab_smartcards_repo&quot;:
+				V.Editor.Slideset.Repository.beforeLoadTab();
+				break;
+			&#x2F;&#x2F;Image
+			case &quot;tab_pic_thumbnails&quot;:
+				V.Editor.Image.Thumbnails.beforeLoadTab();
+				break;
+			case &quot;tab_pic_repo&quot;:
+				V.Editor.Image.Repository.beforeLoadTab();
+				break;
+			case &quot;tab_pic_flikr&quot;:
+				V.Editor.Image.Flikr.beforeLoadTab();
+				break;
+			case &quot;tab_pic_lre&quot;:
+				V.Editor.Image.LRE.beforeLoadTab();
+				break;
+			&#x2F;&#x2F;Video
+			case &quot;tab_video_repo&quot;:
+				V.Editor.Video.Repository.beforeLoadTab();
+				break;
+			case &quot;tab_video_youtube&quot;:
+				V.Editor.Video.Youtube.beforeLoadTab();
+				break;
+			case &quot;tab_video_vimeo&quot;:
+				V.Editor.Video.Vimeo.beforeLoadTab();
+				break;	
+			&#x2F;&#x2F;Objects
+			case &quot;tab_object_repo&quot;:
+				V.Editor.Object.Repository.beforeLoadTab();
+				break;
+			case &quot;tab_object_lre&quot;:
+				V.Editor.Object.LRE.beforeLoadTab();
+				break;
+			case &quot;tab_live_resource&quot;:
+				V.Editor.Object.Live.beforeLoadTab();
+				break;
+				break;
+			default:
+				break;
+		}
+
 		&#x2F;&#x2F;show correct one
 		$(&quot;#&quot;+ tab_id + &quot;_help&quot;).show();
 
-        &#x2F;&#x2F;Submodule callbacks	
+		&#x2F;&#x2F;Submodule callbacks	
 		switch (tab_id) {
 			case &quot;tab_slides&quot;:
 				&#x2F;&#x2F;templates and smartcards
@@ -550,6 +597,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case &quot;tab_pic_flikr&quot;:
 				V.Editor.Image.Flikr.onLoadTab();
+				break;
+			case &quot;tab_pic_lre&quot;:
+				V.Editor.Image.LRE.onLoadTab();
 				break;
 			&#x2F;&#x2F;Video
 			case &quot;tab_video_from_url&quot;:
@@ -583,11 +633,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case &quot;tab_object_lre&quot;:
 				V.Editor.Object.LRE.onLoadTab();
 				break;
-			case &quot;tab_live_webcam&quot;:
-				V.Editor.Object.Live.onLoadTab(&quot;webcam&quot;);
-				break;
-			case &quot;tab_live_micro&quot;:
-				V.Editor.Object.Live.onLoadTab(&quot;micro&quot;);
+			case &quot;tab_live_resource&quot;:
+				V.Editor.Object.Live.onLoadTab();
 				break;
 			case &quot;tab_json_file&quot;:
 				V.Editor.Presentation.File.onLoadTab();
@@ -595,11 +642,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case &quot;tab_pdfex&quot;:
 				V.Editor.PDFex.onLoadTab();
 				break;
-				
- 			&#x2F;&#x2F;Default
 			default:
 				break;
-	  }
+		}
 	};
 
 	return {

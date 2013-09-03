@@ -741,9 +741,9 @@
 			<a class="addvideo medium large" href="#video_fancybox">
 				<div class='thumbicon videothumb' i18n-key="i.Video" title="Video"></div>
 			</a>
-			<a class="addLive medium large" href="#live_fancybox">
+<!-- 			<a class="addLive medium large" href="#live_fancybox">
 				<div class='thumbicon livethumb' i18n-key="i.Live" title="Live"></div>
-			</a>
+			</a> -->
 			<a class="addQuiz large" href="#quiz_fancybox" id="add_quiz_thumb">
 				<div class='thumbicon quizthumb' i18n-key="i.Quiz" title="Quiz"></div>
 			</a>
@@ -1329,29 +1329,27 @@
 		<div id="live_fancybox" class="outer_box">
 			<div class="fancy_tabs" id="live_fancy_tabs_id">
 				<ul>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_webcam')" id="tab_live_webcam" class="fancy_tab">Webcams</a></li>
-					<li><a style='display:none' href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_micro')" id="tab_live_micro" class="fancy_tab" i18n-key="i.Microscopes">Microscopes</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_resource')" id="tab_live_resource" class="fancy_tab">Live Resources</a></li>
 				</ul>
-				<img class='help_in_fancybox' id='tab_live_webcam_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/> 
+				<img class='help_in_fancybox' id='tab_live_resource_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/> 
 			</div>
 
-			<div id='tab_live_webcam_content' class="fancy_tab_content"> 
+			<div id='tab_live_resource_content' class="fancy_tab_content"> 
 				<div class="box1 box1fancy2">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>
 					<div class="search_container">
-						<input id="search_webcam" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+						<input id="search_live_resource" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 					</div>
-					<div id="tab_live_webcam_content_carrousel"></div>
-					<div id="tab_live_webcam_content_preview" class="content_preview">
-						<div id="tab_live_webcam_content_preview_live" class="content_preview_data"></div>
-						<div id="tab_live_webcam_content_preview_metadata" class="content_preview_metadata"></div>
-						<div id="tab_live_webcam_content_preview_foot" class="content_preview_foot">
+					<div id="tab_live_resource_content_carrousel"></div>
+					<div id="tab_live_resource_content_preview" class="content_preview">
+						<div id="tab_live_resource_content_preview_live" class="content_preview_data"></div>
+						<div id="tab_live_resource_content_preview_metadata" class="content_preview_metadata"></div>
+						<div id="tab_live_resource_content_preview_foot" class="content_preview_foot">
 							<button type="button" class="okButton okButtonCarrousel" onclick="VISH.Editor.Object.Live.addSelectedObject()">Add</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div id='tab_live_micro_content' class="fancy_tab_content"></div>
 		</div>
 	</div>
 
@@ -1864,7 +1862,7 @@
 		</ol>
 		   
 		<!-- Help inserting live objects -->
-		  <ol id="tab_live_webcam_id" class="joyRideTipContent">
+		<ol id="tab_live_resource_id" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="custom tut_fancy_index tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.AddLiveContent">Adding Live Content</h2>
 		 <p i18n-key="i.walk52">This window will help you in order to add Live content to a slide. As you can see in the top zone of this window there just one choice for now:</p>
@@ -1878,7 +1876,7 @@
 		    </ul>
 		    <p i18n-key="i.walk54">Now, you are on the webcam section, Click on "Next" to continue</p>.
 		   </li>
-		   <li data-id="search_webcam" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
+		   <li data-id="search_live_resource" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
 		    <h2 i18n-key="i.SearchLiveContent">Search Live Content</h2>
 		 <p i18n-key="i.walk55">Just write inside a word (press Enter)and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by clicking the "add button". Click on "Close" to finish this walkthrough.</p>
 		</li>

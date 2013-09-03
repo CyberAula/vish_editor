@@ -293,7 +293,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_live_webcam');
+				V.Editor.Utils.loadTab('tab_live_resource');
 			}
 		});
 		

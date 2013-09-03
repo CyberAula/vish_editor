@@ -96,24 +96,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 *&#x2F;
 	var init = function(presentation){
-		$(&#x27;#presentation_title&#x27;).val(presentation.title);
-		$(&#x27;#presentation_description&#x27;).val(presentation.description);
-		$(&#x27;#presentation_avatar&#x27;).val(presentation.avatar);
-	
-		if(presentation.age_range){
-			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
-			var end_range = presentation.age_range.substring(presentation.age_range.indexOf(&quot;-&quot;)+2);
-			$(&quot;#slider-age&quot; ).slider( &quot;values&quot;, [start_range, end_range] );
-			$(&quot;#age_range&quot;).val(presentation.age_range);
-		} else {
-			$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
-		}
-		$(&quot;#subject_tag&quot;).val(presentation.subject);
-		$(&quot;#language_tag&quot;).val(presentation.language);
-		$(&quot;#educational_objectives_tag&quot;).val(presentation.educational_objectives);
-		$(&quot;#acquired_competencies_tag&quot;).val(presentation.adquired_competencies);
-
 		V.Editor.Themes.selectTheme(presentation.theme);
+		V.Editor.Settings.loadPresentationSettings(presentation);
 
 		if(presentation.type===V.Constant.PRESENTATION){
 			renderPresentation(presentation);

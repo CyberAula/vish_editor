@@ -470,11 +470,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_object_lre":
 				V.Editor.Object.LRE.beforeLoadTab();
 				break;
-			case "tab_live_webcam":
-				V.Editor.Object.Live.beforeLoadTab("webcam");
+			case "tab_live_resource":
+				V.Editor.Object.Live.beforeLoadTab();
 				break;
-			case "tab_live_micro":
-				V.Editor.Object.Live.beforeLoadTab("micro");
 				break;
 			default:
 				break;
@@ -545,11 +543,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_object_lre":
 				V.Editor.Object.LRE.onLoadTab();
 				break;
-			case "tab_live_webcam":
-				V.Editor.Object.Live.onLoadTab("webcam");
-				break;
-			case "tab_live_micro":
-				V.Editor.Object.Live.onLoadTab("micro");
+			case "tab_live_resource":
+				V.Editor.Object.Live.onLoadTab();
 				break;
 			case "tab_json_file":
 				V.Editor.Presentation.File.onLoadTab();

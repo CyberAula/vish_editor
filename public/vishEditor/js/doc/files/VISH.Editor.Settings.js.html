@@ -91,9 +91,45 @@
 VISH.Editor.Settings = (function(V,$,undefined){
 
 	var themeScrollbarDivId = &quot;scrollbar_themes_list&quot;;
+	var tagsLoaded = false;
+	var themeScrollbarCreated = false;
+
+	&#x2F;&#x2F;LOM
+	var LOM_Difficulty;
+
+	&#x2F;&#x2F;Metadata
+	var presentationThumbnail;
+
 
 	var init = function(){
+		LOM_Difficulty = V.Editor.Utils.LOM.getDifficulty();
+		_initSliders();
 	};
+
+	var _initSliders = function(){
+		$(&quot;#slider-age&quot;).slider({
+			range: true,
+			min: 0,
+			max: 30,
+			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
+			slide: function( event, ui ) {
+				$( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
+			}
+		});
+		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
+
+		$(&quot;#slider-difficulty&quot;).slider({
+			min: 0,
+			max: 5,
+			value: [ V.Constant.DIFFICULTY ],
+			slide: function( event, ui ) {
+				$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,ui.value);
+				$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[ui.value]);
+			}
+		}); 
+		$( &quot;#difficulty_range&quot; ).attr( &quot;difficulty&quot; , V.Constant.DIFFICULTY);
+		$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[V.Constant.DIFFICULTY]);
+	}
 
 	var displaySettings = function(){
 		&#x2F;&#x2F; fancybox to edit presentation settings
@@ -106,10 +142,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			&#x27;padding&#x27;: 0,
 			&#x27;hideOnOverlayClick&#x27;: false,
 			&#x27;hideOnContentClick&#x27;: false,
-			&#x27;showCloseButton&#x27;: true,
-			&quot;onComplete&quot;  : function(data) {
+			&#x27;showCloseButton&#x27;: false,
+			&quot;onComplete&quot;  : function(data){
 				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
 				_onDisplaySettings();
+			},
+			&quot;onClosed&quot; : function(data){
+				&#x2F;&#x2F;Update theme if it has change
+				var selectedThemeNumber = $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
+				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
+				if((typeof selectedThemeNumber == &quot;string&quot;)&amp;&amp;(selectedThemeNumber!=currentThemeNumber)){
+					V.Editor.Themes.selectTheme(&quot;theme&quot;+selectedThemeNumber);
+				};
 			}
 		});
 
@@ -117,49 +161,130 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onDisplaySettings = function(){
-		&#x2F;&#x2F;Avatar
+		var options = V.Utils.getOptions();
 		var presentation = V.Editor.getPresentation();
-		if(presentation &amp;&amp; presentation.avatar){
-			_addThumbnail(presentation.avatar);
-		}
 
 		&#x2F;&#x2F;Tags
-		if(V.Configuration.getConfiguration()[&quot;presentationTags&quot;]){
+		if((V.Configuration.getConfiguration()[&quot;presentationTags&quot;])&amp;&amp;(!tagsLoaded)){
 			$(&quot;#tagBoxIntro&quot;).attr(&quot;HTMLcontent&quot;, $(&quot;#tagBoxIntro&quot;).html());
 			V.Utils.Loader.startLoadingInContainer($(&quot;#tagBoxIntro&quot;),{style: &quot;loading_tags&quot;});
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
 
-		&#x2F;&#x2F;Select Theme scrollbar
-		V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
-		$(&quot;#&quot; + themeScrollbarDivId).hide();
+		&#x2F;&#x2F;Themes
+		if(!themeScrollbarCreated){
+			&#x2F;&#x2F;Select Theme scrollbar
+			V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
+			$(&quot;#&quot; + themeScrollbarDivId).hide();
 
-		&#x2F;&#x2F;Generate thumbnail images
-		var imagesArray = [];
-		var imagesArrayTitles = [];
+			&#x2F;&#x2F;Generate thumbnail images
+			var imagesArray = [];
+			var imagesArrayTitles = [];
 
-		for(var i=1; i&lt;13; i++){
-			var imgExt = &quot;png&quot;;
-			if(i==12){
-				imgExt = &quot;gif&quot;;
+			for(var i=1; i&lt;13; i++){
+				var imgExt = &quot;png&quot;;
+				if(i==12){
+					imgExt = &quot;gif&quot;;
+				}
+				var srcURL = V.ImagesPath + &quot;themes&#x2F;theme&quot; + i + &quot;&#x2F;select.&quot; + imgExt;
+				imagesArray.push($(&quot;&lt;img themeNumber=&#x27;&quot;+ i +&quot;&#x27; class=&#x27;image_barbutton&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
+				imagesArrayTitles.push(i);
 			}
-			var srcURL = V.ImagesPath + &quot;themes&#x2F;theme&quot; + i + &quot;&#x2F;select.&quot; + imgExt;
-			imagesArray.push($(&quot;&lt;img themeNumber=&#x27;&quot;+ i +&quot;&#x27; class=&#x27;image_barbutton&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
-			imagesArrayTitles.push(i);
+
+			var options = {};
+			options.order = true;
+			options.titleArray = imagesArrayTitles;
+			options.callback = _onThemeImagesLoaded;
+			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
+		} else {
+			&#x2F;&#x2F;Select and move to current theme
+			selectTheme(V.Editor.Themes.getCurrentTheme().number);
+			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$(&quot;img.theme_selected_in_scrollbar&quot;));
 		}
 
-		var options = {};
-		options.order = true;
-		options.titleArray = imagesArrayTitles;
-		options.callback = _onThemeImagesLoaded;
-		V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
+		&#x2F;&#x2F;Sliders are initialized in the init() method.
+		onTLTchange();
 
-		V.Debugging.log(&quot;wating for _onThemeImagesLoaded&quot;);
+		&#x2F;&#x2F;Check for enable continue button
+		_checkIfEnableContinueButton();
+	}
+
+	var loadPresentationSettings = function(presentation){
+		var options = V.Utils.getOptions();
+
+		&#x2F;&#x2F;Avatar
+		if(presentation &amp;&amp; presentation.avatar){
+			_addThumbnail(presentation.avatar);
+		}
+
+		&#x2F;&#x2F;Title
+		if(presentation &amp;&amp; presentation.title){
+			var previewTitleDOM = $(&quot;#presentation_details_preview_addtitle&quot;).find(&quot;span&quot;);
+			$(previewTitleDOM).html(presentation.title);
+			$(&quot;#presentation_details_input_title&quot;).val(presentation.title); &#x2F;&#x2F;input
+		}
+
+		&#x2F;&#x2F;Author
+		var author;
+		if(options &amp;&amp; options.username){
+			author = options.username;
+		} else if(presentation &amp;&amp; presentation.author){
+			author = presentation.author;
+		}
+		if(author){
+			var authorDOM = $(&quot;#author_span_in_preview&quot;);
+			$(authorDOM).html(author);
+		}
+
+		&#x2F;&#x2F;Description
+		if(presentation &amp;&amp; presentation.description){
+			var descriptionDOM = $(&quot;#presentation_details_textarea&quot;);
+			$(descriptionDOM).val(presentation.description);
+		}
+
+		&#x2F;&#x2F;Tags: intialized on _onInitialTagsReceived method.
+
+		&#x2F;&#x2F;Themes
+		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+
+		&#x2F;&#x2F;Pedagogical
+		
+		$(&quot;#language_tag&quot;).val(presentation.language);
+		$(&quot;#context_tag&quot;).val(presentation.context);
+		
+		if(presentation.age_range){
+			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
+			var end_range = presentation.age_range.substring(presentation.age_range.indexOf(&quot;-&quot;)+2);
+			$(&quot;#slider-age&quot; ).slider( &quot;values&quot;, [start_range, end_range] );
+			$(&quot;#age_range&quot;).val(presentation.age_range);
+		} else {
+			$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
+		}
+
+		if(presentation.difficulty){
+			var difficultyValue = 0;
+			for(var j=0; j&lt;LOM_Difficulty.length; j++){
+				if(LOM_Difficulty[j]===presentation.difficulty){
+					difficultyValue = j;
+				}
+			}
+			$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[difficultyValue]);
+			$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,difficultyValue);
+			$(&quot;#slider-difficulty&quot; ).slider(&quot;value&quot;,difficultyValue);
+		}
+
+		if(presentation &amp;&amp; presentation.TLT){
+			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
+			$(&quot;#tlt_hours&quot;).val(durations[4].toString());
+			$(&quot;#tlt_minutes&quot;).val(durations[5].toString());
+			$(&quot;#tlt_seconds&quot;).val(durations[6].toString());
+		}
+
+		$(&quot;#subject_tag&quot;).val(presentation.subject);
+		$(&quot;#educational_objectives_textarea&quot;).val(presentation.educational_objectives);
 	}
 
 	var _onThemeImagesLoaded = function(){
-		V.Debugging.log(&quot;_onThemeImagesLoaded&quot;);
-
 		&#x2F;&#x2F;Add class to title elements and events
 		$(&quot;#&quot; + themeScrollbarDivId).find(&quot;img.image_barbutton&quot;).each(function(index,img){
 			&#x2F;&#x2F;Add class to title
@@ -185,14 +310,23 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onClickTheme = function(event){
 		var themeNumber = $(event.target).attr(&quot;themeNumber&quot;);
-		V.Debugging.log(&quot;select Theme &quot; + themeNumber);
+		selectTheme(themeNumber);
 	}
 
 	var _afterCreateThemesScrollbar = function(){
-		V.Debugging.log(&quot;Themes Scrollbar created&quot;);
+		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$(&quot;img.theme_selected_in_scrollbar&quot;));
+		themeScrollbarCreated = true;
+	}
+
+	var selectTheme = function(themeNumber){
+		$(&quot;.theme_selected_in_scrollbar&quot;).removeClass(&quot;theme_selected_in_scrollbar&quot;);
+		var themeDOM = $(&quot;#scrollbar_themes_list img.image_barbutton[themenumber=&#x27;&quot;+themeNumber+&quot;&#x27;]&quot;).addClass(&quot;theme_selected_in_scrollbar&quot;);
 	}
 
 	var _onInitialTagsReceived = function(data){
+		tagsLoaded = true;
+
 		V.Utils.Loader.stopLoadingInContainer($(&quot;#tagBoxIntro&quot;));
 		$(&quot;#tagBoxIntro&quot;).html($(&quot;#tagBoxIntro&quot;).attr(&quot;HTMLcontent&quot;));
 
@@ -222,18 +356,76 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var onChangeThumbnailClicked = function(){
+		$(&quot;#editthumb&quot;).hide();
 		$(&quot;#hidden_button_to_uploadThumbnail&quot;).trigger(&quot;click&quot;);
 	}
 
 	var onThumbnailSelected = function(thumbnail_url){
 		V.Editor.Settings.displaySettings(); &#x2F;&#x2F;Hide previous fancybox
 		_addThumbnail(thumbnail_url);
+		_checkIfEnableContinueButton();
 	}
 
 	var _addThumbnail = function(thumbnail_url){
 		var thumbnail_wrapper = $(&quot;#presentation_details_preview_thumbnail&quot;);
-		$(&quot;#presentation_details_preview_thumbnail_img&quot;).attr(&quot;src&quot;,thumbnail_url);
+		var thumbnail = $(&quot;#presentation_details_preview_thumbnail_img&quot;);
+		$(thumbnail).removeClass(&quot;addThumbnailPlus&quot;);
+		$(thumbnail).attr(&quot;src&quot;,thumbnail_url);
 		$(thumbnail_wrapper).find(&quot;p.addthumbtitle&quot;).hide();
+		presentationThumbnail = thumbnail_url;
+	}
+
+	var onKeyUpOnTitle = function(event){
+		var input = $(&quot;#presentation_details_input_title&quot;);
+		var span = $(&quot;#presentation_details_preview_addtitle&quot;).find(&quot;span&quot;);
+		var title = $(&quot;#presentation_details_input_title&quot;).val();
+		if(title.trim() != &quot;&quot;){
+			$(span).html($(&quot;#presentation_details_input_title&quot;).val());
+		} else {
+			$(span).html(&quot;add a title&quot;);
+		}
+		_checkIfEnableContinueButton();
+	}
+
+	var onTLTchange = function(){
+		var TLT = _getTLT();
+		if(TLT===null){
+			$(&quot;#tlt_current_value&quot;).val(&quot;invalid value&quot;);
+		} else if(typeof TLT == &quot;undefined&quot;){
+			$(&quot;#tlt_current_value&quot;).val(&quot;unspecified&quot;);
+		} else if(typeof TLT == &quot;string&quot;){
+			$(&quot;#tlt_current_value&quot;).val(TLT);
+		}
+	}
+
+	var _checkIfEnableContinueButton = function(){
+		var enable = _checkMandatoryFields();
+		if(enable){
+			$(&quot;#save_presentation_details&quot;).removeClass(&quot;buttonDisabledOnSettings&quot;);
+			$(&quot;#save_presentation_details&quot;).removeAttr(&quot;disabled&quot;);
+			$(&quot;#save_presentation_details&quot;).attr(&quot;disabledTitle&quot;,$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;));
+			$(&quot;#save_presentation_details&quot;).removeAttr(&quot;title&quot;);
+		} else {
+			if(!$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;)){
+				$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;,$(&quot;#save_presentation_details&quot;).attr(&quot;disabledTitle&quot;));
+			}
+			$(&quot;#save_presentation_details&quot;).addClass(&quot;buttonDisabledOnSettings&quot;);
+			$(&quot;#save_presentation_details&quot;).attr(&quot;disabled&quot;,&quot;true&quot;);
+		}
+	}
+
+	var _checkMandatoryFields = function(){
+		&#x2F;&#x2F;Check that mandatory params are filled appropiately.
+		var title = $(&#x27;#presentation_details_input_title&#x27;).val();
+		var thumbnailURL = presentationThumbnail;
+
+		if((typeof title != &quot;string&quot;)||(title.trim()==&quot;&quot;)){
+			return false;
+		}
+		if((typeof thumbnailURL != &quot;string&quot;)||(thumbnailURL.trim()==&quot;&quot;)){
+			return false;
+		}
+		return true;
 	}
 
 	&#x2F;**
@@ -244,35 +436,85 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var onSavePresentationDetailsButtonClicked = function(event){
 		event.preventDefault();
 
-		&#x2F;&#x2F; TODO: Validate	
-		&#x2F;&#x2F; if($(&#x27;#presentation_title&#x27;).val().length &lt; 1) {
-		&#x2F;&#x2F; 	return false;
-		&#x2F;&#x2F; }
+		&#x2F;&#x2F;Check if is disabled
+		if($(event.target).hasClass(&quot;buttonDisabledOnSettings&quot;)){
+			return;
+		}
 		
 		var draftPresentation = V.Editor.getPresentation();
-
 		if(!draftPresentation){
 			draftPresentation = {};
 		}
 
-		draftPresentation.title = $(&#x27;#presentation_title&#x27;).val();
-		draftPresentation.description = $(&#x27;#presentation_description&#x27;).val();
-		draftPresentation.avatar = $(&#x27;#presentation_avatar&#x27;).val();
+		draftPresentation.title = $(&#x27;#presentation_details_input_title&#x27;).val();
+		draftPresentation.description = $(&#x27;#presentation_details_textarea&#x27;).val();
+		if(presentationThumbnail){
+			draftPresentation.avatar = presentationThumbnail;
+		}
+		draftPresentation.author = $(&quot;#author_span_in_preview&quot;).html();
 		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
 
-		&#x2F;&#x2F;now the pedagogical fields if any
-		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
-		draftPresentation.difficulty = $(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;);
-		draftPresentation.subject = $(&quot;#subject_tag&quot;).val();
+		if(typeof $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;) == &quot;string&quot;){
+			draftPresentation.theme = &quot;theme&quot; + $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
+		} else {
+			draftPresentation.theme = V.Constant.Themes.Default;
+		}
+
+		&#x2F;&#x2F;Pedagogical fields
 		draftPresentation.language = $(&quot;#language_tag&quot;).val();
-		draftPresentation.educational_objectives = $(&quot;#educational_objectives_tag&quot;).val();
-		draftPresentation.adquired_competencies = $(&quot;#acquired_competencies_tag&quot;).val();
+		draftPresentation.context = $(&quot;#context_tag&quot;).val();
+		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
+		draftPresentation.difficulty = $(&quot;#difficulty_range&quot;).val();
+		var TLT = _getTLT();
+		if(typeof TLT == &quot;string&quot;){
+			draftPresentation.TLT = TLT;
+		}
+		draftPresentation.subject = $(&quot;#subject_tag&quot;).val();
+		draftPresentation.educational_objectives = $(&quot;#educational_objectives_textarea&quot;).val();
+
+		V.Debugging.log(&quot;draftPresentation&quot;);
+		V.Debugging.log(draftPresentation);
 
 		V.Editor.setPresentation(draftPresentation);
 
 		$.fancybox.close();
 	};
 
+	&#x2F;&#x2F; Return Typical Learning Time (TLT) compliant to LOM.
+	&#x2F;&#x2F; Return null if form values are incorrect (e.g. letters).
+	&#x2F;&#x2F; Return undefined when no TLT is specified. In other words, when value (i.e duration) is zero.
+	&#x2F;&#x2F; TLT must be in ISO8601:2000 format
+	&#x2F;&#x2F; e.g. PT1H30M5S means 1 hour, 30 minutes and 5 seconds
+	var _getTLT = function(){
+		var TLT = &quot;PT&quot;;
+		var hours = $(&quot;#tlt_hours&quot;).val();
+		var minutes = $(&quot;#tlt_minutes&quot;).val();
+		var seconds = $(&quot;#tlt_seconds&quot;).val();
+
+		if(jQuery.isNumeric(hours)&amp;&amp;jQuery.isNumeric(minutes)&amp;&amp;jQuery.isNumeric(seconds)){
+			hours = parseInt(hours);
+			minutes = parseInt(minutes);
+			seconds = parseInt(seconds);
+			
+			if((hours&gt;=0)&amp;&amp;(hours&lt;100)&amp;&amp;(minutes&gt;=0)&amp;&amp;(minutes&lt;60)&amp;&amp;(seconds&gt;=0)&amp;&amp;(seconds&lt;60)){
+				if(hours*24*60+minutes*60+seconds&gt;0){
+					if(hours!=0){
+						TLT = TLT + hours + &quot;H&quot;;
+					}
+					if(minutes!=0){
+						TLT = TLT + minutes + &quot;M&quot;;
+					}
+					if(seconds!=0){
+						TLT = TLT + seconds + &quot;S&quot;;
+					}
+					return TLT;
+				} else if((hours===0)&amp;&amp;(minutes===0)&amp;&amp;(seconds===0)){
+					return undefined;
+				}
+			}
+		}
+		return null;
+	}
 
 	&#x2F;**
 	 * function called when the user clicks on the pedagogical options button
@@ -295,8 +537,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	return {
 		init									: init,
 		displaySettings							: displaySettings,
+		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
+		selectTheme								: selectTheme,
+		onKeyUpOnTitle							: onKeyUpOnTitle,
+		onTLTchange								: onTLTchange,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked

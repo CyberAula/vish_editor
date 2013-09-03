@@ -173,7 +173,7 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		return &quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; &quot; +classes+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + content+&quot;&lt;&#x2F;article&gt;&quot;;
+		return &quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; &quot; +classes+&quot;&#x27; type=&#x27;&quot;+V.Constant.STANDARD+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + content+&quot;&lt;&#x2F;article&gt;&quot;;
 	};
 
 	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons, slidenumber){
@@ -182,20 +182,18 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			&#x2F;&#x2F;Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, &quot;subslide&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+			all_slides += _renderStandardSlide(subslide, null, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
-		var div_for_slides_hidden = &quot;&lt;div class=&#x27;subslides&#x27; &gt;&quot;+all_slides+&quot;&lt;&#x2F;div&gt;&quot;;
-		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; slideset_slide flashcard_slide&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;flashcard&#x27; avatar=&#x27;&quot;+slide.background+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
+		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot;&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.FLASHCARD+&quot;&#x27; avatar=&#x27;&quot;+slide.background+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + all_slides + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
 
 	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons, slidenumber){
 		var all_slides = &quot;&quot;;
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, &quot;subslide&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+			all_slides += _renderStandardSlide(subslide, null, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
-		var div_for_slides_hidden = &quot;&lt;div class=&#x27;subslides&#x27; &gt;&quot;+all_slides+&quot;&lt;&#x2F;div&gt;&quot;;
-		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot; slideset_slide virtualTour_slide&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + div_for_slides_hidden + &quot;&lt;&#x2F;article&gt;&quot;);
+		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot;&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + all_slides + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
 
 

@@ -326,8 +326,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		
 		//Help inserting live objects
-		$(document).on('click','#tab_live_webcam_help', function(){
-			V.Tour.startTourWithId('tab_live_webcam_id', 'bottom');
+		$(document).on('click','#tab_live_resource_help', function(){
+			V.Tour.startTourWithId('tab_live_resource_id', 'bottom');
 		});
 	};
 

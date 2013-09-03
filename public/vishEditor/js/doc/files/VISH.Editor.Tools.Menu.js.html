@@ -293,6 +293,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		});
 	};
 
+	var displaySettings = function(){
+		V.Editor.Settings.displaySettings();
+	}
+
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
 			$(&quot;#menu&quot;).hide();
@@ -313,8 +317,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,
+		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
-		onSaveButtonClicked             : onSaveButtonClicked,
+		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help
 	};

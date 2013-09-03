@@ -157,7 +157,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(!V.Utils.checkMiniumRequirements()){
 			return;
 		}
-		V.Utils.loadDeviceCSS();
+		V.Utils.Loader.loadDeviceCSS();
 		V.Editor.I18n.init(options.lang);
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
@@ -172,45 +172,13 @@ VISH.Editor = (function(V,$,undefined){
 		V.Slides.init();
 		V.User.init(options);
 		V.Editor.LRE.init(options.lang);
+		V.Editor.Settings.init(); &#x2F;&#x2F;Settings must be initialize before V.Editor.Renderer.init(presentation);
 
 		if(V.Debugging.isDevelopping()){
 			if ((options.configuration.mode==V.Constant.NOSERVER)&amp;&amp;(V.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
 				presentation = V.Debugging.getPresentationSamples();
 			}
 		}
-
-		&#x2F;&#x2F;init age sliders, this has to be done BEFORE V.Editor.Renderer.init(presentation);
-		$(&quot;#slider-age&quot;).slider({
-			range: true,
-			min: 0,
-			max: 30,
-			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
-			slide: function( event, ui ) {
-				$( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
-			}
-		});
-		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
-
-		var LOM_difficulty = new Array();
-		LOM_difficulty[0] = &quot;unspecified&quot;;
-		LOM_difficulty[1] = &quot;very easy&quot;;
-		LOM_difficulty[2] = &quot;easy&quot;;
-		LOM_difficulty[3] = &quot;medium&quot;;
-		LOM_difficulty[4] = &quot;difficult&quot;;
-		LOM_difficulty[5] = &quot;very difficult&quot;;
-
-		$(&quot;#slider-difficulty&quot;).slider({
-			min: 0,
-			max: 5,
-			value: [ V.Constant.DIFFICULTY ],
-			slide: function( event, ui ) {
-				$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,ui.value);
-				$(&quot;#difficulty_range&quot;).val(LOM_difficulty[ui.value]);
-			}
-		}); 
-		$( &quot;#difficulty_range&quot; ).attr( &quot;difficulty&quot; , V.Constant.DIFFICULTY);
-		$(&quot;#difficulty_range&quot;).val(LOM_difficulty[V.Constant.DIFFICULTY]);
-
 
 		&#x2F;&#x2F;If we have to edit
 		if(presentation){
@@ -249,7 +217,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
-		V.Editor.Settings.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
 		V.Storage.init();
@@ -365,7 +332,8 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 
-		$(this).find(&quot;.zone_tooltip&quot;).hide();
+		V.Editor.Tools.hideZoneToolTip($(this).find(&quot;.zone_tooltip&quot;));
+
 		$(this).append(content);
 
 		$(&quot;a.addpicture&quot;).fancybox({
@@ -415,7 +383,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_live_webcam&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_live_resource&#x27;);
 			}
 		});
 		
