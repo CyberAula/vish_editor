@@ -87,29 +87,35 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * GET /search.json?type=video&q=text
 	 */
 	var requestVideos = function(text, successCallback, failCallback){
-		
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  if(typeof successCallback == "function"){
-		var result = jQuery.extend({}, V.Samples.API.videoList);
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
+				var result = jQuery.extend({}, V.Samples.API.videoList);
+				switch(text){
+					case "dummy":
+						result['videos'] = V.Samples.API.videoListDummy['videos'];
+						break;
+					case "little":
+						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle['videos']);
+						break;
+					case "server error":
+						result = undefined;
+						break;
+					default:
+						result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
+				}
 
-		switch(text){
-		  case "dummy":
-			result['videos'] = V.Samples.API.videoListDummy['videos'];
-			break;
-		  case "little":
-			result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle['videos']);
-			break;
-		  default:
-			result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
+				setTimeout(function(){
+					if((typeof result == "undefined")&&(typeof failCallback == "function")){
+						failCallback();
+					} else if(typeof successCallback == "function"){
+						successCallback(result);
+					}
+				}, 2000);
+
+			}
+			return;
 		}
-			
-		setTimeout(function(){
-		  successCallback(result);
-		}, 2000);
-	  }
-	  return;
-	}
-		
+
 		_requestByType("video", text, successCallback, failCallback);		
 	};
 	
@@ -118,19 +124,18 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * function to call to VISH and request recommended videos
 	 */
 	var requestRecomendedVideos = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-		  if(typeof successCallback == "function"){
+		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof successCallback == "function"){
 				var result = V.Samples.API.videoList;
 				result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
-			  setTimeout(function(){
-				successCallback(result);
-			  }, 2000);
-		  }
-		return;
-	}
-		
-	_requestByType("video", "", successCallback, failCallback);
-  };
+				setTimeout(function(){
+					successCallback(result);
+				}, 2000);
+			}
+			return;
+		}
+		_requestByType("video", "", successCallback, failCallback);
+	};
 	 
 		
 	/**

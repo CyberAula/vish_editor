@@ -1,74 +1,75 @@
 VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
+	var containerDivId = "tab_video_repo_content";
 	var carrouselDivId = "tab_video_repo_content_carrousel";
 	var previewDivId = "tab_video_repo_content_preview";
+	var myInput;
+	var timestampLastSearch;
+
+	//Store video metadata
 	var currentVideos = new Array();
 	var selectedVideo = null;
 	
-	var init = function() {
-		var myInput = $("#tab_video_repo_content").find("input[type='search']");
+
+	var init = function(){
+		myInput = $("#tab_video_repo_content").find("input[type='search']");
 		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
-		$(myInput).keydown(function(event) {
+		$(myInput).keydown(function(event){
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());
 				$(myInput).blur();
 			}
 		});
-	};	
-	
-	var onLoadTab = function() {
-		var previousSearch = ($("#tab_video_repo_content").find("input[type='search']").val() != "");
-		if(!previousSearch) {
-			_cleanVideoPreview();
-			_requestInitialData();
-		}
 	};
 	
-	/*
-	 * Request inicial data to the server.
-	 */
-	var _requestInitialData = function() {
-		_prepareRequest();
-		V.Editor.API.requestRecomendedVideos(_onDataReceived, _onAPIError);
+	var beforeLoadTab = function(){
+		_cleanSearch();
+	}
+	
+	var onLoadTab = function(){
+		
 	};
 	
-	/*
-	 * Request data to the server.
-	 */
-	var _requestData = function(text) {
+	var _requestData = function(text){
 		_prepareRequest();
 		V.Editor.API.requestVideos(text, _onDataReceived, _onAPIError);
 	};
-	
 
 	var _prepareRequest = function(){
-		//Clean previous carrousel
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$("#" + carrouselDivId).hide();
-		//clean previous preview if any
-		_cleanVideoPreview(); 
+		_cleanCarrousel();
+		_cleanVideoPreview();
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
+		$(myInput).attr("disabled","true");
+		timestampLastSearch = Date.now();
 	}
 
-	/*
-	 * Fill tab_video_repo_content_carrousel div with server data.
-	 */
-	var _onDataReceived = function(data) {
-		//Clean previous videos
+	var _cleanSearch = function(){
+		timestampLastSearch = undefined;
+		$(myInput).val("");
+		$(myInput).removeAttr("disabled");
+		_cleanVideoPreview();
+		_cleanCarrousel();
+	}
+
+	var _cleanCarrousel = function(){
+		$("#" + carrouselDivId).hide();
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+	}
+
+	var _onDataReceived = function(data){
+		if(!_isValidResult()){
+			return;
+		}
+
+		//The received data has an array called "videos"
+		if((!data)||(!data.videos)||(data.videos.length==0)){
+			_onSearchFinished();
+			_drawData(true);
+			return;
+		}
+
+		var carrouselImages = [];
 		currentVideos = new Array();
-		
-		 //Clean carrousel images
-    var carrouselImages = [];
-
-		var content = "";
-
-    if((!data.videos)||(data.videos.length==0)){
-      $("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
-      $("#" + carrouselDivId).show();
-      return;
-    } 
-
-		//data.videos is an array with the results
 		$.each(data.videos, function(index, video) {
 			if(video){
 				var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "' title='"+video.title+"'/>")
@@ -82,28 +83,79 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
 	};
 	
-	
 	var _onImagesLoaded = function(){
+		_onSearchFinished();
+		_drawData();
+	}
+	
+	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
+		$(myInput).removeAttr("disabled");
+	}
+
+	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
-		var options = new Array();
-		options['rows'] = 1;
-		options['callback'] = _onClickCarrouselElement;
-		options['rowItems'] = 5;
-		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
-  }
+
+		if(!_isValidResult()){
+			//We need to clean because data has been loaded by V.Utils.Loader
+			_cleanCarrousel();
+			return;
+		}
+
+		$("#" + containerDivId).addClass("temp_shown");
+		$("#" + carrouselDivId).addClass("temp_shown");
+
+
+		if(noResults===true){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "No results found" + "</p>");
+		} else if(noResults===false){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "Error connecting to ViSH server" + "</p>");
+		} else {
+			var options = new Array();
+			options.callback = _onClickCarrouselElement;
+			options.rowItems = 5;
+			options.scrollItems = 5;		
+			options.afterCreateCarruselFunction = function(){
+				//We need to wait even a little more that afterCreate callback
+				setTimeout(function(){
+					$("#" + containerDivId).removeClass("temp_shown");
+					$("#" + carrouselDivId).removeClass("temp_shown");
+				},100);
+			}
+			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		}
+	}
 	
-	
-	var _onAPIError = function() {
-		//V.Debugging.log("API error");
+	var _onAPIError = function(){
+		if(_isValidResult()){
+			_onSearchFinished();
+			_drawData(false);
+		}
 	};
 	
 	var _onClickCarrouselElement = function(event) {
-		var videoId = $(event.target).attr("videoid");
+		var videoId = $(event.target).attr("videoId");
 		var renderedVideo = V.Renderer.renderVideo(currentVideos[videoId], "preview");
 		_renderVideoPreview(renderedVideo, currentVideos[videoId]);
 		selectedVideo = currentVideos[videoId];
 	};
+
+	var _isValidResult = function(){
+		if(typeof timestampLastSearch == "undefined"){
+			//Old search (not valid).
+			return false;
+		}
+
+		var isVisible = $("#" + carrouselDivId).is(":visible");
+		if(!isVisible){
+			return false;
+		}
+
+		return true;
+	}
+
+
+	/* Preview */
 	
 	var _renderVideoPreview = function(renderedVideo, video) {
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
@@ -119,7 +171,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 		}
 	};
 	
-	var _cleanVideoPreview = function() {
+	var _cleanVideoPreview = function(){
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
 		var button = $("#" + previewDivId).find(".okButton");
@@ -129,14 +181,14 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	};
 	
 	var addSelectedVideo = function() {
-		if(selectedVideo != null) {
+		if(selectedVideo != null){
 			var sourcesArray = [];
 			var options = new Array();
 			options['poster'] = selectedVideo.poster;
 			var sources = selectedVideo.sources;
 			if(typeof sources == "string"){
-        sources = JSON.parse(sources)
-      }
+				sources = JSON.parse(sources)
+			}
 			$.each(sources, function(index, source) {
 				sourcesArray.push([source.src, source.type]);
 			});
@@ -146,9 +198,10 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	};
 	
 	return {
-		init : init,
-		onLoadTab : onLoadTab,
-		addSelectedVideo : addSelectedVideo
+		init 				: init,
+		beforeLoadTab 		: beforeLoadTab,
+		onLoadTab 			: onLoadTab,
+		addSelectedVideo 	: addSelectedVideo
 	};
 
 })(VISH, jQuery);

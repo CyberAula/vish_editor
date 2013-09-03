@@ -452,10 +452,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			//Video
 			case "tab_video_repo":
-				// V.Editor.Video.Repository.beforeLoadTab();
+				V.Editor.Video.Repository.beforeLoadTab();
 				break;
 			case "tab_video_youtube":
-				// V.Editor.Video.Youtube.beforeLoadTab();
+				V.Editor.Video.Youtube.beforeLoadTab();
 				break;
 			case "tab_video_vimeo":
 				// V.Editor.Video.Vimeo.beforeLoadTab();
