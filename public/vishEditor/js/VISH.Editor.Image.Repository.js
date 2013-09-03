@@ -6,7 +6,7 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 	var timestampLastSearch;
 	
 	var init = function(){
-		myInput = $("#tab_pic_repo_content").find("input[type='search']");
+		myInput = $("#" + containerDivId).find("input[type='search']");
 		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event){
 			if(event.keyCode == 13) {

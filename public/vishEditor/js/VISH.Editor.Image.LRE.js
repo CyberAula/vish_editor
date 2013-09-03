@@ -1,84 +1,126 @@
 VISH.Editor.Image.LRE = (function(V,$,undefined){
 
-	var carrouselDivId = "tab_lre_content_carrousel";
-	
-	//add events to inputs
+	var containerDivId = "tab_pic_lre_content";
+	var carrouselDivId = "tab_pic_lre_content_carrousel";
+	var myInput;
+	var timestampLastSearch;
+
 	var init = function(){
-		var myInput = $("#tab_pic_lre_content").find("input[type='search']");
+		myInput = $("#" + containerDivId).find("input[type='search']");
 		$(myInput).watermark(V.Editor.I18n.getTrans("i.SearchContent"));
-		$(myInput).keydown(function(event) {
+		$(myInput).keydown(function(event){
 			if(event.keyCode == 13) {
-		        _requestData($(myInput).val());
+				_requestData($(myInput).val());
 				$(myInput).blur();
 			}
 		});
 	};
 
+
 	var beforeLoadTab = function(){
+		_cleanSearch();
+	}
+	
+	var onLoadTab = function(){
+		
 	};
-
-	var onLoadTab = function(){		
-	};
-
-	/*
-	 * Request data to the server.
-	 */
-	var _requestData = function(text) {
+	
+	var _requestData = function(text){
 		_prepareRequest();
 		V.Editor.LRE.requestImages(text, _onDataReceived, _onAPIError);
 	};
-	
 
 	var _prepareRequest = function(){
-		//Clean previous carrousel
-		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-		$("#" + carrouselDivId).hide();
+		_cleanCarrousel();
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
+		$(myInput).attr("disabled","true");
+		timestampLastSearch = Date.now();
+	}
+	
+	var _cleanSearch = function(){
+		timestampLastSearch = undefined;
+		$(myInput).val("");
+		$(myInput).removeAttr("disabled");
+		_cleanCarrousel();
 	}
 
-	/*
-	 * Fill tab_pic_lre_content_carrousel div with lre data.
-	 */
-	var _onDataReceived = function(data) {
-		//Clean previous Images
-		currentImages = new Array();
-		var carrouselImages = [];
+	var _cleanCarrousel = function(){
+		$("#" + carrouselDivId).hide();
+		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
+	}
 
-		var content = "";
-
-		//the received data is an array with the images, see V.Samples.API.ImageList for an example
-		if((!data.pictures)||(data.pictures.length==0)){
-			$("#" + carrouselDivId).html("<p class='carrouselNoResults'> No results found </p>");
-			$("#" + carrouselDivId).show();
+	var _onDataReceived = function(data){
+		if(!_isValidResult()){
 			return;
-		} 
-		
-		//data.results is an array with the results
+		}
+
+		//The received data has an array called "pictures"
+		if((!data)||(!data.pictures)||(data.pictures.length==0)){
+			_onSearchFinished();
+			_drawData(true);
+			return;
+		}
+
+		var carrouselImages = [];
 		$.each(data.pictures, function(index, image) {
 			var myTitle = image.title;
 			var myImg = $("<img src='" + image.src + "' title='"+ myTitle +"' >");
 			carrouselImages.push(myImg);
-			currentImages[image.id] = image;
 		});
 
 		var options = {};
 		options.callback = _onImagesLoaded;
 		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
-	};
-	
+	}
+
 	var _onImagesLoaded = function(){
+		_onSearchFinished();
+		_drawData();
+	}
+
+	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
+		$(myInput).removeAttr("disabled");
+	}
+
+	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
-		var options = new Array();
-		options['rows'] = 2;
-		options['callback'] = _onClickCarrouselElement;
-		options['rowItems'] = 4;
-		options['scrollItems'] = 4;
-		V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+
+		if(!_isValidResult()){
+			//We need to clean because data has been loaded by V.Utils.Loader
+			_cleanCarrousel();
+			return;
+		}
+
+		$("#" + containerDivId).addClass("temp_shown");
+		$("#" + carrouselDivId).addClass("temp_shown");
+
+		if(noResults===true){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "No results found" + "</p>");
+		} else if(noResults===false){
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "Error connecting to ViSH server" + "</p>");
+		} else {
+			var options = new Array();
+			options.rows = 2;
+			options.callback = _onClickCarrouselElement;
+			options.rowItems = 4;
+			options.scrollItems = 4;
+			options.afterCreateCarruselFunction = function(){
+				//We need to wait even a little more that afterCreate callback
+				setTimeout(function(){
+					$("#" + containerDivId).removeClass("temp_shown");
+					$("#" + carrouselDivId).removeClass("temp_shown");
+				},100);
+			}
+			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
+		}
 	}
 	
-	var _onAPIError = function() {
-		V.Debugging.log("API error");
+	var _onAPIError = function(){
+		if(_isValidResult()){
+			_onSearchFinished();
+			_drawData(false);
+		}
 	};
 	
 	var _onClickCarrouselElement = function(event) {
@@ -87,6 +129,20 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 		$.fancybox.close();
 		V.Editor.Tools.loadToolsForZone(V.Editor.getCurrentArea());
 	};
+
+	var _isValidResult = function(){
+		if(typeof timestampLastSearch == "undefined"){
+			//Old search (not valid).
+			return false;
+		}
+
+		var isVisible = $("#" + carrouselDivId).is(":visible");
+		if(!isVisible){
+			return false;
+		}
+
+		return true;
+	}
 
 	return {
 		init			: init,

@@ -1,7 +1,7 @@
 VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	
 	var containerDivId = "tab_pic_flikr_content";
-	var carrouselDivId = "tab_flikr_content_carrousel";
+	var carrouselDivId = "tab_pic_flikr_content_carrousel";
 	var myInput;
 	var timestampLastSearch;
 	
