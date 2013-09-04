@@ -32,11 +32,6 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	 * Insert the selected slides of a slide presentation in JSON
 	 */
 	var insertPresentation = function(presentationJSON,selectedSlideNumbers){
-
-		console.log("insert presentation");
-		console.log(presentationJSON);
-		console.log(selectedSlideNumbers);
-
 		var snL = selectedSlideNumbers.length;
 
 		if(snL<1){
