@@ -354,6 +354,7 @@ div.carrousel_element_single_row_presentation_repository > img.carrousel_element
 div.image_carousel_single_row_presentation_repository {
 	padding: 100px 0 0px 0px;
 	width: 800px;
+	margin-left: -3px;
 }
 
 div.carrousel_element_single_row_presentation_repository {

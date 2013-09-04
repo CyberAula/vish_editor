@@ -7,8 +7,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 */
 	var init = function(presentation){
 		V.Editor.Themes.selectTheme(presentation.theme);
-		V.Editor.Settings.loadPresentationSettings(presentation);
-
+		
 		if(presentation.type===V.Constant.PRESENTATION){
 			renderPresentation(presentation);
 		} else if(presentation.type===V.Constant.QUIZ_SIMPLE){
@@ -23,14 +22,15 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	var renderPresentation = function(presentation){
 		slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
+			var slideNumber = V.Slides.getSlidesQuantity()+1;
 			var type = slides[i].type;
 			
 			if(type===V.Constant.STANDARD){
-				_renderSlide(slides[i], {slideNumber: i+1 });
+				_renderSlide(slides[i], {slideNumber: slideNumber });
 			} else {
 				var isSlideset = V.Editor.Slideset.isSlideset(type);
 				if(isSlideset){
-					_renderSlideset(slides[i], i+1);
+					_renderSlideset(slides[i], slideNumber);
 				}
 			}
 		}

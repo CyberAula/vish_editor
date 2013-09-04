@@ -1,6 +1,6 @@
 VISH.Constant = VISH.Constant || {};
 
-//VE Edit Modes
+//VE Modes
 VISH.Constant.Edit = "Editor";
 VISH.Constant.Viewer  = "Viewer";
 VISH.Constant.AnyMode  = "Both";
@@ -19,7 +19,6 @@ VISH.Constant.FIREFOX = 'Mozilla Firefox';
 VISH.Constant.CHROME = 'Google Chrome';
 VISH.Constant.SAFARI = 'Safari';
 VISH.Constant.ANDROID_BROWSER = 'Android Browser';
-
 
 //Zone sizes
 VISH.Constant.EXTRA_SMALL = "extra-small";
@@ -56,6 +55,22 @@ VISH.Constant.SNAPSHOT = "snapshot";
 VISH.Constant.APPLET = "applet";
 VISH.Constant.QUIZ = "quiz";
 
+//Media types
+VISH.Constant.MEDIA = {};
+VISH.Constant.MEDIA.IMAGE = "image";
+VISH.Constant.MEDIA.FLASH = "swf";
+VISH.Constant.MEDIA.PDF = "pdf";
+VISH.Constant.MEDIA.YOUTUBE_VIDEO = "youtube";
+VISH.Constant.MEDIA.HTML5_VIDEO = "HTML5";
+VISH.Constant.MEDIA.WEB = "web";
+VISH.Constant.MEDIA.JSON = "json";
+
+//Wrapper types
+VISH.Constant.WRAPPER = {};
+VISH.Constant.WRAPPER.EMBED = "EMBED";
+VISH.Constant.WRAPPER.OBJECT = "OBJECT";
+VISH.Constant.WRAPPER.IFRAME = "IFRAME";
+
 //Subtypes
 VISH.Constant.QZ_TYPE = {};
 VISH.Constant.QZ_TYPE.OPEN = "open";
@@ -75,6 +90,7 @@ VISH.Constant.TextBase = 12;
 VISH.Constant.Video = {};
 VISH.Constant.Video.HTML5 = "HTML5";
 VISH.Constant.Video.Youtube = "Youtube";
+
 
 //Clipboard
 VISH.Constant.Clipboard = {};

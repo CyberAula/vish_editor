@@ -200,9 +200,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		drawPreviewObject(contentToAdd);
 	}
 	
-	var drawPreviewObject = function(content){
+	var drawPreviewObject = function(content,options){
 		if(content){
-			drawObject(content);
+			drawObject(content,options);
 			$.fancybox.close();
 		}
 	}
@@ -295,27 +295,27 @@ VISH.Editor.Object = (function(V,$,undefined){
 			case null:
 				//Draw object preview from source
 				switch (objectInfo.type) {			
-					case "image":
+					case V.Constant.MEDIA.IMAGE:
 						return "<img class='imagePreview' src='" + object + "'></img>"
 						break;
 
-					case "swf":
+					case V.Constant.MEDIA.FLASH:
 						return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>"
 						break;
 
-					case "pdf":
+					case V.Constant.MEDIA.PDF:
 						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
 						break;
 					  
-					case "youtube":
+					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 
-					case "HTML5":
+					case V.Constant.MEDIA.HTML5_VIDEO:
 						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
 						break;
 						
-					case "web":
+					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
 						break;
 
@@ -325,15 +325,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 				}
 				break;
 
-			case "EMBED":
+			case V.Constant.WRAPPER.EMBED:
 				return _genericWrapperPreview(object)
 				break;
 
-			case "OBJECT":
+			case V.Constant.WRAPPER.OBJECT:
 				return _genericWrapperPreview(object)
 				break;
 
-			case "IFRAME":
+			case V.Constant.WRAPPER.IFRAME:
 				return _genericWrapperPreview(object)
 				break;
 
@@ -363,7 +363,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param area: optional param indicating the area to add the object, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*/
-	var drawObject = function(object, area, style, zoomInStyle){	
+	var drawObject = function(object, area, style, zoomInStyle, options){	
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
@@ -380,26 +380,32 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 		
 		var objectInfo = V.Object.getObjectInfo(object);
+		
+		if((options)&&(options.forceType)){
+			objectInfo.wrapper = null;
+			objectInfo.type = options.forceType;
+		}
+
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
 				switch (objectInfo.type) {
-					case "image":
+					case V.Constant.MEDIA.IMAGE:
 						V.Editor.Image.drawImage(object);
 						break;
-					case "swf":
+					case V.Constant.MEDIA.FLASH:
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
-					case "pdf":
+					case V.Constant.MEDIA.PDF:
 						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
 						break;
-					case "youtube":
+					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
 						break;
-					case "HTML5":
+					case V.Constant.MEDIA.HTML5_VIDEO:
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
 						break;
-					case "web":
+					case V.Constant.MEDIA.WEB:
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 						break;
 					default:
@@ -408,15 +414,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 				}
 				break;
 
-			case "EMBED":
+			case V.Constant.WRAPPER.EMBED:
 				drawObjectWithWrapper(object, current_area, object_style);
 				break;
 
-			case "OBJECT":
+			case V.Constant.WRAPPER.OBJECT:
 				drawObjectWithWrapper(object, current_area, object_style);
 				break;
 
-			case "IFRAME":
+			case V.Constant.WRAPPER.IFRAME:
 				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 

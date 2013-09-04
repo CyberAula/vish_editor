@@ -49,6 +49,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 
 	var _drawMap = function(vtJSON,vtDOM){
+		
 		if(!vtJSON){
 			//Default values
 			vtJSON = {};
@@ -414,7 +415,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(vt){
-		_drawMap(undefined,vt);
 	};
 
 	var onLeaveSlideset = function(vt){

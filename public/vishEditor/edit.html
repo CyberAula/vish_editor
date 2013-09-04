@@ -345,10 +345,10 @@
 						<p id="presentation_details_preview_title" class="presentation_details_column_title"> Preview </p>
 						<div id="presentation_details_preview">
 							<div id="presentation_details_preview_thumbnail">
-								<div id="presentation_details_preview_thumbnail_img_wrapper">
+								<div title="Click to add an avatar. You should select an avatar to identify your excursion" id="presentation_details_preview_thumbnail_img_wrapper">
 									<img id='presentation_details_preview_thumbnail_img' class="addThumbnailPlus" src="/vishEditor/images/icons/addThumbnail2.png"/>
 								</div>
-								<p class="addthumbtitle">Add an avatar</p>
+								<p class="addthumbtitle">Add an avatar *</p>
 								<div id="editthumb">
 									<p>edit</p>
 								</div>
@@ -367,7 +367,7 @@
 						<p class="presentation_details_column_title"> Excursion Details </p>
 
 						<div id="presentation_details_title">
-							<span class="presentation_details_text" i18n-key="i.Title">Title</span>
+							<span class="presentation_details_text" title='Title is a mandatory field' i18n-key="i.Title">Title *</span>
 							<input id="presentation_details_input_title" class="presentation_details_input" type="text" placeholder="Excursion title" i18n-key="i.presTitle" maxLength="120"></input>
 						</div>
 
@@ -673,13 +673,13 @@
 						<div class="content_preview_data"></div>
 						<div class="content_preview_metadata"></div>
 						<div class="content_preview_foot">
-							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2 previewbutton2">Preview</button>
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2">Preview</button>
 						</div>
 					</div> 	
 				</div>	
 			</div>
 
-			<div id='tab_smartcards_repo_content' class="fancy_tab_content" style='display:none'> 
+			<div id='tab_smartcards_repo_content' class="fancy_tab_content" style='display:none'>
 				<img class='help_in_fancybox' id='tab_smartcards_repo_help' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 				<div class="excursions_repo_content">
 					<img src="/vishEditor/images/repositoryimg.png" class="imagelogotab"/>  
@@ -691,7 +691,7 @@
 						<div class="content_preview_data"></div>
 						<div class="content_preview_metadata"></div>
 						<div class="content_preview_foot">
-							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2 previewbutton2">Preview</button>
+							<button i18n-key="i.Preview" style="display:none" type="button" class="okButton2">Preview</button>
 						</div>
 					</div> 	
 				</div>	
@@ -863,11 +863,24 @@
 	<div style='display:none'>
 		<div id='message1_form'>
 			<div class="text_in_fancybox">
-				<img id="message1img" src="/vishEditor/images/zonethumbs/content_fail.png">
+				<img class="alertDialogIcon" src="/vishEditor/images/zonethumbs/content_fail.png">
 				<span class="deltext" i18n-key="i.oneSlideAlert">Create at least one slide before saving.</span>
 			</div> 		
 			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
+				<a href="#" onclick="$.fancybox.close();" class="button buttonfail">accept</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- NOTIFY USERS THAT THEY MUST FILL ALL MANDATORY FIELDS IN THE SETTINGS PANEL BEFORE PUBLISH -->
+	<div style='display:none'>
+		<div id='message2_form'>
+			<div class="text_in_fancybox">
+				<img class="alertDialogIcon" src="/vishEditor/images/zonethumbs/content_fail.png">
+				<span class="deltext" i18n-key="i.oneSlideAlert">You need to write a title for the excursion and select an avatar before publish the excursion.</span>
+			</div> 		
+			<div id="button_accept_when_fail">
+				<a href="#" onclick="$.fancybox.close();" class="button buttonfail">Go to Settings</a>
 			</div>
 		</div>
 	</div>
@@ -886,71 +899,6 @@
 					onclick="VISH.Editor.Tools.removeUrl()">Remove</button>
 				</div>
 
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN CLICK ON ADD SLIDE IN FLASHCARD MODE -->
-	<div style='display:none'>
-		<div id='message2_form'>
-			<div class="text_in_fancybox">
-				<img id="message2img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Transform to standard presentation to add a new slide.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" i18n-key="i.accept" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND THERE IS NO POIS IN THE FLASHCARD-->
-	<div style='display:none'>
-		<div id='message3_form'>
-			<div class="text_in_fancybox">
-				<img id="message3img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please drag and drop at least one arrow in the flashcard.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND BACKGROUND IS NOT SET-->
-	<div style='display:none'>
-		<div id='message4_form'>
-			<div class="text_in_fancybox">
-				<img id="message4img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please change the flashcard background before saving.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO CHANGE TO FLASHCARD AND THERE IS NO SLIDES-->
-	<div style='display:none'>
-		<div id='message5_form'>
-			<div class="text_in_fancybox">
-				<img id="message5img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please create at least one slide before changing mode.</span>
-			</div>
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND THERE IS NO POIS IN THE Virtual Tour-->
-	<div style='display:none'>
-		<div id='message6_form'>
-			<div class="text_in_fancybox">
-				<img id="message6img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please drag and drop at least one point of interest in the map.</span>
-			</div>	
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
 			</div>
 		</div>
 	</div>

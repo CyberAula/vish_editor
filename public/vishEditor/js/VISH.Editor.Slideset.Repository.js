@@ -80,11 +80,15 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 		var carrouselImages = [];
 		currentExcursions = new Array();
 		$.each(data.excursions, function(index, pres){
-			if((pres.id)&&(pres.avatar)){
-				var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
-				carrouselImages.push(myImg);
-				currentExcursions[pres.id] = pres;
+			if(!pres.id){
+				pres.id = V.Utils.getId("tmp");
 			}
+			if(!pres.avatar){
+				pres.avatar = V.ImagesPath + "defaultAvatar.png";
+			}
+			var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
+			carrouselImages.push(myImg);
+			currentExcursions[pres.id] = pres;
 		});
 
 		var options = {};
