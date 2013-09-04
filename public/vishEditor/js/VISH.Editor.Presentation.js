@@ -85,12 +85,18 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
 		V.Slides.updateSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
 		V.Slides.lastSlide();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		});
+
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
-		//Reload current slide objects
-		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		//Enter in currentSlide (this will cause that objects will be shown)
+		if(V.Slides.getCurrentSlideNumber()>0){
+			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
+		}
 
 		$.fancybox.close();
 	}
