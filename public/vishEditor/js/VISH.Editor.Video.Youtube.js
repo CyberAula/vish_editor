@@ -197,7 +197,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedIframe) && (video)) {
 			$(videoArea).append(renderedIframe);
-			var table = V.Editor.Utils.generateTable(video.author, video.title, video.description);
+			var table = V.Editor.Utils.generateTable({title:video.title, author:video.author, description:video.subtitle});
 			$(metadataArea).html(table);
 			$(button).show();
 		}

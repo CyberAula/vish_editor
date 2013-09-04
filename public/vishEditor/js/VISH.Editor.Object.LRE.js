@@ -70,15 +70,8 @@ VISH.Editor.Object.LRE = (function(V,$,undefined){
 		currentObject = new Array();  
 		var carrouselImages = [];
 		var carrouselImagesTitles = [];
-	
-		
-		console.log("Data length");
-		console.log(data.length);
-		console.log("Data received");
-		console.log(data);
 
 		$.each(data, function(index, objectItem) {
-			var objectInfo = V.Object.getObjectInfo(objectItem.object);
 			var myImg = $("<img src='" + objectItem.thumbnail + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"'>");
 			carrouselImages.push(myImg);
 			carrouselImagesTitles.push(objectItem.title);
@@ -177,7 +170,8 @@ VISH.Editor.Object.LRE = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedObject)&&(object)){
 			$(objectArea).append(renderedObject);
-			var table = V.Editor.Utils.generateTable(object.author,object.title,object.description);
+			var objectInfo = V.Object.getObjectInfo(object.object);
+			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description, url:objectInfo.source});
 			$(metadataArea).html(table);
 			$("#tab_object_lre_content_preview").find(".okButton").show();
 		}

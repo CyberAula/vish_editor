@@ -1633,6 +1633,12 @@ table.metadata td div.height_wrapper_description {
 	overflow-y: auto;
 }
 
+a.metadata_link {
+	text-decoration: none;
+	color: white;
+	cursor:pointer;
+}
+
 .caroufredsel_wrapper {
 	overflow-y: visible;
 	overflow-x: visible;
