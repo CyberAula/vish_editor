@@ -368,7 +368,8 @@ VISH.Samples.API = (function(V,undefined){
 		flashcardList.flashcards[3],
 		flashcardList.flashcards[3],
 		VISH.Samples.fc_sample, 
-		VISH.Samples.samples_vtour
+		VISH.Samples.samples_vtour,
+		VISH.Samples.test
 	]
   };
 

@@ -139,7 +139,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 		if(slides[slideNumber-1] === true){
 			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_wrong.png"/>Remove Slide');
 		} else {
-			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_checked.png"/>Add Slide');
+			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_checked.png"/>Select Slide');
 		}
 	};
 
