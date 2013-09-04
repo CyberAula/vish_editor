@@ -385,7 +385,7 @@
 					</div>
 
 					<div id="presentation_details_fields_row1_column3">
-						<p class="presentation_details_column_title"> Select Theme </p>
+						<p id="selectthemeshelp" class="presentation_details_column_title"> Select Theme </p>
 						<div id="scrollbar_themes_list"></div>
 					</div>
 				</div>
@@ -1567,7 +1567,7 @@
 
 		<!-- Help in Settings -->
 		 <ol id="help_in_settings_help" class="joyRideTipContent">
-		   <li data-id="tutorialstart" data-text="Next" i18n-key="i.Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
+		   <li data-id="help_in_settings" data-text="Next" i18n-key="i.Next" data-options="tipLocation:none;" class="tut_welcome Next tut_without_arrow">
 		 <h2 i18n-key="i.welcomeVishEditor">Welcome to ViSH editor!</h2>
 		 <p>
 		  <span i18n-key="i.walk1">Using the "Walk through icon"</span>
@@ -1575,32 +1575,40 @@
 		<span i18n-key="i.walk2">around the application, will show you how to use the ViSH editor in several easy steps. All the features related to it will be shown to you, as well as the way to publish the final result generated. Click on "Next" to start the Walk through.</span>
 		</p>
 		</li>
-		<li data-id="presentation_title" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
+		<li data-id="presentation_details_title" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
 		 <h2 i18n-key="i.writeTitle">Let´s write a title (Mandatory)</h2>
 		 <p i18n-key="i.walk3">This black space will allow you to write a title to name your excursions. The title in the excursion is obligatory because it is used to find your excursions inside the ViSH platform. Click on "Next" to continue. </p>
 		</li>
-		<li data-id="presentation_description" data-options="tipLocation:bottom;" i18n-key="i.Next" data-text="Next">
+		<li data-id="presentation_details_preview_thumbnail_img" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
+		 <h2 i18n-key="i.thumbnailsChoosing">Choose or add an image that represents your excursion</h2>
+		   <p i18n-key="i.walk6">In this zone you can choose an image that represents your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.If you want, you can add your own thumbnail by pressing the plus icon at the left of the carrousel.Then click "Next" to continue.</p>
+		</li>	
+		<li data-id="presentation_details_description" data-options="tipLocation:bottom;" i18n-key="i.Next" data-text="Next">
 		 <h2 i18n-key="i.WriteDescription">Write a description (optional)</h2>
 		   <p i18n-key="i.walk4">Here you can explain in a little more detail what the excursion is about. Click on "Next" to continue.</p>
 		</li>
-		   <li data-id="tagindex" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;">
+		<li data-id="selectthemeshelp" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;" class="Next">
+		 <h2 i18n-key="i.SavePresentationDetails">Select your presentation theme</h2>
+		   <p i18n-key="i.walk7">In this section there will be displayed all the different visual themes to your presentation, you can choose now one if you want, or maybe later when you fill the content into it.Click "Next" to continue.</p>
+		</li>	
+		   <li data-id="tags_in_presentation_details" data-text="Next" i18n-key="i.Next" data-options="tipLocation:bottom;">
 		 <h2 i18n-key="i.AddTags">Add tags to your excursion</h2>
 		   <p i18n-key="i.walk5">In this zone you can add topics that will represent your excursion when users search in the ViSH platform. Click on "Next" to continue.</p>
+		</li>   
+		   <li data-id="pedagogical_clasification_button" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
+		 <h2 i18n-key="i.SavePresentationDetails">Peadgogical Aspects</h2>
+		   <p i18n-key="i.walk7">Pressing click in this button will take you to another window in order to fulfill and add pedagogical aspects in order to help you or orders to use the presentation.Click "Next" to continue.</p>
 		</li>
-		   <li data-id="avatars_carrousel" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top;" class="Next">
-		 <h2 i18n-key="i.thumbnailsChoosing">Choose or add an image that represents your excursion</h2>
-		   <p i18n-key="i.walk6">In this zone you can choose an image that represents your excursion. Try the arrows on the sides or the circles at the bottom to check all the images and choose one.If you want, you can add your own thumbnail by pressing the plus icon at the left of the carrousel.Then click "Next" to continue.</p>
-		</li>
-		   <li data-id="save_presentation_details" class="tut_savedetails tut_with_arrow" data-options="tipLocation:none" data-text="Close" i18n-key="i.Close">
+		<li data-id="fill_details_later_button" class="tut_with_arrow" data-options="tipLocation:top" data-text="Close" i18n-key="i.Close">
 		 <h2 i18n-key="i.SavePresentationDetails">Save your excursion details</h2>
-		   <p i18n-key="i.walk7">Finally click on continue to save your excursion details, and start adding content to your excursion.</p>
+		   <p i18n-key="i.walk7">Finally click on "Continue" to save your excursion details or click on "Fill later" if you feel like fill them later, and start adding content to your excursion.</p>
 		</li>
 		</ol>
 
 		<!-- Help in pedagogical options settings -->
 		<ol id="help_pedagogical_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
-		 <h2 i18n-key="i.selectSlide">Peadgogical Aspects</h2>
+		 <h2 i18n-key="i.selectSlide">Pedagogical Aspects</h2>
 		 <p i18n-key="i.walk76">This window offers you to define your excursion in matters of <i>"age range, subject, languaje, objectives and competencies"</i>.<br> If you fill these fields you will show other users and viewers the information they need to use this excursion correctly.<br> Click on "Close" to finish this walkthrough.</p>
 		</li>
 		</ol>
