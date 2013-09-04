@@ -72,7 +72,7 @@
 	opacity: 0.2;
 }
 
-.toolbar_presentation_wrapper_disabled > * {
+.toolbar_presentation_wrapper_disabled * {
 	cursor: default !important;
 }
 
