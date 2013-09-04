@@ -137,7 +137,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 
 	_updateButtonValue = function(slideNumber){
 		if(slides[slideNumber-1] === true){
-			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_wrong.png"/>Remove Slide');
+			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_wrong.png"/>Unselect Slide');
 		} else {
 			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_checked.png"/>Select Slide');
 		}

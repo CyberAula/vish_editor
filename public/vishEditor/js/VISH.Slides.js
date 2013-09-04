@@ -154,12 +154,20 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var getSlidesQuantity = function(){
-		return getSlides().length;
+		var slides = getSlides();
+		if((typeof slides != "undefined")&&(slides.length)){
+			return slides.length;
+		} else {
+			return 0;
+		}	
 	}
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
 			//slide in DOM element
+			return $(slideEl).attr("type");
+		} else if ((typeof slideEl == "object")&&(slideEl.length === 1)&&(slideEl[0].tagName==="ARTICLE")){
+			//slide in DOM element, passed as a jQuery selector
 			return $(slideEl).attr("type");
 		} else if ((typeof slideEl == "object")&&(typeof slideEl.type == "string")){
 			//slide in JSON

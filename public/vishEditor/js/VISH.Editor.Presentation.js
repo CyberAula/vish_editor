@@ -77,6 +77,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		}
 
 		presentationJSON.slides = selectedSlides;
+
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
 		V.Slides.updateSlides();

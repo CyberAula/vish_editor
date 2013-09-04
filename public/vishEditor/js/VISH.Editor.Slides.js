@@ -267,6 +267,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 	var addSlide = function(slide){
 		var slide = $(slide);
+		var slideType = V.Slides.getSlideType(slide);
 		
 		appendSlide(slide);
 
@@ -274,7 +275,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(oldCurrentSlideNumber+1);
 
-		if($(slide).attr("type")===V.Constant.STANDARD){
+		if(slideType===V.Constant.STANDARD){
 			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
@@ -282,6 +283,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Slides.updateSlides();
 		V.Slides.lastSlide();
 		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+
+		if(V.Editor.Slideset.isSlideset(slideType)){
+			// Create/Load dummy slideset
+			var slidesetCreator = V.Editor.Slideset.getCreatorModule(slideType);
+			slidesetCreator.draw(null,slide);
+		}
 
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());

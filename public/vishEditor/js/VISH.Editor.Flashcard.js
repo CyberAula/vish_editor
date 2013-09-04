@@ -11,12 +11,14 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	 * Complete the fc scaffold to draw the flashcard in the presentation
 	 */
 	var draw = function(slidesetJSON,scaffoldDOM){
-		if(slidesetJSON.background){
-			onBackgroundSelected(V.Utils.getSrcFromCSS(slidesetJSON.background));
-		};
-		if(slidesetJSON.pois){
-			_savePoisJSONToDom(scaffoldDOM,slidesetJSON.pois);
-		};
+		if(slidesetJSON){
+			if(slidesetJSON.background){
+				onBackgroundSelected(V.Utils.getSrcFromCSS(slidesetJSON.background));
+			};
+			if(slidesetJSON.pois){
+				_savePoisJSONToDom(scaffoldDOM,slidesetJSON.pois);
+			};
+		}
 	};
 
 	var onEnterSlideset = function(fc){
@@ -26,10 +28,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	var loadSlideset = function(fc){
-		//Load flashcard
-		var fcId = $(fc).attr("id");
-		var subslides = $("#" + fcId + " > article");
-
 		//Show POIs
 		$("#subslides_list").find("div.draggable_sc_div").show();
 	};
