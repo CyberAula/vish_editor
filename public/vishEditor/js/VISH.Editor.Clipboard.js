@@ -75,6 +75,13 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 			case V.Constant.Clipboard.Slide:
 				var slideToCopy = $(myStack[0]).clone()[0];
 
+				// Prevent slidesets to be copied with keyboard shortcuts.
+				// This feature is not well implemented yet.
+				// TODO: Implement slideset copy feature
+				if(V.Editor.Slideset.isSlideset(slideToCopy)){
+					return;
+				}
+
 				var options = {};
 				if(myStack[2]){
 					if(myStack[2].textAreas){

@@ -177,7 +177,7 @@ VISH.Editor.Slideset.Repository = (function(V,$,undefined){
 		var metadataArea = $("#" + previewDivId).find("div.content_preview_metadata");
 		$(metadataArea).html("");
 		if(object){
-			var table = V.Editor.Utils.generateTable(object.author,object.title,object.description,"metadata metadata_presentation");
+			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description, tableClass:"metadata metadata_presentation"});
 			$(metadataArea).html(table);
 			$(previewButton).show();
 		}

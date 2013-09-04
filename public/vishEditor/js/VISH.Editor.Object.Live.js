@@ -191,7 +191,7 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedObject)&&(object)){
 			$(objectArea).append(renderedObject);
-			var table = V.Editor.Utils.generateTable(object.author,object.title,object.description);
+			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description});
 			$(metadataArea).html(table);
 			$("#tab_live_resource_content_preview_foot").find(".okButton").show();
 		}

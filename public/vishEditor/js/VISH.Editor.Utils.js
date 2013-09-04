@@ -103,18 +103,33 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 
 	/* Generate table for carrousels */
-	var generateTable = function(author,title,description,tableClass){       
-		if(!author){
-			author = "";
-		}
-		if(!title){
-			title = "";
-		}
-		if(!description){
-			description = "";
-		}
-		if(!tableClass){
-			tableClass = "metadata";
+	var generateTable = function(options){
+		//Default values
+		var title = "Unknown";
+		var author = "";
+		var description = "";
+		var tableClass = "metadata";
+
+		if(options){
+			if(options.title){
+				title = options.title;
+			}
+
+			if(options.author){
+				author = options.author;
+			}
+
+			if(options.description){
+				description = options.description;
+			}
+
+			if(options.tableClass){
+				tableClass = options.tableClass;
+			}
+
+			if(options.url){
+				title = "<a title='view resource' class='metadata_link' target='_blank' href='"+options.url+"'>" + title + "</a>";
+			}
 		}
 
 		return "<table class=\""+tableClass+"\">"+

@@ -25,7 +25,8 @@ var getOptions = function(){
 		configuration["uploadObjectPath"] = "/object";
 		configuration["uploadPresentationPath"] = "/presentation/";
 		configuration["uploadPDF2PPath"] = "/pdfex/";		
-		configuration["SearchLREPath"] = "/lre/search";
+		configuration["SearchLREPath"] = "http://vishub.org/lre/search";
+		// configuration["SearchLREPath"] = "/lre/search"; To work with ViSH in localhost
 
 		configuration["presentationSettings"] = false;
 		configuration["presentationTags"] = true;

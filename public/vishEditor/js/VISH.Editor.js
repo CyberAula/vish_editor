@@ -28,7 +28,6 @@ VISH.Editor = (function(V,$,undefined){
 	//Tmp var to store slide to delete
 	var article_to_delete;
 
-
 	/**
 	 * VISH Editor initializer.
 	 * Adds the listeners to the click events in the different images and buttons of the UI.
@@ -144,6 +143,12 @@ VISH.Editor = (function(V,$,undefined){
 		//Enter in currentSlide (this will cause that objects will be shown)
 		if(V.Slides.getCurrentSlideNumber()>0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
+		}
+
+		//Add the first slide
+		if(!V.Editor.hasInitialPresentation()){
+			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:"1", slideNumber:1});
+			V.Editor.Slides.addSlide(slide);
 		}
 
 		//Init settings
