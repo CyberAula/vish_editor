@@ -1910,11 +1910,11 @@ div.object_wrapper {
 	border-bottom-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;
-	border-top-color:  #0066ff;
+	border-top-color:  #666;
 }
 
 .tut_with_arrow_up span.joyride-nub {
-	border-bottom-color: #0066ff;
+	border-bottom-color: #666;
 	border-left-color: transparent;
 	border-right-color: transparent;
 	border-top-color: transparent;
@@ -1925,8 +1925,15 @@ div.object_wrapper {
 }
 
 .tut_welcome {
-	top: 163px;
-	left: 450px;
+	top: 78px;
+	left: 396px;
+	width: 446px;
+}
+
+.tut_themes {
+	top: 78px;
+	left: 396px;
+	width: 446px;
 }
 
 .tut_savedetails {
