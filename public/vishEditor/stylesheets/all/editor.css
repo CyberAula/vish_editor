@@ -35,15 +35,15 @@ img {
 	border-radius: 10px;
 }
 
-.addthumbtitle {
+p.addthumbtitle  {
 	position: absolute;
-	margin-top: -92px;
-	margin-left: 90px;
-	width: 4%;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.1em;
-	font-weight: 600;
-	color: #A3A3A3;
+	margin-top: -80px;
+	margin-left: 85px;
+	width: 35%;
+	font-family: Helvetica;
+	font-size: 1.5em;
+	color: #ff005d;
+	pointer-events: none;
 }
 
 img.addThumbnailPlus {
@@ -149,18 +149,6 @@ p.presentation_details_column_title {
 	font-size: 1.3em;
 	font-weight: 400;
 	color: #323232;
-}
-
-.addthumbtitle  {
-	position: absolute;
-	margin-top: -80px;
-	margin-left: 90px;
-	width: 33%;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2em;
-	font-weight: 600;
-	color: #A3A3A3;
-	pointer-events: none;
 }
 
 #presentation_details_preview_author {
