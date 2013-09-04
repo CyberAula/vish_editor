@@ -28,7 +28,6 @@ VISH.Editor = (function(V,$,undefined){
 	//Tmp var to store slide to delete
 	var article_to_delete;
 
-
 	/**
 	 * VISH Editor initializer.
 	 * Adds the listeners to the click events in the different images and buttons of the UI.
