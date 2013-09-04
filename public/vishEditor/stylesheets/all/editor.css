@@ -1933,6 +1933,11 @@ div.object_wrapper {
 	width: 446px;
 }
 
+.tut_pedagogical {
+	top: 134px;
+	left: 470px;
+}
+
 .tut_savedetails {
 	top: 452px;
 	left: 394px;
@@ -1944,8 +1949,9 @@ div.object_wrapper {
 }
 
 .tut_welcome_exc {
-	top: 300px;
-	left: 255px;
+	top: 279px;
+	left: 481px;
+	width: 402px;
 }
 
 .imagetutflash {
@@ -1961,13 +1967,27 @@ div.object_wrapper {
 }
 
 .tut_menubar {
-	top: 510px;
-	left: 255px ;
+	top: 58px;
+	left: 180px;
+	width: 358px;
 }
 
-.tut_menubar span.joyride-nub {
-	bottom: -28px;
-	left: 190px;
+.tut_menubar2 {
+	top: 509px;
+	left: 180px;
+	width: 400px;
+}
+
+.tut_menubar2 span.joyride-nub {
+	top: 158px;
+	left: 165px;
+	border-top-color: #0066ff;
+}
+
+
+.tut_helps {
+	top: 113px;
+	left: 793px;
 }
 
 .tut_savepresentation {
@@ -1980,19 +2000,33 @@ div.object_wrapper {
 	left: 341px;
 }
 
+.tut_menubar span.joyride-nub{
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-right-color: #2461FF;
+	border-top-color: transparent;
+	bottom: 39px;
+	left: -28px;
+}
+
+.tut_toolbar_options {
+width: 431px;
+}
+
 .tut_addslide {
 	top: 470px;
 	right: 319px;
 }
 .tut_templatesel {
-	top: 250px;
-	left:255px;
+	top: 210px;
+	left: 349px;
+	width: 487px;
 }
 
 .tut_template {
-	top: 50px;
-	left: 55px;
-	width: 800px;
+	top: 83px;
+	left: 297px;
+	width: 796px;
 }
 
 #textimagetut {
@@ -2026,7 +2060,7 @@ div.object_wrapper {
 #delimagetut {
 	margin-top: -40px;
 	padding-left: 200px;
-	position:absolute;
+	position: absolute;
 }
 
 #textedimagetut {
@@ -2042,19 +2076,20 @@ div.object_wrapper {
 }
 
 .tut_fancy_index {
-	top: 85px;
-	left: 280px;
+	top: 121px;
+	left: 314px;
 	width: 550px;
 }
 
 .tut_preview {
-	top: 368px;
-	left: 410px;
+	top: 327px;
+	left: 596px;
 }
 
 .tut_search {
-	left:400px;
-	top:192px;
+	left: 452px;
+	top: 192px;
+	width: 390px;
 }
 
 .tut_search span.joyride-nub {
@@ -2229,7 +2264,7 @@ p.draggable_number {
 
 .imagetut {
 	float: left;
-	padding-right: 44px;
+	padding-right: 74px;
 }
 
 .tutaddlink {
@@ -2254,10 +2289,10 @@ p.draggable_number {
 }
 
 .tuttext {
-    left: 167px;
-    position: absolute;
-    top: 177px;
-    width: 243px;
+	left: 208px;
+	position: absolute;
+	top: 171px;
+	width: 204px;
 }
 
 .tutflashbg {
@@ -2267,9 +2302,9 @@ p.draggable_number {
 }
 
 .tut_themes {
-    left: 250px;
-    position: absolute;
-    top: 265px;
+	left: 367px;
+	position: absolute;
+	top: 265px;
 }
 
 #menuButton {
