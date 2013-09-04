@@ -145,6 +145,12 @@ VISH.Editor = (function(V,$,undefined){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
 		}
 
+		//Add the first slide
+		if(!V.Editor.hasInitialPresentation()){
+			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:"1", slideNumber:1});
+			V.Editor.Slides.addSlide(slide);
+		}
+
 		//Init settings
 		if ((V.Configuration.getConfiguration().presentationSettings) && (!V.Editor.hasInitialPresentation())){
 			V.Editor.Settings.displaySettings();
