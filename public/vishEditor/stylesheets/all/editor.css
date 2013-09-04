@@ -1433,6 +1433,11 @@ div.content_preview_presentation > div.content_preview_metadata {
 	height: 270px;
 }
 
+#tab_presentations_repo_content .content_preview_foot, #tab_smartcards_repo_content .content_preview_foot {
+	width: 100%;
+	right: 33%;
+}
+
 .content_preview_foot {
 	position: absolute;
 	bottom: 0px;
