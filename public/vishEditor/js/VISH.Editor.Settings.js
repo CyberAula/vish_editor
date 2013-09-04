@@ -120,15 +120,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var loadPresentationSettings = function(presentation){
-		var options = V.Utils.getOptions();
+		//Prevent to check presentation var in all cases
+		if(!presentation){
+			presentation = {};
+		}
 
 		//Avatar
-		if(presentation && presentation.avatar){
+		if(presentation.avatar){
 			_addThumbnail(presentation.avatar);
 		}
 
 		//Title
-		if(presentation && presentation.title){
+		if(presentation.title){
 			var previewTitleDOM = $("#presentation_details_preview_addtitle").find("span");
 			$(previewTitleDOM).html(presentation.title);
 			$("#presentation_details_input_title").val(presentation.title); //input
@@ -136,9 +139,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Author
 		var author;
+		var options = V.Utils.getOptions();
 		if(options && options.username){
 			author = options.username;
-		} else if(presentation && presentation.author){
+		} else if(presentation.author){
 			author = presentation.author;
 		}
 		if(author){
@@ -147,7 +151,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Description
-		if(presentation && presentation.description){
+		if(presentation.description){
 			var descriptionDOM = $("#presentation_details_textarea");
 			$(descriptionDOM).val(presentation.description);
 		}
@@ -159,8 +163,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Pedagogical
 		
-		$("#language_tag").val(presentation.language);
-		$("#context_tag").val(presentation.context);
+		if(presentation.language){
+			$("#language_tag").val(presentation.language);
+		}
+		if(presentation.context){
+			$("#context_tag").val(presentation.context);
+		}
 		
 		if(presentation.age_range){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
@@ -183,15 +191,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#slider-difficulty" ).slider("value",difficultyValue);
 		}
 
-		if(presentation && presentation.TLT){
+		if(presentation.TLT){
 			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
 			$("#tlt_hours").val(durations[4].toString());
 			$("#tlt_minutes").val(durations[5].toString());
 			$("#tlt_seconds").val(durations[6].toString());
 		}
 
-		$("#subject_tag").val(presentation.subject);
-		$("#educational_objectives_textarea").val(presentation.educational_objectives);
+		if(presentation.subject){
+			$("#subject_tag").val(presentation.subject);
+		}
+		
+		if(presentation.educational_objectives){
+			$("#educational_objectives_textarea").val(presentation.educational_objectives);
+		}		
 	}
 
 	var _onThemeImagesLoaded = function(){

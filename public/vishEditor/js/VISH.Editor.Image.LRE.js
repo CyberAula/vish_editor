@@ -125,9 +125,7 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 	
 	var _onClickCarrouselElement = function(event) {
 		var image_url = $(event.target).attr("src");
-		V.Editor.Image.drawImage(image_url);
-		$.fancybox.close();
-		V.Editor.Tools.loadToolsForZone(V.Editor.getCurrentArea());
+		V.Editor.Image.addContent(image_url);
 	};
 
 	var _isValidResult = function(){

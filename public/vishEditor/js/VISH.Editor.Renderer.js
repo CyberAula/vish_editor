@@ -7,8 +7,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 */
 	var init = function(presentation){
 		V.Editor.Themes.selectTheme(presentation.theme);
-		V.Editor.Settings.loadPresentationSettings(presentation);
-
+		
 		if(presentation.type===V.Constant.PRESENTATION){
 			renderPresentation(presentation);
 		} else if(presentation.type===V.Constant.QUIZ_SIMPLE){

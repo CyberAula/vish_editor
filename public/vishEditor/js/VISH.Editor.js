@@ -98,11 +98,14 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			initialPresentation = true;
 			setPresentation(presentation);
+			V.Editor.Settings.loadPresentationSettings(presentation);
 			V.Editor.Renderer.init(presentation);
+			
 			//remove focus from any zone
 			_removeSelectableProperties();					
 		} else {
 			initialPresentation = false;
+			V.Editor.Settings.loadPresentationSettings();
 		}
 
 		V.Slides.updateSlides();

@@ -55,7 +55,7 @@ VISH.Object = (function(V,$,undefined){
 			case "IFRAME": 
 				return $(object).attr("src");
 			default:
-				V.Debugging.log("Unrecognized object wrapper: " + wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;
 			break;
 		}
@@ -71,8 +71,8 @@ VISH.Object = (function(V,$,undefined){
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9-]+))|((www.youtube.com\/((watch\?v=)|(embed\/)|(v\/)))([aA-z0-9-Z&=.])+))/g
-		var html5VideoFormats = ["mp4","webm","ogg"]  
-		var imageFormats = ["jpg","jpeg","png","gif","bmp"]
+		var html5VideoFormats = ["mp4","webm","ogg"];
+		var imageFormats = ["jpg","jpeg","png","gif","bmp"];
 
 		if(typeof source != "string"){
 			return null
@@ -88,27 +88,27 @@ VISH.Object = (function(V,$,undefined){
 		var extension = getExtensionFromSrc(source);
 
 		if(imageFormats.indexOf(extension)!="-1"){
-			return "image";
+			return V.Constant.MEDIA.IMAGE;
 		}
 
 		if(extension=="swf"){
-			return "swf";
+			return V.Constant.MEDIA.FLASH;
 		}
 
 		if(extension=="pdf"){
-			return "pdf";
+			return V.Constant.MEDIA.PDF;
 		}
 
 		if(html5VideoFormats.indexOf(extension)!="-1"){
-			return "HTML5";
+			return V.Constant.MEDIA.HTML5_VIDEO;
 		}
 
 		if(extension=="json"){
-			return "json";
+			return V.Constant.MEDIA.JSON;
 		}
 
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
-			return "web";
+			return V.Constant.MEDIA.WEB;
 		}
 
 		return extension;

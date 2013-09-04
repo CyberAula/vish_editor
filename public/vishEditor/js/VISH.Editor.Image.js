@@ -162,7 +162,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 	}
 	
-	var addContent = function(content){
+	var addContent = function(content,options){
 		if(content){
 			contentToAdd = content;
 		}
@@ -174,7 +174,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 				V.Editor.Settings.onThumbnailSelected(contentToAdd);
 				break;
 			default:
-				V.Editor.Object.drawPreviewObject(contentToAdd);
+				V.Editor.Object.drawPreviewObject(contentToAdd, {forceType: V.Constant.MEDIA.IMAGE});
 		}
 		//Reset contentAddMode
 		contentAddMode = V.Constant.NONE;
