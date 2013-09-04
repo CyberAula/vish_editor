@@ -322,7 +322,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _checkIfEnableContinueButton = function(){
-		var enable = _checkMandatoryFields();
+		var enable = checkMandatoryFields();
 		if(enable){
 			$("#save_presentation_details").removeClass("buttonDisabledOnSettings");
 			$("#save_presentation_details").removeAttr("disabled");
@@ -337,7 +337,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	}
 
-	var _checkMandatoryFields = function(){
+	var checkMandatoryFields = function(){
 		//Check that mandatory params are filled appropiately.
 		var title = $('#presentation_details_input_title').val();
 		var thumbnailURL = presentationThumbnail;
@@ -466,6 +466,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onTLTchange								: onTLTchange,
+		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked

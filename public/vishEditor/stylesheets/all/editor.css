@@ -1649,29 +1649,28 @@ img.delete_img {
 	height: 50px;
 }
 
+.alertDialogIcon {
+	width: 44px;
+	height: 55px;
+	margin-right: 20px;
+	margin-left: 0px;
+}
+
 .deltext {
 	text-decoration:none;
 	font-family:Helvetica;
-	font-size:32px;
+	font-size:26px;
 	color:#CCC;
 	padding-bottom: 15px;
 }
 
 .buttonfail {
 	position: absolute;
-    padding: 5px 20px;
-    display: inline;
-	text-decoration:none;
-    background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-	margin-left: -85px;
-	margin-top: 30px;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	padding: 5px 20px !important;
 }
 
 .buttons_together {

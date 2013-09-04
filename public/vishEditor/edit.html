@@ -863,11 +863,24 @@
 	<div style='display:none'>
 		<div id='message1_form'>
 			<div class="text_in_fancybox">
-				<img id="message1img" src="/vishEditor/images/zonethumbs/content_fail.png">
+				<img class="alertDialogIcon" src="/vishEditor/images/zonethumbs/content_fail.png">
 				<span class="deltext" i18n-key="i.oneSlideAlert">Create at least one slide before saving.</span>
 			</div> 		
 			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
+				<a href="#" onclick="$.fancybox.close();" class="button buttonfail">accept</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- NOTIFY USERS THAT THEY MUST FILL ALL MANDATORY FIELDS IN THE SETTINGS PANEL BEFORE PUBLISH -->
+	<div style='display:none'>
+		<div id='message2_form'>
+			<div class="text_in_fancybox">
+				<img class="alertDialogIcon" src="/vishEditor/images/zonethumbs/content_fail.png">
+				<span class="deltext" i18n-key="i.oneSlideAlert">You need to write a title for the excursion and select an avatar before publish the excursion.</span>
+			</div> 		
+			<div id="button_accept_when_fail">
+				<a href="#" onclick="$.fancybox.close();" class="button buttonfail">Go to Settings</a>
 			</div>
 		</div>
 	</div>
@@ -886,71 +899,6 @@
 					onclick="VISH.Editor.Tools.removeUrl()">Remove</button>
 				</div>
 
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN CLICK ON ADD SLIDE IN FLASHCARD MODE -->
-	<div style='display:none'>
-		<div id='message2_form'>
-			<div class="text_in_fancybox">
-				<img id="message2img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Transform to standard presentation to add a new slide.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" i18n-key="i.accept" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND THERE IS NO POIS IN THE FLASHCARD-->
-	<div style='display:none'>
-		<div id='message3_form'>
-			<div class="text_in_fancybox">
-				<img id="message3img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please drag and drop at least one arrow in the flashcard.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND BACKGROUND IS NOT SET-->
-	<div style='display:none'>
-		<div id='message4_form'>
-			<div class="text_in_fancybox">
-				<img id="message4img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please change the flashcard background before saving.</span>
-			</div> 		
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO CHANGE TO FLASHCARD AND THERE IS NO SLIDES-->
-	<div style='display:none'>
-		<div id='message5_form'>
-			<div class="text_in_fancybox">
-				<img id="message5img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please create at least one slide before changing mode.</span>
-			</div>
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- NOTIFY WHEN TRY TO SAVE AND THERE IS NO POIS IN THE Virtual Tour-->
-	<div style='display:none'>
-		<div id='message6_form'>
-			<div class="text_in_fancybox">
-				<img id="message6img" src="/vishEditor/images/zonethumbs/content_fail.png">
-				<span class="deltext">Please drag and drop at least one point of interest in the map.</span>
-			</div>	
-			<div id="button_accept_when_fail">
-				<a href="#" onclick="$.fancybox.close();" class="buttonfail">accept</a>
 			</div>
 		</div>
 	</div>

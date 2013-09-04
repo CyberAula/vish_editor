@@ -65,8 +65,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/// SAVE
 	/////////////////
 
-	var onPublishButtonClicked = function(){
-		onSaveButtonClicked();
+	var onSaveButtonClicked = function(){
+		onPublishButtonClicked();
 	}
 
 	/**
@@ -75,11 +75,25 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* covers the section element and every article inside
 	* finally calls V.Viewer with the generated json
 	*/
-	var onSaveButtonClicked = function(){
+	var onPublishButtonClicked = function(){
+
+		if(!V.Editor.Settings.checkMandatoryFields()){
+			var options = {};
+			options.width = 500;
+			options.height = 200;
+			options.onClosedCallback = function(){
+				setTimeout(function(){
+					V.Editor.Settings.displaySettings();
+				},250);
+			};
+			_showDialog("message2_form", options);
+			return;
+		}
+
 		if(V.Slides.getSlides().length === 0){
 			_showDialog("message1_form");
 			return;
-		} 
+		}
 	
 		switch(V.Configuration.getConfiguration()["mode"]){
 			case V.Constant.NOSERVER:
@@ -125,19 +139,36 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/*
 	 * Helper to show validation dialogs
 	 */
-	var _showDialog = function(id){
+	var _showDialog = function(id,options){
 		if($("#"+id).length===0){
 			return;
 		}
+
+		var width = 350;
+		var height = 200;
+		if(options){
+			if(options.width){
+				width = options.width;
+			}
+			if(options.height){
+				height = options.height;
+			}
+		}
+
 		$.fancybox(
 			$("#"+id).html(),
 			{
 				'autoDimensions'	: false,
 				'scrolling': 'no',
-				'width'         	: 350,
-				'height'        	: 200,
+				'width'         	: width,
+				'height'        	: height,
 				'showCloseButton'	: false,
-				'padding' 			: 5		
+				'padding' 			: 5,
+				'onClosed'			: function(){
+					if((options)&&(typeof options.onClosedCallback == "function")){
+						options.onClosedCallback();
+					}
+				}
 			}
 		);
 	}
