@@ -458,8 +458,12 @@ VISH.Samples = (function(V,undefined){
 			          			'id'     : 'article5_article2_zone2',
 								'type'   : 'object',
 								'areaid' : 'left',
-								'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+								// 'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+			        			"body"   : '<embed id="resizableunicID12" class="t10_object" src="http://localhost/vishEditor/examples/contents/swf/virtualexperiment.swf" wmode="opaque">',
+			        			"style"  : 'position: relative; width:64.53634085213032%; height:64.71571906354515%; top:15.719063545150501%; left:15.288220551378446%;'
 			        		}
+
+
 			    		]
 			    	}, 
 			    	{

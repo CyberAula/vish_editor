@@ -10,10 +10,12 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 				V.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
 				return;
 			}
+
 			if($(value).attr("objectWrapper").match("^<iframe")!==null && V.Status.isOnline()=== false){
 				$(value).html("<img src='"+V.ImagesPath+"/adverts/advert_new_grey_iframe.png'/>");
 				return;
 			}
+
 			var object = $($(value).attr("objectWrapper"));
 			$(object).attr("style",$(value).attr("zoomInStyle"));
 			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + V.Utils.getOuterHTML(object) + "</div>");
