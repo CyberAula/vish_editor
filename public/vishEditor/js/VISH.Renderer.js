@@ -211,7 +211,7 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderObject = function(element, template){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
-			case "youtube":
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return _renderYoutubeVideo(element,template,objectInfo.source);
 				break;
 			default:
