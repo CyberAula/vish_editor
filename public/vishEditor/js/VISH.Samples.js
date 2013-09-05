@@ -446,7 +446,7 @@ VISH.Samples = (function(V,undefined){
 					}, 
 					{
 						'id'       	:'article5_article2',
-						'template' 	:'t2',
+						'template' 	:'t3',
 						'elements'	: [
 							{
 			                    'id'     : 'article5_article2_zone1',
