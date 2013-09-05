@@ -250,6 +250,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_pdfex_help', 'bottom');
 		});
 
+		//Help in LRE carrousel
+		$(document).on('click','#tab_presentations_lre_help', function(){
+			V.Tour.startTourWithId('tab_presentations_lre_help', 'bottom');
+		});	
+
 		//Help in presentation carrousel
 		$(document).on('click','#tab_presentations_repo_help', function(){
 			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
@@ -293,7 +298,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on('click','#tab_pic_flikr_help', function(){
 			V.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
-		
+		$(document).on('click','#tab_pic_lre_help', function(){
+			V.Tour.startTourWithId('search_lre_fancy_help', 'bottom');
+		});
 		//Help inserting objects [URL, Upload, Repository, Snapshot]
 		$(document).on('click','#tab_object_from_url_help', function(){
 			V.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
@@ -306,6 +313,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
 			V.Tour.startTourWithId('search_object_help', 'bottom');
+		});
+		$(document).on('click','#tab_object_lre_help', function(){
+			V.Tour.startTourWithId('search_lre_object_help', 'bottom');
 		});
 		$(document).on('click','#tab_object_snapshot_help', function(){
 			V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
