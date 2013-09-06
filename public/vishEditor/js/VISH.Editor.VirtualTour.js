@@ -263,12 +263,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			map: map
 		});
 
-		var pinText = String.fromCharCode(64+parseInt(slideNumber));
-		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+pinText+"|FF776B|000000",
-        new google.maps.Size(25, 40),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34));
-
+		var	pinImage = _getPinImageForSlideNumber(slideNumber);
 		var marker = new google.maps.Marker({
 			position: myLatlng,
 			map: map,
@@ -276,16 +271,15 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			icon: pinImage,
 			poi_id: poi_id,
 			slide_id: slide_id,
+			slideNumber : slideNumber,
 			label : label,
 			title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
 		});
 
 		//Set label properties
-		if(slideNumber){
-			label.bindTo('position', marker, 'position');
-			// In the current version we use a dinamyc image instead of a label to indicate slideNumber
-			// label.set('text', slideNumber);
-		}
+		label.bindTo('position', marker, 'position');
+		// In the current version we use a dinamyc image instead of a label to indicate slideNumber
+		// label.set('text', slideNumber);
 
 		google.maps.event.addListener(marker, 'click', function(event) {
 			// Allow doble click event
@@ -319,6 +313,15 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 		return marker;
 	};
+
+	var _getPinImageForSlideNumber = function(slideNumber){
+		var pinText = String.fromCharCode(64+parseInt(slideNumber));
+		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+pinText+"|FF776B|000000",
+		new google.maps.Size(25, 40),
+		new google.maps.Point(0,0),
+		new google.maps.Point(10, 34));
+		return pinImage;
+	}
 
 	var _onClick = function(marker){
 		// Return the arrow to original position.
@@ -429,7 +432,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var beforeCreateSlidesetThumbnails = function(vt){
-		//Draw POIS
 		_drawPois(vt);
 	}
 
@@ -443,8 +445,9 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			return;
 		}
 		var markers = vt.markers;
+		
+		//Create arrows for existing subslides
 		var subslides = $(vtDOM).find("article");
-
 		$("#subslides_list").find("div.wrapper_barbutton").each(function(index,div){
 			var slide = subslides[index];
 			if(slide){
@@ -460,6 +463,34 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 				}
 			};
 		});
+
+		// //Remove markers for removing subslides
+		// var removedMarkers = [];
+		// Object.keys(markers).forEach(function(key){
+		// 	var marker = markers[key];
+		// 	if((marker)&&(marker.slide_id)){
+		// 		var slide_id = marker.slide_id;
+		// 		if($("#"+slide_id).length===0){
+		// 			//Marker must be deleted
+		// 			removedMarkers.push(marker);
+		// 			_removeMarker(marker);
+		// 		}
+		// 	}
+		// });
+
+		// //Adjust pinImages of the rest of markers
+		// var rMl = removedMarkers.length;
+		// for(var k=0; k<rMl; k++){
+		// 	var deletedSlideNumber = removedMarkers[k].slideNumber;
+		// 	Object.keys(markers).forEach(function(key){
+		// 		var marker = markers[key];
+		// 		if(marker.slideNumber > deletedSlideNumber){
+		// 			marker.slideNumber = marker.slideNumber-1;
+		// 			marker.setIcon(_getPinImageForSlideNumber(marker.slideNumber));
+		// 		}
+		// 	});
+		// }
+
 
 		//Drag&Drop POIs
 
