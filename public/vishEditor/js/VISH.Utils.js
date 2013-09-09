@@ -224,10 +224,6 @@ VISH.Utils = (function(V,undefined){
 			for(var j=0; j<pL;j++){
 				var poi = pois[j];
 
-				if (poi.id.match(new RegExp("^"+slideset.id+"_poi[0-9]+", "g")) === null){
-					return false;
-				}
-
 				if(typeof poi.slide_id == "undefined"){
 					return false;
 				}
@@ -313,7 +309,6 @@ VISH.Utils = (function(V,undefined){
 			var pL = pois.length;
 			for(var j=0; j<pL;j++){
 				var poi = pois[j];
-				poi.id = slideset.id + "_poi"+(j+1).toString();
 				if(typeof subslidesIds[poi.slide_id] != "undefined"){
 					poi.slide_id = subslidesIds[poi.slide_id];
 					newPois.push(poi);

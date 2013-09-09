@@ -346,11 +346,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 	// Event Listeners
 	//////////////
 	
-	var handleBodyKeyDown = function(event) {
+	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: // right arrow
 		case 40: //down arrow	    
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.forwardOneSlide();
 				} else {
@@ -361,7 +361,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;
 		case 37: // left arrow
 		case 38: //up arrow	
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.backwardOneSlide();
 				} else {
@@ -374,7 +374,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			ctrlDown = true;
 			break;	
 		case 67: //cKey
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(ctrlDown){
 					if(V.Slides.getCurrentSlideNumber()){
 						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
@@ -383,15 +383,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;	
 		case 86: //vKey
-		    if(V.Editor.Slides.isSlideFocused()) {
+		    if(V.Editor.Slides.isSlideFocused()){
 			    if(ctrlDown){
 			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
 		case 46: //Supr key
-			if(V.Editor.Slides.isSlideFocused()) {
-				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+			if(V.Editor.Slides.isSlideFocused()){
+				V.Editor.Slides.removeSlideKeyboard();
 			}
 			break;	
 		}

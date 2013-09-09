@@ -13,7 +13,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	 * Use to disable actions (like keyboard shortcuts) when the slide is not focused 
 	 * @return false if other element has the focus
 	 */
-	var isSlideFocused = function() {
+	var isSlideFocused = function(){
 		//Wysiwyg is focused.
 		if($(".wysiwygInstance").is(":focus")){
 			return false;
@@ -306,7 +306,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		if(V.Editor.Slideset.isSlideset(slide)){
-			V.Editor.Slideset.onLeaveSlideset(slide);
+			V.Editor.Slideset.beforeRemoveSlideset(slide);
 		}
 
 		var removing_current_slide = false;
@@ -362,13 +362,30 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		var slideset = $(subslide).parent();
-		V.Editor.Slideset.closeSubslide(subslide);
+		V.Editor.Slideset.beforeRemoveSubslide(slideset,subslide);
 		$(subslide).remove();
 
-		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find("article"),function(){
+		//Update subslide counters
+		var subslides = $(slideset).find("article");
+		$(subslides).each(function(index,subslide){
+			$(subslide).attr("slidenumber",index+1);
+		});	
+
+		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
 			//Subslides Thumbnails drawed succesfully
 		});
+
+		//After remove a subslide, load slideset
+		V.Editor.Slideset.openSlideset(slideset);
 	};
+
+	var removeSlideKeyboard = function(){
+		if(V.Editor.Slideset.getCurrentSubslide()!=null){
+			removeSubslide(V.Editor.Slideset.getCurrentSubslide());
+		} else {
+			removeSlide(V.Slides.getCurrentSlide());
+		}
+	}
 
 	return {
 		showSlides				: showSlides,
@@ -383,6 +400,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		addSubslide				: addSubslide,
 		appendSubslide			: appendSubslide,
 		removeSubslide			: removeSubslide,
+		removeSlideKeyboard		: removeSlideKeyboard,
 		isSubslide				: isSubslide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};

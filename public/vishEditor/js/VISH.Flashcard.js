@@ -40,7 +40,8 @@ VISH.Flashcard = (function(V,$,undefined){
    */
   var addArrow = function(fcId, poi, sync){
     var flashcard_div = $("#"+ fcId);
-    var div_to_add = "<div class='fc_poi' id='" + poi.id + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
+    var poiId = V.Utils.getId(fcId + "_poi");
+    var div_to_add = "<div class='fc_poi' id='" + poiId + "' style='position:absolute;left:"+poi.x+"%;top:"+poi.y+"%'></div>";
     flashcard_div.append(div_to_add);
 
     if(typeof flashcards[fcId] === "undefined"){
@@ -50,7 +51,7 @@ VISH.Flashcard = (function(V,$,undefined){
 
     //Add arrow
     var arrow = new Object();
-    arrow.id = poi.id;
+    arrow.id = poiId;
     if(sync){
         arrow.position = 0;
     } else {
@@ -61,6 +62,11 @@ VISH.Flashcard = (function(V,$,undefined){
 
     flashcards[fcId].arrows.push(arrow);
     pois[arrow.id] = arrow;
+
+    //Add event to the arrow
+    $("#" + poiId).click(function(event){
+      V.Events.onFlashcardPoiClicked(poiId);
+    });
   };
 
   var animateArrows = function(slideId){

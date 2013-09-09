@@ -128,6 +128,9 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		//Show slideset delete and help buttons
 		_showSlideButtons(slideset);
 
+		//Mark slideset thumbnail as selected
+		$("#subslide_selected_img").addClass("selectedSlidesetThumbnail");
+
 		var currentSubslide = getCurrentSubslide();
 		if(currentSubslide){
 			closeSubslide(currentSubslide);
@@ -146,6 +149,9 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		//Hide slideset delete and help buttons
 		_hideSlideButtons(slideset);
 
+		//Mark slideset thumbnail as unselected
+		$("#subslide_selected_img").removeClass("selectedSlidesetThumbnail");
+
 		//Unload slideset
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 
@@ -161,6 +167,22 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			if(typeof slidesetCreator.beforeCreateSlidesetThumbnails == "function"){
 				slidesetCreator.beforeCreateSlidesetThumbnails(slideset);
 			}
+		}
+	}
+
+	var beforeRemoveSlideset = function(slideset){
+		closeSlideset(slideset);
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.beforeRemoveSlideset == "function"){
+			slidesetCreator.beforeRemoveSlideset(slideset);
+		}
+	}
+
+	var beforeRemoveSubslide = function(slideset,subslide){
+		closeSubslide(subslide);
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.beforeRemoveSubslide == "function"){
+			slidesetCreator.beforeRemoveSubslide(slideset,subslide);
 		}
 	}
 
@@ -242,22 +264,26 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	return {
-		init 					: init,
-		isSlideset				: isSlideset,
-		getCreatorModule		: getCreatorModule,
-		getDummy				: getDummy,
-		onEnterSlideset			: onEnterSlideset,
-		onLeaveSlideset			: onLeaveSlideset,
-		openSlideset			: openSlideset,
-		closeSlideset			: closeSlideset,
-		getCurrentSubslide		: getCurrentSubslide,
+		init 							: init,
+		isSlideset						: isSlideset,
+		getCreatorModule				: getCreatorModule,
+		getDummy						: getDummy,
+		onEnterSlideset					: onEnterSlideset,
+		onLeaveSlideset					: onLeaveSlideset,
+		openSlideset					: openSlideset,
+		closeSlideset					: closeSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
-		openSubslideWithNumber 	: openSubslideWithNumber,
-		openSubslide			: openSubslide,
-		closeSubslideWithNumber	: closeSubslideWithNumber,
-		closeSubslide 			: closeSubslide,
-		updateThumbnails		: updateThumbnails,
-		onClickOpenSlideset		: onClickOpenSlideset
+		beforeRemoveSlideset			: beforeRemoveSlideset,
+		beforeRemoveSubslide			: beforeRemoveSubslide,
+		getCurrentSubslide				: getCurrentSubslide,
+		openSubslideWithNumber 			: openSubslideWithNumber,
+		openSubslide					: openSubslide,
+		closeSubslideWithNumber			: closeSubslideWithNumber,
+		closeSubslide 					: closeSubslide,
+		updateThumbnails				: updateThumbnails,
+		onClickOpenSlideset				: onClickOpenSlideset
 	};
+
+
 
 }) (VISH, jQuery);

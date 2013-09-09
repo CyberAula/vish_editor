@@ -64,28 +64,12 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).on('click','.close_subslide', onFlashcardCloseSlideClicked);
 
-		var presentation = V.Viewer.getCurrentPresentation();
-		for(index in presentation.slides){
-			var slide = presentation.slides[index];
-			switch(slide.type){
-				case V.Constant.FLASHCARD:
-					//Add the points of interest with their click events to show the slides
-					for(ind in slide.pois){
-						var poi = slide.pois[ind];
-						$(document).on('click', "#" + poi.id,  { poi_id: poi.id}, onFlashcardPoiClicked);
-					}
-					break;
-				case V.Constant.VTOUR:
-					break;
-			}
-		}
-
 		//when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== "undefined"){
-			applicationCache.addEventListener('cached', function() {
+			applicationCache.addEventListener('cached', function(){
 				V.Storage.addPresentation(presentation);
 			}, false);
-			applicationCache.addEventListener('updateready', function() {
+			applicationCache.addEventListener('updateready', function(){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
@@ -151,22 +135,6 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off('click','.close_subslide', onFlashcardCloseSlideClicked);
 
-		var presentation = V.Viewer.getCurrentPresentation();
-		for(index in presentation.slides){
-			var slide = presentation.slides[index];
-			switch(slide.type){
-				case V.Constant.FLASHCARD:
-					//Add the points of interest with their click events to show the slides
-					for(ind in slide.pois){
-						var poi = slide.pois[ind];
-						$(document).off('click', "#" + poi.id, onFlashcardPoiClicked);
-					}
-					break;
-				case V.Constant.VTOUR:
-					break;
-			}
-		}
-
 		if(typeof applicationCache !== "undefined"){
 			applicationCache.removeEventListener('cached', function() {
 				V.Storage.addPresentation(presentation);
@@ -214,14 +182,7 @@ VISH.Events = (function(V,$,undefined){
 	 * Function called when a poi is clicked
 	 * 'event' can be a delegate click event or a number
 	 */
-	var onFlashcardPoiClicked = function(event){
-		if(typeof event === "string"){
-			var poiId = event;
-		} else if(typeof event === "object"){
-			var poiId = event.data.poi_id;
-		} else {
-			return;
-		}
+	var onFlashcardPoiClicked = function(poiId){
 		var poi = V.Flashcard.getPoiData(poiId);
 		if(poi!==null){
 			V.Slides.openSubslide(poi.slide_id,true);

@@ -279,7 +279,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	 * Get the touches of an event
 	 * Jquery does not pass the touches property in the event, and we get them from the event.originalEvent
 	 */
-	var _getTouches = function (event){
+	var _getTouches = function(event){
 		if(event.touches){
 			return event.touches;
 		} else if(event.originalEvent.touches){

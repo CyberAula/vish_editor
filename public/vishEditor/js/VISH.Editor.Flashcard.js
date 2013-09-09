@@ -64,7 +64,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 			//Create new POI
 			pois[myPoi.slide_id] = {};
-			pois[myPoi.slide_id].id = myPoi.id;
 			pois[myPoi.slide_id].x = (myPoi.x*800/100)+fc_offset.left;
 			pois[myPoi.slide_id].y = (myPoi.y*600/100)+fc_offset.top;
 			pois[myPoi.slide_id].slide_id = myPoi.slide_id;
@@ -198,7 +197,6 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 		$(poisDOM).each(function(index,poi){
 				pois[index]= {};
-				pois[index].id = $(fc).attr("id") + "_poi" + (index+1);
 				pois[index].x = (100*($(poi).offset().left - fc_offset.left)/800).toString();
 				pois[index].y = (100*($(poi).offset().top - fc_offset.top)/600).toString();
 				pois[index].slide_id = $(poi).attr('slide_id');
