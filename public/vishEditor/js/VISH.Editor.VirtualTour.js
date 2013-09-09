@@ -78,6 +78,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			return;
 		}
 
+		$(vtDOM).addClass("temp_shown");
+
 		var latlng = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
 		var myOptions = {
 			zoom: parseInt(vtJSON.zoom),
@@ -120,6 +122,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		});
 
 		vts[vtId].drawed = true;
+
+		$(vtDOM).removeClass("temp_shown");
 	}
 
 
