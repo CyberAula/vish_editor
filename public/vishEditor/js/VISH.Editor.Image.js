@@ -166,6 +166,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if(content){
 			contentToAdd = content;
 		}
+
 		switch(contentAddMode){
 			case V.Constant.FLASHCARD:
 				V.Editor.Flashcard.onBackgroundSelected(contentToAdd);
@@ -187,7 +188,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param area: optional param indicating the area to add the image, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*/
-	var drawImage = function(image_url, area, style, hyperlink){    
+	var drawImage = function(image_url, area, style, hyperlink){
 		_drawImageInArea(image_url, area, style, hyperlink);
 	};
 

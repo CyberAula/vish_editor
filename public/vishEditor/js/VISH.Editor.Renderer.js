@@ -65,7 +65,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 
 		for(el in slide.elements){
 			var areaId = slide.elements[el].id;
-			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");		
+			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");	
 			
 			if(area.length === 0){
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
@@ -80,12 +80,12 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				options['poster'] = slide.elements[el].poster;
 				options['autoplay'] = slide.elements[el].autoplay;
 				var sourcesArray = [];
-				$.each(JSON.parse(slide.elements[el].sources), function(index, source) {
+				$.each(JSON.parse(slide.elements[el].sources), function(index, source){
 					sourcesArray.push([source.src, source.type]);
 				});
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
-			} else if(slide.elements[el].type === V.Constant.OBJECT){				
-				V.Editor.Object.drawObject(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].zoomInStyle);
+			} else if(slide.elements[el].type === V.Constant.OBJECT){
+				V.Editor.Object.drawObject(slide.elements[el].body, {area:area, style:slide.elements[el].style, zoomInStyle:slide.elements[el].zoomInStyle});
 			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
 				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
 			} else if(slide.elements[el].type === V.Constant.QUIZ){
