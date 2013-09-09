@@ -171,7 +171,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	}
 
 	var beforeRemoveSlideset = function(slideset){
-		closeSlideset(slideset);
+		onLeaveSlideset(slideset);
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.beforeRemoveSlideset == "function"){
 			slidesetCreator.beforeRemoveSlideset(slideset);

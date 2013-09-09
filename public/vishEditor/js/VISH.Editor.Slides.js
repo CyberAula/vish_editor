@@ -323,7 +323,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			}
 		}
 		V.Slides.updateSlides();				
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			if(typeof V.Slides.getCurrentSlide() != "undefined"){
+				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+				V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
+			}
+		});
 	};
 
 	//////////////
