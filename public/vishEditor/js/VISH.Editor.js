@@ -191,7 +191,6 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
-
 			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){

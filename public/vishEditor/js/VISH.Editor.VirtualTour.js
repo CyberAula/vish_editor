@@ -10,7 +10,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	//Store virtual tour data
 	var vts;
 
-
 	var init = function(){
 		if(!initialized){
 			vts = {};

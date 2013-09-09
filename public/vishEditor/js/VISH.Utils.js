@@ -65,6 +65,12 @@ VISH.Utils = (function(V,undefined){
 		}
 	};
 
+	var registerId = function(id){
+		if (ids.indexOf(id)===-1){
+			ids.push(id);
+		}
+	}
+
 	/**
 	 * Fix presentations with old JSON format
 	 * Try to update them to current version
@@ -656,6 +662,7 @@ VISH.Utils = (function(V,undefined){
 		init 					: init,
 		getOptions 				: getOptions,
 		getId					: getId,
+		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,
 		checkMiniumRequirements : checkMiniumRequirements,
