@@ -78,6 +78,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			return;
 		}
 
+		vts[vtId].drawed = true;
 		$(vtDOM).addClass("temp_shown");
 
 		var latlng = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
@@ -115,15 +116,16 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			$(".vt_search_input").blur();
 		});
 
-		//Add pois
-		$(vtJSON.pois).each(function(index,poi){
-			_addMarkerToCoordinates(poi.lat,poi.lng,poi.slide_id);
-			$(".draggable_sc_div[slide_id='"+poi.slide_id+"']").hide();
+		google.maps.event.addListenerOnce(vts[vtId].map, 'idle', function(){
+			//Add pois
+			$(vtJSON.pois).each(function(index,poi){
+				_addMarkerToCoordinates(poi.lat,poi.lng,poi.slide_id,index+1,vts[vtId]);
+				$(".draggable_sc_div[slide_id='"+poi.slide_id+"']").hide();
+			});
+
+			// do something only the first time the map is loaded
+			$(vtDOM).removeClass("temp_shown");
 		});
-
-		vts[vtId].drawed = true;
-
-		$(vtDOM).removeClass("temp_shown");
 	}
 
 
@@ -253,12 +255,18 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	/// MAP Utils
 	//////////////////
 
-	var _addMarkerToCoordinates = function(lat,lng,slide_id){
-		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),slide_id);
+	var _addMarkerToCoordinates = function(lat,lng,slide_id,slideNumber,vtJSON){
+		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),slide_id,slideNumber,vtJSON);
 	}
 
-	var _addMarkerToPosition = function(myLatlng,slide_id){
-		var vt = _getCurrentTour();
+	var _addMarkerToPosition = function(myLatlng,slide_id,slideNumber,vtJSON){
+		var vt;
+		if(vtJSON){
+			vt = vtJSON;
+		} else {
+			vt = _getCurrentTour();
+		}
+	
 		var map = vt.map;
 
 		// Create label
@@ -266,7 +274,9 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			map: map
 		});
 
-		var slideNumber = parseInt($(".draggable_sc_div[slide_id='"+slide_id+"']").attr("slidenumber"));
+		if(!slideNumber){
+			slideNumber = parseInt($(".draggable_sc_div[slide_id='"+slide_id+"']").attr("slidenumber"));
+		}
 		var	pinImage = _getPinImageForSlideNumber(slideNumber);
 		var marker = new google.maps.Marker({
 			position: myLatlng,
