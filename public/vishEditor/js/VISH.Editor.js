@@ -366,7 +366,7 @@ VISH.Editor = (function(V,$,undefined){
 						if(V.Editor.Slides.isSubslide(article_to_delete)){
 							V.Editor.Slides.removeSubslide(article_to_delete);
 						} else {
-							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
 						}
 					}
 				}

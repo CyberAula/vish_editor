@@ -145,7 +145,7 @@ VISH.Object = (function(V,$,undefined){
 			case &quot;IFRAME&quot;: 
 				return $(object).attr(&quot;src&quot;);
 			default:
-				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + wrapper)
+				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + wrapper);
 				return null;
 			break;
 		}
@@ -161,8 +161,8 @@ VISH.Object = (function(V,$,undefined){
 		var http_urls_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
 		var www_urls_pattern = &#x2F;(www[.])([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
 		var youtube_video_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)?(((youtu.be\&#x2F;)([aA-zZ0-9-]+))|((www.youtube.com\&#x2F;((watch\?v=)|(embed\&#x2F;)|(v\&#x2F;)))([aA-z0-9-Z&amp;=.])+))&#x2F;g
-		var html5VideoFormats = [&quot;mp4&quot;,&quot;webm&quot;,&quot;ogg&quot;]  
-		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;]
+		var html5VideoFormats = [&quot;mp4&quot;,&quot;webm&quot;,&quot;ogg&quot;];
+		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;];
 
 		if(typeof source != &quot;string&quot;){
 			return null
@@ -178,27 +178,27 @@ VISH.Object = (function(V,$,undefined){
 		var extension = getExtensionFromSrc(source);
 
 		if(imageFormats.indexOf(extension)!=&quot;-1&quot;){
-			return &quot;image&quot;;
+			return V.Constant.MEDIA.IMAGE;
 		}
 
 		if(extension==&quot;swf&quot;){
-			return &quot;swf&quot;;
+			return V.Constant.MEDIA.FLASH;
 		}
 
 		if(extension==&quot;pdf&quot;){
-			return &quot;pdf&quot;;
+			return V.Constant.MEDIA.PDF;
 		}
 
 		if(html5VideoFormats.indexOf(extension)!=&quot;-1&quot;){
-			return &quot;HTML5&quot;;
+			return V.Constant.MEDIA.HTML5_VIDEO;
 		}
 
 		if(extension==&quot;json&quot;){
-			return &quot;json&quot;;
+			return V.Constant.MEDIA.JSON;
 		}
 
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
-			return &quot;web&quot;;
+			return V.Constant.MEDIA.WEB;
 		}
 
 		return extension;

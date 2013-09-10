@@ -155,6 +155,12 @@ VISH.Utils = (function(V,undefined){
 		}
 	};
 
+	var registerId = function(id){
+		if (ids.indexOf(id)===-1){
+			ids.push(id);
+		}
+	}
+
 	&#x2F;**
 	 * Fix presentations with old JSON format
 	 * Try to update them to current version
@@ -308,10 +314,6 @@ VISH.Utils = (function(V,undefined){
 			for(var j=0; j&lt;pL;j++){
 				var poi = pois[j];
 
-				if (poi.id.match(new RegExp(&quot;^&quot;+slideset.id+&quot;_poi[0-9]+&quot;, &quot;g&quot;)) === null){
-					return false;
-				}
-
 				if(typeof poi.slide_id == &quot;undefined&quot;){
 					return false;
 				}
@@ -397,7 +399,6 @@ VISH.Utils = (function(V,undefined){
 			var pL = pois.length;
 			for(var j=0; j&lt;pL;j++){
 				var poi = pois[j];
-				poi.id = slideset.id + &quot;_poi&quot;+(j+1).toString();
 				if(typeof subslidesIds[poi.slide_id] != &quot;undefined&quot;){
 					poi.slide_id = subslidesIds[poi.slide_id];
 					newPois.push(poi);
@@ -746,6 +747,7 @@ VISH.Utils = (function(V,undefined){
 		init 					: init,
 		getOptions 				: getOptions,
 		getId					: getId,
+		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,
 		getSrcFromCSS			: getSrcFromCSS,
 		checkMiniumRequirements : checkMiniumRequirements,

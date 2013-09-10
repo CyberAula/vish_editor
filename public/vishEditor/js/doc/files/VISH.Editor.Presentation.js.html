@@ -167,15 +167,22 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		}
 
 		presentationJSON.slides = selectedSlides;
+
 		V.Editor.Renderer.renderPresentation(presentationJSON);
 
 		V.Slides.updateSlides();
-		V.Editor.Thumbnails.redrawThumbnails();
 		V.Slides.lastSlide();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		});
+
 		&#x2F;&#x2F;Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
-		&#x2F;&#x2F;Reload current slide objects
-		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
+
+		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
+		if(V.Slides.getCurrentSlideNumber()&gt;0){
+			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
+		}
 
 		$.fancybox.close();
 	}

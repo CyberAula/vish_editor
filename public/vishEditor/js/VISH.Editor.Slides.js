@@ -299,8 +299,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		$('.slides').append(slide);
 	}
 
-	var removeSlide = function(slideNumber){
-		var slide = V.Slides.getSlideWithNumber(slideNumber);
+	var removeSlide = function(slide){
 		if(slide===null){
 			return;
 		}
@@ -322,7 +321,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
-		V.Slides.updateSlides();				
+		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(typeof V.Slides.getCurrentSlide() != "undefined"){
 				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());

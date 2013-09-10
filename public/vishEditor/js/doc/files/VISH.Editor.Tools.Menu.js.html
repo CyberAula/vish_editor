@@ -155,8 +155,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F; SAVE
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
-	var onPublishButtonClicked = function(){
-		onSaveButtonClicked();
+	var onSaveButtonClicked = function(){
+		onPublishButtonClicked();
 	}
 
 	&#x2F;**
@@ -165,11 +165,25 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* covers the section element and every article inside
 	* finally calls V.Viewer with the generated json
 	*&#x2F;
-	var onSaveButtonClicked = function(){
+	var onPublishButtonClicked = function(){
+
+		if(!V.Editor.Settings.checkMandatoryFields()){
+			var options = {};
+			options.width = 500;
+			options.height = 200;
+			options.onClosedCallback = function(){
+				setTimeout(function(){
+					V.Editor.Settings.displaySettings();
+				},250);
+			};
+			_showDialog(&quot;message2_form&quot;, options);
+			return;
+		}
+
 		if(V.Slides.getSlides().length === 0){
 			_showDialog(&quot;message1_form&quot;);
 			return;
-		} 
+		}
 	
 		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
 			case V.Constant.NOSERVER:
@@ -215,19 +229,36 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	&#x2F;*
 	 * Helper to show validation dialogs
 	 *&#x2F;
-	var _showDialog = function(id){
+	var _showDialog = function(id,options){
 		if($(&quot;#&quot;+id).length===0){
 			return;
 		}
+
+		var width = 350;
+		var height = 200;
+		if(options){
+			if(options.width){
+				width = options.width;
+			}
+			if(options.height){
+				height = options.height;
+			}
+		}
+
 		$.fancybox(
 			$(&quot;#&quot;+id).html(),
 			{
 				&#x27;autoDimensions&#x27;	: false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;         	: 350,
-				&#x27;height&#x27;        	: 200,
+				&#x27;width&#x27;         	: width,
+				&#x27;height&#x27;        	: height,
 				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27; 			: 5		
+				&#x27;padding&#x27; 			: 5,
+				&#x27;onClosed&#x27;			: function(){
+					if((options)&amp;&amp;(typeof options.onClosedCallback == &quot;function&quot;)){
+						options.onClosedCallback();
+					}
+				}
 			}
 		);
 	}

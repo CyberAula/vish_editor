@@ -520,6 +520,7 @@ div#viewerpreview {
 	border-image: initial; 
 	opacity: 0.5; 
 	z-index: 1080;
+	pointer-events: none;
 }
 
 img#closeButtonImg {

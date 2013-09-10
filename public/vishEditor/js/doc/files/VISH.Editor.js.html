@@ -118,7 +118,6 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;Tmp var to store slide to delete
 	var article_to_delete;
 
-
 	&#x2F;**
 	 * VISH Editor initializer.
 	 * Adds the listeners to the click events in the different images and buttons of the UI.
@@ -189,11 +188,14 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			initialPresentation = true;
 			setPresentation(presentation);
+			V.Editor.Settings.loadPresentationSettings(presentation);
 			V.Editor.Renderer.init(presentation);
+			
 			&#x2F;&#x2F;remove focus from any zone
 			_removeSelectableProperties();					
 		} else {
 			initialPresentation = false;
+			V.Editor.Settings.loadPresentationSettings();
 		}
 
 		V.Slides.updateSlides();
@@ -236,6 +238,12 @@ VISH.Editor = (function(V,$,undefined){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
 
+		&#x2F;&#x2F;Add the first slide
+		if(!V.Editor.hasInitialPresentation()){
+			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:&quot;1&quot;, slideNumber:1});
+			V.Editor.Slides.addSlide(slide);
+		}
+
 		&#x2F;&#x2F;Init settings
 		if ((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!V.Editor.hasInitialPresentation())){
 			V.Editor.Settings.displaySettings();
@@ -273,7 +281,6 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
-
 			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
@@ -449,7 +456,7 @@ VISH.Editor = (function(V,$,undefined){
 						if(V.Editor.Slides.isSubslide(article_to_delete)){
 							V.Editor.Slides.removeSubslide(article_to_delete);
 						} else {
-							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
 						}
 					}
 				}

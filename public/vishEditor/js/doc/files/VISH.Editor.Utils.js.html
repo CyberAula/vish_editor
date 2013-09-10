@@ -193,18 +193,33 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 
 	&#x2F;* Generate table for carrousels *&#x2F;
-	var generateTable = function(author,title,description,tableClass){       
-		if(!author){
-			author = &quot;&quot;;
-		}
-		if(!title){
-			title = &quot;&quot;;
-		}
-		if(!description){
-			description = &quot;&quot;;
-		}
-		if(!tableClass){
-			tableClass = &quot;metadata&quot;;
+	var generateTable = function(options){
+		&#x2F;&#x2F;Default values
+		var title = &quot;Unknown&quot;;
+		var author = &quot;&quot;;
+		var description = &quot;&quot;;
+		var tableClass = &quot;metadata&quot;;
+
+		if(options){
+			if(options.title){
+				title = options.title;
+			}
+
+			if(options.author){
+				author = options.author;
+			}
+
+			if(options.description){
+				description = options.description;
+			}
+
+			if(options.tableClass){
+				tableClass = options.tableClass;
+			}
+
+			if(options.url){
+				title = &quot;&lt;a title=&#x27;view resource&#x27; class=&#x27;metadata_link&#x27; target=&#x27;_blank&#x27; href=&#x27;&quot;+options.url+&quot;&#x27;&gt;&quot; + title + &quot;&lt;&#x2F;a&gt;&quot;;
+			}
 		}
 
 		return &quot;&lt;table class=\&quot;&quot;+tableClass+&quot;\&quot;&gt;&quot;+

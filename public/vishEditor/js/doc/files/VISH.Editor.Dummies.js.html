@@ -188,13 +188,15 @@ VISH.Editor.Dummies = (function(V,undefined){
 
 		if(!articleId){
 			articleId = V.Utils.getId(&quot;article&quot;);
+		} else {
+			V.Utils.registerId(articleId);
 		}
 
 		if(newDummy.indexOf(&quot;article_id_to_change&quot;) != -1){
 			newDummy = newDummy.replace(&quot;article_id_to_change&quot;, articleId);			
 		}
 		
-		while(newDummy.indexOf(&quot;slidenumber_to_change&quot;) != -1){
+		if(newDummy.indexOf(&quot;slidenumber_to_change&quot;) != -1){
 			newDummy = newDummy.replace(&quot;slidenumber_to_change&quot;, slideNumber);
 		}
 
@@ -202,6 +204,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 			if(zoneIds){
 				var newZoneId = zoneIds[nextZoneId];
 				nextZoneId++;
+				V.Utils.registerId(newZoneId);
 			} else {
 				var newZoneId = V.Utils.getId(articleId + &quot;_zone&quot;);
 			}
