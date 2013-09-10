@@ -16,6 +16,8 @@ VISH.Utils = (function(V,undefined){
 			var v = parseInt(this.css(prop),10);
 			return isNaN(v) ? 0 : v;
 		};
+
+		jQuery.fn.reverse = [].reverse;
 	}
 
 	/*

@@ -1638,17 +1638,66 @@ a.metadata_link {
 	cursor:pointer;
 }
 
-.caroufredsel_wrapper {
-	overflow-y: visible;
-	overflow-x: visible;
-}
-
 img.delete_img {
 	margin-left: 25px;
 	margin-top: 30px;
 	height: 50px;
 	width: 65px;
 }
+
+/* Notification CSS */
+
+#notification_template {
+	position: absolute;
+	width: 92%;
+	padding: 4% 4% 4% 4%;
+	margin: 0px;
+}
+
+.notification_row1 {
+	margin-bottom: 35px;
+	width: 100%;
+}
+
+.notification_row2 {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	display: block;
+	height: 35px;
+	width: 100%;
+	text-align: right;
+}
+
+.notification_button {
+	padding: 5px 20px !important;
+}
+
+.notification_button[buttonnumber='1'] {
+	margin-right: 20px;
+}
+
+.notification_button[buttonnumber='2'],  .notification_button[buttonnumber='3']{
+	margin-right: 20px;
+}
+
+.notification_text {
+	text-decoration:none;
+	font-family:Helvetica;
+	font-size:26px;
+	color:#CCC;
+	padding-bottom: 15px;
+}
+
+.notificationIcon {
+	width: 44px;
+	height: 55px;
+	margin-right: 20px;
+	margin-left: 0px;
+}
+
+/* old */
+
 
 .alertDialogIcon {
 	width: 44px;
