@@ -97,7 +97,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		if(V.Slides.getSlides().length === 0){
 			var options = {};
 			options.width = 600;
-			options.height = 150;
+			options.height = 160;
 			options.text = "Create at least one slide before saving.";
 			var button1 = {};
 			button1.text = "Ok";
@@ -108,46 +108,46 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			_showDialog(options);
 			return;
 		}
-	
-		switch(V.Configuration.getConfiguration()["mode"]){
-			case V.Constant.NOSERVER:
-				$("a[save-option-id='save']").hide();
-				break;
-			case V.Constant.VISH:
-				if(V.Editor.isPresentationDraft()){
-					$("a[save-option-id='save']").hide();
-				} else {
-					$("a[save-option-id='draft']").hide();
-					$("a[save-option-id='publish']").hide();
-				}
-				break;
-			case V.Constant.STANDALONE:
-				$("a[save-option-id='publish']").hide();
-				$("a[save-option-id='draft']").hide();
-				break;
+
+		var options = {};
+		options.width = 400;
+		options.height = 145;
+		options.notificationIconSrc = V.ImagesPath + "toolbar/save_document.png";
+		options.text = "are you sure?";
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = "cancel";
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		if(((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)&&(V.Editor.isPresentationDraft()))||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
+			var button2 = {};
+			button2.text = "draft";
+			button2.callback = function(){
+				var presentation = V.Editor.savePresentation();
+				V.Editor.afterSavePresentation(presentation,"draft");
+				$.fancybox.close();
+			}
+			options.buttons.push(button2);
 		}
 
-		$.fancybox(
-			$("#save_form").html(),
-			{
-				'autoDimensions'	: false,
-				'width'         	: 350,
-				'scrolling': 'no',
-				'height'        	: 150,
-				'showCloseButton'	: false,
-				'padding' 			: 0,
-				'onClosed'			: function(){
-					var response = $("#save_answer").val();
-					if(response !=="cancel"){
-						$("#save_answer").val("cancel");	
-						var presentation = V.Editor.savePresentation();	
-						V.Editor.afterSavePresentation(presentation,response);			
-					} else {
-						return false;
-					}
-				}
-			}
-		);  
+		var button3 = {};
+		if((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
+			button3.text = "publish";
+		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.STANDALONE){
+			button3.text = "save";
+		}
+		button3.callback = function(){
+			var presentation = V.Editor.savePresentation();
+			V.Editor.afterSavePresentation(presentation,"publish");
+			$.fancybox.close();
+		}
+		options.buttons.push(button3);
+
+		_showDialog(options);
 	};
 
 	/*
@@ -192,9 +192,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			'hideOnContentClick': false,
 			'showCloseButton'	: showCloseButton,
 			"onStart"  	: function(data){
+				_cleanDialog(id);
 				var text_wrapper = $("#"+id).find(".notification_row1");
 				var buttons_wrapper = $("#"+id).find(".notification_row2");
-
 				$(text_wrapper).find(".notificationIcon").attr("src",notificationIconSrc);
 				$(text_wrapper).find(".notification_text").html(options.text);
 
@@ -226,18 +226,22 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			},
 			"onClosed" : function(data){
-				var text_wrapper = $("#"+id).find(".notification_row1");
-				var buttons_wrapper = $("#"+id).find(".notification_row2");
-				$(buttons_wrapper).html("");
-				$(text_wrapper).find(".notificationIcon").removeAttr("src",notificationIconSrc);
-				$(text_wrapper).find(".notification_text").html("");
-				$("#"+id).removeAttr('style');
+				_cleanDialog(id);
 
 				if((options)&&(typeof options.onClosedCallback == "function")){
 					options.onClosedCallback();
 				}
 			}
 		});
+
+		var _cleanDialog = function(id){
+			var text_wrapper = $("#"+id).find(".notification_row1");
+			var buttons_wrapper = $("#"+id).find(".notification_row2");
+			$(buttons_wrapper).html("");
+			$(text_wrapper).find(".notificationIcon").removeAttr("src");
+			$(text_wrapper).find(".notification_text").html("");
+			$("#"+id).removeAttr('style');
+		};
 
 		$("a#link_to_notification_template").trigger('click');
 	}

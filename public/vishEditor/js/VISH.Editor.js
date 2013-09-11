@@ -693,16 +693,13 @@ VISH.Editor = (function(V,$,undefined){
 		return slide;
 	}
 
-	var afterSavePresentation = function(presentation, order){
+	var afterSavePresentation = function(presentation,order){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
 				//Ignore order param for developping
 				if((V.Debugging)&&(V.Debugging.isDevelopping())){
-					if(V.Debugging.getActionSave()=="view"){
-						V.Debugging.initVishViewer();
-					} else if (V.Debugging.getActionSave()=="edit") {
-						V.Debugging.initVishEditor();
-					}
+					//Preview (ignore action save)
+					V.Editor.Preview.preview();
 				}
 				break;
 			case V.Constant.VISH:
@@ -711,7 +708,7 @@ VISH.Editor = (function(V,$,undefined){
 					send_type = 'PUT'; //if we are editing
 				} else {  
 					send_type = 'POST'; //if it is a new
-				} 
+				}
 
 				var draft = (order==="draft");
 
@@ -734,7 +731,7 @@ VISH.Editor = (function(V,$,undefined){
 				});
 				break;
 			case V.Constant.STANDALONE:
-				//Order is always save, ignore order param
+				//Order is always "publish", ignore order param
 				uploadPresentationWithNode(presentation);
 				break;
 		}
