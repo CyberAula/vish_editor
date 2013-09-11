@@ -315,30 +315,30 @@ VISH.Editor = (function(V,$,undefined){
 	*/
 	var onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-		$("#image_template_prompt").attr("src", V.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png");
-		$.fancybox(
-			$("#prompt_form").html(),
-			{
-				'autoDimensions'	: false,
-				'scrolling': 'no',
-				'width'				: 350,
-				'height'			: 150,
-				'showCloseButton'	: false,
-				'padding'			: 0,
-				'onClosed'			: function(){
-					//if user has answered "yes"
-					if($("#prompt_answer").val() ==="true"){
-						$("#prompt_answer").val("false");
-						var area = getCurrentArea();
-						area.html("");
-						area.removeAttr("type");
-						area.addClass("editable");
-						V.Editor.Tools.addTooltipToZone(area);
-						selectArea(null);
-					}
-				}
-			}
-		);
+
+		var options = {};
+		options.width = 375;
+		options.height = 135;
+		options.notificationIconSrc = V.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png";
+		options.text = "are you sure?";
+		var button1 = {};
+		button1.text = "no";
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		var button2 = {};
+		button2.text = "delete";
+		button2.callback = function(){
+			var area = getCurrentArea();
+			area.html("");
+			area.removeAttr("type");
+			area.addClass("editable");
+			V.Editor.Tools.addTooltipToZone(area);
+			selectArea(null);
+			$.fancybox.close();
+		}
+		options.buttons = [button1,button2];
+		V.Utils.showDialog(options);
 	};
   
   /**
@@ -347,31 +347,29 @@ VISH.Editor = (function(V,$,undefined){
 	var onDeleteSlideClicked = function(){
 		article_to_delete = $(this).parent()[0];
 
-		var thumb = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
-		$("#image_template_prompt").attr("src", thumb);
-
-		$.fancybox(
-			$("#prompt_form").html(),
-			{
-				'autoDimensions'	: false,
-				'width'				: 350,
-				'scrolling': 'no',
-				'height'			: 150,
-				'showCloseButton'	: false,
-				'padding'			: 0,
-				'onClosed'			: function(){
-					//if user has answered "yes"
-					if($("#prompt_answer").val() ==="true"){						
-						$("#prompt_answer").val("false");
-						if(V.Editor.Slides.isSubslide(article_to_delete)){
-							V.Editor.Slides.removeSubslide(article_to_delete);
-						} else {
-							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
-						}
-					}
-				}
+		var options = {};
+		options.width = 375;
+		options.height = 130;
+		options.notificationIconSrc = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
+		options.notificationIconClass = "notificationIconDelete";
+		options.text = "are you sure?";
+		var button1 = {};
+		button1.text = "no";
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		var button2 = {};
+		button2.text = "delete";
+		button2.callback = function(){
+			if(V.Editor.Slides.isSubslide(article_to_delete)){
+				V.Editor.Slides.removeSubslide(article_to_delete);
+			} else {
+				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
 			}
-		);
+			$.fancybox.close();
+		}
+		options.buttons = [button1,button2];
+		V.Utils.showDialog(options);
 	};
 
 	/**

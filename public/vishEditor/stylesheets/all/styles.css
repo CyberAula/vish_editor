@@ -1108,14 +1108,101 @@ div.quizQr > table {
   opacity: 0.4 !important;
 }
 
-/* Presentation not valid dialog */
 
-div.fancy_msg_advert {
+/* Notifications CSS */
+
+#notification_template {
+	position: absolute;
+	width: 92%;
+	padding: 4% 4% 4% 4%;
+	margin: 0px;
+	height: auto;
+}
+
+.notification_row1 {
+	margin-bottom: 40px;
+	width: 100%;
+}
+
+.notification_row2 {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	display: block;
+	height: 30px;
+	width: 100%;
+	text-align: right;
+}
+
+.notification_button {
+	padding: 5px 20px !important;
+}
+
+.notification_button[buttonnumber='1'] {
+	margin-right: 15px;
+}
+
+.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3']{
+	margin-right: 15px;
+}
+
+.notification_text {
+	text-decoration:none;
+	font-family:Helvetica;
+	font-size:26px;
+	color:#CCC;
+	padding-bottom: 15px;
+}
+
+img.notificationIcon {
+	width: 44px;
+	height: 55px;
+	margin-right: 20px;
+	margin-left: 0px;
+}
+
+img.notificationIconDelete {
+	height: 50px;
+	width: 65px;
+}
+
+/* Recommended browsers custom dialog */
+
+#recomended_browsers {
+	margin-top: 35px;
+	height: 115px;
+	text-align: center;
+	width: 80%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+div#requirements_form {
 	text-align: center;
 	padding: 20px 20px 20px 20px;
 	border-radius: 20px;
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;  
+}
+
+img.browser_img { 
+	max-height: 70px;
+  	max-width: 70px;
+	display: block;
+	margin: auto;
+}
+
+span.browserTitle {
+	font-family:Helvetica;
+  	font-size: 15px;
+	display: block;
+	padding: 5px;
+	color: #9B999D;
+}
+
+div.recomended_browser {
+	width: 33%;
+	float: left;
 }
 
 span.adverttext {

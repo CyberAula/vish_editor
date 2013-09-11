@@ -324,16 +324,17 @@ VISH.Utils = (function(V,undefined){
 
 
 	var showPNotValidDialog = function(){
-		$.fancybox(
-			$("#presentation_not_valid_wrapper").html(),
-			{
-				'autoDimensions'  : false,
-				'width'           : 650,
-				'height'          : 250,
-				'showCloseButton' : false,
-				'padding'       : 0
-			}
-		);
+		var options = {};
+		options.width = 650;
+		options.height = 220;
+		options.text = "This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.";
+		var button1 = {};
+		button1.text = "Ok";
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
 	}
 
 	var getOuterHTML = function(tag){
@@ -655,6 +656,108 @@ VISH.Utils = (function(V,undefined){
 	}
 
 
+	/*
+	 * Helper to show validation dialogs
+	 */
+	var showDialog = function(options){
+		var id = "notification_template";
+		if($("#"+id).length===0){
+			return;
+		}
+		if((!options)||(!options.text)){
+			return;
+		}
+
+		var width = 350;
+		var height = 200;
+		var showCloseButton = false;
+		var notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
+
+		if(options.width){
+			width = options.width;
+		}
+		if(options.height){
+			height = options.height;
+		}
+		if(options.showCloseButton){
+			showCloseButton = options.showCloseButton;
+		}
+		if(options.notificationIconSrc){
+			notificationIconSrc = options.notificationIconSrc;
+		}
+
+		// fancybox to edit presentation settings
+		$("a#link_to_notification_template").fancybox({
+			'autoDimensions' 	: false,
+			'autoScale' 		: false,
+			'scrolling'			: 'no',
+			'width'				: width,
+			'height'			: height,
+			'padding' 			: 0,
+			'hideOnOverlayClick': true,
+			'hideOnContentClick': false,
+			'showCloseButton'	: showCloseButton,
+			"onStart"  	: function(data){
+				_cleanDialog(id);
+				var text_wrapper = $("#"+id).find(".notification_row1");
+				var buttons_wrapper = $("#"+id).find(".notification_row2");
+				$(text_wrapper).find(".notificationIcon").attr("src",notificationIconSrc);
+				$(text_wrapper).find(".notification_text").html(options.text);
+
+				if(options.notificationIconClass){
+					$(text_wrapper).find(".notificationIcon").addClass(options.notificationIconClass);
+				}
+
+				if(options.buttons){
+					var obLength = options.buttons.length;
+					$(options.buttons).reverse().each(function(index,button){
+						var bNumber = obLength-index;
+						$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+						$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
+							event.preventDefault();
+							button.callback();
+						});
+					});
+				}
+			},
+			"onComplete"  	: function(data){
+				var text_wrapper = $("#fancybox-content").find(".notification_row1");
+				var buttons_wrapper = $("#fancybox-content").find(".notification_row2");
+				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+
+				if($("#fancybox-content").height() < (adjustedHeight)){
+					//Adjust height (needed when height is smaller than the appropiately one)
+					var transitionTimeMs = 500;
+					var adjustedHeightWithPadding = adjustedHeight + $("#"+id).cssNumber("padding-top") + $("#"+id).cssNumber("padding-bottom");
+					$("#"+id).animate({height:adjustedHeight+"px"},transitionTimeMs);
+					$("#fancybox-content").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
+					$("#fancybox-content > div").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
+				}
+			},
+			"onClosed" : function(data){
+				_cleanDialog(id);
+
+				if((options)&&(typeof options.onClosedCallback == "function")){
+					options.onClosedCallback();
+				}
+			}
+		});
+
+		var _cleanDialog = function(id){
+			var text_wrapper = $("#"+id).find(".notification_row1");
+			var buttons_wrapper = $("#"+id).find(".notification_row2");
+			$(buttons_wrapper).html("");
+			var icon = $(text_wrapper).find(".notificationIcon");
+			$(icon).removeAttr("src");
+			$(icon).removeClass().addClass("notificationIcon");
+			$(text_wrapper).find(".notification_text").html("");
+			$("#"+id).removeAttr('style');
+		};
+
+		$("a#link_to_notification_template").trigger('click');
+	}
+
+
    return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -675,6 +778,7 @@ VISH.Utils = (function(V,undefined){
 		addParamToUrl			: addParamToUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
+		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog
    };
 

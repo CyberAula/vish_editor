@@ -104,16 +104,17 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 	}	
 
 	var _showErrorDialog = function(){
-		$.fancybox(
-			$("#pdf2p_not_valid_wrapper").html(),
-			{
-				'autoDimensions'  : false,
-				'width'           : 650,
-				'height'          : 250,
-				'showCloseButton' : false,
-				'padding'       : 0
-			}
-		);
+		var options = {};
+		options.width = 650;
+		options.height = 190;
+		options.text = "An error has occurred. Ensure that the PDF file is valid.";
+		var button1 = {};
+		button1.text = "Ok";
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
 	}
 	
 	var processResponse = function(jsonResponse){

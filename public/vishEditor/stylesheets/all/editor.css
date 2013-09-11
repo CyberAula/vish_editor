@@ -1638,145 +1638,6 @@ a.metadata_link {
 	cursor:pointer;
 }
 
-img.delete_img {
-	margin-left: 25px;
-	margin-top: 30px;
-	height: 50px;
-	width: 65px;
-}
-
-/* Notification CSS */
-
-#notification_template {
-	position: absolute;
-	width: 92%;
-	padding: 4% 4% 4% 4%;
-	margin: 0px;
-}
-
-.notification_row1 {
-	margin-bottom: 35px;
-	width: 100%;
-}
-
-.notification_row2 {
-	position: absolute;
-	right: 0px;
-	bottom: -10px;
-	display: block;
-	height: 30px;
-	width: 100%;
-	text-align: right;
-}
-
-.notification_button {
-	padding: 5px 20px !important;
-}
-
-.notification_button[buttonnumber='1'] {
-	margin-right: 15px;
-}
-
-.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3']{
-	margin-right: 15px;
-}
-
-.notification_text {
-	text-decoration:none;
-	font-family:Helvetica;
-	font-size:26px;
-	color:#CCC;
-	padding-bottom: 15px;
-}
-
-.notificationIcon {
-	width: 44px;
-	height: 55px;
-	margin-right: 20px;
-	margin-left: 0px;
-}
-
-/* old */
-
-
-.alertDialogIcon {
-	width: 44px;
-	height: 55px;
-	margin-right: 20px;
-	margin-left: 0px;
-}
-
-.deltext {
-	text-decoration:none;
-	font-family:Helvetica;
-	font-size:26px;
-	color:#CCC;
-	padding-bottom: 15px;
-}
-
-.buttonfail {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	margin-bottom: 10px;
-	margin-right: 10px;
-	padding: 5px 20px !important;
-}
-
-.buttons_together {
-	margin-top: 15px;
-	text-align: right;
-	margin-right: 20px;
-}
-
-.text_in_fancybox {
-	margin-left: 22px;
-	margin-top: 22px;
-	margin-bottom: 10px;
-}
-
-#button_accept_when_fail {
-	margin-top: -32px;
-	float: right;
-	margin-right: 25px;
-}
-
-.delimg {
-	margin-left: -18px;
-	margin-bottom: 35px;
-}
-
-.button220 {
-	margin-left: 200px;
-	margin-top: 25px;
-}
-
-.button {
-	padding: 5px 10px;
-	display: inline;
-	text-decoration:none;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-	cursor: pointer;
-	font-weight: bold;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.1em;
-}	
-
-.button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-
-.buttonfancy {
-	margin-left: 620px;
-	margin-top: 2px;
-}
-
 
 /* Objects wrapper */
 
@@ -1909,31 +1770,6 @@ div.object_wrapper {
 .help_in_fancybox:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
 	cursor: pointer;
-}
-
-#recomended_browsers {
-	margin-top: 35px;
-	height: 115px;
-}
-
-.browser_img { 
-	max-height: 70px;
-  	max-width: 70px;
-	display: block;
-	margin: auto;
-}
-
-.browserTitle {
-	font-family:Helvetica;
-  	font-size: 15px;
-	display: block;
-	padding: 5px;
-	color: #9B999D;
-}
-
-.recomended_browser {
-	width: 150px;
-	float: left;
 }
 
 #help_themes_selection {
@@ -2553,6 +2389,35 @@ div.poi_label_container {
 
 .lasticonborder {
 	border-right: none;
+}
+
+
+/* More buttons */
+
+.button {
+	padding: 5px 10px;
+	display: inline;
+	text-decoration:none;
+	background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.1em;
+}	
+
+.button:hover {
+	opacity: 1;
+	text-shadow: 1px 1px #666;
+}
+
+.buttonfancy {
+	margin-left: 620px;
+	margin-top: 2px;
 }
 
 

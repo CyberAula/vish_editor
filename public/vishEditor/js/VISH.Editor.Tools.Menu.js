@@ -90,14 +90,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			options.buttons = [button1];
 			// options.onClosedCallback = function(){
 			// };
-			_showDialog(options);
+			V.Utils.showDialog(options);
 			return;
 		}
 
 		if(V.Slides.getSlides().length === 0){
 			var options = {};
 			options.width = 600;
-			options.height = 160;
+			options.height = 150;
 			options.text = "Create at least one slide before saving.";
 			var button1 = {};
 			button1.text = "Ok";
@@ -105,13 +105,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				$.fancybox.close();
 			}
 			options.buttons = [button1];
-			_showDialog(options);
+			V.Utils.showDialog(options);
 			return;
 		}
 
 		var options = {};
 		options.width = 400;
-		options.height = 145;
+		options.height = 140;
 		options.notificationIconSrc = V.ImagesPath + "toolbar/save_document.png";
 		options.text = "are you sure?";
 		options.buttons = [];
@@ -147,104 +147,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 		options.buttons.push(button3);
 
-		_showDialog(options);
+		V.Utils.showDialog(options);
 	};
-
-	/*
-	 * Helper to show validation dialogs
-	 */
-	var _showDialog = function(options){
-		var id = "notification_template";
-		if($("#"+id).length===0){
-			return;
-		}
-		if((!options)||(!options.text)){
-			return;
-		}
-
-		var width = 350;
-		var height = 200;
-		var showCloseButton = false;
-		var notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-
-		if(options.width){
-			width = options.width;
-		}
-		if(options.height){
-			height = options.height;
-		}
-		if(options.showCloseButton){
-			showCloseButton = options.showCloseButton;
-		}
-		if(options.notificationIconSrc){
-			notificationIconSrc = options.notificationIconSrc;
-		}
-
-		// fancybox to edit presentation settings
-		$("a#link_to_notification_template").fancybox({
-			'autoDimensions' 	: false,
-			'autoScale' 		: false,
-			'scrolling'			: 'no',
-			'width'				: width,
-			'height'			: height,
-			'padding' 			: 0,
-			'hideOnOverlayClick': true,
-			'hideOnContentClick': false,
-			'showCloseButton'	: showCloseButton,
-			"onStart"  	: function(data){
-				_cleanDialog(id);
-				var text_wrapper = $("#"+id).find(".notification_row1");
-				var buttons_wrapper = $("#"+id).find(".notification_row2");
-				$(text_wrapper).find(".notificationIcon").attr("src",notificationIconSrc);
-				$(text_wrapper).find(".notification_text").html(options.text);
-
-				if(options.buttons){
-					var obLength = options.buttons.length;
-					$(options.buttons).reverse().each(function(index,button){
-						var bNumber = obLength-index;
-						$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
-						$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
-							event.preventDefault();
-							button.callback();
-						});
-					});
-				}
-			},
-			"onComplete"  	: function(data){
-				//Adjust height (needed when height is smaller than the appropiately one)
-				var text_wrapper = $("#fancybox-content").find(".notification_row1");
-				var buttons_wrapper = $("#fancybox-content").find(".notification_row2");
-				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
-
-				if($("#fancybox-content").height() < (adjustedHeight+10)){
-					$("#"+id).height(adjustedHeight);
-					var wrapperPadding = $("#"+id).cssNumber("padding-bottom")+$("#"+id).cssNumber("padding-top");
-					var adjustedHeightWithPadding = adjustedHeight+wrapperPadding;
-					$("#fancybox-content").height(adjustedHeightWithPadding);
-					$("#fancybox-content > div").height(adjustedHeightWithPadding);
-				}
-
-			},
-			"onClosed" : function(data){
-				_cleanDialog(id);
-
-				if((options)&&(typeof options.onClosedCallback == "function")){
-					options.onClosedCallback();
-				}
-			}
-		});
-
-		var _cleanDialog = function(id){
-			var text_wrapper = $("#"+id).find(".notification_row1");
-			var buttons_wrapper = $("#"+id).find(".notification_row2");
-			$(buttons_wrapper).html("");
-			$(text_wrapper).find(".notificationIcon").removeAttr("src");
-			$(text_wrapper).find(".notification_text").html("");
-			$("#"+id).removeAttr('style');
-		};
-
-		$("a#link_to_notification_template").trigger('click');
-	}
 
 	/////////////////////
 	/// PREVIEW
