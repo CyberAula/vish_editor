@@ -131,13 +131,6 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 
 	var _launchTextEditorForQuestion = function(area,question){
 		var textArea = $(area).find(".mc_question_wrapper");
-
-		console.log("_launchTextEditorForQuestion and textArea");
-		console.log(textArea);
-
-		console.log("and question");
-		console.log(question);
-
 		if(!question){
 			V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 38, focus: true, autogrow: true});
 		} else {
@@ -210,13 +203,6 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 	 * slide is the area and contains all the required parameters
 	 */
 	var draw = function(area,quiz){
-
-		console.log("draw");
-		console.log("area");
-		console.log(area);
-		console.log("quiz");
-		console.log(quiz);
-
 		//Draw question
 		$(area).append(_getDummy());
 		$(area).attr('type',V.Constant.QUIZ);
