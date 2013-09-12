@@ -237,8 +237,6 @@ this can not be done with show() and hide() because then it remains with display
 #slide-counter-div {
 	cursor: default;
 	z-index: 10;
-	font-family: Helvetica;
-	font-size: 1.2em;
 	text-align: center;
 	margin-top: 8px;
 }
@@ -246,16 +244,17 @@ this can not be done with show() and hide() because then it remains with display
 #slide-counter-span {
 	cursor: default;
 	font-family: Helvetica;
-	font-size: 1em;
+	font-size: 14px;
 	text-align: center;
 }
 
 #slide-counter-input {
 	width: 24px;
-	padding: 1px 1px 1px 0;
-	text-align: right;
 	height: 20px;
-	font-size: 1.0em;
+	padding: 1px 1px 1px 0;
+	font-family: Helvetica;
+	font-size: 14px;
+	text-align: right;
 }
 
 #slide-counter-input:hover {
