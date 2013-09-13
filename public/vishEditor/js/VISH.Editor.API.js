@@ -473,10 +473,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	var uploadTmpJSON = function(json, successCallback, failCallback){
 		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof successCallback == "function"){
-			setTimeout(function(){
-				var iframe = $("#hiddenIframeForAjaxDownloads");
-				$(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
-					successCallback();
+				setTimeout(function(){
+					// var iframe = $("#hiddenIframeForAjaxDownloads");
+					// $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
+					failCallback();
 				},2000);
 			}
 			return;

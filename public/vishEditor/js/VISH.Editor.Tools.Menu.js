@@ -207,8 +207,20 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
-			//on fail
-			V.Utils.Loader.stopLoading();
+			setTimeout(function(){
+				V.Utils.Loader.onCloseLoading();
+				var options = {};
+				options.width = 600;
+				options.height = 185;
+				options.text = "An error has ocurred. Is not possible to export the presentation to JSON.";
+				var button1 = {};
+				button1.text = "Ok";
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
+			},500);
 		});
 	};
 

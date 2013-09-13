@@ -83,8 +83,8 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 				}
 				setTimeout(function(){
 					V.Utils.Loader.onCloseLoading();
-          			_showErrorDialog();
-        		},800);
+					_showErrorDialog();
+				},800);
 			}
 		});
 	};
