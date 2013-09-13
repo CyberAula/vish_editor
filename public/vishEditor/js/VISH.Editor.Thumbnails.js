@@ -27,9 +27,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		var slideElements = 0;
 		$('.slides > article').each(function(index,s){
 			var srcURL = getThumbnailURL(s);
+			var defaultURL = getDefaultThumbnailURL(s);
 			if(srcURL){
 				slideElements += 1;
-				imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "'/>"));
+				imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "' defaultsrc='" + defaultURL + "'/>"));
 				imagesArrayTitles.push(slideElements);
 			}
     	});
@@ -38,9 +39,22 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options.order = true;
 		options.titleArray = imagesArrayTitles;
 		options.callback = _onImagesLoaded;
+		options.defaultOnError = true;
+		options.onImageErrorCallback = _onImageError;
 		V.Utils.Loader.loadImagesOnContainer(imagesArray,thumbnailsDivId,options);
 	};
 	 
+	var _onImageError = function(image){
+		var slideNumber = $(image).attr("slidenumber");
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
+		var isSlideset = V.Editor.Slideset.isSlideset(slide);
+		if(isSlideset){
+			var creator = V.Editor.Slideset.getCreatorModule(slide);
+			if(typeof creator.onThumbnailLoadFail == "function"){
+				creator.onThumbnailLoadFail(slide);
+			}
+		}
+	}
 
 	var _onImagesLoaded = function(){
 		//Add class to title elements and events
@@ -163,6 +177,21 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		}
 
 		return thumbnailURL;
+	}
+
+	var getDefaultThumbnailURL = function(slide){
+		var slideType = $(slide).attr('type');
+
+		if(slideType==V.Constant.STANDARD){
+			return getThumbnailURL(slide);
+		} else if(V.Editor.Slideset.isSlideset(slideType)){
+			var creatorModule = V.Editor.Slideset.getCreatorModule(slideType);
+			if(typeof creatorModule.getDefaultThumbnailURL == "function"){
+				return creatorModule.getDefaultThumbnailURL(slide);
+			} else {
+				return creatorModule.getThumbnailURL(slide);
+			}
+		}
 	}
 
 	////////////////

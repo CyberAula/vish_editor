@@ -233,8 +233,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	/*
 	 * Callback from the V.Editor.Image module to add the background
 	 */
-	var onBackgroundSelected = function(contentToAdd){
-		var fc = V.Slides.getCurrentSlide();
+	var onBackgroundSelected = function(contentToAdd,fc){
+		if(!fc){
+			fc = V.Slides.getCurrentSlide();
+		}
 
 		if($(fc).attr("type")===V.Constant.FLASHCARD){
 			$(fc).css("background-image", "url("+contentToAdd+")");
@@ -253,8 +255,26 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		if(avatar){
 			return V.Utils.getSrcFromCSS(avatar);
 		} else {
-			return (V.ImagesPath + "templatesthumbs/flashcard_template.png");
+			return getDefaultThumbnailURL();
 		}
+	}
+
+	var getDefaultThumbnailURL = function(){
+		return (V.ImagesPath + "templatesthumbs/flashcard_template.png");
+	}
+
+	var onThumbnailLoadFail = function(fc){
+		var thumbnailURL = getDefaultThumbnailURL();
+		$(fc).css("background-image", "none");
+		$(fc).attr("dirtyavatar", $(fc).attr("avatar"));
+		$(fc).attr("avatar", "url('"+thumbnailURL+"')");
+		$(fc).find("div.change_bg_button").show();
+
+		if(V.Slides.getCurrentSlide()==fc){
+			$("#subslide_selected > img").attr("src",thumbnailURL);
+		}
+		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(fc);
+		$(slideThumbnail).attr("src",thumbnailURL);
 	}
 
 
@@ -269,7 +289,15 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		var slide = {};
 		slide.id = $(fc).attr('id');
 		slide.type = V.Constant.FLASHCARD;
-		slide.background = $(fc).css("background-image");
+
+		var currentBackground = $(fc).css("background-image");
+		var dirtyAvatar = $(fc).attr("dirtyavatar");
+		if((currentBackground=="none")&&(dirtyAvatar)){
+			slide.background = dirtyAvatar;
+		} else {
+			slide.background = currentBackground;
+		}
+		
 		if(V.Slides.getCurrentSlide()===fc){
 			_savePoisToDom(fc);
 		}
@@ -302,6 +330,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		getSlideHeader					: getSlideHeader,
 		onBackgroundSelected			: onBackgroundSelected,
 		getThumbnailURL					: getThumbnailURL,
+		getDefaultThumbnailURL			: getDefaultThumbnailURL,
+		onThumbnailLoadFail				: onThumbnailLoadFail,
 		preCopyActions					: preCopyActions,
 		postCopyActions					: postCopyActions
 	};
