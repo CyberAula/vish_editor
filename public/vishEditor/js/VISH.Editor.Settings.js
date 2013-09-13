@@ -132,9 +132,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Title
 		if(presentation.title){
-			var previewTitleDOM = $("#presentation_details_preview_addtitle").find("span");
-			$(previewTitleDOM).html(presentation.title);
-			$("#presentation_details_input_title").val(presentation.title); //input
+			$("#presentation_details_preview_addtitle_input").val(presentation.title); //preview input
+			$("#presentation_details_input_title").val(presentation.title); //data input
 		}
 
 		//Author
@@ -299,13 +298,27 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var onKeyUpOnTitle = function(event){
-		var input = $("#presentation_details_input_title");
-		var span = $("#presentation_details_preview_addtitle").find("span");
-		var title = $("#presentation_details_input_title").val();
+		var inputData = $("#presentation_details_input_title");
+		var inputPreview = $("#presentation_details_preview_addtitle_input");
+
+		var title = $(inputData).val();
 		if(title.trim() != ""){
-			$(span).html($("#presentation_details_input_title").val());
+			$(inputPreview).val(title);
 		} else {
-			$(span).html("add a title");
+			$(inputPreview).val("");
+		}
+		_checkIfEnableContinueButton();
+	}
+
+	var onKeyUpOnPreviewTitle = function(event){
+		var inputData = $("#presentation_details_input_title");
+		var inputPreview = $("#presentation_details_preview_addtitle_input");
+
+		var title = $(inputPreview).val();
+		if(title.trim() != ""){
+			$(inputData).val(title);
+		} else {
+			$(inputData).val("");
 		}
 		_checkIfEnableContinueButton();
 	}
@@ -395,9 +408,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		draftPresentation.subject = $("#subject_tag").val();
 		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
 
-		V.Debugging.log("draftPresentation");
-		V.Debugging.log(draftPresentation);
-
 		V.Editor.setPresentation(draftPresentation);
 
 		$.fancybox.close();
@@ -465,6 +475,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onThumbnailSelected						: onThumbnailSelected,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
+		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
 		onTLTchange								: onTLTchange,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,

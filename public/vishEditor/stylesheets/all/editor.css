@@ -145,6 +145,11 @@ p.presentation_details_column_title {
 	padding-left: 5px;
 	padding-bottom: 12px;
 	border-bottom: 1px solid #ccc;
+}
+
+#presentation_details_preview_addtitle_input{
+	border: none;
+	border: 0px;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
