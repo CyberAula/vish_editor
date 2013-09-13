@@ -192,7 +192,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var insertJSON = function(){
-		$("#addJSONFancybox").trigger('click');
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_json_file');
 	};
 
 	var insertPDFex = function(){

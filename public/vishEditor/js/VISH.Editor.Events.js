@@ -118,18 +118,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			// fancybox to insert JSON	
-			$("a#addJSONFancybox").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 300,
-				'padding' : 0,
-				"onComplete"  : function(data) {
-					V.Editor.Utils.loadTab('tab_json_file');
-				}
-			});
-
 			//Select theme fancybox
 			$("#hidden_button_to_launch_theme_fancybox").fancybox({
 				'autoDimensions' : false,
@@ -248,6 +236,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 		//Help inserting a PDF presentation
 		$(document).on('click','#tab_pdfex_help', function(){
 			V.Tour.startTourWithId('help_pdfex_help', 'bottom');
+		});
+
+		//Help importing a JSON file
+		$(document).on('click','#tab_json_file_help', function(){
+			V.Tour.startTourWithId('help_iJSON_help', 'bottom');
 		});
 
 		//Help in LRE carrousel

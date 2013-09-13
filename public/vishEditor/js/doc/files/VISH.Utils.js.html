@@ -106,6 +106,8 @@ VISH.Utils = (function(V,undefined){
 			var v = parseInt(this.css(prop),10);
 			return isNaN(v) ? 0 : v;
 		};
+
+		jQuery.fn.reverse = [].reverse;
 	}
 
 	&#x2F;*
@@ -412,16 +414,17 @@ VISH.Utils = (function(V,undefined){
 
 
 	var showPNotValidDialog = function(){
-		$.fancybox(
-			$(&quot;#presentation_not_valid_wrapper&quot;).html(),
-			{
-				&#x27;autoDimensions&#x27;  : false,
-				&#x27;width&#x27;           : 650,
-				&#x27;height&#x27;          : 250,
-				&#x27;showCloseButton&#x27; : false,
-				&#x27;padding&#x27;       : 0
-			}
-		);
+		var options = {};
+		options.width = 650;
+		options.height = 220;
+		options.text = &quot;This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.&quot;;
+		var button1 = {};
+		button1.text = &quot;Ok&quot;;
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
 	}
 
 	var getOuterHTML = function(tag){
@@ -743,6 +746,108 @@ VISH.Utils = (function(V,undefined){
 	}
 
 
+	&#x2F;*
+	 * Helper to show validation dialogs
+	 *&#x2F;
+	var showDialog = function(options){
+		var id = &quot;notification_template&quot;;
+		if($(&quot;#&quot;+id).length===0){
+			return;
+		}
+		if((!options)||(!options.text)){
+			return;
+		}
+
+		var width = 350;
+		var height = 200;
+		var showCloseButton = false;
+		var notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;content_fail.png&quot;;
+
+		if(options.width){
+			width = options.width;
+		}
+		if(options.height){
+			height = options.height;
+		}
+		if(options.showCloseButton){
+			showCloseButton = options.showCloseButton;
+		}
+		if(options.notificationIconSrc){
+			notificationIconSrc = options.notificationIconSrc;
+		}
+
+		&#x2F;&#x2F; fancybox to edit presentation settings
+		$(&quot;a#link_to_notification_template&quot;).fancybox({
+			&#x27;autoDimensions&#x27; 	: false,
+			&#x27;autoScale&#x27; 		: false,
+			&#x27;scrolling&#x27;			: &#x27;no&#x27;,
+			&#x27;width&#x27;				: width,
+			&#x27;height&#x27;			: height,
+			&#x27;padding&#x27; 			: 0,
+			&#x27;hideOnOverlayClick&#x27;: true,
+			&#x27;hideOnContentClick&#x27;: false,
+			&#x27;showCloseButton&#x27;	: showCloseButton,
+			&quot;onStart&quot;  	: function(data){
+				_cleanDialog(id);
+				var text_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row1&quot;);
+				var buttons_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row2&quot;);
+				$(text_wrapper).find(&quot;.notificationIcon&quot;).attr(&quot;src&quot;,notificationIconSrc);
+				$(text_wrapper).find(&quot;.notification_text&quot;).html(options.text);
+
+				if(options.notificationIconClass){
+					$(text_wrapper).find(&quot;.notificationIcon&quot;).addClass(options.notificationIconClass);
+				}
+
+				if(options.buttons){
+					var obLength = options.buttons.length;
+					$(options.buttons).reverse().each(function(index,button){
+						var bNumber = obLength-index;
+						$(buttons_wrapper).append(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
+						$(buttons_wrapper).find(&quot;.button[buttonNumber=&#x27;&quot;+bNumber+&quot;&#x27;]&quot;).click(function(event){
+							event.preventDefault();
+							button.callback();
+						});
+					});
+				}
+			},
+			&quot;onComplete&quot;  	: function(data){
+				var text_wrapper = $(&quot;#fancybox-content&quot;).find(&quot;.notification_row1&quot;);
+				var buttons_wrapper = $(&quot;#fancybox-content&quot;).find(&quot;.notification_row2&quot;);
+				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+
+				if($(&quot;#fancybox-content&quot;).height() &lt; (adjustedHeight)){
+					&#x2F;&#x2F;Adjust height (needed when height is smaller than the appropiately one)
+					var transitionTimeMs = 500;
+					var adjustedHeightWithPadding = adjustedHeight + $(&quot;#&quot;+id).cssNumber(&quot;padding-top&quot;) + $(&quot;#&quot;+id).cssNumber(&quot;padding-bottom&quot;);
+					$(&quot;#&quot;+id).animate({height:adjustedHeight+&quot;px&quot;},transitionTimeMs);
+					$(&quot;#fancybox-content&quot;).animate({height:adjustedHeightWithPadding+&quot;px&quot;},transitionTimeMs);
+					$(&quot;#fancybox-content &gt; div&quot;).animate({height:adjustedHeightWithPadding+&quot;px&quot;},transitionTimeMs);
+				}
+			},
+			&quot;onClosed&quot; : function(data){
+				_cleanDialog(id);
+
+				if((options)&amp;&amp;(typeof options.onClosedCallback == &quot;function&quot;)){
+					options.onClosedCallback();
+				}
+			}
+		});
+
+		var _cleanDialog = function(id){
+			var text_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row1&quot;);
+			var buttons_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row2&quot;);
+			$(buttons_wrapper).html(&quot;&quot;);
+			var icon = $(text_wrapper).find(&quot;.notificationIcon&quot;);
+			$(icon).removeAttr(&quot;src&quot;);
+			$(icon).removeClass().addClass(&quot;notificationIcon&quot;);
+			$(text_wrapper).find(&quot;.notification_text&quot;).html(&quot;&quot;);
+			$(&quot;#&quot;+id).removeAttr(&#x27;style&#x27;);
+		};
+
+		$(&quot;a#link_to_notification_template&quot;).trigger(&#x27;click&#x27;);
+	}
+
+
    return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -763,6 +868,7 @@ VISH.Utils = (function(V,undefined){
 		addParamToUrl			: addParamToUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
+		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog
    };
 
