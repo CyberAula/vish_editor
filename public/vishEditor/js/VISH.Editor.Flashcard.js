@@ -12,7 +12,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	 */
 	var draw = function(slidesetJSON,scaffoldDOM){
 		if(slidesetJSON){
-			if(slidesetJSON.background){
+			if((typeof slidesetJSON.background == "string")&&(slidesetJSON.background!="none")){
 				onBackgroundSelected(V.Utils.getSrcFromCSS(slidesetJSON.background));
 			};
 			if(slidesetJSON.pois){
@@ -238,7 +238,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 
 		if($(fc).attr("type")===V.Constant.FLASHCARD){
 			$(fc).css("background-image", "url("+contentToAdd+")");
-			$(fc).attr("avatar", "url("+contentToAdd+")");
+			$(fc).attr("avatar", "url('"+contentToAdd+"')");
 			$(fc).find("div.change_bg_button").hide();
 
 			//Update thumbnails

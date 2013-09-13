@@ -29,7 +29,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			var srcURL = getThumbnailURL(s);
 			if(srcURL){
 				slideElements += 1;
-				imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "' />"));
+				imagesArray.push($("<img id='slideThumbnail" + slideElements + "' class='image_barbutton' slideNumber='" + slideElements + "' action='goToSlide' src='" + srcURL + "'/>"));
 				imagesArrayTitles.push(slideElements);
 			}
     	});
