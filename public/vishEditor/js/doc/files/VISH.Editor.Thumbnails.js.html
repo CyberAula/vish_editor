@@ -117,9 +117,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		var slideElements = 0;
 		$(&#x27;.slides &gt; article&#x27;).each(function(index,s){
 			var srcURL = getThumbnailURL(s);
+			var defaultURL = getDefaultThumbnailURL(s);
 			if(srcURL){
 				slideElements += 1;
-				imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
+				imagesArray.push($(&quot;&lt;img id=&#x27;slideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; action=&#x27;goToSlide&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; defaultsrc=&#x27;&quot; + defaultURL + &quot;&#x27;&#x2F;&gt;&quot;));
 				imagesArrayTitles.push(slideElements);
 			}
     	});
@@ -128,9 +129,22 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options.order = true;
 		options.titleArray = imagesArrayTitles;
 		options.callback = _onImagesLoaded;
+		options.defaultOnError = true;
+		options.onImageErrorCallback = _onImageError;
 		V.Utils.Loader.loadImagesOnContainer(imagesArray,thumbnailsDivId,options);
 	};
 	 
+	var _onImageError = function(image){
+		var slideNumber = $(image).attr(&quot;slidenumber&quot;);
+		var slide = V.Slides.getSlideWithNumber(slideNumber);
+		var isSlideset = V.Editor.Slideset.isSlideset(slide);
+		if(isSlideset){
+			var creator = V.Editor.Slideset.getCreatorModule(slide);
+			if(typeof creator.onThumbnailLoadFail == &quot;function&quot;){
+				creator.onThumbnailLoadFail(slide);
+			}
+		}
+	}
 
 	var _onImagesLoaded = function(){
 		&#x2F;&#x2F;Add class to title elements and events
@@ -253,6 +267,21 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		}
 
 		return thumbnailURL;
+	}
+
+	var getDefaultThumbnailURL = function(slide){
+		var slideType = $(slide).attr(&#x27;type&#x27;);
+
+		if(slideType==V.Constant.STANDARD){
+			return getThumbnailURL(slide);
+		} else if(V.Editor.Slideset.isSlideset(slideType)){
+			var creatorModule = V.Editor.Slideset.getCreatorModule(slideType);
+			if(typeof creatorModule.getDefaultThumbnailURL == &quot;function&quot;){
+				return creatorModule.getDefaultThumbnailURL(slide);
+			} else {
+				return creatorModule.getThumbnailURL(slide);
+			}
+		}
 	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;

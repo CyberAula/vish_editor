@@ -506,33 +506,18 @@ VISH.Editor = (function(V,$,undefined){
 	* Function to save the presentation
 	*/
 	var savePresentation = function(options){
-		//Load and show all objects
-		V.Editor.Utils.Loader.loadAllObjects();
-		$(".object_wrapper, .snapshot_wrapper").show();
-
 		//Save the presentation in JSON
 		var presentation = {};
-		presentation.VEVersion = V.VERSION;
-		presentation.type = V.Constant.PRESENTATION;
 
-		if(draftPresentation){
-			presentation.title = draftPresentation.title;
-			presentation.description = draftPresentation.description;
-			presentation.author = draftPresentation.author;
-			presentation.avatar = draftPresentation.avatar;
-			presentation.tags = draftPresentation.tags;
-			presentation.theme = draftPresentation.theme;
-			presentation.age_range = draftPresentation.age_range;
-			presentation.subject = draftPresentation.subject;
-			presentation.language = draftPresentation.language;
-			presentation.educational_objectives = draftPresentation.educational_objectives;
-			presentation.adquired_competencies = draftPresentation.adquired_competencies;
-		} else {
-			presentation.author = ''; //Filled in server side
-		}
+		//Save metadata
+		presentation = V.Editor.Settings.saveSettings(presentation);
 
 		//Slides of the presentation
 		presentation.slides = [];
+
+		//Load and show all objects
+		V.Editor.Utils.Loader.loadAllObjects();
+		$(".object_wrapper, .snapshot_wrapper").show();
 
 		$('section.slides > article').each(function(index,slideDOM){
 			var slide = {};
@@ -552,8 +537,6 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.slides.push(slide);	
 		});
 
-		savedPresentation = presentation;
-
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 		//Reload current slide objects
@@ -561,6 +544,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		// V.Debugging.log("\n\nVish Editor save the following presentation:\n");
 		// V.Debugging.log(JSON.stringify(presentation));
+
+		//Store saved presentation
+		savedPresentation = presentation;
 
 		return savedPresentation;
 	};

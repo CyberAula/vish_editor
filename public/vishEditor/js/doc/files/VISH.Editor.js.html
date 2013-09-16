@@ -596,33 +596,18 @@ VISH.Editor = (function(V,$,undefined){
 	* Function to save the presentation
 	*&#x2F;
 	var savePresentation = function(options){
-		&#x2F;&#x2F;Load and show all objects
-		V.Editor.Utils.Loader.loadAllObjects();
-		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
-
 		&#x2F;&#x2F;Save the presentation in JSON
 		var presentation = {};
-		presentation.VEVersion = V.VERSION;
-		presentation.type = V.Constant.PRESENTATION;
 
-		if(draftPresentation){
-			presentation.title = draftPresentation.title;
-			presentation.description = draftPresentation.description;
-			presentation.author = draftPresentation.author;
-			presentation.avatar = draftPresentation.avatar;
-			presentation.tags = draftPresentation.tags;
-			presentation.theme = draftPresentation.theme;
-			presentation.age_range = draftPresentation.age_range;
-			presentation.subject = draftPresentation.subject;
-			presentation.language = draftPresentation.language;
-			presentation.educational_objectives = draftPresentation.educational_objectives;
-			presentation.adquired_competencies = draftPresentation.adquired_competencies;
-		} else {
-			presentation.author = &#x27;&#x27;; &#x2F;&#x2F;Filled in server side
-		}
+		&#x2F;&#x2F;Save metadata
+		presentation = V.Editor.Settings.saveSettings(presentation);
 
 		&#x2F;&#x2F;Slides of the presentation
 		presentation.slides = [];
+
+		&#x2F;&#x2F;Load and show all objects
+		V.Editor.Utils.Loader.loadAllObjects();
+		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
 
 		$(&#x27;section.slides &gt; article&#x27;).each(function(index,slideDOM){
 			var slide = {};
@@ -642,8 +627,6 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.slides.push(slide);	
 		});
 
-		savedPresentation = presentation;
-
 		&#x2F;&#x2F;Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 		&#x2F;&#x2F;Reload current slide objects
@@ -651,6 +634,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;);
 		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
+
+		&#x2F;&#x2F;Store saved presentation
+		savedPresentation = presentation;
 
 		return savedPresentation;
 	};

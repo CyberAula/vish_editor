@@ -377,40 +377,105 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			return;
 		}
 		
-		var draftPresentation = V.Editor.getPresentation();
-		if(!draftPresentation){
-			draftPresentation = {};
+		var updatedPresentation = saveSettings();
+		V.Editor.setPresentation(updatedPresentation);
+
+		$.fancybox.close();
+	};
+
+	var saveSettings = function(presentation){
+		var draftPresentation;
+
+		if(typeof presentation == "object"){
+			draftPresentation = presentation;
+		} else {
+			draftPresentation = V.Editor.getPresentation();
+			if(!draftPresentation){
+				draftPresentation = {};
+			}
 		}
 
-		draftPresentation.title = $('#presentation_details_input_title').val();
-		draftPresentation.description = $('#presentation_details_textarea').val();
+		draftPresentation.VEVersion = V.VERSION;
+		draftPresentation.type = V.Constant.PRESENTATION;
+
+		var title = $('#presentation_details_input_title').val();
+		if((typeof title == "string")&&(title.trim()!="")){
+			draftPresentation.title = title;
+		}
+
+		var description = $('#presentation_details_textarea').val();
+		if((typeof description == "string")&&(description.trim()!="")){
+			draftPresentation.description = description;
+		}
+		
 		if(presentationThumbnail){
 			draftPresentation.avatar = presentationThumbnail;
 		}
-		draftPresentation.author = $("#author_span_in_preview").html();
-		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
 
-		if(typeof $(".theme_selected_in_scrollbar").attr("themeNumber") == "string"){
-			draftPresentation.theme = "theme" + $(".theme_selected_in_scrollbar").attr("themeNumber");
+		var author = $("#author_span_in_preview").html();
+		if((typeof author == "string")&&(author.trim()!="")){
+			draftPresentation.author = author;
+		}
+
+		var tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
+		if(tags.length > 1){
+			draftPresentation.tags = tags;
+		}
+
+		var themeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");
+		if(typeof  themeNumber == "string"){
+			draftPresentation.theme = "theme" + themeNumber;
 		} else {
 			draftPresentation.theme = V.Constant.Themes.Default;
 		}
 
 		//Pedagogical fields
-		draftPresentation.language = $("#language_tag").val();
-		draftPresentation.context = $("#context_tag").val();
-		draftPresentation.age_range = $("#age_range").val();
-		draftPresentation.difficulty = $("#difficulty_range").val();
+		var language = $("#language_tag").val();
+		if(typeof language == "string"){
+			draftPresentation.language = language;
+		}
+		
+		var context = $("#context_tag").val();
+		if((typeof context == "string")&&(context!="unspecified")){
+			draftPresentation.context = context;
+		}
+
+		var age_range = $("#age_range").val();
+		if(typeof age_range == "string"){
+			draftPresentation.age_range = age_range;
+		}
+		
+		var difficulty = $("#difficulty_range").val();
+		if((typeof difficulty == "string")&&(difficulty!="unspecified")){
+			draftPresentation.difficulty = difficulty;
+		}	
+		
 		var TLT = _getTLT();
 		if(typeof TLT == "string"){
 			draftPresentation.TLT = TLT;
 		}
-		draftPresentation.subject = $("#subject_tag").val();
-		draftPresentation.educational_objectives = $("#educational_objectives_textarea").val();
 
-		V.Editor.setPresentation(draftPresentation);
+		var subjectsToSave = [];
+		var subjects = $("#subject_tag").val();
+		var sL = subjects.length;
+		if((typeof sL == "number")&&(sL>0)){
+			for(var sI=0; sI<sL; sI++){
+				var subject = subjects[sI];
+				if(subject!="Unspecified"){
+					subjectsToSave.push(subject);
+				}
+			}
+			if(subjectsToSave.length>0){
+				draftPresentation.subject = subjectsToSave;
+			}
+		}
+		
+		var educational_objectives = $("#educational_objectives_textarea").val();
+		if((typeof educational_objectives == "string")&&(educational_objectives.trim()!="")){
+			draftPresentation.educational_objectives = educational_objectives;
+		}
 
-		$.fancybox.close();
+		return draftPresentation;
 	};
 
 	// Return Typical Learning Time (TLT) compliant to LOM.
@@ -479,6 +544,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onTLTchange								: onTLTchange,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
+		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
 	};

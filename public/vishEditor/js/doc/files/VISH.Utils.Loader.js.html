@@ -127,7 +127,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		var imagesLength = imagesArray.length;
 		var imagesLoaded = 0;
 
-		$.each(imagesArray, function(i, image) {
+		$.each(imagesArray, function(i, image){
 			$(image).load(function(response) {
 				imagesLoaded = imagesLoaded + 1;
 				if(imagesLoaded == imagesLength){
@@ -137,7 +137,24 @@ VISH.Utils.Loader = (function(V,undefined){
 					}
 				}
 			})
-			$(image).error(function(response) {
+			$(image).error(function(response){
+				if((options)&amp;&amp;(options.defaultOnError)){
+					&#x2F;&#x2F;Try to load the default image
+					var defaultSrc = $(image).attr(&quot;defaultsrc&quot;);
+					if(typeof defaultSrc == &quot;string&quot;){
+						$(image).removeAttr(&quot;defaultsrc&quot;);
+						$(image).attr(&quot;src&quot;,defaultSrc);
+
+						if(typeof options.onImageErrorCallback == &quot;function&quot;){
+							options.onImageErrorCallback(image);
+						}
+
+						&#x2F;&#x2F;Only return when the first time we load a default source
+						&#x2F;&#x2F;The same image will call load o error callback again.
+						return;
+					}
+				}
+
 				imagesLoaded = imagesLoaded + 1;
 				validImagesArray.splice(validImagesArray.indexOf(image),1);
 				if(imagesLoaded == imagesLength){
@@ -146,6 +163,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						options.callback();
 					}
 				}
+				
 			})
 		});
 	}

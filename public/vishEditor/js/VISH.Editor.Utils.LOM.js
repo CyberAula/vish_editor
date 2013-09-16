@@ -1,5 +1,5 @@
 /*
-* Utils to work with the Learning Object Metadata (standard)
+* Utils to work with the LOM (Learning Object Metadata) standard
 * LOM final draft: http://ltsc.ieee.org/wg12/files/LOM_1484_12_1_v1_Final_Draft.pdf
 */
 

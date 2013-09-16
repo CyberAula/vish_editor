@@ -222,9 +222,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Title
 		if(presentation.title){
-			var previewTitleDOM = $(&quot;#presentation_details_preview_addtitle&quot;).find(&quot;span&quot;);
-			$(previewTitleDOM).html(presentation.title);
-			$(&quot;#presentation_details_input_title&quot;).val(presentation.title); &#x2F;&#x2F;input
+			$(&quot;#presentation_details_preview_addtitle_input&quot;).val(presentation.title); &#x2F;&#x2F;preview input
+			$(&quot;#presentation_details_input_title&quot;).val(presentation.title); &#x2F;&#x2F;data input
 		}
 
 		&#x2F;&#x2F;Author
@@ -389,13 +388,27 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var onKeyUpOnTitle = function(event){
-		var input = $(&quot;#presentation_details_input_title&quot;);
-		var span = $(&quot;#presentation_details_preview_addtitle&quot;).find(&quot;span&quot;);
-		var title = $(&quot;#presentation_details_input_title&quot;).val();
+		var inputData = $(&quot;#presentation_details_input_title&quot;);
+		var inputPreview = $(&quot;#presentation_details_preview_addtitle_input&quot;);
+
+		var title = $(inputData).val();
 		if(title.trim() != &quot;&quot;){
-			$(span).html($(&quot;#presentation_details_input_title&quot;).val());
+			$(inputPreview).val(title);
 		} else {
-			$(span).html(&quot;add a title&quot;);
+			$(inputPreview).val(&quot;&quot;);
+		}
+		_checkIfEnableContinueButton();
+	}
+
+	var onKeyUpOnPreviewTitle = function(event){
+		var inputData = $(&quot;#presentation_details_input_title&quot;);
+		var inputPreview = $(&quot;#presentation_details_preview_addtitle_input&quot;);
+
+		var title = $(inputPreview).val();
+		if(title.trim() != &quot;&quot;){
+			$(inputData).val(title);
+		} else {
+			$(inputData).val(&quot;&quot;);
 		}
 		_checkIfEnableContinueButton();
 	}
@@ -454,43 +467,105 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			return;
 		}
 		
-		var draftPresentation = V.Editor.getPresentation();
-		if(!draftPresentation){
-			draftPresentation = {};
+		var updatedPresentation = saveSettings();
+		V.Editor.setPresentation(updatedPresentation);
+
+		$.fancybox.close();
+	};
+
+	var saveSettings = function(presentation){
+		var draftPresentation;
+
+		if(typeof presentation == &quot;object&quot;){
+			draftPresentation = presentation;
+		} else {
+			draftPresentation = V.Editor.getPresentation();
+			if(!draftPresentation){
+				draftPresentation = {};
+			}
 		}
 
-		draftPresentation.title = $(&#x27;#presentation_details_input_title&#x27;).val();
-		draftPresentation.description = $(&#x27;#presentation_details_textarea&#x27;).val();
+		draftPresentation.VEVersion = V.VERSION;
+		draftPresentation.type = V.Constant.PRESENTATION;
+
+		var title = $(&#x27;#presentation_details_input_title&#x27;).val();
+		if((typeof title == &quot;string&quot;)&amp;&amp;(title.trim()!=&quot;&quot;)){
+			draftPresentation.title = title;
+		}
+
+		var description = $(&#x27;#presentation_details_textarea&#x27;).val();
+		if((typeof description == &quot;string&quot;)&amp;&amp;(description.trim()!=&quot;&quot;)){
+			draftPresentation.description = description;
+		}
+		
 		if(presentationThumbnail){
 			draftPresentation.avatar = presentationThumbnail;
 		}
-		draftPresentation.author = $(&quot;#author_span_in_preview&quot;).html();
-		draftPresentation.tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
 
-		if(typeof $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;) == &quot;string&quot;){
-			draftPresentation.theme = &quot;theme&quot; + $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
+		var author = $(&quot;#author_span_in_preview&quot;).html();
+		if((typeof author == &quot;string&quot;)&amp;&amp;(author.trim()!=&quot;&quot;)){
+			draftPresentation.author = author;
+		}
+
+		var tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
+		if(tags.length &gt; 1){
+			draftPresentation.tags = tags;
+		}
+
+		var themeNumber = $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
+		if(typeof  themeNumber == &quot;string&quot;){
+			draftPresentation.theme = &quot;theme&quot; + themeNumber;
 		} else {
 			draftPresentation.theme = V.Constant.Themes.Default;
 		}
 
 		&#x2F;&#x2F;Pedagogical fields
-		draftPresentation.language = $(&quot;#language_tag&quot;).val();
-		draftPresentation.context = $(&quot;#context_tag&quot;).val();
-		draftPresentation.age_range = $(&quot;#age_range&quot;).val();
-		draftPresentation.difficulty = $(&quot;#difficulty_range&quot;).val();
+		var language = $(&quot;#language_tag&quot;).val();
+		if(typeof language == &quot;string&quot;){
+			draftPresentation.language = language;
+		}
+		
+		var context = $(&quot;#context_tag&quot;).val();
+		if((typeof context == &quot;string&quot;)&amp;&amp;(context!=&quot;unspecified&quot;)){
+			draftPresentation.context = context;
+		}
+
+		var age_range = $(&quot;#age_range&quot;).val();
+		if(typeof age_range == &quot;string&quot;){
+			draftPresentation.age_range = age_range;
+		}
+		
+		var difficulty = $(&quot;#difficulty_range&quot;).val();
+		if((typeof difficulty == &quot;string&quot;)&amp;&amp;(difficulty!=&quot;unspecified&quot;)){
+			draftPresentation.difficulty = difficulty;
+		}	
+		
 		var TLT = _getTLT();
 		if(typeof TLT == &quot;string&quot;){
 			draftPresentation.TLT = TLT;
 		}
-		draftPresentation.subject = $(&quot;#subject_tag&quot;).val();
-		draftPresentation.educational_objectives = $(&quot;#educational_objectives_textarea&quot;).val();
 
-		V.Debugging.log(&quot;draftPresentation&quot;);
-		V.Debugging.log(draftPresentation);
+		var subjectsToSave = [];
+		var subjects = $(&quot;#subject_tag&quot;).val();
+		var sL = subjects.length;
+		if((typeof sL == &quot;number&quot;)&amp;&amp;(sL&gt;0)){
+			for(var sI=0; sI&lt;sL; sI++){
+				var subject = subjects[sI];
+				if(subject!=&quot;Unspecified&quot;){
+					subjectsToSave.push(subject);
+				}
+			}
+			if(subjectsToSave.length&gt;0){
+				draftPresentation.subject = subjectsToSave;
+			}
+		}
+		
+		var educational_objectives = $(&quot;#educational_objectives_textarea&quot;).val();
+		if((typeof educational_objectives == &quot;string&quot;)&amp;&amp;(educational_objectives.trim()!=&quot;&quot;)){
+			draftPresentation.educational_objectives = educational_objectives;
+		}
 
-		V.Editor.setPresentation(draftPresentation);
-
-		$.fancybox.close();
+		return draftPresentation;
 	};
 
 	&#x2F;&#x2F; Return Typical Learning Time (TLT) compliant to LOM.
@@ -555,9 +630,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onThumbnailSelected						: onThumbnailSelected,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
+		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
 		onTLTchange								: onTLTchange,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
+		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
 	};

@@ -544,11 +544,18 @@ VISH.Utils = (function(V,undefined){
 	* this function does that
 	*&#x2F;
 	var getSrcFromCSS = function(css){
-		if(css.indexOf(&quot;url&quot;) === 0){
-			return css.substring(4,css.length-1);
-		} else {
-			return css;
-		}
+		try {
+			if((typeof css == &quot;string&quot;)&amp;&amp;(css.indexOf(&quot;url&quot;)===0)&amp;&amp;(css.length&gt;3)){
+				var quote = css[4];
+				if((quote==&quot;\&quot;&quot;)||(quote==&quot;&#x27;&quot;)){
+					return css.substring(5,css.length-2);
+				} else {
+					return css.substring(4,css.length-1);
+				}
+			}
+		} catch(e){}
+		
+		return css;
 	}
 
 	var getZoomInStyle = function(zoom){
