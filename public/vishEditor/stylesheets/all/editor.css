@@ -40,8 +40,8 @@ p.addthumbtitle  {
 	margin-top: -80px;
 	margin-left: 85px;
 	width: 35%;
-	font-family: Helvetica;
-	font-size: 1.5em;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.3em;
 	color: #ff005d;
 	pointer-events: none;
 }
@@ -154,6 +154,7 @@ p.presentation_details_column_title {
 	font-size: 1.3em;
 	font-weight: 400;
 	color: #323232;
+	width: 193px;
 }
 
 #presentation_details_preview_author {
@@ -176,8 +177,9 @@ p.presentation_details_column_title {
 }
 
 span.presentation_details_text {
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1.6em;
+	font-weight: 400;
 	color: #ff005d;
 	margin-right: 55px;
 }
@@ -187,8 +189,8 @@ input.presentation_details_input {
 	margin-bottom: 17px;
 	width: 80%;
 	height: 25px;
-	font-family: Open Sans;
-	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
 	border: 1px solid #9B999D;
 	border-radius: 10px 10px 10px 10px;
 	outline: 0 none;
@@ -211,7 +213,7 @@ textarea#presentation_details_textarea {
 	border: 1px solid #9B999D;
 	border-radius: 10px 10px 10px 10px;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	outline: 0 none;
 	padding: 5px 7px;
 	z-index: 1000;
@@ -414,6 +416,7 @@ input.slider_range_input {
 #subject_tag {
 	height: 171px;
 	width: 234px;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .ped_box_fields {
@@ -434,6 +437,7 @@ input.slider_range_input {
 }
 
 #educational_objectives_textarea {
+	font-family: 'Open Sans', sans-serif;
 	width: 923px;
 	height: 151px;
 	margin-top: 10px;
@@ -894,7 +898,7 @@ div.vezone[tooltip='true'][size='large'] {
 
 .textfancy {
 	position: absolute;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	margin-left: 70px;
 	margin-top: 15px;
 	font-size: 20px;
@@ -1013,7 +1017,7 @@ div.addUrlButtons{
 }
 
 .input_text_fancy {
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	background: 5px 50% no-repeat;
 	position:absolute;
@@ -1691,7 +1695,7 @@ div.object_wrapper {
 	display:inline-block; 
 	top:2px; 
 	left:44%; 
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size: 16px;
 }
 
@@ -1723,7 +1727,7 @@ div.object_wrapper {
 }
 
 .upload_file_input {
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
   	font-size: 16px;
   	background: 5px 50% no-repeat;
 }
@@ -1738,7 +1742,7 @@ div.object_wrapper {
 .carrouselNoResults {
 	margin: auto;
 	margin-top: 32%;
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size: 23px;
 	text-align: center;
 	padding: 5px;
@@ -2106,7 +2110,7 @@ p.draggable_number {
 	top: -58px;
 	left: 0px !important;
 	text-align: center;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 15px;
 }
 
@@ -2254,7 +2258,7 @@ img#message3img {
 	border-top: 1px solid rgba(0,0,0,0.25);
 	height: 25px;
 	padding-left: 4px;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .vt_search_input:hover {
@@ -2288,7 +2292,7 @@ span.poi_label {
 	border: none;
 	padding: 2px; 
 	background-color: transparent;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 }
 
 div.poi_label_container {
@@ -2301,7 +2305,7 @@ div.poi_label_container {
  */
 .pac-container {
 	z-index: 2000 !important;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .pac-container:after {

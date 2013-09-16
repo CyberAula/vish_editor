@@ -7,7 +7,6 @@ html {
 }
 
 body {
-	font-family: 'Open Sans'
 	margin: 0;
 	padding: 0;
 	display: block !important;
@@ -244,7 +243,7 @@ this can not be done with show() and hide() because then it remains with display
 
 #slide-counter-span {
 	cursor: default;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
 	text-align: center;
 }
@@ -253,7 +252,7 @@ this can not be done with show() and hide() because then it remains with display
 	width: 24px;
 	height: 20px;
 	padding: 1px 1px 1px 0;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
 	text-align: right;
 }
@@ -662,7 +661,7 @@ button#closeButton {
 	margin-bottom: 2%;
 	color: rgb(114, 114, 114);
 	font-size: 2.7em;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	padding: 13px;
 }
@@ -729,7 +728,7 @@ div#tab_quiz_session_results {
 	background: transparent;
 	color: #ff005d;
 	font-size: 1.5em;
-	font-family: Helvetica;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -856,7 +855,7 @@ div.quizQr > table {
 
 .prompt_text_viewer {
 	text-decoration:none;
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size:32px;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1148,7 +1147,7 @@ div.quizQr > table {
 
 .notification_text {
 	text-decoration:none;
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size:26px;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1193,7 +1192,7 @@ img.browser_img {
 }
 
 span.browserTitle {
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
   	font-size: 15px;
 	display: block;
 	padding: 5px;
@@ -1207,7 +1206,7 @@ div.recomended_browser {
 
 span.adverttext {
 	text-decoration:none;
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size:32px;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1254,7 +1253,7 @@ a.button_advert:hover {
 }
 
 .textrec1 {
-	font-family:Helvetica;
+	font-family:'Open Sans', sans-serif;
 	font-size:2em;
 	color: #fff ;
 }
