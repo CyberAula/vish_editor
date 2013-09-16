@@ -35,6 +35,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 			$(document).on('keyup', '#presentation_details_input_title', V.Editor.Settings.onKeyUpOnTitle);
+			$(document).on('keyup', '#presentation_details_preview_addtitle_input', V.Editor.Settings.onKeyUpOnPreviewTitle);
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
 			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
 			$(document).on('click', '#fill_details_later_button', function(event){
@@ -115,18 +116,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'padding': 0,
 				"onStart"  : function(data) {
 					V.Editor.Utils.loadTab('tab_quizes');
-				}
-			});
-
-			// fancybox to insert JSON	
-			$("a#addJSONFancybox").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 800,
-				'height': 300,
-				'padding' : 0,
-				"onComplete"  : function(data) {
-					V.Editor.Utils.loadTab('tab_json_file');
 				}
 			});
 
@@ -250,6 +239,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_pdfex_help', 'bottom');
 		});
 
+		//Help importing a JSON file
+		$(document).on('click','#tab_json_file_help', function(){
+			V.Tour.startTourWithId('help_iJSON_help', 'bottom');
+		});
+
 		//Help in LRE carrousel
 		$(document).on('click','#tab_presentations_lre_help', function(){
 			V.Tour.startTourWithId('tab_presentations_lre_help', 'bottom');
@@ -346,11 +340,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 	// Event Listeners
 	//////////////
 	
-	var handleBodyKeyDown = function(event) {
+	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: // right arrow
 		case 40: //down arrow	    
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.forwardOneSlide();
 				} else {
@@ -361,7 +355,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;
 		case 37: // left arrow
 		case 38: //up arrow	
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.backwardOneSlide();
 				} else {
@@ -374,7 +368,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			ctrlDown = true;
 			break;	
 		case 67: //cKey
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(ctrlDown){
 					if(V.Slides.getCurrentSlideNumber()){
 						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
@@ -383,15 +377,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;	
 		case 86: //vKey
-		    if(V.Editor.Slides.isSlideFocused()) {
+		    if(V.Editor.Slides.isSlideFocused()){
 			    if(ctrlDown){
 			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
 		case 46: //Supr key
-			if(V.Editor.Slides.isSlideFocused()) {
-				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+			if(V.Editor.Slides.isSlideFocused()){
+				V.Editor.Slides.removeSlideKeyboard();
 			}
 			break;	
 		}

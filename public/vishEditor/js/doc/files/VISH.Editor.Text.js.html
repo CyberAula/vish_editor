@@ -294,16 +294,31 @@ VISH.Editor.Text = (function(V,$,undefined){
 				ckeditor.setData(initial_text, function(){
 					&#x2F;&#x2F;Resize: needed to fit content properly
 					&#x2F;&#x2F;Acces current_area leads to errors, use myWidth and myHeight
+
+					if(isQuiz){
+						var slide = $(&quot;article&quot;).has(current_area);
+						$(slide).addClass(&quot;temp_shown&quot;);
+						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
+						myHeight = $(iframeContent).find(&quot;html&quot;).height();
+						$(slide).removeClass(&quot;temp_shown&quot;);
+					}
+
 					ckeditor.resize(myWidth,myHeight);
+				
 					&#x2F;&#x2F;Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
 				});
+
 				if(newInstance){
 					if((isTemplateArea)||((options)&amp;&amp;(options.focus))){
 						ckeditor.focus();
 					}
 				}
 			}
+		});
+
+		ckeditor.on(&quot;resize&quot;, function(event){
+			&#x2F;&#x2F;onResize
 		});
 
 		&#x2F;&#x2F;Catch the focus event
@@ -328,12 +343,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		&#x2F;&#x2F;Exnteds CKEditor functionality
-
 		ckeditor.getPlainText = _getPlainText;
 
 		if(isTemplateArea){
-			&#x2F;&#x2F; Add a button to delete the current text area
-			V.Editor.addDeleteButton(current_area);	
+			&#x2F;&#x2F;Add a button to delete the current text area
+			V.Editor.addDeleteButton(current_area);
 		}
 	};
 	
@@ -345,7 +359,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		var CKEditorInstance = null;
 
-		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance){
 			var CKzone = getZoneForCKContainer(CKinstance.container.$);
 
 			if($(CKzone).attr(&quot;id&quot;)===$(zone).attr(&quot;id&quot;)){
@@ -370,6 +384,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 		if(!editor){
 			return null;
 		}
+		return _getCKEditorIframeContentFromInstance(editor);
+	}
+
+	var _getCKEditorIframeContentFromInstance = function(editor){
 		var iframe = $(document.getElementById(&#x27;cke_contents_&#x27; + editor.name)).find(&quot;iframe&quot;)[0];
 		return $(iframe).contents()[0];
 	}

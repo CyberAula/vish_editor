@@ -208,18 +208,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F; fancybox to insert JSON	
-			$(&quot;a#addJSONFancybox&quot;).fancybox({
-				&#x27;autoDimensions&#x27; : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;: 800,
-				&#x27;height&#x27;: 300,
-				&#x27;padding&#x27; : 0,
-				&quot;onComplete&quot;  : function(data) {
-					V.Editor.Utils.loadTab(&#x27;tab_json_file&#x27;);
-				}
-			});
-
 			&#x2F;&#x2F;Select theme fancybox
 			$(&quot;#hidden_button_to_launch_theme_fancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
@@ -340,6 +328,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;help_pdfex_help&#x27;, &#x27;bottom&#x27;);
 		});
 
+		&#x2F;&#x2F;Help in LRE carrousel
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_lre_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;tab_presentations_lre_help&#x27;, &#x27;bottom&#x27;);
+		});	
+
 		&#x2F;&#x2F;Help in presentation carrousel
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_repo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_excursion_selection_help&#x27;, &#x27;bottom&#x27;);
@@ -383,7 +376,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_flikr_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
-		
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_lre_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_lre_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
 		&#x2F;&#x2F;Help inserting objects [URL, Upload, Repository, Snapshot]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
@@ -396,6 +391,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_lre_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_lre_object_help&#x27;, &#x27;bottom&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_snapshot_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
@@ -416,8 +414,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		
 		&#x2F;&#x2F;Help inserting live objects
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_webcam_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;tab_live_webcam_id&#x27;, &#x27;bottom&#x27;);
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_resource_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;tab_live_resource_id&#x27;, &#x27;bottom&#x27;);
 		});
 	};
 
@@ -426,11 +424,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 	&#x2F;&#x2F; Event Listeners
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	
-	var handleBodyKeyDown = function(event) {
+	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: &#x2F;&#x2F; right arrow
 		case 40: &#x2F;&#x2F;down arrow	    
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.forwardOneSlide();
 				} else {
@@ -441,7 +439,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;
 		case 37: &#x2F;&#x2F; left arrow
 		case 38: &#x2F;&#x2F;up arrow	
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
 					V.Slides.backwardOneSlide();
 				} else {
@@ -454,7 +452,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			ctrlDown = true;
 			break;	
 		case 67: &#x2F;&#x2F;cKey
-			if(V.Editor.Slides.isSlideFocused()) {
+			if(V.Editor.Slides.isSlideFocused()){
 				if(ctrlDown){
 					if(V.Slides.getCurrentSlideNumber()){
 						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
@@ -463,15 +461,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;	
 		case 86: &#x2F;&#x2F;vKey
-		    if(V.Editor.Slides.isSlideFocused()) {
+		    if(V.Editor.Slides.isSlideFocused()){
 			    if(ctrlDown){
 			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
 		case 46: &#x2F;&#x2F;Supr key
-			if(V.Editor.Slides.isSlideFocused()) {
-				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
+			if(V.Editor.Slides.isSlideFocused()){
+				V.Editor.Slides.removeSlideKeyboard();
 			}
 			break;	
 		}

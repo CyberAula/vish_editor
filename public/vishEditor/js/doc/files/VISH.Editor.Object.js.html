@@ -110,7 +110,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
 			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
-				drawPreview(urlDivId, contentToAdd)    
+				drawPreview(urlDivId, contentToAdd);
 			}
 		});
 		
@@ -130,7 +130,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		});
 		
 		
-		$(&quot;#&quot; + uploadDivId + &quot; #upload_document_submit&quot;).click(function(event) {
+		$(&quot;#&quot; + uploadDivId + &quot; #upload_document_submit&quot;).click(function(event){
 			if(!V.Police.validateFileUpload($(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val())[0]){
 				event.preventDefault();
 			} else {
@@ -202,14 +202,14 @@ VISH.Editor.Object = (function(V,$,undefined){
 		contentToAdd = null;
 			
 		&#x2F;&#x2F;Hide and reset elements
-		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;)
+		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
 		$(tagList).parent().hide();
 		$(&quot;#&quot; + uploadDivId + &#x27; form&#x27; + &#x27; .button&#x27;).hide();
 		$(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_wrapper&quot;).hide();
-		$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val(&quot;&quot;); 
+		$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val(&quot;&quot;);
 		_resetUploadFields();
 			
-		V.Editor.API.requestTags(_onTagsReceived)
+		V.Editor.API.requestTags(_onTagsReceived);
 	}
 	
 	var _resetUploadFields = function(){
@@ -218,18 +218,17 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		bar.width(&#x27;0%&#x27;);
 		percent.html(&#x27;0%&#x27;);
-		resetPreview(uploadDivId)
+		resetPreview(uploadDivId);
 
-		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;)
+		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
 		if($(tagList)[0].children.length!==0){
-			$(tagList).tagit(&quot;reset&quot;)
+			$(tagList).tagit(&quot;reset&quot;);
 		}
 	}
    
 	var _onTagsReceived = function(data){
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
 
-		
 		if ($(tagList).children().length == 0){
 			&#x2F;&#x2F; &#x2F;&#x2F;Insert the three first tags. &#x2F;&#x2F;DEPRECATED
 			&#x2F;&#x2F; $.each(data, function(index, tag) {
@@ -244,7 +243,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
-	
 	var processResponse = function(response){
 		try  {
 			var jsonResponse = JSON.parse(response)
@@ -255,44 +253,44 @@ VISH.Editor.Object = (function(V,$,undefined){
 				}
 			}
 		} catch(e) {
-		&#x2F;&#x2F;No JSON response
+			&#x2F;&#x2F;No JSON response
 		}
 	}
 	
 	
-	&#x2F;&#x2F;Preview generation for load and upload tabs
+	&#x2F;&#x2F;Preview generation for &quot;load&quot; and &quot;upload&quot; tabs
 	var previewBackground;
 	
 	var drawPreview = function(divId,src){
 		previewBackground = $(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;,&quot;none&quot;);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox img.imagePreview&quot;).remove();
-		var wrapper = renderObjectPreview(src)
+		var wrapper = renderObjectPreview(src);
 		if($(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).length&gt;0){
 			$(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).remove();
 		}
 		$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).append(wrapper);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).show();
-		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).addClass(&quot;documentblank_extraMargin&quot;)
+		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).addClass(&quot;documentblank_extraMargin&quot;);
 	}
 	
 	var resetPreview = function(divId){
-		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).hide()
+		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).hide();
 		$(&quot;#&quot; + divId + &quot; .previewimgbox img.imagePreview&quot;).remove();
 		$(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).remove();
-		if (previewBackground) {
+		if (previewBackground){
 			$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;, previewBackground);
 		}
-		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).removeClass(&quot;documentblank_extraMargin&quot;)
+		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).removeClass(&quot;documentblank_extraMargin&quot;);
 	}
 	
 	var drawPreviewElement = function(){
 		drawPreviewObject(contentToAdd);
 	}
 	
-	var drawPreviewObject = function(content){
+	var drawPreviewObject = function(content,options){
 		if(content){
-			drawObject(content);
+			drawObject(content,options);
 			$.fancybox.close();
 		}
 	}
@@ -324,7 +322,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			var newHeight = newWrapperHeight;
 			var newWidth = newWrapperWidth;
 		}
-			
+
 		$(&quot;#&quot; + id).width(newWidth);
 		$(&quot;#&quot; + id).height(newHeight);
 	}
@@ -385,60 +383,51 @@ VISH.Editor.Object = (function(V,$,undefined){
 			case null:
 				&#x2F;&#x2F;Draw object preview from source
 				switch (objectInfo.type) {			
-					case &quot;image&quot;:
-						return &quot;&lt;img class=&#x27;imagePreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;img&gt;&quot;
+					case V.Constant.MEDIA.IMAGE:
+						return &quot;&lt;img class=&#x27;imagePreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;img&gt;&quot;;
 						break;
-
-					case &quot;swf&quot;:
-						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27; wmode=&#x27;opaque&#x27; &gt;&lt;&#x2F;embed&gt;&quot;
+					case V.Constant.MEDIA.FLASH:
+						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27; wmode=&#x27;opaque&#x27; &gt;&lt;&#x2F;embed&gt;&quot;;
 						break;
-
-					case &quot;pdf&quot;:
+					case V.Constant.MEDIA.PDF:
 						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
 						break;
-					  
-					case &quot;youtube&quot;:
+					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
-
-					case &quot;HTML5&quot;:
+					case V.Constant.MEDIA.HTML5_VIDEO:
 						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
 						break;
-						
-					case &quot;web&quot;:
+					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
 						break;
-
 					default:
-						V.Debugging.log(&quot;Unrecognized object source type&quot;)
+						V.Debugging.log(&quot;Unrecognized object source type&quot;);
 						break;
 				}
 				break;
 
-			case &quot;EMBED&quot;:
-				return _genericWrapperPreview(object)
+			case V.Constant.WRAPPER.EMBED:
+				return _genericWrapperPreview(object);
 				break;
-
-			case &quot;OBJECT&quot;:
-				return _genericWrapperPreview(object)
+			case V.Constant.WRAPPER.OBJECT:
+				return _genericWrapperPreview(object);
 				break;
-
-			case &quot;IFRAME&quot;:
-				return _genericWrapperPreview(object)
+			case V.Constant.WRAPPER.IFRAME:
+				return _genericWrapperPreview(object);
 				break;
-
 			default:
-				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper)
+				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper);
 				break;
 		}
 	}
 	
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
-		$(wrapperPreview).addClass(&#x27;objectPreview&#x27;)
-		$(wrapperPreview).attr(&#x27;wmode&#x27;,&#x27;opaque&#x27;)
-		$(wrapperPreview).removeAttr(&#x27;width&#x27;)
-		$(wrapperPreview).removeAttr(&#x27;height&#x27;)
+		$(wrapperPreview).addClass(&#x27;objectPreview&#x27;);
+		$(wrapperPreview).attr(&#x27;wmode&#x27;,&#x27;opaque&#x27;);
+		$(wrapperPreview).removeAttr(&#x27;width&#x27;);
+		$(wrapperPreview).removeAttr(&#x27;height&#x27;);
 		return wrapperPreview;
 	}
 	
@@ -449,72 +438,83 @@ VISH.Editor.Object = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	
    &#x2F;**
-	* Returns a object prepared to draw.   * 
-	* param area: optional param indicating the area to add the object, used for editing presentations
-	* param style: optional param with the style, used in editing presentation
+	* Returns a object prepared to draw.
+	* param options.area: optional param indicating the area to add the object, used for editing presentations
+	* param options.style: optional param with the style, used in editing presentation
 	*&#x2F;
-	var drawObject = function(object, area, style, zoomInStyle){	
+	var drawObject = function(object, options){
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
 
-		var current_area;
+		&#x2F;&#x2F;Defaults
+		var objectInfo = V.Object.getObjectInfo(object);
+		var current_area = V.Editor.getCurrentArea();
 		var object_style = &quot;&quot;;
-		if(area){
-			current_area = area;
-		} else {
-			current_area = V.Editor.getCurrentArea();
-		}
-		if(style){
-			object_style = style;
+		var zoomInStyle;
+
+		if(options){
+			if(options.area){
+				current_area = options.area;
+			}
+			if(options.style){
+				object_style = options.style;
+			}
+			if(options.zoomInStyle){
+				zoomInStyle = options.zoomInStyle;
+			}
+			if(options.forceType){
+				objectInfo.wrapper = null;
+				objectInfo.type = options.forceType;
+			}
 		}
 		
-		var objectInfo = V.Object.getObjectInfo(object);
 		switch (objectInfo.wrapper) {
 			case null:
 				&#x2F;&#x2F;Draw object from source
 				switch (objectInfo.type) {
-					case &quot;image&quot;:
+					case V.Constant.MEDIA.IMAGE:
 						V.Editor.Image.drawImage(object);
 						break;
-					case &quot;swf&quot;:
+					case V.Constant.MEDIA.FLASH:
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
-					case &quot;pdf&quot;:
+					case V.Constant.MEDIA.PDF:
 						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
 						break;
-					case &quot;youtube&quot;:
+					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
 						break;
-					case &quot;HTML5&quot;:
+					case V.Constant.MEDIA.HTML5_VIDEO:
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
 						break;
-					case &quot;web&quot;:
+					case V.Constant.MEDIA.WEB:
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 						break;
 					default:
-						V.Debugging.log(&quot;Unrecognized object source type: &quot; + objectInfo.type)
+						V.Debugging.log(&quot;Unrecognized object source type: &quot; + objectInfo.type);
 						break;
 				}
 				break;
 
-			case &quot;EMBED&quot;:
+			case V.Constant.WRAPPER.EMBED:
 				drawObjectWithWrapper(object, current_area, object_style);
 				break;
 
-			case &quot;OBJECT&quot;:
+			case V.Constant.WRAPPER.OBJECT:
 				drawObjectWithWrapper(object, current_area, object_style);
 				break;
 
-			case &quot;IFRAME&quot;:
+			case V.Constant.WRAPPER.IFRAME:
 				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 
 			default:
-				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper)
+				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper);
 				break;
 		}
-		&#x2F;&#x2F;finally load the tools in the toolbar
+
+		&#x2F;&#x2F;Finally load the tools in the toolbar
 		V.Editor.Tools.loadToolsForZone(current_area);
 	}
 	
@@ -561,7 +561,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(wrapperTag).attr(&#x27;style&#x27;, zoomInStyle);
 			V.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
 		}
-	
 	};
 	
 	

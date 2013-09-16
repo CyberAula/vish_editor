@@ -2,7 +2,6 @@
  * Multiple Choice Quiz Module
  */
 VISH.Editor.Quiz.MC = (function(V,$,undefined){
-	var choicesLetters = ['a)','b)','c)','d)','e)','f)','g)','h)','i)','j)','k)','l)','m)','n)','o)','p)','q)','r)','s)'];
 	var addQuizOptionButtonClass = "add_quiz_option_mc";
 	var deleteQuizOptionButtonClass = "delete_quiz_option_mc";
 	var mcCheckbox = "mcCheckbox";
@@ -110,18 +109,9 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	};
 
 	var _refreshChoicesIndexs = function(area){
-		var nChoices = $(area).find("li.mc_option").size(); 
 		$(area).find("li.mc_option").each(function(index, option_element) {
-			$(option_element).find(".mc_option_index").text(_getChoiceLetter(nChoices,index+1));
+			$(option_element).find(".mc_option_index").text(String.fromCharCode(96+index+1)+")");
 		});
-	}
-
-	var _getChoiceLetter = function(nChoices,nChoice){
-		if(nChoices<=choicesLetters.length){
-			return choicesLetters[nChoice-1];
-		} else {
-			return ((nChoice)+")");
-		}
 	}
 
 	var _launchTextEditorForQuestion = function(area,question){
@@ -209,8 +199,8 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	var draw = function(area,quiz){
 		//Draw question
 		$(area).append(_getDummy());
-		$(area).attr('type','quiz');
-		$(area).attr('quiztype', VISH.Constant.QZ_TYPE.MCHOICE);
+		$(area).attr('type', V.Constant.QUIZ );
+		$(area).attr('quiztype', V.Constant.QZ_TYPE.MCHOICE);
 		_launchTextEditorForQuestion(area,quiz.question.wysiwygValue);
 		V.Editor.addDeleteButton(area);
 

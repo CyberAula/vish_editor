@@ -204,16 +204,31 @@ VISH.Editor.Text = (function(V,$,undefined){
 				ckeditor.setData(initial_text, function(){
 					//Resize: needed to fit content properly
 					//Acces current_area leads to errors, use myWidth and myHeight
+
+					if(isQuiz){
+						var slide = $("article").has(current_area);
+						$(slide).addClass("temp_shown");
+						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
+						myHeight = $(iframeContent).find("html").height();
+						$(slide).removeClass("temp_shown");
+					}
+
 					ckeditor.resize(myWidth,myHeight);
+				
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
 				});
+
 				if(newInstance){
 					if((isTemplateArea)||((options)&&(options.focus))){
 						ckeditor.focus();
 					}
 				}
 			}
+		});
+
+		ckeditor.on("resize", function(event){
+			//onResize
 		});
 
 		//Catch the focus event
@@ -238,12 +253,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		//Exnteds CKEditor functionality
-
 		ckeditor.getPlainText = _getPlainText;
 
 		if(isTemplateArea){
-			// Add a button to delete the current text area
-			V.Editor.addDeleteButton(current_area);	
+			//Add a button to delete the current text area
+			V.Editor.addDeleteButton(current_area);
 		}
 	};
 	
@@ -255,7 +269,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		var CKEditorInstance = null;
 
-		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
+		jQuery.each(CKEDITOR.instances, function(name, CKinstance){
 			var CKzone = getZoneForCKContainer(CKinstance.container.$);
 
 			if($(CKzone).attr("id")===$(zone).attr("id")){
@@ -280,6 +294,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 		if(!editor){
 			return null;
 		}
+		return _getCKEditorIframeContentFromInstance(editor);
+	}
+
+	var _getCKEditorIframeContentFromInstance = function(editor){
 		var iframe = $(document.getElementById('cke_contents_' + editor.name)).find("iframe")[0];
 		return $(iframe).contents()[0];
 	}

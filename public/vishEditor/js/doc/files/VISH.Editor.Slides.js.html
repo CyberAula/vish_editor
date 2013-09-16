@@ -103,7 +103,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	 * Use to disable actions (like keyboard shortcuts) when the slide is not focused 
 	 * @return false if other element has the focus
 	 *&#x2F;
-	var isSlideFocused = function() {
+	var isSlideFocused = function(){
 		&#x2F;&#x2F;Wysiwyg is focused.
 		if($(&quot;.wysiwygInstance&quot;).is(&quot;:focus&quot;)){
 			return false;
@@ -357,6 +357,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 	var addSlide = function(slide){
 		var slide = $(slide);
+		var slideType = V.Slides.getSlideType(slide);
 		
 		appendSlide(slide);
 
@@ -364,7 +365,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		&#x2F;&#x2F;currentSlide number is next slide
 		V.Slides.setCurrentSlideNumber(oldCurrentSlideNumber+1);
 
-		if($(slide).attr(&quot;type&quot;)===V.Constant.STANDARD){
+		if(slideType===V.Constant.STANDARD){
 			V.Editor.Tools.addTooltipsToSlide(slide);
 		}
 
@@ -372,6 +373,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Slides.updateSlides();
 		V.Slides.lastSlide();
 		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+
+		if(V.Editor.Slideset.isSlideset(slideType)){
+			&#x2F;&#x2F; Create&#x2F;Load dummy slideset
+			var slidesetCreator = V.Editor.Slideset.getCreatorModule(slideType);
+			slidesetCreator.draw(null,slide);
+		}
 
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
@@ -382,14 +389,13 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		$(&#x27;.slides&#x27;).append(slide);
 	}
 
-	var removeSlide = function(slideNumber){
-		var slide = V.Slides.getSlideWithNumber(slideNumber);
+	var removeSlide = function(slide){
 		if(slide===null){
 			return;
 		}
 
 		if(V.Editor.Slideset.isSlideset(slide)){
-			V.Editor.Slideset.onLeaveSlideset(slide);
+			V.Editor.Slideset.beforeRemoveSlideset(slide);
 		}
 
 		var removing_current_slide = false;
@@ -405,8 +411,13 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				V.Slides.setCurrentSlideNumber(V.Slides.getCurrentSlideNumber()-1);
 			}
 		}
-		V.Slides.updateSlides();				
-		V.Editor.Thumbnails.redrawThumbnails();
+		V.Slides.updateSlides();
+		V.Editor.Thumbnails.redrawThumbnails(function(){
+			if(typeof V.Slides.getCurrentSlide() != &quot;undefined&quot;){
+				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+				V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
+			}
+		});
 	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -445,13 +456,30 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		var slideset = $(subslide).parent();
-		V.Editor.Slideset.closeSubslide(subslide);
+		V.Editor.Slideset.beforeRemoveSubslide(slideset,subslide);
 		$(subslide).remove();
 
-		V.Editor.Thumbnails.drawSlidesetThumbnails($(slideset).find(&quot;article&quot;),function(){
+		&#x2F;&#x2F;Update subslide counters
+		var subslides = $(slideset).find(&quot;article&quot;);
+		$(subslides).each(function(index,subslide){
+			$(subslide).attr(&quot;slidenumber&quot;,index+1);
+		});	
+
+		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
 			&#x2F;&#x2F;Subslides Thumbnails drawed succesfully
 		});
+
+		&#x2F;&#x2F;After remove a subslide, load slideset
+		V.Editor.Slideset.openSlideset(slideset);
 	};
+
+	var removeSlideKeyboard = function(){
+		if(V.Editor.Slideset.getCurrentSubslide()!=null){
+			removeSubslide(V.Editor.Slideset.getCurrentSubslide());
+		} else {
+			removeSlide(V.Slides.getCurrentSlide());
+		}
+	}
 
 	return {
 		showSlides				: showSlides,
@@ -466,6 +494,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		addSubslide				: addSubslide,
 		appendSubslide			: appendSubslide,
 		removeSubslide			: removeSubslide,
+		removeSlideKeyboard		: removeSlideKeyboard,
 		isSubslide				: isSubslide,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};

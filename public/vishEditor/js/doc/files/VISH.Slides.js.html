@@ -244,12 +244,20 @@ VISH.Slides = (function(V,$,undefined){
 	}
 
 	var getSlidesQuantity = function(){
-		return getSlides().length;
+		var slides = getSlides();
+		if((typeof slides != &quot;undefined&quot;)&amp;&amp;(slides.length)){
+			return slides.length;
+		} else {
+			return 0;
+		}	
 	}
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&amp;&amp;(slideEl.tagName===&quot;ARTICLE&quot;)){
 			&#x2F;&#x2F;slide in DOM element
+			return $(slideEl).attr(&quot;type&quot;);
+		} else if ((typeof slideEl == &quot;object&quot;)&amp;&amp;(slideEl.length === 1)&amp;&amp;(slideEl[0].tagName===&quot;ARTICLE&quot;)){
+			&#x2F;&#x2F;slide in DOM element, passed as a jQuery selector
 			return $(slideEl).attr(&quot;type&quot;);
 		} else if ((typeof slideEl == &quot;object&quot;)&amp;&amp;(typeof slideEl.type == &quot;string&quot;)){
 			&#x2F;&#x2F;slide in JSON

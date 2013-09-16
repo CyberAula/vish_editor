@@ -118,7 +118,6 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;Tmp var to store slide to delete
 	var article_to_delete;
 
-
 	&#x2F;**
 	 * VISH Editor initializer.
 	 * Adds the listeners to the click events in the different images and buttons of the UI.
@@ -189,11 +188,14 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			initialPresentation = true;
 			setPresentation(presentation);
+			V.Editor.Settings.loadPresentationSettings(presentation);
 			V.Editor.Renderer.init(presentation);
+			
 			&#x2F;&#x2F;remove focus from any zone
 			_removeSelectableProperties();					
 		} else {
 			initialPresentation = false;
+			V.Editor.Settings.loadPresentationSettings();
 		}
 
 		V.Slides.updateSlides();
@@ -236,6 +238,12 @@ VISH.Editor = (function(V,$,undefined){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
 
+		&#x2F;&#x2F;Add the first slide
+		if(!V.Editor.hasInitialPresentation()){
+			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:&quot;1&quot;, slideNumber:1});
+			V.Editor.Slides.addSlide(slide);
+		}
+
 		&#x2F;&#x2F;Init settings
 		if ((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!V.Editor.hasInitialPresentation())){
 			V.Editor.Settings.displaySettings();
@@ -273,7 +281,6 @@ VISH.Editor = (function(V,$,undefined){
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
-
 			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
@@ -398,30 +405,30 @@ VISH.Editor = (function(V,$,undefined){
 	*&#x2F;
 	var onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
-		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, V.ImagesPath + &quot;zonethumbs&#x2F;&quot; + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;);
-		$.fancybox(
-			$(&quot;#prompt_form&quot;).html(),
-			{
-				&#x27;autoDimensions&#x27;	: false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;				: 350,
-				&#x27;height&#x27;			: 150,
-				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27;			: 0,
-				&#x27;onClosed&#x27;			: function(){
-					&#x2F;&#x2F;if user has answered &quot;yes&quot;
-					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){
-						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
-						var area = getCurrentArea();
-						area.html(&quot;&quot;);
-						area.removeAttr(&quot;type&quot;);
-						area.addClass(&quot;editable&quot;);
-						V.Editor.Tools.addTooltipToZone(area);
-						selectArea(null);
-					}
-				}
-			}
-		);
+
+		var options = {};
+		options.width = 375;
+		options.height = 135;
+		options.notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;&quot; + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;;
+		options.text = &quot;are you sure?&quot;;
+		var button1 = {};
+		button1.text = &quot;no&quot;;
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		var button2 = {};
+		button2.text = &quot;delete&quot;;
+		button2.callback = function(){
+			var area = getCurrentArea();
+			area.html(&quot;&quot;);
+			area.removeAttr(&quot;type&quot;);
+			area.addClass(&quot;editable&quot;);
+			V.Editor.Tools.addTooltipToZone(area);
+			selectArea(null);
+			$.fancybox.close();
+		}
+		options.buttons = [button1,button2];
+		V.Utils.showDialog(options);
 	};
   
   &#x2F;**
@@ -430,31 +437,29 @@ VISH.Editor = (function(V,$,undefined){
 	var onDeleteSlideClicked = function(){
 		article_to_delete = $(this).parent()[0];
 
-		var thumb = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
-		$(&quot;#image_template_prompt&quot;).attr(&quot;src&quot;, thumb);
-
-		$.fancybox(
-			$(&quot;#prompt_form&quot;).html(),
-			{
-				&#x27;autoDimensions&#x27;	: false,
-				&#x27;width&#x27;				: 350,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;height&#x27;			: 150,
-				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27;			: 0,
-				&#x27;onClosed&#x27;			: function(){
-					&#x2F;&#x2F;if user has answered &quot;yes&quot;
-					if($(&quot;#prompt_answer&quot;).val() ===&quot;true&quot;){						
-						$(&quot;#prompt_answer&quot;).val(&quot;false&quot;);
-						if(V.Editor.Slides.isSubslide(article_to_delete)){
-							V.Editor.Slides.removeSubslide(article_to_delete);
-						} else {
-							V.Editor.Slides.removeSlide(V.Slides.getCurrentSlideNumber());
-						}
-					}
-				}
+		var options = {};
+		options.width = 375;
+		options.height = 130;
+		options.notificationIconSrc = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
+		options.notificationIconClass = &quot;notificationIconDelete&quot;;
+		options.text = &quot;are you sure?&quot;;
+		var button1 = {};
+		button1.text = &quot;no&quot;;
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		var button2 = {};
+		button2.text = &quot;delete&quot;;
+		button2.callback = function(){
+			if(V.Editor.Slides.isSubslide(article_to_delete)){
+				V.Editor.Slides.removeSubslide(article_to_delete);
+			} else {
+				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
 			}
-		);
+			$.fancybox.close();
+		}
+		options.buttons = [button1,button2];
+		V.Utils.showDialog(options);
 	};
 
 	&#x2F;**
@@ -776,16 +781,13 @@ VISH.Editor = (function(V,$,undefined){
 		return slide;
 	}
 
-	var afterSavePresentation = function(presentation, order){
+	var afterSavePresentation = function(presentation,order){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
 				&#x2F;&#x2F;Ignore order param for developping
 				if((V.Debugging)&amp;&amp;(V.Debugging.isDevelopping())){
-					if(V.Debugging.getActionSave()==&quot;view&quot;){
-						V.Debugging.initVishViewer();
-					} else if (V.Debugging.getActionSave()==&quot;edit&quot;) {
-						V.Debugging.initVishEditor();
-					}
+					&#x2F;&#x2F;Preview (ignore action save)
+					V.Editor.Preview.preview();
 				}
 				break;
 			case V.Constant.VISH:
@@ -794,7 +796,7 @@ VISH.Editor = (function(V,$,undefined){
 					send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
 				} else {  
 					send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
-				} 
+				}
 
 				var draft = (order===&quot;draft&quot;);
 
@@ -817,7 +819,7 @@ VISH.Editor = (function(V,$,undefined){
 				});
 				break;
 			case V.Constant.STANDALONE:
-				&#x2F;&#x2F;Order is always save, ignore order param
+				&#x2F;&#x2F;Order is always &quot;publish&quot;, ignore order param
 				uploadPresentationWithNode(presentation);
 				break;
 		}

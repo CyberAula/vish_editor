@@ -63,6 +63,7 @@ var getOptions = function(){
 
 			//Possible action: "nothing" or "loadSamples".
 			developmentSettings.actionInit = "loadSamples";
+			
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
 				// developmentSettings.samples = VISH.Samples.basic_samples;
@@ -77,8 +78,8 @@ var getOptions = function(){
 				// developmentSettings.samples = VISH.Samples.new_wysiwyg;
 			}
 
-			//Possible actions: "view", "edit", or "nothing".
-			developmentSettings.actionSave = "view";
+			//Possible actions: "preview"
+			developmentSettings.actionSave = "preview";
 
 			options["developmentSettings"] = developmentSettings;
 
@@ -103,8 +104,8 @@ var getOptions = function(){
         	//Draft presentations
         	options["draft"] = false;
 
-        	//SCORM package
-        	// options["scorm"] = true;
+			//SCORM package
+			// options["scorm"] = true;
 
 			//And a default landguage
 			options["lang"] = "en";

@@ -12,19 +12,18 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 	var beforeLoadTab = function(){
 	}
 
-	var onLoadTab = function() {
-		if(!thumbnailsRequested){
-			thumbnailsRequested = true;
-			_requestInitialData();
-		} else if(dataDrawed === false){
-			_prepareRequest();
-
-			//data received but not drawed, draw it
-			//Give time the fancybox to effectively show the carrousel
-			setTimeout(function(){
+	var onLoadTab = function(){
+		//Give time the fancybox to effectively show the carrousel
+		setTimeout(function(){
+			if(!thumbnailsRequested){
+				thumbnailsRequested = true;
+				_requestInitialData();
+			} else if(dataDrawed === false){
+				_prepareRequest();
+				//data received but not drawed, draw it
 				_loadData(thumbnailsData);
-			},1000);
-		}
+			}
+		},1000);
 	};
 	
 	var _requestInitialData = function(){
@@ -42,7 +41,7 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 		$("#" + carrouselDivId).hide();
 	}
 
-	var _onDataReceived = function(data) {
+	var _onDataReceived = function(data){
 		if(thumbnailsData){
 			return;
 		} else {

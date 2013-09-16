@@ -221,6 +221,10 @@ VISH.Viewer = (function(V,$,undefined){
 		var slideType = $(e.target).attr(&quot;type&quot;);
 		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 
+		&#x2F;&#x2F;Prevent parent to trigger onSlideEnterViewer
+		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
+		e.stopPropagation();
+
 		&#x2F;&#x2F;Hide&#x2F;show page-switcher buttons if neccessary
 		V.ViewerAdapter.decideIfPageSwitcher();
 		
@@ -260,6 +264,8 @@ VISH.Viewer = (function(V,$,undefined){
 	var onSlideLeaveViewer = function(e){
 		var slide = e.target;
 		var slideType = $(e.target).attr(&quot;type&quot;);
+
+		e.stopPropagation();
 
 		if($(slide).hasClass(V.Constant.OBJECT)){
 			V.ObjectPlayer.unloadObject($(slide));

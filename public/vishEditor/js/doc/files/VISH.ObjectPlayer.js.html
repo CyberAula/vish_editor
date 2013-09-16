@@ -100,10 +100,12 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 				V.VideoPlayer.Youtube.loadYoutubeObject(slide,value);
 				return;
 			}
+
 			if($(value).attr(&quot;objectWrapper&quot;).match(&quot;^&lt;iframe&quot;)!==null &amp;&amp; V.Status.isOnline()=== false){
 				$(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;&#x2F;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
 				return;
 			}
+
 			var object = $($(value).attr(&quot;objectWrapper&quot;));
 			$(object).attr(&quot;style&quot;,$(value).attr(&quot;zoomInStyle&quot;));
 			$(value).html(&quot;&lt;div style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(object) + &quot;&lt;&#x2F;div&gt;&quot;);

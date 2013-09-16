@@ -2,6 +2,11 @@
 	margin-top: 4px;
 }
 
+.caroufredsel_wrapper {
+	overflow-y: visible;
+	overflow-x: visible;
+}
+
 div.image_carousel {
 	position: relative;
 	width: 750px;

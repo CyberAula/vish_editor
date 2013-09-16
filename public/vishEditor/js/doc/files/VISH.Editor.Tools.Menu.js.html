@@ -155,8 +155,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F; SAVE
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
-	var onPublishButtonClicked = function(){
-		onSaveButtonClicked();
+	var onSaveButtonClicked = function(){
+		onPublishButtonClicked();
 	}
 
 	&#x2F;**
@@ -165,72 +165,80 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	* covers the section element and every article inside
 	* finally calls V.Viewer with the generated json
 	*&#x2F;
-	var onSaveButtonClicked = function(){
+	var onPublishButtonClicked = function(){
+
+		if(!V.Editor.Settings.checkMandatoryFields()){
+			var options = {};
+			options.width = 600;
+			options.height = 220;
+			options.text = &quot;You need to write a title for the excursion and select an avatar before publish the excursion.&quot;;
+			var button1 = {};
+			button1.text = &quot;Go to Settings&quot;;
+			button1.callback = function(){
+				V.Editor.Settings.displaySettings();
+			}
+			options.buttons = [button1];
+			&#x2F;&#x2F; options.onClosedCallback = function(){
+			&#x2F;&#x2F; };
+			V.Utils.showDialog(options);
+			return;
+		}
+
 		if(V.Slides.getSlides().length === 0){
-			_showDialog(&quot;message1_form&quot;);
+			var options = {};
+			options.width = 600;
+			options.height = 150;
+			options.text = &quot;Create at least one slide before saving.&quot;;
+			var button1 = {};
+			button1.text = &quot;Ok&quot;;
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
 			return;
-		} 
-	
-		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
-			case V.Constant.NOSERVER:
-				$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
-				break;
-			case V.Constant.VISH:
-				if(V.Editor.isPresentationDraft()){
-					$(&quot;a[save-option-id=&#x27;save&#x27;]&quot;).hide();
-				} else {
-					$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
-					$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
-				}
-				break;
-			case V.Constant.STANDALONE:
-				$(&quot;a[save-option-id=&#x27;publish&#x27;]&quot;).hide();
-				$(&quot;a[save-option-id=&#x27;draft&#x27;]&quot;).hide();
-				break;
 		}
 
-		$.fancybox(
-			$(&quot;#save_form&quot;).html(),
-			{
-				&#x27;autoDimensions&#x27;	: false,
-				&#x27;width&#x27;         	: 350,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;height&#x27;        	: 150,
-				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27; 			: 0,
-				&#x27;onClosed&#x27;			: function(){
-					var response = $(&quot;#save_answer&quot;).val();
-					if(response !==&quot;cancel&quot;){
-						$(&quot;#save_answer&quot;).val(&quot;cancel&quot;);	
-						var presentation = V.Editor.savePresentation();	
-						V.Editor.afterSavePresentation(presentation,response);			
-					} else {
-						return false;
-					}
-				}
+		var options = {};
+		options.width = 400;
+		options.height = 140;
+		options.notificationIconSrc = V.ImagesPath + &quot;toolbar&#x2F;save_document.png&quot;;
+		options.text = &quot;are you sure?&quot;;
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = &quot;cancel&quot;;
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		if(((V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH)&amp;&amp;(V.Editor.isPresentationDraft()))||(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER)){
+			var button2 = {};
+			button2.text = &quot;draft&quot;;
+			button2.callback = function(){
+				var presentation = V.Editor.savePresentation();
+				V.Editor.afterSavePresentation(presentation,&quot;draft&quot;);
+				$.fancybox.close();
 			}
-		);  
+			options.buttons.push(button2);
+		}
+
+		var button3 = {};
+		if((V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH)||(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER)){
+			button3.text = &quot;publish&quot;;
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.STANDALONE){
+			button3.text = &quot;save&quot;;
+		}
+		button3.callback = function(){
+			var presentation = V.Editor.savePresentation();
+			V.Editor.afterSavePresentation(presentation,&quot;publish&quot;);
+			$.fancybox.close();
+		}
+		options.buttons.push(button3);
+
+		V.Utils.showDialog(options);
 	};
-
-	&#x2F;*
-	 * Helper to show validation dialogs
-	 *&#x2F;
-	var _showDialog = function(id){
-		if($(&quot;#&quot;+id).length===0){
-			return;
-		}
-		$.fancybox(
-			$(&quot;#&quot;+id).html(),
-			{
-				&#x27;autoDimensions&#x27;	: false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;         	: 350,
-				&#x27;height&#x27;        	: 200,
-				&#x27;showCloseButton&#x27;	: false,
-				&#x27;padding&#x27; 			: 5		
-			}
-		);
-	}
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; PREVIEW
@@ -274,7 +282,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var insertJSON = function(){
-		$(&quot;#addJSONFancybox&quot;).trigger(&#x27;click&#x27;);
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_json_file&#x27;);
 	};
 
 	var insertPDFex = function(){

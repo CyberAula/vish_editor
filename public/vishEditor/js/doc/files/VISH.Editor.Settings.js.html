@@ -210,15 +210,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var loadPresentationSettings = function(presentation){
-		var options = V.Utils.getOptions();
+		&#x2F;&#x2F;Prevent to check presentation var in all cases
+		if(!presentation){
+			presentation = {};
+		}
 
 		&#x2F;&#x2F;Avatar
-		if(presentation &amp;&amp; presentation.avatar){
+		if(presentation.avatar){
 			_addThumbnail(presentation.avatar);
 		}
 
 		&#x2F;&#x2F;Title
-		if(presentation &amp;&amp; presentation.title){
+		if(presentation.title){
 			var previewTitleDOM = $(&quot;#presentation_details_preview_addtitle&quot;).find(&quot;span&quot;);
 			$(previewTitleDOM).html(presentation.title);
 			$(&quot;#presentation_details_input_title&quot;).val(presentation.title); &#x2F;&#x2F;input
@@ -226,9 +229,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Author
 		var author;
+		var options = V.Utils.getOptions();
 		if(options &amp;&amp; options.username){
 			author = options.username;
-		} else if(presentation &amp;&amp; presentation.author){
+		} else if(presentation.author){
 			author = presentation.author;
 		}
 		if(author){
@@ -237,7 +241,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Description
-		if(presentation &amp;&amp; presentation.description){
+		if(presentation.description){
 			var descriptionDOM = $(&quot;#presentation_details_textarea&quot;);
 			$(descriptionDOM).val(presentation.description);
 		}
@@ -249,8 +253,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Pedagogical
 		
-		$(&quot;#language_tag&quot;).val(presentation.language);
-		$(&quot;#context_tag&quot;).val(presentation.context);
+		if(presentation.language){
+			$(&quot;#language_tag&quot;).val(presentation.language);
+		}
+		if(presentation.context){
+			$(&quot;#context_tag&quot;).val(presentation.context);
+		}
 		
 		if(presentation.age_range){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
@@ -273,15 +281,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(&quot;#slider-difficulty&quot; ).slider(&quot;value&quot;,difficultyValue);
 		}
 
-		if(presentation &amp;&amp; presentation.TLT){
+		if(presentation.TLT){
 			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
 			$(&quot;#tlt_hours&quot;).val(durations[4].toString());
 			$(&quot;#tlt_minutes&quot;).val(durations[5].toString());
 			$(&quot;#tlt_seconds&quot;).val(durations[6].toString());
 		}
 
-		$(&quot;#subject_tag&quot;).val(presentation.subject);
-		$(&quot;#educational_objectives_textarea&quot;).val(presentation.educational_objectives);
+		if(presentation.subject){
+			$(&quot;#subject_tag&quot;).val(presentation.subject);
+		}
+		
+		if(presentation.educational_objectives){
+			$(&quot;#educational_objectives_textarea&quot;).val(presentation.educational_objectives);
+		}		
 	}
 
 	var _onThemeImagesLoaded = function(){
@@ -399,7 +412,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _checkIfEnableContinueButton = function(){
-		var enable = _checkMandatoryFields();
+		var enable = checkMandatoryFields();
 		if(enable){
 			$(&quot;#save_presentation_details&quot;).removeClass(&quot;buttonDisabledOnSettings&quot;);
 			$(&quot;#save_presentation_details&quot;).removeAttr(&quot;disabled&quot;);
@@ -414,7 +427,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	}
 
-	var _checkMandatoryFields = function(){
+	var checkMandatoryFields = function(){
 		&#x2F;&#x2F;Check that mandatory params are filled appropiately.
 		var title = $(&#x27;#presentation_details_input_title&#x27;).val();
 		var thumbnailURL = presentationThumbnail;
@@ -543,6 +556,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onTLTchange								: onTLTchange,
+		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked

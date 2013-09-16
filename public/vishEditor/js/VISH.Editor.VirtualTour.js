@@ -10,7 +10,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	//Store virtual tour data
 	var vts;
 
-
 	var init = function(){
 		if(!initialized){
 			vts = {};
@@ -79,6 +78,9 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			return;
 		}
 
+		vts[vtId].drawed = true;
+		$(vtDOM).addClass("temp_shown");
+
 		var latlng = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
 		var myOptions = {
 			zoom: parseInt(vtJSON.zoom),
@@ -114,13 +116,16 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			$(".vt_search_input").blur();
 		});
 
-		//Add pois
-		$(vtJSON.pois).each(function(index,poi){
-			_addMarkerToCoordinates(poi.lat,poi.lng,poi.id,poi.slide_id,index+1);
-			$("#"+poi.id).hide();
-		});
+		google.maps.event.addListenerOnce(vts[vtId].map, 'idle', function(){
+			//Add pois
+			$(vtJSON.pois).each(function(index,poi){
+				_addMarkerToCoordinates(poi.lat,poi.lng,poi.slide_id,index+1,vts[vtId]);
+				$(".draggable_sc_div[slide_id='"+poi.slide_id+"']").hide();
+			});
 
-		vts[vtId].drawed = true;
+			// do something only the first time the map is loaded
+			$(vtDOM).removeClass("temp_shown");
+		});
 	}
 
 
@@ -250,12 +255,18 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	/// MAP Utils
 	//////////////////
 
-	var _addMarkerToCoordinates = function(lat,lng,poi_id,slide_id,slideNumber){
-		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),poi_id,slide_id,slideNumber);
+	var _addMarkerToCoordinates = function(lat,lng,slide_id,slideNumber,vtJSON){
+		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),slide_id,slideNumber,vtJSON);
 	}
 
-	var _addMarkerToPosition = function(myLatlng,poi_id,slide_id,slideNumber){
-		var vt = _getCurrentTour();
+	var _addMarkerToPosition = function(myLatlng,slide_id,slideNumber,vtJSON){
+		var vt;
+		if(vtJSON){
+			vt = vtJSON;
+		} else {
+			vt = _getCurrentTour();
+		}
+	
 		var map = vt.map;
 
 		// Create label
@@ -263,29 +274,24 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			map: map
 		});
 
-		var pinText = String.fromCharCode(64+parseInt(slideNumber));
-		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+pinText+"|FF776B|000000",
-        new google.maps.Size(25, 40),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34));
-
+		if(!slideNumber){
+			slideNumber = parseInt($(".draggable_sc_div[slide_id='"+slide_id+"']").attr("slidenumber"));
+		}
+		var	pinImage = _getPinImageForSlideNumber(slideNumber);
 		var marker = new google.maps.Marker({
 			position: myLatlng,
 			map: map,
 			draggable: true,
 			icon: pinImage,
-			poi_id: poi_id,
 			slide_id: slide_id,
 			label : label,
 			title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
 		});
 
 		//Set label properties
-		if(slideNumber){
-			label.bindTo('position', marker, 'position');
-			// In the current version we use a dinamyc image instead of a label to indicate slideNumber
-			// label.set('text', slideNumber);
-		}
+		label.bindTo('position', marker, 'position');
+		// In the current version we use a dinamyc image instead of a label to indicate slideNumber
+		// label.set('text', slideNumber);
 
 		google.maps.event.addListener(marker, 'click', function(event) {
 			// Allow doble click event
@@ -315,10 +321,19 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		if(typeof vt.markers == "undefined"){
 			vt.markers = {};
 		}
-		vt.markers[poi_id] = marker;
+		vt.markers[slide_id] = marker;
 
 		return marker;
 	};
+
+	var _getPinImageForSlideNumber = function(slideNumber){
+		var pinText = String.fromCharCode(64+parseInt(slideNumber));
+		var	pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+pinText+"|FF776B|000000",
+		new google.maps.Size(25, 40),
+		new google.maps.Point(0,0),
+		new google.maps.Point(10, 34));
+		return pinImage;
+	}
 
 	var _onClick = function(marker){
 		// Return the arrow to original position.
@@ -328,7 +343,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		var vt = _getCurrentTour();
 		var point = vt.overlay.getProjection().fromLatLngToContainerPixel(marker.position);
 
-		var arrow = $("#"+marker.poi_id);
+		var arrow = $(".draggable_sc_div[slide_id='"+marker.slide_id+"']");
+
 		//We need to show the arrow to properly get the offset
 		$(arrow).show();
 
@@ -390,8 +406,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		};
 
 		var markers = _getCurrentTour().markers;
-		if(typeof markers[marker.poi_id] !== "undefined"){
-			delete markers[marker.poi_id];
+		if(typeof markers[marker.slide_id] !== "undefined"){
+			delete markers[marker.slide_id];
 		}
 	};
 
@@ -429,8 +445,50 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var beforeCreateSlidesetThumbnails = function(vt){
-		//Draw POIS
 		_drawPois(vt);
+	}
+
+	var beforeRemoveSlideset = function(vt){
+		var vtId = $(vt).attr("id");
+		if(typeof vts[vtId] !== "undefined"){
+			delete vts[vtId];
+		}
+	}
+
+	var beforeRemoveSubslide = function(vt,subslide){
+		var subslideId = $(subslide).attr("id");
+		var slideNumber = $(subslide).attr("slideNumber");
+
+		//Remove the subslide markers (if exist)
+		var markers = _getCurrentTour().markers;
+		Object.keys(markers).forEach(function(key){
+			var marker = markers[key];
+			if(marker.slide_id===subslideId){
+				_removeMarker(marker);
+			} else {
+				//Adjust pinImages of the rest of the markers
+				var markerArrow = $(".draggable_sc_div[slide_id='"+marker.slide_id+"']");
+				var markerSlideNumber = $(markerArrow).attr("slideNumber");
+				if(markerSlideNumber > slideNumber){
+					$(markerArrow).attr("slideNumber", markerSlideNumber-1);
+					marker.setIcon(_getPinImageForSlideNumber(markerSlideNumber-1));
+				}
+			}
+		});
+
+		// //Adjust pinImages of the rest of markers
+		// var rMl = removedMarkers.length;
+		// for(var k=0; k<rMl; k++){
+		// 	var deletedSlideNumber = removedMarkers[k].slideNumber;
+		// 	Object.keys(markers).forEach(function(key){
+		// 		var marker = markers[key];
+		// 		if(marker.slideNumber > deletedSlideNumber){
+		// 			marker.slideNumber = marker.slideNumber-1;
+		// 			marker.setIcon(_getPinImageForSlideNumber(marker.slideNumber));
+		// 		}
+		// 	});
+		// }
+
 	}
 
 	/*
@@ -443,23 +501,24 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			return;
 		}
 		var markers = vt.markers;
+		
+		//Create arrows for existing subslides
 		var subslides = $(vtDOM).find("article");
-
 		$("#subslides_list").find("div.wrapper_barbutton").each(function(index,div){
 			var slide = subslides[index];
 			if(slide){
 				var slide_id = $(slide).attr("id");
-				var poi_id = $(vtDOM).attr("id") + "_poi" + (index+1);
-				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" id="'+ poi_id +'" slideNumber="'+(index+1)+'"" >');
+				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" slideNumber="'+(index+1)+'"" >');
 				$(arrowDiv).append($('<img src="'+V.ImagesPath+'flashcard/flashcard_button.png" class="fc_draggable_arrow">'));
 				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 
-				if(typeof markers[poi_id] != "undefined"){
+				if(typeof markers[slide_id] != "undefined"){
 					$(arrowDiv).hide();
 				}
 			};
 		});
+
 
 		//Drag&Drop POIs
 
@@ -511,10 +570,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 					$(event.target).css("top", newTop+"px");
 					$(event.target).css("left", newLeft+"px");
 
-					var poi_id = $(event.target).attr("id");
 					var slide_id = $(event.target).attr("slide_id");
-					var slideNumber = $(event.target).attr("slideNumber");
-					var marker = _addMarkerToPosition(position,poi_id,slide_id,slideNumber);
+					var marker = _addMarkerToPosition(position,slide_id);
 					$(event.target).hide();
 
 				} else {
@@ -569,7 +626,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			var poi = {};
 			poi.lat = marker.position.lat().toString();
 			poi.lng = marker.position.lng().toString();
-			poi.id = marker.poi_id;
 			poi.slide_id = marker.slide_id;
 			pois.push(poi);
 		};
@@ -610,6 +666,8 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		loadSlideset					: loadSlideset,
 		unloadSlideset					: unloadSlideset,
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
+		beforeRemoveSlideset			: beforeRemoveSlideset,
+		beforeRemoveSubslide			: beforeRemoveSubslide,
 		getSlideHeader					: getSlideHeader,
 		getThumbnailURL					: getThumbnailURL,
 		preCopyActions					: preCopyActions,

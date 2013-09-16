@@ -37,7 +37,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		var imagesLength = imagesArray.length;
 		var imagesLoaded = 0;
 
-		$.each(imagesArray, function(i, image) {
+		$.each(imagesArray, function(i, image){
 			$(image).load(function(response) {
 				imagesLoaded = imagesLoaded + 1;
 				if(imagesLoaded == imagesLength){
@@ -47,7 +47,24 @@ VISH.Utils.Loader = (function(V,undefined){
 					}
 				}
 			})
-			$(image).error(function(response) {
+			$(image).error(function(response){
+				if((options)&&(options.defaultOnError)){
+					//Try to load the default image
+					var defaultSrc = $(image).attr("defaultsrc");
+					if(typeof defaultSrc == "string"){
+						$(image).removeAttr("defaultsrc");
+						$(image).attr("src",defaultSrc);
+
+						if(typeof options.onImageErrorCallback == "function"){
+							options.onImageErrorCallback(image);
+						}
+
+						//Only return when the first time we load a default source
+						//The same image will call load o error callback again.
+						return;
+					}
+				}
+
 				imagesLoaded = imagesLoaded + 1;
 				validImagesArray.splice(validImagesArray.indexOf(image),1);
 				if(imagesLoaded == imagesLength){
@@ -56,6 +73,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						options.callback();
 					}
 				}
+				
 			})
 		});
 	}

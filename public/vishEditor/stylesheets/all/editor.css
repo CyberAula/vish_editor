@@ -145,6 +145,11 @@ p.presentation_details_column_title {
 	padding-left: 5px;
 	padding-bottom: 12px;
 	border-bottom: 1px solid #ccc;
+}
+
+#presentation_details_preview_addtitle_input{
+	border: none;
+	border: 0px;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
@@ -1638,95 +1643,6 @@ a.metadata_link {
 	cursor:pointer;
 }
 
-.caroufredsel_wrapper {
-	overflow-y: visible;
-	overflow-x: visible;
-}
-
-img.delete_img {
-	margin-left: 25px;
-	margin-top: 30px;
-	height: 50px;
-}
-
-.alertDialogIcon {
-	width: 44px;
-	height: 55px;
-	margin-right: 20px;
-	margin-left: 0px;
-}
-
-.deltext {
-	text-decoration:none;
-	font-family:Helvetica;
-	font-size:26px;
-	color:#CCC;
-	padding-bottom: 15px;
-}
-
-.buttonfail {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	margin-bottom: 10px;
-	margin-right: 10px;
-	padding: 5px 20px !important;
-}
-
-.buttons_together {
-	margin-top: 15px;
-	text-align: right;
-	margin-right: 20px;
-}
-
-.text_in_fancybox {
-	margin-left: 22px;
-	margin-top: 22px;
-	margin-bottom: 10px;
-}
-
-#button_accept_when_fail {
-	margin-top: -32px;
-	float: right;
-	margin-right: 25px;
-}
-
-.delimg {
-	margin-left: -18px;
-	margin-bottom: 35px;
-}
-
-.button220 {
-	margin-left: 200px;
-	margin-top: 25px;
-}
-
-.button {
-	padding: 5px 10px;
-	display: inline;
-	text-decoration:none;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-	cursor: pointer;
-	font-weight: bold;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.1em;
-}	
-
-.button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-
-.buttonfancy {
-	margin-left: 620px;
-	margin-top: 2px;
-}
-
 
 /* Objects wrapper */
 
@@ -1859,31 +1775,6 @@ div.object_wrapper {
 .help_in_fancybox:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
 	cursor: pointer;
-}
-
-#recomended_browsers {
-	margin-top: 35px;
-	height: 115px;
-}
-
-.browser_img { 
-	max-height: 70px;
-  	max-width: 70px;
-	display: block;
-	margin: auto;
-}
-
-.browserTitle {
-	font-family:Helvetica;
-  	font-size: 15px;
-	display: block;
-	padding: 5px;
-	color: #9B999D;
-}
-
-.recomended_browser {
-	width: 150px;
-	float: left;
 }
 
 #help_themes_selection {
@@ -2147,6 +2038,11 @@ iframe.snapshot_content{
 }
 
 .selectedSubslideThumbnail {
+	opacity: 1 !important;
+	border: 1px solid #005fdd !important;
+}
+
+.selectedSlidesetThumbnail {
 	opacity: 1 !important;
 	border: 1px solid #005fdd !important;
 }
@@ -2490,7 +2386,7 @@ div.poi_label_container {
 	height: 54px;
 	padding-left: 5px;
 	margin-right: -20px;
-	margin-top: 0px;
+	margin-top: 0px !important;
 	padding-top: 4px;
 	border-right: none;
 	padding-right: 4px;
@@ -2498,6 +2394,35 @@ div.poi_label_container {
 
 .lasticonborder {
 	border-right: none;
+}
+
+
+/* More buttons */
+
+.button {
+	padding: 5px 10px;
+	display: inline;
+	text-decoration:none;
+	background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.1em;
+}	
+
+.button:hover {
+	opacity: 1;
+	text-shadow: 1px 1px #666;
+}
+
+.buttonfancy {
+	margin-left: 620px;
+	margin-top: 2px;
 }
 
 
@@ -2550,68 +2475,4 @@ div.poi_label_container {
 	height: 102px;
 	margin-bottom: -24px;
 	border-radius: 6px;
-}
-
-
-/* Fonts */
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/vishEditor/stylesheets/libs/OpenSans-Light.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/vishEditor/stylesheets/libs/OpenSans-Regular.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/vishEditor/stylesheets/libs/OpenSans-Semibold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/vishEditor/stylesheets/libs/OpenSans-Bold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 300;
-  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-LightItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/vishEditor/stylesheets/libs/OpenSans-Italic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-SemiboldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-BoldItalic.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 800;
-  src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'), url(/vishEditor/stylesheets/libs/OpenSans-ExtraBoldItalic.ttf) format('ttf');
 }

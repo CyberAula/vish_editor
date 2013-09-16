@@ -20,7 +20,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$("#" + urlDivId + " .previewButton").click(function(event) {
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-				drawPreview(urlDivId, contentToAdd)    
+				drawPreview(urlDivId, contentToAdd);
 			}
 		});
 		
@@ -40,7 +40,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		});
 		
 		
-		$("#" + uploadDivId + " #upload_document_submit").click(function(event) {
+		$("#" + uploadDivId + " #upload_document_submit").click(function(event){
 			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
 				event.preventDefault();
 			} else {
@@ -112,14 +112,14 @@ VISH.Editor.Object = (function(V,$,undefined){
 		contentToAdd = null;
 			
 		//Hide and reset elements
-		var tagList = $("#" + uploadDivId + " .tagList")
+		var tagList = $("#" + uploadDivId + " .tagList");
 		$(tagList).parent().hide();
 		$("#" + uploadDivId + ' form' + ' .button').hide();
 		$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
-		$("#" + uploadDivId + " input[name='document[file]']").val(""); 
+		$("#" + uploadDivId + " input[name='document[file]']").val("");
 		_resetUploadFields();
 			
-		V.Editor.API.requestTags(_onTagsReceived)
+		V.Editor.API.requestTags(_onTagsReceived);
 	}
 	
 	var _resetUploadFields = function(){
@@ -128,18 +128,17 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		bar.width('0%');
 		percent.html('0%');
-		resetPreview(uploadDivId)
+		resetPreview(uploadDivId);
 
-		var tagList = $("#" + uploadDivId + " .tagList")
+		var tagList = $("#" + uploadDivId + " .tagList");
 		if($(tagList)[0].children.length!==0){
-			$(tagList).tagit("reset")
+			$(tagList).tagit("reset");
 		}
 	}
    
 	var _onTagsReceived = function(data){
 		var tagList = $("#" + uploadDivId + " .tagList");
 
-		
 		if ($(tagList).children().length == 0){
 			// //Insert the three first tags. //DEPRECATED
 			// $.each(data, function(index, tag) {
@@ -154,7 +153,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	}
 	
-	
 	var processResponse = function(response){
 		try  {
 			var jsonResponse = JSON.parse(response)
@@ -165,35 +163,35 @@ VISH.Editor.Object = (function(V,$,undefined){
 				}
 			}
 		} catch(e) {
-		//No JSON response
+			//No JSON response
 		}
 	}
 	
 	
-	//Preview generation for load and upload tabs
+	//Preview generation for "load" and "upload" tabs
 	var previewBackground;
 	
 	var drawPreview = function(divId,src){
 		previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
 		$("#" + divId + " .previewimgbox").css("background-image","none");
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
-		var wrapper = renderObjectPreview(src)
+		var wrapper = renderObjectPreview(src);
 		if($("#" + divId + " .previewimgbox .objectPreview").length>0){
 			$("#" + divId + " .previewimgbox .objectPreview").remove();
 		}
 		$("#" + divId + " .previewimgbox").append(wrapper);
 		$("#" + divId + " .previewimgbox button").show();
-		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin")
+		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
 	}
 	
 	var resetPreview = function(divId){
-		$("#" + divId + " .previewimgbox button").hide()
+		$("#" + divId + " .previewimgbox button").hide();
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
 		$("#" + divId + " .previewimgbox .objectPreview").remove();
-		if (previewBackground) {
+		if (previewBackground){
 			$("#" + divId + " .previewimgbox").css("background-image", previewBackground);
 		}
-		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin")
+		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
 	}
 	
 	var drawPreviewElement = function(){
@@ -234,7 +232,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			var newHeight = newWrapperHeight;
 			var newWidth = newWrapperWidth;
 		}
-			
+
 		$("#" + id).width(newWidth);
 		$("#" + id).height(newHeight);
 	}
@@ -296,59 +294,50 @@ VISH.Editor.Object = (function(V,$,undefined){
 				//Draw object preview from source
 				switch (objectInfo.type) {			
 					case V.Constant.MEDIA.IMAGE:
-						return "<img class='imagePreview' src='" + object + "'></img>"
+						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
-
 					case V.Constant.MEDIA.FLASH:
-						return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>"
+						return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>";
 						break;
-
 					case V.Constant.MEDIA.PDF:
 						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
 						break;
-					  
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
-
 					case V.Constant.MEDIA.HTML5_VIDEO:
 						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
 						break;
-						
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
 						break;
-
 					default:
-						V.Debugging.log("Unrecognized object source type")
+						V.Debugging.log("Unrecognized object source type");
 						break;
 				}
 				break;
 
 			case V.Constant.WRAPPER.EMBED:
-				return _genericWrapperPreview(object)
+				return _genericWrapperPreview(object);
 				break;
-
 			case V.Constant.WRAPPER.OBJECT:
-				return _genericWrapperPreview(object)
+				return _genericWrapperPreview(object);
 				break;
-
 			case V.Constant.WRAPPER.IFRAME:
-				return _genericWrapperPreview(object)
+				return _genericWrapperPreview(object);
 				break;
-
 			default:
-				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
 				break;
 		}
 	}
 	
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
-		$(wrapperPreview).addClass('objectPreview')
-		$(wrapperPreview).attr('wmode','opaque')
-		$(wrapperPreview).removeAttr('width')
-		$(wrapperPreview).removeAttr('height')
+		$(wrapperPreview).addClass('objectPreview');
+		$(wrapperPreview).attr('wmode','opaque');
+		$(wrapperPreview).removeAttr('width');
+		$(wrapperPreview).removeAttr('height');
 		return wrapperPreview;
 	}
 	
@@ -359,33 +348,37 @@ VISH.Editor.Object = (function(V,$,undefined){
 	///////////////////////////////////////
 	
    /**
-	* Returns a object prepared to draw.   * 
-	* param area: optional param indicating the area to add the object, used for editing presentations
-	* param style: optional param with the style, used in editing presentation
+	* Returns a object prepared to draw.
+	* param options.area: optional param indicating the area to add the object, used for editing presentations
+	* param options.style: optional param with the style, used in editing presentation
 	*/
-	var drawObject = function(object, area, style, zoomInStyle, options){	
+	var drawObject = function(object, options){
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
 
-		var current_area;
-		var object_style = "";
-		if(area){
-			current_area = area;
-		} else {
-			current_area = V.Editor.getCurrentArea();
-		}
-		if(style){
-			object_style = style;
-		}
-		
+		//Defaults
 		var objectInfo = V.Object.getObjectInfo(object);
-		
-		if((options)&&(options.forceType)){
-			objectInfo.wrapper = null;
-			objectInfo.type = options.forceType;
-		}
+		var current_area = V.Editor.getCurrentArea();
+		var object_style = "";
+		var zoomInStyle;
 
+		if(options){
+			if(options.area){
+				current_area = options.area;
+			}
+			if(options.style){
+				object_style = options.style;
+			}
+			if(options.zoomInStyle){
+				zoomInStyle = options.zoomInStyle;
+			}
+			if(options.forceType){
+				objectInfo.wrapper = null;
+				objectInfo.type = options.forceType;
+			}
+		}
+		
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source
@@ -409,7 +402,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 						break;
 					default:
-						V.Debugging.log("Unrecognized object source type: " + objectInfo.type)
+						V.Debugging.log("Unrecognized object source type: " + objectInfo.type);
 						break;
 				}
 				break;
@@ -427,10 +420,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			default:
-				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper)
+				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
 				break;
 		}
-		//finally load the tools in the toolbar
+
+		//Finally load the tools in the toolbar
 		V.Editor.Tools.loadToolsForZone(current_area);
 	}
 	
@@ -477,7 +471,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(wrapperTag).attr('style', zoomInStyle);
 			V.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
 		}
-	
 	};
 	
 	
