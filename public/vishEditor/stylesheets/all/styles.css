@@ -7,6 +7,7 @@ html {
 }
 
 body {
+	font-family: 'Open Sans'
 	margin: 0;
 	padding: 0;
 	display: block !important;
@@ -370,7 +371,7 @@ html {
 }
 
 article {
-	font-family: Arial, Verdana, sans-serif;
+	font-family: 'Open Sans', sans-serif, Verdana, sans-serif;
 }
 
 article > div > p {
@@ -1330,13 +1331,13 @@ a.button_advert:hover {
 .rec-name {
 	color: #36f;
 	opacity: 0.6;
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1.4em;
 }
 
 .rec-views {
 	color: #999;
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1.2em;
 	margin-left: 1%;
 	margin-right: 8%;
@@ -1359,7 +1360,7 @@ a.button_advert:hover {
 
 .rec-title-excursion {
 	margin-left: -17%;
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	width: 108%;
 	font-size: 1.6em;
 	overflow: hidden;
@@ -1370,7 +1371,7 @@ a.button_advert:hover {
 }
 
 .rec-number_pages {
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	padding: 3%;
 	position: relative;
 	height: 14%;
@@ -1398,7 +1399,7 @@ a.button_advert:hover {
 }
 
 .rec-by {
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	margin-top: 4%;
 	margin-bottom: 4%;
 	color: #999;
@@ -1408,7 +1409,7 @@ a.button_advert:hover {
 
 .rec-visits {
 	font-weight: bold;
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1.2em;
 	display: inline-block;
 	color: #40cc7f;
@@ -1418,7 +1419,7 @@ a.button_advert:hover {
 
 .rec-likes {
 	font-weight: bold;
-	font-family: Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1.1em;
 	display: inline-block;
 	color: #40cc7f;
