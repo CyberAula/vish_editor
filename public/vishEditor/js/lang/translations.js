@@ -2,6 +2,28 @@ var i18n =
 	{ "vish":
 		{ "es":
 			{
+				"i.walkSettings1_1"	: "Welcome to the Settings screen",
+				"i.walkSettings1_2"	: "",
+				"i.walkSettings1_3"	: "",
+				"i.walkSettings1_4"	: "",
+				"i.walkSettings2_1"	: "",
+				"i.walkSettings2_2"	: "",
+				"i.walkSettings3_1"	: "",
+				"i.walkSettings3_2"	: "",
+				"i.walkSettings4_1"	: "",
+				"i.walkSettings4_2"	: "",
+				"i.walkSettings4_3"	: "",
+				"i.walkSettings5_1"	: "",
+				"i.walkSettings5_2"	: "",
+				"i.walkSettings5_3"	: "",
+				"i.walkSettings5_4"	: "",
+				"i.walkSettings6_1"	: "",
+				"i.walkSettings6_2"	: "",
+				"i.walkSettings7_1"	: "",
+				"i.walkSettings7_2"	: "",
+				"i.walkSettings8_1"	: "",
+				"i.walkSettings8_2"	: "",
+
 				"i.walk1"			: "Puedes utilizar el icono tutorial",
 				"i.walk2"			: "durante las secciones de la aplicación para servirte de ayuda a la hora de utilizar el \"ViSH Editor\". De esta manera podrás aprender a utilizar el programa desde sus funciones básicas hasta la publicación final de tu excursión. Pulsa \"Siguiente\" para continuar.",
 				"i.walk3"           : "Este espacio te permite añadir el título de tu excursión.El título de la excursión es obligatorio ya que gracias a el, otros usuarios podrán encontrarla mas fácilmente dentro del ViSH. Pulsa \"Siguiente\" para continuar.",

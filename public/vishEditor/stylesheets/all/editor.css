@@ -1794,13 +1794,17 @@ div.object_wrapper {
 }
 
 
-/* Joyride positions */
+/* Tutorials with Joyride */
 
 .tut_with_arrow span.joyride-nub {
 	border-bottom-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;
 	border-top-color:  #666;
+}
+
+.tut_without_arrow span.joyride-nub {
+	display: none;	
 }
 
 .tut_with_arrow_up span.joyride-nub {
@@ -1810,14 +1814,42 @@ div.object_wrapper {
 	border-top-color: transparent;
 }
 
-.tut_without_arrow span.joyride-nub {
-	display: none;	
-}
-
-.tut_welcome {
+.tut_settings {
 	top: 78px;
 	left: 396px;
 	width: 446px;
+}
+
+.theme_tut {
+	left: 531px !important;
+	width: 350px;
+}
+
+.tut_width350 {
+	width: 350px !important;
+}
+
+p.tut_space {
+	margin: 0px;
+	padding: 0px;
+	height: 10px;
+}
+
+.joyride-next-tip {
+	
+}
+
+.joyride-content-wrapper {
+	text-align: center;
+}
+
+.joyride-content-wrapper p {
+	text-align: left;
+}
+
+.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
+	text-align: left;
+	max-width: 90%;
 }
 
 .tut_themes {
@@ -1903,7 +1935,7 @@ div.object_wrapper {
 }
 
 .tut_toolbar_options {
-width: 431px;
+	width: 431px;
 }
 
 .tut_addslide {
@@ -1989,7 +2021,9 @@ width: 431px;
 	left: 340px ;
 	top:-29px;
 }
-	
+
+
+/* Iframe Style */
 iframe {
 	width: 100%;
 	height: 100%;
