@@ -417,9 +417,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.author = author;
 		}
 
-		var tags = V.Editor.Utils.convertToTagsArray($("#tagindex").tagit("tags"));
-		if(tags.length > 1){
-			draftPresentation.tags = tags;
+		var tagIndex = $("#tagindex");
+		if ((tagIndex.length>0)&&($(tagIndex).hasClass("tagit"))){
+			var tags = V.Editor.Utils.convertToTagsArray($(tagIndex).tagit("tags"));
+			if(tags.length > 1){
+				draftPresentation.tags = tags;
+			}
 		}
 
 		var themeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");

@@ -512,6 +512,14 @@ VISH.Editor = (function(V,$,undefined){
 		//Save metadata
 		presentation = V.Editor.Settings.saveSettings(presentation);
 
+		//Check for tags, we have to do that because
+		//when tags had not been loaded, thay are not saved by the saveSettings method
+		if(!presentation.tags){
+			if((draftPresentation)&&(draftPresentation.tags)){
+				presentation.tags = draftPresentation.tags;
+			}
+		}
+
 		//Slides of the presentation
 		presentation.slides = [];
 
