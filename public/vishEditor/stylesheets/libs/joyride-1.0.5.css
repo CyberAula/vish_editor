@@ -63,6 +63,14 @@
 	border-top-color:  transparent !important;
 }
 
+.joyride-tip-guide span.joyride-nub.right.bottom {
+	border-top-color:  #4866FA !important;
+	border-right-color: transparent !important;
+	top: 100% !important;
+	right: 10px !important;
+}
+
+
 
 /* Typography */
 .joyride-tip-guide h1,.joyride-tip-guide h2,.joyride-tip-guide h3,.joyride-tip-guide h4,.joyride-tip-guide h5,.joyride-tip-guide h6 {

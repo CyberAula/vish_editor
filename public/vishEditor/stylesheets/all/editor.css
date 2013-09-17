@@ -1814,6 +1814,36 @@ div.object_wrapper {
 	border-top-color: transparent;
 }
 
+.tut_width350 {
+	width: 350px !important;
+}
+
+.tut_width500 {
+		width: 500px !important;
+}
+
+.tut_width600 {
+		width: 600px !important;
+}
+
+p.tut_space {
+	margin: 0px;
+	padding: 0px;
+	height: 10px;
+}
+
+p.tut_space_small {
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+}
+
+p.tut_space_big {
+	margin: 0px;
+	padding: 0px;
+	height: 20px;
+}
+
 .tut_settings {
 	top: 78px;
 	left: 396px;
@@ -1825,14 +1855,11 @@ div.object_wrapper {
 	width: 350px;
 }
 
-.tut_width350 {
-	width: 350px !important;
-}
-
-p.tut_space {
-	margin: 0px;
-	padding: 0px;
-	height: 10px;
+.tut_pedagogical {
+	width: 700px;
+	left: 50%;
+	margin-left: -350px;
+	top: 15%;
 }
 
 .joyride-next-tip {
@@ -1856,11 +1883,6 @@ p.tut_space {
 	top: 78px;
 	left: 396px;
 	width: 446px;
-}
-
-.tut_pedagogical {
-	top: 134px;
-	left: 470px;
 }
 
 .tut_savedetails {
