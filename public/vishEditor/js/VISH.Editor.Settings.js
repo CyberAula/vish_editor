@@ -34,11 +34,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			value: [ V.Constant.DIFFICULTY ],
 			slide: function( event, ui ) {
 				$("#difficulty_range").attr("difficulty",ui.value);
-				$("#difficulty_range").val(LOM_Difficulty[ui.value]);
+				$("#difficulty_range").val(LOM_Difficulty[ui.value].text);
 			}
 		}); 
 		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
-		$("#difficulty_range").val(LOM_Difficulty[V.Constant.DIFFICULTY]);
+		$("#difficulty_range").val(LOM_Difficulty[V.Constant.DIFFICULTY].text);
 	}
 
 	var displaySettings = function(){
@@ -179,15 +179,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		if(presentation.difficulty){
-			var difficultyValue = 0;
+			var difficultyIndexValue = 0;
 			for(var j=0; j<LOM_Difficulty.length; j++){
-				if(LOM_Difficulty[j]===presentation.difficulty){
-					difficultyValue = j;
+				if(LOM_Difficulty[j].value===presentation.difficulty){
+					difficultyIndexValue = j;
 				}
 			}
-			$("#difficulty_range").val(LOM_Difficulty[difficultyValue]);
-			$("#difficulty_range").attr("difficulty",difficultyValue);
-			$("#slider-difficulty" ).slider("value",difficultyValue);
+			$("#difficulty_range").val(LOM_Difficulty[difficultyIndexValue].text);
+			$("#difficulty_range").attr("difficulty",difficultyIndexValue);
+			$("#slider-difficulty" ).slider("value",difficultyIndexValue);
 		}
 
 		if(presentation.TLT){
@@ -326,9 +326,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var onTLTchange = function(){
 		var TLT = _getTLT();
 		if(TLT===null){
-			$("#tlt_current_value").val("invalid value");
+			$("#tlt_current_value").val(V.Editor.I18n.getTrans("i.invalidvalue"));
 		} else if(typeof TLT == "undefined"){
-			$("#tlt_current_value").val("unspecified");
+			$("#tlt_current_value").val(V.Editor.I18n.getTrans("i.unspecified"));
 		} else if(typeof TLT == "string"){
 			$("#tlt_current_value").val(TLT);
 		}
@@ -448,10 +448,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.age_range = age_range;
 		}
 		
-		var difficulty = $("#difficulty_range").val();
-		if((typeof difficulty == "string")&&(difficulty!="unspecified")){
-			draftPresentation.difficulty = difficulty;
-		}	
+		var difficultyIndexValue = $("#difficulty_range").attr("difficulty");
+		var difficultyValue = LOM_Difficulty[difficultyIndexValue];
+		if(typeof difficultyValue == "object"){
+			var difficulty = difficultyValue.value;
+			if((typeof difficulty == "string")&&(difficulty!="unspecified")){
+				draftPresentation.difficulty = difficulty;
+			}
+		}
 		
 		var TLT = _getTLT();
 		if(typeof TLT == "string"){

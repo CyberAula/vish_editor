@@ -149,7 +149,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 	/**
 	 * Function to translate a text
 	 */
-	var getTrans = function (s) {
+	var getTrans = function(s) {
 		if (typeof(translations)!== 'undefined' && translations[s]) {
 			return translations[s];
 		}

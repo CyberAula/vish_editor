@@ -241,7 +241,7 @@ textarea#presentation_details_textarea {
 
 #tlt_current_value {
 	display: inline;
-	width: 100px;
+	width: 95px;
 	margin-left: 4px;
 }
 
@@ -293,15 +293,6 @@ textarea#presentation_details_textarea {
 }
 
 
-#fill_details_later_button {
-	margin-left: 498px;
-	margin-right: 30px;
-}
-
-#fill_details_later_button, #save_presentation_details {
-	width: 99px;
-}
-
 div#tagBoxIntro {
 	padding: 0px;
 	color: #7a8fa9;
@@ -321,10 +312,27 @@ div#tagBoxIntro .tagit {
 	height: 57px;
 }
 
-button.buttonpedagogical {
-	margin-left: -279px;
+
+#pedagogical_clasification_button, #fill_details_later_button, #save_presentation_details {
+	position: absolute;
+}
+
+#pedagogical_clasification_button {
+	left: 36px;
 	width: 220px;
-	text-align: center;
+}
+
+#fill_details_later_button, #save_presentation_details {
+	width: 180px;
+}
+
+#fill_details_later_button {
+	right: 20px;
+	margin-right: 200px;
+}
+
+#save_presentation_details {
+	right: 20px;
 }
 
 #pedagogical_options_fields {
@@ -364,7 +372,7 @@ button.buttonpedagogical {
 
 #pedagogical_options_fields_row1_column2 {
 	float: left;
-	width: 321px;
+	width: 338px;
 	height: 246px;
 	border-left: 1px solid #ebebeb;
 	padding-left: 32px;
@@ -374,7 +382,7 @@ button.buttonpedagogical {
 
 #pedagogical_options_fields_row1_column3 {
 	float: left;
-	margin-left: 12px;
+	margin-left: 7px;
 	height: 245px;
 	border-left: 1px solid #ebebeb;
 }
@@ -494,7 +502,7 @@ input.slider_range_input {
 #subject_tag_box {
 	float: left;
 	width: 240px;
-	margin-left: 40px;
+	margin-left: 30px;
 }
 
 #language_tag_box {
