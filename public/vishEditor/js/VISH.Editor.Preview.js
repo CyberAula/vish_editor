@@ -1,6 +1,6 @@
 VISH.Editor.Preview = (function(V,$,undefined){
 
-	var presentation_preview = null;
+	var presentationPreview = null;
 
 	var init = function(){
 		//Wait for loading...
@@ -19,13 +19,13 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			'transitionOut'		: 'none',
 			'type'				: 'iframe',
 			'onStart'			: function(){
-				if(presentation_preview === null){
+				if(presentationPreview === null){
 					_prepare();
 				}
 				V.Editor.Utils.Loader.unloadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 			},
 			'onClosed'			: function() {
-				presentation_preview = null;
+				presentationPreview = null;
 				V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 			},
 			'onComplete': function() {
@@ -48,34 +48,34 @@ VISH.Editor.Preview = (function(V,$,undefined){
 	var _prepare = function(options){
 		var slideNumberToPreview;
 
-		if((!options)||(!options["slideNumberToPreview"])||(typeof options["slideNumberToPreview"] !== "number")){
+		if((!options)||(!options["slideNumberToPreview"])||(typeof options["slideNumberToPreview"] != "number")){
 			slideNumberToPreview =  V.Slides.getCurrentSlideNumber();
 		} else {
 			slideNumberToPreview =  options["slideNumberToPreview"];
 		}
 
-		if(V.Configuration.getConfiguration()["mode"]=="vish"){
+		if(V.Configuration.getConfiguration().mode==V.Constant.VISH){
 			$("#preview_action").attr("href",  "/excursions/preview#" + slideNumberToPreview);
-		} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
+		} else if(V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
 			$("#preview_action").attr("href", "/vishEditor/viewer.html#" + slideNumberToPreview);
-		} else if(V.Configuration.getConfiguration()["mode"]=="node"){
+		} else if(V.Configuration.getConfiguration().mode==V.Constant.STANDALONE){
 			//Code here
 		}
 
-		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] !== "object")){
-			presentation_preview = V.Editor.savePresentation({preview: true});
+		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] != "object")){
+			presentationPreview = V.Editor.savePresentation({preview: true});
 		} else {
-			presentation_preview = options["presentationJSON"];
+			presentationPreview = options["presentationJSON"];
 		}
 
 		if((options)&&(options["insertMode"])&&(typeof options["insertMode"] == "boolean")){
-			presentation_preview.insertMode = options["insertMode"];
+			presentationPreview.insertMode = options["insertMode"];
 		}
 		
 	};
 
 	var getPreview = function(){
-		return presentation_preview;
+		return presentationPreview;
 	};
 
 

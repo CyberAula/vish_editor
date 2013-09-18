@@ -273,7 +273,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				}
 			}
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: V.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.Editor.I18n.getTrans("i.limitReached")});
+			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	}
 
@@ -326,9 +326,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var onTLTchange = function(){
 		var TLT = _getTLT();
 		if(TLT===null){
-			$("#tlt_current_value").val(V.Editor.I18n.getTrans("i.invalidvalue"));
+			$("#tlt_current_value").val(V.I18n.getTrans("i.invalidvalue"));
 		} else if(typeof TLT == "undefined"){
-			$("#tlt_current_value").val(V.Editor.I18n.getTrans("i.unspecified"));
+			$("#tlt_current_value").val(V.I18n.getTrans("i.unspecified"));
 		} else if(typeof TLT == "string"){
 			$("#tlt_current_value").val(TLT);
 		}

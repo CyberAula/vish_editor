@@ -626,6 +626,7 @@ input.slider_range_input {
 
 #addSlideButton, #importButton {
 	font-family: 'Open Sans', sans-serif;
+	text-decoration: none;
 }
 
 #addSlideButton > .slidesScrollbarButton {
@@ -634,6 +635,10 @@ input.slider_range_input {
 
 #importButton > .slidesScrollbarButton {
 	width: 70px;
+}
+
+#addSlideButton span, #importButton span {
+	margin-left: 3px;
 }
 
 #addSlideButtonOnSubslides > .slidesScrollbarButton {

@@ -417,9 +417,9 @@ VISH.Utils = (function(V,undefined){
 		var options = {};
 		options.width = 650;
 		options.height = 220;
-		options.text = &quot;This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.&quot;;
+		options.text = V.I18n.getTrans(&quot;i.resourceNonCompatibleNotification&quot;);
 		var button1 = {};
-		button1.text = &quot;Ok&quot;;
+		button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
 		button1.callback = function(){
 			$.fancybox.close();
 		}

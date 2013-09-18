@@ -67,7 +67,8 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 		V.Utils.Loader.loadDeviceCSS();
-		V.Editor.I18n.init(options.lang);
+		V.I18n.init(options.lang);
+		V.Utils.Loader.loadLanguageCSS();
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
 		V.Editor.Themes.init();
@@ -320,14 +321,14 @@ VISH.Editor = (function(V,$,undefined){
 		options.width = 375;
 		options.height = 135;
 		options.notificationIconSrc = V.ImagesPath + "zonethumbs/" + getCurrentArea().attr("type") + ".png";
-		options.text = "are you sure?";
+		options.text = V.I18n.getTrans("i.areyousureNotification");
 		var button1 = {};
-		button1.text = "no";
+		button1.text = V.I18n.getTrans("i.no");
 		button1.callback = function(){
 			$.fancybox.close();
 		}
 		var button2 = {};
-		button2.text = "delete";
+		button2.text = V.I18n.getTrans("i.delete");
 		button2.callback = function(){
 			var area = getCurrentArea();
 			area.html("");
@@ -352,14 +353,14 @@ VISH.Editor = (function(V,$,undefined){
 		options.height = 130;
 		options.notificationIconSrc = V.Editor.Thumbnails.getThumbnailURL(article_to_delete);
 		options.notificationIconClass = "notificationIconDelete";
-		options.text = "are you sure?";
+		options.text = V.I18n.getTrans("i.areyousureNotification");
 		var button1 = {};
-		button1.text = "no";
+		button1.text = V.I18n.getTrans("i.no");
 		button1.callback = function(){
 			$.fancybox.close();
 		}
 		var button2 = {};
-		button2.text = "delete";
+		button2.text = V.I18n.getTrans("i.delete");
 		button2.callback = function(){
 			if(V.Editor.Slides.isSubslide(article_to_delete)){
 				V.Editor.Slides.removeSubslide(article_to_delete);

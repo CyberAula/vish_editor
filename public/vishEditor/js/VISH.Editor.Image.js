@@ -143,7 +143,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			// });
 
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
-			watermarkAllowMessage: V.Editor.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.Editor.I18n.getTrans("i.limitReached")});
+			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	}
 	

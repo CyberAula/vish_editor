@@ -134,15 +134,15 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		return "<table class=\""+tableClass+"\">"+
 		 "<tr class=\"even\">" +
-		   "<td class=\"title header_left\">" + V.Editor.I18n.getTrans("i.Title") + "</td>" + 
+		   "<td class=\"title header_left\">" + V.I18n.getTrans("i.Title") + "</td>" + 
 		   "<td class=\"title header_right\"><div class=\"height_wrapper\">" + title + "</div></td>" + 
 		 "</tr>" + 
 		 "<tr class=\"odd\">" + 
-		   "<td class=\"title\">" + V.Editor.I18n.getTrans("i.Author") + "</td>" + 
+		   "<td class=\"title\">" + V.I18n.getTrans("i.Author") + "</td>" + 
 		   "<td class=\"info\"><div class=\"height_wrapper\">" + author + "</div></td>" + 
 		 "</tr>" + 
 		 "<tr class=\"even\">" + 
-		   "<td colspan=\"2\" class=\"title_description\">" + V.Editor.I18n.getTrans("i.Description") + "</td>" + 
+		   "<td colspan=\"2\" class=\"title_description\">" + V.I18n.getTrans("i.Description") + "</td>" + 
 		 "</tr>" + 
 		 "<tr class=\"odd\">" + 
 		   "<td colspan=\"2\" class=\"info_description\"><div class=\"height_wrapper_description\">" + description + "</div></td>" + 

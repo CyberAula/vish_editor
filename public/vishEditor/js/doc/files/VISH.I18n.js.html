@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>VISH.Editor.I18n.js</title>
+    <title>VISH.I18n.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -84,11 +84,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.I18n.js</h1>
+                        <h1 class="file-heading">File: VISH.I18n.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-VISH.Editor.I18n = (function(V,$,undefined){
+VISH.I18n = (function(V,$,undefined){
 	
 	var translations;
 	var defaultTranslations;
@@ -96,59 +96,57 @@ VISH.Editor.I18n = (function(V,$,undefined){
 
 	&#x2F;**
 	 * Function to do the language translation
-	 * If this function is called there should be defined an i18n array with the translations 
 	 *&#x2F;
 	var init = function(lang){
 		&#x2F;&#x2F; var initTime = new Date().getTime();
 
 		&#x2F;&#x2F;Set default translation
-		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
-				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!=&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
 			case V.Constant.VISH:
-				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;vish&quot;][&quot;default&quot;])!=&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
 			case V.Constant.STANDALONE:
-				if (typeof(i18n[&quot;standalone&quot;][&quot;default&quot;])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;standalone&quot;][&quot;default&quot;])!=&#x27;undefined&#x27;){
 					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
 				}
 				break;
 		}
 
 		&#x2F;&#x2F;Set lang specific translation
-		if(typeof lang !== &quot;undefined&quot;){
+		if(typeof lang != &quot;undefined&quot;){
 			language = lang;
 		} else {
 			return;
 		}
 		
-		switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
+		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
-				&#x2F;&#x2F;Load Vish translation
-				if (typeof(i18n[&quot;vish&quot;][language])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;vish&quot;][language])!=&#x27;undefined&#x27;){
 					translations = i18n[&quot;vish&quot;][language];
 				}
 				break;
 			case V.Constant.VISH:
-				if (typeof(i18n[&quot;vish&quot;][language])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;vish&quot;][language])!=&#x27;undefined&#x27;){
 					translations = i18n[&quot;vish&quot;][language];
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
 			case V.Constant.STANDALONE:
-				if (typeof(i18n[&quot;standalone&quot;][language])!==&#x27;undefined&#x27;){
+				if (typeof(i18n[&quot;standalone&quot;][language])!=&#x27;undefined&#x27;){
 					translations = i18n[&quot;standalone&quot;][language];
 					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
 				}
 				break;
 		}
 
-		if (typeof(translations)===&#x27;undefined&#x27;){
+		if (typeof(translations)==&#x27;undefined&#x27;){
 			return;
 		}
 
@@ -176,7 +174,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			}
 		});
 
-		_translateTutorialImage();
+		&#x2F;&#x2F; Translate images (if any)
 
 		&#x2F;&#x2F; var duration = new Date().getTime() - initTime;
 		&#x2F;&#x2F; V.Debugging.log(&quot;Internationalization took &quot; + duration + &quot; ms.&quot;);
@@ -216,42 +214,22 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		$(elem).text(translation);
 	}
 
-	var _translateTutorialImage = function(){
-		if ((typeof(translations)!=&#x27;undefined&#x27;)&amp;&amp;(typeof language !== &quot;undefined&quot;)){
-  			var factor;
-  			if(language === &quot;es&quot;){
-  				factor = 2;
-  			}
-  			var normal_pos = 360; &#x2F;&#x2F;120 + 120*factor;
-  			var hover_pos = 480; &#x2F;&#x2F;240 + 120*factor;
-  			$(&quot;#start_tutorial&quot;).css(&quot;background-position&quot;, &quot;0px -&quot; + normal_pos + &quot;px&quot;);
-  			&#x2F;&#x2F;replace hover in that image
-  			$(&quot;#start_tutorial&quot;).hover(function(){
-			    $(&quot;#start_tutorial&quot;).css(&quot;background-position&quot;, &quot;0px -&quot; + hover_pos + &quot;px&quot;);
-			}, function() {
-			    $(&quot;#start_tutorial&quot;).css(&quot;background-position&quot;, &quot;0px -&quot; + normal_pos + &quot;px&quot;);
-			});
-			&#x2F;&#x2F;replace contentusetut image
-			$(&quot;#contentusetut&quot;).attr(&quot;src&quot;, V.ImagesPath + &quot;contentuse_&quot;+language+&quot;.png&quot;);
-  		}
-	}
-
 	&#x2F;**
 	 * Function to translate a text
 	 *&#x2F;
-	var getTrans = function (s) {
-		if (typeof(translations)!== &#x27;undefined&#x27; &amp;&amp; translations[s]) {
+	var getTrans = function(s) {
+		if (typeof(translations)!= &#x27;undefined&#x27; &amp;&amp; translations[s]) {
 			return translations[s];
 		}
 		&#x2F;&#x2F; V.Debugging.log(&quot;Text without translation: &quot; + s);
 
 		&#x2F;&#x2F;Search in default language
-		if (typeof(defaultTranslations)!== &#x27;undefined&#x27; &amp;&amp; defaultTranslations[s]) {
+		if (typeof(defaultTranslations)!= &#x27;undefined&#x27; &amp;&amp; defaultTranslations[s]) {
 			return defaultTranslations[s];
 		}
 		&#x2F;&#x2F; V.Debugging.log(&quot;Text without default translation: &quot; + s);
 
-		&#x2F;&#x2F;Don&#x27;t return s if s is a key. &#x2F;&#x2F;DEPRECATED
+		&#x2F;&#x2F;Don&#x27;t return s if s is a key.
 		var key_pattern =&#x2F;^i\.&#x2F;g;
 		if(key_pattern.exec(s)!=null){
 			return null;
@@ -259,11 +237,18 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			return s;
 		}
 	};
-	
+
+	&#x2F;**
+	 * Return the current language
+	 *&#x2F;
+	var getLanguage = function(){
+		return language;
+	}
 
 	return {
-		getTrans 		  : getTrans,
-		init              : init
+		init 			: init,
+		getTrans 		: getTrans,
+		getLanguage		: getLanguage
 	};
 
 }) (VISH, jQuery);

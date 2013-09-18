@@ -57,13 +57,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "VISH.Editor.I18n.js": {
-            "name": "VISH.Editor.I18n.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "VISH.Editor.Image.js": {
             "name": "VISH.Editor.Image.js",
             "modules": {},
@@ -175,6 +168,13 @@
         },
         "VISH.Events.js": {
             "name": "VISH.Events.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.I18n.js": {
+            "name": "VISH.I18n.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -666,18 +666,6 @@
             "class": "VISH.Editor"
         },
         {
-            "file": "VISH.Editor.I18n.js",
-            "line": 7,
-            "description": "Function to do the language translation\nIf this function is called there should be defined an i18n array with the translations",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.I18n.js",
-            "line": 149,
-            "description": "Function to translate a text",
-            "class": "VISH.Editor"
-        },
-        {
             "file": "VISH.Editor.Image.js",
             "line": 184,
             "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -787,13 +775,13 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 517,
+            "line": 524,
             "description": "function called when the user clicks on the pedagogical options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 526,
+            "line": 533,
             "description": "function called when the user clicks on the done button in the pedagogical options panel",
             "class": "VISH.Editor"
         },
@@ -881,77 +869,77 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 172,
+            "line": 173,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 216,
+            "line": 217,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 313,
+            "line": 314,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 344,
+            "line": 345,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 375,
+            "line": 376,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 384,
+            "line": 385,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 444,
+            "line": 445,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 456,
+            "line": 457,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 480,
+            "line": 481,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 505,
+            "line": 506,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 763,
+            "line": 772,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -967,6 +955,27 @@
             "file": "VISH.Events.js",
             "line": 181,
             "description": "Function called when a poi is clicked\n'event' can be a delegate click event or a number",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.I18n.js",
+            "line": 7,
+            "description": "Function to do the language translation",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.I18n.js",
+            "line": 127,
+            "description": "Function to translate a text",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.I18n.js",
+            "line": 151,
+            "description": "Return the current language",
             "class": "",
             "namespace": "VISH"
         },
@@ -1301,35 +1310,35 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 86,
+            "line": 88,
             "description": "Function to enter and exit fullscreen",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 126,
+            "line": 128,
             "description": "Function called when entering slide in viewer, we have to show the objects",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 171,
+            "line": 173,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 196,
+            "line": 198,
             "description": "function to check if this is the penultimate Slide (or the only one) and call to get the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 211,
+            "line": 213,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
@@ -1562,14 +1571,6 @@
             "line": " VISH.Editor.Events.js:207"
         },
         {
-            "message": "Missing item type\nFunction to do the language translation\nIf this function is called there should be defined an i18n array with the translations",
-            "line": " VISH.Editor.I18n.js:7"
-        },
-        {
-            "message": "Missing item type\nFunction to translate a text",
-            "line": " VISH.Editor.I18n.js:149"
-        },
-        {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
             "line": " VISH.Editor.Image.js:184"
         },
@@ -1643,11 +1644,11 @@
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
-            "line": " VISH.Editor.Settings.js:517"
+            "line": " VISH.Editor.Settings.js:524"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the done button in the pedagogical options panel",
-            "line": " VISH.Editor.Settings.js:526"
+            "line": " VISH.Editor.Settings.js:533"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
@@ -1683,47 +1684,47 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:172"
+            "line": " VISH.Editor.js:173"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:216"
+            "line": " VISH.Editor.js:217"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:313"
+            "line": " VISH.Editor.js:314"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:344"
+            "line": " VISH.Editor.js:345"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:375"
+            "line": " VISH.Editor.js:376"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:384"
+            "line": " VISH.Editor.js:385"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:444"
+            "line": " VISH.Editor.js:445"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:456"
+            "line": " VISH.Editor.js:457"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:480"
+            "line": " VISH.Editor.js:481"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:505"
+            "line": " VISH.Editor.js:506"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:763"
+            "line": " VISH.Editor.js:772"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
@@ -1732,6 +1733,18 @@
         {
             "message": "Missing item type\nFunction called when a poi is clicked\n'event' can be a delegate click event or a number",
             "line": " VISH.Events.js:181"
+        },
+        {
+            "message": "Missing item type\nFunction to do the language translation",
+            "line": " VISH.I18n.js:7"
+        },
+        {
+            "message": "Missing item type\nFunction to translate a text",
+            "line": " VISH.I18n.js:127"
+        },
+        {
+            "message": "Missing item type\nReturn the current language",
+            "line": " VISH.I18n.js:151"
         },
         {
             "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",
@@ -1923,23 +1936,23 @@
         },
         {
             "message": "Missing item type\nFunction to enter and exit fullscreen",
-            "line": " VISH.Viewer.js:86"
+            "line": " VISH.Viewer.js:88"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in viewer, we have to show the objects",
-            "line": " VISH.Viewer.js:126"
+            "line": " VISH.Viewer.js:128"
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:171"
+            "line": " VISH.Viewer.js:173"
         },
         {
             "message": "Missing item type\nfunction to check if this is the penultimate Slide (or the only one) and call to get the recommendations",
-            "line": " VISH.Viewer.js:196"
+            "line": " VISH.Viewer.js:198"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:211"
+            "line": " VISH.Viewer.js:213"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",

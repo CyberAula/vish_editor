@@ -1,4 +1,4 @@
-VISH.Editor.I18n = (function(V,$,undefined){
+VISH.I18n = (function(V,$,undefined){
 	
 	var translations;
 	var defaultTranslations;
@@ -6,59 +6,57 @@ VISH.Editor.I18n = (function(V,$,undefined){
 
 	/**
 	 * Function to do the language translation
-	 * If this function is called there should be defined an i18n array with the translations 
 	 */
 	var init = function(lang){
 		// var initTime = new Date().getTime();
 
 		//Set default translation
-		switch(V.Configuration.getConfiguration()["mode"]){
+		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
-				if (typeof(i18n["vish"]["default"])!=='undefined'){
+				if (typeof(i18n["vish"]["default"])!='undefined'){
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case V.Constant.VISH:
-				if (typeof(i18n["vish"]["default"])!=='undefined'){
+				if (typeof(i18n["vish"]["default"])!='undefined'){
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case V.Constant.STANDALONE:
-				if (typeof(i18n["standalone"]["default"])!=='undefined'){
+				if (typeof(i18n["standalone"]["default"])!='undefined'){
 					defaultTranslations = i18n["standalone"]["default"];
 				}
 				break;
 		}
 
 		//Set lang specific translation
-		if(typeof lang !== "undefined"){
+		if(typeof lang != "undefined"){
 			language = lang;
 		} else {
 			return;
 		}
 		
-		switch(V.Configuration.getConfiguration()["mode"]){
+		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.NOSERVER:
-				//Load Vish translation
-				if (typeof(i18n["vish"][language])!=='undefined'){
+				if (typeof(i18n["vish"][language])!='undefined'){
 					translations = i18n["vish"][language];
 				}
 				break;
 			case V.Constant.VISH:
-				if (typeof(i18n["vish"][language])!=='undefined'){
+				if (typeof(i18n["vish"][language])!='undefined'){
 					translations = i18n["vish"][language];
 					defaultTranslations = i18n["vish"]["default"];
 				}
 				break;
 			case V.Constant.STANDALONE:
-				if (typeof(i18n["standalone"][language])!=='undefined'){
+				if (typeof(i18n["standalone"][language])!='undefined'){
 					translations = i18n["standalone"][language];
 					defaultTranslations = i18n["standalone"]["default"];
 				}
 				break;
 		}
 
-		if (typeof(translations)==='undefined'){
+		if (typeof(translations)=='undefined'){
 			return;
 		}
 
@@ -86,7 +84,7 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			}
 		});
 
-		_translateTutorialImage();
+		// Translate images (if any)
 
 		// var duration = new Date().getTime() - initTime;
 		// V.Debugging.log("Internationalization took " + duration + " ms.");
@@ -126,42 +124,22 @@ VISH.Editor.I18n = (function(V,$,undefined){
 		$(elem).text(translation);
 	}
 
-	var _translateTutorialImage = function(){
-		if ((typeof(translations)!='undefined')&&(typeof language !== "undefined")){
-  			var factor;
-  			if(language === "es"){
-  				factor = 2;
-  			}
-  			var normal_pos = 360; //120 + 120*factor;
-  			var hover_pos = 480; //240 + 120*factor;
-  			$("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
-  			//replace hover in that image
-  			$("#start_tutorial").hover(function(){
-			    $("#start_tutorial").css("background-position", "0px -" + hover_pos + "px");
-			}, function() {
-			    $("#start_tutorial").css("background-position", "0px -" + normal_pos + "px");
-			});
-			//replace contentusetut image
-			$("#contentusetut").attr("src", V.ImagesPath + "contentuse_"+language+".png");
-  		}
-	}
-
 	/**
 	 * Function to translate a text
 	 */
 	var getTrans = function(s) {
-		if (typeof(translations)!== 'undefined' && translations[s]) {
+		if (typeof(translations)!= 'undefined' && translations[s]) {
 			return translations[s];
 		}
 		// V.Debugging.log("Text without translation: " + s);
 
 		//Search in default language
-		if (typeof(defaultTranslations)!== 'undefined' && defaultTranslations[s]) {
+		if (typeof(defaultTranslations)!= 'undefined' && defaultTranslations[s]) {
 			return defaultTranslations[s];
 		}
 		// V.Debugging.log("Text without default translation: " + s);
 
-		//Don't return s if s is a key. //DEPRECATED
+		//Don't return s if s is a key.
 		var key_pattern =/^i\./g;
 		if(key_pattern.exec(s)!=null){
 			return null;
@@ -169,11 +147,18 @@ VISH.Editor.I18n = (function(V,$,undefined){
 			return s;
 		}
 	};
-	
+
+	/**
+	 * Return the current language
+	 */
+	var getLanguage = function(){
+		return language;
+	}
 
 	return {
-		getTrans 		  : getTrans,
-		init              : init
+		init 			: init,
+		getTrans 		: getTrans,
+		getLanguage		: getLanguage
 	};
 
 }) (VISH, jQuery);

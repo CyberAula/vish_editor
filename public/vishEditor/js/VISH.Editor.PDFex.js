@@ -107,9 +107,9 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		var options = {};
 		options.width = 650;
 		options.height = 190;
-		options.text = "An error has occurred. Ensure that the PDF file is valid.";
+		options.text = V.I18n.getTrans("i.pdfErrorNotification");
 		var button1 = {};
-		button1.text = "Ok";
+		button1.text = V.I18n.getTrans("i.Ok");
 		button1.callback = function(){
 			$.fancybox.close();
 		}

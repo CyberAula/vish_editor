@@ -401,7 +401,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var _exitConfirmation = function(){
 		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&&(confirmOnExit)){
-			return V.Editor.I18n.getTrans("i.exitConfirmation");
+			return V.I18n.getTrans("i.exitConfirmation");
 		} else {
 			return;
 		}

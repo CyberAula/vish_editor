@@ -124,11 +124,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			value: [ V.Constant.DIFFICULTY ],
 			slide: function( event, ui ) {
 				$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,ui.value);
-				$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[ui.value]);
+				$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[ui.value].text);
 			}
 		}); 
 		$( &quot;#difficulty_range&quot; ).attr( &quot;difficulty&quot; , V.Constant.DIFFICULTY);
-		$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[V.Constant.DIFFICULTY]);
+		$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[V.Constant.DIFFICULTY].text);
 	}
 
 	var displaySettings = function(){
@@ -269,15 +269,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		if(presentation.difficulty){
-			var difficultyValue = 0;
+			var difficultyIndexValue = 0;
 			for(var j=0; j&lt;LOM_Difficulty.length; j++){
-				if(LOM_Difficulty[j]===presentation.difficulty){
-					difficultyValue = j;
+				if(LOM_Difficulty[j].value===presentation.difficulty){
+					difficultyIndexValue = j;
 				}
 			}
-			$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[difficultyValue]);
-			$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,difficultyValue);
-			$(&quot;#slider-difficulty&quot; ).slider(&quot;value&quot;,difficultyValue);
+			$(&quot;#difficulty_range&quot;).val(LOM_Difficulty[difficultyIndexValue].text);
+			$(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;,difficultyIndexValue);
+			$(&quot;#slider-difficulty&quot; ).slider(&quot;value&quot;,difficultyIndexValue);
 		}
 
 		if(presentation.TLT){
@@ -363,7 +363,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				}
 			}
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
-			watermarkAllowMessage: V.Editor.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.Editor.I18n.getTrans(&quot;i.limitReached&quot;)});
+			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
 	}
 
@@ -416,9 +416,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var onTLTchange = function(){
 		var TLT = _getTLT();
 		if(TLT===null){
-			$(&quot;#tlt_current_value&quot;).val(&quot;invalid value&quot;);
+			$(&quot;#tlt_current_value&quot;).val(V.I18n.getTrans(&quot;i.invalidvalue&quot;));
 		} else if(typeof TLT == &quot;undefined&quot;){
-			$(&quot;#tlt_current_value&quot;).val(&quot;unspecified&quot;);
+			$(&quot;#tlt_current_value&quot;).val(V.I18n.getTrans(&quot;i.unspecified&quot;));
 		} else if(typeof TLT == &quot;string&quot;){
 			$(&quot;#tlt_current_value&quot;).val(TLT);
 		}
@@ -507,9 +507,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.author = author;
 		}
 
-		var tags = V.Editor.Utils.convertToTagsArray($(&quot;#tagindex&quot;).tagit(&quot;tags&quot;));
-		if(tags.length &gt; 1){
-			draftPresentation.tags = tags;
+		var tagIndex = $(&quot;#tagindex&quot;);
+		if ((tagIndex.length&gt;0)&amp;&amp;($(tagIndex).hasClass(&quot;tagit&quot;))){
+			var tags = V.Editor.Utils.convertToTagsArray($(tagIndex).tagit(&quot;tags&quot;));
+			if(tags.length &gt; 1){
+				draftPresentation.tags = tags;
+			}
 		}
 
 		var themeNumber = $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
@@ -535,10 +538,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.age_range = age_range;
 		}
 		
-		var difficulty = $(&quot;#difficulty_range&quot;).val();
-		if((typeof difficulty == &quot;string&quot;)&amp;&amp;(difficulty!=&quot;unspecified&quot;)){
-			draftPresentation.difficulty = difficulty;
-		}	
+		var difficultyIndexValue = $(&quot;#difficulty_range&quot;).attr(&quot;difficulty&quot;);
+		var difficultyValue = LOM_Difficulty[difficultyIndexValue];
+		if(typeof difficultyValue == &quot;object&quot;){
+			var difficulty = difficultyValue.value;
+			if((typeof difficulty == &quot;string&quot;)&amp;&amp;(difficulty!=&quot;unspecified&quot;)){
+				draftPresentation.difficulty = difficulty;
+			}
+		}
 		
 		var TLT = _getTLT();
 		if(typeof TLT == &quot;string&quot;){

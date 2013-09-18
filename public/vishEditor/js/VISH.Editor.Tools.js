@@ -148,7 +148,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			style = "style='display:none'";
 			visible = "false";
 		}
-		var tooltip = "<span class='zone_tooltip' visible='" + visible + "' " + style + " >"+V.Editor.I18n.getTrans('i.ZoneTooltip')+"</span>";
+		var tooltip = "<span class='zone_tooltip' visible='" + visible + "' " + style + " >"+V.I18n.getTrans('i.ZoneTooltip')+"</span>";
 		$(zone).append(tooltip);
 
 		tooltip = $(zone).find(".zone_tooltip");

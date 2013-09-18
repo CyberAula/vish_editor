@@ -199,6 +199,15 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 	}
 
+	var loadLanguageCSS = function(){
+		var languagesWithCSS = ["es"];
+		var language = V.I18n.getLanguage();
+		if(languagesWithCSS.indexOf(language)!=-1){
+			//Load CSS for this language
+			loadCSS("language/" + language + ".css");
+		}
+	}
+
 
 	/*
 	* Loading dialogs
@@ -263,6 +272,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		loadGoogleLibrary			: loadGoogleLibrary,
 		loadCSS						: loadCSS,
 		loadDeviceCSS				: loadDeviceCSS,
+		loadLanguageCSS				: loadLanguageCSS,
 		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
 		startLoading				: startLoading,
 		stopLoading					: stopLoading,

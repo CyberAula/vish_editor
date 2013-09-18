@@ -55,6 +55,8 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Renderer.init();
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
+		V.I18n.init(options.lang);
+		V.Utils.Loader.loadLanguageCSS();
 		V.User.init(options);
 		V.Storage.init();
 		V.Recommendations.init(options);

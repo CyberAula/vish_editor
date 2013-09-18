@@ -171,9 +171,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var options = {};
 			options.width = 600;
 			options.height = 220;
-			options.text = &quot;You need to write a title for the excursion and select an avatar before publish the excursion.&quot;;
+			options.text = V.I18n.getTrans(&quot;i.MandatoryFieldsNotification&quot;);
 			var button1 = {};
-			button1.text = &quot;Go to Settings&quot;;
+			button1.text = V.I18n.getTrans(&quot;i.GotoSettings&quot;);
 			button1.callback = function(){
 				V.Editor.Settings.displaySettings();
 			}
@@ -188,9 +188,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var options = {};
 			options.width = 600;
 			options.height = 150;
-			options.text = &quot;Create at least one slide before saving.&quot;;
+			options.text = V.I18n.getTrans(&quot;i.NoSlidesOnSaveNotification&quot;);
 			var button1 = {};
-			button1.text = &quot;Ok&quot;;
+			button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
 			button1.callback = function(){
 				$.fancybox.close();
 			}
@@ -203,11 +203,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		options.width = 400;
 		options.height = 140;
 		options.notificationIconSrc = V.ImagesPath + &quot;toolbar&#x2F;save_document.png&quot;;
-		options.text = &quot;are you sure?&quot;;
+		options.text = V.I18n.getTrans(&quot;i.areyousureNotification&quot;);
 		options.buttons = [];
 
 		var button1 = {};
-		button1.text = &quot;cancel&quot;;
+		button1.text = V.I18n.getTrans(&quot;i.cancel&quot;);
 		button1.callback = function(){
 			$.fancybox.close();
 		}
@@ -215,7 +215,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		if(((V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH)&amp;&amp;(V.Editor.isPresentationDraft()))||(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER)){
 			var button2 = {};
-			button2.text = &quot;draft&quot;;
+			button2.text = V.I18n.getTrans(&quot;i.draft&quot;);
 			button2.callback = function(){
 				var presentation = V.Editor.savePresentation();
 				V.Editor.afterSavePresentation(presentation,&quot;draft&quot;);
@@ -226,9 +226,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 		var button3 = {};
 		if((V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH)||(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER)){
-			button3.text = &quot;publish&quot;;
+			button3.text = V.I18n.getTrans(&quot;i.publish&quot;);
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.STANDALONE){
-			button3.text = &quot;save&quot;;
+			button3.text = V.I18n.getTrans(&quot;i.save&quot;);
 		}
 		button3.callback = function(){
 			var presentation = V.Editor.savePresentation();
@@ -302,9 +302,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				var options = {};
 				options.width = 600;
 				options.height = 185;
-				options.text = &quot;An error has ocurred. Is not possible to export the presentation to JSON.&quot;;
+				options.text = V.I18n.getTrans(&quot;i.exportPresToJSONerrorNotification&quot;);
 				var button1 = {};
-				button1.text = &quot;Ok&quot;;
+				button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
 				button1.callback = function(){
 					$.fancybox.close();
 				}
