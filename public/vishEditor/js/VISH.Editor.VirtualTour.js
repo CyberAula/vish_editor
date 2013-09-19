@@ -220,10 +220,10 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 					map.setCenter(location.address);
 					map.fitBounds(location.bounds);
 					$(currentInput).val("");
-					$(currentInput).attr("placeholder","Search places");
+					$(currentInput).attr("placeholder",V.I18n.getTrans("i.Search places"));
 				} else {
 					$(currentInput).val("");
-					$(currentInput).attr("placeholder","No results");
+					$(currentInput).attr("placeholder",V.I18n.getTrans("i.Noresultsfound"));
 				}
 			});
 		};

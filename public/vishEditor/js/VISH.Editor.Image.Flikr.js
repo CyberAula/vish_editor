@@ -100,13 +100,14 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 			return;
 		}
 
-		$("#" + containerDivId).addClass("temp_shown");
-		$("#" + carrouselDivId).addClass("temp_shown");
+		V.Editor.Utils.addTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 
 		if(noResults===true){
-			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "No results found" + "</p>");
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.Noresultsfound") + "</p>");
+			V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else if(noResults===false){
-			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + "Error connecting to Flickr server" + "</p>");
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.errorFlickrConnection") + "</p>");
+			V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else {
 			var options = new Array();
 			options['rows'] = 2;
@@ -116,8 +117,7 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 			options.afterCreateCarruselFunction = function(){
 				//We need to wait even a little more that afterCreate callback
 				setTimeout(function(){
-					$("#" + containerDivId).removeClass("temp_shown");
-					$("#" + carrouselDivId).removeClass("temp_shown");
+					V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 				},100);
 			};
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);

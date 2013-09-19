@@ -572,6 +572,18 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 	};
 
+	var addTmpShown = function(els){
+		$(els).each(function(index,el){
+			$(el).addClass("temp_shown");
+		});
+	}
+
+	var removeTmpShown = function(els){
+		$(els).each(function(index,el){
+			$(el).removeClass("temp_shown");
+		});
+	}
+
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
 		addZoomToStyle  			: addZoomToStyle,	
@@ -586,7 +598,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		convertToTagsArray 			: convertToTagsArray,
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
-		loadTab						: loadTab
+		loadTab						: loadTab,
+		addTmpShown					: addTmpShown,
+		removeTmpShown				: removeTmpShown
 	};
 
 }) (VISH, jQuery);

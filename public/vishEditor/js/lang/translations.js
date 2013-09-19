@@ -136,7 +136,12 @@ var i18n =
 				"i.yes"		: "si",
 				"i.Yes"		: "Si",
 				"i.delete"	: "borrar",
-
+				"i.errorViSHConnection"		: "Error al conectarse con el servidor de ViSH",
+				"i.errorFlickrConnection"	: "Error conectando con Flickr",
+				"i.errorLREConnection"		: "Error al conectarse con el repositorio del LRE",
+				"i.errorYoutubeConnection"	: "Error conectando con YouTube",
+				"i.Noresultsfound"			: "No se encontraron resultados",
+				"i.Search places"			: "Buscar lugares",
 
 				"i.walk1"			: "Puedes utilizar el icono tutorial",
 				"i.walk2"			: "durante las secciones de la aplicación para servirte de ayuda a la hora de utilizar el \"ViSH Editor\". De esta manera podrás aprender a utilizar el programa desde sus funciones básicas hasta la publicación final de tu excursión. Pulsa \"Siguiente\" para continuar.",
@@ -421,7 +426,13 @@ var i18n =
 				"i.yes"		: "yes",
 				"i.Yes"		: "Yes",
 				"i.delete"	: "delete",
-				"i.pdfErrorNotification"	: "An error has occurred. Ensure that the PDF file is valid."
+				"i.pdfErrorNotification"	: "An error has occurred. Ensure that the PDF file is valid.",
+				"i.errorViSHConnection"		: "Error connecting to ViSH server",
+				"i.errorFlickrConnection"	: "Error connecting to Flickr",
+				"i.errorLREConnection"		: "Error connecting to the LRE repository",
+				"i.errorYoutubeConnection"	: "Error connecting to YouTube",
+				"i.Noresultsfound"			: "No results found",
+				"i.Search places"			: "Search places"
 			}
 		},
 	 "standalone":
