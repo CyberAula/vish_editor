@@ -12,6 +12,8 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 				var files = $("#"+inputFilesId)[0].files; 
 				if(files.length>0){
 					_insertFile(files[0]);
+				} else {
+					_showNoFileDialog();
 				}
 			});
 			initialized=true;
@@ -38,12 +40,40 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 					var json = JSON.parse(e.target.result);
 					V.Editor.Presentation.previewPresentation(json);
 				} catch (e) {
-					V.Debugging.log("Error reading JSON file");		
+					_showErrorDialog();	
 				}
 			};
 		})(file);
 
 		reader.readAsText(file);
+	}
+
+	var _showErrorDialog = function(){
+		var options = {};
+		options.width = 650;
+		options.height = 190;
+		options.text = V.I18n.getTrans("i.readJSONfileError");
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.Ok");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
+	}
+
+	var _showNoFileDialog = function(){
+		var options = {};
+		options.width = 650;
+		options.height = 190;
+		options.text = V.I18n.getTrans("i.NoJSONFileError");
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.Ok");
+		button1.callback = function(){
+			V.Editor.Tools.Menu.insertJSON();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
 	}
 
 	var exportToJSON = function(successCallback,failCallback){

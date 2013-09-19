@@ -142,6 +142,9 @@ var i18n =
 				"i.errorYoutubeConnection"	: "Error conectando con YouTube",
 				"i.Noresultsfound"			: "No se encontraron resultados",
 				"i.Search places"			: "Buscar lugares",
+				"i.readJSONfileError"		: "Error al leer el fichero JSON",
+				"i.NoJSONFileError"			: "Tienes que seleccionar un archivo para importar en formato JSON",
+				"i.Background"				: "Fondo",
 
 				"i.walk1"			: "Puedes utilizar el icono tutorial",
 				"i.walk2"			: "durante las secciones de la aplicación para servirte de ayuda a la hora de utilizar el \"ViSH Editor\". De esta manera podrás aprender a utilizar el programa desde sus funciones básicas hasta la publicación final de tu excursión. Pulsa \"Siguiente\" para continuar.",
@@ -353,10 +356,10 @@ var i18n =
 				"i.thisIsToolsMenu"		: "Esto es el menú de herramientas",
 				"i.welcomeVishEditor"	: "¡Bienvenidos a ViSH Editor!",
 				"i.Url"					: "Enlace",
-				"i.url"					: "Enlace",
+				"i.url"					: "enlace",
 				"i.Upload"				: "Subir",
 				"i.OwnImages"			: "Subir tus propias imágenes",
-				"i.upload"				: "Subir",
+				"i.upload"				: "subir",
 				"i.Thumbnail"			: "Miniatura",
 				"i.WriteDescription"	: "Escribe una descripción (opcional)",
 				"i.ConvertTo"			: "Convertir a",
@@ -432,7 +435,9 @@ var i18n =
 				"i.errorLREConnection"		: "Error connecting to the LRE repository",
 				"i.errorYoutubeConnection"	: "Error connecting to YouTube",
 				"i.Noresultsfound"			: "No results found",
-				"i.Search places"			: "Search places"
+				"i.Search places"			: "Search places",
+				"i.readJSONfileError"		: "Error reading JSON file",
+				"i.NoJSONFileError"			: "You have to select a file to import in JSON format"
 			}
 		},
 	 "standalone":
