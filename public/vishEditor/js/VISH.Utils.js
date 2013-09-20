@@ -109,7 +109,7 @@ VISH.Utils = (function(V,undefined){
     var _fixTypes = function(presentation){
     	//Presentation type
     	if(typeof presentation.type == "undefined"){
-			presentation.type = V.Constant.STANDARD;
+			presentation.type = V.Constant.PRESENTATION;
 		}
 
 		//Slides type

@@ -348,7 +348,7 @@ var i18n =
 				"i.selectSlides"			: "Seleccionando slides de excursiones externas",
 				"i.selectTheme"			: "Seleccionar tema",
 				"i.selectquiz"			: "Seleccionar Quiz",
-				"i.slidesmenu"		: "Este es el menu de slides",
+				"i.slidesmenu"			: "Este es el menu de slides",
 				"i.Subject"				: "Tema",
 				"i.TeachingGuidelines"  : "Orientaciones didácticas",
 				"i.Title"				: "Título *",
