@@ -195,7 +195,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 			confirmOnExit = true;
 
 			//Allow keyboard events with the first click
-			$(window.document).on('click', function(){
+			$(window.document).on('click', function(ev){
+				if(V.Status.getDevice().browser.name === V.Constant.IE){
+					//Prevent inputs to lose the focus when IE
+					if((ev.target)&&($(ev.target).is(":input"))){
+						return;
+					}
+				}
 				window.focus();
 			});
 
