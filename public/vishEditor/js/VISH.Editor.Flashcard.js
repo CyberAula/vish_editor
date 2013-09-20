@@ -16,7 +16,17 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 				onBackgroundSelected(V.Utils.getSrcFromCSS(slidesetJSON.background));
 			};
 			if(slidesetJSON.pois){
-				_savePoisJSONToDom(scaffoldDOM,slidesetJSON.pois);
+				//Prevent corrupted pois to be drawed
+				var validPois = [];
+				$(slidesetJSON.pois).each(function(index,poi){
+					if((poi.x)&&(poi.y)&&(poi.x<=100)&&(poi.y<=100)){
+						validPois.push(poi);
+					}
+				});
+				
+				if(validPois.length > 0){
+					_savePoisJSONToDom(scaffoldDOM,validPois);
+				}
 			};
 		}
 	};
