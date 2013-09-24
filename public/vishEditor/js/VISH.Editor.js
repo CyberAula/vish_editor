@@ -277,7 +277,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_object_from_url');
+				V.Editor.Utils.loadTab('tab_object_from_web');
 			}
 		});
 		$("a.addvideo").fancybox({
@@ -289,7 +289,7 @@ VISH.Editor = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_video_from_url');
+				V.Editor.Utils.loadTab('tab_video_youtube');
 			}
 		});
 		$("a.addLive").fancybox({

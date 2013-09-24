@@ -87,11 +87,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 					}
 
 					if(slidesAddMode===V.Constant.SLIDESET){
-						//Hide smartcards, show templates only
-						$(".tab_slides_smartcards").hide();
+						//Show slides only
 						$("#tab_pdfex").parent().hide();
 						$("#tab_presentations_repo").parent().hide();
 						$("#tab_smartcards_repo").parent().hide();
+						$("#tab_json_file").parent().hide();
+
+						//Inside slides, show templates only
+						$(".tab_slides_smartcards").hide();
 					}
 
 					var clickedZoneId = $(data).attr("zone");
@@ -100,9 +103,12 @@ VISH.Editor.Events = (function(V,$,undefined){
 				},
 				"onClosed"  : function(data) {
 					$(".tab_slides_smartcards").show();
+
 					$("#tab_pdfex").parent().show();
 					$("#tab_presentations_repo").parent().show();
 					$("#tab_smartcards_repo").parent().show();
+					$("#tab_json_file").parent().show();
+
 					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
 			});	

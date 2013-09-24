@@ -637,7 +637,7 @@ input.slider_range_input {
 	width: 70px;
 }
 
-#addSlideButton span, #importButton span {
+#addSlideButton span, #importButton span, #addSlideButtonOnSubslides span, #importButtonOnSubslides span {
 	margin-left: 3px;
 }
 
@@ -914,7 +914,7 @@ div.vezone[tooltip='true'][size='large'] {
 	font-family: 'Open Sans', sans-serif;
 	margin-left: 70px;
 	margin-top: 15px;
-	font-size: 20px;
+	font-size: 19px;
 	color: #9B999D;
 }
 
