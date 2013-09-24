@@ -1325,74 +1325,73 @@
 
 		<!-- Help in standard slide -->
 		<ol id="sslide_help" class="joyRideTipContent">
-		<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
-		<h2 i18n-key="i.AddSlideContent">Adding content to a slide</h2>
-		<p>
-		<span i18n-key="i.walk15">To fill the slide you chosen with content, you can click the grey spaces in the template.If you click on one of them the content icons will appear:</span>
-		<ul>
-			<li>
-			<h1 i18n-key="i.Text">Text</h1>
-			<img id="textimagetut" src="/vishEditor/images/zonethumbs/text_small.png"/>
-			</li>
+			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="tut_template_full tut_without_arrow" data-options="tipLocation:none">
+				<h2 i18n-key="i.walkSlide1_1">Adding content to a slide</h2>
+				<p><span i18n-key="i.walkSlide1_2">To add content to a slide, first click on any of the available editable areas of the slide. These areas have a dotted border and a text that says</span> "<i i18n-key="i.ZoneTooltip">Click here to add content</i>". <span i18n-key="i.walkSlide1_3">Once you have selected one of these areas, several icons will appear inside.</span> <span i18n-key="i.walkSlide1_4">Each of these icons allows you to add a different type of content.</span></p>
+				
+				<table class="contentIconsWalkthrough">
+					<tr>
+						<td>
+							<img src="/vishEditor/images/zonethumbs/text.png"/>
+							<h1 i18n-key="i.Text">Text</h1>
+						</td>
+						<td>
+							<img src="/vishEditor/images/zonethumbs/video.png"/>
+							<h1 i18n-key="i.Videos">Videos</h1>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="/vishEditor/images/zonethumbs/image.png"/>
+							<h1 i18n-key="i.Images">Images</h1>
+						</td>
+						<td>
+							<img src="/vishEditor/images/zonethumbs/quiz.png"/>
+							<h1 i18n-key="i.QuizzesTrans">Quizzes</h1>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="/vishEditor/images/zonethumbs/object.png"/>
+							<h1 i18n-key="i.Objects">Objects</h1>
+						</td>
+						<td>
+							<!-- <img src="/vishEditor/images/zonethumbs/live.png"/>
+							<h1 i18n-key="i.Live">Live</h1> -->
+						</td>
+					</tr>
+				</table>
 
-			<li>
-			<h1 i18n-key="i.Images">Images</h1>
-			<img id="imageimagetut" src="/vishEditor/images/zonethumbs/image_small.png"/>
-			</li>
+				<p class="tut_withoutbottomspace">
+					<span i18n-key="i.walkSlide1_5">If you select the text icon, a text toolbar will appear on the top, allowing you to define among others the typeface, text style, alignment and size.</span>
+				</p>
+				<img src="/vishEditor/images/textedimg.png"/>
 
-			<li>
-			<h1 i18n-key="i.objectContent">Object</h1>
-			<img id="objectimagetut" src="/vishEditor/images/zonethumbs/object_small.png"/>
-			</li>
+				<p>
+					<span i18n-key="i.walkSlide1_6">If you select the quizzes icon, a new screen will pop up for you to choose the type of quiz (multiple choice, true/false, ...) to add.</span>
+				</p>
 
-			<li class="l11">
-			<h1 i18n-key="i.Videos">Videos</h1>
-			<img id="videoimagetut" src="/vishEditor/images/zonethumbs/video_small.png"/>
-			</li>
+				<p>
+					<span i18n-key="i.walkSlide1_7">In any other case (images, videos, ...), a new screen will pop up for you to choose the content to add. You can add a resource via its URL, uploading a file or by searching in external content providers such as Flickr or YouTube.</span>
+				</p>
 
-			<li class="l22">
-			<h1 i18n-key="i.Live">Live</h1>
-			<img id="liveimagetut" src="/vishEditor/images/zonethumbs/live_small.png"/>
+				<p>
+					<span i18n-key="i.walkSlide1_8">Once you have add content to an area, you can delete it by using the "deleting content" icon</span>: <img id="deletecontenttut" src="/vishEditor/images/icons/delete_content.png"/>
+				</p>
+
+				<p>
+					<span i18n-key="i.walkSlide1_9">Finally, if you want to remove the entire slide, you can do it using the "delete slide" icon</span>: <img id="deleteslidetut" src="/vishEditor/images/icons/ve_delete.png"/>
+				</p>
+
+				<p class="tut_space">&nbsp;</p>
+				<p class="tut_space">&nbsp;</p>
 			</li>
-			
-			<li class="l33">
-			<h1 i18n-key="i.Quiz">Quiz</h1>
-			<img id="quizimagetut" src="/vishEditor/images/zonethumbs/quiz_small.png"/>
-			</li>
-		</ul>
-		<span i18n-key="i.walk16">
-		If you click one of these icons (depending on which content do you choose to fill the grey space) another
-		window will pop-up to help you, with the exception of the text icon, which will make appear a text toolbar at
-		the top of the application that will help you defining the style for your text.
-		</span>
-		</p>
-		<p>
-		<img id="textedimagetut" src="/vishEditor/images/textedimg.png">
-		</p>
-		<p>
-			<span i18n-key="i.walk17">Once, you fill the grey space with content, you can edit whenever you want just by clicking on it again, and in case you want to delete the content you can use the icon at the right bottom corner on your space, and if you want to delete a slide you can use the close icon to do the task at the right upper corner:</span>
-			</br>
-			<ul>
-				<li>
-					<h1 i18n-key="i.deleteContent">Delete Content</h1>
-					<img id="deleteimagetut" src="/vishEditor/images/icons/del_content_small.png"/>
-				</li>
-				<li>
-					<h1 i18n-key="i.closeOrDelete">Close or Delete</h1>
-					<img id="delimagetut" src="/vishEditor/images/icons/ve_delete.png"/>
-				</li>
-			</ul>
-		</p>
-		<p>
-			<span i18n-key="i.walk19">If you need any help with any of the content you can always use the help icons in their respective windows.</span>
-		</p>
-		</li>
 		</ol>
 
 
 		<!-- Help in Flashcards -->
 		<ol id="fc_help" class="joyRideTipContent">
-			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template_full tut_without_arrow" data-options="tipLocation:none">
 				<h2>Flashcards</h2>
 				<p i18n-key="i.walk56">
 					A flashcard, is an application that will help you represent your excursion as an infographic, using an image to represent the concept of the excursion and mark zones of the image for the user to interact with them in order to see the pages of the excursion.
@@ -1417,7 +1416,7 @@
 
 		<!-- Help in Virtual Tours -->
 		<ol id="vt_help" class="joyRideTipContent">
-			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template tut_without_arrow" data-options="tipLocation:none">
+			<li data-id="toolbar_wrapper" data-text="Close" i18n-key="i.Close" class="custom tut_template_full tut_without_arrow" data-options="tipLocation:none">
 				<h2>Virtual Tours</h2>
 				<p i18n-key="i.walk79">A virtual tour is a represententation of your excursion as a map.</p>
 				<p i18n-key="i.walk80">Just "drag and drop" the arrows in the lower zone of the editor (on top of the slides) into the map.</p>

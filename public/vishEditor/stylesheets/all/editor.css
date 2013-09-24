@@ -1839,10 +1839,21 @@ div.object_wrapper {
 		width: 600px !important;
 }
 
+.tut_template_full {
+	top: 70px;
+	left: 245px;
+	width: 900px;
+}
+
 p.tut_space {
 	margin: 0px;
 	padding: 0px;
 	height: 10px;
+}
+
+p.tut_withoutbottomspace {
+	margin-bottom: 3px;
+	padding-bottom: 0px;
 }
 
 p.tut_space_small {
@@ -1906,6 +1917,30 @@ p.tut_space_big {
 .tut_savedetails span.joyride-nub {
 	bottom: -28px;
 	left: 341px;
+}
+
+table.contentIconsWalkthrough {
+	width: 70%;
+	margin-left: 20%;
+	text-align: left;
+}
+
+table.contentIconsWalkthrough img {
+	width: 35px;
+}
+
+table.contentIconsWalkthrough h1 {
+	display: inline;
+	position: absolute;
+}
+
+table.contentIconsWalkthrough td {
+	width: 50%;
+}
+
+#deletecontenttut, #deleteslidetut {
+	margin-left: 5px;
+	max-height: 30px;
 }
 
 .tut_welcome_exc {
@@ -1977,62 +2012,11 @@ p.tut_space_big {
 	top: 470px;
 	right: 319px;
 }
+
 .tut_templatesel {
 	top: 210px;
 	left: 349px;
 	width: 487px;
-}
-
-.tut_template {
-	top: 83px;
-	left: 297px;
-	width: 796px;
-}
-
-#textimagetut {
-	padding-left: 200px;
-	position:absolute;
-	margin-top: -50px;
-}
-
-#imageimagetut {
-	padding-left: 200px;
-	position:absolute;
-	margin-top: -50px;
-}
-#objectimagetut {
-	padding-left: 200px;
-	position:absolute;
-	margin-top: -50px;
-}
-#videoimagetut {
-    margin-top: -48px;
-    padding-left: 200px;
-    position: absolute;
-}
-
-#deleteimagetut {
-	margin-top: -42px;
-	padding-left: 200px;
-	position:absolute;
-}
-
-#delimagetut {
-	margin-top: -40px;
-	padding-left: 200px;
-	position: absolute;
-}
-
-#textedimagetut {
-	margin-left: 50px;
-	margin-top: 5px;
-}
-
-#contentusetut {
-    left: 405px;
-    position: absolute;
-    top: 378px;
-    width: 341px;
 }
 
 .tut_fancy_index {

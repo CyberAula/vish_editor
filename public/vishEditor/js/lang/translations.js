@@ -145,6 +145,23 @@ var i18n =
 				"i.readJSONfileError"		: "Error al leer el fichero JSON",
 				"i.NoJSONFileError"			: "Tienes que seleccionar un archivo para importar en formato JSON",
 				"i.Background"				: "Fondo",
+				"i.Quiz"					: "Quiz",
+				"i.Quizzes"					: "Quizzes",
+				"i.QuizzesTrans"			: "Quizzes (Cuestionarios)",
+
+				"i.walkSlide1_1"	: "Añadiendo contenido a una diapositiva",
+				"i.walkSlide1_2"	: "Para añadir contenido a una diapositiva, primero tienes que pulsar sobre cualquiera de las areas editables disponibles en ella. Estas áreas tienen un borde punteado y un texto que dice ",
+				"i.walkSlide1_3"	: "Una vez que hayas seleccionado una de estas áreas, aparecerán varios iconos dentro.",
+				"i.walkSlide1_4"	: "Cada uno de estos iconos permite añadir un tipo de contenido diferente. ",
+				"i.walkSlide1_5"	: "Si seleccionas el icono de texto, una barra de herramientas de texto aparecerá en la zona superior, permitiendo definir, entre otras características, la tipografía, el estilo y el tamaño del texto.",
+				"i.walkSlide1_6"	: "Si seleccionas el icono de quizzes (cuestionarios), aparecerá una nueva pantalla para que elijas el tipo de cuestionario (respuesta múltiple, verdadero/falso) a añadir.",
+				"i.walkSlide1_7"	: "En cualquier otro caso (imágenes, vídeos, ...), una nueva pantalla aparecerá para que elijas el contenido a añadir. Puedes añadir un recurso mediante su URL, subiendo un archivo propio o buscando en proveedores externos de contenidos como Flickr o YouTube.",
+				"i.walkSlide1_8"	: "Una vez que hayas añadido contenido a un área, puedes borrarlo empleando el icono de \"borrar contenido\"",
+				"i.walkSlide1_9"	: "Finalmente, si quieres borrar la diapositiva entera, puedes hacerlo usando el icono de \"borrar diapositiva\"",
+				
+
+			
+
 
 				"i.walk1"			: "Puedes utilizar el icono tutorial",
 				"i.walk2"			: "durante las secciones de la aplicación para servirte de ayuda a la hora de utilizar el \"ViSH Editor\". De esta manera podrás aprender a utilizar el programa desde sus funciones básicas hasta la publicación final de tu excursión. Pulsa \"Siguiente\" para continuar.",
@@ -317,8 +334,8 @@ var i18n =
 				"i.vídeos"					: "vídeos",
 				"i.Text"					: "Texto",
 				"i.Object"					: "Objeto",
+				"i.Objects"					: "Objetos",
 				"i.Live"					: "Contenidos en directo",
-				"i.writeTitle"				: "Escribamos un título (obligatorio)",
 				"i.no"						: "no",
 				"i.No"						: "No",
 				"i.next"					: "siguiente",
@@ -393,7 +410,7 @@ var i18n =
 				"i.wysiwyg.addurl"		: "Añadir enlace",
 				"i.exitConfirmation"	: "Vas a abandonar esta pagina. Se perderán todos los cambios que no hayas salvado.",
 				"i.Remove"				: "Borrar",
-				"i.ZoneTooltip"			: "Click aquí para añadir contenido",
+				"i.ZoneTooltip"			: "Haz click aquí para añadir contenido",
 				"i.pNotValid"			: "Este recurso no puede ser abierto porque está dañado o no es compatible con la versión actual de ViSH Editor.",
 				"i.PDFNotValid"			: "Se ha producido un error. Asegúrese de que el fichero PDF seleccionado es correcto."
 			},
