@@ -2,6 +2,46 @@ var i18n =
 	{ "vish":
 		{ "es":
 			{
+				"i.walkWelcome1_1"	: "",
+				"i.walkWelcome1_2"	: "",
+				"i.walkWelcome1_3"	: "",
+				"i.walkWelcome2_1"	: "",
+				"i.walkWelcome2_2"	: "",
+				"i.walkWelcome2_3"	: "",
+				"i.walkWelcome3_1"	: "",
+				"i.walkWelcome3_2"	: "",
+				"i.walkWelcome3_3"	: "",
+				"i.walkWelcome4_1"	: "",
+				"i.walkWelcome4_2"	: "",
+				"i.walkWelcome4_3"	: "",
+				"i.walkWelcome5_1"	: "",
+				"i.walkWelcome5_2"	: "",
+				"i.walkWelcome5_3"	: "",
+				"i.walkWelcome6_1"	: "",
+				"i.walkWelcome6_2"	: "",
+				"i.walkWelcome6_3"	: "",
+				"i.walkWelcome7_1"	: "",
+				"i.walkWelcome7_2"	: "",
+				"i.walkWelcome7_3"	: "",
+				"i.walkWelcome8_1"	: "",
+				"i.walkWelcome8_2"	: "",
+				"i.walkWelcome8_3"	: "",
+				"i.walkWelcome9_1"	: "",
+				"i.walkWelcome9_2"	: "",
+				"i.walkWelcome9_3"	: "",
+				"i.walkWelcome10_1"	: "",
+				"i.walkWelcome10_2"	: "",
+				"i.walkWelcome10_3"	: "",
+				"i.walkWelcome11_1"	: "",
+				"i.walkWelcome11_2"	: "",
+				"i.walkWelcome11_3"	: "",
+				"i.walkWelcome12_1"	: "",
+				"i.walkWelcome12_2"	: "",
+				"i.walkWelcome12_3"	: "",
+				"i.walkWelcome13_1"	: "",
+				"i.walkWelcome13_2"	: "",
+				"i.walkWelcome13_3"	: "",
+
 				"i.walkSettings1_1"	: "Bienvenido a la pantalla de Ajustes",
 				"i.walkSettings1_2"	: "Aquí puedes especificar información acerca de tu Excursión Virtual.",
 				"i.walkSettings1_3"	: "El título y el avatar (una imagen que identifica tu excursión en la plataforma ViSH) son campos obligatorios, de modo que debes rellenarlos antes de publicar la excursión.",
@@ -158,8 +198,6 @@ var i18n =
 				"i.walkSlide1_7"	: "En cualquier otro caso (imágenes, vídeos, ...), una nueva pantalla aparecerá para que elijas el contenido a añadir. Puedes añadir un recurso mediante su URL, subiendo un archivo propio o buscando en proveedores externos de contenidos como Flickr o YouTube.",
 				"i.walkSlide1_8"	: "Una vez que hayas añadido contenido a un área, puedes borrarlo empleando el icono de \"borrar contenido\"",
 				"i.walkSlide1_9"	: "Finalmente, si quieres borrar la diapositiva entera, puedes hacerlo usando el icono de \"borrar diapositiva\"",
-				
-
 			
 
 

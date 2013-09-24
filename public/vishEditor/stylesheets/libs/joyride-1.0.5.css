@@ -170,11 +170,11 @@
 	top: 10px;
 	height: 22px;
 	width: 22px;
-	background-image:url(../../images/icons/ve_delete.png);
+	background-image:url(../../images/icons/ve_close.png);
 }
 
 .joyride-close-tip:hover {
-	background-image: url(../../images/icons/ve_delete_hover.png);
+	background-image: url(../../images/icons/ve_close_hover.png);
 }
 
 /* Mobile */

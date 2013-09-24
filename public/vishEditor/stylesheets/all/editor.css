@@ -1832,11 +1832,17 @@ div.object_wrapper {
 }
 
 .tut_width500 {
-		width: 500px !important;
+	width: 500px !important;
+}
+
+.tut_width500_center {
+	width: 500px !important;
+	left: 50%;
+	margin-left: -250px;
 }
 
 .tut_width600 {
-		width: 600px !important;
+	width: 600px !important;
 }
 
 .tut_template_full {
@@ -1949,22 +1955,14 @@ table.contentIconsWalkthrough td {
 	width: 402px;
 }
 
-.imagetutflash {
-	position: absolute;
-	top:98px;
-	left: 420px;
-}
-
-.imagetutflash2 {
-	position: absolute;
-	top:202px;
-	left:399px;
-}
-
 .tut_menubar {
-	top: 58px;
-	left: 180px;
-	width: 358px;
+	top: 62px !important;
+	left: 189px !important;
+}
+
+.tut_menubar span.joyride-nub.top {
+	left: 20px;
+	top: -29px;
 }
 
 .tut_menubar2 {
@@ -1979,6 +1977,11 @@ table.contentIconsWalkthrough td {
 	border-top-color: #0066ff;
 }
 
+.imagetutflash {
+	position: absolute;
+	top:98px;
+	left: 420px;
+}
 
 .tut_helps {
 	top: 113px;
@@ -2009,8 +2012,8 @@ table.contentIconsWalkthrough td {
 }
 
 .tut_addslide {
-	top: 470px;
-	right: 319px;
+	top: 117px !important;
+	margin-left: 1px;
 }
 
 .tut_templatesel {
