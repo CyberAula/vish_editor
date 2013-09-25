@@ -161,6 +161,7 @@ ul.tagit input[type="text"] {
     margin: 0 !important;
     padding: 0 !important;
     width: inherit !important;
+    min-width: 190px !important;
     outline: none;
 }
 
