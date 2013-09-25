@@ -135,7 +135,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				event.preventDefault();
 			} else {
 				if (options) {
-					var description = &quot;Uploaded by &quot; + V.User.getName() + &quot; via Vish Editor&quot;
+					var description = &quot;Uploaded by &quot; + V.User.getName() + &quot; via ViSH Editor&quot;
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[description]&#x27;]&quot;).val(description);
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(V.User.getId());
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(V.User.getToken());

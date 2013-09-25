@@ -24,7 +24,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	//Make init idempotent
 	var initialized = false;
 
-	//Prevent updateInterface with same params (Make Vish Viewer more efficient)
+	//Prevent updateInterface with same params (Make ViSH Viewer more efficient)
 	var _lastWidth;
 	var _lastHeight;
 

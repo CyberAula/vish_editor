@@ -1909,12 +1909,6 @@ p.tut_space_big {
 	max-width: 90%;
 }
 
-.tut_themes {
-	top: 78px;
-	left: 396px;
-	width: 446px;
-}
-
 .tut_savedetails {
 	top: 452px;
 	left: 394px;
@@ -1977,15 +1971,15 @@ table.contentIconsWalkthrough td {
 	border-top-color: #0066ff;
 }
 
+#tutMenuImage {
+	float: left;
+	padding-right: 30px;
+}
+
 .imagetutflash {
 	position: absolute;
 	top:98px;
 	left: 420px;
-}
-
-.tut_helps {
-	top: 113px;
-	left: 793px;
 }
 
 .tut_savepresentation {
@@ -2007,8 +2001,27 @@ table.contentIconsWalkthrough td {
 	left: -28px;
 }
 
-.tut_toolbar_options {
-	width: 431px;
+.tut_toolbar_tools {
+	width: 490px !important;
+	left: 695px !important;
+}
+
+.tut_toolbar_tools img {
+	max-height: 30px;
+}
+
+.tut_toolbar_tools table p {
+	margin-left: 5px;
+}
+
+.tut_menubuttonpresentation {
+	width: 550px !important;
+	top: 57px;
+	left: 49px;
+}
+
+.tut_contextualhelp td.tut_contextualhelp_icon {
+	padding-left: 30px;
 }
 
 .tut_addslide {
@@ -2175,92 +2188,6 @@ p.draggable_number {
 	overflow: visible !important;
 }
 
-.l11 {
-	left: 400px;
-	position: absolute;
-	top: 88px;
-}
-
-#objectimagetut {
-	margin-top: -48px;
-	padding-left: 200px;
-	position: absolute;
-}
-
-.l22 {
-	left: 400px;
-	position: absolute;
-	top: 123px;
-}
-
-#quizimagetut {
-	margin-top: -48px;
-	padding-left: 200px;
-	position: absolute;
-}
-
-.l33 {
-	left: 400px;
-	position: absolute;
-	top: 159px;
-}
-
-#liveimagetut {
-	margin-top: -48px;
-	padding-left: 200px;
-	position: absolute;
-}
-
-.tut_menubuttonpresentation span.joyride-nub {
-	bottom: -28px;
-	left: 37px;
-}
-
-.imagetut {
-	float: left;
-	padding-right: 74px;
-}
-
-.tutaddlink {
-    left: 226px;
-    position: absolute;
-    top: 100px;
-    width: 26px;
-}
-
-.tutresize {
-    left: 246px;
-    position: absolute;
-    top: 136px;
-    width: 25px;
-}
-
-.tutresize2 {
-    left: 212px;
-    position: absolute;
-    top: 136px;
-    width: 25px;
-}
-
-.tuttext {
-	left: 208px;
-	position: absolute;
-	top: 171px;
-	width: 204px;
-}
-
-.tutflashbg {
-    left: 258px;
-    position: absolute;
-    top: 206px;
-}
-
-.tut_themes {
-	left: 367px;
-	position: absolute;
-	top: 265px;
-}
-
 #menuButton {
 	border: none;
 }
@@ -2279,14 +2206,6 @@ p.draggable_number {
 
 .input_text_excursions {
 	width: 345px !important;
-}
-
-img#message2img {
-	padding-right: 10px;
-}
-
-img#message3img {
-	padding-right: 10px;
 }
 
 

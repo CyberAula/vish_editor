@@ -67,7 +67,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Presentation.init(presentation.slides);
 		V.Quiz.init();
 
-		//Init Vish Editor Addons
+		//Init ViSH Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}

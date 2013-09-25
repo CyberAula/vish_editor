@@ -136,7 +136,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Clipboard.init();
 		V.Editor.Events.init();
 		
-		//Init Vish Editor Addons
+		//Init ViSH Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
@@ -551,7 +551,7 @@ VISH.Editor = (function(V,$,undefined){
 		//Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
-		// V.Debugging.log("\n\nVish Editor save the following presentation:\n");
+		// V.Debugging.log("\n\nViSH Editor save the following presentation:\n");
 		// V.Debugging.log(JSON.stringify(presentation));
 
 		//Store saved presentation

@@ -1,4 +1,4 @@
-# Generate documentation for Vish Editor in the /doc folder
+# Generate documentation for ViSH Editor in the /doc folder
 # YUIDoc - Javascript Documentation Tool
 # http://yui.github.com/yuidoc/
 #

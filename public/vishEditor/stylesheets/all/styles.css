@@ -1006,19 +1006,12 @@ div.quizQr > table {
 /*
  * TUTORIALS
  */
-.tut_themes {
-	left: 250px;
-	position: absolute;
-	top: 265px;
-}
-
 .tut_quiz {
 	width: 64%;
 	left: 21%;
 	position: absolute;
 	top: 25%;
 }
-
 
 .joyride-tip-guide h2 {
 	font-size: 1.3em !important;

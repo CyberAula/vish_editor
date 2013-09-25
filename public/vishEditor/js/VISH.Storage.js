@@ -20,7 +20,7 @@ VISH.Storage = (function(V,$,undefined){
 
 	/*
 	 * Generic function to store values
-	 * Persistent===false indicate that the stored value will be lost when Vish Editor version upgrading.
+	 * Persistent===false indicate that the stored value will be lost when ViSH Editor version upgrading.
 	 */
 	var add = function(key,value,persistent){
 		if(!_initialized){

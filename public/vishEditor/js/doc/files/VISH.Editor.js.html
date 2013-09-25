@@ -226,7 +226,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Clipboard.init();
 		V.Editor.Events.init();
 		
-		&#x2F;&#x2F;Init Vish Editor Addons
+		&#x2F;&#x2F;Init ViSH Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
@@ -367,7 +367,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_object_from_url&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_object_from_web&#x27;);
 			}
 		});
 		$(&quot;a.addvideo&quot;).fancybox({
@@ -379,7 +379,7 @@ VISH.Editor = (function(V,$,undefined){
 			&quot;onStart&quot;  : function(data) {
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_video_from_url&#x27;);
+				V.Editor.Utils.loadTab(&#x27;tab_video_youtube&#x27;);
 			}
 		});
 		$(&quot;a.addLive&quot;).fancybox({
@@ -641,7 +641,7 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F;Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
-		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nVish Editor save the following presentation:\n&quot;);
+		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nViSH Editor save the following presentation:\n&quot;);
 		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
 
 		&#x2F;&#x2F;Store saved presentation

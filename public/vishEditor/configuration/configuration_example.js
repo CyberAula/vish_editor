@@ -1,5 +1,5 @@
 /*
- * Configure Standalone Vish Editor
+ * Configure Standalone ViSH Editor
  */
 
 var options;
@@ -130,7 +130,7 @@ var getOptions = function(){
 		}
 		
 		if((typeof window != "undefined")&&(window.console) && (window.console.log)){
-			console.log("Vish Editor Configured Options")
+			console.log("ViSH Editor Configured Options")
 			console.log(options)
 		}
 

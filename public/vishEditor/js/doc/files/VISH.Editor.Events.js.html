@@ -177,11 +177,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 					}
 
 					if(slidesAddMode===V.Constant.SLIDESET){
-						&#x2F;&#x2F;Hide smartcards, show templates only
-						$(&quot;.tab_slides_smartcards&quot;).hide();
+						&#x2F;&#x2F;Show slides only
 						$(&quot;#tab_pdfex&quot;).parent().hide();
 						$(&quot;#tab_presentations_repo&quot;).parent().hide();
 						$(&quot;#tab_smartcards_repo&quot;).parent().hide();
+						$(&quot;#tab_json_file&quot;).parent().hide();
+
+						&#x2F;&#x2F;Inside slides, show templates only
+						$(&quot;.tab_slides_smartcards&quot;).hide();
 					}
 
 					var clickedZoneId = $(data).attr(&quot;zone&quot;);
@@ -190,9 +193,12 @@ VISH.Editor.Events = (function(V,$,undefined){
 				},
 				&quot;onClosed&quot;  : function(data) {
 					$(&quot;.tab_slides_smartcards&quot;).show();
+
 					$(&quot;#tab_pdfex&quot;).parent().show();
 					$(&quot;#tab_presentations_repo&quot;).parent().show();
 					$(&quot;#tab_smartcards_repo&quot;).parent().show();
+					$(&quot;#tab_json_file&quot;).parent().show();
+
 					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
 			});	
@@ -285,7 +291,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 			confirmOnExit = true;
 
 			&#x2F;&#x2F;Allow keyboard events with the first click
-			$(window.document).on(&#x27;click&#x27;, function(){
+			$(window.document).on(&#x27;click&#x27;, function(ev){
+				if(V.Status.getDevice().browser.name === V.Constant.IE){
+					&#x2F;&#x2F;Prevent inputs to lose the focus when IE
+					if((ev.target)&amp;&amp;($(ev.target).is(&quot;:input&quot;))){
+						return;
+					}
+				}
 				window.focus();
 			});
 

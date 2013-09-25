@@ -2,7 +2,7 @@ var samples_vtour = {
 	//Basic Metadata
 	"id" 			: "1987",
 	"title" 		: "Toledo Virtual Tour",
-	"description" 	: "Virtual Tour example with Vish Editor",
+	"description" 	: "Virtual Tour example with ViSH Editor",
 	"author" 		: "Aldo",
 	"avatar" 		: "/assets/logos/original/excursion-10.png",
 	"tags"			: ["Samples","Test","Development","Virtual Tour"],
@@ -11,7 +11,7 @@ var samples_vtour = {
 	"subject" 		: "Media Education",
 	"educational_objectives" 	: "Amazing educational Virtual Tour",
 	"adquired_competencies" 	: "Pupils will be smarter",
-	//Vish Editor data
+	//ViSH Editor data
 	"type"			: "VirtualTour",
 	"theme"	 		: "theme1",
 	"language" 		: "en",

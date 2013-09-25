@@ -1,5 +1,5 @@
 /*
- * Debug, test and utility functions for Vish Editor
+ * Debug, test and utility functions for ViSH Editor
  */
 VISH.Debugging = (function(V,$,undefined){
 	
