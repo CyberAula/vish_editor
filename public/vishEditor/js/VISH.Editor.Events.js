@@ -309,22 +309,27 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		//Help inserting objects [URL, Upload, Repository, Snapshot]
 		$(document).on('click','#tab_object_from_url_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_id_help', 'top');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_from_web_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
+			// V.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_upload_help', function(){
-			V.Tour.startTourWithId('upload_object_form_help', 'top');
+			// V.Tour.startTourWithId('upload_object_form_help', 'top');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_repo_help', function(){
-			V.Tour.startTourWithId('search_object_help', 'bottom');
+			// V.Tour.startTourWithId('search_object_help', 'bottom');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_lre_help', function(){
-			V.Tour.startTourWithId('search_lre_object_help', 'bottom');
+			// V.Tour.startTourWithId('search_lre_object_help', 'bottom');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_snapshot_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
+			// V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		
 		//Help inserting videos [URL, Repository, YouTube, Vimeo]
