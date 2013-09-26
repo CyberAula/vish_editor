@@ -1844,6 +1844,12 @@ div.object_wrapper {
 	margin-left: -300px;
 }
 
+.tut_width700_center {
+	width: 700px !important;
+	left: 50%;
+	margin-left: -350px;
+}
+
 .tut_template_full {
 	top: 70px;
 	left: 245px;
