@@ -75,7 +75,16 @@ VISH.Editor.Image.LRE = (function(V,$,undefined){
 
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
-		_drawData();
+
+		// LRE can return results that are not actually images
+		// So, we have to check the real number of loaded images
+		var loadedImages = $("#" + carrouselDivId + " div:not(#loading_fancy)");
+		var emptyResults = ((loadedImages)&&($(loadedImages).length===0));
+		if(emptyResults){
+			_drawData(true);
+		} else {
+			_drawData();
+		}
 	}
 
 	var _onSearchFinished = function(){

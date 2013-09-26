@@ -70,6 +70,12 @@
 	right: 10px !important;
 }
 
+.joyride-tip-guide span.joyride-nub.right.top {
+	border-bottom-color:  #4866FA !important;
+	border-right-color: transparent !important;
+	top: -29px !important;
+	right: 8px !important;
+}
 
 
 /* Typography */

@@ -86,7 +86,36 @@ var i18n =
 				"i.walkSlide1_7"	: "En cualquier otro caso (imágenes, vídeos, ...), una nueva pantalla aparecerá para que elijas el contenido a añadir. Puedes añadir un recurso mediante su URL, subiendo un archivo propio o buscando en proveedores externos de contenidos como Flickr o YouTube.",
 				"i.walkSlide1_8"	: "Una vez que hayas añadido contenido a un área, puedes borrarlo empleando el icono de \"borrar contenido\"",
 				"i.walkSlide1_9"	: "Finalmente, si quieres borrar la diapositiva entera, puedes hacerlo usando el icono de \"borrar diapositiva\"",
-					
+
+				"i.walkImagesMain_1"		: "Añadiendo imágenes",
+				"i.walkImagesMain_2"		: "Esta pantalla te permite añadir imágenes a la diapositiva. Puedes seleccionar la imagen a añadir de diferentes fuentes:",
+				"i.walkImagesMain_Url"		: "añadir una imagen pegando un enlace (url)",
+				"i.walkImagesMain_Upload"	: "sube una imagen propia de tu ordenador",
+				"i.walkImagesMain_ViSH"		: "busca imágenes en el repositorio del ViSH",
+				"i.walkImagesMain_Flickr"	: "busca imágenes en Flickr",
+				"i.walkImagesMain_LRE"		: "busca imágenes en el repositorio del LRE",
+				"i.walkImagesUrl1_1"		: "Ahora te encuentras en la pestaña de enlace, haz click en \"Siguiente\" para continuar.",
+				"i.walkImagesUrl2_1"		: "Añadiendo imágenes por enlace (url)",
+				"i.walkImagesUrl2_2"		: "Si quieres añadir una imagen mediante su url, debes escribir o pegar la url de la imagen en esta caja de texto, por ejemplo:",
+				"i.walkImagesUrl2_3"		: "Practicamente todos los formatos de imágenes (jpg, png, gif, tiff, bmp, ...) están soportados.",
+				"i.walkImagesUrl3_1"		: "Previsualizar la imagen antes de añadirla",
+				"i.walkImagesUrl3_2"		: "Después de escribir o pegar el enlace (url) de la imagen deseada debes de hacer click en este botón de \"Vista previa\". Después de eso, se mostrará una previsualización de la imagen y aparecerá un nuevo botón \"Añadir Contenido\". Para terminar y añadir la imagen a la diapositiva, debes hacer click en el botón \"Añadir Contenido\".",
+				"i.walkImagesUpload1_1"		: "Ahora te encuentras en la pestaña de subida de imágenes, haz click en \"Siguiente\" para continuar.",
+				"i.walkImagesUpload2_1"		: "Subiendo imágenes",
+				"i.walkImagesUpload2_2"		: "Aquí puedes añadir una imagen propia de tu dispositivo. Para ello, en primer lugar debes seleccionar la imagen que quieras empleando el selector de ficheros. Opcionalmente, puedes escribir etiquetas para clasificar la imagen seleccionada. Después debes de hacer click en el botón \"subir\" para subir la imagen a la plataforma ViSH. Cuando la imagen se haya subido, se mostrará una vista previa de la misma en la parte inferior. Finalmente, para añadir la imagen a la diapositiva debes de pulsar sobre el botón \"Añadir Contenido\".",
+				"i.walkImagesViSH1_1"		: "Ahora te encuentras en la pestaña de ViSH, haz click en \"Siguiente\" para continuar.",
+				"i.walkImagesViSH2_1"		: "Buscar imágenes en el repositorio del ViSH",
+				"i.walkImagesViSH2_2"		: "Esta pantalla te permite buscar imágenes en el repositorio del ViSH (http://vishub.org).",
+				"i.walkImagesSearch1"		: "Escribe el nombre que quieras buscar dentro de la caja de texto, por ejemplo",
+				"i.nature"					: "naturaleza",
+				"i.walkImagesSearch2"		: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las imágenes encontradas serán mostradas en esta pantalla. Para añadir cualquiera de ellas a la diapositiva, simplemente haz click sobre la que desees.",
+				"i.walkImagesFlickr1_1"		: "Ahora te encuentras en la pestaña de Flickr, haz click en \"Siguiente\" para continuar.",
+				"i.walkImagesFlickr2_1"		: "Buscar imágenes en Flickr",
+				"i.walkImagesFlickr2_2"		: "Esta pantalla te permite buscar imágenes en Flickr.",
+				"i.walkImagesLRE1_1"		: "Ahora te encuentras en la pestaña del repositorio del LRE, haz click en \"Siguiente\" para continuar.",
+				"i.walkImagesLRE2_1"		: "Buscar imágenes en el repositorio del LRE",
+				"i.walkImagesLRE2_2"		: "Esta pantalla te permite buscar imágenes en el repositorio del LRE.",
+				
 				"i.Language"				: "Idioma",
 				"i.Context"					: "Contexto",
 				"i.Age range"				: "Rango de edad",
@@ -267,7 +296,6 @@ var i18n =
 				"i.AddslideshowPDF"		: "Añadir presentación de un fichero PDF",
 				"i.AddFromJSONfile"		: "Añadir Excursión o Smartcard de un fichero JSON",
 
-
 				//Deprecated
 
 				"i.walk20"			: "Esta ventana te ayudará a la hora de añadir imágenes. Como puedes ver en la zona superior tienes las siguientes opciones:",
@@ -362,7 +390,7 @@ var i18n =
 				"i.AddObjectContentUpload"	: "Subiendo contenido Object",
 				"i.AddObjectContentUrl"		: "Añadiendo contenido Object por url",
 				"i.AddImagesContent"		: "Añadiendo imágenes",
-				"i.AddImagesContentUrl"		: "Añadiendo imágenes por url",
+				
 				"i.AddImagesContentUpload"	: "Subiendo imágenes",
 				"i.AddLiveContent"			: "Añadiendo Contenido en Directo",
 				"i.SearchObjectContent"	: "Buscar contenido flash",
