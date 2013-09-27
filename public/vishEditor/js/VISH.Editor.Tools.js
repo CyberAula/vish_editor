@@ -284,7 +284,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var changeBackground = function(){
-		$("#hidden_button_to_launch_picture_fancybox_for_flashcard").trigger("click");
+		$("#hidden_button_to_change_slide_background").trigger("click");
 	}
 
 

@@ -349,8 +349,6 @@
 		<a id="preview_action"></a>
 		<!-- Hidden link to open fancybox when adding a slide -->
 		<a id="addSlideFancybox" href="#thumbcontent"></a>
-		<!-- Hidden link to open fancybox when adding a quiz inside a slide -->
-		<a id="addQuizFancybox" href="#quizcontent"></a>
 		<!-- Hidden link to open presentation settings -->
 		<a id="edit_presentation_details" href="#presentationdetails"></a>
 		<!-- Hidden link for loading fancybox -->
@@ -735,20 +733,21 @@
 		</div>
 	</div>
 
+
 	<!-- Quizes fancybox -->
 	<div style='display:none'>
-		<div id='quizcontent'>
+		<div id='quiz_fancybox'>
 
-			<div class='fancy_tabs' id='quizcontent_tabs'>
+			<div class='fancy_tabs' id='quiz_fancybox_tabs'>
 				<ul>
 					<li>
-						<a href="#" id="tab_quizes" class="fancy_tab">Quiz</a>
+						<a href="#" id="tab_quizzes" class="fancy_tab">Quiz</a>
 					</li>
 				</ul>
-				<img id='tab_quizes_help' class='help_in_fancybox' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
+				<img id='tab_quizzes_help' class='help_in_fancybox' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 			</div> 
 
-			<div id='tab_quizes_content' class="fancy_tab_content" style='display:none' > 
+			<div id='tab_quizzes_content' class="fancy_tab_content">
 				
 				<div style="display:none" class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz1.png' />
@@ -851,7 +850,7 @@
 	</div>
 
 	<!-- IMAGE -->
-	<a id="hidden_button_to_launch_picture_fancybox_for_flashcard" href="#picture_fancybox" style="display:none"></a>
+	<a id="hidden_button_to_change_slide_background" href="#picture_fancybox" style="display:none"></a>
 	<a id="hidden_button_to_uploadThumbnail" href="#picture_fancybox" style="display:none"></a>
 
 	<div style='display:none'>
@@ -1629,7 +1628,6 @@
 	</ol>
 
 
-
 	<!-- Help inserting images [URL, Upload, ViSH, Flickr, LRE] -->
 	<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
 
@@ -1847,7 +1845,6 @@
 
 	<!-- Help inserting objects [URL, Upload, Repository, Snapshot] -->
 	<ol id="object_fancy_tabs_main_help" class="joyRideTipContent">
-
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_resources_fancybox tut_width700_center tut_without_arrow" data-options="tipLocation:none">
 			<h2 i18n-key="i.walkObjectsMain_1">Adding objects</h2>
 			<p i18n-key="i.walkObjectsMain_2">This screen allows you to add different types of objects to the slides. You can select an object to be added from different sources:</p>
@@ -1884,124 +1881,57 @@
 		</li>
 	</ol>
 
+	<!-- Help inserting videos [URL, ViSH, YouTube] -->
+	<ol id="video_fancy_tabs_main_help" class="joyRideTipContent">
 
-<!-- 	<ol id="object_fancy_tabs_web_help" class="joyRideTipContent">
-		   <li data-id="object_embedWeb_code" data-text="Next" i18n-key="i.Next">
-		 <h2 i18n-key="i.walk73">Adding Web content by url</h2>
-		 <p>
-		<span i18n-key="i.walk37"> This box is used for pasting or writing on it a url, for example:</span>
-		     <h6>http://www.####.com/</h6>
-		     <span i18n-key="i.walk38">This supports any website url. Click on "Next" to continue.</span>
-		    </p>
-		</li>
-		<li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none;">
-		 <h2 i18n-key="i.SeeContentBefore">See the content before you add it</h2>
-		 <p i18n-key="i.walk28">This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.
-		      Once you are ready to add the content, you just have to click and the button in the right of this zone called
-		      "add content"(this button will appear when the content is on preview).
-		      Click on "Close" to finish this Walkthrough.
-		    </p>
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_resources_fancybox tut_width700_center tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.walkVideosMain_1">Adding videos</h2>
+			<p i18n-key="i.walkVideosMain_2">This screen allows you to add videos to the slides. You can select a video to be added from different sources:</p>
+			<table>
+				<tr>
+					<td><p i18n-key="i.Url">Url</p></td>
+					<td><p i18n-key="i.walkVideosMain_Url">add a video by pasting a url. Only HTML5 and YouTube videos are allowed</p></td>
+				</tr>
+				<tr>
+					<td><p>ViSH</p></td>
+					<td><p i18n-key="i.walkVideosMain_ViSH">search HTML5 videos on the ViSH repository</p></td>
+				</tr>
+				<tr>
+					<td><p>YouTube</p></td>
+					<td><p i18n-key="i.walkVideosMain_YouTube">search videos on YouTube</p></td>
+				</tr>
+				<tr>
+					<td><p i18n-key="i.Upload">Upload</p></td>
+					<td>
+						<p>
+							<span i18n-key="i.walkVideosMain_Upload" class="tut_tutlink" onClick="VISH.Tour.startTourWithId('video_fancy_tabs_upload_help', 'top');">Click here to learn how to upload videos</span>
+						</p>
+					</td>
+				</tr>
+			</table>
+
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
 		</li>
 	</ol>
 
-	<ol id="upload_object_form_help" class="joyRideTipContent">
-		<li data-id="object_file_input" data-text="Next" i18n-key="i.Next" class="custom" data-options="tipLocation:bottom;">
-		 <h2 i18n-key="i.AddObjectContentUpload">Adding Object content by upload</h2>
-		 <p>
-		  <span i18n-key="i.walk39">By clicking on the "Browse" button you will access to a browser windows that will allow you to choose a file from your device. Once you do that, you can click the "upload" button in order to preview the content in zone below. This supports any swf file. Click on "Next" to continue </span>
-		</p>
-		</li>
-		   <li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none;">
-		 <h2 i18n-key="i.SeeContentBefore">See the content before you add it</h2>
-		 <p i18n-key="i.walk28">This zone will show you (once you uploaded a file and clicked on "upload") the content you are going to add.
-		      Once you are ready to add it to the slide, you just have to click and the button in the right of this zone called
-		      "add content"(this button will appear when the content is on preview).
-		      Click on "Close" to finish this Walkthrough.
-		    </p>
+	<ol id="video_fancy_tabs_upload_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_resources_fancybox tut_width700_center tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.walkVideosUpload_1">Uploading videos</h2>
+
+			<p>
+				<span i18n-key="i.walkVideosUpload_2">You can upload your own video from your computer. To do that, go to</span> <a class="tut_tutlink" href="http://vishub.org" target="_blank">http://vishub.org</a> <span i18n-key="i.walkVideosUpload_3">and upload your video file to the ViSH repository. Several video formats (mp4, flv, mpg, avi, ...) are allowed. When you finish uploading the video onto ViSH your video will be converted to an HTML5 compatible format. Note that this process could take several minutes. Once the process finish, you have two ways of adding the video</span>:
+				<ul>
+					<li><span i18n-key="i.walkVideosUpload_4">Search your video on the ViSH repository in the ViSH tab. In this case you will have to wait several hours for the ViSH search engine to index the new video. This is the recommended way to insert the videos, because thereby the videos will be available in several formats and will work in nearly all devices. </span></li>
+					<li class="tut_li_decnone">&nbsp;</li>
+					<li><span i18n-key="i.walkVideosUpload_5">Another way is to go to the page of the video in ViSH, for example, http://vishub.org/videos/325, and add the extension you want (webm, mp4) to the url, for example, http://vishub.org/videos/325.webm. In this page you will be able to see the video in your web browser. Finally, you just have to go to the 'url' tab and paste this url to insert the video immediately.</span></li>
+				</ul>
+			</p>
+
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
 		</li>
 	</ol>
-
-	<ol id="search_object_help" class="joyRideTipContent">
-		<li data-id="search_object" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
-		 <h2 i18n-key="i.SearchObjectContent">Search Object content</h2>
-		 <p i18n-key="i.walk40">This box will allow you to search for flash content in the ViSH repository.
-		     Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by clicking the "add button".
-		     Click on "Close" to finish this walkthrough.
-		</p>
-		</li>
-	</ol>
-
-	<ol id="search_lre_object_help" class="joyRideTipContent">
-		<li data-id="search_object_lre" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
-		 <h2 i18n-key="i.Searchlrecontent">Search LRE content</h2>
-		 <p i18n-key="i.walk102">This box will allow you to search for content in the LRE repository.
-		     Just write inside a word and a gallery will appear to show you the results, If you want to add one from the results you just have to click on it, then, the content will appear below and you will be able to add it to your slide by clicking the "add button".
-		     Click on "Close" to finish this walkthrough.
-		</p>
-		</li>
-	</ol>
-
-
-	<ol id="object_fancy_tabs_websnapshot_help" class="joyRideTipContent">
-		   <li data-id="object_snapshot_code" data-text="Next" i18n-key="i.Next">
-		 <h2 i18n-key="i.walk74">Adding Web Snapshot by url</h2>
-		 <p>
-		<span i18n-key="i.walk37"> This box is used for pasting or writing on it a url, for example:</span>
-		     <h6>http://www.####.com/</h6>
-		     <span i18n-key="i.walk38">This supports any website url and it will create a live window to the website.Click on "Next" to continue.</span>
-		    </p>
-		</li>
-		<li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none;">
-		 <h2 i18n-key="i.SeeContentBefore">See the content before you add it</h2>
-		 <p i18n-key="i.walk28">This zone will show you (once you added a link and clicked on "preview") the content that you are going to add.
-		      Once you are ready to add the content, you just have to click and the button in the right of this zone called
-		      "add content"(this button will appear when the content is on preview).
-		      Click on "Close" to finish this Walkthrough.
-		    </p>
-		</li>
-	</ol> -->
-
-
-		<!-- Help inserting videos [URL, Repository, YouTube, Vimeo] -->
-		<ol id="video_fancy_tabs_id_help" class="joyRideTipContent">
-		<li data-id="video_fancy_tabs_id" data-text="Next" i18n-key="i.Next" class="tut_add_resources_fancybox tut_without_arrow" data-options="tipLocation:none">
-		 <h2 i18n-key="i.AddVideoContent">Adding Video</h2>
-		 <p>
-		  <span i18n-key="i.walk41">This window will help you in order to add videos to the slide. As you can see in the top zone of this window there are few choices: </span>
-		     <ul>
-		     <li data-options="tipLocation:bottom">
-		      <h1 i18n-key="i.Url">Url</h1>
-		<span i18n-key="i.walk42"> (add video by pasting a url)</span>
-		</li>
-		     <li>
-		      <h1>Vish</h1>
-		<span i18n-key="i.walk43">(add video from the ViSH repository)</span>
-		</li>
-		     <li>
-		      <h1>Youtube</h1>
-		<span i18n-key="i.walk44">(add video by choosing one from Youtube)</span>
-		</li>
-		     </ul>
-		     <span i18n-key="i.walk46">Now, you are on the url section, Click on "Next" to continue.</span>
-		    </p>
-		</li>
-		    <li data-id="video_url" data-text="Next" i18n-key="i.Next" class="custom">
-		  <h2 i18n-key="i.AddVideoContentUrl">Adding video by url</h2>
-		  <p>
-		  <span i18n-key="i.walk47">This box is used for pasting or writing on it, a url that contains a video, for example:</span>
-		      <h6>http://www.####.com/example.avi</h6>
-		      <span i18n-key="i.walk48">This supports almost every image format files (avi,mpg,flv...) Click on "Next" to continue.</span>
-		     </p>
-		 </li>
-		    <li data-id="picture_preview" data-text="Close" i18n-key="i.Close" class="custom tut_preview tut_without_arrow" data-options="tipLocation:none">
-		  <h2 i18n-key="i.SeeVideoBefore">See the video before you add it</h2>
-		  <p i18n-key="i.walk28">This zone will show you (once you added a link and clicked on "preview") the video you are going to add.
-		      Once you are ready to add the ideo, you just have to click and the button in the right of this zone called
-		      "add content"(this button will appear when the video is on preview).
-		      Click on "Close" to finish this Walkthrough.
-		     </p>
-		 </li>
-		</ol>
 
 		<ol id="search_video_help" class="joyRideTipContent">
 		<li data-id="search_video" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">

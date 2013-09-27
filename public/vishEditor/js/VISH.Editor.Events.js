@@ -111,18 +111,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
-			});	
-
-			// fancybox to create a new quiz		
-			$("a#addQuizFancybox").fancybox({
-				'autoDimensions' : false,
-				'scrolling': 'no',
-				'width': 385,
-				'height': 340,
-				'padding': 0,
-				"onStart"  : function(data) {
-					V.Editor.Utils.loadTab('tab_quizes');
-				}
 			});
 
 			//Select theme fancybox
@@ -157,8 +145,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			//Change flashcard background
-			$("#hidden_button_to_launch_picture_fancybox_for_flashcard").fancybox({
+			//Change background
+			$("#hidden_button_to_change_slide_background").fancybox({
 				'autoDimensions' : false,
 				'width': 800,
 				'scrolling': 'no',
@@ -285,13 +273,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on('click','#help_pedagogical_selection', function(){
 			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
 		});
-	
-		//Help in Quiz Templates
-		$(document).on('click','#tab_quizes_help', function(){			
-			V.Tour.startTourWithId('quiz_help', 'bottom');
-		});
 
-		//Help inserting images [URL, Upload, Repository, Flickr]
+		//Help inserting images [URL, Upload, ViSH, Flickr, LRE]
 		$(document).on('click','#tab_pic_from_url_help', function(){
 			V.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');
 		});	
@@ -307,43 +290,44 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on('click','#tab_pic_lre_help', function(){
 			V.Tour.startTourWithId('search_lre_fancy_help', 'bottom');
 		});
-		//Help inserting objects [URL, Upload, Repository, Snapshot]
-		$(document).on('click','#tab_object_from_url_help', function(){
-			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
-		});
+
+		//Help inserting objects [Web, Snapshot, URL/Embed, Upload, ViSH, LRE]
 		$(document).on('click','#tab_object_from_web_help', function(){
-			// V.Tour.startTourWithId('object_fancy_tabs_web_help', 'top');
-			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
-		});
-		$(document).on('click','#tab_object_upload_help', function(){
-			// V.Tour.startTourWithId('upload_object_form_help', 'top');
-			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
-		});
-		$(document).on('click','#tab_object_repo_help', function(){
-			// V.Tour.startTourWithId('search_object_help', 'bottom');
-			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
-		});
-		$(document).on('click','#tab_object_lre_help', function(){
-			// V.Tour.startTourWithId('search_lre_object_help', 'bottom');
 			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_object_snapshot_help', function(){
-			// V.Tour.startTourWithId('object_fancy_tabs_websnapshot_help', 'bottom');
 			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
-		
-		//Help inserting videos [URL, Repository, YouTube, Vimeo]
+		$(document).on('click','#tab_object_from_url_help', function(){
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
+		});
+		$(document).on('click','#tab_object_upload_help', function(){
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
+		});
+		$(document).on('click','#tab_object_repo_help', function(){
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
+		});
+		$(document).on('click','#tab_object_lre_help', function(){
+			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
+		});
+
+		//Help inserting videos [URL, ViSH, YouTube, Vimeo]
 		$(document).on('click','#tab_video_from_url_help', function(){
-			V.Tour.startTourWithId('video_fancy_tabs_id_help', 'top');
+			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_video_repo_help', function(){
-			V.Tour.startTourWithId('search_video_help', 'top');
+			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_video_youtube_help', function(){
-			V.Tour.startTourWithId('search_youtube_fancy_help', 'bottom');
+			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_video_vimeo_help', function(){
-			V.Tour.startTourWithId('search_vimeo_fancy_help', 'bottom');
+			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
+		});
+
+		//Help in Quiz Templates
+		$(document).on('click','#tab_quizzes_help', function(){			
+			V.Tour.startTourWithId('quiz_help', 'bottom');
 		});
 		
 		//Help inserting live objects
@@ -351,6 +335,80 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('tab_live_resource_id', 'bottom');
 		});
 	};
+
+	//////////////
+	// Event Listeners
+	//////////////
+	var addZoneThumbsEvents = function(container){
+
+		$(container).find("a.addpicture").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				var clickedZoneId = $(data).attr("zone");
+				V.Editor.setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				V.Editor.Utils.loadTab('tab_pic_from_url');
+			}
+		});
+
+		$(container).find("a.addobject").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'height': 600,
+			'scrolling': 'no',
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				V.Editor.setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Utils.loadTab('tab_object_from_web');
+			}
+		});
+
+		$(container).find("a.addvideo").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				V.Editor.setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Utils.loadTab('tab_video_youtube');
+			}
+		});
+
+		//Fancybox to create a new quiz
+		$(container).find("a.addQuiz").fancybox({
+			'autoDimensions' : false,
+			'width': 700,
+			'scrolling': 'no',
+			'height': 500,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				V.Editor.setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Utils.loadTab('tab_quizzes');
+			}
+		});
+
+		$(container).find("a.addLive").fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				var clickedZoneId = $(data).attr("zone");
+				V.Editor.setCurrentArea($("#" + clickedZoneId));
+				V.Editor.Utils.loadTab('tab_live_resource');
+			}
+		});
+	}
 
 
 	//////////////
@@ -453,6 +511,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			init 							: init,
 			bindEditorEventListeners		: bindEditorEventListeners,
 			unbindEditorEventListeners		: unbindEditorEventListeners,
+			addZoneThumbsEvents				: addZoneThumbsEvents,
 			allowExitWithoutConfirmation 	: allowExitWithoutConfirmation
 	};
 

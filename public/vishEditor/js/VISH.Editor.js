@@ -254,61 +254,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		$(this).append(content);
 
-		$("a.addpicture").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Image.setAddContentMode(V.Constant.NONE);
-				V.Editor.Utils.loadTab('tab_pic_from_url');
-			}
-		});
-		$("a.addobject").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'height': 600,
-			'scrolling': 'no',
-			'padding' : 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_object_from_web');
-			}
-		});
-		$("a.addvideo").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_video_youtube');
-			}
-		});
-		$("a.addLive").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_live_resource');
-			}
-		});
-		
-		$("a.addQuiz").click(function(event){
-			$("a#addQuizFancybox").trigger("click");
-		});
-
+		V.Editor.Events.addZoneThumbsEvents(this);
 	}; 
 
 	/**

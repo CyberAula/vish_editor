@@ -1205,6 +1205,12 @@ div.addUrlButtons{
 	border-radius: 10px;
 }
 
+.quizFancythumb {
+	width: 110px !important;
+	height: 85px !important;
+	margin: 30px 25px 6px 30px !important;
+}
+
 .slidethumb img, .quizFancythumb img {
 	width:100%;
 	height:100%;
@@ -1879,6 +1885,11 @@ p.tut_space_big {
 	height: 20px;
 }
 
+.tut_tutlink {
+	cursor: pointer;
+	color: #0066ff;
+}
+
 .tut_settings {
 	top: 78px;
 	left: 396px;
@@ -1905,13 +1916,18 @@ p.tut_space_big {
 	text-align: center;
 }
 
-.joyride-content-wrapper p {
+.joyride-content-wrapper p, .joyride-content-wrapper ul {
 	text-align: left;
 }
 
 .joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
 	text-align: left;
 	max-width: 90%;
+}
+
+li.tut_li_decnone {
+	text-decoration: none;
+	display: block;
 }
 
 .tut_savedetails {
