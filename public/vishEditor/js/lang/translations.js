@@ -145,6 +145,12 @@ var i18n =
 				"i.walkQuiz_TF2"			: "Un cuestionario de verdadero/falso es una forma de evaluación en la que se solicita a los encuestados que seleccionen, para cada afirmación o sentencia, si esta es verdadera o falsa.",
 				"i.walkQuiz_3"				: "Ademas de los contenidos, también puedes definir las respuestas correctas del cuestionario o quiz, permitiendo de esta manera la autoevaluación y el seguimiento automático del progreso de los estudiantes en plataformas de aprendizaje como Moodle.",
 
+				"i.walkLive_1"				: "Añadiendo contenidos en directo",
+				"i.walkLive_2"				: "ViSH (Virtual Science Hub) ofrece recursos especiales como webcams en vivo, microscopios o laboratorios virtuales provistos por determinadas ciberinfraestructuras.",
+				"i.walkLive_3"				: "En esta pantalla podrás buscar recursos de este tipo en el repositorio del ViSH.",
+				"i.walkLive_4"				: "Si quieres descubrir más recursos de ciberinfraestructuras o atender a eventos de ciencia en directo puedes visitar",
+
+				"i.LiveResources"			: "Contenidos en directo",
 				"i.Language"				: "Idioma",
 				"i.Context"					: "Contexto",
 				"i.Age range"				: "Rango de edad",
@@ -283,7 +289,6 @@ var i18n =
 				"i.videos"			: "vídeos",
 				"i.Object"			: "Objeto",
 				"i.Objects"			: "Objetos",
-				"i.Live"			: "Contenidos en directo",
 				"i.next"			: "siguiente",
 				"i.Next"			: "Siguiente",
 				"i.Preview"			: "Vista previa",
