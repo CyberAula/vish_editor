@@ -137,6 +137,14 @@ var i18n =
 				"i.walkVideosUpload_4"		: "Buscar tu video en el repositorio del ViSH en la pestaña 'ViSH'. En este caso tendrás que esperar varias horas hasta que el motor de búsqueda del ViSH haya indexado el nuevo vídeo. Esta es la manera recomendada de insertar los videos, porque de este modo los vídeos estarán disponibles en varios formatos y funcionarán en casi todos los dispositivos.",
 				"i.walkVideosUpload_5"		: "Otra forma es acceder a la página del vídeo en ViSH, por ejemplo http://vishub.org/videos/325, y añadir la extensión deseada (webm, mp4) a la url, por ejemplo, http://vishub.org/videos/325.webm. En esta página serás capaz de ver el vídeo en tu navegador web. Finalmente, solamente tienes que ir a la pestaña 'enlace' y pegar esta url para insertar el vídeo de forma inmediata.",
 	
+				"i.walkQuiz_1"				: "Añadiendo cuestionarios (Quizzes)",
+				"i.walkQuiz_2"				: "Puedes añadir diferentes tipos de cuestionarios o quizzes a tu presentación. Los cuestionarios actualmente disponibles se muestran a continuación",
+				"i.walkQuiz_MC1"			: "Respuesta múltiple",
+				"i.walkQuiz_MC2"			: "Los cuestionarios de respuesta múltiple son una forma de evaluación en la que se les solicita a los encuestados que seleccionen la mejor respuesta posible  (o respuestas) de una lista de posibles opciones.",
+				"i.walkQuiz_TF1"			: "Verdadero / Falso",
+				"i.walkQuiz_TF2"			: "Un cuestionario de verdadero/falso es una forma de evaluación en la que se solicita a los encuestados que seleccionen, para cada afirmación o sentencia, si esta es verdadera o falsa.",
+				"i.walkQuiz_3"				: "Ademas de los contenidos, también puedes definir las respuestas correctas del cuestionario o quiz, permitiendo de esta manera la autoevaluación y el seguimiento automático del progreso de los estudiantes en plataformas de aprendizaje como Moodle.",
+
 				"i.Language"				: "Idioma",
 				"i.Context"					: "Contexto",
 				"i.Age range"				: "Rango de edad",

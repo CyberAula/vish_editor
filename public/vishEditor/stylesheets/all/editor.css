@@ -1194,21 +1194,26 @@ div.addUrlButtons{
 }
 
 .slidethumb, .quizFancythumb {
-	width: 99px;
-	height: 75px;
-	margin: 16px 11px 6px 16px;
 	float: left;
 	color: black;
 	cursor: pointer;
 	opacity: 0.8;
-	border: 1px solid #ccc;
+}
+
+.slidethumb {
+	width: 99px;
+	height: 75px;
+	margin: 16px 11px 6px 16px;
 	border-radius: 10px;
+	border: 1px solid #ccc;
 }
 
 .quizFancythumb {
-	width: 110px !important;
-	height: 85px !important;
-	margin: 30px 25px 6px 30px !important;
+	width: 125px;
+	height: 85px;
+	margin: 35px 35px 10px 60px;
+	white-space: nowrap;
+	text-align: center;
 }
 
 .slidethumb img, .quizFancythumb img {
@@ -1220,14 +1225,32 @@ div.addUrlButtons{
 	opacity: 0.8;
 }
 
+.quizFancythumb img {
+	width: 110px !important;
+	height: 85px !important;
+	border: 1px solid #ccc;
+}
+
+.quizFancythumb p {
+	display: block;
+	color: #000;
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	text-align: center;
+}
+
+
 .slidethumb:hover, .quizFancythumb:hover {
 	cursor: pointer;
-	border: 1px solid #357ebd;
 	opacity: 1;	
 }
 
+.slidethumb:hover {
+	border: 1px solid #357ebd;
+}
+
 .slidethumb:active, .quizFancythumb:active {
-	border: 1px solid #000;
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
 	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.0);
 	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -1235,6 +1258,14 @@ div.addUrlButtons{
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
 	opacity: 1.0;	
+}
+
+.slidethumb:active {
+	border: 1px solid #000;
+}
+
+.quizFancythumb img:active {
+	border: 1px solid #000;
 }
 
 div.vezone {
@@ -2073,8 +2104,29 @@ table.contentIconsWalkthrough td {
 	margin-top: 13px;
 }
 
+.tut_add_resources_fancybox table tr td img {
+	max-height: 50px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 
+.tut_add_quizzes table tr td:first-child {
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	white-space: nowrap;
+}
 
+.tut_add_quizzes table tr td:first-child p{
+	color: #000;
+	font-size: 15px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	margin-top: 8px;
+	margin-bottom: 0px;
+	text-align: center;
+}
 
 
 /* Iframe Style */

@@ -385,9 +385,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		//Fancybox to create a new quiz
 		$(container).find("a.addQuiz").fancybox({
 			'autoDimensions' : false,
-			'width': 700,
+			'width': 800,
 			'scrolling': 'no',
-			'height': 500,
+			'height': 600,
 			'padding' : 0,
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");

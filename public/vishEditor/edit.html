@@ -748,15 +748,13 @@
 			</div> 
 
 			<div id='tab_quizzes_content' class="fancy_tab_content">
-				
-				<div style="display:none" class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz1.png' />
+				<div class='quizFancythumb'>
+					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.add("multiplechoice");'/>
+					<p><span i18n-key="i.walkQuiz_MC1">Multiple choice</span></p>
 				</div>
 				<div class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.add("multiplechoice");' />
-				</div>
-				<div class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.add("truefalse");' />
+					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.add("truefalse");'/>
+					<p><span i18n-key="i.walkQuiz_TF1">True / False</span></p>
 				</div>
 			</div>
 		</div>
@@ -1570,7 +1568,7 @@
 
 	 <!-- Help in slide templates selection -->
 	<ol id="help_template_selection_help" class="joyRideTipContent">
-	<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+	<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 	 <h2 i18n-key="i.selectSlide">Adding a Slide</h2>
 	 <p i18n-key="i.walk14">This window offers you a variety of templates to create your excursion.The first section are normal templates designed each one differently with different distribution of zones in order to make your presentation easier. The second section in the lower part of this windows offers you to create a flashcard or a virtual tour instead of a normal page, this will alow you to create interactive content on a single page offering you a new section on the lowest zone of the editor allowing you to create new pages inside the flashcard or the virtual tour choosing aswell templates to create the content quickly.You just have to select your choice and click on them to add it in order to fill it with your content.Click on "Close" to finish this walkthrough.</p>
 	</li>
@@ -1578,7 +1576,7 @@
 
 	<!-- Help uploading PDF -->
 	<ol id="help_pdfex_help" class="joyRideTipContent">
-		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_templatesel tut_without_arrow" data-options="tipLocation:none">
 			 <h2>Insert a PDF presentation</h2>
 			 <p>Select a presentation in PDF format and upload the file. Only files with PDF format are allowed.</p>
 		</li>
@@ -1616,14 +1614,6 @@
 	<li data-id="select_theme3" class="tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
 	 <h2 i18n-key="i.themesTitle">ViSH Editor Themes</h2>
 	   <p i18n-key="i.walk70">Choose between the different options a theme that fit your excursion, first line of themes are gradients and powerful colours, second line of themes are colourful textures, and the last line of themes are forms that imitates real life objects and one animated theme that will move slowly behind your presentation giving your excursion an special appeal. Have fun!</p>
-	</li>
-	</ol>
-
-	<!-- Help in Quiz Templates -->
-	<ol id="quiz_help" class="joyRideTipContent">
-	<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="custom tut_templatesel tut_without_arrow" data-options="tipLocation:none">
-	 <h2 i18n-key="i.selectquiz">Selecting a Quiz</h2>
-	 <p i18n-key="i.walk14">This window offers you a variety of Quizzes to create your excursion. You just have to click on one of the images in order to add it to the area you selected. Click on "Close" to finish this walkthrough.</p>
 	</li>
 	</ol>
 
@@ -1933,28 +1923,27 @@
 		</li>
 	</ol>
 
-		<ol id="search_video_help" class="joyRideTipContent">
-		<li data-id="search_video" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
-		    <h2 i18n-key="i.SearchVideosVish">Search videos in ViSH repository</h2>
-		 <p i18n-key="i.walk49">Just write inside a word (press Enter) and a gallery will appear to show you the results. If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by clicking the "add button". Click on "Close" to finish this walkthrough.</p>
+	<!-- Help inserting Quizzes -->
+	<ol id="quiz_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_quizzes tut_add_resources_fancybox tut_width600_center tut_without_arrow" data-options="tipLocation:none">
+		<h2 i18n-key="i.walkQuiz_1">Adding Quizzes</h2>
+		<p><span i18n-key="i.walkQuiz_2">You can add different type of quizzes to your presentation. The current available quizzes are showed below</span>:</p>
+			<table>
+				<tr>
+					<td><img src="/vishEditor/images/templatesthumbs/tquiz2.png"/><p i18n-key="i.walkQuiz_MC1">Multiple choice</p></td>
+					<td><p i18n-key="i.walkQuiz_MC2">Multiple choice quizzes are a form of assessment in which respondents are asked to select the best possible answer (or answers) out of the choices from a list.</p></td>
+				</tr>
+				<tr>
+					<td><img src="/vishEditor/images/templatesthumbs/tquiz3.png"/><p i18n-key="i.walkQuiz_TF1">True / False</p></td>
+					<td><p i18n-key="i.walkQuiz_TF2">A true/false quiz is a a form of assessment in which respondents are asked to select, for each statement, if it is true or false.</p></td>
+				</tr>
+			</table>
+			<p i18n-key="i.walkQuiz_3">In addition to the content, you also can define the correct answers of the quiz, allowing this way self-assessment and the auto tracking of students progress in Learning Management Systems like Moodle.</p>
+			<p class="tut_space">&nbsp;</p>
 		</li>
-		</ol>
-
-		<ol id="search_youtube_fancy_help" class="joyRideTipContent">
-		<li data-id="search_youtube_fancy" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
-		    <h2 i18n-key="i.SearchVideosYoutube">Search videos in Youtube</h2>
-		 <p i18n-key="i.walk50">Just write inside a word (press Enter) and a gallery will appear to show you the results. If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by clicking the "add button". Click on "Close" to finish this walkthrough.</p>
-		</li>
-		</ol>
-
-		<ol id="search_vimeo_fancy_help" class="joyRideTipContent">
-		<li data-id="search_vimeo_fancy" data-text="Close" i18n-key="i.Close" class="custom tut_search tut_with_arrow_up" data-options="tipLocation:none">
-		    <h2 i18n-key="i.SearchVideosVimeo">Search videos in Vimeo</h2>
-		 <p i18n-key="i.walk51">Just write inside a word (press Enter) and a gallery will appear to show you the results. If you want to add one from the results you just have to click on it, then, the video will appear below and you will be able to add it to your slide by clicking the "add button". Click on "Close" to finish this walkthrough.</p>
-		</li>
-		</ol>
+	</ol>
 		   
-		<!-- Help inserting live objects -->
+	<!-- Help inserting live objects -->
 		<ol id="tab_live_resource_id" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_add_resources_fancybox tut_without_arrow" data-options="tipLocation:none">
 		 <h2 i18n-key="i.AddLiveContent">Adding Live Content</h2>
