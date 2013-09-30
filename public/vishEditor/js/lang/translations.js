@@ -165,6 +165,8 @@ var i18n =
 				"i.walkPdf2ex_1"			: "Insertar una presentación PDF",
 				"i.walkPdf2ex_2"			: "Selecciona una presentación en formato PDF y sube el archivo. Únicamente se admiten archivos en formato PDF. Si quieres insertar una presentación en otro formato como PowerPoint (.ppt) debes de convertir el archivo a PDF primero.",
 				"i.walkPdf2ex_3"			: "Una vez que la subida del fichero PDF haya finalizado, aparecerá una nueva ventana para que elijas las diapositivas que quieres insertar de la presentación que has subido.",
+				"i.walkPdf2ex_4"			: "Esta funcionalidad convertirá la presentación PDF en una presentación de ViSH Editor, esto quiere decir que cada una de las diapositivas seleccionadas de la presentación PDF será insertada en la presentación actual como una diapositiva nueva.",
+				"i.walkPdf2ex_5"			: "Si lo que quiere es insertar un documento PDF entero en la misma diapositiva para que pueda ser leido como un libro, debe de subir el archivo PDF desde el panel 'Objectos'.",
 
 				"i.Excursions"				: "Excursiones",
 				"i.LiveResources"			: "Contenidos en directo",
