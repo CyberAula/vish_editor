@@ -1900,8 +1900,18 @@ p.tut_space {
 }
 
 p.tut_withoutbottomspace {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+p.tut_withlittlebottomspace{
 	margin-bottom: 3px;
 	padding-bottom: 0px;
+}
+
+p.tut_withouttopspace {
+	margin-top: 0px;
+	padding-top: 0px;
 }
 
 p.tut_space_small {
@@ -1937,10 +1947,6 @@ p.tut_space_big {
 	left: 50%;
 	margin-left: -350px;
 	top: 15%;
-}
-
-.joyride-next-tip {
-	
 }
 
 .joyride-content-wrapper {
@@ -2102,6 +2108,7 @@ table.contentIconsWalkthrough td {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
 	margin-top: 13px;
+	text-align: center;
 }
 
 .tut_add_resources_fancybox table tr td img {
@@ -2111,14 +2118,14 @@ table.contentIconsWalkthrough td {
 	margin-right: auto;
 }
 
-.tut_add_quizzes table tr td:first-child {
+table.tut_table_imagewithsubtitle tr td:first-child {
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	white-space: nowrap;
 }
 
-.tut_add_quizzes table tr td:first-child p{
+table.tut_table_imagewithsubtitle tr td:first-child p {
 	color: #000;
 	font-size: 15px;
 	font-family: 'Open Sans', sans-serif;
