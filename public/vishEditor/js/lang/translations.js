@@ -106,7 +106,7 @@ var i18n =
 				"i.walkImagesViSH1_1"		: "Ahora te encuentras en la pestaña de ViSH, haz click en \"Siguiente\" para continuar.",
 				"i.walkImagesViSH2_1"		: "Buscar imágenes en el repositorio del ViSH",
 				"i.walkImagesViSH2_2"		: "Esta pantalla te permite buscar imágenes en el repositorio del ViSH (http://vishub.org).",
-				"i.walkImagesSearch1"		: "Escribe el nombre que quieras buscar dentro de la caja de texto, por ejemplo",
+				"i.walkSearch1"				: "Escribe el nombre que quieras buscar dentro de la caja de texto, por ejemplo",
 				"i.nature"					: "nature",
 				"i.walkImagesSearch2"		: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las imágenes encontradas serán mostradas en esta pantalla. Para añadir cualquiera de ellas a la diapositiva, simplemente haz click sobre la que desees.",
 				"i.walkImagesFlickr1_1"		: "Ahora te encuentras en la pestaña de Flickr, haz click en \"Siguiente\" para continuar.",
@@ -152,11 +152,11 @@ var i18n =
 
 				"i.walkAddSlide_1"			: "Añadiendo Diapositivas",
 				"i.walkAddSlide_2"			: "Aquí puedes añadir a tu presentación una nueva diapositiva vacía con una plantilla específica. Para esto, simplemente selecciona la plantilla que quieras de las disponibles en el panel 'Plantillas'. Ten en cuenta que la plantilla define la posición y tamaño de las zonas en las cuales podrás añadir contenidos en la nueva diapositiva.",
-				"i.walkAddSlide_3"			: "Además de diapositivas normales, también puedes añadir a tu presentación elementos más interactivos llamados 'Smartcards'. Para insertar cualquiera de estos elementos, simplemente haz click en el que desees dentro del panel de 'Smartcards'. Una vez que hayas insertado una smartcard podrás personalizarla con el contenido que quieras.",
-				"i.walkAddSlide_4"			: "Haz click aquí para ver más información sobre los tipos disponibles de smartcards y para aprender cómo crearlas.",
+				"i.walkAddSlide_3"			: "Además de diapositivas normales, también puedes añadir a tu presentación elementos más interactivos llamados 'Smartcards'. Para insertar cualquiera de estos elementos, simplemente haz click en el que desees dentro del panel de 'Smartcards'. Una vez que hayas insertado una Smartcard podrás personalizarla con el contenido que quieras.",
+				"i.walkAddSlide_4"			: "Haz click aquí para ver más información sobre los tipos disponibles de Smartcards y para aprender cómo crearlas.",
 
-				"i.walkSmartcards_1"		: "Las smartcards son elementos interactivos que pueden ser insertados en la presentación como si fueran diapositivas normales.",
-				"i.walkSmartcards_2"		: "Los siguientes tipos de smartcards están disponibles",
+				"i.walkSmartcards_1"		: "Las Smartcards son elementos interactivos que pueden ser insertados en la presentación como si fueran diapositivas normales.",
+				"i.walkSmartcards_2"		: "Los siguientes tipos de Smartcards están disponibles",
 				"i.flashcardDef"			: "Las Flashcards son recursos presentados como una imagen de fondo con 'zonas calientes' señaladas por flechas sobre las que el usuario puede hacer click para ver contenidos adicionales que han sido previamente etiquetados.",
 				"i.vtDef"					: "Los Tours Virtuales son similares a las Flashcards, pero en lugar de ser presentados como imágenes de fondo estáticas, se presentan como mapas interactivos donde las 'zonas calientes' son lugares señalados por pines en el mapa. De esta forma, cuando los usuarios hacen click sobre un pin en el mapa (sobre una localización marcada) ven contenidos adicionales.",
 				"i.flashcardLearHow"		: "Haz click aquí para aprender como crear una Flashcard.",
@@ -167,6 +167,18 @@ var i18n =
 				"i.walkPdf2ex_3"			: "Una vez que la subida del fichero PDF haya finalizado, aparecerá una nueva ventana para que elijas las diapositivas que quieres insertar de la presentación que has subido.",
 				"i.walkPdf2ex_4"			: "Esta funcionalidad convertirá la presentación PDF en una presentación de ViSH Editor, esto quiere decir que cada una de las diapositivas seleccionadas de la presentación PDF será insertada en la presentación actual como una diapositiva nueva.",
 				"i.walkPdf2ex_5"			: "Si lo que quiere es insertar un documento PDF entero en la misma diapositiva para que pueda ser leido como un libro, debe de subir el archivo PDF desde el panel 'Objectos'.",
+
+				"i.walkInsertingViSHPres_1"	: "Añadiendo Diapositivas de Excursiones Virtuales",
+				"i.walkInsertingViSHPres_2"	: "Aquí puedes buscar Excursiones Virtuales en la plataforma ViSH para añadirlas (o añadir determinadas diapositivas de ellas) a tu presentación.",
+				"i.walkInsertingViSHPres_3"	: "Haz click en cualquiera de las Excursiones Virtuales para seleccionarla. Después, se mostrará un nuevo botón 'Vista Previa'. Cuando pulses este botón, aparecerá una nueva ventana para que elijas las diapositivas que quieres insertar en tu presentación.",
+				"i.walkPresSearch2"			: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las Excursiones Virtuales encontradas serán mostradas en esta pantalla.",
+				
+				"i.walkInsertingViSHSmart_1"	: "Añadiendo Smartcards",
+				"i.walkInsertingViSHSmart_2"	: "Aquí puedes buscar Smartcards en la plataforma ViSH para añadirlas a tu presentación.",
+				"i.walkInsertingViSHSmart_3"	: "Haz click en cualquiera de las Smartcards para seleccionarla. Después, se mostrará un nuevo botón 'Vista Previa'. Cuando pulses este botón, aparecerá una nueva ventana para que puedas ver la Smartcard antes de insertarla en tu presentación.",
+				"i.walkSmartSearch2"			: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las Smartcards encontradas serán mostradas en esta pantalla.",
+
+				"i.walkLearnMoreSmartcards"		: "Pulsa aquí para aprender más sobre las Smartcards.",
 
 				"i.Excursions"				: "Excursiones",
 				"i.LiveResources"			: "Contenidos en directo",
@@ -409,7 +421,7 @@ var i18n =
 				"i.walk75"			: "Esta zona te ofrece una variedad de Quizes para añadir a tu excursión. Solo tienes que hacer clic en la miniatura que más se ajuste a la información que quieras transmitir. Pulsa \"Cerrar\" para continuar.",
 				"i.walk76"			: "Esta ventana te ofrece definir tu excursión en aspectos de rango de edad, dificultad, tiempo medio de aprendizaje, asignatura, idioma, contexto y objetivos educativos. Rellenando esta información podrás mostrar y detallar a los usuarios la información para utilizar la excursión de manera correcta.Haz click en cerrar para finalizar este tutorial.", 
 				"i.walk77"			: "Esta ventana te ofrece buscar excursiones dentro de la plataforma ViSH para poder añadirlas a tu excursión (o añadir solo algunas slides de esta) en solamente dos pasos. Solamente tienes que hacer click en la excursión que quieras añadir, después, hacer click en previsualizar (lo que te llevará a una nueva ventana), escojer las slides y finalizar haciendo clicks en añadir slides para añadir tu contenido. Haz click en cerrar para finalizar el tutorial",
-				"i.walk78"			: "Esta ventana te ofrece buscar flashcards y virtual tours dentro de la plataforma ViSH para poder añadirlas a tu excursión en solamente dos pasos. Solamente tienes que hacer click en la smartcard que quieras añadir, después, hacer click en previsualizar (lo que te llevará a una nueva ventana), y finalizar haciendo clicks en añadir slides para añadir tu contenido. Haz click en cerrar para finalizar el tutorial",
+				"i.walk78"			: "Esta ventana te ofrece buscar flashcards y virtual tours dentro de la plataforma ViSH para poder añadirlas a tu excursión en solamente dos pasos. Solamente tienes que hacer click en la Smartcard que quieras añadir, después, hacer click en previsualizar (lo que te llevará a una nueva ventana), y finalizar haciendo clicks en añadir slides para añadir tu contenido. Haz click en cerrar para finalizar el tutorial",
 				"i.walk79"			: "Un Virtual tour es una representación de tu excursión con zonas calientes dentro de un mapa.",
 				"i.walk80"			: "Solamente arrastra las flechas de la zona inferior del editor dentro del mapa para marcar una zona.",
 				"i.walk81"			: "Una vez añadidas en el mapa las flechas pasarán a ser una ubicación determinada mostradas como si fuesen una etiqueta.",
