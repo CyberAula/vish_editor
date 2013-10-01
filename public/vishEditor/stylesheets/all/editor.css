@@ -1850,91 +1850,6 @@ div.object_wrapper {
 
 /* Tutorials with Joyride */
 
-.tut_with_arrow span.joyride-nub {
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color:  #666;
-}
-
-.tut_without_arrow span.joyride-nub {
-	display: none;	
-}
-
-.tut_width350 {
-	width: 350px !important;
-}
-
-.tut_width500 {
-	width: 500px !important;
-}
-
-.tut_width500_center {
-	width: 500px !important;
-	left: 50%;
-	margin-left: -250px;
-}
-
-.tut_width600 {
-	width: 600px !important;
-}
-
-.tut_width600_center {
-	width: 600px !important;
-	left: 50%;
-	margin-left: -300px;
-}
-
-.tut_width700_center {
-	width: 700px !important;
-	left: 50%;
-	margin-left: -350px;
-}
-
-.tut_template_full {
-	top: 70px;
-	left: 245px;
-	width: 900px;
-}
-
-p.tut_space {
-	margin: 0px;
-	padding: 0px;
-	height: 10px;
-}
-
-p.tut_withoutbottomspace {
-	margin-bottom: 0px;
-	padding-bottom: 0px;
-}
-
-p.tut_withlittlebottomspace{
-	margin-bottom: 3px;
-	padding-bottom: 0px;
-}
-
-p.tut_withouttopspace {
-	margin-top: 0px;
-	padding-top: 0px;
-}
-
-p.tut_space_small {
-	margin: 0px;
-	padding: 0px;
-	height: 0px;
-}
-
-p.tut_space_big {
-	margin: 0px;
-	padding: 0px;
-	height: 20px;
-}
-
-.tut_tutlink {
-	cursor: pointer;
-	color: #0066ff;
-}
-
 .tut_settings {
 	top: 78px;
 	left: 396px;
@@ -1957,32 +1872,9 @@ p.tut_space_big {
 	top: 15%;
 }
 
-.joyride-content-wrapper {
-	text-align: center;
-}
-
-.joyride-content-wrapper p, .joyride-content-wrapper ul {
-	text-align: left;
-}
-
-.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
-	text-align: left;
-	max-width: 90%;
-}
-
 li.tut_li_decnone {
 	text-decoration: none;
 	display: block;
-}
-
-.tut_savedetails {
-	top: 452px;
-	left: 394px;
-}
-
-.tut_savedetails span.joyride-nub {
-	bottom: -28px;
-	left: 341px;
 }
 
 table.contentIconsWalkthrough {
@@ -2009,12 +1901,6 @@ table.contentIconsWalkthrough td {
 	max-height: 30px;
 }
 
-.tut_welcome_exc {
-	top: 279px;
-	left: 481px;
-	width: 402px;
-}
-
 .tut_menubar {
 	top: 62px !important;
 	left: 189px !important;
@@ -2025,33 +1911,6 @@ table.contentIconsWalkthrough td {
 	top: -29px;
 }
 
-.tut_menubar2 {
-	top: 509px;
-	left: 180px;
-	width: 400px;
-}
-
-.tut_menubar2 span.joyride-nub {
-	top: 158px;
-	left: 165px;
-	border-top-color: #0066ff;
-}
-
-#tutMenuImage {
-	float: left;
-	padding-right: 30px;
-}
-
-.tut_savepresentation {
-	top: 542px;
-	left: 505px;
-}
-
-.tut_savepresentation span.joyride-nub {
-	bottom: -28px;
-	left: 341px;
-}
-
 .tut_menubar span.joyride-nub{
 	border-bottom-color: transparent;
 	border-left-color: transparent;
@@ -2059,6 +1918,11 @@ table.contentIconsWalkthrough td {
 	border-top-color: transparent;
 	bottom: 39px;
 	left: -28px;
+}
+
+#tutMenuImage {
+	float: left;
+	padding-right: 30px;
 }
 
 .tut_toolbar_tools {
@@ -2087,12 +1951,6 @@ table.contentIconsWalkthrough td {
 .tut_addslide {
 	top: 117px !important;
 	margin-left: 1px;
-}
-
-.tut_templatesel {
-	top: 210px;
-	left: 349px;
-	width: 487px;
 }
 
 .tut_add_resources_fancybox {
@@ -2184,7 +2042,7 @@ iframe {
 	height: 100%;
 	border: none;
 }
-	
+
 
 /** Slides bar **/
 

@@ -1003,15 +1003,107 @@ div.quizQr > table {
 }
 
 
-/*
- * TUTORIALS
- */
-.tut_quiz {
-	width: 64%;
-	left: 21%;
-	position: absolute;
-	top: 25%;
+/* Tutorials with Joyride (css for Viewer and Editor) */
+
+.joyride-content-wrapper {
+	text-align: center;
 }
+
+.joyride-content-wrapper p, .joyride-content-wrapper ul {
+	text-align: left;
+}
+
+.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
+	text-align: left;
+	max-width: 90%;
+}
+
+.tut_with_arrow span.joyride-nub {
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color:  #666;
+}
+
+.tut_without_arrow span.joyride-nub {
+	display: none;	
+}
+
+.tut_width350 {
+	width: 350px !important;
+}
+
+.tut_width500 {
+	width: 500px !important;
+}
+
+.tut_width500_center {
+	width: 500px !important;
+	left: 50%;
+	margin-left: -250px;
+}
+
+.tut_width600 {
+	width: 600px !important;
+}
+
+.tut_width600_center {
+	width: 600px !important;
+	left: 50%;
+	margin-left: -300px;
+}
+
+.tut_width700_center {
+	width: 700px !important;
+	left: 50%;
+	margin-left: -350px;
+}
+
+.tut_template_full {
+	top: 70px;
+	left: 245px;
+	width: 900px;
+}
+
+p.tut_space {
+	margin: 0px;
+	padding: 0px;
+	height: 10px;
+}
+
+p.tut_withoutbottomspace {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+p.tut_withlittlebottomspace{
+	margin-bottom: 3px;
+	padding-bottom: 0px;
+}
+
+p.tut_withouttopspace {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+p.tut_space_small {
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+}
+
+p.tut_space_big {
+	margin: 0px;
+	padding: 0px;
+	height: 20px;
+}
+
+.tut_tutlink {
+	cursor: pointer;
+	color: #0066ff;
+}
+
+/* Tutorials for Viewer */
 
 .joyride-tip-guide h2 {
 	font-size: 1.3em !important;
@@ -1026,15 +1118,15 @@ div.quizQr > table {
 	border-top-color:  #0066ff;
 }
 
-.tut_with_arrow_up span.joyride-nub {
-	border-bottom-color: #0066ff;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color: transparent;
-}
-
 .tut_without_arrow span.joyride-nub {
 	display: none;
+}
+
+.tut_quiz {
+	width: 64%;
+	left: 21%;
+	position: absolute;
+	top: 25%;
 }
 
 .addslidestut {
@@ -1045,26 +1137,19 @@ div.quizQr > table {
 	height: 511px;
 }
 
-.selectedslidetut {
-	top: 278px;
-	left: 388px;
-	position: absolute;
-	float: left;
+.selectSlidesGreen, .selectSlidesRed {
 	width: 30px;
 	height: 20px;
+}
+
+.selectSlidesGreen {
 	border: 1px solid green !important;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
 }
 
-.unselectedslidetut {
-	top: 320px;
-	left: 388px;
-	position: absolute;
-	float: left;
-	width: 30px;
-	height: 20px;
+.selectSlidesRed {
 	border: 1px solid red !important;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;

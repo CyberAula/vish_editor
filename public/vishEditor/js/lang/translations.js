@@ -209,6 +209,11 @@ var i18n =
 				"i.walkVirtualTour_5"		: "Cuando la diapositiva está seleccionada, se muestra en la pantalla y puedes editarla y borrarla de la misma forma que las diapositivas normales. Para seleccionar una diapositiva simplemente pulsa sobre ella en el 'panel de Tour Virtual'. Si quieres seleccionar el Tour Virtual nuevamente para editarlo, debes hacer click en el icono de Tour Virtual situado a la izquierda del 'panel de Tour Virtual'.",
 				"i.walkVirtualTour_6"		: "Las diapositivas tienen flechas arrastrables en su parte superior. Puedes arrastrar cualquiera de ellas dentro del mapa para crear una nueva localización. Cuando arrastres una flecha dentro del mapa, un nuevo 'pin' aparecerá en la localización seleccionada. De esta forma, cuando los usuarios hagan click sobre un 'pin' en el mapa verán la diapositiva asociada. Los 'pins' también son arrastrables, de modo que puedes moverlos a lo largo del mapa. Para eliminar un 'pin' en el mapa, simplemente haz click sobre él.",
 
+				"i.walkSelectSlides_1"		: "",
+				"i.walkSelectSlides_2"		: "",
+				"i.walkSelectSlides_3"		: "",
+				"i.walkSelectSlides_4"		: "",
+
 				"i.toJSON"					: "a JSON",
 				"i.PDFSlideshow"			: "Presentación PDF",
 				"i.Excursions"				: "Excursiones",
