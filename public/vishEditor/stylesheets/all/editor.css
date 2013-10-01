@@ -2042,12 +2042,6 @@ table.contentIconsWalkthrough td {
 	padding-right: 30px;
 }
 
-.imagetutflash {
-	position: absolute;
-	top:98px;
-	left: 420px;
-}
-
 .tut_savepresentation {
 	top: 542px;
 	left: 505px;
@@ -2141,6 +2135,27 @@ table.tut_table_imagewithsubtitle tr td:first-child p {
 	margin-top: 8px;
 	margin-bottom: 0px;
 	text-align: center;
+}
+
+table.tut_table_imagewithsubtitle_row2 tr td:nth-child(2) {
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	white-space: nowrap;
+}
+
+table.tut_table_imagewithsubtitle_row2 tr td:nth-child(2) p {
+	color: #000;
+	font-size: 15px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	margin-top: 8px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+table.tut_table_imagewithsubtitle_row2 img {
+	max-height: 55px;
 }
 
 table.tut_table_image tr td:first-child p {
