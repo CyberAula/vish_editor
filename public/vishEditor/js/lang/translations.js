@@ -180,6 +180,15 @@ var i18n =
 
 				"i.walkLearnMoreSmartcards"		: "Pulsa aquí para aprender más sobre las Smartcards.",
 
+				"i.walkInsertJSONfile_1"		: "Añadir una presentación de ViSH Editor de un fichero JSON",
+				"i.walkInsertJSONfile_2"		: "Selecciona el archivo en formato JSON (.json) en el cual está guardada la presentación que quieres insertar. A continuación, pulsa sobre el botón 'Vista Previa'. Aparecerá una nueva pantalla para que elijas las diapositivas a importar.",
+				"i.walkInsertJSONfile_3"		: "Puedes salvar tu presentación en formato JSON haciendo click en 'Menú -> Exportar -> a JSON'. Se descargará a tu dispositivo un fichero JSON conteniendo tu presentación. De esta forma puedes compartir tu presentación mediante un archivo (por ejemplo enviándolo por email) y almacenarla donde quieras.",
+
+				"i.walkThemes_1"			: "Temas de ViSH Editor",
+				"i.walkThemes_4"			: "Recuerda que puedes cambiar el tema de la presentación en cualquier momento accediendo a esta pantalla o seleccionando la opción 'Ajustes' en el menu.",
+				
+				"i.toJSON"					: "a JSON",
+				"i.PDFSlideshow"			: "Presentación PDF",
 				"i.Excursions"				: "Excursiones",
 				"i.LiveResources"			: "Contenidos en directo",
 				"i.Language"				: "Idioma",
@@ -359,7 +368,9 @@ var i18n =
 				"i.addvideourl"			: "añadir URL de video (YouTube, HTML5)",
 				"i.Smartcards"			: "Smartcards",
 				"i.AddslideshowPDF"		: "Añadir presentación de un fichero PDF",
-				"i.AddFromJSONfile"		: "Añadir Excursión o Smartcard de un fichero JSON",
+				"i.AddFromJSONfile"		: "Añadir una presentación de ViSH Editor de un fichero JSON",
+				"i.SearchImagesViSH"	: "Buscar imágenes en el repositorio ViSH",
+				"i.selectPicture"		: "Seleccionar imagen para subir",
 
 				//Deprecated
 
@@ -446,32 +457,8 @@ var i18n =
 				"i.walk100"			: "Esta ventana te ofrece buscar flashcards o virtual tours desde el repositorio de ViSH para añadirlos en tus excursiones. Una flashcard o virtual tour es una página interactiva que contiene otras páginas a su vez en forma de infografía o mapa de contenidos.Haz click en cerrar para terminar el tutorial.",
 				"i.walk101"			: "En este espacio puedes buscar imágenes en el repositiorio del LRE. Solamente escribe lo que busques y en la zona inferior te aparecerá una galería de imágenes de las cuales solo debes pulsar encima de una de ellas para añadirla a tu presentación..Haz clic en cerrar para terminar este tutorial.",
 				"i.walk102"			: "En este espacio puedes buscar contenido en el repositiorio del LRE. Solamente escribe lo que busques y en la zona inferior te aparecerá una galería de contenido de las cuales solo debes pulsar encima de una de ellas para añadirla a tu presentación..Haz clic en cerrar para terminar este tutorial.",
-				
-				"i.Searchlrecontent": "Busqueda de contenido en el LRE",
-				"i.SearchImageslre"	: "Busqueda de Imagenes en el LRE",
-				"i.addflashvirt"	: "Añadiendo flashcards o virtual tours",
-				"i.themesTitle"		: "Temas de ViSH Editor",
-				"i.AddObjectContent"		: "Añadiendo contenido Object",
-				"i.AddObjectContentUpload"	: "Subiendo contenido Object",
-				"i.AddObjectContentUrl"		: "Añadiendo contenido Object por url",
-				"i.AddImagesContent"		: "Añadiendo imágenes",
-				
-				"i.AddImagesContentUpload"	: "Subiendo imágenes",
-				"i.AddLiveContent"			: "Añadiendo Contenido en Directo",
-				"i.SearchObjectContent"	: "Buscar contenido flash",
 				"i.SearchImagesFlickr"	: "Buscar imágenes en Flickr",
-				"i.SearchImagesViSH"	: "Buscar imágenes en el repositorio ViSH",
-				"i.SearchvídeosViSH"	: "Buscar vídeos en el repositorio del ViSH",
-				"i.SearchvídeosYoutube"	: "Buscar vídeos en Youtube",
-				"i.SearchLiveContent"	: "Buscar contenido en directo",
-				"i.SeeContentBefore"	: "Puedes ver el contenido antes de añadirlo",
-				"i.SeeImageBefore"		: "Puedes ver las imágenes antes de añadirlas",
-				"i.selectPicture"		: "Seleccionar imagen para subir",
-				"i.selectSlide"			: "Seleccionando una slide",
-				"i.selectSlides"		: "Seleccionando slides de excursiones externas",
-				"i.selectTheme"			: "Seleccionar tema",
 				"i.OwnImages"			: "Subir tus propias imágenes",
-				"i.selectquiz"			: "Seleccionar Quiz",
 
 				"i.last"				: "último"
 			},

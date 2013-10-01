@@ -1282,14 +1282,6 @@ div.vezone {
 	height: 120px;
 }
 
-#theme_fancybox {
-	background: url(/vishEditor/images/themebg.png) no-repeat;
-	width: 600px;
-	height: 300px;
-	padding-left: 36px;
-    padding-top: 87px;
-}
-
 
 /* Fancybox tabs */
 
@@ -1831,6 +1823,18 @@ div.object_wrapper {
 	cursor: pointer;
 }
 
+
+/* Themes fancybox */
+
+#theme_fancybox {
+	background: url(/vishEditor/images/themebg.png) no-repeat;
+	width: 530px;
+	height: 300px;
+	padding-left: 35px;
+	padding-right: 35px;
+	padding-top: 87px;
+}
+
 #help_themes_selection {
 	position: absolute;
 	margin-top: -88px;
@@ -1937,9 +1941,13 @@ p.tut_space_big {
 	width: 446px;
 }
 
-.theme_tut {
+.theme_tut_in_settings {
 	left: 531px !important;
 	width: 350px;
+}
+
+.tut_themes{
+	top: 217px;
 }
 
 .tut_pedagogical {

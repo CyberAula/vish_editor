@@ -70,7 +70,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		currentTheme = theme;
 
 		$("#theme_fancybox").addClass("waitCursor");
-		$(".templathumb").addClass("waitCursor");
+		$(".themethumb").addClass("waitCursor");
 
 		V.Themes.loadTheme(theme, function(){
 			//Theme loaded callback
@@ -90,7 +90,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 			V.Editor.Tools.setAllTooltipMargins(function(){
 				$.fancybox.close();
 				$("#theme_fancybox").removeClass("waitCursor");
-				$(".templathumb").removeClass("waitCursor");
+				$(".themethumb").removeClass("waitCursor");
 			});
 		});
 	};
