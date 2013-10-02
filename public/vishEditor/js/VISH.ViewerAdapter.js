@@ -145,7 +145,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview_insertMode){
 			//Enable images
-			$("#selectSlidesBar").find("img.addt").attr("src",V.ImagesPath + "templatesthumbs/addt.png");
+			$("#SelectedSlidesToAdd").attr("src",V.ImagesPath + "templatesthumbs/addt.png");
 			$("#tutorialSelectAllImage").attr("src",V.ImagesPath + "tutorial/selectall.png");
 			$("tutorialUnselectAllImage").attr("src",V.ImagesPath + "tutorial/unselectall.png");
 			$("tutorialSelectSlidesImage").attr("src",V.ImagesPath + "tutorial/selectslides.png");

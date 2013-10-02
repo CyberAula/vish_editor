@@ -107,7 +107,7 @@ this can not be done with show() and hide() because then it remains with display
 	display: block;
 	transform: translate(-230%);
 	-o-transform: translate(-230%);
-	-ms-transform: translate(-230%);  /* Added to fix explorer view*/
+	-ms-transform: translate(-230%);
 	-moz-transform: translate(-230%);
 	-webkit-transform: translate3d(-230%, 0, 0);
 }
@@ -116,7 +116,7 @@ this can not be done with show() and hide() because then it remains with display
 	display: block;
 	transform: translate(-115%);
 	-o-transform: translate(-115%);
-	-ms-transform: translate(-115%);  /* Added to fix explorer view*/
+	-ms-transform: translate(-115%);
 	-moz-transform: translate(-115%);
 	-webkit-transform: translate3d(-115%, 0, 0);
 }
@@ -125,8 +125,8 @@ this can not be done with show() and hide() because then it remains with display
 	display: block;
 	transform: translate(0);
 	-o-transform: translate(0);
-	-ms-transform: translate(0);  /* Added to fix explorer view*/
-	-moz-transform: none; /* translate(0) REMOVED BY KIKE, BECAUSE IT BROKE FIREFOX SWF PRESENTATION*/
+	-ms-transform: translate(0);
+	-moz-transform: none;
 	-webkit-transform: translate3d(0, 0, 0);
 }
 
@@ -134,7 +134,7 @@ this can not be done with show() and hide() because then it remains with display
 	display: block;
 	transform: translate(115%);
 	-o-transform: translate(115%);
-	-ms-transform: translate(115%);  /* Added to fix explorer view*/
+	-ms-transform: translate(115%);
 	-moz-transform: translate(115%);
 	-webkit-transform: translate3d(115%, 0, 0);
 }
@@ -143,7 +143,7 @@ this can not be done with show() and hide() because then it remains with display
 	display: block;
 	transform: translate(230%);
 	-o-transform: translate(230%);
-	-ms-transform: translate(230%);  /* Added to fix explorer view*/
+	-ms-transform: translate(230%);
 	-moz-transform: translate(230%);
 	-webkit-transform: translate3d(230%, 0, 0);
 }
@@ -283,86 +283,6 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 
-/* Select slides */
-.selectSlidesBar {
-	background-image: -moz-linear-gradient(#a8a8a8,#ececec);
-	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#a8a8a8),to(#ececec));
-	background-image: -o-linear-gradient(#a8a8a8,#ececec);
-	background-image: -ms-linear-gradient(#a8a8a8,#ececec);
-	height: 80px;
-	bottom: 0;
-	opacity: 1.0;
-	position: absolute;
-	text-align: center;
-	width: 100%;
-	border-bottom: 1px solid #888;
-	border-top: 1px solid #ccc;
-	z-index: 1200;
-	border: none;
-}
-
-#selectSlidesBar > div {
-	height: 100%;
-	text-align: center;
-	margin-left: 23px;
-}
-
-.selectSlidesButtons1 {
-	float: left;
-	width: 25%;
-}
-
-.selectSlidesButtons2 {
-	float: right;
-	width: 49%;
-}
-
-.selectSlidesButtons3 {
-	float: right;
-	width: 25%;
-}
-
-.selectSlidesButtons1 > button {
-	display: block;
-	margin-left: 13px;
-	margin-right: auto;
-	float: left;
-}
-
-.selectSlidesButtons2 > button {
-	display: inline;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.selectSlidesSelection {
-	float: left;
-	position: absolute;
-}
-
-.selectSlidesSelection > img {
-	margin-top: -10px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.selectSlidesSelection > p {
-	font-family: arial;
-	position: absolute;
-	right: 64px;
-	bottom: -21px;
-	padding: 5px;
-	font-size: 1.5em;
-}
-
-.selectSlidesButtonWrapper {
-	position: absolute;
-	top: 25%;
-	right: 4%;
-}
-
-
 /* Style for Texts (CkEditor version) */
 
 html {
@@ -374,9 +294,9 @@ article {
 }
 
 article > div > p {
-	margin-top: 0em;
-	margin-bottom: 1em;
-	font-size: 1em;
+	margin-top: 0rem;
+	margin-bottom: 1rem;
+	font-size: 1rem;
 }
 
 article > div a {
@@ -389,38 +309,38 @@ article > div a {
 /* For old excursions */
 
 .vish-font1 {
-	font-size: 0.65em;
-	line-height: 0.9em;  
+	font-size: 0.65rem;
+	line-height: 0.9rem;  
 }
 	
 .vish-font2 {   
-	font-size: 0.813em;   
-	line-height: 1.54em;
+	font-size: 0.813rem;   
+	line-height: 1.54rem;
 }
 	
 .vish-font3 {   
-	font-size: 1.01em;
-	line-height: 1.24em;
+	font-size: 1.01rem;
+	line-height: 1.24rem;
 }
 	
 .vish-font4 {    
-	font-size: 1.125em;
-	line-height: 1.235em;    
+	font-size: 1.125rem;
+	line-height: 1.235rem;    
 }
 	 
 .vish-font5 {
-	font-size: 1.500em;
-	line-height: 1.32em;
+	font-size: 1.500rem;
+	line-height: 1.32rem;
 }
 	
 .vish-font6 {    
-	font-size: 2em;
-	line-height: 1.18em;
+	font-size: 2rem;
+	line-height: 1.18rem;
 }
 	 
 .vish-font7 {
-	font-size: 3.000em; 
-	line-height: 1.2em;  
+	font-size: 3.000rem; 
+	line-height: 1.2rem;  
 }
 	
 .vish-fontarial {  
@@ -723,11 +643,11 @@ div#tab_quiz_session_results {
 
 .fancy_viewer_tabs li a {
 	display:block;
-	padding: 0.5em 1.5em;
+	padding: 0.5rem 1.5rem;
 	text-decoration: none;
 	background: transparent;
 	color: #ff005d;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
@@ -764,16 +684,16 @@ div#tab_quiz_session_results {
 	margin-right: -5px;
 }
 
-.help_in_fancybox_viewer:hover{
+.help_in_fancybox_viewer:hover {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
 
 #help_addslides_selection {
 	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
-	margin-top: -601px;
-	margin-left: 393px;
-	position: absolute;
+	position: fixed;
+	top: -1px;
+	right: 27px;
 }
 
 #help_addslides_selection:hover {
@@ -876,7 +796,7 @@ div.quizQr > table {
 	background: #ff005d repeat-x bottom;
 	opacity: 0.6;
 	color:#f9f9f9;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-weight: bold;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -886,28 +806,28 @@ div.quizQr > table {
 .prompt_button_viewer1 {
 	left: 45%;
 	font-family: arial;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .prompt_button_viewer2 {
 	left: 50%;
 	margin-left: -20%;
 	font-family: arial;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .prompt_button_viewer3 {
 	margin-left: 50px;
 	left: 51%;
 	font-family: arial;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .prompt_button_viewer4 {
 	right: 0%;
 	margin-right: 10px;
 	font-family: arial;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .prompt_button_viewer1:hover {
@@ -926,82 +846,6 @@ div.quizQr > table {
 	opacity: 1;
 	text-shadow: 1px 1px #666;
 }
-
-.addt {
-	margin-left: 26px !important;
-	width: 58px;
-}
-
-.buttonconfirm {
-	width: 92px;
-	margin-top: -22px;
-	margin-left: -74px;
-	position: absolute;
-}
-
-.buttoncenter {
-	margin-left: -273px !important;
-	margin-top: -76px;
-	position: absolute;
-}
-
-.imgbutton {
-	width: 17px;
-	margin-right: 8px;
-	margin-top: -3px;
-}
-
-.unselectall {
-	position: absolute;
-	margin-left: 118px !important;
-}
-
-.selectall {
-	margin-left: -6px !important;
-}
-
-.selected_accept {
-	-webkit-transition: opacity 0.7s linear;
-	overflow: hidden;
-	border: 1px solid green !important;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-}
-
-.selected_deny {
-	border: 1px solid red !important;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
-}
-
-.selected_n_slides {
-	color: green !important;
-}
-
-.selected_zero_slides {
-	color: red !important;
-}
-
-.addslidetrans {
-	-webkit-transition-duration: 0.8s;
-	-moz-transition-duration: 0.8s;
-	-o-transition-duration: 0.8s;
-	transition-duration: 0.8s;
-	-webkit-transition-property: -webkit-transform;
-	-moz-transition-property: -moz-transform;
-	-o-transition-property: -o-transform;
-	transition-property: transform;
-	overflow: hidden;
-}
-
-.addslidetrans2 {
-	-webkit-transform: rotate(360deg);
-	-moz-transform: rotate(360deg);
-	-o-transform: rotate(360deg);
-}
-
 
 /* Tutorials with Joyride (css for Viewer and Editor) */
 
@@ -1059,6 +903,12 @@ div.quizQr > table {
 	margin-left: -350px;
 }
 
+.tut_width800_center {
+	width: 800px !important;
+	left: 50%;
+	margin-left: -400px;
+}
+
 .tut_template_full {
 	top: 70px;
 	left: 245px;
@@ -1081,8 +931,18 @@ p.tut_withlittlebottomspace{
 	padding-bottom: 0px;
 }
 
+p.tut_withmediumbottomspace{
+	margin-bottom: 6px;
+	padding-bottom: 0px;
+}
+
 p.tut_withouttopspace {
 	margin-top: 0px;
+	padding-top: 0px;
+}
+
+p.tut_withlittletopspace {
+	margin-top: 3px;
 	padding-top: 0px;
 }
 
@@ -1106,9 +966,7 @@ p.tut_space_big {
 /* Tutorials for Viewer */
 
 .joyride-tip-guide h2 {
-	font-size: 1.3em !important;
-	color: #0066ff;
-	padding-bottom: 5px;
+	font-size: 1.8rem !important; /*responsive*/
 }
 
 .tut_with_arrow span.joyride-nub {
@@ -1130,37 +988,116 @@ p.tut_space_big {
 }
 
 .addslidestut {
-	top: 12px;
-	left: 100px;
-	display: block;
-	width: 674px;
-	height: 511px;
+	top: 20px;
 }
 
-.selectSlidesGreen, .selectSlidesRed {
-	width: 30px;
-	height: 20px;
-}
-
-.selectSlidesGreen {
-	border: 1px solid green !important;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
-}
-
-.selectSlidesRed {
-	border: 1px solid red !important;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
+.addslidestut img {
+	max-height: 30px;
 }
 
 
 /* Import slides */
 
-.buttonadd {
-	padding: 5px 10px;
+.selectSlidesBar {
+	background-image: -moz-linear-gradient(#a8a8a8,#ececec);
+	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#a8a8a8),to(#ececec));
+	background-image: -o-linear-gradient(#a8a8a8,#ececec);
+	background-image: -ms-linear-gradient(#a8a8a8,#ececec);
+	height: 80px;
+	bottom: 0;
+	opacity: 1.0;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid #888;
+	border-top: 1px solid #ccc;
+	z-index: 1200;
+	border: none;
+}
+
+#selectSlidesBar > div {
+	height: 100%;
+	text-align: center;
+	margin-left: 20px;
+}
+
+.selectSlidesButtons1 {
+	float: left;
+	width: 35%;
+}
+
+.selectSlidesButtons2 {
+	float: right;
+	width: 39%;
+}
+
+.selectSlidesButtons3 {
+	float: right;
+	width: 25%;
+}
+
+.selectSlidesButtons1 > button {
+	display: block;
+	float: left;
+}
+
+.selectSlidesButtons2 > button {
+	display: inline;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.selectSlidesSelection {
+	float: left;
+	position: absolute;
+	margin-top: 15px;
+}
+
+.selectSlidesSelection > img {
+	margin-top: -10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.selectSlidesSelection > p {
+	font-family: arial;
+	position: absolute;
+	right: 64px;
+	bottom: -10px;
+	padding: 5px;
+	font-size: 1.6rem;
+}
+
+.selectSlidesButtonWrapper {
+	position: absolute;
+	top: 25%;
+	right: 4%;
+}
+
+img#SelectedSlidesToAdd {
+	margin-left: 26px !important;
+	width: 58px;
+}
+
+#ssbdone {
+	width: 100px;
+	margin-top: -8px;
+	margin-left: -80px;
+	position: absolute;
+}
+
+#ssbaccept {
+	max-width: 160px !important;
+	width: 160px !important;
+	margin-left: -353px !important;
+	margin-top: -73px !important;
+	position: absolute;
+}
+
+.selectSlidesButton {
+	max-width : 135px;
+	padding: 2px 10px;
 	display: inline;
 	text-decoration:none;
 	background: #ffffff; /* Old browsers */
@@ -1178,6 +1115,69 @@ p.tut_space_big {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+
+table.selectSlidesTable {
+	width: 100%;
+}
+
+img.selectSlidesimgbutton {
+	width: 17px;
+	margin-right: 3px;
+}
+
+#ssbuAll {
+	margin-left: 13px;
+}
+
+#ssbAll {
+	margin-left: -10px !important;
+}
+
+#ssbAll, #ssbuAll {
+	margin-top: 7px;
+}
+
+.selected_accept {
+	-webkit-transition: opacity 0.7s linear;
+	overflow: hidden;
+	border: 1px solid green !important;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(52, 186, 74, 0.6) !important;
+}
+
+.selected_deny {
+	border: 1px solid red !important;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(191, 21, 21, 0.6) !important;
+}
+
+.selected_n_slides {
+	color: green !important;
+}
+
+.selected_zero_slides {
+	color: red !important;
+}
+
+.addslidetrans {
+	-webkit-transition-duration: 0.8s;
+	-moz-transition-duration: 0.8s;
+	-o-transition-duration: 0.8s;
+	transition-duration: 0.8s;
+	-webkit-transition-property: -webkit-transform;
+	-moz-transition-property: -moz-transform;
+	-o-transition-property: -o-transform;
+	transition-property: transform;
+	overflow: hidden;
+}
+
+.addslidetrans2 {
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
 }
 
 .selected_inactive {
@@ -1332,7 +1332,7 @@ a.button_advert:hover {
 
 .textrec1 {
 	font-family:'Open Sans', sans-serif;
-	font-size:2em;
+	font-size:2rem;
 	color: #fff ;
 }
 
@@ -1409,13 +1409,13 @@ a.button_advert:hover {
 	color: #36f;
 	opacity: 0.6;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.4em;
+	font-size: 1.4rem;
 }
 
 .rec-views {
 	color: #999;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	margin-left: 1%;
 	margin-right: 8%;
 }
@@ -1439,7 +1439,7 @@ a.button_advert:hover {
 	margin-left: -17%;
 	font-family: 'Open Sans', sans-serif;
 	width: 108%;
-	font-size: 1.6em;
+	font-size: 1.6rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -1459,7 +1459,7 @@ a.button_advert:hover {
 	background-color: #fff;
 	border-radius: 50%;
 	color: #333;
-	font-size: 1em;
+	font-size: 1rem;
 	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
 	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
 	box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
@@ -1481,13 +1481,13 @@ a.button_advert:hover {
 	margin-bottom: 4%;
 	color: #999;
 	margin-left: -16%;
-	font-size: 1.1em;
+	font-size: 1.1rem;
 }
 
 .rec-visits {
 	font-weight: bold;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	display: inline-block;
 	color: #40cc7f;
 	margin-left: -16%;
@@ -1497,7 +1497,7 @@ a.button_advert:hover {
 .rec-likes {
 	font-weight: bold;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.1em;
+	font-size: 1.1rem;
 	display: inline-block;
 	color: #40cc7f;
 }
@@ -1516,7 +1516,7 @@ a.button_advert:hover {
 	-webkit-border-radius: 5px;
 	float: right;
 	margin-top: 6%;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	margin-right: 9%;
 }
 

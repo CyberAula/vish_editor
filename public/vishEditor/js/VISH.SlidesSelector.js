@@ -136,10 +136,14 @@ VISH.SlidesSelector = (function(V,$,undefined){
 	};
 
 	_updateButtonValue = function(slideNumber){
+		var img = $(acceptButton).find("table tr td:nth-child(1) img");
+		var span = $(acceptButton).find("table tr td:nth-child(2) span");
 		if(slides[slideNumber-1] === true){
-			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_wrong.png"/>Unselect Slide');
+			$(img).attr("src",V.ImagesPath+ "quiz/checkbox_wrong.png");
+			$(span).text(V.I18n.getTrans("i.UnselectSlide"));
 		} else {
-			$(acceptButton).html('<img class="imgbutton" src="'+V.ImagesPath+ 'quiz/checkbox_checked.png"/>Select Slide');
+			$(img).attr("src",V.ImagesPath+ "quiz/checkbox_checked.png");
+			$(span).text(V.I18n.getTrans("i.SelectSlide"));
 		}
 	};
 

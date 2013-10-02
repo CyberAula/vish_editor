@@ -103,20 +103,41 @@
 	<div id="selectSlidesBar" class="selectSlidesBar" style="display:none">
 		<img id='help_addslides_selection' src='/vishEditor/images/icons/helptutorial_circle_blank.png'/>
 		<div class="selectSlidesButtons1">
-			<button id="ssbAll" class="buttonadd selectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_checked.png"/>Select All</button>
-			<button id="ssbuAll" class="buttonadd unselectall"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Unselect All</button>
+			<button id="ssbAll" class="selectSlidesButton">
+				<table class="selectSlidesTable">
+					<tr>
+						<td><img class="selectSlidesimgbutton" src="/vishEditor/images/quiz/checkbox_checked.png"/></td>
+						<td><span i18n-key="i.SelectAll">Select All</span></td>
+					</tr>
+				</table>
+			</button>
+			<button id="ssbuAll" class="selectSlidesButton">
+				<table class="selectSlidesTable">
+					<tr>
+						<td><img class="selectSlidesimgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/></td>
+						<td><span i18n-key="i.UnselectAll">Unselect All</span></td>
+					</tr>
+				</table>
+			</button>
 		</div>
 		<div class="selectSlidesButtons3">
 			<div class="selectSlidesSelection">
 				<p id="ssbsp" class="selected_n_slides addslidetrans"></p>
-				<img  class="addt"/>
+				<img id="SelectedSlidesToAdd"/>
 			</div>
 			<div class="selectSlidesButtonWrapper">
-				<button id="ssbdone" class="viewer_button buttonconfirm">Add Slides</button>
+				<button i18n-key="i.AddSlides" id="ssbdone" class="viewer_button">Add Slides</button>
 			</div>
 		</div>
 		<div class="selectSlidesButtons2">
-			<button id="ssbaccept" class="buttoncenter buttonadd"><img class="imgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/>Unselect Slide</button>
+			<button id="ssbaccept" class="buttoncenter selectSlidesButton">
+				<table class="selectSlidesTable">
+					<tr>
+						<td><img class="selectSlidesimgbutton" src="/vishEditor/images/quiz/checkbox_wrong.png"/></td>
+						<td><span i18n-key="i.UnselectSlide">Unselect Slide</span></td>
+					</tr>
+				</table>
+			</button>
 		</div>
 	</div>
 
@@ -258,18 +279,19 @@
 
 	<!-- Help selecting slides from a previewed presentation -->
 	<ol id="addslides_help" class="joyRideTipContent">
-		<li data-id="viewbar" data-text="Close" i18n-key="i.Close" class="addslidestut tut_without_arrow" data-options="tipLocation:none">
-			<h2 i18n-key="i.AddingSlideinto">Adding slides into your excursion</h2>
-			<p i18n-key="i.walk84">In this window you can preview the slides of the excursion that you had already choosen in order to add all or some of the slides into your excursion.This preview offers you some options (at the bottom) which are:</p>
-			<p i18n-key="i.walk85">This button will select all the slides in order to add them to your excursion.</p>
-			<p i18n-key="i.walk86">This button will unselect all the slides.</p>
-			<p i18n-key="i.walk87">Also, you can add or remove any slide by clicking the button in the lower center space below the number of the slide.</p>
-			<p i18n-key="i.walk88">Every time you select an slide it will show its border green</p>
-			<div class="selectSlidesGreen"></div>
-			<p i18n-key="i.walk89">and if you remove it it will show a red border.</p>
-			<div class="selectSlidesRed"></div>
-			<p i18n-key="i.walk90">You will know how many slides you are going to add to your excursion by checking the cuantity at the right bottom of the screen.Example: <i style="color: green; font-size: 1.4em">"+4"</i></p>
-			<p i18n-key="i.walk91">If you finished your selection you can finally add your slides to you excursion by click the button "add slides" at the right bottom in the screen. Click on "Close" to finish the tutorial.</p><br>
+		<li data-id="viewbar" data-text="Close" i18n-key="i.Close" class="tut_width800_center addslidestut tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.walkSelectSlides_1">Adding external slides to your presentation</h2>
+			<p i18n-key="i.walkSelectSlides_2">Here you can see a preview of the presentation that you have decided to import. You can insert all the slides of the presentation or select the ones that you want to insert.</p>
+			<p i18n-key="i.walkSelectSlides_3">Taking into account that all slides are selected by default, if you want to insert the whole presentation you just have to click on the 'Add Slides' button placed at the bottom right.</p>
+			<p><span i18n-key="i.walkSelectSlides_4">If you want to select specific slides to import, the following instructions will help you</span>:</p>
+			<p class="tut_withouttopspace"><span i18n-key="i.walkSelectSlides_5a">Use the arrows</span> <img src="/vishEditor/images/tutorial/tut_arrow.png"/> <span i18n-key="i.walkSelectSlides_5b">placed at the bottom to navigate between the slides of the presentation.</span></p>
+			<p class="tut_withouttopspace"><span i18n-key="i.walkSelectSlides_6a">Selected slides have a green border</span> <img src="/vishEditor/images/tutorial/selectedSlideBoxGreen.png"/> <span i18n-key="i.walkSelectSlides_6b">while unselected slides have a red border</span> <img src="/vishEditor/images/tutorial/selectedSlideBoxRed.png"/>.</p>
+			<p class="tut_withmediumbottomspace" i18n-key="i.walkSelectSlides_7">To select or unselect the current slide you are viewing, click on the 'Select/Unselect Slide' button placed at the bottom center.</p>
+			<img src="/vishEditor/images/tutorial/selectslides.png"/>
+
+			<p class="tut_withmediumbottomspace" i18n-key="i.walkSelectSlides_8">Moreover, you can use the following buttons to select or unselect all the slides at once.</p>
+			<img src="/vishEditor/images/tutorial/selectall.png"/><img src="/vishEditor/images/tutorial/unselectall.png"/>
+			<p i18n-key="i.walkSelectSlides_9">Finally, to insert the selected slides you have to click on the 'Add slides' button placed at the bottom right. Notice that the quantity of slides that you are going to insert is indicated at the left of this button.  </p>
 			<p class="tut_space">&nbsp;</p>
 		</li>
 	</ol>

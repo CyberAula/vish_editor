@@ -16,3 +16,11 @@ div#viewerpreview {
 	font-family: Helvetica;
 	font-size: 1.1em;
 }
+
+#ssbAll, #ssbuAll, #ssbaccept, #ssbdone {
+	font-size: 13px !important;
+}
+
+.joyride-tip-guide h2 {
+    font-size: 1.7rem !important;
+}

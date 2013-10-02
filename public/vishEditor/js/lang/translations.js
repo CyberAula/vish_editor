@@ -209,10 +209,22 @@ var i18n =
 				"i.walkVirtualTour_5"		: "Cuando la diapositiva está seleccionada, se muestra en la pantalla y puedes editarla y borrarla de la misma forma que las diapositivas normales. Para seleccionar una diapositiva simplemente pulsa sobre ella en el 'panel de Tour Virtual'. Si quieres seleccionar el Tour Virtual nuevamente para editarlo, debes hacer click en el icono de Tour Virtual situado a la izquierda del 'panel de Tour Virtual'.",
 				"i.walkVirtualTour_6"		: "Las diapositivas tienen flechas arrastrables en su parte superior. Puedes arrastrar cualquiera de ellas dentro del mapa para crear una nueva localización. Cuando arrastres una flecha dentro del mapa, un nuevo 'pin' aparecerá en la localización seleccionada. De esta forma, cuando los usuarios hagan click sobre un 'pin' en el mapa verán la diapositiva asociada. Los 'pins' también son arrastrables, de modo que puedes moverlos a lo largo del mapa. Para eliminar un 'pin' en el mapa, simplemente haz click sobre él.",
 
-				"i.walkSelectSlides_1"		: "",
-				"i.walkSelectSlides_2"		: "",
-				"i.walkSelectSlides_3"		: "",
-				"i.walkSelectSlides_4"		: "",
+				"i.walkSelectSlides_1"		: "Añadiendo diapositivas externas a tu presentación",
+				"i.walkSelectSlides_2"		: "Aquí puedes previsualizar la presentación que has decidido importar. Puedes insertar todas las diapositivas de la presentación o seleccionar solo aquellas que quieras insertar.",
+				"i.walkSelectSlides_3"		: "Teniendo en cuenta que por defecto se seleccionan todas las diapositivas, si quieres insertar la presentacióm completa solamente tienes que hacer click sobre el botón 'Añadir Diapositivas' situado en la zona inferior derecha de la pantalla.",
+				"i.walkSelectSlides_4"		: "Si quieres seleccionar de forma específica las diapositivas a importar, las siguientes instrucciones te servirán de ayuda",
+				"i.walkSelectSlides_5a"		: "Utiliza las flechas",
+				"i.walkSelectSlides_5b"		: "situadas en la zona inferior para recorrer las diapositivas de la presentación.",
+				"i.walkSelectSlides_6a"		: "Las diapositivas seleccionadas tienen un borde verde",
+				"i.walkSelectSlides_6b"		: "mientras que las diapositivas no seleccionadas tienen un borde rojo.",
+				"i.walkSelectSlides_7"		: "Para seleccionar o deseleccionar la diapositiva actual que estás viendo, pulsa sobre el botón 'Seleccionar/Deseleccionar Diapositiva' situado en el centro de la zona inferior.",
+				"i.walkSelectSlides_8"		: "Además, puedes hacer uso de los siguientes botones para seleccionar o deseleccionar de golpe todas las diapositivas.",
+				"i.walkSelectSlides_9"		: "Finalmente, para insertar todas las diapositivas que has seleccionado debes de hacer click en el botón 'Añadir Diapositivas' situado en la zona inferior derecha de la pantalla. La cantidad de diapositivas a insertar se indica a la izquierda de este botón.",
+
+				"i.SelectAll"				: "Seleccionar Todas",
+				"i.UnselectAll"				: "Deseleccionar Todas",
+				"i.UnselectSlide"			: 'Deseleccionar Diapositiva',
+				"i.SelectSlide"				: 'Seleccionar Diapositiva',
 
 				"i.toJSON"					: "a JSON",
 				"i.PDFSlideshow"			: "Presentación PDF",
@@ -398,6 +410,7 @@ var i18n =
 				"i.AddFromJSONfile"		: "Añadir una presentación de ViSH Editor de un fichero JSON",
 				"i.SearchImagesViSH"	: "Buscar imágenes en el repositorio ViSH",
 				"i.selectPicture"		: "Seleccionar imagen para subir",
+				"i.AddSlides"			: "Añadir Diapositivas",
 
 				//Deprecated
 
@@ -470,7 +483,7 @@ var i18n =
 				"i.walk86"			: "Este botón quitará todas las slides de la selección",
 				"i.walk87"			: "También, puedes añadir o quitar las slides una a una haciendo click en el botón central debajo del numero de la slide",
 				"i.walk88"			: "Cada vez que selecciones una slide, esta aparecerá con un borde verde",
-				"i.walk89"			: "Y si la quitas de la selección aparecerá con un borde rojo.",
+				"i.walk89"			: "Y si la quitas de la selección aparecerá con un borde rojo",
 				"i.walk90"			: "Podras comprobar cuantas slides vas a añadir a tu excursión comprobandolo en el numero de la parte inferior derecha. Ejemplo:",
 				"i.walk91"			: "Si has terminado tu selección puedes añadir finalmente las slides a tu excursión haciendo click en el botón 'añadir slides' en la parte inferior.Haz click en cerrar para finalizar el tutorial.",
 				"i.walk92"			: "Esta ventana te ofrece un qr-code y un enlace para que puedas enviar o mostrar a otros usuarios para que puedan participar en tu sesión, puedes comprobar en tiempo real los resultados haciendo click en la sección de 'estado' en la zona superior de esta ventana.<br>Puedes compartir esta sesión tambien en otras redes sociales haciendo click en sus respectivos iconos.<br>Si haces click en el botón de cerrar ventana en la parte superior de esta ventana, siempre podrás volver a esta ventana haciendo click en el botón de opciones en la slide de tu excursión.<br>Puedes salvar todos los resultados una vez termines tu sesión haciendo click en el botón de parar en la parte inferior de esta ventana.Una nueva ventana aparecerá para que pongas nombre a tu sesión y la almacenes en tu perfil.<br> Haz click en cerrar para finalizar el tutorial.",
@@ -534,7 +547,9 @@ var i18n =
 				"i.Noresultsfound"			: "No results found",
 				"i.Searchplaces"			: "Search places",
 				"i.readJSONfileError"		: "Error reading JSON file",
-				"i.NoJSONFileError"			: "You have to select a file to import in JSON format"
+				"i.NoJSONFileError"			: "You have to select a file to import in JSON format",
+				"i.UnselectSlide"			: 'Unselect Slide',
+				"i.SelectSlide"				: 'Select Slide'
 			}
 		},
 	 "standalone":
