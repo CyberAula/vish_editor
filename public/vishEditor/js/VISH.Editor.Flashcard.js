@@ -4,7 +4,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	};
 
 	var getDummy = function(slidesetId,options){
-		return "<article id='"+slidesetId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
+		return "<article id='"+slidesetId+"' type='"+V.Constant.FLASHCARD+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_flashcard' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div class='change_bg_button'></div></article>";
 	};
 
 	/*
@@ -86,7 +86,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			if(slide){
 				var slide_id = $(slide).attr("id");
 				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" >');
-				$(arrowDiv).append($('<img src="'+V.ImagesPath+'flashcard/flashcard_button.png" class="fc_draggable_arrow">'));
+				$(arrowDiv).append($('<img src="'+V.ImagesPath+'icons/flashcard_button.png" class="fc_draggable_arrow">'));
 				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 

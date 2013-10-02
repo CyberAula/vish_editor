@@ -53,9 +53,8 @@ js/VISH.EventsNotifier.js
 js/VISH.LocalStorage.js
 configuration/configuration.js
 images/background1.png
-images/icons/fullscreen_all.png
-images/icons/helptutorial_circle_blank.png
-images/icons/back_icon.png
+images/vicons/helptutorial_circle_blank.png
+images/vicons/back_icon.png
 
 http://blogs.20minutos.es/cronicaverde/files/parque_nacional_donana_lince_iberico.jpg
 http://i13.photobucket.com/albums/a288/inkslinger0611/drawings/Iberian.jpg

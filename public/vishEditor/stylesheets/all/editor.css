@@ -511,7 +511,7 @@ input.slider_range_input {
 }
 
 .help_in_settings {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle.png);
 	position: absolute;
 	right: 1px;
 	height: 29px;
@@ -519,7 +519,7 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
 
@@ -803,7 +803,7 @@ section.slides_editor > article > article {
 
 div.zoneSelected {
 	cursor: auto;
-	background: url(/vishEditor/images/grid.png) repeat;
+	background: url(/vishEditor/images/icons/grid.png) repeat;
 	border: 1px solid #0096fd !important;
 	outline: 0;
 	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(211, 211, 211, 0.1);
@@ -897,7 +897,7 @@ div.vezone[tooltip='true'][size='large'] {
 
 .previewimgbox {
 	position:absolute;
-	background: url(/vishEditor/images/imgprev.png) no-repeat;
+	background: url(/vishEditor/images/icons/imgprev.png) no-repeat;
 	margin-left: 30px;
 	margin-top: 15px;
 	width: 370px;
@@ -1668,12 +1668,12 @@ table.metadata tr.odd {
 } 
 
 table.metadata td.header_left {
-	background: url(/vishEditor/images/table_left.png) no-repeat scroll left -1px #FF005D;
+	background: url(/vishEditor/images/icons/table_left.png) no-repeat scroll left -1px #FF005D;
 	width: 23%;
 }
 
 table.metadata td.header_right {
-	background: url(/vishEditor/images/table_right.png) no-repeat scroll right -1px #FF005D;
+	background: url(/vishEditor/images/icons/table_right.png) no-repeat scroll right -1px #FF005D;
 	width: 77%;
 }
 
@@ -1793,7 +1793,7 @@ div.object_wrapper {
 }
 
 .help_in_slide {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle.png);
 	position: absolute;
 	top: 2px;
 	right: 24px;
@@ -1805,12 +1805,12 @@ div.object_wrapper {
 }
 
 .help_in_slide:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
 
 .help_in_fancybox {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle.png);
 	position: absolute;
 	margin-top: -1px;
 	margin-right: -5px;
@@ -1819,7 +1819,7 @@ div.object_wrapper {
 }
 
 .help_in_fancybox:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover.png);
 	cursor: pointer;
 }
 
@@ -1827,7 +1827,7 @@ div.object_wrapper {
 /* Themes fancybox */
 
 #theme_fancybox {
-	background: url(/vishEditor/images/themebg.png) no-repeat;
+	background: url(/vishEditor/images/icons/themebg.png) no-repeat;
 	width: 530px;
 	height: 300px;
 	padding-left: 35px;
@@ -1843,7 +1843,7 @@ div.object_wrapper {
 }
 
 #help_themes_selection:hover {
-	background-image:url(/vishEditor/images/icons/helptutorial_circle_hover_tp.png);
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
 
@@ -2114,14 +2114,14 @@ div.change_bg_button {
 	position: absolute;
 	left: 325px;
 	top: 225px;
-	background: url(/vishEditor/images/flashcard/flashcard_add_img_button.png);
+	background: url(/vishEditor/images/icons/flashcard_add_img_button.png);
 	width: 150px;
 	height: 150px;
 	cursor: pointer;
 }
 
 div.change_bg_button:hover {
-	background: url(/vishEditor/images/flashcard/flashcard_add_img_button_hover.png);
+	background: url(/vishEditor/images/icons/flashcard_add_img_button_hover.png);
 }
 
 div.draggable_sc_div {

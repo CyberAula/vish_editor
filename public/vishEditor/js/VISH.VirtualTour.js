@@ -110,7 +110,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 	}
 
 	var _addMarkerToPosition = function(map,myLatlng,slide_id){
-		var pinImage = new google.maps.MarkerImage(V.ImagesPath + "vtour/marker.png",
+		var pinImage = new google.maps.MarkerImage(V.ImagesPath + "vicons/marker.png",
 		new google.maps.Size(25, 40),
 		new google.maps.Point(0,0),
 		new google.maps.Point(10, 34));

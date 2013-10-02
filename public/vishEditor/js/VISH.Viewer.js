@@ -12,6 +12,7 @@ VISH.Viewer = (function(V,$,undefined){
 	 */
 	var init = function(options, presentation){
 		V.Editing = false;
+		$("body").addClass("ViSHViewerBody");
 		
 		V.Debugging.init(options);
 

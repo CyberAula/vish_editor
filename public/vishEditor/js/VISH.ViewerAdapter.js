@@ -398,7 +398,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			if((fullscreen)&&(exit_fs_button)){
 				//we are in "simulated" fullscreen ,showing the .full version and we need a close fullscreen
-				$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreen.png")');
+				$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreen.png")');
 				$("#page-fullscreen").css("background-position", "0px 0px");
 
 				$(document).on('click', '#page-fullscreen', function(){
@@ -435,7 +435,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _onEnterFullScreen = function(){
-		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreenback.png")');
+		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreenback.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
 			$("#page-fullscreen").css("background-position", "-30px -40px");
@@ -446,7 +446,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	}
 
 	var _onLeaveFullScreen = function(){
-		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'icons/fullscreen.png")');
+		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreen.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
 			$("#page-fullscreen").css("background-position", "-40px -40px");

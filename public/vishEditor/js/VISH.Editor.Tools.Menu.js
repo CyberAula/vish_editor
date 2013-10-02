@@ -112,7 +112,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var options = {};
 		options.width = 400;
 		options.height = 140;
-		options.notificationIconSrc = V.ImagesPath + "toolbar/save_document.png";
+		options.notificationIconSrc = V.ImagesPath + "icons/save_document.png";
 		options.text = V.I18n.getTrans("i.areyousureNotification");
 		options.buttons = [];
 

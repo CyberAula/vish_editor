@@ -43,7 +43,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var getDummy = function(slidesetId,options){
-		return "<article id='"+slidesetId+"' type='"+V.Constant.VTOUR+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_vt' src='"+V.ImagesPath+"icons/helptutorial_circle_blank.png'/><div class='vt_canvas'></div><div class='vt_search'><input class='vt_search_input' type='text' placeholder='" + V.I18n.getTrans("i.Searchplaces") + "'></input><button class='vt_search_button'><img class='vt_search_button_img' src='/vishEditor/images/vtour/gsearch.png'/></button></div></article>";
+		return "<article id='"+slidesetId+"' type='"+V.Constant.VTOUR+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_vt' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div class='vt_canvas'></div><div class='vt_search'><input class='vt_search_input' type='text' placeholder='" + V.I18n.getTrans("i.Searchplaces") + "'></input><button class='vt_search_button'><img class='vt_search_button_img' src='/vishEditor/images/icons/gsearch.png'/></button></div></article>";
 	};
 
 
@@ -509,7 +509,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			if(slide){
 				var slide_id = $(slide).attr("id");
 				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" slideNumber="'+(index+1)+'"" >');
-				$(arrowDiv).append($('<img src="'+V.ImagesPath+'flashcard/flashcard_button.png" class="fc_draggable_arrow">'));
+				$(arrowDiv).append($('<img src="'+V.ImagesPath+'icons/flashcard_button.png" class="fc_draggable_arrow">'));
 				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 

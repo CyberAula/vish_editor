@@ -40,6 +40,7 @@ VISH.Editor = (function(V,$,undefined){
 	 */
 	var init = function(options, presentation){
 		V.Editing = true;
+		$("body").addClass("ViSHEditorBody");
 
 		V.Debugging.init(options);
 		

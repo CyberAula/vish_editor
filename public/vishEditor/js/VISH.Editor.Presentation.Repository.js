@@ -84,7 +84,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 				pres.id = V.Utils.getId("tmp");
 			}
 			if(!pres.avatar){
-				pres.avatar = V.ImagesPath + "defaultAvatar.png";
+				pres.avatar = V.ImagesPath + "icons/defaultAvatar.png";
 			}
 			var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
 			carrouselImages.push(myImg);

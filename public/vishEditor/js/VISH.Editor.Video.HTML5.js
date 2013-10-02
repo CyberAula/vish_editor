@@ -29,7 +29,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	}
   	
     //Default options
-	  var posterUrl = V.ImagesPath + "example_poster_image.jpg";
+	  var posterUrl = V.ImagesPath + "icons/example_poster_image.jpg";
 	  var autoplay = false;
 		
 	  //Replace defeault options if options hash is defined
@@ -85,7 +85,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = V.ImagesPath + "example_poster_image.jpg";
+    var posterUrl = V.ImagesPath + "icons/example_poster_image.jpg";
     var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
        rendered = rendered + "<source src='" + source + "' " + _getVideoType(source) + ">";
