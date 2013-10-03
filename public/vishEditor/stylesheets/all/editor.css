@@ -801,6 +801,11 @@ section.slides_editor > article > article {
 	top: 50% !important;
 }
 
+/*Padding for Virtual Tours (to allow search box)*/
+section.slides_editor > article[type='VirtualTour'] {
+	padding-top: 38px !important;
+}
+
 div.zoneSelected {
 	cursor: auto;
 	background: url(/vishEditor/images/icons/grid.png) repeat;

@@ -271,14 +271,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 */
 	var _setupSize = function(fullscreen){
 		var reserved_px_for_menubar = 40;
-		var margin_height = 40;
-		var margin_width = 30;
+		var min_margin_height = 25;
+		var min_margin_width = 60;
 
 		if(!showViewbar){
 			//Cases without viewbar (quiz_simple , etc)
 			reserved_px_for_menubar = 0;
-			margin_height = 0;
-			margin_width = 0;
+			min_margin_height = 0;
+			min_margin_width = 0;
 		} else if(is_preview_insertMode){
 			//Preview with insert images
 			reserved_px_for_menubar = 120;
@@ -290,40 +290,55 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			_onFullscreenEvent(false);
 		}
 		
-		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - 40px that is the menubar height
+		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - menubar height
 		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
 
-		var aspectRatio = width/height;
+		var aspectRatio = (width-min_margin_width)/(height-min_margin_height);
 		var slidesRatio = 4/3;
 		if(aspectRatio > slidesRatio){
-			finalH = height - margin_height;  //leave 40px free, 20 in the top and 20 in the bottom ideally
+			finalH = height - min_margin_height;
 			finalW = finalH*slidesRatio;
+			var widthMargin = (width - finalW);
+			if(widthMargin < min_margin_width){
+				var marginWidthToAdd = min_margin_width - widthMargin;
+				finalW = finalW - marginWidthToAdd;
+			}
 		}	else {
-			finalW = width - margin_width; //leave 110px free, at least, 55 left and 55 right ideally
+			finalW = width - min_margin_width;
 			finalH = finalW/slidesRatio;
+			var heightMargin = (height - finalH);
+			if(heightMargin < min_margin_height){
+				var marginHeightToAdd = min_margin_height - heightMargin;
+				finalH = finalH - marginHeightToAdd;
+			}
 		}
 
 		var topSlides = $(".slides > article");
 		var subSlides = $(".slides > article > article");
-		$(topSlides).css("height", finalH);
-		$(topSlides).css("width", finalW);
-		$(subSlides).css("height", finalH);
-		$(subSlides).css("width", finalW);
+		var allSlides = $(".slides article");
+		$(allSlides).css("height", finalH);
+		$(allSlides).css("width", finalW);
 
 		//margin-top and margin-left half of the height and width
 		var marginTop = finalH/2 + reserved_px_for_menubar/2;
 		var marginLeft = finalW/2;
 		$(topSlides).css("margin-top", "-" + marginTop + "px");
-		$(topSlides).css("margin-left", "-" + marginLeft + "px");
-		
 		$(subSlides).css("margin-top", "-" + finalH/2 + "px");
-		$(subSlides).css("margin-left", "-" + marginLeft + "px");	
+		$(allSlides).css("margin-left", "-" + marginLeft + "px");
 		
 		var increase = finalH/600;
 		var increaseW = finalW/800;
 		
+		//Paddings
+		var paddingTopAndBottom = 3/100*finalW;	//3%
+		var paddingLeftAndRight = 5/100*finalW;	//5%
+		$(allSlides).css("padding-left",paddingLeftAndRight);
+		$(allSlides).css("padding-right",paddingLeftAndRight); 
+		$(allSlides).css("padding-top",	paddingTopAndBottom);
+		$(allSlides).css("padding-bottom",paddingTopAndBottom);
+
 		//and now the arrows have to be increased or decreased
 		$(".fc_poi img").css("width", 50*increase + "px");
 		$(".fc_poi img").css("height", 50*increase + "px");

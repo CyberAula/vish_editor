@@ -38,7 +38,10 @@ section.slides > article, section.slides > article > article {
 	width: 800px;
 	height: 600px;
 	overflow: hidden;
-	padding: 35px 50px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+	padding-left: 40px;
+	padding-right: 40px;
 	position: absolute;  
 	display: block;
 	box-sizing: border-box;
