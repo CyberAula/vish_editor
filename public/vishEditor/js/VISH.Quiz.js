@@ -236,11 +236,11 @@ VISH.Quiz = (function(V,$,undefined){
 		var quizButtons = $("<div class='quizButtons'></div>");
 
 		if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
-			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='Launch'/>");
+			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
 			$(quizButtons).append(startButton);
 		}
 		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='Answer'/>");
+			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizAnswer")+"'/>");
 			$(quizButtons).append(answerButton);
 		}
 
@@ -284,7 +284,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).removeAttr("disabled");
 		$(startButton).removeClass("quizStartButtonLoading");
 		$(startButton).removeAttr("quizStatus");
-		$(startButton).attr("value","Launch");
+		$(startButton).attr("value",V.I18n.getTrans("i.QuizLaunch"));
 	}
 
 	var _loadingLaunchButton = function(quiz){
@@ -292,7 +292,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).attr("disabled", "disabled");
 		$(startButton).addClass("quizStartButtonLoading");
 		$(startButton).attr("quizStatus","loading");
-		$(startButton).attr("value","Launch");
+		$(startButton).attr("value",V.I18n.getTrans("i.QuizLaunch"));
 	}
 
 	var _runningLaunchButton = function(quiz){
@@ -300,7 +300,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).removeAttr("disabled");
 		$(startButton).removeClass("quizStartButtonLoading");
 		$(startButton).attr("quizStatus","running");
-		$(startButton).attr("value","Options");
+		$(startButton).attr("value",V.I18n.getTrans("i.QuizOptions"));
 	}
 
 

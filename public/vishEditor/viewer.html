@@ -172,8 +172,8 @@
 		<div id="start_quiz_fancybox" class="outer_box_viewer">
 			<div class="fancy_viewer_tabs" id="images_fancy_tabs_id">     
 				<ul>
-					<li><a href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_viewer_tab tabbable">Quiz Session</a></li>
-					<li><a href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_viewer_tab">Stats</a></li>
+					<li><a i18n-key="i.LiveQuiz" href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_viewer_tab tabbable">Live Quiz</a></li>
+					<li><a i18n-key="i.QuizResults" href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_viewer_tab">Results</a></li>
 				</ul>
 				<img class='help_in_fancybox_viewer' id='tab_quiz_session_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<img class='help_in_fancybox_viewer' id='tab_quiz_stats_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
@@ -186,7 +186,7 @@
 					<a target="_blank" href="#" id='tab_quiz_session_share_gPlus'><img src='/vishEditor/images/vicons/social/gplus.svg' class='socialButton'/></a>
 				</div>
 				<div class="quizQr"></div>
-				<input class='quizButton button quizStopButton' value='Stop'/>
+				<input i18n-key="i.QuizStop" class='quizButton button quizStopButton' value='Stop'/>
 			</div>
 			<div id='tab_quiz_stats_content' class="fancy_viewer_tab_content">
 				<canvas id="quiz_chart" width="400" height="400"></canvas>
@@ -198,10 +198,10 @@
 	<div style='display:none'>
 		<div id='prompt1_alert'>
 			<div class="prompt_text_container_viewer">
-				<span class="prompt_text_viewer">Please stop all quizzes before launch another one.</span>
+				<span i18n-key="i.QuizMultipleLaunchAlert" class="prompt_text_viewer">Please stop all quizzes before launch another one.</span>
 			</div>
 			<div>
-				<a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
 			</div>
 		</div>
 	</div>
@@ -210,11 +210,11 @@
 	<div style='display:none'>
 		<div id='prompt2_alert'>
 			<div class="prompt_text_container_viewer prompt_text_container_viewer2">
-				<p><span class="prompt_text_viewer">Do you want to save the quiz?</span></p>
+				<p><span i18n-key="i.QuizSaveConfirmation" class="prompt_text_viewer">Do you want to save the quiz results?</span></p>
 				<p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
-				<a href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button_viewer prompt_button_viewer2">Yes</a>
-				<a href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button_viewer prompt_button_viewer1">No</a>
-				<a href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button_viewer prompt_button_viewer3">Cancel</a>
+				<a i18n-key="i.Yes" href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button_viewer prompt_button_viewer2">Yes</a>
+				<a i18n-key="i.No" href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button_viewer prompt_button_viewer1">No</a>
+				<a i18n-key="i.Cancel" href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button_viewer prompt_button_viewer3">Cancel</a>
 			</div>
 		</div>
 	  </div>
@@ -223,10 +223,10 @@
 	<div style='display:none'>
 		<div id='prompt3_alert'>
 			<div class="prompt_text_container_viewer">
-				<span class="prompt_text_viewer">Please, answer the quiz before send</span>
+				<span i18n-key="i.QuizEmptyAnswerAlert" class="prompt_text_viewer">Please, answer the quiz before send</span>
 			</div>
 			<div>
-				<a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
 			</div>
 		</div>
 	</div>
@@ -235,10 +235,10 @@
 	<div style='display:none'>
 		<div id='prompt4_alert'>
 			<div class="prompt_text_container_viewer">
-				<span class="prompt_text_viewer">Your answer has been submitted</span>
+				<span i18n-key="i.QuizSubmittedAlert" class="prompt_text_viewer">Your answer has been submitted</span>
 			</div>
 			<div>
-				<a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">accept</a>
+				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
 			</div>
 		</div>
 	</div>
@@ -247,10 +247,10 @@
 	<div style='display:none'>
 		<div id='prompt5_alert'>
 			<div class="prompt_text_container_viewer">
-				<span class="prompt_text_viewer">Sorry, your answer can be submitted.</span>
+				<span i18n-key="i.QuizNotSubmittedAlert" class="prompt_text_viewer">Sorry, your answer couldn't be sent</span>
 			</div>
 			<div>
-				<a href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer_viewer4">accept</a>
+				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer_viewer4">Ok</a>
 			</div>
 		</div>
 	</div>
@@ -261,8 +261,11 @@
 	<!-- Help for quiz session -->
 	<ol id="quiz_session_help" class="joyRideTipContent">>
 		<li data-id="tab_quiz_session_content" class="custom tut_quiz tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
-			<h2 i18n-key="i.themesTitle">Quiz session</h2>
-			<p i18n-key="i.walk92">This window offers you a Qr-code and a link that you can give or show to the users that you want to participate in your simple quiz, or multiple-choice session, you can check in real-time too the results by clicking on the "stats" tab in the upper section of this window.<br>
+			<h2 i18n-key="i.walkQuizzes_1">Live Quizzes</h2>
+			<p i18n-key="i.walkQuizzes_2">
+				Live Quizzes allows you to launch quizzes and polls in real time to get instant feedback. To start a 'Live Quiz' you have to click on the 'Launch' button placed at the bottom of the quiz you want to start.
+				After that, a quiz session is created.	
+				This window offers you a Qr-code and a link that you can give or show to the users that you want to participate in your simple quiz, or multiple-choice session, you can check in real-time too the results by clicking on the "stats" tab in the upper section of this window.<br>
 			You can share this session in other social networks by clicking on their icon.<br>
 			If you click on the close button in the superior zone of this windows you can always go back here by clicking the options button in the slide of the excursion.<br>
 			You can save all the results once you finish by clicking on the button Stop in the button "Stop" in the inferior section of this window.<br>A new window will appear for naming and saving the session in your profile.<br>Click on close button to finish this tutorial.</p>
@@ -270,12 +273,12 @@
 	</ol>
 
 	<!-- Help for quiz stats -->
-	<ol id="quiz_stats_help" class="joyRideTipContent">>
+<!-- 	<ol id="quiz_stats_help" class="joyRideTipContent">>
 		<li data-id="tab_quiz_stats_content" class="custom tut_quiz tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
 			<h2 i18n-key="i.themesTitle">Quiz Session stats</h2>
 			<p i18n-key="i.walk93">This window offers you stadistics of your Quiz session, if you are offering a session with a simple quiz the stadistics the results will be shown as a circle shape separating every option in a different area.<br> If you are offering a session of multiple-choice you will get the results in a bar graph, you can always go back, close or save the results by clicking in the quiz session tab which is located in upper zone of this windows. Click "close" to finsih this tutorial.</p>
 		</li>
-	</ol>
+	</ol> -->
 
 	<!-- Help selecting slides from a previewed presentation -->
 	<ol id="addslides_help" class="joyRideTipContent">

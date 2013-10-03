@@ -221,6 +221,17 @@ var i18n =
 				"i.walkSelectSlides_8"		: "Además, puedes hacer uso de los siguientes botones para seleccionar o deseleccionar de golpe todas las diapositivas.",
 				"i.walkSelectSlides_9"		: "Finalmente, para insertar todas las diapositivas que has seleccionado debes de hacer click en el botón 'Añadir Diapositivas' situado en la zona inferior derecha de la pantalla. La cantidad de diapositivas a insertar se indica a la izquierda de este botón.",
 
+				"i.walkQuizzes_1"			: "Cuestionarios en Vivo",
+				"i.walkQuizzes_2"			: "",
+				"i.walkQuizzes_3"			: "",
+				"i.walkQuizzes_4"			: "",
+				"i.walkQuizzes_5"			: "",
+				"i.walkQuizzes_6"			: "",
+				"i.walkQuizzes_7"			: "",
+				"i.walkQuizzes_8"			: "",
+				"i.walkQuizzes_9"			: "",
+				"i.walkQuizzes_10"			: "",
+
 				"i.SelectAll"				: "Seleccionar Todas",
 				"i.UnselectAll"				: "Deseleccionar Todas",
 				"i.UnselectSlide"			: 'Deseleccionar Diapositiva',
@@ -321,6 +332,7 @@ var i18n =
 				"i.resourceNonCompatibleNotification"	: "El recurso no puede ser abierto porque está corrupto o no es compatible con la versión actual de ViSH Editor",
 				"i.pdfErrorNotification"				: "Ha ocurrido un error. Asegurese de que el fichero PDF es válido.",
 				"i.cancel"	: "cancelar",
+				"i.Cancel"	: "Cancelar",
 				"i.draft"	: "borrador",
 				"i.publish"	: "publicar",
 				"i.Publish"	: "Publicar",
@@ -411,6 +423,25 @@ var i18n =
 				"i.SearchImagesViSH"	: "Buscar imágenes en el repositorio ViSH",
 				"i.selectPicture"		: "Seleccionar imagen para subir",
 				"i.AddSlides"			: "Añadir Diapositivas",
+
+				"i.QuizButtonAnswer"		: 'Responder',
+				"i.QuizButtonLaunch"		: 'Lanzar',
+				"i.QuizButtonOptions"		: 'Opciones',
+				"i.QuizButtonRetry"			: 'Reintentar',
+
+				"i.QuizMultipleLaunchAlert"	: 'Por favor, detén todos los cuestionarios antes de lanzar uno nuevo',
+				"i.QuizSaveConfirmation" 	: '¿Quieres guardar los resultados del cuestionario?',
+				"i.QuizEmptyAnswerAlert"	: 'Por favor, responde el cuestionario antes de enviar tu respuesta',
+				"i.QuizSubmittedAlert" 		: 'Tu respuesta ha sido enviada',
+				"i.QuizNotSubmittedAlert"	: 'Lo sentimos, tu respuesta no ha podido ser enviada',
+
+
+				"i.LiveQuiz"	: "Cuestionario en Vivo",
+				"i.QuizResults"	: "Resultados",
+				"i.QuizStop"	: "Detener",
+				"i.QuizLaunch"	: "Arrancar",
+				"i.QuizAnswer"	: "Responder",
+				"i.QuizOptions"	: "Opciones",
 
 				//Deprecated
 
@@ -530,6 +561,7 @@ var i18n =
 				"i.exportPresToJSONerrorNotification"	: "An error has ocurred. Is not possible to export the presentation to a JSON file.",
 				"i.resourceNonCompatibleNotification"	: "This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.",
 				"i.cancel"	: "cancel",
+				"i.Cancel"	: "Cancel",
 				"i.draft"	: "draft",
 				"i.publish"	: "publish",
 				"i.save"	: "save",
@@ -548,8 +580,16 @@ var i18n =
 				"i.Searchplaces"			: "Search places",
 				"i.readJSONfileError"		: "Error reading JSON file",
 				"i.NoJSONFileError"			: "You have to select a file to import in JSON format",
-				"i.UnselectSlide"			: 'Unselect Slide',
-				"i.SelectSlide"				: 'Select Slide'
+				"i.UnselectSlide"			: "Unselect Slide",
+				"i.SelectSlide"				: "Select Slide",
+				"i.QuizButtonAnswer"		: "Answer",
+				"i.QuizButtonLaunch"		: "Launch",
+				"i.QuizButtonOptions"		: "Options",
+				"i.QuizButtonRetry"			: "Retry",
+				"i.QuizStop"				: "Stop",
+				"i.QuizLaunch"				: "Launch",
+				"i.QuizAnswer"				: "Answer",
+				"i.QuizOptions"				: "Options"
 			}
 		},
 	 "standalone":
