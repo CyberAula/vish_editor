@@ -315,8 +315,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
-		//viewbar
-		$("#viewbar").height(reserved_px_for_menubar);
+		//Viewbar
+		if(!is_preview_insertMode){
+			$("#viewbar").height(reserved_px_for_menubar);
+		}
 
 		//resize slides
 		var topSlides = $(".slides > article");
