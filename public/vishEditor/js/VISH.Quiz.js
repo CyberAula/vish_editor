@@ -44,41 +44,25 @@ VISH.Quiz = (function(V,$,undefined){
 			'height': '0%',
 			'padding': 0,
 			"autoScale" : true,
-			"onStart"  : function(data) {
+			"onStart" : function(data) {
 				loadTab('tab_quiz_session');
 				$("#fancybox-close").height(0);
 				$("#fancybox-close").css("padding",0);
 			},
-			'onComplete'  : function(data) {
+			'onComplete' : function(data) {
 				setTimeout(function (){
-					$("#fancybox-close").height("22px");
-					$("#fancybox-close").css("padding","10px");
-					$("#fancybox-close").css("padding-left","4px");
-
-					$("#fancybox-wrap").css("margin-top", "0px");
-					$('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
-					$('#fancybox-wrap').height($(".current").height()+70);  //+70 because it is the padding
-					$('.outer_box').css("width","100%");
-					$('.outer_box').height($(".current").height()+70);
-					$('#fancybox-wrap').css("top", $(".current").offset().top + "px");  
-					$('#fancybox-wrap').css("left", $(".current").offset().left + "px");
-
-					$("#fancybox-content").width("100%");
-					$("#fancybox-content").height("100%");
-					$("#fancybox-content > div").width("100%");
-					$("#fancybox-content > div").height("100%");
-					$('#fancybox-wrap').show();
+					V.ViewerAdapter.updateFancyboxAfterSetupSize();
 					if((currentQuizSession)&&(currentQuizSession.url)){
 						_loadQr(currentQuizSession.url);
 					}
-				}, 300);   
+				}, 300);
 			},
-			"onClosed"  : function(){
+			"onClosed" : function(){
 				_stopPolling();
 				_cleanResults();
 			}
 		});
-	}
+	};
 
 	var _onAnswerQuiz = function(event){
 		var quiz = $("div.quizzContainer").has(event.target);

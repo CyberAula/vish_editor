@@ -351,6 +351,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		decideIfPageSwitcher();
 
+		updateFancyboxAfterSetupSize();
+
 		//Texts callbacks
 		V.Text.aftersetupSize(increase,increaseW);
 
@@ -365,8 +367,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
-
-		_updateFancyboxAfterSetupSize();
 	};
 
 	var _getDesiredVieweBarHeight = function(windowHeight){
@@ -378,24 +378,40 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	}
 
 	/**
-	 * Fancybox resizing
+	 * Fancybox resizing. If a fancybox is opened, resize it
 	 */
-	var _updateFancyboxAfterSetupSize = function(){
-		//If fancybox is opened, resize it
-	    if ($('#fancybox-content:empty').length === 0){
-	      $('#fancybox-wrap').width($(".current").width()+100); //+100 because it is the padding
-	      $('#fancybox-wrap').height($(".current").height()+70);  //+70 because it is the padding
-	      $('#fancybox-wrap').css("top", $(".current").offset().top + "px");  
-	      $('#fancybox-wrap').css("left", $(".current").offset().left + "px");
+	var updateFancyboxAfterSetupSize = function(){
+		var fOverlay = $("#fancybox-overlay");
+		if(($(fOverlay).length<1)||(!$(fOverlay).is(":visible"))){
+			return;
+		}
 
-	      setTimeout(function () {
-	        $("#fancybox-content").width("100%");
-	        $("#fancybox-content").height("100%");
-	        $("#fancybox-content > div").width("100%");
-	        $("#fancybox-content > div").height("100%"); 
-	      }, 300);
-	    }
+		var fwrap = $("#fancybox-wrap");
+		var fcontent = $("#fancybox-content");
+		var fccontentDivs = $("#" + $(fcontent).attr("id") + " > div");
+		
+		var currentSlide = $(".current");
+		var paddingTop = $(currentSlide).cssNumber("padding-top");
+		var paddingLeft = $(currentSlide).cssNumber("padding-left");
+		var offset = $(currentSlide).offset();
+		
+		var fcClose = $("#fancybox-close");
+		$(fcClose).height("22px");
+		$(fcClose).css("padding","10px");
+		$(fcClose).css("padding-left","4px");
+		
+		$(fwrap).css("margin-top", "0px");
+		$(fwrap).width($(currentSlide).width()+paddingLeft);
+		$(fwrap).height($(currentSlide).height()+2*paddingTop);
+		$(fwrap).css("top", offset.top + "px");  
+		$(fwrap).css("left", offset.left + "px");
+
+		$(fcontent).width("100%");
+		$(fcontent).height("100%");
+		$(fccontentDivs).width("100%");
+		$(fccontentDivs).height("100%");
 	}
+
 
 	///////////
 	// Fullscreen functions
@@ -502,7 +518,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		updateInterface 		: updateInterface,
 		isFullScreen 			: isFullScreen,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
-		decideIfCloseButton		: decideIfCloseButton
+		decideIfCloseButton		: decideIfCloseButton,
+		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize
 	};
 
 }) (VISH, jQuery);
