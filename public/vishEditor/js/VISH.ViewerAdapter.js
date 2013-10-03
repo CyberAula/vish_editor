@@ -270,7 +270,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * param "fullscreen" indicates that the call comes from a fullscreen button
 	 */
 	var _setupSize = function(fullscreen){
-		var reserved_px_for_menubar = 40;
+		var reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
 		var min_margin_height = 25;
 		var min_margin_width = 60;
 
@@ -281,7 +281,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			min_margin_width = 0;
 		} else if(is_preview_insertMode){
 			//Preview with insert images
-			reserved_px_for_menubar = 120;
+			reserved_px_for_menubar = 120; //Constant because is displayed from ViSH Editor
 		}
 
 		if(fullscreen){
@@ -315,6 +315,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
+		//viewbar
+		$("#viewbar").height(reserved_px_for_menubar);
+
+		//resize slides
 		var topSlides = $(".slides > article");
 		var subSlides = $(".slides > article > article");
 		var allSlides = $(".slides article");
@@ -363,6 +367,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_updateFancyboxAfterSetupSize();
 	};
 
+	var _getDesiredVieweBarHeight = function(windowHeight){
+		var minimumViewBarHeight = 20;
+		var maxViewBarHeight = 40;
+		var viewBarHeight = 40;
+		//TODO: Make Viewbar responsive
+		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
+	}
 
 	/**
 	 * Fancybox resizing

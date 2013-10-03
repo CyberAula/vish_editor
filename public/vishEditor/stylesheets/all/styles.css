@@ -154,20 +154,12 @@ this can not be done with show() and hide() because then it remains with display
 
 /* buttons next and previous */
 .page-switcher {
+	position: absolute;
 	background: transparent;	
 	border: none;
-	bottom: 0;
-	font-size: 30px;
-	padding: 0;
-	position: absolute;
-	margin: 0;
+	outline: none;
 	max-width: 26px;
 	min-width: 26px;
-	outline: none;
-	top: 0;
-	padding-bottom: 0px;
-	z-index: 1;
-	color: #4866fa;
 }
 
 .page-switcher:hover,
@@ -269,7 +261,7 @@ this can not be done with show() and hide() because then it remains with display
 	border-radius: 3px;
 }
 
-.viewbar {
+#viewbar {
 	background-image: -moz-linear-gradient(#ececec,#a8a8a8);
 	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#ececec),to(#a8a8a8));
 	background-image: -o-linear-gradient(#ececec,#a8a8a8);
@@ -1005,7 +997,7 @@ p.tut_space_big {
 
 /* Import slides */
 
-.selectSlidesBar {
+#selectSlidesBar {
 	background-image: -moz-linear-gradient(#a8a8a8,#ececec);
 	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#a8a8a8),to(#ececec));
 	background-image: -o-linear-gradient(#a8a8a8,#ececec);
