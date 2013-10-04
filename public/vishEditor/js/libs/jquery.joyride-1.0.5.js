@@ -6,12 +6,6 @@
  * http://www.opensource.org/licenses/mit-license.php
 */
 
-/* 
- * NESTOR:
- * I deleted the "x" in this line 57:
- *"$(self).html() + buttonText + '<a href="#close" class="joyride-close-tip">X</a>' +"
-*/
-
 (function($) {
   $.fn.joyride = function(options) {
 
@@ -33,7 +27,8 @@
       'inline': false, // true or false, if true the tip will be attached after the element
       'tipContent': '#joyRideTipContent', // What is the ID of the <ol> you put the content in
       'postRideCallback': $.noop, // A method to call once the tour closes (canceled or complete)
-      'postStepCallback': $.noop // A method to call after each step
+      'postStepCallback': $.noop, // A method to call after each step
+      'postInitCallback': $.noop // A method to call after joyride is created
     };
 
     var options = $.extend(settings, options);
@@ -145,6 +140,11 @@
             break;
           }
         }
+
+        if((count===0)&&(settings.onInitCallback != $.noop)){
+            settings.onInitCallback();
+        }
+
         var windowHalf = Math.ceil($(window).height() / 2),
           currentTip = $('#joyRidePopup' + count),
           currentTipPosition = parentElement.offset(),
@@ -366,6 +366,7 @@
       } else {
        showNextTip();
       }
+
       var endTip = function(e, interval_id, cookie, self) {
         e.preventDefault();
         clearInterval(interval_id);

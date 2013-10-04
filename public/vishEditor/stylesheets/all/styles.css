@@ -881,10 +881,10 @@ div.quizQr > table {
 	margin-left: -400px;
 }
 
-.tut_template_full {
+.tut_template_editorfull {
 	top: 70px;
-	left: 245px;
-	width: 900px;
+	left: 230px;
+	width: 930px;
 }
 
 img.tut_image {
@@ -957,7 +957,11 @@ p.tut_space_big {
 }
 
 .addslidestut p, .addslidestut span {
-	font-size: 1.4rem;
+	font-size: 1.5rem;
+}
+
+.addslidestut .joyride-next-tip {
+	font-size: 1.3rem;
 }
 
 /* Import slides */
