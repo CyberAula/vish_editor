@@ -1,0 +1,2114 @@
+WEBVTT FILE
+
+1
+0:00:00.800 --> 0:00:02.933
+Male describer: A MULTIMEDIA SLIDE PRESENTATION IS TITLED
+
+2
+0:00:02.933 --> 0:00:07.333
+HTML5 VIDEO ACCESSIBILITY AND THE WebVTT FILE FORMAT.
+
+3
+0:00:07.333 --> 0:00:10.700
+MARCH 23, 2011. SILVIA PFEIFFER.
+
+4
+0:00:10.700 --> 0:00:13.600
+IN AN AUDITORIUM, A WOMAN SPEAKS AT A PODIUM.
+
+5
+0:00:13.600 --> 0:00:16.133
+Black: So welcome all. Thank you for coming.
+
+6
+0:00:16.133 --> 0:00:17.500
+My name is Naomi Black,
+
+7
+0:00:17.500 --> 0:00:19.500
+and I'm a member of the Accessibility Engineering Group
+
+8
+0:00:19.500 --> 0:00:20.666
+here at Google.
+
+9
+0:00:20.666 --> 0:00:22.266
+And today, I'm very pleased to invite
+
+10
+0:00:22.266 --> 0:00:24.400
+our speaker, Dr. Silvia Pfeiffer.
+
+11
+0:00:24.400 --> 0:00:27.733
+Silvia is a member and an invited expert
+
+12
+0:00:27.733 --> 0:00:31.333
+on the W3C HTML Accessibility Task Force.
+
+13
+0:00:31.333 --> 0:00:33.200
+And she's also the author of
+
+14
+0:00:33.200 --> 0:00:35.833
+"The Definitive Guide to HTML5 Video."
+
+15
+0:00:35.833 --> 0:00:37.500
+So Silvia's here to talk to us--
+
+16
+0:00:37.500 --> 0:00:38.833
+come on up.
+
+17
+0:00:38.833 --> 0:00:41.533
+Silvia's here to talk to us today about WebVTT,
+
+18
+0:00:41.533 --> 0:00:43.500
+which is one of the standards for timed text
+
+19
+0:00:43.500 --> 0:00:45.433
+which is under consideration by the W3C.
+
+20
+0:00:45.433 --> 0:00:46.566
+Thank you, Silvia.
+
+21
+0:00:46.566 --> 0:00:47.600
+Pfeiffer: Thank you.
+
+22
+0:00:47.600 --> 0:00:49.166
+Describer: SILVIA TAKES THE PODIUM.
+
+23
+0:00:49.166 --> 0:00:50.966
+Pfeiffer: Thanks for inviting me to come and speak
+
+24
+0:00:50.966 --> 0:00:53.333
+about this important topic today.
+
+25
+0:00:53.333 --> 0:00:55.633
+We know there are a lot of discussions going on
+
+26
+0:00:55.633 --> 0:00:59.066
+about formats for captions,
+
+27
+0:00:59.066 --> 0:01:01.500
+and we want to standardize them for the web.
+
+28
+0:01:01.500 --> 0:01:03.566
+But standardizing it for the web
+
+29
+0:01:03.566 --> 0:01:05.166
+has a much larger impact these days
+
+30
+0:01:05.166 --> 0:01:06.833
+than just on web browsers,
+
+31
+0:01:06.833 --> 0:01:08.033
+just on the web itself.
+
+32
+0:01:08.033 --> 0:01:09.766
+It goes into many different devices.
+
+33
+0:01:09.766 --> 0:01:12.366
+So we're very interested and very keen
+
+34
+0:01:12.366 --> 0:01:15.866
+to give a broad coverage of available technology,
+
+35
+0:01:15.866 --> 0:01:18.033
+and this is what we're trying to do here today.
+
+36
+0:01:18.033 --> 0:01:24.600
+So I'll be talking mostly about WebVTT, the file format.
+
+37
+0:01:24.600 --> 0:01:26.866
+But I'll also be talking a little bit about
+
+38
+0:01:26.866 --> 0:01:31.200
+how to plug that into the web browser into HTML
+
+39
+0:01:31.200 --> 0:01:32.866
+so that in the future,
+
+40
+0:01:32.866 --> 0:01:36.333
+we have a very simple way of displaying captions
+
+41
+0:01:36.333 --> 0:01:39.066
+in web browsers on videos
+
+42
+0:01:39.066 --> 0:01:41.966
+without having to do much more than authoring a file
+
+43
+0:01:41.966 --> 0:01:46.200
+and giving a link to the web browser for that file.
+
+44
+0:01:46.200 --> 0:01:48.633
+So it will be very simple for people in the future
+
+45
+0:01:48.633 --> 0:01:50.100
+to create more captions.
+
+46
+0:01:50.100 --> 0:01:52.400
+Describer: SILVIA CUES A NEW SLIDE TITLED
+
+47
+0:01:52.400 --> 0:01:54.400
+"REQUIREMENTS OF A WEB TEXT FORMAT."
+
+48
+0:01:54.400 --> 0:01:57.066
+HEADINGS BELOW READ "CAPTIONS OR SUBTITLES"
+
+49
+0:01:57.066 --> 0:02:00.133
+"TEXT VIDEO DESCRIPTIONS" "NAVIGATION OR CHAPTERS"
+
+50
+0:02:00.133 --> 0:02:01.666
+AND "METADATA."
+
+51
+0:02:01.666 --> 0:02:03.333
+Pfeiffer: All right, let's dig right in.
+
+52
+0:02:03.333 --> 0:02:06.233
+As we were looking at requirements
+
+53
+0:02:06.233 --> 0:02:08.166
+of such a text format,
+
+54
+0:02:08.166 --> 0:02:10.866
+a web text format for video,
+
+55
+0:02:10.866 --> 0:02:14.933
+we looked at the different types of content
+
+56
+0:02:14.933 --> 0:02:18.133
+that can be time-aligned with video.
+
+57
+0:02:18.133 --> 0:02:20.766
+And captions and subtitles
+are the obvious ones,
+
+58
+0:02:20.766 --> 0:02:24.866
+but text video descriptions
+are also an important use.
+
+59
+0:02:24.866 --> 0:02:26.866
+These are for blind users
+
+60
+0:02:26.866 --> 0:02:29.500
+and can be read out
+by screen readers
+
+61
+0:02:29.500 --> 0:02:33.133
+in parallel to the playback
+of the video.
+
+62
+0:02:33.133 --> 0:02:37.266
+This may well not be
+the most usable way
+
+63
+0:02:37.266 --> 0:02:38.866
+of doing
+audio descriptions,
+
+64
+0:02:38.866 --> 0:02:40.933
+but it is a much easier
+way to publish
+
+65
+0:02:40.933 --> 0:02:44.766
+audio descriptions
+for blind users.
+
+66
+0:02:44.766 --> 0:02:46.466
+And, in fact,
+for a lot of blind users,
+
+67
+0:02:46.466 --> 0:02:48.633
+it may well be
+all they need,
+
+68
+0:02:48.633 --> 0:02:51.133
+because they already have
+their screen readers set up,
+
+69
+0:02:51.133 --> 0:02:54.533
+and it works really well
+for some people.
+
+70
+0:02:54.533 --> 0:02:55.900
+Further to that,
+
+71
+0:02:55.900 --> 0:02:58.833
+we're also talking about
+navigation or chapters,
+
+72
+0:02:58.833 --> 0:03:01.066
+which is also
+very important
+
+73
+0:03:01.066 --> 0:03:04.766
+for blind and,
+in fact, any user.
+
+74
+0:03:04.766 --> 0:03:07.033
+If you want to go through
+a video quickly
+
+75
+0:03:07.033 --> 0:03:08.466
+and find out
+what's in there,
+
+76
+0:03:08.466 --> 0:03:13.500
+you want to jump to what we now
+know as chapter markers.
+
+77
+0:03:13.500 --> 0:03:15.100
+We can call them
+navigation markers.
+
+78
+0:03:15.100 --> 0:03:19.300
+This can be also covered
+with the same kind of format.
+
+79
+0:03:19.300 --> 0:03:22.366
+And more generally,
+metadata.
+
+80
+0:03:22.366 --> 0:03:24.100
+This is something
+that archives
+
+81
+0:03:24.100 --> 0:03:26.100
+are particularly
+interested in,
+
+82
+0:03:26.100 --> 0:03:29.666
+to attach metadata
+to sections in the video.
+
+83
+0:03:29.666 --> 0:03:33.000
+It can also be done with such
+a time-aligned text format.
+
+84
+0:03:33.000 --> 0:03:36.800
+So what we have
+discussed for browsers
+
+85
+0:03:36.800 --> 0:03:38.366
+is a very simple format.
+
+86
+0:03:38.366 --> 0:03:41.966
+It's called WebVTT,
+Video Text Tracks.
+
+87
+0:03:41.966 --> 0:03:43.966
+WebVTT.
+
+88
+0:03:43.966 --> 0:03:47.866
+Describer: A NEW SLIDE TITLED
+"WebVTT OR VIDEO TEXT TRACKS."
+
+89
+0:03:47.866 --> 0:03:51.700
+A SAMPLE FILE IS HEADED "WEBVTT"
+WITH TWO ELEMENTS BELOW.
+
+90
+0:03:51.700 --> 0:03:54.366
+EACH ELEMENT CONTAINS
+THREE LINES OF INFORMATION:
+
+91
+0:03:54.366 --> 0:03:55.633
+CAPTION NUMBER,
+
+92
+0:03:55.633 --> 0:03:57.300
+TIME CODE START
+AND TIME CODE END,
+
+93
+0:03:57.300 --> 0:03:58.633
+AND CAPTION TEXT.
+
+94
+0:03:58.633 --> 0:04:01.533
+BELOW THE TEXT, A STILL PHOTO
+OF A MAN SEATED IN A WORKSHOP
+
+95
+0:04:01.533 --> 0:04:04.200
+IS CAPTIONED "I HEARD ABOUT
+THIS ARDUINO PROJECT,
+
+96
+0:04:04.200 --> 0:04:06.033
+AND I SAW IT ONLINE."
+
+97
+0:04:06.033 --> 0:04:08.733
+Pfeiffer: This is one
+of the very simple files
+
+98
+0:04:08.733 --> 0:04:10.033
+that we can think about.
+
+99
+0:04:10.033 --> 0:04:12.933
+Just a marker
+at the beginning of the file
+
+100
+0:04:12.933 --> 0:04:15.466
+that identifies
+the file format.
+
+101
+0:04:15.466 --> 0:04:20.366
+The captions or subtitles--
+let's call them cues--
+
+102
+0:04:20.366 --> 0:04:23.500
+then have an individual
+identifier.
+
+103
+0:04:23.500 --> 0:04:26.433
+In this case, it's
+the number one and number two.
+
+104
+0:04:26.433 --> 0:04:28.666
+Could be any string, however.
+
+105
+0:04:28.666 --> 0:04:31.433
+And then we've got start times
+and end times
+
+106
+0:04:31.433 --> 0:04:32.800
+on each one of these cues,
+
+107
+0:04:32.800 --> 0:04:35.300
+and a piece of text
+in there.
+
+108
+0:04:35.300 --> 0:04:37.566
+It turns out in--
+
+109
+0:04:37.566 --> 0:04:40.966
+as we all know how captions
+are displayed on screen
+
+110
+0:04:40.966 --> 0:04:43.400
+in something like this
+
+111
+0:04:43.400 --> 0:04:46.766
+if it's automatically
+created by the browser.
+
+112
+0:04:46.766 --> 0:04:49.133
+Describer: THE CAPTION DISPLAYS
+AT THE BOTTOM OF THE SCREEN
+
+113
+0:04:49.133 --> 0:04:53.066
+IN WHITE LETTERING
+OVER A SHADED GRAY BOX.
+
+114
+0:04:53.066 --> 0:04:57.766
+Pfeiffer: That was the very
+simplest way of doing subtitles.
+
+115
+0:04:57.766 --> 0:04:59.933
+Now, we want to do more
+than just the simple captions.
+
+116
+0:04:59.933 --> 0:05:03.433
+In particular,
+if we want to achieve
+
+117
+0:05:03.433 --> 0:05:04.633
+all the functionality
+
+118
+0:05:04.633 --> 0:05:07.800
+of, for example,
+the CEA-608 captions,
+
+119
+0:05:07.800 --> 0:05:10.533
+then we need to do a bit more
+than just text.
+
+120
+0:05:10.533 --> 0:05:12.633
+We also want to have
+some formatting in there.
+
+121
+0:05:12.633 --> 0:05:15.866
+Describer: ANOTHER SLIDE, TITLED
+"WebVTT FORMATTED SUBTITLES,"
+
+122
+0:05:15.866 --> 0:05:18.800
+DISPLAYS THE SAME STILL IMAGE,
+WITH THE CAPTION IN GERMAN.
+
+123
+0:05:18.800 --> 0:05:21.966
+THE WORD "ARDUINO" IS WRITTEN
+IN ALL CAPS AND COLORED RED.
+
+124
+0:05:21.966 --> 0:05:27.700
+Pfeiffer: Here is an example
+on how to do bold.
+
+125
+0:05:27.700 --> 0:05:28.900
+I'll point to it.
+
+126
+0:05:28.900 --> 0:05:33.133
+There's a bold tag in here,
+so that will be bold text.
+
+127
+0:05:33.133 --> 0:05:35.366
+Here is some italic text.
+
+128
+0:05:35.366 --> 0:05:36.500
+Describer: IN THE SAMPLE FILE,
+
+129
+0:05:36.500 --> 0:05:38.500
+THE SECOND CAPTION CONTAINS
+THE WORD "WOW!"
+
+130
+0:05:38.500 --> 0:05:40.733
+SURROUNDED BY THE HTML TAG
+FOR BOLD,
+
+131
+0:05:40.733 --> 0:05:43.033
+THE LETTER "b" SURROUNDED
+BY ANGLED BRACKETS
+
+132
+0:05:43.033 --> 0:05:44.066
+BEFORE THE WORD "WOW,"
+
+133
+0:05:44.066 --> 0:05:47.100
+AND "/b" IN ANGLE BRACKETS
+AFTER THE WORD "WOW."
+
+134
+0:05:47.100 --> 0:05:48.300
+ANOTHER PHRASE IS ENCLOSED
+
+135
+0:05:48.300 --> 0:05:51.166
+IN THE TAG FOR ITALICS,
+"i" AND "/i".
+
+136
+0:05:51.166 --> 0:05:54.033
+Pfeiffer: And up here
+we've got a general way
+
+137
+0:05:54.033 --> 0:06:00.100
+to associate style or a class
+to a piece of text
+
+138
+0:06:00.100 --> 0:06:01.466
+and give it a meaning.
+
+139
+0:06:01.466 --> 0:06:02.733
+In this situation,
+
+140
+0:06:02.733 --> 0:06:06.433
+we've turned a piece of text
+into red text
+
+141
+0:06:06.433 --> 0:06:07.933
+and capitalized it.
+
+142
+0:06:07.933 --> 0:06:09.100
+Describer: THE WORD "ARDUINO"
+
+143
+0:06:09.100 --> 0:06:12.066
+IS PRECEDED BY THE TAG
+"c.red.caps"
+
+144
+0:06:12.066 --> 0:06:13.800
+WITH A "/c" TO CLOSE.
+
+145
+0:06:13.800 --> 0:06:16.666
+IN THE CAPTION, IT APPEARS RED
+AND CAPITALIZED.
+
+146
+0:06:16.666 --> 0:06:20.000
+Pfeiffer: Of course,
+if we're using this format
+
+147
+0:06:20.000 --> 0:06:21.466
+also for subtitles,
+
+148
+0:06:21.466 --> 0:06:25.066
+we need to be careful to cover
+internationalization issues.
+
+149
+0:06:25.066 --> 0:06:27.600
+WebVTT is very clear here.
+
+150
+0:06:27.600 --> 0:06:30.566
+It requires UTF-8
+character encoding.
+
+151
+0:06:30.566 --> 0:06:34.233
+Describer: ANOTHER SLIDE,
+WebVTT FOR INTERNATIONALIZATION,
+
+152
+0:06:34.233 --> 0:06:36.466
+ABBREVIATED
+I18N.
+
+153
+0:06:36.466 --> 0:06:37.966
+A SAMPLE CAPTION FILE CONTAINS
+
+154
+0:06:37.966 --> 0:06:40.133
+TIME CODES FOR CAPTION
+START AND STOP
+
+155
+0:06:40.133 --> 0:06:42.700
+AND CAPTION TEXT
+IN ASIAN LANGUAGE CHARACTERS.
+
+156
+0:06:42.700 --> 0:06:45.600
+HEADINGS BELOW READ
+"UTF-8 CHARACTER ENCODING"
+
+157
+0:06:45.600 --> 0:06:46.800
+"RUBY TEXT"
+
+158
+0:06:46.800 --> 0:06:49.966
+AND "VERTICAL OR HORIZONTAL
+RENDERING AND ALIGNMENT."
+
+159
+0:06:49.966 --> 0:06:52.500
+Pfeiffer: It has a ruby tag,
+
+160
+0:06:52.500 --> 0:06:56.866
+which supports
+Asian languages in particular.
+
+161
+0:06:56.866 --> 0:06:59.166
+Describer: ANNOTATED ASIAN
+LANGUAGE CHARACTERS ARE SHOWN
+
+162
+0:06:59.166 --> 0:07:01.166
+BETWEEN AN OPEN AND CLOSE
+RUBY TAG,
+
+163
+0:07:01.166 --> 0:07:03.633
+WITH THE ANNOTATIONS
+BETWEEN "rt" TAGS
+
+164
+0:07:03.633 --> 0:07:06.366
+AND THE ANNOTATED TEXT
+BETWEEN "rb" TAGS.
+
+165
+0:07:06.366 --> 0:07:08.033
+TO THE RIGHT
+OF THE START AND STOP TIMES,
+
+166
+0:07:08.033 --> 0:07:11.166
+CODES READ "D:vertical"
+AND "A:start".
+
+167
+0:07:11.166 --> 0:07:13.700
+Pfeiffer: It also does
+vertical and horizontal
+
+168
+0:07:13.700 --> 0:07:16.500
+rendering of text.
+
+169
+0:07:16.500 --> 0:07:20.366
+Again, possibly one of the most
+important ones
+
+170
+0:07:20.366 --> 0:07:21.800
+are Asian languages,
+
+171
+0:07:21.800 --> 0:07:22.966
+and I think there are
+a few other languages
+
+172
+0:07:22.966 --> 0:07:26.266
+that are also
+rendered vertically.
+
+173
+0:07:26.266 --> 0:07:29.266
+And we need to make sure
+we get the alignment right.
+
+174
+0:07:29.266 --> 0:07:34.200
+Sometimes text is read
+from the right to the left,
+
+175
+0:07:34.200 --> 0:07:36.433
+so therefore it needs
+to be aligned on the right
+
+176
+0:07:36.433 --> 0:07:37.900
+rather than on the left.
+
+177
+0:07:37.900 --> 0:07:39.233
+Describer:
+ANOTHER SLIDE IS TITLED
+
+178
+0:07:39.233 --> 0:07:41.600
+"WebVTT CAPTION POSITIONING."
+
+179
+0:07:41.600 --> 0:07:45.733
+Pfeiffer: Now, positioning
+is another requirement
+
+180
+0:07:45.733 --> 0:07:48.866
+and, again, something
+that traditional captions,
+
+181
+0:07:48.866 --> 0:07:51.400
+TV captions,
+are able to do.
+
+182
+0:07:51.400 --> 0:07:57.266
+It's possible to position cues
+anywhere in WebVTT.
+
+183
+0:07:57.266 --> 0:08:00.266
+There are basically
+three important ways
+
+184
+0:08:00.266 --> 0:08:01.700
+to position text.
+
+185
+0:08:01.700 --> 0:08:04.400
+Describer: A STILL SHOT FROM
+"ANNIE HALL" FINDS DIANE KEATON
+
+186
+0:08:04.400 --> 0:08:06.500
+WEARING A DRESS SHIRT,
+NECKTIE, AND VEST.
+
+187
+0:08:06.500 --> 0:08:08.800
+CAPTIONS APPEAR
+IN THE CENTER OF THE VIDEO PANE
+
+188
+0:08:08.800 --> 0:08:11.000
+AT BOTH THE TOP AND BOTTOM
+OF THE SCREEN.
+
+189
+0:08:11.000 --> 0:08:13.666
+THE BOTTOM CAPTION TEXT
+WRAPS TO A SECOND LINE.
+
+190
+0:08:13.666 --> 0:08:16.400
+AFTER THE LINE BREAK,
+THE CAPTIONS ARE CENTER ALIGNED.
+
+191
+0:08:16.400 --> 0:08:18.166
+THE BOTTOM CAPTION READS
+
+192
+0:08:18.166 --> 0:08:19.866
+"YEAH, I SORT OF DABBLE AROUND,
+YOU KNOW."
+
+193
+0:08:19.866 --> 0:08:23.766
+THE TOP CAPTION: "I DABBLE?
+LISTEN TO ME. WHAT A JERK."
+
+194
+0:08:23.766 --> 0:08:26.800
+HEADINGS NEXT TO THE STILL
+READ "L, LINE POSITION,
+
+195
+0:08:26.800 --> 0:08:29.866
+T, TEXT POSITION
+A, ALIGNMENT."
+
+196
+0:08:29.866 --> 0:08:31.866
+Pfeiffer: There are
+line positions.
+
+197
+0:08:31.866 --> 0:08:38.266
+So the concept of display lines
+exists in WebVTT.
+
+198
+0:08:38.266 --> 0:08:40.600
+So the line position
+allows people
+
+199
+0:08:40.600 --> 0:08:43.666
+to directly address
+a specific line.
+
+200
+0:08:43.666 --> 0:08:49.966
+It can be done with
+a line number or a percentage.
+
+201
+0:08:49.966 --> 0:08:53.633
+Then we have
+the text position.
+
+202
+0:08:53.633 --> 0:08:57.266
+This means we're placing
+the text either on the left,
+
+203
+0:08:57.266 --> 0:09:01.366
+in the middle,
+or on the right.
+
+204
+0:09:01.366 --> 0:09:03.533
+No, hold on.
+That's the alignment, sorry.
+
+205
+0:09:03.533 --> 0:09:05.800
+Alignment is
+left, middle, and right.
+
+206
+0:09:05.800 --> 0:09:10.100
+And the text position is...
+
+207
+0:09:10.100 --> 0:09:12.233
+so when we have text
+like this,
+
+208
+0:09:12.233 --> 0:09:16.533
+it's in the middle,
+and it's centered.
+
+209
+0:09:16.533 --> 0:09:18.100
+So we can also do a centering,
+
+210
+0:09:18.100 --> 0:09:23.600
+and we can do
+a left alignment
+
+211
+0:09:23.600 --> 0:09:24.900
+and a right alignment.
+
+212
+0:09:24.900 --> 0:09:28.300
+But we can also move
+that whole text elsewhere.
+
+213
+0:09:28.300 --> 0:09:30.666
+So the text position
+is where we move the text
+
+214
+0:09:30.666 --> 0:09:32.833
+and the alignment is
+where we align it at.
+
+215
+0:09:32.833 --> 0:09:34.733
+Describer: A SAMPLE FILE
+FEATURES POSITION CODES
+
+216
+0:09:34.733 --> 0:09:36.900
+TO THE RIGHT
+OF THE TIME CODE MARKERS.
+
+217
+0:09:36.900 --> 0:09:39.100
+FOR THE CAPTION AT THE TOP,
+THE CODES READ
+
+218
+0:09:39.100 --> 0:09:41.566
+"A:middle" AND "L:10%".
+
+219
+0:09:41.566 --> 0:09:45.600
+FOR THE BOTTOM CAPTION,
+"A:middle" AND "L:60%".
+
+220
+0:09:45.600 --> 0:09:48.866
+A NEW SLIDE IS TITLED
+"WebVTT SPEAKER SEMANTICS."
+
+221
+0:09:48.866 --> 0:09:51.600
+TWO FRAMES OF VIDEO FROM
+THE ANIMATED PROGRAM "ARTHUR"
+
+222
+0:09:51.600 --> 0:09:53.900
+CAPTURE A MONKEY
+FROWNING AT A BUNNY.
+
+223
+0:09:53.900 --> 0:09:56.033
+THE FIRST FRAME IS CAPTIONED
+"AHEM..."
+
+224
+0:09:56.033 --> 0:09:58.766
+WITH THE CAPTION LEFT ALIGNED
+TO APPEAR BELOW THE MONKEY.
+
+225
+0:09:58.766 --> 0:10:01.300
+THE SECOND FRAME IS CAPTIONED
+"WHAT'S THE MATTER?"
+
+226
+0:10:01.300 --> 0:10:03.466
+AND IS RIGHT ALIGNED
+TO APPEAR BELOW THE BUNNY.
+
+227
+0:10:03.466 --> 0:10:05.400
+Pfeiffer: We also have
+speaker semantics
+
+228
+0:10:05.400 --> 0:10:07.000
+included into WebVTT,
+
+229
+0:10:07.000 --> 0:10:10.000
+which is interesting
+because it allows us
+
+230
+0:10:10.000 --> 0:10:13.133
+to put some semantic information
+into our markup.
+
+231
+0:10:13.133 --> 0:10:14.200
+Describer: IN THE SAMPLE FILE,
+
+232
+0:10:14.200 --> 0:10:16.766
+TAGS APPEAR BEFORE THE TEXT
+OF EACH CAPTION,
+
+233
+0:10:16.766 --> 0:10:19.100
+"v.Beatrix"
+IN THE FIRST CAPTION,
+
+234
+0:10:19.100 --> 0:10:20.933
+AND "v.Arthur"
+IN THE SECOND.
+
+235
+0:10:20.933 --> 0:10:22.466
+THE TAGS ARE NOT CLOSED.
+
+236
+0:10:22.466 --> 0:10:25.300
+Pfeiffer: Here, for example,
+we have two people speaking.
+
+237
+0:10:25.300 --> 0:10:29.466
+We know their position
+on the left and on the right.
+
+238
+0:10:29.466 --> 0:10:34.133
+And the speaker markup
+
+239
+0:10:34.133 --> 0:10:36.166
+can tell us where we want
+to position it
+
+240
+0:10:36.166 --> 0:10:39.333
+and can also, for example,
+help us always use
+
+241
+0:10:39.333 --> 0:10:42.400
+the same styling
+for the same speaker.
+
+242
+0:10:42.400 --> 0:10:44.800
+So, for example, we want
+to use the same font,
+
+243
+0:10:44.800 --> 0:10:46.233
+the same font color,
+
+244
+0:10:46.233 --> 0:10:49.500
+maybe a specific outline
+or something for a speaker.
+
+245
+0:10:49.500 --> 0:10:50.766
+We can define that
+
+246
+0:10:50.766 --> 0:10:54.133
+and then apply that always
+for that speaker.
+
+247
+0:10:54.133 --> 0:10:57.633
+Describer: ANOTHER SLIDE,
+WebVTT TEXT DESCRIPTIONS.
+
+248
+0:10:57.633 --> 0:11:00.833
+Pfeiffer: Now, so much
+for captions.
+
+249
+0:11:00.833 --> 0:11:03.233
+Now we move on
+to a little example
+
+250
+0:11:03.233 --> 0:11:05.166
+on text descriptions.
+
+251
+0:11:05.166 --> 0:11:09.900
+Here is one
+that I've used previously,
+
+252
+0:11:09.900 --> 0:11:15.633
+and we've got that
+as an example on the site.
+
+253
+0:11:15.633 --> 0:11:18.000
+Describer: A SAMPLE FILE
+CONTAINS THREE DESCRIPTIONS,
+
+254
+0:11:18.000 --> 0:11:19.933
+EACH WITH THREE LINES
+OF INFORMATION:
+
+255
+0:11:19.933 --> 0:11:22.533
+DESCRIPTION NUMBER,
+TIME CODE START AND STOP,
+
+256
+0:11:22.533 --> 0:11:24.933
+AND THE TEXT TO BE READ ALOUD
+BY A SCREEN READER.
+
+257
+0:11:24.933 --> 0:11:27.233
+THE SLIDE GIVES
+THREE SAMPLE DESCRIPTIONS.
+
+258
+0:11:27.233 --> 0:11:30.666
+SAMPLE ONE, "THE ORANGE OPEN
+MOVIE PROJECT PRESENTS."
+
+259
+0:11:30.666 --> 0:11:34.266
+SAMPLE TWO, "INTRODUCTORY TITLES
+ARE SHOWING ON THE BACKGROUND
+
+260
+0:11:34.266 --> 0:11:36.033
+"OF A WATER POOL
+WITH FISHES SWIMMING
+
+261
+0:11:36.033 --> 0:11:39.033
+AND MECHANICAL OBJECTS
+LYING ON A STONE FLOOR."
+
+262
+0:11:39.033 --> 0:11:42.500
+SAMPLE THREE, "TITLE:
+ELEPHANTS DREAM."
+
+263
+0:11:42.500 --> 0:11:43.800
+Pfeiffer: I'm not gonna
+go there;
+
+264
+0:11:43.800 --> 0:11:45.466
+I just want to mention it,
+
+265
+0:11:45.466 --> 0:11:47.866
+because we want to focus
+on captions today.
+
+266
+0:11:47.866 --> 0:11:52.500
+But what happens here is,
+we've got text that's aligned
+
+267
+0:11:52.500 --> 0:11:55.700
+with a start and end time
+as well.
+
+268
+0:11:55.700 --> 0:11:59.733
+And for a typical word rate
+of a screen reader,
+
+269
+0:11:59.733 --> 0:12:03.166
+it will fit into that space,
+
+270
+0:12:03.166 --> 0:12:05.933
+and it will be read back
+by the screen reader
+
+271
+0:12:05.933 --> 0:12:07.333
+during that time.
+
+272
+0:12:07.333 --> 0:12:10.700
+Describer: A NEW SLIDE,
+WebVTT CHAPTERS FOR NAVIGATION.
+
+273
+0:12:10.700 --> 0:12:14.433
+Pfeiffer: And here is
+the navigation example.
+
+274
+0:12:14.433 --> 0:12:19.066
+As I mentioned, WebVTT can also
+be used for navigation.
+
+275
+0:12:19.066 --> 0:12:21.033
+Here we have three chapters,
+
+276
+0:12:21.033 --> 0:12:25.166
+and we can directly jump
+from chapter to chapter.
+
+277
+0:12:25.166 --> 0:12:29.966
+There needs to be extra controls
+on videos to support this,
+
+278
+0:12:29.966 --> 0:12:31.700
+but this is something
+we're working towards.
+
+279
+0:12:31.700 --> 0:12:34.033
+Describer: A SAMPLE FILE
+CONTAINS THREE CHAPTERS,
+
+280
+0:12:34.033 --> 0:12:35.933
+EACH WITH THREE LINES
+OF INFORMATION:
+
+281
+0:12:35.933 --> 0:12:40.033
+CHAPTER NUMBER, TIME CODE START
+AND STOP, AND CHAPTER TITLE.
+
+282
+0:12:40.033 --> 0:12:43.466
+TEXT BELOW THE SAMPLE READS
+"NAVIGATION MARKERS."
+
+283
+0:12:43.466 --> 0:12:47.166
+A NEW SLIDE IS TITLED
+"TEXT TRACKS IN HTML5."
+
+284
+0:12:47.166 --> 0:12:49.066
+Pfeiffer: Now, of course,
+as I'm saying,
+
+285
+0:12:49.066 --> 0:12:51.266
+controls and input
+into web pages
+
+286
+0:12:51.266 --> 0:12:52.966
+and automatic rendering,
+
+287
+0:12:52.966 --> 0:12:55.000
+we need to know
+how we're going to do that.
+
+288
+0:12:55.000 --> 0:12:57.600
+And there is markup
+in HTML5
+
+289
+0:12:57.600 --> 0:13:02.766
+for associating captions
+and formats like this
+
+290
+0:13:02.766 --> 0:13:04.866
+with videos.
+
+291
+0:13:04.866 --> 0:13:10.300
+In this example,
+I've got all of the VTT files
+
+292
+0:13:10.300 --> 0:13:11.900
+that we've used before.
+
+293
+0:13:11.900 --> 0:13:13.766
+I've included them here.
+
+294
+0:13:13.766 --> 0:13:17.666
+And what we're using for it
+is called a track element,
+
+295
+0:13:17.666 --> 0:13:19.400
+and this track element
+is included
+
+296
+0:13:19.400 --> 0:13:23.466
+underneath the video element
+in the HTML5 markup.
+
+297
+0:13:23.466 --> 0:13:26.966
+It links through
+the VTT file.
+
+298
+0:13:26.966 --> 0:13:29.800
+And there is some description
+possible
+
+299
+0:13:29.800 --> 0:13:33.566
+for the type of file it is,
+so we have a label.
+
+300
+0:13:33.566 --> 0:13:36.333
+In this case,
+it's an English caption.
+
+301
+0:13:36.333 --> 0:13:38.733
+We have a kind,
+which gives us a means
+
+302
+0:13:38.733 --> 0:13:45.933
+to group all the tracks
+of the same type together.
+
+303
+0:13:45.933 --> 0:13:47.800
+Describer: A CODE SAMPLE LISTS
+A SOURCE VIDEO
+
+304
+0:13:47.800 --> 0:13:50.100
+AND A SERIES OF TRACKS
+WITH THE FOLLOWING LABELS:
+
+305
+0:13:50.100 --> 0:13:53.666
+ENGLISH CAPTIONS, GERMAN
+SUBTITLES, FRENCH SUBTITLES,
+
+306
+0:13:53.666 --> 0:13:56.366
+ENGLISH DESCRIPTIONS,
+AND CHAPTERS.
+
+307
+0:13:56.366 --> 0:14:00.566
+EACH TRACK HAS ATTRIBUTES "KIND"
+"SRC LANG" AND "SRC",
+
+308
+0:14:00.566 --> 0:14:04.266
+WITH THE "SRC" CONTAINING
+A URL TO THE WebVTT FILE.
+
+309
+0:14:04.266 --> 0:14:05.800
+THE SAMPLE CONTAINS THE KINDS
+
+310
+0:14:05.800 --> 0:14:09.033
+CAPTIONS, SUBTITLES,
+DESCRIPTIONS, AND CHAPTERS.
+
+311
+0:14:09.033 --> 0:14:11.433
+Pfeiffer: And we identify
+the language.
+
+312
+0:14:11.433 --> 0:14:14.566
+Because, of course, when we have
+user settings in browsers,
+
+313
+0:14:14.566 --> 0:14:19.500
+we want to automatically
+make certain tracks
+
+314
+0:14:19.500 --> 0:14:20.833
+available to the user
+
+315
+0:14:20.833 --> 0:14:22.533
+if the user has,
+for example,
+
+316
+0:14:22.533 --> 0:14:24.300
+said that they always
+want captions
+
+317
+0:14:24.300 --> 0:14:28.100
+or they always want subtitles
+in their language being shown.
+
+318
+0:14:28.100 --> 0:14:31.566
+So the browser can
+look through this markup
+
+319
+0:14:31.566 --> 0:14:35.666
+and identify which ones
+it has to turn on by default.
+
+320
+0:14:35.666 --> 0:14:38.600
+Describer: AFTER TEXT THAT READS
+"SRCLANG="
+
+321
+0:14:38.600 --> 0:14:40.600
+THE LETTERS "EN"
+ARE HIGHLIGHTED,
+
+322
+0:14:40.600 --> 0:14:43.166
+INDICATING ENGLISH LANGUAGE.
+
+323
+0:14:43.166 --> 0:14:47.900
+Pfeiffer: Now, in this case,
+I've used only WebVTT files.
+
+324
+0:14:47.900 --> 0:14:54.433
+The track layout, the way that
+we've defined track in HTML5,
+
+325
+0:14:54.433 --> 0:14:56.200
+is actually generic.
+
+326
+0:14:56.200 --> 0:14:59.400
+It can be used for other types
+of files as well,
+
+327
+0:14:59.400 --> 0:15:04.833
+TTML or SRT
+or any other formats
+
+328
+0:15:04.833 --> 0:15:07.133
+that will be implemented.
+
+329
+0:15:07.133 --> 0:15:08.533
+Describer: THE WORD "TRACK"
+IS HIGHLIGHTED
+
+330
+0:15:08.533 --> 0:15:12.166
+IN A TAG READING:
+TRACK LABEL="ENGLISH CAPTIONS".
+
+331
+0:15:12.166 --> 0:15:14.866
+Pfeiffer: But the generic way
+
+332
+0:15:14.866 --> 0:15:19.166
+that track
+works is in this way.
+
+333
+0:15:19.166 --> 0:15:20.633
+Describer: A NEW SLIDE
+IS TITLED
+
+334
+0:15:20.633 --> 0:15:23.000
+"USING CSS FOR RICHER STYLING."
+
+335
+0:15:23.000 --> 0:15:25.200
+A SAMPLE FILE FEATURES
+THE MAN IN HIS WORKSHOP
+
+336
+0:15:25.200 --> 0:15:27.800
+CAPTIONED "I HEARD ABOUT
+THIS ARDUINO PROJECT
+
+337
+0:15:27.800 --> 0:15:29.366
+AND SAW IT ONLINE."
+
+338
+0:15:29.366 --> 0:15:31.733
+THE WORD ARDUINO IS RED
+AND ALL CAPS.
+
+339
+0:15:31.733 --> 0:15:34.766
+THE REST OF THE CAPTION
+IS BLACK AND MIXED TYPECASE.
+
+340
+0:15:34.766 --> 0:15:37.466
+Pfeiffer: Now, once we've got it
+in the browser,
+
+341
+0:15:37.466 --> 0:15:40.166
+we can actually support more
+than what is directly possible
+
+342
+0:15:40.166 --> 0:15:42.900
+as markup
+in the WebVTT file,
+
+343
+0:15:42.900 --> 0:15:45.700
+because now we've got the text
+in the browser,
+
+344
+0:15:45.700 --> 0:15:46.733
+and we can make use
+
+345
+0:15:46.733 --> 0:15:48.866
+of all the functionality
+of the browser,
+
+346
+0:15:48.866 --> 0:15:51.700
+which has styling
+
+347
+0:15:51.700 --> 0:15:54.100
+and the concurrent style sheet
+functionality
+
+348
+0:15:54.100 --> 0:15:55.366
+available to it.
+
+349
+0:15:55.366 --> 0:15:58.100
+So this kind of styling
+is also available
+
+350
+0:15:58.100 --> 0:16:04.066
+if used in a browser,
+to these cues.
+
+351
+0:16:04.066 --> 0:16:09.133
+And the way in which
+this is being done
+
+352
+0:16:09.133 --> 0:16:12.133
+is that there's
+a pseudo-element in CSS
+
+353
+0:16:12.133 --> 0:16:14.533
+called ::cue.
+
+354
+0:16:14.533 --> 0:16:16.433
+And with that pseudo-element,
+
+355
+0:16:16.433 --> 0:16:19.200
+you can address,
+for example,
+
+356
+0:16:19.200 --> 0:16:23.333
+classes in the cue markup.
+
+357
+0:16:23.333 --> 0:16:26.266
+Describer: IN THE SAMPLE FILE,
+A TAG POINTING TO ".arduino"
+
+358
+0:16:26.266 --> 0:16:28.000
+SURROUNDS THE WORD ARDUINO.
+
+359
+0:16:28.000 --> 0:16:31.433
+Pfeiffer: And you can override
+the formatting
+
+360
+0:16:31.433 --> 0:16:34.300
+that by default
+would be given.
+
+361
+0:16:34.300 --> 0:16:35.633
+You can, for example--
+
+362
+0:16:35.633 --> 0:16:38.166
+well, in this case,
+it's been turned red,
+
+363
+0:16:38.166 --> 0:16:41.200
+uppercase,
+a different font family,
+
+364
+0:16:41.200 --> 0:16:42.733
+and a lighter weight.
+
+365
+0:16:42.733 --> 0:16:45.300
+Describer: IN A SEPARATE BOX,
+UNDER THE HEADING CSS,
+
+366
+0:16:45.300 --> 0:16:48.400
+THE ::CUE PSEUDO-ELEMENT
+".arduino"
+
+367
+0:16:48.400 --> 0:16:50.500
+CONTAINS CODE SELECTING
+COLOR AS RED,
+
+368
+0:16:50.500 --> 0:16:52.466
+TEXT-TRANSFORM AS UPPERCASE,
+
+369
+0:16:52.466 --> 0:16:54.400
+FONT-FAMILY AS HELVETICA NEUE,
+
+370
+0:16:54.400 --> 0:16:56.500
+AND FONT-WEIGHT AS LIGHTER.
+
+371
+0:16:56.500 --> 0:17:00.566
+A NEW SLIDE IS TITLED
+"WebVTT DEFAULT RENDERING."
+
+372
+0:17:00.566 --> 0:17:01.866
+TWO HEADINGS READ
+
+373
+0:17:01.866 --> 0:17:04.766
+"POP-ON: BOTTOM THIRD OF VIDEO
+VIEWPORT, CENTERED"
+
+374
+0:17:04.766 --> 0:17:08.166
+AND "ROLL-UP: OVERLAPPING
+CAPTIONS ARE ADDED UNDERNEATH."
+
+375
+0:17:08.166 --> 0:17:09.266
+Pfeiffer: Now, we've
+spoken a lot.
+
+376
+0:17:09.266 --> 0:17:11.200
+We want to see a little bit
+of a demo here,
+
+377
+0:17:11.200 --> 0:17:13.633
+and I've made a little bit
+of a demo
+
+378
+0:17:13.633 --> 0:17:17.366
+which shows that we can
+do more than what's typically
+
+379
+0:17:17.366 --> 0:17:18.933
+being used for captions
+right now.
+
+380
+0:17:18.933 --> 0:17:22.866
+Most captions that are
+being used are pop-on captions,
+
+381
+0:17:22.866 --> 0:17:25.466
+which are captions
+that don't overlap in time.
+
+382
+0:17:25.466 --> 0:17:26.900
+There's one piece of caption,
+
+383
+0:17:26.900 --> 0:17:28.600
+one cue shown;
+
+384
+0:17:28.600 --> 0:17:30.566
+it disappears, and the next cue
+is brought up.
+
+385
+0:17:30.566 --> 0:17:31.866
+That's pop-on.
+
+386
+0:17:31.866 --> 0:17:36.333
+And that is the default way
+of rendering it.
+
+387
+0:17:36.333 --> 0:17:39.500
+But we may have
+a very different style
+
+388
+0:17:39.500 --> 0:17:42.366
+of providing captions
+as well,
+
+389
+0:17:42.366 --> 0:17:44.466
+which has traditionally
+been used
+
+390
+0:17:44.466 --> 0:17:47.400
+mostly in live captioning.
+
+391
+0:17:47.400 --> 0:17:49.100
+It's called roll-up.
+
+392
+0:17:49.100 --> 0:17:52.266
+So the cues will actually
+be added at the bottom
+
+393
+0:17:52.266 --> 0:17:54.900
+and roll up as the--
+
+394
+0:17:54.900 --> 0:17:56.666
+and the old ones
+will disappear.
+
+395
+0:17:56.666 --> 0:17:58.266
+So I've made a little example
+
+396
+0:17:58.266 --> 0:18:00.433
+that shows how that
+can be done as well.
+
+397
+0:18:00.433 --> 0:18:01.633
+Describer: A VIDEO PLAYS.
+
+398
+0:18:01.633 --> 0:18:03.233
+AS THE MAN IN HIS SHOP SPEAKS,
+
+399
+0:18:03.233 --> 0:18:04.966
+TWO LINES OF LEFT-ALIGNED
+CAPTIONS
+
+301
+0:13:36.333 --> 0:13:38.733
+We have a kind,
+which gives us a means
+
+302
+0:13:38.733 --> 0:13:45.933
+to group all the tracks
+of the same type together.
+
+303
+0:13:45.933 --> 0:13:47.800
+Describer: A CODE SAMPLE LISTS
+A SOURCE VIDEO
+
+304
+0:13:47.800 --> 0:13:50.100
+AND A SERIES OF TRACKS
+WITH THE FOLLOWING LABELS:
+
+305
+0:13:50.100 --> 0:13:53.666
+ENGLISH CAPTIONS, GERMAN
+SUBTITLES, FRENCH SUBTITLES,
+
+306
+0:13:53.666 --> 0:13:56.366
+ENGLISH DESCRIPTIONS,
+AND CHAPTERS.
+
+307
+0:13:56.366 --> 0:14:00.566
+EACH TRACK HAS ATTRIBUTES "KIND"
+"SRC LANG" AND "SRC",
+
+308
+0:14:00.566 --> 0:14:04.266
+WITH THE "SRC" CONTAINING
+A URL TO THE WebVTT FILE.
+
+309
+0:14:04.266 --> 0:14:05.800
+THE SAMPLE CONTAINS THE KINDS
+
+310
+0:14:05.800 --> 0:14:09.033
+CAPTIONS, SUBTITLES,
+DESCRIPTIONS, AND CHAPTERS.
+
+311
+0:14:09.033 --> 0:14:11.433
+Pfeiffer: And we identify
+the language.
+
+312
+0:14:11.433 --> 0:14:14.566
+Because, of course, when we have
+user settings in browsers,
+
+313
+0:14:14.566 --> 0:14:19.500
+we want to automatically
+make certain tracks
+
+314
+0:14:19.500 --> 0:14:20.833
+available to the user
+
+315
+0:14:20.833 --> 0:14:22.533
+if the user has,
+for example,
+
+316
+0:14:22.533 --> 0:14:24.300
+said that they always
+want captions
+
+317
+0:14:24.300 --> 0:14:28.100
+or they always want subtitles
+in their language being shown.
+
+318
+0:14:28.100 --> 0:14:31.566
+So the browser can
+look through this markup
+
+319
+0:14:31.566 --> 0:14:35.666
+and identify which ones
+it has to turn on by default.
+
+320
+0:14:35.666 --> 0:14:38.600
+Describer: AFTER TEXT THAT READS
+"SRCLANG="
+
+321
+0:14:38.600 --> 0:14:40.600
+THE LETTERS "EN"
+ARE HIGHLIGHTED,
+
+322
+0:14:40.600 --> 0:14:43.166
+INDICATING ENGLISH LANGUAGE.
+
+323
+0:14:43.166 --> 0:14:47.900
+Pfeiffer: Now, in this case,
+I've used only WebVTT files.
+
+324
+0:14:47.900 --> 0:14:54.433
+The track layout, the way that
+we've defined track in HTML5,
+
+325
+0:14:54.433 --> 0:14:56.200
+is actually generic.
+
+326
+0:14:56.200 --> 0:14:59.400
+It can be used for other types
+of files as well,
+
+327
+0:14:59.400 --> 0:15:04.833
+TTML or SRT
+or any other formats
+
+328
+0:15:04.833 --> 0:15:07.133
+that will be implemented.
+
+329
+0:15:07.133 --> 0:15:08.533
+Describer: THE WORD "TRACK"
+IS HIGHLIGHTED
+
+330
+0:15:08.533 --> 0:15:12.166
+IN A TAG READING:
+TRACK LABEL="ENGLISH CAPTIONS".
+
+331
+0:15:12.166 --> 0:15:14.866
+Pfeiffer: But the generic way
+
+332
+0:15:14.866 --> 0:15:19.166
+that track
+works is in this way.
+
+333
+0:15:19.166 --> 0:15:20.633
+Describer: A NEW SLIDE
+IS TITLED
+
+334
+0:15:20.633 --> 0:15:23.000
+"USING CSS FOR RICHER STYLING."
+
+335
+0:15:23.000 --> 0:15:25.200
+A SAMPLE FILE FEATURES
+THE MAN IN HIS WORKSHOP
+
+336
+0:15:25.200 --> 0:15:27.800
+CAPTIONED "I HEARD ABOUT
+THIS ARDUINO PROJECT
+
+337
+0:15:27.800 --> 0:15:29.366
+AND SAW IT ONLINE."
+
+338
+0:15:29.366 --> 0:15:31.733
+THE WORD ARDUINO IS RED
+AND ALL CAPS.
+
+339
+0:15:31.733 --> 0:15:34.766
+THE REST OF THE CAPTION
+IS BLACK AND MIXED TYPECASE.
+
+340
+0:15:34.766 --> 0:15:37.466
+Pfeiffer: Now, once we've got it
+in the browser,
+
+341
+0:15:37.466 --> 0:15:40.166
+we can actually support more
+than what is directly possible
+
+342
+0:15:40.166 --> 0:15:42.900
+as markup
+in the WebVTT file,
+
+343
+0:15:42.900 --> 0:15:45.700
+because now we've got the text
+in the browser,
+
+344
+0:15:45.700 --> 0:15:46.733
+and we can make use
+
+345
+0:15:46.733 --> 0:15:48.866
+of all the functionality
+of the browser,
+
+346
+0:15:48.866 --> 0:15:51.700
+which has styling
+
+347
+0:15:51.700 --> 0:15:54.100
+and the concurrent style sheet
+functionality
+
+348
+0:15:54.100 --> 0:15:55.366
+available to it.
+
+349
+0:15:55.366 --> 0:15:58.100
+So this kind of styling
+is also available
+
+350
+0:15:58.100 --> 0:16:04.066
+if used in a browser,
+to these cues.
+
+351
+0:16:04.066 --> 0:16:09.133
+And the way in which
+this is being done
+
+352
+0:16:09.133 --> 0:16:12.133
+is that there's
+a pseudo-element in CSS
+
+353
+0:16:12.133 --> 0:16:14.533
+called ::cue.
+
+354
+0:16:14.533 --> 0:16:16.433
+And with that pseudo-element,
