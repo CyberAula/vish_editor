@@ -238,17 +238,18 @@ this can not be done with show() and hide() because then it remains with display
 
 #slide-counter-span {
 	cursor: default;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
 	text-align: center;
+}
+
+#slide-counter-span, #slide-counter-input {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.2rem;
 }
 
 #slide-counter-input {
 	width: 24px;
 	height: 20px;
 	padding: 1px 1px 1px 0;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
 	text-align: right;
 }
 
@@ -402,7 +403,7 @@ div#viewerpreview {
 	padding-right: 10px; 
 	padding-bottom: 10px; 
 	padding-left: 10px; 
-	font-size: 24px; 
+	font-size: 1.9rem;
 	text-align: center; 
 	color: rgb(255, 255, 255); 
 	font-family: 'trebuchet ms', verdana, arial, sans-serif; 
@@ -769,9 +770,9 @@ div.quizQr > table {
 }
 
 .prompt_text_viewer {
-	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
-	font-size:32px;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }
@@ -955,6 +956,9 @@ p.tut_space_big {
 	max-height: 30px;
 }
 
+.addslidestut p, .addslidestut span {
+	font-size: 1.4rem;
+}
 
 /* Import slides */
 
@@ -1186,7 +1190,7 @@ img.selectSlidesimgbutton {
 .notification_text {
 	text-decoration:none;
 	font-family:'Open Sans', sans-serif;
-	font-size:26px;
+	font-size: 1.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }
@@ -1231,7 +1235,7 @@ img.browser_img {
 
 span.browserTitle {
 	font-family:'Open Sans', sans-serif;
-  	font-size: 15px;
+  	font-size: 1.2rem;
 	display: block;
 	padding: 5px;
 	color: #9B999D;
@@ -1245,7 +1249,7 @@ div.recomended_browser {
 span.adverttext {
 	text-decoration:none;
 	font-family:'Open Sans', sans-serif;
-	font-size:32px;
+	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }
