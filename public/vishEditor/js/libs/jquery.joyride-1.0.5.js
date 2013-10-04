@@ -44,8 +44,6 @@
 
       $(options.tipContent).hide();
 
-      //MODIFIED BY KIKE, Added ">" in " > li" to create a better selector, because we have li items inside the tutorials and 
-      //tipcontent captures also those as tips
       var bodyOffset = $(options.tipContainer).children('*').first().position(),
       tipContent = $(options.tipContent + ' > li'),
       count = skipCount = 0,
@@ -108,11 +106,16 @@
             tipLayout(false, index, '', self);
           }
         }
+
         $('#joyRidePopup' + index).hide();
+        if(index===0){
+          $('#joyRidePopup' + index).addClass("joyRideCurrent");
+        }
       });
+
     }
 
-      showNextTip = function() {
+      showNextTip = function(){
         var parentElementID = $(tipContent[count]).data('id'),
         parentElement = $('#' + parentElementID),
         opt = {};
@@ -153,6 +156,10 @@
         if (currentTip.length === 0) {
           return;
         }
+
+        //Update joyRideCurrent
+        $(".joyRideCurrent").removeClass("joyRideCurrent");
+        $(currentTip).addClass("joyRideCurrent");
 
         if (count < tipContent.length) {
           if (settings.tipAnimation == "pop") {
@@ -225,8 +232,6 @@
                 nub.addClass('bottom');
               }
             } else if(tipSettings.tipLocation == "bottom"){
-              //KIKE: ADDED HERE THE IF, SO WE CAN CALL IT WITH LOCATION NONE AND ADD THE LOCATION BY A CLASS
-              // Default is bottom alignment.
               currentTip.offset({
                 top: (currentTipPosition.top + currentParentHeight + nubHeight),
                 left: left
@@ -371,6 +376,9 @@
         if (settings.postRideCallback != $.noop) {
           settings.postRideCallback();
         }
+
+        //Update joyRide current
+         $(".joyRideCurrent").removeClass("joyRideCurrent");
       }
       $('.joyride-close-tip').click(function(e) {
         endTip(e, interval_id, settings.cookieMonster, this);

@@ -1,35 +1,45 @@
 VISH.Tour = (function(V,$,undefined){
 		
 	/**
-	 * function to start a walkme tour witht he help "ol" id given
+	 * Function to start a tutorial
 	 * tipLocation can be 'top' or 'bottom' in relation to parent element
 	 */
 	var startTourWithId = function(helpid, tipLocation){
-		clear();
+		_clean();
 		var loc;
 		if(tipLocation === undefined){
 			loc = "top";
-		}
-		else{
+		} else {
 			loc = tipLocation;
 		}
+
 		$(window).joyride({
 			 'tipLocation'		: loc,
 			 'tipContent'		: '#' + helpid,
-			 'postRideCallback' : V.Tour.clear	 
+			 'postRideCallback' : _afterShowTour
 		});
 	};
 	
-	var clear = function(){
-		$('.joyride-tip-guide').each(function()
-		{
+	var _afterShowTour = function(el){
+		_clean();
+	};
+
+	var _clean = function(){
+		$('.joyride-tip-guide').each(function(){
 			$(this).remove();
 		});
-	};
+	}
+
+	var getCurrentTour = function(){
+		var currentJoyride = $(".joyRideCurrent");
+		if(currentJoyride.length>0){
+			return currentJoyride;
+		}
+	}
 	
 	return {
-		clear             : clear,
-		startTourWithId   : startTourWithId
+		startTourWithId   : startTourWithId,
+		getCurrentTour	  : getCurrentTour
 	};
 
 }) (VISH, jQuery);
