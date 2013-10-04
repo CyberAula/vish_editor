@@ -842,31 +842,7 @@ div.quizQr > table {
 	text-shadow: 1px 1px #666;
 }
 
-/* Tutorials with Joyride (css for Viewer and Editor) */
-
-.joyride-content-wrapper {
-	text-align: center;
-}
-
-.joyride-content-wrapper p, .joyride-content-wrapper ul {
-	text-align: left;
-}
-
-.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
-	text-align: left;
-	max-width: 90%;
-}
-
-.tut_with_arrow span.joyride-nub {
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color:  #666;
-}
-
-.tut_without_arrow span.joyride-nub {
-	display: none;	
-}
+/* Tutorials (with Joyride) (css for Viewer and Editor) */
 
 .tut_width350 {
 	width: 350px !important;
@@ -963,10 +939,6 @@ p.tut_space_big {
 }
 
 /* Tutorials for Viewer */
-
-.ViSHViewerBody .joyride-tip-guide h2 {
-	font-size: 1.8rem; /*responsive*/
-}
 
 .tut_full_viewer {
 	width: 96%;
