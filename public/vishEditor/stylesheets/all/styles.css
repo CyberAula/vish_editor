@@ -968,22 +968,11 @@ p.tut_space_big {
 	font-size: 1.8rem; /*responsive*/
 }
 
-.tut_with_arrow span.joyride-nub {
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color:  #0066ff;
-}
-
-.tut_without_arrow span.joyride-nub {
-	display: none;
-}
-
-.tut_quiz {
-	width: 64%;
-	left: 21%;
+.tut_full_viewer {
+	width: 96%;
+	left: 2%;
+	top: 3%;
 	position: absolute;
-	top: 25%;
 }
 
 .addslidestut {

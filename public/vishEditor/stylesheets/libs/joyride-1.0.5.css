@@ -19,10 +19,14 @@
 	-webkit-box-shadow: 7px 7px 5px rgba(50, 50, 50, 0.08);
 	-moz-box-shadow:    7px 7px 5px rgba(50, 50, 50, 0.08);
 	box-shadow:         7px 7px 5px rgba(50, 50, 50, 0.08);
+
+	/*add scroll*/
+	max-height: 95%;
+	overflow: auto;
 }
 
 .joyride-content-wrapper{
-	padding: 1.125em 1.25em 1.5em;
+	padding: 1.135rem 1.25rem 1.5rem;
 }
 
 
