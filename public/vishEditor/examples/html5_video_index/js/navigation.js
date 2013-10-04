@@ -13,14 +13,30 @@ if (video.readyState >= video.HAVE_METADATA) {
   init.apply(video); // missed the event
 }
 
+
+
+
+
 // update transport bar while playing
 position = document.getElementById('position');
 curTime  = document.getElementById('curTime');
+
+
+/////// here we update the video time progress while playing
 video.addEventListener("timeupdate", curTimeUpdate, false);
+
+/////////////////////////////////////////////////////////////
+
+
+/////// here we add the play- pause functionality to the button - togglePlay function
 
 // play/pause button
 play = document.getElementById('play');
 play.addEventListener('click', togglePlay, false);
+
+
+/////////////////////////////////////////////////////////////
+
 
 // click on transport bar sets playback position
 transportbar = document.getElementById('transportbar');
@@ -33,7 +49,7 @@ video.addEventListener("timeupdate", endChapter, false);
 // display duration and chapters
 function init(evt) {
 	// update duration display
-	duration.innerHTML = video.duration.toFixed(2);
+	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
 
   // grab chapters out of <track>
   retrieve(track.getAttribute('src'));
@@ -71,7 +87,10 @@ function videoPlayPause(evt) {
 function curTimeUpdate(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
 	curTime.innerHTML = video.currentTime.toFixed(2);
-	position.style.width = Math.round(bar_width*video.currentTime/video.duration) + "px";
+	position.style.width = Math.round(bar_width*video.currentTime/video.duration) + "px"; //for the html to draw
+
+	//video.currentTime to know the exact time of the video playing
+	//video.duration speaks by itself.
 }
 
 // seek on transport bar

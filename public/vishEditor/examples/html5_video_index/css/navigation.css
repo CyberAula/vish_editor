@@ -26,18 +26,18 @@ body {
 	width: 80%;
 	display: inline;
 }
-#transportbar {
+#transportbar {  /* duration*/
 	height: 15px;
 	width: 100%;
 	border: 2px solid black;
 }
-#position {
+#position { /* yellow bar, progress of the video*/
 	background: #D7BC28;
 	height: 15px;
 	width: 0px;
 	display: block;
 }
-#segments {
+#segments { /* segments in which the video is divided*/
 	width: 100%;
 	margin: 0;
 	padding: 0;
