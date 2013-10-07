@@ -218,7 +218,12 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 				if(location){
 					var map = _getCurrentTour().map;
 					map.setCenter(location.address);
-					map.fitBounds(location.bounds);
+					if(location.bounds){
+						map.fitBounds(location.bounds);
+					} else if(location.viewport){
+						map.fitBounds(location.viewport);
+					}
+					
 					$(currentInput).val("");
 					$(currentInput).attr("placeholder",V.I18n.getTrans("i.Searchplaces"));
 				} else {
@@ -234,9 +239,11 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			if (status === google.maps.GeocoderStatus.OK) {
 				var addrLocation = results[0].geometry.location;
 				var bounds = results[0].geometry.bounds;
+				var viewport = results[0].geometry.viewport;
 				var location = {
 					address: addrLocation,
-					bounds: bounds
+					bounds: bounds,
+					viewport: viewport
 				};
 				if(typeof callback === "function"){
 					callback(location);
