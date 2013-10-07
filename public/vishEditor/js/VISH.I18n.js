@@ -76,6 +76,8 @@ VISH.I18n = (function(V,$,undefined){
 					 case "LI":
 					 	_translateLI(elem,translation);
 					 	break;
+					 case "IMG":
+					 	_translateImg(elem,translation);
 					default:
 						//Generic translation (for h,p or span elements)
 						_genericTranslate(elem,translation);
@@ -100,11 +102,11 @@ VISH.I18n = (function(V,$,undefined){
 	}
 
 	var _translateDiv = function(div,translation){
-		if($(div).attr("title") != undefined){
-			$(div).attr("title", translation);
-		}
 		if($(div).attr("data-text") != undefined){
 			$(div).attr("data-text", translation);
+		}
+		if($(div).attr("title") != undefined){
+			$(div).attr("title", translation);
 		}
 	}
 
@@ -112,12 +114,16 @@ VISH.I18n = (function(V,$,undefined){
 		$(textArea).attr("placeholder", translation);
 	}
 
-	var _translateLI = function(elem,translation){
-		if($(elem).attr("data-text") != undefined){
-			$(elem).attr("data-text", translation);
+	var _translateLI = function(li,translation){
+		if($(li).attr("data-text") != undefined){
+			$(li).attr("data-text", translation);
 		} else {
-			_genericTranslate(elem,translation);
+			_genericTranslate(li,translation);
 		}
+	}
+
+	var _translateImg = function(img,translation){
+		$(img).attr("src",V.ImagesPath + translation);
 	}
 
 	var _genericTranslate = function(elem,translation){

@@ -1953,6 +1953,10 @@ table.contentIconsWalkthrough td {
 	padding-left: 30px;
 }
 
+.tut_contextualhelp td.tut_contextualhelp_icon p {
+	text-align: center;
+}
+
 .tut_addslide {
 	top: 117px !important;
 	margin-left: 1px;
