@@ -43,7 +43,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 	var getDummy = function(slidesetId,options){
-		return "<article id='"+slidesetId+"' type='"+V.Constant.VTOUR+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_vt' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div class='vt_canvas'></div><div class='vt_search'><input class='vt_search_input' type='text' placeholder='" + V.I18n.getTrans("i.Searchplaces") + "'></input><button class='vt_search_button'><img class='vt_search_button_img' src='/vishEditor/images/icons/gsearch.png'/></button></div></article>";
+		return "<article id='"+slidesetId+"' type='"+V.Constant.VTOUR+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_vt' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div class='vt_canvas'></div><div class='vt_search'><input class='vt_search_input' type='text' placeholder='" + V.I18n.getTrans("i.Searchplaces") + "'></input><button class='vt_search_button'><img class='vt_search_button_img' src='"+V.ImagesPath+"icons/gsearch.png'/></button></div></article>";
 	};
 
 
