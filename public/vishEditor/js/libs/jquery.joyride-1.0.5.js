@@ -6,12 +6,6 @@
  * http://www.opensource.org/licenses/mit-license.php
 */
 
-/* 
- * NESTOR:
- * I deleted the "x" in this line 57:
- *"$(self).html() + buttonText + '<a href="#close" class="joyride-close-tip">X</a>' +"
-*/
-
 (function($) {
   $.fn.joyride = function(options) {
 
@@ -33,7 +27,8 @@
       'inline': false, // true or false, if true the tip will be attached after the element
       'tipContent': '#joyRideTipContent', // What is the ID of the <ol> you put the content in
       'postRideCallback': $.noop, // A method to call once the tour closes (canceled or complete)
-      'postStepCallback': $.noop // A method to call after each step
+      'postStepCallback': $.noop, // A method to call after each step
+      'postInitCallback': $.noop // A method to call after joyride is created
     };
 
     var options = $.extend(settings, options);
@@ -44,8 +39,6 @@
 
       $(options.tipContent).hide();
 
-      //MODIFIED BY KIKE, Added ">" in " > li" to create a better selector, because we have li items inside the tutorials and 
-      //tipcontent captures also those as tips
       var bodyOffset = $(options.tipContainer).children('*').first().position(),
       tipContent = $(options.tipContent + ' > li'),
       count = skipCount = 0,
@@ -108,11 +101,16 @@
             tipLayout(false, index, '', self);
           }
         }
+
         $('#joyRidePopup' + index).hide();
+        if(index===0){
+          $('#joyRidePopup' + index).addClass("joyRideCurrent");
+        }
       });
+
     }
 
-      showNextTip = function() {
+      showNextTip = function(){
         var parentElementID = $(tipContent[count]).data('id'),
         parentElement = $('#' + parentElementID),
         opt = {};
@@ -142,6 +140,11 @@
             break;
           }
         }
+
+        if((count===0)&&(settings.onInitCallback != $.noop)){
+            settings.onInitCallback();
+        }
+
         var windowHalf = Math.ceil($(window).height() / 2),
           currentTip = $('#joyRidePopup' + count),
           currentTipPosition = parentElement.offset(),
@@ -153,6 +156,10 @@
         if (currentTip.length === 0) {
           return;
         }
+
+        //Update joyRideCurrent
+        $(".joyRideCurrent").removeClass("joyRideCurrent");
+        $(currentTip).addClass("joyRideCurrent");
 
         if (count < tipContent.length) {
           if (settings.tipAnimation == "pop") {
@@ -225,8 +232,6 @@
                 nub.addClass('bottom');
               }
             } else if(tipSettings.tipLocation == "bottom"){
-              //KIKE: ADDED HERE THE IF, SO WE CAN CALL IT WITH LOCATION NONE AND ADD THE LOCATION BY A CLASS
-              // Default is bottom alignment.
               currentTip.offset({
                 top: (currentTipPosition.top + currentParentHeight + nubHeight),
                 left: left
@@ -361,6 +366,7 @@
       } else {
        showNextTip();
       }
+
       var endTip = function(e, interval_id, cookie, self) {
         e.preventDefault();
         clearInterval(interval_id);
@@ -371,6 +377,9 @@
         if (settings.postRideCallback != $.noop) {
           settings.postRideCallback();
         }
+
+        //Update joyRide current
+         $(".joyRideCurrent").removeClass("joyRideCurrent");
       }
       $('.joyride-close-tip').click(function(e) {
         endTip(e, interval_id, settings.cookieMonster, this);

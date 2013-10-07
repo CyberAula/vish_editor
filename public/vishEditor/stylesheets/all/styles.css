@@ -238,17 +238,18 @@ this can not be done with show() and hide() because then it remains with display
 
 #slide-counter-span {
 	cursor: default;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
 	text-align: center;
+}
+
+#slide-counter-span, #slide-counter-input {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.2rem;
 }
 
 #slide-counter-input {
 	width: 24px;
 	height: 20px;
 	padding: 1px 1px 1px 0;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
 	text-align: right;
 }
 
@@ -402,7 +403,7 @@ div#viewerpreview {
 	padding-right: 10px; 
 	padding-bottom: 10px; 
 	padding-left: 10px; 
-	font-size: 24px; 
+	font-size: 1.9rem;
 	text-align: center; 
 	color: rgb(255, 255, 255); 
 	font-family: 'trebuchet ms', verdana, arial, sans-serif; 
@@ -769,9 +770,9 @@ div.quizQr > table {
 }
 
 .prompt_text_viewer {
-	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
-	font-size:32px;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }
@@ -842,31 +843,7 @@ div.quizQr > table {
 	text-shadow: 1px 1px #666;
 }
 
-/* Tutorials with Joyride (css for Viewer and Editor) */
-
-.joyride-content-wrapper {
-	text-align: center;
-}
-
-.joyride-content-wrapper p, .joyride-content-wrapper ul {
-	text-align: left;
-}
-
-.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3{
-	text-align: left;
-	max-width: 90%;
-}
-
-.tut_with_arrow span.joyride-nub {
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color:  #666;
-}
-
-.tut_without_arrow span.joyride-nub {
-	display: none;	
-}
+/* Tutorials (with Joyride) (css for Viewer and Editor) */
 
 .tut_width350 {
 	width: 350px !important;
@@ -904,10 +881,10 @@ div.quizQr > table {
 	margin-left: -400px;
 }
 
-.tut_template_full {
+.tut_template_editorfull {
 	top: 70px;
-	left: 245px;
-	width: 900px;
+	left: 230px;
+	width: 930px;
 }
 
 img.tut_image {
@@ -964,10 +941,6 @@ p.tut_space_big {
 
 /* Tutorials for Viewer */
 
-.ViSHViewerBody .joyride-tip-guide h2 {
-	font-size: 1.8rem; /*responsive*/
-}
-
 .tut_full_viewer {
 	width: 96%;
 	left: 2%;
@@ -983,6 +956,13 @@ p.tut_space_big {
 	max-height: 30px;
 }
 
+.addslidestut p, .addslidestut span {
+	font-size: 1.5rem;
+}
+
+.addslidestut .joyride-next-tip {
+	font-size: 1.3rem;
+}
 
 /* Import slides */
 
@@ -1214,7 +1194,7 @@ img.selectSlidesimgbutton {
 .notification_text {
 	text-decoration:none;
 	font-family:'Open Sans', sans-serif;
-	font-size:26px;
+	font-size: 1.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }
@@ -1259,7 +1239,7 @@ img.browser_img {
 
 span.browserTitle {
 	font-family:'Open Sans', sans-serif;
-  	font-size: 15px;
+  	font-size: 1.2rem;
 	display: block;
 	padding: 5px;
 	color: #9B999D;
@@ -1273,7 +1253,7 @@ div.recomended_browser {
 span.adverttext {
 	text-decoration:none;
 	font-family:'Open Sans', sans-serif;
-	font-size:32px;
+	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
 }

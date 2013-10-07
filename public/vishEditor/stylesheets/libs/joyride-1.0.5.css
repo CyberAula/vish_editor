@@ -22,11 +22,29 @@
 
 	/*add scroll*/
 	max-height: 95%;
-	overflow: auto;
+	overflow-y: auto;
+}
+
+/* Disable overflow to make the arrow visible*/
+.tut_with_arrow {
+	max-height: "none";
+	overflow-y: visible !important;
 }
 
 .joyride-content-wrapper{
 	padding: 1.135rem 1.25rem 1.5rem;
+	text-align: center;
+}
+
+.tut_with_arrow span.joyride-nub {
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color:  #666;
+}
+
+.tut_without_arrow span.joyride-nub {
+	display: none !important;	
 }
 
 
@@ -84,51 +102,47 @@
 
 /* Typography */
 .joyride-tip-guide h1,.joyride-tip-guide h2,.joyride-tip-guide h3,.joyride-tip-guide h4,.joyride-tip-guide h5,.joyride-tip-guide h6 {
-	line-height: 1.25;
+	line-height: 1.4rem;
 	margin: 0;
 	font-weight: bold;
 }
 
+.joyride-content-wrapper h1,  .joyride-content-wrapper h2, .joyride-content-wrapper h3 {
+	text-align: left;
+	max-width: 90%;
+}
+
 .joyride-tip-guide h1 {
-	font-size: 16px;
+	font-size: 1.3em;
 	color: #0066ff;
 	font-style:italic;
-	margin: 15px; 
+	margin: 15px;
 }
 
 .joyride-tip-guide h2 {
-	font-size: 18px; 
+	font-size: 1.5rem; 
 	color: #0066ff;
 	padding-bottom: 5px;  
 }
 
-.joyride-tip-guide h3 { 
-	font-size: 22px; 
-}
-
-.joyride-tip-guide h4 { 
-	font-size: 18px; 
-}
-
-.joyride-tip-guide h5 { 
-	font-size: 13px; 
+.ViSHViewerBody .joyride-tip-guide h2 {
+	font-size: 1.7rem; /*responsive*/
 }
 
 .joyride-tip-guide h6 { 
-	font-size: 14px; 
+	font-size: 1.2rem; 
 }
 
-.joyride-tip-guide p {
-	font-size: 14px;
-	line-height: 18px;
+.joyride-content-wrapper p, .joyride-content-wrapper ul {
+	text-align: left;
 }
 
-.joyride-tip-guide span {
-	font-size: 14px;
-	line-height: 18px;
+.joyride-tip-guide p, .joyride-tip-guide span {
+	font-size: 1.2rem;
+	line-height: 1.5rem;
 }
 
-.joyride-tip-guide a {;
+.joyride-tip-guide a {
 	text-decoration: none;
 }
 
@@ -140,7 +154,7 @@
 .joyride-tip-guide .joyride-next-tip {
 	width: auto;
 	padding: 6px 18px 4px;
-	font-size: 13px;
+	font-size: 1.1rem;
 	display: inline;
 	text-decoration:none;
 	background: #ff005d repeat-x bottom;
