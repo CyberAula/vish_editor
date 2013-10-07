@@ -133,15 +133,15 @@ VISH.I18n = (function(V,$,undefined){
 	/**
 	 * Function to translate a text
 	 */
-	var getTrans = function(s) {
+	var getTrans = function(s, params) {
 		if (typeof(translations)!= 'undefined' && translations[s]) {
-			return translations[s];
+			return _getTrans(translations[s],params);
 		}
 		// V.Debugging.log("Text without translation: " + s);
 
 		//Search in default language
 		if (typeof(defaultTranslations)!= 'undefined' && defaultTranslations[s]) {
-			return defaultTranslations[s];
+			return _getTrans(defaultTranslations[s],params);
 		}
 		// V.Debugging.log("Text without default translation: " + s);
 
@@ -153,6 +153,26 @@ VISH.I18n = (function(V,$,undefined){
 			return s;
 		}
 	};
+
+	/*
+	 * Replace params (if they are provided) in the translations keys. Example:
+	 * // "i.dtest"	: "Uploaded by #{name} via ViSH Editor",
+	 * // VISH.I18n.getTrans("i.dtest", {name: "Aldo"}) -> "Uploaded by Aldo via ViSH Editor"
+	 */
+	var _getTrans = function(trans, params){
+		if(typeof params != "object"){
+			return trans;
+		}
+
+		for(var key in params){
+			var stringToReplace = "#{" + key + "}";
+			if(trans.indexOf(stringToReplace)!=-1){
+				trans = trans.replaceAll(stringToReplace,params[key]);
+			}
+		};
+
+		return trans;
+	}
 
 	/**
 	 * Return the current language
