@@ -262,5 +262,10 @@ function parseWebVTT(data) {
 		// add parsed cue
 		cues.push({id: id, start: start, end: end, content: content});
 	}
-	return cues;
+	return cues; //JSON
+	// Estructura por slide:
+		// content: "Example with paint-on captions"
+		// end : 1327.466
+		// id:  "Slide 15"
+		// start: 1180.7
 }
