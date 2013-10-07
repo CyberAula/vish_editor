@@ -119,7 +119,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	}
   	
     &#x2F;&#x2F;Default options
-	  var posterUrl = V.ImagesPath + &quot;example_poster_image.jpg&quot;;
+	  var posterUrl = V.ImagesPath + &quot;vicons&#x2F;example_poster_image.jpg&quot;;
 	  var autoplay = false;
 		
 	  &#x2F;&#x2F;Replace defeault options if options hash is defined
@@ -175,7 +175,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   }
 
   var renderVideoFromSources = function(sources){
-    var posterUrl = V.ImagesPath + &quot;example_poster_image.jpg&quot;;
+    var posterUrl = V.ImagesPath + &quot;icons&#x2F;example_poster_image.jpg&quot;;
     var rendered = &quot;&lt;video class=&#x27;objectPreview&#x27; preload=&#x27;metadata&#x27; controls=&#x27;controls&#x27; poster=&#x27;&quot; + posterUrl + &quot;&#x27; &gt;&quot;;
 		$.each(sources, function(index, source) {
        rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source + &quot;&#x27; &quot; + _getVideoType(source) + &quot;&gt;&quot;;

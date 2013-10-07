@@ -661,7 +661,7 @@
         },
         {
             "file": "VISH.Editor.Events.js",
-            "line": 219,
+            "line": 207,
             "description": "Tutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
             "class": "VISH.Editor"
         },
@@ -869,77 +869,77 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 173,
+            "line": 174,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 217,
+            "line": 218,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 314,
+            "line": 261,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 345,
+            "line": 292,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 376,
+            "line": 323,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 385,
+            "line": 332,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 445,
+            "line": 392,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 457,
+            "line": 404,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 481,
+            "line": 428,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 506,
+            "line": 453,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 772,
+            "line": 719,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1037,7 +1037,7 @@
         },
         {
             "file": "VISH.Quiz.js",
-            "line": 241,
+            "line": 225,
             "description": "Function to render a quiz inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
@@ -1199,7 +1199,7 @@
         {
             "file": "VISH.Tour.js",
             "line": 3,
-            "description": "function to start a walkme tour witht he help \"ol\" id given\ntipLocation can be 'top' or 'bottom' in relation to parent element",
+            "description": "Function to start a tutorial\ntipLocation can be 'top' or 'bottom' in relation to parent element",
             "class": "",
             "namespace": "VISH"
         },
@@ -1310,35 +1310,35 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 88,
+            "line": 89,
             "description": "Function to enter and exit fullscreen",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 128,
+            "line": 129,
             "description": "Function called when entering slide in viewer, we have to show the objects",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 173,
+            "line": 174,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 198,
+            "line": 199,
             "description": "function to check if this is the penultimate Slide (or the only one) and call to get the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 213,
+            "line": 214,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
@@ -1359,8 +1359,8 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 352,
-            "description": "Fancybox resizing",
+            "line": 380,
+            "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
         }
@@ -1568,7 +1568,7 @@
         },
         {
             "message": "Missing item type\nTutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Editor.Events.js:219"
+            "line": " VISH.Editor.Events.js:207"
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -1684,47 +1684,47 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:173"
+            "line": " VISH.Editor.js:174"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:217"
+            "line": " VISH.Editor.js:218"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:314"
+            "line": " VISH.Editor.js:261"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:345"
+            "line": " VISH.Editor.js:292"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:376"
+            "line": " VISH.Editor.js:323"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:385"
+            "line": " VISH.Editor.js:332"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:445"
+            "line": " VISH.Editor.js:392"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:457"
+            "line": " VISH.Editor.js:404"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:481"
+            "line": " VISH.Editor.js:428"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:506"
+            "line": " VISH.Editor.js:453"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:772"
+            "line": " VISH.Editor.js:719"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
@@ -1780,7 +1780,7 @@
         },
         {
             "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
-            "line": " VISH.Quiz.js:241"
+            "line": " VISH.Quiz.js:225"
         },
         {
             "message": "Missing item type\nHelpers",
@@ -1871,7 +1871,7 @@
             "line": " VISH.SnapshotPlayer.js:29"
         },
         {
-            "message": "Missing item type\nfunction to start a walkme tour witht he help \"ol\" id given\ntipLocation can be 'top' or 'bottom' in relation to parent element",
+            "message": "Missing item type\nFunction to start a tutorial\ntipLocation can be 'top' or 'bottom' in relation to parent element",
             "line": " VISH.Tour.js:3"
         },
         {
@@ -1936,23 +1936,23 @@
         },
         {
             "message": "Missing item type\nFunction to enter and exit fullscreen",
-            "line": " VISH.Viewer.js:88"
+            "line": " VISH.Viewer.js:89"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in viewer, we have to show the objects",
-            "line": " VISH.Viewer.js:128"
+            "line": " VISH.Viewer.js:129"
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:173"
+            "line": " VISH.Viewer.js:174"
         },
         {
             "message": "Missing item type\nfunction to check if this is the penultimate Slide (or the only one) and call to get the recommendations",
-            "line": " VISH.Viewer.js:198"
+            "line": " VISH.Viewer.js:199"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:213"
+            "line": " VISH.Viewer.js:214"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
@@ -1963,8 +1963,8 @@
             "line": " VISH.ViewerAdapter.js:268"
         },
         {
-            "message": "Missing item type\nFancybox resizing",
-            "line": " VISH.ViewerAdapter.js:352"
+            "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
+            "line": " VISH.ViewerAdapter.js:380"
         }
     ]
 }

@@ -682,7 +682,7 @@ VISH.Samples = (function(V,undefined){
 						"id":"article9_zone2",
 						"type":"video",
 						"areaid":"left",
-						"poster":"https://raw.github.com/ging/vish_editor/master/public/vishEditor/images/example_poster_image.jpg",
+						"poster":"https://raw.github.com/ging/vish_editor/master/public/vishEditor/images/vicons/example_poster_image.jpg",
 						"style":"position: relative; width:100%; height:100%; top:-3.125%; left:0.14326647564469913%;",
 						"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/325.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]"
 					}

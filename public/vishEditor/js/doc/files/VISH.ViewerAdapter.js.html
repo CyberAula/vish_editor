@@ -235,7 +235,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		if(is_preview_insertMode){
 			&#x2F;&#x2F;Enable images
-			$(&quot;#selectSlidesBar&quot;).find(&quot;img.addt&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;templatesthumbs&#x2F;addt.png&quot;);
+			$(&quot;#SelectedSlidesToAdd&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;templatesthumbs&#x2F;addt.png&quot;);
 			$(&quot;#tutorialSelectAllImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;selectall.png&quot;);
 			$(&quot;tutorialUnselectAllImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;unselectall.png&quot;);
 			$(&quot;tutorialSelectSlidesImage&quot;).attr(&quot;src&quot;,V.ImagesPath + &quot;tutorial&#x2F;selectslides.png&quot;);
@@ -360,18 +360,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * param &quot;fullscreen&quot; indicates that the call comes from a fullscreen button
 	 *&#x2F;
 	var _setupSize = function(fullscreen){
-		var reserved_px_for_menubar = 40;
-		var margin_height = 40;
-		var margin_width = 30;
+		var reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
+		var min_margin_height = 25;
+		var min_margin_width = 60;
 
 		if(!showViewbar){
 			&#x2F;&#x2F;Cases without viewbar (quiz_simple , etc)
 			reserved_px_for_menubar = 0;
-			margin_height = 0;
-			margin_width = 0;
+			min_margin_height = 0;
+			min_margin_width = 0;
 		} else if(is_preview_insertMode){
 			&#x2F;&#x2F;Preview with insert images
-			reserved_px_for_menubar = 120;
+			reserved_px_for_menubar = 120; &#x2F;&#x2F;Constant because is displayed from ViSH Editor
 		}
 
 		if(fullscreen){
@@ -380,45 +380,68 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			_onFullscreenEvent(false);
 		}
 		
-		var height = _lastHeight - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - 40px that is the menubar height
+		var height = _lastHeight - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - menubar height
 		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
 
-		var aspectRatio = width&#x2F;height;
+		var aspectRatio = (width-min_margin_width)&#x2F;(height-min_margin_height);
 		var slidesRatio = 4&#x2F;3;
 		if(aspectRatio &gt; slidesRatio){
-			finalH = height - margin_height;  &#x2F;&#x2F;leave 40px free, 20 in the top and 20 in the bottom ideally
+			finalH = height - min_margin_height;
 			finalW = finalH*slidesRatio;
+			var widthMargin = (width - finalW);
+			if(widthMargin &lt; min_margin_width){
+				var marginWidthToAdd = min_margin_width - widthMargin;
+				finalW = finalW - marginWidthToAdd;
+			}
 		}	else {
-			finalW = width - margin_width; &#x2F;&#x2F;leave 110px free, at least, 55 left and 55 right ideally
+			finalW = width - min_margin_width;
 			finalH = finalW&#x2F;slidesRatio;
+			var heightMargin = (height - finalH);
+			if(heightMargin &lt; min_margin_height){
+				var marginHeightToAdd = min_margin_height - heightMargin;
+				finalH = finalH - marginHeightToAdd;
+			}
 		}
 
+		&#x2F;&#x2F;Viewbar
+		if(!is_preview_insertMode){
+			$(&quot;#viewbar&quot;).height(reserved_px_for_menubar);
+		}
+
+		&#x2F;&#x2F;resize slides
 		var topSlides = $(&quot;.slides &gt; article&quot;);
 		var subSlides = $(&quot;.slides &gt; article &gt; article&quot;);
-		$(topSlides).css(&quot;height&quot;, finalH);
-		$(topSlides).css(&quot;width&quot;, finalW);
-		$(subSlides).css(&quot;height&quot;, finalH);
-		$(subSlides).css(&quot;width&quot;, finalW);
+		var allSlides = $(&quot;.slides article&quot;);
+		$(allSlides).css(&quot;height&quot;, finalH);
+		$(allSlides).css(&quot;width&quot;, finalW);
 
 		&#x2F;&#x2F;margin-top and margin-left half of the height and width
 		var marginTop = finalH&#x2F;2 + reserved_px_for_menubar&#x2F;2;
 		var marginLeft = finalW&#x2F;2;
 		$(topSlides).css(&quot;margin-top&quot;, &quot;-&quot; + marginTop + &quot;px&quot;);
-		$(topSlides).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);
-		
 		$(subSlides).css(&quot;margin-top&quot;, &quot;-&quot; + finalH&#x2F;2 + &quot;px&quot;);
-		$(subSlides).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);	
+		$(allSlides).css(&quot;margin-left&quot;, &quot;-&quot; + marginLeft + &quot;px&quot;);
 		
 		var increase = finalH&#x2F;600;
 		var increaseW = finalW&#x2F;800;
 		
+		&#x2F;&#x2F;Paddings
+		var paddingTopAndBottom = 3&#x2F;100*finalW;	&#x2F;&#x2F;3%
+		var paddingLeftAndRight = 5&#x2F;100*finalW;	&#x2F;&#x2F;5%
+		$(allSlides).css(&quot;padding-left&quot;,paddingLeftAndRight);
+		$(allSlides).css(&quot;padding-right&quot;,paddingLeftAndRight); 
+		$(allSlides).css(&quot;padding-top&quot;,	paddingTopAndBottom);
+		$(allSlides).css(&quot;padding-bottom&quot;,paddingTopAndBottom);
+
 		&#x2F;&#x2F;and now the arrows have to be increased or decreased
 		$(&quot;.fc_poi img&quot;).css(&quot;width&quot;, 50*increase + &quot;px&quot;);
 		$(&quot;.fc_poi img&quot;).css(&quot;height&quot;, 50*increase + &quot;px&quot;);
 
 		decideIfPageSwitcher();
+
+		updateFancyboxAfterSetupSize();
 
 		&#x2F;&#x2F;Texts callbacks
 		V.Text.aftersetupSize(increase,increaseW);
@@ -434,30 +457,51 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
-
-		_updateFancyboxAfterSetupSize();
 	};
 
+	var _getDesiredVieweBarHeight = function(windowHeight){
+		var minimumViewBarHeight = 20;
+		var maxViewBarHeight = 40;
+		var viewBarHeight = 40;
+		&#x2F;&#x2F;TODO: Make Viewbar responsive
+		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
+	}
 
 	&#x2F;**
-	 * Fancybox resizing
+	 * Fancybox resizing. If a fancybox is opened, resize it
 	 *&#x2F;
-	var _updateFancyboxAfterSetupSize = function(){
-		&#x2F;&#x2F;If fancybox is opened, resize it
-	    if ($(&#x27;#fancybox-content:empty&#x27;).length === 0){
-	      $(&#x27;#fancybox-wrap&#x27;).width($(&quot;.current&quot;).width()+100); &#x2F;&#x2F;+100 because it is the padding
-	      $(&#x27;#fancybox-wrap&#x27;).height($(&quot;.current&quot;).height()+70);  &#x2F;&#x2F;+70 because it is the padding
-	      $(&#x27;#fancybox-wrap&#x27;).css(&quot;top&quot;, $(&quot;.current&quot;).offset().top + &quot;px&quot;);  
-	      $(&#x27;#fancybox-wrap&#x27;).css(&quot;left&quot;, $(&quot;.current&quot;).offset().left + &quot;px&quot;);
+	var updateFancyboxAfterSetupSize = function(){
+		var fOverlay = $(&quot;#fancybox-overlay&quot;);
+		if(($(fOverlay).length&lt;1)||(!$(fOverlay).is(&quot;:visible&quot;))){
+			return;
+		}
 
-	      setTimeout(function () {
-	        $(&quot;#fancybox-content&quot;).width(&quot;100%&quot;);
-	        $(&quot;#fancybox-content&quot;).height(&quot;100%&quot;);
-	        $(&quot;#fancybox-content &gt; div&quot;).width(&quot;100%&quot;);
-	        $(&quot;#fancybox-content &gt; div&quot;).height(&quot;100%&quot;); 
-	      }, 300);
-	    }
+		var fwrap = $(&quot;#fancybox-wrap&quot;);
+		var fcontent = $(&quot;#fancybox-content&quot;);
+		var fccontentDivs = $(&quot;#&quot; + $(fcontent).attr(&quot;id&quot;) + &quot; &gt; div&quot;);
+		
+		var currentSlide = $(&quot;.current&quot;);
+		var paddingTop = $(currentSlide).cssNumber(&quot;padding-top&quot;);
+		var paddingLeft = $(currentSlide).cssNumber(&quot;padding-left&quot;);
+		var offset = $(currentSlide).offset();
+		
+		var fcClose = $(&quot;#fancybox-close&quot;);
+		$(fcClose).height(&quot;22px&quot;);
+		$(fcClose).css(&quot;padding&quot;,&quot;10px&quot;);
+		$(fcClose).css(&quot;padding-left&quot;,&quot;4px&quot;);
+		
+		$(fwrap).css(&quot;margin-top&quot;, &quot;0px&quot;);
+		$(fwrap).width($(currentSlide).width()+paddingLeft);
+		$(fwrap).height($(currentSlide).height()+2*paddingTop);
+		$(fwrap).css(&quot;top&quot;, offset.top + &quot;px&quot;);  
+		$(fwrap).css(&quot;left&quot;, offset.left + &quot;px&quot;);
+
+		$(fcontent).width(&quot;100%&quot;);
+		$(fcontent).height(&quot;100%&quot;);
+		$(fccontentDivs).width(&quot;100%&quot;);
+		$(fccontentDivs).height(&quot;100%&quot;);
 	}
+
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; Fullscreen functions
@@ -488,7 +532,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			if((fullscreen)&amp;&amp;(exit_fs_button)){
 				&#x2F;&#x2F;we are in &quot;simulated&quot; fullscreen ,showing the .full version and we need a close fullscreen
-				$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreen.png&quot;)&#x27;);
+				$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;vicons&#x2F;fullscreen.png&quot;)&#x27;);
 				$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 
 				$(document).on(&#x27;click&#x27;, &#x27;#page-fullscreen&#x27;, function(){
@@ -525,7 +569,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _onEnterFullScreen = function(){
-		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreenback.png&quot;)&#x27;);
+		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;vicons&#x2F;fullscreenback.png&quot;)&#x27;);
 		$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		$(&quot;#page-fullscreen&quot;).hover(function(){
 			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-30px -40px&quot;);
@@ -536,7 +580,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	}
 
 	var _onLeaveFullScreen = function(){
-		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;icons&#x2F;fullscreen.png&quot;)&#x27;);
+		$(&quot;#page-fullscreen&quot;).css(&quot;background-image&quot;, &#x27;url(&quot;&#x27;+V.ImagesPath+&#x27;vicons&#x2F;fullscreen.png&quot;)&#x27;);
 		$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;0px 0px&quot;);
 		$(&quot;#page-fullscreen&quot;).hover(function(){
 			$(&quot;#page-fullscreen&quot;).css(&quot;background-position&quot;, &quot;-40px -40px&quot;);
@@ -564,7 +608,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		updateInterface 		: updateInterface,
 		isFullScreen 			: isFullScreen,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
-		decideIfCloseButton		: decideIfCloseButton
+		decideIfCloseButton		: decideIfCloseButton,
+		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize
 	};
 
 }) (VISH, jQuery);

@@ -130,6 +130,7 @@ VISH.Editor = (function(V,$,undefined){
 	 *&#x2F;
 	var init = function(options, presentation){
 		V.Editing = true;
+		$(&quot;body&quot;).addClass(&quot;ViSHEditorBody&quot;);
 
 		V.Debugging.init(options);
 		
@@ -344,61 +345,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		$(this).append(content);
 
-		$(&quot;a.addpicture&quot;).fancybox({
-			&#x27;autoDimensions&#x27; : false,
-			&#x27;width&#x27;: 800,
-			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;height&#x27;: 600,
-			&#x27;padding&#x27; : 0,
-			&quot;onStart&quot;  : function(data) {
-				&#x2F;&#x2F;re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
-				var clickedZoneId = $(data).attr(&quot;zone&quot;);
-				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Image.setAddContentMode(V.Constant.NONE);
-				V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
-			}
-		});
-		$(&quot;a.addobject&quot;).fancybox({
-			&#x27;autoDimensions&#x27; : false,
-			&#x27;width&#x27;: 800,
-			&#x27;height&#x27;: 600,
-			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;padding&#x27; : 0,
-			&quot;onStart&quot;  : function(data) {
-				var clickedZoneId = $(data).attr(&quot;zone&quot;);
-				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_object_from_web&#x27;);
-			}
-		});
-		$(&quot;a.addvideo&quot;).fancybox({
-			&#x27;autoDimensions&#x27; : false,
-			&#x27;width&#x27;: 800,
-			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;height&#x27;: 600,
-			&#x27;padding&#x27; : 0,
-			&quot;onStart&quot;  : function(data) {
-				var clickedZoneId = $(data).attr(&quot;zone&quot;);
-				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_video_youtube&#x27;);
-			}
-		});
-		$(&quot;a.addLive&quot;).fancybox({
-			&#x27;autoDimensions&#x27; : false,
-			&#x27;width&#x27;: 800,
-			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;height&#x27;: 600,
-			&#x27;padding&#x27; : 0,
-			&quot;onStart&quot;  : function(data) {
-				var clickedZoneId = $(data).attr(&quot;zone&quot;);
-				setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_live_resource&#x27;);
-			}
-		});
-		
-		$(&quot;a.addQuiz&quot;).click(function(event){
-			$(&quot;a#addQuizFancybox&quot;).trigger(&quot;click&quot;);
-		});
-
+		V.Editor.Events.addZoneThumbsEvents(this);
 	}; 
 
 	&#x2F;**

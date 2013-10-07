@@ -201,18 +201,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 					V.Editor.setContentAddMode(V.Constant.NONE);
 				}
-			});	
-
-			&#x2F;&#x2F; fancybox to create a new quiz		
-			$(&quot;a#addQuizFancybox&quot;).fancybox({
-				&#x27;autoDimensions&#x27; : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;: 385,
-				&#x27;height&#x27;: 340,
-				&#x27;padding&#x27;: 0,
-				&quot;onStart&quot;  : function(data) {
-					V.Editor.Utils.loadTab(&#x27;tab_quizes&#x27;);
-				}
 			});
 
 			&#x2F;&#x2F;Select theme fancybox
@@ -247,8 +235,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F;Change flashcard background
-			$(&quot;#hidden_button_to_launch_picture_fancybox_for_flashcard&quot;).fancybox({
+			&#x2F;&#x2F;Change background
+			$(&quot;#hidden_button_to_change_slide_background&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 800,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -375,13 +363,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;,&#x27;#help_pedagogical_selection&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_pedagogical_selection_help&#x27;, &#x27;bottom&#x27;);
 		});
-	
-		&#x2F;&#x2F;Help in Quiz Templates
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizes_help&#x27;, function(){			
-			V.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
-		});
 
-		&#x2F;&#x2F;Help inserting images [URL, Upload, Repository, Flickr]
+		&#x2F;&#x2F;Help inserting images [URL, Upload, ViSH, Flickr, LRE]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
@@ -397,38 +380,44 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_lre_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;search_lre_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
-		&#x2F;&#x2F;Help inserting objects [URL, Upload, Repository, Snapshot]
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;object_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
-		});
+
+		&#x2F;&#x2F;Help inserting objects [Web, Snapshot, URL&#x2F;Embed, Upload, ViSH, LRE]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_web_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;object_fancy_tabs_web_help&#x27;, &#x27;top&#x27;);
-		});
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_upload_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;upload_object_form_help&#x27;, &#x27;top&#x27;);
-		});
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;search_object_help&#x27;, &#x27;bottom&#x27;);
-		});
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_lre_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;search_lre_object_help&#x27;, &#x27;bottom&#x27;);
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_snapshot_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;object_fancy_tabs_websnapshot_help&#x27;, &#x27;bottom&#x27;);
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
-		
-		&#x2F;&#x2F;Help inserting videos [URL, Repository, YouTube, Vimeo]
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_url_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_upload_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_repo_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_lre_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;Help inserting videos [URL, ViSH, YouTube, Vimeo]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;video_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
+			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_repo_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;search_video_help&#x27;, &#x27;top&#x27;);
+			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_youtube_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;search_youtube_fancy_help&#x27;, &#x27;bottom&#x27;);
+			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_vimeo_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;search_vimeo_fancy_help&#x27;, &#x27;bottom&#x27;);
+			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;Help in Quiz Templates
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizzes_help&#x27;, function(){			
+			V.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
 		});
 		
 		&#x2F;&#x2F;Help inserting live objects
@@ -436,6 +425,80 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;tab_live_resource_id&#x27;, &#x27;bottom&#x27;);
 		});
 	};
+
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Event Listeners
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	var addZoneThumbsEvents = function(container){
+
+		$(container).find(&quot;a.addpicture&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				&#x2F;&#x2F;re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Image.setAddContentMode(V.Constant.NONE);
+				V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+			}
+		});
+
+		$(container).find(&quot;a.addobject&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;height&#x27;: 600,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Utils.loadTab(&#x27;tab_object_from_web&#x27;);
+			}
+		});
+
+		$(container).find(&quot;a.addvideo&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Utils.loadTab(&#x27;tab_video_youtube&#x27;);
+			}
+		});
+
+		&#x2F;&#x2F;Fancybox to create a new quiz
+		$(container).find(&quot;a.addQuiz&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Utils.loadTab(&#x27;tab_quizzes&#x27;);
+			}
+		});
+
+		$(container).find(&quot;a.addLive&quot;).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;width&#x27;: 800,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;height&#x27;: 600,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data) {
+				var clickedZoneId = $(data).attr(&quot;zone&quot;);
+				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
+				V.Editor.Utils.loadTab(&#x27;tab_live_resource&#x27;);
+			}
+		});
+	}
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -538,6 +601,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			init 							: init,
 			bindEditorEventListeners		: bindEditorEventListeners,
 			unbindEditorEventListeners		: unbindEditorEventListeners,
+			addZoneThumbsEvents				: addZoneThumbsEvents,
 			allowExitWithoutConfirmation 	: allowExitWithoutConfirmation
 	};
 

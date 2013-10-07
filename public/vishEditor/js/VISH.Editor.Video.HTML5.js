@@ -29,7 +29,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
   	}
   	
     //Default options
-	  var posterUrl = V.ImagesPath + "icons/example_poster_image.jpg";
+	  var posterUrl = V.ImagesPath + "vicons/example_poster_image.jpg";
 	  var autoplay = false;
 		
 	  //Replace defeault options if options hash is defined
