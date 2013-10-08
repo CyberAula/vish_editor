@@ -2366,27 +2366,6 @@ div.poi_label_container {
 
 /* More buttons */
 
-.button {
-	padding: 5px 10px;
-	display: inline;
-	text-decoration:none;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-	cursor: pointer;
-	font-weight: bold;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.1em;
-}	
-
-.button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-
 .buttonfancy {
 	margin-left: 620px;
 	margin-top: 2px;

@@ -1153,6 +1153,27 @@ img.selectSlidesimgbutton {
   opacity: 0.4 !important;
 }
 
+/* Buttons */
+.button {
+	padding: 5px 10px;
+	display: inline;
+	text-decoration:none;
+	background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.1em;
+}
+
+.button:hover {
+	opacity: 1;
+	text-shadow: 1px 1px #666;
+}
 
 /* Notifications CSS */
 
@@ -1165,7 +1186,7 @@ img.selectSlidesimgbutton {
 }
 
 .notification_row1 {
-	margin-bottom: 40px;
+	margin-bottom: 5%;
 	width: 100%;
 }
 
@@ -1184,19 +1205,23 @@ img.selectSlidesimgbutton {
 }
 
 .notification_button[buttonnumber='1'] {
-	margin-right: 15px;
+	margin-right: 3%;
 }
 
-.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3']{
+.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3'] {
 	margin-right: 15px;
 }
 
 .notification_text {
-	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
-	font-size: 1.6rem;
-	color:#CCC;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 2.1rem;
+	color: #CCC;
 	padding-bottom: 15px;
+}
+
+.notificationTextWrapperCenter {
+	text-align: center;
 }
 
 img.notificationIcon {
@@ -1204,6 +1229,7 @@ img.notificationIcon {
 	height: 55px;
 	margin-right: 20px;
 	margin-left: 0px;
+	display: inline;
 }
 
 img.notificationIconDelete {

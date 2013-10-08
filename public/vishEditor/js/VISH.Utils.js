@@ -673,24 +673,26 @@ VISH.Utils = (function(V,undefined){
 	 * Helper to show validation dialogs
 	 */
 	var showDialog = function(options){
-		var id = "notification_template";
-		if($("#"+id).length===0){
+		var rootTemplate = $("#notification_template");
+		if($(rootTemplate).length===0){
 			return;
 		}
+
 		if((!options)||(!options.text)){
 			return;
 		}
-
-		var width = 350;
-		var height = 200;
+		
+		//Defaults
+		var width = '90%';
+		var height = 0;
 		var showCloseButton = false;
-		var notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-
+		var notificationIconSrc;
+		if(V.Editing){
+			notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
+		}
+		
 		if(options.width){
 			width = options.width;
-		}
-		if(options.height){
-			height = options.height;
 		}
 		if(options.showCloseButton){
 			showCloseButton = options.showCloseButton;
@@ -699,77 +701,131 @@ VISH.Utils = (function(V,undefined){
 			notificationIconSrc = options.notificationIconSrc;
 		}
 
+		//Automatically center text when no image is specified in the notification
+		if(!notificationIconSrc){
+			options.textWrapperClass = "notificationTextWrapperCenter";
+		}
+
+
+		//Calculate Height (use root template)
+		_cleanDialog();
+		var notificationParent = $(rootTemplate).parent();
+		$(rootTemplate).width(width);
+		
+		//Fill template
+		var text_wrapper = $(rootTemplate).find(".notification_row1");
+		var buttons_wrapper = $(rootTemplate).find(".notification_row2");
+		var imgIcon = $(text_wrapper).find(".notificationIcon");
+
+		if(notificationIconSrc){
+			$(imgIcon).attr("src",notificationIconSrc);
+			$(imgIcon).css("display","inline");
+		}
+		if(options.notificationIconClass){
+			$(imgIcon).addClass(options.notificationIconClass);
+		}
+
+		if(options.textWrapperClass){
+			$(text_wrapper).addClass(options.textWrapperClass);
+		}
+
+		$(text_wrapper).find(".notification_text").html(options.text);
+
+		if(options.buttons){
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+			});
+		}
+
+		$(notificationParent).addClass("temp_shown");
+		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+		$(notificationParent).removeClass("temp_shown");
+
+		$("#notification_template_cloned").remove();
+		var cloneTemplate = $(rootTemplate).clone();
+		$(cloneTemplate).attr("id","notification_template_cloned");
+		$(notificationParent).append(cloneTemplate);
+		var notification = $("#notification_template_cloned");
+
+		//Replace buttons
+		if(options.buttons){
+			buttons_wrapper = $(notification).find(".notification_row2");
+			$(buttons_wrapper).html("");
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				//Add buttons callback
+				$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
+					event.preventDefault();
+					button.callback();
+				});
+			});
+		}
+
 		// fancybox to edit presentation settings
 		$("a#link_to_notification_template").fancybox({
 			'autoDimensions' 	: false,
-			'autoScale' 		: false,
+			'autoScale' 		: true,
 			'scrolling'			: 'no',
 			'width'				: width,
-			'height'			: height,
+			'height'			: adjustedHeight,
 			'padding' 			: 0,
 			'hideOnOverlayClick': true,
 			'hideOnContentClick': false,
 			'showCloseButton'	: showCloseButton,
 			"onStart"  	: function(data){
-				_cleanDialog(id);
-				var text_wrapper = $("#"+id).find(".notification_row1");
-				var buttons_wrapper = $("#"+id).find(".notification_row2");
-				$(text_wrapper).find(".notificationIcon").attr("src",notificationIconSrc);
-				$(text_wrapper).find(".notification_text").html(options.text);
-
-				if(options.notificationIconClass){
-					$(text_wrapper).find(".notificationIcon").addClass(options.notificationIconClass);
-				}
-
-				if(options.buttons){
-					var obLength = options.buttons.length;
-					$(options.buttons).reverse().each(function(index,button){
-						var bNumber = obLength-index;
-						$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
-						$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
-							event.preventDefault();
-							button.callback();
-						});
-					});
-				}
 			},
 			"onComplete"  	: function(data){
-				var text_wrapper = $("#fancybox-content").find(".notification_row1");
-				var buttons_wrapper = $("#fancybox-content").find(".notification_row2");
-				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
-
-				if($("#fancybox-content").height() < (adjustedHeight)){
-					//Adjust height (needed when height is smaller than the appropiately one)
-					var transitionTimeMs = 500;
-					var adjustedHeightWithPadding = adjustedHeight + $("#"+id).cssNumber("padding-top") + $("#"+id).cssNumber("padding-bottom");
-					$("#"+id).animate({height:adjustedHeight+"px"},transitionTimeMs);
-					$("#fancybox-content").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
-					$("#fancybox-content > div").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
-				}
 			},
 			"onClosed" : function(data){
-				_cleanDialog(id);
+				_cleanDialog();
 
 				if((options)&&(typeof options.onClosedCallback == "function")){
 					options.onClosedCallback();
 				}
 			}
 		});
+		
+		$("a#link_to_notification_template").trigger('click');
+	}
 
-		var _cleanDialog = function(id){
-			var text_wrapper = $("#"+id).find(".notification_row1");
-			var buttons_wrapper = $("#"+id).find(".notification_row2");
+	var _fillNotificationTemplate = function(){
+
+	}
+
+	var _cleanDialog = function(){
+			var notificationT = $("#notification_template");
+			var notificationParent = $(".notification_template").parent();
+
+			var text_wrapper = $(notificationT).find(".notification_row1");
+			var buttons_wrapper = $(notificationT).find(".notification_row2");
 			$(buttons_wrapper).html("");
 			var icon = $(text_wrapper).find(".notificationIcon");
 			$(icon).removeAttr("src");
 			$(icon).removeClass().addClass("notificationIcon");
+			$(icon).css("display","none");
 			$(text_wrapper).find(".notification_text").html("");
-			$("#"+id).removeAttr('style');
-		};
+			$(notificationT).removeAttr('style');
+			$(notificationParent).attr('style','display:none');
+			$(notificationT).find("div").removeAttr('style');
+	};
 
-		$("a#link_to_notification_template").trigger('click');
+	var _test = function(){
+		var options = {};
+		options.width = '90%';
+		options.height = 0;
+		options.text = VISH.I18n.getTrans("i.QuizMultipleLaunchAlert");
+		var button1 = {};
+		button1.text = VISH.I18n.getTrans("i.Ok");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		VISH.Utils.showDialog(options);
 	}
-
 
    return {
 		init 					: init,
@@ -792,7 +848,8 @@ VISH.Utils = (function(V,undefined){
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog
+		showPNotValidDialog		: showPNotValidDialog,
+		_test 					: _test
    };
 
 }) (VISH);
