@@ -240,7 +240,7 @@ VISH.Quiz = (function(V,$,undefined){
 			$(quizButtons).append(startButton);
 		}
 		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizAnswer")+"'/>");
+			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizButtonAnswer")+"'/>");
 			$(quizButtons).append(answerButton);
 		}
 
@@ -300,7 +300,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).removeAttr("disabled");
 		$(startButton).removeClass("quizStartButtonLoading");
 		$(startButton).attr("quizStatus","running");
-		$(startButton).attr("value",V.I18n.getTrans("i.QuizOptions"));
+		$(startButton).attr("value",V.I18n.getTrans("i.QuizButtonOptions"));
 	}
 
 
