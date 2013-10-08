@@ -140,7 +140,7 @@
 "i.QuizButtonRetry"			: "Retry",
 "i.QuizEmptyAnswerAlert"	: 'Please, answer the quiz before send',
 "i.QuizLaunch"				: "Launch",
-"i.QuizMultipleLaunchAlert"	: 'Please stop all quizzes before launch another one',
+"i.QuizMultipleLaunchAlert"	: "Please stop all live quizzes before launch another one",
 "i.QuizNotSubmittedAlert"	: 'Sorry, your answer couldn`t be sent',
 "i.QuizResults"				: "Results",
 "i.QuizSaveConfirmation" 	: 'Do you want to save the quiz results?',
