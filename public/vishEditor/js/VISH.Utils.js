@@ -705,7 +705,7 @@ VISH.Utils = (function(V,undefined){
 
 		//Automatically center text when no image is specified in the notification
 		if(!notificationIconSrc){
-			options.textWrapperClass = "notificationTextWrapperCenter";
+			options.textWrapperClass = "forceCenter";
 		}
 
 		//Transform width to px (if not)
@@ -735,18 +735,41 @@ VISH.Utils = (function(V,undefined){
 			$(text_wrapper).addClass(options.textWrapperClass);
 		}
 
+		if(options.buttonsWrapperClass){
+			$(buttons_wrapper).addClass(options.buttonsWrapperClass);
+		}
+
 		$(text_wrapper).find(".notification_text").html(options.text);
 
 		if(options.buttons){
 			var obLength = options.buttons.length;
 			$(options.buttons).reverse().each(function(index,button){
 				var bNumber = obLength-index;
-				$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				var buttonDOM = $('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
 			});
 		}
 
+		//Look for additional HTML
+		if(options.middlerow){
+			var middlerow = document.createElement('div');
+			$(middlerow).addClass("notification_middlerow");
+			$(middlerow).append(options.middlerow);
+			if(options.middlerowExtraClass){
+				$(middlerow).addClass(options.middlerowExtraClass);
+			}
+			$(buttons_wrapper).before(middlerow);
+		}
+
 		$(notificationParent).addClass("temp_shown");
-		var adjustedHeight = $(text_wrapper).height(true)+$(buttons_wrapper).outerHeight(true);
+		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+		if(options.middlerow){
+			var middlerow = $(rootTemplate).find(".notification_middlerow");
+			adjustedHeight = adjustedHeight + $(middlerow).outerHeight(true);
+		}
 		$(notificationParent).removeClass("temp_shown");
 
 
@@ -763,7 +786,12 @@ VISH.Utils = (function(V,undefined){
 			var obLength = options.buttons.length;
 			$(options.buttons).reverse().each(function(index,button){
 				var bNumber = obLength-index;
-				$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				var buttonDOM = $('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
+
 				//Add buttons callback
 				$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
 					event.preventDefault();
@@ -822,19 +850,6 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
-	var _test = function(){
-		var options = {};
-		options.width = '90%';
-		options.text = VISH.I18n.getTrans("i.QuizMultipleLaunchAlert");
-		var button1 = {};
-		button1.text = VISH.I18n.getTrans("i.Ok");
-		button1.callback = function(){
-			$.fancybox.close();
-		}
-		options.buttons = [button1];
-		VISH.Utils.showDialog(options);
-	}
-
    return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -856,8 +871,7 @@ VISH.Utils = (function(V,undefined){
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog,
-		_test 					: _test
+		showPNotValidDialog		: showPNotValidDialog
    };
 
 }) (VISH);

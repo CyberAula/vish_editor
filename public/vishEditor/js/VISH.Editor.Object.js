@@ -13,10 +13,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.PDF.init();
 		V.Editor.Object.Snapshot.init();
 		
-		var urlInput = $(urlDivId ).find("input");
-		$(urlInput).watermark('Paste SWF file URL');
+		var urlInput = $("#"+urlDivId).find("input");
+		// $(urlInput).watermark(V.I18n.getTrans("i.pasteEmbedObject"));
 		
-		//Load from URL
+		//Load from URL (embed)
 		$("#" + urlDivId + " .previewButton").click(function(event) {
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());

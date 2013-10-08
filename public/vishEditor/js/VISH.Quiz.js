@@ -19,10 +19,10 @@ VISH.Quiz = (function(V,$,undefined){
 		} else {
 			quizMode = V.Constant.QZ_MODE.SELFA;
 		}
-	}
+	};
 
 	var init = function(){
-		$("#prompt2name").watermark("Quiz Session Name");
+		$("#quizSessionNameInput").watermark((V.I18n.getTrans("i.QuizSessionName")));
 		V.Quiz.API.init();
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
@@ -75,7 +75,7 @@ VISH.Quiz = (function(V,$,undefined){
 				_answerRTQuiz(quiz,quizModule,report);
 			}
 		}
-	}
+	};
 
 	var _answerRTQuiz = function(quiz,quizModule,report){
 		if(!quizSessionId){
@@ -83,9 +83,19 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		if(report.empty===true){
-			_showAlert("prompt3_alert");
+			var options = {};
+			options.width = '80%';
+			options.text = V.I18n.getTrans("i.QuizEmptyAnswerAlert");
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.Ok");
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
 			return;
 		}
+
 		quizModule.disableQuiz(quiz);
 
 		_loadingAnswerButton(quiz);
@@ -95,13 +105,33 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.API.sendAnwers(answers, quizSessionId,
 			function(data){
 				disableAnswerButton(quiz);
-				_showAlert("prompt4_alert");
+
+				var options = {};
+				options.width = '80%';
+				options.text = V.I18n.getTrans("i.QuizSubmittedAlert");
+				var button1 = {};
+				button1.text = V.I18n.getTrans("i.Ok");
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
 			}, 
 			function(error){
 				disableAnswerButton(quiz);
-				_showAlert("prompt5_alert");
+
+				var options = {};
+				options.width = '80%';
+				options.text = V.I18n.getTrans("i.QuizNotSubmittedAlert");
+				var button1 = {};
+				button1.text = V.I18n.getTrans("i.Ok");
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
 		});
-	}
+	};
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
@@ -119,17 +149,27 @@ VISH.Quiz = (function(V,$,undefined){
 				_startNewQuizSession(quiz);
 			break;
 		}
-	}
+	};
 
 	var _startNewQuizSession = function(quiz){
 		if(currentQuizSession){
-			_showAlert("prompt1_alert");
+			var options = {};
+			options.width = '80%';
+			options.text = V.I18n.getTrans("i.QuizMultipleLaunchAlert");
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.Ok");
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
+
 			return;
 		}
 		_loadingLaunchButton(quiz);
 		var quizJSON = _getQuizJSONFromQuiz(quiz);
 		V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
-	}
+	};
 
 	var _onQuizSessionReceived = function(quiz,quizSession){
 		currentQuiz = quiz;
@@ -137,16 +177,16 @@ VISH.Quiz = (function(V,$,undefined){
 
 		_runningLaunchButton(quiz);
 		$("a#addQuizSessionFancybox").trigger("click");
-	}
+	};
 
 	var _onQuizSessionReceivedError = function(quiz,error){
 		_enableLaunchButton(quiz);
-	}
+	};
 
 	var _getQuizJSONFromQuiz = function(quiz){
 		var slide = $("article").has(quiz);
 		return _getQuizJSONFromSlide(slide);
-	}
+	};
 
 	var _getQuizJSONFromSlide = function(slide){
 		var slideId = $(slide).attr("id");
@@ -167,60 +207,90 @@ VISH.Quiz = (function(V,$,undefined){
 				}
 			}
 		}
-	}
+	};
 
 	var _onStopQuiz = function(event){
-		$.fancybox(
-			$("#prompt2_alert").html(),
-			{
-				'autoDimensions'  : false,
-				'scrolling'       : 'no',
-				'width'           : $(".current").width(),
-				'height'          : Math.min(200,$(".current").height()),
-				'showCloseButton' : false,
-				'padding'         : 5,
-				'onCleanup'       : function(){
+		var options = {};
+		options.width = '80%';
+		options.text = V.I18n.getTrans("i.QuizSaveConfirmation");
 
-				},
-				'onClosed'        : function(){
-				}
-			}
-		);
-	}
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.cancel");
+		button1.extraclass = "quizSession_button_cancel";
+		button1.callback = function(){
+			V.Quiz.onCloseQuizSession('cancel');
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.text = V.I18n.getTrans("i.No");
+		button2.extraclass = "quizSession_button_no";
+		button2.callback = function(){
+			V.Quiz.onCloseQuizSession('no');
+		}
+		options.buttons.push(button2);
+		
+		var button3 = {};
+		button3.text = V.I18n.getTrans("i.Yes");
+		button3.extraclass = "quizSession_button_yes";
+		button3.callback = function(){
+			V.Quiz.onCloseQuizSession('yes');
+		}
+		options.buttons.push(button3);
+
+		var input = document.createElement("input");
+		$(input).attr("id","quizSessionNameInput");
+		$(input).attr("title",V.I18n.getTrans("i.tooltip.QSInput"));
+		$(input).addClass("quizSessionNameInput");
+		$(input).watermark((V.I18n.getTrans("i.QuizSessionName")));
+		options.middlerow = $(input);
+		options.middlerowExtraClass = "mr_quizSession";
+
+		options.buttonsWrapperClass = "forceCenter";
+		
+		V.Utils.showDialog(options);
+	};
 
 	var onCloseQuizSession = function(saving){
 		var name = undefined;
 		switch(saving){
 			case "yes":
-				$(".prompt2name").each(function(index,pn){
+				$(".quizSessionNameInput").each(function(index,pn){
 					if($(pn).is(":visible")){
 						name = $(pn).val();
 					}
 				});
-				$(".prompt_button_viewer2").addClass("quizStartButtonLoading");
+				$(".quizSession_button_yes").addClass("quizStartButtonLoading");
 				_closeQuizSession(name);
 				break;
 			case "no":
-				$(".prompt_button_viewer1").addClass("quizStartButtonLoading");
-				_closeQuizSession();
+				$(".quizSession_button_no").addClass("quizStartButtonLoading");
+				_deleteQuizSession();
 				break;
 			case "cancel":
 			default:
 				$.fancybox.close();
 				break;
 		}
-	}
+	};
 
 	var _closeQuizSession = function(name){
 		V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
 			$.fancybox.close();
-			$(".prompt_button_viewer1").removeClass("quizStartButtonLoading");
-			$(".prompt_button_viewer2").removeClass("quizStartButtonLoading");
+			$(".quizSession_button_no").removeClass("quizStartButtonLoading");
+			$(".quizSession_button_yes").removeClass("quizStartButtonLoading");
 			_enableLaunchButton(currentQuiz);
 			currentQuiz = null;
 			currentQuizSession = null;
 		});
-	}
+	};
+
+	var _deleteQuizSession = function(){
+		//TODO (removeQuizSession in backend is not enabled)
+		_closeQuizSession();
+	};
 
 	/**
 	* Function to render a quiz inside an article (a slide)
@@ -245,7 +315,7 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		return quizButtons;
-	}
+	};
 
 
 	/*
@@ -275,10 +345,9 @@ VISH.Quiz = (function(V,$,undefined){
 	}
 
 
-  /*
-   * Launch button states: Enabled, Loading and Running
-   */
-
+	/*
+	* Launch button states: Enabled, Loading and Running
+	*/
 	var _enableLaunchButton = function(quiz){
 		var startButton = $(quiz).find("input.quizStartButton");
 		$(startButton).removeAttr("disabled");
@@ -303,12 +372,9 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).attr("value",V.I18n.getTrans("i.QuizButtonOptions"));
 	}
 
-
-
-  /*
-   *  Fancybox
-   */
-
+   /*
+	*  Fancybox
+	*/
 	var loadTab = function(tab_id){
 		//hide previous tab
 		$(".fancy_viewer_tab_content").hide();
@@ -389,7 +455,7 @@ VISH.Quiz = (function(V,$,undefined){
 			text: url.toString()
 		}
 		$(container).qrcode(qrOptions);
-	}
+	};
 
 	var _loadStats = function(){
 		_cleanResults();
@@ -397,7 +463,7 @@ VISH.Quiz = (function(V,$,undefined){
 			_drawResults(results,{"first": true});
 			_startPolling();
 		});
-	}
+	};
 
 	var _startPolling = function(){
 		_stopPolling();
@@ -410,13 +476,13 @@ VISH.Quiz = (function(V,$,undefined){
 				_drawResults(results,{"first": false});
 			});
 		},2000);
-	}
+	};
 
 	var _stopPolling = function(){
 		if(currentPolling){
 			clearInterval(currentPolling);
 		}
-	}
+	};
 
 	var _drawResults = function(results,options){
 		//Prepare canvas
@@ -433,14 +499,14 @@ VISH.Quiz = (function(V,$,undefined){
 			$("#quiz_chart").show();
 			quizModule.drawResults(currentQuiz,results,options);
 		}
-	}
+	};
 
 	var _cleanResults = function(){
 		var canvas = $("#quiz_chart");
 		var ctx = $(canvas).get(0).getContext("2d");
 		ctx.clearRect(0, 0, $(canvas).width(), $(canvas).height());
 		$(canvas).hide();
-	}
+	};
 
 
 	/*
@@ -460,7 +526,7 @@ VISH.Quiz = (function(V,$,undefined){
 				return null; 
 				break;
 		}
-	}
+	};
 
 	var updateCheckbox = function(checkbox,check){
 		if(typeof check == "boolean"){
@@ -483,21 +549,7 @@ VISH.Quiz = (function(V,$,undefined){
 				$(checkbox).attr("src",imagePathRoot+".png");
 				break;
 		}
-	}
-
-	var _showAlert = function(alertId){
-		$.fancybox(
-			$("#"+alertId).html(),
-			{
-				'autoDimensions'  : false,
-				'scrolling': 'no',
-				'width'           : $(".current").width(),
-				'height'          : Math.min(200,$(".current").height()),
-				'showCloseButton' : false,
-				'padding'       : 5 
-			}
-		);
-	}
+	};
 
 	var aftersetupSize = function(increase){
 		setTimeout(function(){
@@ -505,7 +557,7 @@ VISH.Quiz = (function(V,$,undefined){
 				_loadQr(currentQuizSession.url);
 			}
 		},500);
-	}
+	};
 
 	return {
 		initBeforeRender  	: initBeforeRender,

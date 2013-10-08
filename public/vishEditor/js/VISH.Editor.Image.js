@@ -11,6 +11,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Image.Repository.init();
 		V.Editor.Image.LRE.init();
 
+		// $("#" + urlInputId).watermark(V.I18n.getTrans("i.pasteImageURL"));
+
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){

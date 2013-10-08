@@ -1,7 +1,6 @@
 VISH.Editor.Video = (function(V,$,undefined){
 		
 	var urlDivId = "tab_video_from_url_content";	
-	var urlInputId = "video_url";
 		
 	var init = function(){
 		V.Editor.Video.HTML5.init();
@@ -9,8 +8,8 @@ VISH.Editor.Video = (function(V,$,undefined){
 		V.Editor.Video.Youtube.init();
 		V.Editor.Video.Vimeo.init();
 
-		var urlInput = $("#" + urlInputId);
-		$(urlInput).watermark('Paste video URL');
+		var urlInput = $("#"+urlDivId).find("input");
+		// $(urlInput).watermark(V.I18n.getTrans("i.pasteVideoURL"));
 
 		$("#tab_video_from_url_content .previewButton").click(function(event) {
 			if(V.Police.validateObject($(urlInput).val())[0]){

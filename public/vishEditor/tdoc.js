@@ -112,6 +112,10 @@
 "i.or" 						: "or",
 "i.Other"					: "Other",
 "i.Others"					: "Others",
+"i.pasteEmbedObject"		: "paste SWF or PDF file URL",
+"i.pasteImageURL"			: "paste image URL",
+"i.pasteVideoURL"			: "paste HTML5 or YouTube video URL",
+"i.pasteWeb"				: "paste website URL",
 "i.pdfErrorNotification"	: "An error has occurred. Ensure that the PDF file is valid.",
 "i.PDFNotValid"				: "There was an error. Make sure the selected PDF file is correct.",
 "i.PDFSlideshow"			: "PDF Slideshow",
@@ -140,6 +144,7 @@
 "i.QuizNotSubmittedAlert"	: 'Sorry, your answer couldn`t be sent',
 "i.QuizResults"				: "Results",
 "i.QuizSaveConfirmation" 	: 'Do you want to save the quiz results?',
+"i.QuizSessionName"			: "Live Quiz Name",
 "i.QuizStop"				: "Stop",
 "i.QuizSubmittedAlert" 		: 'Your answer has been submitted',
 "i.Quizzes"					: "Quizzes",
@@ -190,3 +195,6 @@
 "i.yes"						: "yes",
 "i.Yes"						: "Yes",
 "i.ZoneTooltip"				: "Click here to add content",
+
+//Tooltips
+"i.tooltip.QSInput"			: "Enter a name for the live quiz",

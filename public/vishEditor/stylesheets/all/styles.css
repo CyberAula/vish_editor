@@ -751,97 +751,6 @@ div.quizQr > table {
 	margin-right: auto;
 }
 
-/*
- * PROMPTS
- */
-
-.prompt_text_container_viewer {
-	height: 60%;
-	width: 95%;
-	position: absolute;
-	top: 25%;
-	text-align: center;
-	padding: 2%;
-}
-
-.prompt_text_container_viewer2 {
-	top: 10%;
-	height: 76%;
-}
-
-.prompt_text_viewer {
-	text-decoration: none;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 2.6rem;
-	color:#CCC;
-	padding-bottom: 15px;
-}
-
-#prompt2name{
-	margin-top: 0%;
-	width: 28%
-}
-
-.prompt_button_viewer {
-	position: absolute;
-	bottom: 0%;
-	margin-bottom: 2%;
-	padding: 5px 20px;
-	text-decoration:none;
-	cursor: pointer;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-	font-size: 1.5rem;
-	font-weight: bold;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-.prompt_button_viewer1 {
-	left: 45%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer2 {
-	left: 50%;
-	margin-left: -20%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer3 {
-	margin-left: 50px;
-	left: 51%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer4 {
-	right: 0%;
-	margin-right: 10px;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer1:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer2:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer3:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer4:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
 
 /* Tutorials (with Joyride) (css for Viewer and Editor) */
 
@@ -1184,21 +1093,30 @@ img.selectSlidesimgbutton {
 #notification_template, #notification_template_cloned {
 }
 
-.notification_row1 {
-	margin-bottom: 1%;
+.notification_row1, .notification_row2, .notification_middlerow {
 	width: 92%;
-	padding: 4% 4% 4% 4%;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin-bottom: 1%;
+}
+
+.notification_row1 {
+	padding-top: 4%;
 }
 
 .notification_row2 {
-	right: 0px;
-	bottom: 0px;
-	display: block;
 	height: 30px;
-	width: 92%;
-	padding: 0% 4% 0% 4%;
-	margin-bottom: 1%;
+	padding-top: 4%;
+	padding-bottom: 0%;
 	text-align: right;
+}
+
+.notification_middlerow {
+	padding-top: 4%;
+}
+
+.mr_quizSession {
+	text-align: center;
 }
 
 .notification_button {
@@ -1221,8 +1139,8 @@ img.selectSlidesimgbutton {
 	padding-bottom: 4%;
 }
 
-.notificationTextWrapperCenter {
-	text-align: center;
+.forceCenter {
+	text-align: center !important;
 }
 
 img.notificationIcon {
@@ -1237,6 +1155,15 @@ img.notificationIconDelete {
 	height: 50px;
 	width: 65px;
 }
+
+/*
+ * Viewer notifications
+ */
+
+#quizSessionNameInput {
+	width: 30%;
+}
+
 
 /* Recommended browsers custom dialog */
 

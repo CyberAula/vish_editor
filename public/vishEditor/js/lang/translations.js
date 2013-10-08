@@ -352,6 +352,10 @@ var i18n =
 				"i.or" 						: "o",
 				"i.Other"					: "Otro",
 				"i.Others"					: "Otros",
+				"i.pasteEmbedObject"		: "pega la URL de un archivo SWF o PDF",
+				"i.pasteImageURL"			: "pega la URL de una imagen",
+				"i.pasteVideoURL"			: "pega la URL de un video HTML5 o de YouTube",
+				"i.pasteWeb"				: "pega la URL de una página web",
 				"i.pdfErrorNotification"	: "Ha ocurrido un error. Asegurese de que el fichero PDF es válido.",
 				"i.PDFNotValid"				: "Se ha producido un error. Asegúrese de que el fichero PDF seleccionado es correcto.",
 				"i.PDFSlideshow"			: "Presentación PDF",
@@ -380,6 +384,7 @@ var i18n =
 				"i.QuizNotSubmittedAlert"	: 'Lo sentimos, tu respuesta no ha podido ser enviada',
 				"i.QuizResults"				: "Resultados",
 				"i.QuizSaveConfirmation" 	: '¿Quieres guardar los resultados del cuestionario?',
+				"i.QuizSessionName"			: "Nombre del Cuestionario en vivo",
 				"i.QuizStop"				: "Detener",
 				"i.QuizSubmittedAlert" 		: 'Tu respuesta ha sido enviada',
 				"i.Quizzes"					: "Quizzes (Cuestionarios)",
@@ -441,6 +446,9 @@ var i18n =
 				"i.img.tut_selectAll"		: "tutorial/tut_selectall_es.png",
 				"i.img.tut_unselectAll"		: "tutorial/tut_unselectall_es.png",
 
+				//Tooltips
+				"i.tooltip.QSInput"			: "Introduce un nombre para el cuestionario en vivo",
+
 				//Last
 				"i.last"					: "último"
 			},
@@ -477,15 +485,25 @@ var i18n =
 				"i.NoSlidesOnSaveNotification"	: "Create at least one slide before saving.",
 				"i.Ok"						: "Ok",
 				"i.OK"						: "OK",
+				"i.pasteEmbedObject"		: "paste SWF or PDF file URL",
+				"i.pasteImageURL"			: "paste image URL",
+				"i.pasteVideoURL"			: "paste HTML5 or YouTube video URL",
+				"i.pasteWeb"				: "paste website URL",
 				"i.pdfErrorNotification"	: "An error has occurred. Ensure that the PDF file is valid.",
 				"i.publish"					: "publish",
 				"i.QuizButtonAnswer"		: "Answer",
 				"i.QuizButtonLaunch"		: "Launch",
 				"i.QuizButtonOptions"		: "Options",
 				"i.QuizButtonRetry"			: "Retry",
+				"i.QuizEmptyAnswerAlert"	: "Please, answer the quiz before send",
 				"i.QuizLaunch"				: "Launch",
 				"i.QuizMultipleLaunchAlert"	: "Please stop all quizzes before launch another one.",
+				"i.QuizNotSubmittedAlert"	: "Sorry, your answer couldn't be sent",
+				"i.QuizResults"				: "Results",
+				"i.QuizSaveConfirmation" 	: 'Do you want to save the quiz results?',
+				"i.QuizSessionName"			: "Live Quiz Name",
 				"i.QuizStop"				: "Stop",
+				"i.QuizSubmittedAlert"		: "Your answer has been submitted",
 				"i.readJSONfileError"		: "Error reading JSON file",
 				"i.resourceNonCompatibleNotification"	: "This resource is corrupt or is not compatible with the current version of ViSH Editor and cannot be opened.",
 				"i.save"					: "save",
@@ -502,6 +520,9 @@ var i18n =
 				"i.yes"						: "yes",
 				"i.Yes"						: "Yes",
 				"i.ZoneTooltip"				: "Click here to add content",
+
+				//Tooltips
+				"i.tooltip.QSInput"			: "Enter a name for the live quiz",
 
 				//Last
 				"i.last"					: "last"
