@@ -1177,26 +1177,27 @@ img.selectSlidesimgbutton {
 
 /* Notifications CSS */
 
-#notification_template {
-	position: absolute;
-	width: 92%;
-	padding: 4% 4% 4% 4%;
-	margin: 0px;
-	height: auto;
-}
-
-.notification_row1 {
-	margin-bottom: 5%;
+#notification_template_wrapper {
 	width: 100%;
 }
 
+#notification_template, #notification_template_cloned {
+}
+
+.notification_row1 {
+	margin-bottom: 1%;
+	width: 92%;
+	padding: 4% 4% 4% 4%;
+}
+
 .notification_row2 {
-	position: absolute;
 	right: 0px;
 	bottom: 0px;
 	display: block;
 	height: 30px;
-	width: 100%;
+	width: 92%;
+	padding: 0% 4% 0% 4%;
+	margin-bottom: 1%;
 	text-align: right;
 }
 
@@ -1205,11 +1206,11 @@ img.selectSlidesimgbutton {
 }
 
 .notification_button[buttonnumber='1'] {
-	margin-right: 3%;
+	margin-right: 0%;
 }
 
 .notification_button[buttonnumber='2'], .notification_button[buttonnumber='3'] {
-	margin-right: 15px;
+	margin-right: 3%;
 }
 
 .notification_text {
@@ -1217,7 +1218,7 @@ img.selectSlidesimgbutton {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 2.1rem;
 	color: #CCC;
-	padding-bottom: 15px;
+	padding-bottom: 4%;
 }
 
 .notificationTextWrapperCenter {
@@ -1227,7 +1228,7 @@ img.selectSlidesimgbutton {
 img.notificationIcon {
 	width: 44px;
 	height: 55px;
-	margin-right: 20px;
+	margin-right: 4%;
 	margin-left: 0px;
 	display: inline;
 }

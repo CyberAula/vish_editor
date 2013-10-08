@@ -623,7 +623,7 @@ VISH.Utils = (function(V,undefined){
 	    $.each(style.split(";"), function(index, property){
 	    	 //We need to redefine the var in each iteration (due to Android browser issues)
 	    	 var font_style_pattern = /font-size:\s?([0-9]+)px/g;
-		     if (property.match(font_style_pattern) != null) {
+		     if(property.match(font_style_pattern) != null){
 			   	var result = font_style_pattern.exec(property);
 			   	if ((result!==null)&&(result[1]!==null)) {
 			   		ft = parseFloat(result[1]);
@@ -673,6 +673,8 @@ VISH.Utils = (function(V,undefined){
 	 * Helper to show validation dialogs
 	 */
 	var showDialog = function(options){
+		_cleanDialog();
+
 		var rootTemplate = $("#notification_template");
 		if($(rootTemplate).length===0){
 			return;
@@ -682,9 +684,9 @@ VISH.Utils = (function(V,undefined){
 			return;
 		}
 		
-		//Defaults
+		//*Defaults
 		var width = '90%';
-		var height = 0;
+		var height; //it will be calculated
 		var showCloseButton = false;
 		var notificationIconSrc;
 		if(V.Editing){
@@ -706,9 +708,13 @@ VISH.Utils = (function(V,undefined){
 			options.textWrapperClass = "notificationTextWrapperCenter";
 		}
 
+		//Transform width to px (if not)
+		if((typeof width == "string")&&(width.indexOf("%")!=0)){
+			width = width.split("%")[0].trim();
+			width = (width*$(window).width())/100;
+		}
 
-		//Calculate Height (use root template)
-		_cleanDialog();
+		//*Calculate Height (use root template)
 		var notificationParent = $(rootTemplate).parent();
 		$(rootTemplate).width(width);
 		
@@ -740,16 +746,17 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		$(notificationParent).addClass("temp_shown");
-		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+		var adjustedHeight = $(text_wrapper).height(true)+$(buttons_wrapper).outerHeight(true);
 		$(notificationParent).removeClass("temp_shown");
 
-		$("#notification_template_cloned").remove();
+
+		//*Clone the root template
 		var cloneTemplate = $(rootTemplate).clone();
 		$(cloneTemplate).attr("id","notification_template_cloned");
 		$(notificationParent).append(cloneTemplate);
 		var notification = $("#notification_template_cloned");
 
-		//Replace buttons
+		//Replace buttons (we need to add the events)
 		if(options.buttons){
 			buttons_wrapper = $(notification).find(".notification_row2");
 			$(buttons_wrapper).html("");
@@ -763,9 +770,8 @@ VISH.Utils = (function(V,undefined){
 					button.callback();
 				});
 			});
-		}
+		};
 
-		// fancybox to edit presentation settings
 		$("a#link_to_notification_template").fancybox({
 			'autoDimensions' 	: false,
 			'autoScale' 		: true,
@@ -782,7 +788,6 @@ VISH.Utils = (function(V,undefined){
 			},
 			"onClosed" : function(data){
 				_cleanDialog();
-
 				if((options)&&(typeof options.onClosedCallback == "function")){
 					options.onClosedCallback();
 				}
@@ -792,31 +797,34 @@ VISH.Utils = (function(V,undefined){
 		$("a#link_to_notification_template").trigger('click');
 	}
 
-	var _fillNotificationTemplate = function(){
-
-	}
-
 	var _cleanDialog = function(){
-			var notificationT = $("#notification_template");
-			var notificationParent = $(".notification_template").parent();
+		var notificationWrapper = $("#notification_template_wrapper");
+		$(notificationWrapper).html("");
+		
+		var notificationTemplate = document.createElement('div');
+		$(notificationTemplate).attr("id","notification_template");
 
-			var text_wrapper = $(notificationT).find(".notification_row1");
-			var buttons_wrapper = $(notificationT).find(".notification_row2");
-			$(buttons_wrapper).html("");
-			var icon = $(text_wrapper).find(".notificationIcon");
-			$(icon).removeAttr("src");
-			$(icon).removeClass().addClass("notificationIcon");
-			$(icon).css("display","none");
-			$(text_wrapper).find(".notification_text").html("");
-			$(notificationT).removeAttr('style');
-			$(notificationParent).attr('style','display:none');
-			$(notificationT).find("div").removeAttr('style');
+		var row1 = document.createElement('div');
+		$(row1).addClass("notification_row1");
+		var img = document.createElement('img');
+		$(img).addClass("notificationIcon");
+		$(img).attr("style","display:none");
+		var span = document.createElement('span');
+		$(span).addClass("notification_text");
+		$(row1).append(img);
+		$(row1).append(span);
+		$(notificationTemplate).append(row1);
+
+		var row2 = document.createElement('div');
+		$(row2).addClass("notification_row2");
+		$(notificationTemplate).append(row2);
+
+		$(notificationWrapper).append(notificationTemplate);
 	};
 
 	var _test = function(){
 		var options = {};
 		options.width = '90%';
-		options.height = 0;
 		options.text = VISH.I18n.getTrans("i.QuizMultipleLaunchAlert");
 		var button1 = {};
 		button1.text = VISH.I18n.getTrans("i.Ok");
