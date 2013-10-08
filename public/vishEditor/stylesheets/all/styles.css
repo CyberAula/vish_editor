@@ -243,7 +243,8 @@ this can not be done with show() and hide() because then it remains with display
 
 #slide-counter-span, #slide-counter-input {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2rem;
+	/*font-size: 1.2rem;*/
+	font-size: 14px;
 }
 
 #slide-counter-input {
