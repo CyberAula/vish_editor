@@ -849,6 +849,13 @@ p.tut_space_big {
 	color: #0066ff;
 }
 
+p.tut_video_title {
+	text-align: center;
+	font-size: 1.4rem;
+	color: #BCBBBD;
+	margin-bottom: 7px;
+}
+
 /* Tutorials for Viewer */
 
 .tut_full_viewer {

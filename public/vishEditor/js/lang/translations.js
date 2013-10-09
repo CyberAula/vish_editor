@@ -2,7 +2,14 @@ var i18n =
 	{ "vish":
 		{ "es":
 			{
+
 				//Walkthroughs
+				"i.walkMenuHelp1a"			: "Para aprender a utilizar ViSH Editor tienes a tu disposición varios videotutoriales en nuestro",
+				"i.YouTubeChannel"			: "canal de YouTube",
+				"i.walkMenuHelp1b"			: "Estos tutoriales cubren desde el uso básico para principiantes hasta funcionalidades avanzadas de la herramienta.",
+				"i.walkMenuHelp2"			: "El siguiente videotutorial te enseñará como empezar a utilizar esta herramienta en unos pocos minutos.",
+				"i.walkMenuHelp3"			: "Si lo prefieres puedes hacer click aquí para ver un tutorial textual que te enseñará rápidamente los conceptos básicos para empezar a utilizar ViSH Editor.",
+
 				"i.walkWelcome1_1"			: "¡Bienvenido a ViSH Editor!",
 				"i.walkWelcome1_2"			: "ViSH Editor es una aplicación web innovadora que permite crear increibles presentaciones web y recursos educativos novedosos como Excursiones Virtuales.",
 				"i.walkWelcome1_3"			: "En este tutorial aprenderás como empezar a utilizar esta herramienta.",
@@ -233,6 +240,9 @@ var i18n =
 				"i.walkQuizzes_8"			: "Una pestaña 'Resultados' situada en la parte superior, que permite ver en tiempo real los resultados del cuestionario. Dependiendo del tipo de cuestionario, la representación de los resultados será diferente (gráfico circular, de barras, etc.).",
 				"i.walkQuizzes_9"			: "Si quieres 'cerrar' el cuestionario en vivo debes hacer click en el botón 'Detener' situado en la parte inferior derecha. Después de cerrar un cuestionario, no se admitirán ni guardarán más respuestas. También puedes cerrar un cuestionario en cualquier momento desde la plataforma ViSH. Cuando cierras un cuestionario en vivo, puedes, opcionalmente, especificar un nombre para facilitar su búsqueda posterior en el ViSH.",
 				"i.walkQuizzes_10"			: "Si sales de la pantalla de cuestionarios en vivo, puedes regresar en cualquier momento haciendo click sobre el botón 'Opciones' situado en la parte inferior del cuestionario. Tenga en cuenta que si un cuestionario ha sido lanzado, el botón 'Lanzar' es reemplazado por un botón 'Opciones'. Cuando se cierre el cuestionario, el botón 'Lanzar' volverá a aparecer. Finalmente, tenga en cuenta que no puede lanzar más de un cuestionario en vivo a la vez.",
+
+				//Video Tutorials
+				"i.vtTitle_GStarted"		: "Introducción a ViSH Editor",
 
 				//UI
 				"i.accept"					: "aceptar",

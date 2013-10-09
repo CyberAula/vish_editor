@@ -2047,7 +2047,7 @@ table.tut_table_image tr td:first-child {
 
 
 /* Iframe Style */
-iframe {
+iframe:not(.tut_iframe_yt) {
 	width: 100%;
 	height: 100%;
 	border: none;
