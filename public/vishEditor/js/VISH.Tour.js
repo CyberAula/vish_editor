@@ -59,9 +59,9 @@ VISH.Tour = (function(V,$,undefined){
 			var outerPercentage = (top+paddingTop+paddingBottom)*100/($(joyRideParent).width());
 			var maxHeightPercentage = Math.floor(100-outerPercentage);
 
-			//Add 2% extra margin
-			if(maxHeightPercentage > 2){
-				maxHeightPercentage = maxHeightPercentage-2;
+			//Add 1.5% extra margin
+			if(maxHeightPercentage > 1.5){
+				maxHeightPercentage = maxHeightPercentage-1.5;
 			}
 
 			$(currentJoyride).css("max-height",maxHeightPercentage + "%");
