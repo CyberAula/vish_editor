@@ -27,7 +27,7 @@ VISH.Tour = (function(V,$,undefined){
 
 	var _onStepFinish = function(count){
 		_adjustMaxHeightOfCurrentTour();
-	}
+	};
 
 	var _onTourFinish = function(el){
 		_clean();
@@ -37,14 +37,14 @@ VISH.Tour = (function(V,$,undefined){
 		$('.joyride-tip-guide').each(function(){
 			$(this).remove();
 		});
-	}
+	};
 
 	var getCurrentTour = function(){
 		var currentJoyride = $(".joyRideCurrent");
 		if(currentJoyride.length>0){
 			return currentJoyride;
 		}
-	}
+	};
 
 	var _adjustMaxHeightOfCurrentTour = function(){
 		var currentJoyride = getCurrentTour();
@@ -74,7 +74,7 @@ VISH.Tour = (function(V,$,undefined){
 				$(currentJoyride).css("top",topPorcentage + "%");
 			}
 		}
-	}
+	};
 	
 	return {
 		startTourWithId   : startTourWithId,
