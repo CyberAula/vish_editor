@@ -37,21 +37,25 @@ VISH.Status = (function(V,$,undefined){
 		_isAnotherDomain = false;
 
 		if(_checkIframe()){
-			var parent = window.parent;
-
-			while(parent!=window.top){
-				if(typeof parent.location.href === "undefined"){
-					_isAnotherDomain = true;
-					break;
-				} else {
-					parent = parent.parent;
+			try {
+				var parent = window.parent;
+				while(parent!=window.top){
+					if(typeof parent.location.href === "undefined"){
+						_isAnotherDomain = true;
+						break;
+					} else {
+						parent = parent.parent;
+					}
 				}
-			}
 
-			if(typeof window.top.location.href === "undefined"){
+				if(typeof window.top.location.href === "undefined"){
+					_isAnotherDomain = true;
+				}
+			} catch(e) {
 				_isAnotherDomain = true;
 			}
 		}
+
 		return _isAnotherDomain;
 	}
 
