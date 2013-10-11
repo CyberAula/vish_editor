@@ -242,7 +242,7 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 #slide-counter-span, #slide-counter-input {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	/*font-size: 1.2rem;*/
 	font-size: 14px;
 }
@@ -287,7 +287,7 @@ html {
 }
 
 article {
-	font-family: 'Open Sans', sans-serif, Verdana, sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 }
 
 article > div > p {
@@ -578,7 +578,7 @@ button#closeButton {
 	margin-bottom: 2%;
 	color: rgb(114, 114, 114);
 	font-size: 2.7em;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: bold;
 	padding: 13px;
 }
@@ -645,7 +645,7 @@ div#tab_quiz_session_results {
 	background: transparent;
 	color: #ff005d;
 	font-size: 1.5rem;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -1083,7 +1083,7 @@ img.selectSlidesimgbutton {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.1em;
 }
 
@@ -1141,7 +1141,7 @@ img.selectSlidesimgbutton {
 
 .notification_text {
 	text-decoration: none;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2.1rem;
 	color: #CCC;
 	padding-bottom: 4%;
@@ -1200,7 +1200,7 @@ img.browser_img {
 }
 
 span.browserTitle {
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 1.2rem;
 	display: block;
 	padding: 5px;
@@ -1214,7 +1214,7 @@ div.recomended_browser {
 
 span.adverttext {
 	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1261,7 +1261,7 @@ a.button_advert:hover {
 }
 
 .textrec1 {
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size:2rem;
 	color: #fff ;
 }
@@ -1338,13 +1338,13 @@ a.button_advert:hover {
 .rec-name {
 	color: #36f;
 	opacity: 0.6;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.4rem;
 }
 
 .rec-views {
 	color: #999;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	margin-left: 1%;
 	margin-right: 8%;
@@ -1367,7 +1367,7 @@ a.button_advert:hover {
 
 .rec-title-excursion {
 	margin-left: -17%;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	width: 108%;
 	font-size: 1.6rem;
 	overflow: hidden;
@@ -1378,7 +1378,7 @@ a.button_advert:hover {
 }
 
 .rec-number_pages {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	padding: 3%;
 	position: relative;
 	height: 14%;
@@ -1406,7 +1406,7 @@ a.button_advert:hover {
 }
 
 .rec-by {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	margin-top: 4%;
 	margin-bottom: 4%;
 	color: #999;
@@ -1416,7 +1416,7 @@ a.button_advert:hover {
 
 .rec-visits {
 	font-weight: bold;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	display: inline-block;
 	color: #40cc7f;
@@ -1426,7 +1426,7 @@ a.button_advert:hover {
 
 .rec-likes {
 	font-weight: bold;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.1rem;
 	display: inline-block;
 	color: #40cc7f;
