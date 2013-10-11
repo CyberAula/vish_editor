@@ -62,7 +62,7 @@
 "i.Ethics"					: "Ethics",
 "i.ExcursionDetails" 		: "Excursion Details",
 "i.Excursions"				: "Excursions",
-"i.exitConfirmation"		: "You are about to leave this website. You will lose any changes you have not saved.",
+"i.exitConfirmation"		: "You are about to leave ViSH Editor. You will lose any changes you have not saved.",
 "i.Export"					: "Export",
 "i.exportPresToJSONerrorNotification"	: "An error has ocurred. Is not possible to export the presentation to a JSON file.",
 "i.Filllater"				: "Fill later",
