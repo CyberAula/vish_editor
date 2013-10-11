@@ -425,7 +425,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 
-		var themeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");
+		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
 		if(typeof  themeNumber == "string"){
 			draftPresentation.theme = "theme" + themeNumber;
 		} else {
