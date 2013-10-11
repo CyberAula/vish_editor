@@ -209,11 +209,21 @@ VISH.Editor.Text = (function(V,$,undefined){
 						var slide = $("article").has(current_area);
 						$(slide).addClass("temp_shown");
 						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-						myHeight = $(iframeContent).find("html").height();
+						var newMyHeight = $(iframeContent).find("html").height();
 						$(slide).removeClass("temp_shown");
-					}
 
-					ckeditor.resize(myWidth,myHeight);
+						if(newMyHeight > myHeight){
+							//Prevent some browsers (e.g. Firefox) to calculate wrong heights...
+							ckeditor.resize(myWidth,newMyHeight);
+						}
+
+						//Firefox don't calculate height right, maybe a fallback could be provided
+						// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+						// }
+
+					} else {
+						ckeditor.resize(myWidth,myHeight);
+					}
 				
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
