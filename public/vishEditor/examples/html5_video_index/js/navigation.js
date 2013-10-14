@@ -1,6 +1,10 @@
 var video, track;
-var cues = [];
+var cues = []; //empty array
 var xhr;
+var duracion;
+
+var balls = [];
+var RANGE = 250; //ms around the ball where we should stop
 
 // get video element, track, and duration element
 video = document.getElementsByTagName('video')[0]; //<video preload="metadata" style="width:100%" poster="videos/webvtt_talk.png">
@@ -23,7 +27,27 @@ curTime  = document.getElementById('curTime');
 
 
 /////// here we update the video time progress while playing
-video.addEventListener("timeupdate", curTimeUpdate, false);
+video.addEventListener("timeupdate", curTimeUpdate, false); 
+
+
+
+/*
+video.addEventListener("timeupdate", function() {
+var min = Math.min(balls[0].time,balls[1].time,balls[2].time);
+if (video.currentTime >= min) {
+	video.pause();
+	var numBalls = balls.length;
+	for (i = 0; i < numBalls; i++) {
+		if(min == balls[i].time){
+			popUp(i);
+		}
+
+	}
+console.log(video.currentTime);
+}}, false);
+
+*/
+
 
 /////////////////////////////////////////////////////////////
 
@@ -50,14 +74,21 @@ video.addEventListener("timeupdate", endChapter, false);
 function init(evt) {
 	// update duration display
 	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
+	duracion = video.duration.toFixed(2);
 
-  // grab chapters out of <track>
-  retrieve(track.getAttribute('src'));
+   // display chapters in list and transport bar
+	paintBalls();
+	paintIndex();
+	console.log(balls);
 
-  // display chapters in list and transport bar
-	displayChapters();
-	paintChapterbar();
+	/*nana.onclick = function () {
+			video.currentTime = balls[1].time;
+	}*/
 }
+
+
+/*With this method we generate balls with random numbers and random time between 0 and video.duration
+*/
 
 // pause/play button
 function togglePlay() {
@@ -67,6 +98,27 @@ function togglePlay() {
 	} else {
 		video.play();
 		play.style.backgroundPosition = '0 -75px';
+	}
+}
+
+
+function paintIndex(){
+	var screen = document.getElementById('navigation');
+	for (i = 0; i < vquiz_sample.pois.length; i++) {
+		console.log(vquiz_sample.pois.length);
+		var item = document.createElement('li');
+		item.id = vquiz_sample.pois[i].id;
+		var link = document.createElement('a');
+		link.setAttribute('ident', vquiz_sample.pois[i].id);
+		link.setAttribute('time', vquiz_sample.pois[i].time);
+		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id;
+		link.onclick = function () {
+			video.currentTime = this.getAttribute('time');
+			var id = this.getAttribute('ident');
+			popUp(id);
+		}
+		item.appendChild(link);
+		screen.appendChild(item);
 	}
 }
 
@@ -83,15 +135,53 @@ function videoPlayPause(evt) {
 	}
 }
 
+
+function paintBalls(){
+for (i = 0; i < vquiz_sample.pois.length; i++) {
+		paintBall(i);
+	}
+}
+function paintBall(indice){
+
+	var ball = document.createElement('li');
+	document.getElementById('segments').appendChild(ball);
+	ball.className = 'ball';
+	console.log(ball);
+	var time = vquiz_sample.pois[indice].time; 
+   	var duration = parseFloat(video.duration);
+   	var bar_width = document.getElementById('positionview').offsetWidth;
+   	var perc = bar_width / duration;
+   	ball.style.left = Math.round((time * perc) - 0.5) - 5 + 'px';
+   	ball.onclick = function () {
+			video.currentTime = time;
+			popUp(indice);
+	}
+}
+
+function popUp(indice){
+		var slide;
+		var content = vquiz_sample.pois[indice].slide_id;
+		for (i = 0; i < vquiz_sample.slides.length; i++) {
+		if(vquiz_sample.slides[i].id == content){
+			slide = JSON.stringify(vquiz_sample.slides[i]);
+		}
+	}
+		//var message = vquiz_sample.pois[indice].slide_id;
+		alert(slide);
+}
+
+
 // update transport bar time display
 function curTimeUpdate(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
-	curTime.innerHTML = video.currentTime.toFixed(2);
+	var tiemp = video.currentTime.toFixed(2);
+	curTime.innerHTML = tiemp;
 	position.style.width = Math.round(bar_width*video.currentTime/video.duration) + "px"; //for the html to draw
-
 	//video.currentTime to know the exact time of the video playing
 	//video.duration speaks by itself.
+
 }
+
 
 // seek on transport bar
 function seek(evt) {
@@ -107,21 +197,7 @@ function seek(evt) {
 	}
 }
 
-// seek chapters
-function seekChapter(chapter) {
-	if (chapter) {
-		video.currentTime = parseFloat(cues[chapter].start);
-		for (i = 0; i < cues.length; i++) {
-			var segid = "segment" + i;
-			var segment = document.getElementById(segid);
-			if (i == parseInt(chapter)) {
-				segment.style.backgroundColor = "green";
-			} else {
-				segment.style.backgroundColor = "";
-			}
-		}
-	}		
-}
+
 
 // pause on chapter end
 function endChapter(evt) {
@@ -129,143 +205,5 @@ function endChapter(evt) {
 	if (video.currentTime >= cues[curChapter] && !video.paused) togglePlay();
 }
 
-// retrieve chapters via xhr and process them
-function retrieve(url) {
-	xhr = new XMLHttpRequest();
-	if (xhr != null) {
-		xhr.open("GET", url, false /* sync */);
-		xhr.setRequestHeader('Content-Type', 'text/text; charset=utf-8');
-		
-		xhr.onreadystatechange = function() {
-		  if (xhr.readyState == 4 /* complete */) {
-  			if (xhr.status != 200) {
-  				alert('Unable to retrieve file.');
-  			} else {
-  				cues = parseWebVTT(xhr.responseText);
-  			}
-		  }
-		}
-		xhr.send();
-	} else {
-		alert('Error retrieving file.');
-	}
-}
 
-// display chapter list on screen
-function displayChapters() {
-	// create navigation list on right
-	var chapters = document.getElementById('chapters');
-	for (i=0; i < cues.length; i++) {
-		var item = document.createElement('li');
-		item.id = cues[i].id;
-		var link = document.createElement('a');
-		link.href = '#videoBox';
-		link.innerHTML = cues[i].id + ': ' + cues[i].content;
-		link.setAttribute('data-chapter', i);
-		link.addEventListener('keydown', videoPlayPause, false);
-		link.onclick = function () {
-			seekChapter(this.getAttribute('data-chapter'));
-		}
-		item.appendChild(link);
-		chapters.appendChild(item);
-	}
-}
 
-// paint chapters into chapter bar
-function paintChapterbar() {
-	// create time segments under transportbar
-	var duration = parseFloat(video.duration);
-	var segments = document.getElementById('segments');
-	var bar_width = document.getElementById('positionview').offsetWidth;
-// TODO: bug - the offsetWidth is unknown at load state
-var_width = 558;
-  
-	var perc = bar_width / duration;
-
-	for (i=0; i < cues.length && duration > 0; i++) {    
-		var segment = document.createElement('li');
-		var start = parseFloat(cues[i].start);
-		var end = parseFloat(cues[i].end);
-		segment.id = "segment" + i;
-		segment.className = "segment";
-		segment.title = cues[i].content + "\npress enter to navigate, space to toggle play";
-		segment.style.left = Math.round((start * perc) - 0.5) + 'px';
-		segment.style.width = Math.round((end - start) * perc) + 'px';
-		segment.setAttribute('data-chapter', i);
-		segment.setAttribute('tabindex', '0');
-		segment.setAttribute('role', 'button');
-		segment.onclick = function () {
-			seekChapter(this.getAttribute('data-chapter'));
-		}
-		segment.addEventListener('keydown', videoPlayPause, false);
-		segments.appendChild(segment);
-	}
-}
-
-// Function to parse webvtt file
-function parseWebVTT(data) {
-	var srt;
-	// check WEBVTT identifier
-	if (data.substring(0,6) != "WEBVTT") {
-		alert("Missing WEBVTT header: Not a WebVTT file - trying SRT.");
-		srt = data;
-	} else {
-		// remove WEBVTT identifier line
-		srt = data.split('\n').slice(1).join('\n');
-	}
-
-	// clean up string a bit
-	srt = srt.replace(/\r+/g, ''); // remove dos newlines
-	srt = srt.replace(/^\s+|\s+$/g, ''); // trim white space start and end
-
-	//    srt = srt.replace(/<[a-zA-Z\/][^>]*>/g, ''); // remove all html tags for security reasons
-
-	// parse cues
-	var cuelist = srt.split('\n\n');
-	for (i = 0; i < cuelist.length; i++) {
-		var cue = cuelist[i];
-		var content = "", start, end, id = "";
-		var s = cue.split(/\n/);
-		var t = 0;
-		// is there a cue identifier present?
-		if (!s[t].match(/(\d+):(\d+):(\d+)/)) {
-			// cue identifier present
-			id = s[0];
-			t = 1;
-		}
-		// is the next line the time string
-		if (!s[t].match(/(\d+):(\d+):(\d+)/)) {
-			// file format error: next cue
-			continue;
-		}
-		// parse time string
-		var m = s[t].match(/(\d+):(\d+):(\d+)(?:.(\d+))?\s*--?>\s*(\d+):(\d+):(\d+)(?:.(\d+))?/);
-		if (m) {
-			start =
-			(parseInt(m[1], 10) * 60 * 60) +
-			(parseInt(m[2], 10) * 60) +
-			(parseInt(m[3], 10)) +
-			(parseInt(m[4], 10) / 1000);
-			end =
-			(parseInt(m[5], 10) * 60 * 60) +
-			(parseInt(m[6], 10) * 60) +
-			(parseInt(m[7], 10)) +
-			(parseInt(m[8], 10) / 1000);
-		} else {
-			// Unrecognized timestring: next cue
-			continue;
-		}
-
-		// concatenate text lines to html text
-		content = s.slice(t+1).join("<br>");
-
-		// add parsed cue
-		cues.push({id: id, start: start, end: end, content: content});
-	}
-	return cues; //JSON
-	// Estructura por slide:
-		// content: "Example with paint-on captions"
-		// end : 1327.466
-		// id:  "Slide 15"
-		// start: 1180.7
-}

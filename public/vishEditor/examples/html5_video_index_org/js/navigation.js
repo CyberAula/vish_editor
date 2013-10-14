@@ -111,6 +111,7 @@ function endChapter(evt) {
 }
 
 // retrieve chapters via xhr and process them
+// Just to retrieve file with xhr format
 function retrieve(url) {
 	xhr = new XMLHttpRequest();
 	if (xhr != null) {
@@ -131,6 +132,8 @@ function retrieve(url) {
 		alert('Error retrieving file.');
 	}
 }
+
+
 
 // display chapter list on screen
 function displayChapters() {
@@ -193,25 +196,209 @@ function parseWebVTT(data) {
 	} else {
 		// remove WEBVTT identifier line
 		srt = data.split('\n').slice(1).join('\n');
+			/*
+				Slide 1
+				00:00:00.000 --> 00:00:10.700
+				Title Slide
+
+				Slide 2
+				00:00:10.700 --> 00:00:47.600
+				Introduction by Naomi Black
+
+				Slide 3
+				00:00:47.600 --> 00:01:50.100
+				Impact of Captions on the Web
+
+				Slide 4
+				00:01:50.100 --> 00:03:33.000
+				Requirements of a Video text format
+
+				Slide 5
+				00:03:33.000 --> 00:04:57.766
+				Simple WebVTT file
+
+				Slide 6
+				00:04:57.766 --> 00:06:16.666
+				Styled WebVTT file
+
+				Slide 7
+				00:06:16.666 --> 00:07:37.900
+				Internationalized WebVTT file
+
+				Slide 8
+				00:07:37.900 --> 00:09:45.600
+				Positioning of WebVTT cues
+
+				Slide 9
+				00:09:45.600 --> 00:10:54.133
+				Speaker semantics in cues
+
+				Slide 10
+				00:10:54.133 --> 00:12:07.333
+				Audio descriptions in WebVTT
+
+				Slide 11
+				00:12:07.333 --> 00:12:43.466
+				Navigation through chapters
+
+				Slide 12
+				00:12:43.466 --> 00:15:19.166
+				HTML markup for captions
+
+				Slide 13
+				00:15:19.166 --> 00:17:08.166
+				CSS for rich styling
+
+				Slide 14
+				00:17:08.166 --> 00:19:40.700
+				Demo of roll-up captions
+
+				Slide 15
+				00:19:40.700 --> 00:22:07.466
+				Example with paint-on captions
+
+				Slide 16
+				00:22:07.466 --> 00:23:27.566
+				Concluding remarks
+
+				Slide 17
+				00:23:27.566 --> 00:24:35.466
+				Question on line numbers
+
+				Slide 18
+				00:24:35.466 --> 00:27:14.166
+				Question on hyperlinks
+
+				Slide 19
+				00:27:14.166 --> 00:28:52.866
+				Questions on mixing kinds in a file
+
+				Slide 20
+				00:28:52.866 --> 00:31:47.833
+				Question on where style sheets live
+
+				Slide 21
+				00:31:47.833 --> 00:32:41.466
+				Question on justified text
+
+				Slide 22
+				00:32:41.466 --> 00:33:24.170
+				Final thanks
+			*/
 	}
 
 	// clean up string a bit
 	srt = srt.replace(/\r+/g, ''); // remove dos newlines
-	srt = srt.replace(/^\s+|\s+$/g, ''); // trim white space start and end
+	/*
+				Slide 1
+			00:00:00.000 --> 00:00:10.700
+			Title Slide
 
+			Slide 2
+			00:00:10.700 --> 00:00:47.600
+			Introduction by Naomi Black
+
+			Slide 3
+			00:00:47.600 --> 00:01:50.100
+			Impact of Captions on the Web
+
+			Slide 4
+			00:01:50.100 --> 00:03:33.000
+			Requirements of a Video text format
+
+			Slide 5
+			00:03:33.000 --> 00:04:57.766
+			Simple WebVTT file
+
+			Slide 6
+			00:04:57.766 --> 00:06:16.666
+			Styled WebVTT file
+
+			Slide 7
+			00:06:16.666 --> 00:07:37.900
+			Internationalized WebVTT file
+
+			Slide 8
+			00:07:37.900 --> 00:09:45.600
+			Positioning of WebVTT cues
+
+			Slide 9
+			00:09:45.600 --> 00:10:54.133
+			Speaker semantics in cues
+
+			Slide 10
+			00:10:54.133 --> 00:12:07.333
+			Audio descriptions in WebVTT
+
+			Slide 11
+			00:12:07.333 --> 00:12:43.466
+			Navigation through chapters
+
+			Slide 12
+			00:12:43.466 --> 00:15:19.166
+			HTML markup for captions
+
+			Slide 13
+			00:15:19.166 --> 00:17:08.166
+			CSS for rich styling
+
+			Slide 14
+			00:17:08.166 --> 00:19:40.700
+			Demo of roll-up captions
+
+			Slide 15
+			00:19:40.700 --> 00:22:07.466
+			Example with paint-on captions
+
+			Slide 16
+			00:22:07.466 --> 00:23:27.566
+			Concluding remarks
+
+			Slide 17
+			00:23:27.566 --> 00:24:35.466
+			Question on line numbers
+
+			Slide 18
+			00:24:35.466 --> 00:27:14.166
+			Question on hyperlinks
+
+			Slide 19
+			00:27:14.166 --> 00:28:52.866
+			Questions on mixing kinds in a file
+
+			Slide 20
+			00:28:52.866 --> 00:31:47.833
+			Question on where style sheets live
+
+			Slide 21
+			00:31:47.833 --> 00:32:41.466
+			Question on justified text
+
+			Slide 22
+			00:32:41.466 --> 00:33:24.170
+			Final thanks
+*/
+
+	srt = srt.replace(/^\s+|\s+$/g, ''); // trim white space start and end
 	//    srt = srt.replace(/<[a-zA-Z\/][^>]*>/g, ''); // remove all html tags for security reasons
 
 	// parse cues
 	var cuelist = srt.split('\n\n');
+	/* Cueslist is am strimg
+"Slide 1\n00:00:00.000 --> 00:00:10.700\nTitle Slide", "Slide 2\n00:00:10.700 --...oduction by Naomi Black", "Slide 3\n00:00:47.600 --... of Captions on the Web", "Slide 4\n00:01:50.100 --... of a Video text format", "Slide 5\n00:03:33.000 --....766\nSimple WebVTT file", "Slide 6\n00:04:57.766 --....666\nStyled WebVTT file", "Slide 7\n00:06:16.666 --...ationalized WebVTT file", "Slide 8\n00:07:37.900 --...itioning of WebVTT cues", "Slide 9\n00:09:45.600 --...eaker semantics in cues", "Slide 10\n00:10:54.133 -... descriptions in WebVTT", "Slide 11\n00:12:07.333 -...gation through chapters", "Slide 12\n00:12:43.466 -...TML markup for captions", "Slide 13\n00:15:19.166 -...66\nCSS for rich styling", "Slide 14\n00:17:08.166 -...emo of roll-up captions", "Slide 15\n00:19:40.700 -... with paint-on captions", "Slide 16\n00:22:07.466 -....566\nConcluding remarks", "Slide 17\n00:23:27.566 -...uestion on line numbers", "Slide 18\n00:24:35.466 -...\nQuestion on hyperlinks", "Slide 19\n00:27:14.166 -... mixing kinds in a file", "Slide 20\n00:28:52.866 -...where style sheets live", "Slide 21\n00:31:47.833 -...stion on justified text", "Slide 22\n00:32:41.466 -...:33:24.170\nFinal thanks"
+	*/
+
 	for (i = 0; i < cuelist.length; i++) {
-		var cue = cuelist[i];
-		var content = "", start, end, id = "";
-		var s = cue.split(/\n/);
+		var cue = cuelist[i]; // te divide en estructuras de la forma Slide 1
+							  //	00:00:00.000 --> 00:00:10.700
+							  //Title Slide
+		var content = "", start, end, id = ""; //variable definitions
+		var s = cue.split(/\n/); // Create arrays in ["Slide 1", "00:00:00.000 --> 00:00:10.700", "Title Slide"]
 		var t = 0;
 		// is there a cue identifier present?
 		if (!s[t].match(/(\d+):(\d+):(\d+)/)) {
 			// cue identifier present
-			id = s[0];
+			id = s[0]; //Slide 1, Slide 2...
 			t = 1;
 		}
 		// is the next line the time string
@@ -238,10 +425,19 @@ function parseWebVTT(data) {
 		}
 
 		// concatenate text lines to html text
-		content = s.slice(t+1).join("<br>");
+		content = s.slice(t+1).join("<br>"); //title of the slides
+
 
 		// add parsed cue
-		cues.push({id: id, start: start, end: end, content: content});
+		cues.push({id: id, start: start, end: end, content: content}); // se van añadiendo nuevas, hasta que llegamos a
+		/*
+		[Object { id="Slide 1", start=0, end=10.7, más...}, Object { id="Slide 2", start=10.7, end=47.6, más...}, Object { id="Slide 3", start=47.6, end=110.1, más...}, Object { id="Slide 4", start=110.1, end=213, más...}, Object { id="Slide 5", start=213, end=297.766, más...}, Object { id="Slide 6", start=297.766, end=376.666, más...}, Object { id="Slide 7", start=376.666, end=457.9, más...}, Object { id="Slide 8", start=457.9, end=585.6, más...}, Object { id="Slide 9", start=585.6, end=654.133, más...}, Object { id="Slide 10", start=654.133, end=727.333, más...}, Object { id="Slide 11", start=727.333, end=763.466, más...}, Object { id="Slide 12", start=763.466, end=919.166, más...}, Object { id="Slide 13", start=919.166, end=1028.166, más...}, Object { id="Slide 14", start=1028.166, end=1180.7, más...}, Object { id="Slide 15", start=1180.7, end=1327.466, más...}, Object { id="Slide 16", start=1327.466, end=1407.566, más...}, Object { id="Slide 17", start=1407.566, end=1475.466, más...}, Object { id="Slide 18", start=1475.466, end=1634.166, más...}, Object { id="Slide 19", start=1634.166, end=1732.866, más...}, Object { id="Slide 20", start=1732.866, end=1907.833, más...}, Object { id="Slide 21", start=1907.833, end=1961.466, más...}, Object { id="Slide 22", start=1961.466, end=2004.17, más...}]
+		*/
 	}
-	return cues;
+	return cues; //JSON
+	// Estructura por slide:
+		// content: "Example with paint-on captions"
+		// end : 1327.466
+		// id:  "Slide 15"
+		// start: 1180.7
 }

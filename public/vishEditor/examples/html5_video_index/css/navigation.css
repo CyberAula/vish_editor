@@ -55,6 +55,7 @@ body {
 	float: left;
 	cursor: pointer;
 	position: absolute;
+	z-index: 10;
 }
 .selector {
 	width: 100%;
@@ -70,3 +71,14 @@ body {
 #keys span {
 	text-transform: uppercase;
 }
+
+.ball{
+	border-radius: 50%;
+	width: 10px;
+	height: 10px; 
+	background-color: red;
+	position: absolute;
+	z-index: 20;
+}
+
+
