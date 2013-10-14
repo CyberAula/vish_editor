@@ -3,7 +3,7 @@ var vquiz_sample = {
         "id":"12",
         "type":"vquiz",
         "areaid":"left",
-        "poster":"https://raw.github.com/ging/vish_editor/master/public/vishEditor/images/vicons/example_poster_image.jpg",
+        "poster":"videos/webvtt_talk.png",
      	"style":"position: relative; width:100%; height:100%; top:-3.125%; left:0.14326647564469913%;",
         "sources":"[{ 'type': 'video/webm', 'src': 'https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'},{ 'type': 'video/mp4', 'src': 'videos/webvtt_talk.mp4'}]",
         "pois":[

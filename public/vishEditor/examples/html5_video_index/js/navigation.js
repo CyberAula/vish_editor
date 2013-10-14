@@ -4,7 +4,7 @@ var xhr;
 var duracion;
 
 var balls = [];
-var RANGE = 250; //ms around the ball where we should stop
+var RANGE = 0.200; //ms around the ball where we should stop
 
 // get video element, track, and duration element
 video = document.getElementsByTagName('video')[0]; //<video preload="metadata" style="width:100%" poster="videos/webvtt_talk.png">
@@ -12,6 +12,7 @@ track = video.querySelectorAll('track')[0]; //<track id="nav" srclang="en" kind=
 duration = document.getElementById('duration');
 
 // display duration and chapters once video is loaded
+
 video.addEventListener("loadedmetadata", init, false);
 if (video.readyState >= video.HAVE_METADATA) {
   init.apply(video); // missed the event
@@ -31,22 +32,23 @@ video.addEventListener("timeupdate", curTimeUpdate, false);
 
 
 
-/*
+
 video.addEventListener("timeupdate", function() {
-var min = Math.min(balls[0].time,balls[1].time,balls[2].time);
-if (video.currentTime >= min) {
+var min = Math.min(vquiz_sample.pois[0].time,vquiz_sample.pois[1].time,vquiz_sample.pois[2].time);
+console.log(min);
+var times= video.currentTime;
+if ((times >= min - RANGE) && (times <= min + RANGE)) {
 	video.pause();
-	var numBalls = balls.length;
+	var numBalls = vquiz_sample.pois.length;
 	for (i = 0; i < numBalls; i++) {
-		if(min == balls[i].time){
+		if(min == vquiz_sample.pois[i].time){
 			popUp(i);
 		}
-
 	}
 console.log(video.currentTime);
 }}, false);
 
-*/
+
 
 
 /////////////////////////////////////////////////////////////
@@ -73,6 +75,7 @@ video.addEventListener("timeupdate", endChapter, false);
 // display duration and chapters
 function init(evt) {
 	// update duration display
+
 	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
 	duracion = video.duration.toFixed(2);
 
@@ -85,6 +88,7 @@ function init(evt) {
 			video.currentTime = balls[1].time;
 	}*/
 }
+
 
 
 /*With this method we generate balls with random numbers and random time between 0 and video.duration
