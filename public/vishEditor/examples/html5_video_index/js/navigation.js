@@ -2,9 +2,11 @@ var video, track;
 var cues = []; //empty array
 var xhr;
 var duracion;
+var cont = true;
+
 
 var balls = [];
-var RANGE = 0.200; //ms around the ball where we should stop
+var RANGE = 0.300; //s around the ball where we should stop
 
 // get video element, track, and duration element
 video = document.getElementsByTagName('video')[0]; //<video preload="metadata" style="width:100%" poster="videos/webvtt_talk.png">
@@ -31,22 +33,46 @@ curTime  = document.getElementById('curTime');
 video.addEventListener("timeupdate", curTimeUpdate, false); 
 
 
+video.addEventListener("timeupdate", function(){
+	var times= video.currentTime;
+	// console.log(video.currentTime);
+	// llamo a la función con times de parametro
+	//si el array de bolas no esta vacio hago cosas y si no no.
 
-
-video.addEventListener("timeupdate", function() {
-var min = Math.min(vquiz_sample.pois[0].time,vquiz_sample.pois[1].time,vquiz_sample.pois[2].time);
-console.log(min);
-var times= video.currentTime;
-if ((times >= min - RANGE) && (times <= min + RANGE)) {
-	video.pause();
-	var numBalls = vquiz_sample.pois.length;
-	for (i = 0; i < numBalls; i++) {
-		if(min == vquiz_sample.pois[i].time){
-			popUp(i);
-		}
+	var ballsForTime = _getBallsForTime(times);
+	if (ballsForTime.length > 0){
+		video.pause();
+		$(ballsForTime).each(function(index,ball){
+			// Comprobar la ultima vez que se mostro la bola para no mostrar dos veces seguidas la misma
+			if(!ball.showed){
+				ball.showed = true;
+				popUp(index);
+				cont = false;
+				return false;
+			}else {
+		video.pause();
 	}
-console.log(video.currentTime);
-}}, false);
+});
+	}
+},false);
+
+
+
+var _getBallsForTime = function(t){
+	var ballsForTime = [];
+	//balls variable con las bolas que tienen ya parametros minTime y maxTime
+	if(cont == true){
+	var times = video.currentTime;
+	$(balls).each(function(index,ball){
+		if ((times >= ball.minTime) && (times <= ball.maxTime)) {
+			ballsForTime.push(ball);
+			console.log("me ejecuto");
+
+		}
+	});
+}
+	return ballsForTime;
+}
 
 
 
@@ -80,15 +106,31 @@ function init(evt) {
 	duracion = video.duration.toFixed(2);
 
    // display chapters in list and transport bar
+  	_getBalls();
 	paintBalls();
 	paintIndex();
-	console.log(balls);
 
 	/*nana.onclick = function () {
 			video.currentTime = balls[1].time;
 	}*/
 }
 
+function _getBalls(){
+
+	for (i = 0; i < vquiz_sample.pois.length; i++) {
+			var ballo=  [];
+		var time = vquiz_sample.pois[i].time;
+		ballo.id = vquiz_sample.pois[i].id;
+		ballo.time = vquiz_sample.pois[i].time;
+		ballo.slide_id = vquiz_sample.pois[i].slide_id;
+		ballo.showed = false;
+		var ntime = parseFloat(time);
+		ballo.minTime = ntime - RANGE;
+		ballo.maxTime = ntime + RANGE;
+		balls.push(ballo);
+		console.log(balls);
+	}
+}
 
 
 /*With this method we generate balls with random numbers and random time between 0 and video.duration
@@ -138,6 +180,8 @@ function videoPlayPause(evt) {
 		evt.stopPropagation? evt.stopPropagation() : evt.cancelBubble = true;
 	}
 }
+
+
 
 
 function paintBalls(){

@@ -31,6 +31,13 @@ body {
 	width: 100%;
 	border: 2px solid black;
 }
+
+#transportbar_ul{
+	list-style-type: none;
+	margin-top: 0;
+	position: relative;
+	z-index: 10;
+}
 #position { /* yellow bar, progress of the video*/
 	background: #D7BC28;
 	height: 15px;
@@ -41,7 +48,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	border: 2px solid;
+	border: 0px solid;
 	border-top: none;
 	position: relative;
 	background: none;
