@@ -249,6 +249,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onInitialTagsReceived = function(data){
 		tagsLoaded = true;
 
+		data = V.Editor.Competitions.addCompetitionTags(data);
+
 		V.Utils.Loader.stopLoadingInContainer($("#tagBoxIntro"));
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
 
@@ -268,11 +270,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				if(draftPresentation.tags){
 					//Insert draftPresentation tags
 					$.each(draftPresentation.tags, function(index, tag) {
-						$(tagList).append("<li>" + tag + "</li>")
+						$(tagList).append("<li>" + tag + "</li>");
 					});
 				}
 			}
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:6 , 
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:6 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	}
@@ -417,12 +419,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.author = author;
 		}
 
-		var tagIndex = $("#tagindex");
-		if ((tagIndex.length>0)&&($(tagIndex).hasClass("tagit"))){
-			var tags = V.Editor.Utils.convertToTagsArray($(tagIndex).tagit("tags"));
-			if(tags.length > 1){
-				draftPresentation.tags = tags;
-			}
+		var tags = getTags();
+		if((tags)&&(tags.length > 0)){
+			draftPresentation.tags = tags;
 		}
 
 		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
@@ -521,6 +520,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		return null;
 	}
 
+	var getTags = function(){
+		var tagIndex = $("#tagindex");
+		if((tagIndex.length>0)&&($(tagIndex).hasClass("tagit"))){
+			return V.Editor.Utils.convertToTagsArray($(tagIndex).tagit("tags"));
+		} else {
+			return V.Editor.getPresentation().tags;
+		}
+	}
+
 	/**
 	 * function called when the user clicks on the pedagogical options button
 	 */
@@ -551,6 +559,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onTLTchange								: onTLTchange,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
+		getTags									: getTags,
 		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
