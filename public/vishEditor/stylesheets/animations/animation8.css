@@ -64,11 +64,11 @@ filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.34202014, M12=0.93969262,
    -ms-transform: scale(0) rotate(-70deg);
        opacity: 0;
        z-index: 2;
-     -webkit-transition: all 0.6s ease-in ;
-    -moz-transition: all 0.6s ease-in;
-    -o-transition: all 0.6s ease-in;
-    transition: all 0.6s ease-in;
-    -ms-transition: all 0.6s ease-in;
+     -webkit-transition: all 0.7s ease-in ;
+    -moz-transition: all 0.7s ease-in;
+    -o-transition: all 0.7s ease-in;
+    transition: all 0.7s ease-in;
+    -ms-transition: all 0.7s ease-in;
        display: block;
 }
 
