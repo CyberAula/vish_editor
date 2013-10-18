@@ -4,7 +4,7 @@ VISH.Editor.Animations = (function(V,$,undefined){
 	var currentAnimation;
 	var animation = {};
 
-	var init = function(){
+	var init = function(){		
 		if(!initialized){
 			animation["animation1"] = {
 				number: "1",
@@ -55,6 +55,7 @@ VISH.Editor.Animations = (function(V,$,undefined){
 				filename: "animation12"
 			};
 		}
+		setCurrentAnimation(VISH.Constant.Animations.Default);
 	}
 
 	var onAnimationSelected = function(event){
@@ -86,13 +87,15 @@ VISH.Editor.Animations = (function(V,$,undefined){
 
 
 	var setCurrentAnimation = function(the_animation){
-		currentAnimation = the_animation;
-		V.Editor.Settings.selectAnimation(animation[the_animation].number);
+		if(the_animation!= undefined){
+			currentAnimation = the_animation;
+			V.Editor.Settings.selectAnimation(animation[the_animation].number);
+		}
 	};
 
 
 	return {
-		init			: init,
+		init				: init,
 		onAnimationSelected	: onAnimationSelected,
 		selectAnimation		: selectAnimation,
 		getCurrentAnimation	: getCurrentAnimation,

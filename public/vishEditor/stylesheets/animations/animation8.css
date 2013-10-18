@@ -88,3 +88,40 @@ filter: progid:DXImageTransform.Microsoft.Matrix(M11=-0.50000000, M12=0.86602540
        opacity: 0;
    display: block;
 }
+
+/* Smartcards */
+
+section.slides > article > article.hide_in_smartcard {
+       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.34202014, M12=-0.93969262, M21=0.93969262, M22=0.34202014,sizingMethod='auto expand')";
+filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.34202014, M12=-0.93969262, M21=0.93969262, M22=0.34202014,sizingMethod='auto expand');
+     -webkit-transition: all 0.7s ease-in ;
+    -moz-transition: all 0.7s ease-in;
+    -o-transition: all 0.7s ease-in;
+    transition: all 0.7s ease-in;
+    -ms-transition: all 0.7s ease-in;
+    display: block;
+    -moz-transform: scale(0) rotate(70deg);
+   -webkit-transform: scale(0) rotate(70deg);
+   -o-transform: scale(0) rotate(70deg);
+   transform: scale(0) rotate(70deg);
+   -ms-transform: scale(0) rotate(70deg);
+}
+
+section.slides > article > article.show_in_smartcard {
+       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=0.00000000, M22=1.00000000,sizingMethod='auto expand')";
+filter: progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=0.00000000, M22=1.00000000,sizingMethod='auto expand');
+       border: none;
+       opacity: 0.9;
+       -moz-transform: scale(1) rotate(0deg);
+   -webkit-transform: scale(1) rotate(0deg);
+   -o-transform: scale(1) rotate(0deg);
+   transform: scale(1) rotate(0deg);
+   -ms-transform: scale(1) rotate(0deg);
+       opacity: 1;
+     display: block;
+    -webkit-transition: all 0.4s ease-in 0.3s;
+    -moz-transition: all 0.4s ease-in 0.3s;
+    -o-transition: all 0.4s ease-in 0.3s;
+    transition: all 0.4s ease-in 0.3s;
+    -ms-transition: all 0.4s ease-in 0.3s;
+}

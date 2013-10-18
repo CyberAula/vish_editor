@@ -65,7 +65,9 @@ VISH.Flashcard = (function(V,$,undefined){
 			arrow.position = rand_pos;
 		}
 		arrow.slide_id = poi.slide_id;
-
+		arrow.x = poi.x;
+		arrow.y = poi.y;
+		
 		flashcards[fcId].arrows.push(arrow);
 		pois[arrow.id] = arrow;
 
@@ -89,7 +91,7 @@ VISH.Flashcard = (function(V,$,undefined){
 
 	var getPoiData = function(poiId){
 		if((typeof pois !== "undefined")&&(typeof pois[poiId] !== "undefined")){
-			return pois[poiId]
+			return pois[poiId];
 		}
 		return null; 
 	}

@@ -185,7 +185,7 @@ VISH.Events = (function(V,$,undefined){
 	var onFlashcardPoiClicked = function(poiId){
 		var poi = V.Flashcard.getPoiData(poiId);
 		if(poi!==null){
-			V.Slides.openSubslide(poi.slide_id,true);
+			V.Slides.openSubslideFromPosition(poi,true);
 		}
 	};
 

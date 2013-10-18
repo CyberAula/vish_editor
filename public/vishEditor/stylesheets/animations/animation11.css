@@ -98,3 +98,27 @@
        opacity:0;
        display: block;
 }
+
+section.slides > article > article.hide_in_smartcard {
+  -webkit-transition: all 0.85s ease-in ;
+    -moz-transition: all 0.85s ease-in;
+    -o-transition: all 0.85s ease-in;
+    transition: all 0.85s ease-in;
+    -webkit-transform: scale(0) rotateX(90deg) rotateZ(3deg);
+    -moz-transform: scale(0) rotateX(90deg) rotateZ(3deg);
+    -o-transform: scale(0) rotateX(90deg) rotateZ(3deg);
+    transform: scale(0) rotateX(90deg) rotateZ(3deg);
+  display: block;
+}
+
+section.slides > article > article.show_in_smartcard{
+  -webkit-transition: all 0.85s ease-in ;
+    -moz-transition: all 0.85s ease-in;
+    -o-transition: all 0.85s ease-in;
+    transition: all 0.85s ease-in;
+    -webkit-transform: scale(1) rotateX(0deg) rotateZ(0deg);
+    -moz-transform: scale(1) rotateX(0deg) rotateZ(0deg);
+    -o-transform: scale(1) rotateX(0deg) rotateZ(0deg);
+    transform: scale(1) rotateX(0deg) rotateZ(0deg);
+  display: block;
+}
