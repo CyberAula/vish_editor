@@ -122,7 +122,6 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 	var specialTagSelected = function(event){
 		var tagList = $("#tagBoxIntro .tagList");
 		if ($(event.target).is(':checked')){
-			console.log("checked " + $(event.target).val());			
 			//specialTags.push($(event.target).val());
 			$(tagList).tagit("add", $(event.target).val());
 		}
