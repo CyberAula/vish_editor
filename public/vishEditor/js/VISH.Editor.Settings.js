@@ -275,12 +275,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 						$(tagList).append("<li>" + tag + "</li>");
 					});
 				}
-				if(V.Editor.Competitions.getSpecialTags()){
-					//Insert draftPresentation tags
-					$.each(V.Editor.Competitions.getSpecialTags(), function(index, tag) {
-						$(tagList).append("<li>" + tag + "</li>");
-					});
-				}
 			}
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});

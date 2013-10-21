@@ -3,7 +3,7 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 	var competitionTag = 'ViSHCompetition2013';
 	var competitionCategories = ['Maths', 'Physics', 'Chemistry', 'Biology', 'EnvironmentalStudies', 'Geography', 'Engineering', 'Humanities', 'NaturalScience', 'ComputerScience'];
 	var misleadingTags = ['ViSHCompetitions2013'];
-	var specialTags = [];
+	var vishCompetitionTagAdded = false;
 
 	var init = function(){
 	};
@@ -122,19 +122,15 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 	var specialTagSelected = function(event){
 		var tagList = $("#tagBoxIntro .tagList");
 		if ($(event.target).is(':checked')){
-			//specialTags.push($(event.target).val());
+			if(!vishCompetitionTagAdded){
+				$(tagList).tagit("add", "ViSHCompetition2013");
+			}
 			$(tagList).tagit("add", $(event.target).val());
 		}
 		else{
-			//var index = specialTags.indexOf($(event.target).val());
-			//specialTags.splice(index, 1);
 			$(tagList).tagit("remove", $(event.target).val());
 		}
 		
-	};
-
-	var getSpecialTags = function(){
-		return specialTags;
 	};
 
 
@@ -142,7 +138,6 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 		init				: init,
 		addCompetitionTags	: addCompetitionTags,
 		generateForm		: generateForm,
-		getSpecialTags		: getSpecialTags,
 		isValidCandidate	: isValidCandidate,
 		specialTagSelected  : specialTagSelected
 	};
