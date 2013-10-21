@@ -2,7 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
-	var _competitionsModalShown = true;
+	var _competitionsModalShown = false;
 
 	/*
 	 * Init singleton
@@ -116,6 +116,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			options.width = 650;
 			options.height = 190;
 			options.text = V.I18n.getTrans("i.NoCompetitions1");
+			options.textWrapperClass = "competitions_paragraph";
+
 			options.onClosedCallback = function(){VISH.Editor.Tools.Menu.onPublishButtonClicked()};
 			
 			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
