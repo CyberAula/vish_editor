@@ -3,37 +3,38 @@ var cues = []; //empty array
 var xhr;
 var duracion;
 var cont = true;
-
+var times = [];
+var nextBall = ;
 
 var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
 
-// get video element, track, and duration element
-video = document.getElementsByTagName('video')[0]; //<video preload="metadata" style="width:100%" poster="videos/webvtt_talk.png">
-track = video.querySelectorAll('track')[0]; //<track id="nav" srclang="en" kind="chapters" src="videos/webvtt_talk_navigation.vtt">
-duration = document.getElementById('duration');
 
-// display duration and chapters once video is loaded
+$(document).ready(function(){
 
-video.addEventListener("loadedmetadata", init, false);
-if (video.readyState >= video.HAVE_METADATA) {
-  init.apply(video); // missed the event
-}
+	/* ------- DOM manipulations ------ */
 
 
+	video = document.getElementsByTagName('video')[0]; 
+	track = video.querySelectorAll('track')[0]; 
+	duration = document.getElementById('duration');
+
+
+	position = document.getElementById('position');
+	curTime  = document.getElementById('curTime');
 
 
 
-// update transport bar while playing
-position = document.getElementById('position');
-curTime  = document.getElementById('curTime');
+	video.addEventListener("loadedmetadata", init, false);
+	if (video.readyState >= video.HAVE_METADATA) {
+	  	init.apply(video); // missed the event
+	}
+
+	video.addEventListener("timeupdate", curTimeUpdate, false); 
 
 
-/////// here we update the video time progress while playing
-video.addEventListener("timeupdate", curTimeUpdate, false); 
-
-
-video.addEventListener("timeupdate", function(){
+ //--------------------------------------------------------------
+	video.addEventListener("timeupdate", function(){
 	var times= video.currentTime;
 	// console.log(video.currentTime);
 	// llamo a la función con times de parametro
@@ -50,13 +51,58 @@ video.addEventListener("timeupdate", function(){
 				cont = false;
 				return false;
 			}else {
-		video.pause();
-	}
+				video.pause();
+			}
+		});
+		}
+	},false);
+
+// -----------------------------------------------------
+
+
+
+	play = document.getElementById('play');
+	play.addEventListener('click', togglePlay, false);
+
+	transportbar = document.getElementById('transportbar');
+	transportbar.addEventListener("click", seek, false);
+
+	/* ------ end of DOM manipulations --------*/
+
+	test(function(){
+		console.log("alalala");
+	});
+
+	_getNextBall(2);
+
+	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
+	duracion = video.duration.toFixed(2);
+
+   // display chapters in list and transport bar
+  	_getBalls();
+	paintBalls();
+	paintIndex();
+
+
 });
+
+
+
+
+
+// display duration and chapters once video is loaded
+
+
+
+
+var test = function(callback){
+	var a = confirm('Hola');
+	if(a){
+		if(typeof callback == "function"){
+			callback();
+		}
 	}
-},false);
-
-
+}
 
 var _getBallsForTime = function(t){
 	var ballsForTime = [];
@@ -75,44 +121,8 @@ var _getBallsForTime = function(t){
 }
 
 
-
-
-/////////////////////////////////////////////////////////////
-
-
-/////// here we add the play- pause functionality to the button - togglePlay function
-
-// play/pause button
-play = document.getElementById('play');
-play.addEventListener('click', togglePlay, false);
-
-
-/////////////////////////////////////////////////////////////
-
-
-// click on transport bar sets playback position
-transportbar = document.getElementById('transportbar');
-transportbar.addEventListener("click", seek, false);
-
-// pause video when current chapter is finished
-video.addEventListener("timeupdate", endChapter, false);
-
-
 // display duration and chapters
 function init(evt) {
-	// update duration display
-
-	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
-	duracion = video.duration.toFixed(2);
-
-   // display chapters in list and transport bar
-  	_getBalls();
-	paintBalls();
-	paintIndex();
-
-	/*nana.onclick = function () {
-			video.currentTime = balls[1].time;
-	}*/
 }
 
 function _getBalls(){
@@ -121,7 +131,8 @@ function _getBalls(){
 			var ballo=  [];
 		var time = vquiz_sample.pois[i].time;
 		ballo.id = vquiz_sample.pois[i].id;
-		ballo.time = vquiz_sample.pois[i].time;
+		ballo.time = parseFloat(vquiz_sample.pois[i].time);
+		times.push(ballo.time);
 		ballo.slide_id = vquiz_sample.pois[i].slide_id;
 		ballo.showed = false;
 		var ntime = parseFloat(time);
@@ -130,6 +141,19 @@ function _getBalls(){
 		balls.push(ballo);
 		console.log(balls);
 	}
+}
+
+
+var _getNextBall = function (time){
+	var pTime = video.duration;
+	for (i = 0; i < vquiz_sample.pois.length; i++) {
+		if(parseFloat(vquiz_sample.pois[i].time) < pTime){ 
+			if(parseFloat(vquiz_sample.pois[i].time) > time){
+			pTime = parseFloat(vquiz_sample.pois[i].time);
+		}
+		}
+	}
+			nextBall = pTime; //realmente lo que nos interesa es el tiempo de la bola.
 }
 
 
@@ -182,28 +206,32 @@ function videoPlayPause(evt) {
 }
 
 
-
-
 function paintBalls(){
 for (i = 0; i < vquiz_sample.pois.length; i++) {
 		paintBall(i);
 	}
 }
 function paintBall(indice){
-
 	var ball = document.createElement('li');
-	document.getElementById('segments').appendChild(ball);
+	var marker = document.createElement('div');
+	var segments = 	document.getElementById('segments');
+	var position = document.getElementById('position');
+	position.appendChild(marker);
+	segments.appendChild(ball);
+	marker.className = 'marker';
 	ball.className = 'ball';
 	console.log(ball);
 	var time = vquiz_sample.pois[indice].time; 
    	var duration = parseFloat(video.duration);
    	var bar_width = document.getElementById('positionview').offsetWidth;
    	var perc = bar_width / duration;
-   	ball.style.left = Math.round((time * perc) - 0.5) - 5 + 'px';
+   	ball.style.left = Math.round((time * perc) - 0.5) - 10 + 'px';
+   	marker.style.left = Math.round((time * perc) - 0.5) - 2  + 'px';
    	ball.onclick = function () {
 			video.currentTime = time;
 			popUp(indice);
 	}
+	times.sort();
 }
 
 function popUp(indice){
@@ -243,14 +271,6 @@ function seek(evt) {
 		var segment = document.getElementById(segid);
 		segment.style.backgroundColor = "";
 	}
-}
-
-
-
-// pause on chapter end
-function endChapter(evt) {
-	var curChapter = video.getAttribute('data-chapter');
-	if (video.currentTime >= cues[curChapter] && !video.paused) togglePlay();
 }
 
 

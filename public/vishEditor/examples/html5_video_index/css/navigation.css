@@ -43,6 +43,8 @@ body {
 	height: 15px;
 	width: 0px;
 	display: block;
+	position: absolute;
+	z-index: 10;
 }
 #segments { /* segments in which the video is divided*/
 	width: 100%;
@@ -81,9 +83,17 @@ body {
 
 .ball{
 	border-radius: 50%;
-	width: 10px;
-	height: 10px; 
+	width: 20px;
+	height: 20px; 
 	background-color: red;
+	position: absolute;
+	z-index: 20;
+}
+
+.marker{
+	height: 100%;
+	width: 3px;
+	background-color: green;
 	position: absolute;
 	z-index: 20;
 }
