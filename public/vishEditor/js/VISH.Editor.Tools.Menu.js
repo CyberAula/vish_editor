@@ -2,6 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
+	var _competitionsModalShown = false;
 
 	/*
 	 * Init singleton
@@ -108,6 +109,30 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Utils.showDialog(options);
 			return;
 		}
+
+		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
+			//_competitionsModalShown = true;
+			var options = {};
+			options.width = 650;
+			options.height = 190;
+			options.text = V.I18n.getTrans("i.NoCompetitions1");
+			options.onClosedCallback = function(){VISH.Editor.Tools.Menu.onPublishButtonClicked()};
+			
+			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
+
+			options.middlerow = V.Editor.Competitions.generateForm();			
+			options.middlerowExtraClass = "competitions_options";
+
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.Done");
+			button1.callback = function(){
+				$.fancybox.close();				
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
+			return;
+		}
+
 
 		var options = {};
 		options.width = 400;

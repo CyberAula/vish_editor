@@ -107,9 +107,18 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 		return false;
 	}
 
+	var generateForm = function(){
+		var result = "<div class='comp_first_row'>" + V.I18n.getTrans("i.NoCompetitions2") + "</div>";
+		result += "<div class='comp_second_row'>" + V.I18n.getTrans("i.NoCompetitions3") + "</div>";
+		result += "<div class='comp_checkbox'><input type='checkbox' name='maths' value='maths'  />Maths</div>";
+		result += "<div class='comp_checkbox'><input type='checkbox' name='biology' value='biology'  />Biology</div>";
+		return result;
+	};
+
 	return {
 		init				: init,
 		addCompetitionTags	: addCompetitionTags,
+		generateForm		: generateForm,
 		isValidCandidate	: isValidCandidate
 	};
 

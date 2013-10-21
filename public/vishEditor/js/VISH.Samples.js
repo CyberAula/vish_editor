@@ -9,7 +9,7 @@ VISH.Samples = (function(V,undefined){
 		"author":"ViSH Editor Team",
 		"language":"en",
 		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
-		"tags":["Doñana","Lynx","Biology"],
+		"tags":["Doñana","Lynx"],
 		//Pedagogical metadata
 		"age_range":"4 - 20",
 		"subject":["Biology"],
