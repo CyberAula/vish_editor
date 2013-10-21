@@ -1101,28 +1101,49 @@ img.selectSlidesimgbutton {
 }
 
 #notification_template, #notification_template_cloned {
+	text-align: center;
 }
 
 .notification_row1, .notification_row2, .notification_middlerow {
-	width: 92%;
+	width: 90%;
 	padding-left: 4%;
 	padding-right: 4%;
-	margin-bottom: 1%;
+	margin-bottom: 1px;
 }
 
 .notification_row1 {
-	padding-top: 4%;
+	padding-top: 3%;
 }
 
 .notification_row2 {
+	font-family: 'Open Sans', arial, sans-serif;
+	/*font-size: 1.2rem;*/
+	font-size: 14px;
 	height: 30px;
-	padding-top: 4%;
+	padding-top: 5px;
 	padding-bottom: 0%;
 	text-align: right;
 }
 
+.comp_first_row {
+	margin-top: -15px;
+}
+
+.comp_second_row {
+	margin-bottom: 10px;
+	
+}
+
 .notification_middlerow {
 	padding-top: 4%;
+	font-family: 'Open Sans', arial, sans-serif;
+	/*font-size: 1.2rem;*/
+	font-size: 14px;
+}
+
+.comp_checkbox {
+	text-align: left;
+	margin-left: 169px;
 }
 
 .mr_quizSession {
