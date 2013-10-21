@@ -3,6 +3,7 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 	var competitionTag = 'ViSHCompetition2013';
 	var competitionCategories = ['Maths', 'Physics', 'Chemistry', 'Biology', 'EnvironmentalStudies', 'Geography', 'Engineering', 'Humanities', 'NaturalScience', 'ComputerScience'];
 	var misleadingTags = ['ViSHCompetitions2013'];
+	var specialTags = [];
 
 	var init = function(){
 	};
@@ -113,14 +114,38 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 		for (var i = 0; i<=competitionCategories.length - 1; i++) {
 			result += "<div class='comp_checkbox'><input type='checkbox' name='"+competitionCategories[i]+"' value='"+competitionCategories[i]+"'  />"+competitionCategories[i]+"</div>";
 		};
+
 		return result;
 	};
+
+
+	var specialTagSelected = function(event){
+		var tagList = $("#tagBoxIntro .tagList");
+		if ($(event.target).is(':checked')){
+			console.log("checked " + $(event.target).val());			
+			//specialTags.push($(event.target).val());
+			$(tagList).tagit("add", $(event.target).val());
+		}
+		else{
+			//var index = specialTags.indexOf($(event.target).val());
+			//specialTags.splice(index, 1);
+			$(tagList).tagit("remove", $(event.target).val());
+		}
+		
+	};
+
+	var getSpecialTags = function(){
+		return specialTags;
+	};
+
 
 	return {
 		init				: init,
 		addCompetitionTags	: addCompetitionTags,
 		generateForm		: generateForm,
-		isValidCandidate	: isValidCandidate
+		getSpecialTags		: getSpecialTags,
+		isValidCandidate	: isValidCandidate,
+		specialTagSelected  : specialTagSelected
 	};
 
 }) (VISH, jQuery);

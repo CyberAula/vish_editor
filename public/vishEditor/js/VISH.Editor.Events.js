@@ -60,6 +60,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
 
+			//create the functions to add the tags when click on fancybox
+		
+			$(document).on("click", ".comp_checkbox input", V.Editor.Competitions.specialTagSelected);
+
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
 

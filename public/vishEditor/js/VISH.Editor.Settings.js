@@ -39,6 +39,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}); 
 		$( "#difficulty_range" ).attr( "difficulty" , V.Constant.DIFFICULTY);
 		$("#difficulty_range").val(LOM_Difficulty[V.Constant.DIFFICULTY].text);
+
+		//Tags
+		if((V.Configuration.getConfiguration()["presentationTags"])&&(!tagsLoaded)){
+			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
+			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
+			V.Editor.API.requestTags(_onInitialTagsReceived);
+		}
 	}
 
 	var displaySettings = function(){
@@ -74,12 +81,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 		var presentation = V.Editor.getPresentation();
 
-		//Tags
-		if((V.Configuration.getConfiguration()["presentationTags"])&&(!tagsLoaded)){
-			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
-			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
-			V.Editor.API.requestTags(_onInitialTagsReceived);
-		}
+		
 
 		//Themes
 		if(!themeScrollbarCreated){
@@ -273,8 +275,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 						$(tagList).append("<li>" + tag + "</li>");
 					});
 				}
+				if(V.Editor.Competitions.getSpecialTags()){
+					//Insert draftPresentation tags
+					$.each(V.Editor.Competitions.getSpecialTags(), function(index, tag) {
+						$(tagList).append("<li>" + tag + "</li>");
+					});
+				}
 			}
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:6 , 
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	}
