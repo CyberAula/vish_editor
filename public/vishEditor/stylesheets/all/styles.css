@@ -1102,6 +1102,7 @@ img.selectSlidesimgbutton {
 
 #notification_template, #notification_template_cloned {
 	text-align: center;
+	width: 667px !important;
 }
 
 .notification_row1, .notification_row2, .notification_middlerow {
@@ -1143,7 +1144,8 @@ img.selectSlidesimgbutton {
 
 .comp_checkbox {
 	text-align: left;
-	margin-left: 169px;
+	margin-left: 212px;
+	margin-top: 1px;
 }
 
 .mr_quizSession {
