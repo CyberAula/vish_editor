@@ -2,7 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
-	var _competitionsModalShown = false;
+	var _competitionsModalShown = true;
 
 	/*
 	 * Init singleton
