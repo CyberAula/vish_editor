@@ -109,7 +109,7 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 	}
 
 	var generateForm = function(){
-		var result = "<div class='comp_first_row'>" + V.I18n.getTrans("i.NoCompetitions2") + "</div>";
+		var result = "<hr class='hrcomp'><div class='comp_first_row'>" + V.I18n.getTrans("i.NoCompetitions2") + "</div>";
 		result += "<div class='comp_second_row'>" + V.I18n.getTrans("i.NoCompetitions3") + "</div>";
 		result += "<div class='check_boxer'>";
 		for (var i = 0; i<=competitionCategories.length - 1; i++) {

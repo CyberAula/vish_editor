@@ -1126,7 +1126,7 @@ img.selectSlidesimgbutton {
 }
 
 .competitions_paragraph, .competitions_options {
-	color: #000;
+	color: #666;
 	font-family: 'Open Sans', arial, sans-serif;
 	/*font-size: 1.2rem;*/
 	font-size: 14px;
@@ -1134,21 +1134,29 @@ img.selectSlidesimgbutton {
 }
 
 .check_boxer {
+	cursor: pointer;
+	color: #000;
 	margin-top: 24px;
 	margin-bottom: -44px;
 }
 
 .comp_first_row {
- 	margin-top: -83px;
-	font-size: 24px;
+	font-size: 19px;
+}
+
+.hrcomp {
+	margin-left: 2px;
+	width: 556px;
+	margin-top: -64px;
+	margin-bottom: 22px;
 }
 
 .comp_second_row {
-  	font-size: 24px;
+  	font-size: 19px;
 }
 
 .comp_checkbox {
-	margin-left: 222px;
+	margin-left: 212px;
 	font-size: 16px;
 }
 
@@ -1172,7 +1180,7 @@ img.selectSlidesimgbutton {
 	text-decoration: none;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2.1rem;
-	color: #000;
+	color: #666;
 	padding-bottom: 4%;
 }
 
