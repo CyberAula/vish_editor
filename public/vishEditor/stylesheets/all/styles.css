@@ -1101,51 +1101,55 @@ img.selectSlidesimgbutton {
 }
 
 #notification_template, #notification_template_cloned {
-	text-align: center;
-	width: 667px !important;
 }
 
 .notification_row1, .notification_row2, .notification_middlerow {
-	width: 90%;
+	width: 92%;
 	padding-left: 4%;
 	padding-right: 4%;
-	margin-bottom: 1px;
+	margin-bottom: 1%;
 }
 
 .notification_row1 {
-	padding-top: 3%;
+	padding-top: 4%;
 }
 
 .notification_row2 {
-	font-family: 'Open Sans', arial, sans-serif;
-	/*font-size: 1.2rem;*/
-	font-size: 14px;
 	height: 30px;
-	padding-top: 5px;
+	padding-top: 4%;
 	padding-bottom: 0%;
 	text-align: right;
 }
 
-.comp_first_row {
-	margin-top: -15px;
-}
-
-.comp_second_row {
-	margin-bottom: 10px;
-	
-}
-
 .notification_middlerow {
 	padding-top: 4%;
+}
+
+.competitions_paragraph, .competitions_options {
+	color: #000;
 	font-family: 'Open Sans', arial, sans-serif;
 	/*font-size: 1.2rem;*/
 	font-size: 14px;
+	padding: 40px;
+}
+
+.check_boxer {
+	margin-top: 24px;
+	margin-bottom: -44px;
+}
+
+.comp_first_row {
+ 	margin-top: -83px;
+	font-size: 24px;
+}
+
+.comp_second_row {
+  	font-size: 24px;
 }
 
 .comp_checkbox {
-	text-align: left;
-	margin-left: 212px;
-	margin-top: 1px;
+	margin-left: 222px;
+	font-size: 16px;
 }
 
 .mr_quizSession {
@@ -1168,7 +1172,7 @@ img.selectSlidesimgbutton {
 	text-decoration: none;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2.1rem;
-	color: #CCC;
+	color: #000;
 	padding-bottom: 4%;
 }
 
@@ -1534,4 +1538,3 @@ img.loading_presentation_carrousel {
 .loadingtmpShown img:not(.loading_fancy_img) {
 	display: none !important;
 }
-
