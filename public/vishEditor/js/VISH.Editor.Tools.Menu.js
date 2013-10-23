@@ -111,14 +111,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 
 		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
-			//_competitionsModalShown = true;
+			_competitionsModalShown = true;
 			var options = {};
 			options.width = 650;
 			options.height = 190;
 			options.text = V.I18n.getTrans("i.NoCompetitions1");
 			options.textWrapperClass = "competitions_paragraph";
 
-			options.onClosedCallback = function(){VISH.Editor.Tools.Menu.onPublishButtonClicked()};
+			options.onClosedCallback = function(){
+				setTimeout(function(){
+						VISH.Editor.Tools.Menu.onPublishButtonClicked()
+					}, 500);
+
+			};
 			
 			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
 
@@ -127,10 +132,16 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			var button1 = {};
 			button1.text = V.I18n.getTrans("i.Done");
+			button1.extraclass = "competi_disabled";
 			button1.callback = function(){
 				$.fancybox.close();				
 			}
-			options.buttons = [button1];
+			var button2 = {};
+			button2.text = V.I18n.getTrans("i.NoThanks");
+			button2.callback = function(){
+				$.fancybox.close();				
+			}
+			options.buttons = [button1, button2];
 			V.Utils.showDialog(options);
 			return;
 		}
