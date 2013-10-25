@@ -271,6 +271,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 		//Help in Settings
 		$(document).on('click','#help_in_settings', function(){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
+		});
+
+		//Help in Competitions
+		$(document).on('click','#help_in_competitions', function(){
+			V.Tour.startTourWithId('help_in_competitions_help', 'bottom');
 		})
 
 		//Help in pedagogical options settings	

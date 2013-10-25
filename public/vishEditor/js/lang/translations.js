@@ -6,10 +6,13 @@ var i18n =
 				//Walkthroughs
 				"i.walkMenuHelp1a"			: "Para aprender a utilizar ViSH Editor tienes a tu disposición varios videotutoriales en nuestro",
 				"i.YouTubeChannel"			: "canal de YouTube",
+				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
+				"i.walkCompetitions1_2"		: "Para participar sólo tienes que añadir el tag ViSHCompetition2013 a tu excursión y uno o más de los tags siguientes:",
+				"i.walkCompetitions1_3"		: "Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience o ComputerScience.",
+				"i.walkCompetitions1_4"		: "Para más información ve a <a href='http://vishub.org/competitions' target='_blank'>esta página</a> a al <a href='http://vishub.org/faq#faq_competitions_1a' target='_blank'>preguntas frecuentes</a>.",
 				"i.walkMenuHelp1b"			: "Estos tutoriales cubren desde el uso básico para principiantes hasta funcionalidades avanzadas de la herramienta.",
 				"i.walkMenuHelp2"			: "El siguiente videotutorial te enseñará como empezar a utilizar esta herramienta en unos pocos minutos.",
 				"i.walkMenuHelp3"			: "Si lo prefieres puedes hacer click aquí para ver un tutorial textual que te enseñará rápidamente los conceptos básicos para empezar a utilizar ViSH Editor.",
-
 				"i.walkWelcome1_1"			: "¡Bienvenido a ViSH Editor!",
 				"i.walkWelcome1_2"			: "ViSH Editor es una aplicación web innovadora que permite crear increibles presentaciones web y recursos educativos novedosos como Excursiones Virtuales.",
 				"i.walkWelcome1_3"			: "En este tutorial aprenderás como empezar a utilizar esta herramienta.",
