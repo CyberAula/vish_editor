@@ -283,6 +283,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$("#hidden_button_to_launch_theme_fancybox").trigger("click");
 	}
 
+	var selectAnimation = function(){
+		$("#hidden_button_to_launch_animation_fancybox").trigger("click");
+	}
+
+
 	var changeBackground = function(){
 		$("#hidden_button_to_change_slide_background").trigger("click");
 	}
@@ -505,6 +510,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		publish							: publish,
 		preview 						: preview,
 		selectTheme						: selectTheme,
+		selectAnimation					: selectAnimation,
 		changeBackground				: changeBackground,
 		addTooltipsToSlide				: addTooltipsToSlide,
 		addTooltipToZone				: addTooltipToZone,

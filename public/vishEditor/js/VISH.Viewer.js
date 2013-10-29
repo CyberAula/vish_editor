@@ -65,6 +65,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.EventsNotifier.init();
 	  	V.VideoPlayer.init();
 		V.Themes.loadTheme(presentation.theme);
+		V.Animations.loadAnimation(presentation.animation);
 		V.Presentation.init(presentation.slides);
 		V.Quiz.init();
 

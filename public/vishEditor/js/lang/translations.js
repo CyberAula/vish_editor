@@ -194,7 +194,12 @@ var i18n =
 
 				"i.walkThemes_1"			: "Temas de ViSH Editor",
 				"i.walkThemes_4"			: "Recuerda que puedes cambiar el tema de la presentación en cualquier momento accediendo a esta pantalla o seleccionando la opción 'Ajustes' en el menu.",
-				
+
+				"i.walkAnimations_1"		: "Animaciones de Vish Editor",
+				"i.walkAnimations_2"		: "Una animación define las transiciones visuales entre las slides de la presentación.Vish Editor ofrece diferentes animaciones entre las cuales puedes escojer.",
+				"i.walkAnimations_3"		: "Para escojer una animación, solamente debes pasar con el cursor por encima de los iconos para previsualizar la animación que te gustaría añadir dentro de esta galería.",
+				"i.walkAnimations_4"		: "Recuerda que puedes cambiar la animación entre las slides en cualquier momento accediendo a esta pantalla desde el icono superior.",
+
 				"i.CreatingFlashcards"		: "Creando Flashcards",
 				"i.walkFlashcard_1"			: "Para empezar a crear una Flashcard debes hacer click en el botón 'Añadir' situado a la izquierda (el botón utilizado para añadir nuevas diapositivas), y a continuación debes pulsar sobre el icono de Flashcard en el panel 'Smartcards'. Después de esto, se mostrará una Flashcard vacia en la pantalla.",
 				"i.FlashcardIcon"			: "Icono de Flashcard",

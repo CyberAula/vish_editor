@@ -101,6 +101,10 @@ VISH.Constant.Clipboard.LocalStorageStack = "VishEditorClipboardStack";
 VISH.Constant.Themes = {};
 VISH.Constant.Themes.Default = "theme1";
 
+//Animations
+VISH.Constant.Animations = {};
+VISH.Constant.Animations.Default = "animation1";
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";

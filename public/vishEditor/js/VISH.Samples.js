@@ -19,6 +19,7 @@ VISH.Samples = (function(V,undefined){
 		"VEVersion":"0.2",
 		"type":"presentation",
 		"theme":"theme1",
+		"animation": "animation8",
 		
 		"slides":[
 			{
