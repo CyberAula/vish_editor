@@ -128,9 +128,13 @@ VISH.Editor.Competitions = (function(V,$,undefined){
 				$(tagList).tagit("add", "ViSHCompetition2013");
 			}
 			$(tagList).tagit("add", $(event.target).val());
+			$(".notification_row2 a[buttonnumber=1]").removeClass("competi_disabled");
 		}
 		else{
 			$(tagList).tagit("remove", $(event.target).val());
+			if($(".comp_checkbox input:checked").size()==0){
+				$(".notification_row2 a[buttonnumber=1]").addClass("competi_disabled");
+			}
 		}
 		
 	};

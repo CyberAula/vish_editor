@@ -1546,3 +1546,10 @@ img.loading_presentation_carrousel {
 .loadingtmpShown img:not(.loading_fancy_img) {
 	display: none !important;
 }
+
+.competi_disabled{
+	opacity: 0.6 !important;
+	text-shadow: none !important;
+	background: #ccc !important;
+	cursor: default !important;
+}
