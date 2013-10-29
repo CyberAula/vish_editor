@@ -581,9 +581,8 @@ input.slider_range_input {
 .help_in_competitions{
 	background-image: url(/vishEditor/images/vicons/helptutorial_circle.png);
 	position: absolute;
-	right: 525px;
-	height: 29px;
-	top: 388px;
+	margin-top: -2px;
+	margin-left: -46px;
 }
 
 .help_in_competitions:hover{
