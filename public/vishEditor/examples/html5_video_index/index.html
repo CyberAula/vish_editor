@@ -4,9 +4,10 @@
 	<title>Navigation using WebVTT</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link href="css/navigation.css" type="text/css" rel="stylesheet"/>
+	<link href="css/editor.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-	<div role="application">    
+	<div role="application" id="application">    
 		<div id="videoBox" style="float:left; width:58%;">
 				<video poster="videos/webvtt_talk.png" style="width:100%" preload="metadata">
 				<source src="https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm">
@@ -36,11 +37,10 @@
 			<div style="display: block; clear: both;"></div>
 
 		</div>
-		<div id="transcriptBox" style="width:40%; float:right;">
-			<h4>Navigation to specific time points.</h4>
-			<p style="font-size:small;">
-			  Click on link to navigate to video fragment. Press space to toggle video play/pause.
-			</p>
+		<div id="transcriptBox">
+		<button class="btn btn-small slidesScrollbarButton" id= "add" type="button">
+			<span>+ Add</span>
+		</button>
 			<div id="navigation"
 			style="padding:5px; background-color:#FAF9F8; border:2px black solid;">
 			<ul id="chapters">

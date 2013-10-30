@@ -1,5 +1,6 @@
 body {
 	min-width: 836px;
+ 	overflow-x: hidden;
 }
 #video {
 	min-width: 455px;
@@ -98,4 +99,53 @@ body {
 	z-index: 20;
 }
 
+#navigation{
+	overflow-y: scroll;
+	height: 74%;
+}
 
+.btn-small {
+    border-radius: 3px 3px 3px 3px;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 5px 10px;
+}
+
+.btn {
+    -moz-user-select: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#transcriptBox{
+    width: 35%;
+  	float: right;
+  	margin-right: 2%;
+  	height: 100%;
+
+}
+#videoBox{
+	float: left !important;
+    width: 60% !important;
+}
+#application{
+	height: 100% !important;
+    position: absolute !important;
+    width: 100% !important;
+
+}
+
+#add{
+	margin-bottom: 2%;
+}

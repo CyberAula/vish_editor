@@ -4,7 +4,8 @@ var xhr;
 var duracion;
 var cont = true;
 var times = [];
-var nextBall = ;
+var nextBall;
+var prevNextBall;
 
 var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
@@ -13,6 +14,13 @@ var RANGE = 0.300; //s around the ball where we should stop
 $(document).ready(function(){
 
 	/* ------- DOM manipulations ------ */
+	var probando = function(){
+		if(nextBall-prevNextBall < RANGE){
+			//falta
+		}else{
+			video.play();
+		}
+}
 
 
 	video = document.getElementsByTagName('video')[0]; 
@@ -32,6 +40,7 @@ $(document).ready(function(){
 
 	video.addEventListener("timeupdate", curTimeUpdate, false); 
 
+	_getNextBall(2);
 
  //--------------------------------------------------------------
 	video.addEventListener("timeupdate", function(){
@@ -41,13 +50,14 @@ $(document).ready(function(){
 	//si el array de bolas no esta vacio hago cosas y si no no.
 
 	var ballsForTime = _getBallsForTime(times);
+
 	if (ballsForTime.length > 0){
 		video.pause();
 		$(ballsForTime).each(function(index,ball){
 			// Comprobar la ultima vez que se mostro la bola para no mostrar dos veces seguidas la misma
 			if(!ball.showed){
 				ball.showed = true;
-				popUp(index);
+				popUp(probando,index);
 				cont = false;
 				return false;
 			}else {
@@ -69,11 +79,9 @@ $(document).ready(function(){
 
 	/* ------ end of DOM manipulations --------*/
 
-	test(function(){
-		console.log("alalala");
-	});
 
-	_getNextBall(2);
+
+
 
 	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
 	duracion = video.duration.toFixed(2);
@@ -88,35 +96,21 @@ $(document).ready(function(){
 
 
 
-
-
 // display duration and chapters once video is loaded
 
 
 
-
-var test = function(callback){
-	var a = confirm('Hola');
-	if(a){
-		if(typeof callback == "function"){
-			callback();
-		}
-	}
-}
-
 var _getBallsForTime = function(t){
 	var ballsForTime = [];
 	//balls variable con las bolas que tienen ya parametros minTime y maxTime
-	if(cont == true){
+
 	var times = video.currentTime;
-	$(balls).each(function(index,ball){
-		if ((times >= ball.minTime) && (times <= ball.maxTime)) {
-			ballsForTime.push(ball);
+		if ((times >= nextBall-RANGE) && (times <= nextBall + RANGE)) {
+			ballsForTime.push(nextBall);
 			console.log("me ejecuto");
 
-		}
-	});
-}
+		}	
+
 	return ballsForTime;
 }
 
@@ -181,11 +175,11 @@ function paintIndex(){
 		var link = document.createElement('a');
 		link.setAttribute('ident', vquiz_sample.pois[i].id);
 		link.setAttribute('time', vquiz_sample.pois[i].time);
-		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id;
+		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id + ' ---> '+  vquiz_sample.pois[i].time;
 		link.onclick = function () {
 			video.currentTime = this.getAttribute('time');
 			var id = this.getAttribute('ident');
-			popUp(id);
+				popUp(probando,id);
 		}
 		item.appendChild(link);
 		screen.appendChild(item);
@@ -229,12 +223,12 @@ function paintBall(indice){
    	marker.style.left = Math.round((time * perc) - 0.5) - 2  + 'px';
    	ball.onclick = function () {
 			video.currentTime = time;
-			popUp(indice);
+			popUp(probando,indice);
 	}
 	times.sort();
 }
 
-function popUp(indice){
+var popUp = function(callback, indice){
 		var slide;
 		var content = vquiz_sample.pois[indice].slide_id;
 		for (i = 0; i < vquiz_sample.slides.length; i++) {
@@ -243,8 +237,19 @@ function popUp(indice){
 		}
 	}
 		//var message = vquiz_sample.pois[indice].slide_id;
-		alert(slide);
+		prevNextBall = nextBall;
+		console.log(prevNextBall);
+		_getNextBall(video.currentTime + RANGE);
+		console.log(nextBall);
+		var a = confirm(slide);
+	if(a){
+		if(typeof callback == "function"){
+			callback();
+		}
+	}
 }
+
+
 
 
 // update transport bar time display
@@ -259,12 +264,22 @@ function curTimeUpdate(evt) {
 }
 
 
+
+
+
+
+
+
+
 // seek on transport bar
 function seek(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
 	var clickpos = evt.pageX - this.offsetLeft;
 	var clickpct = clickpos / bar_width;
 	video.currentTime = clickpct * video.duration;
+	_getNextBall(video.currentTime);
+	console.log("seeeeek");
+	console.log(nextBall);
 	// clear chapter selection
 	for (i = 0; i < cues.length; i++) {
 		var segid = "segment" + i;

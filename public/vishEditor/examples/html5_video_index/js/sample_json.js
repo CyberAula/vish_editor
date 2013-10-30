@@ -19,6 +19,10 @@ var vquiz_sample = {
                         "id":"2",
                         "time": "300",
                         "slide_id":"article8_article3"
+                },{
+                        "id":"3",
+                        "time": "1400",
+                        "slide_id":"article8_article4"
                 }
         ],
         "slides":[
