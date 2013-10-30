@@ -291,10 +291,61 @@ textarea#presentation_details_textarea {
 }
 
 .theme_selected_in_scrollbar {
+	border-radius: 16px !important;
 	border: 4px solid #357ebd !important;
 	opacity:1 !important;
 	width: 116px !important;
 }
+
+.theme_selected_in_scrollbar > div {
+	opacity:1 !important;
+	background-color: transparent !important;
+	width: 89px !important;
+	height: 65px !important;
+}
+
+.animation_selected_in_fancybox > div {
+	opacity:1 !important;
+	background-color: transparent !important;
+	width: 89px !important;
+	height: 65px !important;
+}
+
+.animation_selected_in_fancybox > div > h3 {
+	margin-left: 0px;
+	margin-top: 21px;
+}
+
+.animation_selected_in_fancybox {
+	background-position: -5px -6px;
+	border-radius: 13px !important;
+border: 6px solid #357ebd !important;
+opacity: 1 !important;
+width: 92px !important;
+height: 65px !important;
+}
+
+.theme_selected_in_fancybox > div {
+	opacity:1 !important;
+	background-color: transparent !important;
+	width: 89px !important;
+	height: 65px !important;
+}
+
+.theme_selected_in_fancybox > div > h3 {
+	margin-left: 0px;
+	margin-top: 21px;
+}
+
+.theme_selected_in_fancybox {
+	background-position: -5px -6px;
+	border-radius: 13px !important;
+border: 6px solid #357ebd !important;
+opacity: 1 !important;
+width: 92px !important;
+height: 65px !important;
+}
+
 
 
 div#tagBoxIntro {
@@ -530,9 +581,8 @@ input.slider_range_input {
 .help_in_competitions{
 	background-image: url(/vishEditor/images/vicons/helptutorial_circle.png);
 	position: absolute;
-	right: 525px;
-	height: 29px;
-	top: 388px;
+	margin-top: -2px;
+	margin-left: -46px;
 }
 
 .help_in_competitions:hover{
@@ -1871,6 +1921,164 @@ div.object_wrapper {
 	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
+
+/* Animation fancybox */
+
+#animation_fancybox {
+	background: url(/vishEditor/images/icons/animationbg.png) no-repeat;
+	width: 530px;
+	height: 300px;
+	padding-left: 35px;
+	padding-right: 35px;
+	padding-top: 87px;
+}
+
+#help_animation_selection {
+	position: absolute;
+	margin-top: -88px;
+	right: 25px;
+	cursor: pointer;
+}
+
+#help_animation_selection:hover {
+	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
+	cursor: pointer;
+}
+
+.anim_text {
+	opacity: 1;
+	border-radius: 5px;
+	background: rgba(28, 49, 71); /* Fallback */
+	background-color: rgba(28, 49, 71, 0.6);
+	color: rgba(28, 49, 71, 0.6);
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	transition: opacity 0.50s ease-out;
+    -o-transition: opacity 0.50s ease-out;
+    -ms-transition: opacity 0.50s ease-out;
+    -moz-transition: opacity 0.50s ease-out;
+    -webkit-transition: opacity 0.50s ease-out;
+}
+
+.anim_text:hover {
+	opacity: 0;
+	transition: opacity 0.50s ease-out;
+    -o-transition: opacity 0.50s ease-out;
+    -ms-transition: opacity 0.50s ease-out;
+    -moz-transition: opacity 0.50s ease-out;
+    -webkit-transition: opacity 0.50s ease-out;
+}
+
+.anim_text > h3 {
+	margin-left: 3px;
+	margin-top: 26px;
+	font-family: "Open Sans";
+	font-weight: 400;
+	color: #fff;
+	opacity: 1;
+	text-align: center;
+}
+
+#select_animation1 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation1:hover {
+	background-image:url(/vishEditor/images/animations/horizontal.gif);
+}
+
+#select_animation2 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation2:hover {
+	background-image:url(/vishEditor/images/animations/vertical.gif);
+}
+
+#select_animation3 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation3:hover {
+	background-image:url(/vishEditor/images/animations/opacity.gif);
+}
+
+#select_animation4 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation4:hover {
+	background-image:url(/vishEditor/images/animations/elements.gif);
+}
+
+#select_animation5 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation5:hover {
+	background-image:url(/vishEditor/images/animations/rotate.gif);
+}
+
+#select_animation6 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation6:hover {
+	background-image:url(/vishEditor/images/animations/lb_tl.gif);
+}
+
+
+#select_animation7 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation7:hover {
+	background-image:url(/vishEditor/images/animations/lt_rb.gif);
+}
+
+#select_animation8 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation8:hover {
+	background-image:url(/vishEditor/images/animations/inside.gif);
+}
+
+#select_animation9 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation9:hover {
+	background-image:url(/vishEditor/images/animations/zoom.gif);
+}
+
+#select_animation10 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation10:hover {
+	background-image:url(/vishEditor/images/animations/cr_hr.gif);
+}
+
+#select_animation11 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation11:hover {
+	background-image:url(/vishEditor/images/animations/cr_vr.gif);
+}
+
+#select_animation12 {
+	background-image:url(/vishEditor/images/animations/no_animation.gif);
+}
+
+#select_animation12:hover {
+	background-image:url(/vishEditor/images/animations/cube.gif);
+}
+
+
+
 
 
 /* Tutorials with Joyride */

@@ -59,11 +59,12 @@ VISH.Editor.Themes = (function(V,$,undefined){
 
 	var onThemeSelected = function(event){
 		event.preventDefault();
-		var themeNumber = $(event.target).attr("theme");
+		var themeNumber = $(event.currentTarget).attr("theme");
 		if($(event.target).hasClass("waitCursor")){
 			return;
 		}
 		selectTheme(themeNumber);
+		V.Editor.Settings.selectTheme(themes[themeNumber].number);
 	}
 
 	var selectTheme = function(theme){

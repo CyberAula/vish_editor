@@ -1,0 +1,299 @@
+/*+++++++++++++++++++++++++++++++*/
+/* Inside elements fading */
+/*+++++++++++++++++++++++++++++++*/
+
+.slides > article.far-past {
+       transform: translate(0);
+       -o-transform: translate(0);
+       -ms-transform: translate(0);
+       -moz-transform: none;
+       -webkit-transform: translate3d(0, 0, 0);
+       z-index: 0;
+       display: block;
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+}
+
+.slides > article.past {
+       transform: translate(0);
+       -o-transform: translate(0);
+       -ms-transform: translate(0);
+       -moz-transform: none;
+       -webkit-transform: translate3d(0, 0, 0);
+       z-index: 1;
+       display: block;
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+}
+
+.slides > article.current {
+        transform: translate(0);
+       -o-transform: translate(0);
+       -ms-transform: translate(0);
+       -moz-transform: none;
+       -webkit-transform: translate3d(0, 0, 0);
+       display: block;
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 1;
+}
+
+/*first div*/
+.slides > article.past > div:nth-child(1) {
+       -webkit-transition: all 0.5s ease-intransition ;
+       -webkit-transition-delay: 0.5s;
+       -moz-transition: all 0.5s ease-in;
+       -o-transition: all 0.5s ease-ins;
+       transition: all 0.5s ease-in;
+       opacity: 0;
+       display: block;
+       top: -250px;
+}
+
+.slides > article.next > div:nth-child(1) {
+       -webkit-transition: all 0.5s ease-intransition;
+       -webkit-transition-delay: 0.5s;
+       -moz-transition: all 0.5s ease-in;
+       -o-transition: all 0.5s ease-in;
+       transition: all 0.5s ease-in;
+       opacity: 0;
+       display: block;
+       top: -250px;
+}
+
+.slides > article.current > div:nth-child(1) {
+       left: 0px;
+       top: 0px ;
+       -webkit-transition: all 0.5s ease-intransition ;
+       -webkit-transition-delay: 0.5s;
+       -moz-transition: all 0.5s ease-in;
+       -o-transition: all 0.5s ease-in;
+       transition: all 0.5s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*second div*/
+.slides > article.past > div:nth-child(2) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       display: block;
+       left: -200px;
+}
+
+.slides > article.next > div:nth-child(2) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       left: -200px;
+       display: block;
+}
+
+.slides > article.current > div:nth-child(2) {
+       left: 0px;
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*third div*/
+.slides > article.past > div:nth-child(3) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       display: block;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       right: -300px;
+}
+
+.slides > article.next > div:nth-child(3) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       display: block;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       right: -300px;
+}
+
+.slides > article.current > div:nth-child(3) {
+       right: 0px;
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*fourth div*/
+.slides > article.past > div:nth-child(4) {
+       -webkit-transition: all 0.6 ease-intransition ;
+       display: block;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+       bottom: -270px;
+}
+
+.slides > article.next > div:nth-child(4) {
+       -webkit-transition: all 0.6 ease-intransition ;
+       display: block;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+       bottom: -270px;
+}
+
+.slides > article.current > div:nth-child(4) {
+       bottom: 0px;
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*fifth div*/
+.slides > article.past > div:nth-child(5) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       left: -200px;
+}
+
+.slides > article.next > div:nth-child(5) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       left: -200px;
+}
+
+.slides > article.current > div:nth-child(5) {
+       left: 0px;
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*sixth div*/
+.slides > article.past > div:nth-child(6) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       right: -300px;
+}
+
+.slides > article.next > div:nth-child(6) {
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity: 0;
+       right: -300px;
+}
+
+.slides > article.current > div:nth-child(6) {
+       right: 0px;
+       -webkit-transition: all 0.6s ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       -ms-transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+/*seventh div*/
+.slides > article.past > div:nth-child(7) {
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+       bottom: -270px;
+}
+
+.slides > article.next > div:nth-child(7) {
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+       bottom: -270px;
+}
+
+.slides > article.current > div:nth-child(7) {
+       bottom: 0px;
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity:1;
+       display: block;
+}
+
+.slides > article.next {
+       transform: translate(0);
+       -o-transform: translate(0);
+       -ms-transform: translate(0);
+       -moz-transform: none;
+       -webkit-transform: translate3d(0, 0, 0);
+       -webkit-transition: all 0.6 ease-intransition ;
+       -moz-transition: all 0.6s ease-in;
+       -o-transition: all 0.6s ease-in;
+       transition: all 0.6s ease-in;
+       opacity: 0;
+       z-index: 1;
+       display: block;
+}
+
+.slides > article.far-next {
+       transform: translate(0);
+       -o-transform: translate(0);
+       -ms-transform: translate(0);
+       -moz-transform: none;
+       -webkit-transform: translate3d(0, 0, 0);
+       opacity: 0;
+       display: block;
+}

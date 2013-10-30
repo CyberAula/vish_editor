@@ -72,6 +72,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.Loader.loadLanguageCSS();
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
+		V.Editor.Animations.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.VirtualTour.init();
@@ -457,7 +458,7 @@ VISH.Editor = (function(V,$,undefined){
 		//Save the presentation in JSON
 		var presentation = {};
 
-		//Save metadata
+		//Save metadata, theme and animation
 		presentation = V.Editor.Settings.saveSettings(presentation);
 
 		//Check for tags, we have to do that because

@@ -246,6 +246,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var selectTheme = function(themeNumber){
 		$(".theme_selected_in_scrollbar").removeClass("theme_selected_in_scrollbar");
 		var themeDOM = $("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
+
+		$(".theme_selected_in_fancybox").removeClass("theme_selected_in_fancybox");
+		var themeDOM2 = $("#theme_fancybox div#select_theme"+themeNumber+" img").addClass("theme_selected_in_fancybox");
+	}
+
+	var selectAnimation = function(animationNumber){
+		$(".animation_selected_in_fancybox").removeClass("animation_selected_in_fancybox");
+		var themeDOM3 = $("#animation_fancybox div#select_animation"+animationNumber).addClass("animation_selected_in_fancybox");
 	}
 
 	var _onInitialTagsReceived = function(data){
@@ -433,6 +441,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			draftPresentation.theme = V.Constant.Themes.Default;
 		}
 
+		var animationSelection = V.Editor.Animations.getCurrentAnimation().filename;
+		if(typeof  animationSelection == "string"){
+			draftPresentation.animation = animationSelection;
+		} else {
+			draftPresentation.animation = V.Constant.Animations.Default;
+		}
+
 		//Pedagogical fields
 		var language = $("#language_tag").val();
 		if(typeof language == "string"){
@@ -564,7 +579,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		getTags									: getTags,
 		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
-		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked
+		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked,
+		selectAnimation 						: selectAnimation
 	};
 
 }) (VISH, jQuery);
