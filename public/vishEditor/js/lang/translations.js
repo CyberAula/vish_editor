@@ -9,7 +9,7 @@ var i18n =
 				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
 				"i.walkCompetitions1_2"		: "Para participar sólo tienes que añadir el tag ViSHCompetition2013 a tu excursión y uno o más de los tags siguientes:",
 				"i.walkCompetitions1_3"		: "Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience o ComputerScience.",
-				"i.walkCompetitions1_4"		: "Para más información ve a <a href='http://vishub.org/competitions' target='_blank'>esta página</a> a al <a href='http://vishub.org/faq#faq_competitions_1a' target='_blank'>preguntas frecuentes</a>.",
+				"i.walkCompetitions1_4"		: "Para más información ve a http://vishub.org/competitions o a las preguntas frecuentes en http://vishub.org/faq#faq_competitions_1a",
 				"i.walkMenuHelp1b"			: "Estos tutoriales cubren desde el uso básico para principiantes hasta funcionalidades avanzadas de la herramienta.",
 				"i.walkMenuHelp2"			: "El siguiente videotutorial te enseñará como empezar a utilizar esta herramienta en unos pocos minutos.",
 				"i.walkMenuHelp3"			: "Si lo prefieres puedes hacer click aquí para ver un tutorial textual que te enseñará rápidamente los conceptos básicos para empezar a utilizar ViSH Editor.",
