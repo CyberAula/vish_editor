@@ -228,6 +228,12 @@ function paintBall(indice){
 	times.sort();
 }
 
+function eraseBalls(){
+	document.getElementById("position").innerHTML= '';
+	document.getElementById("segments").innerHTML= '';
+
+}
+
 var popUp = function(callback, indice){
 		var slide;
 		var content = vquiz_sample.pois[indice].slide_id;
@@ -292,6 +298,8 @@ function hidde(){
 $('#transcriptBox').hide();
 $('#hide_button2').show();
 $('#videoBox').css("width", '90%');
+eraseBalls();
+paintBalls();
 }
 
 function show(){
