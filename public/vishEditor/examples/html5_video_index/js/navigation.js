@@ -9,11 +9,6 @@ var prevNextBall;
 
 var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
-
-
-$(document).ready(function(){
-
-	/* ------- DOM manipulations ------ */
 	var probando = function(){
 		if(nextBall-prevNextBall < RANGE){
 			//falta
@@ -21,6 +16,12 @@ $(document).ready(function(){
 			video.play();
 		}
 }
+
+
+$(document).ready(function(){
+
+	/* ------- DOM manipulations ------ */
+
 
 
 	video = document.getElementsByTagName('video')[0]; 
@@ -308,5 +309,4 @@ eraseBalls();
 paintBalls();
 $('#transcriptBox').show();
 $('#hide_button2').hide();
-
 }
