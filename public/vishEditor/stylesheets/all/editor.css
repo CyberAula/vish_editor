@@ -1948,7 +1948,7 @@ div.object_wrapper {
 .anim_text {
 	opacity: 1;
 	border-radius: 5px;
-	background: rgba(28, 49, 71); /* Fallback */
+	background: rgba(28, 49, 71, 0.6); /* Fallback */
 	background-color: rgba(28, 49, 71, 0.6);
 	color: rgba(28, 49, 71, 0.6);
 	width: 100%;
