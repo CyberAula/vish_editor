@@ -288,5 +288,15 @@ function seek(evt) {
 	}
 }
 
+function hidde(){
+$('#transcriptBox').hide();
+$('#hide_button2').show();
+$('#videoBox').css("width", '90%');
+}
 
+function show(){
+$('#videoBox').css("width", '60%');
+$('#transcriptBox').show();
+$('#hide_button2').hide();
 
+}

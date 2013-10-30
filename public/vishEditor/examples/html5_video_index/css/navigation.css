@@ -102,6 +102,32 @@ body {
 #navigation{
 	overflow-y: scroll;
 	height: 74%;
+	z-index: 10;
+	padding-left: 10%;
+	list-style: none;
+}
+
+
+#hide_button{
+	width: 2%;
+	height: 12%;
+	background-color: red;
+	margin-top: 20px;
+	z-index: 20;
+	position: absolute;
+
+}
+
+#hide_button2{
+	display: none;
+	width: 2%;
+	height: 12%;
+	background-color: green;
+	margin-top: 20px;
+	z-index: 20;
+	position: absolute;
+
+
 }
 
 .btn-small {
@@ -132,12 +158,12 @@ body {
     width: 35%;
   	float: right;
   	margin-right: 2%;
-  	height: 100%;
-
+  	height: 70%;
 }
+
 #videoBox{
-	float: left !important;
-    width: 60% !important;
+	float: left;
+    width: 60%;
 }
 #application{
 	height: 100% !important;
@@ -149,3 +175,4 @@ body {
 #add{
 	margin-bottom: 2%;
 }
+
