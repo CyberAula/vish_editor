@@ -304,6 +304,8 @@ paintBalls();
 
 function show(){
 $('#videoBox').css("width", '60%');
+eraseBalls();
+paintBalls();
 $('#transcriptBox').show();
 $('#hide_button2').hide();
 
