@@ -74,7 +74,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 
 		//update also subslide classes
-		if($(el).attr("type")==VISH.Constant.FLASHCARD){
+		if($(el).attr("type")===VISH.Constant.FLASHCARD || $(el).attr("type")===VISH.Constant.VTOUR){
 			var arr = $(el).find("article");
 			for (var i=0; i< arr.length; i++) {
 				$(arr[i]).addClass("hide_in_smartcard");
@@ -317,33 +317,6 @@ VISH.Slides = (function(V,$,undefined){
 		goToSlide(slideEls.length);
 	};
 
-	/**
-	 * Function to open a subslide from a determinate position
-	 * used to apply animations
-	 */
-	var openSubslideFromPosition = function(poi,triggeredByUser){
-		triggeredByUser = !(triggeredByUser===false);
-
-		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
-			var params = new Object();
-			params.slideNumber = poi.slide_id;
-			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardPointClicked,params);
-			return;
-  		}
-
-  		_onOpenSubslide(poi.slide_id);  		
-  		//done this way instead of .show() and .hide() to be able to add animations
-  		//on show and on hide with these classes
-  		$("#" + poi.slide_id).removeClass("hide_in_smartcard");  		
-  		$("#" + poi.slide_id).addClass("show_in_smartcard");
-  		//$("#" + slide_id).show();
-		triggerEnterEventById(poi.slide_id);
-
-		//Notify
-		var params = new Object();
-		params.slideNumber = poi.slide_id;
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);	
-	};
 
 	/**
 	 * Function to open a subslide
@@ -449,7 +422,6 @@ VISH.Slides = (function(V,$,undefined){
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
-			openSubslideFromPosition : openSubslideFromPosition,
 			closeSubslide			: closeSubslide,
 			isSlideset				: isSlideset,
 			triggerEnterEvent 		: triggerEnterEvent,
