@@ -513,12 +513,12 @@
 	-moz-border-radius: 6px !important;
 	-webkit-border-radius: 6px !important;
 	float: left;
-	height: 99.7%;
+	height: 100%;
 	left: 0;
 	top: 0;
 	overflow: hidden;
 	position: absolute;
-	width: 99.7%;
+	width: 100%;
 	-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 }
 
