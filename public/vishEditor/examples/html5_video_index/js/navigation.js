@@ -9,11 +9,12 @@ var prevNextBall;
 
 var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
-	var probando = function(){
+
+var probando = function(){
 		if(nextBall-prevNextBall < RANGE){
 			//falta
 		}else{
-			video.play();
+			video[0].play();
 		}
 }
 
@@ -24,9 +25,9 @@ $(document).ready(function(){
 
 
 
-	video = document.getElementsByTagName('video')[0]; 
-	track = video.querySelectorAll('track')[0]; 
-	duration = document.getElementById('duration');
+	video = $("#videoBox video");
+	track = $("#videoBox video track#nav");
+
 
 
 	position = document.getElementById('position');
@@ -34,18 +35,23 @@ $(document).ready(function(){
 
 
 
-	video.addEventListener("loadedmetadata", init, false);
+	video.on("loadedmetadata", function(){
+		init();
+	});
 	if (video.readyState >= video.HAVE_METADATA) {
-	  	init.apply(video); // missed the event
+	  	init.app+
+	  	ly(video); // missed the event
 	}
 
-	video.addEventListener("timeupdate", curTimeUpdate, false); 
+	video.on("timeupdate", function(){
+		curTimeUpdate();
+	});
 
 	_getNextBall(2);
 
  //--------------------------------------------------------------
-	video.addEventListener("timeupdate", function(){
-	var times= video.currentTime;
+	video.on("timeupdate", function(){
+	var times= video[0].currentTime;
 	// console.log(video.currentTime);
 	// llamo a la función con times de parametro
 	//si el array de bolas no esta vacio hago cosas y si no no.
@@ -53,39 +59,37 @@ $(document).ready(function(){
 	var ballsForTime = _getBallsForTime(times);
 
 	if (ballsForTime.length > 0){
-		video.pause();
+		video[0].pause();
 		$(ballsForTime).each(function(index,ball){
 			// Comprobar la ultima vez que se mostro la bola para no mostrar dos veces seguidas la misma
 			if(!ball.showed){
 				ball.showed = true;
+				console.log/
 				popUp(probando,index);
 				cont = false;
 				return false;
 			}else {
-				video.pause();
+				video[0].pause();
 			}
 		});
-		}
-	},false);
+	}
+	});
 
 // -----------------------------------------------------
 
 
 
-	play = document.getElementById('play');
-	play.addEventListener('click', togglePlay, false);
 
-	transportbar = document.getElementById('transportbar');
-	transportbar.addEventListener("click", seek, false);
+	$('#play').on("click", togglePlay);
+	$('#transportbar').on("click", seek);
 
 	/* ------ end of DOM manipulations --------*/
 
 
 
 
-
-	duration.innerHTML = video.duration.toFixed(2); //video has a property called duration. we can
-	duracion = video.duration.toFixed(2);
+	$('#duration').html(video[0].duration.toFixed(2));
+	duracion = video[0].duration.toFixed(2);
 
    // display chapters in list and transport bar
   	_getBalls();
@@ -97,18 +101,13 @@ $(document).ready(function(){
 
 
 
-// display duration and chapters once video is loaded
-
-
-
 var _getBallsForTime = function(t){
 	var ballsForTime = [];
 	//balls variable con las bolas que tienen ya parametros minTime y maxTime
 
-	var times = video.currentTime;
+	var times = video[0].currentTime;
 		if ((times >= nextBall-RANGE) && (times <= nextBall + RANGE)) {
 			ballsForTime.push(nextBall);
-			console.log("me ejecuto");
 
 		}	
 
@@ -116,14 +115,19 @@ var _getBallsForTime = function(t){
 }
 
 
-// display duration and chapters
+
+
+
 function init(evt) {
 }
 
-function _getBalls(){
+
+//JQUERY --------------------------
+
+var _getBalls = function(){
 
 	for (i = 0; i < vquiz_sample.pois.length; i++) {
-			var ballo=  [];
+		var ballo=  [];
 		var time = vquiz_sample.pois[i].time;
 		ballo.id = vquiz_sample.pois[i].id;
 		ballo.time = parseFloat(vquiz_sample.pois[i].time);
@@ -134,13 +138,14 @@ function _getBalls(){
 		ballo.minTime = ntime - RANGE;
 		ballo.maxTime = ntime + RANGE;
 		balls.push(ballo);
-		console.log(balls);
 	}
 }
 
+//----------------------//
 
+//JQUERY -------------------------
 var _getNextBall = function (time){
-	var pTime = video.duration;
+	var pTime = video[0].duration;
 	for (i = 0; i < vquiz_sample.pois.length; i++) {
 		if(parseFloat(vquiz_sample.pois[i].time) < pTime){ 
 			if(parseFloat(vquiz_sample.pois[i].time) > time){
@@ -149,26 +154,26 @@ var _getNextBall = function (time){
 		}
 	}
 			nextBall = pTime; //realmente lo que nos interesa es el tiempo de la bola.
+			console.log(nextBall);
 }
 
+//-------------------------------------------------//
 
-/*With this method we generate balls with random numbers and random time between 0 and video.duration
-*/
 
-// pause/play button
-function togglePlay() {
+
+var togglePlay = function() {
 	if (video.paused == false) {
-		video.pause();
+		video[0].pause();
 		play.style.backgroundPosition = '0 0';
 	} else {
-		video.play();
+		video[0].play();
 		play.style.backgroundPosition = '0 -75px';
 	}
 }
 
 
-function paintIndex(){
-	var screen = document.getElementById('navigation');
+var paintIndex = function(){
+	var screen = document.getElementById('chapters');
 	for (i = 0; i < vquiz_sample.pois.length; i++) {
 		console.log(vquiz_sample.pois.length);
 		var item = document.createElement('li');
@@ -177,14 +182,15 @@ function paintIndex(){
 		link.setAttribute('ident', vquiz_sample.pois[i].id);
 		link.setAttribute('time', vquiz_sample.pois[i].time);
 		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id + ' ---> '+  vquiz_sample.pois[i].time;
-		link.onclick = function () {
-			video.currentTime = this.getAttribute('time');
-			var id = this.getAttribute('ident');
-				popUp(probando,id);
-		}
+
 		item.appendChild(link);
+		
 		screen.appendChild(item);
 	}
+
+		$("#chapters li a").on("click", function(event){
+		$(event.target).attr("ident");
+	});
 }
 
 // capture onkeydown on the navigation to allow space bar to toggle play/pause
@@ -217,22 +223,21 @@ function paintBall(indice){
 	ball.className = 'ball';
 	console.log(ball);
 	var time = vquiz_sample.pois[indice].time; 
-   	var duration = parseFloat(video.duration);
+   	var duration = parseFloat(video[0].duration);
    	var bar_width = document.getElementById('positionview').offsetWidth;
    	var perc = bar_width / duration;
    	ball.style.left = Math.round((time * perc) - 0.5) - 10 + 'px';
    	marker.style.left = Math.round((time * perc) - 0.5) - 2  + 'px';
    	ball.onclick = function () {
-			video.currentTime = time;
+			video[0].currentTime = time;
 			popUp(probando,indice);
 	}
 	times.sort();
 }
 
 function eraseBalls(){
-	document.getElementById("position").innerHTML= '';
-	document.getElementById("segments").innerHTML= '';
-
+	$("#position").html('');
+	$("#segments").html('');
 }
 
 var popUp = function(callback, indice){
@@ -245,9 +250,7 @@ var popUp = function(callback, indice){
 	}
 		//var message = vquiz_sample.pois[indice].slide_id;
 		prevNextBall = nextBall;
-		console.log(prevNextBall);
-		_getNextBall(video.currentTime + RANGE);
-		console.log(nextBall);
+		_getNextBall(video[0].currentTime + RANGE);
 		var a = confirm(slide);
 	if(a){
 		if(typeof callback == "function"){
@@ -262,19 +265,13 @@ var popUp = function(callback, indice){
 // update transport bar time display
 function curTimeUpdate(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
-	var tiemp = video.currentTime.toFixed(2);
+	var tiemp = video[0].currentTime.toFixed(2);
 	curTime.innerHTML = tiemp;
-	position.style.width = Math.round(bar_width*video.currentTime/video.duration) + "px"; //for the html to draw
+	position.style.width = Math.round(bar_width*video[0].currentTime/video[0].duration) + "px"; //for the html to draw
 	//video.currentTime to know the exact time of the video playing
 	//video.duration speaks by itself.
 
 }
-
-
-
-
-
-
 
 
 
@@ -283,10 +280,10 @@ function seek(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
 	var clickpos = evt.pageX - this.offsetLeft;
 	var clickpct = clickpos / bar_width;
-	video.currentTime = clickpct * video.duration;
-	_getNextBall(video.currentTime);
-	console.log("seeeeek");
-	console.log(nextBall);
+	video[0].currentTime = clickpct * video[0].duration;
+	console.log(video[0].currentTime);
+	_getNextBall(video[0].currentTime);
+
 	// clear chapter selection
 	for (i = 0; i < cues.length; i++) {
 		var segid = "segment" + i;
@@ -295,18 +292,18 @@ function seek(evt) {
 	}
 }
 
-function hidde(){
-$('#transcriptBox').hide();
-$('#hide_button2').show();
-$('#videoBox').css("width", '90%');
-eraseBalls();
-paintBalls();
+var hide = function(){
+	$('#transcriptBox').hide();
+	$('#hide_button2').show();
+	$('#videoBox').css("width", '90%');
+	eraseBalls();
+	paintBalls();
 }
 
-function show(){
-$('#videoBox').css("width", '60%');
-eraseBalls();
-paintBalls();
-$('#transcriptBox').show();
-$('#hide_button2').hide();
+var show = function(){
+	$('#videoBox').css("width", '60%');
+	eraseBalls();
+	paintBalls();
+	$('#transcriptBox').show();
+	$('#hide_button2').hide();
 }
