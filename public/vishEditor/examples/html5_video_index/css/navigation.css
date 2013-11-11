@@ -31,6 +31,7 @@ body {
 	height: 15px;
 	width: 100%;
 	border: 2px solid black;
+	position: relative;
 }
 
 #transportbar_ul{
@@ -174,5 +175,11 @@ body {
 
 #add{
 	margin-bottom: 2%;
+}
+
+#position2{
+	width: 48%;
+	height: 18px;
+	position: absolute;
 }
 

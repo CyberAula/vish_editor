@@ -10,7 +10,7 @@ var prevNextBall;
 var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
 
-var probando = function(){
+var nearBall = function(){
 		if(nextBall-prevNextBall < RANGE){
 			//falta
 		}else{
@@ -21,19 +21,7 @@ var probando = function(){
 
 $(document).ready(function(){
 
-	/* ------- DOM manipulations ------ */
-
-
-
 	video = $("#videoBox video");
-	track = $("#videoBox video track#nav");
-
-
-
-	position = document.getElementById('position');
-	curTime  = document.getElementById('curTime');
-
-
 
 	video.on("loadedmetadata", function(){
 		init();
@@ -75,15 +63,10 @@ $(document).ready(function(){
 	}
 	});
 
-// -----------------------------------------------------
-
-
-
 
 	$('#play').on("click", togglePlay);
 	$('#transportbar').on("click", seek);
 
-	/* ------ end of DOM manipulations --------*/
 
 
 
@@ -91,13 +74,17 @@ $(document).ready(function(){
 	$('#duration').html(video[0].duration.toFixed(2));
 	duracion = video[0].duration.toFixed(2);
 
-   // display chapters in list and transport bar
-  	_getBalls();
+   	_getBalls();
 	paintBalls();
 	paintIndex();
 
 
 });
+
+	$(window).resize(function() {
+	eraseBalls();
+	paintBalls();
+	});
 
 
 
@@ -116,13 +103,10 @@ var _getBallsForTime = function(t){
 
 
 
-
-
 function init(evt) {
 }
 
 
-//JQUERY --------------------------
 
 var _getBalls = function(){
 
@@ -141,9 +125,7 @@ var _getBalls = function(){
 	}
 }
 
-//----------------------//
 
-//JQUERY -------------------------
 var _getNextBall = function (time){
 	var pTime = video[0].duration;
 	for (i = 0; i < vquiz_sample.pois.length; i++) {
@@ -157,12 +139,10 @@ var _getNextBall = function (time){
 			console.log(nextBall);
 }
 
-//-------------------------------------------------//
-
 
 
 var togglePlay = function() {
-	if (video.paused == false) {
+	if (video[0].paused == false) {
 		video[0].pause();
 		play.style.backgroundPosition = '0 0';
 	} else {
@@ -182,14 +162,12 @@ var paintIndex = function(){
 		link.setAttribute('ident', vquiz_sample.pois[i].id);
 		link.setAttribute('time', vquiz_sample.pois[i].time);
 		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id + ' ---> '+  vquiz_sample.pois[i].time;
-
 		item.appendChild(link);
-		
 		screen.appendChild(item);
 	}
-
 		$("#chapters li a").on("click", function(event){
-		$(event.target).attr("ident");
+		video[0].currentTime = $(event.target).attr("time");
+	    popUp(probando,$(event.target).attr("ident")); //migrated to JQuery working
 	});
 }
 
@@ -216,7 +194,7 @@ function paintBall(indice){
 	var ball = document.createElement('li');
 	var marker = document.createElement('div');
 	var segments = 	document.getElementById('segments');
-	var position = document.getElementById('position');
+	var position = document.getElementById('transportbar');
 	position.appendChild(marker);
 	segments.appendChild(ball);
 	marker.className = 'marker';
@@ -226,8 +204,8 @@ function paintBall(indice){
    	var duration = parseFloat(video[0].duration);
    	var bar_width = document.getElementById('positionview').offsetWidth;
    	var perc = bar_width / duration;
-   	ball.style.left = Math.round((time * perc) - 0.5) - 10 + 'px';
-   	marker.style.left = Math.round((time * perc) - 0.5) - 2  + 'px';
+   	ball.style.left = ((Math.round((time * perc) - 0.5) - 10)*100)/($('#segments').width()) + '%';
+   	marker.style.left =((Math.round((time * perc) - 0.5) - 2)*100)/($('#transportbar').width()) + '%';
    	ball.onclick = function () {
 			video[0].currentTime = time;
 			popUp(probando,indice);
@@ -236,7 +214,7 @@ function paintBall(indice){
 }
 
 function eraseBalls(){
-	$("#position").html('');
+	$("#transportbar").html('');
 	$("#segments").html('');
 }
 
@@ -263,11 +241,11 @@ var popUp = function(callback, indice){
 
 
 // update transport bar time display
-function curTimeUpdate(evt) {
+var curTimeUpdate = function(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
 	var tiemp = video[0].currentTime.toFixed(2);
-	curTime.innerHTML = tiemp;
-	position.style.width = Math.round(bar_width*video[0].currentTime/video[0].duration) + "px"; //for the html to draw
+	$("#curTime").html(tiemp);
+	$("#position").width((Math.round(bar_width*video[0].currentTime/video[0].duration) + "px")); //for the html to draw
 	//video.currentTime to know the exact time of the video playing
 	//video.duration speaks by itself.
 
@@ -276,8 +254,8 @@ function curTimeUpdate(evt) {
 
 
 // seek on transport bar
-function seek(evt) {
-	var bar_width = document.getElementById('positionview').offsetWidth;
+var seek = function(evt) {
+	var bar_width = document.getElementById('positionview').offsetWidth; // "!it calculates the size of bar_width dinamically, even when you resize the navigation window.
 	var clickpos = evt.pageX - this.offsetLeft;
 	var clickpct = clickpos / bar_width;
 	video[0].currentTime = clickpct * video[0].duration;
