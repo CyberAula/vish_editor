@@ -26,6 +26,10 @@ VISH.Messenger = (function(V,undefined){
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
 		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onVEFocusChange, function(params){ 
+			notifyEventByMessage(V.Constant.Event.onVEFocusChange,params);
+		});
 	};
 
 	var notifyEventByMessage = function(event,params){

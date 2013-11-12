@@ -5,10 +5,12 @@ VISH.Status = (function(V,$,undefined){
 	var _isOnline;
 	var _isSlave;
 	var _isPreventDefault;
+	var _isVEfocused;
 	
 	var init = function(callback){
 		_checkIframe();
 		_checkDomain();
+		_isVEfocused = false;
 
 		V.Status.Device.init(function(returnedDevice){
 			//Device and its viewport loaded
@@ -145,7 +147,7 @@ VISH.Status = (function(V,$,undefined){
 				_isSlave=false;
 			}
 		}
-	}
+	};
 
 	var isPreventDefaultMode = function(){
 		if(typeof _isPreventDefault !=='undefined'){
@@ -163,6 +165,21 @@ VISH.Status = (function(V,$,undefined){
 				_isPreventDefault=false;
 			}
 		}
+	};
+
+	var setVEFocus = function(focus){
+		if((typeof focus == "boolean")&&(focus!=_isVEfocused)){
+			_isVEfocused = focus;
+
+			var params = new Object();
+			params.focus = focus;
+			params.blur = !focus;
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onVEFocusChange,params);
+		}
+	}
+
+	var isVEFocused = function(){
+		return _isVEfocused;
 	}
 
 
@@ -176,7 +193,9 @@ VISH.Status = (function(V,$,undefined){
 		isSlaveMode 			: isSlaveMode,
 		setSlaveMode			: setSlaveMode,
 		isPreventDefaultMode 	: isPreventDefaultMode,
-		setPreventDefaultMode 	: setPreventDefaultMode
+		setPreventDefaultMode 	: setPreventDefaultMode,
+		setVEFocus				: setVEFocus,
+		isVEFocused 			: isVEFocused
 	};
 
 }) (VISH, jQuery);

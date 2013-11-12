@@ -19,19 +19,19 @@ VISH.Slides = (function(V,$,undefined){
 	/* 
 	 * Slides Management
 	 */
-	var updateSlides = function() {
+	var updateSlides = function(){
 		setSlides(document.querySelectorAll('section.slides > article'));
 		_updateSlideClasses();
 		_updateHash();
 	};
 
-	var _updateHash = function() {
+	var _updateHash = function(){
 		if(!V.Editing){
 			location.replace('#' + (curSlideIndex + 1));
 		}
 	};
 
-	var _updateSlideClasses = function() {
+	var _updateSlideClasses = function(){
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:

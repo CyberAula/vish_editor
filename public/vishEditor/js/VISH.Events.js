@@ -62,7 +62,7 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 
-		$(document).on('click','.close_subslide', onFlashcardCloseSlideClicked);
+		$(document).on('click','.close_subslide', onCloseSubslideClicked);
 
 		//when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== "undefined"){
@@ -73,6 +73,13 @@ VISH.Events = (function(V,$,undefined){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
+
+		//Focus
+		$(window).focus(function(){
+			V.Status.setVEFocus(true);
+		}).blur(function(){
+			V.Status.setVEFocus(false);
+		});
 
 		//Load onresize event
 		//Prevent multiple consecutively calls
@@ -133,7 +140,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off('click', '#closeButton');
 
-		$(document).off('click','.close_subslide', onFlashcardCloseSlideClicked);
+		$(document).off('click','.close_subslide', onCloseSubslideClicked);
 
 		if(typeof applicationCache !== "undefined"){
 			applicationCache.removeEventListener('cached', function() {
@@ -175,7 +182,7 @@ VISH.Events = (function(V,$,undefined){
 
 
 	/////////////////
-	// Flashcard events
+	// Subslide events
 	//////////////////
 
 	/**
@@ -189,7 +196,7 @@ VISH.Events = (function(V,$,undefined){
 		}
 	};
 
-	var onFlashcardCloseSlideClicked = function(event){
+	var onCloseSubslideClicked = function(event){
 		var close_slide_id = event.target.id.substring(5); //the id is close3
 		V.Slides.closeSubslide(close_slide_id,true);
 	};
@@ -199,7 +206,7 @@ VISH.Events = (function(V,$,undefined){
 			bindViewerEventListeners		: bindViewerEventListeners,
 			unbindViewerEventListeners		: unbindViewerEventListeners,
 			onFlashcardPoiClicked 			: onFlashcardPoiClicked,
-			onFlashcardCloseSlideClicked 	: onFlashcardCloseSlideClicked
+			onCloseSubslideClicked 			: onCloseSubslideClicked
 	};
 
 }) (VISH,jQuery);

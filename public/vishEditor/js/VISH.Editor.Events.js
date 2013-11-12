@@ -73,9 +73,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$('article').live('slideenter', V.Editor.onSlideEnterEditor);
 			$('article').live('slideleave', V.Editor.onSlideLeaveEditor);
 
+			//Focus
+			$(window).focus(function(){
+				V.Status.setVEFocus(true);
+			}).blur(function(){
+				V.Status.setVEFocus(false);
+			});
+
 			//Tutorial events
 			_addTutorialEvents();
-
 
 			//Fancyboxes
 
