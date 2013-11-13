@@ -86,6 +86,14 @@ VISH.I18n = (function(V,$,undefined){
 			}
 		});
 
+		//Translante hrefs attributes
+		$("[i18n-key-href]").each(function(index, elem){
+			var translation = getTrans($(elem).attr("i18n-key-href"));
+			if(translation!=null){
+				$(elem).attr("href",translation);
+			}
+		});
+
 		// Translate images (if any)
 
 		// var duration = new Date().getTime() - initTime;

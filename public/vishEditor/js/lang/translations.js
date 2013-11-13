@@ -256,6 +256,7 @@ var i18n =
 				"i.VESurvey2"				: "Por favor, rellena",
 				"i.VESurvey3"				: "esta encuesta",
 				"i.VESurvey4"				: "¡Gracias por tu colaboración",
+				"i.VESurveyURL"				: "https://docs.google.com/forms/d/1b_Ml2iua0oDNKkJqc7eT1W2CDlRhIZR__w2AlicfwjA/viewform",			
 
 				//Competitions
 				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
@@ -581,6 +582,9 @@ var i18n =
 				"i.Yes"						: "Yes",
 				"i.ZoneTooltip"				: "Click here to add content",
 
+				//Survey
+				"i.VESurveyURL"				: "https://docs.google.com/forms/d/1jqgQsQ84sBsETRt0qY-vAz7dWk9hT3ouWH1dN0vGzQA/viewform",
+				
 				//Tooltips
 				"i.tooltip.QSInput"			: "Enter a name for the live quiz",
 
