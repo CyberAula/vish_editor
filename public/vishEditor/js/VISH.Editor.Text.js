@@ -243,6 +243,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		//Catch the focus event
 		ckeditor.on('focus', function(event){
+
+			V.Status.setCKEditorInstanceFocused(true);
+
 			if((options)&&(options.placeholder===true)){
 				var a = $(initial_text).text().replace(/\s+/g,'');
 				var b = $(event.editor.getData()).text().replace(/\s+/g,'');
@@ -259,7 +262,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		ckeditor.on('blur', function(event){
-			//Code here
+			V.Status.setCKEditorInstanceFocused(false);
 		});
 
 		//Exnteds CKEditor functionality

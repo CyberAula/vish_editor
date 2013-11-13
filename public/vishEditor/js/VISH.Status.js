@@ -5,12 +5,18 @@ VISH.Status = (function(V,$,undefined){
 	var _isOnline;
 	var _isSlave;
 	var _isPreventDefault;
-	var _isVEfocused;
+
+	//Focus management
+	var _isVEFocused;
+	var _isWindowFocused;
+	var _isCKEditorInstanceFocused;
 	
 	var init = function(callback){
 		_checkIframe();
 		_checkDomain();
-		_isVEfocused = false;
+		_isVEFocused = false;
+		_isWindowFocused = false;
+		_isCKEditorInstanceFocused = false;
 
 		V.Status.Device.init(function(returnedDevice){
 			//Device and its viewport loaded
@@ -167,35 +173,56 @@ VISH.Status = (function(V,$,undefined){
 		}
 	};
 
-	var setVEFocus = function(focus){
-		if((typeof focus == "boolean")&&(focus!=_isVEfocused)){
-			_isVEfocused = focus;
+	var setWindowFocus = function(focus){
+		if(typeof focus == "boolean"){
+			_isWindowFocused = focus;
+			_updateFocus(!focus);
+		}
+	};
 
+	var setCKEditorInstanceFocused = function(focus){
+		if(typeof focus == "boolean"){
+			_isCKEditorInstanceFocused = focus;
+			_updateFocus(!focus);
+		}
+	};
+
+	var _updateFocus = function(delayUpdate){
+		if(delayUpdate===true){
+			setTimeout(function(){
+				_updateFocus();
+			},100);
+			return;
+		}
+		var updatedFocus = ((_isWindowFocused)||(_isCKEditorInstanceFocused));
+		
+		if(updatedFocus!=_isVEFocused){
+			_isVEFocused = updatedFocus;
 			var params = new Object();
-			params.focus = focus;
-			params.blur = !focus;
+			params.focus = updatedFocus;
 			V.EventsNotifier.notifyEvent(V.Constant.Event.onVEFocusChange,params);
 		}
-	}
+	};
 
 	var isVEFocused = function(){
-		return _isVEfocused;
-	}
+		return _isVEFocused;
+	};
 
 
 	return {
-		init					: init,
-		getDevice				: getDevice,
-		getIsEmbed 				: getIsEmbed,
-		getIsInIframe			: getIsInIframe,
-		getIframe				: getIframe,
-		isOnline 				: isOnline,
-		isSlaveMode 			: isSlaveMode,
-		setSlaveMode			: setSlaveMode,
-		isPreventDefaultMode 	: isPreventDefaultMode,
-		setPreventDefaultMode 	: setPreventDefaultMode,
-		setVEFocus				: setVEFocus,
-		isVEFocused 			: isVEFocused
+		init						: init,
+		getDevice					: getDevice,
+		getIsEmbed 					: getIsEmbed,
+		getIsInIframe				: getIsInIframe,
+		getIframe					: getIframe,
+		isOnline 					: isOnline,
+		isSlaveMode 				: isSlaveMode,
+		setSlaveMode				: setSlaveMode,
+		isPreventDefaultMode 		: isPreventDefaultMode,
+		setPreventDefaultMode 		: setPreventDefaultMode,
+		setWindowFocus				: setWindowFocus,
+		setCKEditorInstanceFocused	: setCKEditorInstanceFocused,
+		isVEFocused 				: isVEFocused
 	};
 
 }) (VISH, jQuery);
