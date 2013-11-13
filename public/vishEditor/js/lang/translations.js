@@ -6,10 +6,6 @@ var i18n =
 				//Walkthroughs
 				"i.walkMenuHelp1a"			: "Para aprender a utilizar ViSH Editor tienes a tu disposición varios videotutoriales en nuestro",
 				"i.YouTubeChannel"			: "canal de YouTube",
-				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
-				"i.walkCompetitions1_2"		: "Para participar sólo tienes que añadir el tag ViSHCompetition2013 a tu excursión y uno o más de los tags siguientes:",
-				"i.walkCompetitions1_3"		: "Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience o ComputerScience.",
-				"i.walkCompetitions1_4"		: "Para más información ve a http://vishub.org/competitions o a las preguntas frecuentes en http://vishub.org/faq#faq_competitions_1a",
 				"i.walkMenuHelp1b"			: "Estos tutoriales cubren desde el uso básico para principiantes hasta funcionalidades avanzadas de la herramienta.",
 				"i.walkMenuHelp2"			: "El siguiente videotutorial te enseñará como empezar a utilizar esta herramienta en unos pocos minutos.",
 				"i.walkMenuHelp3"			: "Si lo prefieres puedes hacer click aquí para ver un tutorial textual que te enseñará rápidamente los conceptos básicos para empezar a utilizar ViSH Editor.",
@@ -260,7 +256,16 @@ var i18n =
 				"i.VESurvey2"				: "Por favor, rellena",
 				"i.VESurvey3"				: "esta encuesta",
 				"i.VESurvey4"				: "¡Gracias por tu colaboración",
-				
+
+				//Competitions
+				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
+				"i.walkCompetitions1_2"		: "Para participar sólo tienes que añadir el tag ViSHCompetition2013 a tu excursión y uno o más de los siguientes tags:",
+				"i.walkCompetitions1_3"		: "Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience o ComputerScience.",
+				"i.walkCompetitions1_4"		: "Para más información ve a",
+				"i.walkCompetitions1_5"		: "la página de información",
+				"i.walkCompetitions1_6"		: "o a la",
+				"i.walkCompetitions1_7"		: "sección de preguntas frecuentes",
+
 				//UI
 				"i.accept"					: "aceptar",
 				"i.add"						: "añadir",
@@ -307,6 +312,7 @@ var i18n =
 				"i.ClassicalLanguages"		: "Lenguas Clásicas",
 				"i.close"					: "cerrar",
 				"i.Close"					: "Cerrar",
+				"i.Competitions"			: "Competición",
 				"i.content"					: "contenido",
 				"i.Content"					: "Contenido",
 				"i.Context"					: "Contexto",
