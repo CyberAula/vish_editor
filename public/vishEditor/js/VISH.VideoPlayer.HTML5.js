@@ -12,58 +12,49 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 
 	var setVideoEvents = function(){
 		var videos = $("video")
-		$.each(videos, function(index, video) {
-			video.addEventListener('play', function () {
+		$.each(videos, function(index, video){
+			video.addEventListener('play', function(){
 				// V.Debugging.log("Play at " + video.currentTime);
-
 				var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
-
 				playTriggeredByUser = true;
 			}, false);
-			video.addEventListener('pause', function () {
+			video.addEventListener('pause', function(){
 				// V.Debugging.log("Pause " + video.currentTime);
-
 				var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
-				
 				pauseTriggeredByUser = true;
 			}, false);
 			video.addEventListener('ended', function () {
-				// V.Debugging.log("Ended " + video.currentTime)
+				// V.Debugging.log("Ended " + video.currentTime);
 			}, false);
-
 			video.addEventListener("error", function(err) {
-                // V.Debugging.log("Video error: " + err)
+                // V.Debugging.log("Video error: " + err);
             }, false);
-
 			video.addEventListener("seeked", function(err) {
-                // V.Debugging.log("Seek at " + video.currentTime)
-
+                // V.Debugging.log("Seek at " + video.currentTime);
                 var params = new Object();
 				params.type = "HTML5";
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
-				
 				seekTriggeredByUser = true;
             }, false);
-
 			//PREVENT KEYBOARD EVENTS ON FIREFOX!
-			$(video).focus(function(event) {
+			$(video).focus(function(event){
 				this.blur();
 			});
 		});
-	}
+	};
 	
 		
 	/**
@@ -86,7 +77,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 	
 	
 	/**
@@ -96,19 +87,18 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		var currentVideos = $(element).find("video");
 		$.each(currentVideos, function(index, video) {
 			var playing = ! video.paused;
-			$(video).attr("wasplayingonslideleave",playing)
+			$(video).attr("wasplayingonslideleave",playing);
 			if(playing){
-				video.pause()
+				video.pause();
 			}
 		});
-	}
+	};
 
 	/**
 	 * Function to start a specific video
 	 */
 	var playVideo = function(videoId,currentTime){
 		var video = $("#"+videoId)[0];
-
 		if((typeof currentTime === 'number')&&(video.currentTime !== currentTime)){
 			seekTriggeredByUser = false;
 			video.currentTime = currentTime;
@@ -117,7 +107,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			playTriggeredByUser = false;
 			video.play();
 		}
-	}
+	};
 
 	/**
 	 * Function to pause a specific video
@@ -132,7 +122,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			pauseTriggeredByUser = false;
 			video.pause();
 		}
-	}
+	};
 
 
 	/**
@@ -144,10 +134,10 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			seekTriggeredByUser = false;
 			video.currentTime = currentTime;
 		}
-	}
+	};
 
 	var showControls = function(showControls){
-		var videos = $("video")
+		var videos = $("video");
 		$.each(videos, function(index, video) {
 			if(!showControls){
 				$(video).removeAttr("controls");
@@ -155,7 +145,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 				$(video).attr("controls",true);
 			}
 		});
-	}
+	};
 
 	return {
 		init 				: init,
