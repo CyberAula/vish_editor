@@ -162,6 +162,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Settings.displaySettings();
 		}
 
+		//Fill About screen
+		$("#VEversion").html(V.VERSION);
+
 		//Try to win focus
 		window.focus();
 	};

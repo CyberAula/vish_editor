@@ -252,6 +252,15 @@ var i18n =
 				//Video Tutorials
 				"i.vtTitle_GStarted"		: "Introducción a ViSH Editor",
 
+				//About screen
+				"i.About2"					: "Código disponible en",
+				"i.About3"					: "visita nuestro canal de YouTube",
+				"i.About4"					: "Desarrollado por",
+				"i.VESurvey1"				: "Ayúdanos a mejorar ViSH Editor",
+				"i.VESurvey2"				: "Por favor, rellena",
+				"i.VESurvey3"				: "esta encuesta",
+				"i.VESurvey4"				: "¡Gracias por tu colaboración",
+				
 				//UI
 				"i.accept"					: "aceptar",
 				"i.add"						: "añadir",
@@ -309,6 +318,7 @@ var i18n =
 				"i.Description"				: "Descripción",
 				"i.difficult"				: "difícil",
 				"i.Difficulty"				: "Dificultad",
+				"i.Documentation"			: "Documentación",
 				"i.done"					: "hecho",
 				"i.Done"					: "Hecho",
 				"i.draft"					: "borrador",
@@ -357,6 +367,7 @@ var i18n =
 				"i.Language"				: "Idioma",
 				"i.Languageindependent"		: "Independiente del idioma",
 				"i.Law"						: "Derecho",
+				"i.License"					: "Licencia",
 				"i.limitReached"			: "limite alcanzado",
 				"i.link"					: "enlace",
 				"i.Literature"				: "Literatura",
@@ -466,6 +477,7 @@ var i18n =
 				"i.Upload"					: "Subir",
 				"i.url"						: "enlace",
 				"i.Url"						: "Enlace",
+				"i.Version"					: "Versión",
 				"i.veryeasy"				: "muy fácil",
 				"i.verydifficult"			: "muy difícil",
 				"i.video"					: "vídeo",

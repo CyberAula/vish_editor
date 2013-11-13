@@ -92,6 +92,10 @@ this can not be done with show() and hide() because then it remains with display
 	display: block !important;
 }
 
+.temp_hidden{
+	display: none !important;
+}
+
 .slides > article.far-past.temp_hidden {
 	display: none;
 }

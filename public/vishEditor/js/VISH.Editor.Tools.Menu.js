@@ -208,6 +208,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	//More Actions
 	///////////////
 
+	var about = function(){
+		V.Tour.startTourWithId('about_screen', 'top');
+	}
+
 	var insertSmartcard = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_smartcards_repo');
@@ -268,12 +272,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
-			$("#menu").hide();
+			$("#menu ul.menu_option_main").addClass("temp_hidden");
 			setTimeout(function(){
-				$("#menu").show();
-			},50);
+				$("#menu ul.menu_option_main").removeClass("temp_hidden");
+			},500);
 		}
-	}
+	};
 
 	return {
 		init							: init,
@@ -290,7 +294,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
-		help 							: help
+		help 							: help,
+		about							: about
 	};
 
 }) (VISH, jQuery);

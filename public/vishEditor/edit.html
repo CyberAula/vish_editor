@@ -229,7 +229,13 @@
 									<i class="icon-button icon-question"></i>
 									<span i18n-key="i.Help">Help</span>
 								</a>
-							</li
+							</li>
+							<li>
+								<a class="menu_option menu_action" action="about">
+									<i class="icon-button icon-info"></i>
+									<span i18n-key="i.About">About</span>
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -353,7 +359,7 @@
 	</section>
 
 	<div id="hidden_links" style="display: none;">
-		<!-- Hidden link to open walkthrough -->
+		<!-- Hidden link to open help -->
 		<a id="help_right"></a>
 		<!-- Hidden link to open preview -->
 		<a id="preview_action"></a>
@@ -799,7 +805,7 @@
 	</div>
   
 	<!-- FANCYBOX ADD A LINK TO A ELEMENT (IMAGE,etc) -->
-	<div style='display:none' isFancyBoxContainer="true">
+	<div style='display:none'>
 		<div id='tools_addUrl'>	  		
 			<div class="box1 box1fancy1">
 				<p class="textfancy">Url</p></br>
@@ -815,7 +821,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<!-- NOTIFICATIONS -->
 
@@ -1302,7 +1307,7 @@
 		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_template_editorfull tut_without_arrow" data-options="tipLocation:none">
 			<h2 i18n-key="i.walkWelcome1_1">Welcome to ViSH Editor!</h2>
 			<p i18n-key="i.walkWelcome1_2">ViSH Editor is an innovative web application that allows you to create amazing web slideshows and novel educational resources such as Virtual Excursions.</p>
-			<p><span i18n-key="i.walkMenuHelp1a">To learn how to use ViSH Editor you can watch several video tutorials in our</span> <a i18n-key="i.YouTubeChannel" class="tut_tutlink" href="http://www.youtube.com/watch?v=tZ8qirSTIIs&list=PLve_ezrFIJJxujiqCZid6KcgxPh4ksSp2&vq=hd720" target="_blank">YouTube Channel</a>. <span i18n-key="i.walkMenuHelp1b">These tutorials cover from basic usage for beginners to advanced features.</span></p>
+			<p><span i18n-key="i.walkMenuHelp1a">To learn how to use ViSH Editor you can watch several video tutorials in our</span> <a i18n-key="i.YouTubeChannel" class="tut_tutlink" href="http://www.youtube.com/channel/UCo-73n6eZBWNBs2gvKLyBhQ?feature=watch" target="_blank">YouTube Channel</a>. <span i18n-key="i.walkMenuHelp1b">These tutorials cover from basic usage for beginners to advanced features.</span></p>
 			<p i18n-key="i.walkMenuHelp2">The following video tutorial will teach you how to getting started with ViSH Editor in a few minutes.</p>
 			<p i18n-key="i.vtTitle_GStarted" class="tut_video_title">Getting Started with ViSH Editor</p>
 			<iframe class="tut_iframe_yt" width="625" height="400" src="//www.youtube.com/embed/fBSNZxs8m0I" frameborder="0" allowfullscreen></iframe>
@@ -2152,6 +2157,24 @@
 	</ol>
 
 	<!-- Walkthrough end -->
+
+	<!-- About screen -->
+	<ol id="about_screen" class="joyRideTipContent">
+		<li data-id="thumbcontent" class="about_fancybox tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.About1">ViSH Editor</h2>
+			<p><span class="aboutfield" i18n-key="i.Version">Version</span>: <span id="VEversion"></span></p>
+			<p class="tut_withoutbottomspace"><span class="aboutfield" i18n-key="i.License">License</span>: <span i18n-key="i.OpenSource">Open source</span></p>
+			<p class="tut_withouttopspace"><span i18n-key="i.About2">Code available at</span> <a class="tut_tutlink" href="https://github.com/ging/vish_editor" target="_blank">https://github.com/ging/vish_editor</a>.</p>
+			<p><span class="aboutfield" i18n-key="i.Documentation">Documentation</span>: <a i18n-key="i.About3" class="tut_tutlink" href="http://www.youtube.com/channel/UCo-73n6eZBWNBs2gvKLyBhQ?feature=watch" target="_blank">visit our YouTube Channel</a></p>
+			<p><span class="aboutfield" i18n-key="i.About4">Developed by</span> <span>UPM (Universidad Politécnica de Madrid)</span></p>
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
+			<h2 i18n-key="i.VESurvey1">Help us to improve ViSH Editor</h2>
+			<p class="tut_withoutbottomspace"><span i18n-key="i.VESurvey2">Please fill</span> <a class="tut_tutlink" i18n-key="i.VESurvey3" href="https://docs.google.com/forms/d/1jqgQsQ84sBsETRt0qY-vAz7dWk9hT3ouWH1dN0vGzQA/viewform" target="_blank">this survey</a>.</p>
+			<p class="tut_withouttopspace"><span i18n-key="i.VESurvey4">Thank you for your collaboration</span>!</p>
+		</li>
+	</ol>
 
 	<iframe id="hiddenIframeForAjaxDownloads" style="border:0" iframeborder="0" frameborder="0" iframeelement.frameborder="0;"></iframe>
 

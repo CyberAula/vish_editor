@@ -2272,6 +2272,23 @@ table.tut_table_image tr td:first-child {
 	padding-right: 20px !important;
 }
 
+/* About */
+
+div.about_fancybox {
+	top: 70px;
+	left: 230px;
+	width: 930px;
+	font-family: arial, sans-serif;
+	border: solid 2px black;
+}
+
+div.about_fancybox .joyride-next-tip {
+	display: none;
+}
+
+div.about_fancybox span.aboutfield {
+	font-style: italic;
+}
 
 /* Iframe Style */
 iframe:not(.tut_iframe_yt) {
