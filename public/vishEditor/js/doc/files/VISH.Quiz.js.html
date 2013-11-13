@@ -109,10 +109,10 @@ VISH.Quiz = (function(V,$,undefined){
 		} else {
 			quizMode = V.Constant.QZ_MODE.SELFA;
 		}
-	}
+	};
 
 	var init = function(){
-		$(&quot;#prompt2name&quot;).watermark(&quot;Quiz Session Name&quot;);
+		$(&quot;#quizSessionNameInput&quot;).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
 		V.Quiz.API.init();
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
@@ -165,7 +165,7 @@ VISH.Quiz = (function(V,$,undefined){
 				_answerRTQuiz(quiz,quizModule,report);
 			}
 		}
-	}
+	};
 
 	var _answerRTQuiz = function(quiz,quizModule,report){
 		if(!quizSessionId){
@@ -173,9 +173,19 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		if(report.empty===true){
-			_showAlert(&quot;prompt3_alert&quot;);
+			var options = {};
+			options.width = &#x27;80%&#x27;;
+			options.text = V.I18n.getTrans(&quot;i.QuizEmptyAnswerAlert&quot;);
+			var button1 = {};
+			button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
 			return;
 		}
+
 		quizModule.disableQuiz(quiz);
 
 		_loadingAnswerButton(quiz);
@@ -185,13 +195,33 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.API.sendAnwers(answers, quizSessionId,
 			function(data){
 				disableAnswerButton(quiz);
-				_showAlert(&quot;prompt4_alert&quot;);
+
+				var options = {};
+				options.width = &#x27;80%&#x27;;
+				options.text = V.I18n.getTrans(&quot;i.QuizSubmittedAlert&quot;);
+				var button1 = {};
+				button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
 			}, 
 			function(error){
 				disableAnswerButton(quiz);
-				_showAlert(&quot;prompt5_alert&quot;);
+
+				var options = {};
+				options.width = &#x27;80%&#x27;;
+				options.text = V.I18n.getTrans(&quot;i.QuizNotSubmittedAlert&quot;);
+				var button1 = {};
+				button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
 		});
-	}
+	};
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
@@ -209,17 +239,27 @@ VISH.Quiz = (function(V,$,undefined){
 				_startNewQuizSession(quiz);
 			break;
 		}
-	}
+	};
 
 	var _startNewQuizSession = function(quiz){
 		if(currentQuizSession){
-			_showAlert(&quot;prompt1_alert&quot;);
+			var options = {};
+			options.width = &#x27;80%&#x27;;
+			options.text = V.I18n.getTrans(&quot;i.QuizMultipleLaunchAlert&quot;);
+			var button1 = {};
+			button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons = [button1];
+			V.Utils.showDialog(options);
+
 			return;
 		}
 		_loadingLaunchButton(quiz);
 		var quizJSON = _getQuizJSONFromQuiz(quiz);
 		V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
-	}
+	};
 
 	var _onQuizSessionReceived = function(quiz,quizSession){
 		currentQuiz = quiz;
@@ -227,16 +267,16 @@ VISH.Quiz = (function(V,$,undefined){
 
 		_runningLaunchButton(quiz);
 		$(&quot;a#addQuizSessionFancybox&quot;).trigger(&quot;click&quot;);
-	}
+	};
 
 	var _onQuizSessionReceivedError = function(quiz,error){
 		_enableLaunchButton(quiz);
-	}
+	};
 
 	var _getQuizJSONFromQuiz = function(quiz){
 		var slide = $(&quot;article&quot;).has(quiz);
 		return _getQuizJSONFromSlide(slide);
-	}
+	};
 
 	var _getQuizJSONFromSlide = function(slide){
 		var slideId = $(slide).attr(&quot;id&quot;);
@@ -257,60 +297,90 @@ VISH.Quiz = (function(V,$,undefined){
 				}
 			}
 		}
-	}
+	};
 
 	var _onStopQuiz = function(event){
-		$.fancybox(
-			$(&quot;#prompt2_alert&quot;).html(),
-			{
-				&#x27;autoDimensions&#x27;  : false,
-				&#x27;scrolling&#x27;       : &#x27;no&#x27;,
-				&#x27;width&#x27;           : $(&quot;.current&quot;).width(),
-				&#x27;height&#x27;          : Math.min(200,$(&quot;.current&quot;).height()),
-				&#x27;showCloseButton&#x27; : false,
-				&#x27;padding&#x27;         : 5,
-				&#x27;onCleanup&#x27;       : function(){
+		var options = {};
+		options.width = &#x27;80%&#x27;;
+		options.text = V.I18n.getTrans(&quot;i.QuizSaveConfirmation&quot;);
 
-				},
-				&#x27;onClosed&#x27;        : function(){
-				}
-			}
-		);
-	}
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = V.I18n.getTrans(&quot;i.cancel&quot;);
+		button1.extraclass = &quot;quizSession_button_cancel&quot;;
+		button1.callback = function(){
+			V.Quiz.onCloseQuizSession(&#x27;cancel&#x27;);
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.text = V.I18n.getTrans(&quot;i.No&quot;);
+		button2.extraclass = &quot;quizSession_button_no&quot;;
+		button2.callback = function(){
+			V.Quiz.onCloseQuizSession(&#x27;no&#x27;);
+		}
+		options.buttons.push(button2);
+		
+		var button3 = {};
+		button3.text = V.I18n.getTrans(&quot;i.Yes&quot;);
+		button3.extraclass = &quot;quizSession_button_yes&quot;;
+		button3.callback = function(){
+			V.Quiz.onCloseQuizSession(&#x27;yes&#x27;);
+		}
+		options.buttons.push(button3);
+
+		var input = document.createElement(&quot;input&quot;);
+		$(input).attr(&quot;id&quot;,&quot;quizSessionNameInput&quot;);
+		$(input).attr(&quot;title&quot;,V.I18n.getTrans(&quot;i.tooltip.QSInput&quot;));
+		$(input).addClass(&quot;quizSessionNameInput&quot;);
+		$(input).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
+		options.middlerow = $(input);
+		options.middlerowExtraClass = &quot;mr_quizSession&quot;;
+
+		options.buttonsWrapperClass = &quot;forceCenter&quot;;
+		
+		V.Utils.showDialog(options);
+	};
 
 	var onCloseQuizSession = function(saving){
 		var name = undefined;
 		switch(saving){
 			case &quot;yes&quot;:
-				$(&quot;.prompt2name&quot;).each(function(index,pn){
+				$(&quot;.quizSessionNameInput&quot;).each(function(index,pn){
 					if($(pn).is(&quot;:visible&quot;)){
 						name = $(pn).val();
 					}
 				});
-				$(&quot;.prompt_button_viewer2&quot;).addClass(&quot;quizStartButtonLoading&quot;);
+				$(&quot;.quizSession_button_yes&quot;).addClass(&quot;quizStartButtonLoading&quot;);
 				_closeQuizSession(name);
 				break;
 			case &quot;no&quot;:
-				$(&quot;.prompt_button_viewer1&quot;).addClass(&quot;quizStartButtonLoading&quot;);
-				_closeQuizSession();
+				$(&quot;.quizSession_button_no&quot;).addClass(&quot;quizStartButtonLoading&quot;);
+				_deleteQuizSession();
 				break;
 			case &quot;cancel&quot;:
 			default:
 				$.fancybox.close();
 				break;
 		}
-	}
+	};
 
 	var _closeQuizSession = function(name){
 		V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
 			$.fancybox.close();
-			$(&quot;.prompt_button_viewer1&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
-			$(&quot;.prompt_button_viewer2&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+			$(&quot;.quizSession_button_no&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+			$(&quot;.quizSession_button_yes&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
 			_enableLaunchButton(currentQuiz);
 			currentQuiz = null;
 			currentQuizSession = null;
 		});
-	}
+	};
+
+	var _deleteQuizSession = function(){
+		&#x2F;&#x2F;TODO (removeQuizSession in backend is not enabled)
+		_closeQuizSession();
+	};
 
 	&#x2F;**
 	* Function to render a quiz inside an article (a slide)
@@ -330,12 +400,12 @@ VISH.Quiz = (function(V,$,undefined){
 			$(quizButtons).append(startButton);
 		}
 		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-			var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizAnswerButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizAnswer&quot;)+&quot;&#x27;&#x2F;&gt;&quot;);
+			var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizAnswerButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizButtonAnswer&quot;)+&quot;&#x27;&#x2F;&gt;&quot;);
 			$(quizButtons).append(answerButton);
 		}
 
 		return quizButtons;
-	}
+	};
 
 
 	&#x2F;*
@@ -365,10 +435,9 @@ VISH.Quiz = (function(V,$,undefined){
 	}
 
 
-  &#x2F;*
-   * Launch button states: Enabled, Loading and Running
-   *&#x2F;
-
+	&#x2F;*
+	* Launch button states: Enabled, Loading and Running
+	*&#x2F;
 	var _enableLaunchButton = function(quiz){
 		var startButton = $(quiz).find(&quot;input.quizStartButton&quot;);
 		$(startButton).removeAttr(&quot;disabled&quot;);
@@ -390,15 +459,12 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).removeAttr(&quot;disabled&quot;);
 		$(startButton).removeClass(&quot;quizStartButtonLoading&quot;);
 		$(startButton).attr(&quot;quizStatus&quot;,&quot;running&quot;);
-		$(startButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizOptions&quot;));
+		$(startButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizButtonOptions&quot;));
 	}
 
-
-
-  &#x2F;*
-   *  Fancybox
-   *&#x2F;
-
+   &#x2F;*
+	*  Fancybox
+	*&#x2F;
 	var loadTab = function(tab_id){
 		&#x2F;&#x2F;hide previous tab
 		$(&quot;.fancy_viewer_tab_content&quot;).hide();
@@ -479,7 +545,7 @@ VISH.Quiz = (function(V,$,undefined){
 			text: url.toString()
 		}
 		$(container).qrcode(qrOptions);
-	}
+	};
 
 	var _loadStats = function(){
 		_cleanResults();
@@ -487,7 +553,7 @@ VISH.Quiz = (function(V,$,undefined){
 			_drawResults(results,{&quot;first&quot;: true});
 			_startPolling();
 		});
-	}
+	};
 
 	var _startPolling = function(){
 		_stopPolling();
@@ -500,13 +566,13 @@ VISH.Quiz = (function(V,$,undefined){
 				_drawResults(results,{&quot;first&quot;: false});
 			});
 		},2000);
-	}
+	};
 
 	var _stopPolling = function(){
 		if(currentPolling){
 			clearInterval(currentPolling);
 		}
-	}
+	};
 
 	var _drawResults = function(results,options){
 		&#x2F;&#x2F;Prepare canvas
@@ -523,14 +589,14 @@ VISH.Quiz = (function(V,$,undefined){
 			$(&quot;#quiz_chart&quot;).show();
 			quizModule.drawResults(currentQuiz,results,options);
 		}
-	}
+	};
 
 	var _cleanResults = function(){
 		var canvas = $(&quot;#quiz_chart&quot;);
 		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
 		ctx.clearRect(0, 0, $(canvas).width(), $(canvas).height());
 		$(canvas).hide();
-	}
+	};
 
 
 	&#x2F;*
@@ -550,7 +616,7 @@ VISH.Quiz = (function(V,$,undefined){
 				return null; 
 				break;
 		}
-	}
+	};
 
 	var updateCheckbox = function(checkbox,check){
 		if(typeof check == &quot;boolean&quot;){
@@ -573,21 +639,7 @@ VISH.Quiz = (function(V,$,undefined){
 				$(checkbox).attr(&quot;src&quot;,imagePathRoot+&quot;.png&quot;);
 				break;
 		}
-	}
-
-	var _showAlert = function(alertId){
-		$.fancybox(
-			$(&quot;#&quot;+alertId).html(),
-			{
-				&#x27;autoDimensions&#x27;  : false,
-				&#x27;scrolling&#x27;: &#x27;no&#x27;,
-				&#x27;width&#x27;           : $(&quot;.current&quot;).width(),
-				&#x27;height&#x27;          : Math.min(200,$(&quot;.current&quot;).height()),
-				&#x27;showCloseButton&#x27; : false,
-				&#x27;padding&#x27;       : 5 
-			}
-		);
-	}
+	};
 
 	var aftersetupSize = function(increase){
 		setTimeout(function(){
@@ -595,7 +647,7 @@ VISH.Quiz = (function(V,$,undefined){
 				_loadQr(currentQuizSession.url);
 			}
 		},500);
-	}
+	};
 
 	return {
 		initBeforeRender  	: initBeforeRender,

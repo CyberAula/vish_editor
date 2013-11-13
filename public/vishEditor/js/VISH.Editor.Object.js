@@ -10,7 +10,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Repository.init();
 		V.Editor.Object.Live.init();
 		V.Editor.Object.Web.init();
-		V.Editor.Object.PDF.init();
+		V.Editor.Object.GoogleDOC.init();
 		V.Editor.Object.Snapshot.init();
 		
 		var urlInput = $("#"+urlDivId).find("input");
@@ -300,7 +300,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>";
 						break;
 					case V.Constant.MEDIA.PDF:
-						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
+					case V.Constant.MEDIA.DOC:
+					case V.Constant.MEDIA.PPT:
+						return V.Editor.Object.GoogleDOC.generatePreviewWrapper(object);
 						break;
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
@@ -390,7 +392,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
 					case V.Constant.MEDIA.PDF:
-						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
+					case V.Constant.MEDIA.DOC:
+					case V.Constant.MEDIA.PPT:
+						V.Editor.Object.drawObject(V.Editor.Object.GoogleDOC.generateWrapper(object));
 						break;
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));

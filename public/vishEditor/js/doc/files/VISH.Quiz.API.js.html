@@ -234,7 +234,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 				&quot;authenticity_token&quot; : V.User.getToken() 
 			}
 
-			if(typeof name == &quot;string&quot;){
+			if((typeof name == &quot;string&quot;)&amp;&amp;(name.trim()!=&quot;&quot;)){
 				params[&quot;name&quot;] = name;
 			}
 

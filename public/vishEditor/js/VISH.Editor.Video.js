@@ -1,6 +1,6 @@
 VISH.Editor.Video = (function(V,$,undefined){
 		
-	var urlDivId = "tab_video_from_url_content";	
+	var urlDivId = "tab_video_from_url_content";
 		
 	var init = function(){
 		V.Editor.Video.HTML5.init();
@@ -13,8 +13,8 @@ VISH.Editor.Video = (function(V,$,undefined){
 
 		$("#tab_video_from_url_content .previewButton").click(function(event) {
 			if(V.Police.validateObject($(urlInput).val())[0]){
-				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-			V.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
+				contentToAdd = V.Editor.Utils.autocompleteUrls($(urlInput).val());
+				V.Editor.Object.drawPreview("tab_video_from_url_content", contentToAdd)
 			} else {
 				contentToAdd = null;
 			}
@@ -22,21 +22,21 @@ VISH.Editor.Video = (function(V,$,undefined){
 	};	
 
   
-  var onLoadTab = function(tab){  
-	  //Load Video from URL
+	var onLoadTab = function(tab){
+		//Load Video from URL
 		$("#tab_video_from_url_content").find("input").val("")
 		V.Editor.Object.resetPreview("tab_video_from_url_content");
-  }
+	}
 	
 	
-  var drawPreviewElement = function(){
-    V.Editor.Object.drawPreviewObject(contentToAdd);
-  }
+	var drawPreviewElement = function(){
+		V.Editor.Object.drawPreviewObject(contentToAdd);
+	}
 			
 	return {
-		init: init,
-		onLoadTab : onLoadTab,
-		drawPreviewElement : drawPreviewElement
+		init				: init,
+		onLoadTab 			: onLoadTab,
+		drawPreviewElement 	: drawPreviewElement
 	};
 
 }) (VISH, jQuery);

@@ -166,6 +166,8 @@ VISH.I18n = (function(V,$,undefined){
 					 case &quot;LI&quot;:
 					 	_translateLI(elem,translation);
 					 	break;
+					 case &quot;IMG&quot;:
+					 	_translateImg(elem,translation);
 					default:
 						&#x2F;&#x2F;Generic translation (for h,p or span elements)
 						_genericTranslate(elem,translation);
@@ -190,11 +192,11 @@ VISH.I18n = (function(V,$,undefined){
 	}
 
 	var _translateDiv = function(div,translation){
-		if($(div).attr(&quot;title&quot;) != undefined){
-			$(div).attr(&quot;title&quot;, translation);
-		}
 		if($(div).attr(&quot;data-text&quot;) != undefined){
 			$(div).attr(&quot;data-text&quot;, translation);
+		}
+		if($(div).attr(&quot;title&quot;) != undefined){
+			$(div).attr(&quot;title&quot;, translation);
 		}
 	}
 
@@ -202,12 +204,16 @@ VISH.I18n = (function(V,$,undefined){
 		$(textArea).attr(&quot;placeholder&quot;, translation);
 	}
 
-	var _translateLI = function(elem,translation){
-		if($(elem).attr(&quot;data-text&quot;) != undefined){
-			$(elem).attr(&quot;data-text&quot;, translation);
+	var _translateLI = function(li,translation){
+		if($(li).attr(&quot;data-text&quot;) != undefined){
+			$(li).attr(&quot;data-text&quot;, translation);
 		} else {
-			_genericTranslate(elem,translation);
+			_genericTranslate(li,translation);
 		}
+	}
+
+	var _translateImg = function(img,translation){
+		$(img).attr(&quot;src&quot;,V.ImagesPath + translation);
 	}
 
 	var _genericTranslate = function(elem,translation){
@@ -217,15 +223,15 @@ VISH.I18n = (function(V,$,undefined){
 	&#x2F;**
 	 * Function to translate a text
 	 *&#x2F;
-	var getTrans = function(s) {
+	var getTrans = function(s, params) {
 		if (typeof(translations)!= &#x27;undefined&#x27; &amp;&amp; translations[s]) {
-			return translations[s];
+			return _getTrans(translations[s],params);
 		}
 		&#x2F;&#x2F; V.Debugging.log(&quot;Text without translation: &quot; + s);
 
 		&#x2F;&#x2F;Search in default language
 		if (typeof(defaultTranslations)!= &#x27;undefined&#x27; &amp;&amp; defaultTranslations[s]) {
-			return defaultTranslations[s];
+			return _getTrans(defaultTranslations[s],params);
 		}
 		&#x2F;&#x2F; V.Debugging.log(&quot;Text without default translation: &quot; + s);
 
@@ -237,6 +243,26 @@ VISH.I18n = (function(V,$,undefined){
 			return s;
 		}
 	};
+
+	&#x2F;*
+	 * Replace params (if they are provided) in the translations keys. Example:
+	 * &#x2F;&#x2F; &quot;i.dtest&quot;	: &quot;Uploaded by #{name} via ViSH Editor&quot;,
+	 * &#x2F;&#x2F; VISH.I18n.getTrans(&quot;i.dtest&quot;, {name: &quot;Aldo&quot;}) -&gt; &quot;Uploaded by Aldo via ViSH Editor&quot;
+	 *&#x2F;
+	var _getTrans = function(trans, params){
+		if(typeof params != &quot;object&quot;){
+			return trans;
+		}
+
+		for(var key in params){
+			var stringToReplace = &quot;#{&quot; + key + &quot;}&quot;;
+			if(trans.indexOf(stringToReplace)!=-1){
+				trans = trans.replaceAll(stringToReplace,params[key]);
+			}
+		};
+
+		return trans;
+	}
 
 	&#x2F;**
 	 * Return the current language

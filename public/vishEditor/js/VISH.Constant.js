@@ -64,6 +64,8 @@ VISH.Constant.MEDIA.YOUTUBE_VIDEO = "youtube";
 VISH.Constant.MEDIA.HTML5_VIDEO = "HTML5";
 VISH.Constant.MEDIA.WEB = "web";
 VISH.Constant.MEDIA.JSON = "json";
+VISH.Constant.MEDIA.DOC = "doc";
+VISH.Constant.MEDIA.PPT = "ppt";
 
 //Wrapper types
 VISH.Constant.WRAPPER = {};

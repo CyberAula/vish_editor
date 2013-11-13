@@ -197,6 +197,14 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.JSON;
 		}
 
+		if(extension==&quot;doc&quot;){
+			return V.Constant.MEDIA.DOC;
+		}
+
+		if(extension==&quot;ppt&quot;){
+			return V.Constant.MEDIA.PPT;
+		}
+
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
 			return V.Constant.MEDIA.WEB;
 		}
@@ -205,7 +213,7 @@ VISH.Object = (function(V,$,undefined){
 	}
 	
 	var getExtensionFromSrc = function(source){
-		return (source.split(&#x27;.&#x27;).pop()).toLowerCase();
+		return (source.split(&#x27;.&#x27;).pop().split(&#x27;&amp;&#x27;)[0]).toLowerCase();
 	}
 
 	return {

@@ -76,9 +76,9 @@ VISH.Events = (function(V,$,undefined){
 
 		//Focus
 		$(window).focus(function(){
-			V.Status.setVEFocus(true);
+			V.Status.setWindowFocus(true);
 		}).blur(function(){
-			V.Status.setVEFocus(false);
+			V.Status.setWindowFocus(false);
 		});
 
 		//Load onresize event

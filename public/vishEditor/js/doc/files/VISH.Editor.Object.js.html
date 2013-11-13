@@ -100,13 +100,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Repository.init();
 		V.Editor.Object.Live.init();
 		V.Editor.Object.Web.init();
-		V.Editor.Object.PDF.init();
+		V.Editor.Object.GoogleDOC.init();
 		V.Editor.Object.Snapshot.init();
 		
-		var urlInput = $(urlDivId ).find(&quot;input&quot;);
-		$(urlInput).watermark(&#x27;Paste SWF file URL&#x27;);
+		var urlInput = $(&quot;#&quot;+urlDivId).find(&quot;input&quot;);
+		&#x2F;&#x2F; $(urlInput).watermark(V.I18n.getTrans(&quot;i.pasteEmbedObject&quot;));
 		
-		&#x2F;&#x2F;Load from URL
+		&#x2F;&#x2F;Load from URL (embed)
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
 			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
@@ -238,7 +238,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			&#x2F;&#x2F;   $(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
 			&#x2F;&#x2F; });
 
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
 	}
@@ -390,7 +390,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27; wmode=&#x27;opaque&#x27; &gt;&lt;&#x2F;embed&gt;&quot;;
 						break;
 					case V.Constant.MEDIA.PDF:
-						return V.Editor.Object.PDF.generatePreviewWrapperForPdf(object);
+					case V.Constant.MEDIA.DOC:
+					case V.Constant.MEDIA.PPT:
+						return V.Editor.Object.GoogleDOC.generatePreviewWrapper(object);
 						break;
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
@@ -480,7 +482,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
 					case V.Constant.MEDIA.PDF:
-						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapperForPdf(object));
+					case V.Constant.MEDIA.DOC:
+					case V.Constant.MEDIA.PPT:
+						V.Editor.Object.drawObject(V.Editor.Object.GoogleDOC.generateWrapper(object));
 						break;
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
 						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
