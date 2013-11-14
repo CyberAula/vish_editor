@@ -242,7 +242,7 @@ VISH.Slides = (function(V,$,undefined){
 	* n < 0 (go back)
 	*/
 	var moveSlides = function(n){
-		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))){
+		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))&&(V.Viewer.getPresentationType()===V.Constant.PRESENTATION)){
 			V.Recommendations.showFancybox();
 			return;
 		}

@@ -231,7 +231,12 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var getPresentationType = function(){
-		return getCurrentPresentation().type;
+		var cPresentation = getCurrentPresentation();
+		if(typeof cPresentation == "object"){
+			return cPresentation.type;
+		} else {
+			return undefined;
+		}
 	};
 
 	return {

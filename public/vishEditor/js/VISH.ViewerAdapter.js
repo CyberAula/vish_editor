@@ -93,7 +93,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		isInexternalSite = ((embed)||(scorm));
-	 	isInVishSite = ((!isInexternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+		isInVishSite = ((!isInexternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
 
 		is_preview_insertMode = false;
 		if(is_preview){
@@ -201,19 +201,24 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var decideIfPageSwitcher = function(){
 
 		// ViewBar
-		if (V.Slides.getCurrentSubSlide()!==null){
-			//Subslide active
-			$("#forward_arrow").hide();
-			$("#back_arrow").hide();
-		} else {
-			//No subslide
-			if(V.Slides.isCurrentFirstSlide()){
+		if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
+			if (V.Slides.getCurrentSubSlide()!==null){
+				//Subslide active
+				$("#forward_arrow").hide();
 				$("#back_arrow").hide();
 			} else {
-				$("#back_arrow").show();
-			} 
-			//Always show
-			$("#forward_arrow").show();
+				//No subslide
+				if(V.Slides.isCurrentFirstSlide()){
+					$("#back_arrow").hide();
+				} else {
+					$("#back_arrow").show();
+				} 
+				//Always show
+				$("#forward_arrow").show();
+			}
+		} else if (V.Viewer.getPresentationType()===V.Constant.QUIZ_SIMPLE){
+			//Remove arrow for simple quizs
+			$("#forward_arrow").hide();
 		}
 
 		// Pager
