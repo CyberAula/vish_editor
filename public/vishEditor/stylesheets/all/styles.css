@@ -121,6 +121,7 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(0);
 	-moz-transform: none;
 	-webkit-transform: translate3d(0, 0, 0);
+	z-index: 1076;
 }
 
 .slides > article.next {
