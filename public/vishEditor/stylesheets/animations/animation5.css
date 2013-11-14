@@ -1,14 +1,11 @@
 section.slides:not(.slides_editor) > article.far-past {
-	   display: block;
-	   opacity: 0;
+	display: block;
+	opacity: 0;
 }
 
 section.slides:not(.slides_editor) > article.past {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand')";
 	filter: progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand');
-	opacity: 1;
-	display: block;
-	z-index: -1;
 	-moz-transform: rotate(360deg);
 	-webkit-transform: rotate(360deg);
 	-o-transform: rotate(360deg);
@@ -23,15 +20,15 @@ section.slides:not(.slides_editor) > article.past {
 	transition-duration: 1s,1s,1s,1s,1s,1s;
 	-ms-transition-property: width,height,transform,background,font-size,opacity;
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
+	opacity: 1;
+	display: block;
+	z-index: -1;
 }
 
 section.slides:not(.slides_editor) > article.current {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand')";
 	filter: progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand');
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
-	opacity: 1;
-	display: block;
-	z-index: 1;
 	-moz-transform: rotate(0deg);
 	-webkit-transform: rotate(0deg);
 	-o-transform: rotate(0deg);
@@ -47,20 +44,20 @@ section.slides:not(.slides_editor) > article.current {
 	transition-duration: 1s,1s,1s,1s,1s,1s;
 	-ms-transition-property: width,height,transform,background,font-size,opacity;
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
+	opacity: 1;
+	display: block;
+	z-index: 1;
 }
 
 section.slides:not(.slides_editor) > article.next {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand')";
 	filter: progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=-0.00000000, M22=1.00000000,sizingMethod='auto expand');
-	opacity: 1;
 	-webkit-transform: rotate(-360deg);
 	-moz-transform: rotate(-360deg);
 	-webkit-transform: rotate(-360deg);
 	-o-transform: rotate(-360deg);
 	-ms-transform: rotate(-360deg);
 	transform: rotate(-360deg);
-	display: block;
-	z-index: -1;
 	-webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s;
 	-o-transition-property: width,height,-o-transform,background,font-size,opacity;
 	-o-transition-duration: 1s,1s,1s,1s,1s,1s;
@@ -70,6 +67,9 @@ section.slides:not(.slides_editor) > article.next {
 	transition-duration: 1s,1s,1s,1s,1s,1s;
 	-ms-transition-property: width,height,transform,background,font-size,opacity;
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
+	opacity: 1;
+	display: block;
+	z-index: -1;
 }
 
 section.slides:not(.slides_editor) > article.far-next {

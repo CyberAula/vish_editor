@@ -1,5 +1,4 @@
 section.slides:not(.slides_editor) > article.far-past {
-	display: block;
 	-webkit-transition: all 0.85s ease-in ;
 	-moz-transition: all 0.85s ease-in;
 	-o-transition: all 0.85s ease-in;
@@ -8,10 +7,10 @@ section.slides:not(.slides_editor) > article.far-past {
 	-moz-transform: scale(0);
 	-o-transform: scale(0);
 	transform: scale(0);
+	display: block;
 }
 
 section.slides:not(.slides_editor) > article.past {
-	display: block;
 	-webkit-transition: all 0.85s ease-in ;
 	-moz-transition: all 0.85s ease-in;
 	-o-transition: all 0.85s ease-in;
@@ -20,10 +19,10 @@ section.slides:not(.slides_editor) > article.past {
 	-moz-transform: scale(0);
 	-o-transform: scale(0);
 	transform: scale(0);
+	display: block;
 }
 
 section.slides:not(.slides_editor) > article.current {
-	display: block;
 	-webkit-transition: all 0.85s ease-in ;
 	-moz-transition: all 0.85s ease-in;
 	-o-transition: all 0.85s ease-in;
@@ -32,10 +31,10 @@ section.slides:not(.slides_editor) > article.current {
 	-moz-transform: scale(1);
 	-o-transform: scale(1);
 	transform: scale(1);
+	display: block;
 }
 
 section.slides:not(.slides_editor) > article.next {
-	   display: block;
 	-webkit-transition: all 0.85s ease-in ;
 	-moz-transition: all 0.85s ease-in;
 	-o-transition: all 0.85s ease-in;
@@ -44,10 +43,10 @@ section.slides:not(.slides_editor) > article.next {
 	-moz-transform: scale(0);
 	-o-transform: scale(0);
 	transform: scale(0);
+	display: block;
 }
 
 section.slides:not(.slides_editor) > article.far-next {
-	display: block;
 	-webkit-transition: all 0.85s ease-in ;
 	-moz-transition: all 0.85s ease-in;
 	-o-transition: all 0.85s ease-in;
@@ -56,6 +55,7 @@ section.slides:not(.slides_editor) > article.far-next {
 	-moz-transform: scale(0);
 	-o-transform: scale(0);
 	transform: scale(0);
+	display: block;
 }
 
 /* Smartcards */

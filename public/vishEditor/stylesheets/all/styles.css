@@ -88,28 +88,12 @@ section.slides > article > article {
 this can not be done with show() and hide() because then it remains with display:none*/
 
 /* Allow temp shown to be applied to any element*/
-.temp_shown{
+.temp_shown {
 	display: block !important;
 }
 
-.temp_hidden{
+.temp_hidden {
 	display: none !important;
-}
-
-.slides > article.far-past.temp_hidden {
-	display: none;
-}
-.slides > article.past.temp_hidden {
-	display: none;
-}
-.slides > article.current.temp_hidden {
-	display: none;
-}
-.slides > article.next.temp_hidden {
-	display: none;
-}
-.slides > article.far-next.temp_hidden {
-	display: none;
 }
 
 .slides > article.far-past {
@@ -251,7 +235,6 @@ section.slides > article > article.show_in_smartcard{
 	right: 0;
 	bottom: 0;
 	text-align: center;
-	z-index: 2610;
 	border: medium none;
 	opacity: 1;
 	cursor: pointer;
@@ -488,9 +471,9 @@ button#closeButton {
 	height: 100%;
 	max-height: 100px;
 	background-color: transparent;
-	z-index: 2620;
 	cursor: pointer;
 	border: none;
+	z-index: 2620;
 }
 
 .menubarcolor {
