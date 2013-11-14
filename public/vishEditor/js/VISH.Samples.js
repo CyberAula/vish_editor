@@ -522,7 +522,7 @@ VISH.Samples = (function(V,undefined){
 		"VEVersion":"0.2",
 		"type":"presentation",
 		"theme":"theme1",
-		"animation": "animation10",
+		"animation": "animation1",
 		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
 		"title":"The Iberian Lynx",
 		"author":"ViSH Editor Team",
