@@ -1,4 +1,4 @@
-.slides > article.far-past {
+section.slides:not(.slides_editor) > article.far-past {
        display: block;
        opacity: 0;
        transition: opacity 0.50s ease-out;
@@ -8,7 +8,7 @@
        -webkit-transition: opacity 0.50s ease-out;
 }
 
-.slides > article.past {
+section.slides:not(.slides_editor) > article.past {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -22,7 +22,7 @@
        opacity: 0;
 }
 
-.slides > article.current {
+section.slides:not(.slides_editor) > article.current {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -36,7 +36,7 @@
        opacity: 1;
 }
 
-.slides > article.next {
+section.slides:not(.slides_editor) > article.next {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -50,7 +50,7 @@
        opacity: 0;
 }
 
-.slides > article.far-next {
+section.slides:not(.slides_editor) > article.far-next {
        display: block;
        opacity: 0;
        transition: opacity 0.50s ease-out;
@@ -62,7 +62,7 @@
 
 /* Smartcards */
 
-section.slides > article > article.hide_in_smartcard {
+section.slides:not(.slides_editor) > article > article.hide_in_smartcard {
        webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;
@@ -75,7 +75,7 @@ section.slides > article > article.hide_in_smartcard {
        display: block;
 }
 
-section.slides > article > article.show_in_smartcard{
+section.slides:not(.slides_editor) > article > article.show_in_smartcard{
        -webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;

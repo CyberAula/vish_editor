@@ -2,7 +2,7 @@
 /* Inside elements fading */
 /*+++++++++++++++++++++++++++++++*/
 
-.slides > article.far-past {
+section.slides:not(.slides_editor) > article.far-past {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -17,7 +17,7 @@
        opacity: 0;
 }
 
-.slides > article.past {
+section.slides:not(.slides_editor) > article.past {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -32,7 +32,7 @@
        opacity: 0;
 }
 
-.slides > article.current {
+section.slides:not(.slides_editor) > article.current {
         transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -47,7 +47,7 @@
 }
 
 /*first div*/
-.slides > article.past > div:nth-child(1) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(1) {
        -webkit-transition: all 0.5s ease-intransition ;
        -webkit-transition-delay: 0.5s;
        -moz-transition: all 0.5s ease-in;
@@ -58,7 +58,7 @@
        top: -250px;
 }
 
-.slides > article.next > div:nth-child(1) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(1) {
        -webkit-transition: all 0.5s ease-intransition;
        -webkit-transition-delay: 0.5s;
        -moz-transition: all 0.5s ease-in;
@@ -69,7 +69,7 @@
        top: -250px;
 }
 
-.slides > article.current > div:nth-child(1) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(1) {
        left: 0px;
        top: 0px ;
        -webkit-transition: all 0.5s ease-intransition ;
@@ -82,7 +82,7 @@
 }
 
 /*second div*/
-.slides > article.past > div:nth-child(2) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(2) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -93,7 +93,7 @@
        left: -200px;
 }
 
-.slides > article.next > div:nth-child(2) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(2) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -104,7 +104,7 @@
        display: block;
 }
 
-.slides > article.current > div:nth-child(2) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(2) {
        left: 0px;
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -116,7 +116,7 @@
 }
 
 /*third div*/
-.slides > article.past > div:nth-child(3) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(3) {
        -webkit-transition: all 0.6s ease-intransition ;
        display: block;
        -moz-transition: all 0.6s ease-in;
@@ -127,7 +127,7 @@
        right: -300px;
 }
 
-.slides > article.next > div:nth-child(3) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(3) {
        -webkit-transition: all 0.6s ease-intransition ;
        display: block;
        -moz-transition: all 0.6s ease-in;
@@ -138,7 +138,7 @@
        right: -300px;
 }
 
-.slides > article.current > div:nth-child(3) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(3) {
        right: 0px;
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -150,7 +150,7 @@
 }
 
 /*fourth div*/
-.slides > article.past > div:nth-child(4) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(4) {
        -webkit-transition: all 0.6 ease-intransition ;
        display: block;
        -moz-transition: all 0.6s ease-in;
@@ -160,7 +160,7 @@
        bottom: -270px;
 }
 
-.slides > article.next > div:nth-child(4) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(4) {
        -webkit-transition: all 0.6 ease-intransition ;
        display: block;
        -moz-transition: all 0.6s ease-in;
@@ -170,7 +170,7 @@
        bottom: -270px;
 }
 
-.slides > article.current > div:nth-child(4) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(4) {
        bottom: 0px;
        -webkit-transition: all 0.6 ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -181,7 +181,7 @@
 }
 
 /*fifth div*/
-.slides > article.past > div:nth-child(5) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(5) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -191,7 +191,7 @@
        left: -200px;
 }
 
-.slides > article.next > div:nth-child(5) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(5) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -201,7 +201,7 @@
        left: -200px;
 }
 
-.slides > article.current > div:nth-child(5) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(5) {
        left: 0px;
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -213,7 +213,7 @@
 }
 
 /*sixth div*/
-.slides > article.past > div:nth-child(6) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(6) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -223,7 +223,7 @@
        right: -300px;
 }
 
-.slides > article.next > div:nth-child(6) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(6) {
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -233,7 +233,7 @@
        right: -300px;
 }
 
-.slides > article.current > div:nth-child(6) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(6) {
        right: 0px;
        -webkit-transition: all 0.6s ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -245,7 +245,7 @@
 }
 
 /*seventh div*/
-.slides > article.past > div:nth-child(7) {
+section.slides:not(.slides_editor) > article.past > div:nth-child(7) {
        -webkit-transition: all 0.6 ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -254,7 +254,7 @@
        bottom: -270px;
 }
 
-.slides > article.next > div:nth-child(7) {
+section.slides:not(.slides_editor) > article.next > div:nth-child(7) {
        -webkit-transition: all 0.6 ease-intransition ;
        -moz-transition: all 0.6s ease-in;
        -o-transition: all 0.6s ease-in;
@@ -263,7 +263,7 @@
        bottom: -270px;
 }
 
-.slides > article.current > div:nth-child(7) {
+section.slides:not(.slides_editor) > article.current > div:nth-child(7) {
        bottom: 0px;
        -webkit-transition: all 0.6 ease-intransition ;
        -moz-transition: all 0.6s ease-in;
@@ -273,7 +273,7 @@
        display: block;
 }
 
-.slides > article.next {
+section.slides:not(.slides_editor) > article.next {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -288,7 +288,7 @@
        display: block;
 }
 
-.slides > article.far-next {
+section.slides:not(.slides_editor) > article.far-next {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -301,7 +301,7 @@
 
 /* Smartcards */
 
-section.slides > article > article.hide_in_smartcard {
+section.slides:not(.slides_editor) > article > article.hide_in_smartcard {
        webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;
@@ -313,7 +313,7 @@ section.slides > article > article.hide_in_smartcard {
        display: block;
 }
 
-section.slides > article > article.show_in_smartcard {
+section.slides:not(.slides_editor) > article > article.show_in_smartcard {
        -webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;
@@ -327,16 +327,15 @@ section.slides > article > article.show_in_smartcard {
 
 /* poi fix */
 
-.fc_poi {
+section.slides:not(.slides_editor) .fc_poi {
        -webkit-transition: none !important;
        -webkit-transition-delay: none !important;
        -moz-transition: none !important;
        -o-transition: none !important;
        transition: none !important;
-
 }
 
-section.slides > article > article.show_in_smartcard > div {
+section.slides:not(.slides_editor) > article > article.show_in_smartcard > div {
        -webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;
@@ -348,7 +347,7 @@ section.slides > article > article.show_in_smartcard > div {
        display: block;
 }
 
-section.slides > article > article.hide_in_smartcard > div {
+section.slides:not(.slides_editor) > article > article.hide_in_smartcard > div {
        webkit-transition: all 0.85s ease-in ;
        -moz-transition: all 0.85s ease-in;
        -o-transition: all 0.85s ease-in;

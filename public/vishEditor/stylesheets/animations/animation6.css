@@ -1,4 +1,4 @@
-.slides > article.far-past {
+section.slides:not(.slides_editor) > article.far-past {
        opacity: 0;
        top: 250%;
        left: 250%;
@@ -10,7 +10,7 @@
        display: block;
 }
 
-.slides > article.past {
+section.slides:not(.slides_editor) > article.past {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -27,7 +27,7 @@
        display: block;
 }
 
-.slides > article.current {
+section.slides:not(.slides_editor) > article.current {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -44,7 +44,7 @@
       transition: all 0.6s ease-in-out;
 }
 
-.slides > article.next {
+section.slides:not(.slides_editor) > article.next {
        transform: translate(0);
        -o-transform: translate(0);
        -ms-transform: translate(0);
@@ -61,7 +61,7 @@
        display: block;
 }
 
-.slides > article.far-next {
+section.slides:not(.slides_editor) > article.far-next {
        opacity: 0;
        top: -250%;
        left: -150%;

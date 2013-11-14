@@ -72,14 +72,6 @@ VISH.Slides = (function(V,$,undefined){
 				$(el).removeClass(SLIDE_CLASSES[i]);
 			}
 		}
-
-		//update also subslide classes
-		if($(el).attr("type")===VISH.Constant.FLASHCARD || $(el).attr("type")===VISH.Constant.VTOUR){
-			var arr = $(el).find("article");
-			for (var i=0; i< arr.length; i++) {
-				$(arr[i]).addClass("hide_in_smartcard");
-			}
-		}
 	};
 
 	var _getcurSlideIndexFromHash = function() {
