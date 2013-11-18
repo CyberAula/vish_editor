@@ -1,3 +1,7 @@
+html {
+	font-size: 12px;
+}
+
 body {
 	min-width: 836px;
  	overflow-x: hidden;
@@ -8,24 +12,29 @@ body {
 	margin: 0;
 }
 #controls {
-	margin-top:5px;
+	border: 1px solid #008000;
+	height: 15% !important;
+	width: 85%;
 }
 #button {
-	display: inline;
+ 	display: inline;
+    float: left;
+    max-width: 10%;
+    overflow: hidden;
+    width: 10%;
+    height: 100%;
 }
 #play {
-	background:url(../images/buttons.png) no-repeat top left;
+	/*background:url(../images/buttons.png) no-repeat top left;*/
 	border:none;
-	height: 30px;
-	width: 30px;
-	padding: 5px;
+	height: 100%;
 	float: left;
-	display: inline-block;
 }
 #positionview {
-	float: left;
-	width: 80%;
 	display: inline;
+    float: left;
+    width: 72%;
+    margin-top: 0.6%;
 }
 #transportbar {  /* duration*/
 	height: 15px;
@@ -73,8 +82,17 @@ body {
 	height: 100%;
 }
 #time {
-	position: relative;
-	float: right;
+ 	display: inline;
+    float: right;
+    font-size: 1rem;
+    margin-left: 3%;
+    max-width: 18%;
+    overflow: hidden;
+    position: relative;
+    text-align: right;
+    width: 15%;
+    margin-top: 0.6%;
+
 }
 #keys {
 	list-style-type: none;
@@ -101,9 +119,9 @@ body {
 }
 
 #navigation{
-	overflow-y: scroll;
-	height: 74%;
+	overflow-y: auto;
 	z-index: 10;
+	height: 100%;
 	padding-left: 10%;
 	list-style: none;
 }
@@ -127,7 +145,6 @@ body {
 	margin-top: 20px;
 	z-index: 20;
 	position: absolute;
-
 
 }
 
@@ -156,21 +173,23 @@ body {
 }
 
 #transcriptBox{
-    width: 35%;
+    width: 36%;
   	float: right;
   	margin-right: 2%;
-  	height: 70%;
+  	height: 100%;
 }
 
 #videoBox{
 	float: left;
-    width: 60%;
+   	width: 62%;
+   	height: 100% !important;
 }
 #application{
-	height: 100% !important;
+ 	border: 5px solid #000000;
+    overflow: hidden;
     position: absolute !important;
     width: 100% !important;
-
+    height: 300px;
 }
 
 #add{
@@ -183,3 +202,12 @@ body {
 	position: absolute;
 }
 
+#myvideo{
+	height: 100% !important;
+}
+
+#videoDiv{
+	border: 1px solid #FF0000;
+	height: 85% !important;
+	width: 85% !important;
+}

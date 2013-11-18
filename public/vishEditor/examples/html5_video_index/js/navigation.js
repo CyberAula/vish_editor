@@ -3,171 +3,171 @@ var cues = []; //empty array
 var xhr;
 var duracion;
 var cont = true;
-var times = [];
+var balls = []; //Array de bolas ordenadas por tiempo
 var nextBall;
 var prevNextBall;
-
-var balls = [];
 var RANGE = 0.300; //s around the ball where we should stop
+var bol = true;
 
-var nearBall = function(){
-		if(nextBall-prevNextBall < RANGE){
-			//falta
-		}else{
-			video[0].play();
-		}
-}
 
 
 $(document).ready(function(){
 
-	video = $("#videoBox video");
+	//Events
+	// video = document.getElementById("myvideo");
+	video = $("#myvideo")[0];
 
-	video.on("loadedmetadata", function(){
+	$(video).on("loadedmetadata", function(){
 		init();
 	});
-	if (video.readyState >= video.HAVE_METADATA) {
-	  	init.app+
-	  	ly(video); // missed the event
-	}
 
-	video.on("timeupdate", function(){
+	$(video).on("timeupdate", function(){
 		curTimeUpdate();
-	});
+		var time = video.currentTime;
 
-	_getNextBall(2);
-
- //--------------------------------------------------------------
-	video.on("timeupdate", function(){
-	var times= video[0].currentTime;
-	// console.log(video.currentTime);
-	// llamo a la función con times de parametro
-	//si el array de bolas no esta vacio hago cosas y si no no.
-
-	var ballsForTime = _getBallsForTime(times);
-
-	if (ballsForTime.length > 0){
-		video[0].pause();
-		$(ballsForTime).each(function(index,ball){
-			// Comprobar la ultima vez que se mostro la bola para no mostrar dos veces seguidas la misma
-			if(!ball.showed){
-				ball.showed = true;
-				console.log/
-				popUp(probando,index);
-				cont = false;
-				return false;
-			}else {
-				video[0].pause();
+		if(typeof nextBall == "object"){
+			if(Math.abs(time - nextBall.time) < RANGE){
+				if(nextBall.showed == false){
+					popUp(onCloseSubslide,nextBall);
+				}
 			}
-		});
-	}
+		}
 	});
-
 
 	$('#play').on("click", togglePlay);
 	$('#transportbar').on("click", seek);
 
-
-
-
-
-	$('#duration').html(video[0].duration.toFixed(2));
-	duracion = video[0].duration.toFixed(2);
-
+	//Vars
+	$('#duration').html(video.duration.toFixed(2));
+	duracion = video.duration.toFixed(2);
+	if (video.readyState >= video.HAVE_METADATA) {
+	  	// init.app+ly(video); // missed the event
+	}
    	_getBalls();
+   	_getNextBall(0);
 	paintBalls();
 	paintIndex();
-
-
 });
 
-	$(window).resize(function() {
+
+$( window ).resize(function() {
 	eraseBalls();
 	paintBalls();
-	});
+	/*var videoHeigth= $('#myvideo').height();
+	var videoWidth= $('#myvideo').width();
+	var videoBoxWidth = $('#videoBox').width();
+	var appHeigth = $('#application').height();
+	console.log("videoHeigth: " + videoHeigth);
+	console.log("appHeigth: " + appHeigth);
+	var wWidth= $(window).width();
+	var wWidth2= wWidth - (0.6*wWidth);
+
+	var aspectRatio = $('#myvideo').width()/$('#myvideo').height();
+	var parent = $("#videoBox").parent();
+	var parentWidth = $(parent).width();
+	var parentHeigth = $(parent).height();
+	if(bol == true){
+	if(videoHeigth => appHeigth){
+		console.log("he entrado");
+		//height limit
+		var aa = (aspectRatio * appHeigth);
+		var aaa = (aa*100)/parentWidth;
+		console.log(aaa);
+		$('#myvideo').css("width", aa + "px");
+		bol = false;
+	}else if((videoBoxWidth) => wWidth2)){
+		console.log("no cabe");
+	}
+}*/
+});
 
 
 
-var _getBallsForTime = function(t){
-	var ballsForTime = [];
-	//balls variable con las bolas que tienen ya parametros minTime y maxTime
 
-	var times = video[0].currentTime;
-		if ((times >= nextBall-RANGE) && (times <= nextBall + RANGE)) {
-			ballsForTime.push(nextBall);
-
-		}	
-
-	return ballsForTime;
+var onCloseSubslide = function(){
+	var prevNextBall = nextBall;
+	_getNextBall(video.currentTime);
+	if(nextBall-prevNextBall < RANGE){
+		popUp(onCloseSubslide,nextBall);		
+	} else {
+		video.play();
+	}
 }
-
 
 
 function init(evt) {
 }
 
 
-
 var _getBalls = function(){
-
 	for (i = 0; i < vquiz_sample.pois.length; i++) {
-		var ballo=  [];
-		var time = vquiz_sample.pois[i].time;
-		ballo.id = vquiz_sample.pois[i].id;
-		ballo.time = parseFloat(vquiz_sample.pois[i].time);
-		times.push(ballo.time);
-		ballo.slide_id = vquiz_sample.pois[i].slide_id;
-		ballo.showed = false;
-		var ntime = parseFloat(time);
-		ballo.minTime = ntime - RANGE;
-		ballo.maxTime = ntime + RANGE;
-		balls.push(ballo);
+		var ball = {};
+		ball.id = vquiz_sample.pois[i].id;
+		ball.time = parseFloat(vquiz_sample.pois[i].time);
+		ball.slide_id = vquiz_sample.pois[i].slide_id;
+		ball.showed = false;
+		ball.minTime = ball.time - RANGE;
+		ball.maxTime = ball.time + RANGE;
+		balls.push(ball);
 	}
+
+	balls.sort(function(A,B){
+    	return A.time>B.time;
+	});
 }
 
 
-var _getNextBall = function (time){
-	var pTime = video[0].duration;
-	for (i = 0; i < vquiz_sample.pois.length; i++) {
-		if(parseFloat(vquiz_sample.pois[i].time) < pTime){ 
-			if(parseFloat(vquiz_sample.pois[i].time) > time){
-			pTime = parseFloat(vquiz_sample.pois[i].time);
-		}
+var _getNextBall = function(time){
+	if(typeof time != "number"){
+		return null;
+	}
+
+	var myNextball;
+	var pTime = video.duration;
+	for (i = 0; i < balls.length; i++) {
+		var ball = balls[i];
+		var ballTime = parseFloat(ball.time);
+		if((ballTime < pTime)&&(ballTime > 0)&&(ballTime > time)){
+			if(ball != nextBall){
+				myNextball = ball;
+				break;
+			}
 		}
 	}
-			nextBall = pTime; //realmente lo que nos interesa es el tiempo de la bola.
-			console.log(nextBall);
+	if(myNextball){
+		nextBall = myNextball;
+	} else {
+		nextBall = undefined;
+	}
+	return nextBall;
 }
-
-
 
 var togglePlay = function() {
-	if (video[0].paused == false) {
-		video[0].pause();
-		play.style.backgroundPosition = '0 0';
+	if (video.paused == false) {
+		video.pause();
+		$("#play").attr("src","images/play.png");
 	} else {
-		video[0].play();
-		play.style.backgroundPosition = '0 -75px';
+		video.play();
+		$("#play").attr("src","images/pause.png");
 	}
 }
 
 
 var paintIndex = function(){
 	var screen = document.getElementById('chapters');
-	for (i = 0; i < vquiz_sample.pois.length; i++) {
-		console.log(vquiz_sample.pois.length);
+	for (i = 0; i < balls.length; i++) {
 		var item = document.createElement('li');
-		item.id = vquiz_sample.pois[i].id;
+		item.id = balls[i].id;
 		var link = document.createElement('a');
-		link.setAttribute('ident', vquiz_sample.pois[i].id);
-		link.setAttribute('time', vquiz_sample.pois[i].time);
-		link.innerHTML = vquiz_sample.pois[i].id + ': ' + vquiz_sample.pois[i].slide_id + ' ---> '+  vquiz_sample.pois[i].time;
+		link.setAttribute('ident', balls[i].id);
+		link.setAttribute('time', balls[i].time);
+		link.innerHTML = balls[i].id + ': ' + balls[i].slide_id + ' ---> '+  balls[i].time;
 		item.appendChild(link);
 		screen.appendChild(item);
 	}
 		$("#chapters li a").on("click", function(event){
-		video[0].currentTime = $(event.target).attr("time");
-	    popUp(probando,$(event.target).attr("ident")); //migrated to JQuery working
+		video.currentTime = $(event.target).attr("time");
+	    popUp(onCloseSubslide,balls[parseInt($(event.target).attr("ident"))]); //migrated to JQuery working
 	});
 }
 
@@ -186,50 +186,45 @@ function videoPlayPause(evt) {
 
 
 function paintBalls(){
-for (i = 0; i < vquiz_sample.pois.length; i++) {
-		paintBall(i);
+	for (i = 0; i < balls.length; i++) {
+		paintBall(balls[i]);
 	}
 }
-function paintBall(indice){
+
+function paintBall(ballJSON){
+	console.log("paintBall ejecutada");
+	var segmentDiv = document.getElementById("segmentDiv");
 	var ball = document.createElement('li');
 	var marker = document.createElement('div');
 	var segments = 	document.getElementById('segments');
 	var position = document.getElementById('transportbar');
-	position.appendChild(marker);
+	segmentDiv.appendChild(marker);
 	segments.appendChild(ball);
 	marker.className = 'marker';
 	ball.className = 'ball';
-	console.log(ball);
-	var time = vquiz_sample.pois[indice].time; 
-   	var duration = parseFloat(video[0].duration);
-   	var bar_width = document.getElementById('positionview').offsetWidth;
+	var time = parseFloat(ballJSON.time);
+   	var duration = parseFloat(video.duration);
+   	var bar_width = $('#positionview').width();
    	var perc = bar_width / duration;
-   	ball.style.left = ((Math.round((time * perc) - 0.5) - 10)*100)/($('#segments').width()) + '%';
-   	marker.style.left =((Math.round((time * perc) - 0.5) - 2)*100)/($('#transportbar').width()) + '%';
+   	ball.style.left = (Math.round((bar_width*time/video.duration) - 10 - 8) * 100)/($('#segments').width()) + "%"; //we add 8 to adjust the ball
+   	marker.style.left =(Math.round((bar_width*time/video.duration) - 10) * 100)/($('#transportbar').width()) + "%";
    	ball.onclick = function () {
-			video[0].currentTime = time;
-			popUp(probando,indice);
+			video.currentTime = time;
+			popUp(onCloseSubslide,ballJSON);
 	}
-	times.sort();
 }
 
 function eraseBalls(){
-	$("#transportbar").html('');
+	$("#segmentDiv").html('');
 	$("#segments").html('');
 }
 
-var popUp = function(callback, indice){
-		var slide;
-		var content = vquiz_sample.pois[indice].slide_id;
-		for (i = 0; i < vquiz_sample.slides.length; i++) {
-		if(vquiz_sample.slides[i].id == content){
-			slide = JSON.stringify(vquiz_sample.slides[i]);
-		}
-	}
-		//var message = vquiz_sample.pois[indice].slide_id;
-		prevNextBall = nextBall;
-		_getNextBall(video[0].currentTime + RANGE);
-		var a = confirm(slide);
+var popUp = function(callback, ball){
+	// var slide = $("#" + ball.slide_id);
+	video.pause();
+	var slide = ball.slide_id;
+	ball.showed = true;
+	var a = confirm(slide);
 	if(a){
 		if(typeof callback == "function"){
 			callback();
@@ -238,17 +233,14 @@ var popUp = function(callback, indice){
 }
 
 
-
-
 // update transport bar time display
 var curTimeUpdate = function(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth;
-	var tiemp = video[0].currentTime.toFixed(2);
+	var tiemp = video.currentTime.toFixed(2);
 	$("#curTime").html(tiemp);
-	$("#position").width((Math.round(bar_width*video[0].currentTime/video[0].duration) + "px")); //for the html to draw
-	//video.currentTime to know the exact time of the video playing
-	//video.duration speaks by itself.
-
+	var wid = (Math.round((bar_width*video.currentTime/video.duration) - 10) * 100)/($('#transportbar').width()) + "%";
+	$("#position").width(wid); //for the html to draw
+	console.log($('#position').width);
 }
 
 
@@ -258,9 +250,11 @@ var seek = function(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth; // "!it calculates the size of bar_width dinamically, even when you resize the navigation window.
 	var clickpos = evt.pageX - this.offsetLeft;
 	var clickpct = clickpos / bar_width;
-	video[0].currentTime = clickpct * video[0].duration;
-	console.log(video[0].currentTime);
-	_getNextBall(video[0].currentTime);
+	video.currentTime = clickpct * video.duration;
+
+	nextBall = null;
+	_getNextBall(video.currentTime);
+	_resetShowParams();
 
 	// clear chapter selection
 	for (i = 0; i < cues.length; i++) {
@@ -268,6 +262,12 @@ var seek = function(evt) {
 		var segment = document.getElementById(segid);
 		segment.style.backgroundColor = "";
 	}
+}
+
+var _resetShowParams = function(){
+	$(balls).each(function(index,ball){
+		ball.showed = false;
+	});	
 }
 
 var hide = function(){
