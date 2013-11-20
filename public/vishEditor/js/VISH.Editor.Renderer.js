@@ -6,7 +6,6 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	 * Function to initialize the renderer 
 	 */
 	var init = function(presentation){
-		V.Editor.Themes.selectTheme(presentation.theme);
 		V.Editor.Animations.setCurrentAnimation(presentation.animation);
 		
 		if(presentation.type===V.Constant.PRESENTATION){

@@ -81,8 +81,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 		var presentation = V.Editor.getPresentation();
 
-		
-
 		//Themes
 		if(!themeScrollbarCreated){
 			//Select Theme scrollbar

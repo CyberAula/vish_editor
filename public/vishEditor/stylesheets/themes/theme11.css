@@ -38,14 +38,13 @@ section.slides article[type='standard'][template='t10'] > div.t10_center {
 	-webkit-border-radius: 10px !important;
 	float: left;
 	height: 79% !important;
+	width: 83.6% !important;
 	left: 7% !important;
 	padding-left: 3% !important;
 	padding-top: 2% !important;
 	top: 9% !important;
 	overflow: hidden;
 	position: absolute;
-	width: 83.6% !important;
-	-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 }
 
 section.slides article > div.t10_center {
@@ -54,17 +53,14 @@ section.slides article > div.t10_center {
 	-webkit-border-radius: 10px !important;
 	float: left;
 	height: 79% !important;
+	width: 83.6% !important;
 	left: 7% !important;
 	padding-left: 3% !important;
 	padding-top: 2% !important;
 	top: 9% !important;
 	overflow: hidden;
 	position: absolute;
-	width: 83.6% !important;
-	-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFW…9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-	}
-
-
+}
 
 section.slides article[type='standard'][template='t2'] > div.t2_left {
 	top: 4% !important;

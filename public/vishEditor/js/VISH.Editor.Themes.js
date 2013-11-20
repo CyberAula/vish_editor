@@ -63,15 +63,15 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		if($(event.target).hasClass("waitCursor")){
 			return;
 		}
-		selectTheme(themeNumber);
+		selectTheme(themeNumber,true);
 		V.Editor.Settings.selectTheme(themes[themeNumber].number);
 	}
 
-	var selectTheme = function(theme){
-		currentTheme = theme;
-
-		$("#theme_fancybox").addClass("waitCursor");
-		$(".themethumb").addClass("waitCursor");
+	var selectTheme = function(theme,fromFancybox,callback){
+		if(fromFancybox){
+			$("#theme_fancybox").addClass("waitCursor");
+			$(".themethumb").addClass("waitCursor");
+		}
 
 		V.Themes.loadTheme(theme, function(){
 			//Theme loaded callback
@@ -82,6 +82,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 				draftPresentation = {};
 			}
 			draftPresentation.theme = theme;
+			currentTheme = theme;
 			V.Editor.setPresentation(draftPresentation);
 
 			//Refresh colors
@@ -89,9 +90,14 @@ VISH.Editor.Themes = (function(V,$,undefined){
 			
 			//Reset Tooltips
 			V.Editor.Tools.setAllTooltipMargins(function(){
-				$.fancybox.close();
-				$("#theme_fancybox").removeClass("waitCursor");
-				$(".themethumb").removeClass("waitCursor");
+				if(fromFancybox){
+					$.fancybox.close();
+					$("#theme_fancybox").removeClass("waitCursor");
+					$(".themethumb").removeClass("waitCursor");
+				}
+				if(typeof callback == "function"){
+					callback();
+				}
 			});
 		});
 	};
