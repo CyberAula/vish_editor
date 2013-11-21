@@ -288,8 +288,14 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _deleteQuizSession = function(){
-		//TODO (removeQuizSession in backend is not enabled)
-		_closeQuizSession();
+		V.Quiz.API.deleteQuizSession(currentQuizSession.id);
+		//Don't wait for the callback in this case
+		$.fancybox.close();
+		$(".quizSession_button_no").removeClass("quizStartButtonLoading");
+		$(".quizSession_button_yes").removeClass("quizStartButtonLoading");
+		_enableLaunchButton(currentQuiz);
+		currentQuiz = null;
+		currentQuizSession = null;
 	};
 
 	/**
