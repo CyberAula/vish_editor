@@ -1,15 +1,9 @@
-var video, track;
-var cues = []; //empty array
-var xhr;
+var video; 
 var duracion;
-var cont = true;
-var balls = []; //Array de bolas ordenadas por tiempo
-var nextBall;
-var prevNextBall;
-var RANGE = 0.300; //s around the ball where we should stop
-var bol = true;
-
-
+var balls = []; // Ball array time-ordered
+var nextBall; 
+var prevNextBall; 
+var RANGE = 0.300; //seconds around the ball where we should stop
 
 $(document).ready(function(){
 
@@ -36,12 +30,14 @@ $(document).ready(function(){
 	$('#play').on("click", togglePlay);
 	$('#transportbar').on("click", seek);
 
+
 	//Vars
 	$('#duration').html(video.duration.toFixed(2));
 	duracion = video.duration.toFixed(2);
 	if (video.readyState >= video.HAVE_METADATA) {
 	  	// init.app+ly(video); // missed the event
 	}
+
    	_getBalls();
    	_getNextBall(0);
 	paintBalls();
@@ -49,12 +45,22 @@ $(document).ready(function(){
 });
 
 
+/*
+ *	When resizing the window, we have to erase all balls and then paint them again
+ *	(in order to calculate marker and ball positions again)
+*/
+
+
 $( window ).resize(function() {
 	eraseBalls();
 	paintBalls();
 });
 
-
+/*
+ * Function executed when closing pop-up. We play the video or directly show next slide
+ * depending on the time of next ball.
+ *
+*/
 
 
 var onCloseSubslide = function(){
@@ -67,9 +73,20 @@ var onCloseSubslide = function(){
 	}
 }
 
+/*
+ * Init function
+ *
+*/
+
 
 function init(evt) {
 }
+
+
+/*
+ * With _getBalls we parse the JSON and add the balls ordered by time to 
+ * balls array.
+*/
 
 
 var _getBalls = function(){
@@ -88,6 +105,12 @@ var _getBalls = function(){
     	return A.time>B.time;
 	});
 }
+
+
+/*
+ * Get nextBall of the array ball
+ *
+*/
 
 
 var _getNextBall = function(time){
@@ -115,6 +138,13 @@ var _getNextBall = function(time){
 	return nextBall;
 }
 
+
+/*
+ *	Play/Pause controls (image replacement)
+ *
+*/
+
+
 var togglePlay = function() {
 	if (video.paused == false) {
 		video.pause();
@@ -124,6 +154,15 @@ var togglePlay = function() {
 		$("#play").attr("src","images/pause.png");
 	}
 }
+
+/*
+ * With paintIndex method, we paint the list of balls added by the 
+ * final user in a box (including id, name and time). 
+ * When we click in a list element, the video goes to the time 
+ * when the ball is defined and shows the info associated.
+ *
+*/
+
 
 
 var paintIndex = function(){
@@ -144,6 +183,13 @@ var paintIndex = function(){
 	});
 }
 
+
+/*
+ * Using space bar and enter key to control the  video.
+ *
+*/
+
+
 // capture onkeydown on the navigation to allow space bar to toggle play/pause
 function videoPlayPause(evt) {
 	if (evt.keyCode == "32") { // space bar
@@ -158,11 +204,23 @@ function videoPlayPause(evt) {
 }
 
 
+/*
+ * We paint all balls defined in ball array.
+ *
+*/
+
+
 function paintBalls(){
 	for (i = 0; i < balls.length; i++) {
 		paintBall(balls[i]);
 	}
 }
+
+/*
+ * With paintBall method we paint the ballJSON.
+ * On click of the ball, we show the info associated to the element.
+ *
+*/
 
 function paintBall(ballJSON){
 	console.log("paintBall ejecutada");
@@ -182,18 +240,29 @@ function paintBall(ballJSON){
    	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('#segments').width())) - 1.3 + "%"; //we add 8 to adjust the ball
    	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('#transportbar').width())) - 1.63 + "%";
    	ball.onclick = function () {
-			video.currentTime = time;
-			popUp(onCloseSubslide,ballJSON);
+		video.currentTime = time;
+		popUp(onCloseSubslide,ballJSON);
 	}
 }
+
+/*
+ * In order to recalculate the marker and ball position, with eraseBalls
+ * we erase balls and markers of the time bar.
+ *
+*/
+
 
 function eraseBalls(){
 	$("#segmentDiv").html('');
 	$("#segments").html('');
 }
 
+/*
+ * The element showed when a ball is clicked.
+ *
+*/
+
 var popUp = function(callback, ball){
-	// var slide = $("#" + ball.slide_id);
 	video.pause();
 	var slide = ball.slide_id;
 	ball.showed = true;
@@ -204,6 +273,13 @@ var popUp = function(callback, ball){
 		}
 	}
 }
+
+
+/*
+ * curTimeUpdate updates the time div and draws the yellow progress bar.
+ *
+*/
+
 
 
 // update transport bar time display
@@ -218,6 +294,13 @@ var curTimeUpdate = function(evt) {
 
 
 
+/*
+ * If you click in a specific time in video progress bar, seek function jumps the video to 
+ * that time.
+ *
+*/
+
+
 // seek on transport bar
 var seek = function(evt) {
 	var bar_width = document.getElementById('positionview').offsetWidth; // "!it calculates the size of bar_width dinamically, even when you resize the navigation window.
@@ -228,20 +311,25 @@ var seek = function(evt) {
 	nextBall = null;
 	_getNextBall(video.currentTime);
 	_resetShowParams();
-
-	// clear chapter selection
-	for (i = 0; i < cues.length; i++) {
-		var segid = "segment" + i;
-		var segment = document.getElementById(segid);
-		segment.style.backgroundColor = "";
-	}
 }
+
+/*
+ * Reset ball.showed parameter in every ball.
+ *
+*/
+
 
 var _resetShowParams = function(){
 	$(balls).each(function(index,ball){
 		ball.showed = false;
 	});	
 }
+
+
+/*
+ * hide the transcriptBox in which the ball index is defined
+ *
+*/
 
 var hide = function(){
 	$('#transcriptBox').hide();
@@ -253,9 +341,13 @@ var hide = function(){
 	paintBalls();
 }
 
+/*
+ * shows the transcriptBox in which the ball index is defined
+ *
+*/
+
 var show = function(){
 	$('#videoBox').css("width", '60%');
-
 	eraseBalls();
 	paintBalls();
 	$('#transcriptBox').show();
