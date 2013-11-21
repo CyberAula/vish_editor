@@ -14,7 +14,6 @@ var bol = true;
 $(document).ready(function(){
 
 	//Events
-	// video = document.getElementById("myvideo");
 	video = $("#myvideo")[0];
 
 	$(video).on("loadedmetadata", function(){
@@ -53,32 +52,6 @@ $(document).ready(function(){
 $( window ).resize(function() {
 	eraseBalls();
 	paintBalls();
-	/*var videoHeigth= $('#myvideo').height();
-	var videoWidth= $('#myvideo').width();
-	var videoBoxWidth = $('#videoBox').width();
-	var appHeigth = $('#application').height();
-	console.log("videoHeigth: " + videoHeigth);
-	console.log("appHeigth: " + appHeigth);
-	var wWidth= $(window).width();
-	var wWidth2= wWidth - (0.6*wWidth);
-
-	var aspectRatio = $('#myvideo').width()/$('#myvideo').height();
-	var parent = $("#videoBox").parent();
-	var parentWidth = $(parent).width();
-	var parentHeigth = $(parent).height();
-	if(bol == true){
-	if(videoHeigth => appHeigth){
-		console.log("he entrado");
-		//height limit
-		var aa = (aspectRatio * appHeigth);
-		var aaa = (aa*100)/parentWidth;
-		console.log(aaa);
-		$('#myvideo').css("width", aa + "px");
-		bol = false;
-	}else if((videoBoxWidth) => wWidth2)){
-		console.log("no cabe");
-	}
-}*/
 });
 
 
@@ -206,8 +179,8 @@ function paintBall(ballJSON){
    	var duration = parseFloat(video.duration);
    	var bar_width = $('#positionview').width();
    	var perc = bar_width / duration;
-   	ball.style.left = (Math.round((bar_width*time/video.duration) - 10 - 8) * 100)/($('#segments').width()) + "%"; //we add 8 to adjust the ball
-   	marker.style.left =(Math.round((bar_width*time/video.duration) - 10) * 100)/($('#transportbar').width()) + "%";
+   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('#segments').width())) - 1.3 + "%"; //we add 8 to adjust the ball
+   	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('#transportbar').width())) - 1.63 + "%";
    	ball.onclick = function () {
 			video.currentTime = time;
 			popUp(onCloseSubslide,ballJSON);
@@ -274,12 +247,15 @@ var hide = function(){
 	$('#transcriptBox').hide();
 	$('#hide_button2').show();
 	$('#videoBox').css("width", '90%');
+	$("#videoDiv").css("width", '100%');
+	$('#controls').css("width", '100%');
 	eraseBalls();
 	paintBalls();
 }
 
 var show = function(){
 	$('#videoBox').css("width", '60%');
+
 	eraseBalls();
 	paintBalls();
 	$('#transcriptBox').show();

@@ -12,7 +12,7 @@ body {
 	margin: 0;
 }
 #controls {
-	border: 1px solid #008000;
+	/*border: 1px solid #008000;*/
 	height: 15% !important;
 	width: 85%;
 }
@@ -25,10 +25,9 @@ body {
     height: 100%;
 }
 #play {
-	/*background:url(../images/buttons.png) no-repeat top left;*/
 	border:none;
-	height: 100%;
-	float: left;
+	max-width: 100%;
+	margin-left: 25%;
 }
 #positionview {
 	display: inline;
@@ -207,7 +206,7 @@ body {
 }
 
 #videoDiv{
-	border: 1px solid #FF0000;
+	/*border: 1px solid #FF0000;*/
 	height: 85% !important;
-	width: 85% !important;
+	width: 85%;
 }
