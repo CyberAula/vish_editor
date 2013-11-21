@@ -188,7 +188,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 		   
 			var params = {
 				"id": quizSessionId,
-				"answers": JSON.stringify(answers),
+				"answers": JSON.stringify(answers)
 			}
 
 			$.ajax({
