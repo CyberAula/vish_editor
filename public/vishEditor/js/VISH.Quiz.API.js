@@ -104,7 +104,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var send_type = 'GET';
 			var params = {
 				"id": quizSessionId, 
-				"authenticity_token" : V.User.getToken() 
+				"authenticity_token" : V.User.getToken()
 			}
 
 			$.ajax({
@@ -141,8 +141,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			var send_type = 'GET';
 			var params = {
-				"id": quizSessionId, 
-				"authenticity_token" : V.User.getToken() 
+				"id": quizSessionId
+			}
+
+			if(V.User.isLogged()){
+				params["authenticity_token"] = V.User.getToken();
 			}
 
 			$.ajax({
@@ -189,6 +192,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var params = {
 				"id": quizSessionId,
 				"answers": JSON.stringify(answers)
+			}
+
+			if(V.User.isLogged()){
+				params["authenticity_token"] = V.User.getToken();
 			}
 
 			$.ajax({
