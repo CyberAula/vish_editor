@@ -1,6 +1,12 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
-	var init = function(){
+	// URL in the form: "http://localhost:3000/quiz_sessions/"
+	var quizSessionAPIrootURL;
+
+	var init = function(quizSessionAPI){
+		if((typeof quizSessionAPI == "object")&&(typeof quizSessionAPI.rootURL == "string")){
+			quizSessionAPIrootURL = quizSessionAPI.rootURL;
+		}
 	};
 	
    /*
@@ -18,7 +24,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : 'http://'+ window.location.host + '/quiz_sessions',
+				url     : quizSessionAPIrootURL,
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -33,7 +39,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
-			var url = 'http://'+ window.location.host + '/quiz_sessions/' + quizSessionId;
+			var url = quizSessionAPIrootURL + quizSessionId;
 			var quiz_session = {id: quizSessionId, url: url};
 			if(typeof successCallback=="function"){
 				setTimeout(function(){
@@ -62,7 +68,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId + '/close',
+				url     : quizSessionAPIrootURL + quizSessionId + '/close',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -109,7 +115,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId + '/delete',
+				url     : quizSessionAPIrootURL + quizSessionId + '/delete',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -150,7 +156,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId + '/results.json',
+				url     : quizSessionAPIrootURL + quizSessionId + '/results.json',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -200,7 +206,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 			  type    : send_type,
-			  url     : 'http://'+ window.location.host + '/quiz_sessions/'+quizSessionId+'/answer',
+			  url     : quizSessionAPIrootURL + quizSessionId + '/answer',
 			  data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){

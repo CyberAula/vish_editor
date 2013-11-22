@@ -23,7 +23,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$("#quizSessionNameInput").watermark((V.I18n.getTrans("i.QuizSessionName")));
-		V.Quiz.API.init();
+		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
 		_loadEvents();
@@ -412,9 +412,6 @@ VISH.Quiz = (function(V,$,undefined){
 		_cleanResults();
 		if(!currentQuizSession){
 			return;
-		}
-		if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
-			currentQuizSession.url = "http://vishub.org/quiz_sessions/4567";
 		}
 
 		var myA = $("#tab_quiz_session_url_link");
