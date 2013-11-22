@@ -10,10 +10,17 @@ $(document).ready(function(){
 	//Events
 	video = $("#myvideo")[0];
 
-	$(video).on("loadedmetadata", function(){
-		init();
+	$(video).on("loadeddata", function(){
+		if(video.readyState == 4){
+			_init(video);
+		} else {
+			console.log("Video not loaded appropriately");
+		}
 	});
 
+});
+
+var _init = function(video){
 	$(video).on("timeupdate", function(){
 		curTimeUpdate();
 		var time = video.currentTime;
@@ -30,19 +37,19 @@ $(document).ready(function(){
 	$('#play').on("click", togglePlay);
 	$('#transportbar').on("click", seek);
 
-
 	//Vars
 	$('#duration').html(video.duration.toFixed(2));
 	duracion = video.duration.toFixed(2);
-	if (video.readyState >= video.HAVE_METADATA) {
-	  	// init.app+ly(video); // missed the event
-	}
+
+	// if (video.readyState >= video.HAVE_METADATA) {
+	//   	// init.app+ly(video); // missed the event
+	// }
 
    	_getBalls();
    	_getNextBall(0);
 	paintBalls();
 	paintIndex();
-});
+}
 
 
 /*
@@ -72,16 +79,6 @@ var onCloseSubslide = function(){
 		video.play();
 	}
 }
-
-/*
- * Init function
- *
-*/
-
-
-function init(evt) {
-}
-
 
 /*
  * With _getBalls we parse the JSON and add the balls ordered by time to 
@@ -223,7 +220,6 @@ function paintBalls(){
 */
 
 function paintBall(ballJSON){
-	console.log("paintBall ejecutada");
 	var segmentDiv = document.getElementById("segmentDiv");
 	var ball = document.createElement('li');
 	var marker = document.createElement('div');
@@ -236,6 +232,7 @@ function paintBall(ballJSON){
 	var time = parseFloat(ballJSON.time);
    	var duration = parseFloat(video.duration);
    	var bar_width = $('#positionview').width();
+
    	var perc = bar_width / duration;
    	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('#segments').width())) - 1.3 + "%"; //we add 8 to adjust the ball
    	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('#transportbar').width())) - 1.63 + "%";
@@ -289,7 +286,6 @@ var curTimeUpdate = function(evt) {
 	$("#curTime").html(tiemp);
 	var wid = (Math.round((bar_width*video.currentTime/video.duration) - 10) * 100)/($('#transportbar').width()) + "%";
 	$("#position").width(wid); //for the html to draw
-	console.log($('#position').width);
 }
 
 
