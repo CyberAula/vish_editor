@@ -129,6 +129,7 @@ VISH.Utils = (function(V,undefined){
 					break;
 				case V.Constant.FLASHCARD:
 				case V.Constant.VTOUR:
+				case V.Constant.EVIDEO:
 					var subslides = slide.slides;
 					if(subslides){
 						var ssL = subslides.length;

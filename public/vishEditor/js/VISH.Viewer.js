@@ -53,7 +53,6 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Flashcard.init();
 		V.VirtualTour.init();
 		V.Quiz.initBeforeRender(presentation);
-		V.Renderer.init();
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
@@ -165,6 +164,8 @@ VISH.Viewer = (function(V,$,undefined){
 			V.Flashcard.startAnimation(slide.id);
 		} else if(slideType===V.Constant.VTOUR){
 			V.VirtualTour.loadVirtualTour(slide.id);
+		} else if(slideType===V.Constant.EVIDEO){
+			V.EVideo.loadEVideo(slide.id);
 		}
 
 		if(_isRecommendationMoment()){

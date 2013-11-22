@@ -985,7 +985,7 @@ VISH.Samples = (function(V,undefined){
 		]
 	}
 
-	var vquiz_sample = {
+	var evideo_sample = {
 		"VEVersion":"0.7",
 		"type":"presentation",
 		"title":"Enriched Video Example",
@@ -1001,7 +1001,7 @@ VISH.Samples = (function(V,undefined){
 		"slides":[
 			{
 				"id":"article1",
-				"type":"vquiz",
+				"type":"enrichedvideo",
 				"sources":"[{ 'type': 'video/webm', 'src': 'https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'},{ 'type': 'video/mp4', 'src': 'videos/webvtt_talk.mp4'}]",
 				"poster":"videos/webvtt_talk.png",
 				"pois":[
@@ -1121,7 +1121,7 @@ VISH.Samples = (function(V,undefined){
 		quiz_samples		: quiz_samples,
 		magnetic_gifs		: magnetic_gifs,
 		new_wysiwyg 		: new_wysiwyg,
-		vquiz_sample		: vquiz_sample,
+		evideo_sample		: evideo_sample,
 		test 				: test
 	};
 

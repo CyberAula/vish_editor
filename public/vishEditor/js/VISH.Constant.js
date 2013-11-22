@@ -44,6 +44,7 @@ VISH.Constant.STANDARD = "standard";
 VISH.Constant.SLIDESET = "slideset";
 VISH.Constant.FLASHCARD = "flashcard";
 VISH.Constant.VTOUR = "VirtualTour";
+VISH.Constant.EVIDEO = "enrichedvideo";
 VISH.Constant.GAME = "game";
 
 //Element types

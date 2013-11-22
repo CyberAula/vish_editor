@@ -38,6 +38,9 @@ VISH.Renderer = (function(V,$,undefined){
 			case V.Constant.VTOUR:
 				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons,slidenumber);
 				break;
+			case V.Constant.EVIDEO:
+				article = _renderEVideoSlide(slide, extra_classes, extra_buttons,slidenumber);
+				break;
 			default:
 				article = null;
 				break;
@@ -110,6 +113,15 @@ VISH.Renderer = (function(V,$,undefined){
 		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
 	};
 
+	var _renderEVideoSlide = function(slide, extra_classes, extra_buttons, slidenumber){
+		var all_slides = "";
+		for(index in slide.slides){
+			var subslide = slide.slides[index];
+			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+		}
+		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.EVIDEO+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
+	};
+
 
 	////////////
 	//After Render Slide Actions
@@ -130,7 +142,10 @@ VISH.Renderer = (function(V,$,undefined){
 		  		}
 				break;
 			case V.Constant.VTOUR:
-					V.VirtualTour.drawMap(slide);
+				V.VirtualTour.drawMap(slide);
+				break;
+			case V.Constant.EVIDEO:
+				V.EVideo.drawEVideo(slide);
 				break;
 			default:
 				break;
