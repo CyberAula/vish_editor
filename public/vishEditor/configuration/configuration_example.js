@@ -83,11 +83,17 @@ var getOptions = function(){
 
 			options["developmentSettings"] = developmentSettings;
 
-
 			//Also you can define a username and token for testing purposes
 			options["username"] = "ebarra";
 			options["userId"] = "3456";
 			options["token"] = "12xfDgR345x6";
+			
+			//URL to access to the Quiz Session API
+			options["quizSessionAPI"] = {
+				rootURL: 'http://localhost:3000/quiz_sessions/'
+			};
+
+			//QuizSessionId to answer the quiz
 			options["quizSessionId"] = "1";
 
 			options["full"] = true;

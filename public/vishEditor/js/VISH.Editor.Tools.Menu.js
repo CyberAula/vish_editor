@@ -2,6 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
+	var _competitionsModalShown = false;
 
 	/*
 	 * Init singleton
@@ -109,6 +110,43 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			return;
 		}
 
+		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
+			_competitionsModalShown = true;
+			var options = {};
+			options.width = 650;
+			options.height = 190;
+			options.text = V.I18n.getTrans("i.NoCompetitions1");
+			options.textWrapperClass = "competitions_paragraph";
+
+			options.onClosedCallback = function(){
+				setTimeout(function(){
+						VISH.Editor.Tools.Menu.onPublishButtonClicked()
+					}, 500);
+
+			};
+			
+			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
+
+			options.middlerow = V.Editor.Competitions.generateForm();			
+			options.middlerowExtraClass = "competitions_options";
+
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.Done");
+			button1.extraclass = "competi_disabled";
+			button1.callback = function(){
+				$.fancybox.close();				
+			}
+			var button2 = {};
+			button2.text = V.I18n.getTrans("i.NoThanks");
+			button2.callback = function(){
+				$.fancybox.close();				
+			}
+			options.buttons = [button1, button2];
+			V.Utils.showDialog(options);
+			return;
+		}
+
+
 		var options = {};
 		options.width = 400;
 		options.height = 140;
@@ -170,6 +208,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	//More Actions
 	///////////////
 
+	var about = function(){
+		V.Tour.startTourWithId('about_screen', 'top');
+	}
+
 	var insertSmartcard = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_smartcards_repo');
@@ -230,12 +272,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
-			$("#menu").hide();
+			$("#menu ul.menu_option_main").addClass("temp_hidden");
 			setTimeout(function(){
-				$("#menu").show();
-			},50);
+				$("#menu ul.menu_option_main").removeClass("temp_hidden");
+			},500);
 		}
-	}
+	};
 
 	return {
 		init							: init,
@@ -252,7 +294,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
-		help 							: help
+		help 							: help,
+		about							: about
 	};
 
 }) (VISH, jQuery);

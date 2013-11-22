@@ -570,6 +570,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			default:
 				break;
 		}
+		return false;
 	};
 
 	var addTmpShown = function(els){

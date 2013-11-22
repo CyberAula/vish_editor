@@ -11,6 +11,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Image.Repository.init();
 		V.Editor.Image.LRE.init();
 
+		// $("#" + urlInputId).watermark(V.I18n.getTrans("i.pasteImageURL"));
+
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
@@ -142,7 +144,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			// 	$(tagList).append("<li>" + tag + "</li>")
 			// });
 
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	}

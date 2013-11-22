@@ -108,6 +108,12 @@ VISH.Utils = (function(V,undefined){
 		};
 
 		jQuery.fn.reverse = [].reverse;
+
+		&#x2F;&#x2F;Extend primitives
+		String.prototype.replaceAll = function (find, replace) {
+			var str = this;
+			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
+		};
 	}
 
 	&#x2F;*
@@ -707,7 +713,7 @@ VISH.Utils = (function(V,undefined){
 	    $.each(style.split(&quot;;&quot;), function(index, property){
 	    	 &#x2F;&#x2F;We need to redefine the var in each iteration (due to Android browser issues)
 	    	 var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
-		     if (property.match(font_style_pattern) != null) {
+		     if(property.match(font_style_pattern) != null){
 			   	var result = font_style_pattern.exec(property);
 			   	if ((result!==null)&amp;&amp;(result[1]!==null)) {
 			   		ft = parseFloat(result[1]);
@@ -757,24 +763,28 @@ VISH.Utils = (function(V,undefined){
 	 * Helper to show validation dialogs
 	 *&#x2F;
 	var showDialog = function(options){
-		var id = &quot;notification_template&quot;;
-		if($(&quot;#&quot;+id).length===0){
+		_cleanDialog();
+
+		var rootTemplate = $(&quot;#notification_template&quot;);
+		if($(rootTemplate).length===0){
 			return;
 		}
+
 		if((!options)||(!options.text)){
 			return;
 		}
-
-		var width = 350;
-		var height = 200;
+		
+		&#x2F;&#x2F;*Defaults
+		var width = &#x27;90%&#x27;;
+		var height; &#x2F;&#x2F;it will be calculated
 		var showCloseButton = false;
-		var notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;content_fail.png&quot;;
-
+		var notificationIconSrc;
+		if(V.Editing){
+			notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;content_fail.png&quot;;
+		}
+		
 		if(options.width){
 			width = options.width;
-		}
-		if(options.height){
-			height = options.height;
 		}
 		if(options.showCloseButton){
 			showCloseButton = options.showCloseButton;
@@ -783,77 +793,152 @@ VISH.Utils = (function(V,undefined){
 			notificationIconSrc = options.notificationIconSrc;
 		}
 
-		&#x2F;&#x2F; fancybox to edit presentation settings
+		&#x2F;&#x2F;Automatically center text when no image is specified in the notification
+		if(!notificationIconSrc){
+			options.textWrapperClass = &quot;forceCenter&quot;;
+		}
+
+		&#x2F;&#x2F;Transform width to px (if not)
+		if((typeof width == &quot;string&quot;)&amp;&amp;(width.indexOf(&quot;%&quot;)!=0)){
+			width = width.split(&quot;%&quot;)[0].trim();
+			width = (width*$(window).width())&#x2F;100;
+		}
+
+		&#x2F;&#x2F;*Calculate Height (use root template)
+		var notificationParent = $(rootTemplate).parent();
+		$(rootTemplate).width(width);
+		
+		&#x2F;&#x2F;Fill template
+		var text_wrapper = $(rootTemplate).find(&quot;.notification_row1&quot;);
+		var buttons_wrapper = $(rootTemplate).find(&quot;.notification_row2&quot;);
+		var imgIcon = $(text_wrapper).find(&quot;.notificationIcon&quot;);
+
+		if(notificationIconSrc){
+			$(imgIcon).attr(&quot;src&quot;,notificationIconSrc);
+			$(imgIcon).css(&quot;display&quot;,&quot;inline&quot;);
+		}
+		if(options.notificationIconClass){
+			$(imgIcon).addClass(options.notificationIconClass);
+		}
+
+		if(options.textWrapperClass){
+			$(text_wrapper).addClass(options.textWrapperClass);
+		}
+
+		if(options.buttonsWrapperClass){
+			$(buttons_wrapper).addClass(options.buttonsWrapperClass);
+		}
+
+		$(text_wrapper).find(&quot;.notification_text&quot;).html(options.text);
+
+		if(options.buttons){
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
+			});
+		}
+
+		&#x2F;&#x2F;Look for additional HTML
+		if(options.middlerow){
+			var middlerow = document.createElement(&#x27;div&#x27;);
+			$(middlerow).addClass(&quot;notification_middlerow&quot;);
+			$(middlerow).append(options.middlerow);
+			if(options.middlerowExtraClass){
+				$(middlerow).addClass(options.middlerowExtraClass);
+			}
+			$(buttons_wrapper).before(middlerow);
+		}
+
+		$(notificationParent).addClass(&quot;temp_shown&quot;);
+		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+		if(options.middlerow){
+			var middlerow = $(rootTemplate).find(&quot;.notification_middlerow&quot;);
+			adjustedHeight = adjustedHeight + $(middlerow).outerHeight(true);
+		}
+		$(notificationParent).removeClass(&quot;temp_shown&quot;);
+
+
+		&#x2F;&#x2F;*Clone the root template
+		var cloneTemplate = $(rootTemplate).clone();
+		$(cloneTemplate).attr(&quot;id&quot;,&quot;notification_template_cloned&quot;);
+		$(notificationParent).append(cloneTemplate);
+		var notification = $(&quot;#notification_template_cloned&quot;);
+
+		&#x2F;&#x2F;Replace buttons (we need to add the events)
+		if(options.buttons){
+			buttons_wrapper = $(notification).find(&quot;.notification_row2&quot;);
+			$(buttons_wrapper).html(&quot;&quot;);
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
+
+				&#x2F;&#x2F;Add buttons callback
+				$(buttons_wrapper).find(&quot;.button[buttonNumber=&#x27;&quot;+bNumber+&quot;&#x27;]&quot;).click(function(event){
+					event.preventDefault();
+					button.callback();
+				});
+			});
+		};
+
 		$(&quot;a#link_to_notification_template&quot;).fancybox({
 			&#x27;autoDimensions&#x27; 	: false,
-			&#x27;autoScale&#x27; 		: false,
+			&#x27;autoScale&#x27; 		: true,
 			&#x27;scrolling&#x27;			: &#x27;no&#x27;,
 			&#x27;width&#x27;				: width,
-			&#x27;height&#x27;			: height,
+			&#x27;height&#x27;			: adjustedHeight,
 			&#x27;padding&#x27; 			: 0,
 			&#x27;hideOnOverlayClick&#x27;: true,
 			&#x27;hideOnContentClick&#x27;: false,
 			&#x27;showCloseButton&#x27;	: showCloseButton,
 			&quot;onStart&quot;  	: function(data){
-				_cleanDialog(id);
-				var text_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row1&quot;);
-				var buttons_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row2&quot;);
-				$(text_wrapper).find(&quot;.notificationIcon&quot;).attr(&quot;src&quot;,notificationIconSrc);
-				$(text_wrapper).find(&quot;.notification_text&quot;).html(options.text);
-
-				if(options.notificationIconClass){
-					$(text_wrapper).find(&quot;.notificationIcon&quot;).addClass(options.notificationIconClass);
-				}
-
-				if(options.buttons){
-					var obLength = options.buttons.length;
-					$(options.buttons).reverse().each(function(index,button){
-						var bNumber = obLength-index;
-						$(buttons_wrapper).append(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
-						$(buttons_wrapper).find(&quot;.button[buttonNumber=&#x27;&quot;+bNumber+&quot;&#x27;]&quot;).click(function(event){
-							event.preventDefault();
-							button.callback();
-						});
-					});
-				}
 			},
 			&quot;onComplete&quot;  	: function(data){
-				var text_wrapper = $(&quot;#fancybox-content&quot;).find(&quot;.notification_row1&quot;);
-				var buttons_wrapper = $(&quot;#fancybox-content&quot;).find(&quot;.notification_row2&quot;);
-				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
-
-				if($(&quot;#fancybox-content&quot;).height() &lt; (adjustedHeight)){
-					&#x2F;&#x2F;Adjust height (needed when height is smaller than the appropiately one)
-					var transitionTimeMs = 500;
-					var adjustedHeightWithPadding = adjustedHeight + $(&quot;#&quot;+id).cssNumber(&quot;padding-top&quot;) + $(&quot;#&quot;+id).cssNumber(&quot;padding-bottom&quot;);
-					$(&quot;#&quot;+id).animate({height:adjustedHeight+&quot;px&quot;},transitionTimeMs);
-					$(&quot;#fancybox-content&quot;).animate({height:adjustedHeightWithPadding+&quot;px&quot;},transitionTimeMs);
-					$(&quot;#fancybox-content &gt; div&quot;).animate({height:adjustedHeightWithPadding+&quot;px&quot;},transitionTimeMs);
-				}
 			},
 			&quot;onClosed&quot; : function(data){
-				_cleanDialog(id);
-
+				_cleanDialog();
 				if((options)&amp;&amp;(typeof options.onClosedCallback == &quot;function&quot;)){
 					options.onClosedCallback();
 				}
 			}
 		});
-
-		var _cleanDialog = function(id){
-			var text_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row1&quot;);
-			var buttons_wrapper = $(&quot;#&quot;+id).find(&quot;.notification_row2&quot;);
-			$(buttons_wrapper).html(&quot;&quot;);
-			var icon = $(text_wrapper).find(&quot;.notificationIcon&quot;);
-			$(icon).removeAttr(&quot;src&quot;);
-			$(icon).removeClass().addClass(&quot;notificationIcon&quot;);
-			$(text_wrapper).find(&quot;.notification_text&quot;).html(&quot;&quot;);
-			$(&quot;#&quot;+id).removeAttr(&#x27;style&#x27;);
-		};
-
+		
 		$(&quot;a#link_to_notification_template&quot;).trigger(&#x27;click&#x27;);
 	}
 
+	var _cleanDialog = function(){
+		var notificationWrapper = $(&quot;#notification_template_wrapper&quot;);
+		$(notificationWrapper).html(&quot;&quot;);
+		
+		var notificationTemplate = document.createElement(&#x27;div&#x27;);
+		$(notificationTemplate).attr(&quot;id&quot;,&quot;notification_template&quot;);
+
+		var row1 = document.createElement(&#x27;div&#x27;);
+		$(row1).addClass(&quot;notification_row1&quot;);
+		var img = document.createElement(&#x27;img&#x27;);
+		$(img).addClass(&quot;notificationIcon&quot;);
+		$(img).attr(&quot;style&quot;,&quot;display:none&quot;);
+		var span = document.createElement(&#x27;span&#x27;);
+		$(span).addClass(&quot;notification_text&quot;);
+		$(row1).append(img);
+		$(row1).append(span);
+		$(notificationTemplate).append(row1);
+
+		var row2 = document.createElement(&#x27;div&#x27;);
+		$(row2).addClass(&quot;notification_row2&quot;);
+		$(notificationTemplate).append(row2);
+
+		$(notificationWrapper).append(notificationTemplate);
+	};
 
    return {
 		init 					: init,

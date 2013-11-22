@@ -57,6 +57,10 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = "";
 		var classes = "";
+		if((typeof extra_classes == "undefined")||(extra_classes===null)){
+			extra_classes = "";
+		}
+
 		for(el in slide.elements){
 			if(!V.Renderer.Filter.allowElement(slide.elements[el])){
 				content += V.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
@@ -92,7 +96,7 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			//Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, null, "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.FLASHCARD+"' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
 	};
@@ -101,7 +105,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var all_slides = "";
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, null, "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
 		}
 		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
 	};

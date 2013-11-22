@@ -70,6 +70,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Police.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Recommendations.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Animations.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Configuration.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Status.js"></script>
@@ -114,7 +115,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Live.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Web.js"></script>
-	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.PDF.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.GoogleDOC.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.LRE.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Object.Snapshot.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Text.js"></script>
@@ -140,11 +141,13 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Preview.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.MenuTablet.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Clipboard.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Animations.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.js"></script>	
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.Repository.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Presentation.File.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Events.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Competitions.js"></script>
 </head>
 
 <body onload="start()" style="display: none" class="loaded">
@@ -226,7 +229,13 @@
 									<i class="icon-button icon-question"></i>
 									<span i18n-key="i.Help">Help</span>
 								</a>
-							</li
+							</li>
+							<li>
+								<a class="menu_option menu_action" action="about">
+									<i class="icon-button icon-info"></i>
+									<span i18n-key="i.About">About</span>
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -257,13 +266,21 @@
 					</a>
 					<p class="toolbar_prseentation_title" i18n-key="i.Preview">Preview</p>
 				</div>
-				<div id="toolbar_themes_help" class="toolbar_presentation_wrapper lasticonborder ">
+				<div id="toolbar_themes_help" class="toolbar_presentation_wrapper ">
 					<a id="toolbar_theme" class="tool_action" action="selectTheme" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-adjust"></i>
 						</button>
 					</a>
 					<p class="toolbar_prseentation_title" i18n-key="i.Style">Style</p>
+				</div>
+				<div id="toolbar_animation_help" class="toolbar_presentation_wrapper lasticonborder">
+					<a id="toolbar_animation" class="tool_action" action="selectAnimation" href="#">
+						<button type="button" class="btn btn-primary btn-small">
+							<i class="icon-button icon-magic"></i>
+						</button>
+					</a>
+					<p class="toolbar_prseentation_title" i18n-key="i.Animations">Animation</p>
 				</div>
 				<div id="toolbar_background_help" class="toolbar_presentation_wrapper bgtoolpos">
 					<a id="toolbar_background" class="tool_action" action="changeBackground" href="#">
@@ -342,7 +359,7 @@
 	</section>
 
 	<div id="hidden_links" style="display: none;">
-		<!-- Hidden link to open walkthrough -->
+		<!-- Hidden link to open help -->
 		<a id="help_right"></a>
 		<!-- Hidden link to open preview -->
 		<a id="preview_action"></a>
@@ -353,7 +370,7 @@
 		<!-- Hidden link for loading fancybox -->
 		<a id="fancyLoad" href="#loading_fancy"></a>
 		<!-- Hidden link to open notification template -->
-		<a id="link_to_notification_template" href="#notification_template"></a>
+		<a id="link_to_notification_template" href="#notification_template_cloned"></a>
 	</div>
 
 	<!-- Initial screen to input the basic exursion data (Title, Description, etc.) -->
@@ -399,6 +416,11 @@
 							<span class="presentation_details_text" i18n-key="i.Description">Description</span>
 							<textarea id='presentation_details_textarea' placeholder="Please describe in a few words what your excursion is about..." i18n-key="i.presDescriptionPlaceHolder"></textarea>
 						</div>			
+
+						<div id="competitions_in_presentation_details">
+							<span class="presentation_details_text" i18n-key="i.Competitions">Competitions </span>
+							<img class='help_in_competitions' id='help_in_competitions' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
+						</div>
 
 						<div id="tags_in_presentation_details">
 							<span class="presentation_details_text" i18n-key="i.Tags">Tags</span>
@@ -578,19 +600,19 @@
 			<div class='fancy_tabs' id='thumcontent_tabs'>
 				<ul>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_slides')" id="tab_slides" class="fancy_tab tabbable" i18n-key="i.Slides">Slides</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_slides'); return false;" id="tab_slides" class="fancy_tab tabbable" i18n-key="i.Slides">Slides</a>
 					</li>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pdfex')" id="tab_pdfex" class="fancy_tab">PDF</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pdfex'); return false;" id="tab_pdfex" class="fancy_tab">PDF</a>
 					</li>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_presentations_repo')" id="tab_presentations_repo" class="fancy_tab tabbable" i18n-key="i.Excursions">Excursions</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_presentations_repo'); return false;" id="tab_presentations_repo" class="fancy_tab tabbable" i18n-key="i.Excursions">Excursions</a>
 					</li>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_smartcards_repo')" id="tab_smartcards_repo" class="fancy_tab tabbable" i18n-key="i.Smartcards">Smartcards</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_smartcards_repo'); return false;" id="tab_smartcards_repo" class="fancy_tab tabbable" i18n-key="i.Smartcards">Smartcards</a>
 					</li>
 					<li>
-						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_json_file')" id="tab_json_file" class="fancy_tab">JSON</a>
+						<a href="#" onclick="VISH.Editor.Utils.loadTab('tab_json_file'); return false;" id="tab_json_file" class="fancy_tab">JSON</a>
 					</li>
 				</ul>
 			</div> 
@@ -748,11 +770,11 @@
 
 			<div id='tab_quizzes_content' class="fancy_tab_content">
 				<div class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.add("multiplechoice");'/>
+					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.add("multiplechoice"); return false;'/>
 					<p><span i18n-key="i.walkQuiz_MC1">Multiple choice</span></p>
 				</div>
 				<div class='quizFancythumb'>
-					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.add("truefalse");'/>
+					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.add("truefalse"); return false;'/>
 					<p><span i18n-key="i.walkQuiz_TF1">True / False</span></p>
 				</div>
 			</div>
@@ -783,7 +805,7 @@
 	</div>
   
 	<!-- FANCYBOX ADD A LINK TO A ELEMENT (IMAGE,etc) -->
-	<div style='display:none' isFancyBoxContainer="true">
+	<div style='display:none'>
 		<div id='tools_addUrl'>	  		
 			<div class="box1 box1fancy1">
 				<p class="textfancy">Url</p></br>
@@ -791,30 +813,19 @@
 				<input class="input_text_fancy formsizefancy1 marginsfancy1 tools_input_addUrl" type="text" size="25" value="">
 				<div class="addUrlButtons">
 					<button type="button" class="addUrlButton" i18n-key="i.Add" 
-					onclick="VISH.Editor.Tools.addUrl()">Add</button>
+					onclick="VISH.Editor.Tools.addUrl(); return false;">Add</button>
 					<button type="button" class="removeUrlButton" style="display:none" i18n-key="i.Remove" 
-					onclick="VISH.Editor.Tools.removeUrl()">Remove</button>
+					onclick="VISH.Editor.Tools.removeUrl(); return false;">Remove</button>
 				</div>
 
 			</div>
 		</div>
 	</div>
 
-
-
 	<!-- NOTIFICATIONS -->
 
 	<!-- NOTIFICATION TEMPLATE -->
-	<div style='display:none'>
-		<div id='notification_template'>
-			<div class="notification_row1">
-				<img class="notificationIcon">
-				<span class="notification_text"></span>
-			</div>
-			<div class="notification_row2">
-			</div>
-		</div>
-	</div>
+	<div id="notification_template_wrapper" style='display:none'></div>
 
 	<!-- NOTIFY USER WHEN NOT MET MINIMUM REQUIREMENTS -->
 	<div style='display:none'>
@@ -854,12 +865,12 @@
 		<div id="picture_fancybox" class="outer_box">
 			<div class="fancy_tabs" id="images_fancy_tabs_id">	   
 				<ul>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_thumbnails')" id="tab_pic_thumbnails" class="fancy_tab tabbable" style="display:none" i18n-key="i.thumbnails">thumbnails</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_from_url')" id="tab_pic_from_url" class="fancy_tab tabbable" i18n-key="i.url">url</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_upload')" id="tab_pic_upload" class="fancy_tab" i18n-key="i.upload">upload</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_repo')" id="tab_pic_repo" class="fancy_tab">vish</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_flikr')" id="tab_pic_flikr" class="fancy_tab"><img src='/vishEditor/images/logos/flickrlogo2.png'/></a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_lre')" id="tab_pic_lre" class="fancy_tab"><img src='/vishEditor/images/logos/lrelogo.gif'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_thumbnails'); return false;" id="tab_pic_thumbnails" class="fancy_tab tabbable" style="display:none" i18n-key="i.thumbnails">thumbnails</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_from_url'); return false;" id="tab_pic_from_url" class="fancy_tab tabbable" i18n-key="i.url">url</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_upload'); return false;" id="tab_pic_upload" class="fancy_tab" i18n-key="i.upload">upload</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_repo'); return false;" id="tab_pic_repo" class="fancy_tab">vish</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_flikr'); return false;" id="tab_pic_flikr" class="fancy_tab"><img src='/vishEditor/images/logos/flickrlogo2.png'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_lre'); return false;" id="tab_pic_lre" class="fancy_tab"><img src='/vishEditor/images/logos/lrelogo.gif'/></a></li>
 				</ul>
 				<img class='help_in_fancybox' id='tab_pic_thumbnails' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<img class='help_in_fancybox' id='tab_pic_from_url_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
@@ -995,6 +1006,48 @@
 		</div>
 	</div>
 
+	<!-- Select animation fancybox -->
+	<a id="hidden_button_to_launch_animation_fancybox" href="#animation_fancybox" style="display:none"></a>
+	<div style='display:none'>
+		<div id="animation_fancybox" class="animation_fancybox_class">
+		<img id="help_animation_selection" src="/vishEditor/images/vicons/helptutorial_circle.png"/>
+			<div id='select_animation1' class="slidethumb" animation="animation1">
+				<div class="anim_text"><h3 i18n-key="i.Horizontal">Horizontal</h3></div></div>
+			<div id='select_animation2' class="slidethumb" animation="animation2">
+				<div class="anim_text"><h3 i18n-key="i.Vertical">Vertical</h3></div>
+			</div>
+			<div id='select_animation3' class="slidethumb" animation="animation3">
+				<div class="anim_text"><h3 i18n-key="i.Opacity">Opacity</h3></div>
+			</div>
+			<div id='select_animation4' class="slidethumb" animation="animation4">
+				<div class="anim_text"><h3 i18n-key="i.Elements">Elements</h3></div>
+			</div>
+			<div id='select_animation5' class="slidethumb" animation="animation5">
+				<div class="anim_text"><h3 i18n-key="i.Rotate">Rotate</h3></div>
+			</div>
+			<div id='select_animation6' class="slidethumb" animation="animation6">
+				<div class="anim_text"><h3 i18n-key="i.Diagonal1">Diagonal #1</h3></div>
+			</div>
+			<div id='select_animation7' class="slidethumb" animation="animation7">
+				<div class="anim_text"><h3 i18n-key="i.Diagonal2">Diagonal #2</h3></div>
+			</div>
+			<div id='select_animation8' class="slidethumb" animation="animation8">
+				<div class="anim_text"><h3 i18n-key="i.Inside">Inside</h3></div>
+			</div>
+			<div id='select_animation9' class="slidethumb" animation="animation9">
+				<div class="anim_text"><h3 i18n-key="i.Zoom">Zoom</h3></div>
+			</div>
+			<div id='select_animation10' class="slidethumb" animation="animation10">
+				<div class="anim_text"><h3 i18n-key="i.Flip1">Flip #1</h3></div>
+			</div>
+			<div id='select_animation11' class="slidethumb" animation="animation11">
+				<div class="anim_text"><h3 i18n-key="i.Flip2">Flip #2</h3></div>
+			</div>
+			<div id='select_animation12' class="slidethumb" animation="animation12">
+				<div class="anim_text"><h3 i18n-key="i.3D">3D</h3></div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Objects -->
 	<div style='display:none'>
@@ -1002,12 +1055,12 @@
 
 			<div class="fancy_tabs" id="object_fancy_tabs_id">	   
 				<ul>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_from_web')" id="tab_object_from_web" class="fancy_tab">web</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_snapshot')" id="tab_object_snapshot" class="fancy_tab">web snapshot</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_from_url')" id="tab_object_from_url" class="fancy_tab">embed</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_upload')" id="tab_object_upload" class="fancy_tab" i18n-key="i.upload">upload</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_repo')" id="tab_object_repo" class="fancy_tab">vish</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_lre')" id="tab_object_lre" class="fancy_tab"><img src='/vishEditor/images/logos/lrelogo.gif'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_from_web'); return false;" id="tab_object_from_web" class="fancy_tab">web</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_snapshot'); return false;" id="tab_object_snapshot" class="fancy_tab">web snapshot</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_from_url'); return false;" id="tab_object_from_url" class="fancy_tab">embed</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_upload'); return false;" id="tab_object_upload" class="fancy_tab" i18n-key="i.upload">upload</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_repo'); return false;" id="tab_object_repo" class="fancy_tab">vish</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_object_lre'); return false;" id="tab_object_lre" class="fancy_tab"><img src='/vishEditor/images/logos/lrelogo.gif'/></a></li>
 				</ul>
 				<img class='help_in_fancybox' id='tab_object_from_web_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<img class='help_in_fancybox' id='tab_object_snapshot_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
@@ -1136,10 +1189,10 @@
 
 			<div class="fancy_tabs" id="video_fancy_tabs_id">	   
 				<ul>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_from_url')" id="tab_video_from_url" class="fancy_tab" i18n-key="i.url">url</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_repo')" id="tab_video_repo" class="fancy_tab">vish</a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_youtube')" id="tab_video_youtube" class="fancy_tab"><img src='/vishEditor/images/logos/youtube.png'/></a></li>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_vimeo')" id="tab_video_vimeo" class="fancy_tab"><img src='/vishEditor/images/logos/vimeo.png'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_from_url'); return false;" id="tab_video_from_url" class="fancy_tab" i18n-key="i.url">url</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_repo'); return false;" id="tab_video_repo" class="fancy_tab">vish</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_youtube'); return false;" id="tab_video_youtube" class="fancy_tab"><img src='/vishEditor/images/logos/youtube.png'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_video_vimeo'); return false;" id="tab_video_vimeo" class="fancy_tab"><img src='/vishEditor/images/logos/vimeo.png'/></a></li>
 				</ul>
 				<img class='help_in_fancybox' id='tab_video_from_url_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<img class='help_in_fancybox' id='tab_video_repo_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
@@ -1151,7 +1204,7 @@
 				<div id="box1" class="box1 box1fancy1">
 					<p class="textfancy"><span i18n-key="i.addvideourl">add video url (YouTube, HTML5)</span>.</p></br>
 					<img id="image_add_url" class="image_add_url" src="/vishEditor/images/icons/url_img.png"/>
-					<input id="video_url" class="input_text_fancy formsizefancy1 marginsfancy1" type="video_url">
+					<input class="input_text_fancy formsizefancy1 marginsfancy1">
 					<button type="button" class="button buttonfancy previewButton" i18n-key="i.Preview">Preview</button>
 				</div>
 				<div id="box2" class="box2">
@@ -1222,7 +1275,7 @@
 		<div id="live_fancybox" class="outer_box">
 			<div class="fancy_tabs" id="live_fancy_tabs_id">
 				<ul>
-					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_resource')" i18n-key="i.LiveResources" id="tab_live_resource" class="fancy_tab">Live Resources</a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_live_resource'); return false;" i18n-key="i.LiveResources" id="tab_live_resource" class="fancy_tab">Live Resources</a></li>
 				</ul>
 				<img class='help_in_fancybox' id='tab_live_resource_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/> 
 			</div>
@@ -1249,10 +1302,23 @@
 
 	<!-- WALKTHROUGH HELP SECTION -->
 
-	<!-- Help in menu -->
+	<!-- Menu Help -->
+	<ol id="menubar_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_template_editorfull tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.walkWelcome1_1">Welcome to ViSH Editor!</h2>
+			<p i18n-key="i.walkWelcome1_2">ViSH Editor is an innovative web application that allows you to create amazing web slideshows and novel educational resources such as Virtual Excursions.</p>
+			<p><span i18n-key="i.walkMenuHelp1a">To learn how to use ViSH Editor you can watch several video tutorials in our</span> <a i18n-key="i.YouTubeChannel" class="tut_tutlink" href="http://www.youtube.com/channel/UCo-73n6eZBWNBs2gvKLyBhQ?feature=watch" target="_blank">YouTube Channel</a>. <span i18n-key="i.walkMenuHelp1b">These tutorials cover from basic usage for beginners to advanced features.</span></p>
+			<p i18n-key="i.walkMenuHelp2">The following video tutorial will teach you how to getting started with ViSH Editor in a few minutes.</p>
+			<p i18n-key="i.vtTitle_GStarted" class="tut_video_title">Getting Started with ViSH Editor</p>
+			<iframe class="tut_iframe_yt" width="625" height="400" src="//www.youtube.com/embed/fBSNZxs8m0I" frameborder="0" allowfullscreen></iframe>
+			<p class="tut_space">&nbsp;</p>
+			<p><span class="tut_tutlink" onClick="VISH.Tour.startTourWithId('getting_started_help', 'top');" i18n-key="i.walkMenuHelp3">If you prefer you can click here to see a text tutorial which will teach you quickly the basics to get started.</span></p>
+			<p class="tut_space">&nbsp;</p>
+		</li>
+	</ol>
 
 	<!-- Getting started tutorial -->
-	<ol id="menubar_help" class="joyRideTipContent">
+	<ol id="getting_started_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_width500_center tut_without_arrow" data-options="tipLocation:none">
 			<h2 i18n-key="i.walkWelcome1_1">Welcome to ViSH Editor!</h2>
 			<p i18n-key="i.walkWelcome1_2">ViSH Editor is an innovative web application that allows you to create amazing web slideshows and novel educational resources such as Virtual Excursions.</p>
@@ -1347,7 +1413,7 @@
 				</tr>
 				<tr>
 					<td>
-						<img src="/vishEditor/images/tutorial/textedimg.png"/>
+						<img src="/vishEditor/images/tutorial/tut_textedimg.png"/>
 					</td>
 					<td><p i18n-key="i.walkWelcome11_a_4">Text Toolbar</p></td>
 				</tr>
@@ -1360,7 +1426,7 @@
 		<li data-id="menuButton" class="tut_menubuttonpresentation tut_with_arrow" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
 			<h2 i18n-key="i.walkWelcome12_1">ViSH Editor Menu</h2>
 			<p i18n-key="i.walkWelcome12_2">This button displays the ViSH Editor menu, where you can find all the functionalities of the application.</p>
-			<img id="tutMenuImage" src="/vishEditor/images/tutorial/menutut.png"/>
+			<img id="tutMenuImage" i18n-key="i.img.tut_menu" src="/vishEditor/images/tutorial/tut_menu.png"/>
 			<p i18n-key="i.walkWelcome12_3">Many of these options are also available on the ViSH Editor toolbar, but you always can access to any of them through this menu.</p>
 			<p i18n-key="i.walkWelcome12_4">Using this menu you can save and publish your presentation as well as export it to a external file, you can also preview the presentation before publish or export it, add new slides, import new contents, change the information of the presentation through the 'Settings' option, and start again this tutorial every time you want with the 'Help' option.</p>
 			<p class="tut_space">&nbsp;</p>
@@ -1371,7 +1437,10 @@
 			<table>
 				<tr>
 					<td><p i18n-key="i.walkWelcome13_2">If you have any doubt, you can always click on any of these "contextual help icons" to see additional help and instructions relative to the screen on which you are or to the element on which the icon is placed.</p></td>
-					<td class="tut_contextualhelp_icon"><img src="/vishEditor/images/vicons/helptutorial_circle.png"/><span i18n-key="i.walkWelcome15_3">Contextual Help Icon</span></td>
+					<td class="tut_contextualhelp_icon">
+						<img src="/vishEditor/images/vicons/helptutorial_circle.png"/>
+						<p class="tut_withouttopspace"><span i18n-key="i.walkWelcome13_3">Contextual Help Icon</span></p>
+					</td>
 				</tr>
 			</table>
 			<p class="tut_space">&nbsp;</p>
@@ -1436,6 +1505,19 @@
 		</li>
 	</ol>
 
+
+	<!-- Help in Competitions -->
+	 <ol id="help_in_competitions_help" class="joyRideTipContent">
+
+		<li data-id="help_in_competitions" data-text="Close" i18n-key="i.Close" data-options="tipLocation:none;" class="tut_pedagogical tut_without_arrow">
+			<h2 i18n-key="i.walkCompetitions1_1">We are organizing a competition</h2>
+			<p><span i18n-key="i.walkCompetitions1_2">If you want to participate you only have to add your excursion the tag ViSHCompetition2013 and one or more of the following tags:</span></p>
+			<p><span i18n-key="i.walkCompetitions1_3">Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience or ComputerScience.</span></p>
+			<p><span i18n-key="i.walkCompetitions1_4">For more information go to</span> <a i18n-key="i.walkCompetitions1_5" href='http://vishub.org/competitions' target='_blank'>the info page</a> <span i18n-key="i.walkCompetitions1_6">or the</span> <a i18n-key="i.walkCompetitions1_7" href='http://vishub.org/faq#faq_competitions_1a' target='_blank'>faq</a>.</p>
+			<p class="tut_space">&nbsp;</p>
+		</li>
+	</ol>
+
 	<!-- Help in pedagogical options settings -->
 	<ol id="help_pedagogical_selection_help" class="joyRideTipContent">
 		<li data-id="thumbcontent" data-text="Finish" i18n-key="i.Finish" class="tut_pedagogical tut_without_arrow" data-options="tipLocation:none">
@@ -1480,7 +1562,7 @@
 					</td>
 					<td>
 						<img src="/vishEditor/images/zonethumbs/quiz.png"/>
-						<h1 i18n-key="i.QuizzesTrans">Quizzes</h1>
+						<h1 i18n-key="i.Quizzes">Quizzes</h1>
 					</td>
 				</tr>
 				<tr>
@@ -1498,7 +1580,7 @@
 			<p class="tut_withlittlebottomspace">
 				<span i18n-key="i.walkSlide1_5">If you select the text icon, a text toolbar will appear on the top, allowing you to define among others the typeface, text style, alignment and size.</span>
 			</p>
-			<img src="/vishEditor/images/tutorial/textedimg.png"/>
+			<img src="/vishEditor/images/tutorial/tut_textedimg.png"/>
 
 			<p>
 				<span i18n-key="i.walkSlide1_6">If you select the quizzes icon, a new screen will pop up for you to choose the type of quiz (multiple choice, true/false, ...) to add.</span>
@@ -1626,6 +1708,18 @@
 		</li>
 	</ol>
 
+	<!-- Help in Animation templates -->
+	<ol id="animation_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" class="tut_themes tut_width500_center tut_without_arrow" data-options="tipLocation:none;" data-text="Close" i18n-key="i.Close">
+			<h2 i18n-key="i.walkAnimations_1">ViSH Editor Animations</h2>
+			<p i18n-key="i.walkAnimations_2">An Animation defines the visual transition between the slides of the presentation. ViSH Editor offers different animations among them you can choose.</p>
+			<p i18n-key="i.walkAnimations_3">To pick one animation, just pass through the icons to previsualize the animation you like in this gallery.</p>
+			<p i18n-key="i.walkAnimations_4">Remember that you can change the animation between the slides of the presentation at any time by accesing to this screen.</p>
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
+		</li>
+	</ol>
+
 	<!-- Help in Flashcards -->
 	<ol id="fc_help" class="joyRideTipContent">
 		<li data-id="toolbar_wrapper" data-text="Finish" i18n-key="i.Finish" class="tut_template_editorfull tut_without_arrow" data-options="tipLocation:none">
@@ -1699,11 +1793,11 @@
 			<p><span i18n-key="i.walkVirtualTour_2a">When you are creating a Virtual Tour, an interactive map is displayed with a search box on its top. You can use this box to look for places and locations. Type the location you want to search, for example</span> <i>Madrid</i>. <span i18n-key="i.walkVirtualTour_2b">A list of results will be shown at the bottom of the search box. You can pick any of them or just press the 'enter' key to automatically select the first one. After this, the map will show the selected location.</span></p>
 
 			<p i18n-key="i.walkVirtualTour_3">When you are creating a Virtual Tour, a new panel is displayed at the bottom of the screen. We will refer to this panel as the 'Virtual Tour panel'.</p>
-			<img src="/vishEditor/images/tutorial/tut_flashcard1.png"/>
+			<img src="/vishEditor/images/tutorial/tut_vt1.png"/>
 			<p class="tut_space">&nbsp;</p>
 
 			<p i18n-key="i.walkVirtualTour_4">To add a new slide to the Virtual Tour click on the 'Add slide' button placed in the 'Virtual Tour panel' and continue with the usual process. After add it, the thumbnail of the new slide will appear in the panel and the slide will be displayed in the screen.</p>
-			<img src="/vishEditor/images/tutorial/tut_flashcard2.png"/>
+			<img src="/vishEditor/images/tutorial/tut_vt2.png"/>
 			<p class="tut_space">&nbsp;</p>
 
 			<p i18n-key="i.walkVirtualTour_5">When a slide is selected, is displayed in the screen and you can edit and remove it the same way as you do with common slides. To select a slide just click on it in the 'Virtual Tour panel'. If you want to select the Virtual Tour again to edit it, you have to click on the Virtual Tour icon placed at the left of the 'Virtual Tour panel'.</p>
@@ -1714,7 +1808,7 @@
 						<p i18n-key="i.walkVirtualTour_6">The slides have draggable arrows on their top. You can drag any of them into the map to create a new location. Once you dragged an arrow into the map, a new map pin will appear in the selected location. This way, when users click on this map pin they will see the associated slide. The map pins are also draggables, so you can drag them across the map. To remove a map pin, just click on it.</p>
 					</td>
 					<td>
-						<img src="/vishEditor/images/tutorial/tut_pois_flashcard.png"/>
+						<img src="/vishEditor/images/tutorial/tut_pois_vt.png"/>
 					</td>
 				</tr>
 			</table>
@@ -2063,6 +2157,24 @@
 	</ol>
 
 	<!-- Walkthrough end -->
+
+	<!-- About screen -->
+	<ol id="about_screen" class="joyRideTipContent">
+		<li data-id="thumbcontent" class="about_fancybox tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.About1">ViSH Editor</h2>
+			<p><span class="aboutfield" i18n-key="i.Version">Version</span>: <span id="VEversion"></span></p>
+			<p class="tut_withoutbottomspace"><span class="aboutfield" i18n-key="i.License">License</span>: <span i18n-key="i.OpenSource">Open source</span></p>
+			<p class="tut_withouttopspace"><span i18n-key="i.About2">Code available at</span> <a class="tut_tutlink" href="https://github.com/ging/vish_editor" target="_blank">https://github.com/ging/vish_editor</a>.</p>
+			<p><span class="aboutfield" i18n-key="i.Documentation">Documentation</span>: <a i18n-key="i.About3" class="tut_tutlink" href="http://www.youtube.com/channel/UCo-73n6eZBWNBs2gvKLyBhQ?feature=watch" target="_blank">visit our YouTube Channel</a></p>
+			<p><span class="aboutfield" i18n-key="i.About4">Developed by</span> <span>UPM (Universidad Politécnica de Madrid)</span></p>
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
+			<p class="tut_space">&nbsp;</p>
+			<h2 i18n-key="i.VESurvey1">Help us to improve ViSH Editor</h2>
+			<p class="tut_withoutbottomspace"><span i18n-key="i.VESurvey2">Please fill</span> <a i18n-key-href="i.VESurveyURL" class="tut_tutlink" i18n-key="i.VESurvey3" href="https://docs.google.com/forms/d/1jqgQsQ84sBsETRt0qY-vAz7dWk9hT3ouWH1dN0vGzQA/viewform" target="_blank">this survey</a>.</p>
+			<p class="tut_withouttopspace"><span i18n-key="i.VESurvey4">Thank you for your collaboration</span>!</p>
+		</li>
+	</ol>
 
 	<iframe id="hiddenIframeForAjaxDownloads" style="border:0" iframeborder="0" frameborder="0" iframeelement.frameborder="0;"></iframe>
 

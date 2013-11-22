@@ -19,19 +19,19 @@ VISH.Slides = (function(V,$,undefined){
 	/* 
 	 * Slides Management
 	 */
-	var updateSlides = function() {
+	var updateSlides = function(){
 		setSlides(document.querySelectorAll('section.slides > article'));
 		_updateSlideClasses();
 		_updateHash();
 	};
 
-	var _updateHash = function() {
+	var _updateHash = function(){
 		if(!V.Editing){
 			location.replace('#' + (curSlideIndex + 1));
 		}
 	};
 
-	var _updateSlideClasses = function() {
+	var _updateSlideClasses = function(){
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
@@ -242,7 +242,7 @@ VISH.Slides = (function(V,$,undefined){
 	* n < 0 (go back)
 	*/
 	var moveSlides = function(n){
-		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))){
+		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))&&(V.Viewer.getPresentationType()===V.Constant.PRESENTATION)){
 			V.Recommendations.showFancybox();
 			return;
 		}
@@ -324,7 +324,12 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
   		_onOpenSubslide(slide_id);
-		$("#" + slide_id).show();
+
+  		//done this way instead of .show() and .hide() to be able to add animations
+  		//on show and on hide with these classes
+  		$("#" + slide_id).removeClass("hide_in_smartcard");
+  		$("#" + slide_id).addClass("show_in_smartcard");
+		//$("#" + slide_id).show();
 		triggerEnterEventById(slide_id);
 
 		//Notify
@@ -348,7 +353,9 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
   		_onCloseSubslide(slide_id);
-		$("#"+slide_id).hide();
+  		$("#" + slide_id).removeClass("show_in_smartcard");
+  		$("#" + slide_id).addClass("hide_in_smartcard");
+		//$("#"+slide_id).hide();
 		triggerLeaveEventById(slide_id);	
 
 		//Notify

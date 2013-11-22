@@ -90,69 +90,65 @@
     <pre class="code prettyprint linenums">
 VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		
-  var contentToAdd = null;	
-  var urlDivId = &quot;tab_object_snapshot_content&quot;;
-  var urlInputId = &quot;object_snapshot_code&quot;;
+	var contentToAdd = null;	
+	var urlDivId = &quot;tab_object_snapshot_content&quot;;
+	var urlInputId = &quot;object_snapshot_code&quot;;
 		
-  var init = function(){
-    var urlInput = $(urlDivId ).find(&quot;input&quot;);
-    $(urlInput).watermark(&#x27;Paste website URL&#x27;);
+	var init = function(){
+		var urlInput = $(&quot;#&quot;+urlDivId).find(&quot;input&quot;);
+		&#x2F;&#x2F; $(urlInput).watermark(V.I18n.getTrans(&quot;i.pasteWeb&quot;));
 
-    &#x2F;&#x2F;Load from URL
-    $(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
-      if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
-        contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
-        V.Editor.Object.drawPreview(urlDivId, contentToAdd);
-      }
-    });
-  };
+		&#x2F;&#x2F;Load from URL
+		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
+		  if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
+			contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
+			V.Editor.Object.drawPreview(urlDivId, contentToAdd);
+		  }
+		});
+	};
 
   
-  var onLoadTab = function(tab){
+	var onLoadTab = function(tab){
 		contentToAdd = null;
-    V.Editor.Object.resetPreview(urlDivId);
-    $(&quot;#&quot; + urlInputId).val(&quot;&quot;);
-  }
+		V.Editor.Object.resetPreview(urlDivId);
+		$(&quot;#&quot; + urlInputId).val(&quot;&quot;);
+	}
 	
 	
-  var drawPreviewElement = function(){
+	var drawPreviewElement = function(){
 		if(_validateSnapShot(contentToAdd)){
 			drawSnapShot(_wrapperSnapShot(contentToAdd));
-      $.fancybox.close();
-		}
-  }
-	
-	
-	var _validateSnapShot = function(object){	
-		var objectInfo = V.Object.getObjectInfo(object);
-		
-    switch (objectInfo.wrapper) {
-      case null:
-        &#x2F;&#x2F;Verify Web Url
-				return _validateUrl(object);
-        break;
-        
-      case &quot;IFRAME&quot;:
-        return _validateUrl(objectInfo.source);
-        break;
-        
-      default:
-				return false;
-        break;
-    }
-  }
-	
-	
-	var _validateUrl = function(url){
-		var http_urls_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
-    
-		if(url.match(http_urls_pattern)!=null){
-      return true;
-    } else {
-			return false;
+			$.fancybox.close();
 		}
 	}
 	
+	
+	var _validateSnapShot = function(object){
+		var objectInfo = V.Object.getObjectInfo(object);
+
+		switch (objectInfo.wrapper){
+			case null:
+				&#x2F;&#x2F;Verify Web Url
+				return _validateUrl(object);
+				break;
+			case &quot;IFRAME&quot;:
+				return _validateUrl(objectInfo.source);
+				break;
+			default:
+				return false;
+				break;
+		}
+	}
+	
+	var _validateUrl = function(url){
+		var http_urls_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
+
+		if(url.match(http_urls_pattern)!=null){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	var _wrapperSnapShot = function(content){
 		var objectInfo = V.Object.getObjectInfo(content);
@@ -164,121 +160,121 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	}
 	
 	&#x2F;**
-   * Param style: optional param with the style, used in editing presentation
-   *&#x2F;
-  var drawSnapShot = function(wrapper, area, style,scrollTop,scrollLeft){
+	* Param style: optional param with the style, used in editing presentation
+	*&#x2F;
+	var drawSnapShot = function(wrapper, area, style,scrollTop,scrollLeft){
+		var current_area;
+		var object_style = &quot;&quot;;
+		if(area){
+			current_area = area;
+		} else {
+			current_area = V.Editor.getCurrentArea();
+		}
+		if(style){
+			object_style = style;
+		}
 
-	  var current_area;
-    var object_style = &quot;&quot;;
-    if(area){
-      current_area = area;
-    } else {
-      current_area = V.Editor.getCurrentArea();
-    }
-    if(style){
-        object_style = style;
-    }
-	 
-    var template = V.Editor.getTemplate(current_area);
-    var nextWrapperId = V.Utils.getId();
-    var idToDrag = &quot;draggable&quot; + nextWrapperId;
-    var idToResize = &quot;resizable&quot; + nextWrapperId;
-    current_area.attr(&#x27;type&#x27;, &#x27;snapshot&#x27;);
-		
-    var wrapperDiv = document.createElement(&#x27;div&#x27;);
-    wrapperDiv.setAttribute(&#x27;id&#x27;, idToDrag);
-    if(style){
-      wrapperDiv.setAttribute(&#x27;style&#x27;, style);
-    }
-    $(wrapperDiv).addClass(&#x27;snapshot_wrapper&#x27;);
+		var template = V.Editor.getTemplate(current_area);
+		var nextWrapperId = V.Utils.getId();
+		var idToDrag = &quot;draggable&quot; + nextWrapperId;
+		var idToResize = &quot;resizable&quot; + nextWrapperId;
+		current_area.attr(&#x27;type&#x27;, &#x27;snapshot&#x27;);
 
-    var iframeTag = $(wrapper);
-    $(iframeTag).attr(&#x27;id&#x27;, idToResize);
-    $(iframeTag).attr(&#x27;class&#x27;, &#x27;snapshot_content&#x27;);
-    $(iframeTag).attr(&#x27;scrolling&#x27;, &#x27;no&#x27;);
-    $(iframeTag).attr(&#x27;wmode&#x27;, &quot;opaque&quot;);
-	  $(iframeTag).css(&#x27;pointer-events&#x27;, &quot;none&quot;);
+		var wrapperDiv = document.createElement(&#x27;div&#x27;);
+		wrapperDiv.setAttribute(&#x27;id&#x27;, idToDrag);
+		if(style){
+			wrapperDiv.setAttribute(&#x27;style&#x27;, style);
+		}
+		$(wrapperDiv).addClass(&#x27;snapshot_wrapper&#x27;);
 
-    $(current_area).html(&quot;&quot;);
-    $(current_area).append(wrapperDiv);
+		var iframeTag = $(wrapper);
+		$(iframeTag).attr(&#x27;id&#x27;, idToResize);
+		$(iframeTag).attr(&#x27;class&#x27;, &#x27;snapshot_content&#x27;);
+		$(iframeTag).attr(&#x27;scrolling&#x27;, &#x27;no&#x27;);
+		$(iframeTag).attr(&#x27;wmode&#x27;, &quot;opaque&quot;);
+		$(iframeTag).css(&#x27;pointer-events&#x27;, &quot;none&quot;);
 
-    V.Editor.addDeleteButton($(current_area));
-      
-    $(wrapperDiv).append(iframeTag);
-		
+		$(current_area).html(&quot;&quot;);
+		$(current_area).append(wrapperDiv);
+
+		V.Editor.addDeleteButton($(current_area));
+
+		$(wrapperDiv).append(iframeTag);
+
 		&#x2F;&#x2F;Move scrolls
-    if(scrollTop){
-      $(&#x27;#&#x27; + idToDrag).scrollTop(scrollTop);
-    }
-    if(scrollLeft){
-      $(&#x27;#&#x27; + idToDrag).scrollLeft(scrollLeft);
-    }
-    &#x2F;&#x2F;Also write scroll params (used by Editor Loader)
-    $(wrapperDiv).attr(&#x27;scrollTop&#x27;,scrollTop);
-    $(wrapperDiv).attr(&#x27;scrollLeft&#x27;,scrollLeft);
-		
-		$(&#x27;#&#x27; + idToDrag).bind(&#x27;mousedown&#x27;,function(event){
-			 event.preventDefault();
-    });
-		
-    $(&quot;#&quot; + idToDrag).draggable({
-      cursor : &quot;move&quot;,
-			disabled: false,
-		  start: function(event, ui){
-		  	if (!_isBorderClick(event, idToDrag)) {
-		  		return false;
-		  	}
-	    }
-    });
+		if(scrollTop){
+			$(&#x27;#&#x27; + idToDrag).scrollTop(scrollTop);
+		}
+		if(scrollLeft){
+			$(&#x27;#&#x27; + idToDrag).scrollLeft(scrollLeft);
+		}
+		&#x2F;&#x2F;Also write scroll params (used by Editor Loader)
+		$(wrapperDiv).attr(&#x27;scrollTop&#x27;,scrollTop);
+		$(wrapperDiv).attr(&#x27;scrollLeft&#x27;,scrollLeft);
 
-    V.Editor.Tools.loadToolsForZone(current_area);
-  };
+		$(&#x27;#&#x27; + idToDrag).bind(&#x27;mousedown&#x27;,function(event){
+			event.preventDefault();
+		});
+
+		$(&quot;#&quot; + idToDrag).draggable({
+			cursor : &quot;move&quot;,
+			disabled: false,
+			start: function(event, ui){
+				if (!_isBorderClick(event, idToDrag)) {
+					return false;
+				}
+			}
+		});
+
+		V.Editor.Tools.loadToolsForZone(current_area);
+	};
 	
 	var _isBorderClick = function(event,idToDrag){
 		var accuracy = 6;
 		var scrollAccuracy = -10;
 		var width = $(&#x27;#&#x27; + idToDrag).width();
-    var height = $(&#x27;#&#x27; + idToDrag).height();
-    var offset = $(&#x27;#&#x27; + idToDrag).offset();
-    var dif1 = event.pageX - offset.left;
-    if(dif1&lt;accuracy){
-      &#x2F;&#x2F;Left side&quot;
+		var height = $(&#x27;#&#x27; + idToDrag).height();
+		var offset = $(&#x27;#&#x27; + idToDrag).offset();
+		var dif1 = event.pageX - offset.left;
+
+		if(dif1&lt;accuracy){
+			&#x2F;&#x2F;Left side&quot;
 			return true;
-    }
-    var dif2 = event.pageY - offset.top;
+		}
+		var dif2 = event.pageY - offset.top;
 		if(dif2&lt;accuracy){
-      &#x2F;&#x2F;Top side&quot;
+			&#x2F;&#x2F;Top side&quot;
 			return true;
-    }
-    var dif3 = (offset.left + width)-event.pageX;  
-    if(dif3&lt;scrollAccuracy){
-      &#x2F;&#x2F;Right side&quot;
-      return true;
-    }
-    var dif4 = (offset.top + height)-event.pageY;
-    if(dif4&lt;scrollAccuracy){
-      &#x2F;&#x2F;Bottom side
-      return true;
-    }
-		
+		}
+		var dif3 = (offset.left + width)-event.pageX;  
+		if(dif3&lt;scrollAccuracy){
+			&#x2F;&#x2F;Right side&quot;
+			return true;
+		}
+		var dif4 = (offset.top + height)-event.pageY;
+		if(dif4&lt;scrollAccuracy){
+			&#x2F;&#x2F;Bottom side
+			return true;
+		}
+
 		return false;
 	}
 	
 	&#x2F;*
-   * Resize object and its wrapper automatically
-   *&#x2F;
-  var _resizeWebIframe = function(id,width){
-    var proportion = $(&quot;#&quot; + id).height()&#x2F;$(&quot;#&quot; + id).width();
-    $(&quot;#&quot; + id).width(width);
-    $(&quot;#&quot; + id).height(width*proportion);
-  };
+	* Resize object and its wrapper automatically
+	*&#x2F;
+	var _resizeWebIframe = function(id,width){
+		var proportion = $(&quot;#&quot; + id).height()&#x2F;$(&quot;#&quot; + id).width();
+		$(&quot;#&quot; + id).width(width);
+		$(&quot;#&quot; + id).height(width*proportion);
+	};
 
-			
+	
 	return {
-		init: init,
-		onLoadTab : onLoadTab,
+		init				: init,
+		onLoadTab 			: onLoadTab,
 		drawPreviewElement : drawPreviewElement,
-		drawSnapShot : drawSnapShot
+		drawSnapShot 		: drawSnapShot
 	};
 
 }) (VISH, jQuery);

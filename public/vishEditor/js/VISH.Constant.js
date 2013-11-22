@@ -64,6 +64,8 @@ VISH.Constant.MEDIA.YOUTUBE_VIDEO = "youtube";
 VISH.Constant.MEDIA.HTML5_VIDEO = "HTML5";
 VISH.Constant.MEDIA.WEB = "web";
 VISH.Constant.MEDIA.JSON = "json";
+VISH.Constant.MEDIA.DOC = "doc";
+VISH.Constant.MEDIA.PPT = "ppt";
 
 //Wrapper types
 VISH.Constant.WRAPPER = {};
@@ -101,6 +103,10 @@ VISH.Constant.Clipboard.LocalStorageStack = "VishEditorClipboardStack";
 VISH.Constant.Themes = {};
 VISH.Constant.Themes.Default = "theme1";
 
+//Animations
+VISH.Constant.Animations = {};
+VISH.Constant.Animations.Default = "animation1";
+
 //Events
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
@@ -114,6 +120,7 @@ VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";
 VISH.Constant.Event.onSelectedSlides = "onSelectedSlides";
+VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
 
 //Storage
 VISH.Constant.Storage = {};

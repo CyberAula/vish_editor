@@ -62,6 +62,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Recommendations.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Flashcard.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.VirtualTour.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Animations.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Themes.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Messenger.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Messenger.Helper.js"></script>
@@ -172,8 +173,8 @@
 		<div id="start_quiz_fancybox" class="outer_box_viewer">
 			<div class="fancy_viewer_tabs" id="images_fancy_tabs_id">     
 				<ul>
-					<li><a i18n-key="i.LiveQuiz" href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session')" class="fancy_viewer_tab tabbable">Live Quiz</a></li>
-					<li><a i18n-key="i.QuizResults" href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats')"class="fancy_viewer_tab">Results</a></li>
+					<li><a i18n-key="i.LiveQuiz" href="#" id="tab_quiz_session" onclick="VISH.Quiz.loadTab('tab_quiz_session'); return false;" class="fancy_viewer_tab tabbable">Live Quiz</a></li>
+					<li><a i18n-key="i.QuizResults" href="#" id="tab_quiz_stats" onclick="VISH.Quiz.loadTab('tab_quiz_stats'); return false;"class="fancy_viewer_tab">Results</a></li>
 				</ul>
 				<img class='help_in_fancybox_viewer' id='tab_quiz_session_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<img class='help_in_fancybox_viewer' id='tab_quiz_stats_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
@@ -194,66 +195,14 @@
 		</div>
 	</div>
 
-	<!-- PROMPT WHEN TRY TO LAUNCH TWO QUIZZES AT THE SAME TIME -->
-	<div style='display:none'>
-		<div id='prompt1_alert'>
-			<div class="prompt_text_container_viewer">
-				<span i18n-key="i.QuizMultipleLaunchAlert" class="prompt_text_viewer">Please stop all quizzes before launch another one.</span>
-			</div>
-			<div>
-				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
-			</div>
-		</div>
-	</div>
 
-	<!-- PROMPT WHEN SAVE A QUIZ SESSION -->
-	<div style='display:none'>
-		<div id='prompt2_alert'>
-			<div class="prompt_text_container_viewer prompt_text_container_viewer2">
-				<p><span i18n-key="i.QuizSaveConfirmation" class="prompt_text_viewer">Do you want to save the quiz results?</span></p>
-				<p><input type="text" id="prompt2name" title="Enter a name for the quiz session" class="prompt2name"></input></p>
-				<a i18n-key="i.Yes" href="#" onclick="VISH.Quiz.onCloseQuizSession('yes');" class="prompt_button_viewer prompt_button_viewer2">Yes</a>
-				<a i18n-key="i.No" href="#" onclick="VISH.Quiz.onCloseQuizSession('no');" class="prompt_button_viewer prompt_button_viewer1">No</a>
-				<a i18n-key="i.Cancel" href="#" onclick="VISH.Quiz.onCloseQuizSession('cancel');" class="prompt_button_viewer prompt_button_viewer3">Cancel</a>
-			</div>
-		</div>
-	  </div>
+	<!-- NOTIFICATIONS -->
 
-	<!-- PROMPT WHEN TRY TO SEND AN EMPTY ANSWER-->
-	<div style='display:none'>
-		<div id='prompt3_alert'>
-			<div class="prompt_text_container_viewer">
-				<span i18n-key="i.QuizEmptyAnswerAlert" class="prompt_text_viewer">Please, answer the quiz before send</span>
-			</div>
-			<div>
-				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
-			</div>
-		</div>
-	</div>
+	<!-- Hidden link to open notification template -->
+	<a id="link_to_notification_template" href="#notification_template_cloned"></a>
 
-	<!-- PROMPT AFTER SEND ANSWER-->
-	<div style='display:none'>
-		<div id='prompt4_alert'>
-			<div class="prompt_text_container_viewer">
-				<span i18n-key="i.QuizSubmittedAlert" class="prompt_text_viewer">Your answer has been submitted</span>
-			</div>
-			<div>
-				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer4">Ok</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- PROMPT AFTER ERROR ON SENDING ANSWER-->
-	<div style='display:none'>
-		<div id='prompt5_alert'>
-			<div class="prompt_text_container_viewer">
-				<span i18n-key="i.QuizNotSubmittedAlert" class="prompt_text_viewer">Sorry, your answer couldn't be sent</span>
-			</div>
-			<div>
-				<a i18n-key="i.Ok" href="#" onclick="$.fancybox.close();" class="prompt_button_viewer prompt_button_viewer_viewer4">Ok</a>
-			</div>
-		</div>
-	</div>
+	<!-- NOTIFICATION TEMPLATE -->
+	<div id="notification_template_wrapper" style='display:none'></div>
 
 
 	<!-- WALKTHROUGH HELP SECTION -->
@@ -298,7 +247,6 @@
 			<p i18n-key="i.walkQuizzes_10">
 				If you exit from the live quiz screen, you can come back at any time by clicking on the 'Options' button placed at the bottom of the quiz. Notice that if a quiz has been launched, the 'Launch' button is replaced by a 'Options' button. Once you close the live quiz, the 'Launch' button will appear again. Finally, bear in mind that you can not launch more than one live quiz at the same time.
 			</p>
-			<p class="tut_space">&nbsp;</p>
 		</li>
 
 	</ol>
@@ -311,12 +259,11 @@
 			<p i18n-key="i.walkSelectSlides_3">Taking into account that all slides are selected by default, if you want to insert the whole presentation you just have to click on the 'Add Slides' button placed at the bottom right.</p>
 			<p><span i18n-key="i.walkSelectSlides_4">If you want to select specific slides to import, the following instructions will help you</span>:</p>
 			<p class="tut_withouttopspace"><span i18n-key="i.walkSelectSlides_5a">Use the arrows</span> <img src="/vishEditor/images/tutorial/tut_arrow.png"/> <span i18n-key="i.walkSelectSlides_5b">placed at the bottom to navigate between the slides of the presentation.</span></p>
-			<p class="tut_withouttopspace"><span i18n-key="i.walkSelectSlides_6a">Selected slides have a green border</span> <img src="/vishEditor/images/tutorial/selectedSlideBoxGreen.png"/> <span i18n-key="i.walkSelectSlides_6b">while unselected slides have a red border</span> <img src="/vishEditor/images/tutorial/selectedSlideBoxRed.png"/>.</p>
+			<p class="tut_withouttopspace"><span i18n-key="i.walkSelectSlides_6a">Selected slides have a green border</span> <img src="/vishEditor/images/tutorial/tut_selectedSlideBoxGreen.png"/> <span i18n-key="i.walkSelectSlides_6b">while unselected slides have a red border</span> <img src="/vishEditor/images/tutorial/tut_selectedSlideBoxRed.png"/>.</p>
 			<p class="tut_withmediumbottomspace" i18n-key="i.walkSelectSlides_7">To select or unselect the current slide you are viewing, click on the 'Select/Unselect Slide' button placed at the bottom center.</p>
-			<img src="/vishEditor/images/tutorial/selectslides.png"/>
-
+			<img class="addslidestut_button" i18n-key="i.img.tut_selects" src="/vishEditor/images/tutorial/tut_selects.png"/> <img class="addslidestut_button" i18n-key="i.img.tut_unselects" src="/vishEditor/images/tutorial/tut_unselects.png"/>
 			<p class="tut_withmediumbottomspace" i18n-key="i.walkSelectSlides_8">Moreover, you can use the following buttons to select or unselect all the slides at once.</p>
-			<img src="/vishEditor/images/tutorial/selectall.png"/><img src="/vishEditor/images/tutorial/unselectall.png"/>
+			<img class="addslidestut_button" i18n-key="i.img.tut_selectAll" src="/vishEditor/images/tutorial/tut_selectall.png"/> <img class="addslidestut_button" i18n-key="i.img.tut_unselectAll" src="/vishEditor/images/tutorial/tut_unselectall.png"/>
 			<p i18n-key="i.walkSelectSlides_9">Finally, to insert the selected slides you have to click on the 'Add slides' button placed at the bottom right. Notice that the quantity of slides that you are going to insert is indicated at the left of this button.  </p>
 			<p class="tut_space">&nbsp;</p>
 		</li>

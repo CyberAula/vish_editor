@@ -27,7 +27,7 @@ VISH.Tour = (function(V,$,undefined){
 
 	var _onStepFinish = function(count){
 		_adjustMaxHeightOfCurrentTour();
-	}
+	};
 
 	var _onTourFinish = function(el){
 		_clean();
@@ -37,35 +37,44 @@ VISH.Tour = (function(V,$,undefined){
 		$('.joyride-tip-guide').each(function(){
 			$(this).remove();
 		});
-	}
+	};
 
 	var getCurrentTour = function(){
 		var currentJoyride = $(".joyRideCurrent");
 		if(currentJoyride.length>0){
 			return currentJoyride;
 		}
-	}
+	};
 
 	var _adjustMaxHeightOfCurrentTour = function(){
 		var currentJoyride = getCurrentTour();
 		if(typeof currentJoyride != "undefined"){
+			var joyRideParent = $(currentJoyride).parent();
 			var joyRideWrapper = $(currentJoyride).find(".joyride-content-wrapper");
 
 			var top = $(currentJoyride).cssNumber("top");
 			var paddingTop = $(joyRideWrapper).cssNumber("padding-top");
 			var paddingBottom = $(joyRideWrapper).cssNumber("padding-bottom");
 
-			var heightPercentage = (top+paddingTop+paddingBottom)*100/($(currentJoyride).parent().width());
-			var maxHeightPercentage = Math.floor(100-heightPercentage);
+			var outerPercentage = (top+paddingTop+paddingBottom)*100/($(joyRideParent).width());
+			var maxHeightPercentage = Math.floor(100-outerPercentage);
 
-			//Add 1% extra margin
-			if(maxHeightPercentage > 1){
-				maxHeightPercentage = maxHeightPercentage-1;
+			//Add 1.5% extra margin
+			if(maxHeightPercentage > 1.5){
+				maxHeightPercentage = maxHeightPercentage-1.5;
 			}
 
 			$(currentJoyride).css("max-height",maxHeightPercentage + "%");
+
+			if(top===0){
+				//Center vertical
+				var currentHeightPercentage = ($(currentJoyride).height()*100)/($(window).height());
+				currentHeightPercentage = Math.min(currentHeightPercentage,maxHeightPercentage);
+				var topPorcentage = (100 - currentHeightPercentage)/2;
+				$(currentJoyride).css("top",topPorcentage + "%");
+			}
 		}
-	}
+	};
 	
 	return {
 		startTourWithId   : startTourWithId,

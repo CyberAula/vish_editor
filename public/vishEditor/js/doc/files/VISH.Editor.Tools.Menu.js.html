@@ -92,6 +92,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
+	var _competitionsModalShown = false;
 
 	&#x2F;*
 	 * Init singleton
@@ -198,6 +199,43 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Utils.showDialog(options);
 			return;
 		}
+
+		if(!V.Editor.Competitions.isValidCandidate() &amp;&amp; !_competitionsModalShown){
+			_competitionsModalShown = true;
+			var options = {};
+			options.width = 650;
+			options.height = 190;
+			options.text = V.I18n.getTrans(&quot;i.NoCompetitions1&quot;);
+			options.textWrapperClass = &quot;competitions_paragraph&quot;;
+
+			options.onClosedCallback = function(){
+				setTimeout(function(){
+						VISH.Editor.Tools.Menu.onPublishButtonClicked()
+					}, 500);
+
+			};
+			
+			options.notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;content_fail.png&quot;;
+
+			options.middlerow = V.Editor.Competitions.generateForm();			
+			options.middlerowExtraClass = &quot;competitions_options&quot;;
+
+			var button1 = {};
+			button1.text = V.I18n.getTrans(&quot;i.Done&quot;);
+			button1.extraclass = &quot;competi_disabled&quot;;
+			button1.callback = function(){
+				$.fancybox.close();				
+			}
+			var button2 = {};
+			button2.text = V.I18n.getTrans(&quot;i.NoThanks&quot;);
+			button2.callback = function(){
+				$.fancybox.close();				
+			}
+			options.buttons = [button1, button2];
+			V.Utils.showDialog(options);
+			return;
+		}
+
 
 		var options = {};
 		options.width = 400;

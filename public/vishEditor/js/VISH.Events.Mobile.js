@@ -189,7 +189,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 			V.Events.onFlashcardPoiClicked(poiId);
 		} else if($(event.target).hasClass("close_subslide")){
 			event.preventDefault();
-			V.Events.onFlashcardCloseSlideClicked(event);
+			V.Events.onCloseSubslideClicked(event);
 		}
 		return true;
 	}

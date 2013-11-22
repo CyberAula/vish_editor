@@ -146,9 +146,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;,&#x27;.delete_content&#x27;, V.Editor.onDeleteItemClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.delete_slide&#x27;, V.Editor.onDeleteSlideClicked);
 
+			$(document).on(&#x27;click&#x27;,&#x27;#animation_fancybox div[animation]&#x27;, V.Editor.Animations.onAnimationSelected);
+
 			$(document).on(&#x27;click&#x27;,&#x27;#theme_fancybox img[theme]&#x27;, V.Editor.Themes.onThemeSelected);
 
 			$(document).on(&quot;click&quot;, &quot;.change_bg_button&quot;, V.Editor.Tools.changeBackground);
+
+			&#x2F;&#x2F;create the functions to add the tags when click on fancybox
+		
+			$(document).on(&quot;click&quot;, &quot;.comp_checkbox input&quot;, V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
 			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
@@ -157,9 +163,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;, V.Editor.onSlideEnterEditor);
 			$(&#x27;article&#x27;).live(&#x27;slideleave&#x27;, V.Editor.onSlideLeaveEditor);
 
+			&#x2F;&#x2F;Focus
+			$(window).focus(function(){
+				V.Status.setWindowFocus(true);
+			}).blur(function(){
+				V.Status.setWindowFocus(false);
+			});
+
 			&#x2F;&#x2F;Tutorial events
 			_addTutorialEvents();
-
 
 			&#x2F;&#x2F;Fancyboxes
 
@@ -205,6 +217,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			&#x2F;&#x2F;Select theme fancybox
 			$(&quot;#hidden_button_to_launch_theme_fancybox&quot;).fancybox({
+				&#x27;autoDimensions&#x27; : false,
+				&#x27;width&#x27;: 600,
+				&#x27;scrolling&#x27;: &#x27;no&#x27;,
+				&#x27;height&#x27;: 400,
+				&#x27;padding&#x27; : 0
+			});
+
+			&#x2F;&#x2F;Select animation fancybox
+			$(&quot;#hidden_button_to_launch_animation_fancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 600,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -354,9 +375,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
 		});
 
+		&#x2F;&#x2F;Help in animation templates
+		$(document).on(&#x27;click&#x27;,&#x27;#help_animation_selection&#x27;, function(){		
+			V.Tour.startTourWithId(&#x27;animation_help&#x27;, &#x27;bottom&#x27;);
+		});
+
 		&#x2F;&#x2F;Help in Settings
 		$(document).on(&#x27;click&#x27;,&#x27;#help_in_settings&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_in_settings_help&#x27;, &#x27;bottom&#x27;);
+		});
+
+		&#x2F;&#x2F;Help in Competitions
+		$(document).on(&#x27;click&#x27;,&#x27;#help_in_competitions&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_in_competitions_help&#x27;, &#x27;bottom&#x27;);
 		})
 
 		&#x2F;&#x2F;Help in pedagogical options settings	
@@ -566,7 +597,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var _exitConfirmation = function(){
 		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&amp;&amp;(confirmOnExit)){
-			return V.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+			var confirmationMsg = V.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+			return confirmationMsg;
 		} else {
 			return;
 		}

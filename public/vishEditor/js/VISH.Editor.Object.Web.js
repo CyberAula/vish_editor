@@ -5,8 +5,8 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 	var urlInputId = "object_embedWeb_code";
 		
 	var init = function(){
-		var urlInput = $(urlDivId ).find("input");
-		$(urlInput).watermark('Paste website URL');
+		var urlInput = $("#"+urlDivId).find("input");
+		// $(urlInput).watermark(V.I18n.getTrans("i.pasteWeb"));
 
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {

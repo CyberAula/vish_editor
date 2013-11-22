@@ -209,11 +209,21 @@ VISH.Editor.Text = (function(V,$,undefined){
 						var slide = $("article").has(current_area);
 						$(slide).addClass("temp_shown");
 						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-						myHeight = $(iframeContent).find("html").height();
+						var newMyHeight = $(iframeContent).find("html").height();
 						$(slide).removeClass("temp_shown");
-					}
 
-					ckeditor.resize(myWidth,myHeight);
+						if(newMyHeight > myHeight){
+							//Prevent some browsers (e.g. Firefox) to calculate wrong heights...
+							ckeditor.resize(myWidth,newMyHeight);
+						}
+
+						//Firefox don't calculate height right, maybe a fallback could be provided
+						// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+						// }
+
+					} else {
+						ckeditor.resize(myWidth,myHeight);
+					}
 				
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
@@ -233,6 +243,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		//Catch the focus event
 		ckeditor.on('focus', function(event){
+
+			V.Status.setCKEditorInstanceFocused(true);
+
 			if((options)&&(options.placeholder===true)){
 				var a = $(initial_text).text().replace(/\s+/g,'');
 				var b = $(event.editor.getData()).text().replace(/\s+/g,'');
@@ -249,7 +262,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		ckeditor.on('blur', function(event){
-			//Code here
+			V.Status.setCKEditorInstanceFocused(false);
 		});
 
 		//Exnteds CKEditor functionality

@@ -299,11 +299,21 @@ VISH.Editor.Text = (function(V,$,undefined){
 						var slide = $(&quot;article&quot;).has(current_area);
 						$(slide).addClass(&quot;temp_shown&quot;);
 						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-						myHeight = $(iframeContent).find(&quot;html&quot;).height();
+						var newMyHeight = $(iframeContent).find(&quot;html&quot;).height();
 						$(slide).removeClass(&quot;temp_shown&quot;);
-					}
 
-					ckeditor.resize(myWidth,myHeight);
+						if(newMyHeight &gt; myHeight){
+							&#x2F;&#x2F;Prevent some browsers (e.g. Firefox) to calculate wrong heights...
+							ckeditor.resize(myWidth,newMyHeight);
+						}
+
+						&#x2F;&#x2F;Firefox don&#x27;t calculate height right, maybe a fallback could be provided
+						&#x2F;&#x2F; if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+						&#x2F;&#x2F; }
+
+					} else {
+						ckeditor.resize(myWidth,myHeight);
+					}
 				
 					&#x2F;&#x2F;Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
@@ -323,6 +333,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Catch the focus event
 		ckeditor.on(&#x27;focus&#x27;, function(event){
+
+			V.Status.setCKEditorInstanceFocused(true);
+
 			if((options)&amp;&amp;(options.placeholder===true)){
 				var a = $(initial_text).text().replace(&#x2F;\s+&#x2F;g,&#x27;&#x27;);
 				var b = $(event.editor.getData()).text().replace(&#x2F;\s+&#x2F;g,&#x27;&#x27;);
@@ -339,7 +352,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		});
 
 		ckeditor.on(&#x27;blur&#x27;, function(event){
-			&#x2F;&#x2F;Code here
+			V.Status.setCKEditorInstanceFocused(false);
 		});
 
 		&#x2F;&#x2F;Exnteds CKEditor functionality

@@ -38,7 +38,7 @@ VISH.Editor = (function(V,$,undefined){
 	 *
 	 * @method init
 	 */
-	var init = function(options, presentation){
+	var init = function(options,presentation){
 		V.Editing = true;
 		$("body").addClass("ViSHEditorBody");
 
@@ -72,6 +72,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.Loader.loadLanguageCSS();
 		V.Editor.Dummies.init();
 		V.EventsNotifier.init();
+		V.Editor.Animations.init();
 		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.VirtualTour.init();
@@ -101,21 +102,27 @@ VISH.Editor = (function(V,$,undefined){
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Settings.loadPresentationSettings(presentation);
-			V.Editor.Renderer.init(presentation);
-			
-			//remove focus from any zone
-			_removeSelectableProperties();					
+			V.Editor.Themes.selectTheme(presentation.theme,false,function(){
+				//Theme loaded
+				V.Editor.Renderer.init(presentation);
+				//remove focus from any zone
+				_removeSelectableProperties();
+				_initAferPresentationLoaded(options,presentation);
+			});
 		} else {
 			initialPresentation = false;
 			V.Editor.Settings.loadPresentationSettings();
+			_initAferPresentationLoaded(options,presentation);
 		}
-
+	};
+	
+	var _initAferPresentationLoaded = function(options,presentation){
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		});
 		
-		if(presentation){
+		if(initialPresentation){
 			//hide objects (the onSlideEnterEditor event will show the objects in the current slide)
 			$('.object_wrapper').hide();
 		}
@@ -151,20 +158,22 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		//Add the first slide
-		if(!V.Editor.hasInitialPresentation()){
+		if(!initialPresentation){
 			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:"1", slideNumber:1});
 			V.Editor.Slides.addSlide(slide);
 		}
 
 		//Init settings
-		if ((V.Configuration.getConfiguration().presentationSettings) && (!V.Editor.hasInitialPresentation())){
+		if((V.Configuration.getConfiguration().presentationSettings) && (!initialPresentation)){
 			V.Editor.Settings.displaySettings();
 		}
 
+		//Fill About screen
+		$("#VEversion").html(V.VERSION);
+
 		//Try to win focus
 		window.focus();
-	};
-	
+	}
   
 
 	////////////
@@ -457,7 +466,7 @@ VISH.Editor = (function(V,$,undefined){
 		//Save the presentation in JSON
 		var presentation = {};
 
-		//Save metadata
+		//Save metadata, theme and animation
 		presentation = V.Editor.Settings.saveSettings(presentation);
 
 		//Check for tags, we have to do that because

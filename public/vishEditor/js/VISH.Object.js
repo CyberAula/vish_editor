@@ -107,6 +107,14 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.JSON;
 		}
 
+		if(extension=="doc"){
+			return V.Constant.MEDIA.DOC;
+		}
+
+		if(extension=="ppt"){
+			return V.Constant.MEDIA.PPT;
+		}
+
 		if((source.match(http_urls_pattern)!=null)||(source.match(www_urls_pattern)!=null)){
 			return V.Constant.MEDIA.WEB;
 		}
@@ -115,7 +123,7 @@ VISH.Object = (function(V,$,undefined){
 	}
 	
 	var getExtensionFromSrc = function(source){
-		return (source.split('.').pop()).toLowerCase();
+		return (source.split('.').pop().split('&')[0]).toLowerCase();
 	}
 
 	return {

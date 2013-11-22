@@ -18,6 +18,12 @@ VISH.Utils = (function(V,undefined){
 		};
 
 		jQuery.fn.reverse = [].reverse;
+
+		//Extend primitives
+		String.prototype.replaceAll = function (find, replace) {
+			var str = this;
+			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+		};
 	}
 
 	/*
@@ -617,7 +623,7 @@ VISH.Utils = (function(V,undefined){
 	    $.each(style.split(";"), function(index, property){
 	    	 //We need to redefine the var in each iteration (due to Android browser issues)
 	    	 var font_style_pattern = /font-size:\s?([0-9]+)px/g;
-		     if (property.match(font_style_pattern) != null) {
+		     if(property.match(font_style_pattern) != null){
 			   	var result = font_style_pattern.exec(property);
 			   	if ((result!==null)&&(result[1]!==null)) {
 			   		ft = parseFloat(result[1]);
@@ -667,24 +673,28 @@ VISH.Utils = (function(V,undefined){
 	 * Helper to show validation dialogs
 	 */
 	var showDialog = function(options){
-		var id = "notification_template";
-		if($("#"+id).length===0){
+		_cleanDialog();
+
+		var rootTemplate = $("#notification_template");
+		if($(rootTemplate).length===0){
 			return;
 		}
+
 		if((!options)||(!options.text)){
 			return;
 		}
-
-		var width = 350;
-		var height = 200;
+		
+		//*Defaults
+		var width = '90%';
+		var height; //it will be calculated
 		var showCloseButton = false;
-		var notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-
+		var notificationIconSrc;
+		if(V.Editing){
+			notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
+		}
+		
 		if(options.width){
 			width = options.width;
-		}
-		if(options.height){
-			height = options.height;
 		}
 		if(options.showCloseButton){
 			showCloseButton = options.showCloseButton;
@@ -693,77 +703,152 @@ VISH.Utils = (function(V,undefined){
 			notificationIconSrc = options.notificationIconSrc;
 		}
 
-		// fancybox to edit presentation settings
+		//Automatically center text when no image is specified in the notification
+		if(!notificationIconSrc){
+			options.textWrapperClass = "forceCenter";
+		}
+
+		//Transform width to px (if not)
+		if((typeof width == "string")&&(width.indexOf("%")!=0)){
+			width = width.split("%")[0].trim();
+			width = (width*$(window).width())/100;
+		}
+
+		//*Calculate Height (use root template)
+		var notificationParent = $(rootTemplate).parent();
+		$(rootTemplate).width(width);
+		
+		//Fill template
+		var text_wrapper = $(rootTemplate).find(".notification_row1");
+		var buttons_wrapper = $(rootTemplate).find(".notification_row2");
+		var imgIcon = $(text_wrapper).find(".notificationIcon");
+
+		if(notificationIconSrc){
+			$(imgIcon).attr("src",notificationIconSrc);
+			$(imgIcon).css("display","inline");
+		}
+		if(options.notificationIconClass){
+			$(imgIcon).addClass(options.notificationIconClass);
+		}
+
+		if(options.textWrapperClass){
+			$(text_wrapper).addClass(options.textWrapperClass);
+		}
+
+		if(options.buttonsWrapperClass){
+			$(buttons_wrapper).addClass(options.buttonsWrapperClass);
+		}
+
+		$(text_wrapper).find(".notification_text").html(options.text);
+
+		if(options.buttons){
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				var buttonDOM = $('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
+			});
+		}
+
+		//Look for additional HTML
+		if(options.middlerow){
+			var middlerow = document.createElement('div');
+			$(middlerow).addClass("notification_middlerow");
+			$(middlerow).append(options.middlerow);
+			if(options.middlerowExtraClass){
+				$(middlerow).addClass(options.middlerowExtraClass);
+			}
+			$(buttons_wrapper).before(middlerow);
+		}
+
+		$(notificationParent).addClass("temp_shown");
+		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
+		if(options.middlerow){
+			var middlerow = $(rootTemplate).find(".notification_middlerow");
+			adjustedHeight = adjustedHeight + $(middlerow).outerHeight(true);
+		}
+		$(notificationParent).removeClass("temp_shown");
+
+
+		//*Clone the root template
+		var cloneTemplate = $(rootTemplate).clone();
+		$(cloneTemplate).attr("id","notification_template_cloned");
+		$(notificationParent).append(cloneTemplate);
+		var notification = $("#notification_template_cloned");
+
+		//Replace buttons (we need to add the events)
+		if(options.buttons){
+			buttons_wrapper = $(notification).find(".notification_row2");
+			$(buttons_wrapper).html("");
+			var obLength = options.buttons.length;
+			$(options.buttons).reverse().each(function(index,button){
+				var bNumber = obLength-index;
+				var buttonDOM = $('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
+				if(button.extraclass){
+					$(buttonDOM).addClass(button.extraclass);
+				}
+				$(buttons_wrapper).append(buttonDOM);
+
+				//Add buttons callback
+				$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
+					event.preventDefault();
+					button.callback();
+				});
+			});
+		};
+
 		$("a#link_to_notification_template").fancybox({
 			'autoDimensions' 	: false,
-			'autoScale' 		: false,
+			'autoScale' 		: true,
 			'scrolling'			: 'no',
 			'width'				: width,
-			'height'			: height,
+			'height'			: adjustedHeight,
 			'padding' 			: 0,
 			'hideOnOverlayClick': true,
 			'hideOnContentClick': false,
 			'showCloseButton'	: showCloseButton,
 			"onStart"  	: function(data){
-				_cleanDialog(id);
-				var text_wrapper = $("#"+id).find(".notification_row1");
-				var buttons_wrapper = $("#"+id).find(".notification_row2");
-				$(text_wrapper).find(".notificationIcon").attr("src",notificationIconSrc);
-				$(text_wrapper).find(".notification_text").html(options.text);
-
-				if(options.notificationIconClass){
-					$(text_wrapper).find(".notificationIcon").addClass(options.notificationIconClass);
-				}
-
-				if(options.buttons){
-					var obLength = options.buttons.length;
-					$(options.buttons).reverse().each(function(index,button){
-						var bNumber = obLength-index;
-						$(buttons_wrapper).append('<a href="#" buttonNumber="'+bNumber+'" class="button notification_button">'+button.text+'</a>');
-						$(buttons_wrapper).find(".button[buttonNumber='"+bNumber+"']").click(function(event){
-							event.preventDefault();
-							button.callback();
-						});
-					});
-				}
 			},
 			"onComplete"  	: function(data){
-				var text_wrapper = $("#fancybox-content").find(".notification_row1");
-				var buttons_wrapper = $("#fancybox-content").find(".notification_row2");
-				var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
-
-				if($("#fancybox-content").height() < (adjustedHeight)){
-					//Adjust height (needed when height is smaller than the appropiately one)
-					var transitionTimeMs = 500;
-					var adjustedHeightWithPadding = adjustedHeight + $("#"+id).cssNumber("padding-top") + $("#"+id).cssNumber("padding-bottom");
-					$("#"+id).animate({height:adjustedHeight+"px"},transitionTimeMs);
-					$("#fancybox-content").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
-					$("#fancybox-content > div").animate({height:adjustedHeightWithPadding+"px"},transitionTimeMs);
-				}
 			},
 			"onClosed" : function(data){
-				_cleanDialog(id);
-
+				_cleanDialog();
 				if((options)&&(typeof options.onClosedCallback == "function")){
 					options.onClosedCallback();
 				}
 			}
 		});
-
-		var _cleanDialog = function(id){
-			var text_wrapper = $("#"+id).find(".notification_row1");
-			var buttons_wrapper = $("#"+id).find(".notification_row2");
-			$(buttons_wrapper).html("");
-			var icon = $(text_wrapper).find(".notificationIcon");
-			$(icon).removeAttr("src");
-			$(icon).removeClass().addClass("notificationIcon");
-			$(text_wrapper).find(".notification_text").html("");
-			$("#"+id).removeAttr('style');
-		};
-
+		
 		$("a#link_to_notification_template").trigger('click');
 	}
 
+	var _cleanDialog = function(){
+		var notificationWrapper = $("#notification_template_wrapper");
+		$(notificationWrapper).html("");
+		
+		var notificationTemplate = document.createElement('div');
+		$(notificationTemplate).attr("id","notification_template");
+
+		var row1 = document.createElement('div');
+		$(row1).addClass("notification_row1");
+		var img = document.createElement('img');
+		$(img).addClass("notificationIcon");
+		$(img).attr("style","display:none");
+		var span = document.createElement('span');
+		$(span).addClass("notification_text");
+		$(row1).append(img);
+		$(row1).append(span);
+		$(notificationTemplate).append(row1);
+
+		var row2 = document.createElement('div');
+		$(row2).addClass("notification_row2");
+		$(notificationTemplate).append(row2);
+
+		$(notificationWrapper).append(notificationTemplate);
+	};
 
    return {
 		init 					: init,

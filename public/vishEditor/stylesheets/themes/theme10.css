@@ -1,9 +1,9 @@
 section.slides article[type='standard'] {
 	background-color: transparent;
 	border: none;
-	padding: 17px 40px 86px 40px;;
+	padding: 16px 35px 96px 40px !important;
 	background: url(/vishEditor/images/themes/theme10/bg.png) top;
-	background-size: 100% 100%;
+	background-size: 100% 100% !important;
   	box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   	moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
  	webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
@@ -26,7 +26,13 @@ section.slides {
 }
 
 section.slides article[type='standard'][template='t10'] > div.t10_center {
-	margin: 3% 0% 0% 4%;
-	width: 92%;
-	height: 84%;
+	margin: 2% 0% 0% 4% !important;
+	width: 92% !important;
+	height: 84% !important;
+}
+
+section.slides article > div.t10_center {
+	margin: 2% 0% 0% 4% !important;
+	width: 92% !important;
+	height: 84% !important;
 }

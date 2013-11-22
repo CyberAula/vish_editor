@@ -14,6 +14,8 @@ body {
 	overflow-x: hidden;
 	overflow-y: auto;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 section.slides {
@@ -86,24 +88,12 @@ section.slides > article > article {
 this can not be done with show() and hide() because then it remains with display:none*/
 
 /* Allow temp shown to be applied to any element*/
-.temp_shown{
+.temp_shown {
 	display: block !important;
 }
 
-.slides > article.far-past.temp_hidden {
-	display: none;
-}
-.slides > article.past.temp_hidden {
-	display: none;
-}
-.slides > article.current.temp_hidden {
-	display: none;
-}
-.slides > article.next.temp_hidden {
-	display: none;
-}
-.slides > article.far-next.temp_hidden {
-	display: none;
+.temp_hidden {
+	display: none !important;
 }
 
 .slides > article.far-past {
@@ -113,6 +103,7 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(-230%);
 	-moz-transform: translate(-230%);
 	-webkit-transform: translate3d(-230%, 0, 0);
+	pointer-events: none;
 }
 
 .slides > article.past {
@@ -122,6 +113,7 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(-115%);
 	-moz-transform: translate(-115%);
 	-webkit-transform: translate3d(-115%, 0, 0);
+	pointer-events: none;
 }
 
 .slides > article.current {
@@ -131,6 +123,7 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(0);
 	-moz-transform: none;
 	-webkit-transform: translate3d(0, 0, 0);
+	z-index: 1076;
 }
 
 .slides > article.next {
@@ -140,6 +133,7 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(115%);
 	-moz-transform: translate(115%);
 	-webkit-transform: translate3d(115%, 0, 0);
+	pointer-events: none;
 }
 
 .slides > article.far-next {
@@ -149,8 +143,32 @@ this can not be done with show() and hide() because then it remains with display
 	-ms-transform: translate(230%);
 	-moz-transform: translate(230%);
 	-webkit-transform: translate3d(230%, 0, 0);
+	pointer-events: none;
 }
 
+section.slides:not(.slides_editor) > article > article.hide_in_smartcard {
+	-webkit-transition: all 0.85s ease-in ;
+    -moz-transition: all 0.85s ease-in;
+    -o-transition: all 0.85s ease-in;
+    transition: all 0.85s ease-in;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+	display: block;
+}
+
+section.slides > article > article.show_in_smartcard{
+	-webkit-transition: all 0.85s ease-in ;
+    -moz-transition: all 0.85s ease-in;
+    -o-transition: all 0.85s ease-in;
+    transition: all 0.85s ease-in;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+	display: block;
+}
 
 /* buttons next and previous */
 .page-switcher {
@@ -222,7 +240,6 @@ this can not be done with show() and hide() because then it remains with display
 	right: 0;
 	bottom: 0;
 	text-align: center;
-	z-index: 2610;
 	border: medium none;
 	opacity: 1;
 	cursor: pointer;
@@ -242,8 +259,9 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 #slide-counter-span, #slide-counter-input {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2rem;
+	font-family: 'Open Sans', arial, sans-serif;
+	/*font-size: 1.2rem;*/
+	font-size: 14px;
 }
 
 #slide-counter-input {
@@ -286,7 +304,7 @@ html {
 }
 
 article {
-	font-family: 'Open Sans', sans-serif, Verdana, sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 }
 
 article > div > p {
@@ -458,9 +476,9 @@ button#closeButton {
 	height: 100%;
 	max-height: 100px;
 	background-color: transparent;
-	z-index: 2620;
 	cursor: pointer;
 	border: none;
+	z-index: 2620;
 }
 
 .menubarcolor {
@@ -498,6 +516,11 @@ button#closeButton {
 }
 
 .fc_poi {
+       -webkit-transition: none !important;
+       -webkit-transition-delay: none !important;
+       -moz-transition: none !important;
+       -o-transition: none !important;
+       transition: none !important;
 	width: 50px;
 	height: 50px;
 	background: url(/vishEditor/images/vicons/animation_arrow.png);
@@ -577,7 +600,7 @@ button#closeButton {
 	margin-bottom: 2%;
 	color: rgb(114, 114, 114);
 	font-size: 2.7em;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: bold;
 	padding: 13px;
 }
@@ -644,7 +667,7 @@ div#tab_quiz_session_results {
 	background: transparent;
 	color: #ff005d;
 	font-size: 1.5rem;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -751,97 +774,6 @@ div.quizQr > table {
 	margin-right: auto;
 }
 
-/*
- * PROMPTS
- */
-
-.prompt_text_container_viewer {
-	height: 60%;
-	width: 95%;
-	position: absolute;
-	top: 25%;
-	text-align: center;
-	padding: 2%;
-}
-
-.prompt_text_container_viewer2 {
-	top: 10%;
-	height: 76%;
-}
-
-.prompt_text_viewer {
-	text-decoration: none;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 2.6rem;
-	color:#CCC;
-	padding-bottom: 15px;
-}
-
-#prompt2name{
-	margin-top: 0%;
-	width: 28%
-}
-
-.prompt_button_viewer {
-	position: absolute;
-	bottom: 0%;
-	margin-bottom: 2%;
-	padding: 5px 20px;
-	text-decoration:none;
-	cursor: pointer;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
-	color:#f9f9f9;
-	font-size: 1.5rem;
-	font-weight: bold;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-.prompt_button_viewer1 {
-	left: 45%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer2 {
-	left: 50%;
-	margin-left: -20%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer3 {
-	margin-left: 50px;
-	left: 51%;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer4 {
-	right: 0%;
-	margin-right: 10px;
-	font-family: arial;
-	font-size: 1.5rem;
-}
-
-.prompt_button_viewer1:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer2:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer3:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
-.prompt_button_viewer4:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
-}
 
 /* Tutorials (with Joyride) (css for Viewer and Editor) */
 
@@ -939,12 +871,19 @@ p.tut_space_big {
 	color: #0066ff;
 }
 
+p.tut_video_title {
+	text-align: center;
+	font-size: 1.4rem;
+	color: #BCBBBD;
+	margin-bottom: 7px;
+}
+
 /* Tutorials for Viewer */
 
 .tut_full_viewer {
 	width: 96%;
 	left: 2%;
-	top: 3%;
+	top: 2%;
 	position: absolute;
 }
 
@@ -1153,30 +1092,96 @@ img.selectSlidesimgbutton {
   opacity: 0.4 !important;
 }
 
+/* Buttons */
+.button {
+	padding: 5px 10px;
+	display: inline;
+	text-decoration:none;
+	background: #ff005d repeat-x bottom;
+	opacity: 0.6;
+	color:#f9f9f9;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 1.1em;
+}
+
+.button:hover {
+	opacity: 1;
+	text-shadow: 1px 1px #666;
+}
 
 /* Notifications CSS */
 
-#notification_template {
-	position: absolute;
+#notification_template_wrapper {
+	width: 100%;
+}
+
+#notification_template, #notification_template_cloned {
+}
+
+.notification_row1, .notification_row2, .notification_middlerow {
 	width: 92%;
-	padding: 4% 4% 4% 4%;
-	margin: 0px;
-	height: auto;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin-bottom: 1%;
 }
 
 .notification_row1 {
-	margin-bottom: 40px;
-	width: 100%;
+	padding-top: 4%;
 }
 
 .notification_row2 {
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	display: block;
 	height: 30px;
-	width: 100%;
+	padding-top: 4%;
+	padding-bottom: 0%;
 	text-align: right;
+}
+
+.notification_middlerow {
+	padding-top: 4%;
+}
+
+.competitions_paragraph, .competitions_options {
+	color: #666;
+	font-family: 'Open Sans', arial, sans-serif;
+	/*font-size: 1.2rem;*/
+	font-size: 14px;
+	padding: 40px;
+}
+
+.check_boxer {
+	cursor: pointer;
+	color: #000;
+	margin-top: 21px;
+	margin-bottom: -44px;
+}
+
+.comp_first_row {
+	font-size: 19px;
+}
+
+.hrcomp {
+	margin-left: 2px;
+	width: 556px;
+	margin-top: -64px;
+	margin-bottom: 22px;
+}
+
+.comp_second_row {
+  	font-size: 19px;
+}
+
+.comp_checkbox {
+	margin-left: 212px;
+	font-size: 16px;
+}
+
+.mr_quizSession {
+	text-align: center;
 }
 
 .notification_button {
@@ -1184,32 +1189,46 @@ img.selectSlidesimgbutton {
 }
 
 .notification_button[buttonnumber='1'] {
-	margin-right: 15px;
+	margin-right: 0%;
 }
 
-.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3']{
-	margin-right: 15px;
+.notification_button[buttonnumber='2'], .notification_button[buttonnumber='3'] {
+	margin-right: 3%;
 }
 
 .notification_text {
-	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
-	font-size: 1.6rem;
-	color:#CCC;
-	padding-bottom: 15px;
+	text-decoration: none;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 2.1rem;
+	color: #666;
+	padding-bottom: 4%;
+}
+
+.forceCenter {
+	text-align: center !important;
 }
 
 img.notificationIcon {
 	width: 44px;
 	height: 55px;
-	margin-right: 20px;
+	margin-right: 4%;
 	margin-left: 0px;
+	display: inline;
 }
 
 img.notificationIconDelete {
 	height: 50px;
 	width: 65px;
 }
+
+/*
+ * Viewer notifications
+ */
+
+#quizSessionNameInput {
+	width: 30%;
+}
+
 
 /* Recommended browsers custom dialog */
 
@@ -1238,7 +1257,7 @@ img.browser_img {
 }
 
 span.browserTitle {
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 1.2rem;
 	display: block;
 	padding: 5px;
@@ -1252,7 +1271,7 @@ div.recomended_browser {
 
 span.adverttext {
 	text-decoration:none;
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1299,7 +1318,7 @@ a.button_advert:hover {
 }
 
 .textrec1 {
-	font-family:'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size:2rem;
 	color: #fff ;
 }
@@ -1376,13 +1395,13 @@ a.button_advert:hover {
 .rec-name {
 	color: #36f;
 	opacity: 0.6;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.4rem;
 }
 
 .rec-views {
 	color: #999;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	margin-left: 1%;
 	margin-right: 8%;
@@ -1405,7 +1424,7 @@ a.button_advert:hover {
 
 .rec-title-excursion {
 	margin-left: -17%;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	width: 108%;
 	font-size: 1.6rem;
 	overflow: hidden;
@@ -1416,7 +1435,7 @@ a.button_advert:hover {
 }
 
 .rec-number_pages {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	padding: 3%;
 	position: relative;
 	height: 14%;
@@ -1444,7 +1463,7 @@ a.button_advert:hover {
 }
 
 .rec-by {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	margin-top: 4%;
 	margin-bottom: 4%;
 	color: #999;
@@ -1454,7 +1473,7 @@ a.button_advert:hover {
 
 .rec-visits {
 	font-weight: bold;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	display: inline-block;
 	color: #40cc7f;
@@ -1464,7 +1483,7 @@ a.button_advert:hover {
 
 .rec-likes {
 	font-weight: bold;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.1rem;
 	display: inline-block;
 	color: #40cc7f;
@@ -1548,3 +1567,9 @@ img.loading_presentation_carrousel {
 	display: none !important;
 }
 
+.competi_disabled{
+	opacity: 0.6 !important;
+	text-shadow: none !important;
+	background: #ccc !important;
+	cursor: default !important;
+}

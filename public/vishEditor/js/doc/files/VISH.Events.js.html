@@ -152,7 +152,7 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 
-		$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onFlashcardCloseSlideClicked);
+		$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onCloseSubslideClicked);
 
 		&#x2F;&#x2F;when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== &quot;undefined&quot;){
@@ -163,6 +163,13 @@ VISH.Events = (function(V,$,undefined){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
+
+		&#x2F;&#x2F;Focus
+		$(window).focus(function(){
+			V.Status.setWindowFocus(true);
+		}).blur(function(){
+			V.Status.setWindowFocus(false);
+		});
 
 		&#x2F;&#x2F;Load onresize event
 		&#x2F;&#x2F;Prevent multiple consecutively calls
@@ -223,7 +230,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off(&#x27;click&#x27;, &#x27;#closeButton&#x27;);
 
-		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onFlashcardCloseSlideClicked);
+		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onCloseSubslideClicked);
 
 		if(typeof applicationCache !== &quot;undefined&quot;){
 			applicationCache.removeEventListener(&#x27;cached&#x27;, function() {
@@ -265,7 +272,7 @@ VISH.Events = (function(V,$,undefined){
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Flashcard events
+	&#x2F;&#x2F; Subslide events
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	&#x2F;**
@@ -279,7 +286,7 @@ VISH.Events = (function(V,$,undefined){
 		}
 	};
 
-	var onFlashcardCloseSlideClicked = function(event){
+	var onCloseSubslideClicked = function(event){
 		var close_slide_id = event.target.id.substring(5); &#x2F;&#x2F;the id is close3
 		V.Slides.closeSubslide(close_slide_id,true);
 	};
@@ -289,7 +296,7 @@ VISH.Events = (function(V,$,undefined){
 			bindViewerEventListeners		: bindViewerEventListeners,
 			unbindViewerEventListeners		: unbindViewerEventListeners,
 			onFlashcardPoiClicked 			: onFlashcardPoiClicked,
-			onFlashcardCloseSlideClicked 	: onFlashcardCloseSlideClicked
+			onCloseSubslideClicked 			: onCloseSubslideClicked
 	};
 
 }) (VISH,jQuery);

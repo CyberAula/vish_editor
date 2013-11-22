@@ -109,19 +109,19 @@ VISH.Slides = (function(V,$,undefined){
 	&#x2F;* 
 	 * Slides Management
 	 *&#x2F;
-	var updateSlides = function() {
+	var updateSlides = function(){
 		setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
 		_updateSlideClasses();
 		_updateHash();
 	};
 
-	var _updateHash = function() {
+	var _updateHash = function(){
 		if(!V.Editing){
 			location.replace(&#x27;#&#x27; + (curSlideIndex + 1));
 		}
 	};
 
-	var _updateSlideClasses = function() {
+	var _updateSlideClasses = function(){
 		for (var i = 0; i &lt; slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
@@ -160,6 +160,14 @@ VISH.Slides = (function(V,$,undefined){
 		for (var i in SLIDE_CLASSES) {
 			if (className != SLIDE_CLASSES[i]) {
 				$(el).removeClass(SLIDE_CLASSES[i]);
+			}
+		}
+
+		&#x2F;&#x2F;update also subslide classes
+		if($(el).attr(&quot;type&quot;)===VISH.Constant.FLASHCARD || $(el).attr(&quot;type&quot;)===VISH.Constant.VTOUR){
+			var arr = $(el).find(&quot;article&quot;);
+			for (var i=0; i&lt; arr.length; i++) {
+				$(arr[i]).addClass(&quot;hide_in_smartcard&quot;);
 			}
 		}
 	};
@@ -414,7 +422,12 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
   		_onOpenSubslide(slide_id);
-		$(&quot;#&quot; + slide_id).show();
+
+  		&#x2F;&#x2F;done this way instead of .show() and .hide() to be able to add animations
+  		&#x2F;&#x2F;on show and on hide with these classes
+  		$(&quot;#&quot; + slide_id).removeClass(&quot;hide_in_smartcard&quot;);
+  		$(&quot;#&quot; + slide_id).addClass(&quot;show_in_smartcard&quot;);
+		&#x2F;&#x2F;$(&quot;#&quot; + slide_id).show();
 		triggerEnterEventById(slide_id);
 
 		&#x2F;&#x2F;Notify
@@ -438,7 +451,9 @@ VISH.Slides = (function(V,$,undefined){
   		}
 
   		_onCloseSubslide(slide_id);
-		$(&quot;#&quot;+slide_id).hide();
+  		$(&quot;#&quot; + slide_id).removeClass(&quot;show_in_smartcard&quot;);
+  		$(&quot;#&quot; + slide_id).addClass(&quot;hide_in_smartcard&quot;);
+		&#x2F;&#x2F;$(&quot;#&quot;+slide_id).hide();
 		triggerLeaveEventById(slide_id);	
 
 		&#x2F;&#x2F;Notify

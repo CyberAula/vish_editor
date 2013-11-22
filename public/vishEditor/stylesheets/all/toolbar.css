@@ -2,7 +2,7 @@
 	border: 1px solid #ccc;
 	background-color: #fff;
 	display: inline-block;
-	height: 57px;
+	height: 58px;
 	width: 1158px;
 	margin: 0px 0px 0px 0px;
 	padding-left: 20px;
@@ -24,7 +24,7 @@
 
 #toolbar_menu {
 	border-right: 1px solid #ccc;
-	min-width: 121px;
+	min-width: 159px;
 	float: left;
 }
 
@@ -61,7 +61,7 @@
 
 .toolbar_presentation_wrapper > p {
 	cursor: default;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 }
 
 .icon-button {

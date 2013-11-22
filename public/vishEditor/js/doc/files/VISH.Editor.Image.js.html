@@ -101,6 +101,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Image.Repository.init();
 		V.Editor.Image.LRE.init();
 
+		&#x2F;&#x2F; $(&quot;#&quot; + urlInputId).watermark(V.I18n.getTrans(&quot;i.pasteImageURL&quot;));
+
 		&#x2F;&#x2F;Load from URL
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
 			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
@@ -232,7 +234,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			&#x2F;&#x2F; 	$(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
 			&#x2F;&#x2F; });
 
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:15, maxTags:8 , 
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
 	}

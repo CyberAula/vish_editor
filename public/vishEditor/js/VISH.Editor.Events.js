@@ -56,9 +56,16 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click','.delete_content', V.Editor.onDeleteItemClicked);
 			$(document).on('click','.delete_slide', V.Editor.onDeleteSlideClicked);
 
+			$(document).on('click','#animation_fancybox div[animation]', V.Editor.Animations.onAnimationSelected);
+
 			$(document).on('click','#theme_fancybox img[theme]', V.Editor.Themes.onThemeSelected);
 
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
+
+
+			//create the functions to add the tags when click on fancybox
+		
+			$(document).on("click", ".comp_checkbox input", V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
@@ -67,9 +74,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$('article').live('slideenter', V.Editor.onSlideEnterEditor);
 			$('article').live('slideleave', V.Editor.onSlideLeaveEditor);
 
+			//Focus
+			$(window).focus(function(){
+				V.Status.setWindowFocus(true);
+			}).blur(function(){
+				V.Status.setWindowFocus(false);
+			});
+
 			//Tutorial events
 			_addTutorialEvents();
-
 
 			//Fancyboxes
 
@@ -115,6 +128,15 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			//Select theme fancybox
 			$("#hidden_button_to_launch_theme_fancybox").fancybox({
+				'autoDimensions' : false,
+				'width': 600,
+				'scrolling': 'no',
+				'height': 400,
+				'padding' : 0
+			});
+
+			//Select animation fancybox
+			$("#hidden_button_to_launch_animation_fancybox").fancybox({
 				'autoDimensions' : false,
 				'width': 600,
 				'scrolling': 'no',
@@ -264,9 +286,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('themes_help', 'bottom');
 		});
 
+		//Help in animation templates
+		$(document).on('click','#help_animation_selection', function(){		
+			V.Tour.startTourWithId('animation_help', 'bottom');
+		});
+
 		//Help in Settings
 		$(document).on('click','#help_in_settings', function(){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
+		});
+
+		//Help in Competitions
+		$(document).on('click','#help_in_competitions', function(){
+			V.Tour.startTourWithId('help_in_competitions_help', 'bottom');
 		})
 
 		//Help in pedagogical options settings	
@@ -476,7 +508,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var _exitConfirmation = function(){
 		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&&(confirmOnExit)){
-			return V.I18n.getTrans("i.exitConfirmation");
+			var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
+			return confirmationMsg;
 		} else {
 			return;
 		}
