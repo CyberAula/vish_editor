@@ -27,15 +27,24 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					event.preventDefault();
 					if($(menuButton).parent().hasClass("menu_item_disabled")){
 						//Disabled button
-						return;
+						return false;
 					}
 					if(typeof V.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
 						V.Editor.Tools.Menu[$(menuButton).attr("action")](this);
 						_hideMenuAfterAction();
 					}
+					return false;
 				});
 			});
 
+			//Prevent iframe to move
+			if(V.Status.getDevice().desktop){
+				$("a.menu_option_main, a.menu_option:not('.menu_action')").on("click", function(event){
+					event.preventDefault();
+					return false;
+				});
+			}
+			
 			_initialized = true;
 		}
 		$("#menu").show();
@@ -225,12 +234,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertSlide = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_slides');
+		return false; //Prevent iframe to move
 	};
 
 	var insertSubslide = function(){
 		V.Editor.setContentAddMode(V.Constant.SLIDESET);
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_slides');
+		return false; //Prevent iframe to move
 	};
 
 	var insertJSON = function(){
@@ -241,6 +252,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertPDFex = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_pdfex');
+		return false; //Prevent iframe to move
 	};
 
 	var exportToJSON = function(){

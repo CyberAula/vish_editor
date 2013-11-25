@@ -30,6 +30,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 							V.Editor.Tools[$(toolbarButton).attr("action")](this);
 						}
 					}
+					return false; //Prevent iframe to move
 				});
 			});
 
