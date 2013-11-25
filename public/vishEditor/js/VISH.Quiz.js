@@ -471,10 +471,15 @@ VISH.Quiz = (function(V,$,undefined){
 			return;
 		}
 
+		//Draw QR for fancybox
 		var container = $(".quizQr");
 		$(container).html("");
 
+		$("#tab_quiz_session_content").addClass("temp_shown");
+		$(container).addClass("temp_shown");
 		var height = $(container).height();
+		$(container).removeClass("temp_shown");
+		$("#tab_quiz_session_content").removeClass("temp_shown");
 		var width = height;
 
 		var qrOptions = {
@@ -491,7 +496,43 @@ VISH.Quiz = (function(V,$,undefined){
 			text: url.toString()
 		}
 		$(container).qrcode(qrOptions);
+
+		//Draw QR for overlay
+		var overlayHeight = $("#qr_overlay").height();
+		var qrOptions = {
+			render: 'canvas', 
+			width: overlayHeight,
+			height: overlayHeight,
+			color: '#000',
+			bgColor: '#fff',
+			text: url.toString()
+		}
+		$("#qr_overlay").qrcode(qrOptions);
+
+		var qrDOMFancybox = $(container).find("canvas");
+		$(qrDOMFancybox).click(function(){
+			$("#qr_overlay").show();
+		});
+
+		$("#qr_overlay").click(function(){
+			$("#qr_overlay").hide();
+		});
 	};
+
+	var _openQrOverlay = function(qr){
+		$("#qr_overlay").show();
+	}
+
+	var _updateQrSizeOnOverlay = function(){
+		var qr = $("#qr_overlay").find("canvas");
+		var qrSize = Math.min($("#qr_overlay").width(),$("#qr_overlay").height());
+		$(qr).width(qrSize);
+		$(qr).height(qrSize);
+	}
+
+	var _closeQrOverlay = function(){
+		$("#qr_overlay").hide();
+	} 
 
 	var _loadStats = function(){
 		_cleanResults();
@@ -591,6 +632,7 @@ VISH.Quiz = (function(V,$,undefined){
 		setTimeout(function(){
 			if((currentQuizSession)&&(currentQuizSession.url)){
 				_loadQr(currentQuizSession.url);
+				_updateQrSizeOnOverlay();
 			}
 		},500);
 	};

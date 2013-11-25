@@ -850,7 +850,7 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
-   return {
+	return {
 		init 					: init,
 		getOptions 				: getOptions,
 		getId					: getId,
@@ -872,6 +872,6 @@ VISH.Utils = (function(V,undefined){
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog
-   };
+	};
 
 }) (VISH);

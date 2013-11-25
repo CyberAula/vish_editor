@@ -1574,3 +1574,14 @@ img.loading_presentation_carrousel {
 	background: #ccc !important;
 	cursor: default !important;
 }
+
+
+/* QR Overlay */
+#qr_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+}
