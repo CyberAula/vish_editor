@@ -138,6 +138,7 @@ img.mcCheckbox, img.tfCheckbox{
 }
 
 .buttonQuiz {
+	min-width: 12%;
 	padding: 5px 10px;
 	display: inline;
 	text-decoration:none;
@@ -163,6 +164,12 @@ img.mcCheckbox, img.tfCheckbox{
 
 .quizAnswerButtonDisabled {
 	color: #ccc;
+	cursor: default;
+}
+
+.quizAnswerButtonDisabled:hover {
+	opacity: 0.6;
+	text-shadow: none;
 }
 
 .quizStartButton {

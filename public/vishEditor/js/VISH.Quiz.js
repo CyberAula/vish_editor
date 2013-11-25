@@ -1,13 +1,15 @@
 VISH.Quiz = (function(V,$,undefined){
   
 	var quizMode; //selfA or realTime
-	var quizSessionId;
-
+	
 	//Quiz in real time
-	//Current quiz data
-	var currentQuiz;
+	//Current quiz DOM element
+	var currentQuizDOM;
+	//JSON of the current quiz session
 	var currentQuizSession;
 	var currentPolling;
+	//Quiz session ID to answer the quiz in real time
+	var quizSessionId;
 
 
 	var initBeforeRender = function(presentation){
@@ -30,7 +32,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	/*
-	* Load common events of Quizzes: answer, stats, etc
+	* Load common events of Quizzes: answer, start live quiz, etc
 	*/
 	var _loadEvents = function(){
 		$(document).on('click', ".quizAnswerButton",_onAnswerQuiz);
@@ -65,19 +67,24 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _onAnswerQuiz = function(event){
-		var quiz = $("div.quizContainer").has(event.target);
-		var quizModule = _getQuizModule($(quiz).attr("type"));
+		var quizDOM = $("div.quizContainer").has(event.target);
+		var quizModule = _getQuizModule($(quizDOM).attr("type"));
 		if(quizModule){
 			if(quizMode===V.Constant.QZ_MODE.SELFA){
-				quizModule.onAnswerQuiz(quiz);
+				var quizStatus = $(quizDOM).find(".quizAnswerButton").attr("quizstatus");
+				if(quizStatus === "retry"){
+					quizModule.onRetryQuiz(quizDOM);
+				} else {
+					quizModule.onAnswerQuiz(quizDOM);
+				}
 			} else {
-				var report = quizModule.getReport(quiz);
-				_answerRTQuiz(quiz,quizModule,report);
+				var report = quizModule.getReport(quizDOM);
+				_answerRTQuiz(quizDOM,quizModule,report);
 			}
 		}
 	};
 
-	var _answerRTQuiz = function(quiz,quizModule,report){
+	var _answerRTQuiz = function(quizDOM,quizModule,report){
 		if(!quizSessionId){
 			return;
 		}
@@ -96,15 +103,14 @@ VISH.Quiz = (function(V,$,undefined){
 			return;
 		}
 
-		quizModule.disableQuiz(quiz);
-
-		_loadingAnswerButton(quiz);
+		quizModule.disableQuiz(quizDOM);
+		_loadingAnswerButton(quizDOM);
 
 		var answers = report.answers;
 
 		V.Quiz.API.sendAnwers(answers, quizSessionId,
 			function(data){
-				disableAnswerButton(quiz);
+				disableAnswerButton(quizDOM);
 
 				var options = {};
 				options.width = '80%';
@@ -118,7 +124,7 @@ VISH.Quiz = (function(V,$,undefined){
 				V.Utils.showDialog(options);
 			}, 
 			function(error){
-				disableAnswerButton(quiz);
+				disableAnswerButton(quizDOM);
 
 				var options = {};
 				options.width = '80%';
@@ -135,7 +141,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
-		var quiz = $("div.quizContainer").has(startButton);
+		var quizDOM = $("div.quizContainer").has(startButton);
 
 		switch($(startButton).attr("quizStatus")){
 			case "running":
@@ -146,12 +152,12 @@ VISH.Quiz = (function(V,$,undefined){
 				break;
 			case "stop":
 			default:
-				_startNewQuizSession(quiz);
+				_startNewQuizSession(quizDOM);
 			break;
 		}
 	};
 
-	var _startNewQuizSession = function(quiz){
+	var _startNewQuizSession = function(quizDOM){
 		if(currentQuizSession){
 			var options = {};
 			options.width = '80%';
@@ -163,33 +169,45 @@ VISH.Quiz = (function(V,$,undefined){
 			}
 			options.buttons = [button1];
 			V.Utils.showDialog(options);
-
 			return;
 		}
-		_loadingLaunchButton(quiz);
-		var quizJSON = _getQuizJSONFromQuiz(quiz);
-		V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+		_loadingLaunchButton(quizDOM);
+		var quizJSON = _getQuizJSONFromQuiz(quizDOM);
+		V.Quiz.API.startQuizSession(quizDOM,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
 	};
 
 	var _onQuizSessionReceived = function(quiz,quizSession){
-		currentQuiz = quiz;
+		currentQuizDOM = quiz;
 		currentQuizSession = quizSession;
 
 		_runningLaunchButton(quiz);
 		$("a#addQuizSessionFancybox").trigger("click");
 	};
 
-	var _onQuizSessionReceivedError = function(quiz,error){
-		_enableLaunchButton(quiz);
+	var _onQuizSessionReceivedError = function(quizDOM,error){
+		_enableLaunchButton(quizDOM);
+
+		//Show error message
+		var options = {};
+		options.width = '80%';
+		options.text = V.I18n.getTrans("i.QuizCreateSessionError");
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.Ok");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
+		return;
 	};
 
-	var _getQuizJSONFromQuiz = function(quiz){
-		var slide = $("article").has(quiz);
-		return _getQuizJSONFromSlide(slide);
+	var _getQuizJSONFromQuiz = function(quizDOM){
+		var slideDOM = $("article").has(quizDOM);
+		return _getQuizJSONFromSlide(slideDOM);
 	};
 
-	var _getQuizJSONFromSlide = function(slide){
-		var slideId = $(slide).attr("id");
+	var _getQuizJSONFromSlide = function(slideDOM){
+		var slideId = $(slideDOM).attr("id");
 		var presentation = V.Viewer.getCurrentPresentation();
 		if((slideId)&&(presentation)){
 			var slides = presentation.slides;
@@ -220,7 +238,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button1.text = V.I18n.getTrans("i.cancel");
 		button1.extraclass = "quizSession_button_cancel";
 		button1.callback = function(){
-			V.Quiz.onCloseQuizSession('cancel');
+			_onCloseQuizSession('cancel');
 		}
 		options.buttons.push(button1);
 
@@ -228,7 +246,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button2.text = V.I18n.getTrans("i.No");
 		button2.extraclass = "quizSession_button_no";
 		button2.callback = function(){
-			V.Quiz.onCloseQuizSession('no');
+			_onCloseQuizSession('no');
 		}
 		options.buttons.push(button2);
 		
@@ -236,7 +254,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button3.text = V.I18n.getTrans("i.Yes");
 		button3.extraclass = "quizSession_button_yes";
 		button3.callback = function(){
-			V.Quiz.onCloseQuizSession('yes');
+			_onCloseQuizSession('yes');
 		}
 		options.buttons.push(button3);
 
@@ -253,7 +271,7 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
-	var onCloseQuizSession = function(saving){
+	var _onCloseQuizSession = function(saving){
 		var name = undefined;
 		switch(saving){
 			case "yes":
@@ -278,24 +296,27 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _closeQuizSession = function(name){
 		V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
-			$.fancybox.close();
-			$(".quizSession_button_no").removeClass("quizStartButtonLoading");
-			$(".quizSession_button_yes").removeClass("quizStartButtonLoading");
-			_enableLaunchButton(currentQuiz);
-			currentQuiz = null;
-			currentQuizSession = null;
+			//Success
+			_afterCloseQuizSession();
+		}, function(){
+			//Failure
+			_afterCloseQuizSession();
 		});
 	};
+
+	var _afterCloseQuizSession = function(){
+		$.fancybox.close();
+		$(".quizSession_button_no").removeClass("quizStartButtonLoading");
+		$(".quizSession_button_yes").removeClass("quizStartButtonLoading");
+		_enableLaunchButton(currentQuizDOM);
+		currentQuizDOM = null;
+		currentQuizSession = null;
+	}
 
 	var _deleteQuizSession = function(){
 		V.Quiz.API.deleteQuizSession(currentQuizSession.id);
 		//Don't wait for the callback in this case
-		$.fancybox.close();
-		$(".quizSession_button_no").removeClass("quizStartButtonLoading");
-		$(".quizSession_button_yes").removeClass("quizStartButtonLoading");
-		_enableLaunchButton(currentQuiz);
-		currentQuiz = null;
-		currentQuizSession = null;
+		_afterCloseQuizSession();
 	};
 
 	/**
@@ -326,14 +347,24 @@ VISH.Quiz = (function(V,$,undefined){
 
 
 	/*
-	* Answer button states: Enabled, Loading and Disabled
+	* Answer button states: Enabled, Retry, Loading and Disabled 
 	*/
 
-	var _enableAnswerButton = function(quiz){
+	var enableAnswerButton = function(quiz){
 		var answerButton = $(quiz).find("input.quizAnswerButton");
 		$(answerButton).removeAttr("disabled");
 		$(answerButton).removeClass("quizStartButtonLoading");
 		$(answerButton).removeAttr("quizStatus");
+		$(answerButton).attr("value",V.I18n.getTrans("i.QuizButtonAnswer"));
+	}
+
+	var retryAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).removeAttr("disabled");
+		$(answerButton).removeClass("quizStartButtonLoading");
+		// $(answerButton).addClass("quizAnswerButtonRetry");
+		$(answerButton).attr("quizStatus","retry");
+		$(answerButton).attr("value",V.I18n.getTrans("i.QuizRetry"));
 	}
 
 	var _loadingAnswerButton = function(quiz){
@@ -363,8 +394,8 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).attr("value",V.I18n.getTrans("i.QuizLaunch"));
 	}
 
-	var _loadingLaunchButton = function(quiz){
-		var startButton = $(quiz).find("input.quizStartButton");
+	var _loadingLaunchButton = function(quizDOM){
+		var startButton = $(quizDOM).find("input.quizStartButton");
 		$(startButton).attr("disabled", "disabled");
 		$(startButton).addClass("quizStartButtonLoading");
 		$(startButton).attr("quizStatus","loading");
@@ -419,7 +450,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(myA).attr("href",currentQuizSession.url);
 		$(myA).html("<p id='tab_quiz_session_url'>"+currentQuizSession.url+"</p>");
 
-		var sharingText = $(currentQuiz).find(".mc_question_wrapper_viewer").text().trim();
+		var sharingText = $(currentQuizDOM).find(".mc_question_wrapper_viewer").text().trim();
 
 		var twitter = $("#tab_quiz_session_share_twitter");
 		$(twitter).attr("href","https://twitter.com/share?url="+currentQuizSession.url+"&text="+sharingText+"");
@@ -499,10 +530,10 @@ VISH.Quiz = (function(V,$,undefined){
 		$(canvas).attr("width",desiredWidth);
 		$(canvas).attr("height",desiredHeight);
 
-		var quizModule = _getQuizModule($(currentQuiz).attr("type"));
+		var quizModule = _getQuizModule($(currentQuizDOM).attr("type"));
 		if(quizModule){
 			$("#quiz_chart").show();
-			quizModule.drawResults(currentQuiz,results,options);
+			quizModule.drawResults(currentQuizDOM,results,options);
 		}
 	};
 
@@ -570,9 +601,10 @@ VISH.Quiz = (function(V,$,undefined){
 		render            	: render,
 		renderButtons     	: renderButtons,
 		updateCheckbox    	: updateCheckbox,
+		enableAnswerButton  : enableAnswerButton,
+		retryAnswerButton	: retryAnswerButton,
 		disableAnswerButton : disableAnswerButton,
 		loadTab             : loadTab,
-		onCloseQuizSession  : onCloseQuizSession,
 		aftersetupSize    	: aftersetupSize
 	};
 	

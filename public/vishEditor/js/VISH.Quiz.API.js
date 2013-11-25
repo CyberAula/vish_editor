@@ -13,7 +13,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Create new quiz session
 	* Server responds with a quiz_session JSON object including the quiz session id
 	*/
-	var startQuizSession = function(quiz,quizJSON,successCallback, failCallback){
+	var startQuizSession = function(quizDOM,quizJSON,successCallback, failCallback){
 		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
 			var send_type = 'POST';
 
@@ -28,12 +28,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
-						successCallback(quiz,data);
+						successCallback(quizDOM,data);
 					}
 				},
 				error: function(error){
 					if(typeof failCallback=="function"){
-						failCallback(error);
+						failCallback(quizDOM,error);
 					}
 				}
 			});
@@ -41,9 +41,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
 			var url = quizSessionAPIrootURL + quizSessionId;
 			var quiz_session = {id: quizSessionId, url: url};
-			if(typeof successCallback=="function"){
+			
+			if((typeof successCallback=="function")&&(typeof failCallback=="function")){
 				setTimeout(function(){
-					successCallback(quiz,quiz_session);
+					// failCallback(quizDOM,"error");
+					successCallback(quizDOM,quiz_session);
 				},1000);
 			}
 		}
@@ -93,9 +95,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 			// V.Debugging.log(params)
 
 			var data = {"processed":"true"};
-			if(typeof successCallback=="function"){
+			if((typeof successCallback=="function")&&(typeof failCallback=="function")){
 				setTimeout(function(){
 					successCallback(data);
+					// failCallback();
 				},1000);
 			}
 		}
