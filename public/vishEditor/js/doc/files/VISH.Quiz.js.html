@@ -113,7 +113,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$(&quot;#quizSessionNameInput&quot;).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
-		V.Quiz.API.init();
+		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
 		_loadEvents();
@@ -155,7 +155,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _onAnswerQuiz = function(event){
-		var quiz = $(&quot;div.quizzContainer&quot;).has(event.target);
+		var quiz = $(&quot;div.quizContainer&quot;).has(event.target);
 		var quizModule = _getQuizModule($(quiz).attr(&quot;type&quot;));
 		if(quizModule){
 			if(quizMode===V.Constant.QZ_MODE.SELFA){
@@ -225,7 +225,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
-		var quiz = $(&quot;div.quizzContainer&quot;).has(startButton);
+		var quiz = $(&quot;div.quizContainer&quot;).has(startButton);
 
 		switch($(startButton).attr(&quot;quizStatus&quot;)){
 			case &quot;running&quot;:
@@ -378,17 +378,24 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _deleteQuizSession = function(){
-		&#x2F;&#x2F;TODO (removeQuizSession in backend is not enabled)
-		_closeQuizSession();
+		V.Quiz.API.deleteQuizSession(currentQuizSession.id);
+		&#x2F;&#x2F;Don&#x27;t wait for the callback in this case
+		$.fancybox.close();
+		$(&quot;.quizSession_button_no&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+		$(&quot;.quizSession_button_yes&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+		_enableLaunchButton(currentQuiz);
+		currentQuiz = null;
+		currentQuizSession = null;
 	};
 
 	&#x2F;**
 	* Function to render a quiz inside an article (a slide)
 	*&#x2F;
-	var render = function(slide,template){
-		var quizModule = _getQuizModule(slide.quiztype);
+	var render = function(elJSON,template){
+		var quizModule = _getQuizModule(elJSON.quiztype);
 		if(quizModule){
-			return quizModule.render(slide,template);
+			var quizDOM = quizModule.render(elJSON,template);
+			return &quot;&lt;div id=&#x27;&quot;+elJSON[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;quizWrapper &quot;+template+&quot;_&quot;+elJSON[&#x27;areaid&#x27;]+&quot; &quot;+template+&quot;_quiz&quot;+&quot;&#x27;&gt;&quot;+quizDOM+&quot;&lt;&#x2F;div&gt;&quot;;
 		}
 	};
 
@@ -489,15 +496,13 @@ VISH.Quiz = (function(V,$,undefined){
 			default:
 				break;
 		}
+		return false;
 	};
 
 	var _loadQuizSession = function(){
 		_cleanResults();
 		if(!currentQuizSession){
 			return;
-		}
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-			currentQuizSession.url = &quot;http:&#x2F;&#x2F;vishub.org&#x2F;quiz_sessions&#x2F;4567&quot;;
 		}
 
 		var myA = $(&quot;#tab_quiz_session_url_link&quot;);

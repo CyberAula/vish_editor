@@ -90,26 +90,31 @@
     <pre class="code prettyprint linenums">
 VISH.Quiz.API = (function(V,$,undefined){
 	
-	var init = function(){
-		
+	&#x2F;&#x2F; URL in the form: &quot;http:&#x2F;&#x2F;localhost:3000&#x2F;quiz_sessions&#x2F;&quot;
+	var quizSessionAPIrootURL;
+
+	var init = function(quizSessionAPI){
+		if((typeof quizSessionAPI == &quot;object&quot;)&amp;&amp;(typeof quizSessionAPI.rootURL == &quot;string&quot;)){
+			quizSessionAPIrootURL = quizSessionAPI.rootURL;
+		}
 	};
 	
    &#x2F;*
-	* Request new quiz session
+	* Create new quiz session
 	* Server responds with a quiz_session JSON object including the quiz session id
 	*&#x2F;
 	var startQuizSession = function(quiz,quizJSON,successCallback, failCallback){
 		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
 			var send_type = &#x27;POST&#x27;;
 
-	        var params = {
-	          &quot;quiz&quot;: JSON.stringify(quizJSON),
-	          &quot;authenticity_token&quot; : V.User.getToken()
-	        }
+			var params = {
+			  &quot;quiz&quot;: JSON.stringify(quizJSON),
+			  &quot;authenticity_token&quot; : V.User.getToken()
+			}
 
 			$.ajax({
 				type    : send_type,
-				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x27;,
+				url     : quizSessionAPIrootURL,
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback==&quot;function&quot;){
@@ -124,7 +129,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			});
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
 			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
-			var url = &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27; + quizSessionId;
+			var url = quizSessionAPIrootURL + quizSessionId;
 			var quiz_session = {id: quizSessionId, url: url};
 			if(typeof successCallback==&quot;function&quot;){
 				setTimeout(function(){
@@ -134,99 +139,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 		}
 	};
 
-	&#x2F;**
-	 * Send answers for real time quizzes
-	 * PUT &#x2F;quiz_sessions&#x2F;X
-	 *&#x2F;
-	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
-			var send_type = &#x27;PUT&#x27;;
-	       
-	        var params = {
-	      	  &quot;id&quot;: quizSessionId,
-	     	  &quot;answers&quot;: JSON.stringify(answers),
-	          &quot;authenticity_token&quot; : V.User.getToken()
-	        }
-
-	        $.ajax({
-	          type    : send_type,
-	          url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId,
-	          data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-	          },
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-             });
-
-	         return null;
-		} else {
-			if(typeof successCallback==&quot;function&quot;){
-				setTimeout(function(){
-					successCallback();
-				},1000);
-			}
-		}
-   };
-
-
- 	&#x2F;**
-	 * GET &#x2F;quiz_sessions&#x2F;X&#x2F;results.json.
-	 *&#x2F;
-	var getResults = function(quizSessionId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
-
-			var send_type = &#x27;GET&#x27;;
-			var params = {
-				&quot;id&quot;: quizSessionId, 
-				&quot;authenticity_token&quot; : V.User.getToken() 
-			}
-
-			$.ajax({
-				type    : send_type,
-				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId + &#x27;&#x2F;results.json&#x27;,
-				data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-				},
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-			});
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
-			&#x2F;&#x2F;Test
-
-			&#x2F;&#x2F; For MCChoice
-			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-04-29T10:48:42Z&quot;,&quot;id&quot;:1,&quot;quiz_session_id&quot;:1}];
-			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:00:11Z&quot;,&quot;id&quot;:25,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:00:31Z&quot;,&quot;id&quot;:26,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:03Z&quot;,&quot;id&quot;:27,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:11Z&quot;,&quot;id&quot;:28,&quot;quiz_session_id&quot;:18},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:01:20Z&quot;,&quot;id&quot;:29,&quot;quiz_session_id&quot;:18}];
-
-			&#x2F;&#x2F;For TF quizzes (also works with MC)
-			var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
-
-
-			if(typeof successCallback==&quot;function&quot;){
-				setTimeout(function(){
-					successCallback(data);
-				},1000);
-			}
-		}
-	};
-
    &#x2F;*
 	* Close opened quiz session
 	*&#x2F;
-	var closeQuizSession = function(quizSessionId,name,successCallback, failCallback){
+	var closeQuizSession = function(quizSessionId,name,successCallback,failCallback){
 
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;vish&quot;){
+		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
 
 			var send_type = &#x27;GET&#x27;;
 			var params = {
@@ -240,7 +158,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : &#x27;http:&#x2F;&#x2F;&#x27;+ window.location.host + &#x27;&#x2F;quiz_sessions&#x2F;&#x27;+quizSessionId + &#x27;&#x2F;close&#x27;,
+				url     : quizSessionAPIrootURL + quizSessionId + &#x27;&#x2F;close&#x27;,
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback==&quot;function&quot;){
@@ -253,7 +171,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 					}
 				}
 			});
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
 
 			&#x2F;&#x2F; var params = {
 			&#x2F;&#x2F; 	&quot;id&quot;: quizSessionId, 
@@ -271,15 +189,146 @@ VISH.Quiz.API = (function(V,$,undefined){
 				},1000);
 			}
 		}
-	}
+	};
 
+   &#x2F;*
+	* Delete opened quiz session
+	*&#x2F;
+	var deleteQuizSession = function(quizSessionId,successCallback,failCallback){
+		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
+
+			var send_type = &#x27;GET&#x27;;
+			var params = {
+				&quot;id&quot;: quizSessionId, 
+				&quot;authenticity_token&quot; : V.User.getToken()
+			}
+
+			$.ajax({
+				type    : send_type,
+				url     : quizSessionAPIrootURL + quizSessionId + &#x27;&#x2F;delete&#x27;,
+				data    : params,
+				success : function(data) {
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(data);
+					}
+				},
+				error: function(error){
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
+				}
+			});
+
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
+			var data = {&quot;processed&quot;:&quot;true&quot;};
+			if(typeof successCallback==&quot;function&quot;){
+				setTimeout(function(){
+					successCallback(data);
+				},1000);
+			}
+		}
+	};
+
+	&#x2F;**
+	 * GET &#x2F;quiz_sessions&#x2F;X&#x2F;results.json.
+	 *&#x2F;
+	var getResults = function(quizSessionId, successCallback, failCallback){
+		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
+
+			var send_type = &#x27;GET&#x27;;
+			var params = {
+				&quot;id&quot;: quizSessionId
+			}
+
+			if(V.User.isLogged()){
+				params[&quot;authenticity_token&quot;] = V.User.getToken();
+			}
+
+			$.ajax({
+				type    : send_type,
+				url     : quizSessionAPIrootURL + quizSessionId + &#x27;&#x2F;results.json&#x27;,
+				data    : params,
+				success : function(data) {
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(data);
+					}
+				},
+				error: function(error){
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
+				}
+			});
+		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
+			&#x2F;&#x2F;Test
+
+			&#x2F;&#x2F; For MCChoice
+			var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:03Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:19Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:28Z&quot;,&quot;id&quot;:35,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:43Z&quot;,&quot;id&quot;:36,&quot;quiz_session_id&quot;:26}];
+
+			&#x2F;&#x2F; MC Multiple answer result data
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:20Z&quot;,&quot;id&quot;:37,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:29Z&quot;,&quot;id&quot;:38,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:35Z&quot;,&quot;id&quot;:39,&quot;quiz_session_id&quot;:27}];
+
+			&#x2F;&#x2F;For TF quizzes
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
+
+			if(typeof successCallback==&quot;function&quot;){
+				setTimeout(function(){
+					successCallback(data);
+				},1000);
+			}
+		}
+	};
+
+	&#x2F;**
+	 * Send answers for real time quizzes
+	 * PUT &#x2F;quiz_sessions&#x2F;X
+	 *&#x2F;
+	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
+		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
+			var send_type = &#x27;POST&#x27;;
+		   
+			var params = {
+				&quot;id&quot;: quizSessionId,
+				&quot;answers&quot;: JSON.stringify(answers)
+			}
+
+			if(V.User.isLogged()){
+				params[&quot;authenticity_token&quot;] = V.User.getToken();
+			}
+
+			$.ajax({
+			  type    : send_type,
+			  url     : quizSessionAPIrootURL + quizSessionId + &#x27;&#x2F;answer&#x27;,
+			  data    : params,
+				success : function(data) {
+					if(typeof successCallback==&quot;function&quot;){
+						successCallback(data);
+					}
+			  },
+				error: function(error){
+					if(typeof failCallback==&quot;function&quot;){
+						failCallback(error);
+					}
+				}
+			 });
+
+			 return null;
+		} else {
+			if(typeof successCallback==&quot;function&quot;){
+				setTimeout(function(){
+					successCallback();
+				},1000);
+			}
+		}
+   };
 
 	return {
 		init					: init, 
 		startQuizSession		: startQuizSession, 
 		closeQuizSession		: closeQuizSession,
-		sendAnwers				: sendAnwers,
-		getResults 				: getResults
+		deleteQuizSession		: deleteQuizSession,
+		getResults 				: getResults,
+		sendAnwers				: sendAnwers
 	};
 
 }) (VISH, jQuery);

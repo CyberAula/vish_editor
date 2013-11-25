@@ -11,7 +11,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
   var render = function(slide,template){
     var quizId = V.Utils.getId();
-    var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+V.Constant.QZ_TYPE.TF+"'></div>");
+    var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.TF+"'></div>");
 
     //Question
     var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");

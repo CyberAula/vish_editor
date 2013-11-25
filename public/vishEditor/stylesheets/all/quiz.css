@@ -189,9 +189,10 @@ table.mc_options td:nth-child(1), table.mc_options td:nth-child(2){
 }
 
 table.mc_options td:nth-child(3){
-	min-width: 90%;
-	max-width: 90%;
-	width: 90%;
+	min-width: 88%;
+	max-width: 88%;
+	width: 88%;
+	padding-left: 2%;
 }
 
 table.tf_options td:nth-child(1), table.tf_options td:nth-child(2), table.tf_options td:nth-child(3){

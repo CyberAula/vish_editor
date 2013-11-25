@@ -128,7 +128,7 @@ VISH.Editor = (function(V,$,undefined){
 	 *
 	 * @method init
 	 *&#x2F;
-	var init = function(options, presentation){
+	var init = function(options,presentation){
 		V.Editing = true;
 		$(&quot;body&quot;).addClass(&quot;ViSHEditorBody&quot;);
 
@@ -192,21 +192,27 @@ VISH.Editor = (function(V,$,undefined){
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Settings.loadPresentationSettings(presentation);
-			V.Editor.Renderer.init(presentation);
-			
-			&#x2F;&#x2F;remove focus from any zone
-			_removeSelectableProperties();					
+			V.Editor.Themes.selectTheme(presentation.theme,false,function(){
+				&#x2F;&#x2F;Theme loaded
+				V.Editor.Renderer.init(presentation);
+				&#x2F;&#x2F;remove focus from any zone
+				_removeSelectableProperties();
+				_initAferPresentationLoaded(options,presentation);
+			});
 		} else {
 			initialPresentation = false;
 			V.Editor.Settings.loadPresentationSettings();
+			_initAferPresentationLoaded(options,presentation);
 		}
-
+	};
+	
+	var _initAferPresentationLoaded = function(options,presentation){
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		});
 		
-		if(presentation){
+		if(initialPresentation){
 			&#x2F;&#x2F;hide objects (the onSlideEnterEditor event will show the objects in the current slide)
 			$(&#x27;.object_wrapper&#x27;).hide();
 		}
@@ -242,20 +248,22 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Add the first slide
-		if(!V.Editor.hasInitialPresentation()){
+		if(!initialPresentation){
 			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:&quot;1&quot;, slideNumber:1});
 			V.Editor.Slides.addSlide(slide);
 		}
 
 		&#x2F;&#x2F;Init settings
-		if ((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!V.Editor.hasInitialPresentation())){
+		if((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!initialPresentation)){
 			V.Editor.Settings.displaySettings();
 		}
 
+		&#x2F;&#x2F;Fill About screen
+		$(&quot;#VEversion&quot;).html(V.VERSION);
+
 		&#x2F;&#x2F;Try to win focus
 		window.focus();
-	};
-	
+	}
   
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;

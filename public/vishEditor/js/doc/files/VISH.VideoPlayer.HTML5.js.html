@@ -102,58 +102,49 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 
 	var setVideoEvents = function(){
 		var videos = $(&quot;video&quot;)
-		$.each(videos, function(index, video) {
-			video.addEventListener(&#x27;play&#x27;, function () {
+		$.each(videos, function(index, video){
+			video.addEventListener(&#x27;play&#x27;, function(){
 				&#x2F;&#x2F; V.Debugging.log(&quot;Play at &quot; + video.currentTime);
-
 				var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
-
 				playTriggeredByUser = true;
 			}, false);
-			video.addEventListener(&#x27;pause&#x27;, function () {
+			video.addEventListener(&#x27;pause&#x27;, function(){
 				&#x2F;&#x2F; V.Debugging.log(&quot;Pause &quot; + video.currentTime);
-
 				var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
-				
 				pauseTriggeredByUser = true;
 			}, false);
 			video.addEventListener(&#x27;ended&#x27;, function () {
-				&#x2F;&#x2F; V.Debugging.log(&quot;Ended &quot; + video.currentTime)
+				&#x2F;&#x2F; V.Debugging.log(&quot;Ended &quot; + video.currentTime);
 			}, false);
-
 			video.addEventListener(&quot;error&quot;, function(err) {
-                &#x2F;&#x2F; V.Debugging.log(&quot;Video error: &quot; + err)
+                &#x2F;&#x2F; V.Debugging.log(&quot;Video error: &quot; + err);
             }, false);
-
 			video.addEventListener(&quot;seeked&quot;, function(err) {
-                &#x2F;&#x2F; V.Debugging.log(&quot;Seek at &quot; + video.currentTime)
-
+                &#x2F;&#x2F; V.Debugging.log(&quot;Seek at &quot; + video.currentTime);
                 var params = new Object();
 				params.type = &quot;HTML5&quot;;
 				params.videoId = video.id;
 				params.currentTime = video.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
 				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
-				
 				seekTriggeredByUser = true;
             }, false);
-
 			&#x2F;&#x2F;PREVENT KEYBOARD EVENTS ON FIREFOX!
-			$(video).focus(function(event) {
+			$(video).focus(function(event){
 				this.blur();
 			});
 		});
-	}
+	};
 	
 		
 	&#x2F;**
@@ -176,7 +167,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 	
 	
 	&#x2F;**
@@ -186,19 +177,18 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		var currentVideos = $(element).find(&quot;video&quot;);
 		$.each(currentVideos, function(index, video) {
 			var playing = ! video.paused;
-			$(video).attr(&quot;wasplayingonslideleave&quot;,playing)
+			$(video).attr(&quot;wasplayingonslideleave&quot;,playing);
 			if(playing){
-				video.pause()
+				video.pause();
 			}
 		});
-	}
+	};
 
 	&#x2F;**
 	 * Function to start a specific video
 	 *&#x2F;
 	var playVideo = function(videoId,currentTime){
 		var video = $(&quot;#&quot;+videoId)[0];
-
 		if((typeof currentTime === &#x27;number&#x27;)&amp;&amp;(video.currentTime !== currentTime)){
 			seekTriggeredByUser = false;
 			video.currentTime = currentTime;
@@ -207,7 +197,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			playTriggeredByUser = false;
 			video.play();
 		}
-	}
+	};
 
 	&#x2F;**
 	 * Function to pause a specific video
@@ -222,7 +212,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			pauseTriggeredByUser = false;
 			video.pause();
 		}
-	}
+	};
 
 
 	&#x2F;**
@@ -234,10 +224,10 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 			seekTriggeredByUser = false;
 			video.currentTime = currentTime;
 		}
-	}
+	};
 
 	var showControls = function(showControls){
-		var videos = $(&quot;video&quot;)
+		var videos = $(&quot;video&quot;);
 		$.each(videos, function(index, video) {
 			if(!showControls){
 				$(video).removeAttr(&quot;controls&quot;);
@@ -245,7 +235,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 				$(video).attr(&quot;controls&quot;,true);
 			}
 		});
-	}
+	};
 
 	return {
 		init 				: init,

@@ -11,7 +11,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
   var render = function(slide,template){
 	var quizId = V.Utils.getId();
-	var container = $("<div id='"+quizId+"' class='quizzContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
+	var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
 
 	var multipleAnswer = false;
 	var inputType = 'radio';

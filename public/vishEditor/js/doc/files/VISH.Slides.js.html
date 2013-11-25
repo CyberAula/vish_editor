@@ -162,14 +162,6 @@ VISH.Slides = (function(V,$,undefined){
 				$(el).removeClass(SLIDE_CLASSES[i]);
 			}
 		}
-
-		&#x2F;&#x2F;update also subslide classes
-		if($(el).attr(&quot;type&quot;)===VISH.Constant.FLASHCARD || $(el).attr(&quot;type&quot;)===VISH.Constant.VTOUR){
-			var arr = $(el).find(&quot;article&quot;);
-			for (var i=0; i&lt; arr.length; i++) {
-				$(arr[i]).addClass(&quot;hide_in_smartcard&quot;);
-			}
-		}
 	};
 
 	var _getcurSlideIndexFromHash = function() {
@@ -340,7 +332,7 @@ VISH.Slides = (function(V,$,undefined){
 	* n &lt; 0 (go back)
 	*&#x2F;
 	var moveSlides = function(n){
-		if((n&gt;0)&amp;&amp;(!V.Editing)&amp;&amp;((isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop))){
+		if((n&gt;0)&amp;&amp;(!V.Editing)&amp;&amp;((isCurrentLastSlide() &amp;&amp; V.Status.getDevice().desktop))&amp;&amp;(V.Viewer.getPresentationType()===V.Constant.PRESENTATION)){
 			V.Recommendations.showFancybox();
 			return;
 		}

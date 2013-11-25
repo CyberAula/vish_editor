@@ -65,7 +65,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _onAnswerQuiz = function(event){
-		var quiz = $("div.quizzContainer").has(event.target);
+		var quiz = $("div.quizContainer").has(event.target);
 		var quizModule = _getQuizModule($(quiz).attr("type"));
 		if(quizModule){
 			if(quizMode===V.Constant.QZ_MODE.SELFA){
@@ -135,7 +135,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
-		var quiz = $("div.quizzContainer").has(startButton);
+		var quiz = $("div.quizContainer").has(startButton);
 
 		switch($(startButton).attr("quizStatus")){
 			case "running":
@@ -301,10 +301,11 @@ VISH.Quiz = (function(V,$,undefined){
 	/**
 	* Function to render a quiz inside an article (a slide)
 	*/
-	var render = function(slide,template){
-		var quizModule = _getQuizModule(slide.quiztype);
+	var render = function(elJSON,template){
+		var quizModule = _getQuizModule(elJSON.quiztype);
 		if(quizModule){
-			return quizModule.render(slide,template);
+			var quizDOM = quizModule.render(elJSON,template);
+			return "<div id='"+elJSON['id']+"' class='quizWrapper "+template+"_"+elJSON['areaid']+" "+template+"_quiz"+"'>"+quizDOM+"</div>";
 		}
 	};
 

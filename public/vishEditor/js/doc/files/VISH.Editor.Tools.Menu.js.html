@@ -117,15 +117,24 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					event.preventDefault();
 					if($(menuButton).parent().hasClass(&quot;menu_item_disabled&quot;)){
 						&#x2F;&#x2F;Disabled button
-						return;
+						return false;
 					}
 					if(typeof V.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)] == &quot;function&quot;){
 						V.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)](this);
 						_hideMenuAfterAction();
 					}
+					return false;
 				});
 			});
 
+			&#x2F;&#x2F;Prevent iframe to move
+			if(V.Status.getDevice().desktop){
+				$(&quot;a.menu_option_main, a.menu_option:not(&#x27;.menu_action&#x27;)&quot;).on(&quot;click&quot;, function(event){
+					event.preventDefault();
+					return false;
+				});
+			}
+			
 			_initialized = true;
 		}
 		$(&quot;#menu&quot;).show();
@@ -298,6 +307,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	&#x2F;&#x2F;More Actions
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
+	var about = function(){
+		V.Tour.startTourWithId(&#x27;about_screen&#x27;, &#x27;top&#x27;);
+	}
+
 	var insertSmartcard = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_smartcards_repo&#x27;);
@@ -311,12 +324,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+		return false; &#x2F;&#x2F;Prevent iframe to move
 	};
 
 	var insertSubslide = function(){
 		V.Editor.setContentAddMode(V.Constant.SLIDESET);
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
+		return false; &#x2F;&#x2F;Prevent iframe to move
 	};
 
 	var insertJSON = function(){
@@ -327,6 +342,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertPDFex = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_pdfex&#x27;);
+		return false; &#x2F;&#x2F;Prevent iframe to move
 	};
 
 	var exportToJSON = function(){
@@ -358,12 +374,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
-			$(&quot;#menu&quot;).hide();
+			$(&quot;#menu ul.menu_option_main&quot;).addClass(&quot;temp_hidden&quot;);
 			setTimeout(function(){
-				$(&quot;#menu&quot;).show();
-			},50);
+				$(&quot;#menu ul.menu_option_main&quot;).removeClass(&quot;temp_hidden&quot;);
+			},500);
 		}
-	}
+	};
 
 	return {
 		init							: init,
@@ -380,7 +396,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
-		help 							: help
+		help 							: help,
+		about							: about
 	};
 
 }) (VISH, jQuery);
