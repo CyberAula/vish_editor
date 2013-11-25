@@ -2,69 +2,57 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 	
 	var containerDivId = "tab_pic_thumbnails_content";
 	var carrouselDivId = "tab_pic_thumbnails_carrousel";
-	var thumbnailsData;
+
+	// var thumbnailsData;
 	var thumbnailsRequested = false;
 	var dataDrawed = false;
+
 	
 	var init = function() {
 	};
 	
 	var beforeLoadTab = function(){
-	}
+	};
 
 	var onLoadTab = function(){
-		//Give time the fancybox to effectively show the carrousel
-		setTimeout(function(){
-			if(!thumbnailsRequested){
-				thumbnailsRequested = true;
-				_requestInitialData();
-			} else if(dataDrawed === false){
-				_prepareRequest();
-				//data received but not drawed, draw it
-				_loadData(thumbnailsData);
-			}
-		},1000);
+		if(!thumbnailsRequested){
+			thumbnailsRequested = true;
+			_requestThumbnails();
+		}
 	};
 	
-	var _requestInitialData = function(){
-		_prepareRequest();
+	var _requestThumbnails = function(){
+		_cleanCarrouselAndLoading();
 		V.Editor.API.requestThumbnails(_onDataReceived,_onAPIError);
 	};
 
-	var _prepareRequest = function(){
+	var _cleanCarrouselAndLoading = function(){
 		_cleanCarrousel();
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
 		$("#" + carrouselDivId).hide();
-	}
+	};
 
 	var _onDataReceived = function(data){
-		if(thumbnailsData){
-			return;
-		} else {
-			thumbnailsData = data;
-			_loadData(data);
-		}
+		// if(!thumbnailsData){
+		// 	thumbnailsData = data;
+		// }
+		_loadData(data);
 	};
 
 	var _loadData = function(data){
-		//Ensure that carrousel is visible before drawing it
-		if(!_isValidResult()){
-			return;
-		}
-
 		if((!data.pictures)||(data.pictures.length==0)){
-			_onSearchFinished();
+			_stopLoading();
 			_drawData(true);
 			return;
 		}
 		
 		var carrouselImages = [];
-		$.each(data.pictures, function(index, image) {
-			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >")
+		$.each(data.pictures, function(index, image){
+			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >");
 			carrouselImages.push(myImg);
 		});
 
@@ -72,25 +60,19 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 		options.callback = _onImagesLoaded;
 		options.order = true;
 		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
-	}
+	};
 	
 	var _onImagesLoaded = function(){
-		_onSearchFinished();
+		_stopLoading();
 		_drawData();
-	}
+	};
 
-	var _onSearchFinished = function(){
+	var _stopLoading = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
-
-		if(!_isValidResult()){
-			//We need to clean because data has been loaded by V.Utils.Loader
-			_cleanCarrousel();
-			return;
-		}
 
 		V.Editor.Utils.addTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 
@@ -115,29 +97,28 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
+
 		dataDrawed = true;
-	}
-	
-	var _onAPIError = function(){
-		if(_isValidResult()){
-			_onSearchFinished();
-			_drawData(false);
-		}
 	};
 	
-	var _onClickCarrouselElement = function(event) {
+	var _onAPIError = function(){
+		_stopLoading();
+		_drawData(false);
+	};
+	
+	var _onClickCarrouselElement = function(event){
 		var image_url = $(event.target).attr("src");
 		V.Editor.Image.addContent(image_url);
 	};
 
-	var _isValidResult = function(){
+	var _isCarrouselVisible = function(){
 		var isVisible = $("#" + carrouselDivId).is(":visible");
 		if(!isVisible){
 			return false;
 		}
 
 		return true;
-	}
+	};
 
 	return {
 		init 					: init,

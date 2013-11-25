@@ -90,6 +90,7 @@ this can not be done with show() and hide() because then it remains with display
 /* Allow temp shown to be applied to any element*/
 .temp_shown {
 	display: block !important;
+	opacity: 0 !important;
 }
 
 .temp_hidden {
