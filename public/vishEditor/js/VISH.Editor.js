@@ -5,11 +5,14 @@
  */
 VISH.Editor = (function(V,$,undefined){
 	
+	//Store the initialOptions
+	var initOptions;
+
 	//boolean to indicate if we are editing a previous presentation.
 	var initialPresentation = false;
 
-	//Store the initialOptions
-	var initOptions;
+	//indicate that the presentation has never been saved in the server (never sent) in the current session
+	var neverStored = true;
 
 	//Pointers to the current and last zone
 	var currentZone;
@@ -650,10 +653,10 @@ VISH.Editor = (function(V,$,undefined){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.VISH:
 				var send_type;
-				if(initialPresentation){
-					send_type = 'PUT';  //if we are editing an existing prsesentation
-				} else {  
+				if((neverStored)&&(!initialPresentation)){
 					send_type = 'POST'; //if it is a new presentation
+				} else {
+					send_type = 'PUT';  //if we are editing an existing prsesentation or resaving a new presentation
 				}
 
 				//POST to http://server/excursions/
@@ -678,6 +681,9 @@ VISH.Editor = (function(V,$,undefined){
 							V.Editor.Events.allowExitWithoutConfirmation();
 							window.top.location.href = data.url;
 						} else if((order==="save")||(order==="unpublish")){
+							if(order==="save"){
+								neverStored = false;
+							}							
 							if(typeof successCallback == "function"){
 								successCallback();
 							}
@@ -697,9 +703,10 @@ VISH.Editor = (function(V,$,undefined){
 					} else if(order==="save"){
 						V.Debugging.log("Saved presentation");
 						V.Debugging.log(presentation);
+						neverStored = false;
 						if(typeof successCallback == "function"){
 							setTimeout(function(){
-									successCallback();
+								successCallback();
 							},5000);
 						}
 					} else if(order==="unpublish"){
