@@ -176,7 +176,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 			//Test
 
 			// For MCChoice
-			var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:03Z","id":33,"quiz_session_id":26},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:19Z","id":34,"quiz_session_id":26},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:28Z","id":35,"quiz_session_id":26},{"answer":"[{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:43Z","id":36,"quiz_session_id":26}];
+			// var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:03Z","id":33,"quiz_session_id":26},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:19Z","id":34,"quiz_session_id":26},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:28Z","id":35,"quiz_session_id":26},{"answer":"[{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-11-22T11:59:43Z","id":36,"quiz_session_id":26}];
+
+
+			// For MCChoice with only one answer
+			var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31}];
 
 			// MC Multiple answer result data
 			// var data = [{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"true\"},{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:20Z","id":37,"quiz_session_id":27},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"true\"},{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:29Z","id":38,"quiz_session_id":27},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:35Z","id":39,"quiz_session_id":27}];
