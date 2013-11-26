@@ -62,7 +62,6 @@ VISH.Quiz = (function(V,$,undefined){
 			},
 			"onClosed" : function(){
 				_stopPolling();
-				_cleanResults();
 			}
 		});
 	};
@@ -312,6 +311,7 @@ VISH.Quiz = (function(V,$,undefined){
 		_enableLaunchButton(currentQuizDOM);
 		currentQuizDOM = null;
 		currentQuizSession = null;
+		_cleanResults();
 	}
 
 	var _deleteQuizSession = function(){
@@ -442,7 +442,6 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _loadQuizSession = function(){
-		_cleanResults();
 		if(!currentQuizSession){
 			return;
 		}
@@ -465,6 +464,13 @@ VISH.Quiz = (function(V,$,undefined){
 		var gPlus = $("#tab_quiz_session_share_gPlus");
 		$(gPlus).attr("href","https://plus.google.com/share?url="+currentQuizSession.url);
 	}
+
+	var _loadStats = function(){
+		V.Quiz.API.getResults(currentQuizSession.id, function(results){
+			_drawResults(results);
+			_startPolling();
+		});
+	};
 
 
 	var _loadQr = function(url){
@@ -535,14 +541,6 @@ VISH.Quiz = (function(V,$,undefined){
 		$("#qr_overlay").hide();
 	} 
 
-	var _loadStats = function(){
-		_cleanResults();
-		V.Quiz.API.getResults(currentQuizSession.id, function(results){
-			_drawResults(results,{"first": true});
-			_startPolling();
-		});
-	};
-
 	var _startPolling = function(){
 		_stopPolling();
 		currentPolling = setInterval(function(){
@@ -551,9 +549,9 @@ VISH.Quiz = (function(V,$,undefined){
 				return;
 			}
 			V.Quiz.API.getResults(currentQuizSession.id, function(results){
-				_drawResults(results,{"first": false});
+				_drawResults(results);
 			});
-		},2000);
+		},2500);
 	};
 
 	var _stopPolling = function(){
@@ -562,8 +560,40 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 	};
 
-	var _drawResults = function(results,options){
+	var _drawResults = function(results){
+
+		//Prevent redraw when is not neccesary
+		if (currentQuizSession) {
+			if((typeof currentQuizSession.lastDrawedResults != "undefined")&&(results.length === currentQuizSession.lastDrawedResults.length)){
+				//No new results, redraw is not needed
+				return;
+			} else {
+				currentQuizSession.lastDrawedResults = results;
+			}
+		} else {
+			//No quiz session...
+			return;
+		}
+
+		var options = {};
+
+		//Not redraw while first chart is drawing with animation
+		if(typeof currentQuizSession.firstDrawed == "undefined"){
+			//Case: Draw first chart
+			currentQuizSession.firstDrawed = false; //Drawing first
+			options.animation = true;
+			options.callback = function(){
+				//First chart drawed
+				currentQuizSession.firstDrawed = true;
+			}
+		} else if(currentQuizSession.firstDrawed == false){
+			//Case: Drawing first, wait for it, not redraw
+			return;
+		}
+
+		//Draw
 		//Prepare canvas
+		_cleanResults();
 		var canvas = $("#quiz_chart");
 		var desiredWidth = $("#fancybox-content").width();
 		var desiredHeight = $("#fancybox-content").height()*0.8;

@@ -124,17 +124,26 @@ VISH.QuizCharts = (function(V,$,undefined){
 
 		var ctx = $(canvas).get(0).getContext("2d");
 
-		var animation = false;
-		if((options)&&(options.first===true)){
-			animation = true;
+		var chartOptions = {
+			showTooltips: true,
+			animation: false
 		}
 
-		var options = {
-			showTooltips: false,
-			animation: animation
+		if((options)&&(options.animation===true)){
+			//Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == "function"){
+					options.callback();
+				}
+			}
 		}
 
-		var myNewChart = new Chart(ctx).Pie(data,options);
+		var myNewChart = new Chart(ctx).Pie(data,chartOptions);
+
+		if((options)&&(options.animation!=true)&&(typeof options.callback == "function")){
+			options.callback();
+		}
 	}
 
 	var _drawMcChoiceMAnswerQuizChart = function(canvas,nAnswers,answersList,options){
@@ -185,19 +194,29 @@ VISH.QuizCharts = (function(V,$,undefined){
 			]
 		};
 
-		var animation = false;
-		if((options)&&(options.first===true)){
-			animation = true;
-		}
-
-		var options = {
-			animation: animation,
+		var chartOptions = {
+			showTooltips: true,
+			animation: false,
 			scaleOverride: true,
 			scaleStepWidth: Math.max(1,Math.ceil(maxValue/10)),
-			scaleSteps: scaleSteps,
-			showTooltips: false
+			scaleSteps: scaleSteps
 		}
-		var myNewChart = new Chart(ctx).Bar(data,options);
+
+		if((options)&&(options.animation===true)){
+			//Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == "function"){
+					options.callback();
+				}
+			}
+		}
+
+		var myNewChart = new Chart(ctx).Bar(data,chartOptions);
+
+		if((options)&&(options.animation!=true)&&(typeof options.callback == "function")){
+			options.callback();
+		}
 	}
 
 
@@ -261,19 +280,29 @@ VISH.QuizCharts = (function(V,$,undefined){
 			]
 		};
 
-		var animation = false;
-		if((options)&&(options.first===true)){
-			animation = true;
-		}
-
-		var options = {
-			animation: animation,
+		var chartOptions = {
+			showTooltips: true,
+			animation: false,
 			scaleOverride: true,
 			scaleStepWidth: Math.max(1,Math.ceil(maxValue/10)),
-			scaleSteps: scaleSteps,
-			showTooltips: false
+			scaleSteps: scaleSteps
 		}
-		var myNewChart = new Chart(ctx).Bar(data,options);
+
+		if((options)&&(options.animation===true)){
+			//Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == "function"){
+					options.callback();
+				}
+			}
+		}
+
+		var myNewChart = new Chart(ctx).Bar(data,chartOptions);
+
+		if((options)&&(options.animation!=true)&&(typeof options.callback == "function")){
+			options.callback();
+		}
 	}
 
 	/**

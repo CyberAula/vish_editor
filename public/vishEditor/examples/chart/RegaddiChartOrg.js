@@ -331,21 +331,31 @@ window.Chart = function(context, options){
 		}
 	}
 
-	if(window.Touch) {
-		context.canvas.ontouchstart = function(e) {
-			e.clientX = e.targetTouches[0].clientX;
-			e.clientY = e.targetTouches[0].clientY;
+	// Fix to allow tooltips in Firefox and Google Chrome as well
+	// if(window.Touch) {
+	// 	console.log("window.Touch");
+	// 	context.canvas.ontouchstart = function(e) {
+	// 		console.log("ontouchstart");
+	// 		e.clientX = e.targetTouches[0].clientX;
+	// 		e.clientY = e.targetTouches[0].clientY;
+	// 		tooltipEventHandler(e);
+	// 	}
+	// 	context.canvas.ontouchmove = function(e) {
+	// 		console.log("ontouchmove");
+	// 		e.clientX = e.targetTouches[0].clientX;
+	// 		e.clientY = e.targetTouches[0].clientY;
+	// 		tooltipEventHandler(e);
+	// 	}
+	// } else {
+	// 	console.log("!window.Touch");
+	// 	context.canvas.onmousemove = function(e) {
+	// 		console.log("onmousemove");
+	// 		tooltipEventHandler(e);
+	// 	}
+	// }
+
+	context.canvas.onmousemove = function(e) {
 			tooltipEventHandler(e);
-		}
-		context.canvas.ontouchmove = function(e) {
-			e.clientX = e.targetTouches[0].clientX;
-			e.clientY = e.targetTouches[0].clientY;
-			tooltipEventHandler(e);
-		}
-	} else {
-		context.canvas.onmousemove = function(e) {
-			tooltipEventHandler(e);
-		}
 	}
 	context.canvas.onmouseout = function(e) {
 		if(chart.savedState != null) {
