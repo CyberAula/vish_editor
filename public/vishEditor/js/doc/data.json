@@ -1023,28 +1023,28 @@
         },
         {
             "file": "VISH.Quiz.API.js",
-            "line": 142,
+            "line": 145,
             "description": "GET /quiz_sessions/X/results.json.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Quiz.API.js",
-            "line": 192,
+            "line": 195,
             "description": "Send answers for real time quizzes\nPUT /quiz_sessions/X",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Quiz.js",
-            "line": 301,
+            "line": 323,
             "description": "Function to render a quiz inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.QuizCharts.js",
-            "line": 225,
+            "line": 310,
             "description": "Helpers",
             "class": "",
             "namespace": "VISH"
@@ -1765,19 +1765,19 @@
         },
         {
             "message": "Missing item type\nGET /quiz_sessions/X/results.json.",
-            "line": " VISH.Quiz.API.js:142"
+            "line": " VISH.Quiz.API.js:145"
         },
         {
             "message": "Missing item type\nSend answers for real time quizzes\nPUT /quiz_sessions/X",
-            "line": " VISH.Quiz.API.js:192"
+            "line": " VISH.Quiz.API.js:195"
         },
         {
             "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
-            "line": " VISH.Quiz.js:301"
+            "line": " VISH.Quiz.js:323"
         },
         {
             "message": "Missing item type\nHelpers",
-            "line": " VISH.QuizCharts.js:225"
+            "line": " VISH.QuizCharts.js:310"
         },
         {
             "message": "Missing item type\nFunction to initialize the Recommendations",

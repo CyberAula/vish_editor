@@ -91,13 +91,15 @@
 VISH.Quiz = (function(V,$,undefined){
   
 	var quizMode; &#x2F;&#x2F;selfA or realTime
-	var quizSessionId;
-
+	
 	&#x2F;&#x2F;Quiz in real time
-	&#x2F;&#x2F;Current quiz data
-	var currentQuiz;
+	&#x2F;&#x2F;Current quiz DOM element
+	var currentQuizDOM;
+	&#x2F;&#x2F;JSON of the current quiz session
 	var currentQuizSession;
 	var currentPolling;
+	&#x2F;&#x2F;Quiz session ID to answer the quiz in real time
+	var quizSessionId;
 
 
 	var initBeforeRender = function(presentation){
@@ -116,11 +118,12 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
+		V.QuizCharts.init(V.Utils.getOptions());
 		_loadEvents();
 	};
 
 	&#x2F;*
-	* Load common events of Quizzes: answer, stats, etc
+	* Load common events of Quizzes: answer, start live quiz, etc
 	*&#x2F;
 	var _loadEvents = function(){
 		$(document).on(&#x27;click&#x27;, &quot;.quizAnswerButton&quot;,_onAnswerQuiz);
@@ -149,25 +152,29 @@ VISH.Quiz = (function(V,$,undefined){
 			},
 			&quot;onClosed&quot; : function(){
 				_stopPolling();
-				_cleanResults();
 			}
 		});
 	};
 
 	var _onAnswerQuiz = function(event){
-		var quiz = $(&quot;div.quizContainer&quot;).has(event.target);
-		var quizModule = _getQuizModule($(quiz).attr(&quot;type&quot;));
+		var quizDOM = $(&quot;div.quizContainer&quot;).has(event.target);
+		var quizModule = _getQuizModule($(quizDOM).attr(&quot;type&quot;));
 		if(quizModule){
 			if(quizMode===V.Constant.QZ_MODE.SELFA){
-				quizModule.onAnswerQuiz(quiz);
+				var quizStatus = $(quizDOM).find(&quot;.quizAnswerButton&quot;).attr(&quot;quizstatus&quot;);
+				if(quizStatus === &quot;retry&quot;){
+					quizModule.onRetryQuiz(quizDOM);
+				} else {
+					quizModule.onAnswerQuiz(quizDOM);
+				}
 			} else {
-				var report = quizModule.getReport(quiz);
-				_answerRTQuiz(quiz,quizModule,report);
+				var report = quizModule.getReport(quizDOM);
+				_answerRTQuiz(quizDOM,quizModule,report);
 			}
 		}
 	};
 
-	var _answerRTQuiz = function(quiz,quizModule,report){
+	var _answerRTQuiz = function(quizDOM,quizModule,report){
 		if(!quizSessionId){
 			return;
 		}
@@ -186,15 +193,14 @@ VISH.Quiz = (function(V,$,undefined){
 			return;
 		}
 
-		quizModule.disableQuiz(quiz);
-
-		_loadingAnswerButton(quiz);
+		quizModule.disableQuiz(quizDOM);
+		_loadingAnswerButton(quizDOM);
 
 		var answers = report.answers;
 
 		V.Quiz.API.sendAnwers(answers, quizSessionId,
 			function(data){
-				disableAnswerButton(quiz);
+				disableAnswerButton(quizDOM);
 
 				var options = {};
 				options.width = &#x27;80%&#x27;;
@@ -208,7 +214,7 @@ VISH.Quiz = (function(V,$,undefined){
 				V.Utils.showDialog(options);
 			}, 
 			function(error){
-				disableAnswerButton(quiz);
+				disableAnswerButton(quizDOM);
 
 				var options = {};
 				options.width = &#x27;80%&#x27;;
@@ -225,7 +231,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _onStartQuiz = function(event){
 		var startButton = $(event.target);
-		var quiz = $(&quot;div.quizContainer&quot;).has(startButton);
+		var quizDOM = $(&quot;div.quizContainer&quot;).has(startButton);
 
 		switch($(startButton).attr(&quot;quizStatus&quot;)){
 			case &quot;running&quot;:
@@ -236,12 +242,12 @@ VISH.Quiz = (function(V,$,undefined){
 				break;
 			case &quot;stop&quot;:
 			default:
-				_startNewQuizSession(quiz);
+				_startNewQuizSession(quizDOM);
 			break;
 		}
 	};
 
-	var _startNewQuizSession = function(quiz){
+	var _startNewQuizSession = function(quizDOM){
 		if(currentQuizSession){
 			var options = {};
 			options.width = &#x27;80%&#x27;;
@@ -253,33 +259,45 @@ VISH.Quiz = (function(V,$,undefined){
 			}
 			options.buttons = [button1];
 			V.Utils.showDialog(options);
-
 			return;
 		}
-		_loadingLaunchButton(quiz);
-		var quizJSON = _getQuizJSONFromQuiz(quiz);
-		V.Quiz.API.startQuizSession(quiz,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
+		_loadingLaunchButton(quizDOM);
+		var quizJSON = _getQuizJSONFromQuiz(quizDOM);
+		V.Quiz.API.startQuizSession(quizDOM,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
 	};
 
-	var _onQuizSessionReceived = function(quiz,quizSession){
-		currentQuiz = quiz;
+	var _onQuizSessionReceived = function(quizDOM,quizSession){
+		currentQuizDOM = quizDOM;
 		currentQuizSession = quizSession;
 
-		_runningLaunchButton(quiz);
+		_runningLaunchButton(quizDOM);
 		$(&quot;a#addQuizSessionFancybox&quot;).trigger(&quot;click&quot;);
 	};
 
-	var _onQuizSessionReceivedError = function(quiz,error){
-		_enableLaunchButton(quiz);
+	var _onQuizSessionReceivedError = function(quizDOM,error){
+		_enableLaunchButton(quizDOM);
+
+		&#x2F;&#x2F;Show error message
+		var options = {};
+		options.width = &#x27;80%&#x27;;
+		options.text = V.I18n.getTrans(&quot;i.QuizCreateSessionError&quot;);
+		var button1 = {};
+		button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
+		return;
 	};
 
-	var _getQuizJSONFromQuiz = function(quiz){
-		var slide = $(&quot;article&quot;).has(quiz);
-		return _getQuizJSONFromSlide(slide);
+	var _getQuizJSONFromQuiz = function(quizDOM){
+		var slideDOM = $(&quot;article&quot;).has(quizDOM);
+		return _getQuizJSONFromSlide(slideDOM);
 	};
 
-	var _getQuizJSONFromSlide = function(slide){
-		var slideId = $(slide).attr(&quot;id&quot;);
+	var _getQuizJSONFromSlide = function(slideDOM){
+		var slideId = $(slideDOM).attr(&quot;id&quot;);
 		var presentation = V.Viewer.getCurrentPresentation();
 		if((slideId)&amp;&amp;(presentation)){
 			var slides = presentation.slides;
@@ -310,7 +328,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button1.text = V.I18n.getTrans(&quot;i.cancel&quot;);
 		button1.extraclass = &quot;quizSession_button_cancel&quot;;
 		button1.callback = function(){
-			V.Quiz.onCloseQuizSession(&#x27;cancel&#x27;);
+			_onCloseQuizSession(&#x27;cancel&#x27;);
 		}
 		options.buttons.push(button1);
 
@@ -318,7 +336,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button2.text = V.I18n.getTrans(&quot;i.No&quot;);
 		button2.extraclass = &quot;quizSession_button_no&quot;;
 		button2.callback = function(){
-			V.Quiz.onCloseQuizSession(&#x27;no&#x27;);
+			_onCloseQuizSession(&#x27;no&#x27;);
 		}
 		options.buttons.push(button2);
 		
@@ -326,7 +344,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button3.text = V.I18n.getTrans(&quot;i.Yes&quot;);
 		button3.extraclass = &quot;quizSession_button_yes&quot;;
 		button3.callback = function(){
-			V.Quiz.onCloseQuizSession(&#x27;yes&#x27;);
+			_onCloseQuizSession(&#x27;yes&#x27;);
 		}
 		options.buttons.push(button3);
 
@@ -343,7 +361,7 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
-	var onCloseQuizSession = function(saving){
+	var _onCloseQuizSession = function(saving){
 		var name = undefined;
 		switch(saving){
 			case &quot;yes&quot;:
@@ -368,24 +386,28 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _closeQuizSession = function(name){
 		V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
-			$.fancybox.close();
-			$(&quot;.quizSession_button_no&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
-			$(&quot;.quizSession_button_yes&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
-			_enableLaunchButton(currentQuiz);
-			currentQuiz = null;
-			currentQuizSession = null;
+			&#x2F;&#x2F;Success
+			_afterCloseQuizSession();
+		}, function(){
+			&#x2F;&#x2F;Failure
+			_afterCloseQuizSession();
 		});
 	};
+
+	var _afterCloseQuizSession = function(){
+		$.fancybox.close();
+		$(&quot;.quizSession_button_no&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+		$(&quot;.quizSession_button_yes&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
+		_enableLaunchButton(currentQuizDOM);
+		currentQuizDOM = null;
+		currentQuizSession = null;
+		_cleanResults();
+	}
 
 	var _deleteQuizSession = function(){
 		V.Quiz.API.deleteQuizSession(currentQuizSession.id);
 		&#x2F;&#x2F;Don&#x27;t wait for the callback in this case
-		$.fancybox.close();
-		$(&quot;.quizSession_button_no&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
-		$(&quot;.quizSession_button_yes&quot;).removeClass(&quot;quizStartButtonLoading&quot;);
-		_enableLaunchButton(currentQuiz);
-		currentQuiz = null;
-		currentQuizSession = null;
+		_afterCloseQuizSession();
 	};
 
 	&#x2F;**
@@ -416,14 +438,24 @@ VISH.Quiz = (function(V,$,undefined){
 
 
 	&#x2F;*
-	* Answer button states: Enabled, Loading and Disabled
+	* Answer button states: Enabled, Retry, Loading and Disabled 
 	*&#x2F;
 
-	var _enableAnswerButton = function(quiz){
+	var enableAnswerButton = function(quiz){
 		var answerButton = $(quiz).find(&quot;input.quizAnswerButton&quot;);
 		$(answerButton).removeAttr(&quot;disabled&quot;);
 		$(answerButton).removeClass(&quot;quizStartButtonLoading&quot;);
 		$(answerButton).removeAttr(&quot;quizStatus&quot;);
+		$(answerButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizButtonAnswer&quot;));
+	}
+
+	var retryAnswerButton = function(quiz){
+		var answerButton = $(quiz).find(&quot;input.quizAnswerButton&quot;);
+		$(answerButton).removeAttr(&quot;disabled&quot;);
+		$(answerButton).removeClass(&quot;quizStartButtonLoading&quot;);
+		&#x2F;&#x2F; $(answerButton).addClass(&quot;quizAnswerButtonRetry&quot;);
+		$(answerButton).attr(&quot;quizStatus&quot;,&quot;retry&quot;);
+		$(answerButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizRetry&quot;));
 	}
 
 	var _loadingAnswerButton = function(quiz){
@@ -453,8 +485,8 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizLaunch&quot;));
 	}
 
-	var _loadingLaunchButton = function(quiz){
-		var startButton = $(quiz).find(&quot;input.quizStartButton&quot;);
+	var _loadingLaunchButton = function(quizDOM){
+		var startButton = $(quizDOM).find(&quot;input.quizStartButton&quot;);
 		$(startButton).attr(&quot;disabled&quot;, &quot;disabled&quot;);
 		$(startButton).addClass(&quot;quizStartButtonLoading&quot;);
 		$(startButton).attr(&quot;quizStatus&quot;,&quot;loading&quot;);
@@ -500,7 +532,6 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var _loadQuizSession = function(){
-		_cleanResults();
 		if(!currentQuizSession){
 			return;
 		}
@@ -509,7 +540,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(myA).attr(&quot;href&quot;,currentQuizSession.url);
 		$(myA).html(&quot;&lt;p id=&#x27;tab_quiz_session_url&#x27;&gt;&quot;+currentQuizSession.url+&quot;&lt;&#x2F;p&gt;&quot;);
 
-		var sharingText = $(currentQuiz).find(&quot;.mc_question_wrapper_viewer&quot;).text().trim();
+		var sharingText = $(currentQuizDOM).find(&quot;.mc_question_wrapper_viewer&quot;).text().trim();
 
 		var twitter = $(&quot;#tab_quiz_session_share_twitter&quot;);
 		$(twitter).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;twitter.com&#x2F;share?url=&quot;+currentQuizSession.url+&quot;&amp;text=&quot;+sharingText+&quot;&quot;);
@@ -524,16 +555,28 @@ VISH.Quiz = (function(V,$,undefined){
 		$(gPlus).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;plus.google.com&#x2F;share?url=&quot;+currentQuizSession.url);
 	}
 
+	var _loadStats = function(){
+		V.Quiz.API.getResults(currentQuizSession.id, function(results){
+			_drawResults(results);
+			_startPolling();
+		});
+	};
+
 
 	var _loadQr = function(url){
 		if(typeof url != &quot;string&quot;){
 			return;
 		}
 
+		&#x2F;&#x2F;Draw QR for fancybox
 		var container = $(&quot;.quizQr&quot;);
 		$(container).html(&quot;&quot;);
 
+		$(&quot;#tab_quiz_session_content&quot;).addClass(&quot;temp_shown&quot;);
+		$(container).addClass(&quot;temp_shown&quot;);
 		var height = $(container).height();
+		$(container).removeClass(&quot;temp_shown&quot;);
+		$(&quot;#tab_quiz_session_content&quot;).removeClass(&quot;temp_shown&quot;);
 		var width = height;
 
 		var qrOptions = {
@@ -550,15 +593,43 @@ VISH.Quiz = (function(V,$,undefined){
 			text: url.toString()
 		}
 		$(container).qrcode(qrOptions);
-	};
 
-	var _loadStats = function(){
-		_cleanResults();
-		V.Quiz.API.getResults(currentQuizSession.id, function(results){
-			_drawResults(results,{&quot;first&quot;: true});
-			_startPolling();
+		&#x2F;&#x2F;Draw QR for overlay
+		var overlayHeight = $(&quot;#qr_overlay&quot;).height();
+		var qrOptions = {
+			render: &#x27;canvas&#x27;, 
+			width: overlayHeight,
+			height: overlayHeight,
+			color: &#x27;#000&#x27;,
+			bgColor: &#x27;#fff&#x27;,
+			text: url.toString()
+		}
+		$(&quot;#qr_overlay&quot;).qrcode(qrOptions);
+
+		var qrDOMFancybox = $(container).find(&quot;canvas&quot;);
+		$(qrDOMFancybox).click(function(){
+			$(&quot;#qr_overlay&quot;).show();
+		});
+
+		$(&quot;#qr_overlay&quot;).click(function(){
+			$(&quot;#qr_overlay&quot;).hide();
 		});
 	};
+
+	var _openQrOverlay = function(qr){
+		$(&quot;#qr_overlay&quot;).show();
+	}
+
+	var _updateQrSizeOnOverlay = function(){
+		var qr = $(&quot;#qr_overlay&quot;).find(&quot;canvas&quot;);
+		var qrSize = Math.min($(&quot;#qr_overlay&quot;).width(),$(&quot;#qr_overlay&quot;).height());
+		$(qr).width(qrSize);
+		$(qr).height(qrSize);
+	}
+
+	var _closeQrOverlay = function(){
+		$(&quot;#qr_overlay&quot;).hide();
+	} 
 
 	var _startPolling = function(){
 		_stopPolling();
@@ -568,9 +639,9 @@ VISH.Quiz = (function(V,$,undefined){
 				return;
 			}
 			V.Quiz.API.getResults(currentQuizSession.id, function(results){
-				_drawResults(results,{&quot;first&quot;: false});
+				_drawResults(results);
 			});
-		},2000);
+		},2500);
 	};
 
 	var _stopPolling = function(){
@@ -579,8 +650,41 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 	};
 
-	var _drawResults = function(results,options){
+	var _drawResults = function(results){
+
+		&#x2F;&#x2F;Prevent redraw when is not neccesary
+		if (currentQuizSession) {
+			if((typeof currentQuizSession.lastDrawedResults != &quot;undefined&quot;)&amp;&amp;(results.length === currentQuizSession.lastDrawedResults.length)){
+				&#x2F;&#x2F;No new results, redraw is not needed
+				return;
+			} else {
+				currentQuizSession.lastDrawedResults = results;
+			}
+		} else {
+			&#x2F;&#x2F;No quiz session...
+			return;
+		}
+
+		var options = {};
+
+		&#x2F;&#x2F;Not redraw while first chart is drawing with animation
+		if(typeof currentQuizSession.firstDrawed == &quot;undefined&quot;){
+			&#x2F;&#x2F;Case: Draw first chart
+			currentQuizSession.firstDrawed = false; &#x2F;&#x2F;Drawing first
+			options.animation = true;
+			options.callback = function(){
+				&#x2F;&#x2F;First chart drawed
+				currentQuizSession.firstDrawed = true;
+			}
+		} else if(currentQuizSession.firstDrawed == false){
+			&#x2F;&#x2F;Case: Drawing first, wait for it, not redraw
+			return;
+		}
+
+		&#x2F;&#x2F;Draw
+
 		&#x2F;&#x2F;Prepare canvas
+		_cleanResults();
 		var canvas = $(&quot;#quiz_chart&quot;);
 		var desiredWidth = $(&quot;#fancybox-content&quot;).width();
 		var desiredHeight = $(&quot;#fancybox-content&quot;).height()*0.8;
@@ -588,12 +692,9 @@ VISH.Quiz = (function(V,$,undefined){
 		$(canvas).height(desiredHeight);
 		$(canvas).attr(&quot;width&quot;,desiredWidth);
 		$(canvas).attr(&quot;height&quot;,desiredHeight);
-
-		var quizModule = _getQuizModule($(currentQuiz).attr(&quot;type&quot;));
-		if(quizModule){
-			$(&quot;#quiz_chart&quot;).show();
-			quizModule.drawResults(currentQuiz,results,options);
-		}
+		$(canvas).show();
+		var quizJSON = _getQuizJSONFromQuiz(currentQuizDOM);
+		V.QuizCharts.drawQuizChart(canvas,quizJSON,results,options);
 	};
 
 	var _cleanResults = function(){
@@ -650,6 +751,7 @@ VISH.Quiz = (function(V,$,undefined){
 		setTimeout(function(){
 			if((currentQuizSession)&amp;&amp;(currentQuizSession.url)){
 				_loadQr(currentQuizSession.url);
+				_updateQrSizeOnOverlay();
 			}
 		},500);
 	};
@@ -660,9 +762,10 @@ VISH.Quiz = (function(V,$,undefined){
 		render            	: render,
 		renderButtons     	: renderButtons,
 		updateCheckbox    	: updateCheckbox,
+		enableAnswerButton  : enableAnswerButton,
+		retryAnswerButton	: retryAnswerButton,
 		disableAnswerButton : disableAnswerButton,
 		loadTab             : loadTab,
-		onCloseQuizSession  : onCloseQuizSession,
 		aftersetupSize    	: aftersetupSize
 	};
 	

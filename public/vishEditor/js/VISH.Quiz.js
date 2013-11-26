@@ -176,11 +176,11 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.API.startQuizSession(quizDOM,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
 	};
 
-	var _onQuizSessionReceived = function(quiz,quizSession){
-		currentQuizDOM = quiz;
+	var _onQuizSessionReceived = function(quizDOM,quizSession){
+		currentQuizDOM = quizDOM;
 		currentQuizSession = quizSession;
 
-		_runningLaunchButton(quiz);
+		_runningLaunchButton(quizDOM);
 		$("a#addQuizSessionFancybox").trigger("click");
 	};
 
@@ -592,6 +592,7 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		//Draw
+
 		//Prepare canvas
 		_cleanResults();
 		var canvas = $("#quiz_chart");
@@ -601,12 +602,9 @@ VISH.Quiz = (function(V,$,undefined){
 		$(canvas).height(desiredHeight);
 		$(canvas).attr("width",desiredWidth);
 		$(canvas).attr("height",desiredHeight);
-
-		var quizModule = _getQuizModule($(currentQuizDOM).attr("type"));
-		if(quizModule){
-			$("#quiz_chart").show();
-			quizModule.drawResults(currentQuizDOM,results,options);
-		}
+		$(canvas).show();
+		var quizJSON = _getQuizJSONFromQuiz(currentQuizDOM);
+		V.QuizCharts.drawQuizChart(canvas,quizJSON,results,options);
 	};
 
 	var _cleanResults = function(){

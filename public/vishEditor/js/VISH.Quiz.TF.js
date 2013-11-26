@@ -137,14 +137,6 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		V.Quiz.disableAnswerButton(quiz);
 	}
 
-	/*
-	* Data representation
-	*/
-	var drawResults = function(quiz,results,options){
-		var canvas = $("#quiz_chart");
-		var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
-		V.QuizCharts.drawQuizChart(canvas,V.Constant.QZ_TYPE.TF,nAnswers,results,options);
-	}
 
 	return {
 		init          : init,
@@ -152,8 +144,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		onAnswerQuiz  : onAnswerQuiz,
 		onRetryQuiz	  : onRetryQuiz,
 		getReport     : getReport,
-		disableQuiz   : disableQuiz,
-		drawResults   : drawResults
+		disableQuiz   : disableQuiz
 	};
 	
 }) (VISH, jQuery);

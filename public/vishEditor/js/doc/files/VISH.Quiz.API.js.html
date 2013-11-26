@@ -103,7 +103,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Create new quiz session
 	* Server responds with a quiz_session JSON object including the quiz session id
 	*&#x2F;
-	var startQuizSession = function(quiz,quizJSON,successCallback, failCallback){
+	var startQuizSession = function(quizDOM,quizJSON,successCallback, failCallback){
 		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
 			var send_type = &#x27;POST&#x27;;
 
@@ -118,12 +118,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback==&quot;function&quot;){
-						successCallback(quiz,data);
+						successCallback(quizDOM,data);
 					}
 				},
 				error: function(error){
 					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
+						failCallback(quizDOM,error);
 					}
 				}
 			});
@@ -131,9 +131,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
 			var url = quizSessionAPIrootURL + quizSessionId;
 			var quiz_session = {id: quizSessionId, url: url};
-			if(typeof successCallback==&quot;function&quot;){
+			
+			if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
 				setTimeout(function(){
-					successCallback(quiz,quiz_session);
+					&#x2F;&#x2F; failCallback(quizDOM,&quot;error&quot;);
+					successCallback(quizDOM,quiz_session);
 				},1000);
 			}
 		}
@@ -183,9 +185,10 @@ VISH.Quiz.API = (function(V,$,undefined){
 			&#x2F;&#x2F; V.Debugging.log(params)
 
 			var data = {&quot;processed&quot;:&quot;true&quot;};
-			if(typeof successCallback==&quot;function&quot;){
+			if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
 				setTimeout(function(){
 					successCallback(data);
+					&#x2F;&#x2F; failCallback();
 				},1000);
 			}
 		}

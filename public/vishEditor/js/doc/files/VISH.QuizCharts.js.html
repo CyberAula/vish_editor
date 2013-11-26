@@ -93,197 +93,272 @@ VISH.Constant = VISH.Constant || {};
 VISH.Constant.QZ_TYPE = VISH.Constant.QZ_TYPE || {};
 VISH.Constant.QZ_TYPE.OPEN = &quot;open&quot;;
 VISH.Constant.QZ_TYPE.MCHOICE = &quot;multiplechoice&quot;;
-VISH.Constant.QZ_TYPE.MCHOICE_MANSWER = &quot;multiplechoiceMultipleAnswer&quot;;
 VISH.Constant.QZ_TYPE.TF = &quot;truefalse&quot;;
 
 
 VISH.QuizCharts = (function(V,$,undefined){
   
-  var pieBackgroundColor = [&quot;#F38630&quot;,&quot;#E0E4CC&quot;,&quot;#69D2E7&quot;,&quot;#FFF82A&quot;,&quot;#FF0FB4&quot;,&quot;#2A31FF&quot;,&quot;#FF6075&quot;,&quot;#00D043&quot;];
-  var pieLetterColor = [&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;,&quot;#000&quot;];
-  var choices = {};
+	var pieBackgroundColor = [&quot;#F38630&quot;,&quot;#E0E4CC&quot;,&quot;#69D2E7&quot;,&quot;#FFF82A&quot;,&quot;#FF0FB4&quot;,&quot;#2A31FF&quot;,&quot;#FF6075&quot;,&quot;#00D043&quot;];
+	var pieLetterColor = [&quot;#000&quot;];
+	var choices = {};
 
-  var init = function(){
-  };
-
-  var drawQuizChart = function(canvas,quizType,nAnswers,results,options){
-	var answersList = _getAnswers(results);
-	switch (quizType) {
-	  case V.Constant.QZ_TYPE.OPEN:
-		 break;
-	  case V.Constant.QZ_TYPE.MCHOICE:
-		_drawMcChoiceQuizChart(canvas,nAnswers,answersList,options);
-		break;
-	  case V.Constant.QZ_TYPE.MCHOICE_MANSWER:
-		_drawMcChoiceMAnswerQuizChart(canvas,nAnswers,answersList,options);
-		break;
-	  case V.Constant.QZ_TYPE.TF:
-		_drawTFQuizChart(canvas,nAnswers,answersList,options);
-		break;
-	  default:
-		return null; 
-		break;
-	}
-  }
-
-  var _drawMcChoiceQuizChart = function(canvas,nAnswers,answersList,options){
-	var pieFragments = [];
-	var data = [];
-
-	for(var i=0; i&lt;nAnswers; i++){
-	  pieFragments[i] = {};
-	  pieFragments[i].value = 0;
-	  pieFragments[i].label = String.fromCharCode(96+i+1);
-	  pieFragments[i].color = pieBackgroundColor[i];
-	  pieFragments[i].labelColor = pieLetterColor[i];
-	  pieFragments[i].labelFontSize = &#x27;16&#x27;;
-	}
-
-	var alL = answersList.length;
-	for(var j=0; j&lt;alL; j++){
-	  &#x2F;&#x2F;List of answers of a user
-	  var answers = answersList[j];
-
-	  var aL = answers.length;
-	  for(var k=0; k&lt;aL; k++){
-		var answer = answers[k];
-		var index = answer.no-1;
-
-		if((answer.answer===&quot;true&quot;)&amp;&amp;(pieFragments[index])){
-		  pieFragments[index].value++;
-		}
-	  } 
-	}
-
-	for(var i=0; i&lt;nAnswers; i++){
-	  data.push(pieFragments[i]);
-	}
-
-	var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
-	
-	var animation = false;
-	if((options)&amp;&amp;(options.first===true)){
-	  animation = true;
-	}
-
-	var options = {
-		showTooltips: false,
-		animation: animation
-	}
-
-	var myNewChart = new Chart(ctx).Pie(data,options);
-  }
-
-  var _drawMcChoiceMAnswerQuizChart = function(canvas,nAnswers,answersList,options){
-	var labels = [];
-	var data = [];
-	var maxValue = 0;
-	var scaleSteps = 10;
-
-	for(var i=0; i&lt;nAnswers; i++){
-	  labels[i] = String.fromCharCode(96+i+1);
-	  data[i] = 0;
-	}
-
-	var alL = answersList.length;
-	for(var j=0; j&lt;alL; j++){
-	  &#x2F;&#x2F;List of answers of a user
-	  var answers = answersList[j];
-
-	  var aL = answers.length;
-	  for(var k=0; k&lt;aL; k++){
-		var answer = answers[k];
-		var index = answer.no-1;
-		if(answer.answer===&quot;true&quot;){
-		  data[index]++;
-		}
-	  } 
-	}
-
-	for(var l=0; l&lt;nAnswers; l++){
-	  if(data[l] &gt; maxValue){
-		maxValue = data[l];
-	  }
-	}
-
-	if(maxValue&lt;10){
-	  scaleSteps = Math.max(1,maxValue);
-	}
-
-	var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
-	var data = {
-		labels : labels,
-		datasets : [
+	&#x2F;&#x2F;Translations
+	var language = &quot;en&quot;;
+	var i18n = 
+		{ &quot;es&quot;:
 			{
+				&quot;i.T&quot;	: &quot;V&quot;,
+				&quot;i.F&quot;	: &quot;F&quot;
+			},
+		  &quot;default&quot;:
+			{
+				&quot;i.T&quot;	: &quot;T&quot;,
+				&quot;i.F&quot;	: &quot;F&quot;
+			}
+		};
+	var translations = i18n[&quot;default&quot;];
+
+	var init = function(options){
+		if((options)&amp;&amp;(options.lang)){
+			language = options.lang;
+		}
+
+		if(i18n[language]){
+			translations = i18n[language];
+		}
+	};
+
+	var _getTrans = function(s, params) {
+		if (translations[s]){
+			return _getTransWithParams(translations[s],params);
+		}
+		
+		&#x2F;&#x2F;Search in default language
+		return _getTransWithParams(i18n[&quot;default&quot;][s],params);
+	};
+
+	&#x2F;*
+	 * Replace params (if they are provided) in the translations keys. See VISH.I18n for details.
+	 *&#x2F;
+	var _getTransWithParams = function(trans, params){
+		if(typeof params != &quot;object&quot;){
+			return trans;
+		}
+
+		for(var key in params){
+			var stringToReplace = &quot;#{&quot; + key + &quot;}&quot;;
+			if(trans.indexOf(stringToReplace)!=-1){
+				trans = trans.replaceAll(stringToReplace,params[key]);
+			}
+		};
+
+		return trans;
+	}
+
+
+	&#x2F;* Draw Methods *&#x2F;
+
+	var drawQuizChart = function(canvas,quizJSON,results,options){
+		var quizParams = _getQuizParams(quizJSON);
+		var answersList = _getAnswers(results);
+		switch (quizParams.quizType) {
+			case V.Constant.QZ_TYPE.OPEN:
+			break;
+		case V.Constant.QZ_TYPE.MCHOICE:
+			if(quizParams.extras.multipleAnswer==true){
+				_drawMcChoiceMAnswerQuizChart(canvas,quizParams,answersList,options);
+			} else {
+				_drawMcChoiceQuizChart(canvas,quizParams,answersList,options);
+			}
+			break;
+		case V.Constant.QZ_TYPE.TF:
+			_drawTFQuizChart(canvas,quizParams,answersList,options);
+			break;
+		default:
+			return null; 
+			break;
+		}
+	}
+
+	var _drawMcChoiceQuizChart = function(canvas,quizParams,answersList,options){
+		var pieFragments = [];
+		var data = [];
+
+		for(var i=0; i&lt;quizParams.choices.length; i++){
+			pieFragments[i] = {};
+			pieFragments[i].value = 0;
+			pieFragments[i].label = String.fromCharCode(96+i+1);
+			pieFragments[i].color = pieBackgroundColor[i%pieBackgroundColor.length];
+			pieFragments[i].labelColor = pieLetterColor[i%pieLetterColor];
+			pieFragments[i].labelFontSize = &#x27;16&#x27;;
+			pieFragments[i].tooltipLabel = _purgeString(quizParams.choices[i].value);
+		}
+
+		var alL = answersList.length;
+		for(var j=0; j&lt;alL; j++){
+			&#x2F;&#x2F;List of answers of a user
+			var answers = answersList[j];
+
+			var aL = answers.length;
+			for(var k=0; k&lt;aL; k++){
+				var answer = answers[k];
+				var index = answer.no-1;
+
+				if((answer.answer===&quot;true&quot;)&amp;&amp;(pieFragments[index])){
+					pieFragments[index].value++;
+				}
+			}
+		}
+
+		for(var i=0; i&lt;quizParams.choices.length; i++){
+			data.push(pieFragments[i]);
+		}
+
+		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+
+		var chartOptions = {
+			showTooltips: true,
+			animation: false
+		}
+
+		if((options)&amp;&amp;(options.animation===true)){
+			&#x2F;&#x2F;Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == &quot;function&quot;){
+					options.callback();
+				}
+			}
+		}
+
+		var myNewChart = new Chart(ctx).Pie(data,chartOptions);
+
+		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+			options.callback();
+		}
+	}
+
+	var _drawMcChoiceMAnswerQuizChart = function(canvas,quizParams,answersList,options){
+		var labels = [];
+		var data = [];
+		var maxValue = 0;
+		var scaleSteps = 10;
+
+		for(var i=0; i&lt;quizParams.nAnswers; i++){
+			labels[i] = String.fromCharCode(96+i+1);
+			data[i] = 0;
+		}
+
+		var alL = answersList.length;
+		for(var j=0; j&lt;alL; j++){
+			&#x2F;&#x2F;List of answers of a user
+			var answers = answersList[j];
+
+			var aL = answers.length;
+			for(var k=0; k&lt;aL; k++){
+				var answer = answers[k];
+				var index = answer.no-1;
+				if(answer.answer===&quot;true&quot;){
+					data[index]++;
+				}
+			} 
+		}
+
+		for(var l=0; l&lt;quizParams.nAnswers; l++){
+			if(data[l] &gt; maxValue){
+				maxValue = data[l];
+			}
+		}
+
+		if(maxValue&lt;10){
+			scaleSteps = Math.max(1,maxValue);
+		}
+
+		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+		var data = {
+			labels : labels,
+			datasets : [
+				{
 				fillColor : &quot;#E2FFE3&quot;,
 				strokeColor : &quot;rgba(220,220,220,1)&quot;,
 				data : data
-			}
-		]
-	};
+				}
+			]
+		};
 
-	var animation = false;
-	if((options)&amp;&amp;(options.first===true)){
-	  animation = true;
-	}
-
-	var options = {
-	  animation: animation,
-	  scaleOverride: true,
-	  scaleStepWidth: Math.max(1,Math.ceil(maxValue&#x2F;10)),
-	  scaleSteps: scaleSteps,
-	  showTooltips: false
-	}
-	var myNewChart = new Chart(ctx).Bar(data,options);
-  }
-
-  var _drawTFQuizChart = function(canvas,nAnswers,answersList,options){
-	var labels = [];
-	var dataTrue = [];
-	var dataFalse = [];
-	var maxValue = 0;
-	var scaleSteps = 10;
-
-	for(var i=0; i&lt;nAnswers; i++){
-	  labels[i] = &quot;V       &quot; + String.fromCharCode(96+i+1) + &quot;       F&quot;;
-	  dataTrue[i] = 0;
-	  dataFalse[i] = 0;
-	}
-
-	var alL = answersList.length;
-	for(var j=0; j&lt;alL; j++){
-	  &#x2F;&#x2F;List of answers of a user
-	  var answers = answersList[j];
-
-	  var aL = answers.length;
-	  for(var k=0; k&lt;aL; k++){
-		var answer = answers[k];
-		var index = answer.no-1;
-		if(answer.answer===&quot;true&quot;){
-		  dataTrue[index]++;
-		} else {
-		  dataFalse[index]++;
+		var chartOptions = {
+			showTooltips: true,
+			animation: false,
+			scaleOverride: true,
+			scaleStepWidth: Math.max(1,Math.ceil(maxValue&#x2F;10)),
+			scaleSteps: scaleSteps
 		}
-	  } 
+
+		if((options)&amp;&amp;(options.animation===true)){
+			&#x2F;&#x2F;Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == &quot;function&quot;){
+					options.callback();
+				}
+			}
+		}
+
+		var myNewChart = new Chart(ctx).Bar(data,chartOptions);
+
+		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+			options.callback();
+		}
 	}
 
-	for(var l=0; l&lt;nAnswers; l++){
-	  if(dataTrue[l] &gt; maxValue){
-		maxValue = dataTrue[l];
-	  }
-	  if(dataFalse[l] &gt; maxValue){
-		maxValue = dataFalse[l];
-	  }
-	}
 
-	if(maxValue&lt;10){
-	  scaleSteps = Math.max(1,maxValue);
-	}
+	var _drawTFQuizChart = function(canvas,quizParams,answersList,options){
+		var labels = [];
+		var dataTrue = [];
+		var dataFalse = [];
+		var maxValue = 0;
+		var scaleSteps = 10;
 
-	var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
-	var data = {
-		labels : labels,
-		datasets : [
+		for(var i=0; i&lt;quizParams.nAnswers; i++){
+			labels[i] = _getTrans(&quot;i.T&quot;) + &quot;       &quot; + String.fromCharCode(96+i+1) + &quot;       &quot; + _getTrans(&quot;i.F&quot;);
+			dataTrue[i] = 0;
+			dataFalse[i] = 0;
+		}
+
+		var alL = answersList.length;
+		for(var j=0; j&lt;alL; j++){
+			&#x2F;&#x2F;List of answers of a user
+			var answers = answersList[j];
+
+			var aL = answers.length;
+			for(var k=0; k&lt;aL; k++){
+				var answer = answers[k];
+				var index = answer.no-1;
+				if(answer.answer===&quot;true&quot;){
+					dataTrue[index]++;
+				} else {
+					dataFalse[index]++;
+				}
+			}
+		}
+
+		for(var l=0; l&lt;quizParams.nAnswers; l++){
+			if(dataTrue[l] &gt; maxValue){
+				maxValue = dataTrue[l];
+			}
+			if(dataFalse[l] &gt; maxValue){
+				maxValue = dataFalse[l];
+			}
+		}
+
+		if(maxValue&lt;10){
+			scaleSteps = Math.max(1,maxValue);
+		}
+
+		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
+		var data = {
+			labels : labels,
+			datasets : [
 			{
 				fillColor : &quot;#E2FFE3&quot;,
 				strokeColor : &quot;rgba(220,220,220,1)&quot;,
@@ -294,23 +369,33 @@ VISH.QuizCharts = (function(V,$,undefined){
 				strokeColor : &quot;rgba(220,220,220,1)&quot;,
 				data : dataFalse
 			}
-		]
-	};
+			]
+		};
 
-	var animation = false;
-	if((options)&amp;&amp;(options.first===true)){
-	  animation = true;
-	}
+		var chartOptions = {
+			showTooltips: true,
+			animation: false,
+			scaleOverride: true,
+			scaleStepWidth: Math.max(1,Math.ceil(maxValue&#x2F;10)),
+			scaleSteps: scaleSteps
+		}
 
-	var options = {
-	  animation: animation,
-	  scaleOverride: true,
-	  scaleStepWidth: Math.max(1,Math.ceil(maxValue&#x2F;10)),
-	  scaleSteps: scaleSteps,
-	  showTooltips: false
+		if((options)&amp;&amp;(options.animation===true)){
+			&#x2F;&#x2F;Include animation
+			chartOptions.animation = true;
+			chartOptions.onAnimationComplete = function(){
+				if(typeof options.callback == &quot;function&quot;){
+					options.callback();
+				}
+			}
+		}
+
+		var myNewChart = new Chart(ctx).Bar(data,chartOptions);
+
+		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+			options.callback();
+		}
 	}
-	var myNewChart = new Chart(ctx).Bar(data,options);
-  }
 
 	&#x2F;**
 	* Helpers
@@ -324,29 +409,39 @@ VISH.QuizCharts = (function(V,$,undefined){
 		return answers;
 	}
 
-	var getQuizParams = function(quiz){
+	var _getQuizParams = function(quiz){
 		var params = {};
+		params.extras = {};
 		try {
 			var quizEl = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0];
 			params.quizType = quizEl[&quot;quiztype&quot;];
 			if(params.quizType==V.Constant.QZ_TYPE.MCHOICE){
 				&#x2F;&#x2F;Check for multiple answer
 				if ((quizEl.extras) &amp;&amp; (quizEl.extras.multipleAnswer==true)){
-					params.quizType = V.Constant.QZ_TYPE.MCHOICE_MANSWER;
+					params.extras.multipleAnswer = true;
 				}
 			}
-			params.nAnswers = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0][&quot;choices&quot;].length;
+			params.choices = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0][&quot;choices&quot;];
+			params.nAnswers = params.choices.length;
 		} catch (e){}
 		return params;
 	}
 
+	var _purgeString = function(str){
+		if(typeof str != &quot;string&quot;){
+			return str;
+		}
+		return str.replace(&#x2F;Â&#x2F;g, &#x27;&#x27;);
+	}
+
 	return {
 		init                : init,
-		drawQuizChart       : drawQuizChart,
-		getQuizParams       : getQuizParams
+		drawQuizChart       : drawQuizChart
 	};
 	
 }) (VISH, jQuery);
+
+
 
  
     </pre>

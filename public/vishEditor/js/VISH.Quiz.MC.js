@@ -138,31 +138,13 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		V.Quiz.disableAnswerButton(quiz);
 	}
 
-	/*
-	* Data representation
-	*/
-	var drawResults = function(quiz,results,options){
-		var canvas = $("#quiz_chart");
-		var nAnswers = $(quiz).find("tr.mc_option[nChoice]").length;
-
-		var quizType;
-		if($(quiz).attr("multipleAnswer")==="true"){
-			quizType = V.Constant.QZ_TYPE.MCHOICE_MANSWER;
-		} else {
-			quizType = V.Constant.QZ_TYPE.MCHOICE;
-		}
-
-		V.QuizCharts.drawQuizChart(canvas,quizType,nAnswers,results,options);
-	}
-
 	return {
 		init                : init,
 		render              : render,
 		onAnswerQuiz        : onAnswerQuiz,
 		onRetryQuiz			: onRetryQuiz,
 		getReport           : getReport,
-		disableQuiz         : disableQuiz,
-		drawResults         : drawResults
+		disableQuiz         : disableQuiz
 	};
 	
 }) (VISH, jQuery);
