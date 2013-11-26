@@ -68,7 +68,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	*/
 
 	/*
-	 * Update toolbar when load slide
+	 * Update toolbar when load slide or events
 	 */
 	var loadToolsForSlide = function(slide){
 		_cleanPresentationToolbar();
@@ -90,7 +90,162 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _cleanPresentationToolbar = function(){
 		//Enable all buttons
-		$(".toolbar_presentation_wrapper").removeClass("toolbar_presentation_wrapper_disabled");
+		$(".toolbar_presentation_wrapper_slideTools").removeClass("toolbar_presentation_wrapper_disabled");
+	}
+
+
+	/*
+	 * Draft Mode: change publish button status
+	 */
+	var changePublishButtonStatus = function(status){
+		switch(status){
+			case "enabled":
+				_enablePublishButton();
+				break;
+			case "unpublish":
+				_enableUnpublishButton();
+				break;
+			case "unpublishing":
+				_enableUnpublishingButton();
+				break;
+			case "disabled":
+				_disablePublishButton();
+				break;
+			default:
+				return;
+		}
+	}
+
+	var _enablePublishButton = function(){
+		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_disabled");
+		var icon = $("#toolbar_publish").find("i.icon-download-alt");
+		$(icon).removeClass("icon-rotate-90");
+		$(icon).addClass("icon-rotate-270");
+		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Publish"));
+		$("#toolbar_publish").attr("action","publish");
+
+		//Menu
+		var menuItem = $(".menu_option.menu_action.publishMenuOption");
+		$(menuItem).parent().removeClass("menu_item_disabled");
+		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
+		$(menuItem).attr("action","onPublishButtonClicked");
+	}
+
+	var _enableUnpublishButton = function(){
+		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_disabled");
+		var icon = $("#toolbar_publish").find("i.icon-download-alt");
+		$(icon).removeClass("icon-rotate-270");
+		$(icon).addClass("icon-rotate-90");
+		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Unpublish"));
+		$("#toolbar_publish").attr("action","unpublish");
+
+		//Menu
+		var menuItem = $(".menu_option.menu_action.publishMenuOption");
+		$(menuItem).parent().removeClass("menu_item_disabled");
+		$(menuItem).find("span").html(V.I18n.getTrans("i.Unpublish"));
+		$(menuItem).attr("action","onUnpublishButtonClicked");
+	}
+
+	var _enableUnpublishingButton = function(){
+		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_disabled");
+		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Unpublishing"));
+
+		//Menu
+		var menuItem = $(".menu_option.menu_action.publishMenuOption");
+		$(menuItem).parent().addClass("menu_item_disabled");
+		$(menuItem).find("span").html(V.I18n.getTrans("i.Unpublishing"));
+	}
+
+	var _disablePublishButton = function(){
+		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_disabled");
+		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Publish"));
+
+		//Menu
+		var menuItem = $(".menu_option.menu_action.publishMenuOption");
+		$(menuItem).parent().addClass("menu_item_disabled");
+		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
+		$(menuItem).attr("action","onPublishButtonClicked");
+	}
+
+
+	/*
+	 * Dirty Mode: change save buttons status
+	 */
+	var dirtyModeTimeout;
+	var saveButtonStatus = "enabled";
+
+	var changeSaveButtonStatus = function(status){
+		switch(status){
+			case "enabled":
+				_enableSaveButton();
+				break;
+			case "loading":
+				_loadingSaveButton();
+				break;
+			case "disabled":
+				_disableSaveButton();
+				break;
+			default:
+				return;
+		}
+	}
+
+	var _enableSaveButton = function(){
+		if(saveButtonStatus === "enabled"){
+			return;
+		}
+		saveButtonStatus = "enabled";
+		_stopDirtyTimeout();
+		$("#toolbar_save").parent().removeClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_save").parent().removeClass("toolbar_presentation_wrapper_disabled");
+		$("#toolbar_save").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Save"));
+
+		//Menu
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().removeClass("menu_item_disabled");
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Save"));
+	}
+
+	var _loadingSaveButton = function(){
+		if(saveButtonStatus === "loading"){
+			return;
+		}
+		saveButtonStatus = "loading";
+		$("#toolbar_save").parent().addClass("toolbar_presentation_wrapper_disabled");
+		$("#toolbar_save").parent().addClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_save").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Saving"));
+
+		//Menu
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().addClass("menu_item_disabled");
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Saving"));
+	}
+
+	var _disableSaveButton = function(){
+		if(saveButtonStatus === "disabled"){
+			return;
+		}
+		saveButtonStatus = "disabled";
+		$("#toolbar_save").parent().removeClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_save").parent().addClass("toolbar_presentation_wrapper_disabled");
+		$("#toolbar_save").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Saved"));
+
+		_stopDirtyTimeout();
+		dirtyModeTimeout = setTimeout(function(){
+			changeSaveButtonStatus("enabled");
+		}, 5000);
+
+		//Menu
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().addClass("menu_item_disabled");
+		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Saved"));
+	}
+
+	var _stopDirtyTimeout = function(){
+		if(typeof dirtyModeTimeout != "undefined"){
+			clearTimeout(dirtyModeTimeout);
+		}
 	}
 
 
@@ -274,6 +429,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var publish = function(){
 		V.Editor.Tools.Menu.onPublishButtonClicked();
+	}
+
+	var unpublish = function(){
+		V.Editor.Tools.Menu.onUnpublishButtonClicked();
 	}
 
 	var preview = function(){
@@ -509,6 +668,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		zoomLess 						: zoomLess,
 		save 							: save,
 		publish							: publish,
+		unpublish 						: unpublish,
 		preview 						: preview,
 		selectTheme						: selectTheme,
 		selectAnimation					: selectAnimation,
@@ -517,7 +677,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		addTooltipToZone				: addTooltipToZone,
 		showZoneToolTip					: showZoneToolTip,
 		hideZoneToolTip					: hideZoneToolTip,
-		setAllTooltipMargins			: setAllTooltipMargins
+		setAllTooltipMargins			: setAllTooltipMargins,
+		changePublishButtonStatus		: changePublishButtonStatus,
+		changeSaveButtonStatus			: changeSaveButtonStatus
 	};
 
 }) (VISH, jQuery);

@@ -102,6 +102,10 @@ VISH.Editor = (function(V,$,undefined){
 			initialPresentation = true;
 			setPresentation(presentation);
 			V.Editor.Settings.loadPresentationSettings(presentation);
+			if(!isPresentationDraft()){
+				// V.Editor.Tools.changePublishButtonStatus("disabled");
+				V.Editor.Tools.changePublishButtonStatus("unpublish");
+			}
 			V.Editor.Themes.selectTheme(presentation.theme,false,function(){
 				//Theme loaded
 				V.Editor.Renderer.init(presentation);
@@ -642,52 +646,81 @@ VISH.Editor = (function(V,$,undefined){
 		return slide;
 	}
 
-	var afterSavePresentation = function(presentation,order){
+	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.NOSERVER:
-				//Ignore order param for developping
-				if((V.Debugging)&&(V.Debugging.isDevelopping())){
-					//Preview (ignore action save)
-					V.Editor.Preview.preview();
-				}
-				break;
 			case V.Constant.VISH:
 				var send_type;
 				if(initialPresentation){
-					send_type = 'PUT'; //if we are editing
+					send_type = 'PUT';  //if we are editing an existing prsesentation
 				} else {  
-					send_type = 'POST'; //if it is a new
+					send_type = 'POST'; //if it is a new presentation
 				}
-
-				var draft = (order==="draft");
 
 				//POST to http://server/excursions/
 				var jsonPresentation = JSON.stringify(presentation);
 				var params = {
 					"excursion[json]": jsonPresentation,
-					"authenticity_token" : initOptions.token,
-					"draft": draft
+					"authenticity_token" : V.User.getToken()
 				};
+
+				if(order==="publish"){
+					params.draft = true;
+				} else if(order==="unpublish"){
+					params.draft = false;
+				}
 
 				$.ajax({
 					type    : send_type,
 					url     : V.UploadPresentationPath,
 					data    : params,
 					success : function(data) {
-						V.Editor.Events.allowExitWithoutConfirmation();
-						window.top.location.href = data.url;
-					}     
+						if(order==="publish"){
+							V.Editor.Events.allowExitWithoutConfirmation();
+							window.top.location.href = data.url;
+						} else if((order==="save")||(order==="unpublish")){
+							if(typeof successCallback == "function"){
+								successCallback();
+							}
+						}
+					}, 
+					error: function(xhr, error){
+        				if(typeof failCallback == "function"){
+							failCallback();
+						}
+ 					}
 				});
 				break;
+			case V.Constant.NOSERVER:
+				if((V.Debugging)&&(V.Debugging.isDevelopping())){
+					if(order==="publish"){
+						V.Editor.Preview.preview();
+					} else if(order==="save"){
+						V.Debugging.log("Saved presentation");
+						V.Debugging.log(presentation);
+						if(typeof successCallback == "function"){
+							setTimeout(function(){
+									successCallback();
+							},5000);
+						}
+					} else if(order==="unpublish"){
+						setTimeout(function(){
+							successCallback();
+						},5000);
+					}
+				}
+				break;
 			case V.Constant.STANDALONE:
-				//Order is always "publish", ignore order param
-				uploadPresentationWithNode(presentation);
+				//Ignore order param
+				_uploadPresentationWithNode(presentation);
 				break;
 		}
 	};
-	
 
-	var uploadPresentationWithNode = function(presentation){
+	var _afterSavePresentation = function(){
+		V.Debugging.log("After save presentation");
+	}
+
+	var _uploadPresentationWithNode = function(presentation){
 		var send_type;
 		var url = V.UploadPresentationPath;
 
@@ -847,7 +880,7 @@ VISH.Editor = (function(V,$,undefined){
 		hasInitialPresentation	: hasInitialPresentation,
 		isZoneEmpty				: isZoneEmpty,
 		savePresentation		: savePresentation,
-		afterSavePresentation	: afterSavePresentation,
+		sendPresentation		: sendPresentation,
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea,
 		onSlideEnterEditor 		: onSlideEnterEditor,

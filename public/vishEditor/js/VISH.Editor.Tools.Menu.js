@@ -76,7 +76,17 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/////////////////
 
 	var onSaveButtonClicked = function(){
-		onPublishButtonClicked();
+		V.Editor.Tools.changeSaveButtonStatus("loading");
+		var presentation = V.Editor.savePresentation();
+		V.Editor.sendPresentation(presentation,"save",function(){
+			//onSave succesfully
+			V.Debugging.log("onSave succesfully");
+			V.Editor.Tools.changeSaveButtonStatus("disabled");
+		}, function(){
+			//error onSave
+			V.Debugging.log("onSave failure");
+			V.Editor.Tools.changeSaveButtonStatus("enabled");
+		});
 	}
 
 	/**
@@ -119,6 +129,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			return;
 		}
 
+		//Competitions (deprecated)
 		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
 			_competitionsModalShown = true;
 			var options = {};
@@ -129,14 +140,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			options.onClosedCallback = function(){
 				setTimeout(function(){
-						VISH.Editor.Tools.Menu.onPublishButtonClicked()
-					}, 500);
-
+						V.Editor.Tools.Menu.onPublishButtonClicked()
+				}, 500);
 			};
 			
 			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
 
-			options.middlerow = V.Editor.Competitions.generateForm();			
+			options.middlerow = V.Editor.Competitions.generateForm();		
 			options.middlerowExtraClass = "competitions_options";
 
 			var button1 = {};
@@ -159,7 +169,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var options = {};
 		options.width = 400;
 		options.height = 140;
-		options.notificationIconSrc = V.ImagesPath + "icons/save_document.png";
+		options.notificationIconSrc = V.ImagesPath + "icons/publish_icon.png";
+		options.notificationIconClass = "publishNotificationIcon";
 		options.text = V.I18n.getTrans("i.areyousureNotification");
 		options.buttons = [];
 
@@ -170,29 +181,53 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 		options.buttons.push(button1);
 
-		if(((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)&&(V.Editor.isPresentationDraft()))||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
-			var button2 = {};
-			button2.text = V.I18n.getTrans("i.draft");
-			button2.callback = function(){
-				var presentation = V.Editor.savePresentation();
-				V.Editor.afterSavePresentation(presentation,"draft");
-				$.fancybox.close();
-			}
-			options.buttons.push(button2);
-		}
+		var button2 = {};
+		button2.text = V.I18n.getTrans("i.publish");
 
-		var button3 = {};
-		if((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
-			button3.text = V.I18n.getTrans("i.publish");
-		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.STANDALONE){
-			button3.text = V.I18n.getTrans("i.save");
-		}
-		button3.callback = function(){
+		button2.callback = function(){
 			var presentation = V.Editor.savePresentation();
-			V.Editor.afterSavePresentation(presentation,"publish");
+			V.Editor.sendPresentation(presentation,"publish");
 			$.fancybox.close();
 		}
-		options.buttons.push(button3);
+		options.buttons.push(button2);
+
+		V.Utils.showDialog(options);
+	};
+
+	var onUnpublishButtonClicked = function(){
+		var options = {};
+		options.width = 400;
+		options.height = 140;
+		options.notificationIconSrc = V.ImagesPath + "icons/unpublish_icon.png";
+		options.notificationIconClass = "publishNotificationIcon";
+		options.text = V.I18n.getTrans("i.areyousureNotification");
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.cancel");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.text = V.I18n.getTrans("i.unpublish");
+
+		button2.callback = function(){
+			V.Editor.Tools.changePublishButtonStatus("unpublishing");
+			var presentation = V.Editor.savePresentation();
+			console.log("sendPresentation call");
+			V.Editor.sendPresentation(presentation,"unpublish", function(){
+				//onSuccess
+				V.Editor.Tools.changePublishButtonStatus("enabled");
+				console.log("unpublish callback");
+			}, function(){
+				//onFail
+				V.Editor.Tools.changePublishButtonStatus("unpublish");
+			});
+			$.fancybox.close();
+		}
+		options.buttons.push(button2);
 
 		V.Utils.showDialog(options);
 	};
@@ -304,6 +339,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		exportToJSON 					: exportToJSON,
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
+		onUnpublishButtonClicked		: onUnpublishButtonClicked,
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
