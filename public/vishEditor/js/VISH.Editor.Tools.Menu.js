@@ -216,11 +216,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		button2.callback = function(){
 			V.Editor.Tools.changePublishButtonStatus("unpublishing");
 			var presentation = V.Editor.savePresentation();
-			console.log("sendPresentation call");
 			V.Editor.sendPresentation(presentation,"unpublish", function(){
 				//onSuccess
 				V.Editor.Tools.changePublishButtonStatus("enabled");
-				console.log("unpublish callback");
 			}, function(){
 				//onFail
 				V.Editor.Tools.changePublishButtonStatus("unpublish");

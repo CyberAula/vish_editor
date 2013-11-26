@@ -652,8 +652,10 @@ VISH.Editor = (function(V,$,undefined){
 	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.VISH:
+				var createNewPresentation = ((neverStored)&&(!initialPresentation));
+				
 				var send_type;
-				if((neverStored)&&(!initialPresentation)){
+				if(createNewPresentation){
 					send_type = 'POST'; //if it is a new presentation
 				} else {
 					send_type = 'PUT';  //if we are editing an existing prsesentation or resaving a new presentation
@@ -667,9 +669,13 @@ VISH.Editor = (function(V,$,undefined){
 				};
 
 				if(order==="publish"){
-					params.draft = true;
-				} else if(order==="unpublish"){
 					params.draft = false;
+				} else if(order==="unpublish"){
+					params.draft = true;
+				} else if(order==="save"){
+					if(createNewPresentation){
+						params.draft = true;
+					}
 				}
 
 				$.ajax({
@@ -680,15 +686,22 @@ VISH.Editor = (function(V,$,undefined){
 						if(order==="publish"){
 							V.Editor.Events.allowExitWithoutConfirmation();
 							window.top.location.href = data.url;
-						} else if((order==="save")||(order==="unpublish")){
-							if(order==="save"){
-								neverStored = false;
-							}							
+						} else if (order==="unpublish"){
+							if(typeof successCallback == "function"){
+								successCallback();
+							}
+						} else if(order==="save"){
+							neverStored = false;
+							if(createNewPresentation){
+								//Update V.UploadPresentationPath because the presentation exists now
+								//Future saves will update the existing presentation
+								V.UploadPresentationPath = data.uploadPath;
+							}
 							if(typeof successCallback == "function"){
 								successCallback();
 							}
 						}
-					}, 
+					},
 					error: function(xhr, error){
         				if(typeof failCallback == "function"){
 							failCallback();
