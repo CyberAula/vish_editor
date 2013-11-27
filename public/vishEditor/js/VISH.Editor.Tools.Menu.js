@@ -87,11 +87,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var presentation = V.Editor.savePresentation();
 		V.Editor.sendPresentation(presentation,"save",function(){
 			//onSave succesfully
-			V.Debugging.log("onSave succesfully");
+			// V.Debugging.log("onSave succesfully");
+			// V.Debugging.log(presentation);
 			V.Editor.Tools.changeSaveButtonStatus("disabled");
 		}, function(){
 			//error onSave
-			V.Debugging.log("onSave failure");
+			// V.Debugging.log("onSave failure");
 			V.Editor.Tools.changeSaveButtonStatus("enabled");
 		});
 	}
@@ -147,12 +148,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			options.onClosedCallback = function(){
 				setTimeout(function(){
-						V.Editor.Tools.Menu.onPublishButtonClicked()
+						V.Editor.Tools.Menu.onPublishButtonClicked();
 				}, 500);
 			};
 			
 			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-
 			options.middlerow = V.Editor.Competitions.generateForm();		
 			options.middlerowExtraClass = "competitions_options";
 
@@ -160,12 +160,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			button1.text = V.I18n.getTrans("i.Done");
 			button1.extraclass = "competi_disabled";
 			button1.callback = function(){
-				$.fancybox.close();				
+				$.fancybox.close();	
 			}
 			var button2 = {};
 			button2.text = V.I18n.getTrans("i.NoThanks");
 			button2.callback = function(){
-				$.fancybox.close();				
+				$.fancybox.close();			
 			}
 			options.buttons = [button1, button2];
 			V.Utils.showDialog(options);
@@ -203,8 +203,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 						window.top.location.href = data.url;
 						break;
 					case V.Constant.NOSERVER:
-						V.Debugging.log("Saved presentation");
-						V.Debugging.log(presentation);
+						// V.Debugging.log("Published presentation");
+						// V.Debugging.log(presentation);
 						V.Editor.Preview.preview();
 						V.Editor.Tools.changePublishButtonStatus("unpublish");
 						break;
