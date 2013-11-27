@@ -318,7 +318,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					//onSave succesfully
 					V.Editor.Tools.changeSaveButtonStatus("disabled");
 					_exitFromVE();
-					$("#waiting_overlay").hide();
 				}, function(){
 					//error onSave
 					V.Editor.Tools.changeSaveButtonStatus("enabled");
