@@ -44,6 +44,13 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					return false;
 				});
 			}
+
+			//EditorAdapter
+			var options = V.Utils.getOptions();
+			//Check exit option in menu
+			if(typeof options.exitURL != "string"){
+				$(".menu_option.menu_action[action='exit']").parent().hide();
+			}
 			
 			_initialized = true;
 		}
@@ -275,6 +282,64 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Tour.startTourWithId('about_screen', 'top');
 	}
 
+	var exit = function(){
+
+		if(V.Editor.hasPresentationChanged()){
+			var options = {};
+			options.width = 600;
+			options.height = 200;
+			options.notificationIconSrc = V.ImagesPath + "icons/save_document.png";
+			// options.notificationIconClass = "publishNotificationIcon";
+			options.text = V.I18n.getTrans("i.exitConfirmationMenu");
+			options.buttons = [];
+
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.cancel");
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons.push(button1);
+
+			var button2 = {};
+			button2.text = V.I18n.getTrans("i.ExitWSaving");
+			button2.callback = function(){
+				_exitFromVE();
+				$.fancybox.close();
+			}
+			options.buttons.push(button2);
+
+			var button3 = {};
+			button3.text = V.I18n.getTrans("i.SaveAndExit");
+			button3.callback = function(){
+				$("#waiting_overlay").show();
+				V.Editor.Tools.changeSaveButtonStatus("loading");
+				var presentation = V.Editor.savePresentation();
+				V.Editor.sendPresentation(presentation,"save",function(){
+					//onSave succesfully
+					V.Editor.Tools.changeSaveButtonStatus("disabled");
+					_exitFromVE();
+					$("#waiting_overlay").hide();
+				}, function(){
+					//error onSave
+					V.Editor.Tools.changeSaveButtonStatus("enabled");
+					$("#waiting_overlay").hide();
+				});
+				$.fancybox.close();
+			}
+			options.buttons.push(button3);
+
+			V.Utils.showDialog(options);
+
+		} else {
+			_exitFromVE();
+		}
+	}
+
+	var _exitFromVE = function(){
+		V.Editor.Events.allowExitWithoutConfirmation();
+		window.top.location.href = V.Utils.getOptions().exitURL;
+	}
+
 	var insertSmartcard = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_smartcards_repo');
@@ -362,7 +427,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
-		about							: about
+		about							: about,
+		exit 							: exit
 	};
 
 }) (VISH, jQuery);

@@ -682,7 +682,7 @@ VISH.Editor = (function(V,$,undefined){
 							}
 						}
 						if(typeof successCallback == "function"){
-							successCallback();
+							successCallback(data);
 						}
 					},
 					error: function(xhr, error){
