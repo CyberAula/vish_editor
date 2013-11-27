@@ -10,26 +10,18 @@ VISH.Editor = (function(V,$,undefined){
 
 	//boolean to indicate if we are editing a previous presentation.
 	var initialPresentation = false;
+	//drafPresentation stores the initial presentation
+	var draftPresentation;
 
-	//indicate that the presentation has never been saved in the server (never sent) in the current session
-	var neverStored = true;
+	//last presentation stored in the server
+	var lastStoredPresentationStringify;
 
 	//Pointers to the current and last zone
 	var currentZone;
 	var lastZone;
-	
-	//drafPresentation uses:
-	//* Store the presentation we are previewing
-	//* Used when editing a presentation
-	var draftPresentation = null;
-
-	//savedPresentation contains the JSON of the saved presentation
-	var savedPresentation = null;
 
 	//Content mode to add slides
 	var contentAddModeForSlides = V.Constant.NONE;
-	//Tmp var to store slide to delete
-	var article_to_delete;
 
 	/**
 	 * VISH Editor initializer.
@@ -42,6 +34,8 @@ VISH.Editor = (function(V,$,undefined){
 	 * @method init
 	 */
 	var init = function(options,presentation){
+		$("#waiting_overlay").show();
+
 		V.Editing = true;
 		$("body").addClass("ViSHEditorBody");
 
@@ -68,6 +62,7 @@ VISH.Editor = (function(V,$,undefined){
 
 	var _initAferStatusLoaded = function(options,presentation){
 		if(!V.Utils.checkMiniumRequirements()){
+			$("#waiting_overlay").hide();
 			return;
 		}
 		V.Utils.Loader.loadDeviceCSS();
@@ -99,11 +94,12 @@ VISH.Editor = (function(V,$,undefined){
 		if(presentation){
 			presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
+				$("#waiting_overlay").hide();
 				V.Utils.showPNotValidDialog();
 				return;
 			}
 			initialPresentation = true;
-			setPresentation(presentation);
+			draftPresentation = presentation;
 			V.Editor.Settings.loadPresentationSettings(presentation);
 			if(!isPresentationDraft()){
 				// V.Editor.Tools.changePublishButtonStatus("disabled");
@@ -180,6 +176,8 @@ VISH.Editor = (function(V,$,undefined){
 
 		//Try to win focus
 		window.focus();
+
+		$("#waiting_overlay").hide();
 	}
   
 
@@ -309,7 +307,7 @@ VISH.Editor = (function(V,$,undefined){
    * Function called when user delete a slide
    */
 	var onDeleteSlideClicked = function(){
-		article_to_delete = $(this).parent()[0];
+		var article_to_delete = $(this).parent()[0];
 
 		var options = {};
 		options.width = 375;
@@ -469,20 +467,12 @@ VISH.Editor = (function(V,$,undefined){
 	/**
 	* Function to save the presentation
 	*/
-	var savePresentation = function(options){
+	var savePresentation = function(){
 		//Save the presentation in JSON
 		var presentation = {};
 
-		//Save metadata, theme and animation
-		presentation = V.Editor.Settings.saveSettings(presentation);
-
-		//Check for tags, we have to do that because
-		//when tags had not been loaded, thay are not saved by the saveSettings method
-		if(!presentation.tags){
-			if((draftPresentation)&&(draftPresentation.tags)){
-				presentation.tags = draftPresentation.tags;
-			}
-		}
+		//Save settings (metadata, theme, animation, ...)
+		presentation = V.Editor.Settings.saveSettings();
 
 		//Slides of the presentation
 		presentation.slides = [];
@@ -517,10 +507,7 @@ VISH.Editor = (function(V,$,undefined){
 		// V.Debugging.log("\n\nViSH Editor save the following presentation:\n");
 		// V.Debugging.log(JSON.stringify(presentation));
 
-		//Store saved presentation
-		savedPresentation = presentation;
-
-		return savedPresentation;
+		return presentation;
 	};
 	
 	var _saveStandardSlide = function(slideDOM,presentation,isSubslide){
@@ -652,7 +639,7 @@ VISH.Editor = (function(V,$,undefined){
 	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.VISH:
-				var createNewPresentation = ((neverStored)&&(!initialPresentation));
+				var createNewPresentation = ((typeof lastStoredPresentationStringify == "undefined")&&(!initialPresentation));
 				
 				var send_type;
 				if(createNewPresentation){
@@ -661,12 +648,14 @@ VISH.Editor = (function(V,$,undefined){
 					send_type = 'PUT';  //if we are editing an existing prsesentation or resaving a new presentation
 				}
 
-				//POST to http://server/excursions/
-				var jsonPresentation = JSON.stringify(presentation);
 				var params = {
-					"excursion[json]": jsonPresentation,
 					"authenticity_token" : V.User.getToken()
 				};
+
+				if(order!="unpublish"){
+					var jsonPresentation = JSON.stringify(presentation);
+					params["excursion[json]"] = jsonPresentation;
+				}
 
 				if(order==="publish"){
 					params.draft = false;
@@ -678,28 +667,22 @@ VISH.Editor = (function(V,$,undefined){
 					}
 				}
 
+				//POST to http://server/excursions/ or PUT to http://server/excursions/id
 				$.ajax({
 					type    : send_type,
 					url     : V.UploadPresentationPath,
 					data    : params,
 					success : function(data) {
-						if(order==="publish"){
-							V.Editor.Events.allowExitWithoutConfirmation();
-							window.top.location.href = data.url;
-						} else if (order==="unpublish"){
-							if(typeof successCallback == "function"){
-								successCallback();
-							}
-						} else if(order==="save"){
-							neverStored = false;
-							if(createNewPresentation){
+						if(order != "unpublish"){
+							lastStoredPresentationStringify = jsonPresentation;
+							if((createNewPresentation)&&(typeof data != "undefined")&&(data.uploadPath)){
 								//Update V.UploadPresentationPath because the presentation exists now
 								//Future saves will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
 							}
-							if(typeof successCallback == "function"){
-								successCallback();
-							}
+						}
+						if(typeof successCallback == "function"){
+							successCallback();
 						}
 					},
 					error: function(xhr, error){
@@ -711,22 +694,14 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 			case V.Constant.NOSERVER:
 				if((V.Debugging)&&(V.Debugging.isDevelopping())){
-					if(order==="publish"){
-						V.Editor.Preview.preview();
-					} else if(order==="save"){
-						V.Debugging.log("Saved presentation");
-						V.Debugging.log(presentation);
-						neverStored = false;
-						if(typeof successCallback == "function"){
-							setTimeout(function(){
-								successCallback();
-							},5000);
-						}
-					} else if(order==="unpublish"){
-						setTimeout(function(){
-							successCallback();
-						},5000);
+
+					if(order != "unpublish"){
+						lastStoredPresentationStringify = JSON.stringify(presentation);
 					}
+
+					setTimeout(function(){
+						successCallback();
+					},5000);
 				}
 				break;
 			case V.Constant.STANDALONE:
@@ -735,10 +710,6 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
-
-	var _afterSavePresentation = function(){
-		V.Debugging.log("After save presentation");
-	}
 
 	var _uploadPresentationWithNode = function(presentation){
 		var send_type;
@@ -805,30 +776,19 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
-	var getLastArea = function() {
+	var getLastArea = function(){
 		if(lastZone){
 			return lastZone;
 		}
 		return null;
 	};
 
-	var getPresentation = function() {
+	var getDraftPresentation = function(){
 		return draftPresentation;
 	};
 
-	var setPresentation = function(presentation) {
-		draftPresentation = presentation;
-	};
-
-	var getSavedPresentation = function() {
-		if(savedPresentation){
-			return savedPresentation;
-		} else {
-			return null;
-		}
-	};
-
 	var hasInitialPresentation = function(){
+		// return (typeof draftPresentation != "undefined");
 		return initialPresentation;
 	};
 
@@ -854,16 +814,6 @@ VISH.Editor = (function(V,$,undefined){
 		return draftPresentation.type;
 	};
 
-	var setPresentationType  = function(type){
-		if(!draftPresentation){
-			draftPresentation = {};
-		}
-		if(type){
-			draftPresentation.type = type;
-		} else {
-			draftPresentation.type = V.Constant.PRESENTATION;
-		}
-	};
 
 	/*
 	 * Returns if the server has checked the presentation has a draft.
@@ -883,6 +833,25 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
+	var hasPresentationChanged = function(){
+		try {
+			var objectToCompare;
+			if(typeof lastStoredPresentationStringify != "undefined"){
+				objectToCompare = lastStoredPresentationStringify;
+			} else if(typeof draftPresentation != "undefined"){
+				objectToCompare = JSON.stringify(draftPresentation);
+			} else {
+				return true;
+			}
+
+			var currentPresentation = V.Editor.savePresentation();
+			return !(objectToCompare === JSON.stringify(currentPresentation));
+		} catch (e){
+			return true;
+		}
+	};
+
+
 	return {
 		init					: init,
 		getOptions				: getOptions, 
@@ -890,10 +859,7 @@ VISH.Editor = (function(V,$,undefined){
 		getCurrentArea			: getCurrentArea,
 		getLastArea				: getLastArea,
 		getPresentationType		: getPresentationType,
-		getPresentation			: getPresentation,
-		getSavedPresentation	: getSavedPresentation,
-		setPresentation			: setPresentation,
-		setPresentationType		: setPresentationType,
+		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
@@ -911,7 +877,8 @@ VISH.Editor = (function(V,$,undefined){
 		onNoSelectableClicked 	: onNoSelectableClicked,
 		onDeleteItemClicked 	: onDeleteItemClicked,
 		onDeleteSlideClicked 	: onDeleteSlideClicked,
-		addDeleteButton			: addDeleteButton
+		addDeleteButton			: addDeleteButton,
+		hasPresentationChanged	: hasPresentationChanged
 	};
 
 }) (VISH, jQuery);

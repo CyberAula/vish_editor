@@ -1575,6 +1575,19 @@ img.loading_presentation_carrousel {
 	cursor: default !important;
 }
 
+/* Waiting overlay */
+#waiting_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0 !important;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+	cursor: wait !important;
+	opacity: 0.8;
+}
+
 
 /* QR Overlay */
 #qr_overlay{

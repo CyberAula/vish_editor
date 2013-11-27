@@ -76,14 +76,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		V.Themes.loadTheme(theme, function(){
 			//Theme loaded callback
 
-			//Save it in the draftPresentation
-			var draftPresentation = V.Editor.getPresentation();
-			if(!draftPresentation){
-				draftPresentation = {};
-			}
-			draftPresentation.theme = theme;
 			currentTheme = theme;
-			V.Editor.setPresentation(draftPresentation);
 
 			//Refresh colors
 			V.Editor.Text.refreshAutoColors();

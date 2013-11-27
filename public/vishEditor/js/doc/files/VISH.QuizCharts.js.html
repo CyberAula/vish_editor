@@ -183,13 +183,17 @@ VISH.QuizCharts = (function(V,$,undefined){
 	var _drawMcChoiceQuizChart = function(canvas,quizParams,answersList,options){
 		var pieFragments = [];
 		var data = [];
+		var choicesQuantity = quizParams.choices.length;
 
-		for(var i=0; i&lt;quizParams.choices.length; i++){
+		var pBCL = pieBackgroundColor.length;
+		var pLCL = pieLetterColor.length;
+
+		for(var i=0; i&lt;choicesQuantity; i++){
 			pieFragments[i] = {};
 			pieFragments[i].value = 0;
 			pieFragments[i].label = String.fromCharCode(96+i+1);
-			pieFragments[i].color = pieBackgroundColor[i%pieBackgroundColor.length];
-			pieFragments[i].labelColor = pieLetterColor[i%pieLetterColor];
+			pieFragments[i].color = pieBackgroundColor[i%pBCL];
+			pieFragments[i].labelColor = pieLetterColor[i%pLCL];
 			pieFragments[i].labelFontSize = &#x27;16&#x27;;
 			pieFragments[i].tooltipLabel = _purgeString(quizParams.choices[i].value);
 		}
@@ -210,7 +214,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			}
 		}
 
-		for(var i=0; i&lt;quizParams.choices.length; i++){
+		for(var i=0; i&lt;choicesQuantity; i++){
 			data.push(pieFragments[i]);
 		}
 
@@ -240,12 +244,15 @@ VISH.QuizCharts = (function(V,$,undefined){
 
 	var _drawMcChoiceMAnswerQuizChart = function(canvas,quizParams,answersList,options){
 		var labels = [];
+		var tooltipLabels = [];
 		var data = [];
+		var choicesQuantity = quizParams.choices.length;
 		var maxValue = 0;
 		var scaleSteps = 10;
 
-		for(var i=0; i&lt;quizParams.nAnswers; i++){
+		for(var i=0; i&lt;choicesQuantity; i++){
 			labels[i] = String.fromCharCode(96+i+1);
+			tooltipLabels[i] = _purgeString(quizParams.choices[i].value);
 			data[i] = 0;
 		}
 
@@ -264,7 +271,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			} 
 		}
 
-		for(var l=0; l&lt;quizParams.nAnswers; l++){
+		for(var l=0; l&lt;choicesQuantity; l++){
 			if(data[l] &gt; maxValue){
 				maxValue = data[l];
 			}
@@ -277,6 +284,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
 		var data = {
 			labels : labels,
+			tooltipLabels: tooltipLabels,
 			datasets : [
 				{
 				fillColor : &quot;#E2FFE3&quot;,
@@ -314,13 +322,16 @@ VISH.QuizCharts = (function(V,$,undefined){
 
 	var _drawTFQuizChart = function(canvas,quizParams,answersList,options){
 		var labels = [];
+		var tooltipLabels = [];
 		var dataTrue = [];
 		var dataFalse = [];
+		var choicesQuantity = quizParams.choices.length;
 		var maxValue = 0;
 		var scaleSteps = 10;
 
-		for(var i=0; i&lt;quizParams.nAnswers; i++){
+		for(var i=0; i&lt;choicesQuantity; i++){
 			labels[i] = _getTrans(&quot;i.T&quot;) + &quot;       &quot; + String.fromCharCode(96+i+1) + &quot;       &quot; + _getTrans(&quot;i.F&quot;);
+			tooltipLabels[i] = _purgeString(quizParams.choices[i].value);
 			dataTrue[i] = 0;
 			dataFalse[i] = 0;
 		}
@@ -342,7 +353,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			}
 		}
 
-		for(var l=0; l&lt;quizParams.nAnswers; l++){
+		for(var l=0; l&lt;choicesQuantity; l++){
 			if(dataTrue[l] &gt; maxValue){
 				maxValue = dataTrue[l];
 			}
@@ -358,6 +369,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		var ctx = $(canvas).get(0).getContext(&quot;2d&quot;);
 		var data = {
 			labels : labels,
+			tooltipLabels: tooltipLabels,
 			datasets : [
 			{
 				fillColor : &quot;#E2FFE3&quot;,

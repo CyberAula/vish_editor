@@ -99,8 +99,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	 */
 	var changePublishButtonStatus = function(status){
 		switch(status){
-			case "enabled":
+			case "publish":
 				_enablePublishButton();
+				break;
+			case "publishing":
+				_enablePublishingButton();
 				break;
 			case "unpublish":
 				_enableUnpublishButton();
@@ -117,6 +120,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var _enablePublishButton = function(){
+		$("#waiting_overlay").hide();
+
 		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
 		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_disabled");
 		var icon = $("#toolbar_publish").find("i.icon-download-alt");
@@ -132,7 +137,25 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).attr("action","onPublishButtonClicked");
 	}
 
+	var _enablePublishingButton = function(){
+		$("#waiting_overlay").show();
+
+		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_loading");
+		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_disabled");
+		var icon = $("#toolbar_publish").find("i.icon-download-alt");
+		$(icon).removeClass("icon-rotate-90");
+		$(icon).addClass("icon-rotate-270");
+		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Publishing"));
+
+		//Menu
+		var menuItem = $(".menu_option.menu_action.publishMenuOption");
+		$(menuItem).parent().addClass("menu_item_disabled");
+		$(menuItem).find("span").html(V.I18n.getTrans("i.Publishing"));
+	}
+
 	var _enableUnpublishButton = function(){
+		$("#waiting_overlay").hide();
+
 		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
 		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_disabled");
 		var icon = $("#toolbar_publish").find("i.icon-download-alt");
@@ -149,6 +172,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var _enableUnpublishingButton = function(){
+		$("#waiting_overlay").hide();
+
 		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_disabled");
 		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_loading");
 		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Unpublishing"));
@@ -160,6 +185,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 
 	var _disablePublishButton = function(){
+		$("#waiting_overlay").hide();
+		
 		$("#toolbar_publish").parent().removeClass("toolbar_presentation_wrapper_loading");
 		$("#toolbar_publish").parent().addClass("toolbar_presentation_wrapper_disabled");
 		$("#toolbar_publish").parent().find("p.toolbar_presentation_title").html(V.I18n.getTrans("i.Publish"));
@@ -168,7 +195,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var menuItem = $(".menu_option.menu_action.publishMenuOption");
 		$(menuItem).parent().addClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
-		$(menuItem).attr("action","onPublishButtonClicked");
 	}
 
 

@@ -13,8 +13,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var bindEditorEventListeners = function(){
 		if((!bindedEventListeners)&&(V.Editing)){
-			var presentation = V.Editor.getPresentation();
-
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
@@ -64,7 +62,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 
 			//create the functions to add the tags when click on fancybox
-		
 			$(document).on("click", ".comp_checkbox input", V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind('keydown', handleBodyKeyDown);
@@ -73,6 +70,12 @@ VISH.Editor.Events = (function(V,$,undefined){
 			// Slide Enter and Leave events
 			$('article').live('slideenter', V.Editor.onSlideEnterEditor);
 			$('article').live('slideleave', V.Editor.onSlideLeaveEditor);
+
+			//Waiting overlay
+			$(document).on('click',"#waiting_overlay", function(event){
+				event.stopPropagation();
+				event.preventDefault();
+			});
 
 			//Focus
 			$(window).focus(function(){
@@ -507,9 +510,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 	var _exitConfirmation = function(){
-		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&&(confirmOnExit)){
-			var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
-			return confirmationMsg;
+		if(confirmOnExit){
+			if(V.Editor.hasPresentationChanged()){
+				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){
+					var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
+					return confirmationMsg;
+				}
+			}
 		} else {
 			return;
 		}

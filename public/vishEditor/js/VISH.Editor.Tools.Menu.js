@@ -167,11 +167,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 
 		var options = {};
-		options.width = 400;
-		options.height = 140;
+		options.width = 600;
+		options.height = 200;
 		options.notificationIconSrc = V.ImagesPath + "icons/publish_icon.png";
 		options.notificationIconClass = "publishNotificationIcon";
-		options.text = V.I18n.getTrans("i.areyousureNotification");
+		options.text = V.I18n.getTrans("i.Publish_confirmation");
 		options.buttons = [];
 
 		var button1 = {};
@@ -185,8 +185,29 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		button2.text = V.I18n.getTrans("i.publish");
 
 		button2.callback = function(){
+			V.Editor.Tools.changePublishButtonStatus("publishing");
 			var presentation = V.Editor.savePresentation();
-			V.Editor.sendPresentation(presentation,"publish");
+			V.Editor.sendPresentation(presentation,"publish", function(data){
+				//onSuccess
+
+				switch(V.Configuration.getConfiguration().mode){
+					case V.Constant.VISH:
+						V.Editor.Events.allowExitWithoutConfirmation();
+						window.top.location.href = data.url;
+						break;
+					case V.Constant.NOSERVER:
+						V.Debugging.log("Saved presentation");
+						V.Debugging.log(presentation);
+						V.Editor.Preview.preview();
+						V.Editor.Tools.changePublishButtonStatus("unpublish");
+						break;
+					case V.Constant.STANDALONE:
+						break;
+				}
+			}, function(){
+				//onFail
+				V.Editor.Tools.changePublishButtonStatus("publish");
+			});
 			$.fancybox.close();
 		}
 		options.buttons.push(button2);
@@ -196,11 +217,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var onUnpublishButtonClicked = function(){
 		var options = {};
-		options.width = 400;
-		options.height = 140;
+		options.width = 600;
+		options.height = 200;
 		options.notificationIconSrc = V.ImagesPath + "icons/unpublish_icon.png";
 		options.notificationIconClass = "publishNotificationIcon";
-		options.text = V.I18n.getTrans("i.areyousureNotification");
+		options.text = V.I18n.getTrans("i.Unpublish_confirmation");
 		options.buttons = [];
 
 		var button1 = {};
@@ -216,9 +237,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		button2.callback = function(){
 			V.Editor.Tools.changePublishButtonStatus("unpublishing");
 			var presentation = V.Editor.savePresentation();
-			V.Editor.sendPresentation(presentation,"unpublish", function(){
+			V.Editor.sendPresentation(null,"unpublish", function(){
 				//onSuccess
-				V.Editor.Tools.changePublishButtonStatus("enabled");
+				V.Editor.Tools.changePublishButtonStatus("publish");
 			}, function(){
 				//onFail
 				V.Editor.Tools.changePublishButtonStatus("unpublish");
