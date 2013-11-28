@@ -345,8 +345,8 @@ var _paintBall = function(ballJSON){
    	var bar_width = $('.positionview').width();
 
    	var perc = bar_width / duration;
-   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('.segments').width())) - 1.3 + "%"; //we add 8 to adjust the ball
-   	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('.transportbar').width())) - 1.63 + "%";
+   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('.segments').width()))  + 0.85 + "%"; //we add 8 to adjust the ball
+   	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('.transportbar').width())) + 0.2 + "%";
    	ball.onclick = function () {
 		video.currentTime = time;
 		_popUp(_onCloseSubslide,ballJSON);
@@ -402,15 +402,13 @@ var _secondsTimeSpanToHMS = function(s) {
     s -= m*60;
 
      if(h <1){
-     	    display = (m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
+     	display = (m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
 
      }else{
      	display =  h+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
      }
     return display;
 }
-
-
 
 
 // Helpers
