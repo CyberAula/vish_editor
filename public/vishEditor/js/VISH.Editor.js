@@ -679,6 +679,11 @@ VISH.Editor = (function(V,$,undefined){
 								//Update V.UploadPresentationPath because the presentation exists now
 								//Future saves will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
+								if(V.Status.getDevice().features.historypushState){
+									if(data.editPath){
+										window.top.history.replaceState("","",data.editPath);
+									}
+								}
 							}
 						}
 						if(typeof successCallback == "function"){
