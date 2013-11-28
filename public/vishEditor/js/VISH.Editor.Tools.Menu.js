@@ -379,6 +379,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
+			//on error
 			setTimeout(function(){
 				V.Utils.Loader.onCloseLoading();
 				var options = {};
