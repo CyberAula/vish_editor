@@ -34,6 +34,8 @@ VISH.EVideo = (function(V,$,undefined){
 		$(document).on("click", '.play', _onClickPlayVideo);
 		$(document).on("click", '.transportbar', _onClickTransportBar);
 		$(document).on("click", '.hide_button', _hide);
+		$(document).on("click", '.hide_button2', _show);
+				
 
 
 	}
@@ -95,7 +97,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox =  $("<div class='videoBox'></div>");
 		$(evideoDOM).append(videoBox);
 
-		$(videoBox).append($("<div class = 'hide_button2' onClick= '_show()'>x</div>"));
+		$(videoBox).append($("<div class = 'hide_button2'>x</div>"));
 
 		var videoDiv =  $("<div class = 'videoDiv'></div>");
 		$(videoBox).append(videoDiv);
@@ -139,7 +141,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(video).on("loadeddata", function(){
 			if(video.readyState == 4){
 				_init(video,evideoJSON);
-				var t = _secondsTimeSpanToHMS(video.duration.toFixed(2));
+				var t = _secondsTimeSpanToHMS(video.duration.toFixed(0));
 						$('.duration').html(t);
 			duracion = video.duration.toFixed(2);
 			} else {
@@ -358,7 +360,7 @@ var _eraseBalls = function(){
 
 var _curTimeUpdate = function(evt) {
 	var bar_width = $('.positionview').outerWidth();;
-	var tiemp = video.currentTime.toFixed(2);
+	var tiemp = video.currentTime.toFixed(1);
 	$(".curTime").html(tiemp);
 	
 	var percentWidth = (100*video.currentTime)/video.duration;
