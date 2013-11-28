@@ -52,6 +52,7 @@ VISH.Viewer = (function(V,$,undefined){
 	var _initAferStatusLoaded = function(options,presentation){	
 		V.Flashcard.init();
 		V.VirtualTour.init();
+		V.EVideo.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
