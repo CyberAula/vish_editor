@@ -185,10 +185,10 @@ var _init = function(video,evideoJSON){
 
 		if (video.paused == false) {
 			video.pause();
-			$(".play").attr("src","images/evideo/play.png");
+			$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/play.png");
 		} else {
 			video.play();
-			$(".play").attr("src","images/evideo/pause.png");
+			$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/pause.png");
 		}
 }
 
@@ -196,9 +196,8 @@ var _init = function(video,evideoJSON){
 
 
 	var _onClickTransportBar = function(evt){
-		var container = V.Slides.getCurrentSlide();
 
-		var video = $(container).find("video")[0];
+		var video = _getCurrentEVideo();
 		console.log("SEEK");
 		console.log(video);
 
@@ -254,6 +253,7 @@ var _init = function(video,evideoJSON){
 	}
 
 	var _popUp = function(callback, ball){
+	var video = _getCurrentEVideo();
 	video.pause();
 	var slide = ball.slide_id;
 	ball.showed = true;
@@ -268,6 +268,7 @@ var _init = function(video,evideoJSON){
 
 
 var _onCloseSubslide = function(){
+	var video = _getCurrentEVideo();
 	var prevNextBall = nextBall;
 	_getNextBall(video.currentTime);
 	if(nextBall-prevNextBall < RANGE){
@@ -296,24 +297,27 @@ var _getBalls = function(evideoJSON){
 
 
 var _paintIndex = function(){
+	var video = _getCurrentEVideo();
 	for (i = 0; i < balls.length; i++) {
 		var item = document.createElement('li');
 		item.id = balls[i].id;
 		var link = document.createElement('a');
-		link.setAttribute('ident', balls[i].id);
+		link.setAttribute('ident', i);
 		link.setAttribute('time', balls[i].time);
 		link.innerHTML = balls[i].id + ': ' + balls[i].slide_id + ' ---> '+  balls[i].time;
 		$(item).append(link);
-		$(".chapters").append(item);
+		$(V.Slides.getCurrentSlide()).find(".chapters").append(item);
 	}
-		$(".chapters li a").on("click", function(event){
+
+		$(V.Slides.getCurrentSlide()).find(".chapters li a").on("click", function(event){
 		video.currentTime = $(event.target).attr("time");
 	    _popUp(_onCloseSubslide,balls[parseInt($(event.target).attr("ident"))]); //migrated to JQuery working
 	});
 }
 var _videoPlayPause = function(evt) {
+	var video = _getCurrentEVideo();
 	if (evt.keyCode == "32") { // space bar
-		_togglePlay();
+		_togglePlay(video);
 	}
 	if (evt.keyCode == "13") { // enter key
 		seekChapter(this.getAttribute('data-chapter'));
@@ -331,22 +335,23 @@ var _paintBalls = function(){
 }
 
 var _paintBall = function(ballJSON){
-	var segmentDiv = $(".segmentDiv");
+	var video = _getCurrentEVideo();
+	var segmentDiv = $(V.Slides.getCurrentSlide()).find(".segmentDiv");
 	var ball = document.createElement('li');
 	var marker = document.createElement('div');
-	var segments = 	$('.segments');
-	var position = $('transportbar');
+	var segments = 	$(V.Slides.getCurrentSlide()).find(".segments");
+	var position = $(V.Slides.getCurrentSlide()).find(".transportbar");
 	$(segmentDiv).append(marker);
 	$(segments).append(ball);
 	marker.className = 'marker';
 	ball.className = 'ball';
 	var time = parseFloat(ballJSON.time);
    	var duration = parseFloat(video.duration);
-   	var bar_width = $('.positionview').width();
+   	var bar_width = $(V.Slides.getCurrentSlide()).find(".positionview").width();
 
    	var perc = bar_width / duration;
-   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($('.segments').width()))  + 0.85 + "%"; //we add 8 to adjust the ball
-   	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($('.transportbar').width())) + 0.2 + "%";
+   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($(segments).width()))  + 0.85 + "%"; //we add 8 to adjust the ball
+   	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($(position).width())) + 0.2 + "%";
    	ball.onclick = function () {
 		video.currentTime = time;
 		_popUp(_onCloseSubslide,ballJSON);
@@ -354,14 +359,15 @@ var _paintBall = function(ballJSON){
 }
 
 var _eraseBalls = function(){
-	$(".segmentDiv").html('');
-	$(".segments").html('');
+	$(V.Slides.getCurrentSlide()).find(".segmentDiv").html('');
+	$(V.Slides.getCurrentSlide()).find(".segments").html('');
 }
 
 var _curTimeUpdate = function(evt) {
-	var bar_width = $('.positionview').outerWidth();;
+	var video = _getCurrentEVideo();
+	var bar_width = $(V.Slides.getCurrentSlide()).find(".positionview").outerWidth();;
 	var tiemp = video.currentTime.toFixed(1);
-	$(".curTime").html(tiemp);
+	$(V.Slides.getCurrentSlide()).find(".curTime").html(tiemp);
 	
 	var percentWidth = (100*video.currentTime)/video.duration;
 	// var wid = (Math.round(bar_width*video.currentTime/video.duration) * 100)/($('.transportbar').width()) + "%";
@@ -371,11 +377,11 @@ var _curTimeUpdate = function(evt) {
 }
 
 var _hide = function() {
-	$('.transcriptBox').hide();
-	$('.hide_button2').show();
-	$('.videoBox').css("width", '90%');
-	$(".videoDiv").css("width", '100%');
-	$('.controls').css("width", '100%');
+	$(V.Slides.getCurrentSlide()).find(".transcriptBox").hide();
+	$(V.Slides.getCurrentSlide()).find(".hide_button2").show();
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '90%');
+	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
+	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
 	_eraseBalls();
 	_paintBalls();
 }
@@ -386,11 +392,11 @@ var _hide = function() {
 */
 
 var _show = function(){
-	$('.videoBox').css("width", '60%');
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '60%');
 	_eraseBalls();
 	_paintBalls();
-	$('.transcriptBox').show();
-	$('.hide_button2').hide();
+	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
+	$(V.Slides.getCurrentSlide()).find(".hide_button2").hide();
 }
 
 var _secondsTimeSpanToHMS = function(s) {
