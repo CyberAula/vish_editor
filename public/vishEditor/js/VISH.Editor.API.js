@@ -447,7 +447,7 @@ VISH.Editor.API = (function(V,$,undefined){
 			if(typeof successCallback == "function"){
 				setTimeout(function(){
 					successCallback(V.Samples.API.thumbnailsList);
-				}, 2000);
+				}, 1000);
 			};
 			return;
 		};

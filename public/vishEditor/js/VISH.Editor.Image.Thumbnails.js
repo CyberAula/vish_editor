@@ -6,6 +6,7 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 	// var thumbnailsData;
 	var thumbnailsRequested = false;
 	var dataDrawed = false;
+	var t1;
 
 	
 	var init = function() {
@@ -17,6 +18,7 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 	var onLoadTab = function(){
 		if(!thumbnailsRequested){
 			thumbnailsRequested = true;
+			t1 = Date.now();
 			_requestThumbnails();
 		}
 	};
@@ -40,7 +42,12 @@ VISH.Editor.Image.Thumbnails = (function(V,$,undefined){
 		// if(!thumbnailsData){
 		// 	thumbnailsData = data;
 		// }
-		_loadData(data);
+
+		//Give some extra time to effectively show the fancybox
+		var t2 = Math.max(1250-(Date.now()-t1),0);
+		setTimeout(function(){
+			_loadData(data);
+		},t2);
 	};
 
 	var _loadData = function(data){
