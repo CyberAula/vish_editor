@@ -329,6 +329,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(typeof V.Slides.getCurrentSlide() != "undefined"){
 				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+				V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 				V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
 			}
 		});
