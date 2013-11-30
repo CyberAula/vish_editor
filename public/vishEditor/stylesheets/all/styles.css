@@ -551,8 +551,7 @@ button#closeButton {
 	border: none;
 	outline: none;
 	font-size: 40px;
-	max-width: 200px;
-	min-width: 40px;
+	/*min-width: 40px; width is adjusted via javascript, including a min value */
 }
 
 #back_arrow, #forward_arrow {
