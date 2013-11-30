@@ -5,7 +5,6 @@ VISH.Constant.QZ_TYPE.OPEN = "open";
 VISH.Constant.QZ_TYPE.MCHOICE = "multiplechoice";
 VISH.Constant.QZ_TYPE.TF = "truefalse";
 
-var global;
 
 VISH.QuizCharts = (function(V,$,undefined){
   
