@@ -3,6 +3,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 	// URL in the form: "http://localhost:3000/quiz_sessions/"
 	var quizSessionAPIrootURL;
 
+	// Just for developping
+	var getResultsCount = 0;
+
 	var init = function(quizSessionAPI){
 		if((typeof quizSessionAPI == "object")&&(typeof quizSessionAPI.rootURL == "string")){
 			quizSessionAPIrootURL = quizSessionAPI.rootURL;
@@ -175,8 +178,21 @@ VISH.Quiz.API = (function(V,$,undefined){
 		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 			//Test
 
+			//Empty
+			var data;
+			if(getResultsCount<1){
+				//Empty data
+				data = [];
+			} else if(getResultsCount<3){
+				data = [{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-30T12:35:05Z","id":82,"quiz_session_id":59}];
+			} else {
+				data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:49:59Z","id":74,"quiz_session_id":56},{"answer":"[{\"no\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:03Z","id":75,"quiz_session_id":56},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:07Z","id":76,"quiz_session_id":56},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:12Z","id":77,"quiz_session_id":56},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:15Z","id":78,"quiz_session_id":56},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:19Z","id":79,"quiz_session_id":56},{"answer":"[{\"no\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:23Z","id":80,"quiz_session_id":56}];
+			}
+			getResultsCount++;
+
+
 			//MC (Multiple Choice)
-			var data = [{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:22Z","id":63,"quiz_session_id":50},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:25:13Z","id":64,"quiz_session_id":50}];
+			// var data = [{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:22Z","id":63,"quiz_session_id":50},{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:25:13Z","id":64,"quiz_session_id":50}];
 
 			// MC with only one result
 			// var data = [{"answer":"[{\"no\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31}];
@@ -186,7 +202,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			// TF Quizz (True/False)
 			// var data = [{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"false\"},{\"no\":\"3\",\"answer\":\"true\"},{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:10:23Z","id":30,"quiz_session_id":19},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"false\"},{\"no\":\"3\",\"answer\":\"false\"},{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:10:37Z","id":31,"quiz_session_id":19},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"true\"},{\"no\":\"3\",\"answer\":\"false\"},{\"no\":\"4\",\"answer\":\"false\"}]","created_at":"2013-05-13T13:10:52Z","id":32,"quiz_session_id":19},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"false\"},{\"no\":\"3\",\"answer\":\"true\"},{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:11:09Z","id":33,"quiz_session_id":19},{"answer":"[{\"no\":\"1\",\"answer\":\"true\"},{\"no\":\"2\",\"answer\":\"false\"},{\"no\":\"3\",\"answer\":\"true\"},{\"no\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:11:41Z","id":34,"quiz_session_id":19}];
-
+			
 			if(typeof successCallback=="function"){
 				setTimeout(function(){
 					successCallback(data);
