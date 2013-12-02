@@ -49,7 +49,8 @@ VISH.Viewer = (function(V,$,undefined){
 		});
 	};
 
-	var _initAferStatusLoaded = function(options,presentation){	
+	var _initAferStatusLoaded = function(options,presentation){
+		V.EventsNotifier.init();	
 		V.Flashcard.init();
 		V.VirtualTour.init();
 		V.EVideo.init();
@@ -62,7 +63,6 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Storage.init();
 		V.Recommendations.init(options);
 		V.Events.init();
-		V.EventsNotifier.init();
 		V.VideoPlayer.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);

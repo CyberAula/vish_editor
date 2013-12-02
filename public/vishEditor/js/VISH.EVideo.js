@@ -36,7 +36,10 @@ VISH.EVideo = (function(V,$,undefined){
 		$(document).on("click", '.hide_button', _hide);
 		$(document).on("click", '.hide_button2', _show);
 				
-
+		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
+			var subslide_id = params.slideNumber;
+			_onCloseSubslide(subslide_id);
+		});
 
 	}
 
@@ -254,30 +257,23 @@ var _init = function(video,evideoJSON){
 	}
 
 	var _popUp = function(callback, ball){
-	var video = _getCurrentEVideo();
-	video.pause();
-	var slide = ball.slide_id;
-	ball.showed = true;
-	var a = confirm(slide);
-	if(a){
-		if(typeof callback == "function"){
-			callback();
-		}
-		}
+		var video = _getCurrentEVideo();
+		video.pause();
+		var slide_id = ball.slide_id;
+		ball.showed = true;
+		V.Slides.openSubslide(slide_id,true);
 	}
 
-
-
-var _onCloseSubslide = function(){
-	var video = _getCurrentEVideo();
-	var prevNextBall = nextBall;
-	_getNextBall(video.currentTime);
-	if(nextBall-prevNextBall < RANGE){
-		_popUp(_onCloseSubslide,nextBall);		
-	} else {
-		video.play();
+	var _onCloseSubslide = function(subslide_id){
+		var video = _getCurrentEVideo();
+		var prevNextBall = nextBall;
+		_getNextBall(video.currentTime);
+		if(nextBall-prevNextBall < RANGE){
+			_popUp(_onCloseSubslide,nextBall);		
+		} else {
+			video.play();
+		}
 	}
-}
 
 var _getBalls = function(evideoJSON){
 	for (i = 0; i < evideoJSON.pois.length; i++) {
