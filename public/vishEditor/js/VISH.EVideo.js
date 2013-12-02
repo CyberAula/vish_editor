@@ -187,10 +187,10 @@ var _init = function(video,evideoJSON){
 	}
 
 	var _togglePlay = function(video){
+		console.log("entro en _togglePlay");
 		video = _getCurrentEVideo();
 		if (video.paused == false) {
 			video.pause();
-
 			$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/play.png");
 		} else {
 			video.play();
@@ -283,6 +283,7 @@ var _init = function(video,evideoJSON){
 			if(state_vid == true){
 			console.log("state_vid == true");
 			video.play(); // we have to know the previous state of the video
+			$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/pause.png");
 		}else{
 			console.log("state_vid == false");
 			video.pause();
@@ -323,6 +324,7 @@ var _paintIndex = function(){
 
 		$(V.Slides.getCurrentSlide()).find(".chapters li a").on("click", function(event){
 		video.currentTime = $(event.target).attr("time");
+		$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/play.png");
 	    _popUp(_onCloseSubslide,balls[parseInt($(event.target).attr("ident"))]); //migrated to JQuery working
 	});
 }
