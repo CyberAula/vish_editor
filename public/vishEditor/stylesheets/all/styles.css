@@ -1643,7 +1643,7 @@ img.loading_presentation_carrousel {
 .time {
  	display: inline;
     float: right;
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-left: 2%;
     max-width: 18%;
     overflow: hidden;

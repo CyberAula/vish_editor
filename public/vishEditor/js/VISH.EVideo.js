@@ -1,6 +1,7 @@
 VISH.EVideo = (function(V,$,undefined){
 
 	var evideos;
+	var state_vid;
 	var video; 
 	var duracion;
 	var balls = []; // Ball array time-ordered
@@ -39,6 +40,7 @@ VISH.EVideo = (function(V,$,undefined){
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			var subslide_id = params.slideNumber;
 			_onCloseSubslide(subslide_id);
+			console.log("he cerrado la slide");
 		});
 
 	}
@@ -258,9 +260,16 @@ var _init = function(video,evideoJSON){
 
 	var _popUp = function(callback, ball){
 		var video = _getCurrentEVideo();
+		if (video.paused == false) {
+			state_vid = true;
+		}else{
+			state_vid = false;
+		}
 		video.pause();
 		var slide_id = ball.slide_id;
 		ball.showed = true;
+
+
 		V.Slides.openSubslide(slide_id,true);
 	}
 
@@ -271,8 +280,14 @@ var _init = function(video,evideoJSON){
 		if(nextBall-prevNextBall < RANGE){
 			_popUp(_onCloseSubslide,nextBall);		
 		} else {
-			video.play();
+			if(state_vid == true){
+			console.log("state_vid == true");
+			video.play(); // we have to know the previous state of the video
+		}else{
+			console.log("state_vid == false");
+			video.pause();
 		}
+	}
 	}
 
 var _getBalls = function(evideoJSON){
@@ -363,13 +378,14 @@ var _eraseBalls = function(){
 var _curTimeUpdate = function(evt) {
 	var video = _getCurrentEVideo();
 	var bar_width = $(V.Slides.getCurrentSlide()).find(".positionview").outerWidth();;
-	var tiemp = video.currentTime.toFixed(1);
-	$(V.Slides.getCurrentSlide()).find(".curTime").html(tiemp);
+	var tiemp = video.currentTime.toFixed(0);
+	var tiemph= _secondsTimeSpanToHMS(tiemp);
+	$(V.Slides.getCurrentSlide()).find(".curTime").html(tiemph);
 	
 	var percentWidth = (100*video.currentTime)/video.duration;
 	// var wid = (Math.round(bar_width*video.currentTime/video.duration) * 100)/($('.transportbar').width()) + "%";
-	console.log("percentWidth");
-	console.log(percentWidth);
+	//console.log("percentWidth");
+	//console.log(percentWidth);
 	$(V.Slides.getCurrentSlide()).find(".position").css("width", percentWidth + "%"); //for the html to draw
 }
 
