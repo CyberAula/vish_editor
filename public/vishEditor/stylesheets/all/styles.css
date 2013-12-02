@@ -98,7 +98,7 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 .slides > article.far-past {
-	display: block;
+	display: none;
 	transform: translate(-230%);
 	-o-transform: translate(-230%);
 	-ms-transform: translate(-230%);
@@ -138,7 +138,7 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 .slides > article.far-next {
-	display: block;
+	display: none;
 	transform: translate(230%);
 	-o-transform: translate(230%);
 	-ms-transform: translate(230%);

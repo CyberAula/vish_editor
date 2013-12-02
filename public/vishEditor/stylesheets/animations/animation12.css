@@ -55,42 +55,6 @@ section.slides:not(.slides_editor) > article.current {
 	-webkit-perspective: none;
 }
 
-section.slides:not(.slides_editor) > article.current > div{
-  opacity: 1;
-}
-
-section.slides:not(.slides_editor) > article.next > div {
-	opacity: 0;
-	-webkit-transition: all 1s linear ;
-	-moz-transition: all 1s linear;
-	-o-transition: all 1s linear;
-	transition: all 1s linear;
-}
-
-section.slides:not(.slides_editor) > article.past > div{
-	opacity: 0;
-	-webkit-transition: all 1s linear ;
-	-moz-transition: all 1s linear;
-	-o-transition: all 1s linear;
-	transition: all 1s linear;
-}
-
-section.slides:not(.slides_editor) > article.far-next {
-	opacity: 0;
-	-webkit-transition: all 1s linear ;
-	-moz-transition: all 1s linear;
-	-o-transition: all 1s linear;
-	transition: all 1s linear;
-}
-
-section.slides:not(.slides_editor) > article.far-past {
-	opacity: 0;
-	-webkit-transition: all 1s linear ;
-	-moz-transition: all 1s linear;
-	-o-transition: all 1s linear;
-	transition: all 1s linear;
-}
-
 section.slides:not(.slides_editor) > article.next {
 	top: 50%;
 	left: 143%;
@@ -124,6 +88,27 @@ section.slides:not(.slides_editor) > article.far-next {
 	transform: rotateY( 180deg ) rotateZ( 0deg ) scale(0.65);
 	display: block;
 }
+
+section.slides:not(.slides_editor) > article.current > div{
+  opacity: 1;
+}
+
+section.slides:not(.slides_editor) > article.next > div {
+	opacity: 0;
+	-webkit-transition: all 1s linear ;
+	-moz-transition: all 1s linear;
+	-o-transition: all 1s linear;
+	transition: all 1s linear;
+}
+
+section.slides:not(.slides_editor) > article.past > div{
+	opacity: 0;
+	-webkit-transition: all 1s linear ;
+	-moz-transition: all 1s linear;
+	-o-transition: all 1s linear;
+	transition: all 1s linear;
+}
+
 
 section.slides:not(.slides_editor) {
 	-webkit-perspective: 1500px;
