@@ -374,14 +374,15 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var exportToJSON = function(){
+		var t1 = Date.now();
 		V.Utils.Loader.startLoading();
 		V.Editor.Presentation.File.exportToJSON(function(){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
-			//on error
+			var diff = t1 - Date.now();
 			setTimeout(function(){
-				V.Utils.Loader.onCloseLoading();
+				//on error
 				var options = {};
 				options.width = 600;
 				options.height = 185;
@@ -392,8 +393,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					$.fancybox.close();
 				}
 				options.buttons = [button1];
+				V.Utils.Loader.onCloseLoading();
 				V.Utils.showDialog(options);
-			},500);
+			},Math.max(1250-diff,0));
 		});
 	};
 

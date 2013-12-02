@@ -220,25 +220,30 @@ VISH.Utils.Loader = (function(V,undefined){
 			t1Loading = Date.now();
 			$("#fancyLoad").trigger('click');
 		}
-	}
+	};
 
 	var stopLoading = function(callback){
 		var diff = Date.now()-t1Loading;
-		if(diff < 800){
+
+		if(diff < 1250){
 			setTimeout(function(){
 				stopLoading(callback);
-			},800);
+			},Math.min(1250-diff,1250));
 		} else {
 			var closed = false;
+			var tWClose = 0;
 			if(_isFullLoadingActive()){
 				$.fancybox.close();
 				closed = true;
+				tWClose = 800;
 			}
 			if(typeof callback == "function"){
-				callback(closed);
+				setTimeout(function(){
+					callback(closed);
+				},tWClose);
 			}
 		}
-	}
+	};
 
 	/*
 	* Called when loading panel is going to be closed by another fancybox
@@ -246,11 +251,11 @@ VISH.Utils.Loader = (function(V,undefined){
 	*/
 	var onCloseLoading = function(){
 		$("#fancybox-outer").css("background", "white");
-	}
+	};
 
 	var _isFullLoadingActive = function(){
 		return $("#loading_fancy").is(":visible");
-	}
+	};
 
 	var startLoadingInContainer = function(container,options){
 		$(container).html($("#loading_fancy_wrapper").html());
@@ -259,12 +264,12 @@ VISH.Utils.Loader = (function(V,undefined){
 		if((options)&&(options.style)){
 			$(container).find(".loading_fancy_img").addClass(options.style);
 		}
-	}
+	};
 
 	var stopLoadingInContainer = function(container){
 		$(container).find(".loading_fancy_img").parent().remove();
 		$(container).removeClass("loadingtmpShown");
-	}
+	};
 
 	return {
 		loadImagesOnContainer		: loadImagesOnContainer,
