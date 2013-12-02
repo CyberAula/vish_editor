@@ -159,7 +159,11 @@ VISH.Utils.Loader = (function(V,undefined){
 		if(typeof callback == "function"){
 
 			//calling a function after the css is loaded (Firefox & Google Chrome)
-			link.onload = function () {
+			link.onload = function(){
+				callback();
+			}
+
+			link.onerror = function(){
 				callback();
 			}
 

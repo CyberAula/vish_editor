@@ -99,51 +99,26 @@ this can not be done with show() and hide() because then it remains with display
 
 .slides > article.far-past {
 	display: none;
-	transform: translate(-230%);
-	-o-transform: translate(-230%);
-	-ms-transform: translate(-230%);
-	-moz-transform: translate(-230%);
-	-webkit-transform: translate3d(-230%, 0, 0);
 	pointer-events: none;
 }
 
 .slides > article.past {
 	display: block;
-	transform: translate(-115%);
-	-o-transform: translate(-115%);
-	-ms-transform: translate(-115%);
-	-moz-transform: translate(-115%);
-	-webkit-transform: translate3d(-115%, 0, 0);
 	pointer-events: none;
 }
 
 .slides > article.current {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-ms-transform: translate(0);
-	-moz-transform: none;
-	-webkit-transform: translate3d(0, 0, 0);
 	z-index: 1076;
 }
 
 .slides > article.next {
 	display: block;
-	transform: translate(115%);
-	-o-transform: translate(115%);
-	-ms-transform: translate(115%);
-	-moz-transform: translate(115%);
-	-webkit-transform: translate3d(115%, 0, 0);
 	pointer-events: none;
 }
 
 .slides > article.far-next {
 	display: none;
-	transform: translate(230%);
-	-o-transform: translate(230%);
-	-ms-transform: translate(230%);
-	-moz-transform: translate(230%);
-	-webkit-transform: translate3d(230%, 0, 0);
 	pointer-events: none;
 }
 
