@@ -4,6 +4,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var tagsLoaded = false;
 	var themeScrollbarCreated = false;
 
+	//Timers
+	var t1;
+
 	//LOM
 	var LOM_Difficulty;
 
@@ -104,6 +107,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			options.order = true;
 			options.titleArray = imagesArrayTitles;
 			options.callback = _onThemeImagesLoaded;
+			var t1 = Date.now();
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		} else {
 			//Select and move to current theme
@@ -206,6 +210,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onThemeImagesLoaded = function(){
+
+		var diff = Date.now()-t1;
+		if(diff<500){
+			setTimeout(function(){
+				_onThemeImagesLoaded();
+			},500-diff);
+			return;
+		}
+
 		//Add class to title elements and events
 		$("#" + themeScrollbarDivId).find("img.image_barbutton").each(function(index,img){
 			//Add class to title
