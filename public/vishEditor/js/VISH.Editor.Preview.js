@@ -63,7 +63,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		}
 
 		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] != "object")){
-			presentationPreview = V.Editor.savePresentation({preview: true});
+			presentationPreview = V.Editor.savePresentation();
 		} else {
 			presentationPreview = options["presentationJSON"];
 		}

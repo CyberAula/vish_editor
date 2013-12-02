@@ -7,7 +7,7 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		var features = {};
 
 		//Fullscreen support
-		var elem = document.getElementById("page-fullscreen");
+		var elem = document.createElement('div');
 		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
 			features.fullscreen = true;
 		} else {
@@ -21,7 +21,13 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		features.localStorage = V.Storage.checkLocalStorageSupport();
 
 		//Session management
-		features.history = (typeof history === "object")&&(typeof history.back === "function")&&(typeof history.go === "function");
+		features.history = ((typeof history === "object")&&(typeof history.back === "function")&&(typeof history.go === "function"));
+
+		if((features.history)&&(typeof history.pushState == "function")){
+			features.historypushState = true;
+		} else {
+			features.historypushState = false;
+		}
 
 		//FileReader API
 		if (window.File && window.FileReader && window.FileList && window.Blob) {

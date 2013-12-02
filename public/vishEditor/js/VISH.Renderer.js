@@ -269,20 +269,12 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderApplet = function(element, template){
 		return "<div id='"+element['id']+"' class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";
 	};
-	
-	/**
-	 * Function to render a flashcard inside an article (a slide)
-	 * we only add canvas inside the div element
-	 * the flashcard will be drawn inside the canvas element
-	 */
-	var _renderFlashcard = function(element, template){
-		return "<div id='"+element['id']+"' class='template_flashcard'><canvas id='"+element['canvasid']+"'>Your browser does not support canvas</canvas></div>";
-	};
+
 
 	return {
-		init        : init,
-		renderVideo : renderVideo,
-		renderSlide : renderSlide
+		init        	: init,
+		renderVideo 	: renderVideo,
+		renderSlide 	: renderSlide
 	};
 
 }) (VISH,jQuery);

@@ -340,6 +340,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperPreview).attr('wmode','opaque');
 		$(wrapperPreview).removeAttr('width');
 		$(wrapperPreview).removeAttr('height');
+		//Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperPreview).attr("scrolling") != "undefined"){
+			$(wrapperPreview).attr("scrolling","auto");
+		}
 		return wrapperPreview;
 	}
 	
@@ -454,6 +458,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperTag).css('pointer-events', "none");
 		$(wrapperTag).attr('class', template + "_object");
 		$(wrapperTag).attr('wmode', "opaque");
+		//Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperTag).attr("scrolling") != "undefined"){
+			$(wrapperTag).attr("scrolling","auto");
+		}
 
 		$(current_area).html("");
 		$(current_area).append(wrapperDiv);

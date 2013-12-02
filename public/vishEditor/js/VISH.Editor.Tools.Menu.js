@@ -27,15 +27,31 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					event.preventDefault();
 					if($(menuButton).parent().hasClass("menu_item_disabled")){
 						//Disabled button
-						return;
+						return false;
 					}
 					if(typeof V.Editor.Tools.Menu[$(menuButton).attr("action")] == "function"){
 						V.Editor.Tools.Menu[$(menuButton).attr("action")](this);
 						_hideMenuAfterAction();
 					}
+					return false;
 				});
 			});
 
+			//Prevent iframe to move
+			if(V.Status.getDevice().desktop){
+				$("a.menu_option_main, a.menu_option:not('.menu_action')").on("click", function(event){
+					event.preventDefault();
+					return false;
+				});
+			}
+
+			//EditorAdapter
+			var options = V.Utils.getOptions();
+			//Check exit option in menu
+			if(typeof options.exitURL != "string"){
+				$(".menu_option.menu_action[action='exit']").parent().hide();
+			}
+			
 			_initialized = true;
 		}
 		$("#menu").show();
@@ -67,7 +83,18 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	/////////////////
 
 	var onSaveButtonClicked = function(){
-		onPublishButtonClicked();
+		V.Editor.Tools.changeSaveButtonStatus("loading");
+		var presentation = V.Editor.savePresentation();
+		V.Editor.sendPresentation(presentation,"save",function(){
+			//onSave succesfully
+			// V.Debugging.log("onSave succesfully");
+			// V.Debugging.log(presentation);
+			V.Editor.Tools.changeSaveButtonStatus("disabled");
+		}, function(){
+			//error onSave
+			// V.Debugging.log("onSave failure");
+			V.Editor.Tools.changeSaveButtonStatus("enabled");
+		});
 	}
 
 	/**
@@ -110,6 +137,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			return;
 		}
 
+		//Competitions (deprecated)
 		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
 			_competitionsModalShown = true;
 			var options = {};
@@ -120,26 +148,24 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 			options.onClosedCallback = function(){
 				setTimeout(function(){
-						VISH.Editor.Tools.Menu.onPublishButtonClicked()
-					}, 500);
-
+						V.Editor.Tools.Menu.onPublishButtonClicked();
+				}, 500);
 			};
 			
 			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-
-			options.middlerow = V.Editor.Competitions.generateForm();			
+			options.middlerow = V.Editor.Competitions.generateForm();		
 			options.middlerowExtraClass = "competitions_options";
 
 			var button1 = {};
 			button1.text = V.I18n.getTrans("i.Done");
 			button1.extraclass = "competi_disabled";
 			button1.callback = function(){
-				$.fancybox.close();				
+				$.fancybox.close();	
 			}
 			var button2 = {};
 			button2.text = V.I18n.getTrans("i.NoThanks");
 			button2.callback = function(){
-				$.fancybox.close();				
+				$.fancybox.close();			
 			}
 			options.buttons = [button1, button2];
 			V.Utils.showDialog(options);
@@ -148,10 +174,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 
 		var options = {};
-		options.width = 400;
-		options.height = 140;
-		options.notificationIconSrc = V.ImagesPath + "icons/save_document.png";
-		options.text = V.I18n.getTrans("i.areyousureNotification");
+		options.width = 600;
+		options.height = 200;
+		options.notificationIconSrc = V.ImagesPath + "icons/publish_icon.png";
+		options.notificationIconClass = "publishNotificationIcon";
+		options.text = V.I18n.getTrans("i.Publish_confirmation");
 		options.buttons = [];
 
 		var button1 = {};
@@ -161,29 +188,72 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 		options.buttons.push(button1);
 
-		if(((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)&&(V.Editor.isPresentationDraft()))||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
-			var button2 = {};
-			button2.text = V.I18n.getTrans("i.draft");
-			button2.callback = function(){
-				var presentation = V.Editor.savePresentation();
-				V.Editor.afterSavePresentation(presentation,"draft");
-				$.fancybox.close();
-			}
-			options.buttons.push(button2);
-		}
+		var button2 = {};
+		button2.text = V.I18n.getTrans("i.publish");
 
-		var button3 = {};
-		if((V.Configuration.getConfiguration()["mode"]==V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER)){
-			button3.text = V.I18n.getTrans("i.publish");
-		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.STANDALONE){
-			button3.text = V.I18n.getTrans("i.save");
-		}
-		button3.callback = function(){
+		button2.callback = function(){
+			V.Editor.Tools.changePublishButtonStatus("publishing");
 			var presentation = V.Editor.savePresentation();
-			V.Editor.afterSavePresentation(presentation,"publish");
+			V.Editor.sendPresentation(presentation,"publish", function(data){
+				//onSuccess
+
+				switch(V.Configuration.getConfiguration().mode){
+					case V.Constant.VISH:
+						V.Editor.Events.allowExitWithoutConfirmation();
+						window.top.location.href = data.url;
+						break;
+					case V.Constant.NOSERVER:
+						// V.Debugging.log("Published presentation");
+						// V.Debugging.log(presentation);
+						V.Editor.Preview.preview();
+						V.Editor.Tools.changePublishButtonStatus("unpublish");
+						break;
+					case V.Constant.STANDALONE:
+						break;
+				}
+			}, function(){
+				//onFail
+				V.Editor.Tools.changePublishButtonStatus("publish");
+			});
 			$.fancybox.close();
 		}
-		options.buttons.push(button3);
+		options.buttons.push(button2);
+
+		V.Utils.showDialog(options);
+	};
+
+	var onUnpublishButtonClicked = function(){
+		var options = {};
+		options.width = 600;
+		options.height = 200;
+		options.notificationIconSrc = V.ImagesPath + "icons/unpublish_icon.png";
+		options.notificationIconClass = "publishNotificationIcon";
+		options.text = V.I18n.getTrans("i.Unpublish_confirmation");
+		options.buttons = [];
+
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.cancel");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.text = V.I18n.getTrans("i.unpublish");
+
+		button2.callback = function(){
+			V.Editor.Tools.changePublishButtonStatus("unpublishing");
+			var presentation = V.Editor.savePresentation();
+			V.Editor.sendPresentation(null,"unpublish", function(){
+				//onSuccess
+				V.Editor.Tools.changePublishButtonStatus("publish");
+			}, function(){
+				//onFail
+				V.Editor.Tools.changePublishButtonStatus("unpublish");
+			});
+			$.fancybox.close();
+		}
+		options.buttons.push(button2);
 
 		V.Utils.showDialog(options);
 	};
@@ -212,6 +282,63 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Tour.startTourWithId('about_screen', 'top');
 	}
 
+	var exit = function(){
+
+		if(V.Editor.hasPresentationChanged()){
+			var options = {};
+			options.width = 600;
+			options.height = 200;
+			options.notificationIconSrc = V.ImagesPath + "icons/save_document.png";
+			// options.notificationIconClass = "publishNotificationIcon";
+			options.text = V.I18n.getTrans("i.exitConfirmationMenu");
+			options.buttons = [];
+
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.cancel");
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			options.buttons.push(button1);
+
+			var button2 = {};
+			button2.text = V.I18n.getTrans("i.ExitWSaving");
+			button2.callback = function(){
+				_exitFromVE();
+				$.fancybox.close();
+			}
+			options.buttons.push(button2);
+
+			var button3 = {};
+			button3.text = V.I18n.getTrans("i.SaveAndExit");
+			button3.callback = function(){
+				$("#waiting_overlay").show();
+				V.Editor.Tools.changeSaveButtonStatus("loading");
+				var presentation = V.Editor.savePresentation();
+				V.Editor.sendPresentation(presentation,"save",function(){
+					//onSave succesfully
+					V.Editor.Tools.changeSaveButtonStatus("disabled");
+					_exitFromVE();
+				}, function(){
+					//error onSave
+					V.Editor.Tools.changeSaveButtonStatus("enabled");
+					$("#waiting_overlay").hide();
+				});
+				$.fancybox.close();
+			}
+			options.buttons.push(button3);
+
+			V.Utils.showDialog(options);
+
+		} else {
+			_exitFromVE();
+		}
+	}
+
+	var _exitFromVE = function(){
+		V.Editor.Events.allowExitWithoutConfirmation();
+		window.top.location.href = V.Utils.getOptions().exitURL;
+	}
+
 	var insertSmartcard = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_smartcards_repo');
@@ -225,12 +352,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertSlide = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_slides');
+		return false; //Prevent iframe to move
 	};
 
 	var insertSubslide = function(){
 		V.Editor.setContentAddMode(V.Constant.SLIDESET);
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_slides');
+		return false; //Prevent iframe to move
 	};
 
 	var insertJSON = function(){
@@ -241,16 +370,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertPDFex = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_pdfex');
+		return false; //Prevent iframe to move
 	};
 
 	var exportToJSON = function(){
+		var t1 = Date.now();
 		V.Utils.Loader.startLoading();
 		V.Editor.Presentation.File.exportToJSON(function(){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
+			var diff = t1 - Date.now();
 			setTimeout(function(){
-				V.Utils.Loader.onCloseLoading();
+				//on error
 				var options = {};
 				options.width = 600;
 				options.height = 185;
@@ -261,8 +393,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 					$.fancybox.close();
 				}
 				options.buttons = [button1];
+				V.Utils.Loader.onCloseLoading();
 				V.Utils.showDialog(options);
-			},500);
+			},Math.max(1250-diff,0));
 		});
 	};
 
@@ -292,10 +425,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		exportToJSON 					: exportToJSON,
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
+		onUnpublishButtonClicked		: onUnpublishButtonClicked,
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
-		about							: about
+		about							: about,
+		exit 							: exit
 	};
 
 }) (VISH, jQuery);

@@ -364,7 +364,7 @@ div#tagBoxIntro {
 }
 
 div#tagBoxIntro .tagit {
-	height: 57px;
+	height: 59px;
 }
 
 
@@ -2665,4 +2665,9 @@ div.poi_label_container {
 	height: 102px;
 	margin-bottom: -24px;
 	border-radius: 6px;
+}
+
+.publishNotificationIcon {
+	width: 50px !important;
+	height: 42px !important;
 }

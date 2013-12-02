@@ -63,11 +63,31 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Recommendations.init(options);
 		V.Events.init();
 		V.EventsNotifier.init();
-	  	V.VideoPlayer.init();
-		V.Themes.loadTheme(presentation.theme);
-		V.Animations.loadAnimation(presentation.animation);
-		V.Presentation.init(presentation.slides);
-		V.Quiz.init();
+		V.VideoPlayer.init();
+		V.Themes.loadTheme(presentation.theme, function(){
+			_initAferThemeLoaded(options,presentation);
+		});
+	};
+
+	var _initAferThemeLoaded = function(options,presentation){
+		V.Presentation.init(presentation.slides, function(){
+			_initAferRenderPresentation(options,presentation);
+		});
+	};
+
+	var _initAferRenderPresentation = function(options,presentation){
+		V.VideoPlayer.HTML5.setVideoEvents();
+		V.Animations.loadAnimation(presentation.animation, function(){
+			_initAferAnimationLoaded(options,presentation);
+		})
+	};
+
+	var _initAferAnimationLoaded = function(options,presentation){
+		//we have to update slides AFTER load theme and before anything
+		//This way we prevent undesired behaviours 
+		V.Slides.updateSlides(); 
+
+		V.Quiz.init(); //initQuizAfterRender
 
 		//Init ViSH Editor Addons
 		if(options.addons){
@@ -75,6 +95,7 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); //Also init texts
+		
 
 		if(V.Slides.getCurrentSlideNumber()>0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));

@@ -76,7 +76,16 @@
 	cursor: default !important;
 }
 
-.toolbar_prseentation_title {
+.toolbar_presentation_wrapper_loading {
+	opacity: 0.2;
+	cursor: wait !important;
+}
+
+.toolbar_presentation_wrapper_loading * {
+	cursor: wait !important;
+}
+
+.toolbar_presentation_title {
 	text-align: center;
 	font-size: 12px;
 	padding: 0;

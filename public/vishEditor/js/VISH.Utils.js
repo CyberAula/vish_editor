@@ -851,7 +851,30 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
-   return {
+	/////////////
+	// VERSION MANAGEMENT
+	////////////
+
+	var isObseleteVersion = function(version){
+		return _getVersionValue(V.VERSION) > _getVersionValue(version);
+	};
+
+	var _getVersionValue = function(version){
+		var vValue = 0;
+		var coef = [100,10,1];
+		try {
+			var digits = version.split(".");
+			for(var i=0; i<digits.length; i++){
+				vValue += parseFloat(digits[i])*coef[i];
+			}
+		} catch (e){
+			return 0;
+		}
+		return vValue;
+	};
+
+
+	return {
 		init 					: init,
 		getOptions 				: getOptions,
 		getId					: getId,
@@ -872,7 +895,8 @@ VISH.Utils = (function(V,undefined){
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog
-   };
+		showPNotValidDialog		: showPNotValidDialog,
+		isObseleteVersion		: isObseleteVersion
+	};
 
 }) (VISH);

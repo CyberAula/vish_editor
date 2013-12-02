@@ -103,8 +103,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var bindEditorEventListeners = function(){
 		if((!bindedEventListeners)&amp;&amp;(V.Editing)){
-			var presentation = V.Editor.getPresentation();
-
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
@@ -152,8 +150,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on(&quot;click&quot;, &quot;.change_bg_button&quot;, V.Editor.Tools.changeBackground);
 
+
 			&#x2F;&#x2F;create the functions to add the tags when click on fancybox
-		
 			$(document).on(&quot;click&quot;, &quot;.comp_checkbox input&quot;, V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
@@ -162,6 +160,12 @@ VISH.Editor.Events = (function(V,$,undefined){
 			&#x2F;&#x2F; Slide Enter and Leave events
 			$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;, V.Editor.onSlideEnterEditor);
 			$(&#x27;article&#x27;).live(&#x27;slideleave&#x27;, V.Editor.onSlideLeaveEditor);
+
+			&#x2F;&#x2F;Waiting overlay
+			$(document).on(&#x27;click&#x27;,&quot;#waiting_overlay&quot;, function(event){
+				event.stopPropagation();
+				event.preventDefault();
+			});
 
 			&#x2F;&#x2F;Focus
 			$(window).focus(function(){
@@ -596,9 +600,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 	var _exitConfirmation = function(){
-		if((V.Configuration.getConfiguration().mode===V.Constant.VISH)&amp;&amp;(confirmOnExit)){
-			var confirmationMsg = V.I18n.getTrans(&quot;i.exitConfirmation&quot;);
-			return confirmationMsg;
+		if(confirmOnExit){
+			if(V.Editor.hasPresentationChanged()){
+				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){
+					var confirmationMsg = V.I18n.getTrans(&quot;i.exitConfirmation&quot;);
+					return confirmationMsg;
+				}
+			}
 		} else {
 			return;
 		}

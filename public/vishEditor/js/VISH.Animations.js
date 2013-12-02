@@ -1,12 +1,23 @@
 VISH.Animations = (function(V,$,undefined){
 
 	var loadAnimation = function(animation,callback){
+		if(V.Status.getDevice().mobile){
+			// Don't load any animation for mobile devices
+			// if(typeof callback == "function"){
+			// 	callback();
+			// }
+			// return;
+
+			//Force default animation for mobile devices
+			animation = V.Constant.Animations.Default;
+		}
+
 		if(!animation){
 			animation = V.Constant.Animations.Default;
 		}
 		_unloadAllAnimations();
 		V.Utils.Loader.loadCSS("animations/" + animation + ".css",callback);
-	}
+	};
 
 	var _unloadAllAnimations = function(){
 		var animation_pattern = "(^" + V.StylesheetsPath + "animations/)";
@@ -18,7 +29,7 @@ VISH.Animations = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
 	return {
 		loadAnimation	: loadAnimation

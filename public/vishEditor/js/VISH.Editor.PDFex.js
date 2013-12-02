@@ -78,13 +78,13 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 			},
 			error: function(error){
 				if(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
-					//ignore the error
-					return;
+					//uncomment to ignore the error
+					return; 
 				}
-				setTimeout(function(){
+				V.Utils.Loader.stopLoading(function(){
 					V.Utils.Loader.onCloseLoading();
 					_showErrorDialog();
-				},800);
+				});
 			}
 		});
 	};

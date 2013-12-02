@@ -18,9 +18,9 @@ VISH.Text = (function(V,$,undefined){
 		_adaptPs($("article > div.VEtextArea > p"));
 
 		//Adapt quiz questions
-		_adaptPs($("article > div.quizzContainer > div > p"));
+		_adaptPs($("article div.quizContainer > div > p"));
 		//Adapt quiz answers
-		_adaptPs($("article > div.quizzContainer").find("td > p"));
+		_adaptPs($("article div.quizContainer").find("td > p"));
 
 		//Make Tables responsive
 		$("article > div.VEtextArea > table").each(function(index,table){
