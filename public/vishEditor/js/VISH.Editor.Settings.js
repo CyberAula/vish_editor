@@ -107,7 +107,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			options.order = true;
 			options.titleArray = imagesArrayTitles;
 			options.callback = _onThemeImagesLoaded;
-			var t1 = Date.now();
+			t1 = Date.now();
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		} else {
 			//Select and move to current theme
