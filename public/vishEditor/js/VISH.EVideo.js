@@ -182,9 +182,10 @@ var _init = function(video,evideoJSON){
 	}
 
 	var _togglePlay = function(video){
-
+		video = _getCurrentEVideo();
 		if (video.paused == false) {
 			video.pause();
+
 			$(V.Slides.getCurrentSlide()).find(".play").attr("src","images/evideo/play.png");
 		} else {
 			video.play();
@@ -373,7 +374,7 @@ var _curTimeUpdate = function(evt) {
 	// var wid = (Math.round(bar_width*video.currentTime/video.duration) * 100)/($('.transportbar').width()) + "%";
 	console.log("percentWidth");
 	console.log(percentWidth);
-	$(".position").css("width", percentWidth + "%"); //for the html to draw
+	$(V.Slides.getCurrentSlide()).find(".position").css("width", percentWidth + "%"); //for the html to draw
 }
 
 var _hide = function() {
