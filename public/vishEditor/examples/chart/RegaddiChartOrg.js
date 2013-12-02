@@ -2,18 +2,9 @@
  * Chart.js
  * http://chartjs.org/
  *
- * Original Version
  * Copyright 2013 Nick Downie
  * Released under the MIT license
  * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
- * 
- * Fork by Regaddi
- * https://github.com/Regaddi/Chart.js
- *
- * Some fixes by Aldo
- * Allow tooltips in Firefox and Google Chrome
- * Personalized tooltip content
- *
  */
 
 //Define the global Chart Variable as a class.
@@ -698,7 +689,7 @@ window.Chart = function(context, options){
 					for(var p = 0; p <= pAmount; p++) {
 						points.push({x:width/2+radius*Math.cos(startAngle+p/pAmount*rotateAnimation*angleStep),y:height/2+radius*Math.sin(startAngle+p/pAmount*rotateAnimation*angleStep)});
 					}
-					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].tooltipLabel,value:data[i].tooltipLabel},'PolarArea');
+					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].label,value:data[i].value},'PolarArea');
 				}
 
 				if(config.segmentShowStroke){
@@ -976,7 +967,6 @@ window.Chart = function(context, options){
 
 			for (var i=0; i<data.length; i++){
 				var segmentAngle = rotateAnimation * ((data[i].value/segmentTotal) * (Math.PI*2));
-				segmentAngle=Math.min(Math.PI*1.99999,segmentAngle);
 				ctx.beginPath();
 				ctx.arc(width/2,height/2,scaleAnimation * pieRadius,cumulativeAngle,cumulativeAngle + segmentAngle);
 				ctx.lineTo(width/2,height/2);
@@ -1038,7 +1028,7 @@ window.Chart = function(context, options){
 					for(var p = 0; p <= pAmount; p++) {
 						points.push({x:width/2+pieRadius*Math.cos(cumulativeAngle+p/pAmount*segmentAngle),y:height/2+pieRadius*Math.sin(cumulativeAngle+p/pAmount*segmentAngle)});
 					}
-					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].tooltipLabel,value:data[i].value},'Pie');
+					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].label,value:data[i].value},'Pie');
 				}
 				
 				if(config.segmentShowStroke){
@@ -1099,7 +1089,7 @@ window.Chart = function(context, options){
 					for(var p = pAmount; p >= 0; p--) {
 						points.push({x:width/2+cutoutRadius*Math.cos(cumulativeAngle+p/pAmount*segmentAngle),y:height/2+cutoutRadius*Math.sin(cumulativeAngle+p/pAmount*segmentAngle)});
 					}
-					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].tooltipLabel,value:data[i].value},'Doughnut');
+					registerTooltip(ctx,{type:'shape',points:points},{label:data[i].label,value:data[i].value},'Doughnut');
 				}
 				
 				if(config.segmentShowStroke){
@@ -1160,7 +1150,7 @@ window.Chart = function(context, options){
 				for(var j = 0; j < data.datasets[i].data.length; j++) {
 					if(animPc >= 1 && config.showTooltips) {
 						// register tooltips
-						registerTooltip(ctx,{type:'circle',x:xPos(j),y:yPos(i,j),r:pointRadius},{label:data.tooltipLabels[j],value:data.datasets[i].data[j]},'Line');
+						registerTooltip(ctx,{type:'circle',x:xPos(j),y:yPos(i,j),r:pointRadius},{label:data.labels[j],value:data.datasets[i].data[j]},'Line');
 					}
 				}
 				ctx.stroke();
@@ -1405,7 +1395,7 @@ window.Chart = function(context, options){
 							height = calculateOffset(data.datasets[i].data[j],calculatedScale,scaleHop),
 							y = xAxisPosY-height,
 							width = barWidth;
-						registerTooltip(ctx,{type:'rect',x:x,y:y,width:width,height:height},{label:data.tooltipLabels[j],value:data.datasets[i].data[j]},'Bar');
+						registerTooltip(ctx,{type:'rect',x:x,y:y,width:width,height:height},{label:data.labels[j],value:data.datasets[i].data[j]},'Bar');
 					}
 				}
 			}

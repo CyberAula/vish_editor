@@ -67,13 +67,6 @@ VISH.Editor.Animations = (function(V,$,undefined){
 	};
 
 	var selectAnimation = function(animation){
-		//Save it in the draftPresentation
-		var draftPresentation = V.Editor.getPresentation();
-		if(!draftPresentation){
-			draftPresentation = {};
-		}
-		draftPresentation.animation = animation;
-		V.Editor.setPresentation(draftPresentation);
 		currentAnimation = animation;
 	};
 
@@ -85,14 +78,12 @@ VISH.Editor.Animations = (function(V,$,undefined){
 		}
 	};
 
-
 	var setCurrentAnimation = function(the_animation){
 		if(the_animation!=undefined){
 			currentAnimation = the_animation;
 			V.Editor.Settings.selectAnimation(animation[the_animation].number);
 		}
 	};
-
 
 	return {
 		init				: init,

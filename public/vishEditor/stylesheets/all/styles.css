@@ -90,6 +90,7 @@ this can not be done with show() and hide() because then it remains with display
 /* Allow temp shown to be applied to any element*/
 .temp_shown {
 	display: block !important;
+	opacity: 0 !important;
 }
 
 .temp_hidden {
@@ -97,52 +98,27 @@ this can not be done with show() and hide() because then it remains with display
 }
 
 .slides > article.far-past {
-	display: block;
-	transform: translate(-230%);
-	-o-transform: translate(-230%);
-	-ms-transform: translate(-230%);
-	-moz-transform: translate(-230%);
-	-webkit-transform: translate3d(-230%, 0, 0);
+	display: none;
 	pointer-events: none;
 }
 
 .slides > article.past {
 	display: block;
-	transform: translate(-115%);
-	-o-transform: translate(-115%);
-	-ms-transform: translate(-115%);
-	-moz-transform: translate(-115%);
-	-webkit-transform: translate3d(-115%, 0, 0);
 	pointer-events: none;
 }
 
 .slides > article.current {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-ms-transform: translate(0);
-	-moz-transform: none;
-	-webkit-transform: translate3d(0, 0, 0);
 	z-index: 1076;
 }
 
 .slides > article.next {
 	display: block;
-	transform: translate(115%);
-	-o-transform: translate(115%);
-	-ms-transform: translate(115%);
-	-moz-transform: translate(115%);
-	-webkit-transform: translate3d(115%, 0, 0);
 	pointer-events: none;
 }
 
 .slides > article.far-next {
-	display: block;
-	transform: translate(230%);
-	-o-transform: translate(230%);
-	-ms-transform: translate(230%);
-	-moz-transform: translate(230%);
-	-webkit-transform: translate3d(230%, 0, 0);
+	display: none;
 	pointer-events: none;
 }
 
@@ -550,8 +526,7 @@ button#closeButton {
 	border: none;
 	outline: none;
 	font-size: 40px;
-	max-width: 200px;
-	min-width: 40px;
+	/*min-width: 40px; width is adjusted via javascript, including a min value */
 }
 
 #back_arrow, #forward_arrow {
@@ -1574,8 +1549,8 @@ img.loading_presentation_carrousel {
 	cursor: default !important;
 }
 
-/* Evideo style */
 
+/* Evideo style */
 
 .videoBox{
 	float: left;
@@ -1777,3 +1752,29 @@ img.loading_presentation_carrousel {
     width: 10%;
     height: 100%;
 }
+
+
+/* Waiting overlay */
+#waiting_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0 !important;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+	cursor: wait !important;
+	opacity: 0.8;
+}
+
+
+/* QR Overlay */
+#qr_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+}
+

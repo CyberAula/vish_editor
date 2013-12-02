@@ -79,7 +79,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
-		var presentation = V.Editor.getPresentation();
 
 		//Themes
 		if(!themeScrollbarCreated){
@@ -243,15 +242,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var selectTheme = function(themeNumber){
 		$(".theme_selected_in_scrollbar").removeClass("theme_selected_in_scrollbar");
-		var themeDOM = $("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
-
+		$("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
 		$(".theme_selected_in_fancybox").removeClass("theme_selected_in_fancybox");
-		var themeDOM2 = $("#theme_fancybox div#select_theme"+themeNumber+" img").addClass("theme_selected_in_fancybox");
+		$("#theme_fancybox div#select_theme"+themeNumber+" img").addClass("theme_selected_in_fancybox");
 	}
 
 	var selectAnimation = function(animationNumber){
 		$(".animation_selected_in_fancybox").removeClass("animation_selected_in_fancybox");
-		var themeDOM3 = $("#animation_fancybox div#select_animation"+animationNumber).addClass("animation_selected_in_fancybox");
+		$("#animation_fancybox div#select_animation"+animationNumber).addClass("animation_selected_in_fancybox");
 	}
 
 	var _onInitialTagsReceived = function(data){
@@ -263,7 +261,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
 
 		var tagList = $("#tagBoxIntro .tagList");
-		var draftPresentation = V.Editor.getPresentation();
+		var draftPresentation = V.Editor.getDraftPresentation();
 
 		if ($(tagList).children().length == 0){
 			if(!draftPresentation){
@@ -386,80 +384,68 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if($(event.target).hasClass("buttonDisabledOnSettings")){
 			return;
 		}
-		
-		var updatedPresentation = saveSettings();
-		V.Editor.setPresentation(updatedPresentation);
 
 		$.fancybox.close();
 	};
 
-	var saveSettings = function(presentation){
-		var draftPresentation;
+	var saveSettings = function(){
+		var settings = {};
 
-		if(typeof presentation == "object"){
-			draftPresentation = presentation;
-		} else {
-			draftPresentation = V.Editor.getPresentation();
-			if(!draftPresentation){
-				draftPresentation = {};
-			}
-		}
-
-		draftPresentation.VEVersion = V.VERSION;
-		draftPresentation.type = V.Constant.PRESENTATION;
+		settings.VEVersion = V.VERSION;
+		settings.type = V.Constant.PRESENTATION;
 
 		var title = $('#presentation_details_input_title').val();
 		if((typeof title == "string")&&(title.trim()!="")){
-			draftPresentation.title = title;
+			settings.title = title;
 		}
 
 		var description = $('#presentation_details_textarea').val();
 		if((typeof description == "string")&&(description.trim()!="")){
-			draftPresentation.description = description;
+			settings.description = description;
 		}
 		
 		if(presentationThumbnail){
-			draftPresentation.avatar = presentationThumbnail;
+			settings.avatar = presentationThumbnail;
 		}
 
 		var author = $("#author_span_in_preview").html();
 		if((typeof author == "string")&&(author.trim()!="")){
-			draftPresentation.author = author;
+			settings.author = author;
 		}
 
 		var tags = getTags();
 		if((tags)&&(tags.length > 0)){
-			draftPresentation.tags = tags;
+			settings.tags = tags;
 		}
 
 		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
 		if(typeof  themeNumber == "string"){
-			draftPresentation.theme = "theme" + themeNumber;
+			settings.theme = "theme" + themeNumber;
 		} else {
-			draftPresentation.theme = V.Constant.Themes.Default;
+			settings.theme = V.Constant.Themes.Default;
 		}
 
 		var animationSelection = V.Editor.Animations.getCurrentAnimation().filename;
 		if(typeof  animationSelection == "string"){
-			draftPresentation.animation = animationSelection;
+			settings.animation = animationSelection;
 		} else {
-			draftPresentation.animation = V.Constant.Animations.Default;
+			settings.animation = V.Constant.Animations.Default;
 		}
 
 		//Pedagogical fields
 		var language = $("#language_tag").val();
 		if(typeof language == "string"){
-			draftPresentation.language = language;
+			settings.language = language;
 		}
 		
 		var context = $("#context_tag").val();
 		if((typeof context == "string")&&(context!="unspecified")){
-			draftPresentation.context = context;
+			settings.context = context;
 		}
 
 		var age_range = $("#age_range").val();
 		if(typeof age_range == "string"){
-			draftPresentation.age_range = age_range;
+			settings.age_range = age_range;
 		}
 		
 		var difficultyIndexValue = $("#difficulty_range").attr("difficulty");
@@ -467,13 +453,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(typeof difficultyValue == "object"){
 			var difficulty = difficultyValue.value;
 			if((typeof difficulty == "string")&&(difficulty!="unspecified")){
-				draftPresentation.difficulty = difficulty;
+				settings.difficulty = difficulty;
 			}
 		}
 		
 		var TLT = _getTLT();
 		if(typeof TLT == "string"){
-			draftPresentation.TLT = TLT;
+			settings.TLT = TLT;
 		}
 
 		var subjectsToSave = [];
@@ -487,16 +473,16 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				}
 			}
 			if(subjectsToSave.length>0){
-				draftPresentation.subject = subjectsToSave;
+				settings.subject = subjectsToSave;
 			}
 		}
 		
 		var educational_objectives = $("#educational_objectives_textarea").val();
 		if((typeof educational_objectives == "string")&&(educational_objectives.trim()!="")){
-			draftPresentation.educational_objectives = educational_objectives;
+			settings.educational_objectives = educational_objectives;
 		}
 
-		return draftPresentation;
+		return settings;
 	};
 
 	// Return Typical Learning Time (TLT) compliant to LOM.
@@ -540,7 +526,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if((tagIndex.length>0)&&($(tagIndex).hasClass("tagit"))){
 			return V.Editor.Utils.convertToTagsArray($(tagIndex).tagit("tags"));
 		} else {
-			return V.Editor.getPresentation().tags;
+			var draftPresentation = V.Editor.getDraftPresentation();
+			if(typeof draftPresentation == "object"){
+				return draftPresentation.tags;
+			}
 		}
 	}
 

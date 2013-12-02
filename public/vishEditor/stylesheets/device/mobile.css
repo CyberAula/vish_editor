@@ -36,7 +36,7 @@
 /** Arrows **/
 
 #back_arrow, #forward_arrow{
-  width: 6% !important;
+  min-width: 5% !important;
 }
 
 #back_arrow:hover {

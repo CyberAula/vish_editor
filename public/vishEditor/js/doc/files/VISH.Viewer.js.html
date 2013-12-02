@@ -321,7 +321,12 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var getPresentationType = function(){
-		return getCurrentPresentation().type;
+		var cPresentation = getCurrentPresentation();
+		if(typeof cPresentation == &quot;object&quot;){
+			return cPresentation.type;
+		} else {
+			return undefined;
+		}
 	};
 
 	return {

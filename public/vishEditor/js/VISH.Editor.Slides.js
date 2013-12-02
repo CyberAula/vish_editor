@@ -269,7 +269,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		var slide = $(slide);
 		var slideType = V.Slides.getSlideType(slide);
 		
-		appendSlide(slide);
+		if(V.Slides.getCurrentSlide()){
+			$(V.Slides.getCurrentSlide()).after(slide);
+		} else {
+			appendSlide(slide);
+		}
 
 		var oldCurrentSlideNumber = V.Slides.getCurrentSlideNumber();
 		//currentSlide number is next slide
@@ -281,7 +285,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		V.Slides.triggerLeaveEvent(oldCurrentSlideNumber);
 		V.Slides.updateSlides();
-		V.Slides.lastSlide();
 		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
 
 		if(V.Editor.Slideset.isSlideset(slideType)){
@@ -292,6 +295,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 		});
 	};
 
@@ -325,6 +329,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			if(typeof V.Slides.getCurrentSlide() != "undefined"){
 				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+				V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 				V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
 			}
 		});

@@ -147,6 +147,10 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
 		var content = &quot;&quot;;
 		var classes = &quot;&quot;;
+		if((typeof extra_classes == &quot;undefined&quot;)||(extra_classes===null)){
+			extra_classes = &quot;&quot;;
+		}
+
 		for(el in slide.elements){
 			if(!V.Renderer.Filter.allowElement(slide.elements[el])){
 				content += V.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
@@ -182,7 +186,7 @@ VISH.Renderer = (function(V,$,undefined){
 		for(index in slide.slides){
 			&#x2F;&#x2F;Subslide id its a composition of parent id and its own id.
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, null, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+			all_slides += _renderStandardSlide(subslide, &quot;hide_in_smartcard&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
 		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot;&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.FLASHCARD+&quot;&#x27; avatar=&#x27;&quot;+slide.background+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + all_slides + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
@@ -191,7 +195,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var all_slides = &quot;&quot;;
 		for(index in slide.slides){
 			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, null, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+			all_slides += _renderStandardSlide(subslide, &quot;hide_in_smartcard&quot;, &quot;&lt;div class=&#x27;close_subslide&#x27; id=&#x27;close&quot;+subslide.id+&quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 		}
 		return $(&quot;&lt;article class=&#x27;&quot;+ extra_classes + &quot;&#x27; slidenumber=&#x27;&quot;+slidenumber+&quot;&#x27; type=&#x27;&quot;+V.Constant.VTOUR+&quot;&#x27; id=&#x27;&quot;+slide.id+&quot;&#x27;&gt;&quot;+ extra_buttons + all_slides + &quot;&lt;&#x2F;article&gt;&quot;);
 	};
@@ -340,20 +344,12 @@ VISH.Renderer = (function(V,$,undefined){
 	var _renderApplet = function(element, template){
 		return &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;appletelement &quot;+template+&quot;_&quot;+element[&#x27;areaid&#x27;]+&quot;&#x27; code=&#x27;&quot;+element[&#x27;code&#x27;]+&quot;&#x27; width=&#x27;&quot;+element[&#x27;width&#x27;]+&quot;&#x27; height=&#x27;&quot;+element[&#x27;height&#x27;]+&quot;&#x27; archive=&#x27;&quot;+element[&#x27;archive&#x27;]+&quot;&#x27; params=&#x27;&quot;+element[&#x27;params&#x27;]+&quot;&#x27; &gt;&lt;&#x2F;div&gt;&quot;;
 	};
-	
-	&#x2F;**
-	 * Function to render a flashcard inside an article (a slide)
-	 * we only add canvas inside the div element
-	 * the flashcard will be drawn inside the canvas element
-	 *&#x2F;
-	var _renderFlashcard = function(element, template){
-		return &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;template_flashcard&#x27;&gt;&lt;canvas id=&#x27;&quot;+element[&#x27;canvasid&#x27;]+&quot;&#x27;&gt;Your browser does not support canvas&lt;&#x2F;canvas&gt;&lt;&#x2F;div&gt;&quot;;
-	};
+
 
 	return {
-		init        : init,
-		renderVideo : renderVideo,
-		renderSlide : renderSlide
+		init        	: init,
+		renderVideo 	: renderVideo,
+		renderSlide 	: renderSlide
 	};
 
 }) (VISH,jQuery);

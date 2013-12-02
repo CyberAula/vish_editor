@@ -447,7 +447,7 @@ VISH.Editor.API = (function(V,$,undefined){
 			if(typeof successCallback == "function"){
 				setTimeout(function(){
 					successCallback(V.Samples.API.thumbnailsList);
-				}, 2000);
+				}, 1000);
 			};
 			return;
 		};
@@ -468,16 +468,16 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
 	var uploadTmpJSON = function(json, successCallback, failCallback){
 		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
+			if(typeof failCallback == "function"){
 				setTimeout(function(){
 					// var iframe = $("#hiddenIframeForAjaxDownloads");
 					// $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
 					failCallback();
-				},2000);
+				},800);
 			}
 			return;
 		}

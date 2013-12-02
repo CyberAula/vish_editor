@@ -2,21 +2,6 @@
 /* Inside elements fading */
 /*+++++++++++++++++++++++++++++++*/
 
-section.slides:not(.slides_editor) > article.far-past {
-	transform: translate(0);
-	-o-transform: translate(0);
-	-ms-transform: translate(0);
-	-moz-transform: none;
-	-webkit-transform: translate3d(0, 0, 0);
-	-webkit-transition: all 0.6 ease-intransition ;
-	-moz-transition: all 0.6s ease-in;
-	-o-transition: all 0.6s ease-in;
-	transition: all 0.6s ease-in;
-	opacity: 0;
-	z-index: 0;
-	display: block;
-}
-
 section.slides:not(.slides_editor) > article.past {
 	transform: translate(0);
 	-o-transform: translate(0);
@@ -45,6 +30,24 @@ section.slides:not(.slides_editor) > article.current {
 	opacity: 1;
 	display: block;
 }
+
+section.slides:not(.slides_editor) > article.next {
+	transform: translate(0);
+	-o-transform: translate(0);
+	-ms-transform: translate(0);
+	-moz-transform: none;
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-transition: all 0.6 ease-intransition ;
+	-moz-transition: all 0.6s ease-in;
+	-o-transition: all 0.6s ease-in;
+	transition: all 0.6s ease-in;
+	opacity: 0;
+	z-index: 1;
+	display: block;
+}
+
+
+
 
 /*first div*/
 section.slides:not(.slides_editor) > article.past > div:nth-child(1) {
@@ -274,30 +277,7 @@ section.slides:not(.slides_editor) > article.current > div:nth-child(7) {
 	display: block;
 }
 
-section.slides:not(.slides_editor) > article.next {
-	transform: translate(0);
-	-o-transform: translate(0);
-	-ms-transform: translate(0);
-	-moz-transform: none;
-	-webkit-transform: translate3d(0, 0, 0);
-	-webkit-transition: all 0.6 ease-intransition ;
-	-moz-transition: all 0.6s ease-in;
-	-o-transition: all 0.6s ease-in;
-	transition: all 0.6s ease-in;
-	opacity: 0;
-	z-index: 1;
-	display: block;
-}
 
-section.slides:not(.slides_editor) > article.far-next {
-	transform: translate(0);
-	-o-transform: translate(0);
-	-ms-transform: translate(0);
-	-moz-transform: none;
-	-webkit-transform: translate3d(0, 0, 0);
-	opacity: 0;
-	display: block;
-}
 
 
 /* Smartcards */
