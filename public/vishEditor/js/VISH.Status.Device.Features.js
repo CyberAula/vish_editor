@@ -7,7 +7,7 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		var features = {};
 
 		//Fullscreen support
-		var elem = document.getElementById("page-fullscreen");
+		var elem = document.createElement('div');
 		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
 			features.fullscreen = true;
 		} else {

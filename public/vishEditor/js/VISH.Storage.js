@@ -50,9 +50,7 @@ VISH.Storage = (function(V,$,undefined){
 				myObject = JSON.parse(myObject);
 				if((myObject)&&(myObject.value)){
 					if((!myObject.persistent)&&(myObject.version)){
-						var cVersion = parseFloat(V.VERSION);
-						var valueVersion = parseFloat(myObject.version);
-						if(cVersion > valueVersion){
+						if(V.Utils.isObseleteVersion(myObject.version)){
 							//Obsolete value
 							return undefined;
 						}
@@ -65,6 +63,7 @@ VISH.Storage = (function(V,$,undefined){
 			return undefined;
 		}
 	}
+
 
 	//////////////
 	// OFFLINE STORAGE
