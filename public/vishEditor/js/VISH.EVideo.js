@@ -3,6 +3,8 @@ VISH.EVideo = (function(V,$,undefined){
 	var evideos;
 	var state_vid;
 	var video; 
+	var myvideoId;
+	var videoDiv;
 	var duracion;
 	var balls = []; // Ball array time-ordered
 	var nextBall; 
@@ -104,16 +106,11 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(videoBox).append($("<div class = 'hide_button2'>x</div>"));
 
-		var videoDiv =  $("<div class = 'videoDiv'></div>");
+		videoDiv =  $("<div class = 'videoDiv'></div>");
 		$(videoBox).append(videoDiv);
-		var myvideoId = V.Utils.getId();
-
-
-		var videoPlayer = $("<video id= '" + myvideoId + "' poster='videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
-		$(videoDiv).append(videoPlayer);
-		$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='videos/webvtt_talk.mp4'></source><track class='nav' src='videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
-
 		
+		_renderVideo();
+
 		var controls = $("<div class='controls'>");
 		$(videoBox).append(controls);
 
@@ -180,6 +177,25 @@ var _init = function(video,evideoJSON){
 		//console.log(evideoDOM);
 
 }
+
+var _renderVideo = function(){
+	if (true){
+		_renderHTML5Video();
+	}else{
+
+	}
+
+}
+
+
+var _renderHTML5Video = function(){
+	myvideoId = V.Utils.getId();
+	
+	var videoPlayer = $("<video id= '" + myvideoId + "' poster='videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
+	$(videoDiv).append(videoPlayer);
+	$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='videos/webvtt_talk.mp4'></source><track class='nav' src='videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
+}
+
 
 	var _onClickPlayVideo = function(evt){
 		video = _getCurrentEVideo();
@@ -422,7 +438,7 @@ var _secondsTimeSpanToHMS = function(s) {
     var m = Math.floor(s/60); //Get remaining minutes
     s -= m*60;
 
-     if(h <1){
+     if(h <1){ // if h'd be > 1, we have space to that.
      	display = (m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
 
      }else{
