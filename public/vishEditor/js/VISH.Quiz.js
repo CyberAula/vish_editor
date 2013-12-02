@@ -567,8 +567,10 @@ VISH.Quiz = (function(V,$,undefined){
 			if((typeof currentQuizSession.lastDrawedResults != "undefined")&&(results.length === currentQuizSession.lastDrawedResults.length)){
 				//No new results, redraw is not needed
 				return;
-			} else {
-				currentQuizSession.lastDrawedResults = results;
+			}
+			//Empty results, redraw is not needed
+			if(results.length===0){
+				return;
 			}
 		} else {
 			//No quiz session...
@@ -592,6 +594,9 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		//Draw
+
+		//Store drawed results
+		currentQuizSession.lastDrawedResults = results;
 
 		//Prepare canvas
 		_cleanResults();
