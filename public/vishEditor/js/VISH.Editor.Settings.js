@@ -212,10 +212,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onThemeImagesLoaded = function(){
 
 		var diff = Date.now()-t1;
-		if(diff<500){
+		if(diff<1500){
 			setTimeout(function(){
 				_onThemeImagesLoaded();
-			},500-diff);
+			},1500-diff);
 			return;
 		}
 
