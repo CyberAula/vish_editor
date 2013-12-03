@@ -6,7 +6,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 		V.VideoPlayer.Youtube.init();
 	}
 
-	var getTypeVideoWithId = function(videoId){
+	var getTypeVideoWithId = function(videoId){ // to know the type of video
 		return getTypeVideo(document.getElementById(videoId));
 	}
 
@@ -15,7 +15,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			return V.Constant.UNKNOWN;
 		} else if(video.tagName==="VIDEO"){
 			return V.Constant.Video.HTML5;
-		} else if((video.tagName==="OBJECT")||(video.tagName==="IFRAME")){
+		} else if((video.tagName==="OBJECT")||(video.tagName==="IFRAME")){ 
 			//Iframe for HTML5 API, Object for deprecated Flash API
 			return V.Constant.Video.Youtube;
 		}
@@ -23,12 +23,13 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	}
 
 	var playVideo = function(videoId,currentTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){
+		switch(getTypeVideoWithId(videoId)){ //play the video in a different way depending 
+											 // on the type.
 			case V.Constant.Video.HTML5:
 				V.VideoPlayer.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
-				V.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser);
+				V.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser); //how 2 play a Youtube Video
 				break;
 			default:
 				break;
@@ -36,7 +37,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	}
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){
+		switch(getTypeVideoWithId(videoId)){ // Same idea but pausing
 			case V.Constant.Video.HTML5:
 				V.VideoPlayer.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
@@ -49,7 +50,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	}
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){
+		switch(getTypeVideoWithId(videoId)){ //same idea but seeking
 			case V.Constant.Video.HTML5:
 				V.VideoPlayer.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
@@ -67,7 +68,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	//Get parameters regardless of video type
 
 	var getDuration = function(video){
-		switch(getTypeVideo(video)){
+		switch(getTypeVideo(video)){ //get duration of the video (returns a number)
 			case V.Constant.Video.HTML5:
 				return video.getDuration();
 				break;
@@ -80,7 +81,8 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	}
 
 
-	var getCurrentTime = function(video){
+	var getCurrentTime = function(video){ //getCurrentTime method depending on the type
+										  // of video
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				return video.getCurrentTime();

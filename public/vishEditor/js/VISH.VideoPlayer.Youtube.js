@@ -7,6 +7,8 @@
 var youtubePlayers = {}; 
 //Youtube Constants (also accesible in window['YT'].PlayerState when API is loaded)
 var YT = YT || {};
+
+/* WE DEFINE CONSTANTS*/
 YT.PlayerState = YT.PlayerState || {};
 YT.PlayerState.UNSTARTED = -1;
 YT.PlayerState.ENDED = 0;
@@ -32,18 +34,19 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 		}
 	}
 
-	var loadYoutubeObject = function(article,zone){
+	var loadYoutubeObject = function(article,zone){ //load YoutubeVideo
 
 		if(V.Status.isOnline()===false){
 			$(zone).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
 		}
 
-		if(!_isYouTubeIframeAPIReady()){
+		if(!_isYouTubeIframeAPIReady()){ // if Youtube Iframe isn't ready, load nothing
 		 	return;
 		}
 
-		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr("source"));
+		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr("source")); 
+		// the user gives us an URL, we have to extract the id of the video
 		if(youtubeVideoId===null){
 			return;
 		}
@@ -120,6 +123,8 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 
 	var playVideo = function(iframeId,currentTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
+		console.log("ytPlayer");
+		console.log(ytPlayer);
 
 		//ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
 		if((ytPlayer)&&(ytPlayer.getPlayerState)){

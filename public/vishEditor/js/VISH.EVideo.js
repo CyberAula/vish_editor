@@ -182,15 +182,14 @@ var _renderVideo = function(){
 	if (true){
 		_renderHTML5Video();
 	}else{
-
+		//Aquí se renderizarán los vídeos de Youtube
 	}
 
 }
 
 
 var _renderHTML5Video = function(){
-	myvideoId = V.Utils.getId();
-	
+	myvideoId = V.Utils.getId();	
 	var videoPlayer = $("<video id= '" + myvideoId + "' poster='videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
 	$(videoDiv).append(videoPlayer);
 	$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='videos/webvtt_talk.mp4'></source><track class='nav' src='videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
@@ -290,7 +289,7 @@ var _renderHTML5Video = function(){
 	}
 
 	var _onCloseSubslide = function(subslide_id){
-		var video = _getCurrentEVideo();
+		var video = $('#' + myvideoId)[0];
 		var prevNextBall = nextBall;
 		_getNextBall(video.currentTime);
 		if(nextBall-prevNextBall < RANGE){
@@ -333,7 +332,7 @@ var _paintIndex = function(){
 		var link = document.createElement('a');
 		link.setAttribute('ident', i);
 		link.setAttribute('time', balls[i].time);
-		link.innerHTML = balls[i].id + ': ' + balls[i].slide_id + ' ---> '+  balls[i].time;
+		link.innerHTML = (i+1) + '.'+ '    ' + balls[i].slide_id;
 		$(item).append(link);
 		$(V.Slides.getCurrentSlide()).find(".chapters").append(item);
 	}
@@ -413,6 +412,7 @@ var _hide = function() {
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '90%');
 	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
 	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.2rem');
 	_eraseBalls();
 	_paintBalls();
 }
@@ -426,8 +426,10 @@ var _show = function(){
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '60%');
 	_eraseBalls();
 	_paintBalls();
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '0.8rem');
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
 	$(V.Slides.getCurrentSlide()).find(".hide_button2").hide();
+
 }
 
 var _secondsTimeSpanToHMS = function(s) {
