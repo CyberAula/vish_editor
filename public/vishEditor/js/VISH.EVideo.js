@@ -127,7 +127,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		var transcriptBox = $("<div class='transcriptBox'></div>");
 		$(evideoDOM).append(transcriptBox);
-		$(transcriptBox).append("<div class='hide_button'>x</div><div class='navigation' style= 'background-color:#FAF9F8; border:2px black solid;'><ul class='chapters'></ul>")
+		$(transcriptBox).append("<div class='hide_button'><div class= 'i_letter'>I\n</div><div class='inside_hide'>N\nD\nE\nX</div><div class='eback_button'></div></div></div><div class='navigation' style= 'background-color:#FAF9F8; border:2px black solid;'><ul class='chapters'></ul>")
 	
 		video = $('#' + myvideoId)[0];
 		// console.log("video");
@@ -379,7 +379,7 @@ var _paintBall = function(ballJSON){
    	var bar_width = $(V.Slides.getCurrentSlide()).find(".positionview").width();
 
    	var perc = bar_width / duration;
-   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($(segments).width()))  + 0.85 + "%"; //we add 8 to adjust the ball
+   	ball.style.left = ((Math.round((bar_width*time/video.duration) - 10 ) * 100)/($(segments).width()))  + 0.42 + "%"; //we add 8 to adjust the ball
    	marker.style.left =((Math.round((bar_width*time/video.duration)) * 100)/($(position).width())) + 0.2 + "%";
    	ball.onclick = function () {
 		video.currentTime = time;
@@ -423,7 +423,7 @@ var _hide = function() {
 */
 
 var _show = function(){
-	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '60%');
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
 	_eraseBalls();
 	_paintBalls();
 	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '0.8rem');
