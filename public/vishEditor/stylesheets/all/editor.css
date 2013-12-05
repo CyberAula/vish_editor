@@ -1342,6 +1342,62 @@ div.addUrlButtons{
 	border: 1px solid #000;
 }
 
+.stthumb{
+	float: none;
+}
+
+.stthumb_wrapper {
+	overflow: hidden;
+	width: 101px;
+	height: 110px;
+	float: left;
+	margin: 16px 11px 6px 16px;
+	text-align: center;
+}
+
+.stthumb {
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	width: 99px;
+	height: 75px;
+	overflow: hidden;
+}
+
+.stthumb:hover {
+	cursor: pointer;
+	opacity: 1;
+	border: 1px solid #357ebd;
+}
+
+.stthumb:active {
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.0);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.0);
+	border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	opacity: 1.0;
+	border: 1px solid #000;
+}
+
+.stthumb_wrapper p {
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: 400;
+	font-family: 'Open Sans', arial, sans-serif;
+	padding: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	color: #666;
+	cursor: pointer;
+}
+
+.stthumb_wrapper img {
+	width: 100%;
+	height: 100%;
+}
+
+
 div.vezone {
 	border: 1px dotted #666;
 }
@@ -1434,7 +1490,7 @@ div.vezone {
 }
 
 .tab_slides_content {
-	margin-top: 30px;
+	margin-top: 25px;
 	margin-left: 73px;
 }
 
@@ -2662,7 +2718,7 @@ div.poi_label_container {
 .templateselectlist2 {
 	border: 1px solid #ccc;
 	width: 642px;
-	height: 102px;
+	height: 125px;
 	margin-bottom: -24px;
 	border-radius: 6px;
 }

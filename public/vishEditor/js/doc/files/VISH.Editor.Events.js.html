@@ -137,6 +137,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			
 			
 			$(document).on(&#x27;click&#x27;,&#x27;div.slidethumb&#x27;, V.Editor.onSlideThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;div.stthumb&#x27;, V.Editor.onSlideThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;.stthumb_wrapper p&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.selectable&#x27;, V.Editor.onSelectableClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;)&#x27;, V.Editor.onNoSelectableClicked);
@@ -196,7 +198,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 						&#x2F;&#x2F;Show slides only
 						$(&quot;#tab_pdfex&quot;).parent().hide();
 						$(&quot;#tab_presentations_repo&quot;).parent().hide();
-						$(&quot;#tab_smartcards_repo&quot;).parent().hide();
 						$(&quot;#tab_json_file&quot;).parent().hide();
 
 						&#x2F;&#x2F;Inside slides, show templates only
@@ -212,7 +213,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 					$(&quot;#tab_pdfex&quot;).parent().show();
 					$(&quot;#tab_presentations_repo&quot;).parent().show();
-					$(&quot;#tab_smartcards_repo&quot;).parent().show();
 					$(&quot;#tab_json_file&quot;).parent().show();
 
 					V.Editor.setContentAddMode(V.Constant.NONE);
@@ -368,11 +368,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_repo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_excursion_selection_help&#x27;, &#x27;bottom&#x27;);
 		});	
-
-		&#x2F;&#x2F;Help in smartcards carrousel
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_smartcards_repo_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;help_smartcard_selection_help&#x27;, &#x27;bottom&#x27;);
-		});
 
 		&#x2F;&#x2F;Help in themes templates
 		$(document).on(&#x27;click&#x27;,&#x27;#help_themes_selection&#x27;, function(){			

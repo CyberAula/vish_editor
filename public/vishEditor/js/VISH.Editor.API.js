@@ -278,43 +278,6 @@ VISH.Editor.API = (function(V,$,undefined){
 
 
 	/**
-	* function to call VISH and request smartcards (flashcards and virtual tours) in json format
-	* The request is:
-	* GET /excursions/search.json?type=smartcard&q=text
-	*/
-	var requestSmartcards = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("smartcard", text, successCallback, failCallback);   
-	};
-
-	/**
-	* function to call VISH and request recommended smartcards
-	*/
-	var requestRecomendedSmartcards = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("smartcard", "", successCallback, failCallback);
-	};
-
-
-	/**
 	* generic function to call VISH and request by query and type
 	* The request is:
 	* GET /search.json?type=type&q=query
@@ -323,7 +286,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		if((type==="live")||(type==="object")){
 			_requestResourceType(type,query, successCallback, failCallback);
 			return;
-		}else if((type==="excursion")||(type==="smartcard")){
+		} else if(type==="excursion"){
 			_requestExcursionType(type,query, successCallback, failCallback);
 			return;
 		}
@@ -520,8 +483,6 @@ VISH.Editor.API = (function(V,$,undefined){
 		init						: init,
 		requestExcursions           : requestExcursions,
 		requestRecomendedExcursions : requestRecomendedExcursions,
-		requestSmartcards           : requestSmartcards,
-		requestRecomendedSmartcards : requestRecomendedSmartcards,
 		requestVideos               : requestVideos,
 		requestRecomendedVideos     : requestRecomendedVideos,
 		requestImages               : requestImages,

@@ -940,6 +940,29 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; VERSION MANAGEMENT
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	var isObseleteVersion = function(version){
+		return _getVersionValue(V.VERSION) &gt; _getVersionValue(version);
+	};
+
+	var _getVersionValue = function(version){
+		var vValue = 0;
+		var coef = [100,10,1];
+		try {
+			var digits = version.split(&quot;.&quot;);
+			for(var i=0; i&lt;digits.length; i++){
+				vValue += parseFloat(digits[i])*coef[i];
+			}
+		} catch (e){
+			return 0;
+		}
+		return vValue;
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -961,7 +984,8 @@ VISH.Utils = (function(V,undefined){
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog
+		showPNotValidDialog		: showPNotValidDialog,
+		isObseleteVersion		: isObseleteVersion
 	};
 
 }) (VISH);

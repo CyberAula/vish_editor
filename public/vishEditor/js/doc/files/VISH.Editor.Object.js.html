@@ -430,6 +430,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperPreview).attr(&#x27;wmode&#x27;,&#x27;opaque&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;width&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;height&#x27;);
+		&#x2F;&#x2F;Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperPreview).attr(&quot;scrolling&quot;) != &quot;undefined&quot;){
+			$(wrapperPreview).attr(&quot;scrolling&quot;,&quot;auto&quot;);
+		}
 		return wrapperPreview;
 	}
 	
@@ -544,6 +548,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperTag).css(&#x27;pointer-events&#x27;, &quot;none&quot;);
 		$(wrapperTag).attr(&#x27;class&#x27;, template + &quot;_object&quot;);
 		$(wrapperTag).attr(&#x27;wmode&#x27;, &quot;opaque&quot;);
+		&#x2F;&#x2F;Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperTag).attr(&quot;scrolling&quot;) != &quot;undefined&quot;){
+			$(wrapperTag).attr(&quot;scrolling&quot;,&quot;auto&quot;);
+		}
 
 		$(current_area).html(&quot;&quot;);
 		$(current_area).append(wrapperDiv);

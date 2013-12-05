@@ -390,6 +390,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var finalW = 800;
 		var finalH = 600;
 
+		var finalWidthMargin;
+
 		var aspectRatio = (width-min_margin_width)&#x2F;(height-min_margin_height);
 		var slidesRatio = 4&#x2F;3;
 		if(aspectRatio &gt; slidesRatio){
@@ -397,18 +399,25 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			finalW = finalH*slidesRatio;
 			var widthMargin = (width - finalW);
 			if(widthMargin &lt; min_margin_width){
+				finalWidthMargin = min_margin_width;
 				var marginWidthToAdd = min_margin_width - widthMargin;
 				finalW = finalW - marginWidthToAdd;
+			} else {
+				finalWidthMargin = widthMargin;
 			}
 		}	else {
 			finalW = width - min_margin_width;
 			finalH = finalW&#x2F;slidesRatio;
+			finalWidthMargin = min_margin_width;
 			var heightMargin = (height - finalH);
 			if(heightMargin &lt; min_margin_height){
 				var marginHeightToAdd = min_margin_height - heightMargin;
 				finalH = finalH - marginHeightToAdd;
 			}
 		}
+
+		&#x2F;&#x2F;finalWidthMargin: margin with added 
+		$(&quot;.vish_arrow&quot;).width(finalWidthMargin&#x2F;2*0.9);
 
 		&#x2F;&#x2F;Viewbar
 		if(!is_preview_insertMode){

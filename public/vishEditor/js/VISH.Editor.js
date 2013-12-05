@@ -137,7 +137,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
 		V.Editor.Presentation.Repository.init();
-		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
@@ -184,15 +183,22 @@ VISH.Editor = (function(V,$,undefined){
 	////////////
 	// UI EVENTS
 	////////////
-  
+
 	/**
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
 	 */
 	var onSlideThumbClicked = function(event){
-		var type = $(event.currentTarget).attr('type');
+		var slideThumb;
+		if(event.currentTarget.tagName === "P"){
+			slideThumb = $(event.currentTarget).parent().find(".stthumb");
+		} else {
+			slideThumb = event.currentTarget;
+		}
+
+		var type = $(slideThumb).attr('type');
 		if(!type){
-			type=V.Constant.STANDARD;
+			type = V.Constant.STANDARD;
 		}
 
 		//Get slideMode before close fancybox!
@@ -203,7 +209,7 @@ VISH.Editor = (function(V,$,undefined){
 
 			var options = {};
 			if(type===V.Constant.STANDARD){
-				options.template = $(event.currentTarget).attr('template');
+				options.template = $(slideThumb).attr('template');
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
@@ -218,7 +224,7 @@ VISH.Editor = (function(V,$,undefined){
 			if((type === V.Constant.STANDARD)&&(V.Editor.Slideset.isSlideset(slideset))){
 				var options = {};
 				options.subslide = true;
-				options.template = $(event.currentTarget).attr('template');
+				options.template = $(slideThumb).attr('template');
 				options.slideset = slideset;
 				var subslide = V.Editor.Dummies.getDummy(type, options);
 				V.Editor.Slides.addSubslide(slideset,subslide);

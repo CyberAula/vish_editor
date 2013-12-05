@@ -95,24 +95,19 @@ VISH.Presentation = (function(V,undefined){
 	 * Function to initialize the presentation
 	 * Initialize renderer and call it to render each slide
 	 *&#x2F;
-	var init = function(slides){
+	var init = function(slides,callback){
 		mySlides = slides;
 		V.Renderer.init();
 
 		for(var i=0;i&lt;slides.length;i++){
-			V.Renderer.renderSlide(slides[i]);			
+			V.Renderer.renderSlide(slides[i]);
 		}
 
-		_finishRenderer();
+		if(typeof callback == &quot;function&quot;){
+			callback();
+		}
 	};
 
-	&#x2F;**
-	 * Private function called when we have finished rendering the slides
-	 *&#x2F;
-	var _finishRenderer = function(){
-		V.VideoPlayer.HTML5.setVideoEvents();
-		V.Slides.updateSlides();
-	};
 
 	return {
 		init: init

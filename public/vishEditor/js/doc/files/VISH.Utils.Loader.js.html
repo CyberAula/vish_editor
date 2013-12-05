@@ -249,7 +249,11 @@ VISH.Utils.Loader = (function(V,undefined){
 		if(typeof callback == &quot;function&quot;){
 
 			&#x2F;&#x2F;calling a function after the css is loaded (Firefox &amp; Google Chrome)
-			link.onload = function () {
+			link.onload = function(){
+				callback();
+			}
+
+			link.onerror = function(){
 				callback();
 			}
 
@@ -310,25 +314,30 @@ VISH.Utils.Loader = (function(V,undefined){
 			t1Loading = Date.now();
 			$(&quot;#fancyLoad&quot;).trigger(&#x27;click&#x27;);
 		}
-	}
+	};
 
 	var stopLoading = function(callback){
 		var diff = Date.now()-t1Loading;
-		if(diff &lt; 800){
+
+		if(diff &lt; 1250){
 			setTimeout(function(){
 				stopLoading(callback);
-			},800);
+			},Math.min(1250-diff,1250));
 		} else {
 			var closed = false;
+			var tWClose = 0;
 			if(_isFullLoadingActive()){
 				$.fancybox.close();
 				closed = true;
+				tWClose = 800;
 			}
 			if(typeof callback == &quot;function&quot;){
-				callback(closed);
+				setTimeout(function(){
+					callback(closed);
+				},tWClose);
 			}
 		}
-	}
+	};
 
 	&#x2F;*
 	* Called when loading panel is going to be closed by another fancybox
@@ -336,11 +345,11 @@ VISH.Utils.Loader = (function(V,undefined){
 	*&#x2F;
 	var onCloseLoading = function(){
 		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
-	}
+	};
 
 	var _isFullLoadingActive = function(){
 		return $(&quot;#loading_fancy&quot;).is(&quot;:visible&quot;);
-	}
+	};
 
 	var startLoadingInContainer = function(container,options){
 		$(container).html($(&quot;#loading_fancy_wrapper&quot;).html());
@@ -349,12 +358,12 @@ VISH.Utils.Loader = (function(V,undefined){
 		if((options)&amp;&amp;(options.style)){
 			$(container).find(&quot;.loading_fancy_img&quot;).addClass(options.style);
 		}
-	}
+	};
 
 	var stopLoadingInContainer = function(container){
 		$(container).find(&quot;.loading_fancy_img&quot;).parent().remove();
 		$(container).removeClass(&quot;loadingtmpShown&quot;);
-	}
+	};
 
 	return {
 		loadImagesOnContainer		: loadImagesOnContainer,

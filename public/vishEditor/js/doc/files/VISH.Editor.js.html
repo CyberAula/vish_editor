@@ -227,7 +227,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
 		V.Editor.Presentation.Repository.init();
-		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
@@ -274,15 +273,22 @@ VISH.Editor = (function(V,$,undefined){
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; UI EVENTS
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-  
+
 	&#x2F;**
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
 	 *&#x2F;
 	var onSlideThumbClicked = function(event){
-		var type = $(event.currentTarget).attr(&#x27;type&#x27;);
+		var slideThumb;
+		if(event.currentTarget.tagName === &quot;P&quot;){
+			slideThumb = $(event.currentTarget).parent().find(&quot;.stthumb&quot;);
+		} else {
+			slideThumb = event.currentTarget;
+		}
+
+		var type = $(slideThumb).attr(&#x27;type&#x27;);
 		if(!type){
-			type=V.Constant.STANDARD;
+			type = V.Constant.STANDARD;
 		}
 
 		&#x2F;&#x2F;Get slideMode before close fancybox!
@@ -293,7 +299,7 @@ VISH.Editor = (function(V,$,undefined){
 
 			var options = {};
 			if(type===V.Constant.STANDARD){
-				options.template = $(event.currentTarget).attr(&#x27;template&#x27;);
+				options.template = $(slideThumb).attr(&#x27;template&#x27;);
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
@@ -308,7 +314,7 @@ VISH.Editor = (function(V,$,undefined){
 			if((type === V.Constant.STANDARD)&amp;&amp;(V.Editor.Slideset.isSlideset(slideset))){
 				var options = {};
 				options.subslide = true;
-				options.template = $(event.currentTarget).attr(&#x27;template&#x27;);
+				options.template = $(slideThumb).attr(&#x27;template&#x27;);
 				options.slideset = slideset;
 				var subslide = V.Editor.Dummies.getDummy(type, options);
 				V.Editor.Slides.addSubslide(slideset,subslide);
@@ -769,10 +775,15 @@ VISH.Editor = (function(V,$,undefined){
 								&#x2F;&#x2F;Update V.UploadPresentationPath because the presentation exists now
 								&#x2F;&#x2F;Future saves will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
+								if(V.Status.getDevice().features.historypushState){
+									if(data.editPath){
+										window.top.history.replaceState(&quot;&quot;,&quot;&quot;,data.editPath);
+									}
+								}
 							}
 						}
 						if(typeof successCallback == &quot;function&quot;){
-							successCallback();
+							successCallback(data);
 						}
 					},
 					error: function(xhr, error){
