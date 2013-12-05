@@ -84,6 +84,10 @@ section.slides > article > article {
 	padding: 0;
 }
 
+.slides > article[type="enrichedvideo"] {
+	padding: 0 !important;
+}
+
 /*class used to show a slide to get width and height and after that remove the class
 this can not be done with show() and hide() because then it remains with display:none*/
 
@@ -1556,7 +1560,7 @@ img.loading_presentation_carrousel {
 	float: left;
 	width: 62%;
 	height: 100% !important;
-	margin-top: 18% !important;
+	margin-top: 18%;
 }
 
 .hide_button2{

@@ -18,7 +18,6 @@ VISH.EVideo = (function(V,$,undefined){
 	var initialized = false;
 
 	var init = function(presentation){
-
 		if(!initialized){
 			initialized = true;
 			_loadEvents();
@@ -99,7 +98,7 @@ VISH.EVideo = (function(V,$,undefined){
 		// console.log(evideoJSON);
 
 		var evideoDOM = $("#"+evideoJSON.id);
-
+		console.log("Holaaaaaaaaaaaaa");
 
 		var videoBox =  $("<div class='videoBox'></div>");
 		$(evideoDOM).append(videoBox);
@@ -132,6 +131,7 @@ VISH.EVideo = (function(V,$,undefined){
 		video = $('#' + myvideoId)[0];
 		// console.log("video");
 		// console.log(video);
+
 
 
 		//Vars
@@ -190,9 +190,9 @@ var _renderVideo = function(){
 
 var _renderHTML5Video = function(){
 	myvideoId = V.Utils.getId();	
-	var videoPlayer = $("<video id= '" + myvideoId + "' poster='videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
+	var videoPlayer = $("<video id= '" + myvideoId + "' poster='images/videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
 	$(videoDiv).append(videoPlayer);
-	$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='videos/webvtt_talk.mp4'></source><track class='nav' src='videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
+	$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='images/videos/webvtt_talk.mp4'></source><track class='nav' src='images/videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='images/videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
 }
 
 
@@ -410,11 +410,14 @@ var _hide = function() {
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").hide();
 	$(V.Slides.getCurrentSlide()).find(".hide_button2").show();
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '90%');
+
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '8%');
 	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
 	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
 	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.2rem');
 	_eraseBalls();
 	_paintBalls();
+	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '6%');
 }
 
 /*
@@ -426,6 +429,8 @@ var _show = function(){
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
 	_eraseBalls();
 	_paintBalls();
+	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '10%');
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '18%');
 	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '0.8rem');
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
 	$(V.Slides.getCurrentSlide()).find(".hide_button2").hide();
