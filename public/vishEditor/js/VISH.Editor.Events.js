@@ -193,13 +193,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'scrolling': 'no',
 				'height': 600,
 				'padding' : 0,
-				"onStart"  : function(data) {						
+				"onStart"  : function(data) {		
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-					$("#tab_pic_thumbnails").show();
 					V.Editor.Utils.loadTab('tab_pic_thumbnails');
 				},
 				"onClosed" : function(data){
-					$("#tab_pic_thumbnails").hide();
 					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){
 						setTimeout(function(){
 							V.Editor.Settings.displaySettings();
