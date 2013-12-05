@@ -45,9 +45,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('change', '#tlt_seconds', V.Editor.Settings.onTLTchange);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 			
-			
-			$(document).on('click','div.slidethumb', V.Editor.onSlideThumbClicked);
+			$(document).on('click','div.templatethumb', V.Editor.onSlideThumbClicked);
 			$(document).on('click','div.stthumb', V.Editor.onSlideThumbClicked);
+			$(document).on('click','#animation_fancybox div.slidethumb', V.Editor.onAnimationThumbClicked); //animations thumb
+
 			$(document).on('click','.stthumb_wrapper p', V.Editor.onSlideThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);
 			$(document).on('click','.selectable', V.Editor.onSelectableClicked);

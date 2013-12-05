@@ -233,7 +233,11 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
+
+	var onAnimationThumbClicked = function(){
+		$.fancybox.close();
+	};
 
 	/**
 	 * Function called when user clicks on an editable element
@@ -883,6 +887,7 @@ VISH.Editor = (function(V,$,undefined){
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
 		onSlideThumbClicked		: onSlideThumbClicked,
+		onAnimationThumbClicked	: onAnimationThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,
