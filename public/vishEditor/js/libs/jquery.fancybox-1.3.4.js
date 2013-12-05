@@ -317,8 +317,13 @@
 		},
 
 		_show = function() {
-			//XXX modified by KIKE first remove the walkthrough if open
+
+			//onShow fancybox is called before show a fancybox
+			//Clean Fancybox
+			$("#fancybox-outer").css("background", "white");
   			$('.joyride-close-tip').click();
+
+  			//Original code
 			var pos, equal;
 
 			loading.hide();

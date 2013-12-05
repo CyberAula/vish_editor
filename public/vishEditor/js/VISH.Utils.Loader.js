@@ -217,6 +217,10 @@ VISH.Utils.Loader = (function(V,undefined){
 	* Loading dialogs
 	*/
 
+	///////////////////
+	// Full Loading
+	///////////////////
+
 	var t1Loading;
 
 	var startLoading = function(){
@@ -249,25 +253,30 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 	};
 
-	/*
-	* Called when loading panel is going to be closed by another fancybox
-	* Keep original fancybox CSS
-	*/
-	var onCloseLoading = function(){
-		$("#fancybox-outer").css("background", "white");
-	};
+	var prepareFancyboxForFullLoading = function(){
+		$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
+		$("#fancybox-wrap").css("margin-top", "20px");
+       	$("#fancybox-wrap").css("margin-left", "20px");
+	}
 
 	var _isFullLoadingActive = function(){
 		return $("#loading_fancy").is(":visible");
 	};
 
 	var startLoadingInContainer = function(container,options){
-		$(container).html($("#loading_fancy_wrapper").html());
-		$(container).addClass("loadingtmpShown");
-
+		var loadImg = document.createElement("img");
+		$(loadImg).addClass("loading_fancy_img");
+		$(loadImg).attr("src", V.ImagesPath + "lightbox-ico-loading.gif");
 		if((options)&&(options.style)){
-			$(container).find(".loading_fancy_img").addClass(options.style);
+			$(loadImg).addClass(options.style);
 		}
+		var loadingBody = document.createElement("div");
+		$(loadingBody).addClass("loading_fancy");
+		$(loadingBody).append(loadImg);
+
+		$(container).html("");
+		$(container).append(loadingBody);
+		$(container).addClass("loadingtmpShown");
 	};
 
 	var stopLoadingInContainer = function(container){
@@ -283,9 +292,9 @@ VISH.Utils.Loader = (function(V,undefined){
 		loadDeviceCSS				: loadDeviceCSS,
 		loadLanguageCSS				: loadLanguageCSS,
 		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		prepareFancyboxForFullLoading	: prepareFancyboxForFullLoading,
 		startLoading				: startLoading,
 		stopLoading					: stopLoading,
-		onCloseLoading				: onCloseLoading,
 		startLoadingInContainer		: startLoadingInContainer,
 		stopLoadingInContainer		: stopLoadingInContainer
 	};

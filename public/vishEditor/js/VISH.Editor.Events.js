@@ -161,12 +161,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'overlayColor' : "#fff",
 				'showCloseButton'	: false,
 				'onComplete'  : function(data) {
-						$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
-						$("#fancybox-wrap").css("margin-top", "20px");
-						$("#fancybox-wrap").css("margin-left", "20px");
+						V.Utils.Loader.prepareFancyboxForFullLoading();
 				},
 				'onClosed' : function(data) {
-						$("#fancybox-outer").css("background", "white");
 				}
 			});
 

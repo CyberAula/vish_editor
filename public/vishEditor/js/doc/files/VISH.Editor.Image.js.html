@@ -348,7 +348,22 @@ VISH.Editor.Image = (function(V,$,undefined){
 	}
 
 	var setAddContentMode = function(mode){
+		_cleanTabs();
+		switch(mode){
+			case V.Constant.NONE:
+				break;
+			case V.Constant.THUMBNAIL:
+				$(&quot;#tab_pic_thumbnails&quot;).show();
+				break;
+			case V.Constant.FLASHCARD:
+				break;	
+		}
 		contentAddMode = mode;
+	}
+
+	var _cleanTabs = function(){
+		&#x2F;&#x2F;Hide thumbnails tab
+		$(&quot;#tab_pic_thumbnails&quot;).hide();
 	}
 
 	return {

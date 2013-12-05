@@ -307,6 +307,10 @@ VISH.Utils.Loader = (function(V,undefined){
 	* Loading dialogs
 	*&#x2F;
 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Full Loading
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
 	var t1Loading;
 
 	var startLoading = function(){
@@ -339,13 +343,11 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 	};
 
-	&#x2F;*
-	* Called when loading panel is going to be closed by another fancybox
-	* Keep original fancybox CSS
-	*&#x2F;
-	var onCloseLoading = function(){
-		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
-	};
+	var prepareFancyboxForFullLoading = function(){
+		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(255,255,255,0.9)&quot;);
+		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
+       	$(&quot;#fancybox-wrap&quot;).css(&quot;margin-left&quot;, &quot;20px&quot;);
+	}
 
 	var _isFullLoadingActive = function(){
 		return $(&quot;#loading_fancy&quot;).is(&quot;:visible&quot;);
@@ -373,9 +375,9 @@ VISH.Utils.Loader = (function(V,undefined){
 		loadDeviceCSS				: loadDeviceCSS,
 		loadLanguageCSS				: loadLanguageCSS,
 		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		prepareFancyboxForFullLoading	: prepareFancyboxForFullLoading,
 		startLoading				: startLoading,
 		stopLoading					: stopLoading,
-		onCloseLoading				: onCloseLoading,
 		startLoadingInContainer		: startLoadingInContainer,
 		stopLoadingInContainer		: stopLoadingInContainer
 	};
