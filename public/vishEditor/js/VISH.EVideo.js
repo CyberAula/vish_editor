@@ -9,6 +9,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var balls = []; // Ball array time-ordered
 	var nextBall; 
 	var prevNextBall; 
+	var eback = true;
 	var RANGE = 0.300; //seconds around the ball where we should stop
 	// myEvideo = evideos['evideoId'] has:
 	// myEvideo.balls = [ball1,ball2,...,ball3];
@@ -35,8 +36,9 @@ VISH.EVideo = (function(V,$,undefined){
 		console.log("_loadEvents");
 		$(document).on("click", '.play', _onClickPlayVideo);
 		$(document).on("click", '.transportbar', _onClickTransportBar);
-		$(document).on("click", '.eback_button', _hide);
-		$(document).on("click", '.hide_button2', _show);
+		$(document).on("click", '.eback_button', _toggle);
+
+
 				
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			var subslide_id = params.slideNumber;
@@ -88,6 +90,14 @@ VISH.EVideo = (function(V,$,undefined){
 		// });
 	};
 
+
+	var _toggle = function(){
+		if(eback == true){
+			_hide();
+		}else{
+			_show();
+		}
+	}
 	var loadEVideo = function(evideoId){
 		// console.log("Load EVideo");
 		// console.log(evideoId);
@@ -103,7 +113,6 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox =  $("<div class='videoBox'></div>");
 		$(evideoDOM).append(videoBox);
 
-		$(videoBox).append($("<div class = 'hide_button2'>x</div>"));
 
 		videoDiv =  $("<div class = 'videoDiv'></div>");
 		$(videoBox).append(videoDiv);
@@ -410,19 +419,20 @@ var _curTimeUpdate = function(evt) {
 
 var _hide = function() {
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "10%");
-	$(V.Slides.getCurrentSlide()).find(".hide_button2").show();
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '85%');
 
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '8%');
-	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '85%');
+	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
 	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("height", 'auto');
-	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '85%');
-		$(V.Slides.getCurrentSlide()).find(".navigation").hide();
-	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.8rem');
+	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
+	$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "5%");
+	$(V.Slides.getCurrentSlide()).find(".navigation").hide();
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.6rem');
 	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", '1%');
 	_eraseBalls();
 	_paintBalls();
-	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '6%');
+	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '4%');
+	eback = false;
 }
 
 /*
@@ -434,16 +444,16 @@ var _show = function(){
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
 	_eraseBalls();
 	_paintBalls();
-			$(V.Slides.getCurrentSlide()).find(".navigation").show();
-	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '10%');
+	$(V.Slides.getCurrentSlide()).find(".navigation").show();
+
+	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '5%');
+	$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "-4%");
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "36%");
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '18%');
-		$(V.Slides.getCurrentSlide()).find(".time").css("margin-right", '1%');
-	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.2rem');
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1rem');
 	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", 'auto');
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
-	$(V.Slides.getCurrentSlide()).find(".hide_button2").hide();
-
+	eback = true;
 }
 
 var _secondsTimeSpanToHMS = function(s) {

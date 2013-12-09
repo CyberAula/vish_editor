@@ -1581,7 +1581,7 @@ img.loading_presentation_carrousel {
 }
 
 .controls {
-	height: 5% !important;
+	height: 3% !important;
 	width: 85%;
 }
 
@@ -1598,7 +1598,7 @@ img.loading_presentation_carrousel {
 	border:none;
 	max-height: 80%;
 	margin-left: 20%;
-	margin-top: 5%;
+	margin-top: 3%;
 }
 
 .positionview {
@@ -1668,13 +1668,14 @@ img.loading_presentation_carrousel {
 .time {
  	display: inline;
     float: right;
-    font-size: 1.2rem;
+    font-size: 1rem;
     max-width: 18%;
-    /*overflow: hidden;*/
+    overflow: hidden;
     position: relative;
     text-align: right;
     margin-top: 1%;
-   	color: #C9C9C9 !important; 
+    margin-bottom: auto;
+   	color: #808080 !important; 
 
 }
 .keys {
@@ -1691,7 +1692,7 @@ img.loading_presentation_carrousel {
 	background-color: #787878;
 	position: absolute;
 	z-index: 20;
-	margin-top: 10%;
+	margin-top: 5%;
 	border: 2px solid white;
 	box-shadow: 2px 2px 2px #888888;
 	background-image: url('http://catn.com/wp-content/uploads/2013/07/icon-grey-plus.png');
@@ -1705,6 +1706,7 @@ img.loading_presentation_carrousel {
 	background-color: #787878;
 	position: absolute;
 	z-index: 20;
+	pointer-events: none;
 }
 
 .navigation{
@@ -1727,7 +1729,7 @@ img.loading_presentation_carrousel {
 	background-color: #C9C9C9;
 	z-index: 20;
 	position: absolute;
-	margin-left: -4% !important;
+	margin-left: -4%;
 
 }
 
@@ -1860,6 +1862,7 @@ ul
 .chapters li{
 	padding: 10px;
 	padding-left: 0;
+	white-space: nowrap;
 }
 
 .e_button {
