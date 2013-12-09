@@ -90,6 +90,9 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 						} else if (PDFexAPIError.responseText.match(/#PDFexAPIError:2/)){
 							//Size is too big error
 							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotificationSize"));
+						} else if(PDFexAPIError.responseText.match(/#PDFexAPIError:3/)){
+							//Too much pages
+							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotificationPages"));
 						} else {
 							//Generic error
 							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotification"));
