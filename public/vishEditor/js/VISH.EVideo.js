@@ -35,7 +35,7 @@ VISH.EVideo = (function(V,$,undefined){
 		console.log("_loadEvents");
 		$(document).on("click", '.play', _onClickPlayVideo);
 		$(document).on("click", '.transportbar', _onClickTransportBar);
-		$(document).on("click", '.hide_button', _hide);
+		$(document).on("click", '.eback_button', _hide);
 		$(document).on("click", '.hide_button2', _show);
 				
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
@@ -107,7 +107,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		videoDiv =  $("<div class = 'videoDiv'></div>");
 		$(videoBox).append(videoDiv);
-		
+		$(videoDiv).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		_renderVideo();
 
 		var controls = $("<div class='controls'>");
@@ -120,13 +120,13 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 		var pViewContent = $("<div class='transportbar'><div class='position'></div><div class= 'segmentDiv'></div></div><ul class='segments' title='chapter navigation' aria-describedby='keys'></ul></div>");
-		$(controls).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
+		//$(controls).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		$(positionview).append(pViewContent);
 		$(videoBox).append("<div style='display: block; clear: both;'></div>");
 
 		var transcriptBox = $("<div class='transcriptBox'></div>");
 		$(evideoDOM).append(transcriptBox);
-		$(transcriptBox).append("<div class='hide_button'><div class= 'i_letter'>I\n</div><div class='inside_hide'>N\nD\nE\nX</div><div class='eback_button'></div></div></div><div class='navigation' style= 'background-color:#FAF9F8; border:2px black solid;'><ul class='chapters'></ul>")
+		$(transcriptBox).append("<div class='hide_button'><div class= 'i_letter'>I\n</div><div class='inside_hide'>N\nD\nE\nX</div><div class='eback_button'><div><</div></div></div></div><div class='navigation' style= 'background-color:#FAF9F8; border:2px black solid;'><ul class='chapters'></ul>")
 	
 		video = $('#' + myvideoId)[0];
 		// console.log("video");
@@ -144,7 +144,9 @@ VISH.EVideo = (function(V,$,undefined){
 			if(video.readyState == 4){
 				_init(video,evideoJSON);
 				var t = _secondsTimeSpanToHMS(video.duration.toFixed(0));
-						$('.duration').html(t);
+				//console.log("variable t: ");
+				//console.log(t);
+				$(V.Slides.getCurrentSlide()).find(".duration").html(t);
 			duracion = video.duration.toFixed(2);
 			} else {
 				console.log("Video not loaded appropriately");
@@ -407,14 +409,17 @@ var _curTimeUpdate = function(evt) {
 }
 
 var _hide = function() {
-	$(V.Slides.getCurrentSlide()).find(".transcriptBox").hide();
+	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "10%");
 	$(V.Slides.getCurrentSlide()).find(".hide_button2").show();
-	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '90%');
+	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '85%');
 
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '8%');
-	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
-	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
-	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.2rem');
+	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '85%');
+	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("height", 'auto');
+	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '85%');
+		$(V.Slides.getCurrentSlide()).find(".navigation").hide();
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.8rem');
+	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", '1%');
 	_eraseBalls();
 	_paintBalls();
 	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '6%');
@@ -429,9 +434,13 @@ var _show = function(){
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
 	_eraseBalls();
 	_paintBalls();
+			$(V.Slides.getCurrentSlide()).find(".navigation").show();
 	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '10%');
+	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "36%");
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '18%');
-	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '0.8rem');
+		$(V.Slides.getCurrentSlide()).find(".time").css("margin-right", '1%');
+	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.2rem');
+	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", 'auto');
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
 	$(V.Slides.getCurrentSlide()).find(".hide_button2").hide();
 

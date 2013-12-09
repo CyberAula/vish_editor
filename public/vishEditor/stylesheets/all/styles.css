@@ -1561,6 +1561,7 @@ img.loading_presentation_carrousel {
 	width: 62%;
 	height: 100% !important;
 	margin-top: 18%;
+	margin-left: 2%;
 }
 
 .hide_button2{
@@ -1576,6 +1577,7 @@ img.loading_presentation_carrousel {
 .videoDiv{
 	/*height: 85% !important;*/
 	width: 85%;
+	height: 47%;
 }
 
 .controls {
@@ -1666,14 +1668,13 @@ img.loading_presentation_carrousel {
 .time {
  	display: inline;
     float: right;
-    font-size: 0.8rem;
-    margin-left: 2%;
+    font-size: 1.2rem;
     max-width: 18%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
     text-align: right;
-    width: 0%;
     margin-top: 1%;
+   	color: #C9C9C9 !important; 
 
 }
 .keys {
@@ -1751,13 +1752,35 @@ img.loading_presentation_carrousel {
 }
 
 .eback_button{
-	border-radius: 50%;
-	width: 20px;
-	height: 20px; 
-	background-color: #787878;
-	position: absolute;
-	z-index: 20;
-	margin-top: 0;
+    width:80%;
+    margin-top: -50%;
+    margin-left: 25%;
+}
+
+.eback_button:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height:0;
+    padding-bottom: 100%;
+    background: #FFFFFF;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.eback_button div {
+    float:left;
+    width:100%;
+    padding-top:50%;
+    line-height:1em;
+    margin-top:-0.5em;
+    text-align:center;
+    color: #636363 ;
+}
+
+.back_symbol{
+	margin-left: 50%;
+	position: relative;
 }
 
 .hide_button2{
@@ -1798,10 +1821,8 @@ img.loading_presentation_carrousel {
 .transcriptBox{
     width: 36%;
   	float: right;
-  	margin-right: 2%;
   	height: 100%;
   	list-style: none !important;
-  	background-color: green;
 }
 
 .videoBox{
