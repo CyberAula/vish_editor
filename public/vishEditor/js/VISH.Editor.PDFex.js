@@ -81,8 +81,20 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 					//uncomment to ignore the error
 					return; 
 				}
+				var PDFexAPIError = error;
 				V.Utils.Loader.stopLoading(function(){
-					_showErrorDialog();
+					if ((typeof PDFexAPIError != "undefined") && (typeof PDFexAPIError.responseText == "string")){
+						if (PDFexAPIError.responseText.match(/#PDFexAPIError:1/)){
+							//Bad format error
+							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotificationFormat"));
+						} else if (PDFexAPIError.responseText.match(/#PDFexAPIError:2/)){
+							//Size is too big error
+							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotificationSize"));
+						} else {
+							//Generic error
+							_showErrorDialog(V.I18n.getTrans("i.pdfErrorNotification"));
+						}
+					}
 				});
 			}
 		});
@@ -102,11 +114,11 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		percent.html('0%');
 	}	
 
-	var _showErrorDialog = function(){
+	var _showErrorDialog = function(msg){
 		var options = {};
 		options.width = 650;
 		options.height = 190;
-		options.text = V.I18n.getTrans("i.pdfErrorNotification");
+		options.text = msg;
 		var button1 = {};
 		button1.text = V.I18n.getTrans("i.Ok");
 		button1.callback = function(){
