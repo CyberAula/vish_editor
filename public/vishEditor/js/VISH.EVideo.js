@@ -112,6 +112,7 @@ VISH.EVideo = (function(V,$,undefined){
 			$(hide_button).css("padding-right", hide_buttonPR);
 			$(hide_button).css("padding-top", hide_buttonPT);
 		
+			nAnimations = 4;
 			$(navigation).animate({width: "0%"}, 1000, function(){ _checkAnimationFinish(); });
 			$(navigation).animate({"padding-right": "0%"},1000, function(){ _checkAnimationFinish(); });
 			$(transcriptBox).animate({width: "5%"}, 1000, function(){ _checkAnimationFinish(); });
@@ -119,9 +120,15 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 		}else{
-			_show();
-			$(navigation).animate({width: "58%"}, 1000, function(){ console.log("me he ejecutado"); });
-			
+			$(currentSlide).find(".segmentDiv").hide();
+			$(currentSlide).find(".segments").hide();
+			$(timeDiv).hide();
+			// _show();
+			nAnimations = 4;
+			$(navigation).animate({width: "58%"}, 1000, function(){ _checkAnimationFinish() });
+			$(navigation).animate({"padding-right": "5%"},1000, function(){ _checkAnimationFinish(); });
+			$(transcriptBox).animate({width: "36%"}, 1000, function(){ _checkAnimationFinish(); });
+			$(videoBox).animate({width: "62%", "margin-top": "18%"}, 1000, function(){ _checkAnimationFinish(); });
 		}
 
  // Utilizar el contador para hacer el hide cuando hayan acabado todas las animaciones.
@@ -141,7 +148,7 @@ VISH.EVideo = (function(V,$,undefined){
 	}
 
 	var nAnimationsFinished = 0;
-	var nAnimations = 4;
+	var nAnimations;
 	var _checkAnimationFinish = function(){
 		console.log("_checkAnimationFinish called");
 		nAnimationsFinished = nAnimationsFinished +1;
@@ -152,8 +159,11 @@ VISH.EVideo = (function(V,$,undefined){
 	}
 
 	var _onAnimationsFinish = function(){
-		console.log("I'm here!");
-		_hide();
+		if(eback==true){
+			_hide();
+		} else {
+			_show()
+		}
 	}
 
 	var loadEVideo = function(evideoId){
@@ -206,8 +216,15 @@ VISH.EVideo = (function(V,$,undefined){
 		// console.log(duracion);
 
 
-		$(video).on("loadeddata", function(){
-			if(video.readyState == 4){
+		$(video).on("loadeddata", function(data){
+
+			console.log("onloadeddata")
+			console.log(data)
+			console.log(video.readyState)
+
+			//http://www.w3schools.com/tags/av_prop_readystate.asp
+
+			if((video.readyState == 4)||(video.readyState == 3)){
 				_init(video,evideoJSON);
 				var t = _secondsTimeSpanToHMS(video.duration.toFixed(0));
 				//console.log("variable t: ");
@@ -501,17 +518,26 @@ var _hide = function() {
 */
 
 var _show = function(){
-	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
+	currentSlide = $(V.Slides.getCurrentSlide());
+	$(currentSlide).find(".time").show();
+	$(currentSlide).find(".time").css("font-size", '1rem');
+	$(currentSlide).find(".time").css("margin-bottom", 'auto');
+	$(currentSlide).find(".segmentDiv").show();
+	$(currentSlide).find(".segments").show();
 	_eraseBalls();
 	_paintBalls();
-	$(V.Slides.getCurrentSlide()).find(".navigation").show();
 	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '5%');
-	$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "-4%");
-	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "36%");
-	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '18%');
-	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1rem');
-	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", 'auto');
-	$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
+	//$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '55%');
+	//_eraseBalls();
+	//_paintBalls();
+	//$(V.Slides.getCurrentSlide()).find(".navigation").show();
+	//$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '5%');
+	//$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "-4%");
+	//$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "36%");
+	//$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '18%');
+	//$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1rem');
+	//$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", 'auto');
+	//$(V.Slides.getCurrentSlide()).find(".transcriptBox").show();
 	eback = true;
 }
 
