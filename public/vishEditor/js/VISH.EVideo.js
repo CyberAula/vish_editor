@@ -22,8 +22,6 @@ VISH.EVideo = (function(V,$,undefined){
 		if(!initialized){
 			initialized = true;
 			_loadEvents();
-
-
 		}
 
 		if(!evideos){
@@ -34,10 +32,9 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _loadEvents = function(){
 		console.log("_loadEvents");
-		$(document).on("click", '.play', _onClickPlayVideo);
+		$(document).on("click", '.play' , _onClickPlayVideo);
 		$(document).on("click", '.transportbar', _onClickTransportBar);
 		$(document).on("click", '.eback_button', _toggle);
-
 
 				
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
@@ -92,12 +89,73 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 	var _toggle = function(){
+		var currentSlide = $(V.Slides.getCurrentSlide());
+		var transcriptBox = $(currentSlide).find(".transcriptBox");
+		var navigation =  $(transcriptBox).find(".navigation");
+		var hide_button = $(transcriptBox).find(".hide_button");
+		var hide_buttonW = $(hide_button).css("width");
+		var hide_buttonPR = $(hide_button).css("padding-right");
+		var hide_buttonPT = $(hide_button).css("padding-top");
+		var videoBox = $(currentSlide).find(".videoBox");
+		var timeDiv = $(videoBox).find(".time");
+
 		if(eback == true){
-			_hide();
+			
+			$(currentSlide).find(".segmentDiv").hide();
+			$(currentSlide).find(".segments").hide();
+			$(timeDiv).hide();
+
+
+			var animationTime = 1000;			
+
+			$(hide_button).css("width", hide_buttonW);
+			$(hide_button).css("padding-right", hide_buttonPR);
+			$(hide_button).css("padding-top", hide_buttonPT);
+		
+			$(navigation).animate({width: "0%"}, 1000, function(){ _checkAnimationFinish(); });
+			$(navigation).animate({"padding-right": "0%"},1000, function(){ _checkAnimationFinish(); });
+			$(transcriptBox).animate({width: "5%"}, 1000, function(){ _checkAnimationFinish(); });
+			$(videoBox).animate({width: "92%", "margin-top": "8%"}, 1000, function(){ _checkAnimationFinish(); });
+
+
 		}else{
 			_show();
+			$(navigation).animate({width: "58%"}, 1000, function(){ console.log("me he ejecutado"); });
+			
+		}
+
+ // Utilizar el contador para hacer el hide cuando hayan acabado todas las animaciones.
+
+		// $( ".navigation" ).animate({
+		// width: "0%"
+		// }, 1000, function() {
+		// 	var transcriptBox = $(V.Slides.getCurrentSlide()).find(".transcriptBox");
+		// 	$(transcriptBox).find(".navigation").css("padding-right", "0%");
+		// 	$(transcriptBox).find(".hide_button").css("width","100%");
+		// 	$(transcriptBox).css("width","5%")
+		// 	_hide();
+		// });
+		// }else{
+		// 	_show();
+		// }
+	}
+
+	var nAnimationsFinished = 0;
+	var nAnimations = 4;
+	var _checkAnimationFinish = function(){
+		console.log("_checkAnimationFinish called");
+		nAnimationsFinished = nAnimationsFinished +1;
+		if(nAnimationsFinished===nAnimations){
+			_onAnimationsFinish();
+			nAnimationsFinished = 0;
 		}
 	}
+
+	var _onAnimationsFinish = function(){
+		console.log("I'm here!");
+		_hide();
+	}
+
 	var loadEVideo = function(evideoId){
 		// console.log("Load EVideo");
 		// console.log(evideoId);
@@ -108,15 +166,14 @@ VISH.EVideo = (function(V,$,undefined){
 		// console.log(evideoJSON);
 
 		var evideoDOM = $("#"+evideoJSON.id);
-		console.log("Holaaaaaaaaaaaaa");
 
 		var videoBox =  $("<div class='videoBox'></div>");
 		$(evideoDOM).append(videoBox);
 
 
 		videoDiv =  $("<div class = 'videoDiv'></div>");
+		$(videoBox).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		$(videoBox).append(videoDiv);
-		$(videoDiv).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		_renderVideo();
 
 		var controls = $("<div class='controls'>");
@@ -135,7 +192,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		var transcriptBox = $("<div class='transcriptBox'></div>");
 		$(evideoDOM).append(transcriptBox);
-		$(transcriptBox).append("<div class='hide_button'><div class= 'i_letter'>I\n</div><div class='inside_hide'>N\nD\nE\nX</div><div class='eback_button'><div><</div></div></div></div><div class='navigation' style= 'background-color:#FAF9F8; border:2px black solid;'><ul class='chapters'></ul>")
+		$(transcriptBox).append("<div class='hide_button'><div class= 'i_letter'>I\n</div><div class='inside_hide'>N\nD\nE\nX</div><div class='eback_button'><div><</div></div></div></div><div class='navigation'><ul class='chapters'></ul>")
 	
 		video = $('#' + myvideoId)[0];
 		// console.log("video");
@@ -208,7 +265,8 @@ var _renderHTML5Video = function(){
 
 
 	var _onClickPlayVideo = function(evt){
-		video = _getCurrentEVideo();
+		console.log("se ejecuta _onClickPlayVideo");
+		video= _getCurrentEVideo();
 		_togglePlay(video);
 	}
 
@@ -418,17 +476,19 @@ var _curTimeUpdate = function(evt) {
 }
 
 var _hide = function() {
-	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "10%");
-	$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '85%');
-
+	currentSlide = $(V.Slides.getCurrentSlide());
+	/*$(V.Slides.getCurrentSlide()).find(".videoBox").css("width", '92%');
 	$(V.Slides.getCurrentSlide()).find(".videoBox").css("margin-top", '8%');
-	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '100%');
+	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("width", '92%');
 	$(V.Slides.getCurrentSlide()).find(".videoDiv").css("height", 'auto');
-	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '100%');
-	$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "5%");
-	$(V.Slides.getCurrentSlide()).find(".navigation").hide();
+	$(V.Slides.getCurrentSlide()).find(".controls").css("width", '92%');
 	$(V.Slides.getCurrentSlide()).find(".time").css("font-size", '1.6rem');
 	$(V.Slides.getCurrentSlide()).find(".time").css("margin-bottom", '1%');
+	$(V.Slides.getCurrentSlide()).find(".time").css("margin-right", '8%');*/
+	$(currentSlide).find(".time").show();
+	$(currentSlide).find(".time").css("font-size", '1.6rem');
+	$(currentSlide).find(".segmentDiv").show();
+	$(currentSlide).find(".segments").show();
 	_eraseBalls();
 	_paintBalls();
 	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '4%');
@@ -445,7 +505,6 @@ var _show = function(){
 	_eraseBalls();
 	_paintBalls();
 	$(V.Slides.getCurrentSlide()).find(".navigation").show();
-
 	$(V.Slides.getCurrentSlide()).find(".ball").css("margin-top", '5%');
 	$(V.Slides.getCurrentSlide()).find(".hide_button").css("margin-left", "-4%");
 	$(V.Slides.getCurrentSlide()).find(".transcriptBox").css("width", "36%");

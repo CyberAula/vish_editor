@@ -1564,20 +1564,13 @@ img.loading_presentation_carrousel {
 	margin-left: 2%;
 }
 
-.hide_button2{
-	display: none;
-	width: 2%;
-	height: 12%;
-	background-color: green;
-	margin-top: 20px;
-	z-index: 20;
-	position: absolute;
-}
 
 .videoDiv{
 	/*height: 85% !important;*/
 	width: 85%;
-	height: 47%;
+	height: auto;
+	overflow: hidden;
+	margin-top: 5%;
 }
 
 .controls {
@@ -1672,10 +1665,10 @@ img.loading_presentation_carrousel {
     max-width: 18%;
     overflow: hidden;
     position: relative;
-    text-align: right;
     margin-top: 1%;
     margin-bottom: auto;
    	color: #808080 !important; 
+   	margin-right: 15%;
 
 }
 .keys {
@@ -1710,27 +1703,49 @@ img.loading_presentation_carrousel {
 }
 
 .navigation{
-	overflow-y: auto;
+	/*overflow-y: auto;
 	z-index: 10;
 	height: 100%;
 	padding-left: 5%;
 	padding-right: 5%;
 	list-style: none;
 	background-color: #C9C9C9 !important; 
-	border: none !important;
+	border: none !important;*/
+
+	background-color: #C9C9C9 !important;
+    display: inline-block;
+    float: right;
+    width: 58%;
+    height: 100%;
+    list-style: none outside none;
+    overflow-y: auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    z-index: 10;
+}
 
 
-} 
+
 
 .hide_button{
-	border-radius:5px;
+
+  	background-color: #C9C9C9 !important;
+    border-radius: 6px;
+    display: inline-block;
+    height: 30%;
+    margin-left: -14%;
+    margin-top: -2%;
+    padding-top: 2%;
+    width: 14%;
+    z-index: 20;
+    padding-right: 2%;
+	/*border-radius:5px;
 	width: 5%;
 	height: 30%;
 	background-color: #C9C9C9;
 	z-index: 20;
 	position: absolute;
-	margin-left: -4%;
-
+	margin-left: -4%;*/
 }
 
 .inside_hide{
@@ -1756,7 +1771,7 @@ img.loading_presentation_carrousel {
 .eback_button{
     width:80%;
     margin-top: -50%;
-    margin-left: 25%;
+    margin-left: 18%;
 }
 
 .eback_button:after {
@@ -1821,10 +1836,16 @@ img.loading_presentation_carrousel {
 }
 
 .transcriptBox{
-    width: 36%;
+    /*width: 36%;
   	float: right;
   	height: 100%;
-  	list-style: none !important;
+  	list-style: none !important;*/
+  	display: inline-block;
+    text-align: right;
+    width: 36%;
+    float: right;
+    height: 100%;
+    list-style: none outside none !important;
 }
 
 .videoBox{
@@ -1839,7 +1860,7 @@ ul
 }
 
 .chapters{
-	background-color: #F7F7F7;
+	/*background-color: #F7F7F7;
 	padding: 0px 20px 0px 20px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -1856,7 +1877,14 @@ ul
     height: 94%;
     -webkit-box-shadow:0 0 6px 1px #575757	 inset;
 	-moz-box-shadow: 0 0 6px 1px #575757 inset;
-	box-shadow: 0 0 6px 1px #575757 inset;
+	box-shadow: 0 0 6px 1px #575757 inset;*/
+
+  background-color: #F7F7F7;
+    border-radius: 5px;
+    box-shadow: 0 0 6px 1px #575757 inset;
+    height: 94%;
+    overflow: hidden;
+    padding: 0 20px;
 }
 
 .chapters li{
@@ -1880,7 +1908,8 @@ ul
 	background: -ms-linear-gradient(top, #27292b 0%,#000000 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #27292b 0%,#000000 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-	box-shadow: 10px 0px 5px #C9C9C9;
+	box-shadow: 40px 40px 5px #FFFFFF;
+
 }
 
 
