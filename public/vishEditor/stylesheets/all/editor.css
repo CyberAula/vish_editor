@@ -203,9 +203,6 @@ input.presentation_details_input {
 	display: block;
 }
 
-#competitions_in_presentation_details{
-	margin-bottom: 10px;
-}
 
 textarea#presentation_details_textarea {
 	margin-top: 7px;
@@ -577,20 +574,6 @@ input.slider_range_input {
 	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
 	cursor: pointer;
 }
-
-.help_in_competitions{
-	background-image: url(/vishEditor/images/vicons/helptutorial_circle.png);
-	position: absolute;
-	margin-top: -2px;
-	margin-left: -46px;
-}
-
-.help_in_competitions:hover{
-	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
-
-
 
 #presentation_details_logo {
 	width: 107%;

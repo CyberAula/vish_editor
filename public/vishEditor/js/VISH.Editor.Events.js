@@ -63,10 +63,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
 
-
-			//create the functions to add the tags when click on fancybox
-			$(document).on("click", ".comp_checkbox input", V.Editor.Competitions.specialTagSelected);
-
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
 
@@ -290,10 +286,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
 		});
 
-		//Help in Competitions
-		$(document).on('click','#help_in_competitions', function(){
-			V.Tour.startTourWithId('help_in_competitions_help', 'bottom');
-		})
 
 		//Help in pedagogical options settings	
 		$(document).on('click','#help_pedagogical_selection', function(){
