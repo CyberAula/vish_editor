@@ -115,8 +115,7 @@ VISH.EVideo = (function(V,$,undefined){
 	}
 
 	var loadEVideo = function(evideoId){
-		// console.log("Load EVideo");
-		// console.log(evideoId);
+		_renderVideo();
 	}
 
 	var drawEVideo = function(evideoJSON){ // here we have to add the html parsed in Javascript
@@ -126,11 +125,9 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox =  $("<div class='videoBox'></div>");
 		$(evideoDOM).append(videoBox);
 
-
 		videoDiv =  $("<div class = 'videoDiv'></div>");
 		$(videoBox).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		$(videoBox).append(videoDiv);
-		_renderVideo();
 
 		var controls = $("<div class='controls'>");
 		$(videoBox).append(controls);
@@ -142,7 +139,6 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 		var pViewContent = $("<div class='transportbar'><div class='position'></div><div class= 'segmentDiv'></div></div><ul class='segments' title='chapter navigation' aria-describedby='keys'></ul></div>");
-		//$(controls).append("<div class='time'><span class='curTime'>00:00</span>/<span class='duration'>00:00</span></div>");
 		$(positionview).append(pViewContent);
 		$(videoBox).append("<div style='display: block; clear: both;'></div>");
 
@@ -199,7 +195,7 @@ var _renderVideo = function(){
 	if (true){
 		_renderHTML5Video();
 	}else{
-		//Aquí se renderizarán los vídeos de Youtube
+		_renderYoutubeVideo();
 	}
 }
 
@@ -207,11 +203,15 @@ var _renderVideo = function(){
 var _renderHTML5Video = function(){
 	myvideoId = V.Utils.getId();
 
-	//var videoPlayer = $("<iframe src='//www.youtube.com/embed/nlcIKh6sBtc' frameborder='0'  style='width:100%; 	height: 100% !important;' allowfullscreen></iframe>")
 	var videoPlayer = $("<video id= '" + myvideoId + "' poster='images/videos/webvtt_talk.png' style='width:100%; 	height: 100% !important;'  preload='metadata'></video>")
-	$(videoDiv).append(videoPlayer);
+	$(".videoDiv").append(videoPlayer);
 	$(videoPlayer).append("<source src='https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm'></source><source src='images/videos/webvtt_talk.mp4'></source><track class='nav' src='images/videos/webvtt_talk_navigation.vtt' kind='chapters' srclang='en'></track><track class='cc' src='images/videos/webvtt_talk_captions.vtt' kind='captions' label='captions' srclang='en' default></track>");
 }
+
+var _renderYoutubeVideo = function(){
+	$(".videoDiv").append(generateWrapperForYoutubeVideoUrl('http://www.youtube.com/watch?v=EHkozMIXZ8w'));
+}
+
 
 var _onClickPlayVideo = function(evt){
 	video= _getCurrentEVideo();
@@ -235,7 +235,6 @@ var _togglePlay = function(video){
 var _onClickTransportBar = function(evt){
 
 	var video = _getCurrentEVideo();
-
 
 	var bar_width = $('.positionview').outerWidth();
 	var offset = $(evt.target).offset();//this ahora es evt.target
@@ -467,14 +466,29 @@ var _secondsTimeSpanToHMS = function(s) {
     return display;
 }
 
+var _generateWrapper = function(videoId){
+		var video_embedded = "http://www.youtube.com/embed/"+videoId;
+		current_area=  $(V.Slides.getCurrentSlide()).find(".videoDiv");
+		var width_height = V.Utils.dimentionToDraw($(".videoDiv").width(), $(".videoDiv").height(), 325, 243 );    
+		var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
+		return wrapper;
+}
+ 
+var generateWrapperForYoutubeVideoUrl = function (url){
+		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		if(videoId!=null){
+			return _generateWrapper(videoId);
+		} else {
+			return "Youtube Video ID can't be founded."
+		}
+}
+
 
 // Helpers
 
 var _getCurrentEVideo = function(){
 	return $(V.Slides.getCurrentSlide()).find("video")[0];
 }
-
-
 
 	return {
 		init			: init,

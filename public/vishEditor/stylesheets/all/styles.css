@@ -1567,7 +1567,7 @@ img.loading_presentation_carrousel {
 
 .videoDiv{
 	width: 85%;
-	height: auto;
+	height: 40%; 
 	overflow: hidden;
 	margin-top: 5%;
 }

@@ -29,6 +29,24 @@ VISH.Utils = (function(V,undefined){
 	/*
 	 *
 	 */
+
+	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
+		var dimentions_for_drawing = {width:  w_content, height: h_content};
+		var aspect_ratio_zone = w_zone/h_zone;
+		var aspect_ratio_content = w_content/h_content;
+		
+		if (aspect_ratio_zone>aspect_ratio_content) {
+			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
+			dimentions_for_drawing.height = h_zone;
+			return dimentions_for_drawing;
+		} else {
+			dimentions_for_drawing.width = w_zone;
+			dimentions_for_drawing.height = w_zone/aspect_ratio_content;
+			return  dimentions_for_drawing;
+		}	
+	};
+
+
 	var getOptions = function(){
 		if(V.Editing){
 			return V.Editor.getOptions();
@@ -877,6 +895,7 @@ VISH.Utils = (function(V,undefined){
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
+		dimentionToDraw			: dimentionToDraw,
 		getId					: getId,
 		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,

@@ -217,7 +217,10 @@ VISH.Viewer = (function(V,$,undefined){
 			V.Flashcard.stopAnimation(slide.id);
 		} else if(slideType===V.Constant.VTOUR){
 			V.VirtualTour.unloadVirtualTour(slide.id);
+		} else if(slideType===V.Constant.EVIDEO){
+			V.EVideo.unloadEVideo(slide.id);
 		}
+
 	};
 
 	/**
