@@ -193,6 +193,7 @@ var _init = function(video,evideoJSON){
 
 var _renderVideo = function(){
 	if (true){
+		$(V.Slides.getCurrentSlide()).find(".videoDiv").css("height", 'auto');
 		_renderHTML5Video();
 	}else{
 		_renderYoutubeVideo();
