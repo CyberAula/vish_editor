@@ -1120,14 +1120,6 @@ img.selectSlidesimgbutton {
 	padding-top: 4%;
 }
 
-.competitions_paragraph, .competitions_options {
-	color: #666;
-	font-family: 'Open Sans', arial, sans-serif;
-	/*font-size: 1.2rem;*/
-	font-size: 14px;
-	padding: 40px;
-}
-
 .check_boxer {
 	cursor: pointer;
 	color: #000;

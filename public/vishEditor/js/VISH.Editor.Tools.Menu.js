@@ -2,8 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
-	var _competitionsModalShown = false;
-
+	
 	/*
 	 * Init singleton
 	 * Perform actions that must be executed only once
@@ -136,42 +135,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Utils.showDialog(options);
 			return;
 		}
-
-		//Competitions (deprecated)
-		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
-			_competitionsModalShown = true;
-			var options = {};
-			options.width = 650;
-			options.height = 190;
-			options.text = V.I18n.getTrans("i.NoCompetitions1");
-			options.textWrapperClass = "competitions_paragraph";
-
-			options.onClosedCallback = function(){
-				setTimeout(function(){
-						V.Editor.Tools.Menu.onPublishButtonClicked();
-				}, 500);
-			};
-			
-			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-			options.middlerow = V.Editor.Competitions.generateForm();		
-			options.middlerowExtraClass = "competitions_options";
-
-			var button1 = {};
-			button1.text = V.I18n.getTrans("i.Done");
-			button1.extraclass = "competi_disabled";
-			button1.callback = function(){
-				$.fancybox.close();	
-			}
-			var button2 = {};
-			button2.text = V.I18n.getTrans("i.NoThanks");
-			button2.callback = function(){
-				$.fancybox.close();			
-			}
-			options.buttons = [button1, button2];
-			V.Utils.showDialog(options);
-			return;
-		}
-
 
 		var options = {};
 		options.width = 600;
