@@ -62,6 +62,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			//Add class to title
 			var imgContainer = $(img).parent();
 			$(imgContainer).addClass("wrapper_barbutton");
+			$(imgContainer).addClass("preventNoselectable");
 			var p = $(imgContainer).find("p");
 			$(p).addClass("ptext_barbutton");
 

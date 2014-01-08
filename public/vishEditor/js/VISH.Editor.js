@@ -344,6 +344,15 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
+
+	/*
+	 * Selectable elements are zones which can be selected.
+	 * Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
+	 * Add class 'preventNoselectable' to a element to never call _onNoSelectableClicked
+	 * Add class 'selectable' to a element to call onSelectableClicked and never call _onNoSelectableClicked
+	*/
+
+
 	/**
 	* function called when user clicks on template zone with class selectable
 	*/
@@ -357,17 +366,19 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*/
 	var onNoSelectableClicked = function(event){
-		
-		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
-		if(!$(event.target).hasClass("noSelectableElement")){
+
+		var target = $(event.target);
+		var targetParent = $(target).parent();
+
+		if(!$(target).hasClass("noSelectableElement")){
 
 			//No hide toolbar when we are working in a fancybox
 			if($("#fancybox-content").is(":visible")){
 				return;
 			}
 
-			//No hide toolbar for selectable childrens
-			if($(event.target).parent().hasClass("selectable")){
+			//No hide toolbar for selectable or preventNoselectable childrens
+			if($(targetParent).hasClass("selectable") || $(targetParent).hasClass("preventNoselectable")){
 				return;
 			}
 
@@ -393,10 +404,14 @@ VISH.Editor = (function(V,$,undefined){
 
 		}
 
+		cleanArea();
+	};
+
+	var cleanArea = function(){
 		V.Editor.Tools.cleanZoneTools(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
-	};
+	}
 	
 	var _addSelectableProperties = function(zone){
 		$(zone).removeClass("zoneUnselected");
@@ -446,6 +461,8 @@ VISH.Editor = (function(V,$,undefined){
 			},500);
 		}
 
+		V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		cleanArea();
 		V.Editor.Tools.loadToolsForSlide(slide);
 	};
   
@@ -873,6 +890,7 @@ VISH.Editor = (function(V,$,undefined){
 		getTemplate				: getTemplate,
 		getCurrentArea			: getCurrentArea,
 		getLastArea				: getLastArea,
+		cleanArea				: cleanArea,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,

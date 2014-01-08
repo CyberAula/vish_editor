@@ -278,12 +278,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		_goToSlide(no);
 
-		if(V.Editing){
-			V.Editor.Tools.cleanZoneTools();
-			//finally add a background color to thumbnail of the selected slide
-			V.Editor.Thumbnails.selectThumbnail(no);
-		}	else {
-			//update slide counter
+		if(!V.Editing){
 			V.Viewer.updateSlideCounter();
 		}
 

@@ -52,7 +52,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click','.stthumb_wrapper p', V.Editor.onSlideThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);
 			$(document).on('click','.selectable', V.Editor.onSelectableClicked);
-			$(document).on('click',':not(".selectable")', V.Editor.onNoSelectableClicked);
+			$(document).on('click',':not(".selectable"):not(".preventNoselectable")', V.Editor.onNoSelectableClicked);
 			
 			$(document).on('click','.delete_content', V.Editor.onDeleteItemClicked);
 			$(document).on('click','.delete_slide', V.Editor.onDeleteSlideClicked);
